@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  balance: 1.5
+  unit: MyString
+  name: MyString
+  type: MyString
+
+two:
+  balance: 1.5
+  unit: MyString
+  name: MyString
+  type: MyString
