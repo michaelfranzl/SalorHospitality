@@ -1,0 +1,50 @@
+<%= error_messages_for 'article' %>
+
+<% form_for @article do |article_form| %>
+  <p>
+    <%= article_form.label 'Artikelname' %>
+    <%= article_form.text_field :name %>
+  </p>
+  <p>
+   <%= article_form.label 'Preis' %>
+   <%= article_form.text_field :price %>
+  </p>
+  <p>
+   <%= article_form.label 'Kategorie' %>
+   <%= article_form.collection_select(:category_id, Category.find(:all), :id, :name, {:include_blank => true}) %>
+  </p>
+  <p>
+    <div id="ingredients">
+      <% article_form.fields_for :ingredients do |ingredient_form| %>
+        <p>
+          <%= ingredient_form.label :amount, "Menge:" %>
+          <%= ingredient_form.text_field :amount %>
+
+          <%# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash. %>
+          <% nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1] %>
+
+          <select id="article_ingredients_attributes_<%= nested_attribute_id %>_stock_id" name="article[ingredients_attributes][<%= nested_attribute_id %>][stock_id]">
+            <option value="">
+            <%= option_groups_from_collection_for_select(Group.find(:all), :stocks, :name, :id, :name, ingredient_form.object.stock_id) %>
+          </select>
+
+          <% unless ingredient_form.object.new_record? %>
+            <span>
+              <%= ingredient_form.label :_delete, 'Entfernen' %>
+              <%= ingredient_form.check_box :_delete %>
+            </span>
+          <% end %>
+
+        </p>
+      <% end %>
+      <%# nested indgredients attributes will be added dynamically. %>
+    </div>
+  </p>
+  <p>
+    <%= add_ingredient_link "Zutat hinzufuegen", article_form %>
+  </p>
+  <p>
+    <%= submit_tag %>
+  </p>
+
+<% end %>
