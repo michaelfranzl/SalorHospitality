@@ -1,3 +1,3 @@
 class Stock < ActiveRecord::Base
-  has_many :ingredients
+  belongs_to :group
 end

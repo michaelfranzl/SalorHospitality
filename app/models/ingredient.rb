@@ -1,4 +1,4 @@
 class Ingredient < ActiveRecord::Base
-  belongs_to :commodity
-  belongs_to :stock
+  belongs_to :article
+  validates_presence_of :amount, :stock_id
 end

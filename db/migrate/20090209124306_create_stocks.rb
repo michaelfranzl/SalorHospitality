@@ -4,7 +4,7 @@ class CreateStocks < ActiveRecord::Migration
       t.float :balance
       t.string :unit
       t.string :name
-      t.string :type
+      t.integer :group_id
 
       t.timestamps
     end
