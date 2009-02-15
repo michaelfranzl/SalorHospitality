@@ -1,0 +1,14 @@
+= error_messages_for 'user'
+
+- form_for @user do |user_form|
+  %p
+    = user_form.label 'Name'
+    = user_form.text_field :name
+  %p
+    = user_form.label 'Passwort'
+    = user_form.text_field :password
+  %p
+    = user_form.label 'Rolle'
+    %select{ :id => 'user_role', :name => 'user[role]' }
+      = options_for_select ['', 'su','admin','gasthaus','kellner'], @user.role
+  %p= submit_tag

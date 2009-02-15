@@ -1,0 +1,14 @@
+%h2 Tische
+
+= link_to 'Neuen Tisch hinzufuegen', new_table_path
+
+%table
+  %tr
+    %th Name
+    %th Beschreibung
+  - @tables.each do |ta|
+    %tr
+      %td= ta.name
+      %td= ta.description
+      %td= link_to 'Bearbeiten', edit_table_path(ta)
+      %td= link_to 'Loeschen', ta, :confirm => 'Sind Sie sicher?', :method => :delete

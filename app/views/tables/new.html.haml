@@ -1,0 +1,10 @@
+= error_messages_for 'table'
+
+- form_for @table do |table_form|
+  %p
+    = table_form.label 'Tischname'
+    = table_form.text_field :name
+  %p
+   = table_form.label 'Beschreibung'
+   = table_form.text_field :description
+  %p= submit_tag

@@ -1,0 +1,13 @@
+%h1 Kategorien
+= link_to 'Neue Kategorie hinzufuegen', new_category_path
+
+%table
+  %tr
+    %th Name
+    %th Prozentsatz
+  - @categories.each do |ca|
+    %tr
+      %td= ca.name
+      %td= ca.percent
+      %td= link_to 'Bearbeiten', edit_category_path(ca)
+      %td= link_to 'Loeschen', ca, :confirm => 'Sind Sie sicher?', :method => :delete

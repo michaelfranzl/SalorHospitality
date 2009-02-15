@@ -1,0 +1,34 @@
+= error_messages_for 'order'
+
+- form_for @order, :url => table_orders_path do |order_form|
+
+  %p
+    = order_form.label 'User'
+    = order_form.collection_select :user_id, User.find(:all), :id, :name, { :include_blank => true }
+
+  %p
+    #items
+      - order_form.fields_for :items do |item_form|
+
+        - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+
+        %p
+          = item_form.label :count, 'Anzahl:'
+          %select{ :id => "order_items_attributes_#{ nested_attribute_id }_count", :name => "order[items_attributes][#{ nested_attribute_id }][count]" }
+            = options_for_select MyGlobals::predefined_count
+
+          = item_form.label :article_id, 'Artikel:'
+          %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
+            %option{ :value => '' }
+            = option_groups_from_collection_for_select Category.find(:all), :articles, :name, :id, :name, item_form.object.article_id
+
+          = item_form.label :free
+          = item_form.check_box :free
+
+          -# unless item_form.object.new_record?
+          %span
+            = item_form.label :_delete, 'Entfernen'
+            = item_form.check_box :_delete
+
+  %p= add_item_link 'Artikel hinzufuegen', order_form
+  %p= submit_tag

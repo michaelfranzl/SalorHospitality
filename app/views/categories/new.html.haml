@@ -1,0 +1,10 @@
+= error_messages_for 'category'
+
+= form_for @category do |category_form|
+  %p
+    = category_form.label 'Kategoriename'
+    = category_form.text_field :name
+  %p
+   = category_form.label 'Prozensatz'
+   = category_form.text_field :percent
+  %p= submit_tag

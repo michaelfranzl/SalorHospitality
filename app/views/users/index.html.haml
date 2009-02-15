@@ -1,0 +1,16 @@
+%h2 User
+
+= link_to 'Neuen User hinzufuegen', new_user_path
+
+%table
+  %tr
+    %th Name
+    %th Passwort
+    %th Rolle
+  - @users.each do |us|
+    %tr
+      %td= link_to us.name, user_path(us)
+      %td= us.password
+      %td= us.role
+      %td= link_to 'Bearbeiten', edit_user_path(us)
+      %td= link_to 'Loeschen', us, :confirm => 'Sind Sie sicher?', :method => :delete

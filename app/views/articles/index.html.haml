@@ -1,0 +1,17 @@
+%h1 Artikel
+
+= link_to 'Neuen Artikel hinzufuegen', new_article_path
+
+- @categories.each do |ca|
+  %h2= ca.name
+  %table
+    %tr
+      %th Name
+      %th Preis
+    %tr
+    - ca.articles.each do |ar|
+      %tr
+        %td= ar.name
+        %td= ar.price
+        %td= link_to 'Bearbeiten', edit_article_path(ar)
+        %td= link_to 'Loeschen', ar, :confirm => 'Sind Sie sicher?', :method => :delete
