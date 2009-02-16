@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @groups = Group.find(:all)
   end
 
   def create

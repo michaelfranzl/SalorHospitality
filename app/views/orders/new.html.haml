@@ -1,3 +1,5 @@
+%h2== Bestellung #{ Table.find(@order.table_id).name }
+
 = error_messages_for 'order'
 
 - form_for @order, :url => table_orders_path do |order_form|
@@ -5,6 +7,11 @@
   %p
     = order_form.label 'User'
     = order_form.collection_select :user_id, User.find(:all), :id, :name, { :include_blank => true }
+
+    = order_form.label :finished
+    = order_form.check_box :finished
+
+    = hidden_field_tag 'order[table_id]', @order.table_id
 
   %p
     #items

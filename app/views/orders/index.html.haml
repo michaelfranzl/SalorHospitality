@@ -4,7 +4,7 @@
   - @tables.each do |ta|
     %p
       = ta.name
-    - if !ta.orders.empty? and ta.orders.last.finished
-      = link_to 'laufende Bestellung', edit_table_order_path(ta, ta.orders.last)
-    - else
+    - if ta.orders.empty? or ta.orders.last.finished
       = link_to 'Neue Bestellung', new_table_order_path(ta)
+    - else
+      = link_to 'laufende Bestellung', edit_table_order_path(ta, ta.orders.last)

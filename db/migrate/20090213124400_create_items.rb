@@ -3,6 +3,7 @@ class CreateItems < ActiveRecord::Migration
     create_table :items do |t|
       t.integer :count
       t.integer :article_id
+      t.integer :order_id
       t.boolean :free
 
       t.timestamps

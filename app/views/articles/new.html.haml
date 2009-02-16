@@ -20,7 +20,7 @@
 
       %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
         %option{ :value => '' }
-          = option_groups_from_collection_for_select Group.find(:all), :stocks, :name, :id, :name, ingredient_form.object.stock_id
+          = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :name, ingredient_form.object.stock_id
         %span
           = ingredient_form.label :_delete, 'Entfernen'
           = ingredient_form.check_box :_delete

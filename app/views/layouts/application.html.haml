@@ -13,9 +13,11 @@
     %p{ :style => 'color: green' }= flash[:notice]
 
     %small
-      = link_to 'User', users_path
-      = link_to 'Lager', groups_path
       = link_to 'Artikel', articles_path
+      = link_to 'Kategorien', categories_path
+      = link_to 'Lager', stocks_path
+      = link_to 'Lagergruppen', groups_path
+      = link_to 'User', users_path
       = link_to 'Tische', tables_path
 
     = yield
