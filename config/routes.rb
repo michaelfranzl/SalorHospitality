@@ -35,9 +35,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
   map.resources :articles
+  map.resources :orders
   map.resources :categories
   map.resources :groups
   map.resources :stocks
+  map.resources :taxes
   map.resources :users, :has_many => :settlements
   map.resources :tables, :has_many => :orders
 

@@ -1,0 +1,18 @@
+%h2 Lager
+
+= link_to 'Neuen Lagerartikel hinzufuegen', new_stock_path
+
+%table
+  %tr
+    %th name
+    %th Vorrat
+    %th Einheit
+    %th Lagergruppe
+  - @stocks.each do |st|
+    %tr
+      %td= st.name
+      %td= st.balance
+      %td= st.unit
+      %td= Group.find(st.group_id).name
+      %td= link_to 'Bearbeiten', edit_stock_path(st)
+      %td= link_to 'Loeschen', st, :confirm => 'Sind Sie sicher?', :method => :delete

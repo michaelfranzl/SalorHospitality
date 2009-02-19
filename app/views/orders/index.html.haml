@@ -8,3 +8,15 @@
       = link_to 'Neue Bestellung', new_table_order_path(ta)
     - else
       = link_to 'laufende Bestellung', edit_table_order_path(ta, ta.orders.last)
+
+.abrechnungen
+  %h3 Abrechnungen
+  - @unsettled_users.each do |uu|
+    %ul
+      %li= link_to uu.name, user_path(uu)
+      %ul
+        - Order.find_all_by_user_id(uu.id).each do |uo|
+          %li= link_to "##{uo.id}", order_path(uo)
+        %li= link_to 'Abrechnen', new_user_settlement_path(uu)
+
+

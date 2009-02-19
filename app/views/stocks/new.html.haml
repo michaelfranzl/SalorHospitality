@@ -1,0 +1,17 @@
+= error_messages_for 'stock'
+
+- form_for @stock do |stock_form|
+  %p
+    = stock_form.label 'Name'
+    = stock_form.text_field :name
+  %p
+    = stock_form.label 'Vorrat'
+    = stock_form.text_field :balance
+  %p
+    = stock_form.label 'Eiheit'
+    %select{ :id => 'stock_unit', :name => 'stock[unit]' }
+      = options_for_select([['',''], ['Flaschen','Flaschen'], ['Liter','Liter'], ['Fässer','Fässer'], ['kg','kg']], @stock.unit)
+  %p
+    = stock_form.label 'Lagergruppe'
+    = stock_form.collection_select :group_id, Group.find(:all), :id, :name, { :include_blank => true }
+  %p= submit_tag

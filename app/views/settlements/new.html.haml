@@ -1,0 +1,7 @@
+%table
+- @unsettled_orders.each do |uo|
+  %tr
+    %td== ##{uo.id}
+- uo.items do |i|
+  %tr
+    %td

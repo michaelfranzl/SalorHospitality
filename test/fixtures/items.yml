@@ -1,9 +1,38 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  count: 1
+  count: 2
+  article_id: 2
+  order_id: 1
   free: false
 
 two:
-  count: 1
+  count: 2
+  article_id: 3
+  order_id: 1
+  free: false
+
+three: 2
+  article_id: 1
+  order_id: 1
+  free: true
+
+four:
+  article_id: 2
+  order_id: 2
+  free: false
+
+five:
+  article_id: 1
+  order_id: 3
+  free: false
+
+six:
+  article_id: 2
+  order_id: 4
+  free: false
+
+seven:
+  article_id: 2
+  order_id: 5
   free: false

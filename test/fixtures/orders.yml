@@ -1,11 +1,31 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  finished: false
+finished_and_settled_1:
+  finished: true
   table_id: 1
+  user_id: 1
   settlement_id: 1
 
-two:
+finished_and_settled_2:
+  finished: true
+  table_id: 2
+  user_id: 1
+  settlement_id: 1
+
+finished_and_settled_3:
+  finished: true
+  table_id: 1
+  user_id: 2
+  settlement_id: 2
+
+finished_but_unsettled:
+  finished: true
+  table_id: 2
+  user_id: 1
+  settlement_id:
+
+unfinished_and_unsettled:
   finished: false
   table_id: 1
-  settlement_id: 1
+  user_id: 1
+  settlement_id:

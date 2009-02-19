@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Cola Rum
+  description: 0.25 l with 2cl Rum
+  category_id: 3
+  price: 2.5
+  menucard: true
+  blackboard: false
+
+two:
+  name: Ham Toast
+  description: with Bio Ham
+  category_id: 1
+  price: 3.0
+  menucard: true
+  blackboard: true
+
+three:
+  name: Cola
+  description: 0.25l
+  category_id: 2
+  price: 1.5
+  menucard: true
+  blackboard: false

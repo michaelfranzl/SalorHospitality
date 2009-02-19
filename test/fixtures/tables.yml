@@ -1,7 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
+  name: Table 1
+  description: Guest Room
 
 two:
-  name: MyString
+  name: Table 2
+  description: Backroom

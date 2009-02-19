@@ -13,6 +13,7 @@
     %p{ :style => 'color: green' }= flash[:notice]
 
     %small
+      = link_to 'Bestellungen', orders_path
       = link_to 'Artikel', articles_path
       = link_to 'Kategorien', categories_path
       = link_to 'Lager', stocks_path

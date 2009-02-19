@@ -1,13 +1,25 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  balance: 1.5
-  unit: MyString
-  name: MyString
-  type: MyString
+  balance: 11.5
+  unit: bottles
+  name: Cola
+  group_id: 1
 
 two:
-  balance: 1.5
-  unit: MyString
-  name: MyString
-  type: MyString
+  balance: 21.5
+  unit: liters
+  name: Rum
+  group_id: 2
+
+three:
+  balance: 1
+  unit: Packages
+  name: Toastbread
+  group_id: 3
+
+four:
+  balance: 0.5
+  unit: kg
+  name: Ham
+  group_id: 3

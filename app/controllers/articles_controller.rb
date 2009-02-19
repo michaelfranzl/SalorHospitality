@@ -16,6 +16,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    @groups = Group.find(:all)
     render :new
   end
 

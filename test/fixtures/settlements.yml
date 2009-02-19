@@ -1,9 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  revenue: 1.5
+  revenue: 123.45
   user_id: 1
 
 two:
-  revenue: 1.5
+  revenue: 234.56
   user_id: 1
+
+three:
+  revenue: 345.67
+  user_id: 2

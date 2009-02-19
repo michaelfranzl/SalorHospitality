@@ -1,0 +1,7 @@
+= error_messages_for 'group'
+
+- form_for @group do |group_form|
+  %p
+    = group_form.label 'Name'
+    = group_form.text_field :name
+  %p= submit_tag

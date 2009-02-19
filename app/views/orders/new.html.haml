@@ -2,7 +2,8 @@
 
 = error_messages_for 'order'
 
-- form_for @order, :url => table_orders_path do |order_form|
+-# form_for @order, :url => table_orders_path do |order_form|
+- form_for @order do |order_form|
 
   %p
     = order_form.label 'User'
