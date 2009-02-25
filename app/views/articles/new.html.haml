@@ -1,28 +1,76 @@
 = error_messages_for 'article'
 
 - form_for @article do |article_form|
-  %p
-    = article_form.label 'Artikelname'
-    = article_form.text_field :name
-  %p
-    = article_form.label 'Preis'
-    = article_form.text_field :price
-  %p
-    = article_form.label 'Kategorie'
-    = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
-  #ingredients
-    - article_form.fields_for :ingredients do |ingredient_form|
-      = ingredient_form.label :amount, 'Menge:'
-      = ingredient_form.text_field :amount
+  %fieldset
+    %legend= t :stock
+    %table
+      %tr
+        %td
+          = article_form.label( 'name', (t :name))
+        %td
+          = article_form.text_field :name
+      %tr
+        %td
+          = article_form.label('description', (t :description))
+        %td
+          = article_form.text_field :description
+      %tr
+        %td
+          = article_form.label('price', (t :price))
+        %td
+          = article_form.text_field :price
+      %tr
+        %td
+          = article_form.label('category_id', (t :category))
+        %td
+          = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
+      %tr
+        %td{ :colspan => '2' }
 
-      -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
-      - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1]
+  %fieldset
+    %legend= t :format_for_online_backboard
+    %table
+      %tr
+        %td
+          = article_form.label('format_name', (t :name))
+        %td
+          = article_form.text_area :format_name, :size => '20x2'
+      %tr
+        %td
+          = article_form.label('format_division', (t :division))
+        %td
+          = article_form.text_area :format_division, :size => '20x1'
+      %tr
+        %td
+          = article_form.label('format_sort_id', (t :sort_id))
+        %td
+          = article_form.text_field :format_sort_id, :size => 10
 
-      %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
-        %option{ :value => '' }
-          = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :name, ingredient_form.object.stock_id
-        %span
-          = ingredient_form.label :_delete, 'Entfernen'
-          = ingredient_form.check_box :_delete
-  %p= add_ingredient_link 'Zutat hinzufuegen', article_form
-  %p= submit_tag
+  %fieldset
+    %legend Zutaten
+    %table{ :id => 'ingredients' }
+
+      - article_form.fields_for :ingredients do |ingredient_form|
+        %tr
+          %td
+            = ingredient_form.label :amount, 'Menge:'
+          %td
+            = ingredient_form.text_field :amount, :size => '3'
+
+          -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
+          - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1]
+
+          %td
+            %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
+              %option{ :value => '' }
+              = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :custom_name, ingredient_form.object.stock_id
+          - if controller.action_name == 'edit'
+            %td
+              = ingredient_form.label('_delete', (t :delete))
+            %td
+              = ingredient_form.check_box :_delete
+
+    %p
+      %small= add_ingredient_link((t :add_ingredient), article_form)
+
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

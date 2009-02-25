@@ -1,0 +1,4 @@
+- form_tag 'update' do
+  %select{ :id => 'menucard', :name => 'menucard[]', :multiple => true }
+    = grouped_options_for_select @menucard, @selected
+  %p= submit_tag

@@ -1,10 +1,18 @@
 = error_messages_for 'table'
 
 - form_for @table do |table_form|
-  %p
-    = table_form.label 'Tischname'
-    = table_form.text_field :name
-  %p
-    = table_form.label 'Beschreibung'
-    = table_form.text_field :description
-  %p= submit_tag
+  %fieldset
+    %legend= t :table
+    %table
+      %tr
+        %td
+          = table_form.label('name', (t :name))
+        %td
+          = table_form.text_field :name, :size => '20'
+      %tr
+        %td
+          = table_form.label('description', (t :description))
+        %td
+          = table_form.text_field :description, :size => '20'
+
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

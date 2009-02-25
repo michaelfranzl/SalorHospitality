@@ -11,7 +11,7 @@
   = f.label :article_id, 'Artikel:'
   %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
     %option{ :value => '' }
-    = option_groups_from_collection_for_select Category.find(:all), :articles, :name, :id, :name, f.object.article_id
+    = option_groups_from_collection_for_select Category.find(:all), :articles_in_menucard, :name, :id, :name, f.object.article_id
 
   = f.label :free
   = f.check_box :free

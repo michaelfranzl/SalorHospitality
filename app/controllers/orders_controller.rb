@@ -11,14 +11,27 @@ class OrdersController < ApplicationController
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
   end
 
+  def show
+    @order = Order.find(params[:id])
+  end
+
   def new
     @order = Order.new
-    @order.table_id = params[:table_id]
   end
 
   def create
     @order = Order.new(params[:order])
-    @order.save ? redirect_to(orders_path) : render(:new)
+    @order.table_id = params[:table_id]
+    if @order.save
+      if @order.finished
+        reduce_stocks(@order)
+        redirect_to @order
+      else
+        redirect_to(orders_path)
+      end
+    else
+      render(:new)
+    end
   end
 
   def edit
@@ -28,7 +41,16 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-    @order.update_attributes(params[:order]) ? redirect_to(orders_path) : render(:new)
+    if @order.update_attributes(params[:order])
+      if @order.finished
+        reduce_stocks(@order)
+        redirect_to @order
+      else
+        redirect_to orders_path
+      end
+    else
+      render(:new)
+    end
   end
 
   def destroy
@@ -37,4 +59,15 @@ class OrdersController < ApplicationController
     @order.destroy
     redirect_to table_orders_path
   end
+
+  private
+
+    def reduce_stocks(order)
+      order.items.each do |item|
+        item.article.ingredients.each do |ingredient|
+          ingredient.stock.balance -= item.count * ingredient.amount
+          ingredient.stock.save
+        end
+      end
+    end
 end

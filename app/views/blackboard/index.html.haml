@@ -1,0 +1,32 @@
+%table
+  %tr{ :valign => 'top' }
+    %td
+      - form_tag 'blackboard/update', :style => 'width:200px' do
+        = label_tag 'special', 'Special Note'
+        %br
+        = text_field_tag 'special', @special
+        %br
+        = label_tag 'title', 'Titel'
+        %br
+        = text_field_tag 'title', @title
+        %br
+        = label_tag 'date', 'Datum'
+        %br
+        = text_field_tag 'date', @date
+        %br
+        = label_tag 'blackboard', 'Auswahl fuer Tafel'
+        %br
+        %select{ :id => 'blackboard', :name => 'blackboard[]', :multiple => true }
+          = grouped_options_for_select @menucard, @selected
+        %p= submit_tag
+    %td
+      %object{ :style => 'float:left' }
+        %param{ :name => 'movie', :value => 'blackboard.swf' }
+        %embed{ :src => 'tafel.swf', :width => '577', :height => '391' }
+    %td
+      - @menucard.each do |category|
+        %ul{ :style => 'font-size:small' }
+          %li= category[0]
+          %ul
+            - category[1].each do |article|
+              %li= link_to article[0], edit_article_path(article[1])

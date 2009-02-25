@@ -1,17 +1,22 @@
-%h1 Artikel
+%h2= t :articles
 
-= link_to 'Neuen Artikel hinzufuegen', new_article_path
+%p= link_to((t :new), new_article_path)
 
-- @categories.each do |ca|
-  %h2= ca.name
-  %table
-    %tr
-      %th Name
-      %th Preis
-    %tr
-    - ca.articles.each do |ar|
-      %tr
-        %td= ar.name
-        %td= ar.price
-        %td= link_to 'Bearbeiten', edit_article_path(ar)
-        %td= link_to 'Loeschen', ar, :confirm => 'Sind Sie sicher?', :method => :delete
+%table
+  %tr
+    %th{ :style => 'width:250px' }= t :name
+    %th{ :style => 'width:290px' }= t :description
+    %th{ :style => 'width:100px' }
+    %th{ :style => 'width:100px' }
+  %tr
+    %td{ :colspan => '4' } &nbsp;
+  - @categories.each do |ca|
+    %tr{ :id => 'category' }
+      %td{ :colspan => '4' }
+        %b= ca.name
+      - ca.articles.each do |ar|
+        %tr
+          %td= ar.name
+          %td= ar.description
+          %td= link_to((t :edit), edit_article_path(ar))
+          %td= link_to((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete)

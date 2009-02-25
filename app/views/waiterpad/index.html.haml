@@ -1,0 +1,16 @@
+%h2= t :waiterpad
+
+%table{ :class => 'waiterpad' }
+  %tr
+    %th{ :style => '' }
+    %th{ :style => '' }
+
+  - @categories.each do |ca|
+    - if !ca.articles_in_waiterpad.size.zero?
+      %tr{ :class => 'category' }
+        %td{ :colspan => '3' }
+          %b= ca.name
+      - ca.articles_in_waiterpad.each do |ar|
+        %tr{ :valign => 'top' }
+          %td= ar.name
+          %td{ :style => 'text-align:right' }= number_to_currency ar.price

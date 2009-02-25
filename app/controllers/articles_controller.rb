@@ -11,18 +11,30 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
+    @groups = Group.find(:all)
     @article.save ? redirect_to(articles_path) : render(:new)
   end
 
   def edit
     @article = Article.find(params[:id])
     @groups = Group.find(:all)
+    session[:return_to] = /http:\/\/.*?(\/.*)/.match(request.referer)[1]
     render :new
   end
 
   def update
     @article = Article.find(params[:id])
-    @article.update_attributes(params[:article]) ? redirect_to(articles_path) : render(:new)
+    if @article.update_attributes params[:article]
+      if session[:return_to]
+        redirect_to session[:return_to]
+        session[:return_to] = nil
+      else
+        redirect_to orders_path
+      end
+    else
+      @groups = Group.find(:all)
+      render :new
+    end
   end
 
   def destroy

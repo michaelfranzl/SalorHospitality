@@ -1,0 +1,123 @@
+!link_color = #700
+!error_text = #C00
+!lightgray = #EEE
+!darkgray = #999
+!middlegray = #DDD
+
+//global settings
+
+body
+  :font-family sans
+  :padding 20px
+
+a
+  :color = !link_color
+
+//main layout
+
+#content
+  :float left
+  :margin-top 10px
+
+.sidebar
+  :float right
+  :background-color = !lightgray
+  :margin-left 20px
+  :width 100px
+  :padding 20px
+
+#login_logout
+  :text-align right
+  :font-size small
+
+#sidebar a,
+#metanavi a
+  :text-decoration none
+  &:hover
+    :text-decoration underline
+
+.fieldWithErrors
+  :display inline
+  label
+    :color = !error_text
+
+.errorExplanation
+  :font-size small
+  :color = !error_text
+  h2
+    :font-size 110%
+
+td
+  :text-align left
+
+fieldset
+  :border-style outset
+  :width 300px
+  :background-color = !lightgray
+
+legend
+  :font
+    :style italic
+    :weight bold
+    :size small
+
+table
+  :border-spacing 0
+
+#metanavi
+  :background-color = !lightgray
+  :padding 5px
+  a
+    :margin 5px
+
+label
+  :font-size small
+  :margin-right 10px
+
+th
+  :text-align left
+
+
+tr.category
+  :background-color = !lightgray
+
+table.settlements
+  :font-size 70%
+  td
+    :width 30px
+    :text-align right
+    :background-color = !lightgray
+    :border
+      :right 3px solid white
+    :border
+      :bottom 1px solid white
+  .sum
+    :background-color = !middlegray
+    :border-top 2px solid
+    :font
+      :weight bold
+    :text-align right
+  .colsum
+    :background-color = !middlegray
+    :font-style italic
+
+
+  .br
+    :border
+      :right 3px solid
+        :color = !darkgray
+  .bb
+    :border
+      :bottom 3px solid
+        :color = !darkgray
+
+  th
+    :background-color = !lightgray
+    :border-right 3px solid white
+    :border-bottom 3px solid white
+    :text-align center
+
+table.waiterpad
+  :font-family Trebuchet
+  :border 1px solid black
+  :width 60mm

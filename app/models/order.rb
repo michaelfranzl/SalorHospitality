@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   belongs_to :settlement
   belongs_to :table
+  belongs_to :user
   has_many :items
 
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
@@ -9,4 +10,5 @@ class Order < ActiveRecord::Base
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
   validates_presence_of :user_id
+
 end

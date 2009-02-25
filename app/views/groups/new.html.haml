@@ -1,7 +1,13 @@
 = error_messages_for 'group'
 
 - form_for @group do |group_form|
-  %p
-    = group_form.label 'Name'
-    = group_form.text_field :name
-  %p= submit_tag
+  %fieldset
+    %legend= t :group
+    %table
+      %tr
+        %td
+          = group_form.label('name', (t :name))
+        %td
+          = group_form.text_field :name
+
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

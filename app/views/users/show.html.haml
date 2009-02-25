@@ -1,10 +1,15 @@
-%h2= @user.name
+%h2= @user.login
 
-%p= @user.role
+%p== Rolle: <i>#{ @user.role }
 
-%table
+%table{ :id => 'settlements' }
+  - sum = 0
   - @user.settlements.each do |s|
     %tr
-    %td= s.created_at
-    %td= link_to s.id, user_settlement_path(@user,s)
-    %td s.revenue
+      %td{ :style => 'width:100px' }= l s.created_at, :format => 'date_only'
+      %td{ :style => 'width:140px' }= link_to("#{ t :settlement } ##{s.id}", user_settlement_path(@user,s))
+      %td{ :class => 'colsum' }= number_to_currency s.revenue
+      - sum += s.revenue
+    %tr
+      %td{ :colspan => '2' }= t :sum
+      %td{ :class => 'sum' }= number_to_currency sum

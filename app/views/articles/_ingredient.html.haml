@@ -2,12 +2,14 @@
 -# Note that the statement 'ingredient' represents the name of this partial
 
 - frm.fields_for :ingredients, ingredient do |f|
-  = f.label :amount, 'Menge:'
-  = f.text_field :amount
+  %td
+    = f.label :amount, 'Menge:'
+  %td
+    = f.text_field :amount, :size => '3'
 
   -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
   - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(f.object_name)[1]
-
-  %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
-    %option{ :value => '' }
-    = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :custom_name
+  %td
+    %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
+      %option{ :value => '' }
+      = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :custom_name

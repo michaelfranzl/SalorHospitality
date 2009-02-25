@@ -1,10 +1,18 @@
 = error_messages_for 'category'
 
 - form_for @category do |category_form|
-  %p
-    = category_form.label 'Kategoriename'
-    = category_form.text_field :name
-  %p
-    = category_form.label 'Prozensatz'
-    = category_form.text_field :percent
-  %p= submit_tag
+  %fieldset
+    %legend= t :category
+    %table
+      %tr
+        %td
+          = category_form.label('name', (t :name))
+        %td
+          = category_form.text_field :name, :size => '20'
+      %tr
+        %td
+          = category_form.label('tax_id', (t :tax))
+        %td
+          = category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
+
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

@@ -1,16 +1,16 @@
-%h2 User
-
-= link_to 'Neuen User hinzufuegen', new_user_path
+%h2= t :users
 
 %table
   %tr
-    %th Name
-    %th Passwort
-    %th Rolle
+    %th{ :style => 'width:100px' }
+    %th{ :style => 'width:100px' }
+    %th{ :style => 'width:120px' }
+    %th{ :style => 'width:120px' }
   - @users.each do |us|
     %tr
-      %td= link_to us.name, user_path(us)
-      %td= us.password
+      %td= link_to us.login, user_path(us)
       %td= us.role
-      %td= link_to 'Bearbeiten', edit_user_path(us)
-      %td= link_to 'Loeschen', us, :confirm => 'Sind Sie sicher?', :method => :delete
+      %td= link_to((t :edit), edit_user_path(us))
+      %td= link_to((t :delete), us, :confirm => 'Sind Sie sicher?', :method => :delete)
+
+%p= link_to((t :new), new_user_path)

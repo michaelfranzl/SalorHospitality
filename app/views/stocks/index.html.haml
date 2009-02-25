@@ -1,18 +1,21 @@
-%h2 Lager
+%h2= t :stocks
 
-= link_to 'Neuen Lagerartikel hinzufuegen', new_stock_path
+%p= link_to((t :new), new_stock_path)
 
 %table
   %tr
-    %th name
-    %th Vorrat
-    %th Einheit
-    %th Lagergruppe
+    %th{ :style => 'width:200px' }= t :name
+    %th{ :style => 'width:80px'  }= t :balance
+    %th{ :style => 'width:100px' }= t :unit
+    %th{ :style => 'width:150px' }= t :group
+    %th{ :style => 'width:120px' }
+    %th{ :style => 'width:120px' }
   - @stocks.each do |st|
     %tr
       %td= st.name
-      %td= st.balance
+      %td{ :style => 'text-align:right;padding-right:20px' }= number_with_precision st.balance
       %td= st.unit
-      %td= Group.find(st.group_id).name
-      %td= link_to 'Bearbeiten', edit_stock_path(st)
-      %td= link_to 'Loeschen', st, :confirm => 'Sind Sie sicher?', :method => :delete
+      %td= Group.find(st.group_id).name if st.group_id?
+      %td= link_to((t :edit), edit_stock_path(st))
+      %td= link_to((t :delete), st, :confirm => 'Sind Sie sicher?', :method => :delete)
+

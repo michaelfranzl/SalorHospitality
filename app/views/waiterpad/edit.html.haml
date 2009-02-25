@@ -1,0 +1,4 @@
+- form_tag 'update' do
+  %select{ :id => 'waiterpad', :name => 'waiterpad[]', :multiple => true }
+    = grouped_options_for_select @waiterpad, @selected
+  %p= submit_tag

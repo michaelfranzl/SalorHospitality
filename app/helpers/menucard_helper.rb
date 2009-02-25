@@ -1,0 +1,2 @@
+module MenucardHelper
+end

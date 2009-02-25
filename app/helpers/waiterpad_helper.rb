@@ -1,0 +1,2 @@
+module WaiterpadHelper
+end

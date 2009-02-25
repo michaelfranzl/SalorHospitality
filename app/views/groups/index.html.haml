@@ -1,12 +1,14 @@
-%h2 Lagergruppen
-
-= link_to 'Neue Lagergruppe hinzufuegen', new_group_path
+%h2= t :groups
 
 %table
   %tr
-    %th Name
+    %th{ :style => 'width:200px' }
+    %th{ :style => 'width:120px' }
+    %th{ :style => 'width:120px' }
   - @groups.each do |gr|
     %tr
       %td= gr.name
-      %td= link_to 'Bearbeiten', edit_group_path(gr)
-      %td= link_to 'Loeschen', gr, :confirm => 'Sind Sie sicher?', :method => :delete
+      %td= link_to((t :edit), edit_group_path(gr))
+      %td= link_to((t :delete), gr, :confirm => 'Sind Sie sicher?', :method => :delete)
+
+%p= link_to((t :new), new_group_path)

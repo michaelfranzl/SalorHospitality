@@ -1,0 +1,26 @@
+%h3== #{ t :order} ##{@order.id}
+%p= l @order.created_at, :format => :long
+%p== #{ t :served_by } #{ @order.user.title }
+%table{ :class => 'order' }
+  %tr
+    %th{ :style => 'width:30px; text-align:right' }
+    %th
+    %th{ :style => 'width:90px' }
+    %th{ :style => 'width:90px' }
+  - subtotal = 0
+  - @order.items.each do |item|
+    - c = item.count
+    - p = item.article.price
+    - sum = 0
+    - if !item.free
+      - sum = c * p
+      - subtotal += sum
+    %tr
+      %td= c
+      %td= item.article.name
+      %td{ :style => 'text-align:right' }= number_to_currency p
+      %td{ :style => 'text-align:right' }= number_to_currency sum.zero? ? 'free' : sum
+  %tr
+    %td{ :colspan => '3'}
+    %td{ :style => 'text-align:right'}
+      %b= number_to_currency subtotal

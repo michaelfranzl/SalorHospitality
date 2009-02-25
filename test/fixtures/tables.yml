@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  name: Table 1
-  description: Guest Room
-
-two:
-  name: Table 2
-  description: Backroom

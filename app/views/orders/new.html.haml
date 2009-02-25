@@ -1,18 +1,17 @@
-%h2== Bestellung #{ Table.find(@order.table_id).name }
+%h2== Bestellung #{ Table.find(params[:table_id]).name }
 
 = error_messages_for 'order'
 
--# form_for @order, :url => table_orders_path do |order_form|
-- form_for @order do |order_form|
+- path = controller.action_name == 'new' ? table_orders_path : table_order_path(@order.table, @order)
+- method = controller.action_name == 'new' ? 'post' : 'put'
 
+- form_for :order, @order, :url => path, :html => { :method => method } do |order_form|
   %p
     = order_form.label 'User'
-    = order_form.collection_select :user_id, User.find(:all), :id, :name, { :include_blank => true }
+    = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => true }
 
     = order_form.label :finished
     = order_form.check_box :finished
-
-    = hidden_field_tag 'order[table_id]', @order.table_id
 
   %p
     #items
@@ -23,12 +22,12 @@
         %p
           = item_form.label :count, 'Anzahl:'
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_count", :name => "order[items_attributes][#{ nested_attribute_id }][count]" }
-            = options_for_select MyGlobals::predefined_count
+            = options_for_select MyGlobals::predefined_count, item_form.object.count
 
           = item_form.label :article_id, 'Artikel:'
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
             %option{ :value => '' }
-            = option_groups_from_collection_for_select Category.find(:all), :articles, :name, :id, :name, item_form.object.article_id
+            = option_groups_from_collection_for_select Category.find(:all), :articles_in_menucard, :name, :id, :name, item_form.object.article_id
 
           = item_form.label :free
           = item_form.check_box :free
