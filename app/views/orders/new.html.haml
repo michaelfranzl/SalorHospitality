@@ -1,9 +1,9 @@
-%h2== Bestellung #{ Table.find(params[:table_id]).name }
+%h2= @order.id ? "#{t :order} ##{@order.id} #{Table.find(@order.table_id).name}" : "#{t :new_order} #{Table.find(@order.table_id).name}"
 
 = error_messages_for 'order'
 
-- path = controller.action_name == 'new' ? table_orders_path : table_order_path(@order.table, @order)
-- method = controller.action_name == 'new' ? 'post' : 'put'
+- path = controller.action_name == 'edit' ? table_order_path(@order.table_id, @order) : table_orders_path
+- method = controller.action_name == 'edit' ? 'put' : 'post'
 
 - form_for :order, @order, :url => path, :html => { :method => method } do |order_form|
   %p
@@ -32,10 +32,13 @@
           = item_form.label :free
           = item_form.check_box :free
 
+          = item_form.label :partial_order
+          = item_form.check_box :partial_order
+
           -# unless item_form.object.new_record?
           %span
             = item_form.label :_delete, 'Entfernen'
             = item_form.check_box :_delete
 
   %p= add_item_link 'Artikel hinzufuegen', order_form
-  %p= submit_tag
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

@@ -2,21 +2,29 @@
 
 %p= link_to((t :new), new_article_path)
 
-%table
-  %tr
-    %th{ :style => 'width:250px' }= t :name
-    %th{ :style => 'width:290px' }= t :description
-    %th{ :style => 'width:100px' }
-    %th{ :style => 'width:100px' }
+%table{ :class => 'articles' }
+  %tr{ :class => 'category' }
+    %th= t :name
+    %th= t :description
+    %th= t :price
+    %th{ :style => 'width:200px' }= t :ingredients
+    %th
+    %th
   %tr
     %td{ :colspan => '4' } &nbsp;
   - @categories.each do |ca|
-    %tr{ :id => 'category' }
-      %td{ :colspan => '4' }
-        %b= ca.name
-      - ca.articles.each do |ar|
-        %tr
-          %td= ar.name
-          %td= ar.description
-          %td= link_to((t :edit), edit_article_path(ar))
-          %td= link_to((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete)
+    - if !ca.articles.size.zero?
+      %tr{ :class => 'category' }
+        %td{ :colspan => '6' }
+          %b= ca.name
+        - ca.articles_sorted_by_name.each do |ar|
+          %tr
+            %td= ar.name
+            %td= ar.description
+            %td= number_to_currency ar.price
+            %td{ :style => 'font-size:70%' }
+              - ar.ingredients.each do |ingredient|
+                == #{ ingredient.amount } #{ ingredient.stock.unit } #{ ingredient.stock.name }
+                = ingredient == ar.ingredients.last ? '' : '+'
+            %td= link_to((t :edit), edit_article_path(ar))
+            %td= link_to((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role == 'su'

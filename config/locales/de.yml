@@ -123,7 +123,8 @@
       default: "%a, %d. %b. %Y, %H:%M:%S %z"
       short: "%d. %b.  %y %H:%M"
       long: "%d. %B %y %H:%M"
-      date_only: "%Y-%m-%d"
+      date_iso: "%Y-%m-%d"
+      date: "%d. %B %Y"
     am: ""
     pm: ""
 
@@ -239,7 +240,14 @@
   categories: Artikelkategorien
 
   article: Artikel
-  articles: Artikel
+  articles: Alle Artikel
+
+  ingredient: Zutat
+  ingredients: Alle Zutaten
+
+  order: Bestellung
+  new_order: Neue Bestellung
+  orders: Alle Bestellungen
 
   settlement: Abrechnung
   settlements: Abrechnungen
@@ -257,7 +265,7 @@
   percent: Prozentsatz
   unit: Einheit
   balance: Stand
-  menucard: Speisekarte
+  menucard: Aktive Artikel
   price: Preis
 
   format_for_online_backboard: "Formatierung für Online-Tafel"

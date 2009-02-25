@@ -1,19 +1,13 @@
-%h2 Bestellungen
+%h2= t :orders
 
 .Order_index{ :id => 'tables' }
   - @tables.each do |ta|
-    %p
+    - unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => ta.id })
+    - c = unfinished_orders.empty? ? 'occupied' : 'vacant'
+    %div{ :class => "table #{ c }"}
       = ta.name
-    - if ta.orders.empty? or ta.orders.last.finished
-      = link_to 'Neue Bestellung', new_table_order_path(ta)
-    - else
-      = link_to 'laufende Bestellung', edit_table_order_path(ta, ta.orders.last)
-
-.sideba
-  %p Abrechnungen
-  - @unsettled_users.each do |uu|
-    %ul
-      %li= link_to uu.login, new_user_settlement_path(uu)
-      %ul
-        - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil } ).each do |uo|
-          %li= link_to "Best. ##{uo.id}", order_path(uo)
+      %br
+      - if unfinished_orders.empty?
+        = link_to 'Neue Bestellung', new_table_order_path(ta)
+      - else
+        = link_to 'laufende Bestellung', edit_table_order_path(ta, unfinished_orders.last)

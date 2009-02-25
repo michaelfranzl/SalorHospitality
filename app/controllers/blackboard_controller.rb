@@ -1,5 +1,10 @@
 class BlackboardController < ApplicationController
+
   def index
+    @special = MyGlobals::blackboard_messages[:special]
+    @title   = MyGlobals::blackboard_messages[:title]
+    @date    = MyGlobals::blackboard_messages[:date].empty? ? (l DateTime.now, :format => 'date') : MyGlobals::blackboard_messages[:date]
+
     respond_to do |wants|
       wants.html do
         @menucard = {}
@@ -16,17 +21,13 @@ class BlackboardController < ApplicationController
         Article.find_all_by_blackboard(true).each do |article|
           @selected << article.id
         end
-
-        @special = MyGlobals::blackboard_messages[:special]
-        @title   = MyGlobals::blackboard_messages[:title]
-        @date    = MyGlobals::blackboard_messages[:date]
       end
       wants.xml
     end
   end
 
   def update
-    Article.update_all :blackboard => 0
+    Article.update_all :blackboard => false
     params[:blackboard].each do |article_id|
       Article.find(article_id).update_attribute :blackboard, true
     end

@@ -1,23 +1,23 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.find(:all)
+    @categories = Category.find(:all, :order => 'name ASC')
   end
 
   def new
     @article = Article.new
-    @groups = Group.find(:all)
+    @groups = Group.find(:all, :order => 'name ASC')
   end
 
   def create
     @article = Article.new(params[:article])
-    @groups = Group.find(:all)
+    @groups = Group.find(:all, :order => 'name ASC')
     @article.save ? redirect_to(articles_path) : render(:new)
   end
 
   def edit
     @article = Article.find(params[:id])
-    @groups = Group.find(:all)
+    @groups = Group.find(:all, :order => 'name ASC')
     session[:return_to] = /http:\/\/.*?(\/.*)/.match(request.referer)[1]
     render :new
   end
@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
         redirect_to orders_path
       end
     else
-      @groups = Group.find(:all)
+      @groups = Group.find(:all, :order => 'name ASC')
       render :new
     end
   end

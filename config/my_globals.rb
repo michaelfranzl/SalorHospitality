@@ -8,7 +8,8 @@ module MyGlobals
     @@predefined_count << i
   }
 
-  @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => DateTime.now.strftime( '%d. %B %Y' ) }
+  #@@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => DateTime.now.strftime( '%d. %B %Y' ) }
+  @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => '' }
 
   @@user_roles = [ '', 'su', 'admin', 'waiter' ]
 

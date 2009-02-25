@@ -40,11 +40,6 @@
           = article_form.label('format_division', (t :division))
         %td
           = article_form.text_area :format_division, :size => '20x1'
-      %tr
-        %td
-          = article_form.label('format_sort_id', (t :sort_id))
-        %td
-          = article_form.text_field :format_sort_id, :size => 10
 
   %fieldset
     %legend Zutaten
@@ -55,7 +50,7 @@
           %td
             = ingredient_form.label :amount, 'Menge:'
           %td
-            = ingredient_form.text_field :amount, :size => '3'
+            = ingredient_form.text_field :amount, :size => '4'
 
           -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
           - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1]

@@ -5,6 +5,9 @@ body {
 a {
   color: #770000; }
 
+table {
+  font-size: small; }
+
 #content {
   float: left;
   margin-top: 10px; }
@@ -13,7 +16,7 @@ a {
   float: right;
   background-color: #eeeeee;
   margin-left: 20px;
-  width: 100px;
+  width: 150px;
   padding: 20px; }
 
 #login_logout {
@@ -67,7 +70,7 @@ label {
 th {
   text-align: left; }
 
-tr.category {
+.category {
   background-color: #eeeeee; }
 
 table.settlements {
@@ -102,3 +105,23 @@ table.waiterpad {
   font-family: Trebuchet;
   border: 1px solid black;
   width: 60mm; }
+
+table.articles td {
+  padding-right: 30px; }
+
+div.settlements {
+  border: 1px solid black; }
+
+div.table {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  width: 100px;
+  height: 61px; }
+
+.occupied {
+  background-color: #eeeeee; }
+
+.vacant {
+  background-color: #999999; }
