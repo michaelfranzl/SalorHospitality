@@ -10,7 +10,7 @@ module MyGlobals
 
   @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => DateTime.now.strftime( '%d. %B %Y' ) }
 
-  @@user_roles = [ '', 'su', 'Admin', 'Gasthaus', 'Kellner' ]
+  @@user_roles = [ '', 'su', 'admin', 'waiter' ]
 
   @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'kg', 'Packungen', 'Fässer' ]
 

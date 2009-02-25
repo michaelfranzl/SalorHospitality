@@ -7,10 +7,11 @@
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
   - @users.each do |us|
-    %tr
-      %td= link_to us.login, user_path(us)
-      %td= us.role
-      %td= link_to((t :edit), edit_user_path(us))
-      %td= link_to((t :delete), us, :confirm => 'Sind Sie sicher?', :method => :delete)
+    - if (@current_user.role == 'su') or (us == @current_user)
+      %tr
+        %td= link_to us.login, user_path(us)
+        %td= us.role
+        %td= link_to((t :edit), edit_user_path(us))
+        %td= link_to((t :delete), us, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role == 'su'
 
 %p= link_to((t :new), new_user_path)
