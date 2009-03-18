@@ -6,25 +6,24 @@
     %table
       %tr
         %td
-          = user_form.label('login', (t :login))
+          = user_form.label('login', "#{t :login}*")
         %td
           = user_form.text_field :login, :size => '20'
       %tr
         %td
-          = user_form.label('title', (t :title))
+          = user_form.label('title', "#{t :title}*")
         %td
           = user_form.text_field :title, :size => '20'
       %tr
         %td
-          = user_form.label('password', (t :password))
+          = user_form.label('password', "#{t :password}*")
         %td
           = user_form.text_field :password, :size => '20'
-      - if @current_user.role == 'admin'
         %tr
           %td
-            = user_form.label('role', (t :role))
+            = user_form.label('role', "#{t :role}*")
           %td
             %select{ :id => 'user_role', :name => 'user[role]' }
-              = options_for_select MyGlobals::user_roles, @user.role
+              = options_for_select MyGlobals::user_roles[0..@current_user.role+1], @user.role
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

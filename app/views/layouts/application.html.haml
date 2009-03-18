@@ -37,19 +37,21 @@
           = link_to 'User', users_path
           = link_to 'Tische', tables_path
 
-      .sidebar
-        %small
-          %p== #{ link_to 'Aktive Artikel', :controller => 'menucard' } (#{ link_to 'Bearb.', :controller => 'menucard', :action => 'edit' })
-          %p== #{ link_to 'Bestellblock', :controller => 'waiterpad' } (#{ link_to 'Bearb.', :controller => 'waiterpad', :action => 'edit' })
-          %p= link_to 'Tafel', :controller => 'blackboard'
+      //.sidebar
+      //  %small
+      //    //%p== #{ link_to 'Aktive Artikel', :controller => 'menucard' } (#{ link_to 'Bearb.', :controller => 'menucard', :action => 'edit' })
+      //    //%p== #{ link_to 'Bestellblock', :controller => 'waiterpad' } (#{ link_to 'Bearb.', :controller => 'waiterpad', :action => 'edit' })
+      //    //%p= link_to 'Tafel', :controller => 'blackboard'
 
-          - if (controller.controller_name == 'orders') and (controller.action_name == 'index')
-            %h3= t :settlements
-            - @unsettled_users.each do |uu|
-              %ul
-                %li= link_to uu.login, new_user_settlement_path(uu)
-                %ul
-                  - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true } ).each do |uo|
-                    %li= link_to "Best. ##{uo.id}", order_path(uo)
+      //    - if (controller.controller_name == 'orders') and (controller.action_name == 'index')
+      //      %h3= t :settlements
+      //      - @unsettled_users.each do |uu|
+      //        %ul
+      //          %li= link_to uu.login, new_user_settlement_path(uu)
+      //          %ul
+      //            - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true } ).each do |uo|
+      //              %li= link_to "Best. ##{uo.id}", order_path(uo)
 
-      = yield
+      //  //%ul#search_results
+
+    = yield

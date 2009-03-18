@@ -10,35 +10,36 @@
     = order_form.label 'User'
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => true }
 
-    = order_form.label :finished
+    = order_form.label(:finished, (t :finished))
     = order_form.check_box :finished
 
   %p
-    #items
-      - order_form.fields_for :items do |item_form|
+    = order_form.label 'Datum'
+    = order_form.date_select :created_at
 
-        - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
-
-        %p
-          = item_form.label :count, 'Anzahl:'
+  %table#items
+    %th{ :style => 'width: 80px' }= t :count
+    %th{ :style => 'width: 400px' }= t :article
+    %th{ :style => 'width: 50px' }= t :free
+    %th{ :style => 'width: 50px' }= t :partial_order
+    - order_form.fields_for :items do |item_form|
+      - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+      %tr
+        %td
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_count", :name => "order[items_attributes][#{ nested_attribute_id }][count]" }
             = options_for_select MyGlobals::predefined_count, item_form.object.count
-
-          = item_form.label :article_id, 'Artikel:'
+        %td
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
             %option{ :value => '' }
-            = option_groups_from_collection_for_select Category.find(:all), :articles_in_menucard, :name, :id, :name, item_form.object.article_id
-
-          = item_form.label :free
-          = item_form.check_box :free
-
-          = item_form.label :partial_order
-          = item_form.check_box :partial_order
-
-          -# unless item_form.object.new_record?
-          %span
-            = item_form.label :_delete, 'Entfernen'
+            = option_groups_from_collection_for_select Category.all, :articles_in_menucard, :name, :id, :name, item_form.object.article_id
+        %td= item_form.check_box :free
+        %td= item_form.check_box :partial_order
+        - unless item_form.object.new_record?
+          %td
+            = label(:_delete, (t :delete))
             = item_form.check_box :_delete
 
-  %p= add_item_link 'Artikel hinzufuegen', order_form
+  %p
+    - @categories.each do |category|
+      %span.small= add_item_link "| #{category.name}", order_form, category
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

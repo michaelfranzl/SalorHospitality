@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
 
+  def new
+    redirect_to orders_path if session[:user_id]
+  end
+
   def create
     @current_user = User.find_by_login_and_password params[:login], params[:password]
 

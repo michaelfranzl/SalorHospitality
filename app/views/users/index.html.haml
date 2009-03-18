@@ -3,15 +3,13 @@
 %table
   %tr
     %th{ :style => 'width:100px' }
-    %th{ :style => 'width:100px' }
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
-  - @users.each do |us|
-    - if (@current_user.role == 'su') or (us == @current_user)
-      %tr
-        %td= link_to us.login, user_path(us)
-        %td= us.role
-        %td= link_to((t :edit), edit_user_path(us))
-        %td= link_to((t :delete), us, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role == 'su'
+  - @users.each do |u|
+    %tr
+      - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
+      %td= disclose ? link_to(u.login, user_path(u)) : u.login
+      %td= link_to((t :edit), edit_user_path(u)) if disclose
+      %td= link_to((t :delete), u, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
 
-%p= link_to((t :new), new_user_path)
+%p= link_to((t :new), new_user_path) if @current_user.role >= 2

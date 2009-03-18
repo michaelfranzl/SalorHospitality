@@ -8,7 +8,7 @@
   - @groups.each do |gr|
     %tr
       %td= gr.name
-      %td= link_to((t :edit), edit_group_path(gr))
-      %td= link_to((t :delete), gr, :confirm => 'Sind Sie sicher?', :method => :delete)
+      %td= link_to((t :edit), edit_group_path(gr)) if @current_user.role >= 2
+      %td= link_to((t :delete), gr, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
 
-%p= link_to((t :new), new_group_path)
+%p= link_to((t :new), new_group_path) if @current_user.role >= 2

@@ -1,30 +1,38 @@
 %h2= t :articles
 
-%p= link_to((t :new), new_article_path)
+%span= link_to((t :new), new_article_path) if @current_user.role >= 2
+%span= link_to('Vereinfachte Eingabe Speisen', new_foods_articles_path) if @current_user.role >= 2
 
-%table{ :class => 'articles' }
-  %tr{ :class => 'category' }
-    %th= t :name
-    %th= t :description
-    %th= t :price
-    %th{ :style => 'width:200px' }= t :ingredients
-    %th
-    %th
+%table{ :valign => 'top' }
   %tr
-    %td{ :colspan => '4' } &nbsp;
-  - @categories.each do |ca|
-    - if !ca.articles.size.zero?
-      %tr{ :class => 'category' }
-        %td{ :colspan => '6' }
-          %b= ca.name
-        - ca.articles_sorted_by_name.each do |ar|
-          %tr
-            %td= ar.name
-            %td= ar.description
-            %td= number_to_currency ar.price
-            %td{ :style => 'font-size:70%' }
-              - ar.ingredients.each do |ingredient|
-                == #{ ingredient.amount } #{ ingredient.stock.unit } #{ ingredient.stock.name }
-                = ingredient == ar.ingredients.last ? '' : '+'
-            %td= link_to((t :edit), edit_article_path(ar))
-            %td= link_to((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role == 'su'
+    %td{ :style => 'width:300px;vertical-align:top' }
+      %fieldset#drop_remove
+        = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
+        %legend Alle Artikel
+        = label_tag 'article_name', 'Suchbegriff'
+        = text_field_tag 'article_name'
+        = observe_field 'article_name', :frequency => 0.5, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('search_spinner_#{@id}').style.display='inline'", :loaded => "document.getElementById('search_spinner_#{@id}').style.display='none'"
+        %ul#articles_search_results{ :style => 'list-style-type:none' }
+          = render 'articles_search_results'
+
+
+    %td
+      %fieldset#drop_add_to_menucard
+        %legend Menuekarte
+        = link_to 'Druckansicht', :controller => 'menucard'
+        = render 'menucard_list'
+        = drop_receiving_element :drop_add_to_menucard, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_menucard'"
+
+    %td
+      %fieldset#drop_add_to_waiterpad
+        %legend Bestellblock
+        = link_to 'Druckansicht', :controller => 'waiterpad'
+        = render 'waiterpad_list'
+        = drop_receiving_element :drop_add_to_waiterpad, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_waiterpad'"
+
+    %td
+      %fieldset#drop_add_to_blackboard
+        %legend Online Tafel
+        = link_to 'Online Ansicht', :controller => 'blackboard'
+        = render 'blackboard_list'
+        = drop_receiving_element :drop_add_to_blackboard, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_blackboard'"

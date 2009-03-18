@@ -1,14 +1,17 @@
+%h2= @article.new_record? ? 'Neuer Artikel' : 'Artikel bearbeiten'
 = error_messages_for 'article'
 
 - form_for @article do |article_form|
-  %fieldset
-    %legend= t :stock
+  %fieldset{ :style => 'width:350px' }
+    %legend= t :article
     %table
       %tr
-        %td
-          = article_form.label( 'name', (t :name))
-        %td
+        %td{ :style => 'width:130px;' }
+          = article_form.label( 'name', "#{t :name}*")
+        %td{ :style => 'width:130px;' }
           = article_form.text_field :name
+        %td{ :style => 'width:130px;' }
+          %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
       %tr
         %td
           = article_form.label('description', (t :description))
@@ -18,17 +21,32 @@
         %td
           = article_form.label('price', (t :price))
         %td
-          = article_form.text_field :price
+          = @article.price ? article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #EEE') : article_form.text_field( :price, :size => 6 )
       %tr
         %td
           = article_form.label('category_id', (t :category))
         %td
           = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
       %tr
+        %td
+          = article_form.label('menucard', (t :menucard))
+        %td
+          = article_form.check_box :menucard
+      %tr
+        %td
+          = article_form.label('blackboard', (t :blackboard))
+        %td
+          = article_form.check_box :blackboard
+      %tr
+        %td
+          = article_form.label('waiterpad', (t :waiterpad))
+        %td
+          = article_form.check_box :waiterpad
+      %tr
         %td{ :colspan => '2' }
 
-  %fieldset
-    %legend= t :format_for_online_backboard
+  %fieldset{ :style => 'width:350px' }
+    %legend== #{t :format_for_online_backboard} (optional)
     %table
       %tr
         %td
@@ -41,7 +59,7 @@
         %td
           = article_form.text_area :format_division, :size => '20x1'
 
-  %fieldset
+  %fieldset{ :style => 'width:350px' }
     %legend Zutaten
     %table{ :id => 'ingredients' }
 
@@ -69,3 +87,5 @@
       %small= add_ingredient_link((t :add_ingredient), article_form)
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+  = observe_field 'article_name', :frequency => 0.5, :update => 'search_results', :url => { :controller => 'articles', :action => 'get_results' }, :with => "'search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"

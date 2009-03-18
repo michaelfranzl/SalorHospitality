@@ -5,19 +5,6 @@ class MenucardController < ApplicationController
   end
 
   def edit
-    @menucard = {}
-    Category.all.each do |category|
-      articles = {}
-      category.articles.each do |article|
-        articles = articles.merge({ "#{article.name} | #{article.description}" => article.id })
-      end
-      @menucard = @menucard.merge({ category.name => articles })
-    end
-
-    @selected = []
-    Article.find_all_by_menucard(true).each do |article|
-      @selected << article.id
-    end
   end
 
   def update

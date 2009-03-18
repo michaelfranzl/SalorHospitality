@@ -7,7 +7,7 @@
     %div{ :class => "table #{ c }"}
       = ta.name
       %br
-      - if unfinished_orders.empty?
-        = link_to 'Neue Bestellung', new_table_order_path(ta)
-      - else
-        = link_to 'laufende Bestellung', edit_table_order_path(ta, unfinished_orders.last)
+      = link_to 'Neue Bestellung', new_table_order_path(ta)
+      - unfinished_orders.each do |uo|
+        = link_to "##{uo.id}", edit_table_order_path(ta, uo)
+        = ' ,' if uo != unfinished_orders.last

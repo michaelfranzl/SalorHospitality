@@ -1,0 +1,3 @@
+page.replace 'menucard_list', :partial => 'menucard_list'
+page.replace 'waiterpad_list', :partial => 'waiterpad_list'
+page.replace 'blackboard_list', :partial => 'blackboard_list'

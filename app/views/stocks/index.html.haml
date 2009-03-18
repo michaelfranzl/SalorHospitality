@@ -1,6 +1,6 @@
 %h2= t :stocks
 
-%p= link_to((t :new), new_stock_path)
+%p= link_to((t :new), new_stock_path) if @current_user.role >= 2
 
 %table
   %tr
@@ -16,6 +16,6 @@
       %td{ :style => 'text-align:right;padding-right:20px' }= number_with_precision st.balance
       %td= st.unit
       %td= Group.find(st.group_id).name if st.group_id?
-      %td= link_to((t :edit), edit_stock_path(st))
-      %td= link_to((t :delete), st, :confirm => 'Sind Sie sicher?', :method => :delete)
+      %td= link_to((t :edit), edit_stock_path(st)) if @current_user.role >= 2
+      %td= link_to((t :delete), st, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
 

@@ -52,11 +52,14 @@ table
 
 td
   :text-align left
+  :vertical-align top
 
 fieldset
   :border-style outset
-  :width 300px
   :background-color = !lightgray
+
+fieldset.new_foods
+  :width 280px
 
 legend
   :font
@@ -143,3 +146,35 @@ div.table
 
 .vacant
   :background-color = !darkgray
+
+table#items td
+  :background-color none
+  :padding 3px
+  :border-top 2px solid white
+  :border-bottom 2px solid white
+
+span.small
+  :font-size small
+
+ul#search_results
+  :font-size small
+  :list-style-type none
+  :padding 0
+  :margin 0
+
+.hover
+  :background-color #FFFFCC
+  //:border 2px solid black
+
+ul#articles_search_results
+  :padding 0px
+
+ul#menucard_list,
+ul#waiterpad_list,
+ul#blackboard_list
+  :padding 0
+  :list-style-type none
+  ul
+    :list-style-type none
+    :padding-left 20px
+

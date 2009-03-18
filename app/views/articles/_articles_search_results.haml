@@ -1,0 +1,20 @@
+- if @found_articles
+  - @found_articles.each do |ar|
+    %li{ :id => "drag_from_articles_#{ar.id}", :style => 'margin-top:10px;' }
+      %img{ :id => "handle_for_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+      %span
+        %b= link_to ar.name, edit_article_path(ar)
+      %span
+        %i= number_to_currency ar.price
+      %br
+      %span= ( ar.description.nil? or ar.description.empty? ) ? '' : "#{ar.description}<br/>"
+      %small
+        - ar.ingredients.each do |ingredient|
+          == #{ ingredient.amount } #{ ingredient.stock.unit } #{ ingredient.stock.name }
+          = ingredient == ar.ingredients.last ? '' : '+'
+    = draggable_element "drag_from_articles_#{ar.id}", :revert => true, :ghosting => true, :handle => "'handle_for_article_#{ar.id}'"
+    %li
+      -# link_to((t :edit), edit_article_path(ar)) if @current_user.role >= 2
+      = link_to((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %hr
+

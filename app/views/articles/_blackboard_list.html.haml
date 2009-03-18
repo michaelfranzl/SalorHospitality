@@ -1,0 +1,11 @@
+%ul#blackboard_list
+  - @categories.each do |ca|
+    - if !ca.articles_in_blackboard.size.zero?
+      %li
+        %i= ca.name
+      %ul
+        - ca.articles_in_blackboard.each do |ar|
+          %li{ :id => "drag_from_blackboard_#{ar.id}" }
+            %img{ :id => "handle_for_blackboard_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+            = link_to ar.name, edit_article_path(ar)
+            = draggable_element "drag_from_blackboard_#{ar.id}", :revert => true, :ghosting => true, :handle => "'handle_for_blackboard_article_#{ar.id}'"

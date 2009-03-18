@@ -1,7 +1,6 @@
 module ArticlesHelper
 
   def add_ingredient_link(caption, frm)
-
     link_to_function caption do |page|
       ingredient = render(:partial => 'ingredient', :locals => { :frm => frm, :ingredient => Ingredient.new })
       page << %{
@@ -20,7 +19,6 @@ module ArticlesHelper
         HighlightEffect($(new_ingredient_id));
       }
     end
-
   end
 
 end

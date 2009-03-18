@@ -1,0 +1,11 @@
+%ul#waiterpad_list
+  - @categories.each do |ca|
+    - if !ca.articles_in_waiterpad.size.zero?
+      %li
+        %i= ca.name
+      %ul
+        - ca.articles_in_waiterpad.each do |ar|
+          %li{ :id => "drag_from_waiterpad_#{ar.id}" }
+            %img{ :id => "handle_for_waiterpad_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+            = link_to ar.name, edit_article_path(ar)
+            = draggable_element "drag_from_waiterpad_#{ar.id}", :revert => true, :ghosting => true, :handle => "'handle_for_waiterpad_article_#{ar.id}'"

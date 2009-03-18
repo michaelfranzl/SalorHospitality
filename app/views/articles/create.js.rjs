@@ -1,0 +1,8 @@
+page.replace "form_#{@id}", :partial => 'new_foods_form'
+page.replace_html 'foods_in_menucard', "#{@foods_in_menucard}"
+if @article.errors.empty?
+  page.visual_effect :highlight, "fieldset_#{@id}", { :startcolor => '#AAFFAA', :endcolor => '#EEFFEE', :restorecolor => '#EEFFEE' }
+  page.visual_effect :highlight, 'foods_in_menucard', { :startcolor => '#AAFFAA' }
+else
+  page.visual_effect :highlight, "fieldset_#{@id}", { :startcolor => '#FFAAAA', :endcolor => '#FFEEEE', :restorecolor => '#FFEEEE' }
+end

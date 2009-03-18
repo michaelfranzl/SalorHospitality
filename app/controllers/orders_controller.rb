@@ -17,22 +17,26 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    @categories = Category.all
     @order.table_id = params[:table_id]
   end
 
   def edit
     @order = Order.find(params[:id])
+    @categories = Category.all
     render :new
   end
 
   def create
     @order = Order.new(params[:order])
+    @categories = Category.all
     @order.table_id = params[:table_id]
     @order.save ? process_order(@order) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
+    @categories = Category.all
     @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
   end
 

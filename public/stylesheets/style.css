@@ -42,12 +42,15 @@ table {
     font-size: 110%; }
 
 td {
-  text-align: left; }
+  text-align: left;
+  vertical-align: top; }
 
 fieldset {
   border-style: outset;
-  width: 300px;
   background-color: #eeeeee; }
+
+fieldset.new_foods {
+  width: 280px; }
 
 legend {
   font-style: italic;
@@ -125,3 +128,35 @@ div.table {
 
 .vacant {
   background-color: #999999; }
+
+table#items td {
+  background-color: none;
+  padding: 3px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white; }
+
+span.small {
+  font-size: small; }
+
+ul#search_results {
+  font-size: small;
+  list-style-type: none;
+  padding: 0;
+  margin: 0; }
+
+.hover {
+  background-color: #FFFFCC; }
+
+ul#articles_search_results {
+  padding: 0px; }
+
+ul#menucard_list,
+ul#waiterpad_list,
+ul#blackboard_list {
+  padding: 0;
+  list-style-type: none; }
+  ul#menucard_list ul,
+  ul#waiterpad_list ul,
+  ul#blackboard_list ul {
+    list-style-type: none;
+    padding-left: 20px; }

@@ -5,7 +5,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :name, :tax_id
 
   def articles_in_menucard
-    articles.find(:all, :conditions => 'menucard = 1', :order => 'price')
+    articles.find(:all, :conditions => 'menucard = 1', :order => 'name, description')
   end
 
   def articles_in_blackboard
@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   end
 
   def articles_in_waiterpad
-    articles.find(:all, :conditions => 'waiterpad = 1', :order => 'price')
+    articles.find(:all, :conditions => 'waiterpad = 1', :order => 'name, description')
   end
 
   def articles_sorted_by_name

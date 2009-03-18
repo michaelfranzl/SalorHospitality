@@ -123,8 +123,9 @@
       default: "%a, %d. %b. %Y, %H:%M:%S %z"
       short: "%d. %b.  %y %H:%M"
       long: "%d. %B %y %H:%M"
-      date_iso: "%Y-%m-%d"
-      date: "%d. %B %Y"
+      datetime_iso: "%Y-%m-%d %H:%M"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
     am: ""
     pm: ""
 
@@ -218,13 +219,14 @@
   create: Erzeugen
   new: Neu anlegen
   save: Speichern
+  finished: Abschließen
 
   table: Tisch
   tables: Tische
 
   user: Benutzer
   users: Benutzer
-  title: Anrede
+  title: Anrede u. Name
   served_by: Es bediente Sie
 
   tax: Steuerklasse
@@ -248,12 +250,15 @@
   order: Bestellung
   new_order: Neue Bestellung
   orders: Alle Bestellungen
+  partial_order: Teilabr.
 
   settlement: Abrechnung
   settlements: Abrechnungen
   settlement_abbr: 'Abr.'
 
   waiterpad: Bestellblock
+
+  blackboard: Online-Tafel
 
   revenue: Kellnerumsatz
 
@@ -283,6 +288,14 @@
   single: Einzel
   total: Alle
   order_sums: Bestellsummen
-  order: Bestellung
+  order:
+    one: Bestellung
+    other: Bestellungen
   item: Einheit
   free: gratis
+
+#Roles
+  restaurant: Gasthaus
+  waiter: Kellner
+  admin: Admin
+  su: SuperUser

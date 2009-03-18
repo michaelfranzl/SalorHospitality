@@ -6,12 +6,12 @@
     %table
       %tr
         %td
-          = tax_form.label('name',(t :name))
+          = tax_form.label('name',"#{t :name}*")
         %td
           = tax_form.text_field :name, :size => '20'
       %tr
         %td
-          = tax_form.label('percent', (t :percent))
+          = tax_form.label('percent', "#{t :percent}*")
         %td
           = tax_form.text_field :percent, :size => '10'
 

@@ -1,0 +1,29 @@
+- an = controller.action_name
+- remote_form_for @article, :html => { :id => "form_#{@id}" }, :before => "Element.hide('submit_button_#{@id}'); Element.show('submit_spinner_#{@id}');", :complete => "Element.hide('submit_spinner_#{@id}'); Element.show('submit_button_#{@id}');" do |f|
+  %fieldset.new_foods{ :id => "fieldset_#{@id}" }
+    = f.hidden_field :category_id
+    = f.hidden_field :menucard
+    = f.hidden_field :blackboard
+    = f.hidden_field :waiterpad
+    = hidden_field_tag 'id', @id
+    %legend== #{t :article} (#{Category.find(@article.category_id).name})
+    %table
+      %tr
+        %td
+          = f.label('name', (t :name))
+        %td
+          = f.text_field :name, :size => 25
+          = observe_field 'article_name', :frequency => 0.5, :update => 'foods_search_results', :url => { :action => 'find_foods' }, :with => "'foods_search_text=' + escape(value)", :loading => "document.getElementById('search_spinner_#{@id}').style.display='inline'", :loaded => "document.getElementById('search_spinner_#{@id}').style.display='none'"
+        %td{ :style => 'width:20px;' }
+          %img{ :id => "search_spinner_#{@id}", :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+      %tr
+        %td
+          = f.label('price', (t :price))
+        %td
+          = f.text_field :price, :size => 5
+      %tr
+        %td
+        %td
+          = submit_tag( ((an == 'new') or (an == 'new_foods')) ? (t :create) : (t :edit), :id => "submit_button_#{@id}" )
+          %img{ :id => "submit_spinner_#{@id}", :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+

@@ -3,14 +3,14 @@
 %table
   %tr
     %th{ :width => '100px' }
-    %th{ :width => '250px' }
+    %th{ :width => '200px' }
     %th{ :width => '120px' }
     %th{ :width => '120px' }
   - @tables.each do |ta|
     %tr
       %td= ta.name
       %td= ta.description
-      %td= link_to ((t :edit), edit_table_path(ta))
-      %td= link_to ((t :delete), ta, :confirm => 'Sind Sie sicher?', :method => :delete)
+      %td= link_to ((t :edit), edit_table_path(ta)) if @current_user.role >= 2
+      %td= link_to ((t :delete), ta, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
 
-%p= link_to ((t :new), new_table_path)
+%p= link_to ((t :new), new_table_path) if @current_user.role >= 2

@@ -11,4 +11,8 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :ingredients, :allow_destroy => true,
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
+  def name_description
+    descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)
+    name + descr
+  end
 end
