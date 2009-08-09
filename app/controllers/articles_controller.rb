@@ -32,6 +32,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
+    @groups = Group.find(:all, :order => 'name ASC')
     respond_to do |wants|
       wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
       wants.js do

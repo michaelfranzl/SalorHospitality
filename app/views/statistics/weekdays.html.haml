@@ -1,0 +1,21 @@
+%h2 Statistik Wochentage
+
+%br
+
+- form_tag '/statistics/weekdays' do
+  = label('from', 'von')
+  = select_date(@from, :prefix => 'from')
+  = label('to', 'bis')
+  = select_date(@to, :prefix => 'to')
+  = submit_tag 'Abfrage'
+
+%br
+
+%table
+  %tr
+    %th{ :width => '100px' }
+    %th{ :width => '100px' }
+  - 0.upto 6 do |day|
+    %tr
+      %td= (t 'date.day_names')[day==6 ? 0 : day+1]
+      %td= number_to_currency @weekdaysums[day]

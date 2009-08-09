@@ -1,0 +1,33 @@
+h1, h2, h6, #login_logout, .metanavi {
+  display: none; }
+
+table {
+  border-spacing: 0px;
+  font-size: small; }
+
+table.waiterpad {
+  border-spacing: 0px;
+  font-size: 70%;
+  font-family: Trebuchet MS;
+  border: 2px solid gray;
+  width: 190pt;
+  float: left; }
+  table.waiterpad th {
+    text-transform: uppercase;
+    background-color: lightgray;
+    font-size: 80%; }
+  table.waiterpad td, table.waiterpad th {
+    border-bottom: 1px solid black;
+    height: 20pt;
+    text-align: center;
+    vertical-align: middle; }
+  table.waiterpad .borderright {
+    border-right: 1px solid black; }
+  table.waiterpad tr.logo {
+    height: 40pt; }
+    table.waiterpad tr.logo td {
+      vertical-align: top;
+      padding-top: 25pt; }
+  table.waiterpad tr.sum {
+    height: 40pt;
+    background-color: lightgray; }

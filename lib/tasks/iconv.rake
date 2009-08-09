@@ -1,5 +1,4 @@
 desc 'Convert german Latin 1 umlauts to utf8 and leave already existing german utf8 umlauts untouched'
-
 task :iconv do
   from_to = {
               'ä' => '\xc3\xa4',

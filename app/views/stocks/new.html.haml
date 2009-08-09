@@ -6,17 +6,17 @@
     %table
       %tr
         %td
-          = stock_form.label('name', (t :name))
+          = stock_form.label('name', "#{ t :name }*")
         %td
           = stock_form.text_field :name, :size => '20'
       %tr
         %td
-          = stock_form.label('balance', (t :balance))
+          = stock_form.label('balance', "#{ t :balance }*")
         %td
           = stock_form.text_field :balance, :size => '10'
       %tr
         %td
-          = stock_form.label('unit', (t :unit))
+          = stock_form.label('unit', "#{ t :unit }*")
         %td
           %select{ :id => 'stock_unit', :name => 'stock[unit]' }
             = options_for_select MyGlobals::stock_units, @stock.unit

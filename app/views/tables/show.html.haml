@@ -1,0 +1,6 @@
+%h2= @table.name
+= link_to((t :new_order), new_table_order_path(@table))
+%h3= t :open_orders
+- @unfinished_orders.each do |uo|
+  = link_to "##{uo.id}", edit_table_order_path(@table, uo)
+  %br

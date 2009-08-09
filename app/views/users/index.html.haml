@@ -1,7 +1,8 @@
-%h2= t :users
+%h2= t :users_menu
 
 %table
   %tr
+    %th{ :style => 'width:100px' }
     %th{ :style => 'width:100px' }
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
@@ -10,6 +11,6 @@
       - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
       %td= disclose ? link_to(u.login, user_path(u)) : u.login
       %td= link_to((t :edit), edit_user_path(u)) if disclose
-      %td= link_to((t :delete), u, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %td= link_to((t :delete), u, :confirm => (t :are_you_sure_delete_user, :login => u.login), :method => :delete) if @current_user.role >= 3
 
 %p= link_to((t :new), new_user_path) if @current_user.role >= 2

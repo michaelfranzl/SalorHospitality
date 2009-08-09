@@ -1,4 +1,4 @@
-%h2= @order.id ? "#{t :order} ##{@order.id} #{Table.find(@order.table_id).name}" : "#{t :new_order} #{Table.find(@order.table_id).name}"
+%h2= @order.id ? "#{t :order, :count => 1} ##{@order.id}, #{Table.find(@order.table_id).name}" : "#{t :new_order} #{Table.find(@order.table_id).name}"
 
 = error_messages_for 'order'
 
@@ -7,14 +7,14 @@
 
 - form_for :order, @order, :url => path, :html => { :method => method } do |order_form|
   %p
-    = order_form.label 'User'
+    = order_form.label(:user_id, (t :user))
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => true }
 
     = order_form.label(:finished, (t :finished))
     = order_form.check_box :finished
 
   %p
-    = order_form.label 'Datum'
+    = order_form.label(:created_at, (t :creation_date))
     = order_form.date_select :created_at
 
   %table#items
@@ -40,6 +40,7 @@
             = item_form.check_box :_delete
 
   %p
+    = t :add_article
     - @categories.each do |category|
       %span.small= add_item_link "| #{category.name}", order_form, category
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

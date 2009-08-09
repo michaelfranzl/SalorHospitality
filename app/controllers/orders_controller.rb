@@ -2,13 +2,6 @@ class OrdersController < ApplicationController
 
   def index
     @tables = Table.find(:all)
-    @unsettled_orders = Order.find_all_by_settlement_id(nil)
-    unsettled_userIDs = Array.new
-    @unsettled_orders.each do |uo|
-      unsettled_userIDs << uo.user_id
-    end
-    unsettled_userIDs.uniq!
-    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
   end
 
   def show
@@ -31,12 +24,14 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     @categories = Category.all
     @order.table_id = params[:table_id]
+    @order.sum = calculate_order_sum @order
     @order.save ? process_order(@order) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
+    @order.update_attribute( :sum, calculate_order_sum(@order) )
     @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
   end
 
@@ -81,4 +76,18 @@ class OrdersController < ApplicationController
         partial_order ? redirect_to(edit_order_path(partial_order)) : redirect_to(orders_path)
       end
     end
+
+    def calculate_order_sum(order)
+      subtotal = 0
+      order.items.each do |item|
+        c = item.count
+        p = item.article.price
+        if !item.free
+          sum = c * p
+          subtotal += c * p
+        end
+      end
+      return subtotal
+    end
+
 end

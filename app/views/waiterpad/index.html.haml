@@ -1,16 +1,35 @@
 %h2= t :waiterpad
 
-%table{ :class => 'waiterpad' }
-  %tr
-    %th{ :style => '' }
-    %th{ :style => '' }
+- 4.times do
+  %table{ :class => 'waiterpad' }
+    %tr.logo
+      %td{ :colspan => 2 }
+        %img{ :src => "images/waiterpadlogos/#{ MyGlobals::project }.png" }
+      %td{ :colspan => 2 }== Tisch Nr./Beleg Nr.
+    %tr
+      %th.borderright Artikel
+      %th.borderright Preis
+      %th.borderright Anzahl
+      %th Summe
 
-  - @categories.each do |ca|
-    - if !ca.articles_in_waiterpad.size.zero?
-      %tr{ :class => 'category' }
-        %td{ :colspan => '3' }
-          %b= ca.name
-      - ca.articles_in_waiterpad.each do |ar|
-        %tr{ :valign => 'top' }
-          %td= ar.name
-          %td{ :style => 'text-align:right' }= number_to_currency ar.price
+    - i = 0
+    - @categories.each do |ca|
+      - if !ca.articles_in_waiterpad.size.zero?
+        - ca.articles_in_waiterpad.each do |ar|
+          - i += 1
+          %tr{ :valign => 'top' }
+            %td.borderright.textleft= ar.name
+            %td.borderright.textright= number_with_precision ar.price
+            %td.borderright
+            %td
+    - (23-i).times do
+      %tr
+        %td.borderright.textleft
+        %td.borderright.textright
+        %td.borderright
+        %td
+
+    %tr.sum
+      %td{ :colspan => 2} SUMME
+      %td{ :colspan => 2}
+

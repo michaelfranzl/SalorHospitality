@@ -1,4 +1,4 @@
-%h2= t :stocks
+%h2= t :stocks_menu
 
 %p= link_to((t :new), new_stock_path) if @current_user.role >= 2
 
@@ -17,5 +17,5 @@
       %td= st.unit
       %td= Group.find(st.group_id).name if st.group_id?
       %td= link_to((t :edit), edit_stock_path(st)) if @current_user.role >= 2
-      %td= link_to((t :delete), st, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %td= link_to((t :delete), st, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 

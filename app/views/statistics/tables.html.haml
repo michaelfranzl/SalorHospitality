@@ -1,0 +1,23 @@
+%h2 Statistik Tische
+
+%br
+
+- form_tag '/statistics/tables' do
+  = label('from', 'von')
+  = select_date(@from, :prefix => 'from')
+  = label('to', 'bis')
+  = select_date(@to, :prefix => 'to')
+  = submit_tag 'abfragen'
+
+%br
+
+%table
+  %tr
+    %th{ :style => 'width:100px' } Name
+    %th{ :style => 'width:100px' } Beschreibung
+    %th{ :style => 'width:100px;text-align:right;' } Summe
+  - @tables.each do |ta|
+    %tr
+      %td= ta.name
+      %td= ta.description
+      %td{ :style => 'text-align:right' }= number_to_currency Order.sum( 'sum', :conditions => { :table_id => ta.id, :created_at => @from..@to })

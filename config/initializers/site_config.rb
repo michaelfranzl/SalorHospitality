@@ -1,7 +1,7 @@
 require 'active_support'
 
 module MyGlobals
-  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units
+  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :project
 
   @@predefined_count = ['']
   1.upto(15) { |i|
@@ -23,6 +23,8 @@ module MyGlobals
 
   @@user_roles = [ ['',''], ['restaurant',0], ['waiter',1], ['admin',2], ['su',3] ]
 
-  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'kg', 'Packungen', 'Fässer' ]
+  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'kg', 'Packungen', 'Fässer', 'Stueck' ]
+
+  @@project = "restaurant"
 
 end

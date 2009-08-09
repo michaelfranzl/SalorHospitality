@@ -1,0 +1,41 @@
+---
+stocks_004:
+  name: Toastbread
+  updated_at: 2009-05-13 11:18:19
+  unit: Packungen
+  group_id: "2"
+  id: "4"
+  created_at: 2009-05-13 11:18:19
+  balance: "12"
+stocks_005:
+  name: Eggs
+  updated_at: 2009-05-13 11:24:24
+  unit: Stueck
+  group_id: "2"
+  id: "5"
+  created_at: 2009-05-13 11:24:24
+  balance: "20"
+stocks_001:
+  name: Coca Cola
+  updated_at: 2009-05-13 09:26:14
+  unit: Liter
+  group_id: "1"
+  id: "1"
+  created_at: 2009-05-13 09:26:14
+  balance: "20"
+stocks_002:
+  name: Rum
+  updated_at: 2009-05-13 10:23:17
+  unit: Liter
+  group_id: "1"
+  id: "2"
+  created_at: 2009-05-13 10:23:17
+  balance: "3"
+stocks_003:
+  name: Ham
+  updated_at: 2009-05-13 11:18:05
+  unit: kg
+  group_id: "2"
+  id: "3"
+  created_at: 2009-05-13 11:18:05
+  balance: "1"

@@ -1,0 +1,148 @@
+en:
+
+  attributes: #label translations seem to be still missing in rails 2.3
+    user:
+      password: Password
+      login: Login
+      role: Role
+      title: Title
+
+  activerecord:
+    models:
+      table: Table
+      user: User
+      tax: Tax
+      article: Article
+      stock: Stock
+      category: Category
+      settlement: Settlement
+      order: Order
+
+# ==================================================================================
+# Custom messages
+# ==================================================================================
+
+  hello_world: Hello World
+
+  language: Language
+
+  please_login: Bitte log in
+  login: Login
+  logout: Logout
+  logged_out: Logged out
+  password: Password
+  this_is_a_demo_app: This is a Demo-Application. Please try all features!
+  logged_in_as: Logged in as
+  are_you_sure_delete_user: 'Are you sure you want to delete user "{{login}}"?'
+  are_you_sure: 'Are you sure?'
+
+  delete: Delete
+  edit: Edit
+  create: Create
+  new: New
+  save: Save
+  finished: Finished
+
+  creation_date: Date
+
+  table: Table
+  tables_menu: Tables
+
+  user: User
+  users_menu: Users
+
+  title: Whole Name
+  served_by: You were served by
+
+  tax: Tax
+  taxes_menu: Taxes
+
+  group: Group
+  groups_menu: Groups
+
+  stock: Stock
+  stocks_menu: Stocks
+
+  category: Category
+  categories_menu: Categories
+
+  article: Article
+  articles_menu: Articles
+  new_article: New Article
+  edit_article: Edit Article
+  add_article: 'Add Article:'
+
+  ingredient: Ingredient
+  ingredients: Ingredients
+
+
+  settlement: Settlement
+  settlements_menu: Settlements
+  settlement_abbr: 'Stlmnts.'
+
+  waiterpad: Waiterpad
+
+  blackboard: Blackboard
+
+  revenue: Waiter Revenue
+
+  password: Password
+  name: Name
+  role: Role
+  login: Login
+  description: Description
+  percent: Percent
+  unit: Unit
+  balance: Balance
+  menucard: Menucard
+  price: Price
+
+  format_for_online_backboard: "Format for online blackboard"
+  division: Division
+  sort_id: Sort order
+  add_ingredient: Add ingredient
+
+  sum: Sum
+  gr: 'gr.'
+  net: 'net.'
+  diff: 'Diff.'
+  datum: Date
+
+  count: Count
+  single: Single
+  total: Total
+
+  order_sums: Order Sums
+  order:
+    one: Order
+    other: Orders
+  orders_menu: Orders
+  new_order: New Order
+  orders: All Orders
+  open_orders: Open Orders
+  partial_order: Partial Order
+  item: Item
+  free: free
+
+# User Roles
+  restaurant: Restaurant
+  waiter: Waiter
+  admin: Admin
+  su: SuperUser
+
+  statistics: Statistics
+  weekdays: Weekdays
+  journal: Journal
+
+  already_created_articles: Already created Articles
+  create_a_series_of_foods: Simple Foodstuff creation
+  search_term: Search term
+  print_preview: Print Preview
+  online_preview: Preview
+
+  amount: Amount
+  there_are_x_food_articles_active:
+    one: It is {{count}} article active
+    other: There are {{count}} articles active
+
+  remove_all_foods_from_menucard: Remove all foods from menucard

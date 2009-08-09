@@ -1,4 +1,4 @@
-%h3== #{ t :order} ##{@order.id}
+%h3== #{ t :order, :count => 1} ##{@order.id}
 %p= l @order.created_at, :format => :long
 %p== #{ t :served_by } #{ @order.user.title }
 %table{ :class => 'order' }

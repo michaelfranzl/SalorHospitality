@@ -1,6 +1,19 @@
 body {
   font-family: sans;
-  padding: 20px; }
+  padding: 20px;
+  margin: 0;
+  padding: 10px; }
+
+body.orders_index {
+  overflow: hidden; }
+
+h1 {
+  margin: 0; }
+
+h6 {
+  color: green;
+  margin: 10px 0 0 0;
+  font-style: italic; }
 
 a {
   color: #770000; }
@@ -24,10 +37,10 @@ table {
   font-size: small; }
 
 #sidebar a,
-#metanavi a {
+.metanavi a {
   text-decoration: none; }
   #sidebar a:hover,
-  #metanavi a:hover {
+  .metanavi a:hover {
     text-decoration: underline; }
 
 .fieldWithErrors {
@@ -42,7 +55,6 @@ table {
     font-size: 110%; }
 
 td {
-  text-align: left;
   vertical-align: top; }
 
 fieldset {
@@ -52,6 +64,10 @@ fieldset {
 fieldset.new_foods {
   width: 280px; }
 
+fieldset.articles {
+  width: 280px;
+  font-size: small; }
+
 legend {
   font-style: italic;
   font-weight: bold;
@@ -60,10 +76,10 @@ legend {
 table {
   border-spacing: 0; }
 
-#metanavi {
+.metanavi {
   background-color: #eeeeee;
   padding: 5px; }
-  #metanavi a {
+  .metanavi a {
     margin: 5px; }
 
 label {
@@ -107,7 +123,9 @@ table.settlements {
 table.waiterpad {
   font-family: Trebuchet;
   border: 1px solid black;
-  width: 60mm; }
+  width: 200pt; }
+  table.waiterpad td {
+    border-bottom: 1px solid black; }
 
 table.articles td {
   padding-right: 30px; }
@@ -117,11 +135,9 @@ div.settlements {
 
 div.table {
   border: 1px solid gray;
-  padding: 10px;
-  margin: 10px;
-  float: left;
-  width: 100px;
-  height: 61px; }
+  padding: 5px;
+  margin: 0;
+  float: left; }
 
 .occupied {
   background-color: #eeeeee; }
@@ -160,3 +176,11 @@ ul#blackboard_list {
   ul#blackboard_list ul {
     list-style-type: none;
     padding-left: 20px; }
+
+#restaurant_plan {
+  width: 1000px;
+  height: 850px;
+  background-image: url('../images/plan.jpg');
+  position: absolute;
+  top: 250px;
+  left: 40px; }

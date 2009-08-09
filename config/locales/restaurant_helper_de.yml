@@ -1,0 +1,148 @@
+de:
+
+  attributes: #label translations seem to be still missing in rails 2.3
+    user:
+      password: Passwort
+      login: Login
+      role: Rolle
+      title: Titel
+
+  activerecord:
+    models:
+      table: Tisch
+      user: Benutzer
+      tax: Steuerklasse
+      article: Verkaufsartikel
+      stock: Lagervorräte
+      category: Artikelkategorie
+      settlement: Abrechnung
+      order: Bestellung
+
+# ==================================================================================
+# Custom messages
+# ==================================================================================
+
+  hello_world: Hallo Welt
+
+  language: Sprache
+
+  please_login: Bitte loggen Sie sich ein!
+  login: Login
+  logout: Logout
+  logged_out: Ausgeloggt
+  password: Passwort
+  this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
+  logged_in_as: Eingeloggt als
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
+  are_you_sure: 'Sind Sie sicher?'
+
+  delete: LÃ¶schen
+  edit: Ã„ndern
+  create: Erzeugen
+  new: Neu anlegen
+  save: Speichern
+  finished: AbschlieÃŸen
+
+  creation_date: Datum
+
+  table: Tisch
+  tables_menu: Tische
+
+  user: Benutzer
+  users_menu: Benutzer
+
+  title: Anrede u. Name
+  served_by: Es bediente Sie
+
+  tax: Steuerklasse
+  taxes_menu: Steuerklassen
+
+  group: Lagerort
+  groups_menu: Lagerorte
+
+  stock: Lagervorrat
+  stocks_menu: LagervorrÃ¤te
+
+  category: Artikelkategorie
+  categories_menu: Artikelkategorien
+
+  article: Artikel
+  articles_menu: Verkaufsartikel
+  new_article: Neuer Artikel
+  edit_article: Artikel bearbeiten
+  add_article: 'Hinzufügen:'
+
+  ingredient: Zutat
+  ingredients: Alle Zutaten
+
+
+  settlement: Abrechnung
+  settlements_menu: Abrechnungen
+  settlement_abbr: 'Abr.'
+
+  waiterpad: Bestellblock
+
+  blackboard: Online-Tafel
+
+  revenue: Kellnerumsatz
+
+  password: Passwort
+  name: Name
+  role: Rolle
+  login: Login
+  description: Beschreibung
+  percent: Prozentsatz
+  unit: Einheit
+  balance: Stand
+  menucard: Aktive Artikel
+  price: Preis
+
+  format_for_online_backboard: "Formatierung fÃ¼r Online-Tafel"
+  division: Trennlinie
+  sort_id: Sortierreihenfolge
+  add_ingredient: Zutat hinzufÃ¼gen
+
+  sum: Summe
+  gr: 'br.'
+  net: 'net.'
+  diff: 'Diff.'
+  datum: Datum
+
+  count: Anzahl
+  single: Einzel
+  total: Alle
+
+  order_sums: Bestellsummen
+  order:
+    one: Bestellung
+    other: Bestellungen
+  orders_menu: Bestellungen
+  new_order: Neue Bestellung
+  orders: Alle Bestellungen
+  open_orders: Laufende Bestellungen
+  partial_order: Teilabr.
+  item: Einheit
+  free: gratis
+
+# User Roles
+  restaurant: Gasthaus
+  waiter: Kellner
+  admin: Admin
+  su: SuperUser
+
+  statistics: Statistik
+  weekdays: Wochentage
+  journal: Journal
+
+  already_created_articles: Bereits angelegte Artikel
+  create_a_series_of_foods: Vereinfachte Speiseneingabe
+  search_term: Suchbegriff
+  print_preview: Druckansicht
+  online_preview: Voransicht
+
+  amount: Menge
+  there_are_x_food_articles_active:
+    one: Es ist {{count}} Speise aktiv
+    other: Es sind {{count}} Speisen aktiv
+
+  remove_all_foods_from_menucard: Alle im Moment aktiven Speisen inaktivieren

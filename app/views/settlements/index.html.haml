@@ -1,4 +1,25 @@
-%h2 Alle Abrechnungen
+%h2 Abrechnungen
+
+%h3 Offene
+- @unsettled_users.each do |uu|
+  %ul
+    %li= link_to uu.login, new_user_settlement_path(uu)
+    %ul
+      - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true } ).each do |uo|
+        %li= link_to "Best. ##{uo.id}", order_path(uo)
+
+
+%h3 Gesamtabrechnung
+
+- form_tag 'settlements/index' do
+  = label('from', 'von')
+  = date_select('from', 'von')
+  = label('to', 'bis')
+  = date_select('to', 'bis')
+  = submit_tag 'anfrage'
+
+%br
+
 
 - col = 0
 %table{ :class => 'settlements' }

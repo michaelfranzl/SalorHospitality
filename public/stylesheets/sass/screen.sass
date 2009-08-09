@@ -9,12 +9,30 @@
 body
   :font-family sans
   :padding 20px
+  :margin 0
+  :padding 10px
+
+body.orders_index
+  :overflow hidden
+
+h1
+  :margin 0
+
+h6
+  :color green
+  :margin 10px 0 0 0
+  :font-style italic
 
 a
   :color = !link_color
 
 table
   :font-size small
+
+.textleft
+  :text-align left
+.textright
+  :text-align right
 
 //main layout
 
@@ -34,7 +52,7 @@ table
   :font-size small
 
 #sidebar a,
-#metanavi a
+.metanavi a
   :text-decoration none
   &:hover
     :text-decoration underline
@@ -51,7 +69,7 @@ table
     :font-size 110%
 
 td
-  :text-align left
+  //:text-align left
   :vertical-align top
 
 fieldset
@@ -60,6 +78,10 @@ fieldset
 
 fieldset.new_foods
   :width 280px
+
+fieldset.articles
+  :width 280px
+  :font-size small
 
 legend
   :font
@@ -70,7 +92,7 @@ legend
 table
   :border-spacing 0
 
-#metanavi
+.metanavi
   :background-color = !lightgray
   :padding 5px
   a
@@ -123,9 +145,32 @@ table.settlements
     :text-align center
 
 table.waiterpad
-  :font-family Trebuchet
-  :border 1px solid black
-  :width 60mm
+  :border-spacing 0px
+  :font-size 70%
+  :font-family Trebuchet MS
+  :border 2px solid gray
+  :width 190pt
+  :float left
+  th
+    :text-transform uppercase
+    :background-color lightgray
+    :font-size 80%
+  td, th
+    :border-bottom 1px solid black
+    :height 20pt
+    :text-align center
+    :vertical-align middle
+  .borderright
+    :border-right 1px solid black
+  tr.logo
+    :height 40pt
+    td
+      :vertical-align top
+      :padding-top 25pt
+
+  tr.sum
+    :height 40pt
+    :background-color lightgray
 
 table.articles td
   :padding-right 30px
@@ -135,11 +180,9 @@ div.settlements
 
 div.table
   :border 1px solid gray
-  :padding 10px
-  :margin 10px
+  :padding 5px
+  :margin 0
   :float left
-  :width 100px
-  :height 61px
 
 .occupied
   :background-color = !lightgray
@@ -177,4 +220,12 @@ ul#blackboard_list
   ul
     :list-style-type none
     :padding-left 20px
+
+#restaurant_plan
+  :width 1000px
+  :height 850px
+  :background-image url('../images/plan.jpg')
+  :position absolute
+  :top 250px
+  :left 40px
 

@@ -1,0 +1,71 @@
+---
+articles_004:
+  name: Ham Toast
+  updated_at: 2009-05-13 11:27:03
+  format_name: ""
+  price: "4"
+  format_division: ""
+  id: "4"
+  category_id: "1"
+  description: ""
+  blackboard: "1"
+  recipe:
+  menucard: "1"
+  created_at: 2009-05-13 11:25:52
+  waiterpad: "1"
+articles_001:
+  name: Cola Rum
+  updated_at: 2009-05-13 11:19:58
+  format_name: ""
+  price: "2.5"
+  format_division: ""
+  id: "1"
+  category_id: "4"
+  description: ""
+  blackboard: "0"
+  recipe:
+  menucard: "1"
+  created_at: 2009-05-13 11:19:58
+  waiterpad: "0"
+articles_002:
+  name: Coca Cola
+  updated_at: 2009-05-13 11:21:27
+  format_name: ""
+  price: "2"
+  format_division: ""
+  id: "2"
+  category_id: "5"
+  description: ""
+  blackboard: "0"
+  recipe:
+  menucard: "1"
+  created_at: 2009-05-13 11:21:27
+  waiterpad: "0"
+articles_003:
+  name: Ham and Eggs
+  updated_at: 2009-05-13 11:26:58
+  format_name: ""
+  price: "4"
+  format_division: ""
+  id: "3"
+  category_id: "2"
+  description: ""
+  blackboard: "1"
+  recipe:
+  menucard: "1"
+  created_at: 2009-05-13 11:25:36
+  waiterpad: "1"
+articles_004:
+  name: Icecream
+  updated_at: 2009-05-13 11:26:58
+  format_name: ""
+  price: "2"
+  format_division: ""
+  id: "4"
+  category_id: "3"
+  description: ""
+  blackboard: "1"
+  recipe:
+  menucard: "1"
+  created_at: 2009-05-13 11:25:36
+  waiterpad: "1"

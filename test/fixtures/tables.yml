@@ -1,0 +1,31 @@
+---
+tables_001:
+  left: "368"
+  name: Table 1
+  updated_at: 2009-05-13 11:54:10
+  id: "1"
+  description: Guest Room
+  height: "45"
+  width: "70"
+  top: "377"
+  created_at: 2009-05-13 09:20:40
+tables_002:
+  left: "247"
+  name: Table 2
+  updated_at: 2009-05-13 11:28:28
+  id: "2"
+  description: Guest Room
+  height: "45"
+  width: "70"
+  top: "378"
+  created_at: 2009-05-13 09:20:54
+tables_003:
+  left: "150"
+  name: Bar
+  updated_at: 2009-05-13 11:28:26
+  id: "3"
+  description: Lounge
+  height: "45"
+  width: "70"
+  top: "378"
+  created_at: 2009-05-13 09:21:06

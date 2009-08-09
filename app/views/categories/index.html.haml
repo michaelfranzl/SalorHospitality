@@ -1,4 +1,4 @@
-%h2= t :categories
+%h2= t :categories_menu
 
 %table
   %tr
@@ -11,6 +11,6 @@
       %td= ca.name
       %td= ca.tax.custom_name
       %td= link_to((t :edit), edit_category_path(ca)) if @current_user.role >= 2
-      %td= link_to((t :delete), ca, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %td= link_to((t :delete), ca, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
 %p= link_to((t :new), new_category_path) if @current_user.role >= 2

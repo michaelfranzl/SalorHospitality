@@ -1,0 +1,49 @@
+---
+users_004:
+  updated_at: 2009-05-13 09:22:37
+  login: Mr. Waiter 1
+  role: "1"
+  id: "4"
+  password: waiter1
+  login: waiter1
+  created_at: 2009-05-13 09:22:37
+users_005:
+  updated_at: 2009-05-13 09:22:57
+  login: Mr. Waiter 2
+  role: "1"
+  id: "5"
+  password: waiter2
+  login: waiter2
+  created_at: 2009-05-13 09:22:57
+users_006:
+  updated_at: 2009-05-13 09:24:14
+  login: Restaurant
+  role: "0"
+  id: "6"
+  password: restaurant
+  login: restaurant
+  created_at: 2009-05-13 09:24:14
+users_001:
+  updated_at: 2009-05-13 09:23:08
+  login: Mr. Superuser
+  role: "3"
+  id: "1"
+  password: su
+  login: su
+  created_at: 2009-02-19 12:40:35
+users_002:
+  updated_at: 2009-05-13 09:21:35
+  login: Mr. Admin 1
+  role: "2"
+  id: "2"
+  password: admin1
+  login: admin1
+  created_at: 2009-02-19 12:40:35
+users_003:
+  updated_at: 2009-05-13 09:22:12
+  login: Mr. Admin 2
+  role: "2"
+  id: "3"
+  password: admin2
+  login: admin2
+  created_at: 2009-02-19 12:40:35

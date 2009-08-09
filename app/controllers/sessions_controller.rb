@@ -22,4 +22,9 @@ class SessionsController < ApplicationController
     redirect_to new_session_path
   end
 
+  def set_language
+    I18n.locale = session[:language] = params[:id]
+    redirect_to orders_path
+  end
+
 end

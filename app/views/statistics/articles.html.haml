@@ -1,0 +1,26 @@
+%h2 Statistik Artikel
+
+%br
+
+- form_tag '/statistics/articles' do
+  = label('from', 'von')
+  = select_date(@from, :prefix => 'from')
+  = label('to', 'bis')
+  = select_date(@to, :prefix => 'to')
+  = submit_tag 'Abfrage'
+
+%br
+
+%table
+  %tr
+    %th{ :style => 'width:200px' } Name
+    %th{ :style => 'width:100px;text-align:right;' } Anzahl
+    %th{ :style => 'width:100px;text-align:right;' } Preis
+    %th{ :style => 'width:100px;text-align:right;' } Gesamt
+  - @articlesums.each do |articlesum|
+    %tr
+      - article = Article.find articlesum[0]
+      %td= article.name
+      %td{ :style => 'text-align:right;' }= articlesum[1]
+      %td{ :style => 'text-align:right;' }= number_to_currency article.price
+      %td{ :style => 'text-align:right;' }= number_to_currency article.price * articlesum[1]

@@ -1,5 +1,5 @@
 page.replace "form_#{@id}", :partial => 'new_foods_form'
-page.replace_html 'foods_in_menucard', "#{@foods_in_menucard}"
+page.replace_html 'foods_in_menucard', "#{ t :there_are_x_food_articles_active, :count => @foods_in_menucard } (#{ link_to ((t :menucard), '/menucard') })"
 if @article.errors.empty?
   page.visual_effect :highlight, "fieldset_#{@id}", { :startcolor => '#AAFFAA', :endcolor => '#EEFFEE', :restorecolor => '#EEFFEE' }
   page.visual_effect :highlight, 'foods_in_menucard', { :startcolor => '#AAFFAA' }

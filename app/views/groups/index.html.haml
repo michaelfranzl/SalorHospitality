@@ -1,5 +1,4 @@
-%h2= t :groups
-
+%h2= t :groups_menu
 %table
   %tr
     %th{ :style => 'width:200px' }
@@ -9,6 +8,6 @@
     %tr
       %td= gr.name
       %td= link_to((t :edit), edit_group_path(gr)) if @current_user.role >= 2
-      %td= link_to((t :delete), gr, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %td= link_to((t :delete), gr, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
 %p= link_to((t :new), new_group_path) if @current_user.role >= 2

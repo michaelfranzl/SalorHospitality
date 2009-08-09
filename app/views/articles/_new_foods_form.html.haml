@@ -1,4 +1,5 @@
 - an = controller.action_name
+
 - remote_form_for @article, :html => { :id => "form_#{@id}" }, :before => "Element.hide('submit_button_#{@id}'); Element.show('submit_spinner_#{@id}');", :complete => "Element.hide('submit_spinner_#{@id}'); Element.show('submit_button_#{@id}');" do |f|
   %fieldset.new_foods{ :id => "fieldset_#{@id}" }
     = f.hidden_field :category_id

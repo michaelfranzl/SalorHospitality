@@ -1,91 +1,97 @@
-%h2= @article.new_record? ? 'Neuer Artikel' : 'Artikel bearbeiten'
+%h2= @article.new_record? ? (t :new_article) : (t :edit_article)
 = error_messages_for 'article'
 
-- form_for @article do |article_form|
-  %fieldset{ :style => 'width:350px' }
-    %legend= t :article
-    %table
-      %tr
-        %td{ :style => 'width:130px;' }
-          = article_form.label( 'name', "#{t :name}*")
-        %td{ :style => 'width:130px;' }
-          = article_form.text_field :name
-        %td{ :style => 'width:130px;' }
-          %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
-      %tr
-        %td
-          = article_form.label('description', (t :description))
-        %td
-          = article_form.text_field :description
-      %tr
-        %td
-          = article_form.label('price', (t :price))
-        %td
-          = @article.price ? article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #EEE') : article_form.text_field( :price, :size => 6 )
-      %tr
-        %td
-          = article_form.label('category_id', (t :category))
-        %td
-          = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
-      %tr
-        %td
-          = article_form.label('menucard', (t :menucard))
-        %td
-          = article_form.check_box :menucard
-      %tr
-        %td
-          = article_form.label('blackboard', (t :blackboard))
-        %td
-          = article_form.check_box :blackboard
-      %tr
-        %td
-          = article_form.label('waiterpad', (t :waiterpad))
-        %td
-          = article_form.check_box :waiterpad
-      %tr
-        %td{ :colspan => '2' }
+%table
+  %tr
+    %td
+      - form_for @article do |article_form|
+        %fieldset{ :style => 'width:350px' }
+          %legend= t :article
+          %table
+            %tr
+              %td{ :style => 'width:130px;' }
+                = article_form.label( 'name', "#{t :name}*")
+              %td{ :style => 'width:130px;' }
+                = article_form.text_field :name
+              %td{ :style => 'width:130px;' }
+                %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+            %tr
+              %td
+                = article_form.label('description', (t :description))
+              %td
+                = article_form.text_field :description
+            %tr
+              %td
+                = article_form.label('price', "#{ t :price }*")
+              %td
+                = @article.price ? article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #EEE') : article_form.text_field( :price, :size => 6 )
+            %tr
+              %td
+                = article_form.label('category_id', "#{ t :category }*")
+              %td
+                = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
+            %tr
+              %td
+                = article_form.label('menucard', (t :menucard))
+              %td
+                = article_form.check_box :menucard
+            %tr
+              %td
+                = article_form.label('blackboard', (t :blackboard))
+              %td
+                = article_form.check_box :blackboard
+            %tr
+              %td
+                = article_form.label('waiterpad', (t :waiterpad))
+              %td
+                = article_form.check_box :waiterpad
+            %tr
+              %td{ :colspan => '2' }
 
-  %fieldset{ :style => 'width:350px' }
-    %legend== #{t :format_for_online_backboard} (optional)
-    %table
-      %tr
-        %td
-          = article_form.label('format_name', (t :name))
-        %td
-          = article_form.text_area :format_name, :size => '20x2'
-      %tr
-        %td
-          = article_form.label('format_division', (t :division))
-        %td
-          = article_form.text_area :format_division, :size => '20x1'
+        %fieldset{ :style => 'width:350px' }
+          %legend== #{t :format_for_online_backboard} (optional)
+          %table
+            %tr
+              %td
+                = article_form.label('format_name', (t :name))
+              %td
+                = article_form.text_area :format_name, :size => '20x2'
+            %tr
+              %td
+                = article_form.label('format_division', (t :division))
+              %td
+                = article_form.text_area :format_division, :size => '20x1'
 
-  %fieldset{ :style => 'width:350px' }
-    %legend Zutaten
-    %table{ :id => 'ingredients' }
+        %fieldset{ :style => 'width:350px' }
+          %legend Zutaten
+          %table{ :id => 'ingredients' }
 
-      - article_form.fields_for :ingredients do |ingredient_form|
-        %tr
-          %td
-            = ingredient_form.label :amount, 'Menge:'
-          %td
-            = ingredient_form.text_field :amount, :size => '4'
+            - article_form.fields_for :ingredients do |ingredient_form|
+              %tr
+                %td
+                  = ingredient_form.label :amount, (t :amount)
+                %td
+                  = ingredient_form.text_field :amount, :size => '4'
 
-          -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
-          - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1]
+                -# Here we need to extract the name of the nested attribute ('new_') in order to make the drop down list set its value in the correct place in the params hash.
+                - nested_attribute_id = /article\[ingredients_attributes\]\[(.*)\]/.match(ingredient_form.object_name)[1]
 
-          %td
-            %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
-              %option{ :value => '' }
-              = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :custom_name, ingredient_form.object.stock_id
-          - if controller.action_name == 'edit'
-            %td
-              = ingredient_form.label('_delete', (t :delete))
-            %td
-              = ingredient_form.check_box :_delete
+                %td
+                  %select{ :id => "article_ingredients_attributes_#{ nested_attribute_id }_stock_id", :name => "article[ingredients_attributes][#{ nested_attribute_id }][stock_id]" }
+                    %option{ :value => '' }
+                    = option_groups_from_collection_for_select @groups, :stocks, :name, :id, :custom_name, ingredient_form.object.stock_id
+                - if controller.action_name == 'edit'
+                  %td
+                    = ingredient_form.label('_delete', (t :delete))
+                  %td
+                    = ingredient_form.check_box :_delete
 
-    %p
-      %small= add_ingredient_link((t :add_ingredient), article_form)
+          %p
+            %small= add_ingredient_link((t :add_ingredient), article_form)
 
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+        %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-  = observe_field 'article_name', :frequency => 0.5, :update => 'search_results', :url => { :controller => 'articles', :action => 'get_results' }, :with => "'search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"
+        = observe_field 'article_name', :frequency => 0.5, :update => 'foods_search_results', :url => { :action => 'find_foods' }, :with => "'foods_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"
+
+      %td
+        %p#foods_search_results

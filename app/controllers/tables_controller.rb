@@ -3,6 +3,11 @@ class TablesController < ApplicationController
     @tables = Table.find(:all)
   end
 
+  def show
+    @table = Table.find(params[:id])
+    @unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => params[:id] })
+  end
+
   def new
     @table = Table.new
   end
@@ -19,7 +24,11 @@ class TablesController < ApplicationController
 
   def update
     @table = Table.find(params[:id])
-    @table.update_attributes(params[:table]) ? redirect_to(tables_path) : render(:new)
+    success = @table.update_attributes(params[:table])
+    respond_to do |wants|
+      wants.html{ success ? redirect_to(tables_path) : render(:new)}
+      wants.js { render :nothing => true }
+    end
   end
 
   def destroy
@@ -27,6 +36,17 @@ class TablesController < ApplicationController
     flash[:notice] = "Der Tisch \"#{ @table.name }\" wurde erfolgreich geloescht."
     @table.destroy
     redirect_to tables_path
+  end
+
+  def time_range
+    @from = Date.civil( params[:from][:year ].to_i,
+                        params[:from][:month].to_i,
+                        params[:from][:day  ].to_i) if params[:from]
+    @to =   Date.civil( params[:to  ][:year ].to_i,
+                        params[:to  ][:month].to_i,
+                        params[:to  ][:day  ].to_i) if params[:to]
+    @tables = Table.find(:all)
+    render :index
   end
 
 end

@@ -1,0 +1,22 @@
+%h2 Statistik User
+
+%br
+
+- form_tag '/statistics/users' do
+  = label('from', 'von')
+  = select_date(@from, :prefix => 'from')
+  = label('to', 'bis')
+  = select_date(@to, :prefix => 'to')
+  = submit_tag 'abfragen'
+
+%br
+
+%table
+  %tr
+    %th{ :style => 'width:100px' }
+    %th{ :style => 'width:100px' }
+  - @users.each do |u|
+    %tr
+      - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
+      %td= disclose ? link_to(u.login, user_path(u)) : u.login
+      %td= number_to_currency Order.sum( 'sum', :conditions => { :user_id => u.id, :created_at => @from..@to })

@@ -4,54 +4,59 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    %meta{ :name => 'language', :content => 'de' }
     %title restaurant_helper
-    = stylesheet_link_tag 'style'
+    = stylesheet_link_tag 'screen', :media => 'screen'
+    = stylesheet_link_tag 'print', :media => 'print'
     = javascript_include_tag :defaults
 
-  %body
+  %body{ :class => "#{ controller.controller_name }_#{ controller.action_name }" }
     - if flash[:notice]
       #flash_notice= flash[:notice]
     - if flash[:error]
       #flash_error= flash[:error]
 
+    - case MyGlobals.project
+      - when 'restaurant'
+        %h1 restaurant_helper
+        %h6= t :this_is_a_demo_app
+      - when 'stempel'
+        %h1 Gasthaus Stempel
+
     - if logged_in?
 
       #login_logout
+        = t :language
+        = link_to( 'English', 'sessions/set_language/en')
+        = link_to( 'Deutsch', 'sessions/set_language/de')
+        |
         - if @current_user
-          = "Eingeloggt als <b>#{ @current_user.login }</b>"
-          %em= link_to '(Logout)', session_path, :method => :delete
+          = "#{ t :logged_in_as } <b>#{ @current_user.login }</b>"
+          %em= link_to "(#{ t :logout })", session_path, :method => :delete
         - else
-          %em Ausgeloggt.
-          = link_to 'Login', new_session_path
+          %em "#{ t :logged_out }."
+          = link_to (t :login), new_session_path
 
-      #metanavi
+      .metanavi
         %small
-          = link_to 'Bestellungen', orders_path
-          = link_to 'Abrechnungen', settlements_path
-          = link_to 'Verkaufsartikel', articles_path
-          = link_to 'Kategorien', categories_path
-          = link_to 'Lagerartikel', stocks_path
-          = link_to 'Lagergruppen', groups_path
-          = link_to 'Steuerklassen', taxes_path
-          = link_to 'User', users_path
-          = link_to 'Tische', tables_path
+          = link_to( (t :orders_menu), orders_path)
+          = link_to( (t :settlements_menu), settlements_path)
+          = link_to( (t :articles_menu), articles_path)
+          = link_to( (t :categories_menu), categories_path)
+          = link_to( (t :stocks_menu), stocks_path)
+          = link_to( (t :groups_menu), groups_path)
+          = link_to( (t :taxes_menu), taxes_path)
+          = link_to( (t :users_menu), users_path)
+          = link_to( (t :tables_menu), tables_path)
 
-      //.sidebar
-      //  %small
-      //    //%p== #{ link_to 'Aktive Artikel', :controller => 'menucard' } (#{ link_to 'Bearb.', :controller => 'menucard', :action => 'edit' })
-      //    //%p== #{ link_to 'Bestellblock', :controller => 'waiterpad' } (#{ link_to 'Bearb.', :controller => 'waiterpad', :action => 'edit' })
-      //    //%p= link_to 'Tafel', :controller => 'blackboard'
-
-      //    - if (controller.controller_name == 'orders') and (controller.action_name == 'index')
-      //      %h3= t :settlements
-      //      - @unsettled_users.each do |uu|
-      //        %ul
-      //          %li= link_to uu.login, new_user_settlement_path(uu)
-      //          %ul
-      //            - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true } ).each do |uo|
-      //              %li= link_to "Best. ##{uo.id}", order_path(uo)
-
-      //  //%ul#search_results
+    - if @current_user and @current_user.role >= 2
+      %br
+      .metanavi
+        %small
+          %b= t :statistics
+          = link_to( (t :tables_menu), '/statistics/tables')
+          = link_to( (t :weekdays), '/statistics/weekdays')
+          = link_to( (t :waiter), '/statistics/users')
+          = link_to( (t :articles_menu), '/statistics/articles')
+          = link_to( (t :journal), '/statistics/journal')
 
     = yield
