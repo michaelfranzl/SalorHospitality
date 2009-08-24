@@ -4,7 +4,7 @@
 
 %div{ :id => "table#{table.id}", :class => "table #{color}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{table.left}px;top:#{table.top}px;position:absolute;font-size:small;"}
 
-  = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] }); return false;}"
+  = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}"
   = link_to table.name, table_path(table)
   %br
   = link_to( (t :new_order), new_table_order_path(table))

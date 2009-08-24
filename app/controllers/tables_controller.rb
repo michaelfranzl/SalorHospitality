@@ -25,6 +25,9 @@ class TablesController < ApplicationController
   def update
     @table = Table.find(params[:id])
     success = @table.update_attributes(params[:table])
+    @table.left = params[:pagexoffset].to_i  + params[:table][:left].to_i - 10
+    @table.top =  params[:pageyoffset].to_i  + params[:table][:top].to_i - 200
+    @table.save
     respond_to do |wants|
       wants.html{ success ? redirect_to(tables_path) : render(:new)}
       wants.js { render :nothing => true }
