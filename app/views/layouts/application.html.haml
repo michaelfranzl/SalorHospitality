@@ -4,7 +4,15 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    %title restaurant_helper
+    - case MyGlobals.client
+      - when 'stempel'
+        %title gastrohelper Gasthaus Stempel
+      - when 'gaube'
+        %title gastrohelper Gasthaus Gaube
+      - when 'local'
+        %title gastrohelper Lokal
+      - else
+        %title gastrohelper
     = stylesheet_link_tag 'screen', :media => 'screen'
     = stylesheet_link_tag 'print', :media => 'print'
     = javascript_include_tag :defaults
@@ -15,12 +23,16 @@
     - if flash[:error]
       #flash_error= flash[:error]
 
-    - case MyGlobals.project
-      - when 'restaurant'
-        %h1 restaurant_helper
-        %h6= t :this_is_a_demo_app
+    - case MyGlobals.client
       - when 'stempel'
         %h1 Gasthaus Stempel
+      - when 'gaube'
+        %h1 Gasthaus Gaube
+      - when 'local'
+        %h1 Lokal
+      - else
+        %h1 gastrohelper
+        %h6= t :this_is_a_demo_app
 
     - if logged_in?
 
