@@ -46,7 +46,8 @@ class ArticlesController < ApplicationController
   def edit
     @article = Article.find(params[:id])
     @groups = Group.find(:all, :order => 'name ASC')
-    session[:return_to] = /http:\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
+    logger.info "REFERER #{request.referer}"
+    session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new
   end
 
