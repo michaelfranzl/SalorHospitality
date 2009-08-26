@@ -14,5 +14,23 @@
           = table_form.label('description', (t :description))
         %td
           = table_form.text_field :description, :size => '20'
+      %tr
+        %td
+          = table_form.label('width', (t :width))
+        %td
+          = table_form.text_field :width, :size => '10'
+      %tr
+        %td
+          = table_form.label('height', (t :height))
+        %td
+          = table_form.text_field :height, :size => '10'
+      %tr
+        %td
+        %td
+          = table_form.hidden_field :top, :size => '10'
+      %tr
+        %td
+        %td
+          = table_form.hidden_field :left, :size => '10'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

@@ -47,6 +47,8 @@ en:
 
   table: Table
   tables_menu: Tables
+  width: Width
+  height: Length
 
   user: User
   users_menu: Users

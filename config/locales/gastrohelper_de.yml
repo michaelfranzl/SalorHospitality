@@ -13,7 +13,7 @@ de:
       user: Benutzer
       tax: Steuerklasse
       article: Verkaufsartikel
-      stock: Lagervorräte
+      stock: LagervorrÃ¤te
       category: Artikelkategorie
       settlement: Abrechnung
       order: Bestellung
@@ -33,7 +33,7 @@ de:
   password: Passwort
   this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
   logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" lÃ¶schen möchten?'
   are_you_sure: 'Sind Sie sicher?'
 
   delete: LÃ¶schen
@@ -47,6 +47,8 @@ de:
 
   table: Tisch
   tables_menu: Tische
+  width: LÃ¤nge
+  height: Breite
 
   user: Benutzer
   users_menu: Benutzer
@@ -70,7 +72,7 @@ de:
   articles_menu: Verkaufsartikel
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
-  add_article: 'Hinzufügen:'
+  add_article: 'HinzufÃ¼gen:'
 
   ingredient: Zutat
   ingredients: Alle Zutaten

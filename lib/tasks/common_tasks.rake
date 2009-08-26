@@ -24,7 +24,7 @@ task :iconv do
               'Ü' => '\xc3\x9c'
             }
   from_to.each do |c|
-     `sed -i 's/#{ c[0] }/#{ c[1] }/' config/locales/de.yml`
+     `sed -i 's/#{ c[0] }/#{ c[1] }/' config/locales/*de.yml`
   end
 end
 

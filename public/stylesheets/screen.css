@@ -4,7 +4,6 @@ body {
   margin: 0;
   padding: 10px; }
 
-
 h1 {
   margin: 0; }
 
@@ -203,7 +202,7 @@ ul#blackboard_list {
 
 #restaurant_plan {
   width: 1000px;
-  height: 850px;
+  height: 1000px;
   background-repeat: no-repeat;
   position: absolute;
   top: 200px;
