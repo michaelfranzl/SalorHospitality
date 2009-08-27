@@ -23,11 +23,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(params[:order])
+    session[:last_user_id] = @order.user_id
     @categories = Category.all
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
+    redirect_to orders_path and return if @order.items.size.zero?
     @order.save ? process_order(@order) : render(:new)
-    session[:last_user_id] = @order.user_id
   end
 
   def update

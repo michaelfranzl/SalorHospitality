@@ -43,8 +43,8 @@
   %p
     = t :add_article
     - @categories.each do |category|
-      - item_category_caption = "<div class='item_category'>#{category.name}</div>"
+      - item_category_caption = "<div class='item_category #{category.name.delete " "}'>#{category.name}</div>"
       %span= add_item_link item_category_caption, order_form, category
 
   .clear
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit), :class => 'create_edit_order' )
