@@ -6,11 +6,11 @@
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     - case MyGlobals.client
       - when 'stempel'
-        %title gastrohelper Gasthaus Stempel
+        %title Gasthaus Stempel
       - when 'gaube'
-        %title gastrohelper Gasthaus Gaube
+        %title Gasthaus Gaube
       - when 'local'
-        %title gastrohelper Lokal
+        %title Lokal
       - else
         %title gastrohelper
     = stylesheet_link_tag 'screen', :media => 'screen'
@@ -19,9 +19,9 @@
 
   %body
     - if flash[:notice]
-      #flash_notice= flash[:notice]
+      .flash_notice= flash[:notice]
     - if flash[:error]
-      #flash_error= flash[:error]
+      .flash_error= flash[:error]
 
     - case MyGlobals.client
       - when 'stempel'

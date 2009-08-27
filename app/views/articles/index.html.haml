@@ -1,7 +1,13 @@
 %h2= t :articles_menu
 
-%span= link_to((t :new), new_article_path) if @current_user.role >= 2
-%span= link_to((t :create_a_series_of_foods), new_foods_articles_path) if @current_user.role >= 2
+%span
+  = link_to((t :new), new_article_path) if @current_user.role >= 2
+  |
+%span
+  = link_to((t :create_a_series_of_foods), new_foods_articles_path) if @current_user.role >= 2
+  |
+%span
+  = link_to((t :all_articles), listall_articles_path)
 
 %fieldset#drop_remove.articles{ :style => 'float:left;' }
   = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"

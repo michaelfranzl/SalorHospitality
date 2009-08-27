@@ -5,6 +5,10 @@ class ArticlesController < ApplicationController
     @articles = Article.all
   end
 
+  def listall
+    @articles = Article.all
+  end
+
   def new
     @article = Article.new
     @groups = Group.find(:all, :order => 'name ASC')

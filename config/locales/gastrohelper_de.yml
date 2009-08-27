@@ -33,7 +33,7 @@ de:
   password: Passwort
   this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
   logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen m�chten?'
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
   are_you_sure: 'Sind Sie sicher?'
 
   delete: Löschen
@@ -70,6 +70,7 @@ de:
 
   article: Artikel
   articles_menu: Verkaufsartikel
+  all_articles: Alle Artikel
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
   add_article: 'Hinzufügen:'
