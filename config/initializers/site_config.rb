@@ -21,9 +21,9 @@ module MyGlobals
 
   @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => '' }
 
-  @@user_roles = [ ['',''], ['restaurant',0], ['waiter',1], ['admin',2], ['su',3] ]
+  @@user_roles = [ ['',''], ['Restaurant',0], ['Kellner',1], ['Admin',2], ['Superuser',3] ]
 
-  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'kg', 'Packungen', 'Fässer', 'Stueck' ]
+  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Fässer', 'Stueck' ]
 
   @@client = "stempel"
 
