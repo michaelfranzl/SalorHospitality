@@ -2,7 +2,7 @@
 !error_text = #C00
 !lightgray = #EEE
 !darkgray = #999
-!middlegray = #DDD
+!middlegray = #BBB
 
 //global settings
 
@@ -177,15 +177,28 @@ div.settlements
 
 div.table
   :border 1px solid gray
-  :padding 5px
+  :padding 0px 0px 0px 0px
   :margin 0
-  :float left
+
+div.bigtablename
+  :text-align center
+  :font-size 150%
+
+div.smalltablename
+  :background-color #FCC
+  :font-size 130%
+  :text-align center
+  :margin-bottom 5px
+  :padding 2px 0 2px 0
+
+span.orderid
+  :font-size 150%
 
 .occupied
   :background-color = !lightgray
 
 .vacant
-  :background-color = !darkgray
+  :background-color = !middlegray
 
 table#items td
   :background-color none
@@ -225,3 +238,5 @@ ul#blackboard_list
   :position absolute
   :top 200px
   :left 10px
+
+

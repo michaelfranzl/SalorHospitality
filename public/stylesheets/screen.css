@@ -104,12 +104,12 @@ table.settlements {
     border-right: 3px solid white;
     border-bottom: 1px solid white; }
   table.settlements .sum {
-    background-color: #dddddd;
+    background-color: #bbbbbb;
     border-top: 2px solid;
     font-weight: bold;
     text-align: right; }
   table.settlements .colsum {
-    background-color: #dddddd;
+    background-color: #bbbbbb;
     font-style: italic; }
   table.settlements .br {
     border-right: 3px solid;
@@ -158,15 +158,28 @@ div.settlements {
 
 div.table {
   border: 1px solid gray;
-  padding: 5px;
-  margin: 0;
-  float: left; }
+  padding: 0px 0px 0px 0px;
+  margin: 0; }
+
+div.bigtablename {
+  text-align: center;
+  font-size: 150%; }
+
+div.smalltablename {
+  background-color: #FCC;
+  font-size: 130%;
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 2px 0 2px 0; }
+
+span.orderid {
+  font-size: 150%; }
 
 .occupied {
   background-color: #eeeeee; }
 
 .vacant {
-  background-color: #999999; }
+  background-color: #bbbbbb; }
 
 table#items td {
   background-color: none;
@@ -207,5 +220,3 @@ ul#blackboard_list {
   position: absolute;
   top: 200px;
   left: 10px; }
-
-fl

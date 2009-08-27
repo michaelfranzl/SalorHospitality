@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
+        next if !item.id
         c = item.count
         p = item.article.price
         if !item.free

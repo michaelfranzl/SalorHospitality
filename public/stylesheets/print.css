@@ -31,3 +31,12 @@ table.waiterpad {
   table.waiterpad tr.sum {
     height: 40pt;
     background-color: lightgray; }
+
+#flash_notice {
+  color: green; }
+
+#flash_notice {
+  color: orange; }
+
+#flash_error {
+  color: red; }

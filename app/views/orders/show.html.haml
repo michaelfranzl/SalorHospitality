@@ -19,8 +19,10 @@
       %td= c
       %td= item.article.name
       %td{ :style => 'text-align:right' }= number_to_currency p
-      %td{ :style => 'text-align:right' }= number_to_currency sum.zero? ? 'free' : sum
+      %td{ :style => 'text-align:right' }= number_to_currency sum.zero? ? "#{t :free}" : sum
   %tr
     %td{ :colspan => '3'}
     %td{ :style => 'text-align:right'}
       %b= number_to_currency subtotal
+
+=link_to 'Drucken und weiter', orders_path
