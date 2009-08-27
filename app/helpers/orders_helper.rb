@@ -2,6 +2,7 @@ module OrdersHelper
 
   def add_item_link(caption, frm, cat)
     link_to_function caption do |body|
+      "abc"
       item = render(:partial => 'item', :locals => { :frm => frm, :item => Item.new, :cat => cat })
       body << %{
         var new_item_id = "new_" + new Date().getTime();

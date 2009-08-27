@@ -13,15 +13,16 @@
     = order_form.label(:finished, (t :finished))
     = order_form.check_box :finished
 
-  %p
-    = order_form.label(:created_at, (t :creation_date))
-    = order_form.date_select :created_at
+  - if @current_user.role >= 2
+    %p
+      = order_form.label(:created_at, (t :creation_date))
+      = order_form.date_select :created_at
 
   %table#items
-    %th{ :style => 'width: 80px' }= t :count
-    %th{ :style => 'width: 400px' }= t :article
-    %th{ :style => 'width: 50px' }= t :free
-    %th{ :style => 'width: 50px' }= t :partial_order
+    %th.count= t :count
+    %th.article= t :article
+    %th.checkbox= t :free
+    %th.checkbox= t :partial_order
     - order_form.fields_for :items do |item_form|
       - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
       %tr
@@ -42,5 +43,8 @@
   %p
     = t :add_article
     - @categories.each do |category|
-      %span.small= add_item_link "| #{category.name}", order_form, category
+      - item_category_caption = "<div class='item_category'>#{category.name}</div>"
+      %span= add_item_link item_category_caption, order_form, category
+
+  .clear
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

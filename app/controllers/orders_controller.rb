@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
     @order = Order.new
     @categories = Category.all
     @order.table_id = params[:table_id]
+    @order.user_id = session[:last_user_id]
   end
 
   def edit
@@ -26,6 +27,7 @@ class OrdersController < ApplicationController
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
     @order.save ? process_order(@order) : render(:new)
+    session[:last_user_id] = @order.user_id
   end
 
   def update
