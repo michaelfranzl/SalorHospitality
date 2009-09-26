@@ -1,0 +1,14 @@
+%h2= t :all_articles
+
+%table
+  %tr
+    %th{ :width => '250px' }
+    %th{ :width => '250px' }
+    %th{ :width => '80px' }
+    %th{ :width => '50px' }
+  - @articles.each do |ar|
+    %tr
+      %td= link_to (ar.name, edit_article_path(ar))
+      %td= ar.description
+      %td= number_to_currency ar.price
+      %td= link_to ((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
