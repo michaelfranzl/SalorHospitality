@@ -1,6 +1,6 @@
 %h3== #{ t :order, :count => 1} ##{@order.id}
 %p= l @order.created_at, :format => :long
-%p== #{ t :served_by } #{ @order.user.title }
+%p== #{ t :served_by } #{ @order.user.login }
 %table{ :class => 'order' }
   %tr
     %th{ :style => 'width:30px; text-align:right' }
@@ -25,4 +25,7 @@
     %td{ :style => 'text-align:right'}
       %b= number_to_currency subtotal
 
-=link_to 'Drucken und weiter', orders_path
+%a{ :href => "#{order_path(@order)}.bon" }
+  %div{ :class => "item_category MainDishes" }Drucken
+//=link_to 'Drucken', "#{order_path(@order)}.bon"
+=link_to 'Weiter', orders_path

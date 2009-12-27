@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
   map.resources :articles, :collection => { :new_foods => :get, :remove_all_foods_from_menucard => :get, :listall => :get }
   map.resources :orders
+  map.resources :test
   map.resources :settlements
   map.resources :categories
   map.resources :groups

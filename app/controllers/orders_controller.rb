@@ -6,6 +6,12 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    respond_to do |wants|
+      wants.html
+      wants.bon {
+        render :text => generate_escpos_invoice(@order)
+      }
+    end
   end
 
   def new
@@ -92,6 +98,38 @@ class OrdersController < ApplicationController
         end
       end
       return subtotal
+    end
+
+    def generate_escpos_invoice(order)
+      header =
+      "\x1B@"     +  # Initialize Printer
+      "\x1Ba\x01" +  # align center
+      "\x1BM\x49" +  # select font
+      "TM 88 Printer Test\x0A\r\n" +
+
+      "Bestellung No.#{order.id}\r\n" +
+      "#{l order.created_at, :format => :long}\r\n" +
+      "#{ t :served_by } #{ order.user.login }\r\n"
+
+      subtotal = 0
+      list_of_items = ''
+
+      order.items.each do |item|
+        c = item.count
+        p = item.article.price
+        sum = 0
+        if !item.free
+          sum = c * p
+          subtotal += sum
+        end
+        list_of_items += "%2u %.*s %6.2f %6.2f\r\n" % [c,6,item.article.name,p,sum]
+      end
+
+      footer =
+      "          -----------\r\n" +
+      "SUMME %17.2f" % subtotal.to_s
+
+      header + list_of_items + footer
     end
 
 end
