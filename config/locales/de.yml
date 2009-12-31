@@ -121,9 +121,9 @@
   time:
     formats:
       default: "%a, %d. %b. %Y, %H:%M:%S %z"
-      short: "%d. %b.  %y %H:%M"
-      long: "%d. %B %y %H:%M"
-      datetime_iso: "%Y-%m-%d %H:%M"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
       date_normal: "%d. %B %Y"
       date_short: "%d. %b %y"
     am: ""

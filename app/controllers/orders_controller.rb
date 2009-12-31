@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
       wants.html
       wants.bon {
         render :text => generate_escpos_invoice(@order)
+        #render :text => generate_escpos_test(@order)
       }
     end
   end
@@ -100,20 +101,31 @@ class OrdersController < ApplicationController
       return subtotal
     end
 
+    
     def generate_escpos_invoice(order)
       header =
-      "\x1B@"     +  # Initialize Printer
-      "\x1Ba\x01" +  # align center
-      "\x1BM\x49" +  # select font
-      "TM 88 Printer Test\x0A\r\n" +
+      "\e@"     +  # Initialize Printer
+      "\ea\x01" +  # align center
 
-      "Bestellung No.#{order.id}\r\n" +
-      "#{l order.created_at, :format => :long}\r\n" +
-      "#{ t :served_by } #{ order.user.login }\r\n"
+      "\e!\x38" +  # doube tall, double wide, bold
+      "Gasthof Gaube\n" +
 
+      "\e!\x01" +  # Font B
+      "... wer gut isst hat gute Laune!\n\n" +
+      "2732 W\x81rflach, Gerasdorferstra\xe1e 61\n" +
+      "ATU-12345678\n\n" +
+
+      "\ea\x00" +  # align left
+      "\e!\x01" +  # Font B
+      "#{ t :served_by } #{ order.user.title } auf Tisch Nr. #{ order.table.id }\n" +
+      "Bestellung Nr. #{order.id} am #{l order.created_at, :format => :long}\n\n" +
+
+      "\e!\x00" +  # Font A
+      "               Artikel    EP    Stk   GP\n"
+
+      sum_taxes = Array.new(Tax.count, 0)
       subtotal = 0
       list_of_items = ''
-
       order.items.each do |item|
         c = item.count
         p = item.article.price
@@ -122,14 +134,70 @@ class OrdersController < ApplicationController
           sum = c * p
           subtotal += sum
         end
-        list_of_items += "%2u %.*s %6.2f %6.2f\r\n" % [c,6,item.article.name,p,sum]
+        tax_id = item.article.category.tax.id
+        sum_taxes[tax_id-1] += sum
+        itemname = Iconv.conv('ISO-8859-15','UTF-8',item.article.name)
+        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,itemname,p,c,sum]
       end
 
-      footer =
-      "          -----------\r\n" +
-      "SUMME %17.2f" % subtotal.to_s
+      sum =
+      "                               -----------\r\n" +
+      "\e!\x18" + # double tall, bold
+      "\ea\x02" +  # align right
+      "SUMME:   EUR %.2f\n\n" % subtotal.to_s +
+      "\ea\x01" +  # align center
+      "\e!\x01" # Font A
 
-      header + list_of_items + footer
+      tax_header = "          netto     USt.  brutto\n"
+
+      list_of_taxes = ''
+      Tax.all.each do |tax|
+        tax_id = tax.id - 1
+        next if sum_taxes[tax_id]==0
+        fact = tax.percent/100.00
+        net = sum_taxes[tax_id]/(1.00+fact)
+        gro = sum_taxes[tax_id]
+        vat = gro-net
+
+        list_of_taxes += "%c: %2i%% %7.2f %7.2f %8.2f\n" % [tax.id+64,tax.percent,net,vat,gro]
+      end
+
+      footer = 
+      "\ea\x01" +  # align center
+      "\e!\x00" + # font A
+      "\nWir danken für Ihren Besuch!\n" +
+      "\e!\x08" + # emphasized
+      "T\x84glich aktueller Men\x81plan unter\n" +
+      "\e!\x88" + # underline, emphasized
+      "www.gasthof-gaube.at\n\n\n\n\n\n\n" + 
+      "\x1DV\x00" # paper cut
+
+      output = header + list_of_items + sum + tax_header + list_of_taxes + footer
+
+      output.gsub!(/\xE4/,"\x84") #ä
+      output.gsub!(/\xFC/,"\x81") #ü
+      output.gsub!(/\xF6/,"\x94") #ö
+      output.gsub!(/\xC4/,"\x8E") #Ä
+      output.gsub!(/\xDC/,"\x9A") #Ü
+      output.gsub!(/\xD6/,"\x99") #Ö
+      output.gsub!(/\xDF/,"\xE1") #ß
+      output.gsub!(/\xE9/,"\x82") #é
+      output.gsub!(/\xE8/,"\x7A") #è
+      output.gsub!(/\xFA/,"\xA3") #ú
+      output.gsub!(/\xF9/,"\x97") #ù
+      output.gsub!(/\xC9/,"\x90") #É
+
+      return output
+
     end
 
+    def generate_escpos_test(order)
+      out =
+      "\e@"     +  # Initialize Printer
+      "\ea\x02"
+      0.upto(255) { |i|
+        out += "\et%c %i\xDC\n" % [i,i]
+      }
+      return out
+    end
 end
