@@ -160,11 +160,13 @@ div.settlements {
 div.table {
   border: 1px solid gray;
   padding: 0px 0px 0px 0px;
-  margin: 0; }
+  margin: 0;
+  padding: 9px; }
 
 div.bigtablename {
   text-align: center;
-  font-size: 150%; }
+  font-size: 150%;
+  margin: 10px; }
 
 div.smalltablename {
   background-color: #FCC;

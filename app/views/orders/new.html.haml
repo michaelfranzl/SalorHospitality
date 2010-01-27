@@ -10,10 +10,7 @@
     = order_form.label(:user_id, (t :user))
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => true }
 
-    = order_form.label(:finished, (t :finished))
-    = order_form.check_box :finished
-
-  - if @current_user.role >= 2
+  - if @current_user.role >= 10 
     %p
       = order_form.label(:created_at, (t :creation_date))
       = order_form.date_select :created_at
@@ -21,7 +18,7 @@
   %table#items
     %th.count= t :count
     %th.article= t :article
-    %th.checkbox= t :free
+    %th.checkbox= t :cost_center
     %th.checkbox= t :partial_order
     - order_form.fields_for :items do |item_form|
       - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
@@ -33,18 +30,22 @@
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
             %option{ :value => '' }
             = option_groups_from_collection_for_select Category.all, :articles_in_menucard, :name, :id, :name, item_form.object.article_id
-        %td= item_form.check_box :free
+        %td
+          %select{ :id => "order_items_attributes_#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][#{ nested_attribute_id }][cost_center_id]" }
+            = options_from_collection_for_select @active_cost_centers, :id, :name, item_form.object.cost_center_id
+
         %td= item_form.check_box :partial_order
-        - unless item_form.object.new_record?
-          %td
-            = label(:_delete, (t :delete))
-            = item_form.check_box :_delete
 
   %p
     = t :add_article
     - @categories.each do |category|
       - item_category_caption = "<div class='item_category #{category.name.delete " "}'>#{category.name}</div>"
-      %span= add_item_link item_category_caption, order_form, category
+      %span= add_item_link item_category_caption, order_form, category, @active_cost_centers
 
   .clear
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit), :class => 'create_edit_order' )
+
+  - if controller.action_name == 'new'
+    %p= submit_tag( (t :create), :class => 'create_edit_order' )
+  - else
+    %p= submit_tag( "#{t :save}", :class => 'create_edit_order', :name => 'edit_order' )
+    %p= submit_tag( "#{t :finished}", :class => 'create_edit_order', :name => 'finish_order' )

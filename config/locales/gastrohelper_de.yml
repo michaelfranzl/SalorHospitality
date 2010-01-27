@@ -12,6 +12,7 @@ de:
       table: Tisch
       user: Benutzer
       tax: Steuerklasse
+      cost_center: Kostenstelle
       article: Verkaufsartikel
       stock: Lagervorräte
       category: Artikelkategorie
@@ -58,6 +59,9 @@ de:
 
   tax: Steuerklasse
   taxes_menu: Steuerklassen
+
+  cost_center: Kostenstelle
+  cost_centers_menu: Kostenstellen
 
   group: Lagerort
   groups_menu: Lagerorte

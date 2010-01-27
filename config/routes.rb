@@ -41,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :categories
   map.resources :groups
   map.resources :stocks
+  map.resources :cost_centers
   map.resources :taxes
   map.resources :statistics, :collection => { :tables => :get, :weekdays => :get, :users => :get, :journal => :get, :articles => :get }
   map.resources :users, :has_many => :settlements

@@ -9,9 +9,9 @@
   %td
     %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
       %option{ :value => '' }
-      -#= option_groups_from_collection_for_select @categories, :articles_in_menucard, :name, :id, :name, f.object.article_id
       = options_from_collection_for_select cat.articles_in_menucard, :id, :name_description
   %td
-    = f.check_box :free
+    %select{ :id => "order_items_attributes_#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][#{ nested_attribute_id }][cost_center_id]" }
+      = options_from_collection_for_select cc, :id, :name
   %td
     = f.check_box :partial_order

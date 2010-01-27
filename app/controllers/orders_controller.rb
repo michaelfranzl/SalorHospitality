@@ -20,11 +20,13 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @order.table_id = params[:table_id]
     @order.user_id = session[:last_user_id]
+    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
   end
 
   def edit
     @order = Order.find(params[:id])
     @categories = Category.all
+    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     render :new
   end
 
@@ -32,6 +34,7 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     session[:last_user_id] = @order.user_id
     @categories = Category.all
+    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
     redirect_to orders_path and return if @order.items.size.zero?
@@ -41,7 +44,12 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
+    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.update_attribute( :sum, calculate_order_sum(@order) )
+    params['order']['items_attributes'].each do |item|
+      item[1]['_delete'] = 1 if item[1]['count'] == '0' or item[1]['article_id'] == ''
+    end
+    params['order']['finished'] = '1' if params.has_key?('finish_order')
     @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
   end
 

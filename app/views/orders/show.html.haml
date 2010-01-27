@@ -27,5 +27,6 @@
 
 %a{ :href => "#{order_path(@order)}.bon" }
   %div{ :class => "item_category MainDishes" }Drucken
-//=link_to 'Drucken', "#{order_path(@order)}.bon"
-=link_to 'Weiter', orders_path
+%a{ :href => orders_path }
+  %div{ :class => "item_category MainDishes" }Weiter
+//=link_to 'Weiter', orders_path

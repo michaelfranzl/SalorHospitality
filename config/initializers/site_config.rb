@@ -3,8 +3,8 @@ require 'active_support'
 module MyGlobals
   mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :client
 
-  @@predefined_count = ['']
-  1.upto(15) { |i|
+  @@predefined_count = []
+  0.upto(15) { |i|
     @@predefined_count << i
   }
 
@@ -25,6 +25,6 @@ module MyGlobals
 
   @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Fässer', 'Stueck' ]
 
-  @@client = "gastrohelper"
+  @@client = "local"
 
 end
