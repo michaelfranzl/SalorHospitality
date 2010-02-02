@@ -17,15 +17,15 @@
   %tr
     %th{ :style => 'width:200px' }= t :item
     %th{ :style => 'width:30px' }= t :count
-    %th{ :style => 'width:50px' }= t :single
-    %th{ :style => 'width:50px' }= t :total
+    %th{ :style => 'width:90px' }= t :single
+    %th{ :style => 'width:90px' }= t :total
     %th{ :style => 'width:100px' }= t :order_sums
   - total = 0
   - @orders.each do |so|
     %tr
       %td{ :colspan => 5, :style => 'background-color: white' } &nbsp;
     %tr
-      %td{ :colspan => 4, :style => 'text-align:left; background-color: white' }== #{ link_to("#{ t :order, :count => 1} ##{so.id}", order_path(so)) } auf #{ so.table.name } am #{ l so.created_at, :format => :short }
+      %td{ :colspan => 4, :style => 'text-align:left; background-color: white' }== #{ link_to("#{ t :order, :count => 1} ##{so.id}", order_path(so)) } auf <b>#{ so.table.name }</b> am <b>#{ l so.created_at, :format => :datetime_iso }</b>
       - subtotal = 0
       - so.items.each do |item|
         - c = item.count
