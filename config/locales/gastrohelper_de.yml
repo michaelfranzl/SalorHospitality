@@ -14,7 +14,7 @@ de:
       tax: Steuerklasse
       cost_center: Kostenstelle
       article: Verkaufsartikel
-      stock: LagervorrÃ¤te
+      stock: Lagervorräte
       category: Artikelkategorie
       settlement: Abrechnung
       order: Bestellung
@@ -34,21 +34,21 @@ de:
   password: Passwort
   this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
   logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" lÃ¶schen mÃ¶chten?'
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
   are_you_sure: 'Sind Sie sicher?'
 
-  delete: LÃ¶schen
-  edit: Ã„ndern
+  delete: Löschen
+  edit: Ändern
   create: Erzeugen
   new: Neu anlegen
   save: Speichern
-  finished: AbschlieÃŸen
+  finished: Abschließen
 
   creation_date: Datum
 
   table: Tisch
   tables_menu: Tische
-  width: LÃ¤nge
+  width: Länge
   height: Breite
 
   user: Benutzer
@@ -67,7 +67,7 @@ de:
   groups_menu: Lagerorte
 
   stock: Lagervorrat
-  stocks_menu: LagervorrÃ¤te
+  stocks_menu: Lagervorräte
 
   category: Artikelkategorie
   categories_menu: Artikelkategorien
@@ -77,7 +77,7 @@ de:
   all_articles: Alle Artikel
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
-  add_article: 'HinzufÃ¼gen:'
+  add_article: 'Hinzufügen:'
 
   ingredient: Zutat
   ingredients: Alle Zutaten
@@ -105,10 +105,10 @@ de:
   menucard: Aktive Artikel
   price: Preis
 
-  format_for_online_backboard: "Formatierung fÃ¼r Online-Tafel"
+  format_for_online_backboard: "Formatierung für Online-Tafel"
   division: Trennlinie
   sort_id: Sortierreihenfolge
-  add_ingredient: Zutat hinzufÃ¼gen
+  add_ingredient: Zutat hinzufügen
 
   sum: Summe
   gr: 'br.'

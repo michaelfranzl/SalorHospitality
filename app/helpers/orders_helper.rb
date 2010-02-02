@@ -6,7 +6,7 @@ module OrdersHelper
       item = render(:partial => 'item', :locals => { :frm => frm, :item => Item.new, :cat => cat, :cc => cc })
       body << %{
         var new_item_id = "new_" + new Date().getTime();
-        $('items').insert({ bottom: '<tr id="' + new_item_id + '">#{ escape_javascript item }</tr>'.replace(/new_\\d+/g, new_item_id) });
+        $('items').insert({ bottom: '<tr id="' + new_item_id + '">#{ escape_javascript item }'.replace(/xxx\\d+/g, new_item_id) + '</tr>'});
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {
@@ -21,5 +21,4 @@ module OrdersHelper
       }
     end
   end
-
 end

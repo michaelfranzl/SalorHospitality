@@ -38,6 +38,7 @@ class OrdersController < ApplicationController
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
     redirect_to orders_path and return if @order.items.size.zero?
+    @order.finished = params.has_key?('finish_order') ? true : false
     @order.save ? process_order(@order) : render(:new)
   end
 
@@ -49,7 +50,7 @@ class OrdersController < ApplicationController
     params['order']['items_attributes'].each do |item|
       item[1]['_delete'] = 1 if item[1]['count'] == '0' or item[1]['article_id'] == ''
     end
-    params['order']['finished'] = '1' if params.has_key?('finish_order')
+    @order.finished = true if params.has_key?('finish_order')
     @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
   end
 
@@ -116,12 +117,12 @@ class OrdersController < ApplicationController
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      "Gasthof Gaube\n" +
+      t("clients.#{MyGlobals.client}.invoice_title") + "\n" +
 
       "\e!\x01" +  # Font B
-      "... wer gut isst hat gute Laune!\n\n" +
-      "2732 W\x81rflach, Gerasdorferstra\xe1e 61\n" +
-      "ATU-12345678\n\n" +
+      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle") + "\n\n" +
+      "\n" + t("clients.#{MyGlobals.client}.address") + "\n\n" +
+      t("clients.#{MyGlobals.client}.tax_number") + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
@@ -173,11 +174,11 @@ class OrdersController < ApplicationController
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\nWir danken für Ihren Besuch!\n" +
+      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle1") + "\n" +
       "\e!\x08" + # emphasized
-      "T\x84glich aktueller Men\x81plan unter\n" +
+      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle2") + "\n" +
       "\e!\x88" + # underline, emphasized
-      "www.gasthof-gaube.at\n\n\n\n\n\n\n" + 
+      t("clients.#{MyGlobals.client}.website") + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer

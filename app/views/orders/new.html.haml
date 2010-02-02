@@ -29,7 +29,7 @@
         %td
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
             %option{ :value => '' }
-            = option_groups_from_collection_for_select Category.all, :articles_in_menucard, :name, :id, :name, item_form.object.article_id
+            = option_groups_from_collection_for_select Category.all, :articles_in_menucard, :name, :id, :name_description, item_form.object.article_id
         %td
           %select{ :id => "order_items_attributes_#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][#{ nested_attribute_id }][cost_center_id]" }
             = options_from_collection_for_select @active_cost_centers, :id, :name, item_form.object.cost_center_id
@@ -37,15 +37,12 @@
         %td= item_form.check_box :partial_order
 
   %p
-    = t :add_article
+
     - @categories.each do |category|
       - item_category_caption = "<div class='item_category #{category.name.delete " "}'>#{category.name}</div>"
       %span= add_item_link item_category_caption, order_form, category, @active_cost_centers
 
   .clear
 
-  - if controller.action_name == 'new'
-    %p= submit_tag( (t :create), :class => 'create_edit_order' )
-  - else
-    %p= submit_tag( "#{t :save}", :class => 'create_edit_order', :name => 'edit_order' )
-    %p= submit_tag( "#{t :finished}", :class => 'create_edit_order', :name => 'finish_order' )
+  %p= submit_tag( "#{t :save}", :class => 'create_edit_order', :name => 'edit_order' )
+  %p= submit_tag( "#{t :finished}", :class => 'create_edit_order', :name => 'finish_order' )

@@ -4,14 +4,14 @@
 - frm.fields_for :items, item do |f|
   - nested_attribute_id = /order\[items_attributes\]\[(.*)\]/.match(f.object_name)[1]
   %td
-    %select{ :id => "order_items_attributes_#{ nested_attribute_id }_count", :name => "order[items_attributes][#{ nested_attribute_id }][count]" }
+    %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_count", :name => "order[items_attributes][xxx#{ nested_attribute_id }][count]" }
       = options_for_select MyGlobals::predefined_count, 1
   %td
-    %select{ :id => "order_items_attributes_#{ nested_attribute_id }_article_id", :name => "order[items_attributes][#{ nested_attribute_id }][article_id]" }
+    %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_article_id", :name => "order[items_attributes][xxx#{ nested_attribute_id }][article_id]" }
       %option{ :value => '' }
       = options_from_collection_for_select cat.articles_in_menucard, :id, :name_description
   %td
-    %select{ :id => "order_items_attributes_#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][#{ nested_attribute_id }][cost_center_id]" }
+    %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][xxx#{ nested_attribute_id }][cost_center_id]" }
       = options_from_collection_for_select cc, :id, :name
   %td
     = f.check_box :partial_order
