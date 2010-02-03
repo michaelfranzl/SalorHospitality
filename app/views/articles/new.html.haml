@@ -24,7 +24,7 @@
               %td
                 = article_form.label('price', "#{ t :price }*")
               %td
-                = @article.price ? article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #EEE') : article_form.text_field( :price, :size => 6 )
+                = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #EEE')
             %tr
               %td
                 = article_form.label('category_id', "#{ t :category }*")

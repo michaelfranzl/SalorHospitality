@@ -3,6 +3,10 @@ class Article < ActiveRecord::Base
   belongs_to :category
   has_many :ingredients
 
+  def price=(price)
+    write_attribute(:price, price.gsub(',', '.'))
+  end
+
   validates_presence_of :name, :price, :type, :category_id
   validates_numericality_of :price
 
@@ -15,4 +19,5 @@ class Article < ActiveRecord::Base
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)
     name + descr
   end
+
 end
