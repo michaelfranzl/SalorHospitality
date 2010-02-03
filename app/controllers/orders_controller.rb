@@ -31,6 +31,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+debugger
     @order = Order.new(params[:order])
     session[:last_user_id] = @order.user_id
     @categories = Category.all

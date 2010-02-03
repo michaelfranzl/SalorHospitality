@@ -14,4 +14,5 @@
     %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_cost_center_id", :name => "order[items_attributes][xxx#{ nested_attribute_id }][cost_center_id]" }
       = options_from_collection_for_select cc, :id, :name
   %td
-    = f.check_box :partial_order
+    %input{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_partial_order", :type => 'checkbox', :value => '1', :name => "order[items_attributes][xxx#{ nested_attribute_id }][partial_order]" }
+    -# f.check_box :partial_order
