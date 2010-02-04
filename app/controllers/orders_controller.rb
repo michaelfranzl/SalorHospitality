@@ -74,6 +74,7 @@ class OrdersController < ApplicationController
 
     def make_partial_order(order, items_for_partial_order)
       partial_order = order.clone
+      partial_order.finished = false
       if partial_order.save
         items_for_partial_order.each do |item|
           item.update_attribute :order_id, partial_order.id
