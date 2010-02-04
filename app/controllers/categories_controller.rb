@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.find(:all)
+    @categories = Category.find(:all, :order => :sort_order)
   end
 
   def new

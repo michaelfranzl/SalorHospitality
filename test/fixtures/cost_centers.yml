@@ -1,9 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: "1"
   name: normal
   description: this is a normal cost center
+  active: true
 
 two:
+  id: "2"
   name: party
   description: this is for a private party
+  active: true

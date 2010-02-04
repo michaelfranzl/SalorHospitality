@@ -117,6 +117,7 @@ de:
   datum: Datum
 
   count: Anzahl
+  sort_order: Reihenfolge
   single: Einzel
   total: Alle
 

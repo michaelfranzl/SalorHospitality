@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @categories = Category.all
+    @categories = Category.find(:all, :order => :sort_order)
     @order.table_id = params[:table_id]
     @order.user_id = session[:last_user_id]
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
@@ -25,16 +25,15 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
-    @categories = Category.all
+    @categories = Category.find(:all, :order => :sort_order)
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     render :new
   end
 
   def create
-debugger
     @order = Order.new(params[:order])
     session[:last_user_id] = @order.user_id
-    @categories = Category.all
+    @categories = Category.find(:all, :order => :sort_order)
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
