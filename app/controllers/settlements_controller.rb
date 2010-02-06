@@ -3,7 +3,7 @@ class SettlementsController < ApplicationController
     @settlements = Settlement.all
     @taxes = Tax.all
 
-    @unsettled_orders = Order.find_all_by_settlement_id(nil)
+    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
     unsettled_userIDs = Array.new
     @unsettled_orders.each do |uo|
       unsettled_userIDs << uo.user_id
