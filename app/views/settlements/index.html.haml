@@ -29,13 +29,13 @@
       %th{ :class => 'bb' }= t :datum
       %th{ :class => 'br bb' }= t :user
       - @taxes.each do |tax|
-        %th{ :class => 'bb', :style => 'width:60px' }== #{ tax.name }<br>#{ t :net }
-      %th{ :class => 'br bb colsum', :style => 'width:90px' }== #{ t :sum }<br>#{ t :net }
+        %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }
+      %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :net }
       - @taxes.each do |tax|
-        %th{ :class => 'bb', :style => 'width:60px' }== #{ tax.name }<br>#{t :gr} #{ number_to_percentage tax.percent }
-      %th{ :class => 'br bb colsum', :style => 'width:90px' }== #{ t :sum }<br>#{ t :gr }
-      %th{ :class => 'bb', :style => 'width:90px' }== #{ t :settlement_abbr }<br>#{ t :gr }
-      %th{ :class => 'bb', :style => 'width:50px' }== #{ t :diff }<br>#{ t :gr }
+        %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gr} #{ number_to_percentage tax.percent }
+      %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gr }
+      %th{ :class => 'bb', :style => 'width:100px' }== #{ t :settlement_abbr }<br>#{ t :gr }
+      %th{ :class => 'bb', :style => 'width:60px' }== #{ t :diff }<br>#{ t :gr }
     - total_net = Array.new(@taxes.size + 1) { 0 }
     - total_gro = Array.new(@taxes.size + 1) { 0 }
     - total_rev = 0
@@ -52,16 +52,16 @@
         - total_gro[tax.id] += s_gro[tax.id] #.round(2) not neccessary
       %tr
         %td= link_to "##{s.id}", settlement_path(s)
-        %td= l s.created_at, :format => :datetime_iso
+        %td= l s.created_at, :format => :date_iso
         %td{ :class => 'br' }= s.user.login
         - @taxes.each do |tax|
-          %td= number_with_precision s_net[tax.id]
-        %td{ :class => 'br colsum' }= number_with_precision s_net.sum
+          %td= number_to_currency s_net[tax.id]
+        %td{ :class => 'br colsum' }= number_to_currency s_net.sum
         - @taxes.each do |tax|
-          %td= number_with_precision s_gro[tax.id]
-        %td{ :class => 'br colsum' }= number_with_precision s_gro.sum
-        %td= number_with_precision rev = s.revenue
-        %td= number_with_precision diff = s.revenue - s_gro.sum
+          %td= number_to_currency s_gro[tax.id]
+        %td{ :class => 'br colsum' }= number_to_currency s_gro.sum
+        %td= number_to_currency rev = s.revenue
+        %td= number_to_currency diff = s.revenue - s_gro.sum
         - total_rev += rev
         - total_diff += diff
     %tr

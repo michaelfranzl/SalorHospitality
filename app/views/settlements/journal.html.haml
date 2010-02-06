@@ -43,7 +43,7 @@
   - else
     - path = controller.action_name == 'edit' ? user_settlement_path(settlement.user, settlement) : user_settlements_path
     - method = controller.action_name == 'edit' ? 'put' : 'post'
-
+    abc
     - form_for :settlement, @settlement, :url => path, :html => { :method => method } do |sm_form|
       %tr
         %td{ :colspan => '1', :class => 'colsum' }= sm_form.label('created_at', 'Datum')

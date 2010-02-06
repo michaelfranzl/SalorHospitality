@@ -24,6 +24,18 @@ class SettlementsController < ApplicationController
     @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
   end
 
+  def edit
+    @settlement = Settlement.find(params[:id])
+    @orders = Order.find_all_by_settlement_id(@settlement.id)
+    render :new
+  end
+
+  def update
+    @settlement = Settlement.find(params[:id])
+    @settlement.update_attributes(params[:settlement])
+    redirect_to settlements_path
+  end
+
   def create
     @settlement = Settlement.new(params[:settlement])
     @settlement.user_id = params[:user_id]
@@ -33,7 +45,7 @@ class SettlementsController < ApplicationController
         so.settlement_id = @settlement.id
         so.save
       end
-      redirect_to orders_path
+      redirect_to settlements_path
     else
       render :new
     end

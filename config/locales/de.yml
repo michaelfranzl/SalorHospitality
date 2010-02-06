@@ -126,6 +126,7 @@
       datetime_iso: "%Y-%m-%d %H:%M:%S"
       date_normal: "%d. %B %Y"
       date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
     am: ""
     pm: ""
 
