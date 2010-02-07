@@ -12,7 +12,7 @@
 - if @current_user.role >= 2
   %h3 Gesamtabrechnung
   
-  - form_tag 'index' do
+  - form_tag '/settlements/index' do
     = label('from', 'von')
     = select_date(@from, :prefix => 'from')
     = label('to', 'bis')
