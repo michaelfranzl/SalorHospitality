@@ -74,6 +74,9 @@
       - path = user_settlements_path
       - form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
         %tr
+          %td{ :colspan => '1', :class => 'colsum' }= sm_form.label('created_at', 'Datum')
+          %td{ :colspan => '4', :class => 'colsum' }= sm_form.date_select('created_at')
+        %tr
           %td{ :colspan => '3', :class => 'colsum' }= sm_form.label('revenue', (t :revenue))
           %td{ :colspan => '2', :class => 'colsum' }
             = submit_tag t :save
