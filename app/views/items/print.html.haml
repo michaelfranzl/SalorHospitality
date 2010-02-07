@@ -9,7 +9,7 @@
   - @unprinted_items.each do |ui|
     - next if ui.article.category.tax.percent != 10 # This is ugly but works for now
     %tr
-      %td= ui.order.user.name
+      %td= ui.order.user.title
       %td= ui.order.table.name
       %td= ui.count
       %td= ui.article.name.upcase

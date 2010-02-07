@@ -4,9 +4,6 @@ class MenucardController < ApplicationController
     @categories = Category.all
   end
 
-  def edit
-  end
-
   def update
     Article.update_all :menucard => 0
     params[:menucard].each do |article_id|

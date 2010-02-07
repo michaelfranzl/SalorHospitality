@@ -5,10 +5,14 @@ class ItemsController < ApplicationController
     respond_to do |wants|
       wants.html
       wants.bon {
-        render :text => generate_escpos_items(@unprinted_items)
         @unprinted_items.each do |ui|
-          ui.printed = true
+          ui.update_attribute(:printed, true)
         end
+        from = @unprinted_items.size - 21
+        from = 0 if from < 0
+        to = @unprinted_items.size - 1
+        @print_items = @unprinted_items[from..to]
+        render :text => generate_escpos_items(@print_items)
       }
     end
   end
@@ -23,21 +27,22 @@ class ItemsController < ApplicationController
 
         output +=
         "\e@"     +  # Initialize Printer
-        "\ea\x01" +  # align center
 
         "\e!\x00" +  # Font A
         "\e!\x08" +  # Font A, emphasized
-        "%15s %20.20s\n" % [ui.order.user.name, ui.order.table.name] +
+        "%-25.25s %15s\n" % [ui.order.user.title, ui.order.table.name] +
 
         "\e!\x38" +  # doube tall, double wide, bold
-        "%u %20s\n" % [ui.count, ui.article.name.upcase] +
+        "%u %-17.17s\n" % [ui.count, ui.article.name] +
 
         "\e!\x08" +  # Font A, emphasized
-        "%30s\n" % [ui.article.description.upcase] +
+        "%-42.42s\n" % [ui.article.description] +
 
-        "\n\n\n\n\n\n\n" +
+        "\n\n\n\n\n\n" +
         "\x1DV\x00" # paper cut
       end
+
+      output = Iconv.conv('ISO-8859-15','UTF-8',output)
 
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
