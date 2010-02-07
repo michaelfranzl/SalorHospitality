@@ -1,0 +1,15 @@
+%h2= t :items_menu
+
+%table
+  %tr
+    %th{ :width => '100px' }
+    %th{ :width => '200px' }
+    %th{ :width => '120px' }
+    %th{ :width => '120px' }
+  - @unprinted_items.each do |ui|
+    - next if ui.article.category.tax.percent != 10 # This is ugly but works for now
+    %tr
+      %td= ui.order.user.name
+      %td= ui.order.table.name
+      %td= ui.count
+      %td= ui.article.name.upcase

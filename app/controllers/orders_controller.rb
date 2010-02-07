@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.find(:all)
+    @tables = Table.all
   end
 
   def show
