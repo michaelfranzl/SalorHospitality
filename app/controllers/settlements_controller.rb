@@ -1,6 +1,8 @@
 class SettlementsController < ApplicationController
   def index
-    @settlements = Settlement.all
+    @from, @to = assign_from_to(params)
+    @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to })
+
     @taxes = Tax.all
 
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
@@ -50,5 +52,20 @@ class SettlementsController < ApplicationController
       render :new
     end
   end
+
+  private
+
+    def assign_from_to(p)
+      f = Date.civil( p[:from][:year ].to_i,
+                      p[:from][:month].to_i,
+                      p[:from][:day  ].to_i) if p[:from]
+      t = Date.civil( p[:to  ][:year ].to_i,
+                      p[:to  ][:month].to_i,
+                      p[:to  ][:day  ].to_i) if p[:to]
+      f ||= 1.week.ago
+      t ||= 0.week.ago
+
+      return f, t
+    end
 
 end

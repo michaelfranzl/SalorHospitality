@@ -12,12 +12,12 @@
 - if @current_user.role >= 2
   %h3 Gesamtabrechnung
   
-  - form_tag 'settlements/index' do
+  - form_tag 'index' do
     = label('from', 'von')
-    = date_select('from', 'von')
+    = select_date(@from, :prefix => 'from')
     = label('to', 'bis')
-    = date_select('to', 'bis')
-    = submit_tag 'anfrage'
+    = select_date(@to, :prefix => 'to')
+    = submit_tag 'abfragen'
   
   %br
   
@@ -36,20 +36,24 @@
       %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gr }
       %th{ :class => 'bb', :style => 'width:100px' }== #{ t :settlement_abbr }<br>#{ t :gr }
       %th{ :class => 'bb', :style => 'width:60px' }== #{ t :diff }<br>#{ t :gr }
+
     - total_net = Array.new(@taxes.size + 1) { 0 }
     - total_gro = Array.new(@taxes.size + 1) { 0 }
     - total_rev = 0
     - total_diff = 0
+
     - @settlements.each do |s|
       - s_net = Array.new(@taxes.size + 1) { 0 }
       - s_gro = Array.new(@taxes.size + 1) { 0 }
       - s.orders.each do |o|
         - o.items.each do |i|
-          - s_gro[i.article.category.tax.id] += i.count * i.article.price if !i.free
+          - price = @current_user.role >= 3 ? 0 : i.article.price
+          - s_gro[i.article.category.tax.id] += i.count * price
       - @taxes.each do |tax|
         - s_net[tax.id] = s_gro[tax.id] / (1 + tax.percent/100.0)
         - total_net[tax.id] += s_net[tax.id].round(2)
         - total_gro[tax.id] += s_gro[tax.id] #.round(2) not neccessary
+
       %tr
         %td= link_to "##{s.id}", settlement_path(s)
         %td= l s.created_at, :format => :date_iso
@@ -60,10 +64,16 @@
         - @taxes.each do |tax|
           %td= number_to_currency s_gro[tax.id]
         %td{ :class => 'br colsum' }= number_to_currency s_gro.sum
-        %td= number_to_currency rev = s.revenue
-        %td= number_to_currency diff = s.revenue - s_gro.sum
+
+        - rev = s.revenue
+        - diff = s.revenue - s_gro.sum
         - total_rev += rev
         - total_diff += diff
+        - rev = diff = total_rev = total_diff = 0 if @current_user.role >= 3
+
+        %td= number_to_currency rev
+        %td= number_to_currency diff
+
     %tr
       %td{ :colspan => 3, :class => 'br sum' } Summen
       - @taxes.each do |tax|
