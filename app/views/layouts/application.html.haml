@@ -51,9 +51,11 @@
       .metanavi
         %small
           = link_to( (t :orders_menu), orders_path)
-          - if @current_user.role >= 1
+          - if @current_user.role == 1
             = link_to( (t :settlements_menu), settlements_path)
+            = link_to( (t :articles_menu), '/articles/listall')
           - if @current_user.role >= 2
+            = link_to( (t :settlements_menu), settlements_path)
             = link_to( (t :articles_menu), articles_path)
             = link_to( (t :categories_menu), categories_path)
             = link_to( (t :stocks_menu), stocks_path)

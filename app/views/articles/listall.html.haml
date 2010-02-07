@@ -8,7 +8,10 @@
     %th{ :width => '50px' }
   - @articles.each do |ar|
     %tr
-      %td= link_to (ar.name, edit_article_path(ar))
+      - if @current_user.role >= 2
+        %td= link_to (ar.name, edit_article_path(ar))
+      - else
+        %td= ar.name
       %td= ar.description
       %td= number_to_currency ar.price
       %td= link_to ((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
