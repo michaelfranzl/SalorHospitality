@@ -188,6 +188,8 @@ table#items th {
   background-color: #f5f5f5; }
 table#items th.count {
   width: 90px; }
+table#items th.price {
+  width: 90px; }
 table#items th.article {
   width: 500px; }
 table#items th.checkbox {
