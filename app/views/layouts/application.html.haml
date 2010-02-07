@@ -51,9 +51,12 @@
       .metanavi
         %small
           = link_to( (t :orders_menu), orders_path)
+          = link_to( 'Druck', '/items/print.bon')
+
           - if @current_user.role == 1
             = link_to( (t :settlements_menu), settlements_path)
             = link_to( (t :articles_menu), '/menucard')
+
           - if @current_user.role >= 2
             = link_to( (t :settlements_menu), settlements_path)
             = link_to( (t :articles_menu), articles_path)
@@ -64,7 +67,7 @@
             = link_to( (t :cost_centers_menu), cost_centers_path)
             = link_to( (t :users_menu), users_path)
             = link_to( (t :tables_menu), tables_path)
-            = link_to( 'Druck', '/items/print.bon')
+
 
     - if @current_user and @current_user.role >= 2
       %br
