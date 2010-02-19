@@ -127,7 +127,7 @@ class OrdersController < ApplicationController
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
-      "#{ t :served_by } #{ order.user.title } auf Tisch Nr. #{ order.table.id }\n" +
+      "#{ t :served_by } #{ order.user.title } auf Tisch Nr. #{ order.table.name }\n" +
       "Bestellung Nr. #{order.id} am #{l order.created_at, :format => :long}\n\n" +
 
       "\e!\x00" +  # Font A

@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.find(:all, :order => 'name ASC')
+    @categories = Category.find(:all, :order => 'sort_order')
     @articles = Article.all
   end
 

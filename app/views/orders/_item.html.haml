@@ -6,7 +6,7 @@
 
 
   %td
-    %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_count", :name => "order[items_attributes][xxx#{ nested_attribute_id }][count]", :onchange => "document.getElementById('item_sum_#{ nested_attribute_id }').innerHTML = 'Fred Flinstone';" }
+    %select{ :id => "order_items_attributes_xxx#{ nested_attribute_id }_count", :name => "order[items_attributes][xxx#{ nested_attribute_id }][count]" }
       = options_for_select MyGlobals::predefined_count, 1
 
   %td{ :id => "item_sum_#{ nested_attribute_id }" }
