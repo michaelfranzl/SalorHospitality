@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: 1/8 liter
+  price: 2
+  article_id: 1
+
+two:
+  name: 1/2 liter
+  price: 4
+  article_id: 1

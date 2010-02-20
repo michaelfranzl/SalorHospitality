@@ -2,6 +2,7 @@ class Article < ActiveRecord::Base
 
   belongs_to :category
   has_many :ingredients
+  has_many :quantities
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
