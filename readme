@@ -15,10 +15,6 @@ Have fun!
 
 == ToDo
 
-OK Keep order of items on invoice throughout
-OK Keep order of articles, sort after creation date
-OK Table id versus title on invoice
-OK Order of categories: vhnbs
 Make partial_order and cost_center a separate step
 implement a button for: finish and new order on same table (bars)
 graphics
