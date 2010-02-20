@@ -9,17 +9,6 @@ module OrdersHelper
         itemrow = itemrow.replace(/xxx\\d+/g, new_item_id);
         itemrow = itemrow.replace(/yyy/g, new_item_id.substr(-9,9));
         $('items').insert({ bottom: '<tr id="' + new_item_id + '">' + itemrow + '</tr>'});
-        function HighlightEffect(element){
-          new Effect.Highlight(element,
-            {
-              startcolor: "#ffff44",
-              endcolor: "#ffffff",
-              restorecolor: "#ffffff",
-              duration: 3
-            }
-          )
-        }
-        HighlightEffect($(new_item_id));
       }
     end
   end
