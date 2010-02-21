@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(:version => 20100220171101) do
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity_id"
   end
 
   create_table "categories", :force => true do |t|
@@ -68,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20100220171101) do
     t.integer  "cost_center_id"
     t.boolean  "printed",        :default => false
     t.integer  "sort"
+    t.integer  "quantity_id"
   end
 
   create_table "orders", :force => true do |t|

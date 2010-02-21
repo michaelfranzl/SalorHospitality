@@ -32,10 +32,18 @@ module OrdersHelper
         }.to_s
       }.to_s
     }.to_s
+    
 
-    new_item_html = "\n\nvar new_item_html = \"#{ escape_javascript render 'items/item', :locals => { :number => categories, :articleid => 'ARTICLEID', :itemname => 'ITEMNAME' } }\""
+    @designator = 'DESIGNATOR'
+    @sort = 'SORT'
+    @articleid = 'ARTICLEID'
+    @quantityid = 'QUANTITYID'
+    @itemname = 'ITEMNAME'
+    new_item_html = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :itemname => @itemname, :designator => @designator }
+    new_item_html_var = "\n\nvar new_item_html = \"#{ escape_javascript new_item_html }\""
 
-    return articleslist + quantitylist + itemdetails + new_item_html
+
+    return articleslist + quantitylist + itemdetails + new_item_html_var
   end
 
 
@@ -45,9 +53,11 @@ module OrdersHelper
     display_quantities = "function display_quantities(art_id) { document.getElementById('quantities').innerHTML = quantitylist[art_id]; }\n"
     add_new_item = "function add_new_item(qu_id) {
                       var timestamp = new Date().getTime();
-                      new_item_html_modified = new_item_html.replace(/TIMESTAMP/g, timestamp.toString().substr(-8,8));
-                      new_item_html_modified = new_item_html_modified.replace(/ITEMNAME/g,  itemdetails[qu_id][1] );
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, 'new_' + timestamp.toString().substr(-9,9));
+                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
+                      new_item_html_modified = new_item_html_modified.replace(/ITEMNAME/g,  itemdetails[qu_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails[qu_id][0] );
+                      new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
                       $('items').insert({ bottom: new_item_html_modified });
                     }"
     return display_articles + display_quantities + add_new_item
