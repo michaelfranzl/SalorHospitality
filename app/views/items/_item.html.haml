@@ -1,7 +1,8 @@
-%div.plus +
-%div.minus -
-%div.label= @label
-<input id='order_items_attributes_new_#{ @designator }_article_id' name='order[items_attributes][#{ @designator }][article_id]' type='text' value='#{ @articleid}' }
-<input id='order_items_attributes_new_#{ @designator }_count' name='order[items_attributes][#{ @designator }][count]' type='text' value='1' }
-<input id='order_items_attributes_new_#{ @designator }_quantity_id' name='order[items_attributes][#{ @designator }][quantity_id]' type='text' value='#{ @quantityid}' }
-<input id='order_items_attributes_new_#{ @designator }_sort' name='order[items_attributes][#{ @designator }][sort]' type='text' value='#{ @sort}' }
+%div.item
+  %div.plusminus +
+  %div.plusminus -
+  %div.label= @label
+  <input id='order_items_attributes_new_#{ @designator }_count' name='order[items_attributes][#{ @designator }][count]' type='text' value='1' }
+  <input id='order_items_attributes_new_#{ @designator }_article_id' name='order[items_attributes][#{ @designator }][article_id]' type='hidden' value='#{ @articleid }' }
+  <input id='order_items_attributes_new_#{ @designator }_quantity_id' name='order[items_attributes][#{ @designator }][quantity_id]' type='hidden' value='#{ @quantityid }' }
+  <input id='order_items_attributes_new_#{ @designator }_sort' name='order[items_attributes][#{ @designator }][sort]' type='hidden' value='#{ @sort }' }

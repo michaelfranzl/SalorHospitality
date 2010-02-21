@@ -3,7 +3,7 @@ body {
   padding: 20px;
   margin: 0;
   padding: 10px;
-  font-size: 120%; }
+  font-size: 100%; }
 
 h1 {
   margin: 0; }
@@ -270,7 +270,15 @@ div.quantity {
 
 div#items {
   float: left;
-  width: 230px; }
+  width: 400px; }
+
+div.plusminus {
+  float: left;
+  width: 30px;
+  height: 30px; }
+
+div.label {
+  float: left; }
 
 div.clear {
   clear: both; }
