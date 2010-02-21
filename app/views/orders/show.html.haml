@@ -10,16 +10,15 @@
   - subtotal = 0
   - @order.items.each do |item|
     - c = item.count
-    - p = item.article.price
+    - p = item.quantity_id ? item.quantity.price : item.article.price
     - sum = 0
-    - if !item.free
-      - sum = c * p
-      - subtotal += sum
+    - sum = c * p
+    - subtotal += sum
     %tr
       %td= c
-      %td= item.article.name
+      %td= item.quantity_id ? compose_item_label(item.quantity) : item.article.name
       %td{ :style => 'text-align:right' }= number_to_currency p
-      %td{ :style => 'text-align:right' }= number_to_currency sum.zero? ? "#{t :free}" : sum
+      %td{ :style => 'text-align:right' }= number_to_currency sum
   %tr
     %td{ :colspan => '3'}
     %td{ :style => 'text-align:right'}

@@ -61,7 +61,7 @@ module OrdersHelper
   end
 
   def compose_item_label(qu)
-    label = "#{ qu.article.name } | #{ qu.name } | #{ qu.price }"
+    label = "#{ qu.article.name } | #{ qu.name }"
     label += '<br>' + '| ' + qu.article.description if !qu.article.description.empty?
     return label
   end

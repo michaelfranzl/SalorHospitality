@@ -29,17 +29,16 @@
       - subtotal = 0
       - so.items.each do |item|
         - c = item.count
-        - p = item.article.price
+        - p = item.quantity_id ? item.quantity.price : item.article.price
         - sum = 0
-        - if !item.free
-          - sum = c * p
-          - subtotal += sum
-          - total += sum
+        - sum = c * p
+        - subtotal += sum
+        - total += sum
         %tr
-          %td= item.article.name
+          %td= item.quantity_id ? compose_item_label(item.quantity) : item.article.name
           %td= c
           %td= number_to_currency p
-          %td{ :class => 'colsum' }= sum.zero? ? (t :free) : (number_to_currency sum)
+          %td{ :class => 'colsum' }= number_to_currency sum
     %tr
       %td{ :colspan => '3' } Bestellsumme
       %td{ :colspan => '2', :class => 'sum' }= number_to_currency subtotal
