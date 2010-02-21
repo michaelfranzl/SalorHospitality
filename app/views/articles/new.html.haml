@@ -89,6 +89,36 @@
           %p
             %small= add_ingredient_link((t :add_ingredient), article_form)
 
+
+
+        %fieldset{ :style => 'width:350px' }
+          %legend Varianten
+          %table{ :id => 'quantities' }
+
+            - article_form.fields_for :quantities do |quantity_form|
+              %tr
+                %td
+                  = quantity_form.label :name, (t :name)
+                %td
+                  = quantity_form.text_field :name, :size => '7'
+                %td
+                  = quantity_form.label :price, (t :price)
+                %td
+                  = quantity_form.text_field :price, :price => '4'
+
+                - if controller.action_name == 'edit'
+                  %td
+                    = quantity_form.label('_delete', (t :delete))
+                  %td
+                    = quantity_form.check_box :_delete
+
+          %p
+            %small= add_quantity_link((t :add_quantity), article_form)
+
+
+
+
+
         %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
         = observe_field 'article_name', :frequency => 0.5, :update => 'foods_search_results', :url => { :action => 'find_foods' }, :with => "'foods_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"
