@@ -77,12 +77,14 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, art_id );
+                      document.getElementById('quantities').innerHTML = '&nbsp;';
                       $('items').insert({ bottom: new_item_html_modified });
                     }"
     return display_articles + display_quantities + add_new_item_q + add_new_item_a
   end
 
   def compose_item_label(input)
+    return "error" if !input
     if input.class == Quantity
       label = "#{ input.article.name } | #{ input.name }"
       label += '<br>' + '| ' + input.article.description if !input.article.description.empty?
