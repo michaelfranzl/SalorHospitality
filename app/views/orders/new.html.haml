@@ -43,7 +43,7 @@
       - @sort = item_form.object.sort
       - @articleid = item_form.object.article_id
       - @quantityid = item_form.object.quantity_id
-      - @label = compose_item_label(item_form.object.quantity)
+      - @label = compose_item_label(item_form.object.quantity ? item_form.object.quantity : item_form.object.article)
       = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator }
 
   .clear

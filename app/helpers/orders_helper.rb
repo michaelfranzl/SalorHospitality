@@ -72,11 +72,12 @@ module OrdersHelper
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, 'new_' + timestamp.toString().substr(-9,9));
+                      timestamp = 'new_' + timestamp.toString().substr(-9,9);
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, timestamp);
                       new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
-                      new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, art_id );
+                      new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
                       document.getElementById('quantities').innerHTML = '&nbsp;';
                       $('items').insert({ bottom: new_item_html_modified });
                     }"
@@ -84,7 +85,6 @@ module OrdersHelper
   end
 
   def compose_item_label(input)
-    return "error" if !input
     if input.class == Quantity
       label = "#{ input.article.name } | #{ input.name }"
       label += '<br>' + '| ' + input.article.description if !input.article.description.empty?
