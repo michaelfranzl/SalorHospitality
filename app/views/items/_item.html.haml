@@ -1,9 +1,11 @@
 %div{ :id => "item_#{ @designator }", :class => "item" }
-  %span{ :id => "plus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); $('order_items_attributes_#{ @designator }_count').value = i+1;" }+
-  %span{ :id => "minus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); if(i<1){i=1}; $('order_items_attributes_#{ @designator }_count').value = i-1;" }-
-  %span{ :id => "label_#{ @designator }", :class => 'item_label', :onclick => "$('order_items_attributes_#{ @designator }_count').value++" }= @label
-  %input{ :id => "order_items_attributes_#{ @designator }_count", :name => "order[items_attributes][#{ @designator }][count]", :class => 'item_count', :type => 'text', :value => "#{ @count }" }
-  %span{ :id => "remove_#{ @designator }", :class => 'item_plusminus', :onclick => "$('item_#{ @designator }').remove(); $('order_items_attributes_#{ @designator }__delete').value = 1;" }X
+  -#%span{ :id => "plus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); $('order_items_attributes_#{ @designator }_count').value = i+1; new Effect.Highlight(this, { startcolor: '#ffff99', endcolor: '#ffffff' }); " }+
+
+  %input{ :id => "order_items_attributes_#{ @designator }_count", :name => "order[items_attributes][#{ @designator }][count]", :class => 'item_count', :type => 'text', :value => "#{ @count }", :onclick => "$('order_items_attributes_#{ @designator }_count').value++; new Effect.Highlight(this, { startcolor: '#ffff99', endcolor: '#ffffff' });" }
+  %span{ :id => "label_#{ @designator }", :class => 'item_label', :onclick => "$('order_items_attributes_#{ @designator }_count').value++; new Effect.Highlight('order_items_attributes_#{ @designator }_count', { startcolor: '#ffff99', endcolor: '#ffffff' });" }= @label
+  %span{ :id => "minus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); if(i<2){ Effect.DropOut('item_#{ @designator }'); }; $('order_items_attributes_#{ @designator }_count').value = i-1; new Effect.Highlight('order_items_attributes_#{ @designator }_count', { startcolor: '#ffff99', endcolor: '#ffffff' });" }-
+
+  -#%span{ :id => "remove_#{ @designator }", :class => 'item_plusminus', :onclick => "$('order_items_attributes_#{ @designator }__delete').value = 1;" }X
 
 %input{ :id => "order_items_attributes_#{ @designator }_article_id", :name => "order[items_attributes][#{ @designator }][article_id]", :type => 'hidden', :value => "#{ @articleid }" }
 %input{ :id => "order_items_attributes_#{ @designator }_quantity_id", :name => "order[items_attributes][#{ @designator }][quantity_id]", :type => 'hidden', :value => "#{ @quantityid }" }

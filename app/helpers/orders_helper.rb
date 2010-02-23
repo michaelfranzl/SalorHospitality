@@ -1,14 +1,12 @@
 module OrdersHelper
 
-
-
   def generate_js_variables(categories)
     articleslist =
     "var articleslist = new Array();" +
     categories.collect{ |cat|
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles_in_menucard.collect{ |art|
-        action = art.quantities.empty? ? "add_new_item_a(#{ art.id })" : "display_quantities(#{ art.id })"
+        action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
         "<div class='orders_article' onclick='#{ action }'>#{ art.name }</div>"
       }.to_s + '";'
     }.to_s
@@ -60,26 +58,31 @@ module OrdersHelper
 
 
   def generate_js_functions
-    display_articles   = "function display_articles(cat_id)   { document.getElementById('articles').innerHTML   = articleslist[cat_id]; document.getElementById('quantities').innerHTML  = '&nbsp;';}\n"
-    display_quantities = "function display_quantities(art_id) { document.getElementById('quantities').innerHTML = quantitylist[art_id]; }\n"
+    display_articles   = "function display_articles(cat_id) {Effect.BlindDown('articles', { duration: 1 }); document.getElementById('quantities').innerHTML  = '&nbsp;'; document.getElementById('articles').innerHTML   = articleslist[cat_id];   }\n"
+    display_quantities = "function display_quantities(art_id) { document.getElementById('quantities').innerHTML = quantitylist[art_id]; Effect.BlindDown('quantities', { duration: 0.2 });}\n"
     add_new_item_q = "function add_new_item_q(qu_id) {
                       var timestamp = new Date().getTime();
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, 'new_' + timestamp.toString().substr(-9,9));
-                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
+                      var short_timestamp = 'new_' + timestamp.toString().substr(-9,9);
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, short_timestamp);
+                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, short_timestamp );
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_q[qu_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
                       $('items').insert({ bottom: new_item_html_modified });
+                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff' });
+
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, 'new_' + timestamp.toString().substr(-9,9));
+                      var short_timestamp = 'new_' + timestamp.toString().substr(-9,9);
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, short_timestamp);
                       new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
                       document.getElementById('quantities').innerHTML = '&nbsp;';
                       $('items').insert({ bottom: new_item_html_modified });
+                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff' });
                     }"
     return display_articles + display_quantities + add_new_item_q + add_new_item_a
   end
@@ -93,5 +96,7 @@ module OrdersHelper
     end
     return label
   end
+
+
 
 end
