@@ -57,7 +57,6 @@ class ArticlesController < ApplicationController
   def update
     @categories = Category.find(:all, :order => 'name ASC')
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't get always id's only.
-
     @article.update_attributes params[:article]
 
     respond_to do |wants|

@@ -50,7 +50,8 @@ module OrdersHelper
     @articleid = 'ARTICLEID'
     @quantityid = 'QUANTITYID'
     @label = 'LABEL'
-    new_item_html = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator }
+    @count = 1
+    new_item_html = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count  }
     new_item_html_var = "\n\nvar new_item_html = \"#{ escape_javascript new_item_html }\""
 
     return articleslist + quantitylist + itemdetails_a + itemdetails_q + new_item_html_var
@@ -72,8 +73,7 @@ module OrdersHelper
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
-                      timestamp = 'new_' + timestamp.toString().substr(-9,9);
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, timestamp);
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, 'new_' + timestamp.toString().substr(-9,9));
                       new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );

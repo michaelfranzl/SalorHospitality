@@ -37,7 +37,6 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    redirect_to orders_path and return if @order.items.size.zero?
     @order.finished = params.has_key?('finish_order') ? true : false
     @order.save ? process_order(@order) : render(:new)
   end
@@ -46,12 +45,15 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+
     @order.update_attribute( :sum, calculate_order_sum(@order) )
-    params['order']['items_attributes'].each do |item|
-      item[1]['_delete'] = 1 if item[1]['count'] == '0' or item[1]['article_id'] == ''
-    end
     @order.finished = true if params.has_key?('finish_order')
-    @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
+
+    if @order.update_attributes(params[:order])
+      process_order(@order)
+    else
+      render(:new)
+    end
   end
 
   def destroy
@@ -87,6 +89,10 @@ class OrdersController < ApplicationController
     end
 
     def process_order(order)
+      order.items.each do |item|
+        item.delete if item.count.zero?
+      end
+      order.delete and redirect_to orders_path and return if order.items.size.zero?
       items_for_partial_order = Item.find_all_by_partial_order(true)
       partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
       if order.finished
@@ -100,13 +106,10 @@ class OrdersController < ApplicationController
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
-        next if !item.id
         c = item.count
-        p = item.article.price
-        if !item.free
-          sum = c * p
-          subtotal += c * p
-        end
+        p = item.quantity_id ? item.quantity.price : item.article.price
+        sum = c * p
+        subtotal += c * p
       end
       return subtotal
     end
