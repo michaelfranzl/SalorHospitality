@@ -260,15 +260,26 @@ select#order_user_id
 
 
 
+div.orders_article,
+div.orders_quantity
+  :background-color = !lightgray
+  :margin 2px
+  :height 20px
+  :padding 10px
+  :cursor pointer
+
+
+
+
 div#categories
-  :width 230px
+  :width 205px
   :float left
 
 div.category
   :float left
   :width 50px
   :height 50px
-  :margin 3px
+  :margin 2px
   :border 1px solid black
   :background-color #fff1f1
   :font-size 70%
@@ -284,7 +295,7 @@ div.article
   :cursor pointer
 
 div#quantities
-  :width 230px
+  :width 180px
   :float left
 
 div.quantity
@@ -292,10 +303,11 @@ div.quantity
 
 div#items
   :float left
-  :width 400px
+  :width 440px
 
 div.item
   :clear both
+  :padding 5px
 
 span.item_plusminus
   :width 40px
@@ -304,17 +316,28 @@ span.item_plusminus
   :cursor pointer
   :background-color = !lightgray
   :text-align center
-  :margin 5px
+  :margin 2px
   :font-size 200%
 
 span.item_label
   :cursor pointer
   :display inline-block
-  :width 150px
+  :width 200px
+  :background-color = !lightgray
+  :height 20px
+  :padding 10px
+
 
 input.item_count
+  :width 30px
+  :border none
+  :background-color = !lightgray
+  :background-color = !lightgray
+  :height 20px
+  :padding 10px
   :cursor pointer
-  :width 50px
+  :font-size 120%
+
 
 
 

@@ -9,7 +9,7 @@ module OrdersHelper
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id })" : "display_quantities(#{ art.id })"
-        "<div class='article' onclick='#{ action }'>#{ art.name }</div>"
+        "<div class='orders_article' onclick='#{ action }'>#{ art.name }</div>"
       }.to_s + '";'
     }.to_s
 
@@ -20,7 +20,7 @@ module OrdersHelper
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.collect{ |qu|
-          "<div class='quantity' onclick='add_new_item_q(#{ qu.id })'>#{ qu.name }</div>"
+          "<div class='orders_quantity' onclick='add_new_item_q(#{ qu.id })'>#{ qu.name }</div>"
         }.to_s + '";'
       }.to_s
     }.to_s

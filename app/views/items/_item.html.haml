@@ -1,5 +1,5 @@
 %div{ :id => "item_#{ @designator }", :class => "item" }
-  %span{ :id => "plus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); if(i<0){i=0}; $('order_items_attributes_#{ @designator }_count').value = i+1;" }+
+  %span{ :id => "plus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); $('order_items_attributes_#{ @designator }_count').value = i+1;" }+
   %span{ :id => "minus_#{ @designator }", :class => 'item_plusminus', :onclick => "var i; i=parseInt($('order_items_attributes_#{ @designator }_count').value); if(i<1){i=1}; $('order_items_attributes_#{ @designator }_count').value = i-1;" }-
   %span{ :id => "label_#{ @designator }", :class => 'item_label', :onclick => "$('order_items_attributes_#{ @designator }_count').value++" }= @label
   %input{ :id => "order_items_attributes_#{ @designator }_count", :name => "order[items_attributes][#{ @designator }][count]", :class => 'item_count', :type => 'text', :value => "#{ @count }" }
