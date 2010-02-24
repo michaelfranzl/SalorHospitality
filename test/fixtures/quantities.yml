@@ -5,21 +5,25 @@ one:
   name: 1/8 liter
   price: 2
   article_id: 1
+  active: true
 
 two:
   id: 2
   name: 1/2 liter
   price: 4
   article_id: 1
+  active: true
 
 three:
   id: 3
   name: with extra cream
   price: 6
   article_id: 4
+  active: true
 
 four:
   id: 4
   name: with extra ice
   price: 8
   article_id: 4
+  active: true

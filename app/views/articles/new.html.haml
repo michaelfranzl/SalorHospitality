@@ -104,9 +104,14 @@
                 %td
                   = quantity_form.label :price, (t :price)
                 %td
-                  = quantity_form.text_field :price, :price => '4'
+                  = quantity_form.text_field( :price, :price => '4', :readonly => 'readonly', :style => 'background-color: #EEE')
+                %td
+                  = quantity_form.label('active', (t :active))
+                %td
+                  = quantity_form.check_box :active
 
-                - if controller.action_name == 'edit'
+
+                - if @current_user.role > 4
                   %td
                     = quantity_form.label('_delete', (t :delete))
                   %td
