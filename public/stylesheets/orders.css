@@ -1,0 +1,64 @@
+div#categories {
+  width: 225px;
+  float: left; }
+
+div#articles {
+  float: left; }
+
+table#articlestable {
+  border-spacing: 1px; }
+
+div#quantities {
+  width: 180px;
+  float: left; }
+
+div#items {
+  float: right; }
+
+div.category,
+td.article,
+td.quantity {
+  border-top: 2px solid #555;
+  border-left: 2px solid #555;
+  border-right: 2px solid #222;
+  border-bottom: 2px solid #222;
+  margin: 1px 0px 0px 1px;
+  background-color: #444444;
+  cursor: pointer; }
+
+div.category {
+  float: left;
+  width: 60px;
+  height: 60px;
+  padding: 14px 5px 0 5px; }
+
+td.article,
+td.quantity {
+  background-color: #444444;
+  height: 30px;
+  vertical-align: middle;
+  padding-left: 10px;
+  width: 200px; }
+
+input.item_count {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #444444;
+  background-color: #444444;
+  cursor: pointer; }
+
+td.item_plusminus {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #444444;
+  text-align: center;
+  margin: 2px; }
+
+td.item_label {
+  cursor: pointer;
+  width: 200px;
+  background-color: #444444;
+  height: 20px;
+  padding: 5px 0 5px 10px; }

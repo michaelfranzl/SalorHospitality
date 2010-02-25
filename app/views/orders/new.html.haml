@@ -1,4 +1,7 @@
-%h2= @order.id ? "#{t :order, :count => 1} ##{@order.id}, #{Table.find(@order.table_id).name}" : "#{t :new_order} #{Table.find(@order.table_id).name}"
+.info
+  %p= @username
+  %p= @order.id ? "#{t :order, :count => 1} ##{@order.id}" : t(:new_order)
+  %p= @table.name
 
 %script{ :type => 'text/javascript' }= generate_js_variables(@categories)
 %script{ :type => 'text/javascript' }= generate_js_functions
@@ -19,31 +22,34 @@
       = order_form.label(:created_at, (t :creation_date))
       = order_form.date_select :created_at
 
-  %div#categories
-    - @categories.each do |category|
-      ==<div class='category #{ category.name.delete ' ' }' onclick='display_articles(#{ category.id });'>#{ category.name }</div>
-
-
-
-  %div#articles &nbsp;
-
-
-  %div#quantities &nbsp;
-
-
-  %div#items
-    - order_form.fields_for :items do |item_form|
-
-      - item = item_form.object
-      - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
-      - @sort = item.sort
-      - @articleid = item.article_id
-      - @quantityid = item.quantity_id
-      - @count = item.count
-      - @label = compose_item_label(item.quantity ? item.quantity : item.article)
-      = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :cout => @count }
-
-  .clear
-
-  %p= submit_tag( "#{t :save}", :class => 'create_edit_order', :name => 'edit_order' )
-  %p= submit_tag( "#{t :finished}", :class => 'create_edit_order', :name => 'finish_order' )
+  %div#container
+  
+    %div#categories
+      - @categories.each do |category|
+        ==<div class="category #{ category.name.delete ' ' }" onclick="display_articles(#{ category.id }); ">#{ category.name }</div>
+  
+  
+    %div#articles
+      %table#articlestable
+  
+  
+    %div#quantities
+      %table#quantitiestable
+  
+    %div#items
+      %table#itemstable
+        - order_form.fields_for :items do |item_form|
+  
+          - item = item_form.object
+          - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
+          - @sort = item.sort
+          - @articleid = item.article_id
+          - @quantityid = item.quantity_id
+          - @count = item.count
+          - @label = compose_item_label(item.quantity ? item.quantity : item.article)
+          = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :cout => @count }
+  
+    .clear
+  
+    %p= submit_tag( "#{t :save}", :class => 'create_edit_order', :name => 'edit_order' )
+    %p= submit_tag( "#{t :finished}", :class => 'create_edit_order', :name => 'finish_order' )

@@ -5,7 +5,7 @@ module ArticlesHelper
       ingredient = render(:partial => 'ingredient', :locals => { :frm => frm, :ingredient => Ingredient.new })
       page << %{
         var new_ingredient_id = "new_" + new Date().getTime();
-        $('ingredients').insert({ bottom: '<tr id="' + new_ingredient_id + '">#{ escape_javascript ingredient }</tr>'.replace(/new_\\d+/g, new_ingredient_id) });
+        $('ingredients').insert({ bottom: '<tr id="' + new_ingredient_id + '">#{ escape_javascript ingredient }</tr>'.replace(/\\d/g, new_ingredient_id) });
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {
@@ -26,7 +26,7 @@ module ArticlesHelper
       quantity = render(:partial => 'quantity', :locals => { :frm => frm, :quantity => Quantity.new })
       page << %{
         var new_quantity_id = "new_" + new Date().getTime();
-        $('quantities').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/new_\\d+/g, new_quantity_id) });
+        $('quantities').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\d/g, new_quantity_id) });
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {

@@ -1,13 +1,14 @@
 module OrdersHelper
 
   def generate_js_variables(categories)
+
     articleslist =
     "var articleslist = new Array();" +
     categories.collect{ |cat|
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
-        "<div class='orders_article' onclick='#{ action }'>#{ art.name }</div>"
+        "<tr><td class='article' onclick='#{ action }'>#{ art.name }</td></tr>"
       }.to_s + '";'
     }.to_s
 
@@ -18,7 +19,7 @@ module OrdersHelper
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.collect{ |qu|
-          "<div class='orders_quantity' onclick='add_new_item_q(#{ qu.id })'>#{ qu.name }</div>"
+          "<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })'>#{ qu.name }</td></tr>"
         }.to_s + '";'
       }.to_s
     }.to_s
@@ -58,8 +59,11 @@ module OrdersHelper
 
 
   def generate_js_functions
-    display_articles   = "function display_articles(cat_id) {Effect.BlindDown('articles', { duration: 1 }); document.getElementById('quantities').innerHTML  = '&nbsp;'; document.getElementById('articles').innerHTML   = articleslist[cat_id];   }\n"
-    display_quantities = "function display_quantities(art_id) { document.getElementById('quantities').innerHTML = quantitylist[art_id]; Effect.BlindDown('quantities', { duration: 0.2 });}\n"
+
+    display_articles   = "function display_articles(cat_id) { $('articlestable').innerHTML = articleslist[cat_id]; Effect.Pulsate('articles', { duration: 0.2, pulses: 1 }); Effect.BlindUp('quantities', { duration: 0.2 }); }\n"
+
+    display_quantities = "function display_quantities(art_id) { $('quantitiestable').innerHTML = quantitylist[art_id]; Effect.BlindDown('quantities', { duration: 0.2 });}\n"
+
     add_new_item_q = "function add_new_item_q(qu_id) {
                       var timestamp = new Date().getTime();
                       var short_timestamp = 'new_' + timestamp.toString().substr(-9,9);
@@ -68,9 +72,8 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_q[qu_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
-                      $('items').insert({ bottom: new_item_html_modified });
-                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff' });
-
+                      $('itemstable').insert({ top: new_item_html_modified });
+                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end'});
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
@@ -81,8 +84,8 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
                       document.getElementById('quantities').innerHTML = '&nbsp;';
-                      $('items').insert({ bottom: new_item_html_modified });
-                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff' });
+                      $('itemstable').insert({ top: new_item_html_modified });
+                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
                     }"
     return display_articles + display_quantities + add_new_item_q + add_new_item_a
   end
@@ -90,7 +93,7 @@ module OrdersHelper
   def compose_item_label(input)
     if input.class == Quantity
       label = "#{ input.article.name } | #{ input.name }"
-      label += '<br>' + '| ' + input.article.description if !input.article.description.empty?
+      label += '<br>' + input.article.description if !input.article.description.empty?
     else
       label = "#{ input.name }"
     end

@@ -1,100 +1,35 @@
-!link_color = #700
+!link_color = white
 !error_text = #C00
 !lightgray = #EEE
 !darkgray = #999
-!middlegray = #BBB
+!middlegray = #444
+!background = #333
 
-//global settings
+//global settings==============================
 
 body
   :font-family sans
-  :padding 20px
-  :margin 0
-  :padding 10px
+  :color white
+  :padding 0px
+  :margin 0px 30px
   :font-size 100%
+  :background-color = !background
 
 h1
   :margin 0
 
-h6
-  :color green
-  :margin 10px 0 0 0
-  :font-style italic
-
 a
   :color = !link_color
-
-table
-  :font-size small
-
-.textleft
-  :text-align left
-.textright
-  :text-align right
-
-//main layout
-
-#content
-  :float left
-  :margin-top 10px
-
-.sidebar
-  :float right
-  :background-color = !lightgray
-  :margin-left 20px
-  :width 150px
-  :padding 20px
-
-#login_logout
-  :text-align right
-  :font-size small
-
-#sidebar a,
-.metanavi a
-  :text-decoration none
-  &:hover
-    :text-decoration underline
-
-.fieldWithErrors
-  :display inline
-  label
-    :color = !error_text
-
-.errorExplanation
-  :font-size small
-  :color = !error_text
-  h2
-    :font-size 110%
-
-td
-  //:text-align left
-  :vertical-align top
 
 fieldset
   :border-style outset
   :background-color = !lightgray
-
-fieldset.new_foods
-  :width 280px
-
-fieldset.articles
-  :width 280px
-  :font-size small
 
 legend
   :font
     :style italic
     :weight bold
     :size small
-
-table
-  :border-spacing 0
-
-.metanavi
-  :background-color = !lightgray
-  :padding 5px
-  a
-    :margin 5px
 
 label
   :font-size small
@@ -103,8 +38,34 @@ label
 th
   :text-align left
 
-.category
-  :background-color = !lightgray
+
+//main layout ==================================
+
+#container
+  :margin auto
+
+#main
+  :border 3px solid white
+
+.metaelements
+  :float right
+
+
+
+
+//normal style definitions =============================
+
+fieldset.new_foods
+  :width 280px
+
+fieldset.articles
+  :width 280px
+  :font-size small
+
+
+
+
+
 
 table.settlements
   :font-size 70%
@@ -260,84 +221,6 @@ select#order_user_id
 
 
 
-div.orders_article,
-div.orders_quantity
-  :background-color = !lightgray
-  :margin 2px
-  :height 20px
-  :padding 10px
-  :cursor pointer
-
-
-
-
-div#categories
-  :width 205px
-  :float left
-
-div.category
-  :float left
-  :width 50px
-  :height 50px
-  :margin 2px
-  :border 1px solid black
-  :background-color #fff1f1
-  :font-size 70%
-  :text-align center
-  :padding 14px 5px 0 5px
-  :cursor pointer
-
-div#articles
-  :width 230px
-  :float left
-
-div.article
-  :cursor pointer
-
-div#quantities
-  :width 180px
-  :float left
-
-div.quantity
-  :cursor pointer
-
-div#items
-  :float left
-  :width 440px
-
-div.item
-  :clear both
-  :padding 5px
-
-span.item_plusminus
-  :width 40px
-  :height 40px
-  :display inline-block
-  :cursor pointer
-  :background-color = !lightgray
-  :text-align center
-  :margin 2px
-  :font-size 200%
-
-span.item_label
-  :cursor pointer
-  :display inline-block
-  :width 200px
-  :background-color = !lightgray
-  :height 20px
-  :padding 10px
-
-
-input.item_count
-  :width 30px
-  :border none
-  :background-color = !lightgray
-  :background-color = !lightgray
-  :height 20px
-  :padding 10px
-  :cursor pointer
-  :font-size 120%
-
 
 
 
@@ -361,3 +244,24 @@ div.flash_error
   :font-size small
   :font-style italic
   :color red
+
+//helpers==============================
+
+.textleft
+  :text-align left
+
+.textright
+  :text-align right
+
+//RAILS styles==============================
+
+.fieldWithErrors
+  :display inline
+  label
+    :color = !error_text
+
+.errorExplanation
+  :font-size small
+  :color = !error_text
+  h2
+    :font-size 110%
