@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   end
 
   def articles_in_waiterpad
-    articles.find(:all, :conditions => 'waiterpad = 1', :order => 'updated_at DESC')
+    articles.find(:all, :conditions => 'waiterpad = 1', :order => 'price')
   end
 
   def articles_sorted_by_name
