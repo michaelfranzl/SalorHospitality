@@ -62,7 +62,8 @@ class SettlementsController < ApplicationController
       t = Date.civil( p[:to  ][:year ].to_i,
                       p[:to  ][:month].to_i,
                       p[:to  ][:day  ].to_i) if p[:to]
-      f ||= 1.week.ago
+
+      f ||= (DateTime.now.day - 1).days.ago
       t ||= 0.week.ago
 
       return f, t
