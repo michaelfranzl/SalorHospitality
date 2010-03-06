@@ -1,7 +1,7 @@
 .info
   %p= @username
   %p= @order.id ? "#{t :order, :count => 1} ##{@order.id}" : t(:new_order)
-  %p= @table.name
+  %p= @order.table.name
 
 %script{ :type => 'text/javascript' }= generate_js_variables(@categories)
 %script{ :type => 'text/javascript' }= generate_js_functions
@@ -26,7 +26,7 @@
   
     %div#categories
       - @categories.each do |category|
-        ==<div class="category #{ category.name.delete ' ' }" onclick="display_articles(#{ category.id }); ">#{ category.name }</div>
+        ==<div class="category #{ category.name.delete ' ' }" onclick="display_articles(#{ category.id });">#{ category.name }</div>
   
   
     %div#articles

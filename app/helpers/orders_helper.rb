@@ -60,9 +60,9 @@ module OrdersHelper
 
   def generate_js_functions
 
-    display_articles   = "function display_articles(cat_id) { $('articlestable').innerHTML = articleslist[cat_id]; Effect.Pulsate('articles', { duration: 0.2, pulses: 1 }); Effect.BlindUp('quantities', { duration: 0.2 }); }\n"
+    display_articles   = "function display_articles(cat_id) { $('articlestable').innerHTML = articleslist[cat_id]; $('quantitiestable').innerHTML = ''; }\n"
 
-    display_quantities = "function display_quantities(art_id) { $('quantitiestable').innerHTML = quantitylist[art_id]; Effect.BlindDown('quantities', { duration: 0.2 });}\n"
+    display_quantities = "function display_quantities(art_id) { $('quantitiestable').innerHTML = quantitylist[art_id]; }\n"
 
     add_new_item_q = "function add_new_item_q(qu_id) {
                       var timestamp = new Date().getTime();
@@ -83,7 +83,7 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
-                      document.getElementById('quantities').innerHTML = '&nbsp;';
+                      document.getElementById('quantitiestable').innerHTML = '&nbsp;';
                       $('itemstable').insert({ top: new_item_html_modified });
                       new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
                     }"

@@ -44,7 +44,6 @@ class OrdersController < ApplicationController
   end
 
   def update
-debugger
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
