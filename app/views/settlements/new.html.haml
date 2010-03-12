@@ -68,8 +68,7 @@
             = submit_tag t :edit
             = sm_form.text_field :revenue, :size => 5
 
-
-    - if controller.action_name == 'new'
+    - if controller.action_name == 'create' or controller.action_name == 'new'
       - path = user_settlements_path
       - form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
         %tr
