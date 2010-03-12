@@ -56,9 +56,9 @@ class OrdersController < ApplicationController
 
   def destroy
     @order = Order.find(params[:id])
-    flash[:notice] = "Die Bestellung \"#{ @order.name }\" wurde erfolgreich geloescht."
+    flash[:notice] = "Die Bestellung Nr. \"#{ @order.id }\" wurde erfolgreich geloescht."
     @order.destroy
-    redirect_to table_orders_path
+    redirect_to orders_path
   end
 
   private

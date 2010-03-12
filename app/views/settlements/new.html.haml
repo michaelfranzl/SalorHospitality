@@ -56,7 +56,6 @@
         %td{ :colspan => '3', :class => 'colsum' }= t :revenue
         %td{ :colspan => '2', :class => 'colsum' }= number_to_currency @settlement.revenue
 
-
     - if controller.action_name == 'edit'
       - path = user_settlement_path(@settlement.user, @settlement)
       - form_for :settlement, @settlement, :url => path, :html => { :method => 'put' } do |sm_form|

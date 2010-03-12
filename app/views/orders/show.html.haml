@@ -29,4 +29,5 @@
   %div{ :class => "item_category MainDishes" }Drucken
 %a{ :href => orders_path }
   %div{ :class => "item_category MainDishes" }Weiter
-//=link_to 'Weiter', orders_path
+
+= link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3

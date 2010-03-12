@@ -1,7 +1,6 @@
 class SettlementsController < ApplicationController
   def index
     @from, @to = assign_from_to(params)
-    debugger
     @settlements = Settlement.find(:all, :conditions => { :created_at => (@from - 1.day)..@to })
     @taxes = Tax.all
 
