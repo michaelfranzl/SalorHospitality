@@ -4,15 +4,16 @@
 !darkgray = #999
 !middlegray = #444
 !background = #333
+!adminbackground = #222
 
 //global settings==============================
 
 body
-  :font-family sans
+  :font-family Verdana
   :color white
   :padding 0px
   :margin 0px 30px
-  :font-size 100%
+  :font-size 85%
   :background-color = !background
 
 h1
@@ -29,10 +30,8 @@ legend
   :font
     :style italic
     :weight bold
-    :size small
 
 label
-  :font-size small
   :margin-right 10px
 
 th
@@ -41,29 +40,48 @@ th
 
 //main layout ==================================
 
-#container
-  :margin auto
-
-#main
+div#main
   :border 3px solid white
+  :-moz-border-radius 5px
+  :padding 5px
 
-.metaelements
+
+div.metaelements
   :float right
+
+div#header
+  :height 120px
+  
+div#admin
+  :background-color = !adminbackground
+
 
 
 
 
 //normal style definitions =============================
 
-fieldset.new_foods
-  :width 280px
-
-fieldset.articles
-  :width 280px
-  :font-size small
-
-
-
+div.fieldWithErrors
+  :border 6px solid red
+  :-moz-border-radius 3px
+      
+      
+      
+div.adminlinks
+  :padding 10px
+  a
+    :display inline-block
+    :height 15px
+    :margin-left 1px
+    :margin-bottom 5px
+    :background-color white
+    :-moz-border-radius 3px
+    :color black
+    :text-decoration none
+    :text-transform uppercase
+    :font-size 70%
+    :padding 4px
+    :border 1px solid #666
 
 
 
@@ -164,29 +182,12 @@ span.orderid
 .vacant
   :background-color = !middlegray
 
-table#items
-  th
-    :background-color #f5f5f5
-  th.count
-    :width 90px
-  th.price
-    :width 90px
-  th.article
-    :width 500px
-  th.checkbox
-    :width 80px
-  td
-    :background-color #f5f5f5
-    :padding 3px
-    :border-top 2px solid white
-    select
-      :font-size 150%
+
 
 span.small
   :font-size 90%
 
 ul#search_results
-  :font-size small
   :list-style-type none
   :padding 0
   :margin 0
@@ -220,18 +221,15 @@ select#order_user_id
 
 
 
-
+a#toggle_admin_interface
+  :cursor pointer
 
 
 
 div.clear
   :clear both
 
-input.create_edit_order
-  :width 80px
-  :height 45px
-  :background-color #FFAAAA
-  :border 1px solid black
+
 
 select
   :border 1px solid #AAAAAA

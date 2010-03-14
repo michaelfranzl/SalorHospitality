@@ -1,45 +1,98 @@
 // =========== ORDERS VIEW ===================
 !buttoncolor = #444
-
+!itembgcolor = #556
 
 
 
 div#categories
-  :width 225px
-  :float left
+  :display inline-block
+  :width 25%
+  :vertical-align top
 
 div#articles
-  :float left
+  :display inline-block
+  :width 25%
+  :vertical-align top
+  
+div#quantities
+  :display inline-block
+  :width 15%
+  :vertical-align top
+  
+div#items
+  :display inline-block
+  :width 26%
+  :border 1px solid !buttoncolor
+  :vertical-align top
+  
+div#functions
+  :float right
+  :width 4%
+  :vertical-align top
+  :margin-right 10px
+  
+div#footer
+  :height 50px
 
 table#articlestable
   :border-spacing 1px
+  :width 100%
 
-div#quantities
-  :width 180px
-  :float left
+table#quantitiestable
+  :border-spacing 1px
+  :width 100%
 
-div#items
+table#itemstable
+  :border-spacing 1px
+  :width 100%
+  
+tr.item
+  :height 41px
+
+#save_order,
+#finish_order
+  :background-color #FFAAAA
+  :border 1px solid black
+  :margin 10px 0
+  
+
+div#scrollup,
+div#scrolldown
+  :width 40px
+  :height 40px
+  :margin 10px 0
+
+div#scrollup
   :float right
-
-
-
+  :margin-right 10px
 
 div.category,
 td.article,
 td.quantity
+  :margin 1px 0px 0px 1px
+  :background-color = !buttoncolor
+  :cursor pointer
+  :padding 10px 5px
+
+div.category,
+td.article,
+td.quantity,
+td.item_count,
+td.item_plusminus,
+td.item_label
   :border-top 2px solid #555
   :border-left 2px solid #555
   :border-right 2px solid #222
   :border-bottom 2px solid #222
-  :margin 1px 0px 0px 1px
-  :background-color = !buttoncolor
-  :cursor pointer
+
+
 
 div.category
-  :float left
+  :float right
   :width 60px
   :height 60px
   :padding 14px 5px 0 5px
+  :overflow hidden
 
 
 td.article,
@@ -48,37 +101,54 @@ td.quantity
   :height 30px
   :vertical-align middle
   :padding-left 10px
-  :width 200px
 
 
 
-
-
-
-input.item_count
-  :width 30px
-  :height 30px
-  :border none
-  :background-color = !buttoncolor
-  :background-color = !buttoncolor
+td.item_count
   :cursor pointer
-
-
+  :width 30px
+  :background-color = !buttoncolor
+  :text-align center
 
 td.item_plusminus
   :width 30px
-  :height 30px
   :cursor pointer
   :background-color = !buttoncolor
   :text-align center
-  :margin 2px
 
 td.item_label
   :cursor pointer
-  :width 200px
   :background-color = !buttoncolor
-  :height 20px
-  :padding 5px 0 5px 10px
+  :min-height 30px
+  
+  
 
 
+.order_info
+  :float right
+  :margin-top -49px
+  :margin-right 123px
+  :width 150px
+  :text-align right
 
+fieldset.new_foods
+  :width 280px
+
+fieldset.articles
+  :width 280px
+
+div.waiter
+  :float right
+  :margin-top -45px
+  :margin-right -5px
+
+
+div.button
+  :background-color white
+  :-moz-border-radius 2px
+  :width 120px
+  :height 26px
+  a
+    :color black
+    :text-transform uppercase
+    :text-decoration none

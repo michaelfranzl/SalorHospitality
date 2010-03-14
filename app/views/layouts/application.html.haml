@@ -19,29 +19,35 @@
     = javascript_include_tag :defaults
 
   %body
+  
+    %script{ :type => 'text/javascript' }= toggle_admin_interface
 
-    .admin
-      = link_to( (t :orders_menu), orders_path)
-      = link_to( 'Druck', '/items/print.bon')
-      - if @current_user.role == 1
-        = link_to( (t :settlements_menu), settlements_path)
-        = link_to( (t :articles_menu), '/menucard')
-      - if @current_user.role >= 2
-        = link_to( (t :settlements_menu), settlements_path)
-        = link_to( (t :articles_menu), articles_path)
-        = link_to( (t :categories_menu), categories_path)
-        = link_to( (t :stocks_menu), stocks_path)
-        = link_to( (t :groups_menu), groups_path)
-        = link_to( (t :taxes_menu), taxes_path)
-        = link_to( (t :cost_centers_menu), cost_centers_path)
-        = link_to( (t :users_menu), users_path)
-        = link_to( (t :tables_menu), tables_path)
-        = link_to( (t :statistics), '/statistics/index')
+    #admin{ :style => 'display: none' }
+      .adminlinks
+        = link_to( (t :orders_menu), orders_path)
+        = link_to( 'Druck', '/items/print.bon' )
+        - if logged_in?
+          - if @current_user.role == 1
+            = link_to( (t :settlements_menu), settlements_path)
+            = link_to( (t :articles_menu), '/menucard')
+          - if @current_user.role >= 2
+            = link_to( (t :settlements_menu), settlements_path)
+            = link_to( (t :articles_menu), articles_path)
+            = link_to( (t :categories_menu), categories_path)
+            = link_to( (t :stocks_menu), stocks_path)
+            = link_to( (t :groups_menu), groups_path)
+            = link_to( (t :taxes_menu), taxes_path)
+            = link_to( (t :cost_centers_menu), cost_centers_path)
+            = link_to( (t :users_menu), users_path)
+            = link_to( (t :tables_menu), tables_path)
+            = link_to( (t :statistics), '/statistics/index')
+          = link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
 
 
-    .container
-      .header
-        %img{ :src => "images/#{ MyGlobals.client}.jpg" }
+    #container
+      #header
+        %a#toggle_admin_interface{ :onclick => "toggle_admin_interface()" }
+          %img{ :src => "/images/client_logos/#{ MyGlobals.client }.jpg" }
 
         .flash
           - if flash[:notice]
@@ -51,11 +57,10 @@
 
         - if logged_in?
           .metaelements
-            = link_to( 'English', 'sessions/set_language/en')
-            = link_to( 'Deutsch', 'sessions/set_language/de')
+            //= link_to( 'English', '/sessions/set_language/en')
+            //= link_to( 'Deutsch', '/sessions/set_language/de')
             
-            - if @current_user
-              %em= link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
+
 
       #main
         = yield
