@@ -5,6 +5,6 @@ class Item < ActiveRecord::Base
   belongs_to :quantity
   validates_presence_of :count, :article_id
 
-  default_scope :order => 'sort ASC'
+  default_scope :order => 'sort DESC'
 
 end

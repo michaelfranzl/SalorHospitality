@@ -59,6 +59,9 @@ div.adminlinks {
     font-size: 70%;
     padding: 4px;
     border: 1px solid #666; }
+  div.adminlinks a:hover {
+    background-color: #333333;
+    color: white; }
 
 table.settlements {
   font-size: 70%; }

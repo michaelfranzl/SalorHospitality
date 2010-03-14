@@ -76,26 +76,26 @@ module OrdersHelper
 
     add_new_item_q = "function add_new_item_q(qu_id) {
                       var timestamp = new Date().getTime();
-                      var short_timestamp = 'new_' + timestamp.toString().substr(-9,9);
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, short_timestamp);
-                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, short_timestamp );
+                      var sort = timestamp.toString().substr(-9,9);
+                      var desig = 'new_' + sort;
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, desig);
+                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, sort );
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_q[qu_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
                       $('itemstable').insert({ top: new_item_html_modified });
-                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end'});
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
-                      var short_timestamp = 'new_' + timestamp.toString().substr(-9,9);
-                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, short_timestamp);
-                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, timestamp.toString().substr(-9,9));
+                      var sort = timestamp.toString().substr(-9,9);
+                      var desig = 'new_' + sort;
+                      new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, desig);
+                      new_item_html_modified = new_item_html_modified.replace(/SORT/g, sort);
                       new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
                       document.getElementById('quantitiestable').innerHTML = '&nbsp;';
                       $('itemstable').insert({ top: new_item_html_modified });
-                      new Effect.Highlight('item_'+short_timestamp, { startcolor: '#ffff99', endcolor: '#ffffff', queue: 'end' });
                     }"
                     
     increment_item_func = "function increment_item(desig) {
@@ -110,7 +110,7 @@ module OrdersHelper
                            }"
 
     
-    return display_articles + display_quantities + add_new_item_q + add_new_item_a + increment_item_func + decrement_item_func
+    return display_articles + display_quantities + add_new_item_q + add_new_item_a + increment_item_func + decrement_item_func + flash_button
   end
 
   def compose_item_label(input)
