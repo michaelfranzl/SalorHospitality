@@ -64,11 +64,31 @@ module OrdersHelper
 
     flash_button = 'function highlight_button(element) {
                       restorecolor = element.style.backgroundColor;
-                      element.style.backgroundColor = "#777777";
+                      //element.style.backgroundColor = "#777777";
+                      element.style.border = "2px solid white";
                    }
                    function restore_button(element) {
-                      element.style.backgroundColor = restorecolor;
-                   }'
+                      //element.style.backgroundColor = restorecolor;
+                      element.style.border = "none";
+                   }
+                   function deselect_all_categories2() {
+                     //cats = document.getElementsByClassName("category");
+                     container = document.getElementById("categories");
+                     cats = container.firstChild;
+                     for( c in cats ) {
+                       alert(cats[c].className);
+                       //cats[c].style = "border: none";
+                     }
+                   }
+                   function deselect_all_categories() {
+                     container = document.getElementById("categories");
+                     cat = container.firstChild;
+                     while(cat) {
+                       alert(cat.className);
+                       cat = cat.nextSibling;
+                     }
+                   }
+                   '
                    
 
     display_articles   = "function display_articles(cat_id) { $('articlestable').innerHTML = articleslist[cat_id]; $('quantitiestable').innerHTML = '&nbsp;'; }\n"

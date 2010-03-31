@@ -64,8 +64,7 @@ td.article,
 td.quantity {
   margin: 1px 0px 0px 1px;
   background-color: #444444;
-  cursor: pointer;
-  padding: 10px 5px; }
+  cursor: pointer; }
 
 div.category,
 td.article,
@@ -80,10 +79,20 @@ td.item_label {
 
 div.category {
   float: right;
-  width: 60px;
-  height: 60px;
-  padding: 14px 5px 0 5px;
+  width: 70px;
+  height: 70px;
   overflow: hidden; }
+
+div.category_label {
+  width: 65px;
+  height: 65px;
+  font-size: 9px;
+  text-transform: uppercase;
+  position: relative; }
+  div.category_label span {
+    position: absolute;
+    top: 30px;
+    left: 5px; }
 
 td.article,
 td.quantity {

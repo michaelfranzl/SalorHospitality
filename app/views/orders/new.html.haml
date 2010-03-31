@@ -22,7 +22,9 @@
 
   %div#categories
     - @categories.each do |category|
-      ==<div class="category #{ category.name.delete ' ' }" onclick="display_articles(#{ category.id });" onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ category.name }</div>
+      %div{ :class => "category #{ category.name.delete ' ' }", :onmousedown => "display_articles(#{ category.id }); deselect_all_categories()", :onmouseup => 'highlight_button(this)' }
+        %div{ :class => "category_label" }
+          %span= category.name
   
   
   %div#articles
