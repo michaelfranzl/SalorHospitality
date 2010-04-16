@@ -1,5 +1,5 @@
 - if @found_foods
-  %h4= t :already_created_articles
+  %span= t :already_created_articles
   %ul{ :style => 'list-style-type:none;padding-left:0px;' }
     - for article in @found_foods
       %li== #{ link_to article.name, edit_article_path(article) } (#{ number_to_currency article.price })
