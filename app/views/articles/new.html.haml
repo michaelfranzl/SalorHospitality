@@ -48,19 +48,6 @@
             %tr
               %td{ :colspan => '2' }
 
-        %fieldset{ :style => 'width:350px' }
-          %legend== #{t :format_for_online_backboard} (optional)
-          %table
-            %tr
-              %td
-                = article_form.label('format_name', (t :name))
-              %td
-                = article_form.text_area :format_name, :size => '20x2'
-            %tr
-              %td
-                = article_form.label('format_division', (t :division))
-              %td
-                = article_form.text_area :format_division, :size => '20x1'
 
         %fieldset{ :style => 'width:350px' }
           %legend Varianten
