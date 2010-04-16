@@ -8,7 +8,7 @@ module OrdersHelper
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
-        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ escape_javascript art.name }</td></tr>"
+        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ escape_javascript art.name }</td></tr>"
       }.to_s + '";'
     }.to_s
 
@@ -63,29 +63,20 @@ module OrdersHelper
   def generate_js_functions
 
     flash_button = 'function highlight_button(element) {
-                      restorecolor = element.style.backgroundColor;
-                      //element.style.backgroundColor = "#777777";
                       element.style.border = "2px solid white";
                    }
-                   function restore_button(element) {
-                      //element.style.backgroundColor = restorecolor;
-                      element.style.border = "none";
-                   }
-                   function deselect_all_categories2() {
-                     //cats = document.getElementsByClassName("category");
-                     container = document.getElementById("categories");
-                     cats = container.firstChild;
-                     for( c in cats ) {
-                       alert(cats[c].className);
-                       //cats[c].style = "border: none";
+                   function deselect_all_categories() {
+                     var container = document.getElementById("categories");
+                     var cats = container.children;
+                     for(c in cats) {
+                       cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
                      }
                    }
-                   function deselect_all_categories() {
-                     container = document.getElementById("categories");
-                     cat = container.firstChild;
-                     while(cat) {
-                       alert(cat.className);
-                       cat = cat.nextSibling;
+                   function deselect_all_articles() {
+                     var container = document.getElementById("articlestable");
+                     var arts = container.rows;
+                     for(count in arts) {
+                       arts[count].cells[0].style.borderColor = "#555555 #222222 #222222 #555555";
                      }
                    }
                    '
