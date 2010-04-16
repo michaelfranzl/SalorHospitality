@@ -12,10 +12,9 @@ class Article < ActiveRecord::Base
   
   validates_each :price do |record, attr, value|
     record.errors.add attr, 'muss entweder beim Artikel selbst oder bei der Artikelmenge angegeben werden. ' if record.quantities.empty? and !value
+    validates_numericality_of :price
   end
   
-  validates_numericality_of :price
-
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
   #This will prevent children_attributes with all empty values to be ignored
   accepts_nested_attributes_for :ingredients, :allow_destroy => true,
