@@ -3,3 +3,4 @@ tmp
 config/database.yml
 *.*~
 vendor/plugins
+*.sql
