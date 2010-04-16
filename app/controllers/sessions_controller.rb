@@ -28,5 +28,14 @@ skip_before_filter :fetch_logged_in_user
     I18n.locale = session[:language] = params[:id]
     redirect_to orders_path
   end
+  
+  def toggle_admin_interface
+    if session[:admin_interface]
+      session[:admin_interface] = !session[:admin_interface]
+    else
+      session[:admin_interface] = true
+    end
+    render :nothing => true
+  end
 
 end
