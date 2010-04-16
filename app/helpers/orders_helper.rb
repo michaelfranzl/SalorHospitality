@@ -63,7 +63,10 @@ module OrdersHelper
   def generate_js_functions
 
     flash_button = 'function highlight_button(element) {
-                      element.style.border = "2px solid white";
+                      element.style.borderColor = "white";
+                   }
+                   function restore_button(element) {
+                      element.style.borderColor = "#555555 #222222 #222222 #555555";
                    }
                    function deselect_all_categories() {
                      var container = document.getElementById("categories");
@@ -76,7 +79,7 @@ module OrdersHelper
                      var container = document.getElementById("articlestable");
                      var arts = container.rows;
                      for(count in arts) {
-                       arts[count].cells[0].style.borderColor = "#555555 #222222 #222222 #555555";
+                       arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
                      }
                    }
                    '
