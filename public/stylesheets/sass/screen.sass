@@ -14,8 +14,13 @@ body
   :padding 0px
   :margin 0px 30px
   :font-size 85%
-  :background-color = !background
+  :background-color #0e1d25
+  :background-image url('/images/bg.png')
+  :background-repeat repeat-x
 
+img
+  :border none
+  
 h1
   :margin 0
 
@@ -44,18 +49,19 @@ div#main
   :border 3px solid white
   :-moz-border-radius 5px
   :padding 5px
+  :background-color #0e1d25
 
 
 div.metaelements
   :float right
 
 div#header
-  :height 120px
+  :height 150px
   
 div#admin
-  :background-color = !adminbackground
-
-
+  :border 3px solid white
+  :border-top none
+  :-moz-border-radius 5px
 
 
 
@@ -264,3 +270,10 @@ div.flash_error
   :color = !error_text
   h2
     :font-size 110%
+    
+    
+    
+    
+option[value=deutschland]:before { content:url("de.gif"); }
+option[value=irland]:before { content:url("ie.gif"); }
+

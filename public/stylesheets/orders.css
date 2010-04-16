@@ -19,6 +19,12 @@ div#items {
   border: 1px solid !buttoncolor;
   vertical-align: top; }
 
+div#functions {
+  float: right;
+  width: 4%;
+  vertical-align: top;
+  margin-right: 10px; }
+
 div#footer {
   height: 50px; }
 
@@ -40,14 +46,15 @@ tr.item {
 #save_order,
 #finish_order {
   background-color: #FFAAAA;
-  border: 1px solid black;
-  margin: 10px 0; }
+  margin: 5px 0;
+  cursor: pointer; }
 
 div#scrollup,
 div#scrolldown {
   width: 40px;
   height: 40px;
-  margin: 10px 0; }
+  margin: 10px 0;
+  cursor: pointer; }
 
 div#scrollup {
   float: right;
@@ -57,7 +64,7 @@ div.category,
 td.article,
 td.quantity {
   margin: 1px 0px 0px 1px;
-  background-color: #444444;
+  background-color: #27343b;
   cursor: pointer; }
 
 div.category,
@@ -65,7 +72,8 @@ td.article,
 td.quantity,
 td.item_count,
 td.item_plusminus,
-td.item_label {
+td.item_label,
+div.ordersum_container {
   border-top: 2px solid #555;
   border-left: 2px solid #555;
   border-right: 2px solid #222;
@@ -90,7 +98,7 @@ div.category_label {
 
 td.article,
 td.quantity {
-  background-color: #444444;
+  background-color: #27343b;
   height: 30px;
   vertical-align: middle;
   padding-left: 10px; }
@@ -98,18 +106,18 @@ td.quantity {
 td.item_count {
   cursor: pointer;
   width: 30px;
-  background-color: #444444;
+  background-color: #3a474d;
   text-align: center; }
 
 td.item_plusminus {
   width: 30px;
   cursor: pointer;
-  background-color: #444444;
+  background-color: #3a474d;
   text-align: center; }
 
 td.item_label {
   cursor: pointer;
-  background-color: #444444;
+  background-color: #3a474d;
   min-height: 30px; }
 
 .order_info {
@@ -139,3 +147,17 @@ div.button {
     color: black;
     text-transform: uppercase;
     text-decoration: none; }
+
+input#order_sum {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 110%;
+  width: 160px;
+  text-align: right; }
+
+div.ordersum_container {
+  background-color: #556067;
+  height: 30px;
+  font-size: 130%;
+  padding-left: 20px; }

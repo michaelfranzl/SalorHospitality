@@ -4,7 +4,12 @@ body {
   padding: 0px;
   margin: 0px 30px;
   font-size: 85%;
-  background-color: #333333; }
+  background-color: #0e1d25;
+  background-image: url('/images/bg.png');
+  background-repeat: repeat-x; }
+
+img {
+  border: none; }
 
 h1 {
   margin: 0; }
@@ -14,7 +19,7 @@ a {
 
 fieldset {
   border-style: outset;
-  background-color: #444444; }
+  background-color: #eeeeee; }
 
 legend {
   font-style: italic;
@@ -29,16 +34,19 @@ th {
 div#main {
   border: 3px solid white;
   -moz-border-radius: 5px;
-  padding: 5px; }
+  padding: 5px;
+  background-color: #0e1d25; }
 
 div.metaelements {
   float: right; }
 
 div#header {
-  height: 120px; }
+  height: 150px; }
 
 div#admin {
-  background-color: #222222; }
+  border: 3px solid white;
+  border-top: none;
+  -moz-border-radius: 5px; }
 
 div.fieldWithErrors {
   border: 6px solid red;
@@ -222,10 +230,3 @@ div.flash_error {
   color: #cc0000; }
   .errorExplanation h2 {
     font-size: 110%; }
-    
-div#functions {
-  float: right;
-  width: 4%;
-  vertical-align: top;
-  margin-right: 10px;
-  height: 300px; }
