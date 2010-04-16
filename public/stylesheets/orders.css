@@ -19,12 +19,6 @@ div#items {
   border: 1px solid !buttoncolor;
   vertical-align: top; }
 
-div#functions {
-  float: right;
-  width: 4%;
-  vertical-align: top;
-  margin-right: 10px; }
-
 div#footer {
   height: 50px; }
 

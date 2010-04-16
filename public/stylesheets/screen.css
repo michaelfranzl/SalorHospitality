@@ -222,3 +222,10 @@ div.flash_error {
   color: #cc0000; }
   .errorExplanation h2 {
     font-size: 110%; }
+    
+div#functions {
+  float: right;
+  width: 4%;
+  vertical-align: top;
+  margin-right: 10px;
+  height: 300px; }
