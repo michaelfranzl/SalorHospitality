@@ -8,7 +8,12 @@ class Article < ActiveRecord::Base
     write_attribute(:price, price.gsub(',', '.'))
   end
 
-  validates_presence_of :name, :price, :type, :category_id
+  validates_presence_of :name, :type, :category_id
+  
+  validates_each :price do |record, attr, value|
+    record.errors.add attr, 'muss entweder beim Artikel selbst oder bei der Artikelmenge angegeben werden. ' if record.quantities.empty? and !value
+  end
+  
   validates_numericality_of :price
 
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
