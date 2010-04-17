@@ -14,7 +14,7 @@ de:
       tax: Steuerklasse
       cost_center: Kostenstelle
       article: Verkaufsartikel
-      stock: Lagervorräte
+      stock: LagervorrÃ¤te
       category: Artikelkategorie
       settlement: Abrechnung
       order: Bestellung
@@ -34,21 +34,21 @@ de:
   password: Passwort
   this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
   logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" lÃ¶schen mÃ¶chten?'
   are_you_sure: 'Sind Sie sicher?'
 
-  delete: Löschen
-  edit: Ändern
+  delete: LÃ¶schen
+  edit: Ã„ndern
   create: Erzeugen
   new: Neu anlegen
   save: Speichern
-  finished: Abschließen
+  finished: AbschlieÃŸen
 
   creation_date: Datum
 
   table: Tisch
   tables_menu: Tische
-  width: Länge
+  width: LÃ¤nge
   height: Breite
 
   user: Benutzer
@@ -67,7 +67,7 @@ de:
   groups_menu: Lagerorte
 
   stock: Lagervorrat
-  stocks_menu: Lagervorräte
+  stocks_menu: LagervorrÃ¤te
 
   category: Artikelkategorie
   categories_menu: Artikelkategorien
@@ -77,7 +77,7 @@ de:
   all_articles: Alle Artikel
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
-  add_article: 'Hinzufügen:'
+  add_article: 'HinzufÃ¼gen:'
 
   ingredient: Zutat
   ingredients: Alle Zutaten
@@ -105,10 +105,10 @@ de:
   menucard: Aktive Artikel
   price: Preis
 
-  format_for_online_backboard: "Formatierung für Online-Tafel"
+  format_for_online_backboard: "Formatierung fÃ¼r Online-Tafel"
   division: Trennlinie
   sort_id: Sortierreihenfolge
-  add_ingredient: Zutat hinzufügen
+  add_ingredient: Zutat hinzufÃ¼gen
 
   sum: Summe
   gr: 'br.'
@@ -155,3 +155,26 @@ de:
     other: Es sind {{count}} Speisen aktiv
 
   remove_all_foods_from_menucard: Alle im Moment aktiven Speisen inaktivieren
+  
+  categories:
+    new:
+      aperitif: Aperitif
+      sidedish: Beilage
+      starter: Vorspeise
+      maindish: Hauptspeise
+      childrendish: KindermenÃ¼
+      dessert: Nachspeise
+      digestif: Digestif
+      beer: Bier
+      nonalcoholics: Alkoholfrei
+      cigarette: Zigaretten
+      rosewineglass: RosÃ©wein
+      redwineglass: Rotwein
+      whitewineglass: WeiÃŸwein
+      rosewinebottle: Flasche RosÃ©
+      redwinebottle: Flasche Rot
+      whitewinebottle: Flasche WeiÃŸ
+      sparkling: Sekt
+      coffee: Kaffee
+      teapot: Teekanne
+      tea: Tee

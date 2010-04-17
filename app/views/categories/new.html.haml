@@ -1,3 +1,5 @@
+%style= generate_item_styles
+
 = error_messages_for 'category'
 
 - form_for @category do |category_form|
@@ -19,5 +21,30 @@
           = category_form.label('tax_id', "#{ t :tax }*")
         %td
           = category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
+      %tr
+        %td
+          = category_form.label('tax_id', "#{ t :tax }*")
+        %td
+          %select{ :size => 2 }
+            %option{ :value => 'aperitif' }= t('.aperitif')
+            %option{ :value => 'sidedish' }= t('.sidedish')
+            %option{ :value => 'starter' }= t('.starter')
+            %option{ :value => 'maindish' }= t('.maindish')
+            %option{ :value => 'childrendish' }= t('.childrendish')
+            %option{ :value => 'dessert' }= t('.dessert')
+            %option{ :value => 'digestif' }= t('.digestif')
+            %option{ :value => 'beer' }= t('.beer')
+            %option{ :value => 'nonalcoholics' }= t('.nonalcoholics')
+            %option{ :value => 'cigarette' }= t('.cigarette')
+            %option{ :value => 'rosewineglass' }= t('.rosewineglass')
+            %option{ :value => 'redwineglass' }= t('.redwineglass')
+            %option{ :value => 'whitewineglass' }= t('.whitewineglass')
+            %option{ :value => 'rosewinebottle' }= t('.rosewinebottle')
+            %option{ :value => 'redwinebottle' }= t('.redwinebottle')
+            %option{ :value => 'whitewinebottle' }= t('.whitewinebottle')
+            %option{ :value => 'sparkling' }= t('.sparkling')
+            %option{ :value => 'coffee' }= t('.coffee')
+            %option{ :value => 'teapot' }= t('.teapot')           
+            
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

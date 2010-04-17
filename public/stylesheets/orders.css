@@ -65,6 +65,9 @@ td.article,
 td.quantity {
   margin: 1px 0px 0px 1px;
   background-color: #27343b;
+  background-image: url(/images/cat_aperitif.png);
+  background-repeat: no-repeat;
+  background-position: center center;
   cursor: pointer; }
 
 div.category,
@@ -81,8 +84,8 @@ div.ordersum_container {
 
 div.category {
   float: right;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   overflow: hidden; }
 
 div.category_label {
@@ -93,8 +96,8 @@ div.category_label {
   position: relative; }
   div.category_label span {
     position: absolute;
-    top: 30px;
-    left: 5px; }
+    top: 76px;
+    left: 2px; }
 
 td.article,
 td.quantity {
@@ -153,7 +156,7 @@ input#order_sum {
   color: white;
   border: none;
   font-size: 110%;
-  width: 160px;
+  width: 150px;
   text-align: right; }
 
 div.ordersum_container {
