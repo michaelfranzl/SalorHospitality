@@ -25,6 +25,7 @@
   
     #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
       .adminlinks
+        = link_to( (t :orders_menu), orders_path)
         - if logged_in?
           - if @current_user.role == 1
             = link_to( (t :settlements_menu), settlements_path)

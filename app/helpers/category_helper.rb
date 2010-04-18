@@ -21,6 +21,7 @@ module CategoryHelper
       [t('.sparkling'), 'sparkling'],
       [t('.coffee'), 'coffee'],
       [t('.teapot'), 'teapot'],
+      [t('.tea'), 'tea'],
       [t('.blank'), 'blank']
     ]
   end

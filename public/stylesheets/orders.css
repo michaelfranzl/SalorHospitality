@@ -84,8 +84,8 @@ div.ordersum_container {
 
 div.category {
   float: right;
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   overflow: hidden; }
 
 div.category_label {
@@ -96,7 +96,7 @@ div.category_label {
   position: relative; }
   div.category_label span {
     position: absolute;
-    top: 76px;
+    top: 66px;
     left: 2px; }
 
 td.article,

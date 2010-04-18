@@ -62,13 +62,13 @@ ActiveRecord::Schema.define(:version => 20100417131739) do
     t.integer  "count"
     t.integer  "article_id"
     t.integer  "order_id"
-    t.boolean  "free"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "partial_order"
     t.integer  "cost_center_id"
     t.boolean  "printed",        :default => false
     t.integer  "sort"
+    t.integer  "quantity_id"
   end
 
   create_table "orders", :force => true do |t|
