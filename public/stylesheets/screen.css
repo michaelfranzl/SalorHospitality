@@ -18,8 +18,7 @@ a {
   color: white; }
 
 fieldset {
-  border-style: outset;
-  background-color: #eeeeee; }
+  border-style: outset; }
 
 legend {
   font-style: italic;

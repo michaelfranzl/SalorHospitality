@@ -23,9 +23,9 @@
           = category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
       %tr
         %td
-          = category_form.label('tax_id', "#{ t :tax }*")
+          = category_form.label('icon', "#{ t :icon }*")
         %td
-          %select{ :size => 2 }
+          %select#category_icon{ :name => 'category[icon]', :size => 2 }
             %option{ :value => 'aperitif' }= t('.aperitif')
             %option{ :value => 'sidedish' }= t('.sidedish')
             %option{ :value => 'starter' }= t('.starter')
@@ -44,7 +44,20 @@
             %option{ :value => 'whitewinebottle' }= t('.whitewinebottle')
             %option{ :value => 'sparkling' }= t('.sparkling')
             %option{ :value => 'coffee' }= t('.coffee')
-            %option{ :value => 'teapot' }= t('.teapot')           
+            %option{ :value => 'teapot' }= t('.teapot')
+            %option{ :value => 'blank' }= t('.blank')
             
+      %tr
+        %td
+          = category_form.label('color', "#{ t :color }*")
+        %td
+          %select#category_color{ :name => 'category[color]', :size => 2 }
+            %option{ :value => '#80477d' }= t('.violet')
+            %option{ :value => '#ed8b00' }= t('.orange')
+            %option{ :value => '#cd0052' }= t('.pink')
+            %option{ :value => '#75b10d' }= t('.green')
+            %option{ :value => '#136880' }= t('.blue')
+            %option{ :value => '#27343b' }= t('.blank')
 
+            
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
