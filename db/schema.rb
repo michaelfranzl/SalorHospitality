@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100417131739) do
+ActiveRecord::Schema.define(:version => 20100418153215) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20100417131739) do
     t.integer  "settlement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "sum"
+    t.float    "sum",           :default => 0.0
   end
 
   create_table "quantities", :force => true do |t|

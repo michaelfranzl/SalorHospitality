@@ -29,7 +29,7 @@ module OrdersHelper
     categories.collect{ |cat|
       cat.articles_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ escape_javascript qu.article.name }', '#{ escape_javascript qu.name }', '#{ qu.price }', '#{ escape_javascript qu.article.description }', '#{ escape_javascript compose_item_label(qu) }');"
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ escape_javascript qu.article.name }', '#{ escape_javascript qu.name }', #{ qu.price }, '#{ escape_javascript qu.article.description }', '#{ escape_javascript compose_item_label(qu) }');"
         }.to_s
       }.to_s
     }.to_s
@@ -39,7 +39,7 @@ module OrdersHelper
     "\n\nvar itemdetails_a = new Array();" +
     categories.collect{ |cat|
       cat.articles_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ escape_javascript art.name }', '#{ escape_javascript art.name }', '#{ art.price }', '#{ escape_javascript art.description }', '#{ escape_javascript compose_item_label(art) }');"
+        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ escape_javascript art.name }', '#{ escape_javascript art.name }', #{ art.price }, '#{ escape_javascript art.description }', '#{ escape_javascript compose_item_label(art) }');"
       }.to_s
     }.to_s
 
@@ -100,8 +100,8 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
                       $('itemstable').insert({ top: new_item_html_modified });
-                      var sum = parseFloat($('order_sum').value) + parseFloat(itemdetails_q[qu_id][3]);
-                      $('order_sum').value = sum.toFixed(2);
+                      var sum = parseFloat($('order_sum').value.replace(',', '.')) + itemdetails_q[qu_id][3];
+                      $('order_sum').value = sum.toFixed(2).replace('.', ',');
                     }"
     add_new_item_a = "function add_new_item_a(art_id) {
                       var timestamp = new Date().getTime();
@@ -115,29 +115,34 @@ module OrdersHelper
                       new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
                       document.getElementById('quantitiestable').innerHTML = '&nbsp;';
                       $('itemstable').insert({ top: new_item_html_modified });
-                      var sum = parseFloat($('order_sum').value) + parseFloat(itemdetails_a[art_id][3]);
-                      $('order_sum').value = sum.toFixed(2);
+                      var sum = parseFloat($('order_sum').value.replace(',', '.')) + itemdetails_a[art_id][3];
+                      $('order_sum').value = sum.toFixed(2).replace('.', ',');
                     }"
                     
     increment_item_func = "function increment_item(desig) {
                              $('count_' + desig).innerHTML = $('order_items_attributes_' + desig + '_count').value++ + 1;
-                             var sum = parseFloat($('order_sum').value) + parseFloat($(desig + '_price').value);
-                             $('order_sum').value = sum.toFixed(2);
+                             var sum = parseFloat($('order_sum').value.replace(',', '.')) + parseFloat($(desig + '_price').value);
+                             $('order_sum').value = sum.toFixed(2).replace('.', ',');
                            }"
                            
     decrement_item_func = "function decrement_item(desig) {
                              var i;
                              i = parseInt($('order_items_attributes_' + desig + '_count').value);
-                             if (i < 2) { Effect.DropOut('item_' + desig); };
-                             $('count_' + desig).innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
-                             var sum = parseFloat($('order_sum').value) - parseFloat($(desig + '_price').value);
-                             $('order_sum').value = sum.toFixed(2);
+                             if (i < 2) {
+                               Effect.DropOut('item_' + desig);
+                               $('order_items_attributes_' + desig + '__delete').value = 1;
+                             };
+                             if (i > 0) {
+                               $('count_' + desig).innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
+                               var sum = parseFloat($('order_sum').value.replace(',', '.')) - parseFloat($(desig + '_price').value);
+                               $('order_sum').value = sum.toFixed(2).replace('.', ',');
+                             };
                            }"
     remove_item_func = "function remove_item(desig) {
                              Effect.DropOut('item_' + desig );
                              $('order_items_attributes_' + desig + '__delete').value = 1;
-                             var sum = parseFloat($('order_sum').value) - ( parseFloat($('order_items_attributes_' + desig + '_count').value) * parseFloat($(desig + '_price').value));
-                             $('order_sum').value = sum.toFixed(2);
+                             var sum = parseFloat($('order_sum').value.replace(',', '.')) - ( parseFloat($('order_items_attributes_' + desig + '_count').value) * parseFloat($(desig + '_price').value));
+                             $('order_sum').value = sum.toFixed(2).replace('.', ',');
                         }"
     
     return display_articles + display_quantities + add_new_item_q + add_new_item_a + increment_item_func + decrement_item_func + flash_button + remove_item_func

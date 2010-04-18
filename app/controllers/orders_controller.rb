@@ -47,11 +47,11 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-
-    @order.update_attribute( :sum, calculate_order_sum(@order) )
     @order.finished = true if params.has_key?('finish_order.x')
-
+    
     if @order.update_attributes(params[:order])
+      @order = Order.find(params[:id])
+      @order.update_attribute( :sum, calculate_order_sum(@order) )
       process_order(@order)
     else
       render(:new)

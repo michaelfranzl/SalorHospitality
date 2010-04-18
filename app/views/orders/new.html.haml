@@ -38,7 +38,7 @@
   %div#items
     %div.ordersum_container
       SUMME
-      %input#order_sum{ :value => "0,00" } €
+      %input#order_sum{ :value => number_with_precision(@order.sum, :precision => 2) } €
     %table#itemstable
       - order_form.fields_for :items do |item_form|
   
