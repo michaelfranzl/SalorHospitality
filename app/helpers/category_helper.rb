@@ -1,6 +1,42 @@
 module CategoryHelper
 
-  def generate_item_styles
+  def get_icon_array
+    icon_array = [
+      [t('.aperitif'), 'aperitif'],
+      [t('.sidedish'), 'sidedish'],
+      [t('.starter'), 'starter'],
+      [t('.maindish'), 'maindish'],
+      [t('.childrendish'), 'childrendish'],
+      [t('.dessert'), 'dessert'],
+      [t('.digestif'), 'digestif'],
+      [t('.beer'), 'beer'],
+      [t('.nonalcoholics'), 'nonalcoholics'],
+      [t('.cigarette'), 'cigarette'],
+      [t('.rosewineglass'), 'rosewineglass'],
+      [t('.redwineglass'), 'redwineglass'],
+      [t('.whitewineglass'), 'whitewineglass'],
+      [t('.rosewinebottle'), 'rosewinebottle'],
+      [t('.redwinebottle'), 'redwinebottle'],
+      [t('.whitewinebottle'), 'whitewinebottle'],
+      [t('.sparkling'), 'sparkling'],
+      [t('.coffee'), 'coffee'],
+      [t('.teapot'), 'teapot'],
+      [t('.blank'), 'blank']
+    ]
+  end
+
+  def get_color_array
+    color_array = [
+      [t('.violet'), '#80477d'],
+      [t('.orange'), '#ed8b00'],
+      [t('.pink'), '#cd0052'],
+      [t('.green'), '#75b10d'],
+      [t('.blue'), '#136880'],
+      [t('.blank'), '#27343b']
+    ]
+  end
+
+  def generate_item_style
 
     styles = "
       option[value='aperitif']:before { content:url('/images/category_aperitif.png'); }

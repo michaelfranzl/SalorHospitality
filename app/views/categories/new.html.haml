@@ -1,4 +1,4 @@
-%style= generate_item_styles
+%style= generate_item_style
 
 = error_messages_for 'category'
 
@@ -26,38 +26,12 @@
           = category_form.label('icon', "#{ t :icon }*")
         %td
           %select#category_icon{ :name => 'category[icon]', :size => 2 }
-            %option{ :value => 'aperitif' }= t('.aperitif')
-            %option{ :value => 'sidedish' }= t('.sidedish')
-            %option{ :value => 'starter' }= t('.starter')
-            %option{ :value => 'maindish' }= t('.maindish')
-            %option{ :value => 'childrendish' }= t('.childrendish')
-            %option{ :value => 'dessert' }= t('.dessert')
-            %option{ :value => 'digestif' }= t('.digestif')
-            %option{ :value => 'beer' }= t('.beer')
-            %option{ :value => 'nonalcoholics' }= t('.nonalcoholics')
-            %option{ :value => 'cigarette' }= t('.cigarette')
-            %option{ :value => 'rosewineglass' }= t('.rosewineglass')
-            %option{ :value => 'redwineglass' }= t('.redwineglass')
-            %option{ :value => 'whitewineglass' }= t('.whitewineglass')
-            %option{ :value => 'rosewinebottle' }= t('.rosewinebottle')
-            %option{ :value => 'redwinebottle' }= t('.redwinebottle')
-            %option{ :value => 'whitewinebottle' }= t('.whitewinebottle')
-            %option{ :value => 'sparkling' }= t('.sparkling')
-            %option{ :value => 'coffee' }= t('.coffee')
-            %option{ :value => 'teapot' }= t('.teapot')
-            %option{ :value => 'blank' }= t('.blank')
-            
+            = options_for_select(get_icon_array, category_form.object.icon)
       %tr
         %td
-          = category_form.label('color', "#{ t :color }*")
+          = category_form.label('color', t(:color))
         %td
           %select#category_color{ :name => 'category[color]', :size => 2 }
-            %option{ :value => '#80477d' }= t('.violet')
-            %option{ :value => '#ed8b00' }= t('.orange')
-            %option{ :value => '#cd0052' }= t('.pink')
-            %option{ :value => '#75b10d' }= t('.green')
-            %option{ :value => '#136880' }= t('.blue')
-            %option{ :value => '#27343b' }= t('.blank')
+            = options_for_select(get_color_array, category_form.object.color)
 
-            
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
