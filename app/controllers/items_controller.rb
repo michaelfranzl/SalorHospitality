@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
         "\n\n\n"
 
         unprinted_items = Item.find(:all, :conditions => { :order_id => order.id, :printed => false } )
-        return '' if unprinted_items.size.zero?
+        next if unprinted_items.size.zero?
         unprinted_items.each do |ui|
           ui.update_attribute(:printed, true)
           next if ui.article.category.tax.percent != 10  # This is ugly but works for now
