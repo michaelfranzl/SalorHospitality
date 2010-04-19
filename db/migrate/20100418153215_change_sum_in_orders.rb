@@ -4,6 +4,6 @@ class ChangeSumInOrders < ActiveRecord::Migration
   end
 
   def self.down
-    change_column :orders, :sum, :float
+    change_column :orders, :sum
   end
 end

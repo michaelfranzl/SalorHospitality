@@ -4,3 +4,4 @@ config/database.yml
 *.*~
 vendor/plugins
 *.sql
+public/stylesheets/*.css

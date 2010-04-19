@@ -64,6 +64,21 @@ class OrdersController < ApplicationController
     @order.destroy
     redirect_to table_orders_path
   end
+  
+  
+  def into_new_invoice
+    partial_order = order.clone
+    partial_order.finished = false
+    if partial_order.save
+      items_for_partial_order.each do |item|
+        item.update_attribute :order_id, partial_order.id
+    end
+    else
+      flash[:error] = 'Partial Order could not be saved.'
+    end
+    Item.update_all :partial_order => false
+    partial_order
+  end
 
   private
 
@@ -76,7 +91,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    def make_partial_order(order, items_for_partial_order)
+    def old_make_partial_order(order, items_for_partial_order)
       partial_order = order.clone
       partial_order.finished = false
       if partial_order.save
@@ -95,11 +110,11 @@ class OrdersController < ApplicationController
         item.delete if item.count.zero?
       end
       order.delete and redirect_to orders_path and return if order.items.size.zero?
-      items_for_partial_order = Item.find_all_by_partial_order(true)
-      partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
+      #items_for_partial_order = Item.find_all_by_partial_order(true)
+      #partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
       if finish
         reduce_stocks order
-        redirect_to order_path order
+        redirect_to table_path order.table
       else
         partial_order ? redirect_to(edit_order_path(partial_order)) : redirect_to(orders_path)
       end

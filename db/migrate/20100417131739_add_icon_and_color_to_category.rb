@@ -5,7 +5,7 @@ class AddIconAndColorToCategory < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :categories, :icon, :string
-    remove_column :categories, :color, :string
+    remove_column :categories, :icon
+    remove_column :categories, :color
   end
 end

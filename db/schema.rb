@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100418153215) do
+ActiveRecord::Schema.define(:version => 20100419115237) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -72,13 +72,14 @@ ActiveRecord::Schema.define(:version => 20100418153215) do
   end
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",      :default => false
+    t.boolean  "finished",        :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "sum",           :default => 0.0
+    t.float    "sum",             :default => 0.0
+    t.integer  "parent_order_id"
   end
 
   create_table "quantities", :force => true do |t|

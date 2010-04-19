@@ -1,6 +1,16 @@
 %h2= @table.name
 = link_to((t :new_order), new_table_order_path(@table))
 %h3= t :open_orders
-- @unfinished_orders.each do |uo|
-  = link_to "##{uo.id}", edit_table_order_path(@table, uo)
-  %br
+%div#invoices
+  - @unfinished_orders.each do |uo|
+    %div.invoice
+      = render :partial => 'simple_invoice', :locals => { :order => uo }
+    
+      %a{ :href => "#{order_path(uo)}.bon", :title => 'Drucken' }
+        %img{ :src => '/images/button_print.png' }
+      - if !uo.finished
+        %a{ :href => edit_order_path(uo), :title => 'Bearbeiten' }
+          %img{ :src => '/images/button_edit.png' }
+          
+%a{ :href => orders_path, :title => 'Bestellungen' }
+  %img{ :src => '/images/button_tables.png' }
