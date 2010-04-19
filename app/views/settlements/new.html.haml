@@ -55,7 +55,6 @@
         %td{ :colspan => '3', :class => 'colsum' }= t :revenue
         %td{ :colspan => '2', :class => 'colsum' }= number_to_currency @settlement.revenue
 
-
     - if controller.action_name == 'edit'
       - path = user_settlement_path(@settlement.user, @settlement)
       - form_for :settlement, @settlement, :url => path, :html => { :method => 'put' } do |sm_form|
@@ -68,8 +67,7 @@
             = submit_tag t :edit
             = sm_form.text_field :revenue, :size => 5
 
-
-    - if controller.action_name == 'new'
+    - if controller.action_name == 'create' or controller.action_name == 'new'
       - path = user_settlements_path
       - form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
         %tr

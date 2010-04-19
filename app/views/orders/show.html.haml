@@ -1,2 +1,3 @@
 %div.invoice
   = render :partial => 'tables/simple_invoice', :locals => { :order => @order }
+  = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
