@@ -1,5 +1,13 @@
 module OrdersHelper
 
+  def download_invoice_js
+    "Event.observe(window, 'load',
+      function() {
+        location.href='#{order_path(@order)}.bon';
+      }
+    );"
+  end
+
   def generate_js_variables(categories)
 
     articleslist =

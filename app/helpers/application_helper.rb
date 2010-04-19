@@ -7,10 +7,5 @@ module ApplicationHelper
                  }"
     return toggle
   end
-
-  def onload_functions
-    function = 'function onload_function() {}'
-    function = 'function onload_function() { document.getElementById("order_sum").value = "33"; }'
-    return function
-  end
+  
 end

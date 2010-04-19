@@ -1,6 +1,5 @@
 %script{ :type => 'text/javascript' }= generate_js_variables(@categories)
 %script{ :type => 'text/javascript' }= generate_js_functions
-%script{ :type => 'text/javascript' }= onload_functions
 
 - path = controller.action_name == 'edit' ? table_order_path(@order.table_id, @order) : table_orders_path
 - method = controller.action_name == 'edit' ? 'put' : 'post'
@@ -55,15 +54,15 @@
   
   
   %div#functions
-    %div#scrolldown{ :onclick => 'Effect.ScrollTo("footer", 100);' }
-      %img{ :src => '/images/button_scrolldown.jpg' }
+    %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => 'Hinunterscrollen' }
+      %img{ :src => '/images/button_scrolldown.png' }
       
-    %input#save_order{ :name => 'edit_order', :type => 'image', :src => '/images/button_tables.jpg' }
-    %input#finish_order{ :name => 'finish_order', :type => 'image', :src => '/images/button_invoice.jpg' }
+    %input#save_order{ :name => 'edit_order', :type => 'image', :src => '/images/button_tables.png', :title => 'Übernehmen und zurück' }
+    %input#finish_order{ :name => 'finish_order', :type => 'image', :src => '/images/button_invoice.png', :title => 'Bestellung abschließen' }
     
-    %a{ :href => '/orders' }
-      %img{ :src => '/images/button_cancel.jpg' }
+    %a{ :href => '/orders', :title => 'Abbrechen und zurück' }
+      %img{ :src => '/images/button_cancelsmall.png' }
 
   %div#footer
-    %div#scrollup{ :onclick => 'Effect.ScrollTo("container", 100);' }
-      %img{ :src => '/images/button_scrollup.jpg' }
+    %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => 'Hinaufscrollen' }
+      %img{ :src => '/images/button_scrollup.png' }

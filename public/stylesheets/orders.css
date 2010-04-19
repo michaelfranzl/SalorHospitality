@@ -40,25 +40,30 @@ table#itemstable {
   border-spacing: 1px;
   width: 100%; }
 
+div.invoice {
+  background-color: white;
+  width: 400px;
+  font-family: Monospace;
+  font-size: 140%;
+  color: #333;
+  padding: 30px 10px;
+  margin: 20px; }
+
 tr.item {
   height: 41px; }
 
 #save_order,
 #finish_order {
-  background-color: #FFAAAA;
   margin: 5px 0;
   cursor: pointer; }
 
-div#scrollup,
-div#scrolldown {
-  width: 40px;
-  height: 40px;
-  margin: 10px 0;
+div#functions a {
   cursor: pointer; }
 
-div#scrollup {
+div#footer a {
   float: right;
-  margin-right: 10px; }
+  margin-right: 10px;
+  cursor: pointer; }
 
 div.category,
 td.article,
@@ -123,10 +128,13 @@ td.item_label {
   background-color: #3a474d;
   min-height: 30px; }
 
+select#order_user_id {
+  font-size: 160%; }
+
 .order_info {
   float: right;
-  margin-top: -49px;
-  margin-right: 123px;
+  margin-top: -47px;
+  margin-right: 142px;
   width: 150px;
   text-align: right; }
 

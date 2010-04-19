@@ -191,9 +191,6 @@ ul#blackboard_list {
   top: 200px;
   left: 10px; }
 
-select#order_user_id {
-  font-size: 110%; }
-
 a#toggle_admin_interface {
   cursor: pointer; }
 

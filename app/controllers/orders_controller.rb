@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
       wants.html
       wants.bon {
         render :text => generate_escpos_invoice(@order)
-        #render :text => generate_escpos_test(@order)
+        @order.update_attribute(:finished, true)
       }
     end
   end
@@ -39,20 +39,20 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    @order.finished = params.has_key?('finish_order') ? true : false
-    @order.save ? process_order(@order) : render(:new)
+    finish = params.has_key?('finish_order.x') ? true : false
+    @order.save ? process_order(@order, finish) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.finished = true if params.has_key?('finish_order.x')
+    finish = true if params.has_key?('finish_order.x')
     
     if @order.update_attributes(params[:order])
       @order = Order.find(params[:id])
       @order.update_attribute( :sum, calculate_order_sum(@order) )
-      process_order(@order)
+      process_order(@order, finish)
     else
       render(:new)
     end
@@ -90,14 +90,14 @@ class OrdersController < ApplicationController
       partial_order
     end
 
-    def process_order(order)
+    def process_order(order, finish)
       order.items.each do |item|
         item.delete if item.count.zero?
       end
       order.delete and redirect_to orders_path and return if order.items.size.zero?
       items_for_partial_order = Item.find_all_by_partial_order(true)
       partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
-      if order.finished
+      if finish
         reduce_stocks order
         redirect_to order_path order
       else
@@ -145,10 +145,8 @@ class OrdersController < ApplicationController
         c = item.count
         p = item.article.price
         sum = 0
-        if !item.free
-          sum = c * p
-          subtotal += sum
-        end
+        sum = c * p
+        subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
         itemname = Iconv.conv('ISO-8859-15','UTF-8',item.article.name)
