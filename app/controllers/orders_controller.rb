@@ -116,7 +116,7 @@ class OrdersController < ApplicationController
         reduce_stocks order
         redirect_to table_path order.table
       else
-        partial_order ? redirect_to(edit_order_path(partial_order)) : redirect_to(orders_path)
+        redirect_to orders_path
       end
     end
 
