@@ -3,6 +3,8 @@ class SettlementsController < ApplicationController
     @from, @to = assign_from_to(params)
     @settlements = Settlement.find(:all, :conditions => { :created_at => (@from - 1.day)..@to })
     @taxes = Tax.all
+    
+    @cost_centers = CostCenter.all
 
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
     unsettled_userIDs = Array.new
