@@ -1,0 +1,46 @@
+%script= switch_item_js_code
+
+%h3== #{ t :order, :count => 1} ##{order.id}
+%p= l order.created_at, :format => :long
+
+- form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put } do |order_form|
+  %table{ :class => 'invoice' }
+    %tr
+      %th{ :style => 'width:20px; text-align:right' }
+      %th{ :style => 'width:150px' }
+      %th{ :style => 'width:70px' }
+      %th{ :style => 'width:70px' }
+    - subtotal = 0
+    - order_form.fields_for :items do |item_form|
+      - item = item_form.object
+      - c = item.count
+      - p = item.quantity_id ? item.quantity.price : item.article.price
+      - sum = 0
+      - sum = c * p
+      - subtotal += sum
+      - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+      %tr.simple_invoice{ :id => "item#{item.id}", :onclick => "mark_item(this, #{order_form.object.id}, #{itemnumber})" }
+        %td= c
+        - label = item.quantity_id ? compose_item_label(item.quantity) : item.article.name
+        %td= "%20.20s" % [label]
+        %td{ :style => 'text-align:right' }= number_to_currency p
+        %td{ :style => 'text-align:right' }= number_to_currency sum
+        %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}
+
+    %tr
+      %td{ :colspan => '3'}
+      %td{ :style => 'text-align:right'}
+        %b= number_to_currency subtotal
+
+  - if !order.finished
+    %a#edit_invoice{ :href => edit_order_path(order), :title => 'Bearbeiten' }
+      %img{ :src => '/images/button_edit.png' }
+
+  %input#split_invoice{ :name => 'split_invoice', :type => 'image', :src => '/images/button_splitinvoice.png', :title => 'Rechnung teilen' }
+  
+  %select#cost_center_for_invoice{ :name => 'cost_center_id' }
+    = options_from_collection_for_select(@cost_centers, :id, :name)
+    
+  %input#print_invoice{ :name => 'print_invoice', :type => 'image', :src => '/images/button_print.png', :title => 'Drucken' }
+    
+

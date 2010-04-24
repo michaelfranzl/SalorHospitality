@@ -1,5 +1,20 @@
 module OrdersHelper
 
+  def switch_item_js_code
+    %{
+      function mark_item(list_id, order_id, item_id) {
+        if ( $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value == 1 ) {
+          list_id.style.backgroundColor = 'white';
+          $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value = 0;
+        } else {
+          list_id.style.backgroundColor = '#CCC';
+          $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value = 1;
+        }
+     }
+   }
+  end
+
+
   def download_invoice_js
     "Event.observe(window, 'load',
       function() {

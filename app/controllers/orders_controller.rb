@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
       wants.html
       wants.bon {
         render :text => generate_escpos_invoice(@order)
-        @order.update_attribute(:finished, true)
+        @order.update_attribute(:finished, true) and reduce_stocks @order
       }
     end
   end
@@ -40,19 +40,20 @@ class OrdersController < ApplicationController
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
     finish = params.has_key?('finish_order.x') ? true : false
-    @order.save ? process_order(@order, finish) : render(:new)
+    @order.save ? process_order(@order, finish, false) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    finish = true if params.has_key?('finish_order.x')
+    checkout_order = params.has_key?('finish_order.x')
+    print_order    = params.has_key?('print_order.x')
     
     if @order.update_attributes(params[:order])
       @order = Order.find(params[:id])
       @order.update_attribute( :sum, calculate_order_sum(@order) )
-      process_order(@order, finish)
+      process_order(@order, checkout_order, print_order)
     else
       render(:new)
     end
@@ -64,21 +65,7 @@ class OrdersController < ApplicationController
     @order.destroy
     redirect_to orders_path
   end
-  
-  
-  def into_new_invoice
-    partial_order = order.clone
-    partial_order.finished = false
-    if partial_order.save
-      items_for_partial_order.each do |item|
-        item.update_attribute :order_id, partial_order.id
-    end
-    else
-      flash[:error] = 'Partial Order could not be saved.'
-    end
-    Item.update_all :partial_order => false
-    partial_order
-  end
+
 
   private
 
@@ -91,30 +78,39 @@ class OrdersController < ApplicationController
       end
     end
 
-    def old_make_partial_order(order, items_for_partial_order)
+    def make_partial_order(order, items_for_partial_order)
       partial_order = order.clone
-      partial_order.finished = false
       if partial_order.save
         items_for_partial_order.each do |item|
           item.update_attribute :order_id, partial_order.id
+          item.update_attribute :partial_order, false
+          item.update_attribute :cost_center_id, params[:cost_center_id]
         end
+        order = Order.find(params[:id])
+        order.delete if order.items.empty?
       else
         flash[:error] = 'Partial Order could not be saved.'
       end
-      Item.update_all :partial_order => false
-      partial_order
+      return partial_order
     end
 
-    def process_order(order, finish)
+    def process_order(order, checkout, print)
       order.items.each do |item|
         item.delete if item.count.zero?
       end
       order.delete and redirect_to orders_path and return if order.items.size.zero?
-      #items_for_partial_order = Item.find_all_by_partial_order(true)
-      #partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
-      if finish
-        reduce_stocks order
+      items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
+      make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
+
+      if checkout
         redirect_to table_path order.table
+      elsif items_for_partial_order.empty?
+        redirect_to "#{order_path(order)}.bon"
+      elsif print
+        items_for_partial_order.each do |item|
+          item.update_attribute :cost_center_id, params[:cost_center_id]
+        end
+        redirect_to table_path
       else
         redirect_to orders_path
       end

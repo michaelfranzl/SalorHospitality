@@ -11,9 +11,6 @@
 %a{ :href => path }
   %div{ :id => "table#{table.id}", :class => "table #{color}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{table.left}px;top:#{table.top}px;position:absolute;font-size:small;"}
     %div.bigtablename= table.name
-    - unfinished_orders.each do |uo|
-      %span.orderid= "##{uo.id}"
-      = ' ,' if uo != unfinished_orders.last
       
       
 = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}" if @current_user.role >= 2

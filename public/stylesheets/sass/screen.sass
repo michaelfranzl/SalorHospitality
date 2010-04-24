@@ -49,6 +49,7 @@ div#main
   :-moz-border-radius 5px
   :padding 5px
   :background-color #0e1d25
+  :min-height 800px
 
 
 div.metaelements
@@ -274,10 +275,39 @@ div.flash_error
 div.invoice
   :background-color white
   :float left
-  :width 500px
+  :width 320px
   :font-family Monospace
-  :font-size 140%
+  :font-size 150%
   :color #333
   :padding 30px 10px
-  :margin 20px
+  :margin 10px
+  :letter-spacing -1.5px
+  form
+    :min-height 250px
+  table
+    :border-collapse collapse
+    :margin-bottom 20px
 
+
+tr.simple_invoice
+  :cursor pointer
+  td
+    :padding 6px 0
+  
+tr.simple_invoice:hover
+  :background-color #EEE
+
+
+input#print_invoice
+  :vertical-align middle
+
+input#split_invoice
+  :vertical-align middle
+  
+a#edit_invoice img
+  :vertical-align middle
+  
+select#cost_center_for_invoice
+  :vertical-align middle
+  :font-size 170%
+  :width 160px
