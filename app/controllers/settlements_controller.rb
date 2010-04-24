@@ -4,6 +4,9 @@ class SettlementsController < ApplicationController
     @settlements = Settlement.find(:all, :conditions => { :created_at => (@from - 1.day)..@to })
     @taxes = Tax.all
     
+    params[:cost_center_id] ||= CostCenter.first.id
+    @selected_cost_center = CostCenter.find(params[:cost_center_id])
+    
     @cost_centers = CostCenter.all
 
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
@@ -16,8 +19,9 @@ class SettlementsController < ApplicationController
   end
 
   def show
-    @settlement = Settlement.find(params[:id])
-    @orders = Order.find_all_by_settlement_id(@settlement.id)
+    @settlement = Settlement.find params[:id]
+    @orders = Order.find_all_by_settlement_id @settlement.id
+    @cost_center = CostCenter.find params[:cost_center_id]
     render :new
   end
 

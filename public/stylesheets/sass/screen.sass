@@ -94,38 +94,23 @@ div.adminlinks
 
 table.settlements
   :font-size 70%
+  :border-collapse collapse
   td
     :width 30px
     :text-align right
-    :background-color = !middlegray
-    :border
-      :right 3px solid white
-    :border
-      :bottom 1px solid white
-  .sum
-    :background-color = !middlegray
-    :border-top 2px solid
+  .subtotal
     :font
       :weight bold
     :text-align right
   .colsum
-    :background-color = !middlegray
     :font-style italic
+  .total td
+    :border-top 1px solid darkgrey
+    :font-weight bold
 
-
-  .br
-    :border
-      :right 3px solid
-        :color = !darkgray
-  .bb
-    :border
-      :bottom 3px solid
-        :color = !darkgray
 
   th
-    :background-color = !middlegray
-    :border-right 3px solid white
-    :border-bottom 3px solid white
+    :border 1px solid !darkgray
     :text-align center
 
 table.waiterpad
