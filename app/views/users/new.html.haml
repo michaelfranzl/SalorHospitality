@@ -1,3 +1,4 @@
+%style= generate_color_style
 = error_messages_for 'user'
 
 - form_for @user do |user_form|
@@ -25,5 +26,11 @@
           %td
             %select{ :id => 'user_role', :name => 'user[role]' }
               = options_for_select MyGlobals::user_roles[0..@current_user.role+1], @user.role
-
+      %tr
+        %td
+          = user_form.label('color', t(:color))
+        %td
+          %select#category_color{ :name => 'user[color]' }
+            = options_for_select(get_color_array, user_form.object.color)
+            
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

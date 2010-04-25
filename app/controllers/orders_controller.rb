@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
       wants.html
       wants.bon {
         render :text => generate_escpos_invoice(@order)
-        @order.update_attribute(:finished, true) and reduce_stocks @order
       }
     end
   end
@@ -39,20 +38,24 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    finish = params.has_key?('finish_order.x') ? true : false
-    @order.save ? process_order(@order, finish, false) : render(:new)
+    invoice = params.has_key?('invoice.x')
+    save = params.has_key?('save.x')
+    @order.save ? process_order(@order, save, invoice, false, false) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
+    flash[:error] = "Rechnung ##{@order.id} wurde schon gedruckt und kann nicht mehr verÃ¤ndert werden." and redirect_to table_path(@order.table) and return if @order.finished
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    checkout_order = params.has_key?('finish_order.x')
-    print_invoice    = params.has_key?('print_invoice.x')
+    save = params.has_key?('save.x')
+    invoice = params.has_key?('invoice.x')
+    print = params.has_key?('print.x')
+    split = params.has_key?('split.x')
     if @order.update_attributes(params[:order])
       @order = Order.find(params[:id])
       @order.update_attribute( :sum, calculate_order_sum(@order) )
-      process_order(@order, checkout_order, print_invoice)
+      process_order(@order, save, invoice, print, split)
     else
       render(:new)
     end
@@ -102,7 +105,7 @@ class OrdersController < ApplicationController
       return partial_order
     end
 
-    def process_order(order, checkout, print)
+    def process_order(order, save, invoice, print, split)
       order.items.each do |item|
         item.delete if item.count.zero?
       end
@@ -110,12 +113,15 @@ class OrdersController < ApplicationController
       items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
       make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
 
-      if checkout
-        redirect_to table_path order.table
-      elsif print
-        redirect_to "#{order_path(order)}.bon"
-      else
+      if save
+        redirect_to orders_path
+      elsif invoice
         redirect_to table_path(order.table)
+      elsif print
+        @order.update_attribute(:finished, true) and reduce_stocks @order
+        redirect_to "#{order_path(order)}.bon"
+      elsif split
+        redirect_to table_path order.table 
       end
     end
 
@@ -163,7 +169,7 @@ class OrdersController < ApplicationController
         subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
-        itemname = Iconv.conv('ISO-8859-15','UTF-8',item.article.name)
+        itemname = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',item.article.name)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,itemname,p,c,sum]
       end
 
@@ -201,18 +207,18 @@ class OrdersController < ApplicationController
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
 
-      output.gsub!(/\xE4/,"\x84") #ä
-      output.gsub!(/\xFC/,"\x81") #ü
-      output.gsub!(/\xF6/,"\x94") #ö
-      output.gsub!(/\xC4/,"\x8E") #Ä
-      output.gsub!(/\xDC/,"\x9A") #Ü
-      output.gsub!(/\xD6/,"\x99") #Ö
-      output.gsub!(/\xDF/,"\xE1") #ß
-      output.gsub!(/\xE9/,"\x82") #é
-      output.gsub!(/\xE8/,"\x7A") #è
-      output.gsub!(/\xFA/,"\xA3") #ú
-      output.gsub!(/\xF9/,"\x97") #ù
-      output.gsub!(/\xC9/,"\x90") #É
+      output.gsub!(/\xE4/,"\x84") #Ã¤
+      output.gsub!(/\xFC/,"\x81") #Ã¼
+      output.gsub!(/\xF6/,"\x94") #Ã¶
+      output.gsub!(/\xC4/,"\x8E") #Ã„
+      output.gsub!(/\xDC/,"\x9A") #Ãœ
+      output.gsub!(/\xD6/,"\x99") #Ã–
+      output.gsub!(/\xDF/,"\xE1") #ÃŸ
+      output.gsub!(/\xE9/,"\x82") #Ã©
+      output.gsub!(/\xE8/,"\x7A") #Ã¨
+      output.gsub!(/\xFA/,"\xA3") #Ãº
+      output.gsub!(/\xF9/,"\x97") #Ã¹
+      output.gsub!(/\xC9/,"\x90") #Ã‰
 
       return output
 

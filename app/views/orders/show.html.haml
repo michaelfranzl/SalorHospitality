@@ -1,5 +1,17 @@
-%h2= t "clients.#{MyGlobals.client}.invoice_title"
-%h3= t "clients.#{MyGlobals.client}.invoice_subtitle"
+%h2= t :invoice
+
+%a{ :href => "#{order_path(@order)}.bon", :title => 'Drucken (Bon)' }
+  %img{ :src => '/images/button_print.png' }
+
+%a{ :href => '#', :onclick => "window.print()", :title => 'Drucken (Geschäftsrechnung)' }
+  %img{ :src => '/images/button_print2.png' }
+  
+%a{ :href => '#', :onclick => "window.history.back();", :title => 'Zurück' }
+  %img{ :src => '/images/button_cancel.png' }
+
+
+%h3= t "clients.#{MyGlobals.client}.invoice_title"
+%h4= t "clients.#{MyGlobals.client}.invoice_subtitle"
 
 %p= t "clients.#{MyGlobals.client}.address"
 %p= t "clients.#{MyGlobals.client}.tax_number"

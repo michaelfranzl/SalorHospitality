@@ -9,7 +9,7 @@
 //global settings==============================
 
 body
-  :font-family Verdana
+  :font-family Trebuchet MS
   :color white
   :padding 0px
   :margin 0px 30px
@@ -23,6 +23,10 @@ img
   
 h1
   :margin 0
+
+h2
+  :text-transform uppercase
+  :margin 0px
 
 a
   :color = !link_color
@@ -49,22 +53,41 @@ div#main
   :-moz-border-radius 5px
   :padding 5px
   :background-color #0e1d25
-  :min-height 800px
+  :min-height 600px
 
 
 div.metaelements
   :float right
 
 div#header
-  :height 140px
+  :height 155px
   
 div#admin
   :border 3px solid white
   :border-top none
   :-moz-border-radius 5px
+  
+div#functions
+  :float right
+  :width 4%
+  :vertical-align top
+  :margin-right 10px
+  a
+    :cursor pointer
 
+div#footer
+  :height 50px
+  :clear both
 
+div#functions a
+  :cursor pointer
 
+div#footer a
+  :float right
+  :margin-right 10px
+  :cursor pointer
+  
+  
 //normal style definitions =============================
 
 div.fieldWithErrors
@@ -151,11 +174,17 @@ div.table
   :padding 0px 0px 0px 0px
   :margin 0
   :padding 9px
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 6px
+  
+
+
 
 div.bigtablename
   :text-align center
-  :font-size 150%
-  :margin 10px
+  :font-size 110%
+  :font-weight bold
+  :text-transform uppercase
 
 div.smalltablename
   :background-color #FCC
@@ -167,11 +196,14 @@ div.smalltablename
 span.orderid
   :font-size 150%
 
-.occupied
-  :background-color = !lightgray
-
-.vacant
-  :background-color = !middlegray
+div.occupied
+  :-moz-box-shadow 0px 0px 8px #35586a
+  
+div.vacant
+  :background-color #0d161a
+  
+div.vacant:hover
+  :background-color #192932
 
 
 
@@ -295,3 +327,37 @@ select#cost_center_for_invoice
   :vertical-align middle
   :font-size 170%
   :width 160px
+  
+table.detailed_list
+  :margin 20px
+  :border-collapse collapse
+  :color #BBB
+  th
+    :border 1px solid gray
+    :padding 5px 10px
+    :color white
+  td
+    :vertical-align top
+    :border-right 1px solid gray
+    :padding 0px 10px
+  td.order_begin
+    :padding 20px 0 5px 10px
+    :font-size 120%
+    :border none
+  td.colsum
+    :border none
+    :text-align right
+  td.number
+    :text-align right
+  td.subtotal
+    :font-size 120%
+    :padding-bottom 20px
+    :text-align right
+    :color white
+    :border none
+  td.total
+    :font-size 150%
+    :color white
+    :font-weight bold
+    :text-align right
+    :border none

@@ -1,5 +1,5 @@
 - unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => table.id })
-- color = unfinished_orders.empty? ? 'occupied' : 'vacant'
+- status = unfinished_orders.empty? ? 'vacant' : 'occupied'
 
 - if unfinished_orders.size == 0
   - path = new_table_order_path(table)
@@ -7,12 +7,10 @@
   - path = edit_table_order_path(table, unfinished_orders.first.id)
 - else
   - path = table_path(table)
-  
-%a{ :href => path }
-  %div{ :id => "table#{table.id}", :class => "table #{color}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{table.left}px;top:#{table.top}px;position:absolute;font-size:small;"}
+
+- color_style = "background-color: #{ unfinished_orders.first.user.color }" if !unfinished_orders.empty?
+%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{table.left}px;top:#{table.top}px;position:absolute;font-size:small;#{color_style}"}
+  %a{ :href => path }
     %div.bigtablename= table.name
-      
-      
+
 = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}" if @current_user.role >= 2
-
-
