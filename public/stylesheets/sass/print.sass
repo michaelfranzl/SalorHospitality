@@ -1,4 +1,4 @@
-h1, h2, h6, #login_logout, .metanavi
+h1, h6, #login_logout, .metanavi, div#admin
   :display none
 
 table
@@ -33,11 +33,27 @@ table.waiterpad
     :height 40pt
     :background-color lightgray
 
-#flash_notice
+
+table.printed_invoice
+  :border-spacing 0px
+  :font-size 15pt
+  :font-family Trebuchet MS
+  :border 2pt solid black
+  :border-collapse collapse
+  :width 190pt
+  th
+    :text-transform uppercase
+    :background-color lightgray
+    :text-align center
+  td, th
+    :border-bottom 1px solid black
+    :height 20pt
+    :vertical-align middle
+
+td.two
   :color green
-
-#flash_notice
-  :color orange
-
-#flash_error
+  :width 200%
+  
+th.one
   :color red
+  :width 800px

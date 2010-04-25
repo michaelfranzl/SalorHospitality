@@ -2,8 +2,8 @@
 
 %h3== #{ t :order, :count => 1} ##{order.id}
 %p= l order.created_at, :format => :long
-
 - form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put } do |order_form|
+
   %table{ :class => 'invoice' }
     %tr
       %th{ :style => 'width:20px; text-align:right' }
@@ -31,16 +31,11 @@
       %td{ :colspan => '3'}
       %td{ :style => 'text-align:right'}
         %b= number_to_currency subtotal
-
+      
   - if !order.finished
     %a#edit_invoice{ :href => edit_order_path(order), :title => 'Bearbeiten' }
       %img{ :src => '/images/button_edit.png' }
-
-  %input#split_invoice{ :name => 'split_invoice', :type => 'image', :src => '/images/button_splitinvoice.png', :title => 'Rechnung teilen' }
-  
   %select#cost_center_for_invoice{ :name => 'cost_center_id' }
     = options_from_collection_for_select(@cost_centers, :id, :name)
-    
+  %input#split_invoice{ :name => 'split_invoice', :type => 'image', :src => '/images/button_splitinvoice.png', :title => 'Rechnung teilen' }
   %input#print_invoice{ :name => 'print_invoice', :type => 'image', :src => '/images/button_print.png', :title => 'Drucken' }
-    
-

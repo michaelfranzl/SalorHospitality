@@ -113,8 +113,8 @@
     abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    month_names: [~, Januar, Februar, MÃ¤rz, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, MÃ¤r, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     # Used in date_select and datime_select.
     order: [ :year, :month, :day ]
 
@@ -156,8 +156,8 @@
       messages:
         inclusion: "ist nicht in der Liste"
         exclusion: "ist reserviert"
-        invalid: "ist ungültig"
-        confirmation: "stimmt nicht überein"
+        invalid: "ist ungÃ¼ltig"
+        confirmation: "stimmt nicht Ã¼berein"
         accepted: "must be accepted"
         empty: "darf nicht leer sein"
         blank: "muss eingegeben werden"

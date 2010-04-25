@@ -1,70 +1,54 @@
-%h2= t :settlements_menu
+- cost_center_header_text = "(#{ t :cost_center } #{@selected_cost_center.name})" if @selected_cost_center
+%h2== #{ t :settlements_menu } #{ cost_center_header_text }
 
-%h3 Offene
-- @unsettled_users.each do |uu|
-  %ul
-    %li= link_to uu.login, new_user_settlement_path(uu)
-    %ul
-      - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true } ).each do |uo|
-        %li= link_to "Best. ##{uo.id}", order_path(uo)
+- form_tag '/settlements/index' do
+  = label('from', 'von')
+  = select_date(@from, :prefix => 'from')
+  = label('to', 'bis')
+  = select_date(@to, :prefix => 'to')
+  = label('cc', 'Kostenstelle')
+  %select{ :name => 'cost_center_id' }
+    %option{ :value => '' }Alle
+    = options_from_collection_for_select(@cost_centers, :id, :name)
+  = submit_tag 'abfragen'
 
+%table{ :class => 'settlements' }
+  %tr
+    %th{ :class => 'bb', :style => 'width:40px' }= t :settlement_abbr
+    %th{ :class => 'bb' }= t :datum
+    %th{ :class => 'br bb' }= t :user
+    - @taxes.each do |tax|
+      %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }
+    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :net }
+    - @taxes.each do |tax|
+      %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gr} #{ number_to_percentage tax.percent }
+    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gr }
 
-- if @current_user.role >= 2
-  %h3 Gesamtabrechnung
-  
-  - form_tag '/settlements/index' do
-    = label('from', 'von')
-    = select_date(@from, :prefix => 'from')
-    = label('to', 'bis')
-    = select_date(@to, :prefix => 'to')
-    = label('cc', 'Kostenstelle')
-    %select{ :name => 'cost_center_id' }
-      = options_from_collection_for_select(@cost_centers, :id, :name)
-    = submit_tag 'abfragen'
-  
-  
-  %h4= @selected_cost_center.name
-  %table{ :class => 'settlements' }
-    %tr
-      %th{ :class => 'bb', :style => 'width:40px' }= t :settlement_abbr
-      %th{ :class => 'bb' }= t :datum
-      %th{ :class => 'br bb' }= t :user
-      - @taxes.each do |tax|
-        %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }
-      %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :net }
-      - @taxes.each do |tax|
-        %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gr} #{ number_to_percentage tax.percent }
-      %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gr }
-
-    - total_net, total_gro = initialize_total_varaibles
-
-    - @settlements.each do |s|
-      - s_net, s_gro = initialize_settlement_varaibles
-      - s_gro, total_net, total_gro = calculate_sums(s, s_net, s_gro, total_net, total_gro)
+  - total_net, total_gro = initialize_total_varaibles
+  - @settlements.each do |s|
       
-      %tr
-        %td= link_to "##{s.id}", "#{settlement_path(s)}?cost_center_id=#{@selected_cost_center.id}"
-        %td= l s.created_at, :format => :date_iso
-        %td{ :class => 'br' }= s.user.login
-        - @taxes.each do |tax|
-          %td= number_to_currency s_net[tax.id]
-        %td{ :class => 'br colsum' }= number_to_currency s_net.sum
-        - @taxes.each do |tax|
-          %td= number_to_currency s_gro[tax.id]
-        %td{ :class => 'br colsum' }= number_to_currency s_gro.sum
-
-
-
-
-
+    - s_net, s_gro = initialize_settlement_varaibles
+    - s_gro, total_net, total_gro = calculate_sums(s, s_net, s_gro, total_net, total_gro)
+      
     %tr
-      %td{ :colspan => 3, :class => 'br sum' } Summen
+      %td= link_to "##{s.id}", settlement_path(s)
+      %td= l s.created_at, :format => :date_iso
+      %td{ :class => 'br' }= s.user.login
       - @taxes.each do |tax|
-        %td{ :class => 'sum' }= number_to_currency total_net[tax.id]
-      %td{ :class => 'sum colsum br' }= number_to_currency total_net.sum
+        %td= number_to_currency s_net[tax.id]
+      %td{ :class => 'br colsum' }= number_to_currency s_net.sum
       - @taxes.each do |tax|
-        %td{ :class => 'sum' }= number_to_currency total_gro[tax.id]
-      %td{ :class => 'sum colsum br' }= number_to_currency total_gro.sum
+        %td= number_to_currency s_gro[tax.id]
+      %td{ :class => 'br colsum' }= number_to_currency s_gro.sum
+
+  %tr
+    %td{ :colspan => 3, :class => 'br sum' } Summen
+    - @taxes.each do |tax|
+      %td{ :class => 'sum' }= number_to_currency total_net[tax.id]
+    %td{ :class => 'sum colsum br' }= number_to_currency total_net.sum
+    - @taxes.each do |tax|
+      %td{ :class => 'sum' }= number_to_currency total_gro[tax.id]
+    %td{ :class => 'sum colsum br' }= number_to_currency total_gro.sum
   
-      -#%td= link_to 'Bearbeiten', edit_user_settlement_path(settlement.user, settlement)
-      -#%td= link_to 'Loeschen', se, :confirm => 'Sind Sie sicher?', :method => :delete
+    -#%td= link_to 'Bearbeiten', edit_user_settlement_path(settlement.user, settlement)
+    -#%td= link_to 'Loeschen', se, :confirm => 'Sind Sie sicher?', :method => :delete

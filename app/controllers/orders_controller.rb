@@ -48,12 +48,11 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     checkout_order = params.has_key?('finish_order.x')
-    print_order    = params.has_key?('print_order.x')
-    
+    print_invoice    = params.has_key?('print_invoice.x')
     if @order.update_attributes(params[:order])
       @order = Order.find(params[:id])
       @order.update_attribute( :sum, calculate_order_sum(@order) )
-      process_order(@order, checkout_order, print_order)
+      process_order(@order, checkout_order, print_invoice)
     else
       render(:new)
     end
@@ -65,7 +64,16 @@ class OrdersController < ApplicationController
     @order.destroy
     redirect_to orders_path
   end
-
+  
+  def unsettled
+    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
+    unsettled_userIDs = Array.new
+    @unsettled_orders.each do |uo|
+      unsettled_userIDs << uo.user_id
+    end
+    unsettled_userIDs.uniq!
+    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
+  end
 
   private
 
@@ -104,15 +112,10 @@ class OrdersController < ApplicationController
 
       if checkout
         redirect_to table_path order.table
-      elsif items_for_partial_order.empty?
-        redirect_to "#{order_path(order)}.bon"
       elsif print
-        items_for_partial_order.each do |item|
-          item.update_attribute :cost_center_id, params[:cost_center_id]
-        end
-        redirect_to table_path
+        redirect_to "#{order_path(order)}.bon"
       else
-        redirect_to orders_path
+        redirect_to table_path(order.table)
       end
     end
 
@@ -143,7 +146,7 @@ class OrdersController < ApplicationController
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
-      "#{ t :served_by } #{ order.user.title } auf Tisch Nr. #{ order.table.name }\n" +
+      "#{ t :served_by } #{ order.user.title } auf #{ order.table.name }\n" +
       "Bestellung Nr. #{order.id} am #{l order.created_at, :format => :long}\n\n" +
 
       "\e!\x00" +  # Font A
@@ -177,7 +180,7 @@ class OrdersController < ApplicationController
       list_of_taxes = ''
       Tax.all.each do |tax|
         tax_id = tax.id - 1
-        next if sum_taxes[tax_id]==0
+        next if sum_taxes[tax_id] == 0
         fact = tax.percent/100.00
         net = sum_taxes[tax_id]/(1.00+fact)
         gro = sum_taxes[tax_id]

@@ -1,3 +1,58 @@
-%div.invoice
-  = render :partial => 'simple_invoice', :locals => { :order => @order }
-  = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
+%h2= t "clients.#{MyGlobals.client}.invoice_title"
+%h3= t "clients.#{MyGlobals.client}.invoice_subtitle"
+
+%p= t "clients.#{MyGlobals.client}.address"
+%p= t "clients.#{MyGlobals.client}.tax_number"
+
+%p== #{ t :served_by } #{ @order.user.title } auf #{ @order.table.name }
+%p== Bestellung Nr. #{@order.id} am #{l @order.created_at, :format => :long}
+
+%table.printed_invoice
+  %tr
+    %th{ :style => 'width:4em' }= t :tax
+    %th{ :style => 'width:20em' }= t :item
+    %th{ :style => 'width:90px' }= t :single
+    %th{ :style => 'width:90px' }= t :count
+    %th{ :style => 'width:100px' }= t :order_sums
+  - sum_taxes = Array.new(Tax.count, 0)
+  - subtotal = 0
+  - @order.items.each do |item|
+    - c = item.count
+    - p = item.article.price
+    - sum = 0
+    - sum = c * p
+    - subtotal += sum
+    - tax_id = item.article.category.tax.id
+    - sum_taxes[tax_id-1] += sum
+    %tr
+      %td= "%c" % [tax_id+64]
+      %td= item.article.name
+      %td= number_to_currency p
+      %td= c
+      %td= number_to_currency sum
+  %tr
+    %td{ :colspan => 4 }
+    %td= number_to_currency subtotal
+
+%p Liste aller Steuern:
+
+%table.printed_invoice
+  %tr
+    %th.one= t :tax
+    %th= t :tax_percent
+    %th.three= t :net
+    %th.four= t :vat
+    %th.five= t :gro
+  - Tax.all.each do |tax|
+    - tax_id = tax.id - 1
+    - next if sum_taxes[tax_id] == 0
+    - fact = tax.percent/100.00
+    - net = sum_taxes[tax_id]/(1.00+fact)
+    - gro = sum_taxes[tax_id]
+    - vat = gro-net
+    %tr
+      %td= "%c:" % [tax.id+64]
+      %td.two= number_to_percentage tax.percent
+      %td= number_to_currency net
+      %td= number_to_currency vat
+      %td= number_to_currency gro

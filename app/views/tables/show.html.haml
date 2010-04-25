@@ -5,4 +5,4 @@
 %div#invoices
   - @unfinished_orders.each do |uo|
     %div.invoice
-      = render :partial => 'orders/simple_invoice', :locals => { :order => uo }
+      = render :partial => 'orders/invoice_form', :locals => { :order => uo }

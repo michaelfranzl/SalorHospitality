@@ -1,4 +1,4 @@
-h1, h2, h6, #login_logout, .metanavi {
+h1, h6, #login_logout, .metanavi, div#admin {
   display: none; }
 
 table {
@@ -32,11 +32,26 @@ table.waiterpad {
     height: 40pt;
     background-color: lightgray; }
 
-#flash_notice {
-  color: green; }
+table.printed_invoice {
+  border-spacing: 0px;
+  font-size: 15pt;
+  font-family: Trebuchet MS;
+  border: 2pt solid black;
+  border-collapse: collapse;
+  width: 190pt; }
+  table.printed_invoice th {
+    text-transform: uppercase;
+    background-color: lightgray;
+    text-align: center; }
+  table.printed_invoice td, table.printed_invoice th {
+    border-bottom: 1px solid black;
+    height: 20pt;
+    vertical-align: middle; }
 
-#flash_notice {
-  color: orange; }
+td.two {
+  color: green;
+  width: 200%; }
 
-#flash_error {
-  color: red; }
+th.one {
+  color: red;
+  width: 800px; }
