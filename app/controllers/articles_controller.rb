@@ -136,13 +136,13 @@ private
   end
   
   def generate_js_database(categories)
-    articleslist =
+    articleslist = 
     "var articleslist = new Array();" +
     categories.collect{ |cat|
-      "\n\narticleslist[#{ cat.id }] = \"" +
+      "\narticleslist[#{ cat.id }] = \"" +
       cat.articles_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
-        "\n<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name  }</td></tr>"
+        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name }</td></tr>"
       }.to_s + '";'
     }.to_s
 
@@ -153,7 +153,7 @@ private
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.collect{ |qu|
-          "\n<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ Helper.escape_javascript qu.name }</td></tr>"
+          "<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ Helper.escape_javascript qu.name }</td></tr>"
         }.to_s + '";'
       }.to_s
     }.to_s
@@ -163,7 +163,7 @@ private
     categories.collect{ |cat|
       cat.articles_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', #{ qu.price }, '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }');"
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }');"
         }.to_s
       }.to_s
     }.to_s
@@ -173,11 +173,11 @@ private
     "\n\nvar itemdetails_a = new Array();" +
     categories.collect{ |cat|
       cat.articles_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', #{ art.price }, '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
+        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
       }.to_s
     }.to_s
     
-    return articleslist + quantitylist + itemdetails_a + itemdetails_q
+    return articleslist + quantitylist + itemdetails_q + itemdetails_a + "testvar = 'abc';"
   end
   
   
