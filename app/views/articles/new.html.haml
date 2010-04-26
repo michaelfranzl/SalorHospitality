@@ -2,82 +2,79 @@
 = error_messages_for 'article'
 
 - form_for @article do |article_form|
-  %fieldset
-    %legend= t :article
-    %table
+  %table.article
+    %tr
+      %td{ :style => 'width: 440px;' }
+        %table
+          %tr{ :style => 'vertical-align: top;' }
+            %td
+              = article_form.label( 'name', "#{t :name}*")
+            %td
+              = article_form.text_field :name
+            %td
+              %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+          %tr
+            %td
+              = article_form.label('description', (t :description))
+            %td
+              = article_form.text_field :description
+          - if article_form.object.quantities.empty?    
+            %tr
+              %td
+                = article_form.label('price', "#{ t :price }*")
+              %td
+                = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
+          %tr
+            %td
+              = article_form.label('category_id', "#{ t :category }*")
+            %td
+              = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
+          %tr
+            %td
+              = article_form.label('menucard', (t :menucard))
+            %td
+              = article_form.check_box :menucard
+          %tr
+            %td
+              = article_form.label('blackboard', (t :blackboard))
+            %td
+              = article_form.check_box :blackboard
+          %tr
+            %td
+              = article_form.label('waiterpad', (t :waiterpad))
+            %td
+              = article_form.check_box :waiterpad
+          %tr
+            %td{ :colspan => '2' }
+      %td#foods_search_results
+
+  %h3 Varianten
+  %table{ :id => 'quantities' }
+
+    - article_form.fields_for :quantities do |quantity_form|
       %tr
         %td
-          %table
-            %tr{ :style => 'vertical-align: top;' }
-              %td
-                = article_form.label( 'name', "#{t :name}*")
-              %td
-                = article_form.text_field :name
-              %td
-                %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
-            %tr
-              %td
-                = article_form.label('description', (t :description))
-              %td
-                = article_form.text_field :description
-            - if article_form.object.quantities.empty?    
-              %tr
-                %td
-                  = article_form.label('price', "#{ t :price }*")
-                %td
-                  = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
-            %tr
-              %td
-                = article_form.label('category_id', "#{ t :category }*")
-              %td
-                = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
-            %tr
-              %td
-                = article_form.label('menucard', (t :menucard))
-              %td
-                = article_form.check_box :menucard
-            %tr
-              %td
-                = article_form.label('blackboard', (t :blackboard))
-              %td
-                = article_form.check_box :blackboard
-            %tr
-              %td
-                = article_form.label('waiterpad', (t :waiterpad))
-              %td
-                = article_form.check_box :waiterpad
-            %tr
-              %td{ :colspan => '2' }
-        %td#foods_search_results
-
-  %fieldset
-    %legend Varianten
-    %table{ :id => 'quantities' }
-
-      - article_form.fields_for :quantities do |quantity_form|
-        %tr
-          %td
-            = quantity_form.label :name, (t :name)
-          %td
-            = quantity_form.text_field :name, :size => '7'
-          %td
-            = quantity_form.label :price, (t :price)
-          %td
-            = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :price => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
-          %td
-            = quantity_form.label('active', (t :active))
-          %td
-            = quantity_form.check_box :active
+          = quantity_form.label :name, (t :name)
+        %td
+          = quantity_form.text_field :name, :size => '7'
+        %td
+          = quantity_form.label :price, (t :price)
+        %td
+          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :price => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
+        %td
+          = quantity_form.label('active', (t :active))
+        %td
+          = quantity_form.check_box :active
 
 
-          - if @current_user.role > 4
-            %td
-              = quantity_form.label('_delete', (t :delete))
-            %td
-              = quantity_form.check_box :_delete
+        - if @current_user.role > 4
+          %td
+            = quantity_form.label('_delete', (t :delete))
+          %td
+            = quantity_form.check_box :_delete
 
-    %p
-      %small= add_quantity_link((t :add_quantity), article_form)
+  %p
+    %small= add_quantity_link((t :add_quantity), article_form)
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
