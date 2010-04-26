@@ -138,16 +138,33 @@ class OrdersController < ApplicationController
 
     
     def generate_escpos_invoice(order)
+    
+      invoice_title = t("clients.#{MyGlobals.client}.invoice_title")
+      invoice_title = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_title)    
+    
+    
+      invoice_subtitle = t("clients.#{MyGlobals.client}.invoice_subtitle")
+      invoice_subtitle = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle)
+      
+      invoice_address = t("clients.#{MyGlobals.client}.address")
+      invoice_address = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_address)
+      
+      invoice_subtitle1 = t("clients.#{MyGlobals.client}.invoice_subtitle1")
+      invoice_subtitle1 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle1)
+
+      invoice_subtitle2 = t("clients.#{MyGlobals.client}.invoice_subtitle2")
+      invoice_subtitle2 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle2)
+      
       header =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      t("clients.#{MyGlobals.client}.invoice_title") + "\n" +
+      invoice_title + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle") + "\n\n" +
-      "\n" + t("clients.#{MyGlobals.client}.address") + "\n\n" +
+      "\n" + invoice_subtitle + "\n\n" +
+      "\n" + invoice_address + "\n\n" +
       t("clients.#{MyGlobals.client}.tax_number") + "\n\n" +
 
       "\ea\x00" +  # align left
@@ -170,8 +187,8 @@ class OrdersController < ApplicationController
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
         label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-        itemname = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
-        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,itemname,p,c,sum]
+        label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
+        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,c,sum]
       end
 
       sum =
@@ -199,9 +216,9 @@ class OrdersController < ApplicationController
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle1") + "\n" +
+      "\n" + invoice_subtitle1 + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle2") + "\n" +
+      "\n" + invoice_subtitle2 + "\n" +
       "\e!\x88" + # underline, emphasized
       t("clients.#{MyGlobals.client}.website") + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
