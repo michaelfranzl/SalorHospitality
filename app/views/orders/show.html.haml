@@ -6,7 +6,7 @@
 %a{ :href => '#', :onclick => "window.print()", :title => 'Drucken (Geschäftsrechnung)' }
   %img{ :src => '/images/button_print2.png' }
   
-%a{ :href => '#', :onclick => "window.history.back();", :title => 'Zurück' }
+%a{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
   %img{ :src => '/images/button_cancel.png' }
 
 
@@ -30,7 +30,7 @@
   - subtotal = 0
   - @order.items.each do |item|
     - c = item.count
-    - p = item.article.price
+    - p = item.quantity_id ? item.quantity.price : item.article.price
     - sum = 0
     - sum = c * p
     - subtotal += sum
@@ -38,7 +38,7 @@
     - sum_taxes[tax_id-1] += sum
     %tr
       %td= "%c" % [tax_id+64]
-      %td= item.article.name
+      %td= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
       %td= number_to_currency p
       %td= c
       %td= number_to_currency sum

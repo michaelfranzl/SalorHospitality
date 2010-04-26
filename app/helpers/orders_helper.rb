@@ -1,5 +1,14 @@
 module OrdersHelper
 
+  def compose_item_label(input)
+    if input.class == Quantity
+      label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
+    else
+      label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
+    end
+    return label
+  end
+
   def switch_item_js_code
     %{
       function mark_item(list_id, order_id, item_id) {

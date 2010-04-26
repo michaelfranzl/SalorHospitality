@@ -42,6 +42,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(params[:article])
     @groups = Group.find(:all, :order => 'name ASC')
+    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
     respond_to do |wants|
       wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
       wants.js do
@@ -55,6 +56,7 @@ class ArticlesController < ApplicationController
   def edit
     @article = Article.find(params[:id])
     @groups = Group.find(:all, :order => 'name ASC')
+    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new
   end
@@ -63,6 +65,7 @@ class ArticlesController < ApplicationController
     @categories = Category.find(:all, :order => 'name ASC')
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't get always id's only.
     @article.update_attributes params[:article]
+    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
 
     respond_to do |wants|
       wants.html do #html request from new_articles_path
@@ -99,6 +102,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
+    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
     flash[:notice] = "Der Artikel \"#{ @article.name }\" wurde erfolgreich geloescht."
     @article.destroy
     redirect_to articles_path
@@ -184,7 +188,6 @@ private
   def compose_item_label(input)
     if input.class == Quantity
       label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
-      #label += '<small>, ' + input.article.description if !input.article.description.empty?
     else
       label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
     end

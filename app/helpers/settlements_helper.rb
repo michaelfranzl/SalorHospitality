@@ -16,8 +16,7 @@ module SettlementsHelper
     s.orders.each do |o|
       o.items.each do |i|
         next if @selected_cost_center and i.cost_center != @selected_cost_center
-        #price = @current_user.role == 2 ? i.article.price : 0
-        price = i.article.price
+        price = i.quantity_id ? i.quantity.price : i.article.price
         s_gro[i.article.category.tax.id] += i.count * price
       end
     end

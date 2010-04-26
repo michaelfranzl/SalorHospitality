@@ -163,13 +163,14 @@ class OrdersController < ApplicationController
       list_of_items = ''
       order.items.each do |item|
         c = item.count
-        p = item.article.price
+        p = item.quantity_id ? item.quantity.price : item.article.price
         sum = 0
         sum = c * p
         subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
-        itemname = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',item.article.name)
+        label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
+        itemname = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,itemname,p,c,sum]
       end
 

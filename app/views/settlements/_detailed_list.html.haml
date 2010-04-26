@@ -21,7 +21,7 @@
         - subtotal += sum
         - total += sum
         %tr
-          %td= item.quantity_id ? compose_item_label(item.quantity) : item.article.name
+          %td= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
           %td.number= c
           %td.number= number_to_currency p
           %td= item.cost_center.name

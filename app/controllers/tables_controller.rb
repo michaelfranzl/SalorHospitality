@@ -6,7 +6,7 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => params[:id] })
-    flash[:notice] = "#{ @table.name } ist frei."
+    flash[:notice] = "#{ @table.name } ist frei." if !@unfinished_orders
     @cost_centers = CostCenter.all
   end
 

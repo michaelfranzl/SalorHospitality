@@ -37,9 +37,7 @@ class ItemsController < ApplicationController
 
           "\e!\x38" +  # doube tall, double wide, bold
           "%u %-17.17s\n" % [ui.count, ui.article.name] +
-
           "  %-17.17s\n" % [quantityname] +
-
           "\n\n\n"
         end
 

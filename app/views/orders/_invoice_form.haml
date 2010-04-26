@@ -30,7 +30,7 @@
       - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
       %tr.simple_invoice{ :id => "item#{item.id}", :onclick => "mark_item(this, #{order_form.object.id}, #{itemnumber})" }
         %td= c
-        - label = item.quantity_id ? compose_item_label(item.quantity) : item.article.name
+        - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
         %td= "%20.20s" % [label]
         %td{ :style => 'text-align:right' }= number_to_currency p
         %td{ :style => 'text-align:right' }= number_to_currency sum
