@@ -24,49 +24,6 @@ module OrdersHelper
   end
 
   def generate_js_variables(categories)
-
-    articleslist =
-    "var articleslist = new Array();" +
-    categories.collect{ |cat|
-      "\narticleslist[#{ cat.id }] = \"" +
-      cat.articles_in_menucard.collect{ |art|
-        action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
-        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ escape_javascript art.name }</td></tr>"
-      }.to_s + '";'
-    }.to_s
-
-    quantitylist =
-    "\n\nvar quantitylist = new Array();" +
-    categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
-        next if art.quantities.empty?
-        "\nquantitylist[#{ art.id }] = \"" +
-        art.quantities.collect{ |qu|
-          "<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ escape_javascript qu.name }</td></tr>"
-        }.to_s + '";'
-      }.to_s
-    }.to_s
-
-    itemdetails_q =
-    "\n\nvar itemdetails_q = new Array();" +
-    categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
-        art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ escape_javascript qu.article.name }', '#{ escape_javascript qu.name }', #{ qu.price }, '#{ escape_javascript qu.article.description }', '#{ escape_javascript compose_item_label(qu) }');"
-        }.to_s
-      }.to_s
-    }.to_s
-    
-
-    itemdetails_a =
-    "\n\nvar itemdetails_a = new Array();" +
-    categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ escape_javascript art.name }', '#{ escape_javascript art.name }', #{ art.price }, '#{ escape_javascript art.description }', '#{ escape_javascript compose_item_label(art) }');"
-      }.to_s
-    }.to_s
-
-
     @designator = 'DESIGNATOR'
     @sort = 'SORT'
     @articleid = 'ARTICLEID'
@@ -78,7 +35,7 @@ module OrdersHelper
     new_item_html = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :price => @price }
     new_item_html_var = "\n\nvar new_item_html = \"#{ escape_javascript new_item_html }\""
 
-    return articleslist + quantitylist + itemdetails_a + itemdetails_q + new_item_html_var
+    return  new_item_html_var
   end
 
 
@@ -171,15 +128,7 @@ module OrdersHelper
     return display_articles + display_quantities + add_new_item_q + add_new_item_a + increment_item_func + decrement_item_func + flash_button + remove_item_func
   end
 
-  def compose_item_label(input)
-    if input.class == Quantity
-      label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
-      #label += '<small>, ' + input.article.description if !input.article.description.empty?
-    else
-      label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
-    end
-    return label
-  end
+
 
 
 

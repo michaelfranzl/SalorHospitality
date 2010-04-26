@@ -1,7 +1,7 @@
 %h2= t :articles_menu
 
 %span
-  = link_to((t :new), new_article_path) if @current_user.role >= 2
+  = link_to((t :new), new_article_path) if @current_user.role >= 1
   |
 %span
   = link_to((t :create_a_series_of_foods), new_foods_articles_path) if @current_user.role >= 2

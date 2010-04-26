@@ -15,9 +15,9 @@
         %title gastrohelper
     = stylesheet_link_tag 'screen', :media => 'screen'
     = stylesheet_link_tag controller.controller_name, :media => 'screen'
-    = stylesheet_link_tag "#{controller.controller_name}_#{controller.action_name}", :media => 'screen'
     = stylesheet_link_tag 'print', :media => 'print'
     = javascript_include_tag :defaults
+    = javascript_include_tag "articles.js?#{MyGlobals.last_js_change}" if controller.controller_name == 'orders' and controller.action_name == 'new'
     %script{ :type => 'text/javascript' }= toggle_admin_interface
 
   %body 
@@ -52,8 +52,8 @@
 
         - if logged_in?
           .metaelements
-            //= link_to( 'English', '/sessions/set_language/en')
-            //= link_to( 'Deutsch', '/sessions/set_language/de')
+            = link_to( 'English', '/sessions/set_language/en')
+            = link_to( 'Deutsch', '/sessions/set_language/de')
             
 
 

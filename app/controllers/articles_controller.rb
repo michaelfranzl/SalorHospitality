@@ -2,7 +2,12 @@ class ArticlesController < ApplicationController
 
   def index
     @categories = Category.find(:all, :order => 'sort_order')
-    @articles = Article.all
+    respond_to do |wants|
+      wants.html {
+        @articles = Article.all
+      }
+      wants.js { render :text => generate_js_database(@categories) }
+    end
   end
 
   def listall
@@ -118,5 +123,73 @@ class ArticlesController < ApplicationController
     end
       render :partial => 'foods_search_results'
   end
+
+
+
+private
+
+  class Helper
+    class << self
+     #include Singleton - no need to do this, class objects are singletons
+     include ActionView::Helpers::JavaScriptHelper
+    end
+  end
+  
+  def generate_js_database(categories)
+    articleslist =
+    "var articleslist = new Array();" +
+    categories.collect{ |cat|
+      "\n\narticleslist[#{ cat.id }] = \"" +
+      cat.articles_in_menucard.collect{ |art|
+        action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
+        "\n<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name  }</td></tr>"
+      }.to_s + '";'
+    }.to_s
+
+    quantitylist =
+    "\n\nvar quantitylist = new Array();" +
+    categories.collect{ |cat|
+      cat.articles_in_menucard.collect{ |art|
+        next if art.quantities.empty?
+        "\nquantitylist[#{ art.id }] = \"" +
+        art.quantities.collect{ |qu|
+          "\n<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ Helper.escape_javascript qu.name }</td></tr>"
+        }.to_s + '";'
+      }.to_s
+    }.to_s
+
+    itemdetails_q =
+    "\n\nvar itemdetails_q = new Array();" +
+    categories.collect{ |cat|
+      cat.articles_in_menucard.collect{ |art|
+        art.quantities.collect{ |qu|
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', #{ qu.price }, '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }');"
+        }.to_s
+      }.to_s
+    }.to_s
+    
+
+    itemdetails_a =
+    "\n\nvar itemdetails_a = new Array();" +
+    categories.collect{ |cat|
+      cat.articles_in_menucard.collect{ |art|
+        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', #{ art.price }, '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
+      }.to_s
+    }.to_s
+    
+    return articleslist + quantitylist + itemdetails_a + itemdetails_q
+  end
+  
+  
+  def compose_item_label(input)
+    if input.class == Quantity
+      label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
+      #label += '<small>, ' + input.article.description if !input.article.description.empty?
+    else
+      label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
+    end
+    return label
+  end
+
 
 end
