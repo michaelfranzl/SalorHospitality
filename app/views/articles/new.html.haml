@@ -31,6 +31,11 @@
               = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
           %tr
             %td
+              = article_form.label('hidden', (t :hidden))
+            %td
+              = article_form.check_box :hidden
+          %tr
+            %td
               = article_form.label('menucard', (t :menucard))
             %td
               = article_form.check_box :menucard
@@ -65,6 +70,10 @@
           = quantity_form.label('active', (t :active))
         %td
           = quantity_form.check_box :active
+        %td
+          = article_form.label('hidden', (t :hidden))
+        %td
+          = article_form.check_box :hidden
 
 
         - if @current_user.role > 4
