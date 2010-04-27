@@ -1,5 +1,3 @@
-- @scopes = ['menucard','waiterpad','blackboard']
-
 %h2= t :articles_menu
 
 - if @current_user.role >= 1
@@ -16,26 +14,10 @@
       %ul#articles_search_results{ :style => 'list-style-type:none' }
         = render 'articles_search_results'
     
-    %td#drop_add_to_menucard
-      = t :menucard
-      = link_to ((t :print_preview), :controller => 'menucard')
-      %div#menucard_list
-        - @scope = 'menucard'
-        = render 'list', :locals => { :scope => @scope }
-      = drop_receiving_element :drop_add_to_menucard, :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_menucard'"
-    
-    %td#drop_add_to_waiterpad
-      = t :waiterpad
-      = link_to ((t :print_preview), :controller => 'waiterpad')
-      %div#waiterpad_list
-        - @scope = 'waiterpad'
-        = render 'list', :locals => { :scope => @scope }
-      = drop_receiving_element :drop_add_to_waiterpad, :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_waiterpad'"
-    
-    %td#drop_add_to_blackboard
-      = t :blackboard
-      = link_to ((t :online_preview), :controller => 'blackboard')
-      %div#blackboard_list
-        - @scope = 'blackboard'
-        = render 'list', :locals => { :scope => @scope }
-      = drop_receiving_element :drop_add_to_blackboard, :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_blackboard'"
+    - @scopes.each do |@scope|
+      %td{ :id => "drop_add_to_#{@scope}" }
+        = t @scope.to_sym
+        = link_to t(:print_preview), :controller => @scope
+        %div{ :id => "#{@scope}_list" }
+          = render 'list', :locals => { :scope => @scope }
+        = drop_receiving_element "drop_add_to_#{@scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{@scope}'"

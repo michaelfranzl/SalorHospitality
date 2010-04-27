@@ -1,6 +1,3 @@
-@scope = 'menucard'
-page.replace_html 'menucard_list', :partial => 'list', :locals => { :scope => @scope }
-@scope = 'waiterpad'
-page.replace_html 'waiterpad_list', :partial => 'list', :locals => { :scope => @scope }
-@scope = 'blackboard'
-page.replace_html 'blackboard_list', :partial => 'list', :locals => { :scope => @scope }
+@scopes.each do |@scope|
+  page.replace_html "#{@scope}_list", :partial => 'list', :locals => { :scope => @scope }
+end

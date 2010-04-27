@@ -2,6 +2,7 @@ class ArticlesController < ApplicationController
 
   def index
     @categories = Category.find(:all, :order => 'sort_order')
+    @scopes = ['menucard','waiterpad','blackboard']
     respond_to do |wants|
       wants.html {
         @articles = Article.all
@@ -63,6 +64,7 @@ class ArticlesController < ApplicationController
 
   def update
     @categories = Category.find(:all, :order => 'sort_order')
+    @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't get always id's only.
     @article.update_attributes params[:article]
     MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
