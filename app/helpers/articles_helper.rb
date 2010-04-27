@@ -9,10 +9,9 @@ module ArticlesHelper
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {
-              startcolor: "#FFAAAA",
-              endcolor: "#EEEEEE",
-              restorecolor: "#EEEEEE",
-              duration: 3
+              startcolor: "#3f5763",
+              endcolor: "#243239",
+              duration: 1
             }
           )
         }
@@ -26,14 +25,13 @@ module ArticlesHelper
       quantity = render(:partial => 'quantity', :locals => { :frm => frm, :quantity => Quantity.new })
       page << %{
         var new_quantity_id = "new_" + new Date().getTime();
-        $('quantities').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\d/g, new_quantity_id) });
+        $('quantities_new').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\dd/g, new_quantity_id) });
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {
-              startcolor: "#FFAAAA",
-              endcolor: "#EEEEEE",
-              restorecolor: "#EEEEEE",
-              duration: 3
+              startcolor: "#3f5763",
+              endcolor: "#243239",
+              duration: 1
             }
           )
         }

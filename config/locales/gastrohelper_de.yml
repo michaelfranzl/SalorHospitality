@@ -1,5 +1,4 @@
 de:
-
   attributes: #label translations seem to be still missing in rails 2.3
     user:
       password: Passwort
@@ -87,6 +86,10 @@ de:
   new_settlement: Neue Abrechnung
   settlements_menu: Abrechnungen
   settlement_abbr: 'Abr.'
+  unsettled_menu: Abrechnen
+  unsettled_orders: Ausständige Abrechnungen
+  
+  make_settlement: Abrechnen!
 
   waiterpad: Bestellblock
 

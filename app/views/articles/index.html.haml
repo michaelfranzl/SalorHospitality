@@ -9,7 +9,7 @@
   %tr
     %td#drop_remove
       = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
-      = text_field_tag 'article_name', t(:search_term)
+      = text_field_tag 'article_name', t(:search_term), :onclick => 'this.value="";'
       = observe_field 'article_name', :frequency => 1, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('search_spinner_#{@id}').style.display='inline'", :loaded => "document.getElementById('search_spinner_#{@id}').style.display='none'"
       %ul#articles_search_results
         = render 'articles_search_results'

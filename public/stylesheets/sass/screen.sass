@@ -28,6 +28,9 @@ h2
   :text-transform uppercase
   :margin 0px
 
+h3
+  :text-transform uppercase
+  :margin-bottom 0px
 a
   :color = !link_color
 
@@ -51,7 +54,7 @@ th
 div#main
   :border 3px solid white
   :-moz-border-radius 5px
-  :padding 5px
+  :padding 20px
   :background-color #0e1d25
   :min-height 600px
   :width 950px
@@ -62,7 +65,7 @@ div.metaelements
 
 div#header
   :height 155px
-  :width 965px
+  :width 990px
   :margin auto
   
 div#admin
@@ -271,6 +274,8 @@ div.clear
 select
   :border 1px solid #AAAAAA
 
+div.flash
+  :text-align right
 div.flash_notice
   :font-size small
   :font-style italic
@@ -416,3 +421,36 @@ table.articles
       :margin 0px
       :font-weight bold
       :font-style italic
+      
+table.article_new
+  :background-color #243239
+  :border 1px solid #7e868a
+  :border-spacing 10px
+  td.labels
+    :width 125px
+  td.input_fields
+    :width 280px
+  td.spinner
+    :width 20px
+  td#foods_search_results
+    :width 300px
+  td
+    :vertical-align top
+    a
+      :text-decoration none
+    li
+      :list-style-type none
+      :padding-top 5px
+    ul
+      :list-style-type none
+      :padding-left 0px
+    span.header_search_results
+      :text-transform uppercase
+      :font-weight bold
+
+table#quantities_new
+  :background-color #243239
+  :border 1px solid #7e868a
+  :border-collapse collapse
+  td
+    :padding 10px

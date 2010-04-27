@@ -2,16 +2,16 @@
 = error_messages_for 'article'
 
 - form_for @article do |article_form|
-  %table.article
+  %table.article_new
     %tr
-      %td{ :style => 'width: 440px;' }
+      %td
         %table
-          %tr{ :style => 'vertical-align: top;' }
-            %td
+          %tr
+            %td.labels
               = article_form.label( 'name', "#{t :name}*")
-            %td
+            %td.input_fields
               = article_form.text_field :name
-            %td
+            %td.spinner
               %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
           %tr
             %td
@@ -53,9 +53,10 @@
             %td{ :colspan => '2' }
       %td#foods_search_results
 
-  %h3 Varianten
-  %table{ :id => 'quantities' }
 
+
+  %h3 Varianten
+  %table#quantities_new
     - article_form.fields_for :quantities do |quantity_form|
       %tr
         %td
@@ -65,7 +66,7 @@
         %td
           = quantity_form.label :price, (t :price)
         %td
-          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :price => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
+          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :size => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
         %td
           = quantity_form.label('active', (t :active))
         %td

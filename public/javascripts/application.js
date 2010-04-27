@@ -18,7 +18,7 @@ function add_new_item_q(qu_id) {
   new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
   new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
   $('itemstable').insert({ top: new_item_html_modified });
-  var sum = parseFloat($('order_sum').value.replace(',', '.')) + parseFloat(itemdetails_q[qu_id][3]);
+  var sum = calculate_sum();
   $('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
@@ -34,7 +34,7 @@ function add_new_item_a(art_id) {
   new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
   document.getElementById('quantitiestable').innerHTML = '&nbsp;';
   $('itemstable').insert({ top: new_item_html_modified });
-  var sum = parseFloat($('order_sum').value.replace(',', '.')) + parseFloat(itemdetails_a[art_id][3]);
+  var sum = calculate_sum();
   $('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
