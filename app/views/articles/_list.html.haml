@@ -1,7 +1,7 @@
 - @categories.each do |ca|
   - articles = ca.send "articles_in_#{@scope}".to_sym
   - if !articles.empty?
-    %p= ca.name
+    %p.category_title= ca.name
     %ul
       - articles.each do |ar|
         %li{ :id => "drag_from_#{@scope}_#{ar.id}" }
