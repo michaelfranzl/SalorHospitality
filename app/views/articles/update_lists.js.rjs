@@ -1,3 +1,6 @@
-page.replace 'menucard_list', :partial => 'menucard_list'
-page.replace 'waiterpad_list', :partial => 'waiterpad_list'
-page.replace 'blackboard_list', :partial => 'blackboard_list'
+@scope = 'menucard'
+page.replace_html 'menucard_list', :partial => 'list', :locals => { :scope => @scope }
+@scope = 'waiterpad'
+page.replace_html 'waiterpad_list', :partial => 'list', :locals => { :scope => @scope }
+@scope = 'blackboard'
+page.replace_html 'blackboard_list', :partial => 'list', :locals => { :scope => @scope }

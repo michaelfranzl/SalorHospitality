@@ -62,7 +62,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @categories = Category.find(:all, :order => 'name ASC')
+    @categories = Category.find(:all, :order => 'sort_order')
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't get always id's only.
     @article.update_attributes params[:article]
     MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')

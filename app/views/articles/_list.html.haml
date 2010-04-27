@@ -1,0 +1,10 @@
+- @categories.each do |ca|
+  - articles = ca.send "articles_in_#{@scope}".to_sym
+  - if !articles.empty?
+    %p= ca.name
+    %ul
+      - articles.each do |ar|
+        %li{ :id => "drag_from_#{@scope}_#{ar.id}" }
+          %img{ :id => "handle_for_#{@scope}_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+          = link_to ar.name, edit_article_path(ar)
+          = draggable_element "drag_from_#{@scope}_#{ar.id}", :revert => false, :ghosting => true, :handle => "'handle_for_#{@scope}_article_#{ar.id}'"
