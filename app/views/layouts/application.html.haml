@@ -22,36 +22,37 @@
       = javascript_include_tag 'effects.js'
       = javascript_include_tag 'dragdrop.js' if @current_user.role >= 2
       // javascript_include_tag 'controls.js'
+      = javascript_include_tag 'application.js'
       = javascript_include_tag "/articles.js?#{MyGlobals.last_js_change}" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
       %script{ :type => 'text/javascript' }= toggle_admin_interface
 
   %body
-    - if logged_in?
-      #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
-        .adminlinks
-          = link_to( (t :orders_menu), orders_path)
-          - if logged_in?
-            - if @current_user.role >= 1
-              = link_to( (t :settlements_menu), settlements_path)
-              = link_to( (t :articles_menu), articles_path)
-              = link_to( (t :unsettled_menu), '/orders/unsettled')
-            - if @current_user.role >= 2
-              = link_to( (t :categories_menu), categories_path)
-              = link_to( (t :taxes_menu), taxes_path)
-              = link_to( (t :cost_centers_menu), cost_centers_path)
-              = link_to( (t :users_menu), users_path)
-              = link_to( (t :tables_menu), tables_path)
-              = link_to( (t :statistics), '/statistics/index')
-            - if @current_user.role >= 1
-              = link_to( 'English', '/sessions/set_language/en')
-              = link_to( 'Deutsch', '/sessions/set_language/de')
-            = link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
 
 
     #container
       #header
+        - if logged_in?
+          #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
+            .adminlinks
+              = link_to( (t :orders_menu), orders_path)
+              - if logged_in?
+                - if @current_user.role >= 1
+                  = link_to( (t :settlements_menu), settlements_path)
+                  = link_to( (t :articles_menu), articles_path)
+                  = link_to( (t :unsettled_menu), '/orders/unsettled')
+                - if @current_user.role >= 2
+                  = link_to( (t :categories_menu), categories_path)
+                  = link_to( (t :taxes_menu), taxes_path)
+                  = link_to( (t :cost_centers_menu), cost_centers_path)
+                  = link_to( (t :users_menu), users_path)
+                  = link_to( (t :tables_menu), tables_path)
+                  = link_to( (t :statistics), '/statistics/index')
+                - if @current_user.role >= 1
+                  = link_to( 'English', '/sessions/set_language/en')
+                  = link_to( 'Deutsch', '/sessions/set_language/de')
+                = link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
         %a#toggle_admin_interface{ :onclick => "toggle_admin_interface(); #{ remote_function(:url => { :controller => 'sessions', :action => 'toggle_admin_interface' }) }" }
-          %img{ :src => "/images/client_logos/#{ MyGlobals.client }.jpg" }
+          %img{ :src => "/images/client_logos/#{ MyGlobals.client }.png" }
 
         .flash
           - if flash[:notice]

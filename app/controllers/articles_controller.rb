@@ -180,8 +180,8 @@ private
         "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
       }.to_s
     }.to_s
-    
-    return articleslist + quantitylist + itemdetails_q + itemdetails_a + "testvar = 'abc';"
+
+    return articleslist + quantitylist + itemdetails_q + itemdetails_a
   end
   
   

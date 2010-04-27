@@ -1,5 +1,4 @@
-%script{ :type => 'text/javascript' }= generate_js_variables(@categories)
-%script{ :type => 'text/javascript' }= generate_js_functions
+%script{ :type => 'text/javascript' }= generate_js_variables
 
 - path = controller.action_name == 'edit' ? table_order_path(@order.table_id, @order) : table_orders_path
 - method = controller.action_name == 'edit' ? 'put' : 'post'
