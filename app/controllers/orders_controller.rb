@@ -76,6 +76,7 @@ class OrdersController < ApplicationController
     end
     unsettled_userIDs.uniq!
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
+    flash[:notice] = 'Es gibt keine ausständigen Abrechnungen' if @unsettled_users.empty?
   end
 
   private

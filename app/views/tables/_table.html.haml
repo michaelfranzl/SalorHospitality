@@ -13,4 +13,4 @@
   %a{ :href => path }
     %div.bigtablename= table.name
 
-= draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}" if @current_user.role >= 2
+= draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[left]=' + Position.page(el)[0] + '&table[top]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}" if session[:admin_interface] == true

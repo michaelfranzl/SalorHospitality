@@ -41,7 +41,7 @@ class SettlementsController < ApplicationController
         so.settlement_id = @settlement.id
         so.save
       end
-      redirect_to settlements_path
+      redirect_to '/orders/unsettled'
     else
       render :new
     end
