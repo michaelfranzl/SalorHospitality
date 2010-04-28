@@ -101,3 +101,25 @@ function calculate_sum() {
   };
   return sum;
 }
+
+
+function mark_item_for_partial(list_id, order_id, item_id) {
+  if ( $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value == 1 ) {
+    list_id.style.backgroundColor = 'transparent';
+    $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value = 0;
+  } else {
+    list_id.style.backgroundColor = '#CCC';
+    $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value = 1;
+  }
+}
+
+function mark_item_for_storno(list_id, order_id, item_id) {
+  if ( $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value == 1 ) {
+    list_id.style.backgroundColor = 'transparent';
+    $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value = 0;
+  } else {
+    list_id.style.backgroundColor = '#FCC';
+    $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value = 1;
+  }
+}
+

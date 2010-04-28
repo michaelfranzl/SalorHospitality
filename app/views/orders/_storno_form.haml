@@ -1,12 +1,7 @@
 - form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put } do |order_form|
 
-  - if !order.finished
-    %a#edit_invoice{ :href => edit_order_path(order), :title => 'Bearbeiten' }
-      %img{ :src => '/images/button_edit.png' }
-  %select#cost_center_for_invoice{ :name => 'cost_center_id' }
-    = options_from_collection_for_select(@cost_centers, :id, :name)
-  %input#split_invoice{ :name => 'split', :type => 'image', :src => '/images/button_splitinvoice.png', :title => 'Rechnung teilen' }
   %input#print_invoice{ :name => 'print', :type => 'image', :src => '/images/button_print.png', :title => 'Drucken' }
+  %input#storno_item{ :name => 'storno', :type => 'image', :src => '/images/button_cancel.png', :title => 'Storno' }
   
   %h3== #{ t :order, :count => 1} ##{order.id}
   %p= l order.created_at, :format => :long
@@ -22,17 +17,22 @@
       - item = item_form.object
       - c = item.count
       - p = item.quantity_id ? item.quantity.price : item.article.price
+      - p = -p if item.storno_status == 2
       - sum = 0
       - sum = c * p
       - subtotal += sum
       - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
-      %tr.simple_invoice{ :id => "item#{item.id}", :onclick => "mark_item_for_partial(this, #{order_form.object.id}, #{itemnumber})" }
+      - color = item.storno_status == 2 ? '#FAA' : 'transparent'
+      - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
+      - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
+      %tr.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }
         %td= c
         - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
         %td= "%20.20s" % [label]
         %td{ :style => 'text-align:right' }= number_to_currency p
         %td{ :style => 'text-align:right' }= number_to_currency sum
-        %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}
+        - if storno_enabled
+          %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_storno_status", :name => "order[items_attributes][#{itemnumber}][storno_status]", :type => "hidden"} 
 
     %tr
       %td{ :colspan => '3'}

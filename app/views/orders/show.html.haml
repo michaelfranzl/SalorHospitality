@@ -31,6 +31,7 @@
   - @order.items.each do |item|
     - c = item.count
     - p = item.quantity_id ? item.quantity.price : item.article.price
+    - p = -p if item.storno_status == 2
     - sum = 0
     - sum = c * p
     - subtotal += sum

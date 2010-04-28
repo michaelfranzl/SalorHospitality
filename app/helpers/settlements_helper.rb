@@ -17,6 +17,7 @@ module SettlementsHelper
       o.items.each do |i|
         next if @selected_cost_center and i.cost_center != @selected_cost_center
         price = i.quantity_id ? i.quantity.price : i.article.price
+        price = -price if i.storno_status == 2
         s_gro[i.article.category.tax.id] += i.count * price
       end
     end

@@ -40,34 +40,30 @@ class OrdersController < ApplicationController
     @order.sum = calculate_order_sum @order
     invoice = params.has_key?('invoice.x')
     save = params.has_key?('save.x')
-    @order.save ? process_order(@order, save, invoice, false, false) : render(:new)
+    @order.save ? process_order(@order, save, invoice, false, false, false) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
-    flash[:error] = "Rechnung ##{@order.id} wurde schon gedruckt und kann nicht mehr verändert werden." and redirect_to table_path(@order.table) and return if @order.finished
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     save = params.has_key?('save.x')
     invoice = params.has_key?('invoice.x')
     print = params.has_key?('print.x')
     split = params.has_key?('split.x')
+    storno = params.has_key?('storno.x')
     if @order.update_attributes(params[:order])
-      @order = Order.find(params[:id])
+      process_order(@order, save, invoice, print, split, storno)
       @order.update_attribute( :sum, calculate_order_sum(@order) )
-      process_order(@order, save, invoice, print, split)
     else
       render(:new)
     end
   end
 
-  def destroy
+  def storno
     @order = Order.find(params[:id])
-    flash[:notice] = "Die Bestellung Nr. \"#{ @order.id }\" wurde erfolgreich geloescht."
-    @order.destroy
-    redirect_to orders_path
   end
-  
+
   def unsettled
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
     unsettled_userIDs = Array.new
@@ -78,6 +74,13 @@ class OrdersController < ApplicationController
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
     flash[:notice] = 'Es gibt keine ausständigen Abrechnungen' if @unsettled_users.empty?
   end
+  
+  def destroy
+    @order = Order.find(params[:id])
+    flash[:notice] = "Die Bestellung Nr. \"#{ @order.id }\" wurde erfolgreich geloescht."
+    @order.destroy
+    redirect_to orders_path
+  end
 
   private
 
@@ -87,6 +90,30 @@ class OrdersController < ApplicationController
           ingredient.stock.balance -= item.count * ingredient.amount
           ingredient.stock.save
         end
+      end
+    end
+
+    def process_order(order, save, invoice, print, split, storno)
+      order.items.each do |item|
+        item.delete if item.count.zero?
+      end
+      order.delete and redirect_to orders_path and return if order.items.size.zero?
+      items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
+      items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
+      make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
+      make_storno(order, items_for_storno) if !items_for_storno.empty?
+
+      if save
+        redirect_to orders_path
+      elsif invoice
+        redirect_to table_path(order.table)
+      elsif print
+        @order.update_attribute(:finished, true) and reduce_stocks @order
+        redirect_to "#{order_path(order)}.bon"
+      elsif split
+        redirect_to table_path order.table 
+      elsif storno
+        redirect_to "/orders/storno/#{order.id}"
       end
     end
 
@@ -105,27 +132,20 @@ class OrdersController < ApplicationController
       end
       return partial_order
     end
-
-    def process_order(order, save, invoice, print, split)
-      order.items.each do |item|
-        item.delete if item.count.zero?
-      end
-      order.delete and redirect_to orders_path and return if order.items.size.zero?
-      items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
-      make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
-
-      if save
-        redirect_to orders_path
-      elsif invoice
-        redirect_to table_path(order.table)
-      elsif print
-        @order.update_attribute(:finished, true) and reduce_stocks @order
-        redirect_to "#{order_path(order)}.bon"
-      elsif split
-        redirect_to table_path order.table 
+    
+    # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
+    #
+    def make_storno(order, items_for_storno)
+      items_for_storno.each do |item|
+        next if item.storno_status == 3 # only one storno allowed per item
+        storno_item = item.clone
+        storno_item.save
+        storno_item.update_attribute :storno_status, 2 # tis is a storno clone
+        item.update_attribute :storno_status, 3 # this is a storno original
       end
     end
-
+    
+    
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
@@ -182,6 +202,7 @@ class OrdersController < ApplicationController
       order.items.each do |item|
         c = item.count
         p = item.quantity_id ? item.quantity.price : item.article.price
+        p = -p if item.storno_status == 2
         sum = 0
         sum = c * p
         subtotal += sum
