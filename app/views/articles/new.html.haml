@@ -51,7 +51,7 @@
               = article_form.check_box :waiterpad
           %tr
             %td{ :colspan => '2' }
-      %td#foods_search_results
+      %td#articles_search_results
 
 
 
@@ -88,4 +88,4 @@
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-  = observe_field 'article_name', :frequency => 0.5, :update => 'foods_search_results', :url => { :action => 'find_foods' }, :with => "'foods_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"
+  = observe_field 'article_name', :frequency => 1, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"

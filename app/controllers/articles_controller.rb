@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def listall
-    @articles = Article.all
+    @articles = Article.find_visible
   end
 
   def new
@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
   end
 
   def new_foods
-    @foods_in_menucard = Article.find(:all, :conditions => { :menucard => true, :category_id => 1..3 }).size
+    @foods_in_menucard = Article.find(:all, :conditions => { :menucard => true, :category_id => 1..3, :hidden => false }).size
     starters = []
     main_dishes = []
     desserts = []
@@ -115,7 +115,10 @@ class ArticlesController < ApplicationController
       search_terms = params['articles_search_text'].split.collect do |word|
         "%#{ word.downcase }%"
       end
-      @found_articles = Article.find( :all, :conditions => [ (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND '), * search_terms.flatten ], :order => 'name', :limit => 5 )
+      conditions = 'hidden = false AND '
+      conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
+      @found_articles = Article.find( :all,
+        :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
     end
       render :partial => 'articles_search_results'
   end
@@ -129,8 +132,6 @@ class ArticlesController < ApplicationController
     end
       render :partial => 'foods_search_results'
   end
-
-
 
 private
 
@@ -146,7 +147,7 @@ private
     "var articleslist = new Array();" +
     categories.collect{ |cat|
       "\narticleslist[#{ cat.id }] = \"" +
-      cat.articles_in_menucard.collect{ |art|
+      cat.articles.find_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
         "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name }</td></tr>"
       }.to_s + '";'
@@ -155,7 +156,7 @@ private
     quantitylist =
     "\n\nvar quantitylist = new Array();" +
     categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
+      cat.articles.find_in_menucard.collect{ |art|
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.collect{ |qu|
@@ -167,7 +168,7 @@ private
     itemdetails_q =
     "\n\nvar itemdetails_q = new Array();" +
     categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
+      cat.articles.find_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
           "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }');"
         }.to_s
@@ -178,7 +179,7 @@ private
     itemdetails_a =
     "\n\nvar itemdetails_a = new Array();" +
     categories.collect{ |cat|
-      cat.articles_in_menucard.collect{ |art|
+      cat.articles.find_in_menucard.collect{ |art|
         "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
       }.to_s
     }.to_s

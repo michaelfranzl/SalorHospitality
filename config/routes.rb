@@ -58,5 +58,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action.:format'
   
   map.connect 'articles.:format/:action', :controller => 'index'
+  map.connect 'blackboard.:format/:action', :controller => 'blackboard'
 
 end

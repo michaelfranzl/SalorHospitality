@@ -5,7 +5,7 @@ xml.menucard{
   xml.title(@title)
   1.upto(3) do |category_id|
     xml << " <category#{category_id}>\n"
-      for dish in Category.find(category_id).articles_in_blackboard
+      for dish in Category.find(category_id).articles.find_in_blackboard
         use_formatted_name = !(dish.format_name.nil? or dish.format_name.empty?)
         xml.dish do
           xml << "  <name><![CDATA[#{html_escape_umlauts (use_formatted_name == true ?                        dish.format_name : "\n#{dish.name}") }]]></name>\n"
