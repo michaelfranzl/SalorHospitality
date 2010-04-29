@@ -8,7 +8,9 @@
   
 %a{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
   %img{ :src => '/images/button_cancel.png' }
-
+  
+%a{ :href => "/orders/storno/#{@order.id}", :title => 'Storno' }
+  %img{ :src => '/images/button_cancel.png' }
 
 %h3= t "clients.#{MyGlobals.client}.invoice_title"
 %h4= t "clients.#{MyGlobals.client}.invoice_subtitle"
