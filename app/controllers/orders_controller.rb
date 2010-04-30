@@ -2,10 +2,19 @@ class OrdersController < ApplicationController
 
   def index
     @tables = Table.all
+    @last_finished_order = Order.find_all_by_finished(true).last
   end
 
   def show
-    @order = Order.find(params[:id])
+    id = params[:id].to_i
+    from = id - 1
+    to = id + 1
+    order_range = Order.find(:all, :conditions => { :id => from..to })
+    @previous_order = order_range[0]
+    @previous_order = @order if @previous_order.nil?
+    @order = order_range[1]
+    @next_order = order_range[2]
+    @next_order = @order if @next_order.nil?
     respond_to do |wants|
       wants.html
       wants.bon {

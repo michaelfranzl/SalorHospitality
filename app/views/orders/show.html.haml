@@ -1,4 +1,4 @@
-%h2= t :invoice
+%h2== #{ t :invoice } ##{ @order.id }
 
 %a{ :href => "#{order_path(@order)}.bon", :title => 'Drucken (Bon)' }
   %img{ :src => '/images/button_print.png' }
@@ -10,8 +10,14 @@
   %img{ :src => '/images/button_back.png' }
   
 %a{ :href => "/orders/storno/#{@order.id}", :title => 'Storno' }
-  %img{ :src => '/images/button_forward.png' }
-
+  %img{ :src => '/images/button_cancelsmall.png' }
+  
+%a{ :href => order_path(@previous_order), :title => 'Storno' }
+  %img{ :src => '/images/button_previous.png' }
+  
+%a{ :href => order_path(@next_order), :title => 'Storno' }
+  %img{ :src => '/images/button_next.png' }
+  
 %h3= t "clients.#{MyGlobals.client}.invoice_title"
 %h4= t "clients.#{MyGlobals.client}.invoice_subtitle"
 

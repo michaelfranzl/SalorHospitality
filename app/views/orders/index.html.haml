@@ -2,5 +2,7 @@
 %div#functions
   %a#print_kitchenlist{ :href => '/items/print.bon', :title => 'Küchenliste' }
     %img{ :src => '/images/button_kitchenlist.png' }
+  %a{ :href => order_path(@last_finished_order.id), :title => 'Letzte abgeschlossene Bestellung' }
+    %img{ :src => '/images/button_list.png' }
     
 = render @tables

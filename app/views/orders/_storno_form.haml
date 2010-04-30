@@ -2,6 +2,8 @@
 
   %input#print_invoice{ :name => 'print', :type => 'image', :src => '/images/button_print.png', :title => 'Drucken' }
   %input#storno_item{ :name => 'storno', :type => 'image', :src => '/images/button_cancel.png', :title => 'Storno' }
+  %a#go_back{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
+    %img{ :src => '/images/button_back.png' }
   
   %h3== #{ t :order, :count => 1} ##{order.id}
   %p= l order.created_at, :format => :long

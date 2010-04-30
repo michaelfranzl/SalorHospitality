@@ -1,7 +1,7 @@
 %h2= t :articles_menu
 
 - if @current_user.role >= 1
-  %a.links{ :href => new_article_path}= t :new 
+  %a.links{ :href => new_article_path}= t :new
   //%a.links{ :href => new_foods_articles_path} t :create_a_series_of_foods), new_foods_articles_path)
 %a.links{ :href => listall_articles_path}= t :all_articles
 
