@@ -8,10 +8,12 @@
     %th{ :width => '50px' }
   - @articles.each do |ar|
     %tr
+      - label = ar.quantities.collect { |qu| "#{ qu.name}, " }
       - if @current_user.role >= 2
-        %td= link_to (ar.name, edit_article_path(ar))
+        %td== #{ link_to(ar.name, edit_article_path(ar)) } #{ label }
       - else
-        %td= ar.name
+        %td= label
+      
       %td= ar.description
       %td= number_to_currency ar.price
       %td= link_to ((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3

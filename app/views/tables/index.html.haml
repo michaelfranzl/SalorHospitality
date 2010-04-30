@@ -1,17 +1,14 @@
-%h2= t :tables
+%h2= t :tables_menu
+
+%p= link_to ((t :new), new_table_path)
 
 %table
   %tr
     %th{ :width => '100px' }
     %th{ :width => '250px' }
     %th{ :width => '120px' }
-    %th{ :width => '120px' }
   - @tables.each do |ta|
     %tr
-      %td= ta.name
+      %td= link_to (ta.name, edit_table_path(ta))
       %td= ta.description
-      %td= link_to ((t :edit), edit_table_path(ta))
       %td= link_to ((t :delete), ta, :confirm => 'Sind Sie sicher?', :method => :delete)
-
-%p= link_to ((t :new), new_table_path)
-

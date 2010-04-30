@@ -17,6 +17,26 @@ de:
       category: Artikelkategorie
       settlement: Abrechnung
       order: Bestellung
+    attributes:
+      article:
+        price: Preis
+        category_id: Artikelkategorie
+        name: Name
+      tax:
+        percent: Prozentsatz
+        name: Name
+      table:
+        name: Name
+      category:
+        name: Name
+        tax_id: Steuerklasse
+        icon: Icon
+        color: Farbe
+      user:
+        login: Login
+        password: Passwort
+        role: Rolle
+        title: Anrede und Name
 
 # ==================================================================================
 # Custom messages
@@ -35,6 +55,8 @@ de:
   logged_in_as: Eingeloggt als
   are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
   are_you_sure: 'Sind Sie sicher?'
+  
+  active: aktiv?
 
   delete: Löschen
   edit: Ändern
@@ -70,6 +92,9 @@ de:
 
   category: Artikelkategorie
   categories_menu: Artikelkategorien
+  
+  icon: Icon
+  color: Farbe
 
   article: Artikel
   articles_menu: Verkaufsartikel
@@ -77,6 +102,8 @@ de:
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
   add_article: 'Hinzufügen:'
+  
+  add_quantity: Variante/Menge hinzufügen
 
   ingredient: Zutat
   ingredients: Alle Zutaten
@@ -189,3 +216,10 @@ de:
       green: Grün
       blue: Blau
       blank: Blank
+      
+  violet: Violett
+  orange: Orange
+  pink: Pink
+  green: Grün
+  blue: Blau
+  blank: Blank

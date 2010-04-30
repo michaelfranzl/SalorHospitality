@@ -7,16 +7,18 @@
   %img{ :src => '/images/button_print2.png' }
   
 %a{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
-  %img{ :src => '/images/button_cancel.png' }
+  %img{ :src => '/images/button_back.png' }
   
 %a{ :href => "/orders/storno/#{@order.id}", :title => 'Storno' }
-  %img{ :src => '/images/button_cancel.png' }
+  %img{ :src => '/images/button_forward.png' }
 
 %h3= t "clients.#{MyGlobals.client}.invoice_title"
 %h4= t "clients.#{MyGlobals.client}.invoice_subtitle"
 
-%p= t "clients.#{MyGlobals.client}.address"
-%p= t "clients.#{MyGlobals.client}.tax_number"
+%p
+  = t "clients.#{MyGlobals.client}.address"
+  %br
+  = t "clients.#{MyGlobals.client}.tax_number"
 
 %p== #{ t :served_by } #{ @order.user.title } auf #{ @order.table.name }
 %p== Bestellung Nr. #{@order.id} am #{l @order.created_at, :format => :long}
