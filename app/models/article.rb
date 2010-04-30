@@ -13,7 +13,7 @@ class Article < ActiveRecord::Base
   end
   
   def self.find_in_menucard #articles_in_menucard
-    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'updated_at DESC')
+    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'name') #pdated_at DESC
   end
 
   def self.find_in_blackboard #articles_in_

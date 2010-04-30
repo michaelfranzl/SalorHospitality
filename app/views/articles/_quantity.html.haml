@@ -2,12 +2,7 @@
 -# Note that the statement 'ingredient' represents the name of this partial
 
 - frm.fields_for :quantities, quantity do |f|
-  %td
-    = f.label :name, 'Name:'
-  %td
-    = f.text_field :name, :size => '7'
-  %td
-    = f.label :price, 'Preis:'
-  %td
-    = f.text_field :price, :size => '4'
-
+  %td= f.label :name, 'Name:'
+  %td= f.text_field :name
+  %td= f.label :price, 'Preis:'
+  %td= f.text_field :price

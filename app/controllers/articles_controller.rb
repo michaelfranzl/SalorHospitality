@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def listall
-    @articles = Article.find(:all, :order => 'name, description, price')
+    @articles = Article.find(:all, :order => 'name, description, price', :conditions => { :hidden => false })
   end
 
   def new

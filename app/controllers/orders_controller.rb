@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     @order = Order.new
     @categories = Category.find(:all, :order => :sort_order)
     @order.table_id = params[:table_id]
-    @order.user_id = session[:last_user_id]
+    #@order.user_id = session[:last_user_id]
     @table = Table.find(@order.table_id)
     @username = @order.user_id ? User.find(@order.user_id) : ''
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })

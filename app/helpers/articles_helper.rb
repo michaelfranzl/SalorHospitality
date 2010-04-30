@@ -25,7 +25,7 @@ module ArticlesHelper
       quantity = render(:partial => 'quantity', :locals => { :frm => frm, :quantity => Quantity.new })
       page << %{
         var new_quantity_id = "new_" + new Date().getTime();
-        $('quantities_new').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\dd/g, new_quantity_id) });
+        $('quantities_new').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\d/g, new_quantity_id) });
         function HighlightEffect(element){
           new Effect.Highlight(element,
             {
