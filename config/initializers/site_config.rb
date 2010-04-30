@@ -16,6 +16,6 @@ module MyGlobals
 
   @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Fässer', 'Stueck' ]    
 
-  @@client = "local"
+  @@client = "gastrohelper"
 
 end

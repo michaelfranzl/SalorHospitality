@@ -1,4 +1,4 @@
-module TablesHelper
+module UsersHelper
 
   def get_color_array
     color_array = [
@@ -21,5 +21,5 @@ module TablesHelper
       option[value='#27343b'] { background-color: #27343b }
     "
   end
-  
+
 end

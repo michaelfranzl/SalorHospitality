@@ -219,10 +219,11 @@ de:
       green: Grün
       blue: Blau
       blank: Blank
-      
-  violet: Violett
-  orange: Orange
-  pink: Pink
-  green: Grün
-  blue: Blau
-  blank: Blank
+  users:
+    new:
+      violet: Violett
+      orange: Orange
+      pink: Pink
+      green: Grün
+      blue: Blau
+      blank: Blank

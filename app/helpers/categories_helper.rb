@@ -1,4 +1,4 @@
-module CategoryHelper
+module CategoriesHelper
 
   def get_icon_array
     icon_array = [
