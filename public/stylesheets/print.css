@@ -1,4 +1,4 @@
-h1, h6, #login_logout, .metanavi, div#admin {
+h1, h6, #login_logout, .metanavi, div#admin, div#buttons {
   display: none; }
 
 table {
@@ -33,25 +33,43 @@ table.waiterpad {
     background-color: lightgray; }
 
 table.printed_invoice {
-  border-spacing: 0px;
-  font-size: 15pt;
-  font-family: Trebuchet MS;
-  border: 2pt solid black;
-  border-collapse: collapse;
-  width: 190pt; }
-  table.printed_invoice th {
-    text-transform: uppercase;
-    background-color: lightgray;
-    text-align: center; }
+  border: 0.1pt solid black; }
   table.printed_invoice td, table.printed_invoice th {
-    border-bottom: 1px solid black;
-    height: 20pt;
-    vertical-align: middle; }
+    border: 0.1pt solid black;
+    padding: 3pt; }
+  table.printed_invoice .one {
+    width: 30pt;
+    text-align: center; }
+  table.printed_invoice .two {
+    width: 200pt;
+    text-align: left; }
+  table.printed_invoice .three {
+    width: 80pt;
+    text-align: right; }
+  table.printed_invoice .four {
+    width: 30pt;
+    text-align: center; }
+  table.printed_invoice .five {
+    width: 80pt;
+    text-align: right; }
 
-td.two {
-  color: green;
-  width: 200%; }
-
-th.one {
-  color: red;
-  width: 800px; }
+table.printed_taxes {
+  border: 0.1pt solid black; }
+  table.printed_taxes td, table.printed_taxes th {
+    border: 0.1pt solid black;
+    padding: 3pt; }
+  table.printed_taxes .one {
+    width: 30pt;
+    text-align: center; }
+  table.printed_taxes .two {
+    width: 30pt;
+    text-align: left; }
+  table.printed_taxes .three {
+    width: 30pt;
+    text-align: right; }
+  table.printed_taxes .four {
+    width: 30pt;
+    text-align: center; }
+  table.printed_taxes .five {
+    width: 30pt;
+    text-align: right; }

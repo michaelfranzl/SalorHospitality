@@ -1,4 +1,4 @@
-h1, h6, #login_logout, .metanavi, div#admin
+h1, h6, #login_logout, .metanavi, div#admin, div#buttons
   :display none
 
 table
@@ -35,25 +35,43 @@ table.waiterpad
 
 
 table.printed_invoice
-  :border-spacing 0px
-  :font-size 15pt
-  :font-family Trebuchet MS
-  :border 2pt solid black
-  :border-collapse collapse
-  :width 190pt
-  th
-    :text-transform uppercase
-    :background-color lightgray
-    :text-align center
+  :border 0.1pt solid black
   td, th
-    :border-bottom 1px solid black
-    :height 20pt
-    :vertical-align middle
-
-td.two
-  :color green
-  :width 200%
-  
-th.one
-  :color red
-  :width 800px
+    :border 0.1pt solid black
+    :padding 3pt
+  .one
+    :width 30pt
+    :text-align center
+  .two
+    :width 200pt
+    :text-align left
+  .three
+    :width 80pt
+    :text-align right
+  .four
+    :width 30pt
+    :text-align center
+  .five
+    :width 80pt
+    :text-align right
+    
+table.printed_taxes
+  :border 0.1pt solid black
+  td, th
+    :border 0.1pt solid black
+    :padding 3pt
+  .one
+    :width 30pt
+    :text-align center
+  .two
+    :width 30pt
+    :text-align left
+  .three
+    :width 30pt
+    :text-align right
+  .four
+    :width 30pt
+    :text-align center
+  .five
+    :width 30pt
+    :text-align right
