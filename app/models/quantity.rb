@@ -10,4 +10,8 @@ class Quantity < ActiveRecord::Base
   validates_presence_of :price
   validates_numericality_of :price
 
+  def self.active_and_sorted
+    find(:all, :conditions => 'active = 1 AND hidden = false', :order => 'name')
+  end
+  
 end

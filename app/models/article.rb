@@ -12,19 +12,19 @@ class Article < ActiveRecord::Base
     find_all_by_hidden(false)
   end
   
-  def self.find_in_menucard #articles_in_menucard
-    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'name') #pdated_at DESC
+  def self.find_in_menucard
+    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'name') #updated_at DESC
   end
 
-  def self.find_in_blackboard #articles_in_
+  def self.find_in_blackboard
     find(:all, :conditions => 'blackboard = 1 AND hidden = false', :order => 'price')
   end
 
-  def self.find_in_waiterpad #articles_in_
+  def self.find_in_waiterpad
     find(:all, :conditions => 'waiterpad = 1 AND hidden = false', :order => 'price')
   end
 
-  def self.sorted_by_name # articles_sorted_by_name
+  def self.sorted_by_name
     find(:all, :conditions => 'hidden => false', :order => 'name, description')
   end
   

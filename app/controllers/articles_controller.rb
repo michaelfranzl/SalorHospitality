@@ -149,7 +149,8 @@ private
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles.find_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
-        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name }</td></tr>"
+        image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
+        "<tr><td class='article' onclick='#{ action }' onmousedown='highlight_button(this); deselect_all_articles()' onmouseup='highlight_button(this)'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</td></tr>"
       }.to_s + '";'
     }.to_s
 
@@ -159,7 +160,7 @@ private
       cat.articles.find_in_menucard.collect{ |art|
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
-        art.quantities.collect{ |qu|
+        art.quantities.active_and_sorted.collect{ |qu|
           "<tr><td class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='highlight_button(this)' onmouseup='restore_button(this)'>#{ Helper.escape_javascript qu.name }</td></tr>"
         }.to_s + '";'
       }.to_s
