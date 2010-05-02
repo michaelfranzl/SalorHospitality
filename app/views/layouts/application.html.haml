@@ -33,7 +33,7 @@
       #header
         %a#toggle_admin_interface{ :onclick => "toggle_admin_interface(); #{ remote_function(:url => { :controller => 'sessions', :action => 'toggle_admin_interface' }) }" }
           %img{ :src => "/images/client_logos/#{ MyGlobals.client }.png" }
-          
+        %img#logo{ :src => "/images/logo-small.png" }
         - if logged_in?
           #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
             .adminlinks
@@ -51,12 +51,10 @@
                   = link_to( (t :tables_menu), tables_path)
                 = link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
 
-
+      #main
         .flash
           - if flash[:notice]
             .flash_notice= flash[:notice]
           - if flash[:error]
             .flash_error= flash[:error]
-
-      #main
         = yield

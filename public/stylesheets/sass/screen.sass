@@ -72,6 +72,8 @@ div#admin
   :border 3px solid white
   :border-top none
   :margin-left 130px
+  :position absolute
+  :width 835px
   :-moz-border-radius 5px
   
 div#functions
@@ -97,6 +99,11 @@ div#footer a
 
 div#login
   :margin auto
+  :width 180px
+  :margin-top 130px
+  label
+    :margin-bottom -10px
+    :font-weight bold
   
 //normal style definitions =============================
 
@@ -279,15 +286,14 @@ select
   :border 1px solid #AAAAAA
 
 div.flash
-  :text-align right
-div.flash_notice
   :font-size small
   :font-style italic
+  :float right
+div.flash_notice
   :color green
 div.flash_error
-  :font-size small
-  :font-style italic
   :color red
+
 
 //helpers==============================
 
@@ -458,3 +464,7 @@ table#quantities_new
   :border-collapse collapse
   td
     :padding 10px
+    
+img#logo
+  :float right
+  :margin-top 50px

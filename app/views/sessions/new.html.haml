@@ -1,8 +1,9 @@
 %div#login
   - form_tag session_path do
-    %p= t :please_login
     = label_tag 'login', (t :login)
-    %p= text_field_tag 'login'
+    = text_field_tag 'login'
+    %br
     = label_tag 'password', (t :password)
-    %p= password_field_tag 'password'
-    %p= submit_tag (t :login)
+    = password_field_tag 'password'
+    %br
+    = submit_tag (t :login)
