@@ -1,11 +1,2 @@
---- 
-groups_001: 
-  name: "Getr\xC3\xA4nke"
-  created_at: 2009-02-24 14:57:09
-  updated_at: 2009-02-24 14:57:09
-  id: "1"
-groups_002: 
-  name: Zigaretten
-  created_at: 2009-02-24 14:57:24
-  updated_at: 2009-02-24 14:57:24
-  id: "2"
+--- {}
+
