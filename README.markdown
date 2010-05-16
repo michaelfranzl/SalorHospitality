@@ -7,28 +7,20 @@ BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is
 
 Copyright (C) 2010 Michael Franzl
 
-BillGastro is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License.
+BillGastro is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.
 
-Foobar is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+BillGastro is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with BillGastro.  If not, see <http://www.gnu.org/licenses/> or the file COPYING.
-
-Icons and images are copyrighted and may not be used for other projects than BillGastro
+You should have received a copy of the GNU General Public License along with BillGastro.  If not, see <http://www.gnu.org/licenses/> or the file COPYING.
 
 
 # Getting Started
 
-BillGastro is a Ruby on Rails 2.3 application. It probably runs on other Rails versions too.
+BillGastro is a Ruby on Rails 2.3 application. It most probably runs on other Rails versions too.
 
 1. Get source from github: `git clone git@github.com:michaelfranzl/billgastro.git`
 2. `cd billgastro`
-3. Adapt your database settings: `vim config/database.yml`
+3. Copy your own database settings into `config/database.yml`
 4. Create database: `rake db:create`
 5. Migrate database: `rake db:migrate`
 6. Load seed data to try the application: `rake db:fixtures:load`
@@ -53,7 +45,6 @@ BillGastro is work in progress. The version on github should work as it is.
 * tables: List of tables
 * taxes: List of possible taxes.
 * users: List of users
-
 * ingredients: Not used.
 * groups: Not used.
 * stocks: Not used.
