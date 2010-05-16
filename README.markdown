@@ -11,6 +11,7 @@ BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is
 * Sold Items can be assigned to a cost center, in case the restaurant invites the guest
 * There is a fast storno-method for sold items
 * The application generates ESCPOS code for printing on standard thermo-printers like the popular Epson TM-T88. (see details for printing below)
+* Multi-Language. Change your language with just one click. (only partially implemented yet, see ToDo)
 
 
 # Licence
@@ -67,7 +68,7 @@ BillGastro is work in progress. The version on github should work as it is. Bill
 
 # ToDo
 
-BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations.
+BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations. I am planning to implement it soon.
 
 
 # Invoice Printing
@@ -83,4 +84,5 @@ I derived this solution from http://www.pvgenerator.de/index.php/off-topic/php-u
 # Contact
 
 Michael Franzl
+
 michaelfranzl a t gmx d ot at
