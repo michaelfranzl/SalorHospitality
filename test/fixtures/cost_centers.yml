@@ -1,13 +1,15 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  id: "1"
-  name: normal
-  description: this is a normal cost center
-  active: true
-
-two:
+--- 
+cost_centers_002: 
+  name: restaurant
+  created_at: 2010-02-04 17:42:47
+  updated_at: 2010-05-16 15:36:54
   id: "2"
-  name: party
-  description: this is for a private party
-  active: true
+  description: restaurant pays
+  active: "1"
+cost_centers_001: 
+  name: guest
+  created_at: 2010-02-01 15:15:08
+  updated_at: 2010-05-16 15:36:40
+  id: "1"
+  description: guest pays
+  active: "1"

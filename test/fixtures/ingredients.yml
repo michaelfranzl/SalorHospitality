@@ -1,50 +1,701 @@
----
-ingredients_003:
-  updated_at: 2009-05-13 11:21:27
-  id: "3"
-  amount: "0.5"
+--- 
+ingredients_095: 
+  created_at: 2009-02-26 13:41:23
+  updated_at: 2009-02-26 13:42:16
+  amount: "0.167"
+  id: "95"
+  article_id: "90"
+  stock_id: "61"
+ingredients_074: 
+  created_at: 2009-02-25 12:29:57
+  updated_at: 2009-02-25 12:29:57
+  amount: "0.21"
+  id: "74"
+  article_id: "73"
   stock_id: "1"
-  article_id: "2"
-  created_at: 2009-05-13 11:21:27
-ingredients_004:
-  updated_at: 2009-05-13 11:25:36
-  id: "4"
-  amount: "2"
-  stock_id: "5"
-  article_id: "3"
-  created_at: 2009-05-13 11:25:36
-ingredients_005:
-  updated_at: 2009-05-13 11:25:36
-  id: "5"
-  amount: "0.01"
-  stock_id: "3"
-  article_id: "3"
-  created_at: 2009-05-13 11:25:36
-ingredients_006:
-  updated_at: 2009-05-13 11:26:51
-  id: "6"
-  amount: "0.2"
-  stock_id: "4"
-  article_id: "4"
-  created_at: 2009-05-13 11:26:51
-ingredients_007:
-  updated_at: 2009-05-13 11:26:51
-  id: "7"
+ingredients_011: 
+  created_at: 2009-02-24 16:46:35
+  updated_at: 2009-02-24 16:46:35
+  amount: "0.167"
+  id: "11"
+  article_id: "26"
+  stock_id: "32"
+ingredients_032: 
+  created_at: 2009-02-25 11:50:32
+  updated_at: 2009-02-25 11:50:32
   amount: "0.1"
-  stock_id: "3"
-  article_id: "4"
-  created_at: 2009-05-13 11:26:51
-ingredients_001:
-  updated_at: 2009-05-13 11:19:58
-  id: "1"
-  amount: "0.25"
+  id: "32"
+  article_id: "44"
+  stock_id: "24"
+ingredients_053: 
+  created_at: 2009-02-25 12:12:17
+  updated_at: 2009-02-25 12:12:17
+  amount: "0.125"
+  id: "53"
+  article_id: "60"
   stock_id: "1"
-  article_id: "1"
-  created_at: 2009-05-13 11:19:58
-ingredients_002:
-  updated_at: 2009-05-13 11:19:58
-  id: "2"
-  amount: "0.02"
+ingredients_096: 
+  created_at: 2009-03-01 15:17:08
+  updated_at: 2009-03-01 15:17:08
+  amount: "0.25"
+  id: "96"
+  article_id: "91"
   stock_id: "2"
+ingredients_075: 
+  created_at: 2009-02-25 12:30:53
+  updated_at: 2009-02-25 12:30:53
+  amount: "0.04"
+  id: "75"
+  article_id: "74"
+  stock_id: "12"
+ingredients_012: 
+  created_at: 2009-02-24 16:47:49
+  updated_at: 2009-02-24 16:47:49
+  amount: "0.167"
+  id: "12"
+  article_id: "27"
+  stock_id: "33"
+ingredients_033: 
+  created_at: 2009-02-25 11:51:28
+  updated_at: 2009-02-25 11:51:28
+  amount: "0.1"
+  id: "33"
+  article_id: "45"
+  stock_id: "52"
+ingredients_054: 
+  created_at: 2009-02-25 12:12:42
+  updated_at: 2009-02-25 12:12:42
+  amount: "0.25"
+  id: "54"
+  article_id: "61"
+  stock_id: "4"
+ingredients_097: 
+  created_at: 2009-03-01 15:17:08
+  updated_at: 2009-03-01 15:17:08
+  amount: "0.67"
+  id: "97"
+  article_id: "91"
+  stock_id: "10"
+ingredients_076: 
+  created_at: 2009-02-25 12:30:53
+  updated_at: 2009-02-25 12:30:53
+  amount: "0.21"
+  id: "76"
+  article_id: "74"
+  stock_id: "1"
+ingredients_013: 
+  created_at: 2009-02-24 16:52:29
+  updated_at: 2009-02-24 16:52:29
+  amount: "0.167"
+  id: "13"
+  article_id: "28"
+  stock_id: "34"
+ingredients_034: 
+  created_at: 2009-02-25 11:52:04
+  updated_at: 2009-02-25 11:52:04
+  amount: "0.1"
+  id: "34"
+  article_id: "46"
+  stock_id: "53"
+ingredients_055: 
+  created_at: 2009-02-25 12:12:42
+  updated_at: 2009-02-25 12:12:42
+  amount: "0.25"
+  id: "55"
+  article_id: "61"
+  stock_id: "1"
+ingredients_098: 
+  created_at: 2009-03-01 15:17:08
+  updated_at: 2009-03-01 15:19:22
+  amount: "0.15"
+  id: "98"
+  article_id: "92"
+  stock_id: "2"
+ingredients_077: 
+  created_at: 2009-02-25 12:32:24
+  updated_at: 2009-02-25 12:32:24
+  amount: "1"
+  id: "77"
+  article_id: "75"
+  stock_id: "13"
+ingredients_035: 
+  created_at: 2009-02-25 11:53:24
+  updated_at: 2009-02-25 11:53:24
+  amount: "0.08"
+  id: "35"
+  article_id: "47"
+  stock_id: "25"
+ingredients_056: 
+  created_at: 2009-02-25 12:14:00
+  updated_at: 2009-02-25 12:14:00
+  amount: "0.25"
+  id: "56"
+  article_id: "62"
+  stock_id: "6"
+ingredients_014: 
+  created_at: 2009-02-24 16:55:49
+  updated_at: 2009-02-24 16:55:49
+  amount: "0.167"
+  id: "14"
+  article_id: "29"
+  stock_id: "35"
+ingredients_099: 
+  created_at: 2009-03-01 15:17:08
+  updated_at: 2009-03-01 15:19:22
+  amount: "0.5"
+  id: "99"
+  article_id: "92"
+  stock_id: "10"
+ingredients_078: 
+  created_at: 2009-02-25 12:34:44
+  updated_at: 2009-02-25 12:34:44
+  amount: "1"
+  id: "78"
+  article_id: "76"
+  stock_id: "13"
+ingredients_057: 
+  created_at: 2009-02-25 12:21:19
+  updated_at: 2009-02-25 12:21:19
+  amount: "0.125"
+  id: "57"
+  article_id: "63"
+  stock_id: "6"
+ingredients_015: 
+  created_at: 2009-02-24 16:55:49
+  updated_at: 2009-02-24 16:55:49
+  amount: "0.125"
+  id: "15"
+  article_id: "29"
+  stock_id: "1"
+ingredients_036: 
+  created_at: 2009-02-25 11:54:16
+  updated_at: 2009-02-25 11:54:16
+  amount: "0.04"
+  id: "36"
+  article_id: "48"
+  stock_id: "26"
+ingredients_080: 
+  created_at: 2009-02-25 12:35:20
+  updated_at: 2009-02-25 12:35:20
+  amount: "2"
+  id: "80"
+  article_id: "77"
+  stock_id: "13"
+ingredients_079: 
+  created_at: 2009-02-25 12:34:44
+  updated_at: 2009-02-25 12:34:44
+  amount: "0.01"
+  id: "79"
+  article_id: "76"
+  stock_id: "55"
+ingredients_016: 
+  created_at: 2009-02-24 16:57:21
+  updated_at: 2009-02-24 16:57:21
+  amount: "0.167"
+  id: "16"
+  article_id: "30"
+  stock_id: "37"
+ingredients_037: 
+  created_at: 2009-02-25 11:55:33
+  updated_at: 2009-02-25 11:55:33
+  amount: "0.02"
+  id: "37"
+  article_id: "49"
+  stock_id: "50"
+ingredients_058: 
+  created_at: 2009-02-25 12:21:19
+  updated_at: 2009-02-25 12:21:19
+  amount: "0.125"
+  id: "58"
+  article_id: "63"
+  stock_id: "1"
+ingredients_081: 
+  created_at: 2009-02-25 12:35:20
+  updated_at: 2009-02-25 12:35:20
+  amount: "0.02"
+  id: "81"
+  article_id: "77"
+  stock_id: "55"
+ingredients_017: 
+  created_at: 2009-02-24 16:58:36
+  updated_at: 2009-02-24 16:58:36
+  amount: "0.167"
+  id: "17"
+  article_id: "31"
+  stock_id: "38"
+ingredients_038: 
+  created_at: 2009-02-25 11:56:01
+  updated_at: 2009-02-25 11:56:01
+  amount: "0.02"
+  id: "38"
+  article_id: "50"
+  stock_id: "49"
+ingredients_060: 
+  created_at: 2009-02-25 12:22:02
+  updated_at: 2009-02-25 12:22:02
+  amount: "0.25"
+  id: "60"
+  article_id: "64"
+  stock_id: "1"
+ingredients_059: 
+  created_at: 2009-02-25 12:22:02
+  updated_at: 2009-02-25 12:22:02
+  amount: "0.25"
+  id: "59"
+  article_id: "64"
+  stock_id: "6"
+ingredients_082: 
+  created_at: 2009-02-25 12:36:12
+  updated_at: 2009-02-25 12:36:12
+  amount: "1"
+  id: "82"
+  article_id: "78"
+  stock_id: "13"
+ingredients_018: 
+  created_at: 2009-02-25 10:30:32
+  updated_at: 2009-02-25 10:30:32
+  amount: "0.167"
+  id: "18"
+  article_id: "32"
+  stock_id: "39"
+ingredients_040: 
+  created_at: 2009-02-25 11:57:55
+  updated_at: 2009-02-25 11:58:36
+  amount: "0.02"
+  id: "40"
+  article_id: "52"
+  stock_id: "54"
+ingredients_039: 
+  created_at: 2009-02-25 11:56:39
+  updated_at: 2009-02-25 11:56:39
+  amount: "0.02"
+  id: "39"
+  article_id: "51"
+  stock_id: "51"
+ingredients_061: 
+  created_at: 2009-02-25 12:23:02
+  updated_at: 2009-02-25 12:23:02
+  amount: "0.25"
+  id: "61"
+  article_id: "65"
+  stock_id: "7"
+ingredients_083: 
+  created_at: 2009-02-25 12:36:12
+  updated_at: 2009-02-25 12:36:12
+  amount: "0.04"
+  id: "83"
+  article_id: "78"
+  stock_id: "55"
+ingredients_020: 
+  created_at: 2009-02-25 10:36:50
+  updated_at: 2009-02-25 10:36:50
+  amount: "0.167"
+  id: "20"
+  article_id: "34"
+  stock_id: "40"
+ingredients_019: 
+  created_at: 2009-02-25 10:34:33
+  updated_at: 2009-02-25 10:34:33
+  amount: "0.167"
+  id: "19"
+  article_id: "33"
+  stock_id: "41"
+ingredients_041: 
+  created_at: 2009-02-25 12:05:31
+  updated_at: 2009-02-25 12:05:31
+  amount: "0.25"
+  id: "41"
+  article_id: "53"
+  stock_id: "3"
+ingredients_062: 
+  created_at: 2009-02-25 12:23:30
+  updated_at: 2009-02-25 12:23:30
+  amount: "0.125"
+  id: "62"
+  article_id: "66"
+  stock_id: "7"
+ingredients_084: 
+  created_at: 2009-02-25 12:37:01
+  updated_at: 2009-02-25 12:37:01
+  amount: "0.01"
+  id: "84"
+  article_id: "79"
+  stock_id: "14"
+ingredients_021: 
+  created_at: 2009-02-25 11:20:06
+  updated_at: 2009-02-25 11:20:06
+  amount: "0.167"
+  id: "21"
+  article_id: "35"
+  stock_id: "48"
+ingredients_042: 
+  created_at: 2009-02-25 12:06:27
+  updated_at: 2009-02-25 12:06:27
+  amount: "0.125"
+  id: "42"
+  article_id: "54"
+  stock_id: "3"
+ingredients_063: 
+  created_at: 2009-02-25 12:23:30
+  updated_at: 2009-02-25 12:23:30
+  amount: "0.125"
+  id: "63"
+  article_id: "66"
+  stock_id: "1"
+ingredients_100: 
+  created_at: 2009-03-07 11:37:50
+  updated_at: 2009-03-07 11:37:50
+  amount: "0.167"
+  id: "100"
+  article_id: "94"
+  stock_id: "46"
+ingredients_085: 
+  created_at: 2009-02-25 12:38:02
+  updated_at: 2009-02-25 12:38:02
+  amount: "0.01"
+  id: "85"
+  article_id: "80"
+  stock_id: "15"
+ingredients_001: 
+  created_at: 2009-02-24 16:01:17
+  updated_at: 2009-02-24 16:01:17
+  amount: "0.5"
+  id: "1"
   article_id: "1"
-  created_at: 2009-05-13 11:19:58
+  stock_id: "2"
+ingredients_022: 
+  created_at: 2009-02-25 11:31:34
+  updated_at: 2009-02-25 11:31:34
+  amount: "0.167"
+  id: "22"
+  article_id: "36"
+  stock_id: "42"
+ingredients_043: 
+  created_at: 2009-02-25 12:06:27
+  updated_at: 2009-02-25 12:06:27
+  amount: "0.125"
+  id: "43"
+  article_id: "54"
+  stock_id: "1"
+ingredients_064: 
+  created_at: 2009-02-25 12:24:00
+  updated_at: 2009-02-25 12:24:00
+  amount: "0.25"
+  id: "64"
+  article_id: "67"
+  stock_id: "7"
+ingredients_086: 
+  created_at: 2009-02-25 12:38:44
+  updated_at: 2009-02-25 12:38:44
+  amount: "0.01"
+  id: "86"
+  article_id: "81"
+  stock_id: "16"
+ingredients_002: 
+  created_at: 2009-02-24 16:01:58
+  updated_at: 2009-02-24 16:01:58
+  amount: "0.3"
+  id: "2"
+  article_id: "2"
+  stock_id: "2"
+ingredients_023: 
+  created_at: 2009-02-25 11:33:36
+  updated_at: 2009-02-25 11:33:36
+  amount: "0.167"
+  id: "23"
+  article_id: "37"
+  stock_id: "43"
+ingredients_044: 
+  created_at: 2009-02-25 12:07:06
+  updated_at: 2009-02-25 12:07:06
+  amount: "0.25"
+  id: "44"
+  article_id: "55"
+  stock_id: "3"
+ingredients_065: 
+  created_at: 2009-02-25 12:24:00
+  updated_at: 2009-02-25 12:24:00
+  amount: "0.25"
+  id: "65"
+  article_id: "67"
+  stock_id: "1"
+ingredients_087: 
+  created_at: 2009-02-25 12:39:12
+  updated_at: 2009-02-25 12:39:12
+  amount: "0.01"
+  id: "87"
+  article_id: "82"
+  stock_id: "17"
+ingredients_024: 
+  created_at: 2009-02-25 11:34:56
+  updated_at: 2009-02-25 11:34:56
+  amount: "0.167"
+  id: "24"
+  article_id: "38"
+  stock_id: "44"
+ingredients_045: 
+  created_at: 2009-02-25 12:07:06
+  updated_at: 2009-02-25 12:07:06
+  amount: "0.25"
+  id: "45"
+  article_id: "55"
+  stock_id: "1"
+ingredients_066: 
+  created_at: 2009-02-25 12:24:43
+  updated_at: 2009-02-25 12:24:43
+  amount: "0.25"
+  id: "66"
+  article_id: "68"
+  stock_id: "8"
+ingredients_003: 
+  created_at: 2009-02-24 16:02:40
+  updated_at: 2009-02-24 16:02:40
+  amount: "0.2"
+  id: "3"
+  article_id: "3"
+  stock_id: "2"
+ingredients_088: 
+  created_at: 2009-02-25 12:39:38
+  updated_at: 2009-02-25 12:39:38
+  amount: "0.01"
+  id: "88"
+  article_id: "83"
+  stock_id: "18"
+ingredients_067: 
+  created_at: 2009-02-25 12:25:22
+  updated_at: 2009-02-25 12:25:22
+  amount: "0.125"
+  id: "67"
+  article_id: "69"
+  stock_id: "8"
+ingredients_046: 
+  created_at: 2009-02-25 12:08:07
+  updated_at: 2009-02-25 12:08:07
+  amount: "0.25"
+  id: "46"
+  article_id: "56"
+  stock_id: "5"
+ingredients_004: 
+  created_at: 2009-02-24 16:03:41
+  updated_at: 2009-02-24 16:03:41
+  amount: "0.25"
+  id: "4"
+  article_id: "4"
+  stock_id: "1"
+ingredients_025: 
+  created_at: 2009-02-25 11:36:13
+  updated_at: 2009-02-25 11:36:13
+  amount: "0.167"
+  id: "25"
+  article_id: "39"
+  stock_id: "45"
+ingredients_090: 
+  created_at: 2009-02-25 12:44:52
+  updated_at: 2009-02-25 12:44:52
+  amount: "1"
+  id: "90"
+  article_id: "85"
+  stock_id: "56"
+ingredients_089: 
+  created_at: 2009-02-25 12:40:01
+  updated_at: 2009-02-25 12:40:01
+  amount: "0.01"
+  id: "89"
+  article_id: "84"
+  stock_id: "19"
+ingredients_068: 
+  created_at: 2009-02-25 12:25:22
+  updated_at: 2009-02-25 12:25:22
+  amount: "0.125"
+  id: "68"
+  article_id: "69"
+  stock_id: "1"
+ingredients_005: 
+  created_at: 2009-02-24 16:05:02
+  updated_at: 2009-02-24 16:05:02
+  amount: "1"
+  id: "5"
+  article_id: "5"
+  stock_id: "36"
+ingredients_026: 
+  created_at: 2009-02-25 11:37:13
+  updated_at: 2009-02-25 11:37:13
+  amount: "0.167"
+  id: "26"
+  article_id: "40"
+  stock_id: "47"
+ingredients_047: 
+  created_at: 2009-02-25 12:08:41
+  updated_at: 2009-02-25 12:08:41
+  amount: "0.125"
+  id: "47"
+  article_id: "57"
+  stock_id: "5"
+ingredients_091: 
+  created_at: 2009-02-25 12:45:16
+  updated_at: 2009-02-25 12:45:16
+  amount: "1"
+  id: "91"
+  article_id: "86"
+  stock_id: "57"
+ingredients_070: 
+  created_at: 2009-02-25 12:25:50
+  updated_at: 2009-02-25 12:25:50
+  amount: "0.25"
+  id: "70"
+  article_id: "70"
+  stock_id: "1"
+ingredients_069: 
+  created_at: 2009-02-25 12:25:50
+  updated_at: 2009-02-25 12:25:50
+  amount: "0.25"
+  id: "69"
+  article_id: "70"
+  stock_id: "8"
+ingredients_006: 
+  created_at: 2009-02-24 16:36:26
+  updated_at: 2009-02-24 16:36:26
+  amount: "0.167"
+  id: "6"
+  article_id: "21"
+  stock_id: "27"
+ingredients_027: 
+  created_at: 2009-02-25 11:44:13
+  updated_at: 2009-02-25 11:44:13
+  amount: "0.04"
+  id: "27"
+  article_id: "41"
+  stock_id: "22"
+ingredients_048: 
+  created_at: 2009-02-25 12:08:41
+  updated_at: 2009-02-25 12:08:41
+  amount: "0.125"
+  id: "48"
+  article_id: "57"
+  stock_id: "1"
+ingredients_092: 
+  created_at: 2009-02-25 12:45:35
+  updated_at: 2009-02-25 12:45:35
+  amount: "1"
+  id: "92"
+  article_id: "87"
+  stock_id: "58"
+ingredients_071: 
+  created_at: 2009-02-25 12:26:28
+  updated_at: 2009-02-25 12:26:28
+  amount: "1"
+  id: "71"
+  article_id: "71"
+  stock_id: "9"
+ingredients_007: 
+  created_at: 2009-02-24 16:38:08
+  updated_at: 2009-02-24 16:38:08
+  amount: "0.167"
+  id: "7"
+  article_id: "22"
+  stock_id: "28"
+ingredients_028: 
+  created_at: 2009-02-25 11:48:48
+  updated_at: 2009-02-25 11:48:48
+  amount: "0.04"
+  id: "28"
+  article_id: "42"
+  stock_id: "23"
+ingredients_050: 
+  created_at: 2009-02-25 12:09:14
+  updated_at: 2009-02-25 12:09:14
+  amount: "0.25"
+  id: "50"
+  article_id: "58"
+  stock_id: "1"
+ingredients_049: 
+  created_at: 2009-02-25 12:09:14
+  updated_at: 2009-02-25 12:09:14
+  amount: "0.25"
+  id: "49"
+  article_id: "58"
+  stock_id: "5"
+ingredients_093: 
+  created_at: 2009-02-25 12:45:59
+  updated_at: 2009-02-25 12:45:59
+  amount: "1"
+  id: "93"
+  article_id: "88"
+  stock_id: "59"
+ingredients_072: 
+  created_at: 2009-02-25 12:26:53
+  updated_at: 2009-02-25 12:26:53
+  amount: "1"
+  id: "72"
+  article_id: "72"
+  stock_id: "10"
+ingredients_008: 
+  created_at: 2009-02-24 16:41:29
+  updated_at: 2009-02-24 16:41:29
+  amount: "0.167"
+  id: "8"
+  article_id: "23"
+  stock_id: "29"
+ingredients_030: 
+  created_at: 2009-02-25 11:49:36
+  updated_at: 2009-02-25 11:49:36
+  amount: "0.04"
+  id: "30"
+  article_id: "43"
+  stock_id: "23"
+ingredients_029: 
+  created_at: 2009-02-25 11:48:48
+  updated_at: 2009-02-25 11:48:48
+  amount: "0.1"
+  id: "29"
+  article_id: "42"
+  stock_id: "1"
+ingredients_051: 
+  created_at: 2009-02-25 12:11:48
+  updated_at: 2009-02-25 12:11:48
+  amount: "0.25"
+  id: "51"
+  article_id: "59"
+  stock_id: "4"
+ingredients_094: 
+  created_at: 2009-02-25 12:46:47
+  updated_at: 2009-02-25 12:46:47
+  amount: "1"
+  id: "94"
+  article_id: "89"
+  stock_id: "60"
+ingredients_073: 
+  created_at: 2009-02-25 12:29:57
+  updated_at: 2009-02-25 12:29:57
+  amount: "0.04"
+  id: "73"
+  article_id: "73"
+  stock_id: "11"
+ingredients_010: 
+  created_at: 2009-02-24 16:43:53
+  updated_at: 2009-02-24 16:43:53
+  amount: "0.167"
+  id: "10"
+  article_id: "25"
+  stock_id: "31"
+ingredients_009: 
+  created_at: 2009-02-24 16:42:23
+  updated_at: 2009-02-24 16:42:23
+  amount: "0.167"
+  id: "9"
+  article_id: "24"
+  stock_id: "30"
+ingredients_031: 
+  created_at: 2009-02-25 11:49:36
+  updated_at: 2009-02-25 11:49:36
+  amount: "0.1"
+  id: "31"
+  article_id: "43"
+  stock_id: "5"
+ingredients_052: 
+  created_at: 2009-02-25 12:12:17
+  updated_at: 2009-02-25 12:12:17
+  amount: "0.125"
+  id: "52"
+  article_id: "60"
+  stock_id: "4"

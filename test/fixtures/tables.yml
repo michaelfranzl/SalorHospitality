@@ -1,31 +1,131 @@
----
-tables_001:
-  left: "368"
-  name: Table 1
-  updated_at: 2009-05-13 11:54:10
+--- 
+tables_009: 
+  left: "332"
+  name: Tisch 8
+  created_at: 2009-02-25 12:01:05
+  updated_at: 2010-04-25 18:26:59
+  id: "9"
+  height: "55"
+  description: 2 Personen
+  width: "55"
+  top: "355"
+tables_010: 
+  left: "603"
+  name: Tisch 9
+  created_at: 2009-02-25 12:01:16
+  updated_at: 2010-04-27 06:56:32
+  id: "10"
+  height: "55"
+  description: 2 Personen
+  width: "55"
+  top: "600"
+tables_011: 
+  left: "749"
+  name: Tisch 10
+  created_at: 2009-02-25 12:01:26
+  updated_at: 2010-04-25 18:27:11
+  id: "11"
+  height: "55"
+  description: Nische 5P
+  width: "80"
+  top: "353"
+tables_012: 
+  left: "856"
+  name: Tisch 11
+  created_at: 2009-02-25 12:01:42
+  updated_at: 2010-04-25 18:27:30
+  id: "12"
+  height: "55"
+  description: Extrazimmer 2P
+  width: "55"
+  top: "352"
+tables_001: 
+  left: "691"
+  name: Tisch 1
+  created_at: 2009-02-24 14:56:08
+  updated_at: 2010-04-27 06:56:34
   id: "1"
-  description: Guest Room
-  height: "45"
-  width: "70"
-  top: "377"
-  created_at: 2009-05-13 09:20:40
-tables_002:
-  left: "247"
-  name: Table 2
-  updated_at: 2009-05-13 11:28:28
+  height: "55"
+  description: 2-3 Personen
+  width: "55"
+  top: "601"
+tables_013: 
+  left: "709"
+  name: Tisch 12
+  created_at: 2009-02-25 12:02:01
+  updated_at: 2010-04-30 15:53:58
+  id: "13"
+  height: "80"
+  description: Extrazimmer 4P
+  width: "55"
+  top: "211"
+tables_002: 
+  left: "668"
+  name: Tisch 2
+  created_at: 2009-02-24 14:56:17
+  updated_at: 2010-04-25 18:27:09
   id: "2"
-  description: Guest Room
-  height: "45"
-  width: "70"
-  top: "378"
-  created_at: 2009-05-13 09:20:54
-tables_003:
-  left: "150"
+  height: "80"
+  description: 5-6 Personen
+  width: "55"
+  top: "354"
+tables_003: 
+  left: "493"
   name: Bar
-  updated_at: 2009-05-13 11:28:26
+  created_at: 2009-02-24 14:56:22
+  updated_at: 2010-04-30 10:09:08
   id: "3"
-  description: Lounge
-  height: "45"
-  width: "70"
-  top: "378"
-  created_at: 2009-05-13 09:21:06
+  height: "30"
+  description: ""
+  width: "150"
+  top: "357"
+tables_004: 
+  left: "412"
+  name: Tisch 3
+  created_at: 2009-02-25 11:59:30
+  updated_at: 2010-04-25 18:35:20
+  id: "4"
+  height: "80"
+  description: 5 Personen
+  width: "55"
+  top: "355"
+tables_005: 
+  left: "251"
+  name: Tisch 4
+  created_at: 2009-02-25 11:59:36
+  updated_at: 2010-04-27 06:56:28
+  id: "5"
+  height: "80"
+  description: 5-6 Personen
+  width: "55"
+  top: "440"
+tables_006: 
+  left: "250"
+  name: Tisch 5
+  created_at: 2009-02-25 11:59:42
+  updated_at: 2010-04-26 13:09:35
+  id: "6"
+  height: "55"
+  description: 3 Personen
+  width: "55"
+  top: "356"
+tables_007: 
+  left: "538"
+  name: Tisch 6
+  created_at: 2009-02-25 11:59:53
+  updated_at: 2010-04-30 10:08:34
+  id: "7"
+  height: "120"
+  description: 8 Personen
+  width: "55"
+  top: "203"
+tables_008: 
+  left: "504"
+  name: Tisch 7
+  created_at: 2009-02-25 12:00:55
+  updated_at: 2010-04-27 06:56:30
+  id: "8"
+  height: "55"
+  description: 4 Personen
+  width: "55"
+  top: "600"

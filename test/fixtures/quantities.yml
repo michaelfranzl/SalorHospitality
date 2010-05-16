@@ -1,29 +1,651 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+--- 
+quantities_072: 
+  price: "5"
+  name: Camel nat. flavour
+  created_at: 2010-05-01 16:53:36
+  updated_at: 2010-05-01 16:53:36
+  id: "72"
+  article_id: "345"
+  hidden: "0"
+  active: "1"
+quantities_007: 
+  price: "2.5"
+  name: 1/4l pur
+  created_at: 2010-04-30 13:08:06
+  updated_at: 2010-04-30 13:08:06
+  id: "7"
+  article_id: "324"
+  hidden: "0"
+  active: "1"
+quantities_030: 
+  price: "2.2"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:51:28
+  updated_at: 2010-04-30 13:51:28
+  id: "30"
+  article_id: "330"
+  hidden: "0"
+  active: "1"
+quantities_028: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 13:49:35
+  updated_at: 2010-04-30 13:49:35
+  id: "28"
+  article_id: "329"
+  hidden: "0"
+  active: "1"
+quantities_051: 
+  price: "2.2"
+  name: 1/4 pur
+  created_at: 2010-04-30 14:16:02
+  updated_at: 2010-04-30 14:16:02
+  id: "51"
+  article_id: "337"
+  hidden: "0"
+  active: "1"
+quantities_010: 
+  price: "2.3"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:31:09
+  updated_at: 2010-04-30 13:33:53
+  id: "10"
+  article_id: "325"
+  hidden: "0"
+  active: "1"
+quantities_008: 
+  price: "2.3"
+  name: 1/4l gespritzt
+  created_at: 2010-04-30 13:10:22
+  updated_at: 2010-04-30 13:10:22
+  id: "8"
+  article_id: "324"
+  hidden: "0"
+  active: "1"
+quantities_031: 
+  price: "2"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:51:28
+  updated_at: 2010-04-30 13:51:28
+  id: "31"
+  article_id: "330"
+  hidden: "0"
+  active: "1"
+quantities_029: 
+  price: "2.3"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:49:35
+  updated_at: 2010-04-30 13:49:35
+  id: "29"
+  article_id: "329"
+  hidden: "0"
+  active: "1"
+quantities_052: 
+  price: "1.1"
+  name: 1/8 pur
+  created_at: 2010-04-30 14:16:02
+  updated_at: 2010-04-30 14:16:02
+  id: "52"
+  article_id: "337"
+  hidden: "0"
+  active: "1"
+quantities_011: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 13:31:09
+  updated_at: 2010-04-30 13:33:53
+  id: "11"
+  article_id: "325"
+  hidden: "0"
+  active: "1"
+quantities_009: 
+  price: "3.7"
+  name: 1/2l gespritzt
+  created_at: 2010-04-30 13:28:42
+  updated_at: 2010-04-30 13:33:47
+  id: "9"
+  article_id: "324"
+  hidden: "0"
+  active: "1"
+quantities_032: 
+  price: "1.1"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:51:28
+  updated_at: 2010-04-30 13:51:28
+  id: "32"
+  article_id: "330"
+  hidden: "0"
+  active: "1"
+quantities_053: 
+  price: "21"
+  name: Flasche
+  created_at: 2010-04-30 14:16:53
+  updated_at: 2010-04-30 14:16:53
+  id: "53"
+  article_id: "320"
+  hidden: "0"
+  active: "1"
+quantities_012: 
+  price: "1.3"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:31:09
+  updated_at: 2010-04-30 13:33:53
+  id: "12"
+  article_id: "325"
+  hidden: "0"
+  active: "1"
+quantities_033: 
+  price: "3.7"
+  name: 1/2l gespritzt
+  created_at: 2010-04-30 13:51:28
+  updated_at: 2010-04-30 13:51:28
+  id: "33"
+  article_id: "330"
+  hidden: "0"
+  active: "1"
+quantities_054: 
+  price: "2.7"
+  name: "0,3"
+  created_at: 2010-04-30 14:18:09
+  updated_at: 2010-04-30 14:18:09
+  id: "54"
+  article_id: "338"
+  hidden: "0"
+  active: "1"
+quantities_013: 
+  price: "2.5"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:31:09
+  updated_at: 2010-04-30 13:33:53
+  id: "13"
+  article_id: "325"
+  hidden: "0"
+  active: "1"
+quantities_034: 
+  price: "27"
+  name: Flasche
+  created_at: 2010-04-30 13:52:14
+  updated_at: 2010-04-30 13:52:35
+  id: "34"
+  article_id: "319"
+  hidden: "0"
+  active: "1"
+quantities_055: 
+  price: "3.5"
+  name: "0,5"
+  created_at: 2010-04-30 14:18:09
+  updated_at: 2010-04-30 14:18:09
+  id: "55"
+  article_id: "338"
+  hidden: "0"
+  active: "1"
+quantities_014: 
+  price: "2.3"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:32:38
+  updated_at: 2010-04-30 13:33:06
+  id: "14"
+  article_id: "326"
+  hidden: "0"
+  active: "1"
+quantities_035: 
+  price: "3.5"
+  name: 1/8
+  created_at: 2010-04-30 13:53:37
+  updated_at: 2010-04-30 13:53:37
+  id: "35"
+  article_id: "331"
+  hidden: "0"
+  active: "1"
+quantities_056: 
+  price: "6.5"
+  name: 1/8
+  created_at: 2010-04-30 14:19:30
+  updated_at: 2010-04-30 14:19:30
+  id: "56"
+  article_id: "339"
+  hidden: "0"
+  active: "1"
+quantities_015: 
+  price: "2.5"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:32:38
+  updated_at: 2010-04-30 13:33:06
+  id: "15"
+  article_id: "326"
+  hidden: "0"
+  active: "1"
+quantities_036: 
+  price: "26"
+  name: Flasche
+  created_at: 2010-04-30 13:53:37
+  updated_at: 2010-04-30 13:53:37
+  id: "36"
+  article_id: "331"
+  hidden: "0"
+  active: "1"
+quantities_057: 
+  price: "42"
+  name: Flasche
+  created_at: 2010-04-30 14:19:30
+  updated_at: 2010-04-30 14:19:30
+  id: "57"
+  article_id: "339"
+  hidden: "0"
+  active: "1"
+quantities_037: 
+  price: "2.2"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:56:34
+  updated_at: 2010-04-30 13:56:34
+  id: "37"
+  article_id: "332"
+  hidden: "0"
+  active: "1"
+quantities_058: 
+  price: "3.4"
+  name: 1/8
+  created_at: 2010-04-30 14:20:52
+  updated_at: 2010-04-30 14:20:52
+  id: "58"
+  article_id: "340"
+  hidden: "0"
+  active: "1"
+quantities_016: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 13:32:38
+  updated_at: 2010-04-30 13:33:06
+  id: "16"
+  article_id: "326"
+  hidden: "0"
+  active: "1"
+quantities_059: 
+  price: "26"
+  name: Flasche
+  created_at: 2010-04-30 14:20:52
+  updated_at: 2010-04-30 14:20:52
+  id: "59"
+  article_id: "340"
+  hidden: "0"
+  active: "1"
+quantities_038: 
+  price: "1.1"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:56:34
+  updated_at: 2010-04-30 13:56:34
+  id: "38"
+  article_id: "332"
+  hidden: "0"
+  active: "1"
+quantities_060: 
+  price: "10.5"
+  name: normal
+  created_at: 2010-04-30 14:22:28
+  updated_at: 2010-04-30 14:22:28
+  id: "60"
+  article_id: "341"
+  hidden: "0"
+  active: "1"
+quantities_017: 
+  price: "1.3"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:33:06
+  updated_at: 2010-04-30 13:33:58
+  id: "17"
+  article_id: "326"
+  hidden: "0"
+  active: "1"
+quantities_040: 
+  price: "2"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:56:34
+  updated_at: 2010-04-30 13:56:34
+  id: "40"
+  article_id: "332"
+  hidden: "0"
+  active: "1"
+quantities_061: 
+  price: "6.5"
+  name: klein
+  created_at: 2010-04-30 14:22:28
+  updated_at: 2010-04-30 14:22:28
+  id: "61"
+  article_id: "341"
+  hidden: "0"
+  active: "1"
+quantities_020: 
+  price: "1.3"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:44:28
+  updated_at: 2010-04-30 13:44:52
+  id: "20"
+  article_id: "327"
+  hidden: "0"
+  active: "1"
+quantities_018: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 13:44:28
+  updated_at: 2010-04-30 13:44:52
+  id: "18"
+  article_id: "327"
+  hidden: "0"
+  active: "1"
+quantities_041: 
+  price: "3.5"
+  name: Soda
+  created_at: 2010-04-30 13:59:19
+  updated_at: 2010-04-30 13:59:19
+  id: "41"
+  article_id: "333"
+  hidden: "0"
+  active: "1"
+quantities_039: 
+  price: "3.7"
+  name: "1/2 gespritzt "
+  created_at: 2010-04-30 13:56:34
+  updated_at: 2010-04-30 13:56:34
+  id: "39"
+  article_id: "332"
+  hidden: "0"
+  active: "1"
+quantities_062: 
+  price: "3"
+  name: 1/2
+  created_at: 2010-04-30 14:26:52
+  updated_at: 2010-04-30 14:26:52
+  id: "62"
+  article_id: "342"
+  hidden: "0"
+  active: "1"
+quantities_021: 
+  price: "2.5"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:44:28
+  updated_at: 2010-04-30 13:44:52
+  id: "21"
+  article_id: "327"
+  hidden: "0"
+  active: "1"
+quantities_019: 
+  price: "2.3"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:44:28
+  updated_at: 2010-04-30 13:44:52
+  id: "19"
+  article_id: "327"
+  hidden: "0"
+  active: "1"
+quantities_042: 
+  price: "3.5"
+  name: Orange
+  created_at: 2010-04-30 13:59:19
+  updated_at: 2010-04-30 13:59:19
+  id: "42"
+  article_id: "333"
+  hidden: "0"
+  active: "1"
+quantities_063: 
+  price: "1.5"
+  name: 1/4
+  created_at: 2010-04-30 14:26:52
+  updated_at: 2010-04-30 14:26:52
+  id: "63"
+  article_id: "342"
+  hidden: "0"
+  active: "1"
+quantities_001: 
+  price: "4.2"
+  name: 1/8
+  created_at: 2010-04-30 12:41:36
+  updated_at: 2010-04-30 12:41:36
+  id: "1"
+  article_id: "319"
+  hidden: "0"
+  active: "1"
+quantities_022: 
+  price: "1.3"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:46:51
+  updated_at: 2010-04-30 13:47:07
+  id: "22"
+  article_id: "328"
+  hidden: "0"
+  active: "1"
+quantities_043: 
+  price: "7"
+  name: !binary |
+    Z3Jvw58=
 
-one:
-  id: 1
-  name: 1/8 liter
-  price: 2
-  article_id: 1
-  active: true
-
-two:
-  id: 2
-  name: 1/2 liter
-  price: 4
-  article_id: 1
-  active: true
-
-three:
-  id: 3
-  name: with extra cream
-  price: 6
-  article_id: 4
-  active: true
-
-four:
-  id: 4
-  name: with extra ice
-  price: 8
-  article_id: 4
-  active: true
+  created_at: 2010-04-30 14:04:16
+  updated_at: 2010-04-30 14:04:16
+  id: "43"
+  article_id: "334"
+  hidden: "0"
+  active: "1"
+quantities_064: 
+  price: "3.4"
+  name: 1/2 Zitron
+  created_at: 2010-04-30 14:26:52
+  updated_at: 2010-04-30 14:26:52
+  id: "64"
+  article_id: "342"
+  hidden: "0"
+  active: "1"
+quantities_002: 
+  price: "3"
+  name: 1/8
+  created_at: 2010-04-30 12:46:01
+  updated_at: 2010-04-30 12:46:01
+  id: "2"
+  article_id: "320"
+  hidden: "0"
+  active: "1"
+quantities_023: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 13:46:51
+  updated_at: 2010-04-30 13:47:07
+  id: "23"
+  article_id: "328"
+  hidden: "0"
+  active: "1"
+quantities_044: 
+  price: "3.5"
+  name: klein
+  created_at: 2010-04-30 14:04:16
+  updated_at: 2010-04-30 14:04:16
+  id: "44"
+  article_id: "334"
+  hidden: "0"
+  active: "1"
+quantities_065: 
+  price: "1.7"
+  name: 1/4 Zitron
+  created_at: 2010-04-30 14:26:52
+  updated_at: 2010-04-30 14:26:52
+  id: "65"
+  article_id: "342"
+  hidden: "0"
+  active: "1"
+quantities_003: 
+  price: "2.2"
+  name: Flasche 0,35l
+  created_at: 2010-04-30 12:47:04
+  updated_at: 2010-04-30 12:58:01
+  id: "3"
+  article_id: "321"
+  hidden: "0"
+  active: "1"
+quantities_024: 
+  price: "2.3"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:46:51
+  updated_at: 2010-04-30 13:47:07
+  id: "24"
+  article_id: "328"
+  hidden: "0"
+  active: "1"
+quantities_045: 
+  price: "2.4"
+  name: 1/4
+  created_at: 2010-04-30 14:06:12
+  updated_at: 2010-04-30 14:06:12
+  id: "45"
+  article_id: "335"
+  hidden: "0"
+  active: "1"
+quantities_066: 
+  price: "1.5"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 14:28:02
+  updated_at: 2010-05-01 16:37:37
+  id: "66"
+  article_id: "343"
+  hidden: "0"
+  active: "1"
+quantities_067: 
+  price: "3.2"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 14:28:02
+  updated_at: 2010-04-30 14:28:02
+  id: "67"
+  article_id: "343"
+  hidden: "0"
+  active: "1"
+quantities_004: 
+  price: "3.7"
+  name: gespritzt 1/2
+  created_at: 2010-04-30 12:58:01
+  updated_at: 2010-04-30 12:58:01
+  id: "4"
+  article_id: "321"
+  hidden: "0"
+  active: "1"
+quantities_025: 
+  price: "2.5"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:46:51
+  updated_at: 2010-04-30 13:47:07
+  id: "25"
+  article_id: "328"
+  hidden: "0"
+  active: "1"
+quantities_046: 
+  price: "3.9"
+  name: 1/2
+  created_at: 2010-04-30 14:06:12
+  updated_at: 2010-04-30 14:06:12
+  id: "46"
+  article_id: "335"
+  hidden: "0"
+  active: "1"
+quantities_068: 
+  price: "3"
+  name: 1/2l gespritzt
+  created_at: 2010-05-01 16:46:50
+  updated_at: 2010-05-01 16:46:50
+  id: "68"
+  article_id: "344"
+  hidden: "0"
+  active: "1"
+quantities_026: 
+  price: "1.3"
+  name: 1/8 pur
+  created_at: 2010-04-30 13:49:35
+  updated_at: 2010-04-30 13:49:35
+  id: "26"
+  article_id: "329"
+  hidden: "0"
+  active: "1"
+quantities_047: 
+  price: "2.4"
+  name: 1/4
+  created_at: 2010-04-30 14:10:18
+  updated_at: 2010-04-30 14:10:18
+  id: "47"
+  article_id: "336"
+  hidden: "0"
+  active: "1"
+quantities_005: 
+  price: "5.8"
+  name: Gelb
+  created_at: 2010-04-30 12:59:55
+  updated_at: 2010-04-30 12:59:55
+  id: "5"
+  article_id: "322"
+  hidden: "0"
+  active: "1"
+quantities_070: 
+  price: "1.3"
+  name: 1/8l pur
+  created_at: 2010-05-01 16:49:07
+  updated_at: 2010-05-01 16:49:07
+  id: "70"
+  article_id: "324"
+  hidden: "0"
+  active: "1"
+quantities_069: 
+  price: "1.5"
+  name: 1/4l gespritzt
+  created_at: 2010-05-01 16:46:50
+  updated_at: 2010-05-01 16:46:50
+  id: "69"
+  article_id: "344"
+  hidden: "0"
+  active: "1"
+quantities_048: 
+  price: "3.9"
+  name: 1/2
+  created_at: 2010-04-30 14:10:18
+  updated_at: 2010-04-30 14:10:18
+  id: "48"
+  article_id: "336"
+  hidden: "0"
+  active: "1"
+quantities_027: 
+  price: "2.5"
+  name: 1/4 pur
+  created_at: 2010-04-30 13:49:35
+  updated_at: 2010-04-30 13:49:35
+  id: "27"
+  article_id: "329"
+  hidden: "0"
+  active: "1"
+quantities_071: 
+  price: "4.7"
+  name: Camel gelb
+  created_at: 2010-05-01 16:53:36
+  updated_at: 2010-05-01 16:53:36
+  id: "71"
+  article_id: "345"
+  hidden: "0"
+  active: "1"
+quantities_006: 
+  price: "3.5"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 13:05:40
+  updated_at: 2010-04-30 13:05:40
+  id: "6"
+  article_id: "323"
+  hidden: "0"
+  active: "1"
+quantities_050: 
+  price: "2"
+  name: 1/4 gespritzt
+  created_at: 2010-04-30 14:16:02
+  updated_at: 2010-04-30 14:16:02
+  id: "50"
+  article_id: "337"
+  hidden: "0"
+  active: "1"
+quantities_049: 
+  price: "3.7"
+  name: 1/2 gespritzt
+  created_at: 2010-04-30 14:16:02
+  updated_at: 2010-04-30 14:16:02
+  id: "49"
+  article_id: "337"
+  hidden: "0"
+  active: "1"

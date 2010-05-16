@@ -1,41 +1,497 @@
----
-stocks_004:
-  name: Toastbread
-  updated_at: 2009-05-13 11:18:19
+--- 
+stocks_059: 
+  name: Camel Natural Flavour Light
+  created_at: 2009-02-25 12:44:21
+  updated_at: 2010-02-09 17:37:36
+  group_id: "2"
+  id: "59"
   unit: Packungen
-  group_id: "2"
+  balance: "3"
+stocks_048: 
+  name: Feiller Artinger Zweigelt
+  created_at: 2009-02-24 16:12:15
+  updated_at: 2009-02-26 13:45:31
+  group_id: "1"
+  id: "48"
+  unit: Bouteille
+  balance: "7"
+stocks_037: 
+  name: Langmann Schilcher
+  created_at: 2009-02-24 16:05:42
+  updated_at: 2010-01-13 10:24:44
+  group_id: "1"
+  id: "37"
+  unit: Bouteille
+  balance: "0.998"
+stocks_026: 
+  name: Pastis Paul Ricard
+  created_at: 2009-02-24 15:52:18
+  updated_at: 2010-04-08 21:37:47
+  group_id: "1"
+  id: "26"
+  unit: Flaschen
+  balance: "0.14"
+stocks_015: 
+  name: Schwarzer Tee
+  created_at: 2009-02-24 15:48:11
+  updated_at: 2010-03-29 22:31:00
+  group_id: "1"
+  id: "15"
+  unit: kg
+  balance: "0.42"
+stocks_004: 
+  name: Birnensaft
+  created_at: 2009-02-24 15:42:38
+  updated_at: 2010-04-13 21:25:15
+  group_id: "1"
   id: "4"
-  created_at: 2009-05-13 11:18:19
-  balance: "12"
-stocks_005:
-  name: Eggs
-  updated_at: 2009-05-13 11:24:24
-  unit: Stueck
-  group_id: "2"
-  id: "5"
-  created_at: 2009-05-13 11:24:24
-  balance: "20"
-stocks_001:
-  name: Coca Cola
-  updated_at: 2009-05-13 09:26:14
   unit: Liter
+  balance: "0"
+stocks_060: 
+  name: American Spirit Gelb
+  created_at: 2009-02-25 12:46:25
+  updated_at: 2009-02-26 13:47:47
+  group_id: "2"
+  id: "60"
+  unit: Packungen
+  balance: "0"
+stocks_049: 
+  name: Grappa Poli Sarpa Riserva
+  created_at: 2009-02-24 16:13:05
+  updated_at: 2010-04-12 22:46:53
+  group_id: "1"
+  id: "49"
+  unit: Flaschen
+  balance: "-0.24"
+stocks_038: 
+  name: "Fink Ros\xC3\xA9"
+  created_at: 2009-02-24 16:06:10
+  updated_at: 2010-01-13 09:53:27
+  group_id: "1"
+  id: "38"
+  unit: Bouteille
+  balance: "3.497"
+stocks_027: 
+  name: "Zi\xC3\x9F GV"
+  created_at: 2009-02-24 15:52:40
+  updated_at: 2010-04-13 22:17:46
+  group_id: "1"
+  id: "27"
+  unit: Bouteille
+  balance: "-29.41"
+stocks_016: 
+  name: Oolong Schwarzer Tee
+  created_at: 2009-02-24 15:48:34
+  updated_at: 2010-03-19 22:38:48
+  group_id: "1"
+  id: "16"
+  unit: kg
+  balance: "0.23"
+stocks_005: 
+  name: Orangensaft
+  created_at: 2009-02-24 15:42:53
+  updated_at: 2010-03-25 20:22:57
+  group_id: "1"
+  id: "5"
+  unit: Liter
+  balance: "2.975"
+stocks_061: 
+  name: Hilberg Pasquero Barbera d'Alba
+  created_at: 2009-02-26 13:41:54
+  updated_at: 2009-02-26 13:41:54
+  group_id: "1"
+  id: "61"
+  unit: Bouteille
+  balance: "10"
+stocks_050: 
+  name: Grappa Nonino
+  created_at: 2009-02-24 16:13:46
+  updated_at: 2010-03-18 22:04:42
+  group_id: "1"
+  id: "50"
+  unit: Flaschen
+  balance: "0.6"
+stocks_039: 
+  name: Pelzmann Zweigelt
+  created_at: 2009-02-24 16:06:38
+  updated_at: 2010-04-13 22:12:15
+  group_id: "1"
+  id: "39"
+  unit: Bouteille
+  balance: "7.119"
+stocks_028: 
+  name: Direder GV
+  created_at: 2009-02-24 15:53:00
+  updated_at: 2009-02-26 13:42:59
+  group_id: "1"
+  id: "28"
+  unit: Bouteille
+  balance: "5"
+stocks_017: 
+  name: Rotbuschtee
+  created_at: 2009-02-24 15:48:51
+  updated_at: 2010-04-09 19:11:48
+  group_id: "1"
+  id: "17"
+  unit: kg
+  balance: "0.21"
+stocks_006: 
+  name: Apfel-Hollersaft
+  created_at: 2009-02-24 15:43:20
+  updated_at: 2010-04-13 21:25:15
+  group_id: "1"
+  id: "6"
+  unit: Liter
+  balance: "-6.375"
+stocks_062: 
+  name: Schuster SB
+  created_at: 2009-03-01 15:09:39
+  updated_at: 2009-03-01 15:09:39
+  group_id: "1"
+  id: "62"
+  unit: Bouteille
+  balance: "6"
+stocks_051: 
+  name: Fernet Branca
+  created_at: 2009-02-24 16:14:05
+  updated_at: 2010-04-12 22:46:53
+  group_id: "1"
+  id: "51"
+  unit: Flaschen
+  balance: "0.69"
+stocks_040: 
+  name: Artner Rubin Carnuntum Zweigelt
+  created_at: 2009-02-24 16:08:29
+  updated_at: 2010-02-23 19:50:39
+  group_id: "1"
+  id: "40"
+  unit: Bouteille
+  balance: "-1.845"
+stocks_029: 
+  name: Kirchberghof Muskat-Ottonel
+  created_at: 2009-02-24 15:53:28
+  updated_at: 2009-02-26 13:43:07
+  group_id: "1"
+  id: "29"
+  unit: Bouteille
+  balance: "15"
+stocks_018: 
+  name: Honigbuschtee
+  created_at: 2009-02-24 15:49:08
+  updated_at: 2010-03-27 20:58:28
+  group_id: "1"
+  id: "18"
+  unit: kg
+  balance: "0.18"
+stocks_007: 
+  name: Apfel-Himbeersaft
+  created_at: 2009-02-24 15:43:44
+  updated_at: 2010-04-25 20:31:23
+  group_id: "1"
+  id: "7"
+  unit: Liter
+  balance: "6.625"
+stocks_052: 
+  name: Sekt
+  created_at: 2009-02-25 11:51:02
+  updated_at: 2009-02-25 11:51:02
+  group_id: "1"
+  id: "52"
+  unit: Flaschen
+  balance: "1"
+stocks_041: 
+  name: "Weninger Blaufr\xC3\xA4nkisch"
+  created_at: 2009-02-24 16:08:50
+  updated_at: 2010-04-13 21:20:16
+  group_id: "1"
+  id: "41"
+  unit: Bouteille
+  balance: "-15.213"
+stocks_030: 
+  name: "Stift G\xC3\xB6ttweig Riesling"
+  created_at: 2009-02-24 15:53:49
+  updated_at: 2009-02-26 13:43:11
+  group_id: "1"
+  id: "30"
+  unit: Bouteille
+  balance: "3"
+stocks_019: 
+  name: "Kr\xC3\xA4utertee"
+  created_at: 2009-02-24 15:49:33
+  updated_at: 2010-04-06 22:52:53
+  group_id: "1"
+  id: "19"
+  unit: kg
+  balance: "-0.01"
+stocks_008: 
+  name: "Apfel-RoteR\xC3\xBCbe"
+  created_at: 2009-02-24 15:44:05
+  updated_at: 2010-04-25 20:31:23
+  group_id: "1"
+  id: "8"
+  unit: Liter
+  balance: "10.25"
+stocks_053: 
+  name: Frizzante
+  created_at: 2009-02-25 11:51:42
+  updated_at: 2010-03-02 21:23:28
+  group_id: "1"
+  id: "53"
+  unit: Flaschen
+  balance: "0.8"
+stocks_042: 
+  name: Kirchberghof St. Laurent
+  created_at: 2009-02-24 16:09:15
+  updated_at: 2009-02-26 21:13:33
+  group_id: "1"
+  id: "42"
+  unit: Bouteille
+  balance: "4.666"
+stocks_031: 
+  name: Diwald Riesling
+  created_at: 2009-02-24 15:54:15
+  updated_at: 2009-03-01 15:56:08
+  group_id: "1"
+  id: "31"
+  unit: Bouteille
+  balance: "7.833"
+stocks_020: 
+  name: Roggenbier Schremser
+  created_at: 2009-02-24 15:50:04
+  updated_at: 2009-02-24 15:50:04
+  group_id: "1"
+  id: "20"
+  unit: Flaschen
+  balance: "25"
+stocks_009: 
+  name: Coca Cola
+  created_at: 2009-02-24 15:44:40
+  updated_at: 2010-04-12 22:46:53
+  group_id: "1"
+  id: "9"
+  unit: Flaschen
+  balance: "-14"
+stocks_054: 
+  name: Krenn Kaiserholzbirn
+  created_at: 2009-02-25 11:58:22
+  updated_at: 2010-03-26 23:08:23
+  group_id: "1"
+  id: "54"
+  unit: Flaschen
+  balance: "-0.04"
+stocks_043: 
+  name: Steindorfer St. Laurent Reserve
+  created_at: 2009-02-24 16:09:55
+  updated_at: 2009-02-26 13:44:33
+  group_id: "1"
+  id: "43"
+  unit: Bouteille
+  balance: "20"
+stocks_032: 
+  name: "S\xC3\xB6ll Welschriesling"
+  created_at: 2009-02-24 15:54:32
+  updated_at: 2010-04-01 20:51:59
+  group_id: "1"
+  id: "32"
+  unit: Bouteille
+  balance: "-10.859"
+stocks_021: 
+  name: Beck's alkoholfreies Bier
+  created_at: 2009-02-24 15:50:34
+  updated_at: 2009-02-24 15:50:34
+  group_id: "1"
+  id: "21"
+  unit: Flaschen
+  balance: "10"
+stocks_010: 
+  name: Almdudler
+  created_at: 2009-02-24 15:45:01
+  updated_at: 2010-04-13 21:25:15
+  group_id: "1"
+  id: "10"
+  unit: Flaschen
+  balance: "-34.9"
+stocks_055: 
+  name: Milch
+  created_at: 2009-02-25 12:33:48
+  updated_at: 2010-04-13 21:20:16
+  group_id: "1"
+  id: "55"
+  unit: Liter
+  balance: "-0.72"
+stocks_044: 
+  name: Scheiblhofer Big John Cuvee
+  created_at: 2009-02-24 16:10:29
+  updated_at: 2010-02-27 22:51:38
+  group_id: "1"
+  id: "44"
+  unit: Bouteille
+  balance: "4.827"
+stocks_033: 
+  name: Wohlmuth Chardonnay
+  created_at: 2009-02-24 15:54:54
+  updated_at: 2010-02-26 19:19:10
+  group_id: "1"
+  id: "33"
+  unit: Bouteille
+  balance: "-0.006"
+stocks_022: 
+  name: Martini ExtraDry
+  created_at: 2009-02-24 15:51:03
+  updated_at: 2010-03-11 22:38:58
+  group_id: "1"
+  id: "22"
+  unit: Flaschen
+  balance: "0.67"
+stocks_011: 
+  name: Hollersaft
+  created_at: 2009-02-24 15:45:39
+  updated_at: 2009-03-01 15:10:23
+  group_id: "1"
+  id: "11"
+  unit: Liter
+  balance: "4"
+stocks_056: 
+  name: Marlboro Rot
+  created_at: 2009-02-25 12:43:02
+  updated_at: 2010-04-13 22:18:08
+  group_id: "2"
+  id: "56"
+  unit: Packungen
+  balance: "-2"
+stocks_045: 
+  name: Artner Cuvee Barrique
+  created_at: 2009-02-24 16:10:48
+  updated_at: 2010-03-30 20:53:39
+  group_id: "1"
+  id: "45"
+  unit: Bouteille
+  balance: "-10.529"
+stocks_034: 
+  name: Wohlmuth Pinot Gris
+  created_at: 2009-02-24 15:55:21
+  updated_at: 2009-02-26 13:43:34
+  group_id: "1"
+  id: "34"
+  unit: Bouteille
+  balance: "3"
+stocks_023: 
+  name: Campari
+  created_at: 2009-02-24 15:51:23
+  updated_at: 2010-03-21 00:43:12
+  group_id: "1"
+  id: "23"
+  unit: Flaschen
+  balance: "0.76"
+stocks_012: 
+  name: Himbeersaft
+  created_at: 2009-02-24 15:46:17
+  updated_at: 2010-01-13 10:24:44
+  group_id: "1"
+  id: "12"
+  unit: Liter
+  balance: "0.84"
+stocks_001: 
+  name: Soda
+  created_at: 2009-02-24 15:41:51
+  updated_at: 2010-04-25 20:31:23
   group_id: "1"
   id: "1"
-  created_at: 2009-05-13 09:26:14
-  balance: "20"
-stocks_002:
-  name: Rum
-  updated_at: 2009-05-13 10:23:17
   unit: Liter
+  balance: "-21.04"
+stocks_057: 
+  name: Camel
+  created_at: 2009-02-25 12:43:18
+  updated_at: 2010-04-10 18:28:46
+  group_id: "2"
+  id: "57"
+  unit: Packungen
+  balance: "-10"
+stocks_046: 
+  name: Fratelli Rabino Nebbiolo d'Alba
+  created_at: 2009-02-24 16:11:24
+  updated_at: 2009-02-26 13:45:14
+  group_id: "1"
+  id: "46"
+  unit: Bouteille
+  balance: "3"
+stocks_035: 
+  name: Artner Landwein GV
+  created_at: 2009-02-24 15:55:57
+  updated_at: 2010-04-13 22:12:15
+  group_id: "1"
+  id: "35"
+  unit: Flaschen
+  balance: "-9.058"
+stocks_024: 
+  name: Prosecco
+  created_at: 2009-02-24 15:51:37
+  updated_at: 2010-04-03 21:00:22
+  group_id: "1"
+  id: "24"
+  unit: Flaschen
+  balance: "0.5"
+stocks_013: 
+  name: Kaffee
+  created_at: 2009-02-24 15:46:41
+  updated_at: 2010-04-13 21:20:16
+  group_id: "1"
+  id: "13"
+  unit: Packungen
+  balance: "-72"
+stocks_002: 
+  name: Bier
+  created_at: 2009-02-24 15:42:01
+  updated_at: 2010-04-13 22:17:46
   group_id: "1"
   id: "2"
-  created_at: 2009-05-13 10:23:17
-  balance: "3"
-stocks_003:
-  name: Ham
-  updated_at: 2009-05-13 11:18:05
-  unit: kg
+  unit: Liter
+  balance: "-180.55"
+stocks_058: 
+  name: Gauloises Rot
+  created_at: 2009-02-25 12:43:40
+  updated_at: 2010-04-12 22:41:56
   group_id: "2"
+  id: "58"
+  unit: Packungen
+  balance: "-13"
+stocks_047: 
+  name: "Hofst\xC3\xA4dter Apollo"
+  created_at: 2009-02-24 16:11:50
+  updated_at: 2009-02-26 13:45:21
+  group_id: "1"
+  id: "47"
+  unit: Bouteille
+  balance: "0.5"
+stocks_036: 
+  name: Mineral
+  created_at: 2009-02-24 16:04:15
+  updated_at: 2010-04-13 21:20:16
+  group_id: "1"
+  id: "36"
+  unit: Flaschen
+  balance: "-29"
+stocks_025: 
+  name: Sherry Manzanilla
+  created_at: 2009-02-24 15:51:54
+  updated_at: 2010-02-05 18:26:55
+  group_id: "1"
+  id: "25"
+  unit: Flaschen
+  balance: "6.84"
+stocks_014: 
+  name: Weisser Tee
+  created_at: 2009-02-24 15:47:23
+  updated_at: 2010-04-08 22:36:07
+  group_id: "1"
+  id: "14"
+  unit: kg
+  balance: "0.43"
+stocks_003: 
+  name: Apfelsaft
+  created_at: 2009-02-24 15:42:23
+  updated_at: 2010-04-13 19:28:13
+  group_id: "1"
   id: "3"
-  created_at: 2009-05-13 11:18:05
-  balance: "1"
+  unit: Liter
+  balance: "-12.125"

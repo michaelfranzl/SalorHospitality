@@ -1,49 +1,46 @@
----
-users_004:
-  updated_at: 2009-05-13 09:22:37
-  login: Mr. Waiter 1
+--- 
+users_004: 
+  created_at: 2010-05-16 15:35:46
+  title: Mrs. Waiter 1
+  updated_at: 2010-05-16 15:35:46
   role: "1"
-  id: "4"
+  color: "#cd0052"
+  id: "11"
   password: waiter1
   login: waiter1
-  created_at: 2009-05-13 09:22:37
-users_005:
-  updated_at: 2009-05-13 09:22:57
-  login: Mr. Waiter 2
+users_005: 
+  created_at: 2010-05-16 15:36:22
+  title: Mr. Waiter 2
+  updated_at: 2010-05-16 15:36:22
   role: "1"
-  id: "5"
+  color: "#cd0052"
+  id: "12"
   password: waiter2
   login: waiter2
-  created_at: 2009-05-13 09:22:57
-users_006:
-  updated_at: 2009-05-13 09:24:14
-  login: Restaurant
-  role: "0"
-  id: "6"
-  password: restaurant
-  login: restaurant
-  created_at: 2009-05-13 09:24:14
-users_001:
-  updated_at: 2009-05-13 09:23:08
-  login: Mr. Superuser
+users_001: 
+  created_at: 2009-02-24 14:54:46
+  title: Mister Superuser
+  updated_at: 2010-05-16 15:35:04
   role: "3"
+  color: "#cd0052"
   id: "1"
   password: su
   login: su
-  created_at: 2009-02-19 12:40:35
-users_002:
-  updated_at: 2009-05-13 09:21:35
-  login: Mr. Admin 1
+users_002: 
+  created_at: 2009-05-18 11:00:48
+  title: "-"
+  updated_at: 2010-05-16 15:34:26
+  role: "0"
+  color: "#80477d"
+  id: "7"
+  password: restaurant
+  login: restaurant
+users_003: 
+  created_at: 2010-05-16 15:35:24
+  title: Mr. Admin
+  updated_at: 2010-05-16 15:35:24
   role: "2"
-  id: "2"
-  password: admin1
-  login: admin1
-  created_at: 2009-02-19 12:40:35
-users_003:
-  updated_at: 2009-05-13 09:22:12
-  login: Mr. Admin 2
-  role: "2"
-  id: "3"
-  password: admin2
-  login: admin2
-  created_at: 2009-02-19 12:40:35
+  color: "#75b10d"
+  id: "10"
+  password: admin
+  login: admin
