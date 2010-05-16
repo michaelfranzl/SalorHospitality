@@ -2,7 +2,7 @@
 
 BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is real world-tested in a restaurant in Vienna (since March of 2010) and continues to be used live. It has eye-candy graphics and was optimized for fast entering of sales (uses lots of js, minimal http requests). Main Features:
 
-* It has detailed article management using drag-and drop
+* It has detailed article management using drag-and drop and dynamic search
 * Tables can be moved around with drag-and-drop
 * User management with roles (superuser, administrator, waiter, restaurant)
 * An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash, for use on an external homepage. An example swf file is included.
@@ -38,9 +38,14 @@ BillGastro is a Ruby on Rails 2.3 application. It most probably runs on other Ra
 8. Browse to `localhost:3000` and log in as superuser: login "su", password "su"
 
 
+# Usage
+
+After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu. When you press reload while the admin menu is open, the tables will have handles, with which you can drag them around. When the admin menu is closed, it the tables are not moveable any more. I believe that the rest of the application is quite straightforward and can be learned by clicking around and trying things out. If you are in doubt, contact me.
+
+
 # Notes
 
-BillGastro is work in progress. The version on github should work as it is.
+BillGastro is work in progress. The version on github should work as it is. BillGastro was optimized for Mozilla Firefox, because it is open source, free, multi-platform, includes preliminary CSS3 support and is known to adhere to W3C standards.
 
 
 # Database structure
