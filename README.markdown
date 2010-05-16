@@ -14,6 +14,11 @@ BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is
 * Multi-Language. Change your language with just one click. (only partially implemented yet, see ToDo)
 
 
+# Try it live!
+
+Go to [billgastro.michaelfranzl.com](http://billgastro.michaelfranzl.com) and click on "Login". Username and password will be preset for you.
+
+
 # Licence
 
 Copyright (C) 2010 Michael Franzl
