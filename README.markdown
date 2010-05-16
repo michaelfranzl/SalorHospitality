@@ -1,25 +1,46 @@
-# BillGastro: A POS (Point of Sales) Ruby on Rails Internet Application for your Restaurant or Bar
+### BillGastro: A POS (Point of Sales) Ruby on Rails Internet Application for your Restaurant or Bar
+
+![Bill Gastro Schreenshot POS Point of Sales](http://michaelfranzl.com/images/billgastro/screenshot1-small.jpg)
 
 BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is real world-tested in a restaurant in Vienna (since March of 2010) and continues to be used live. It has eye-candy graphics and was optimized for fast entering of sales (uses lots of js, minimal http requests). Main Features:
 
-* It has detailed article management using drag-and drop and dynamic search
+* Detailed article management using drag-and drop and dynamic search
+* Optimized for touchscreen monitors, but also usable with standard mouse
 * Tables can be moved around with drag-and-drop
 * User management with roles (superuser, administrator, waiter, restaurant)
-* An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash, for use on an external homepage. An example swf file is included.
-* A waiter-pad or tally (sorry, English is not my native language) can be printed
 * Sold Items can be easily taken from one invoice to another invoice, in case guests want to pay separately
 * Sold Items can be assigned to a cost center, in case the restaurant invites the guest
 * There is a fast storno-method for sold items
 * The application generates ESCPOS code for printing on standard thermo-printers like the popular Epson TM-T88. (see details for printing below)
 * Multi-Language. Change your language with just one click. (only partially implemented yet, see ToDo)
+* Print notes for the kitchen with your invoice-printer for optimimal waiter-kitchen communication. Each ordered food will be printed exactly once.
+* An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash, for use on an external homepage. An example swf file is included.
+* A waiter-pad or tally (sorry, English is not my native language) can be printed
 
 
-# Try it live!
+#### Try it live!
 
 Go to [billgastro.michaelfranzl.com](http://billgastro.michaelfranzl.com) and click on "Login". Username and password will be preset for you.
 
 
-# Licence
+#### Screenshots
+
+[Take an order](http://michaelfranzl.com/images/billgastro/screenshot1.jpg)
+
+[Select a table, drag tables around](http://michaelfranzl.com/images/billgastro/screenshot2.jpg)
+
+[Final check of the invoice, optionally divide the invoice](http://michaelfranzl.com/images/billgastro/screenshot3.jpg)
+
+[Permanent storno of items](http://michaelfranzl.com/images/billgastro/screenshot4.jpg)
+
+[Article management with drag and drop](http://michaelfranzl.com/images/billgastro/screenshot5.jpg)
+
+[Create an article with variants/quantities](http://michaelfranzl.com/images/billgastro/screenshot6.jpg)
+
+[View settlement (several orders)](http://michaelfranzl.com/images/billgastro/screenshot7.jpg)
+
+
+#### Licence
 
 Copyright (C) 2010 Michael Franzl
 
@@ -30,7 +51,7 @@ BillGastro is distributed in the hope that it will be useful, but WITHOUT ANY WA
 You should have received a copy of the GNU General Public License along with BillGastro.  If not, see <http://www.gnu.org/licenses/> or the file COPYING.
 
 
-# Getting Started
+#### Getting Started
 
 BillGastro is a Ruby on Rails 2.3 application. It most probably runs on other Rails versions too.
 
@@ -44,17 +65,17 @@ BillGastro is a Ruby on Rails 2.3 application. It most probably runs on other Ra
 8. Browse to `localhost:3000` and log in as superuser: login "su", password "su"
 
 
-# Usage
+#### Usage
 
 After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu. When you press reload while the admin menu is open, the tables will have handles, with which you can drag them around. When the admin menu is closed, it the tables are not moveable any more. I believe that the rest of the application is quite straightforward and can be learned by clicking around and trying things out. If you are in doubt, contact me.
 
 
-# Notes
+#### Notes
 
 BillGastro is work in progress. The version on github should work as it is. BillGastro was optimized for Mozilla Firefox, because it is open source, free, multi-platform, includes preliminary CSS3 support and is known to adhere to W3C standards.
 
 
-# Database structure
+#### Database structure
 
 * articles: Articles that can be sold, e.g. a Duff beer
 * quantities: Optional variants of an article, e.g. 0.5l Duff Beer
@@ -71,12 +92,12 @@ BillGastro is work in progress. The version on github should work as it is. Bill
 * stocks: Not used.
 
 
-# ToDo
+#### ToDo
 
 BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations. I am planning to implement it soon.
 
 
-# Invoice Printing
+#### Invoice Printing
 
 When you use a standard invoice printer (like Epson TM-T88) on the serial port, you don't even need a special driver. When you press the print button in BillGastro, it is just a simple download technically speaking. You can configure Firefox to not confirm a download, but to execute the file instead. For the file to execute, you need to configure Windows to use the program `print.bat` for it. `print.bat` contains the following code (adapt the settings for your printer/serial port):
 
@@ -86,7 +107,7 @@ When you use a standard invoice printer (like Epson TM-T88) on the serial port, 
 I derived this solution from http://www.pvgenerator.de/index.php/off-topic/php-und-die-serielle-schnittstelle/43
 
 
-# Contact
+#### Contact
 
 Michael Franzl
 
