@@ -1,6 +1,15 @@
 # BillGastro: A POS (Point of Sales) Ruby on Rails Internet Application for your Restaurant or Bar
 
-BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is real world-tested in a restaurant in Vienna (since March of 2010) and continues to be used live. It has eye-candy graphics and was optimized for fast entering of sales (uses lots of js, minimal http requests).
+BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is real world-tested in a restaurant in Vienna (since March of 2010) and continues to be used live. It has eye-candy graphics and was optimized for fast entering of sales (uses lots of js, minimal http requests). Main Features:
+
+* It has detailed article management using drag-and drop
+* Tables can be moved around with drag-and-drop
+* User management with roles (superuser, administrator, waiter, restaurant)
+* An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash.
+* Sold Items can be easily taken from one invoice to another invoice, in case guests want to pay separately
+* Sold Items can be assigned to a cost center, in case the restaurant invites the guest
+* There is a fast storno-method for sold items
+* The application generates ESCPOS code for printing on standard thermo-printers like the popular Epson TM-T88. (see details for printing below)
 
 
 # Licence
@@ -53,6 +62,16 @@ BillGastro is work in progress. The version on github should work as it is.
 # ToDo
 
 BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations.
+
+
+# Invoice Printing
+
+When you use a standard invoice printer (like Epson TM-T88) on the serial port, you don't even need a special driver. When you press the print button in BillGastro, it is just a simple download technically speaking. You can configure Firefox to not confirm a download, but to execute the file instead. For the file to execute, you need to configure Windows to use the program `print.bat` for it. `print.bat` contains the following code (adapt the settings for your printer/serial port):
+
+    MODE COM1:9600,N,8,1
+    copy %1 COM1
+
+I derived this solution from http://www.pvgenerator.de/index.php/off-topic/php-und-die-serielle-schnittstelle/43
 
 
 # Contact
