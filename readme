@@ -41,6 +41,24 @@ BillGastro is a Ruby on Rails 2.3 application. It probably runs on other Rails v
 BillGastro is work in progress. The version on github should work as it is.
 
 
+# Database structure
+
+* articles: Articles that can be sold, e.g. a Duff beer
+* quantities: Optional variants of an article, e.g. 0.5l Duff Beer
+* items: Sold articles (if no quantity is present) OR sold quantity
+* orders: Several items sold together
+* settlements: Waiters take several orders a day. At the end of the day they need to pay the revenue.
+* cost_centers: Who pays for sold articles, e.g. the restaurant for the consumation of the employees.
+* categories: Several articles grouped together, e.g. desserts
+* tables: List of tables
+* taxes: List of possible taxes.
+* users: List of users
+
+* ingredients: Not used.
+* groups: Not used.
+* stocks: Not used.
+
+
 # ToDo
 
 BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations.
