@@ -1,0 +1,9 @@
+%h2= t :settlement
+= error_messages_for 'settlement'
+= render :partial => 'detailed_list', :locals => { :orders => @settlement.orders, :selected_cost_center => @cost_center }
+
+- path = user_settlement_path(@settlement.user, @settlement)
+- form_for :settlement, @settlement, :url => path, :html => { :method => 'put' } do |sm_form|
+  = sm_form.label('created_at', 'Datum')
+  = sm_form.date_select('created_at')
+  = submit_tag

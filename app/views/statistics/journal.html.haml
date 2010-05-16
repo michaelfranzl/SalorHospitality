@@ -1,0 +1,13 @@
+%h2= t :journal
+
+- form_tag '/statistics/journal' do
+  = label 'from', 'von'
+  = select_date @from, :prefix => 'from'
+  = label 'to', 'bis'
+  = select_date @to, :prefix => 'to'
+  = label 'cc', 'Kostenstelle'
+  %select{ :name => 'cost_center_id' }
+    = options_from_collection_for_select @cost_centers, :id, :name
+  = submit_tag 'abfragen'
+ 
+= render :partial => 'settlements/detailed_list', :locals => { :orders => @orders_from_to, :selected_cost_center => @selected_cost_center }

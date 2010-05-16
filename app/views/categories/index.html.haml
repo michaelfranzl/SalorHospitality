@@ -1,5 +1,7 @@
 %h2= t :categories_menu
 
+%p= link_to((t :new), new_category_path) if @current_user.role >= 2
+
 %table
   %tr
     %th{ :style => 'width:250px' }= t :name
@@ -9,10 +11,7 @@
     %th{ :style => 'width:120px' }
   - @categories.each do |ca|
     %tr
-      %td= ca.name
+      %td= @current_user.role >= 2 ? link_to(ca.name, edit_category_path(ca)) : ca.name
       %td= ca.tax.custom_name
       %td= ca.sort_order
-      %td= link_to((t :edit), edit_category_path(ca)) if @current_user.role >= 2
       %td= link_to((t :delete), ca, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
-
-%p= link_to((t :new), new_category_path) if @current_user.role >= 2

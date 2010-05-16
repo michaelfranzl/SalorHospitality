@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100207180803) do
+ActiveRecord::Schema.define(:version => 20100430113909) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20100207180803) do
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "hidden",          :default => false
   end
 
   create_table "categories", :force => true do |t|
@@ -32,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20100207180803) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sort_order"
+    t.string   "icon"
+    t.string   "color"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -60,23 +63,35 @@ ActiveRecord::Schema.define(:version => 20100207180803) do
     t.integer  "count"
     t.integer  "article_id"
     t.integer  "order_id"
-    t.boolean  "free"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "partial_order"
-    t.integer  "cost_center_id"
+    t.integer  "cost_center_id", :default => 1
     t.boolean  "printed",        :default => false
     t.integer  "sort"
+    t.integer  "quantity_id"
+    t.integer  "storno_status"
   end
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",      :default => false
+    t.boolean  "finished",        :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "sum"
+    t.float    "sum",             :default => 0.0
+    t.integer  "parent_order_id"
+  end
+
+  create_table "quantities", :force => true do |t|
+    t.string   "name"
+    t.float    "price"
+    t.integer  "article_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden",     :default => false
   end
 
   create_table "settlements", :force => true do |t|
@@ -120,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20100207180803) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role"
+    t.string   "color"
   end
 
 end

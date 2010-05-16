@@ -33,8 +33,11 @@ class StatisticsController < ApplicationController
 
   def journal
     @from, @to = assign_from_to(params)
-    @orders = Order.find(:all, :conditions => { :created_at => @from..@to })
-    render 'settlements/new'
+    @orders_from_to = Order.find(:all, :conditions => { :created_at => @from..@to })
+    
+    @cost_centers = CostCenter.all
+    params[:cost_center_id] ||= CostCenter.first.id
+    @selected_cost_center = CostCenter.find(params[:cost_center_id])
   end
 
   private

@@ -19,7 +19,7 @@
     %td
       - 1.upto(3) do |category_id|
         %td{ :style => 'width:200px;text-align:center;vertical-align:top' }
-          - Category.find(category_id).articles_in_blackboard.each do |article|
+          - Category.find(category_id).articles.find_in_blackboard.each do |article|
             - article.format_name = " \n#{article.name}" if ( article.format_name.nil? or article.format_name.empty? )
             - remote_form_for article, :html => { :id => "form_#{article.id}" }, :before => "Element.hide('submit_button_#{article.id}'); Element.show('submit_spinner_#{article.id}');", :complete => "Element.hide('submit_spinner_#{article.id}'); Element.show('submit_button_#{article.id}'); var time = new Date().getTime(); Element.replace('blackboard_flash', '<object id=\"blackboard_flash\" class=\"' + time + '\"><embed src=\"blackboard.swf\" width=577 height=391 /></object>');" do |f|
               = f.text_area :format_name, :size => '25x2', :style => 'text-align:center'

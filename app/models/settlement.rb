@@ -5,7 +5,4 @@ class Settlement < ActiveRecord::Base
   def price=(price)
     write_attribute(:revenue, price.gsub(',', '.'))
   end
-
-  validates_presence_of :revenue
-  validates_numericality_of :revenue
 end

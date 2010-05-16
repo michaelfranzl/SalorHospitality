@@ -1,81 +1,9 @@
 %h2= t :settlement
-- if controller.controller_name == 'settlements'
-  = error_messages_for 'settlement'
+= error_messages_for 'settlement'
+= render :partial => 'detailed_list', :locals => { :orders => @orders, :selected_cost_center => nil }
 
-- else
-  %br
-  - form_tag '/statistics/journal' do
-    = label('from', 'von')
-    = select_date(@from, :prefix => 'from')
-    = label('to', 'bis')
-    = select_date(@to, :prefix => 'to')
-    = submit_tag 'abfragen'
-  %br
-
-
-%table{ :class => 'settlements' }
-  %tr
-    %th{ :style => 'width:200px' }= t :item
-    %th{ :style => 'width:30px' }= t :count
-    %th{ :style => 'width:90px' }= t :single
-    %th{ :style => 'width:90px' }= t :total
-    %th{ :style => 'width:100px' }= t :order_sums
-  - total = 0
-  - @orders.each do |so|
-    %tr
-      %td{ :colspan => 5, :style => 'background-color: white' } &nbsp;
-    %tr
-      %td{ :colspan => 4, :style => 'text-align:left; background-color: white' }== #{ link_to("#{ t :order, :count => 1} ##{so.id}", order_path(so)) } auf <b>#{ so.table.name }</b> am <b>#{ l so.created_at, :format => :datetime_iso }</b>
-      - subtotal = 0
-      - so.items.each do |item|
-        - c = item.count
-        - p = item.article.price
-        - sum = 0
-        - if !item.free
-          - sum = c * p
-          - subtotal += sum
-          - total += sum
-        %tr
-          %td= item.article.name
-          %td= c
-          %td= number_to_currency p
-          %td{ :class => 'colsum' }= sum.zero? ? (t :free) : (number_to_currency sum)
-    %tr
-      %td{ :colspan => '3' } Bestellsumme
-      %td{ :colspan => '2', :class => 'sum' }= number_to_currency subtotal
-  %tr
-    %td{ :colspan => 5, :style => 'background-color: white' } &nbsp;
-  %tr
-    %td{ :colspan => '3', :class => 'colsum' } Abrechnungssumme
-    %td{ :colspan => '2', :class => 'sum' }= number_to_currency total
-
-  - if controller.controller_name == 'settlements'
-
-    - if controller.action_name == 'show'
-      %tr
-        %td{ :colspan => '3', :class => 'colsum' }= t :revenue
-        %td{ :colspan => '2', :class => 'colsum' }= number_to_currency @settlement.revenue
-
-    - if controller.action_name == 'edit'
-      - path = user_settlement_path(@settlement.user, @settlement)
-      - form_for :settlement, @settlement, :url => path, :html => { :method => 'put' } do |sm_form|
-        %tr
-          %td{ :colspan => '1', :class => 'colsum' }= sm_form.label('created_at', 'Datum')
-          %td{ :colspan => '4', :class => 'colsum' }= sm_form.date_select('created_at')
-        %tr
-          %td{ :colspan => '3', :class => 'colsum' }= sm_form.label('revenue', (t :revenue))
-          %td{ :colspan => '2', :class => 'colsum' }
-            = submit_tag t :edit
-            = sm_form.text_field :revenue, :size => 5
-
-    - if controller.action_name == 'create' or controller.action_name == 'new'
-      - path = user_settlements_path
-      - form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
-        %tr
-          %td{ :colspan => '1', :class => 'colsum' }= sm_form.label('created_at', 'Datum')
-          %td{ :colspan => '4', :class => 'colsum' }= sm_form.date_select('created_at')
-        %tr
-          %td{ :colspan => '3', :class => 'colsum' }= sm_form.label('revenue', (t :revenue))
-          %td{ :colspan => '2', :class => 'colsum' }
-            = submit_tag t :save
-            = sm_form.text_field :revenue, :size => 5
+- path = user_settlements_path @settlement.user
+- form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
+  = sm_form.label('created_at', 'Datum')
+  = sm_form.date_select('created_at')
+  = submit_tag

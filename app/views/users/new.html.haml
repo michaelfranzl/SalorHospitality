@@ -1,29 +1,29 @@
+%style= generate_color_style
+
+%h2== Benutzer #{ controller.action_name == 'new' ? (t :new) : (t :edit) }
+
 = error_messages_for 'user'
 
 - form_for @user do |user_form|
-  %fieldset
-    %legend= t :user
-    %table
+  %table
+    %tr
+      %td= user_form.label('login', "#{t :login}*")
+      %td= user_form.text_field :login, :size => '20'
+    %tr
+      %td= user_form.label('title', "#{t :title}*")
+      %td= user_form.text_field :title, :size => '20'
+    %tr
+      %td= user_form.label('password', "#{t :password}*")
+      %td= user_form.text_field :password, :size => '20'
       %tr
+        %td= user_form.label('role', "#{t :role}*")
         %td
-          = user_form.label('login', "#{t :login}*")
-        %td
-          = user_form.text_field :login, :size => '20'
-      %tr
-        %td
-          = user_form.label('title', "#{t :title}*")
-        %td
-          = user_form.text_field :title, :size => '20'
-      %tr
-        %td
-          = user_form.label('password', "#{t :password}*")
-        %td
-          = user_form.text_field :password, :size => '20'
-        %tr
-          %td
-            = user_form.label('role', "#{t :role}*")
-          %td
-            %select{ :id => 'user_role', :name => 'user[role]' }
-              = options_for_select MyGlobals::user_roles[0..@current_user.role+1], @user.role
-
+          %select{ :id => 'user_role', :name => 'user[role]' }
+            = options_for_select MyGlobals::user_roles[0..@current_user.role+1], @user.role
+    %tr
+      %td= user_form.label('color', t(:color))
+      %td
+        %select#category_color{ :name => 'user[color]' }
+          = options_for_select(get_color_array, user_form.object.color)
+            
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

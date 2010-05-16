@@ -1,41 +1,23 @@
 %h2= t :articles_menu
 
-%span
-  = link_to((t :new), new_article_path) if @current_user.role >= 2
-  |
-%span
-  = link_to((t :create_a_series_of_foods), new_foods_articles_path) if @current_user.role >= 2
-  |
-%span
-  = link_to((t :all_articles), listall_articles_path)
+- if @current_user.role >= 1
+  %a.links{ :href => new_article_path}= t :new
+  //%a.links{ :href => new_foods_articles_path} t :create_a_series_of_foods), new_foods_articles_path)
+%a.links{ :href => listall_articles_path}= t :all_articles
 
-%fieldset#drop_remove.articles{ :style => 'float:left;' }
-  = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
-  %legend= t :articles_menu
-  = label_tag 'article_name', (t :search_term)
-  = text_field_tag 'article_name'
-  = observe_field 'article_name', :frequency => 0.5, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('search_spinner_#{@id}').style.display='inline'", :loaded => "document.getElementById('search_spinner_#{@id}').style.display='none'"
-  %ul#articles_search_results{ :style => 'list-style-type:none' }
-    = render 'articles_search_results'
-  = draggable_element 'drop_remove'
-
-%fieldset#drop_add_to_menucard.articles{ :style => 'float:right' }
-  %legend= t :menucard
-  = link_to ((t :print_preview), :controller => 'menucard')
-  = render 'menucard_list'
-  = drop_receiving_element :drop_add_to_menucard, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_menucard'"
-  = draggable_element 'drop_add_to_menucard'
-
-%fieldset#drop_add_to_waiterpad.articles{ :style => 'float:right' }
-  %legend= t :waiterpad
-  = link_to ((t :print_preview), :controller => 'waiterpad')
-  = render 'waiterpad_list'
-  = drop_receiving_element :drop_add_to_waiterpad, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_waiterpad'"
-  = draggable_element 'drop_add_to_waiterpad'
-
-%fieldset#drop_add_to_blackboard.articles{ :style => 'float:right' }
-  %legend= t :blackboard
-  = link_to ((t :online_preview), :controller => 'blackboard')
-  = render 'blackboard_list'
-  = drop_receiving_element :drop_add_to_blackboard, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_blackboard'"
-  = draggable_element 'drop_add_to_blackboard'
+%table.articles
+  %tr
+    %td#drop_remove
+      = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
+      = text_field_tag 'article_name', t(:search_term), :onclick => 'this.value="";'
+      = observe_field 'article_name', :frequency => 1, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('search_spinner_#{@id}').style.display='inline'", :loaded => "document.getElementById('search_spinner_#{@id}').style.display='none'"
+      %ul#articles_search_results
+        = render 'articles_search_results'
+    
+    - @scopes.each do |@scope|
+      %td{ :id => "drop_add_to_#{@scope}" }
+        %span.scope_title= t @scope.to_sym
+        = link_to t(:print_preview), { :controller => @scope }, :class => 'scopelink'
+        %div{ :id => "#{@scope}_list" }
+          = render 'list', :locals => { :scope => @scope }
+        = drop_receiving_element "drop_add_to_#{@scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{@scope}'"

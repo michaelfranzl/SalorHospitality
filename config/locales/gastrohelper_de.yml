@@ -1,5 +1,4 @@
 de:
-
   attributes: #label translations seem to be still missing in rails 2.3
     user:
       password: Passwort
@@ -14,10 +13,30 @@ de:
       tax: Steuerklasse
       cost_center: Kostenstelle
       article: Verkaufsartikel
-      stock: Lagervorr‰te
+      stock: Lagervorr√§te
       category: Artikelkategorie
       settlement: Abrechnung
       order: Bestellung
+    attributes:
+      article:
+        price: Preis
+        category_id: Artikelkategorie
+        name: Name
+      tax:
+        percent: Prozentsatz
+        name: Name
+      table:
+        name: Name
+      category:
+        name: Name
+        tax_id: Steuerklasse
+        icon: Icon
+        color: Farbe
+      user:
+        login: Login
+        password: Passwort
+        role: Rolle
+        title: Anrede und Name
 
 # ==================================================================================
 # Custom messages
@@ -34,21 +53,26 @@ de:
   password: Passwort
   this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
   logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" lˆschen mˆchten?'
+  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" l√∂schen m√∂chten?'
   are_you_sure: 'Sind Sie sicher?'
+  
+  active: aktiv?
+  hidden: l√∂schen?
 
-  delete: Lˆschen
-  edit: ƒndern
+  delete: L√∂schen
+  edit: √Ñndern
   create: Erzeugen
   new: Neu anlegen
   save: Speichern
-  finished: Abschlieﬂen
+  finished: Abschlie√üen
+  
+  invoice: Rechnung
 
   creation_date: Datum
 
   table: Tisch
   tables_menu: Tische
-  width: L‰nge
+  width: L√§nge
   height: Breite
 
   user: Benutzer
@@ -67,17 +91,22 @@ de:
   groups_menu: Lagerorte
 
   stock: Lagervorrat
-  stocks_menu: Lagervorr‰te
+  stocks_menu: Lagervorr√§te
 
   category: Artikelkategorie
   categories_menu: Artikelkategorien
+  
+  icon: Icon
+  color: Farbe
 
   article: Artikel
   articles_menu: Verkaufsartikel
   all_articles: Alle Artikel
   new_article: Neuer Artikel
   edit_article: Artikel bearbeiten
-  add_article: 'Hinzuf¸gen:'
+  add_article: 'Hinzuf√ºgen:'
+  
+  add_quantity: Variante/Menge hinzuf√ºgen
 
   ingredient: Zutat
   ingredients: Alle Zutaten
@@ -87,6 +116,10 @@ de:
   new_settlement: Neue Abrechnung
   settlements_menu: Abrechnungen
   settlement_abbr: 'Abr.'
+  unsettled_menu: Abrechnen
+  unsettled_orders: Ausst√§ndige Abrechnungen
+  
+  make_settlement: Abrechnen!
 
   waiterpad: Bestellblock
 
@@ -105,10 +138,10 @@ de:
   menucard: Aktive Artikel
   price: Preis
 
-  format_for_online_backboard: "Formatierung f¸r Online-Tafel"
+  format_for_online_backboard: "Formatierung f√ºr Online-Tafel"
   division: Trennlinie
   sort_id: Sortierreihenfolge
-  add_ingredient: Zutat hinzuf¸gen
+  add_ingredient: Zutat hinzuf√ºgen
 
   sum: Summe
   gr: 'br.'
@@ -155,3 +188,42 @@ de:
     other: Es sind {{count}} Speisen aktiv
 
   remove_all_foods_from_menucard: Alle im Moment aktiven Speisen inaktivieren
+  
+  categories:
+    new:
+      aperitif: Aperitif
+      sidedish: Beilage
+      starter: Vorspeise
+      maindish: Hauptspeise
+      childrendish: Kindermen√º
+      dessert: Nachspeise
+      digestif: Digestif
+      beer: Bier
+      nonalcoholics: Alkoholfrei
+      cigarette: Zigaretten
+      rosewineglass: Ros√©wein
+      redwineglass: Rotwein
+      whitewineglass: Wei√üwein
+      rosewinebottle: Flasche Ros√©
+      redwinebottle: Flasche Rot
+      whitewinebottle: Flasche Wei√ü
+      sparkling: Sekt
+      coffee: Kaffee
+      teapot: Teekanne
+      tea: Tee
+      blank: Leer
+      
+      violet: Violett
+      orange: Orange
+      pink: Pink
+      green: Gr√ºn
+      blue: Blau
+      blank: Blank
+  users:
+    new:
+      violet: Violett
+      orange: Orange
+      pink: Pink
+      green: Gr√ºn
+      blue: Blau
+      blank: Blank

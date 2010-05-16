@@ -1,4 +1,4 @@
-h1, h2, h6, #login_logout, .metanavi {
+h1, h6, #login_logout, .metanavi, div#admin, div#buttons {
   display: none; }
 
 table {
@@ -32,11 +32,44 @@ table.waiterpad {
     height: 40pt;
     background-color: lightgray; }
 
-#flash_notice {
-  color: green; }
+table.printed_invoice {
+  border: 0.1pt solid black; }
+  table.printed_invoice td, table.printed_invoice th {
+    border: 0.1pt solid black;
+    padding: 3pt; }
+  table.printed_invoice .one {
+    width: 30pt;
+    text-align: center; }
+  table.printed_invoice .two {
+    width: 200pt;
+    text-align: left; }
+  table.printed_invoice .three {
+    width: 80pt;
+    text-align: right; }
+  table.printed_invoice .four {
+    width: 30pt;
+    text-align: center; }
+  table.printed_invoice .five {
+    width: 80pt;
+    text-align: right; }
 
-#flash_notice {
-  color: orange; }
-
-#flash_error {
-  color: red; }
+table.printed_taxes {
+  border: 0.1pt solid black; }
+  table.printed_taxes td, table.printed_taxes th {
+    border: 0.1pt solid black;
+    padding: 3pt; }
+  table.printed_taxes .one {
+    width: 30pt;
+    text-align: center; }
+  table.printed_taxes .two {
+    width: 30pt;
+    text-align: left; }
+  table.printed_taxes .three {
+    width: 30pt;
+    text-align: right; }
+  table.printed_taxes .four {
+    width: 30pt;
+    text-align: center; }
+  table.printed_taxes .five {
+    width: 30pt;
+    text-align: right; }

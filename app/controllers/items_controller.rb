@@ -31,14 +31,13 @@ class ItemsController < ApplicationController
           ui.update_attribute(:printed, true)
           next if ui.article.category.tax.percent != 10  # This is ugly but works for now
 
+          quantityname = ui.quantity ? ui.quantity.name : ''
+
           output +=
 
           "\e!\x38" +  # doube tall, double wide, bold
           "%u %-17.17s\n" % [ui.count, ui.article.name] +
-
-          "\e!\x08" +  # Font A, emphasized
-          "%-42.42s\n" % [ui.article.description] +
-
+          "  %-17.17s\n" % [quantityname] +
           "\n\n\n"
         end
 

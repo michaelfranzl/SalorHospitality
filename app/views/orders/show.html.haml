@@ -1,33 +1,81 @@
-%h3== #{ t :order, :count => 1} ##{@order.id}
-%p= l @order.created_at, :format => :long
-%p== #{ t :served_by } #{ @order.user.login }
-%table{ :class => 'order' }
+%h2== #{ t :invoice } ##{ @order.id }
+
+%div#buttons
+  %a{ :href => "#{order_path(@order)}.bon", :title => 'Drucken (Bon)' }
+    %img{ :src => '/images/button_print.png' }
+
+  %a{ :href => '#', :onclick => "window.print()", :title => 'Drucken (Geschäftsrechnung)' }
+    %img{ :src => '/images/button_print2.png' }
+  
+  %a{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
+    %img{ :src => '/images/button_back.png' }
+  
+  %a{ :href => "/orders/storno/#{@order.id}", :title => 'Storno' }
+    %img{ :src => '/images/button_storno.png' }
+  
+  %a{ :href => order_path(@previous_order), :title => 'Nächste Bestellung' }
+    %img{ :src => '/images/button_previous.png' }
+  
+  %a{ :href => order_path(@next_order), :title => 'Vorige Bestellung' }
+    %img{ :src => '/images/button_next.png' }
+  
+%h3= t "clients.#{MyGlobals.client}.invoice_title"
+
+%p
+  = t "clients.#{MyGlobals.client}.address"
+  %br
+  = t "clients.#{MyGlobals.client}.tax_number"
+
+%p== #{ t :served_by } #{ @order.user.title } auf #{ @order.table.name }
+%p== Bestellung am #{l @order.created_at, :format => :long}
+
+%table.printed_invoice
   %tr
-    %th{ :style => 'width:30px; text-align:right' }
-    %th
-    %th{ :style => 'width:90px' }
-    %th{ :style => 'width:90px' }
+    %th.one= t :tax
+    %th.two= t :item
+    %th.three= t :single
+    %th.four= t :count
+    %th.five= t :sum
+  - sum_taxes = Array.new(Tax.count, 0)
   - subtotal = 0
   - @order.items.each do |item|
     - c = item.count
-    - p = item.article.price
+    - p = item.quantity_id ? item.quantity.price : item.article.price
+    - p = -p if item.storno_status == 2
     - sum = 0
-    - if !item.free
-      - sum = c * p
-      - subtotal += sum
+    - sum = c * p
+    - subtotal += sum
+    - tax_id = item.article.category.tax.id
+    - sum_taxes[tax_id-1] += sum
     %tr
-      %td= c
-      %td= item.article.name
-      %td{ :style => 'text-align:right' }= number_to_currency p
-      %td{ :style => 'text-align:right' }= number_to_currency sum.zero? ? "#{t :free}" : sum
+      %td.one= "%c" % [tax_id+64]
+      %td.two= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
+      %td.three= number_to_currency p
+      %td.four= c
+      %td.five= number_to_currency sum
   %tr
-    %td{ :colspan => '3'}
-    %td{ :style => 'text-align:right'}
-      %b= number_to_currency subtotal
+    %td{ :colspan => 4 }
+    %td.five= number_to_currency subtotal
 
-%a{ :href => "#{order_path(@order)}.bon" }
-  %div{ :class => "item_category MainDishes" }Drucken
-%a{ :href => orders_path }
-  %div{ :class => "item_category MainDishes" }Weiter
+%p Liste aller Steuern:
 
-= link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
+%table.printed_taxes
+  %tr
+    %th.one= t :tax
+    %th.two Prozentsatz
+    %th.three Netto
+    %th.four USt.
+    %th.five Brutto
+  - Tax.all.each do |tax|
+    - tax_id = tax.id - 1
+    - next if sum_taxes[tax_id] == 0
+    - fact = tax.percent/100.00
+    - net = sum_taxes[tax_id]/(1.00+fact)
+    - gro = sum_taxes[tax_id]
+    - vat = gro-net
+    %tr
+      %td.one= "%c:" % [tax.id+64]
+      %td.two= number_to_percentage tax.percent
+      %td.three= number_to_currency net
+      %td.four= number_to_currency vat
+      %td.five= number_to_currency gro

@@ -1,0 +1,34 @@
+%table.detailed_list
+  %tr
+    %th{ :style => 'width:200px' }= t :item
+    %th{ :style => 'width:30px' }= t :count
+    %th{ :style => 'width:50px' }= t :single
+    %th{ :style => 'width:80px' }= t :cost_center
+    %th{ :style => 'width:50px' }= t :total
+    %th{ :style => 'width:80px' }= t :order_sums
+  - total = 0
+  - orders.each do |so|
+    %tr
+    %tr
+      %td.order_begin{ :colspan => 6 }== #{ link_to("#{ t :order, :count => 1} ##{so.id}", order_path(so)) } auf #{ so.table.name } am #{ l so.created_at, :format => :datetime_iso } #{ link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3 }
+
+      - subtotal = 0
+      - so.items.each do |item|
+        - c = item.count
+        - p = item.quantity_id ? item.quantity.price : item.article.price
+        - p = -p if item.storno_status == 2
+        - sum = 0
+        - sum = c * p
+        - subtotal += sum
+        - total += sum
+        %tr
+          %td= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
+          %td.number= c
+          %td.number= number_to_currency p
+          %td= item.cost_center.name
+          %td.colsum= number_to_currency sum
+    %tr
+      %td.subtotal{ :colspan => 6 }= number_to_currency subtotal
+        
+  %tr.total
+    %td.total{ :colspan => 6 }= number_to_currency total

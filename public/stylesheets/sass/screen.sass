@@ -1,145 +1,172 @@
-!link_color = #700
+!link_color = white
 !error_text = #C00
 !lightgray = #EEE
 !darkgray = #999
-!middlegray = #BBB
+!middlegray = #444
+!background = #333
+!adminbackground = #222
 
-//global settings
+//global settings==============================
 
 body
-  :font-family sans
-  :padding 20px
-  :margin 0
-  :padding 10px
-  :font-size 120%
+  :font-family Trebuchet MS
+  :color #CCC
+  :padding 0px
+  :margin 0px 30px
+  :font-size 85%
+  :background-color #0e1d25
+  :background-image url('/images/bg.png')
+  :background-repeat repeat-x
 
+img
+  :border none
+  
 h1
   :margin 0
 
-h6
-  :color green
-  :margin 10px 0 0 0
-  :font-style italic
+h2
+  :text-transform uppercase
+  :margin 0px
 
+h3
+  :text-transform uppercase
+  :margin-bottom 0px
 a
   :color = !link_color
 
-table
-  :font-size small
-
-.textleft
-  :text-align left
-.textright
-  :text-align right
-
-//main layout
-
-#content
-  :float left
-  :margin-top 10px
-
-.sidebar
-  :float right
-  :background-color = !lightgray
-  :margin-left 20px
-  :width 150px
-  :padding 20px
-
-#login_logout
-  :text-align right
-  :font-size small
-
-#sidebar a,
-.metanavi a
-  :text-decoration none
-  &:hover
-    :text-decoration underline
-
-.fieldWithErrors
-  :display inline
-  label
-    :color = !error_text
-
-.errorExplanation
-  :font-size small
-  :color = !error_text
-  h2
-    :font-size 110%
-
-td
-  //:text-align left
-  :vertical-align top
-
 fieldset
   :border-style outset
-  :background-color = !lightgray
-
-fieldset.new_foods
-  :width 280px
-
-fieldset.articles
-  :width 280px
-  :font-size small
 
 legend
   :font
     :style italic
     :weight bold
-    :size small
-
-table
-  :border-spacing 0
-
-.metanavi
-  :background-color = !lightgray
-  :padding 5px
-  a
-    :margin 5px
 
 label
-  :font-size small
   :margin-right 10px
 
 th
   :text-align left
 
-.category
-  :background-color = !lightgray
+
+//main layout ==================================
+
+div#main
+  :border 3px solid white
+  :-moz-border-radius 5px
+  :padding 20px
+  :background-color #0e1d25
+  :min-height 560px
+  :width 930px
+  :margin auto
+
+div.metaelements
+  :float right
+
+div#header
+  :height 130px
+  :width 970px
+  :margin auto
+  
+div#admin
+  :border 3px solid white
+  :border-top none
+  :margin-left 130px
+  :position absolute
+  :width 835px
+  :-moz-border-radius 5px
+  
+div#functions
+  :float right
+  :width 4%
+  :vertical-align top
+  :margin-right 10px
+  a, input
+    :cursor pointer
+    :margin-bottom 10px
+
+div#footer
+  :height 50px
+  :clear both
+
+div#functions a
+  :cursor pointer
+
+div#footer a
+  :float right
+  :margin-right 0px
+  :cursor pointer
+
+div#login
+  :margin auto
+  :width 180px
+  :margin-top 130px
+  label
+    :margin-bottom -10px
+    :font-weight bold
+  
+//normal style definitions =============================
+
+div.fieldWithErrors
+  :border 6px solid red
+  :-moz-border-radius 3px
+      
+div.adminlinks
+  :padding 10px
+  a
+    :display inline-block
+    :height 15px
+    :margin-left 1px
+    :margin-bottom 5px
+    :background-color white
+    :-moz-border-radius 3px
+    :color black
+    :text-decoration none
+    :text-transform uppercase
+    :font-size 70%
+    :padding 4px
+    :border 1px solid #666
+  a:hover
+    :background-color = !background
+    :color white
+
+
+a.links
+  :display inline-block
+  :height 15px
+  :margin-left 1px
+  :margin-bottom 5px
+  :background-color white
+  :-moz-border-radius 3px
+  :color black
+  :text-decoration none
+  :text-transform uppercase
+  :font-size 70%
+  :padding 4px
+  :border 1px solid #666
+a.links:hover
+  :background-color = !background
+  :color white
+
 
 table.settlements
-  :font-size 70%
+  :border-collapse collapse
   td
     :width 30px
     :text-align right
-    :background-color = !lightgray
-    :border
-      :right 3px solid white
-    :border
-      :bottom 1px solid white
-  .sum
-    :background-color = !middlegray
-    :border-top 2px solid
+  .subtotal
     :font
       :weight bold
     :text-align right
   .colsum
-    :background-color = !middlegray
     :font-style italic
+  .total td
+    :border-top 1px solid darkgrey
+    :font-weight bold
 
-
-  .br
-    :border
-      :right 3px solid
-        :color = !darkgray
-  .bb
-    :border
-      :bottom 3px solid
-        :color = !darkgray
 
   th
-    :background-color = !lightgray
-    :border-right 3px solid white
-    :border-bottom 3px solid white
+    :border 1px solid !darkgray
     :text-align center
 
 table.waiterpad
@@ -181,11 +208,18 @@ div.table
   :padding 0px 0px 0px 0px
   :margin 0
   :padding 9px
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 6px
+  
+
+
 
 div.bigtablename
   :text-align center
-  :font-size 150%
-  :margin 10px
+  :font-size 110%
+  :font-weight bold
+  :text-transform uppercase
+  :height 100%
 
 div.smalltablename
   :background-color #FCC
@@ -197,35 +231,21 @@ div.smalltablename
 span.orderid
   :font-size 150%
 
-.occupied
-  :background-color = !lightgray
+div.occupied
+  :-moz-box-shadow 0px 0px 8px #35586a
+  
+div.vacant
+  :background-color #0d161a
+  
+div.vacant:hover
+  :background-color #192932
 
-.vacant
-  :background-color = !middlegray
 
-table#items
-  th
-    :background-color #f5f5f5
-  th.count
-    :width 90px
-  th.price
-    :width 90px
-  th.article
-    :width 500px
-  th.checkbox
-    :width 80px
-  td
-    :background-color #f5f5f5
-    :padding 3px
-    :border-top 2px solid white
-    select
-      :font-size 150%
 
 span.small
   :font-size 90%
 
 ul#search_results
-  :font-size small
   :list-style-type none
   :padding 0
   :margin 0
@@ -237,14 +257,7 @@ ul#search_results
 ul#articles_search_results
   :padding 0px
 
-ul#menucard_list,
-ul#waiterpad_list,
-ul#blackboard_list
-  :padding 0
-  :list-style-type none
-  ul
-    :list-style-type none
-    :padding-left 20px
+
 
 #restaurant_plan
   :width 1000px
@@ -254,37 +267,204 @@ ul#blackboard_list
   :top 200px
   :left 10px
 
-select#order_user_id
-  :font-size 110%
 
-div.item_category
-  :float left
-  :width 75px
-  :height 35px
-  :margin 3px
-  :border 1px solid black
-  :background-color #fff1f1
-  :font-size 70%
-  :text-align center
-  :padding 14px 5px 0 5px
+
+
+
+a#toggle_admin_interface
+  :cursor pointer
+  :position absolute
+
+
 
 div.clear
   :clear both
 
-input.create_edit_order
-  :width 80px
-  :height 45px
-  :background-color #FFAAAA
-  :border 1px solid black
+
 
 select
   :border 1px solid #AAAAAA
 
-div.flash_notice
+div.flash
   :font-size small
   :font-style italic
+  :float right
+div.flash_notice
   :color green
 div.flash_error
-  :font-size small
-  :font-style italic
   :color red
+
+
+//helpers==============================
+
+.textleft
+  :text-align left
+
+.textright
+  :text-align right
+
+//RAILS styles==============================
+
+.fieldWithErrors
+  :display inline
+  label
+    :color = !error_text
+
+.errorExplanation
+  :font-size small
+  :color = !error_text
+  h2
+    :font-size 110%
+
+
+
+div.invoice
+  :background-color white
+  :float left
+  :width 320px
+  :font-family Monospace
+  :font-size 150%
+  :color #333
+  :padding 30px 10px
+  :margin 10px
+  :letter-spacing -1.5px
+  form
+    :min-height 250px
+  table
+    :border-collapse collapse
+    :margin-bottom 20px
+
+
+tr.simple_invoice
+  :cursor pointer
+  td
+    :padding 6px 0
+  
+tr.simple_invoice:hover
+  :background-color #EEE
+
+
+input#print_invoice,
+input#split_invoice,
+input#storno_item,
+a#edit_invoice img,
+a#go_back img
+  :vertical-align middle
+
+
+  
+select#cost_center_for_invoice
+  :vertical-align middle
+  :font-size 170%
+  :width 160px
+  
+table.detailed_list
+  :margin 20px
+  :border-collapse collapse
+  :color #BBB
+  th
+    :border 1px solid gray
+    :padding 5px 10px
+    :color white
+  td
+    :vertical-align top
+    :border-right 1px solid gray
+    :padding 0px 10px
+  td.order_begin
+    :padding 20px 0 5px 10px
+    :font-size 120%
+    :border none
+  td.colsum
+    :border none
+    :text-align right
+  td.number
+    :text-align right
+  td.subtotal
+    :font-size 120%
+    :padding-bottom 20px
+    :text-align right
+    :color white
+    :border none
+  td.total
+    :font-size 150%
+    :color white
+    :font-weight bold
+    :text-align right
+    :border none
+    
+table.article
+  td
+    :vertical-align top
+    
+table.articles
+  :border-spacing 10px
+  td.receiving
+    :background-color #304345
+  td#drop_remove
+    :background-color #304345
+    li
+      :margin-top 20px
+    span.info
+      :margin-right 10px
+    span.description
+    
+  td
+    :vertical-align top
+    :background-color #243239
+    :border 1px solid #7e868a
+    :padding 10px
+    a
+      :text-decoration none
+    li
+      :list-style-type none
+    ul
+      :list-style-type none
+      :padding-left 10px
+    span.scope_title
+      :text-transform uppercase
+      :font-weight bold
+    a.scopelink
+      :text-decoration underline
+      :float right
+    p.category_title
+      :padding-top 25px
+      :margin 0px
+      :font-weight bold
+      :font-style italic
+      
+table.article_new
+  :background-color #243239
+  :border 1px solid #7e868a
+  :border-spacing 10px
+  td.labels
+    :width 125px
+  td.input_fields
+    :width 280px
+  td.spinner
+    :width 20px
+  td#articles_search_results
+    :width 300px
+  td
+    :vertical-align top
+    a
+      :text-decoration none
+    li
+      :list-style-type none
+      :padding-top 5px
+    ul
+      :list-style-type none
+      :padding-left 0px
+    span.header_search_results
+      :text-transform uppercase
+      :font-weight bold
+
+table#quantities_new
+  :background-color #243239
+  :border 1px solid #7e868a
+  :border-collapse collapse
+  td
+    :padding 10px
+    
+img#logo
+  :float right
+  :margin-top 50px

@@ -1,0 +1,238 @@
+// =========== ORDERS VIEW ===================
+!buttoncolor = #27343b
+!itembgcolor = #556
+!articlelistbgcolor = #3a474d
+
+
+
+div#categories
+  :display inline-block
+  :width 28%
+  :vertical-align top
+
+div#articles
+  :display inline-block
+  :width 23%
+  :vertical-align top
+  
+div#quantities
+  :display inline-block
+  :width 14%
+  :vertical-align top
+  
+div#items
+  :display inline-block
+  :width 27%
+  :border 1px solid !buttoncolor
+  :vertical-align top
+
+div.handle_for_table
+  :width 50px
+  :height 20px
+  :margin -9px auto 0px auto
+  :background-image url(/images/drag_handle.png)
+
+table#articlestable
+  :border-spacing 1px
+  :width 100%
+
+table#quantitiestable
+  :border-spacing 1px
+  :width 100%
+
+table#itemstable
+  :border-spacing 1px
+  :width 100%
+  
+
+  
+tr.item
+  :height 41px
+
+#save_order,
+#finish_order
+  :margin 5px 0
+  :cursor pointer
+
+div.category,
+td.article,
+td.quantity
+  :margin 1px 0px 0px 1px
+  :background-color #27343b
+  :background-repeat no-repeat
+  :background-position center center
+  :cursor pointer
+
+div.category,
+td.article,
+td.quantity,
+td.item_count,
+td.item_plusminus,
+td.item_label,
+div.ordersum_container
+  :border-top 2px solid #555
+  :border-left 2px solid #555
+  :border-right 2px solid #222
+  :border-bottom 2px solid #222
+
+
+div.category
+  :float left
+  :width 80px
+  :height 80px
+  :overflow hidden
+
+
+div.category_label
+  :width 65px
+  :height 65px
+  :font-size 9px
+  :text-transform uppercase
+  :position relative
+  span
+    :position absolute
+    :top 66px
+    :left 2px
+
+
+
+td.article,
+td.quantity
+  :background-color = !buttoncolor
+  :height 30px
+  :vertical-align middle
+  :padding-left 10px
+
+
+
+td.item_count
+  :cursor pointer
+  :width 30px
+  :background-color = #3a474d
+  :text-align center
+
+td.item_plusminus
+  :width 30px
+  :cursor pointer
+  :background-color = #3a474d
+  :text-align center
+
+td.item_label
+  :cursor pointer
+  :background-color = !articlelistbgcolor
+  :min-height 30px
+  
+  
+select#order_user_id
+  :font-size 160%
+
+.order_info
+  :float right
+  :margin-top -63px
+  :margin-right 340px
+  :width 150px
+  :text-align right
+
+fieldset.new_foods
+  :width 280px
+
+fieldset.articles
+  :width 280px
+
+div.waiter
+  :float right
+  :margin-top -61px
+  :margin-right 190px
+
+
+div.button
+  :background-color white
+  :-moz-border-radius 2px
+  :width 120px
+  :height 26px
+  a
+    :color black
+    :text-transform uppercase
+    :text-decoration none
+    
+input#order_sum
+  :background-color transparent
+  :color white
+  :border none
+  :font-size 110%
+  :width 150px
+  :text-align right
+  
+div.ordersum_container
+  :background-color #556067
+  :height 30px
+  :font-size 130%
+  :padding-left 20px
+
+table#unsettled_orders
+  :margin 20px
+  :border-spacing 10px
+  a.make_settlement
+    :float right
+    :text-decoration underline
+  span.username
+    :text-transform uppercase
+    :font-weight bold
+  td
+    :vertical-align top
+    :border 1px solid gray
+    :padding 10px
+    :background-color #243239
+    :padding 10px
+    :width 230px
+    a
+      :text-decoration none
+
+img.more
+  :float right
+  :margin-top 2px
+  
+  
+table.printed_invoice
+  :border 2px solid #7e868a
+  :border-collapse collapse
+  td, th
+    :border 1px solid #7e868a
+    :padding 3px
+  .one
+    :width 30px
+    :text-align center
+  .two
+    :width 200px
+    :text-align left
+  .three
+    :width 80px
+    :text-align right
+  .four
+    :width 30px
+    :text-align center
+  .five
+    :width 80px
+    :text-align right
+    
+table.printed_taxes
+  :border 2px solid #7e868a
+  :border-collapse collapse
+  td, th
+    :border 1px solid #7e868a
+    :padding 3px
+  .one
+    :width 30px
+    :text-align center
+  .two
+    :width 30px
+    :text-align left
+  .three
+    :width 60px
+    :text-align right
+  .four
+    :width 60px
+    :text-align center
+  .five
+    :width 60px
+    :text-align right

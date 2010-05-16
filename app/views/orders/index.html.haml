@@ -1,3 +1,8 @@
 %h2= t :orders_menu
-%div{ :id => 'restaurant_plan', :style => "background-image: url('images/plan-#{ MyGlobals::client}.jpg');" }
-  = render @tables
+%div#functions
+  %a#print_kitchenlist{ :href => '/items/print.bon', :title => 'Küchenliste' }
+    %img{ :src => '/images/button_kitchenlist.png' }
+  %a{ :href => order_path(@last_finished_order.id), :title => 'Letzte abgeschlossene Bestellung' }
+    %img{ :src => '/images/button_list.png' }
+    
+= render @tables

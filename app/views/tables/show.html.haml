@@ -1,6 +1,17 @@
 %h2= @table.name
-= link_to((t :new_order), new_table_order_path(@table))
-%h3= t :open_orders
-- @unfinished_orders.each do |uo|
-  = link_to "##{uo.id}", edit_table_order_path(@table, uo)
-  %br
+
+%div#functions
+  %a{ :href => orders_path, :title => 'Bestellungen' }
+    %img{ :src => '/images/button_tables.png' }
+    
+  %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => 'Hinunterscrollen' }
+    %img{ :src => '/images/button_scrolldown.png' }
+      
+%div#invoices
+  - @unfinished_orders.each do |uo|
+    %div.invoice
+      = render :partial => 'orders/invoice_form', :locals => { :order => uo }
+      
+%div#footer
+  %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => 'Hinaufscrollen' }
+    %img{ :src => '/images/button_scrollup.png' }

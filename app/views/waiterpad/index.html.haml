@@ -14,8 +14,8 @@
 
     - i = 0
     - @categories.each do |ca|
-      - if !ca.articles_in_waiterpad.size.zero?
-        - ca.articles_in_waiterpad.each do |ar|
+      - if !ca.articles.find_in_waiterpad.size.zero?
+        - ca.articles.find_in_waiterpad.each do |ar|
           - i += 1
           %tr{ :valign => 'top' }
             %td.borderright.textleft= ar.name

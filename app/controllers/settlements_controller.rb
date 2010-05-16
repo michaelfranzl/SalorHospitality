@@ -1,22 +1,17 @@
 class SettlementsController < ApplicationController
   def index
     @from, @to = assign_from_to(params)
-    @settlements = Settlement.find(:all, :conditions => { :created_at => (@from - 1.day)..@to })
+    @settlements = Settlement.find(:all, :conditions => { :created_at => (@from)..@to })
     @taxes = Tax.all
-
-    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
-    unsettled_userIDs = Array.new
-    @unsettled_orders.each do |uo|
-      unsettled_userIDs << uo.user_id
-    end
-    unsettled_userIDs.uniq!
-    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
+    
+    @cost_centers = CostCenter.all
+    @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
 
   def show
-    @settlement = Settlement.find(params[:id])
-    @orders = Order.find_all_by_settlement_id(@settlement.id)
-    render :new
+    @settlement = Settlement.find params[:id]
+    params[:cost_center_id] ||= CostCenter.first.id
+    @selected_cost_center = CostCenter.find(params[:cost_center_id])
   end
 
   def new
@@ -26,9 +21,8 @@ class SettlementsController < ApplicationController
   end
 
   def edit
-    @settlement = Settlement.find(params[:id])
-    @orders = Order.find_all_by_settlement_id(@settlement.id)
-    render :new
+    @settlement = Settlement.find params[:id]
+    @orders = Order.find_all_by_settlement_id @settlement.id
   end
 
   def update
@@ -39,6 +33,7 @@ class SettlementsController < ApplicationController
 
   def create
     @settlement = Settlement.new(params[:settlement])
+    
     @settlement.user_id = params[:user_id]
     @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
     if @settlement.save
@@ -46,12 +41,12 @@ class SettlementsController < ApplicationController
         so.settlement_id = @settlement.id
         so.save
       end
-      redirect_to settlements_path
+      redirect_to '/orders/unsettled'
     else
       render :new
     end
   end
-
+  
   private
 
     def assign_from_to(p)

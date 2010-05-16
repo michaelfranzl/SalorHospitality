@@ -8,7 +8,7 @@ class WaiterpadController < ApplicationController
     @waiterpad = {}
     Category.all.each do |category|
       articles = {}
-      category.articles_in_menucard.each do |article|
+      category.articles.find_in_menucard.each do |article|
         articles = articles.merge({ "#{article.name} | #{article.description}" => article.id })
       end
       @waiterpad = @waiterpad.merge({ category.name => articles })

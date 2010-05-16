@@ -1,20 +1,16 @@
 %h2= t :cost_centers_menu
 
+%p= link_to((t :new), new_cost_center_path) if @current_user.role >= 2
+
 %table
   %tr
-    %th{ :style => 'width:50px' }
-    %th{ :style => 'width:50px' }
+    %th{ :style => 'width:150px' }
     %th{ :style => 'width:100px' }
     %th{ :style => 'width:200px' }
     %th{ :style => 'width:100px' }
-    %th{ :style => 'width:100px' }
   - @cost_centers.each do |cc|
     %tr
-      %td= cc.id
-      %td= cc.active
-      %td= cc.name
+      %td= @current_user.role >= 2 ? link_to(cc.name, edit_cost_center_path(cc)) : cc.name
+      %td= cc.active ? 'aktiv' : 'inaktiv'
       %td= cc.description
-      %td= link_to((t :edit), edit_cost_center_path(cc)) if @current_user.role >= 2
       %td= link_to((t :delete), cc, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
-
-%p= link_to((t :new), new_cost_center_path) if @current_user.role >= 2

@@ -2,15 +2,23 @@ class OrdersController < ApplicationController
 
   def index
     @tables = Table.all
+    @last_finished_order = Order.find_all_by_finished(true).last
   end
 
   def show
-    @order = Order.find(params[:id])
+    id = params[:id].to_i
+    from = id - 1
+    to = id + 1
+    order_range = Order.find(:all, :conditions => { :id => from..to })
+    @previous_order = order_range[0]
+    @previous_order = @order if @previous_order.nil?
+    @order = order_range[1]
+    @next_order = order_range[2]
+    @next_order = @order if @next_order.nil?
     respond_to do |wants|
       wants.html
       wants.bon {
         render :text => generate_escpos_invoice(@order)
-        #render :text => generate_escpos_test(@order)
       }
     end
   end
@@ -20,6 +28,8 @@ class OrdersController < ApplicationController
     @categories = Category.find(:all, :order => :sort_order)
     @order.table_id = params[:table_id]
     @order.user_id = session[:last_user_id]
+    @table = Table.find(@order.table_id)
+    @username = @order.user_id ? User.find(@order.user_id) : ''
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
   end
 
@@ -37,23 +47,43 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    redirect_to orders_path and return if @order.items.size.zero?
-    @order.finished = params.has_key?('finish_order') ? true : false
-    @order.save ? process_order(@order) : render(:new)
+    invoice = params.has_key?('invoice.x')
+    save = params.has_key?('save.x')
+    @order.save ? process_order(@order, save, invoice, false, false, false) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.update_attribute( :sum, calculate_order_sum(@order) )
-    params['order']['items_attributes'].each do |item|
-      item[1]['_delete'] = 1 if item[1]['count'] == '0' or item[1]['article_id'] == ''
+    save = params.has_key?('save.x')
+    invoice = params.has_key?('invoice.x')
+    print = params.has_key?('print.x')
+    split = params.has_key?('split.x')
+    storno = params.has_key?('storno.x')
+    if @order.update_attributes(params[:order])
+      process_order(@order, save, invoice, print, split, storno)
+      @order.update_attribute( :sum, calculate_order_sum(@order) )
+    else
+      render(:new)
     end
-    @order.finished = true if params.has_key?('finish_order')
-    @order.update_attributes(params[:order]) ? process_order(@order) : render(:new)
   end
 
+  def storno
+    @order = Order.find(params[:id])
+  end
+
+  def unsettled
+    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
+    unsettled_userIDs = Array.new
+    @unsettled_orders.each do |uo|
+      unsettled_userIDs << uo.user_id
+    end
+    unsettled_userIDs.uniq!
+    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
+    flash[:notice] = 'Es gibt keine ausst√§ndigen Abrechnungen' if @unsettled_users.empty?
+  end
+  
   def destroy
     @order = Order.find(params[:id])
     flash[:notice] = "Die Bestellung Nr. \"#{ @order.id }\" wurde erfolgreich geloescht."
@@ -72,62 +102,104 @@ class OrdersController < ApplicationController
       end
     end
 
+    def process_order(order, save, invoice, print, split, storno)
+      order.items.each do |item|
+        item.delete if item.count.zero?
+      end
+      order.delete and redirect_to orders_path and return if order.items.size.zero?
+      items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
+      items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
+      make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
+      make_storno(order, items_for_storno) if !items_for_storno.empty?
+
+      if save
+        redirect_to orders_path
+      elsif invoice
+        redirect_to table_path(order.table)
+      elsif print
+        @order.update_attribute(:finished, true) and reduce_stocks @order
+        redirect_to "#{order_path(order)}.bon"
+      elsif split
+        redirect_to table_path order.table 
+      elsif storno
+        redirect_to "/orders/storno/#{order.id}"
+      end
+    end
+
     def make_partial_order(order, items_for_partial_order)
       partial_order = order.clone
-      partial_order.finished = false
       if partial_order.save
         items_for_partial_order.each do |item|
           item.update_attribute :order_id, partial_order.id
+          item.update_attribute :partial_order, false
+          item.update_attribute :cost_center_id, params[:cost_center_id]
         end
+        order = Order.find(params[:id])
+        order.delete if order.items.empty?
       else
         flash[:error] = 'Partial Order could not be saved.'
       end
-      Item.update_all :partial_order => false
-      partial_order
+      return partial_order
     end
-
-    def process_order(order)
-      items_for_partial_order = Item.find_all_by_partial_order(true)
-      partial_order = make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
-      if order.finished
-        reduce_stocks order
-        redirect_to order_path order
-      else
-        partial_order ? redirect_to(edit_order_path(partial_order)) : redirect_to(orders_path)
+    
+    # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
+    #
+    def make_storno(order, items_for_storno)
+      items_for_storno.each do |item|
+        next if item.storno_status == 3 # only one storno allowed per item
+        storno_item = item.clone
+        storno_item.save
+        storno_item.update_attribute :storno_status, 2 # tis is a storno clone
+        item.update_attribute :storno_status, 3 # this is a storno original
       end
     end
-
+    
+    
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
-        next if !item.id
         c = item.count
-        p = item.article.price
-        if !item.free
-          sum = c * p
-          subtotal += c * p
-        end
+        p = item.quantity_id ? item.quantity.price : item.article.price
+        sum = c * p
+        subtotal += c * p
       end
       return subtotal
     end
 
     
     def generate_escpos_invoice(order)
+    
+      invoice_title = t("clients.#{MyGlobals.client}.invoice_title")
+      invoice_title = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_title)    
+    
+    
+      invoice_subtitle = t("clients.#{MyGlobals.client}.invoice_subtitle")
+      invoice_subtitle = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle)
+      
+      invoice_address = t("clients.#{MyGlobals.client}.address")
+      invoice_address = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_address)
+      
+      invoice_subtitle1 = t("clients.#{MyGlobals.client}.invoice_subtitle1")
+      invoice_subtitle1 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle1)
+
+      invoice_subtitle2 = t("clients.#{MyGlobals.client}.invoice_subtitle2")
+      invoice_subtitle2 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle2)
+      
       header =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      t("clients.#{MyGlobals.client}.invoice_title") + "\n" +
+      invoice_title + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle") + "\n\n" +
-      "\n" + t("clients.#{MyGlobals.client}.address") + "\n\n" +
+      "\n" + invoice_subtitle + "\n\n" +
+      "\n" + invoice_address + "\n\n" +
       t("clients.#{MyGlobals.client}.tax_number") + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
-      "#{ t :served_by } #{ order.user.title } auf Tisch Nr. #{ order.table.name }\n" +
+      "#{ t :served_by } #{ order.user.title } auf #{ order.table.name }\n" +
       "Bestellung Nr. #{order.id} am #{l order.created_at, :format => :long}\n\n" +
 
       "\e!\x00" +  # Font A
@@ -138,16 +210,16 @@ class OrdersController < ApplicationController
       list_of_items = ''
       order.items.each do |item|
         c = item.count
-        p = item.article.price
+        p = item.quantity_id ? item.quantity.price : item.article.price
+        p = -p if item.storno_status == 2
         sum = 0
-        if !item.free
-          sum = c * p
-          subtotal += sum
-        end
+        sum = c * p
+        subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
-        itemname = Iconv.conv('ISO-8859-15','UTF-8',item.article.name)
-        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,itemname,p,c,sum]
+        label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
+        label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
+        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,c,sum]
       end
 
       sum =
@@ -163,7 +235,7 @@ class OrdersController < ApplicationController
       list_of_taxes = ''
       Tax.all.each do |tax|
         tax_id = tax.id - 1
-        next if sum_taxes[tax_id]==0
+        next if sum_taxes[tax_id] == 0
         fact = tax.percent/100.00
         net = sum_taxes[tax_id]/(1.00+fact)
         gro = sum_taxes[tax_id]
@@ -175,27 +247,27 @@ class OrdersController < ApplicationController
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle1") + "\n" +
+      "\n" + invoice_subtitle1 + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + t("clients.#{MyGlobals.client}.invoice_subtitle2") + "\n" +
+      "\n" + invoice_subtitle2 + "\n" +
       "\e!\x88" + # underline, emphasized
       t("clients.#{MyGlobals.client}.website") + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
 
-      output.gsub!(/\xE4/,"\x84") #‰
-      output.gsub!(/\xFC/,"\x81") #¸
-      output.gsub!(/\xF6/,"\x94") #ˆ
-      output.gsub!(/\xC4/,"\x8E") #ƒ
-      output.gsub!(/\xDC/,"\x9A") #‹
-      output.gsub!(/\xD6/,"\x99") #÷
-      output.gsub!(/\xDF/,"\xE1") #ﬂ
-      output.gsub!(/\xE9/,"\x82") #È
-      output.gsub!(/\xE8/,"\x7A") #Ë
-      output.gsub!(/\xFA/,"\xA3") #˙
-      output.gsub!(/\xF9/,"\x97") #˘
-      output.gsub!(/\xC9/,"\x90") #…
+      output.gsub!(/\xE4/,"\x84") #√§
+      output.gsub!(/\xFC/,"\x81") #√º
+      output.gsub!(/\xF6/,"\x94") #√∂
+      output.gsub!(/\xC4/,"\x8E") #√Ñ
+      output.gsub!(/\xDC/,"\x9A") #√ú
+      output.gsub!(/\xD6/,"\x99") #√ñ
+      output.gsub!(/\xDF/,"\xE1") #√ü
+      output.gsub!(/\xE9/,"\x82") #√©
+      output.gsub!(/\xE8/,"\x7A") #√®
+      output.gsub!(/\xFA/,"\xA3") #√∫
+      output.gsub!(/\xF9/,"\x97") #√π
+      output.gsub!(/\xC9/,"\x90") #√â
 
       return output
 

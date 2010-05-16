@@ -6,6 +6,8 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => params[:id] })
+    flash[:notice] = "#{ @table.name } ist frei." if !@unfinished_orders
+    @cost_centers = CostCenter.all
   end
 
   def new
@@ -26,8 +28,8 @@ class TablesController < ApplicationController
     @table = Table.find(params[:id])
     success = @table.update_attributes(params[:table])
     if request.xhr?
-      @table.left = params[:pagexoffset].to_i  + params[:table][:left].to_i - 10
-      @table.top =  params[:pageyoffset].to_i  + params[:table][:top].to_i - 200
+      @table.left = params[:pagexoffset].to_i  + params[:table][:left].to_i
+      @table.top =  params[:pageyoffset].to_i  + params[:table][:top].to_i
       @table.save
     end
     respond_to do |wants|
