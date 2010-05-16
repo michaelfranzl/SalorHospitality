@@ -5,7 +5,8 @@ BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is
 * It has detailed article management using drag-and drop
 * Tables can be moved around with drag-and-drop
 * User management with roles (superuser, administrator, waiter, restaurant)
-* An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash.
+* An XML file can be generated to display an always up-to-date menucard rendered in Macromedia Flash, for use on an external homepage. An example swf file is included.
+* A waiter-pad or tally (sorry, English is not my native language) can be printed
 * Sold Items can be easily taken from one invoice to another invoice, in case guests want to pay separately
 * Sold Items can be assigned to a cost center, in case the restaurant invites the guest
 * There is a fast storno-method for sold items
@@ -29,7 +30,7 @@ BillGastro is a Ruby on Rails 2.3 application. It most probably runs on other Ra
 
 1. Get source from github: `git clone git@github.com:michaelfranzl/billgastro.git`
 2. `cd billgastro`
-3. Copy your own database settings into `config/database.yml`
+3. Copy `config/database-default.yml` to `config/database.yml` and adapt db settings
 4. Create database: `rake db:create`
 5. Migrate database: `rake db:migrate`
 6. Load seed data to try the application: `rake db:fixtures:load`
