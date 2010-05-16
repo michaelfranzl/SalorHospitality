@@ -1,28 +1,52 @@
-== restaurant_helper
+# BillGastro: A POS (Point of Sales) Ruby on Rails Internet Application for your Restaurant or Bar
 
-Should provide help in the daily business of Restaurants, Bars, etc. This is not a plugin, it's a normal Rails application.
-
-== Getting Started
-
-1. Adapt database settings in "config/database.yml"
-2. Create database with `rake db:create`
-3. Migrate database with `rake db:migrate`
-4. Load fixtures to have a basic dataset to begin with, `rake db:fixtures:load`
-5. Start server `script/server`
-6. The 'superuser' from the basic fixture data is username "su", password "su"
-
-Have fun!
-
-== ToDo
-
-Make partial_order and cost_center a separate step
-implement a button for: finish and new order on same table (bars)
-graphics
-display prices while entering items
-buy https certificate
-barabverkauf mit live-eingabe
+BillGastro helps you manage your daily business in Restaurants, Bars, etc. It is real world-tested in a restaurant in Vienna (since March of 2010) and continues to be used live. It has eye-candy graphics and was optimized for fast entering of sales (uses lots of js, minimal http requests).
 
 
+# Licence
+
+Copyright (C) 2010 Michael Franzl
+
+BillGastro is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License.
+
+Foobar is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with BillGastro.  If not, see <http://www.gnu.org/licenses/> or the file COPYING.
+
+Icons and images are copyrighted and may not be used for other projects than BillGastro
 
 
+# Getting Started
 
+BillGastro is a Ruby on Rails 2.3 application. It probably runs on other Rails versions too.
+
+1. Get source from github: `git clone git@github.com:michaelfranzl/billgastro.git`
+2. `cd billgastro`
+3. Adapt your database settings: `vim config/database.yml`
+4. Create database: `rake db:create`
+5. Migrate database: `rake db:migrate`
+6. Load seed data to try the application: `rake db:fixtures:load`
+7. Start server: `script/server`
+8. Browse to `localhost:3000` and log in as superuser: login "su", password "su"
+
+
+# Notes
+
+BillGastro is work in progress. The version on github should work as it is.
+
+
+# ToDo
+
+BillGastro uses standard Rails I18n, but is only partially translated. It should not be too difficult to add the rest of the translations.
+
+
+# Contact
+
+Michael Franzl
+michaelfranzl a t gmx d ot at
