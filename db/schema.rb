@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20100430113909) do
     t.boolean  "printed",        :default => false
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status"
+    t.integer  "storno_status",  :default => 0
   end
 
   create_table "orders", :force => true do |t|
