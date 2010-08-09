@@ -1,4 +1,4 @@
-%h2= @article.new_record? ? (t :new_article) : (t :edit_article)
+%h2= @article.new_record? ? (t '.new_article') : (t '.edit_article')
 = error_messages_for 'article'
 
 - form_for @article do |article_form|
@@ -8,45 +8,45 @@
         %table
           %tr
             %td.labels
-              = article_form.label( 'name', "#{t :name}*")
+              = article_form.label( 'name', Article.human_attribute_name(:name))
             %td.input_fields
               = article_form.text_field :name
             %td.spinner
               %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
           %tr
             %td
-              = article_form.label('description', (t :description))
+              = article_form.label('description', Article.human_attribute_name(:description))
             %td
               = article_form.text_field :description
           - if article_form.object.quantities.empty?    
             %tr
               %td
-                = article_form.label('price', "#{ t :price }*")
+                = article_form.label('price', Article.human_attribute_name(:price))
               %td
                 = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
           %tr
             %td
-              = article_form.label('category_id', "#{ t :category }*")
+              = article_form.label('category_id', Article.human_attribute_name(:category))
             %td
               = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
           %tr
             %td
-              = article_form.label('hidden', (t :hidden))
+              = article_form.label('hidden', Article.human_attribute_name(:hidden))
             %td
               = article_form.check_box :hidden
           %tr
             %td
-              = article_form.label('menucard', (t :menucard))
+              = article_form.label('menucard', Article.human_attribute_name(:menucard))
             %td
               = article_form.check_box :menucard
           %tr
             %td
-              = article_form.label('blackboard', (t :blackboard))
+              = article_form.label('blackboard', Article.human_attribute_name(:blackboard))
             %td
               = article_form.check_box :blackboard
           %tr
             %td
-              = article_form.label('waiterpad', (t :waiterpad))
+              = article_form.label('waiterpad', Article.human_attribute_name(:waiterpad))
             %td
               = article_form.check_box :waiterpad
           %tr
@@ -55,24 +55,24 @@
 
 
 
-  %h3 Varianten
+  %h3= t('activerecord.models.quantity', :count => 2)
   %table#quantities_new
     - article_form.fields_for :quantities do |quantity_form|
       %tr
         %td
-          = quantity_form.label :name, (t :name)
+          = quantity_form.label :name, Quantity.human_attribute_name(:name)
         %td
           = quantity_form.text_field :name, :size => '7'
         %td
-          = quantity_form.label :price, (t :price)
+          = quantity_form.label :price, Quantity.human_attribute_name(:price)
         %td
           = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :size => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
         %td
-          = quantity_form.label('active', (t :active))
+          = quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td
           = quantity_form.check_box :active
         %td
-          = article_form.label('hidden', (t :hidden))
+          = article_form.label('hidden', Quantity.human_attribute_name(:hidden))
         %td
           = article_form.check_box :hidden
 
@@ -84,8 +84,8 @@
             = quantity_form.check_box :_delete
 
   %p
-    %small= add_quantity_link((t :add_quantity), article_form)
+    %small= add_quantity_link((t '.add_quantity'), article_form)
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-  = observe_field 'article_name', :frequency => 1, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"
+  = observe_field 'article_name', :frequency => 2, :update => 'articles_search_results', :url => { :action => 'find_articles' }, :with => "'articles_search_text=' + escape(value)", :loading => "document.getElementById('spinner').style.display='inline'", :loaded => "document.getElementById('spinner').style.display='none'"

@@ -1,8 +1,8 @@
--# The generated HTML code of this partial is inserted into the JS code of the add_ingredient_link helper
--# Note that the statement 'ingredient' represents the name of this partial
+-# The generated HTML code of this partial is inserted into the JS code of the add_quantity_link helper
+-# Note that the statement 'quantity' represents the name of this partial
 
 - frm.fields_for :quantities, quantity do |f|
-  %td= f.label :name, 'Name:'
+  %td= f.label :name, Quantity.human_attribute_name(:name)
   %td= f.text_field :name
-  %td= f.label :price, 'Preis:'
+  %td= f.label :price, Quantity.human_attribute_name(:price)
   %td= f.text_field :price

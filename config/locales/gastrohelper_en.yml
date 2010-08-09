@@ -1,22 +1,44 @@
 en:
-
-  attributes: #label translations seem to be still missing in rails 2.3
-    user:
-      password: Password
-      login: Login
-      role: Role
-      title: Title
-
   activerecord:
     models:
       table: Table
       user: User
       tax: Tax
+      cost_center: Cost Center
       article: Article
+      quantity:
+        one: Variant
+        other: Variants
       stock: Stock
       category: Category
       settlement: Settlement
       order: Order
+    attributes:
+      article:
+        price: Price
+        category_id: Category
+        name: Name
+        description: Description
+      quantity:
+        name:
+        price:
+        active:
+        hidden:
+      tax:
+        percent: Tax
+        name: Name
+      table:
+        name: Name
+      category:
+        name: Name
+        tax_id: Tax
+        icon: Icon
+        color: Color
+      user:
+        login: Login
+        password: Password
+        role: Role
+        title: Title
 
 # ==================================================================================
 # Custom messages
@@ -34,11 +56,10 @@ en:
   this_is_a_demo_app: This is a Demo-Application. Please try all features!
   logged_in_as: Logged in as
   are_you_sure_delete_user: 'Are you sure you want to delete user "{{login}}"?'
-  are_you_sure: 'Are you sure?'
 
-  delete: Delete
-  edit: Edit
-  create: Create
+
+
+
   new: New
   save: Save
   finished: Finished
@@ -139,13 +160,36 @@ en:
 
   already_created_articles: Already created Articles
   create_a_series_of_foods: Simple Foodstuff creation
-  search_term: Search term
+
   print_preview: Print Preview
   online_preview: Preview
 
   amount: Amount
-  there_are_x_food_articles_active:
-    one: It is {{count}} article active
-    other: There are {{count}} articles active
 
-  remove_all_foods_from_menucard: Remove all foods from menucard
+#######################
+
+  articles:
+    index:
+      quick_food_article_creation: Quick
+      list_all: List all
+      search_term: Search term
+    new:
+      new_article: New article
+      add_quantity: Add Variant
+    listall:
+      all_articles: List of all articles
+    articles_search_results:
+      variants: Variants
+    quick_foods:
+      quick_food_article_creation: Quick food article creation
+      there_are_x_foods_active:
+        one: There is {{count}} food article active
+        other: There are {{count}} food articles active
+      remove_all_foods_from_menucard: Remove all foods from menucard
+    quick_foods_search_results:
+      already_created_articles: Already created articles
+
+  delete: Delete
+  are_you_sure: 'Are you sure?'
+  edit: Edit
+  create: Create

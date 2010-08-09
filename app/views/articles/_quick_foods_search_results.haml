@@ -1,5 +1,5 @@
 - if @found_foods
-  %span.header_search_results= t :already_created_articles
+  %span.header_search_results= t '.already_created_articles'
   %ul.search_results
     - for article in @found_foods
       - label = article.name

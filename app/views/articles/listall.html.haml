@@ -1,4 +1,4 @@
-%h2= t :all_articles
+%h2= t '.all_articles'
 
 %table
   %tr
@@ -16,4 +16,4 @@
       
       %td= ar.description
       %td= number_to_currency ar.price
-      %td= link_to ((t :delete), ar, :confirm => 'Sind Sie sicher?', :method => :delete) if @current_user.role >= 3
+      %td= link_to ((t :delete), ar, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3

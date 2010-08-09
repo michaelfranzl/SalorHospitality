@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
     @groups = Group.find(:all, :order => 'name ASC')
   end
 
-  def new_foods
+  def quick_foods
     @foods_in_menucard = Article.find(:all, :conditions => { :menucard => true, :category_id => 1..3, :hidden => false }).size
     starters = []
     main_dishes = []
@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
   def remove_all_foods_from_menucard
     Article.update_all "menucard = false, blackboard = false, waiterpad = false", :category_id => 1..3
     flash[:notice] = 'Alle Speisen wurden aus dem Menue entfernt.'
-    redirect_to new_foods_articles_path
+    redirect_to quick_foods_articles_path
   end
 
   def create
@@ -130,7 +130,7 @@ class ArticlesController < ApplicationController
       end
       @found_foods = Article.find( :all, :conditions => [ (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND '), * search_terms.flatten ], :order => 'name', :limit => 5 )
     end
-      render :partial => 'foods_search_results'
+      render :partial => 'quick_foods_search_results'
   end
 
 private

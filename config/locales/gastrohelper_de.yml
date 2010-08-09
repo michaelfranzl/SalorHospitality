@@ -1,11 +1,4 @@
 de:
-  attributes: #label translations seem to be still missing in rails 2.3
-    user:
-      password: Passwort
-      login: Login
-      role: Rolle
-      title: Titel
-
   activerecord:
     models:
       table: Tisch
@@ -22,6 +15,7 @@ de:
         price: Preis
         category_id: Artikelkategorie
         name: Name
+        description: Beschreibung
       tax:
         percent: Prozentsatz
         name: Name

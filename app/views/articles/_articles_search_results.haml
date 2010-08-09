@@ -7,7 +7,7 @@
       - if !ar.description.nil? and !ar.description.empty?
         %i= ar.description
         %br
-      - info = ar.quantities.empty? ? number_to_currency(ar.price) : "#{ar.quantities.size} Varianten"
+      - info = ar.quantities.empty? ? number_to_currency(ar.price) : "#{ar.quantities.size} #{t '.variants' }"
       == (#{info})
         
     = draggable_element "drag_from_articles_#{ar.id}", :revert => true, :ghosting => true, :handle => "'handle_for_article_#{ar.id}'"
