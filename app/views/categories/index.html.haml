@@ -1,12 +1,12 @@
-%h2= t :categories_menu
+%h2= t('activerecord.models.category.other')
 
-%p= link_to((t :new), new_category_path) if @current_user.role >= 2
+=link_to((t :new), new_category_path, :class => 'links') if @current_user.role >= 2
 
 %table
   %tr
-    %th{ :style => 'width:250px' }= t :name
-    %th{ :style => 'width:150px' }= t :percent
-    %th{ :style => 'width:150px' }= t :sort_order
+    %th{ :style => 'width:250px' }= Category.human_attribute_name(:name)
+    %th{ :style => 'width:150px' }= Category.human_attribute_name(:percent)
+    %th{ :style => 'width:150px' }= Category.human_attribute_name(:sort_order)
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
   - @categories.each do |ca|

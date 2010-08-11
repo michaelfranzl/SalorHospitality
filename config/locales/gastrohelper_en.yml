@@ -4,15 +4,24 @@ en:
       table: Table
       user: User
       tax: Tax
-      cost_center: Cost Center
-      article: Article
+      cost_center:
+        one: Cost Center
+        other: Cost Centers
+      article:
+        one: Article
+        other: Articles
       quantity:
         one: Variant
         other: Variants
       stock: Stock
-      category: Category
+      category:
+        one: Category
+        other: Categories
       settlement: Settlement
       order: Order
+
+
+
     attributes:
       article:
         price: Price
@@ -20,7 +29,7 @@ en:
         name: Name
         description: Description
       quantity:
-        name:
+        name: abc
         price:
         active:
         hidden:
@@ -32,8 +41,13 @@ en:
       category:
         name: Name
         tax_id: Tax
+        sort_order: Sort Order
         icon: Icon
         color: Color
+      cost_center:
+        name: Name
+        description: Description
+        active: Active?
       user:
         login: Login
         password: Password
@@ -60,7 +74,6 @@ en:
 
 
 
-  new: New
   save: Save
   finished: Finished
 
@@ -173,8 +186,10 @@ en:
       quick_food_article_creation: Quick
       list_all: List all
       search_term: Search term
+      preview: Preview
     new:
       new_article: New article
+      edit_article: Edit article
       add_quantity: Add Variant
     listall:
       all_articles: List of all articles
@@ -189,7 +204,57 @@ en:
     quick_foods_search_results:
       already_created_articles: Already created articles
 
+  blackboard:
+    index:
+      update: Update
+
+  categories:
+    new:
+      new_category: New Category
+      edit_category: Edit Category
+      aperitif: Aperitif
+      sidedish: Side Dish
+      starter: Starter
+      maindish: Main Dish
+      childrendish: Childrens Dish
+      dessert: Dessert
+      digestif: Digestif
+      beer: Beer
+      nonalcoholics: Alcohol Free
+      cigarette: Tobacco
+      rosewineglass: Rosé Wine
+      redwineglass: Red Wine
+      whitewineglass: White Wine
+      rosewinebottle: Bottle Rosé
+      redwinebottle: Bottle Red
+      whitewinebottle: Bottle White
+      sparkling: Sparkling Wine
+      coffee: Coffee
+      teapot: Teapot
+      tea: Teacup
+      blank: Blank
+
+      violet: Violet
+      orange: Orange
+      pink: Pink
+      green: Green
+      blue: Blue
+      blank: Blank
+
+  cost_centers:
+    index:
+      active: Active
+      inactive: Inactive
+    new:
+      new_cost_center: New Cost Center
+      edit_cost_center: Edit Cost Center
+
   delete: Delete
   are_you_sure: 'Are you sure?'
   edit: Edit
   create: Create
+  new: New
+  
+  blackboard_generic_name: Blackboard
+  waiterpad_generic_name: Waiterpad
+  menucard_generic_name: Menucard

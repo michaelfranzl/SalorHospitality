@@ -1,10 +1,10 @@
-%h2= t :articles_menu
+%h2= t('activerecord.models.article.other')
 
 - if @current_user.role >= 1
-  %a.links{ :href => new_article_path}= t :new
-  %a.links{ :href => quick_foods_articles_path}= t('.quick_food_article_creation')
+  =link_to((t :new), new_article_path, :class => 'links')
+  =link_to((t '.quick_food_article_creation'), quick_foods_articles_path, :class => 'links')
 
-%a.links{ :href => listall_articles_path}= t '.list_all'
+=link_to((t '.list_all'), listall_articles_path, :class => 'links')
 
 %table.articles
   %tr
@@ -17,8 +17,8 @@
     
     - @scopes.each do |@scope|
       %td{ :id => "drop_add_to_#{@scope}" }
-        %span.scope_title= t @scope.to_sym
-        = link_to t(:print_preview), { :controller => @scope }, :class => 'scopelink'
+        %span.scope_title= t "#{@scope}_generic_name".to_sym
+        = link_to t('.preview'), { :controller => @scope }, :class => 'scopelink'
         %div{ :id => "#{@scope}_list" }
           = render 'list', :locals => { :scope => @scope }
         = drop_receiving_element "drop_add_to_#{@scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{@scope}'"
