@@ -1,21 +1,15 @@
-%h2 Statistik Tische
+%h2== #{ t 'statistic' } #{ t 'activerecord.models.table.other' }
 
-%br
+= render 'menu'
 
 - form_tag '/statistics/tables' do
-  = label('from', 'von')
-  = select_date(@from, :prefix => 'from')
-  = label('to', 'bis')
-  = select_date(@to, :prefix => 'to')
-  = submit_tag 'abfragen'
-
-%br
+  = render 'date_form'
 
 %table
   %tr
-    %th{ :style => 'width:100px' } Name
-    %th{ :style => 'width:100px' } Beschreibung
-    %th{ :style => 'width:100px;text-align:right;' } Summe
+    %th{ :style => 'width:100px' }= Table.human_attribute_name(:name)
+    %th{ :style => 'width:100px' }= Table.human_attribute_name(:description)
+    %th{ :style => 'width:100px;text-align:right;' }= t :sum
   - @tables.each do |ta|
     %tr
       %td= ta.name

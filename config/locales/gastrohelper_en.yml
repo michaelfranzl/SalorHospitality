@@ -161,7 +161,7 @@ en:
       back: Back
       previous_invoice: Previous invoice
       next_invoice: Next invoice
-      item_price: Unit price
+      unit_price: Unit price
       count: Count
       sum: Sum
       list_of_taxes: List of taxes
@@ -181,7 +181,7 @@ en:
     detailed_list:
       order_number_on_table_on_date: '{{order}} number {{number}} on {{table}} at {{time}}'
       count: Count
-      item_price: Unit Price
+      unit_price: Unit Price
       total: Total
       revenue: Revenue
 
@@ -193,6 +193,11 @@ en:
       username: User
       login: Login
       password: Password
+
+  statistic: Statistic
+  statistics:
+    weekdays: Weekdays
+    journal: Journal (chronological list)
 
   delete: Delete
   are_you_sure: 'Are you sure?'

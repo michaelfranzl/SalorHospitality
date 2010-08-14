@@ -1,0 +1,5 @@
+= label('from', t('settlements.index.start_date'))
+= select_date(@from, :prefix => 'from')
+= label('to', t('settlements.index.end_date'))
+= select_date(@to, :prefix => 'to')
+= submit_tag t(:display)
