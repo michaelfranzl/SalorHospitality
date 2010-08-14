@@ -1,7 +1,7 @@
 - form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put } do |order_form|
 
   - if !order.finished
-    %a#edit_invoice{ :href => edit_order_path(order), :title => 'Bearbeiten' }
+    %a#edit_invoice{ :href => edit_order_path(order), :title => t(:edit) }
       %img{ :src => '/images/button_edit.png' }
   %select#cost_center_for_invoice{ :name => 'cost_center_id' }
     = options_from_collection_for_select(@cost_centers, :id, :name)

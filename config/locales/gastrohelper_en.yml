@@ -1,9 +1,15 @@
 en:
   activerecord:
     models:
-      table: Table
-      user: User
-      tax: Tax
+      table:
+        one: Table
+        other: Tables
+      user:
+        one: User
+        other: Users
+      tax:
+        one: Tax Class
+        other: Tax Classes
       cost_center:
         one: Cost Center
         other: Cost Centers
@@ -13,14 +19,24 @@ en:
       quantity:
         one: Variant
         other: Variants
-      stock: Stock
       category:
         one: Category
         other: Categories
-      settlement: Settlement
-      order: Order
-
-
+      item:
+        one: Item
+        other: Items
+      settlement:
+        one: Settlement
+        other: Settlements
+      order:
+        one: Order
+        other: Orders
+      stock:
+        one: Stock
+        other: Stocks
+      group:
+        one: Stock Group
+        other: Stock Groups
 
     attributes:
       article:
@@ -48,6 +64,8 @@ en:
         name: Name
         description: Description
         active: Active?
+      group:
+        name: Name
       user:
         login: Login
         password: Password
@@ -249,6 +267,11 @@ en:
       new_cost_center: New Cost Center
       edit_cost_center: Edit Cost Center
 
+  groups:
+    new:
+      new_group: New Group
+      edit_group: Edit Group
+
   delete: Delete
   are_you_sure: 'Are you sure?'
   edit: Edit
@@ -258,3 +281,7 @@ en:
   blackboard_generic_name: Blackboard
   waiterpad_generic_name: Waiterpad
   menucard_generic_name: Menucard
+  unsettled_orders_generic_name: Unsettled orders
+
+  print_kitchenlist: Print Kitchen Item List
+  recent_orders: View recent orders

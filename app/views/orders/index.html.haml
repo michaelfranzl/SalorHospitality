@@ -1,8 +1,9 @@
-%h2= t :orders_menu
+%h2= t('activerecord.models.order.other')
+
 %div#functions
-  %a#print_kitchenlist{ :href => '/items/print.bon', :title => 'Küchenliste' }
+  %a#print_kitchenlist{ :href => '/items/print.bon', :title => t(:print_kitchenlist) }
     %img{ :src => '/images/button_kitchenlist.png' }
-  %a{ :href => @last_finished_order ? order_path(@last_finished_order.id) : '', :title => 'Letzte abgeschlossene Bestellung' }
+  %a{ :href => @last_finished_order ? order_path(@last_finished_order.id) : '', :title => t(:recent_orders) }
     %img{ :src => '/images/button_list.png' }
     
 = render @tables

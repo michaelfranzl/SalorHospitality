@@ -1,13 +1,13 @@
+%h2= @cost_center.new_record? ? (t '.new_group') : (t '.edit_group')
+
 = error_messages_for 'group'
 
 - form_for @group do |group_form|
-  %fieldset
-    %legend= t :group
-    %table
-      %tr
-        %td
-          = group_form.label('name', "#{t :name}*")
-        %td
-          = group_form.text_field :name
+  %table
+    %tr
+      %td
+        = group_form.label('name', Group.human_attribute_name(:name))
+      %td
+        = group_form.text_field :name
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
