@@ -1,0 +1,261 @@
+fr:
+  activerecord:
+    models:
+      table:
+        one: Table
+        other: Tables
+      user:
+        one: User
+        other: Users
+      tax:
+        one: Tax Class
+        other: Tax Classes
+      cost_center:
+        one: Cost Center
+        other: Cost Centers
+      article:
+        one: Article
+        other: Articles
+      quantity:
+        one: Variant
+        other: Variants
+      category:
+        one: Category
+        other: Categories
+      item:
+        one: Item
+        other: Items
+      settlement:
+        one: Settlement
+        other: Settlements
+      order:
+        one: Order
+        other: Orders
+      stock:
+        one: Stock
+        other: Stocks
+      group:
+        one: Stock Group
+        other: Stock Groups
+
+    attributes:
+      article:
+        price: Price
+        category_id: Category
+        name: Name
+        description: Description
+      quantity:
+        name: Variant Name
+        price: Variant Price
+        active: active
+        hidden: hidden
+      tax:
+        percent: Tax
+        name: Name
+      table:
+        name: Name
+      category:
+        name: Name
+        tax_id: Tax
+        sort_order: Sort Order
+        icon: Icon
+        color: Color
+      cost_center:
+        name: Name
+        description: Description
+        active: Active?
+      group:
+        name: Name
+      user:
+        login: Login
+        password: Password
+        role: Role
+        title: Title
+
+
+  articles:
+    index:
+      quick_food_article_creation: Quick
+      list_all: List all
+      search_term: Search term
+      preview: Preview
+    new:
+      new_article: New article
+      edit_article: Edit article
+      add_quantity: Add Variant
+    listall:
+      all_articles: List of all articles
+    articles_search_results:
+      variants: Variants
+    quick_foods:
+      quick_food_article_creation: Quick food article creation
+      there_are_x_foods_active:
+        one: There is {{count}} food article active
+        other: There are {{count}} food articles active
+      remove_all_foods_from_menucard: Remove all foods from menucard
+    quick_foods_search_results:
+      already_created_articles: Already created articles
+
+  blackboard:
+    index:
+      update: Update
+
+  categories:
+    new:
+      new_category: New Category
+      edit_category: Edit Category
+      aperitif: Aperitif
+      sidedish: Side Dish
+      starter: Starter
+      maindish: Main Dish
+      childrendish: Childrens Dish
+      dessert: Dessert
+      digestif: Digestif
+      beer: Beer
+      nonalcoholics: Alcohol Free
+      cigarette: Tobacco
+      rosewineglass: Rosé Wine
+      redwineglass: Red Wine
+      whitewineglass: White Wine
+      rosewinebottle: Bottle Rosé
+      redwinebottle: Bottle Red
+      whitewinebottle: Bottle White
+      sparkling: Sparkling Wine
+      coffee: Coffee
+      teapot: Teapot
+      tea: Teacup
+      blank: Blank
+
+  cost_centers:
+    index:
+      active: Active
+      inactive: Inactive
+    new:
+      new_cost_center: New Cost Center
+      edit_cost_center: Edit Cost Center
+
+  groups:
+    new:
+      new_group: New Group
+      edit_group: Edit Group
+
+  stocks:
+    new:
+      new_stock: New Stock
+      edit_stock: Edit Stock
+
+  orders:
+    served_by: You were served by
+    new:
+      sum: SUM
+    show:
+      print_invoice: Print invoice
+      print_business_invoice: Print business invoice
+      back: Back
+      previous_invoice: Previous invoice
+      next_invoice: Next invoice
+      unit_price: Unit price
+      count: Count
+      sum: Sum
+      list_of_taxes: List of taxes
+    unsettled:
+      make_settlement: Make settlement
+    invoice_form:
+      split_invoice: Split invoice
+
+  settlements:
+    index:
+      start_date: Start date
+      end_date: End date
+      all_cost_centers: All
+      sum_total: Sum total
+    new:
+      set_date: Set a date for this settlement
+    detailed_list:
+      order_number_on_table_on_date: '{{order}} number {{number}} on {{table}} at {{time}}'
+      count: Count
+      unit_price: Unit Price
+      total: Total
+      revenue: Revenue
+
+  sessions:
+    browser_warning:
+      warning: You don't use Firefox web browser. Bill Gastro was optimized for Firefox.
+      continue: Continue
+    new:
+      username: User
+      login: Login
+      password: Password
+
+  statistic: Statistic
+  statistics:
+    weekdays: Weekdays
+    journal: Journal (chronological list)
+
+  tables:
+    new:
+      new_table: New Table
+      edit_table: Edit Table
+
+  taxes:
+    new:
+      new_tax: New Tax
+      edit_tax: Edit Tax
+
+  users:
+    new:
+      new_user: New User
+      edit_user: Edit User
+
+  delete: Delete
+  are_you_sure: 'Are you sure?'
+  edit: Edit
+  create: Create
+  new: New
+  print: Print
+  display: Display
+  logout: 'log out {{who}}'
+  
+  blackboard_generic_name: Blackboard
+  waiterpad_generic_name: Waiterpad
+  menucard_generic_name: Menucard
+  unsettled_orders_generic_name: Unsettled orders
+
+  print_kitchenlist: Print Kitchen Item List
+  recent_orders: View recent orders
+  scroll_down: Scroll down
+  scroll_up: Scroll up
+  save_and_go_back: Save and go back
+  cancel_and_go_back: Cancel and go back
+  finish_order: Finish order
+
+  invoice: Invoice
+  storno: Storno
+  datetime: Date
+  sum: Sum
+  count: Count
+
+  net: Net
+  value_added_tax: VAT
+  gross: Gross
+
+  violet: Violet
+  orange: Orange
+  pink: Pink
+  green: Green
+  blue: Blue
+  blank: blank
+
+
+# TRANSLATIONS FOR MODELS
+  must_be_entered_either_for_article_or_for_quantity: must be entered either for the Article or for the Variant.
+  is_no_number: is not a number.
+
+# TRANSLATIONS FOR CONTROLLERS
+  all_foods_were_removed_from_the_menucard: All foods were remove from the menucard.
+  category_was_successfully_deleted: 'Category {{category}} was successfully deleted.'
+  cost_center_was_successfully_deleted: 'Cost Center {{cost_center}} was successfully deleted.'
+  table_was_successfully_deleted: '{{table}} was successfully deleted.'
+  there_are_no_open_settlements: There are no open settlements.
+  logout_successful: You have logged off successfully.
+  user_not_found: User not found
