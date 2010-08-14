@@ -1,6 +1,6 @@
-%h2= t :tables_menu
+%h2= t('activerecord.models.table.other')
 
-%p= link_to ((t :new), new_table_path)
+%p= link_to ((t :new), new_table_path, :class => 'links')
 
 %table
   %tr
@@ -11,4 +11,4 @@
     %tr
       %td= link_to (ta.name, edit_table_path(ta))
       %td= ta.description
-      %td= link_to ((t :delete), ta, :confirm => 'Sind Sie sicher?', :method => :delete)
+      %td= link_to ((t :delete), ta, :confirm => t(:are_you_sure), :method => :delete)

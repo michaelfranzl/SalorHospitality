@@ -1,18 +1,14 @@
-%h2== Steuerklasse #{ controller.action_name == 'new' ? (t :new) : (t :edit) }
+%h2= @tax.new_record? ? (t '.new_tax') : (t '.edit_tax')
 
 = error_messages_for 'tax'
 
 - form_for @tax do |tax_form|
   %table
     %tr
-      %td
-        = tax_form.label('name',"#{t :name}*")
-      %td
-        = tax_form.text_field :name, :size => '20'
+      %td= tax_form.label('name',Tax.human_attribute_name(:name))
+      %td= tax_form.text_field :name, :size => '20'
     %tr
-      %td
-        = tax_form.label('percent', "#{t :percent}*")
-      %td
-        = tax_form.text_field :percent, :size => '10'
+      %td= tax_form.label('percent', Tax.human_attribute_name(:percent))
+      %td= tax_form.text_field :percent, :size => '10'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

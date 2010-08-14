@@ -28,12 +28,12 @@ module CategoriesHelper
 
   def get_color_array
     color_array = [
-      [t('.violet'), '#80477d'],
-      [t('.orange'), '#ed8b00'],
-      [t('.pink'), '#cd0052'],
-      [t('.green'), '#75b10d'],
-      [t('.blue'), '#136880'],
-      [t('.blank'), '#27343b']
+      [t(:violet), '#80477d'],
+      [t(:orange), '#ed8b00'],
+      [t(:pink), '#cd0052'],
+      [t(:green), '#75b10d'],
+      [t(:blue), '#136880'],
+      [t(:blank), '#27343b']
     ]
   end
 

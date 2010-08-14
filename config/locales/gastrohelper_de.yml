@@ -1,200 +1,124 @@
 de:
   activerecord:
     models:
-      table: Tisch
-      user: Benutzer
-      tax: Steuerklasse
-      cost_center: Kostenstelle
-      article: Verkaufsartikel
-      stock: Lagervorräte
-      category: Artikelkategorie
-      settlement: Abrechnung
-      order: Bestellung
+      table:
+        one: Tisch
+        other: Tische
+      user:
+        one: Benutzer
+        other: Benutzer
+      tax:
+        one: Steuerklasse
+        other: Steuerklassen
+      cost_center:
+        one: Kostenstelle
+        other: Kostenstellen
+      article:
+        one: Artikel
+        other: Artikel
+      quantity:
+        one: Variante
+        other: Varianten
+      category:
+        one: Kategorie
+        other: Kategorien
+      item:
+        one: Posten
+        other: Posten
+      settlement:
+        one: Abrechnung
+        other: Abrechnungen
+      order:
+        one: Bestellung
+        other: Bestellungen
+      stock:
+        one: Lagerbestand
+        other: Lagerbestände
+      group:
+        one: Lagergruppe
+        other: Lagergruppen
+
     attributes:
       article:
         price: Preis
-        category_id: Artikelkategorie
+        category_id: Kategorie
         name: Name
         description: Beschreibung
+      quantity:
+        name: Name
+        price: Preis
+        active: aktiv
+        hidden: versteckt
       tax:
-        percent: Prozentsatz
+        percent: Steuer in %
         name: Name
       table:
         name: Name
       category:
         name: Name
         tax_id: Steuerklasse
-        icon: Icon
+        sort_order: Sortierwert
+        icon: Symbol
         color: Farbe
+      cost_center:
+        name: Name
+        description: Beschreibung
+        active: aktiv?
+      group:
+        name: Name
       user:
-        login: Login
+        login: Einloggen
         password: Passwort
         role: Rolle
-        title: Anrede und Name
-
-# ==================================================================================
-# Custom messages
-# ==================================================================================
-
-  hello_world: Hallo Welt
-
-  language: Sprache
-
-  please_login: Bitte loggen Sie sich ein!
-  login: Login
-  logout: Logout
-  logged_out: Ausgeloggt
-  password: Passwort
-  this_is_a_demo_app: Dies ist eine Demo-Applikation. Probieren Sie alle Funktionen aus!
-  logged_in_as: Eingeloggt als
-  are_you_sure_delete_user: 'Sind Sie sicher, dass sie User "{{login}}" löschen möchten?'
-  are_you_sure: 'Sind Sie sicher?'
-  
-  active: aktiv?
-  hidden: löschen?
-
-  delete: Löschen
-  edit: Ändern
-  create: Erzeugen
-  new: Neu anlegen
-  save: Speichern
-  finished: Abschließen
-  
-  invoice: Rechnung
-
-  creation_date: Datum
-
-  table: Tisch
-  tables_menu: Tische
-  width: Länge
-  height: Breite
-
-  user: Benutzer
-  users_menu: Benutzer
-
-  title: Anrede u. Name
-  served_by: Es bediente Sie
-
-  tax: Steuerklasse
-  taxes_menu: Steuerklassen
-
-  cost_center: Kostenstelle
-  cost_centers_menu: Kostenstellen
-
-  group: Lagerort
-  groups_menu: Lagerorte
-
-  stock: Lagervorrat
-  stocks_menu: Lagervorräte
-
-  category: Artikelkategorie
-  categories_menu: Artikelkategorien
-  
-  icon: Icon
-  color: Farbe
-
-  article: Artikel
-  articles_menu: Verkaufsartikel
-  all_articles: Alle Artikel
-  new_article: Neuer Artikel
-  edit_article: Artikel bearbeiten
-  add_article: 'Hinzufügen:'
-  
-  add_quantity: Variante/Menge hinzufügen
-
-  ingredient: Zutat
-  ingredients: Alle Zutaten
+        title: Anrede
 
 
-  settlement: Abrechnung
-  new_settlement: Neue Abrechnung
-  settlements_menu: Abrechnungen
-  settlement_abbr: 'Abr.'
-  unsettled_menu: Abrechnen
-  unsettled_orders: Ausständige Abrechnungen
-  
-  make_settlement: Abrechnen!
+  time:
+    formats:
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      date_iso: "%Y-%m-%d"
 
-  waiterpad: Bestellblock
+  articles:
+    index:
+      quick_food_article_creation: Schnell
+      list_all: Alle auflisten
+      search_term: Suchbegriff
+      preview: Voransicht
+    new:
+      new_article: Neuer Artikel
+      edit_article: Artikel bearbeiten
+      add_quantity: Variante hinzufügen
+    listall:
+      all_articles: Liste aller Artikel
+    articles_search_results:
+      variants: Varianten
+    quick_foods:
+      quick_food_article_creation: Schnelle Artikelerzeugung
+      there_are_x_foods_active:
+        one: Es ist {{count}} Speise aktiv.
+        other: Es sind {{count}} Speisen aktiv.
+      remove_all_foods_from_menucard: Alle Speisen von der Speisekarte entfernen
+    quick_foods_search_results:
+      already_created_articles: Bereits angelegte Speisen
 
-  blackboard: Online-Tafel
+  blackboard:
+    index:
+      update: Aktualisieren
 
-  revenue: Kellnerumsatz
-
-  password: Passwort
-  name: Name
-  role: Rolle
-  login: Login
-  description: Beschreibung
-  percent: Prozentsatz
-  unit: Einheit
-  balance: Stand
-  menucard: Aktive Artikel
-  price: Preis
-
-  format_for_online_backboard: "Formatierung für Online-Tafel"
-  division: Trennlinie
-  sort_id: Sortierreihenfolge
-  add_ingredient: Zutat hinzufügen
-
-  sum: Summe
-  gr: 'br.'
-  net: 'net.'
-  diff: 'Diff.'
-  datum: Datum
-
-  count: Anzahl
-  sort_order: Reihenfolge
-  single: Einzel
-  total: Alle
-
-  order_sums: Bestellsummen
-  order:
-    one: Bestellung
-    other: Bestellungen
-  orders_menu: Bestellungen
-  new_order: Neue Bestellung
-  orders: Alle Bestellungen
-  open_orders: Laufende Bestellungen
-  partial_order: Teilabr.
-  item: Einheit
-  free: gratis
-
-# User Roles
-  restaurant: Gasthaus
-  waiter: Kellner
-  admin: Admin
-  su: SuperUser
-
-  statistics: Statistik
-  weekdays: Wochentage
-  journal: Journal
-
-  already_created_articles: Bereits angelegte Artikel
-  create_a_series_of_foods: Vereinfachte Speiseneingabe
-  search_term: Suchbegriff
-  print_preview: Druckansicht
-  online_preview: Voransicht
-
-  amount: Menge
-  there_are_x_food_articles_active:
-    one: Es ist {{count}} Speise aktiv
-    other: Es sind {{count}} Speisen aktiv
-
-  remove_all_foods_from_menucard: Alle im Moment aktiven Speisen inaktivieren
-  
   categories:
     new:
+      new_category: Neue Kategorie anlegen
+      edit_category: Kategorie bearbeiten
       aperitif: Aperitif
       sidedish: Beilage
       starter: Vorspeise
       maindish: Hauptspeise
-      childrendish: Kindermenü
+      childrendish: Kinder
       dessert: Nachspeise
       digestif: Digestif
       beer: Bier
       nonalcoholics: Alkoholfrei
-      cigarette: Zigaretten
+      cigarette: Tabak
       rosewineglass: Roséwein
       redwineglass: Rotwein
       whitewineglass: Weißwein
@@ -202,22 +126,126 @@ de:
       redwinebottle: Flasche Rot
       whitewinebottle: Flasche Weiß
       sparkling: Sekt
-      coffee: Kaffee
+      coffee: Caffee
       teapot: Teekanne
-      tea: Tee
+      tea: Teetasse
       blank: Leer
-      
-      violet: Violett
-      orange: Orange
-      pink: Pink
-      green: Grün
-      blue: Blau
-      blank: Blank
+
+  cost_centers:
+    index:
+      active: aktiv
+      inactive: inaktiv
+    new:
+      new_cost_center: Neue Kostenstelle
+      edit_cost_center: Kostenstelle bearbeiten
+
+  groups:
+    new:
+      new_group: Neue Lagergruppe
+      edit_group: Lagergruppe bearbeiten
+
+  stocks:
+    new:
+      new_stock: Neuer Lagerartikel
+      edit_stock: Lagerartikel bearbeiten
+
+  orders:
+    served_by: Sie wurden bedient von
+    new:
+      sum: SUMME
+    show:
+      print_invoice: Rechnung drucken
+      print_business_invoice: Geschäftsrechnung drucken
+      back: zurück
+      previous_invoice: vorherige Rechnung
+      next_invoice: nächste Rechnung
+      unit_price: Stück
+      count: Anzahl
+      sum: Summe
+      list_of_taxes: Liste der Steuern
+    unsettled:
+      make_settlement: abrechnen
+    invoice_form:
+      split_invoice: Rechnung teilen
+
+  settlements:
+    index:
+      start_date: Von
+      end_date: Bis
+      all_cost_centers: Alle
+      sum_total: Gesamtsumme
+    new:
+      set_date: Datum für diese Abrechnung
+    detailed_list:
+      order_number_on_table_on_date: '{{order}} #{{number}} auf {{table}} am {{time}}'
+      count: Anzahl
+      unit_price: Stück
+      total: Gesamt
+      revenue: Umsatz
+
+  sessions:
+    browser_warning:
+      warning: Sie verwenden nicht Firefox als Browser. Bill Gastro wurde auf Firefox optimiert.
+      continue: weiter
+    new:
+      username: Benutzer
+      login: Name
+      password: Passwort
+
+  statistic: Statistik
+  statistics:
+    weekdays: Wochentage
+    journal: Journal (chronologische Liste)
+
+  tables:
+    new:
+      new_table: Neuer Tisch
+      edit_table: Tisch bearbeiten
+
+  taxes:
+    new:
+      new_tax: Neue Steuerklasse
+      edit_tax: Steuerklasse bearbeiten
+
   users:
     new:
-      violet: Violett
-      orange: Orange
-      pink: Pink
-      green: Grün
-      blue: Blau
-      blank: Blank
+      new_user: Neuer Benutzer
+      edit_user: Benutzer bearbeiten
+
+  delete: Löschen
+  are_you_sure: 'Sind Sie sicher?'
+  edit: Bearbeiten
+  create: Erzeugen
+  new: Neu
+  print: Drucken
+  display: Anzeigen
+  
+  blackboard_generic_name: Speisetafel
+  waiterpad_generic_name: Bestellblock
+  menucard_generic_name: Speisekarte
+  unsettled_orders_generic_name: Offene Bestellungen
+
+  print_kitchenlist: Küchenliste drucken
+  recent_orders: Kürzliche Rechnugen ansehen
+  scroll_down: Hinunterscrollen
+  scroll_up: Hinaufscrollen
+  save_and_go_back: Speichern und zurück
+  cancel_and_go_back: Abbrechen und zurück
+  finish_order: Bestellung abschließen
+
+  invoice: Rechnung
+  storno: Storno
+  datetime: Datum
+  sum: Summe
+  count: Anzahl
+
+  net: Netto
+  value_added_tax: USt.
+  gross: Brutto
+
+  violet: Violett
+  orange: Orange
+  pink: Pink
+  green: Grün
+  blue: Blau
+  blank: Leer

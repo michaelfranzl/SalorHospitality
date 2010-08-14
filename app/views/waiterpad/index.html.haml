@@ -1,16 +1,16 @@
-%h2= t :waiterpad
+%h2= t :waiterpad_generic_name
 
-- 4.times do
+- 3.times do
   %table{ :class => 'waiterpad' }
     %tr.logo
       %td{ :colspan => 2 }
         %img{ :src => "images/waiterpadlogos/#{ MyGlobals::client }.png" }
-      %td{ :colspan => 2 }== Tisch Nr./Beleg Nr.
+      %td{ :colspan => 2 }= Table.human_name
     %tr
-      %th.borderright Artikel
-      %th.borderright Preis
-      %th.borderright Anzahl
-      %th Summe
+      %th.borderright= Article.human_name
+      %th.borderright= Article.human_attribute_name(:price)
+      %th.borderright= t :count
+      %th= t :sum
 
     - i = 0
     - @categories.each do |ca|
@@ -19,7 +19,7 @@
           - i += 1
           %tr{ :valign => 'top' }
             %td.borderright.textleft= ar.name
-            %td.borderright.textright= number_with_precision ar.price
+            %td.borderright.textright= number_with_precision ar.price, :precision => 2
             %td.borderright
             %td
     - (23-i).times do

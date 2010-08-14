@@ -1,36 +1,26 @@
-%h2== Tisch #{ controller.action_name == 'new' ? (t :new) : (t :edit) }
+%h2= @table.new_record? ? (t '.new_table') : (t '.edit_table')
 
 = error_messages_for 'table'
 
 - form_for @table do |table_form|
   %table
     %tr
-      %td
-        = table_form.label('name', "#{t :name}*")
-      %td
-        = table_form.text_field :name, :size => '20'
+      %td= table_form.label('name', Table.human_attribute_name(:name))
+      %td= table_form.text_field :name, :size => '20'
+    %tr
+      %td= table_form.label('description', Table.human_attribute_name(:description))
+      %td= table_form.text_field :description, :size => '20'
+    %tr
+      %td= table_form.label('width', Table.human_attribute_name(:width))
+      %td= table_form.text_field :width, :size => '10'
+    %tr
+      %td= table_form.label('height', Table.human_attribute_name(:height))
+      %td= table_form.text_field :height, :size => '10'
     %tr
       %td
-        = table_form.label('description', (t :description))
-      %td
-        = table_form.text_field :description, :size => '20'
+      %td= table_form.hidden_field :top, :size => '10'
     %tr
       %td
-        = table_form.label('width', (t :width))
-      %td
-        = table_form.text_field :width, :size => '10'
-    %tr
-      %td
-        = table_form.label('height', (t :height))
-      %td
-        = table_form.text_field :height, :size => '10'
-    %tr
-      %td
-      %td
-        = table_form.hidden_field :top, :size => '10'
-    %tr
-      %td
-      %td
-        = table_form.hidden_field :left, :size => '10'
+      %td= table_form.hidden_field :left, :size => '10'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

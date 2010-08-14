@@ -1,29 +1,22 @@
+%h2= @stock.new_record? ? (t '.new_stock') : (t '.edit_stock')
+
 = error_messages_for 'stock'
 
 - form_for @stock do |stock_form|
-  %fieldset
-    %legend= t :stock
-    %table
-      %tr
-        %td
-          = stock_form.label('name', "#{ t :name }*")
-        %td
-          = stock_form.text_field :name, :size => '20'
-      %tr
-        %td
-          = stock_form.label('balance', "#{ t :balance }*")
-        %td
-          = stock_form.text_field :balance, :size => '10'
-      %tr
-        %td
-          = stock_form.label('unit', "#{ t :unit }*")
-        %td
-          %select{ :id => 'stock_unit', :name => 'stock[unit]' }
-            = options_for_select MyGlobals::stock_units, @stock.unit
-      %tr
-        %td
-          = stock_form.label('group', (t :group))
-        %td
-          = stock_form.collection_select :group_id, Group.find(:all), :id, :name, { :include_blank => true }
+  %table
+    %tr
+      %td= stock_form.label('name', Stock.human_attribute_name(:name))
+      %td= stock_form.text_field :name, :size => '20'
+    %tr
+      %td= stock_form.label('balance', Stock.human_attribute_name(:balance))
+      %td= stock_form.text_field :balance, :size => '10'
+    %tr
+      %td= stock_form.label('unit', Stock.human_attribute_name(:unit))
+      %td
+        %select{ :id => 'stock_unit', :name => 'stock[unit]' }
+          = options_for_select MyGlobals::stock_units, @stock.unit
+    %tr
+      %td= stock_form.label('group', Group.human_name)
+      %td= stock_form.collection_select :group_id, Group.find(:all), :id, :name, { :include_blank => true }
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

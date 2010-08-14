@@ -1,13 +1,13 @@
-%h2= t :stocks_menu
+%h2= t('activerecord.models.stock.other')
 
-%p= link_to((t :new), new_stock_path) if @current_user.role >= 2
+%p= link_to((t :new), new_stock_path, :class => 'links') if @current_user.role >= 2
 
 %table
   %tr
-    %th{ :style => 'width:200px' }= t :name
-    %th{ :style => 'width:80px'  }= t :balance
-    %th{ :style => 'width:100px' }= t :unit
-    %th{ :style => 'width:150px' }= t :group
+    %th{ :style => 'width:200px' }= Stock.human_attribute_name(:name)
+    %th{ :style => 'width:80px'  }= Stock.human_attribute_name(:balance)
+    %th{ :style => 'width:100px' }= Stock.human_attribute_name(:unit)
+    %th{ :style => 'width:150px' }= Stock.human_attribute_name(:group)
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
   - @stocks.each do |st|
@@ -18,4 +18,3 @@
       %td= Group.find(st.group_id).name if st.group_id?
       %td= link_to((t :edit), edit_stock_path(st)) if @current_user.role >= 2
       %td= link_to((t :delete), st, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
-

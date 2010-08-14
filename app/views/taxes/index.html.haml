@@ -1,6 +1,6 @@
-%h2= t :taxes_menu
+%h2= t('activerecord.models.tax.other')
 
-%p= link_to((t :new), new_tax_path) if @current_user.role >= 2
+%p= link_to((t :new), new_tax_path, :class => 'links') if @current_user.role >= 2
 
 %table
   %tr
@@ -10,5 +10,5 @@
   - @taxes.each do |ta|
     %tr
       %td= @current_user.role >= 2 ? link_to(ta.name, edit_tax_path(ta)) : ta.name
-      %td= number_to_percentage ta.percent
+      %td= number_to_percentage ta.percent, :precision => 0
       %td= link_to((t :delete), ta, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3

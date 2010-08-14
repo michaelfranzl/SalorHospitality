@@ -131,13 +131,6 @@ en:
       tea: Teacup
       blank: Blank
 
-      violet: Violet
-      orange: Orange
-      pink: Pink
-      green: Green
-      blue: Blue
-      blank: Blank
-
   cost_centers:
     index:
       active: Active
@@ -150,6 +143,11 @@ en:
     new:
       new_group: New Group
       edit_group: Edit Group
+
+  stocks:
+    new:
+      new_stock: New Stock
+      edit_stock: Edit Stock
 
   orders:
     served_by: You were served by
@@ -199,6 +197,21 @@ en:
     weekdays: Weekdays
     journal: Journal (chronological list)
 
+  tables:
+    new:
+      new_table: New Table
+      edit_table: Edit Table
+
+  taxes:
+    new:
+      new_tax: New Tax
+      edit_tax: Edit Tax
+
+  users:
+    new:
+      new_user: New User
+      edit_user: Edit User
+
   delete: Delete
   are_you_sure: 'Are you sure?'
   edit: Edit
@@ -224,7 +237,15 @@ en:
   storno: Storno
   datetime: Date
   sum: Sum
+  count: Count
 
   net: Net
   value_added_tax: VAT
   gross: Gross
+
+  violet: Violet
+  orange: Orange
+  pink: Pink
+  green: Green
+  blue: Blue
+  blank: Blank

@@ -1,6 +1,6 @@
-%h2= t :users_menu
+%h2= t('activerecord.models.user.other')
 
-%p= link_to((t :new), new_user_path) if @current_user.role >= 2
+%p= link_to((t :new), new_user_path, :class => 'links') if @current_user.role >= 2
 
 %table
   %tr
@@ -11,4 +11,4 @@
     %tr
       - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
       %td= disclose ? link_to(u.login, edit_user_path(u)) : u.login
-      %td= link_to((t :delete), u, :confirm => (t :are_you_sure_delete_user, :login => u.login), :method => :delete) if @current_user.role >= 3
+      %td= link_to((t :delete), u, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
