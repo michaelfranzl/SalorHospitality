@@ -1,22 +1,22 @@
 %h2== #{ t :invoice } ##{ @order.id }
 
 %div#buttons
-  %a{ :href => "#{order_path(@order)}.bon", :title => 'Drucken (Bon)' }
+  %a{ :href => "#{order_path(@order)}.bon", :title => (t '.print_invoice') }
     %img{ :src => '/images/button_print.png' }
 
-  %a{ :href => '#', :onclick => "window.print()", :title => 'Drucken (Geschäftsrechnung)' }
+  %a{ :href => '#', :onclick => "window.print()", :title => (t '.print_business_invoice') }
     %img{ :src => '/images/button_print2.png' }
   
-  %a{ :href => '#', :onclick => "history.back(); return false;", :title => 'Zurück' }
+  %a{ :href => '#', :onclick => "history.back(); return false;", :title => (t '.back') }
     %img{ :src => '/images/button_back.png' }
   
-  %a{ :href => "/orders/storno/#{@order.id}", :title => 'Storno' }
+  %a{ :href => "/orders/storno/#{@order.id}", :title => (t :storno) }
     %img{ :src => '/images/button_storno.png' }
   
-  %a{ :href => order_path(@previous_order), :title => 'Nächste Bestellung' }
+  %a{ :href => order_path(@previous_order), :title => (t '.next_invoice') }
     %img{ :src => '/images/button_previous.png' }
   
-  %a{ :href => order_path(@next_order), :title => 'Vorige Bestellung' }
+  %a{ :href => order_path(@next_order), :title => (t '.previous_invoice') }
     %img{ :src => '/images/button_next.png' }
   
 %h3= t "clients.#{MyGlobals.client}.invoice_title"
@@ -27,15 +27,15 @@
   = t "clients.#{MyGlobals.client}.tax_number"
 
 %p== #{ t :served_by } #{ @order.user.title } auf #{ @order.table.name }
-%p== Bestellung am #{l @order.created_at, :format => :long}
+%p== #{l @order.created_at, :format => :long}
 
 %table.printed_invoice
   %tr
-    %th.one= t :tax
-    %th.two= t :item
-    %th.three= t :single
-    %th.four= t :count
-    %th.five= t :sum
+    %th.one= Tax.human_name
+    %th.two= Item.human_name
+    %th.three= t '.item_price'
+    %th.four= t '.count'
+    %th.five= t '.sum'
   - sum_taxes = Array.new(Tax.count, 0)
   - subtotal = 0
   - @order.items.each do |item|
@@ -57,15 +57,15 @@
     %td{ :colspan => 4 }
     %td.five= number_to_currency subtotal
 
-%p Liste aller Steuern:
+%p= t '.list_of_taxes'
 
 %table.printed_taxes
   %tr
-    %th.one= t :tax
-    %th.two Prozentsatz
-    %th.three Netto
-    %th.four USt.
-    %th.five Brutto
+    %th.one= Tax.human_name
+    %th.two= Tax.human_attribute_name(:percent)
+    %th.three= t(:net)
+    %th.four= t(:value_added_tax)
+    %th.five= t(:gross)
   - Tax.all.each do |tax|
     - tax_id = tax.id - 1
     - next if sum_taxes[tax_id] == 0
@@ -75,7 +75,7 @@
     - vat = gro-net
     %tr
       %td.one= "%c:" % [tax.id+64]
-      %td.two= number_to_percentage tax.percent
+      %td.two= number_to_percentage tax.percent, :precision => 0
       %td.three= number_to_currency net
       %td.four= number_to_currency vat
       %td.five= number_to_currency gro

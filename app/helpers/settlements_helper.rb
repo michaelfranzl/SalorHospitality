@@ -1,12 +1,12 @@
 module SettlementsHelper
 
-  def initialize_total_varaibles
+  def initialize_total_variables
     total_net = Array.new(@taxes.size + 1) { 0 }
     total_gro = Array.new(@taxes.size + 1) { 0 }
     return total_net, total_gro
   end
   
-  def initialize_settlement_varaibles
+  def initialize_settlement_variables
     s_net = Array.new(@taxes.size + 1) { 0 }
     s_gro = Array.new(@taxes.size + 1) { 0 }
     return s_net, s_gro

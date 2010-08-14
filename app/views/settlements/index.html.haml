@@ -1,33 +1,33 @@
-- cost_center_header_text = "(#{ t :cost_center } #{@selected_cost_center.name})" if @selected_cost_center
-%h2== #{ t :settlements_menu } #{ cost_center_header_text }
+- cost_center_header_text = "(#{ CostCenter.human_name }: #{@selected_cost_center.name})" if @selected_cost_center
+%h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 - form_tag '/settlements/index' do
-  = label('from', 'von')
+  = label('from', t('.start_date'))
   = select_date(@from, :prefix => 'from')
-  = label('to', 'bis')
+  = label('to', t('.end_date'))
   = select_date(@to, :prefix => 'to')
-  = label('cc', 'Kostenstelle')
+  = label('cc', CostCenter.human_name)
   %select{ :name => 'cost_center_id' }
-    %option{ :value => '' }Alle
+    %option{ :value => '' }= t '.all_cost_centers'
     = options_from_collection_for_select(@cost_centers, :id, :name)
-  = submit_tag 'abfragen'
+  = submit_tag t(:display)
 
 %table{ :class => 'settlements' }
   %tr
-    %th{ :class => 'bb', :style => 'width:40px' }= t :settlement_abbr
-    %th{ :class => 'bb' }= t :datum
-    %th{ :class => 'br bb' }= t :user
+    %th{ :class => 'bb', :style => 'width:40px' }
+    %th{ :class => 'bb' }= t :datetime
+    %th{ :class => 'br bb' }= User.human_name
     - @taxes.each do |tax|
       %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }
     %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :net }
     - @taxes.each do |tax|
-      %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gr} #{ number_to_percentage tax.percent }
-    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gr }
+      %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gross} #{ number_to_percentage tax.percent, :precision => 0 }
+    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gross }
 
-  - total_net, total_gro = initialize_total_varaibles
+  - total_net, total_gro = initialize_total_variables
   - @settlements.each do |s|
       
-    - s_net, s_gro = initialize_settlement_varaibles
+    - s_net, s_gro = initialize_settlement_variables
     - s_gro, total_net, total_gro = calculate_sums(s, s_net, s_gro, total_net, total_gro)
       
     %tr
@@ -42,7 +42,7 @@
       %td{ :class => 'br colsum' }= number_to_currency s_gro.sum
 
   %tr
-    %td{ :colspan => 3, :class => 'br sum' } Summen
+    %td{ :colspan => 3, :class => 'br sum' }= t('.sum_total')
     - @taxes.each do |tax|
       %td{ :class => 'sum' }= number_to_currency total_net[tax.id]
     %td{ :class => 'sum colsum br' }= number_to_currency total_net.sum

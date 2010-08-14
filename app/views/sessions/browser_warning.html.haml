@@ -1,3 +1,3 @@
 %div#login
-  %p Sie verwenden einen anderen Browser als <a target= '_blank' href='http://www.mozilla-europe.org/de/firefox'>Mozilla Firefox</a>. Bill Gastro wurde auf Mozilla Firefox optimiert.
-  %p= link_to 'Weiter', orders_path
+  %p= t('.warning')
+  %p= link_to (t '.continue'), orders_path

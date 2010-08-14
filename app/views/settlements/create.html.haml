@@ -1,4 +1,4 @@
-%h2= t :settlement
+%h2= t('activerecord.models.settlement.other')
 
 = error_messages_for 'settlement'
 
@@ -8,7 +8,7 @@
 
   - if controller.action_name == 'show'
     %tr
-      %td{ :colspan => '3', :class => 'colsum' }= t :revenue
+      %td{ :colspan => '3', :class => 'colsum' }= t '.revenue'
       %td{ :colspan => '2', :class => 'colsum' }= number_to_currency @settlement.revenue
 
   - if controller.action_name == 'edit'

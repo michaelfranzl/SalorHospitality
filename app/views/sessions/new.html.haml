@@ -1,9 +1,9 @@
 %div#login
   - form_tag session_path do
-    = label_tag 'login', (t :login)
+    = label_tag 'login', (t '.username')
     = text_field_tag 'login', MyGlobals.client == 'gastrohelper' ? 'admin' : ''
     %br
-    = label_tag 'password', (t :password)
+    = label_tag 'password', (t '.password')
     = password_field_tag 'password', MyGlobals.client == 'gastrohelper' ? 'admin' : ''
     %br
-    = submit_tag (t :login)
+    = submit_tag (t '.login')

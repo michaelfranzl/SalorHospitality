@@ -1,15 +1,15 @@
-%h2 Storno
+%h2= t :storno
 
 %div.invoice
   = render :partial => 'orders/storno_form', :locals => { :order => @order }
 
 %div#functions
-  %a{ :href => orders_path, :title => 'Bestellungen' }
+  %a{ :href => orders_path, :title => t(:cancel_and_go_back) }
     %img{ :src => '/images/button_tables.png' }
     
-  %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => 'Hinunterscrollen' }
+  %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
     %img{ :src => '/images/button_scrolldown.png' }
       
 %div#footer
-  %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => 'Hinaufscrollen' }
+  %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }
     %img{ :src => '/images/button_scrollup.png' }

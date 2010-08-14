@@ -1,16 +1,19 @@
 %table.detailed_list
   %tr
-    %th{ :style => 'width:200px' }= t :item
-    %th{ :style => 'width:30px' }= t :count
-    %th{ :style => 'width:50px' }= t :single
-    %th{ :style => 'width:80px' }= t :cost_center
-    %th{ :style => 'width:50px' }= t :total
-    %th{ :style => 'width:80px' }= t :order_sums
+    %th{ :style => 'width:200px' }= Item.human_name
+    %th{ :style => 'width:30px' }= t '.count'
+    %th{ :style => 'width:50px' }= t '.item_price'
+    %th{ :style => 'width:80px' }= CostCenter.human_name
+    %th{ :style => 'width:50px' }= t '.total'
+    %th{ :style => 'width:80px' }= t '.revenue'
   - total = 0
   - orders.each do |so|
     %tr
     %tr
-      %td.order_begin{ :colspan => 6 }== #{ link_to("#{ t :order, :count => 1} ##{so.id}", order_path(so)) } auf #{ so.table.name } am #{ l so.created_at, :format => :datetime_iso } #{ link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3 }
+      %td.order_begin{ :colspan => 6 }
+        = t('.order_number_on_table_on_date', :order => Order.human_name, :number => so.id, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
+        = link_to t(:invoice), order_path(so)
+        = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
       - subtotal = 0
       - so.items.each do |item|

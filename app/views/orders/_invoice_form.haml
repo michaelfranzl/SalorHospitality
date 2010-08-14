@@ -5,10 +5,10 @@
       %img{ :src => '/images/button_edit.png' }
   %select#cost_center_for_invoice{ :name => 'cost_center_id' }
     = options_from_collection_for_select(@cost_centers, :id, :name)
-  %input#split_invoice{ :name => 'split', :type => 'image', :src => '/images/button_splitinvoice.png', :title => 'Rechnung teilen' }
-  %input#print_invoice{ :name => 'print', :type => 'image', :src => '/images/button_printok.png', :title => 'Drucken' }
+  %input#split_invoice{ :name => 'split', :type => 'image', :src => '/images/button_splitinvoice.png', :title => t('.split_invoice') }
+  %input#print_invoice{ :name => 'print', :type => 'image', :src => '/images/button_printok.png', :title => t(:print) }
   
-  %h3== #{ t :order, :count => 1} ##{order.id}
+  %h3== #{ t('activerecord.models.order.other')} ##{order.id}
   %p= l order.created_at, :format => :long
   
   %table{ :class => 'invoice' }

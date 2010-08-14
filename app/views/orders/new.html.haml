@@ -14,11 +14,6 @@
     = @order.table.name
 
 
-  - if @current_user.role >= 10 
-    %p
-      = order_form.label(:created_at, (t :creation_date))
-      = order_form.date_select :created_at
-
   %div#categories
     - @categories.each do |category|
       %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "display_articles(#{ category.id }); deselect_all_categories()", :onmouseup => 'highlight_button(this)' }
@@ -33,10 +28,12 @@
   %div#quantities
     %table#quantitiestable
   
+
   %div#items
     %div.ordersum_container
-      SUMME
-      %input#order_sum{ :value => number_with_precision(@order.sum, :precision => 2) } €
+      = t '.sum'
+      = t 'number.currency.format.unit'
+      %input#order_sum{ :value => number_with_precision(@order.sum, :precision => 2) }
     %table#itemstable
       - order_form.fields_for :items do |item_form|
   
@@ -53,15 +50,15 @@
   
   
   %div#functions
-    %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => 'Hinunterscrollen' }
+    %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
       %img{ :src => '/images/button_scrolldown.png' }
       
-    %input{ :name => 'save', :type => 'image', :src => '/images/button_tables.png', :title => 'Übernehmen und zurück' }
-    %input{ :name => 'invoice', :type => 'image', :src => '/images/button_invoice.png', :title => 'Bestellung abschließen' }
+    %input{ :name => 'save', :type => 'image', :src => '/images/button_tables.png', :title => t(:save_and_go_back) }
+    %input{ :name => 'invoice', :type => 'image', :src => '/images/button_invoice.png', :title => t(:finish_order) }
     
-    %a{ :href => '/orders', :title => 'Abbrechen und zurück' }
+    %a{ :href => '/orders', :title => t(:cancel_and_go_back) }
       %img{ :src => '/images/button_cancelsmall.png' }
 
   %div#footer
-    %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => 'Hinaufscrollen' }
+    %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }
       %img{ :src => '/images/button_scrollup.png' }

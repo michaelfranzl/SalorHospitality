@@ -72,132 +72,11 @@ en:
         role: Role
         title: Title
 
-# ==================================================================================
-# Custom messages
-# ==================================================================================
 
-  hello_world: Hello World
-
-  language: Language
-
-  please_login: Bitte log in
-  login: Login
-  logout: Logout
-  logged_out: Logged out
-  password: Password
-  this_is_a_demo_app: This is a Demo-Application. Please try all features!
-  logged_in_as: Logged in as
-  are_you_sure_delete_user: 'Are you sure you want to delete user "{{login}}"?'
-
-
-
-
-  save: Save
-  finished: Finished
-
-  creation_date: Date
-
-  table: Table
-  tables_menu: Tables
-  width: Width
-  height: Length
-
-  user: User
-  users_menu: Users
-
-  title: Whole Name
-  served_by: You were served by
-
-  tax: Tax
-  taxes_menu: Taxes
-
-  group: Group
-  groups_menu: Groups
-
-  stock: Stock
-  stocks_menu: Stocks
-
-  category: Category
-  categories_menu: Categories
-
-  article: Article
-  articles_menu: Articles
-  all_articles: All Articles
-  new_article: New Article
-  edit_article: Edit Article
-  add_article: 'Add Article:'
-
-  ingredient: Ingredient
-  ingredients: Ingredients
-
-
-  settlement: Settlement
-  settlements_menu: Settlements
-  settlement_abbr: 'Stlmnts.'
-
-  waiterpad: Waiterpad
-
-  blackboard: Blackboard
-
-  revenue: Waiter Revenue
-
-  password: Password
-  name: Name
-  role: Role
-  login: Login
-  description: Description
-  percent: Percent
-  unit: Unit
-  balance: Balance
-  menucard: Menucard
-  price: Price
-
-  format_for_online_backboard: "Format for online blackboard"
-  division: Division
-  sort_id: Sort order
-  add_ingredient: Add ingredient
-
-  sum: Sum
-  gr: 'gr.'
-  net: 'net.'
-  diff: 'Diff.'
-  datum: Date
-
-  count: Count
-  single: Single
-  total: Total
-
-  order_sums: Order Sums
-  order:
-    one: Order
-    other: Orders
-  orders_menu: Orders
-  new_order: New Order
-  orders: All Orders
-  open_orders: Open Orders
-  partial_order: Partial Order
-  item: Item
-  free: free
-
-# User Roles
-  restaurant: Restaurant
-  waiter: Waiter
-  admin: Admin
-  su: SuperUser
-
-  statistics: Statistics
-  weekdays: Weekdays
-  journal: Journal
-
-  already_created_articles: Already created Articles
-  create_a_series_of_foods: Simple Foodstuff creation
-
-  print_preview: Print Preview
-  online_preview: Preview
-
-  amount: Amount
-
-#######################
+  time:
+    formats:
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      date_iso: "%Y-%m-%d"
 
   articles:
     index:
@@ -272,11 +151,56 @@ en:
       new_group: New Group
       edit_group: Edit Group
 
+  orders:
+    served_by: You were served by
+    new:
+      sum: SUM
+    show:
+      print_invoice: Print invoice
+      print_business_invoice: Print business invoice
+      back: Back
+      previous_invoice: Previous invoice
+      next_invoice: Next invoice
+      item_price: Unit price
+      count: Count
+      sum: Sum
+      list_of_taxes: List of taxes
+    unsettled:
+      make_settlement: Make settlement
+    invoice_form:
+      split_invoice: Split invoice
+
+  settlements:
+    index:
+      start_date: Start date
+      end_date: End date
+      all_cost_centers: All
+      sum_total: Sum total
+    new:
+      set_date: Set a date for this settlement
+    detailed_list:
+      order_number_on_table_on_date: '{{order}} number {{number}} on {{table}} at {{time}}'
+      count: Count
+      item_price: Unit Price
+      total: Total
+      revenue: Revenue
+
+  sessions:
+    browser_warning:
+      warning: You don't use Firefox web browser. Bill Gastro was optimized for Firefox.
+      continue: Continue
+    new:
+      username: User
+      login: Login
+      password: Password
+
   delete: Delete
   are_you_sure: 'Are you sure?'
   edit: Edit
   create: Create
   new: New
+  print: Print
+  display: Display
   
   blackboard_generic_name: Blackboard
   waiterpad_generic_name: Waiterpad
@@ -285,3 +209,17 @@ en:
 
   print_kitchenlist: Print Kitchen Item List
   recent_orders: View recent orders
+  scroll_down: Scroll down
+  scroll_up: Scroll up
+  save_and_go_back: Save and go back
+  cancel_and_go_back: Cancel and go back
+  finish_order: Finish order
+
+  invoice: Invoice
+  storno: Storno
+  datetime: Date
+  sum: Sum
+
+  net: Net
+  value_added_tax: VAT
+  gross: Gross
