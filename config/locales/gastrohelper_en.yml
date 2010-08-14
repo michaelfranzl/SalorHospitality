@@ -45,10 +45,10 @@ en:
         name: Name
         description: Description
       quantity:
-        name: abc
-        price:
-        active:
-        hidden:
+        name: Variant Name
+        price: Variant Price
+        active: active
+        hidden: hidden
       tax:
         percent: Tax
         name: Name

@@ -45,8 +45,8 @@ de:
         name: Name
         description: Beschreibung
       quantity:
-        name: Name
-        price: Preis
+        name: Variantenname
+        price: Variantenpreis
         active: aktiv
         hidden: versteckt
       tax:
