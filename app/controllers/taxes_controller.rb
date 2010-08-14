@@ -24,7 +24,6 @@ class TaxesController < ApplicationController
 
   def destroy
     @tax = Tax.find(params[:id])
-    flash[:notice] = "Die Steuerklasse \"#{ @tax.name }\" wurde erfolgreich geloescht."
     @tax.destroy
     redirect_to taxes_path
   end

@@ -73,11 +73,6 @@ en:
         title: Title
 
 
-  time:
-    formats:
-      datetime_iso: "%Y-%m-%d %H:%M:%S"
-      date_iso: "%Y-%m-%d"
-
   articles:
     index:
       quick_food_article_creation: Quick
@@ -219,6 +214,7 @@ en:
   new: New
   print: Print
   display: Display
+  logout: 'log out {{who}}'
   
   blackboard_generic_name: Blackboard
   waiterpad_generic_name: Waiterpad
@@ -248,4 +244,18 @@ en:
   pink: Pink
   green: Green
   blue: Blue
-  blank: Blank
+  blank: blank
+
+
+# TRANSLATIONS FOR MODELS
+  must_be_entered_either_for_article_or_for_quantity: must be entered either for the Article or for the Variant.
+  is_no_number: is not a number.
+
+# TRANSLATIONS FOR CONTROLLERS
+  all_foods_were_removed_from_the_menucard: All foods were remove from the menucard.
+  category_was_successfully_deleted: 'Category {{category}} was successfully deleted.'
+  cost_center_was_successfully_deleted: 'Cost Center {{cost_center}} was successfully deleted.'
+  table_was_successfully_deleted: '{{table}} was successfully deleted.'
+  there_are_no_open_settlements: There are no open settlements.
+  logout_successful: You have logged off successfully.
+  user_not_found: User not found

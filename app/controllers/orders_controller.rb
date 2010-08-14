@@ -81,12 +81,11 @@ class OrdersController < ApplicationController
     end
     unsettled_userIDs.uniq!
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
-    flash[:notice] = 'Es gibt keine ausständigen Abrechnungen' if @unsettled_users.empty?
+    flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
   end
   
   def destroy
     @order = Order.find(params[:id])
-    flash[:notice] = "Die Bestellung Nr. \"#{ @order.id }\" wurde erfolgreich geloescht."
     @order.destroy
     redirect_to orders_path
   end

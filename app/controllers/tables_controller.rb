@@ -40,7 +40,7 @@ class TablesController < ApplicationController
 
   def destroy
     @table = Table.find(params[:id])
-    flash[:notice] = "Der Tisch \"#{ @table.name }\" wurde erfolgreich geloescht."
+    flash[:notice] = t(:table_was_successfully_deleted, :table => @table.name)
     @table.destroy
     redirect_to tables_path
   end

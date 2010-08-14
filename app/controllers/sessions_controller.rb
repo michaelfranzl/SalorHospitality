@@ -16,14 +16,14 @@ skip_before_filter :fetch_logged_in_user
       session[:user_id] = @current_user.id
       (request.user_agent[0..6] != 'Mozilla' or request.user_agent[25..28] == 'MSIE') ? redirect_to('/session/browser_warning') : redirect_to(orders_path)
     else
-      flash[:error] = 'User nicht gefunden.'
+      flash[:error] = t(:user_not_found)
       render :action => 'new'
     end
   end
 
   def destroy
     session[:user_id] = @current_user = nil
-    flash[:notice] = 'Logout erfolgreich.'
+    flash[:notice] = t(:logout_successful)
     redirect_to new_session_path
   end
 

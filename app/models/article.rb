@@ -34,14 +34,14 @@ class Article < ActiveRecord::Base
   validates_presence_of :name, :type, :category_id
   
   validates_each :price do |record, attr_name, value|
-    record.errors.add(attr_name, 'muss entweder beim Artikel selbst oder bei der Artikelmenge angegeben werden.') if record.quantities.empty? and !value
+    record.errors.add(attr_name, I18n.t(:must_be_entered_either_for_article_or_for_quantity)) if record.quantities.empty? and !value
     
     if record.quantities.empty?
       raw_value = record.send("#{attr_name}_before_type_cast") || value
       begin
         raw_value = Kernel.Float(raw_value)
       rescue ArgumentError, TypeError
-        record.errors.add(attr_name, 'ist keine Zahl', :value => raw_value)
+        record.errors.add(attr_name, I18n.t(:is_no_number), :value => raw_value)
       end
     end
   end

@@ -72,12 +72,6 @@ de:
         role: Rolle
         title: Anrede
 
-
-  time:
-    formats:
-      datetime_iso: "%Y-%m-%d %H:%M:%S"
-      date_iso: "%Y-%m-%d"
-
   articles:
     index:
       quick_food_article_creation: Schnell
@@ -219,6 +213,7 @@ de:
   new: Neu
   print: Drucken
   display: Anzeigen
+  logout: '{{who}} abmelden'
   
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
@@ -249,3 +244,16 @@ de:
   green: Grün
   blue: Blau
   blank: Leer
+
+# TRANSLATIONS FOR MODELS
+  must_be_entered_either_for_article_or_for_quantity: muss entweder beim Artikel oder bei der Variante eingegeben werden.
+  is_no_number: ist keine Zahl
+
+# TRANSLATIONS FOR CONTROLLERS
+  all_foods_were_removed_from_the_menucard: Alle Speisen wurden aus der Menükarte entfernt.
+  category_was_successfully_deleted: 'Die Kategorie {{category}} wurde erfolgreich gelöscht.'
+  cost_center_was_successfully_deleted: 'Die Kostenstelle {{cost_center}} wurde erfolgreich gelöscht.'
+  table_was_successfully_deleted: '{{table}} wurde erfolgreich gelöscht.'
+  there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
+  logout_successful: Sie haben sich erfolgreich abgemeldet.
+  user_not_found: Benutzer nicht gefunden.

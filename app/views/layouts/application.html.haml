@@ -50,7 +50,7 @@
                   = link_to( t('activerecord.models.user.other'), users_path)
                   = link_to( t('activerecord.models.table.other'), tables_path)
                   = link_to( t('statistic'), statistics_path)
-                = link_to "#{ t :logout } #{ @current_user.login}", session_path, :method => :delete
+                = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete
 
       #main
         .flash

@@ -5,7 +5,7 @@
   %a#go_back{ :href => '#', :onclick => "history.back(); return false;", :title => (t :cancel_and_go_back) }
     %img{ :src => '/images/button_back.png' }
   
-  %h3== #{ t :order, :count => 1} ##{order.id}
+  %h3== #{ Order.human_name } ##{order.id}
   %p= l order.created_at, :format => :long
   
   %table{ :class => 'invoice' }

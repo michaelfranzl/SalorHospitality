@@ -29,7 +29,6 @@ class StocksController < ApplicationController
 
   def destroy
     @stock = Stock.find(params[:id])
-    flash[:notice] = "Der Lagerbestand \"#{ @stock.name }\" wurde erfolgreich geloescht."
     @stock.destroy
     redirect_to stocks_path
   end

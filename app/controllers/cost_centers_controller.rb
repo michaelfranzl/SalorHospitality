@@ -24,7 +24,7 @@ class CostCentersController < ApplicationController
 
   def destroy
     @cost_center = CostCenter.find(params[:id])
-    flash[:notice] = "Die Kostenstelle \"#{ @cost_center.name }\" wurde erfolgreich geloescht."
+    flash[:notice] = t(:cost_center_was_successfully_deleted, :cost_center => @cost_center.name)
     @cost_center.destroy
     redirect_to cost_centers_path
   end

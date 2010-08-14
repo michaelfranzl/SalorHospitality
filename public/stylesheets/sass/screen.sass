@@ -107,9 +107,9 @@ div#login
   
 //normal style definitions =============================
 
+
 div.fieldWithErrors
-  :border 6px solid red
-  :-moz-border-radius 3px
+  :color red
       
 div.adminlinks
   :padding 10px
@@ -306,14 +306,10 @@ div.flash_error
 
 //RAILS styles==============================
 
-.fieldWithErrors
-  :display inline
-  label
-    :color = !error_text
-
 .errorExplanation
   :font-size small
   :color = !error_text
+  :margin-top 30px
   h2
     :font-size 110%
 

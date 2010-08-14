@@ -36,7 +36,7 @@ class ArticlesController < ApplicationController
 
   def remove_all_foods_from_menucard
     Article.update_all "menucard = false, blackboard = false, waiterpad = false", :category_id => 1..3
-    flash[:notice] = 'Alle Speisen wurden aus dem Menue entfernt.'
+    flash[:notice] = t(:all_foods_were_removed_from_the_menucard)
     redirect_to quick_foods_articles_path
   end
 
@@ -65,7 +65,7 @@ class ArticlesController < ApplicationController
   def update
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
-    @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't get always id's only.
+    @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
     @article.update_attributes params[:article]
     MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
 
