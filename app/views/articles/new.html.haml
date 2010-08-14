@@ -79,9 +79,9 @@
 
         - if @current_user.role > 4
           %td
-            = quantity_form.label('_delete', (t :delete))
+            = quantity_form.label('_destroy', (t :destroy))
           %td
-            = quantity_form.check_box :_delete
+            = quantity_form.check_box :_destroy
 
   %p
     %small= add_quantity_link((t '.add_quantity'), article_form)

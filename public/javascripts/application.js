@@ -49,7 +49,7 @@ function decrement_item(desig) {
 
   if (i < 2) {
     Effect.DropOut('item_' + desig );
-    $('order_items_attributes_' + desig + '__delete').value = 1;
+    $('order_items_attributes_' + desig + '__destroy').value = 1;
   };
 
   if (i > 0) {

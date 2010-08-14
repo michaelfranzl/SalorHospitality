@@ -9,4 +9,4 @@
 %input{ :id => "order_items_attributes_#{ @designator }_quantity_id", :name => "order[items_attributes][#{ @designator }][quantity_id]", :type => 'hidden', :value => "#{ @quantityid }" }
 %input{ :id => "order_items_attributes_#{ @designator }_sort", :name => "order[items_attributes][#{ @designator }][sort]", :type => 'hidden', :value => "#{ @sort }" }
 %input.price{ :id => "#{ @designator }_price", :type => 'hidden', :value => "#{ @price }" }
-%input{ :id => "order_items_attributes_#{ @designator }__delete", :name => "order[items_attributes][#{ @designator }][_delete]", :type => 'hidden', :value => '0' }
+%input{ :id => "order_items_attributes_#{ @designator }__destroy", :name => "order[items_attributes][#{ @designator }][_destroy]", :type => 'hidden', :value => '0' }
