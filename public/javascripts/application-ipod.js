@@ -3,7 +3,11 @@ function category_onmousedown(category_id) {
 }
 
 function articles_onmousedown(element) {
-  Effect.ScrollTo('quantities',75); highlight_button(element); deselect_all_articles();
+  highlight_button(element); deselect_all_articles();
+}
+
+function display_quantities(art_id) {
+  $('article_' + art_id).insert({ bottom: '<table>' + quantitylist[art_id] + '</table>' });
 }
 
 function quantities_onmousedown(element) {

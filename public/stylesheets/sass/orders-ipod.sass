@@ -1,0 +1,67 @@
+!buttoncolor = #27343b
+!itembgcolor = #556
+!articlelistbgcolor = #3a474d
+
+div.category
+  :width 75px
+  :height 75px
+  :float left
+  :background-repeat no-repeat
+  :background-position center center
+  :overflow hidden
+
+div.category,
+td.article,
+td.quantity,
+td.item_count,
+td.item_plusminus,
+td.item_label,
+div.ordersum_container
+  :border-top 2px solid #555
+  :border-left 2px solid #555
+  :border-right 2px solid #222
+  :border-bottom 2px solid #222
+
+div.category_label
+  :width 65px
+  :height 65px
+  :font-size 9px
+  :text-transform uppercase
+  :position relative
+  span
+    :position absolute
+    :top 66px
+    :left 2px
+
+div#articles
+  :clear both
+
+td#article
+  :height 40px
+
+
+td.article,
+td.quantity
+  :background-color = !buttoncolor
+  :height 30px
+  :vertical-align middle
+  :padding-left 10px
+
+
+
+td.item_count
+  :cursor pointer
+  :width 30px
+  :background-color = #3a474d
+  :text-align center
+
+td.item_plusminus
+  :width 30px
+  :cursor pointer
+  :background-color = #3a474d
+  :text-align center
+
+td.item_label
+  :cursor pointer
+  :background-color = !articlelistbgcolor
+  :min-height 30px

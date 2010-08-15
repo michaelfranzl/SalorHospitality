@@ -9,3 +9,7 @@ function articles_onmousedown(element) {
 function quantities_onmousedown(element) {
   highlight_button(element);
 }
+
+function display_quantities(art_id) {
+  $('quantitiestable').innerHTML = quantitylist[art_id];
+}

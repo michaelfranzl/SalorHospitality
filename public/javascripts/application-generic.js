@@ -3,9 +3,7 @@ function display_articles(cat_id) {
   $('quantitiestable').innerHTML = '&nbsp;';
 }
 
-function display_quantities(art_id) {
-  $('quantitiestable').innerHTML = quantitylist[art_id];
-}
+
 
 function add_new_item_q(qu_id) {
   var timestamp = new Date().getTime();
