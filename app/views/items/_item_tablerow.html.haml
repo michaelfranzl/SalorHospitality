@@ -1,0 +1,5 @@
+%tr{ :id => "item_#{ @designator }", :class => "item" }
+  %td{ :id => "count_#{ @designator }", :class => 'item_count', :onclick => "increment_item('#{ @designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= @count
+  %td{ :id => "label_#{ @designator }", :class => 'item_label', :onclick => "increment_item('#{ @designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= @label
+  %td{ :id => "minus_#{ @designator }", :class => 'item_plusminus', :onclick => "decrement_item('#{ @designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
+  %td{ :id => "remove_#{ @designator }", :class => 'item_plusminus', :onclick => "remove_item('#{ @designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }X

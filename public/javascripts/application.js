@@ -1,5 +1,6 @@
 function display_articles(cat_id) {
-  $('articlestable').innerHTML = articleslist[cat_id]; $('quantitiestable').innerHTML = '&nbsp;';
+  $('articlestable').innerHTML = articleslist[cat_id];
+  $('quantitiestable').innerHTML = '&nbsp;';
 }
 
 function display_quantities(art_id) {
@@ -11,31 +12,31 @@ function add_new_item_q(qu_id) {
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
 
-  new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, desig);
-  new_item_html_modified = new_item_html_modified.replace(/SORT/g, sort );
-  new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_q[qu_id][5] );
-  new_item_html_modified = new_item_html_modified.replace(/PRICE/g,  itemdetails_q[qu_id][3] );
-  new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_q[qu_id][0] );
-  new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, qu_id );
-  $('itemstable').insert({ top: new_item_html_modified });
-  var sum = calculate_sum();
-  $('order_sum').value = sum.toFixed(2).replace('.', ',');
+  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/,desig).replace(/SORT/,sort).replace(/LABEL/,itemdetails_q[qu_id][5]).replace(/PRICE/,itemdetails_q[qu_id][3]).replace(/ARTICLEID/,itemdetails_q[qu_id][0]).replace(/QUANTITYID/,qu_id);
+
+  new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/,desig).replace(/SORT/,sort).replace(/LABEL/,itemdetails_q[qu_id][5]).replace(/PRICE/,itemdetails_q[qu_id][3]).replace(/ARTICLEID/,itemdetails_q[qu_id][0]).replace(/QUANTITYID/,qu_id);
+
+  $('itemstable').insert({ top: new_item_tablerow_modified });
+  $('inputfields').insert({ top: new_item_inputfields_modified });
+  //var sum = calculate_sum();
+  //$('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
 function add_new_item_a(art_id) {
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
-  new_item_html_modified = new_item_html.replace(/DESIGNATOR/g, desig);
-  new_item_html_modified = new_item_html_modified.replace(/SORT/g, sort);
-  new_item_html_modified = new_item_html_modified.replace(/LABEL/g,  itemdetails_a[art_id][5] );
-  new_item_html_modified = new_item_html_modified.replace(/PRICE/g,  itemdetails_a[art_id][3] );
-  new_item_html_modified = new_item_html_modified.replace(/ARTICLEID/g, itemdetails_a[art_id][0] );
-  new_item_html_modified = new_item_html_modified.replace(/QUANTITYID/g, '' );
+
+  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/,desig).replace(/SORT/,sort).replace(/LABEL/,itemdetails_a[art_id][5]).replace(/PRICE/,itemdetails_a[art_id][3]).replace(/ARTICLEID/,itemdetails_a[art_id][0]).replace(/QUANTITYID/,'');
+
+  new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/,desig).replace(/SORT/,sort).replace(/LABEL/,itemdetails_a[art_id][5]).replace(/PRICE/,itemdetails_a[art_id][3]).replace(/ARTICLEID/,itemdetails_a[art_id][0]).replace(/QUANTITYID/,'');
+
+  $('itemstable').insert({ top: new_item_tablerow_modified });
+  $('inputfields').insert({ top: new_item_inputfields_modified });
   document.getElementById('quantitiestable').innerHTML = '&nbsp;';
-  $('itemstable').insert({ top: new_item_html_modified });
-  var sum = calculate_sum();
-  $('order_sum').value = sum.toFixed(2).replace('.', ',');
+
+  //var sum = calculate_sum();
+  //$('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
 function increment_item(desig) {
@@ -71,7 +72,7 @@ function deselect_all_categories() {
   var container = document.getElementById("categories");
   var cats = container.children;
   for(c in cats) {
-    cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
+    //cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
   }
 }
 
@@ -80,7 +81,7 @@ function deselect_all_articles() {
   var container = document.getElementById("articlestable");
   var arts = container.rows;
   for(count in arts) {
-    arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
+    //arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
   }
 }
 

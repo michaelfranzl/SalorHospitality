@@ -36,7 +36,6 @@
       %input#order_sum{ :value => number_with_precision(@order.sum, :precision => 2) }
     %table#itemstable
       - order_form.fields_for :items do |item_form|
-  
         - item = item_form.object
         - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
         - @sort = item.sort
@@ -45,10 +44,21 @@
         - @quantityid = item.quantity_id
         - @count = item.count
         - @label = compose_item_label(item.quantity ? item.quantity : item.article)
-                                
-        = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
-  
-  
+        = render 'items/item_tablerow', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
+
+    %div#inputfields
+      - order_form.fields_for :items do |item_form|
+        - item = item_form.object
+        - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
+        - @sort = item.sort
+        - @articleid = item.article_id
+        - @price = item.quantity ? item.quantity.price : item.article.price
+        - @quantityid = item.quantity_id
+        - @count = item.count
+        - @label = compose_item_label(item.quantity ? item.quantity : item.article)
+        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
+
+
   %div#functions
     %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
       %img{ :src => '/images/button_scrolldown.png' }
@@ -58,6 +68,7 @@
     
     %a{ :href => '/orders', :title => t(:cancel_and_go_back) }
       %img{ :src => '/images/button_cancelsmall.png' }
+
 
   %div#footer
     %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }

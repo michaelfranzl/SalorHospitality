@@ -18,10 +18,13 @@ module OrdersHelper
     @label = 'LABEL'
     @count = 1
 
-    new_item_html = render 'items/item', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :price => @price }
-    new_item_html_var = "\n\nvar new_item_html = \"#{ escape_javascript new_item_html }\""
+    new_item_tablerow = render 'items/item_tablerow', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :price => @price }
+    new_item_tablerow_var = "\n\nvar new_item_tablerow = \"#{ escape_javascript new_item_tablerow }\""
 
-    return  new_item_html_var
+    new_item_inputfields = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :price => @price }
+    new_item_inputfields_var = "\n\nvar new_item_inputfields = \"#{ escape_javascript new_item_inputfields }\""
+
+    return  new_item_tablerow_var, new_item_inputfields_var
   end
 
 end
