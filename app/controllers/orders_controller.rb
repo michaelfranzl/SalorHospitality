@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    debugger
     @order = Order.new(params[:order])
     session[:last_user_id] = @order.user_id
     @categories = Category.find(:all, :order => :sort_order)
@@ -54,6 +55,7 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
+    debugger
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     save = params.has_key?('save.x')

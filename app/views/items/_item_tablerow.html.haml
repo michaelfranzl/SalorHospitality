@@ -1,5 +1,5 @@
 %tr{ :id => "item_#{ locals[:designator] }", :class => "item" }
-  %td{ :id => "count_#{ locals[:designator] }", :class => 'item_count', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= @count
-  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= @label
+  %td{ :id => "count_#{ locals[:designator] }", :class => 'item_count', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:count]
+  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:label]
   %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
   %td{ :id => "remove_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "remove_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }X

@@ -16,7 +16,7 @@
 
   %div#categories
     - @categories.each do |category|
-      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "display_articles(#{ category.id }); deselect_all_categories()", :onmouseup => 'highlight_button(this)' }
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "Effect.ScrollTo('articles',100,{axis:'x'}); display_articles(#{ category.id }); deselect_all_categories(); ", :onmouseup => 'highlight_button(this)' }
         %div{ :class => "category_label" }
           %span= category.name
   
@@ -46,12 +46,12 @@
         - @quantityid = item.quantity_id
         - @count = item.count
         - @label = compose_item_label(item.quantity ? item.quantity : item.article)
-        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
-        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :label => @label }
+        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price, :label => @label }
+        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :label => @label, :label => @label }
 
     %table#itemstable
       - @parameters.each do |@p|
-        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :price => @p[:price] }
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :price => @p[:price], :label => @p[:label] }
 
 
   %div#functions

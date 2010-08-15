@@ -4,6 +4,9 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+    - if request.user_agent[13..16] == 'iPod'
+      %meta{ 'name' => "viewport", :content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" }
+      %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
     - case MyGlobals.client
       - when 'stempel'
         %title Gasthaus Stempel
@@ -13,10 +16,14 @@
         %title Lokal
       - else
         %title gastrohelper
-    
-    = stylesheet_link_tag 'screen', :media => 'screen'
+
+    - if request.user_agent[13..16] == 'iPod'
+      = stylesheet_link_tag('ipod', :media => 'screen')
+      = stylesheet_link_tag('orders-ipod', :media => 'screen')
+    - else
+      = stylesheet_link_tag('screen', :media => 'screen')
+      = stylesheet_link_tag('orders', :media => 'screen')
     - if logged_in?
-      = stylesheet_link_tag controller.controller_name, :media => 'screen' if controller.controller_name == 'orders'
       = stylesheet_link_tag 'print', :media => 'print'
       = javascript_include_tag 'prototype.js'
       = javascript_include_tag 'effects.js'

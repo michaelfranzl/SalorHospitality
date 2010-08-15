@@ -1,7 +1,7 @@
-%div{ :id => "fields_for_item_#{ @designator }" }
-  %input.count{ :id => "order_items_attributes_#{ @designator }_count", :name => "order[items_attributes][#{ @designator }][count]", :type => 'hidden', :value => "#{ @count }" }
-  %input{ :id => "order_items_attributes_#{ @designator }_article_id", :name => "order[items_attributes][#{ @designator }][article_id]", :type => 'hidden', :value => "#{ @articleid }" }
-  %input{ :id => "order_items_attributes_#{ @designator }_quantity_id", :name => "order[items_attributes][#{ @designator }][quantity_id]", :type => 'hidden', :value => "#{ @quantityid }" }
-  %input{ :id => "order_items_attributes_#{ @designator }_sort", :name => "order[items_attributes][#{ @designator }][sort]", :type => 'hidden', :value => "#{ @sort }" }
-  %input.price{ :id => "#{ @designator }_price", :type => 'hidden', :value => "#{ @price }" }
-  %input{ :id => "order_items_attributes_#{ @designator }__destroy", :name => "order[items_attributes][#{ @designator }][_destroy]", :type => 'hidden', :value => '0' }
+%div{ :id => "fields_for_item_#{ locals[:designator] }" }
+  %input.count{ :id => "order_items_attributes_#{ locals[:designator] }_count", :name => "order[items_attributes][#{ locals[:designator] }][count]", :type => 'hidden', :value => "#{ locals[:count] }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_article_id", :name => "order[items_attributes][#{ locals[:designator] }][article_id]", :type => 'hidden', :value => "#{ locals[:articleid] }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_quantity_id", :name => "order[items_attributes][#{ locals[:designator] }][quantity_id]", :type => 'hidden', :value => "#{ locals[:quantityid] }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_sort", :name => "order[items_attributes][#{ locals[:designator] }][sort]", :type => 'hidden', :value => "#{ locals[:sort] }" }
+  %input.price{ :id => "#{ locals[:designator] }_price", :type => 'hidden', :value => "#{ @price }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }__destroy", :name => "order[items_attributes][#{ locals[:designator] }][_destroy]", :type => 'hidden', :value => '0' }
