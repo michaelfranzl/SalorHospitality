@@ -34,19 +34,9 @@
       = t '.sum'
       = t 'number.currency.format.unit'
       %input#order_sum{ :value => number_with_precision(@order.sum, :precision => 2) }
-    %table#itemstable
-      - order_form.fields_for :items do |item_form|
-        - item = item_form.object
-        - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
-        - @sort = item.sort
-        - @articleid = item.article_id
-        - @price = item.quantity ? item.quantity.price : item.article.price
-        - @quantityid = item.quantity_id
-        - @count = item.count
-        - @label = compose_item_label(item.quantity ? item.quantity : item.article)
-        = render 'items/item_tablerow', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
 
     %div#inputfields
+      - @parameters = Array.new
       - order_form.fields_for :items do |item_form|
         - item = item_form.object
         - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
@@ -57,6 +47,11 @@
         - @count = item.count
         - @label = compose_item_label(item.quantity ? item.quantity : item.article)
         = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :price => @price }
+        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :label => @label }
+
+    %table#itemstable
+      - @parameters.each do |@p|
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :price => @p[:price] }
 
 
   %div#functions
