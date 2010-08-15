@@ -125,3 +125,17 @@ function mark_item_for_storno(list_id, order_id, item_id) {
   }
 }
 
+
+// VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON IPOD
+
+function category_onmouseup(element) {
+  highlight_button(element);
+}
+
+function articles_onmouseup(element) {
+  highlight_button(element);
+}
+
+function quantities_onmouseup(element) {
+  restore_button(element);
+}

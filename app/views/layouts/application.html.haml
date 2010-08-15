@@ -20,16 +20,19 @@
     - if request.user_agent[13..16] == 'iPod'
       = stylesheet_link_tag('ipod', :media => 'screen')
       = stylesheet_link_tag('orders-ipod', :media => 'screen')
+      = javascript_include_tag 'application-ipod.js'
     - else
       = stylesheet_link_tag('screen', :media => 'screen')
       = stylesheet_link_tag('orders', :media => 'screen')
+      = javascript_include_tag 'application-workstation.js'
+
     - if logged_in?
       = stylesheet_link_tag 'print', :media => 'print'
+      = javascript_include_tag 'application-generic.js'
       = javascript_include_tag 'prototype.js'
       = javascript_include_tag 'effects.js'
       = javascript_include_tag 'dragdrop.js' if @current_user.role >= 2
       // javascript_include_tag 'controls.js'
-      = javascript_include_tag 'application.js'
       = javascript_include_tag "/articles.js?#{MyGlobals.last_js_change}" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
       %script{ :type => 'text/javascript' }= toggle_admin_interface
 

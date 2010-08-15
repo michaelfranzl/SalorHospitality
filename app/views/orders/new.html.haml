@@ -16,7 +16,7 @@
 
   %div#categories
     - @categories.each do |category|
-      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "Effect.ScrollTo('articles',100,{axis:'x'}); display_articles(#{ category.id }); deselect_all_categories(); ", :onmouseup => 'highlight_button(this)' }
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id })", :onmouseup => 'category_onmouseup(this)' }
         %div{ :class => "category_label" }
           %span= category.name
   
