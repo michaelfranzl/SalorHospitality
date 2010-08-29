@@ -58,5 +58,9 @@ class Article < ActiveRecord::Base
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)
     name + descr
   end
+  
+  def options
+    return self.category.options
+  end
 
 end
