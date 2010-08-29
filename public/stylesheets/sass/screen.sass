@@ -60,6 +60,7 @@ div#main
   :min-height 560px
   :width 930px
   :margin auto
+  :position relative
 
 div.metaelements
   :float right
@@ -82,10 +83,11 @@ div#functions
   :float right
   :width 4%
   :vertical-align top
-  :margin-right 10px
-  a, input
+  :margin-right 3px
+  :padding-top 70px
+  a, div
     :cursor pointer
-    :margin-bottom 10px
+    :margin-bottom 20px
 
 div#footer
   :height 50px
@@ -481,8 +483,18 @@ div.iconbutton
   :height 54px
   :margin 5px
 
-div.scrolldown_button
+a.scrolldown_button
+  :position absolute
+  :top 15px
+  :right 0px
+
+div.scrolldown
   :background-image url(/images/button_ipod_scrolldown.png)
+
+a.scrollup_button
+  :position absolute
+  :bottom 0px
+  :right 0px
 
 div.scrollup_button
   :background-image url(/images/button_ipod_scrollup.png)
