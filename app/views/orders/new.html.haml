@@ -5,6 +5,8 @@
 
 - form_for :order, @order, :url => path, :html => { :method => method, :name => 'itemform' } do |order_form|
 
+  = hidden_field_tag 'order_action', 'unset'
+
   %div.waiter
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => true }
 
@@ -56,15 +58,18 @@
 
   %div#functions
     %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
-      %img{ :src => '/images/button_scrolldown.png' }
-      
-    %input{ :name => 'save', :type => 'image', :src => '/images/button_tables.png', :title => t(:save_and_go_back) }
-    %input{ :name => 'invoice', :type => 'image', :src => '/images/button_invoice.png', :title => t(:finish_order) }
+      %div.iconbutton.scrolldown_button
+
+    %a{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back) }
+      %div.iconbutton.tables_button
+
+    %a{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :title => t(:finish_order) }
+      %div.iconbutton.invoice_button
     
     %a{ :href => '/orders', :title => t(:cancel_and_go_back) }
-      %img{ :src => '/images/button_cancelsmall.png' }
+      %div.iconbutton.cancel_button
 
 
   %div#footer
     %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }
-      %img{ :src => '/images/button_scrollup.png' }
+      %div.iconbutton.scrollup_button

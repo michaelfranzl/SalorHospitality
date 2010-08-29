@@ -48,22 +48,17 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    invoice = params.has_key?('invoice.x')
-    save = params.has_key?('save.x')
-    @order.save ? process_order(@order, save, invoice, false, false, false) : render(:new)
+    order_action = params[:order_action]
+    @order.save ? process_order(@order, order_action) : render(:new)
   end
 
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    save = params.has_key?('save.x')
-    invoice = params.has_key?('invoice.x')
-    print = params.has_key?('print.x')
-    split = params.has_key?('split.x')
-    storno = params.has_key?('storno.x')
+    order_action = params[:order_action]
     if @order.update_attributes(params[:order])
-      process_order(@order, save, invoice, print, split, storno)
+      process_order(@order, order_action)
       @order.update_attribute( :sum, calculate_order_sum(@order) )
     else
       render(:new)
@@ -102,7 +97,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    def process_order(order, save, invoice, print, split, storno)
+    def process_order(order, order_action)
       order.items.each do |item|
         item.delete if item.count.zero?
       end
@@ -112,17 +107,16 @@ class OrdersController < ApplicationController
       make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
       make_storno(order, items_for_storno) if !items_for_storno.empty?
 
-      if save
-        redirect_to orders_path
-      elsif invoice
-        redirect_to table_path(order.table)
-      elsif print
-        @order.update_attribute(:finished, true) and reduce_stocks @order
-        redirect_to "#{order_path(order)}.bon"
-      elsif split
-        redirect_to table_path order.table 
-      elsif storno
-        redirect_to "/orders/storno/#{order.id}"
+      case order_action
+        when 'save_and_go_back'
+          redirect_to orders_path
+        when 'go_to_invoice', 'split'
+          redirect_to table_path(order.table)
+        when 'print'
+          @order.update_attribute(:finished, true) and reduce_stocks @order
+          redirect_to "#{order_path(order)}.bon"
+        when 'storno'
+          redirect_to "/orders/storno/#{order.id}"
       end
     end
 
