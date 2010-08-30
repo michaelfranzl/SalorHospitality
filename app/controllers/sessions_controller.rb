@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
 skip_before_filter :fetch_logged_in_user
 
   def new
+    @users=User.all
     redirect_to orders_path if session[:user_id]
   end
 
