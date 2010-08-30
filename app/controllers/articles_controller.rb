@@ -150,7 +150,7 @@ private
       cat.articles.find_in_menucard.collect{ |art|
         action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
         image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
-        "<tr><td id='article_#{ art.id }' class='article' onclick='#{ action }' onmousedown='articles_onmousedown(this)' onmouseup='articles_onmouseup(this)'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }<div id='article_#{ art.id }_quantitylist'>div</div></td></tr>"
+        "<tr><td id='article_#{ art.id }' class='article' onclick='#{ action }' onmousedown='articles_onmousedown(this)' onmouseup='articles_onmouseup(this)'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }<div id='article_#{ art.id }_quantitylist'></div></td></tr>"
       }.to_s + '";'
     }.to_s
 

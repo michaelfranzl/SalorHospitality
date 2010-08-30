@@ -178,6 +178,10 @@ en:
       total: Total
       revenue: Revenue
 
+  items:
+    item_tablerow:
+      please_enter_item_comment: Please enter special wish
+
   sessions:
     browser_warning:
       warning: You don't use Firefox web browser. Bill Gastro was optimized for Firefox.
