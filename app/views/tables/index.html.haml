@@ -1,6 +1,8 @@
 %h2= t('activerecord.models.table.other')
 
-%p= link_to ((t :new), new_table_path, :class => 'links')
+%p
+  = link_to ((t :new), new_table_path, :class => 'links')
+  = link_to ( 'iPod', '/orders?ipod=', :class => 'links')
 
 %table
   %tr

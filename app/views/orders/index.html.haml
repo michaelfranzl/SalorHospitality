@@ -1,8 +1,20 @@
 %div#functions
-  %a#print_kitchenlist{ :href => '/items/print.bon', :title => t(:print_kitchenlist) }
-    %img{ :src => '/images/button_kitchenlist.png' }
-  %a{ :href => @last_finished_order ? order_path(@last_finished_order.id) : '', :title => t(:recent_orders) }
-    %img{ :src => '/images/button_list.png' }
+  - if not ipod?
+    %a#print_kitchenlist{ :href => '/items/print.bon', :title => t(:print_kitchenlist) }
+      %img{ :src => '/images/button_kitchenlist.png' }
+
+  %a{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
+    %div.iconbutton#room1_button
+
+  %a{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
+    %div.iconbutton#room2_button
+
+  %a{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
+    %div.iconbutton#room3_button
+
+  %a{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
+    %div.iconbutton#room4_button
+
 
 %h2= t('activerecord.models.order.other')
 
@@ -11,5 +23,7 @@
 %div#room2.room
 
 %div#room3.room
+
+%div#room4.room
     
 = render @tables

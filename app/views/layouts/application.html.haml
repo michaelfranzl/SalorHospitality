@@ -62,7 +62,8 @@
                 
 
       #main
-        = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete
+        = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout' if logged_in?
+
         .flash
           - if flash[:notice]
             .flash_notice= flash[:notice]

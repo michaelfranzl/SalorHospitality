@@ -117,28 +117,10 @@ div.fieldWithErrors
       
 div.adminlinks
   :padding 10px
-  a
-    :display inline-block
-    :height 15px
-    :margin-left 1px
-    :margin-bottom 5px
-    :background-color white
-    :-moz-border-radius 3px
-    :-webkit-border-radius 3px
-    :color black
-    :text-decoration none
-    :text-transform uppercase
-    :font-size 70%
-    :padding 4px
-    :border 1px solid #666
-  a:hover
-    :background-color = !background
-    :color white
 
-
+div.adminlinks a,
 a.links
   :display inline-block
-  :height 15px
   :margin-left 1px
   :margin-bottom 5px
   :background-color white
@@ -150,9 +132,13 @@ a.links
   :font-size 70%
   :padding 4px
   :border 1px solid #666
+div.adminlinks a:hover,
 a.links:hover
   :background-color = !background
   :color white
+
+a.logout
+  :float right
 
 
 table.settlements
@@ -482,6 +468,7 @@ div.iconbutton
   :width 50px
   :height 54px
   :margin 5px
+  :cursor pointer
 
 a.scrolldown_button
   :position absolute
