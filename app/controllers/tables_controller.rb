@@ -6,7 +6,6 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => params[:id] })
-    flash[:notice] = "#{ @table.name } ist frei." if !@unfinished_orders
     @cost_centers = CostCenter.all
   end
 
@@ -27,16 +26,6 @@ class TablesController < ApplicationController
   def update
     @table = Table.find(params[:id])
     success = @table.update_attributes(params[:table])
-    if request.xhr?
-      if ipod?
-        @table.left = params[:table][:left_ipod].to_i
-        @table.top =  params[:table][:top_ipod].to_i
-      else
-        @table.left = params[:table][:left].to_i
-        @table.top =  params[:table][:top].to_i
-      end
-      @table.save
-    end
     respond_to do |wants|
       wants.html{ success ? redirect_to(tables_path) : render(:new)}
       wants.js { render :nothing => true }
