@@ -48,21 +48,21 @@
           #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
             .adminlinks
               = link_to( t('activerecord.models.order.other'), orders_path)
-              - if logged_in?
-                - if @current_user.role >= 1
-                  = link_to( t('activerecord.models.article.other'), articles_path)
-                  = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
-                - if @current_user.role >= 2
-                  = link_to( t('activerecord.models.settlement.other'), settlements_path)
-                  = link_to( t('activerecord.models.category.other'), categories_path)
-                  = link_to( t('activerecord.models.tax.other'), taxes_path)
-                  = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
-                  = link_to( t('activerecord.models.user.other'), users_path)
-                  = link_to( t('activerecord.models.table.other'), tables_path)
-                  = link_to( t('statistic'), statistics_path)
-                = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete
+              - if @current_user.role >= 1
+                = link_to( t('activerecord.models.article.other'), articles_path)
+                = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
+              - if @current_user.role >= 2
+                = link_to( t('activerecord.models.settlement.other'), settlements_path)
+                = link_to( t('activerecord.models.category.other'), categories_path)
+                = link_to( t('activerecord.models.tax.other'), taxes_path)
+                = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
+                = link_to( t('activerecord.models.user.other'), users_path)
+                = link_to( t('activerecord.models.table.other'), tables_path)
+                = link_to( t('statistic'), statistics_path)
+                
 
       #main
+        = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete
         .flash
           - if flash[:notice]
             .flash_notice= flash[:notice]

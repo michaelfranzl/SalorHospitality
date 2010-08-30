@@ -19,8 +19,7 @@ class ApplicationController < ActionController::Base
     end
 
     def ipod?
-      #request.user_agent[13..16] == 'iPod'
-      true
+      (request.user_agent[13..16] == 'iPod') or params[:ipod]
     end
 
     helper_method :logged_in?, :ipod?

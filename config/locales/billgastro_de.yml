@@ -177,6 +177,10 @@ de:
       total: Gesamt
       revenue: Umsatz
 
+  items:
+    item_tablerow:
+      please_enter_item_comment: Spezialwunsch
+
   sessions:
     browser_warning:
       warning: Sie verwenden nicht Firefox als Browser. Bill Gastro wurde auf Firefox optimiert.
