@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   default_scope :order => 'sort DESC'
   
   def add_option(o)
-    self.options << ItemOption.new {:value => o.value}
+    self.options << ItemOption.new(:value => o.value)
   end
   def remove_option(o)
     nos = []

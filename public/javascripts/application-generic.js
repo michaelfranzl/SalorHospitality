@@ -130,6 +130,10 @@ function category_onmouseup(element) {
   highlight_button(element);
 }
 
+function articles_onmousedown(element) {
+  highlight_button(element); deselect_all_articles();
+}
+
 function articles_onmouseup(element) {
   highlight_button(element);
 }
@@ -137,3 +141,5 @@ function articles_onmouseup(element) {
 function quantities_onmouseup(element) {
   restore_button(element);
 }
+
+

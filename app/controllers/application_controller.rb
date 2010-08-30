@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
       ! @current_user.nil?
     end
 
-    helper_method :logged_in?
+    def ipod?
+      not request.user_agent[13..16] == 'iPod'
+    end
+
+    helper_method :logged_in?, :ipod?
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
