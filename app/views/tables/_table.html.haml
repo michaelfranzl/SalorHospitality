@@ -25,4 +25,4 @@
 - left_attribute = ipod? ? 'left_ipod' : 'left'
 - top_attribute = ipod? ? 'top_ipod' : 'top'
 
-= draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[#{left_attribute}]=' + Position.page(el)[0] + '&table[#{top_attribute}]=' + Position.page(el)[1] + '&pageyoffset=' + window.pageYOffset + '&pagexoffset=' + window.pageXOffset }); return false;}", :handle => "'handle_for_table#{table.id}'" if (session[:admin_interface] == true or ipod?)
+= draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'" if (session[:admin_interface] == true or ipod?)

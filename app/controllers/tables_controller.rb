@@ -28,8 +28,13 @@ class TablesController < ApplicationController
     @table = Table.find(params[:id])
     success = @table.update_attributes(params[:table])
     if request.xhr?
-      @table.left = params[:pagexoffset].to_i  + params[:table][:left].to_i
-      @table.top =  params[:pageyoffset].to_i  + params[:table][:top].to_i
+      if ipod?
+        @table.left = params[:table][:left_ipod].to_i
+        @table.top =  params[:table][:top_ipod].to_i
+      else
+        @table.left = params[:table][:left].to_i
+        @table.top =  params[:table][:top].to_i
+      end
       @table.save
     end
     respond_to do |wants|
