@@ -16,6 +16,9 @@ de:
       article:
         one: Artikel
         other: Artikel
+      option:
+        one: Option
+        other: Optionen
       quantity:
         one: Variante
         other: Varianten
@@ -147,6 +150,7 @@ de:
     served_by: Sie wurden bedient von
     new:
       sum: SUMME
+      new: Neue Bestellung
     show:
       print_invoice: Rechnung drucken
       print_business_invoice: Geschäftsrechnung drucken
@@ -256,9 +260,7 @@ de:
 
 # TRANSLATIONS FOR CONTROLLERS
   all_foods_were_removed_from_the_menucard: Alle Speisen wurden aus der Menükarte entfernt.
-  category_was_successfully_deleted: 'Die Kategorie {{category}} wurde erfolgreich gelöscht.'
-  cost_center_was_successfully_deleted: 'Die Kostenstelle {{cost_center}} wurde erfolgreich gelöscht.'
-  table_was_successfully_deleted: '{{table}} wurde erfolgreich gelöscht.'
+  was_successfully_deleted: '{{what}} wurde erfolgreich gelöscht.'
   there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
   logout_successful: Sie haben sich erfolgreich abgemeldet.
   user_not_found: Benutzer nicht gefunden.

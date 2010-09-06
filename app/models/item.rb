@@ -22,4 +22,12 @@ class Item < ActiveRecord::Base
     self.options = nos
   end
 
+  def real_price
+    if price.nil? or price.zero? then
+      self.quantity ? self.quantity.price : self.article.price
+    else
+      price
+    end
+  end
+
 end

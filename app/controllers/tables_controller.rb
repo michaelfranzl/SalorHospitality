@@ -1,6 +1,6 @@
 class TablesController < ApplicationController
   def index
-    @tables = Table.find(:all)
+    @tables = Table.all
   end
 
   def show
@@ -34,7 +34,7 @@ class TablesController < ApplicationController
 
   def destroy
     @table = Table.find(params[:id])
-    flash[:notice] = t(:table_was_successfully_deleted, :table => @table.name)
+    flash[:notice] = t(:successfully_deleted, :what => @table.name)
     @table.destroy
     redirect_to tables_path
   end

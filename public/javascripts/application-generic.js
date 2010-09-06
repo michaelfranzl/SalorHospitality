@@ -31,6 +31,9 @@ function add_new_item_a(art_id) {
 
   $('itemstable').insert({ top: new_item_tablerow_modified });
   $('inputfields').insert({ top: new_item_inputfields_modified });
+  if (itemdetails_a[art_id][3] == 0) {
+    $('order_items_attributes_' + desig + '_price').value = prompt('enter price');
+  }
   document.getElementById('quantitiestable').innerHTML = '&nbsp;';
 
   var sum = calculate_sum();

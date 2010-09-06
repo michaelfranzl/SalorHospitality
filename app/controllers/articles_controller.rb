@@ -105,7 +105,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
-    flash[:notice] = "Der Artikel \"#{ @article.name }\" wurde erfolgreich geloescht."
+    flash[:notice] = t(:successfully_deleted, :what => @article.name)
     @article.destroy
     redirect_to articles_path
   end

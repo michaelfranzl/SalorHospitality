@@ -1,10 +1,10 @@
 module OrdersHelper
 
   def compose_item_label(input)
-    if input.class == Quantity
-      label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
+    if not input.quantity.nil?
+      label = "#{ input.article.name }<br><small>#{ input.real_price } EUR, #{ input.quantity.name } #{ input.comment }</small>"
     else
-      label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
+      label = "#{ input.article.name }<br><small>#{ input.real_price } EUR #{ input.comment }</small>"
     end
     return label
   end

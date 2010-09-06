@@ -39,11 +39,9 @@
   - sum_taxes = Array.new(Tax.count, 0)
   - subtotal = 0
   - @order.items.each do |item|
-    - c = item.count
-    - p = item.quantity_id ? item.quantity.price : item.article.price
+    - p = item.real_price
     - p = -p if item.storno_status == 2
-    - sum = 0
-    - sum = c * p
+    - sum = item.count * p
     - subtotal += sum
     - tax_id = item.article.category.tax.id
     - sum_taxes[tax_id-1] += sum
@@ -51,7 +49,7 @@
       %td.one= "%c" % [tax_id+64]
       %td.two= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
       %td.three= number_to_currency p
-      %td.four= c
+      %td.four= item.count
       %td.five= number_to_currency sum
   %tr
     %td{ :colspan => 4 }

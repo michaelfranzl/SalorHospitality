@@ -14,7 +14,7 @@
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
 
   .order_info
-    = @order.id ? "#{Order.human_name} ##{@order.id}" : t(:new_order)
+    = @order.id ? "#{Order.human_name} ##{@order.id}" : t('.new')
     %br
     = @order.table.name
 
@@ -47,11 +47,11 @@
         - @designator = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1] # nested_attribute_id
         - @sort = item.sort
         - @articleid = item.article_id
-        - @price = item.quantity ? item.quantity.price : item.article.price
+        - @price = item.real_price
         - @quantityid = item.quantity_id
         - @count = item.count
         - @comment = item.comment
-        - @label = compose_item_label(item.quantity ? item.quantity : item.article)
+        - @label = compose_item_label(item)
         = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label }
         - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label }
 

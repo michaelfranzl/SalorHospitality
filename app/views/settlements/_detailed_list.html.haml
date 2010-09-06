@@ -17,11 +17,9 @@
 
       - subtotal = 0
       - so.items.each do |item|
-        - c = item.count
-        - p = item.quantity_id ? item.quantity.price : item.article.price
+        - p = item.real_price
         - p = -p if item.storno_status == 2
-        - sum = 0
-        - sum = c * p
+        - sum = item.count * p
         - subtotal += sum
         - total += sum
         %tr

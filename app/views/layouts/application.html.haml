@@ -50,6 +50,7 @@
               = link_to( t('activerecord.models.order.other'), orders_path)
               - if @current_user.role >= 1
                 = link_to( t('activerecord.models.article.other'), articles_path)
+                = link_to( t('activerecord.models.order.other'), orders_path)
                 = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
               - if @current_user.role >= 2
                 = link_to( t('activerecord.models.settlement.other'), settlements_path)

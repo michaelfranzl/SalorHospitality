@@ -111,9 +111,16 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         when 'go_to_invoice', 'split'
           redirect_to table_path(order.table)
-        when 'print'
+        when 'print_kitchen'
           @order.update_attribute(:finished, true) and reduce_stocks @order
-          redirect_to "#{order_path(order)}.bon"
+          redirect_to orders_path
+          #redirect_to "#{order_path(order)}.bon"
+        when 'print_bar'
+          @order.update_attribute(:finished, true) and reduce_stocks @order
+          redirect_to orders_path
+        when 'print_guestroom'
+          @order.update_attribute(:finished, true) and reduce_stocks @order
+          redirect_to orders_path
         when 'storno'
           redirect_to "/orders/storno/#{order.id}"
       end
@@ -151,10 +158,9 @@ class OrdersController < ApplicationController
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
-        c = item.count
-        p = item.quantity_id ? item.quantity.price : item.article.price
-        sum = c * p
-        subtotal += c * p
+        p = item.real_price
+        sum = item.count * p
+        subtotal += item.count * p
       end
       return subtotal
     end
@@ -202,11 +208,9 @@ class OrdersController < ApplicationController
       subtotal = 0
       list_of_items = ''
       order.items.each do |item|
-        c = item.count
-        p = item.quantity_id ? item.quantity.price : item.article.price
+        p = item.real_price
         p = -p if item.storno_status == 2
-        sum = 0
-        sum = c * p
+        sum = item.count * p
         subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum

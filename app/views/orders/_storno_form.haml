@@ -17,18 +17,16 @@
     - subtotal = 0
     - order_form.fields_for :items do |item_form|
       - item = item_form.object
-      - c = item.count
-      - p = item.quantity_id ? item.quantity.price : item.article.price
+      - p = item.real_price
       - p = -p if item.storno_status == 2
-      - sum = 0
-      - sum = c * p
+      - sum = item.count * p
       - subtotal += sum
       - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
       - color = item.storno_status == 2 ? '#FAA' : 'transparent'
       - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
       - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
       %tr.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }
-        %td= c
+        %td= item.count
         - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
         %td= "%20.20s" % [label]
         %td{ :style => 'text-align:right' }= number_to_currency p

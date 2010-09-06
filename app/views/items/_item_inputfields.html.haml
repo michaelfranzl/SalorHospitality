@@ -1,6 +1,6 @@
 %div{ :id => "fields_for_item_#{ locals[:designator] }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_count", :name => "order[items_attributes][#{ locals[:designator] }][count]", :type => 'hidden', :value => "#{ locals[:count] }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_count", :class => 'count', :name => "order[items_attributes][#{ locals[:designator] }][count]", :type => 'hidden', :value => "#{ locals[:count] }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_comment", :name => "order[items_attributes][#{ locals[:designator] }][comment]", :type => 'hidden', :value => "#{ locals[:comment] }" }
 
@@ -10,6 +10,6 @@
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_sort", :name => "order[items_attributes][#{ locals[:designator] }][sort]", :type => 'hidden', :value => "#{ locals[:sort] }" }
 
-  %input{ :id => "#{ locals[:designator] }_price", :type => 'hidden', :value => "#{ @price }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_price", :class => 'price', :name => "order[items_attributes][#{ locals[:designator] }][price]", :type => 'hidden', :value => "#{ @price }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }__destroy", :name => "order[items_attributes][#{ locals[:designator] }][_destroy]", :type => 'hidden', :value => '0' }

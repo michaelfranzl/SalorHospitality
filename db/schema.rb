@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100830144301) do
+ActiveRecord::Schema.define(:version => 20100906121150) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20100830144301) do
     t.integer  "quantity_id"
     t.integer  "storno_status",  :default => 0
     t.string   "comment"
+    t.float    "price"
   end
 
   create_table "options", :force => true do |t|

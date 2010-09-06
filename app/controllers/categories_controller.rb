@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find(params[:id])
-    flash[:notice] = t(:category_was_successfully_deleted, :category => @category.name)
+    flash[:notice] = t(:successfully_deleted, :what => @category.name)
     @category.destroy
     redirect_to categories_path
   end

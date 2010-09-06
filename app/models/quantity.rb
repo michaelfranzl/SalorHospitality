@@ -13,5 +13,9 @@ class Quantity < ActiveRecord::Base
   def self.active_and_sorted
     find(:all, :conditions => 'active = 1 AND hidden = false', :order => 'name')
   end
+
+  def options
+    return article.category.options
+  end
   
 end

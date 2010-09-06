@@ -8,4 +8,4 @@
 
   %td{ :id => "remove_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "remove_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }X
 
-  %td{ :id => "option_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }O
+  %td{ :id => "option_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= #link_to_remote 'O', :url => { :controller => 'item', :action => 'add_option', :id =>
