@@ -19,7 +19,7 @@ class OptionsController < ApplicationController
 
   def update
     @option = Option.find(params[:id])
-    success = @option.update_attributes(params[:table])
+    success = @option.update_attributes(params[:option])
     success ? redirect_to(options_path) : render(:new)
   end
 

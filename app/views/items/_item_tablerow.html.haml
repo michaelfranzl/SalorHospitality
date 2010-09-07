@@ -4,11 +4,11 @@
 
   %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "add_comment_to_item('#{ t('.please_enter_item_comment') }', '#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     = locals[:label]
-    = locals [:optionslabels]
+    = locals [:optionsnames]
 
-  %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
+  %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_minus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
-  %td{ :class => 'item_plusminus' }
+  %td{ :class => 'item_options' }
     %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)" }
       %option{ :selected => true }
       = locals[:optionsselect]
