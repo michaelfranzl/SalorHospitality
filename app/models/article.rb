@@ -28,9 +28,6 @@ class Article < ActiveRecord::Base
     find(:all, :conditions => 'hidden => false', :order => 'name, description')
   end
   
-  
-  
-  
   validates_presence_of :name, :type, :category_id
   
   validates_each :price do |record, attr_name, value|
@@ -59,8 +56,4 @@ class Article < ActiveRecord::Base
     name + descr
   end
   
-  def options
-    return self.category.options
-  end
-
 end

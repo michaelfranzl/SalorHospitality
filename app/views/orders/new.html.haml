@@ -52,7 +52,7 @@
         - @count = item.count
         - @comment = item.comment
         - @label = compose_item_label(item)
-        - @options = compose_item_options(item)
+        - @options = item.option_ids
         = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :options => @options }
         - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label, :options => @options }
 

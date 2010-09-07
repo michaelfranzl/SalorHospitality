@@ -75,8 +75,16 @@ ActiveRecord::Schema.define(:version => 20100906121150) do
     t.float    "price"
   end
 
+  create_table "items_options", :id => false, :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "option_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "options", :force => true do |t|
     t.integer  "category_id"
+    t.integer  "option_id"
     t.string   "name"
     t.float    "price"
     t.datetime "created_at"

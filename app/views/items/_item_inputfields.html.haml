@@ -4,6 +4,8 @@
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_comment", :name => "order[items_attributes][#{ locals[:designator] }][comment]", :type => 'hidden', :value => "#{ locals[:comment] }" }
 
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_options", :name => "order[items_attributes][#{ locals[:designator] }][options]", :type => 'hidden', :value => "#{ locals[:options] }" }
+
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_article_id", :name => "order[items_attributes][#{ locals[:designator] }][article_id]", :type => 'hidden', :value => "#{ locals[:articleid] }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_quantity_id", :name => "order[items_attributes][#{ locals[:designator] }][quantity_id]", :type => 'hidden', :value => "#{ locals[:quantityid] }" }

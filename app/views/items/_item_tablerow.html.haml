@@ -6,4 +6,5 @@
 
   %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
 
-  %td{ :id => "options_#{ locals[:designator] }", :class => 'item_plusminus' }= locals[:options]
+  %td{ :id => "options_#{ locals[:designator] }", :class => 'item_plusminus' }
+    %select{ :onchange => "add_option_to_item('#{ locals[:designator] }')" }= locals[:options]

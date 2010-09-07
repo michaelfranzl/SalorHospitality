@@ -9,8 +9,15 @@ function add_new_item_q(qu_id) {
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
+  var category_id = itemdetails_q[qu_id][6];
 
-  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id);
+  if (optionslist[category_id]) {
+    var options = optionslist[category_id];
+  } else {
+    var options = '';
+  }
+
+  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONS/g,options);
 
   new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id);
 
@@ -24,8 +31,15 @@ function add_new_item_a(art_id) {
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
+  var category_id = itemdetails_a[art_id][6];
 
-  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICEg/,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'');
+  if (optionslist[category_id]) {
+    var options = optionslist[category_id];
+  } else {
+    var options = '';
+  }
+
+  new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICEg/,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONS/g,options);
 
   new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'');
 
@@ -130,6 +144,10 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 function add_comment_to_item(prompt_message,item_designator) {
   var comment = prompt(prompt_message, document.getElementById('order_items_attributes_' + item_designator + '_comment').value);
   document.getElementById('order_items_attributes_' + item_designator + '_comment').value = comment;
+}
+
+function add_option_to_item(item_designator) {
+  document.getElementById('order_items_attributes_' + item_designator + '_options').value = "AAA";
 }
 
 // VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON IPOD

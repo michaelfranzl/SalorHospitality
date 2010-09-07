@@ -166,12 +166,13 @@ private
       }.to_s
     }.to_s
 
+
     itemdetails_q =
     "\n\nvar itemdetails_q = new Array();" +
     categories.collect{ |cat|
       cat.articles.find_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }');"
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }');"
         }.to_s
       }.to_s
     }.to_s
@@ -181,13 +182,24 @@ private
     "\n\nvar itemdetails_a = new Array();" +
     categories.collect{ |cat|
       cat.articles.find_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }');"
+        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }', '#{ cat.id }');"
       }.to_s
     }.to_s
 
-    return articleslist + quantitylist + itemdetails_q + itemdetails_a
+    optionslist =
+    "\n\nvar optionslist = new Array();" +
+    categories.collect{ |cat|
+      next if cat.options.empty?
+      "\noptionslist[#{ cat.id }] = \"" +
+      cat.options.collect{ |opt|
+          "<option value='#{ opt.id }'>#{ opt.name }</option>"
+      }.to_s
+    }.to_s
+
+    return articleslist + quantitylist + itemdetails_q + itemdetails_a + optionslist
   end
-  
+
+
   
   def compose_item_label(input)
     if input.class == Quantity
