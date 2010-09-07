@@ -8,7 +8,7 @@
 
 - form_for :order, @order, :url => path, :html => { :method => method, :name => 'itemform' } do |order_form|
 
-  = hidden_field_tag 'order_action', 'unset'
+  = hidden_field_tag 'order_action', 'not_set'
 
   %div.waiter
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
@@ -52,12 +52,13 @@
         - @count = item.count
         - @comment = item.comment
         - @label = compose_item_label(item)
-        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label }
-        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label }
+        - @options = compose_item_options(item)
+        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :options => @options }
+        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label, :options => @options }
 
     %table#itemstable
       - @parameters.each do |@p|
-        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label] }
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :options => @p[:options] }
 
 
   %div#functions

@@ -59,13 +59,6 @@ ActiveRecord::Schema.define(:version => 20100906121150) do
     t.datetime "updated_at"
   end
 
-  create_table "item_options", :force => true do |t|
-    t.integer  "item_id"
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "items", :force => true do |t|
     t.integer  "count"
     t.integer  "article_id"
@@ -84,7 +77,8 @@ ActiveRecord::Schema.define(:version => 20100906121150) do
 
   create_table "options", :force => true do |t|
     t.integer  "category_id"
-    t.string   "value"
+    t.string   "name"
+    t.float    "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

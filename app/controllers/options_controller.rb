@@ -4,11 +4,16 @@ class OptionsController < ApplicationController
   end
 
   def new
-    @options = Option.new
+    @option = Option.new
+  end
+
+  def create
+    @option = Option.new(params[:option])
+    @option.save ? redirect_to(options_path) : render(:new)
   end
 
   def edit
-    @options = Option.find(params[:id])
+    @option = Option.find(params[:id])
     render :new
   end
 

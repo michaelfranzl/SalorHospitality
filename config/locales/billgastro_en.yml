@@ -18,7 +18,7 @@ en:
         other: Articles
       option:
         one: Option
-        other: Optionen
+        other: Options
       quantity:
         one: Variant
         other: Variants
@@ -47,6 +47,10 @@ en:
         category_id: Category
         name: Name
         description: Description
+      option:
+        price: Price
+        category_id: Category
+        name: Name
       quantity:
         name: Variant Name
         price: Variant Price
@@ -98,6 +102,11 @@ en:
       remove_all_foods_from_menucard: Remove all foods from menucard
     quick_foods_search_results:
       already_created_articles: Already created articles
+
+  options:
+    new:
+      new_option: New Option
+      edit_option: Edit Option
 
   blackboard:
     index:

@@ -2,7 +2,8 @@ class CreateOptions < ActiveRecord::Migration
   def self.up
     create_table :options do |t|
       t.references :category
-      t.string :value
+      t.string :name
+      t.float :price
       t.timestamps
     end
   end
