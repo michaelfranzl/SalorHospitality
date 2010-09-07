@@ -6,6 +6,4 @@
 
   %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
 
-  -#%td{ :id => "remove_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "remove_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }X
-
-  %td{ :id => "option_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:options]
+  %td{ :id => "options_#{ locals[:designator] }", :class => 'item_plusminus' }= locals[:options]
