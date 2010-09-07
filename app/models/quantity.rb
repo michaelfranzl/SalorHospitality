@@ -1,6 +1,7 @@
 class Quantity < ActiveRecord::Base
 
   belongs_to :article
+  has_many :items
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))

@@ -186,17 +186,17 @@ private
       }.to_s
     }.to_s
 
-    optionslist =
-    "\n\nvar optionslist = new Array();" +
+    optionsselect =
+    "\n\nvar optionsselect = new Array();" +
     categories.collect{ |cat|
       next if cat.options.empty?
-      "\noptionslist[#{ cat.id }] = \"" +
+      "\noptionsselect[#{ cat.id }] = \"" +
       cat.options.collect{ |opt|
           "<option value='#{ opt.id }'>#{ opt.name }</option>"
-      }.to_s
+      }.to_s + '";'
     }.to_s
 
-    return articleslist + quantitylist + itemdetails_q + itemdetails_a + optionslist
+    return articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
   end
 
 

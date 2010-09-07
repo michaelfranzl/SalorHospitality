@@ -2,9 +2,14 @@
 
   %td{ :id => "count_#{ locals[:designator] }", :class => 'item_count', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:count]
 
-  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "add_comment_to_item('#{ t('.please_enter_item_comment') }', '#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:label]
+  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "add_comment_to_item('#{ t('.please_enter_item_comment') }', '#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+    = locals[:label]
+    = locals [:optionslabels]
 
   %td{ :id => "minus_#{ locals[:designator] }", :class => 'item_plusminus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }-
 
-  %td{ :id => "options_#{ locals[:designator] }", :class => 'item_plusminus' }
-    %select{ :onchange => "add_option_to_item('#{ locals[:designator] }')" }= locals[:options]
+  %td{ :class => 'item_plusminus' }
+    %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)" }
+      %option{ :selected => true }
+      = locals[:optionsselect]
+

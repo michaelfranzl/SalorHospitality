@@ -24,7 +24,7 @@
         - total += sum
         %tr
           %td= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-          %td.number= c
+          %td.number= item.count
           %td.number= number_to_currency p
           %td= item.cost_center.name
           %td.colsum= number_to_currency sum

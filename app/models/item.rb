@@ -16,4 +16,19 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def optionslist=(optionslist)
+    self.options = []
+    optionslist.split.uniq.each do |o|
+      self.options << Option.find(o.to_i)
+    end
+  end
+
+  def optionslist
+    self.options.collect{ |o| "#{ o.id } " }.to_s
+  end
+
+  def category
+    self.article.category
+  end
+
 end

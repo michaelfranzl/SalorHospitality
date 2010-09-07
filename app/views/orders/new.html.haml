@@ -52,13 +52,17 @@
         - @count = item.count
         - @comment = item.comment
         - @label = compose_item_label(item)
-        - @options = item.option_ids
-        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :options => @options }
-        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label, :options => @options }
+        - @optionslist = item.optionslist
+        - @optionslabels = compose_option_labels(item)
+        - @optionsselect = compose_option_select(item)
+
+        = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionslabels => @optionslabels, :optionsselect => @optionsselect }
+
+        - @parameters << { :designator => @designator, :sort => @sort, :articleid => @articleid, :price => @price, :quantityid => @quantityid, :count => @count, :comment => @comment, :label => @label, :label => @label, :optionslist => @optionslist, :optionslabels => @optionslabels, :optionsselect => @optionsselect }
 
     %table#itemstable
       - @parameters.each do |@p|
-        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :options => @p[:options] }
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :optionslist => @p[:optiosnlist], :optionslabels => @p[:optionslabels], :optionsselect => @p[:optionsselect] }
 
 
   %div#functions
