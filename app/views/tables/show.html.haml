@@ -2,10 +2,10 @@
 
 %div#functions
   %a{ :href => orders_path, :title => t(:cancel_and_go_back) }
-    %img{ :src => '/images/button_tables.png' }
+    %div.iconbutton.tables_button
     
   %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
-    %img{ :src => '/images/button_scrolldown.png' }
+    %div.iconbutton.scrolldown_button
       
 %div#invoices
   - @unfinished_orders.each do |uo|
@@ -14,4 +14,4 @@
       
 %div#footer
   %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }
-    %img{ :src => '/images/button_scrollup.png' }
+    %div.iconbutton.scrollup_button

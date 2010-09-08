@@ -21,37 +21,7 @@ div#main
 h2
   :display none
 
-div.iconbutton
-  :width 50px
-  :height 54px
-  :margin 10px
-  :display inline-block
-  :cursor pointer
 
-a.scrolldown_button
-  :position absolute
-  :top 0px
-  :right 0px
-
-div.scrolldown
-  :background-image url(/images/button_ipod_scrolldown.png)
-
-a.scrollup_button
-  :position absolute
-  :bottom 0px
-  :right 0px
-
-div.scrollup_button
-  :background-image url(/images/button_ipod_scrollup.png)
-
-div.cancel_button
-  :background-image url(/images/button_ipod_cancel.png)
-
-div.tables_button
-  :background-image url(/images/button_ipod_tables.png)
-
-div.invoice_button
-  :background-image url(/images/button_ipod_invoice.png)
 
 div.room
   :border 1px solid grey
@@ -132,3 +102,28 @@ select#order_user_id
 
 img#logo
   :width 100px
+
+div.invoice
+  :background-color white
+  :color black
+  :width 275px
+  :padding 5px
+  :margin 15px 20px
+  :-webkit-box-shadow 0px 0px 8px black
+  :font-family Courier
+  :letter-spacing -1px
+  table
+    :border-collapse collapse
+    td
+      :height 30px
+  select#cost_center_for_invoice
+    :position relative
+    :top -28px
+    :width 49px
+    :height 54px
+    :background-image url(/images/button_ipod_splitinvoice.png)
+    :background-repeat no-repeat
+    :background-color transparent
+    :border 0px
+    :color transparent
+

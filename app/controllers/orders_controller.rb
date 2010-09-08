@@ -109,18 +109,21 @@ class OrdersController < ApplicationController
       case order_action
         when 'save_and_go_back'
           redirect_to orders_path
-        when 'go_to_invoice', 'split'
+        when 'go_to_invoice', 'split_invoice'
           redirect_to table_path(order.table)
         when 'print_kitchen'
           @order.update_attribute(:finished, true) and reduce_stocks @order
-          redirect_to orders_path
+          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
+          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
           #redirect_to "#{order_path(order)}.bon"
         when 'print_bar'
           @order.update_attribute(:finished, true) and reduce_stocks @order
-          redirect_to orders_path
+          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
+          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
         when 'print_guestroom'
           @order.update_attribute(:finished, true) and reduce_stocks @order
-          redirect_to orders_path
+          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
+          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
         when 'storno'
           redirect_to "/orders/storno/#{order.id}"
       end

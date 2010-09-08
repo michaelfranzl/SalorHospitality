@@ -1,25 +1,27 @@
 - form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put, :name => 'order_form' } do |order_form|
 
-  = hidden_field_tag 'order_action', 'not_set'
+  = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{order.id}"
+
+  %h3== #{ t('activerecord.models.order.other')} ##{order.id}
+  %p= l order.created_at, :format => :long
 
   - if !order.finished
     %a#edit_invoice{ :href => edit_order_path(order), :title => t(:edit) }
-      %img{ :src => '/images/button_edit.png' }
-  %select#cost_center_for_invoice{ :name => 'cost_center_id' }
-    = options_from_collection_for_select(@cost_centers, :id, :name)
-  %input#split_invoice{ :name => 'split', :type => 'image', :src => '/images/button_splitinvoice.png', :title => t('.split_invoice') }
+      %div.iconbutton.edit_button
 
-  %a{ :onclick => 'document.getElementById("order_action").value="print_kitchen"; this.parentNode.submit();', :title => t(:print) }
+  %select#cost_center_for_invoice{ :name => 'cost_center_id', :onchange => "document.getElementById('order_action_#{order.id}').value='split_invoice'; this.parentNode.submit();", :title => t('.split_invoice') }
+    = options_from_collection_for_select(@cost_centers, :id, :name)
+
+  %br
+
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_kitchen'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_kitchen_button
 
-  %a{ :onclick => 'document.getElementById("order_action").value="print_bar"; this.parentNode.submit();', :title => t(:print) }
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_bar'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_bar_button
 
-  %a{ :onclick => 'document.getElementById("order_action").value="print_guestroom"; this.parentNode.submit();', :title => t(:print) }
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_guestroom'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_guestroom_button
-  
-  %h3== #{ t('activerecord.models.order.other')} ##{order.id}
-  %p= l order.created_at, :format => :long
   
   %table{ :class => 'invoice' }
     %tr
@@ -37,7 +39,7 @@
         %td= item.count
         - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
         %td= "%20.20s" % [label]
-        %td{ :style => 'text-align:right' }= number_to_currency p
+        %td{ :style => 'text-align:right' }= number_to_currency item.real_price
         %td{ :style => 'text-align:right' }= number_to_currency sum
         %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}
 
