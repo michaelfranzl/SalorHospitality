@@ -10,16 +10,12 @@ div.category
   :background-position center center
   :overflow hidden
 
-table#articlestable,
 table#itemstable
-  :width 100%
-  :border-collapse collapse
-  td
-    :padding 10px 5px
+  :border-spacing 0px
 
 div.category,
-td.article,
-td.quantity,
+div.article,
+div.quantity,
 td.item_count,
 td.item_minus,
 td.item_options,
@@ -45,18 +41,34 @@ div.category_label
 div#articles
   :clear both
 
-td#article
-  :height 40px
-
-
-td.article,
-td.quantity
+div.article,
+div.quantity
   :background-color = !buttoncolor
-  :height 40px
-  :vertical-align middle
-  :padding-left 10px
+  :padding 10px 10px
+
+div.quantity
+  :background-color #37444b
+  :padding-left 50px
 
 
+div.ordersum_container
+  :font-size 200%
+  :color #CCC
+  :text-align right
+
+input#order_sum
+  :background-color transparent
+  :border 0px
+  :font-size 100%
+  :width 120px
+  :color #CCC
+
+
+
+table#itemstable
+  :width 100%
+  td
+    :padding 5px
 
 td.item_count
   :cursor pointer
@@ -64,6 +76,11 @@ td.item_count
   :text-align center
   :font-size 150%
   :font-weight bold
+
+td.item_label
+  :cursor pointer
+  :background-color = !articlelistbgcolor
+  :min-height 40%
 
 td.item_minus
   :width 20%
@@ -73,8 +90,9 @@ td.item_minus
   :background-position center
   :background-repeat no-repeat
 
-
 td.item_options
+  :text-align center
+  :width 20%
   select
     :width 41px
     :height 38px
@@ -84,10 +102,7 @@ td.item_options
     :border 0px
     :color transparent
 
-td.item_label
-  :cursor pointer
-  :background-color = !articlelistbgcolor
-  :min-height 40%
+
 
 div.handle_for_table
   :background-image url("/images/drag_handle.png")
@@ -95,16 +110,9 @@ div.handle_for_table
   :margin -9px auto 0
   :width 50px
 
-input#order_sum
-  :background-color transparent
-  :border 0px
-  :width 150px
-  :font-size 100%
-  :color #CCC
 
-div.ordersum_container
-  :font-size 200%
-  :color #CCC
+
+
 
 div#room1_button
   :background-image url(/images/button_ipod_room1.png)
@@ -134,3 +142,7 @@ div.vacant a
 
 div.occupied a
   :color white
+
+img.more
+  :float right
+  :margin-top 4px

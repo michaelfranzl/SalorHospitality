@@ -1,11 +1,14 @@
 function display_articles(cat_id) {
-  $('articlestable').innerHTML = articleslist[cat_id];
-  $('quantitiestable').innerHTML = '&nbsp;';
+  $('articles').innerHTML = articleslist[cat_id];
+  $('quantities').innerHTML = '&nbsp;';
 }
 
 
 
-function add_new_item_q(qu_id) {
+function add_new_item_q(qu_id, button) {
+
+  new Effect.Highlight(button);
+
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
@@ -27,7 +30,10 @@ function add_new_item_q(qu_id) {
   $('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
-function add_new_item_a(art_id) {
+function add_new_item_a(art_id, button) {
+
+  new Effect.Highlight(button);
+
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
@@ -87,7 +93,9 @@ function deselect_all_categories() {
   var container = document.getElementById("categories");
   var cats = container.children;
   for(c in cats) {
-    cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
+    if (cats[c].style) {
+      cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
+    }
   }
 }
 
@@ -96,7 +104,9 @@ function deselect_all_articles() {
   var container = document.getElementById("articlestable");
   var arts = container.rows;
   for(count in arts) {
-    arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
+    if (arts[count].firstChild) {
+      arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
+    }
   }
 }
 
@@ -147,10 +157,15 @@ function add_comment_to_item(prompt_message,item_designator) {
 }
 
 function add_option_to_item(item_designator, select_tag) {
-  document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
-  var index = $('optionsselect_' + item_designator).selectedIndex;
-  var text = $('optionsselect_' + item_designator).options[index].text;
-  $('label_' + item_designator).insert('<br>'+text);
+  if (select_tag.value == 0) {
+    document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value = '';
+    $('optionsnames_' + item_designator).innerHTML = '';
+  } else {
+    document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
+    var index = $('optionsselect_' + item_designator).selectedIndex;
+    var text = $('optionsselect_' + item_designator).options[index].text;
+    $('optionsnames_' + item_designator).insert('<br>'+text);
+  }
 }
 
 
@@ -161,7 +176,8 @@ function category_onmouseup(element) {
 }
 
 function articles_onmousedown(element) {
-  highlight_button(element); deselect_all_articles();
+  
+  deselect_all_articles();
 }
 
 function articles_onmouseup(element) {

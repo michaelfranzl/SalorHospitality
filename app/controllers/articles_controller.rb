@@ -148,9 +148,11 @@ private
     categories.collect{ |cat|
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles.find_in_menucard.collect{ |art|
-        action = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
+        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this);" : "display_quantities(#{ art.id });"
+        onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
+        onmouseupaction = art.quantities.empty? ? "articles_onmouseup(this);" : ""
         image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
-        "<tr><td id='article_#{ art.id }' class='article' onclick='#{ action }' onmousedown='articles_onmousedown(this)' onmouseup='articles_onmouseup(this)'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }<div id='article_#{ art.id }_quantitylist'></div></td></tr>"
+        "<div id='article_#{ art.id }' class='article' onclick='#{ onclickaction }' onmousedown='#{ onmousedownaction }' onmouseup='#{ onmouseupaction }'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</div>"
       }.to_s + '";'
     }.to_s
 
@@ -161,7 +163,7 @@ private
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.active_and_sorted.collect{ |qu|
-          "<tr><td id='quantity_#{ qu.id }' class='quantity' onclick='add_new_item_q(#{ qu.id })' onmousedown='quantities_onmousedown(this)' onmouseup='quantities_onmouseup(this)'>#{ Helper.escape_javascript qu.name }</td></tr>"
+          %&<div id='quantity_#{ qu.id }' class='quantity' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
         }.to_s + '";'
       }.to_s
     }.to_s
