@@ -6,3 +6,4 @@ vendor/plugins
 *.sql
 public/stylesheets/*.css
 .swp
+.escpos

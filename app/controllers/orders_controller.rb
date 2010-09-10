@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
     id = params[:id].to_i
     from = id - 1
     to = id + 1
@@ -130,10 +131,10 @@ class OrdersController < ApplicationController
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > out-bar.txt`
+      `cat bar.escpos > out-bar.escpos`
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > out-kitchen.txt`
+      `cat kitchen.escpos > out-kitchen.escpos`
     end
 
 
@@ -178,8 +179,7 @@ class OrdersController < ApplicationController
 
 
     def generate_escpos_invoice(order)
-      client_data = YAML.load_file( 'client_data.yaml' ) if File.exist?('client_data.yaml')
-      client_data ||= { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
+      client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
 
       header =
       "\e@"     +  # Initialize Printer

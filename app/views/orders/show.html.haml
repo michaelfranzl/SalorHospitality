@@ -19,15 +19,15 @@
   %a{ :href => order_path(@next_order), :title => (t '.previous_invoice') }
     %img{ :src => '/images/button_next.png' }
   
-%h3= t "clients.#{MyGlobals.client}.invoice_title"
+%h3= @client_data[:name]
 
 %p
-  = t "clients.#{MyGlobals.client}.address"
+  = @client_data[:address]
   %br
-  = t "clients.#{MyGlobals.client}.tax_number"
+  = @client_data[:taxnumber]
 
-%p== #{ t 'orders.served_by' } #{ @order.user.title } auf #{ @order.table.name }
-%p== #{l @order.created_at, :format => :long}
+%p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
+%p= l @order.created_at, :format => :long
 
 %table.printed_invoice
   %tr
