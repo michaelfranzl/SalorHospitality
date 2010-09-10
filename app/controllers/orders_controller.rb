@@ -125,7 +125,7 @@ class OrdersController < ApplicationController
           unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
           unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
           File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
-          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }.txt`
+          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }.escpos`
         when 'storno'
           redirect_to "/orders/storno/#{order.id}"
       end

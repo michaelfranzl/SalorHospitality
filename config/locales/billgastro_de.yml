@@ -265,6 +265,7 @@ de:
   finish_order: Bestellung abschließen
 
   invoice: Rechnung
+  invoices: Invoices
   storno: Storno
   datetime: Datum
   sum: Summe

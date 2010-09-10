@@ -266,6 +266,7 @@ en:
   finish_order: Finish order
 
   invoice: Invoice
+  invoices: Invoices
   storno: Storno
   datetime: Date
   sum: Sum

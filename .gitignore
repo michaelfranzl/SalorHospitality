@@ -5,5 +5,5 @@ config/database.yml
 vendor/plugins
 *.sql
 public/stylesheets/*.css
-.swp
-.escpos
+*.swp
+*.escpos

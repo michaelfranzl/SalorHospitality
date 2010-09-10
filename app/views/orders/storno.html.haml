@@ -1,15 +1,12 @@
+%a.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
+  %div.iconbutton.scrolldown_button
+
 %h2= t :storno
 
 %div.invoice
   = render :partial => 'orders/storno_form', :locals => { :order => @order }
 
-%div#functions
-  %a{ :href => orders_path, :title => t(:cancel_and_go_back) }
-    %img{ :src => '/images/button_tables.png' }
-    
-  %a{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
-    %img{ :src => '/images/button_scrolldown.png' }
-      
+%a.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
+  %div.iconbutton.scrollup_button
+
 %div#footer
-  %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }
-    %img{ :src => '/images/button_scrollup.png' }

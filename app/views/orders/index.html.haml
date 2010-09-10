@@ -1,10 +1,10 @@
 %div#functions
   - if not ipod?
-    %a#print_kitchenlist{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
-      %img{ :src => '/images/button_kitchenlist.png' }
+    %a{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
+      %div.iconbutton.kitchenlist_button
 
-  %a{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:scroll_to_room)} 1" }
-    %div.iconbutton#room1_button
+  %a{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)} 1" }
+    %div.iconbutton.print2_button
 
   %a{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
     %div.iconbutton#room1_button

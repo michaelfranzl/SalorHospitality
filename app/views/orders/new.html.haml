@@ -1,7 +1,7 @@
 %script{ :type => 'text/javascript' }= generate_js_variables
 
 %a.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
-  %div.iconbutton.scrolldown
+  %div.iconbutton.scrolldown_button
 
 - path = controller.action_name == 'edit' ? table_order_path(@order.table_id, @order) : table_orders_path
 - method = controller.action_name == 'edit' ? 'put' : 'post'
