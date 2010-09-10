@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
   belongs_to :settlement
   belongs_to :table
   belongs_to :user
+  belongs_to :cost_center
   has_many :items
   has_one :order
 

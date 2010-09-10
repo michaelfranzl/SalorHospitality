@@ -1,7 +1,6 @@
 %script{ :type => 'text/javascript' }= generate_js_variables
 
-%a.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
-  %div.iconbutton.scrolldown_button
+%a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
 
 - path = controller.action_name == 'edit' ? table_order_path(@order.table_id, @order) : table_orders_path
 - method = controller.action_name == 'edit' ? 'put' : 'post'
@@ -64,16 +63,12 @@
 
 
   %div#functions
-    %a{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back) }
-      %div.iconbutton.tables_button
+    %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back) }
     
-    %a{ :href => '/orders', :title => t(:cancel_and_go_back) }
-      %div.iconbutton.cancel_button
+    %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
 
-    %a{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :title => t(:finish_order) }
-      %div.iconbutton.invoice_button
+    %a.iconbutton.invoice_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :title => t(:finish_order) }
 
-%a.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
-  %div.iconbutton.scrollup_button
+%a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
 
 %div#footer

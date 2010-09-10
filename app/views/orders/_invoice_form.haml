@@ -1,31 +1,25 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
 
-  - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :split_invoice, :id => invoice_form.id }, :html => { :id => 'form' } do |order_form|
-
+  - form_for :order, invoice_form, :url => { :controller => :orders, :action => :print, :id => invoice_form.id }, :html => { :method => 'put' } do |order_form|
     = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{invoice_form.id}"
 
-    %h3== #{ t('activerecord.models.order.other')} ##{invoice_form.id} (##{invoice_form.order.id if invoice_form.order})
-    %p= l invoice_form.created_at, :format => :long
-
     - if !invoice_form.finished
-      %a#edit_invoice{ :href => edit_order_path(invoice_form), :title => t(:edit) }
-        %div.iconbutton.edit_button
+      %a.iconbutton.edit_button{ :href => edit_order_path(invoice_form), :title => t(:edit) }
 
-    //%select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
-    //= options_from_collection_for_select(@cost_centers, :id, :name)
+    %select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
+      = options_from_collection_for_select(@cost_centers, :id, :name)
+
+    %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print)}
+    %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print1'; this.parentNode.submit();", :title => t(:print)}
+    %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print2'; this.parentNode.submit();", :title => t(:print)}
+
+  - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :update }, :html => { :method => 'put', :id => 'form' } do |order_form|
+
+    %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.id}
+    %p= l invoice_form.created_at, :format => :long
 
     = link_to_remote('', :url => { :controller => :orders, :action => :split_invoice_all_at_once, :id => invoice_form.id }, :submit => "form", :html => { :class => 'iconbutton splitinvoice_button' })
 
-    
-
-    %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print)}
-
-    %a{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
-      %div.iconbutton.print_bar_button
-
-    %a{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
-      %div.iconbutton.print_guestroom_button
-  
     %table{ :class => 'invoice' }
       %tr
         %th{ :style => 'width:20px; text-align:right' }

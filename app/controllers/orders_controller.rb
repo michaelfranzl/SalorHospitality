@@ -47,8 +47,7 @@ class OrdersController < ApplicationController
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    order_action = params[:order_action]
-    @order.save ? process_order(@order, order_action) : render(:new)
+    @order.save ? process_order(@order) : render(:new)
   end
 
   def update
@@ -56,8 +55,7 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     if @order.update_attributes(params[:order])
-      process_order(@order, params[:order_action])
-      @order.update_attribute( :sum, calculate_order_sum(@order) )
+      process_order @order
     else
       render(:new)
     end
@@ -109,33 +107,31 @@ class OrdersController < ApplicationController
     render 'split_invoice'
   end
 
+  def print
+    @order = Order.find(params[:id])
+    @order.update_attribute(:finished, true) and reduce_stocks @order
+    if /tables/.match(request.referer)
+      unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+      unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
+    else
+      redirect_to order_path(@order)
+    end
+    File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
+    `cat order.escpos > port#{ params[:port] }.escpos`
+  end
+
 
   private
 
-    def reduce_stocks(order)
-      order.items.each do |item|
-        item.article.ingredients.each do |ingredient|
-          ingredient.stock.balance -= item.count * ingredient.amount
-          ingredient.stock.save
-        end
-      end
-    end
-
-    def process_order(order, order_action)
+    def process_order(order)
       order.items.each { |i| i.delete if i.count.zero? }
       order.delete and redirect_to orders_path and return if order.items.size.zero?
 
-      case order_action
+      case params[:order_action]
         when 'save_and_go_back'
           redirect_to orders_path
         when 'go_to_invoice'
           redirect_to table_path(order.table)
-        when /print/ # number after print determines directly the serial port 0..3
-          @order.update_attribute(:finished, true) and reduce_stocks @order
-          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
-          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
-          File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
-          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }.escpos`
         when 'storno'
           items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
           make_storno(order, items_for_storno)
@@ -147,17 +143,30 @@ class OrdersController < ApplicationController
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
       `cat kitchen.escpos > out-kitchen.escpos`
+
+      order.update_attribute( :sum, calculate_order_sum(order) )
+    end
+
+    def reduce_stocks(order)
+      order.items.each do |item|
+        item.article.ingredients.each do |ingredient|
+          ingredient.stock.balance -= item.count * ingredient.amount
+          ingredient.stock.save
+        end
+      end
     end
 
 
     def make_split_invoice(parent_order, split_items, mode)
       return if split_items.empty?
+debugger
       if parent_order.order # if there already exists one child order, use it for the split invoice
         split_invoice = parent_order.order
       else # create a brand new split invoice, and make it belong to the parent order
         split_invoice = parent_order.clone
         split_invoice.save
         parent_order.order = split_invoice  # make an association between parent and child
+        split_invoice.order = parent_order  # ... and vice versa
       end
       case mode
         when :all
@@ -174,6 +183,7 @@ class OrdersController < ApplicationController
             split_item.count = 0
             split_item.save
             parent_item.item = split_item # make an association between parent and child
+            split_item.item = parent_item # ... and vice versa
           end
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1

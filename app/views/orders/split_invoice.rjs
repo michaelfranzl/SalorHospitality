@@ -1,2 +1,2 @@
 page.replace_html 'invoices', render(:partial => 'invoice_form', :collection => @orders )
-page.visual_effect :highlight, "invoice_#{@order.order.id}"
+#page.visual_effect :highlight, "invoice_#{@order.order.id}"
