@@ -10,8 +10,5 @@
     %tr
       %td= option_form.label('category_id', Option.human_attribute_name(:category))
       %td= option_form.collection_select :category_id, Category.all, :id, :name, { :include_blank => true }
-    %tr
-      %td= option_form.label('tax_id', Option.human_attribute_name(:price))
-      %td= option_form.text_field :price, :size => '20'
           
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

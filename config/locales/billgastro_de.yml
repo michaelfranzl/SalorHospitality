@@ -67,6 +67,7 @@ de:
         sort_order: Sortierwert
         icon: Symbol
         color: Farbe
+        food: Speise?
       cost_center:
         name: Name
         description: Beschreibung
@@ -112,6 +113,9 @@ de:
       update: Aktualisieren
 
   categories:
+    index:
+      foods: Speisen
+      drinks: Getränke
     new:
       new_category: Neue Kategorie anlegen
       edit_category: Kategorie bearbeiten

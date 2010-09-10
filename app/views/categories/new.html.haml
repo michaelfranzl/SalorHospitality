@@ -13,6 +13,9 @@
       %td= category_form.label('sort_order', Category.human_attribute_name(:sort_order))
       %td= category_form.text_field :sort_order, :size => '20'
     %tr
+      %td= category_form.label('food', Category.human_attribute_name(:food))
+      %td= category_form.check_box :food
+    %tr
       %td= category_form.label('tax_id', Category.human_attribute_name(:tax_id))
       %td= category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
     %tr

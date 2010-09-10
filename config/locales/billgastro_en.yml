@@ -67,6 +67,7 @@ en:
         sort_order: Sort Order
         icon: Icon
         color: Color
+        food: Food?
       cost_center:
         name: Name
         description: Description
@@ -113,6 +114,9 @@ en:
       update: Update
 
   categories:
+    index:
+      foods: foods
+      drinks: drinks
     new:
       new_category: New Category
       edit_category: Edit Category

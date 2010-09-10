@@ -86,10 +86,7 @@ class OrdersController < ApplicationController
 
   def items
     respond_to do |wants|
-      wants.html
-      wants.bon {
-        render :text => generate_escpos_items
-      }
+      wants.bon { render :text => generate_escpos_items }
     end
   end
 
@@ -108,13 +105,13 @@ class OrdersController < ApplicationController
     end
 
     def process_order(order, order_action)
-      order.items.each do |item|
-        item.delete if item.count.zero?
-      end
+      order.items.each { |i| i.delete if i.count.zero? }
       order.delete and redirect_to orders_path and return if order.items.size.zero?
+
       items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
-      items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
       make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
+
+      items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
       make_storno(order, items_for_storno) if !items_for_storno.empty?
 
       case order_action
@@ -124,15 +121,21 @@ class OrdersController < ApplicationController
           redirect_to table_path(order.table)
         when /print/
           @order.update_attribute(:finished, true) and reduce_stocks @order
-          File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
           unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
           unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
-          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }`
+          File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
+          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }.txt`
         when 'storno'
           redirect_to "/orders/storno/#{order.id}"
       end
-      #PRINT UNPRINTED ITEMS HERE
+
+      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
+      `cat bar.escpos > out-bar.txt`
+
+      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
+      `cat kitchen.escpos > out-kitchen.txt`
     end
+
 
     def make_partial_order(order, items_for_partial_order)
       partial_order = order.clone
@@ -246,7 +249,7 @@ class OrdersController < ApplicationController
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
-      #output = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',output)
+      #output = Iconv.conv('ISO-8859-15','UTF-8',output)
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
       output.gsub!(/\xF6/,"\x94") #ö
@@ -266,43 +269,39 @@ class OrdersController < ApplicationController
 
 
 
-    def generate_escpos_items
+    def generate_escpos_items(type)
       output = ''
       Order.find_all_by_finished(false).each do |order|
-      
-        unprinted_items = Item.find(:all, :conditions => { :order_id => order.id, :printed => false } )
-        next if unprinted_items.size.zero?
-
         output +=
         "\e@"     +  # Initialize Printer
 
         "\e!\x00" +  # Font A
         "\e!\x08" +  # Font A, emphasized
         "%-25.25s %15s\n" % [order.user.title, order.table.name] +
-        "\n\n\n"
+        "===========================\n\n\n"
 
-        unprinted_items.each do |ui|
-          ui.update_attribute(:printed, true)
-          next if ui.article.category.tax.percent != 10  # This is ugly but works for now
-
-          quantityname = ui.quantity ? ui.quantity.name : ''
-
+        order.items.each do |i|
+          next if i.count == i.printed_count or (i.category.food and type == :drink) or (!i.category.food and type == :food) # no need to print
+          quantityname = i.quantity ? i.quantity.name : ''
           output +=
-
           "\e!\x38" +  # doube tall, double wide, bold
-          "%u %-17.17s\n" % [ui.count, ui.article.name] +
+          "%u %-17.17s\n" % [i.count - i.printed_count, i.article.name] +
           "  %-17.17s\n" % [quantityname] +
-          "\n\n\n"
+          "  * %-15.15s\n" % [i.comment]
+
+          i.options.each { |o| output += "  - %-15.15s\n" % [o.name] }
+
+          output += "---------------------------\n\n\n"
+
+          i.update_attribute :printed_count, i.count
         end
 
         output +=
         "\n\n\n\n\n\n" +
-        "\x1DV\x00" # paper cut
-
+        "\x1DV\x00" # paper cut at the end of each order/table
       end
 
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
-
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
       output.gsub!(/\xF6/,"\x94") #ö
@@ -315,7 +314,6 @@ class OrdersController < ApplicationController
       output.gsub!(/\xFA/,"\xA3") #ú
       output.gsub!(/\xF9/,"\x97") #ù
       output.gsub!(/\xC9/,"\x90") #É
-
       return output
     end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100906121150) do
+ActiveRecord::Schema.define(:version => 20100910124540) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20100906121150) do
     t.integer  "sort_order"
     t.string   "icon"
     t.string   "color"
+    t.boolean  "food"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -67,12 +68,12 @@ ActiveRecord::Schema.define(:version => 20100906121150) do
     t.datetime "updated_at"
     t.boolean  "partial_order"
     t.integer  "cost_center_id", :default => 1
-    t.boolean  "printed",        :default => false
     t.integer  "sort"
     t.integer  "quantity_id"
     t.integer  "storno_status",  :default => 0
     t.string   "comment"
     t.float    "price"
+    t.integer  "printed_count",  :default => 0
   end
 
   create_table "items_options", :id => false, :force => true do |t|
