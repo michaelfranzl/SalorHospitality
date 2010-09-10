@@ -1,4 +1,4 @@
-- form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put, :name => 'order_form' } do |order_form|
+- remote_form_for :order, order, :url => { :controller => :orders, :action => :split_invoice, :id => order.id }, :html => { :id => 'form' } do |order_form|
 
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{order.id}"
 
@@ -12,11 +12,9 @@
   %select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
     = options_from_collection_for_select(@cost_centers, :id, :name)
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='split_invoice_all_at_once'; this.parentNode.submit();", :title => t(:print) }
-    %div.iconbutton.splitinvoice_button
+  = link_to_remote('', :url => { :controller => :orders, :action => :split_invoice, :id => order.id }, :submit => "form", :html => { :class => 'iconbutton splitinvoice_button' })
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
-    %div.iconbutton.print_kitchen_button
+  %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print)}
 
   %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_bar_button

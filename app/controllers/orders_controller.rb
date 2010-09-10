@@ -55,9 +55,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.all
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    order_action = params[:order_action]
     if @order.update_attributes(params[:order])
-      process_order(@order, order_action)
+      process_order(@order, params[:order_action])
       @order.update_attribute( :sum, calculate_order_sum(@order) )
     else
       render(:new)
@@ -91,7 +90,20 @@ class OrdersController < ApplicationController
     end
   end
 
-
+  def split_invoice
+    @order = Order.find(params[:id])
+    case params[:order_action]
+      when 'split_invoice_all_at_once'
+        items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
+        make_split_invoice(@order, items_for_split_invoice, :all_at_once)
+      when 'split_invoice_one_at_a_time'
+        items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
+        make_split_invoice(@order, items_for_split_invoice, :one_at_a_time)
+    end
+    respond_to do |wants|
+      wants.js
+    end
+  end
 
 
   private
@@ -113,14 +125,6 @@ class OrdersController < ApplicationController
         when 'save_and_go_back'
           redirect_to orders_path
         when 'go_to_invoice'
-          redirect_to table_path(order.table)
-        when 'split_invoice_all_at_once'
-          items_for_split_invoice = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
-          make_split_invoice(order, items_for_split_invoice, :all_at_once)
-          redirect_to table_path(order.table)
-        when 'split_invoice_one_at_a_time'
-          items_for_split_invoice = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
-          make_split_invoice(order, items_for_split_invoice, :one_at_a_time)
           redirect_to table_path(order.table)
         when /print/ # number after print determines directly the serial port 0..3
           @order.update_attribute(:finished, true) and reduce_stocks @order
