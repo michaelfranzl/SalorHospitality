@@ -1,51 +1,21 @@
 --- 
 orders_001: 
-  sum: "15.1"
+  sum: "45.5"
   parent_order_id: 
-  created_at: 2010-05-16 16:40:44
-  updated_at: 2010-05-16 16:40:44
-  table_id: "9"
+  created_at: 2010-09-10 16:41:55
+  updated_at: 2010-09-10 16:41:55
+  table_id: "5"
   id: "1"
-  user_id: "11"
+  user_id: "12"
   settlement_id: 
   finished: "0"
 orders_002: 
-  sum: "48.2"
+  sum: "15.6"
   parent_order_id: 
-  created_at: 2010-05-16 16:41:07
-  updated_at: 2010-05-16 16:41:07
-  table_id: "7"
+  created_at: 2010-09-10 16:42:52
+  updated_at: 2010-09-10 16:42:52
+  table_id: "1"
   id: "2"
-  user_id: "12"
-  settlement_id: 
-  finished: "0"
-orders_003: 
-  sum: "29.3"
-  parent_order_id: 
-  created_at: 2010-05-16 16:41:40
-  updated_at: 2010-05-16 16:42:24
-  table_id: "4"
-  id: "3"
-  user_id: "12"
-  settlement_id: "1"
-  finished: "1"
-orders_004: 
-  sum: "18.4"
-  parent_order_id: 
-  created_at: 2010-05-16 16:41:40
-  updated_at: 2010-05-16 16:42:24
-  table_id: "4"
-  id: "4"
-  user_id: "12"
-  settlement_id: "1"
-  finished: "1"
-orders_005: 
-  sum: "25.3"
-  parent_order_id: 
-  created_at: 2010-05-16 16:42:39
-  updated_at: 2010-05-16 16:42:39
-  table_id: "2"
-  id: "5"
-  user_id: "12"
+  user_id: "1"
   settlement_id: 
   finished: "0"

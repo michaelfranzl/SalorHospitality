@@ -44,6 +44,15 @@ quantities_051:
   article_id: "337"
   hidden: "0"
   active: "1"
+quantities_073: 
+  price: "2.2"
+  name: "0,2"
+  created_at: 2010-09-10 16:33:08
+  updated_at: 2010-09-10 16:33:08
+  id: "73"
+  article_id: "3"
+  hidden: "0"
+  active: "1"
 quantities_010: 
   price: "2.3"
   name: 1/4 gespritzt
@@ -89,6 +98,15 @@ quantities_052:
   article_id: "337"
   hidden: "0"
   active: "1"
+quantities_074: 
+  price: "0.5"
+  name: "0,5"
+  created_at: 2010-09-10 16:33:08
+  updated_at: 2010-09-10 16:33:08
+  id: "74"
+  article_id: "3"
+  hidden: "0"
+  active: "1"
 quantities_011: 
   price: "3.7"
   name: 1/2 gespritzt
@@ -123,6 +141,15 @@ quantities_053:
   updated_at: 2010-04-30 14:16:53
   id: "53"
   article_id: "320"
+  hidden: "0"
+  active: "1"
+quantities_075: 
+  price: "2.7"
+  name: "0,3"
+  created_at: 2010-09-10 16:33:08
+  updated_at: 2010-09-10 16:33:08
+  id: "75"
+  article_id: "3"
   hidden: "0"
   active: "1"
 quantities_012: 

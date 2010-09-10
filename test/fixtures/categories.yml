@@ -8,6 +8,7 @@ categories_009:
   icon: teapot
   id: "10"
   tax_id: "2"
+  food: 
 categories_010: 
   name: Tobacco
   created_at: 2009-02-24 16:00:23
@@ -17,6 +18,7 @@ categories_010:
   icon: cigarette
   id: "11"
   tax_id: "3"
+  food: 
 categories_011: 
   name: Beer
   created_at: 2009-02-24 16:15:26
@@ -26,6 +28,7 @@ categories_011:
   icon: beer
   id: "13"
   tax_id: "2"
+  food: 
 categories_012: 
   name: Aperitiv
   created_at: 2009-02-24 16:15:36
@@ -35,15 +38,17 @@ categories_012:
   icon: aperitif
   id: "14"
   tax_id: "2"
+  food: 
 categories_001: 
   name: Starters
   created_at: 2009-02-24 15:57:33
-  updated_at: 2010-05-16 15:37:43
+  updated_at: 2010-09-10 16:30:27
   sort_order: "10"
   color: "#136880"
   icon: starter
   id: "1"
   tax_id: "1"
+  food: "1"
 categories_013: 
   name: White Wine
   created_at: 2009-02-24 16:15:44
@@ -53,33 +58,37 @@ categories_013:
   icon: whitewineglass
   id: "15"
   tax_id: "2"
+  food: 
 categories_002: 
   name: Main Dish
   created_at: 2009-02-24 15:57:43
-  updated_at: 2010-05-16 15:37:51
+  updated_at: 2010-09-10 16:30:33
   sort_order: "20"
   color: "#136880"
   icon: maindish
   id: "2"
   tax_id: "1"
+  food: "1"
 categories_014: 
   name: Side Dish
   created_at: 2010-02-02 21:04:34
-  updated_at: 2010-05-16 15:38:23
+  updated_at: 2010-09-10 16:30:43
   sort_order: "35"
   color: "#136880"
   icon: sidedish
   id: "16"
   tax_id: "1"
+  food: "1"
 categories_003: 
   name: Desserts
   created_at: 2009-02-24 15:57:53
-  updated_at: 2010-05-16 15:38:07
+  updated_at: 2010-09-10 16:30:37
   sort_order: "30"
   color: "#136880"
   icon: dessert
   id: "3"
   tax_id: "1"
+  food: "1"
 categories_015: 
   name: Divers
   created_at: 2010-02-06 19:33:53
@@ -89,6 +98,7 @@ categories_015:
   icon: blank
   id: "17"
   tax_id: "1"
+  food: 
 categories_004: 
   name: "Ros\xC3\xA9 Wine"
   created_at: 2009-02-24 15:58:00
@@ -98,6 +108,7 @@ categories_004:
   icon: rosewineglass
   id: "4"
   tax_id: "2"
+  food: 
 categories_005: 
   name: Red Wine
   created_at: 2009-02-24 15:58:14
@@ -107,6 +118,7 @@ categories_005:
   icon: redwineglass
   id: "5"
   tax_id: "2"
+  food: 
 categories_006: 
   name: "Dig\xC3\xA9stif"
   created_at: 2009-02-24 15:58:28
@@ -116,6 +128,7 @@ categories_006:
   icon: digestif
   id: "6"
   tax_id: "2"
+  food: 
 categories_007: 
   name: Alcohol Free
   created_at: 2009-02-24 15:58:37
@@ -125,6 +138,7 @@ categories_007:
   icon: nonalcoholics
   id: "7"
   tax_id: "2"
+  food: 
 categories_008: 
   name: Coffee
   created_at: 2009-02-24 15:59:59
@@ -134,3 +148,4 @@ categories_008:
   icon: coffee
   id: "9"
   tax_id: "2"
+  food: 
