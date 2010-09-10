@@ -102,7 +102,6 @@ class OrdersController < ApplicationController
 
   def split_invoice_one_at_a_time
     item_to_split = Item.find(params[:id]) # find item on which was clicked
-    item_to_split.partial_order = true # mark this item for splitting
     @order = item_to_split.order
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     make_split_invoice(@order, [item_to_split], :one)
@@ -158,7 +157,7 @@ class OrdersController < ApplicationController
       else # create a brand new split invoice, and make it belong to the parent order
         split_invoice = parent_order.clone
         split_invoice.save
-        parent_order.order = split_invoice
+        parent_order.order = split_invoice  # make an association between parent and child
       end
       case mode
         when :all
@@ -167,18 +166,23 @@ class OrdersController < ApplicationController
             i.update_attribute :partial_order, false # after the item has moved to the new order, leave it alone
           end
         when :one
-          old = split_items[0] # in this mode there will only single items to split
-          new = old.clone
-          new.order = split_invoice
-          new.count += 1
-          old.count -= 1
-          new.partial_order = false
-          old.partial_order = false
-          old.count == 0 ? old.delete : old.save
-          new.save
+          parent_item = split_items.first # in this mode there will only single items to split
+          if parent_item.item
+            split_item = parent_item.item
+          else
+            split_item = parent_item.clone
+            split_item.count = 0
+            split_item.save
+            parent_item.item = split_item # make an association between parent and child
+          end
+          split_item.order = split_invoice # this is the actual moving to the new order
+          split_item.count += 1
+          parent_item.count -= 1
+          parent_item.count == 0 ? parent_item.delete : parent_item.save
+          split_item.save
       end
       parent_order = Order.find(parent_order.id) # re-read
-      parent_order.delete if  parent_order.items.empty?
+      parent_order.delete if parent_order.items.empty?
     end
     
     # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original

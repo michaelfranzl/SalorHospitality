@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   belongs_to :article
   belongs_to :cost_center
   belongs_to :quantity
+  has_one :item
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
