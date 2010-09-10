@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   before_filter :fetch_logged_in_user
-  
+
   protected
 
     def fetch_logged_in_user
-      redirect_to new_session_path and return unless session[:user_id]
       @current_user = User.find session[:user_id]
+      redirect_to new_session_path and return unless @current_user
     end
 
     def logged_in?
