@@ -1,6 +1,6 @@
 %div#functions
   - if not ipod?
-    %a#print_kitchenlist{ :href => '/items/print.bon', :title => t(:print_kitchenlist) }
+    %a#print_kitchenlist{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
       %img{ :src => '/images/button_kitchenlist.png' }
 
   %a{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }

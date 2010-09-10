@@ -29,7 +29,6 @@ class OrdersController < ApplicationController
     @order.table_id = params[:table_id]
     @order.user = @current_user if ipod?
     @table = Table.find(@order.table_id)
-    #@username = @order.user_id ? User.find(@order.user_id) : ''
     @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
   end
 
@@ -85,6 +84,18 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
+  def items
+    respond_to do |wants|
+      wants.html
+      wants.bon {
+        render :text => generate_escpos_items
+      }
+    end
+  end
+
+
+
+
   private
 
     def reduce_stocks(order)
@@ -111,22 +122,16 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         when 'go_to_invoice', 'split_invoice'
           redirect_to table_path(order.table)
-        when 'print_kitchen'
+        when /print/
           @order.update_attribute(:finished, true) and reduce_stocks @order
+          File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
           unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
           unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
-          #redirect_to "#{order_path(order)}.bon"
-        when 'print_bar'
-          @order.update_attribute(:finished, true) and reduce_stocks @order
-          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
-          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
-        when 'print_guestroom'
-          @order.update_attribute(:finished, true) and reduce_stocks @order
-          unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
-          unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
+          `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }`
         when 'storno'
           redirect_to "/orders/storno/#{order.id}"
       end
+      #PRINT UNPRINTED ITEMS HERE
     end
 
     def make_partial_order(order, items_for_partial_order)
@@ -168,41 +173,27 @@ class OrdersController < ApplicationController
       return subtotal
     end
 
-    
-    def generate_escpos_invoice(order)
-    
-      invoice_title = t("clients.#{MyGlobals.client}.invoice_title")
-      invoice_title = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_title)    
-    
-    
-      invoice_subtitle = t("clients.#{MyGlobals.client}.invoice_subtitle")
-      invoice_subtitle = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle)
-      
-      invoice_address = t("clients.#{MyGlobals.client}.address")
-      invoice_address = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_address)
-      
-      invoice_subtitle1 = t("clients.#{MyGlobals.client}.invoice_subtitle1")
-      invoice_subtitle1 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle1)
 
-      invoice_subtitle2 = t("clients.#{MyGlobals.client}.invoice_subtitle2")
-      invoice_subtitle2 = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',invoice_subtitle2)
-      
+    def generate_escpos_invoice(order)
+      client_data = YAML.load_file( 'client_data.yaml' ) if File.exist?('client_data.yaml')
+      client_data ||= { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
+
       header =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      invoice_title + "\n" +
+      client_data[:name] + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + invoice_subtitle + "\n\n" +
-      "\n" + invoice_address + "\n\n" +
-      t("clients.#{MyGlobals.client}.tax_number") + "\n\n" +
+      "\n" + client_data[:subtitle] + "\n" +
+      "\n" + client_data[:address] + "\n\n" +
+      client_data[:taxnumber] + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
-      "#{ t :served_by } #{ order.user.title } auf #{ order.table.name }\n" +
-      "Bestellung Nr. #{order.id} am #{l order.created_at, :format => :long}\n\n" +
+      t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
+      t('invoice_numer_X_at_time', :number => order.id, :datetime => l(order.created_at, :format => :long)) + "\n\n" +
 
       "\e!\x00" +  # Font A
       "               Artikel    EP    Stk   GP\n"
@@ -219,7 +210,7 @@ class OrdersController < ApplicationController
         sum_taxes[tax_id-1] += sum
         label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
         label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
-        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,c,sum]
+        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,item.count,sum]
       end
 
       sum =
@@ -247,14 +238,70 @@ class OrdersController < ApplicationController
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + invoice_subtitle1 + "\n" +
+      "\n" + client_data[:slogan1] + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + invoice_subtitle2 + "\n" +
+      "\n" + client_data[:slogan2] + "\n" +
       "\e!\x88" + # underline, emphasized
-      t("clients.#{MyGlobals.client}.website") + "\n\n\n\n\n\n\n" + 
+      client_data[:internet] + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
+      #output = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',output)
+      output.gsub!(/\xE4/,"\x84") #ä
+      output.gsub!(/\xFC/,"\x81") #ü
+      output.gsub!(/\xF6/,"\x94") #ö
+      output.gsub!(/\xC4/,"\x8E") #Ä
+      output.gsub!(/\xDC/,"\x9A") #Ü
+      output.gsub!(/\xD6/,"\x99") #Ö
+      output.gsub!(/\xDF/,"\xE1") #ß
+      output.gsub!(/\xE9/,"\x82") #é
+      output.gsub!(/\xE8/,"\x7A") #è
+      output.gsub!(/\xFA/,"\xA3") #ú
+      output.gsub!(/\xF9/,"\x97") #ù
+      output.gsub!(/\xC9/,"\x90") #É
+      return output
+    end
+
+
+
+
+
+    def generate_escpos_items
+      output = ''
+      Order.find_all_by_finished(false).each do |order|
+      
+        unprinted_items = Item.find(:all, :conditions => { :order_id => order.id, :printed => false } )
+        next if unprinted_items.size.zero?
+
+        output +=
+        "\e@"     +  # Initialize Printer
+
+        "\e!\x00" +  # Font A
+        "\e!\x08" +  # Font A, emphasized
+        "%-25.25s %15s\n" % [order.user.title, order.table.name] +
+        "\n\n\n"
+
+        unprinted_items.each do |ui|
+          ui.update_attribute(:printed, true)
+          next if ui.article.category.tax.percent != 10  # This is ugly but works for now
+
+          quantityname = ui.quantity ? ui.quantity.name : ''
+
+          output +=
+
+          "\e!\x38" +  # doube tall, double wide, bold
+          "%u %-17.17s\n" % [ui.count, ui.article.name] +
+          "  %-17.17s\n" % [quantityname] +
+          "\n\n\n"
+        end
+
+        output +=
+        "\n\n\n\n\n\n" +
+        "\x1DV\x00" # paper cut
+
+      end
+
+      output = Iconv.conv('ISO-8859-15','UTF-8',output)
 
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
@@ -270,8 +317,9 @@ class OrdersController < ApplicationController
       output.gsub!(/\xC9/,"\x90") #É
 
       return output
-
     end
+
+
 
     def generate_escpos_test(order)
       out =

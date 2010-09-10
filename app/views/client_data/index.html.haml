@@ -15,7 +15,16 @@
   = label_tag 'data_taxnumber', t('.taxnumber')
   = text_field_tag 'data[taxnumber]', @client_data[:taxnumber]
   %br
-  = label_tag 'data_slogan', t('.slogan')
-  = text_field_tag 'data[slogan]', @client_data[:slogan]
+  = label_tag 'data_slogan1', t('.slogan')
+  = text_field_tag 'data[slogan1]', @client_data[:slogan1]
+  %br
+  = label_tag 'data_slogan2', t('.slogan')
+  = text_field_tag 'data[slogan2]', @client_data[:slogan2]
+  %br
+  = label_tag 'data_internet', t('.internet_address')
+  = text_field_tag 'data[internet]', @client_data[:internet]
+  %br
+  = label_tag 'data_email', t('.email')
+  = text_field_tag 'data[email]', @client_data[:email]
   %br
   = submit_tag

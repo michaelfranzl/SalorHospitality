@@ -9,9 +9,7 @@ class ClientDataController < ApplicationController
   end
 
   def update
-    File.open( 'client_data.yaml', 'w' ) do |out|
-      YAML.dump( params[:data], out )
-    end
+    File.open('client_data.yaml', 'w') { |out|  YAML.dump(params[:data], out) }
   end
 
 end

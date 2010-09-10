@@ -194,6 +194,7 @@ en:
   items:
     item_tablerow:
       please_enter_item_comment: Please enter special wish
+      no_options: normal
 
   sessions:
     browser_warning:
@@ -288,3 +289,6 @@ en:
   there_are_no_open_settlements: There are no open settlements.
   logout_successful: You have logged off successfully.
   user_not_found: User not found
+
+  served_by_X_on_table_Y: Served by {{waiter}} on table {{table}}
+  invoice_numer_X_at_time: Invoice No {{number}} at {{datetime}}

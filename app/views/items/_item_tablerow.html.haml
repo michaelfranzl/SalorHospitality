@@ -11,6 +11,5 @@
 
   %td{ :class => 'item_options' }
     %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)" }
-      %option{ :selected => true }
-      %option{ :value => 0 }== normal
+      %option{ :value => 0 }= t('.no_options')
       = locals[:optionsselect]

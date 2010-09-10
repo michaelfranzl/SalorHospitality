@@ -14,13 +14,13 @@
 
   %br
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_kitchen'; this.parentNode.submit();", :title => t(:print) }
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_kitchen_button
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_bar'; this.parentNode.submit();", :title => t(:print) }
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_bar_button
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print_guestroom'; this.parentNode.submit();", :title => t(:print) }
+  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
     %div.iconbutton.print_guestroom_button
   
   %table{ :class => 'invoice' }

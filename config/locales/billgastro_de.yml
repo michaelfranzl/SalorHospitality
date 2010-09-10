@@ -193,6 +193,7 @@ de:
   items:
     item_tablerow:
       please_enter_item_comment: Spezialwunsch
+      no_options: Normal
 
   sessions:
     browser_warning:
@@ -286,3 +287,6 @@ de:
   there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
   logout_successful: Sie haben sich erfolgreich abgemeldet.
   user_not_found: Benutzer nicht gefunden.
+
+  served_by_X_on_table_Y: Es bediente {{waiter}} auf Tisch {{table}}
+  invoice_numer_X_at_time: Rechnung Nr. {{number}} am {{datetime}}
