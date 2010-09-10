@@ -86,7 +86,7 @@ class OrdersController < ApplicationController
 
   def items
     respond_to do |wants|
-      wants.bon { render :text => generate_escpos_items }
+      wants.bon { render :text => generate_escpos_items(:drink) }
     end
   end
 
