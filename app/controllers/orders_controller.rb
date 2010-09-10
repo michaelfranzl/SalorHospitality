@@ -280,8 +280,11 @@ class OrdersController < ApplicationController
         "%-25.25s %15s\n" % [order.user.title, order.table.name] +
         "===========================\n\n\n"
 
+        printed_items = 0
         order.items.each do |i|
           next if i.count == i.printed_count or (i.category.food and type == :drink) or (!i.category.food and type == :food) # no need to print
+          printed_items =+ 1
+
           quantityname = i.quantity ? i.quantity.name : ''
           output +=
           "\e!\x38" +  # doube tall, double wide, bold
@@ -299,6 +302,7 @@ class OrdersController < ApplicationController
         output +=
         "\n\n\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
+        output = '' if printed_items == 0
       end
 
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
