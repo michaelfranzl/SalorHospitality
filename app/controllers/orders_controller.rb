@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
     order_range = Order.find(:all, :conditions => { :id => from..to })
     @previous_order = order_range[0]
     @previous_order = @order if @previous_order.nil?
-    @order = order_range[1]
+    @order = Order.all.last
     @next_order = order_range[2]
     @next_order = @order if @next_order.nil?
     respond_to do |wants|
@@ -22,6 +22,7 @@ class OrdersController < ApplicationController
         render :text => generate_escpos_invoice(@order)
       }
     end
+
   end
 
   def new
@@ -109,6 +110,7 @@ class OrdersController < ApplicationController
 
   def print
     @order = Order.find(params[:id])
+    @order.update_attributes(params[:order])
     @order.update_attribute(:finished, true) and reduce_stocks @order
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
@@ -159,7 +161,6 @@ class OrdersController < ApplicationController
 
     def make_split_invoice(parent_order, split_items, mode)
       return if split_items.empty?
-debugger
       if parent_order.order # if there already exists one child order, use it for the split invoice
         split_invoice = parent_order.order
       else # create a brand new split invoice, and make it belong to the parent order

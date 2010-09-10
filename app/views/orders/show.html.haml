@@ -1,5 +1,7 @@
 %h2== #{ t :invoice } ##{ @order.id }
 
+= @order.cost_center.name if @order.cost_center
+
 - form_for :order, @order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
 
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"

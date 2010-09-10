@@ -1,33 +1,20 @@
 %div#functions
   - if not ipod?
-    %a{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
-      %div.iconbutton.kitchenlist_button
+    %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
 
   - if @last_finished_order
-    %a{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)} 1" }
-      %div.iconbutton.print2_button
+    %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)} 1" }
 
-  %a{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
-    %div.iconbutton#room1_button
-
-  %a{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
-    %div.iconbutton#room2_button
-
-  %a{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
-    %div.iconbutton#room3_button
-
-  %a{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
-    %div.iconbutton#room4_button
-
+  %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
+  %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
+  %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
+  %a.iconbutton.room4_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
 
 %h2= t('activerecord.models.order.other')
 
 %div#room1.room
-
 %div#room2.room
-
 %div#room3.room
-
 %div#room4.room
     
 = render @tables
