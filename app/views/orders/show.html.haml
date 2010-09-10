@@ -1,23 +1,33 @@
 %h2== #{ t :invoice } ##{ @order.id }
 
-%div#buttons
-  %a{ :href => "#{order_path(@order)}.bon", :title => (t '.print_invoice') }
-    %img{ :src => '/images/button_print.png' }
+- form_for :order, @order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
 
-  %a{ :href => '#', :onclick => "window.print()", :title => (t '.print_business_invoice') }
-    %img{ :src => '/images/button_print2.png' }
-  
-  %a{ :href => '#', :onclick => "history.back(); return false;", :title => (t '.back') }
-    %img{ :src => '/images/button_back.png' }
+  = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
+
+%div#buttons
+  %a{ :onclick => "document.getElementById('order_action_#{@order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
+    %div.iconbutton.print_kitchen_button
+
+  %a{ :onclick => "document.getElementById('order_action_#{@order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
+    %div.iconbutton.print_bar_button
+
+  %a{ :onclick => "document.getElementById('order_action_#{@order.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
+    %div.iconbutton.print_guestroom_button
+
+  %a{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
+    %div.iconbutton.print2_button
+
+  %a{ :href => "#{orders_path}", :title => t(:go_back) }
+    %div.iconbutton.tables_button
   
   %a{ :href => "/orders/storno/#{@order.id}", :title => (t :storno) }
-    %img{ :src => '/images/button_storno.png' }
+    %div.iconbutton.storno_button
   
-  %a{ :href => order_path(@previous_order), :title => (t '.next_invoice') }
-    %img{ :src => '/images/button_previous.png' }
+  %a{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
+    %div.iconbutton.previous_button
   
-  %a{ :href => order_path(@next_order), :title => (t '.previous_invoice') }
-    %img{ :src => '/images/button_next.png' }
+  %a{ :href => order_path(@next_order), :title => (t '.next_invoice') }
+    %div.iconbutton.next_button
   
 %h3= @client_data[:name]
 
