@@ -9,8 +9,7 @@
       
 %div#invoices
   - @unfinished_orders.each do |uo|
-    %div.invoice
-      = render :partial => 'orders/invoice_form', :locals => { :order => uo }
+    = render :partial => 'orders/invoice_form', :locals => { :invoice_form => uo }
       
 %div#footer
   %a{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }

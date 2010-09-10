@@ -1,0 +1,1 @@
+page.replace_html 'invoices', render(:partial => 'invoice_form', :collection => @orders )

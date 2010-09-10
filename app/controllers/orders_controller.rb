@@ -90,19 +90,19 @@ class OrdersController < ApplicationController
     end
   end
 
-  def split_invoice
+  def split_invoice_all_at_once
     @order = Order.find(params[:id])
-    case params[:order_action]
-      when 'split_invoice_all_at_once'
-        items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
-        make_split_invoice(@order, items_for_split_invoice, :all_at_once)
-      when 'split_invoice_one_at_a_time'
-        items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
-        make_split_invoice(@order, items_for_split_invoice, :one_at_a_time)
-    end
-    respond_to do |wants|
-      wants.js
-    end
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
+    make_split_invoice(@order, items_for_split_invoice, :all_at_once) 
+  end
+
+  def split_invoice_one_at_a_time
+    @order = Order.find(params[:id])
+    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
+    make_split_invoice(@order, items_for_split_invoice, :one_at_a_time)
   end
 
 
