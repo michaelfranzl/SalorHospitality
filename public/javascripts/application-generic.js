@@ -130,7 +130,7 @@ function calculate_sum() {
 }
 
 
-function mark_item_for_partial(list_id, order_id, item_id) {
+function mark_item_for_split_invoice(list_id, order_id, item_id) {
   if ( $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value == 1 ) {
     list_id.style.backgroundColor = 'transparent';
     $('order_items_attributes_'+order_id+'_'+item_id+'_partial_order').value = 0;

@@ -109,24 +109,28 @@ class OrdersController < ApplicationController
       order.items.each { |i| i.delete if i.count.zero? }
       order.delete and redirect_to orders_path and return if order.items.size.zero?
 
-      items_for_partial_order = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
-      make_partial_order(order, items_for_partial_order) if !items_for_partial_order.empty?
-
-      items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
-      make_storno(order, items_for_storno) if !items_for_storno.empty?
-
       case order_action
         when 'save_and_go_back'
           redirect_to orders_path
-        when 'go_to_invoice', 'split_invoice'
+        when 'go_to_invoice'
           redirect_to table_path(order.table)
-        when /print/
+        when 'split_invoice_all_at_once'
+          items_for_split_invoice = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
+          make_split_invoice(order, items_for_split_invoice, :all_at_once)
+          redirect_to table_path(order.table)
+        when 'split_invoice_one_at_a_time'
+          items_for_split_invoice = Item.find(:all, :conditions => { :order_id => order.id, :partial_order => true })
+          make_split_invoice(order, items_for_split_invoice, :one_at_a_time)
+          redirect_to table_path(order.table)
+        when /print/ # number after print determines directly the serial port 0..3
           @order.update_attribute(:finished, true) and reduce_stocks @order
           unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => order.table, :finished => false })
           unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(order.table))
           File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(order)) }
           `cat order.escpos > out#{ /print(.)/.match(order_action)[1] }.escpos`
         when 'storno'
+          items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
+          make_storno(order, items_for_storno)
           redirect_to "/orders/storno/#{order.id}"
       end
 
@@ -138,25 +142,40 @@ class OrdersController < ApplicationController
     end
 
 
-    def make_partial_order(order, items_for_partial_order)
-      partial_order = order.clone
-      if partial_order.save
-        items_for_partial_order.each do |item|
-          item.update_attribute :order_id, partial_order.id
-          item.update_attribute :partial_order, false
-          item.update_attribute :cost_center_id, params[:cost_center_id]
-        end
-        order = Order.find(params[:id])
-        order.delete if order.items.empty?
-      else
-        flash[:error] = 'Partial Order could not be saved.'
+    def make_split_invoice(parent_order, split_items, mode)
+      return if split_items.empty?
+      if parent_order.order # if there already exists one child order, use it for the split invoice
+        split_invoice = parent_order.order
+      else # create a brand new split invoice, and make it belong to the parent order
+        split_invoice = parent_order.clone
+        split_invoice.save
+        parent_order.order = split_invoice
       end
-      return partial_order
+      case mode
+        when :all_at_once
+          split_items.each do |i|
+            i.update_attribute :order_id, split_invoice.id # move item to the new order
+            i.update_attribute :partial_order, false # after the item has moved to the new order, leave it alone
+          end
+        when :one_at_a_time
+          old = split_items[0] # in this mode there will only single items to split
+          new = old.clone
+          new.order = split_invoice
+          new.count += 1
+          old.count -= 1
+          old.delete if old.count == 0
+          new.partial_order = old.partial_order = false
+          new.save
+          old.save
+      end
+      parent_order = Order.find(params[:id]) # re-read
+      parent_order.delete if  parent_order.items.empty?
     end
     
     # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
     #
     def make_storno(order, items_for_storno)
+      return if items_for_storno.empty?
       items_for_storno.each do |item|
         next if item.storno_status == 3 # only one storno allowed per item
         storno_item = item.clone

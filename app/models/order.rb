@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :table
   belongs_to :user
   has_many :items
+  has_one :order
 
   validates_presence_of :user_id
 
