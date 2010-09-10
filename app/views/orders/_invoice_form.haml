@@ -1,4 +1,4 @@
-%div.invoice
+%div.invoice{ :id => "invoice_#{invoice_form.id}" }
 
   - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :split_invoice, :id => invoice_form.id }, :html => { :id => 'form' } do |order_form|
 
@@ -11,10 +11,12 @@
       %a#edit_invoice{ :href => edit_order_path(invoice_form), :title => t(:edit) }
         %div.iconbutton.edit_button
 
-    %select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
-      = options_from_collection_for_select(@cost_centers, :id, :name)
+    //%select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
+    //= options_from_collection_for_select(@cost_centers, :id, :name)
 
     = link_to_remote('', :url => { :controller => :orders, :action => :split_invoice_all_at_once, :id => invoice_form.id }, :submit => "form", :html => { :class => 'iconbutton splitinvoice_button' })
+
+    
 
     %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print)}
 
@@ -37,7 +39,7 @@
         - subtotal += sum
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         %tr
-          %td= item.count
+          %td= link_to_remote(item.count, :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "form")
           - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
           %td.simple_invoice{ :id => "item#{item.id}", :onclick => "mark_item_for_split_invoice(this, #{order_form.object.id}, #{itemnumber})"}= "%20.20s" % [label]
           %td{ :style => 'text-align:right' }= number_to_currency item.real_price

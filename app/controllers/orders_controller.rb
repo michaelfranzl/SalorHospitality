@@ -92,17 +92,22 @@ class OrdersController < ApplicationController
 
   def split_invoice_all_at_once
     @order = Order.find(params[:id])
-    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    @order.update_attributes(params[:order])
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
-    make_split_invoice(@order, items_for_split_invoice, :all_at_once) 
+    make_split_invoice(@order, items_for_split_invoice, :all)
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    render 'split_invoice'
   end
 
   def split_invoice_one_at_a_time
-    @order = Order.find(params[:id])
+    item_to_split = Item.find(params[:id]) # find item on which was clicked
+    item_to_split.partial_order = true # mark this item for splitting
+    @order = item_to_split.order
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
-    make_split_invoice(@order, items_for_split_invoice, :one_at_a_time)
+    make_split_invoice(@order, [item_to_split], :one)
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    render 'split_invoice'
   end
 
 
@@ -156,23 +161,23 @@ class OrdersController < ApplicationController
         parent_order.order = split_invoice
       end
       case mode
-        when :all_at_once
+        when :all
           split_items.each do |i|
             i.update_attribute :order_id, split_invoice.id # move item to the new order
             i.update_attribute :partial_order, false # after the item has moved to the new order, leave it alone
           end
-        when :one_at_a_time
+        when :one
           old = split_items[0] # in this mode there will only single items to split
           new = old.clone
           new.order = split_invoice
           new.count += 1
           old.count -= 1
-          old.delete if old.count == 0
-          new.partial_order = old.partial_order = false
+          new.partial_order = false
+          old.partial_order = false
+          old.count == 0 ? old.delete : old.save
           new.save
-          old.save
       end
-      parent_order = Order.find(params[:id]) # re-read
+      parent_order = Order.find(parent_order.id) # re-read
       parent_order.delete if  parent_order.items.empty?
     end
     
