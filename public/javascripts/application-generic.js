@@ -54,7 +54,7 @@ function add_new_item_a(art_id, button) {
   if (itemdetails_a[art_id][3] == 0) {
     $('order_items_attributes_' + desig + '_price').value = prompt('enter price');
   }
-  document.getElementById('quantitiestable').innerHTML = '&nbsp;';
+  document.getElementById('quantities').innerHTML = '&nbsp;';
 
   var sum = calculate_sum();
   $('order_sum').value = sum.toFixed(2).replace('.', ',');
@@ -101,7 +101,7 @@ function deselect_all_categories() {
 
 
 function deselect_all_articles() {
-  var container = document.getElementById("articlestable");
+  var container = document.getElementById("articles");
   var arts = container.rows;
   for(count in arts) {
     if (arts[count].firstChild) {

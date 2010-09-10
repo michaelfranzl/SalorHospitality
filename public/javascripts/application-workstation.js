@@ -7,5 +7,5 @@ function quantities_onmousedown(element) {
 }
 
 function display_quantities(art_id) {
-  $('quantitiestable').innerHTML = quantitylist[art_id];
+  $('quantities').innerHTML = quantitylist[art_id];
 }
