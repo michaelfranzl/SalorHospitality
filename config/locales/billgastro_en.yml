@@ -224,6 +224,19 @@ en:
       new_user: New User
       edit_user: Edit User
 
+  client_data:
+    menulabel: Company Data
+    index:
+      name: Name
+      subtitle: Invoice Subtitle
+      address: Address
+      taxnumber: Tax Number
+      slogan: Invoice Slogan
+      internet_address: Internet Address
+      email: E-Mail
+    update:
+      client_data_successfully_updated: Data successfully updated!
+
   delete: Delete
   are_you_sure: 'Are you sure?'
   edit: Edit

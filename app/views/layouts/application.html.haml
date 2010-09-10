@@ -17,6 +17,13 @@
       - else
         %title gastrohelper
 
+    = stylesheet_link_tag('generic', :media => 'screen')
+    = stylesheet_link_tag 'print', :media => 'print'
+    = javascript_include_tag 'application-generic.js'
+    = javascript_include_tag 'prototype.js'
+    = javascript_include_tag 'effects.js'
+    = javascript_include_tag 'dragdrop.js'
+
     - if ipod?
       = stylesheet_link_tag('ipod', :media => 'screen')
       = stylesheet_link_tag('orders-ipod', :media => 'screen')
@@ -26,12 +33,6 @@
       = stylesheet_link_tag('orders', :media => 'screen')
       = javascript_include_tag 'application-workstation.js'
 
-    = stylesheet_link_tag('generic', :media => 'screen')
-    = stylesheet_link_tag 'print', :media => 'print'
-    = javascript_include_tag 'application-generic.js'
-    = javascript_include_tag 'prototype.js'
-    = javascript_include_tag 'effects.js'
-    = javascript_include_tag 'dragdrop.js' if @current_user.role >= 2
 
     - if logged_in?
       = javascript_include_tag "/articles.js?#{MyGlobals.last_js_change}" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
@@ -61,6 +62,7 @@
                 = link_to( t('activerecord.models.user.other'), users_path)
                 = link_to( t('activerecord.models.table.other'), tables_path)
                 = link_to( t('statistic'), statistics_path)
+                = link_to( t('client_data.menulabel'), 'client_data')
                 
 
       #main

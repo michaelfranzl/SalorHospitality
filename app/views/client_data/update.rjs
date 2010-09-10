@@ -1,0 +1,2 @@
+page.replace_html 'message', t('.client_data_successfully_updated')
+page.visual_effect :highlight, 'message'

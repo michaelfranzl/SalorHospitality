@@ -223,6 +223,19 @@ de:
       new_user: Neuer Benutzer
       edit_user: Benutzer bearbeiten
 
+  client_data:
+    menulabel: Daten
+    index:
+      name: Name
+      subtitle: Untertitel
+      address: Adresse
+      taxnumber: Steuernummer
+      slogan: Rechnung Nachricht
+      internet_address: Internetadresse
+      email: E-Mail Adresse
+    update:
+      client_data_successfully_updated: Daten erfolgreich aktualisiert!
+
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'
   edit: Bearbeiten
