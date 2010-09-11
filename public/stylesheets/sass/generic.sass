@@ -1,3 +1,16 @@
+.errorExplanation
+  :font-size small
+  :color red
+  :margin-top 30px
+  h2
+    :font-size 110%
+
+div.fieldWithErrors
+  :border 5px solid red
+
+
+
+
 a.iconbutton
   :width 50px
   :height 54px
@@ -78,18 +91,46 @@ a.room3_button
 a.room4_button
   :background-image url(/images/button_ipod_room4.png)
 
-a.split_item
-  :display block
-  :text-align center
-  :padding-top 12px
-  :width 40px
-  :height 28px
-  :background-color #EEE
 
-div.invoice a
+
+div.invoice
+  :background-color white
+  :float left
+  :width 320px
+  :font-family Monospace
+  :font-size 150%
   :color #333
-  :text-decoration none
+  :padding 30px 10px
+  :margin 10px
+  :letter-spacing -1.5px
+  a
+    :color #333
+    :text-decoration none
+  select#cost_center_for_invoice
+    :position relative
+    :top -25px
+    :width 180px
+    :height 54px
+    :font-size 140%
+  table
+    :border-collapse collapse
+    :margin-bottom 20px
+    td
+      :cursor pointer
+    td:hover
+      :background-color #EEE
+  a.count
+    :display block
+    :text-align center
+    :padding-top 12px
+    :width 50px
+    :height 28px
+    :background-color #EEE
+
 
 div.table a
   :font-size 240%
   :text-decoration none
+  :display block
+  :width 100%
+  :height 100%

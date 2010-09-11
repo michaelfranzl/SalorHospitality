@@ -8,12 +8,7 @@ class OrdersController < ApplicationController
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
     @order = Order.find(params[:id])
-    @orders = Order.find_all_by_finished(true)
-    idx = @orders.index(@order)
-    @previous_order = @orders[idx-1]
-    @previous_order = @order if @previous_order.nil?
-    @next_order = @orders[idx+1]
-    @next_order = @order if @next_order.nil?
+    @previous_order, @next_order = neighbour_orders(@order)
     respond_to do |wants|
       wants.html
       wants.bon { render :text => generate_escpos_invoice(@order) }
@@ -23,17 +18,17 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    @cost_centers = CostCenter.find_all_by_active(true)
     @categories = Category.find(:all, :order => :sort_order)
     @order.table_id = params[:table_id]
     @order.user = @current_user if ipod?
     @table = Table.find(@order.table_id)
-    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
   end
 
   def edit
     @order = Order.find(params[:id])
     @categories = Category.find(:all, :order => :sort_order)
-    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     render :new
   end
 
@@ -50,7 +45,7 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @categories = Category.all
-    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     if @order.update_attributes(params[:order])
       process_order @order
     else
@@ -84,10 +79,9 @@ class OrdersController < ApplicationController
   def split_invoice_all_at_once
     @order = Order.find(params[:id])
     @order.update_attributes(params[:order])
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @cost_centers = CostCenter.find_all_by_active(true)
     items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
     make_split_invoice(@order, items_for_split_invoice, :all)
-    @order = Order.find(params[:id]) # re-read in case it was deleted
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
   end
@@ -95,7 +89,7 @@ class OrdersController < ApplicationController
   def split_invoice_one_at_a_time
     item_to_split = Item.find(params[:id]) # find item on which was clicked
     @order = item_to_split.order
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @cost_centers = CostCenter.find_all_by_active(true)
     make_split_invoice(@order, [item_to_split], :one)
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
@@ -103,19 +97,28 @@ class OrdersController < ApplicationController
 
   def storno
     @order = Order.find(params[:id])
-    @orders = Order.find_all_by_finished(true)
-    idx = @orders.index(@order)
-    @previous_order = @orders[idx-1]
-    @previous_order = @order if @previous_order.nil?
-    @next_order = @orders[idx+1]
-    @next_order = @order if @next_order.nil?
+    @previous_order, @next_order = neighbour_orders(@order)
     @order.update_attributes(params[:order])
     items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
     make_storno(@order, items_for_storno)
     @order = Order.find(params[:id]) # re-read
     respond_to do |wants|
       wants.html
-      wants.js
+      wants.js { render 'display_storno' }
+    end
+  end
+
+  def separate_item
+    @item=Item.find(params[:id])
+    @separated_item = @item.clone
+    @separated_item.count = 1
+    @item.count -= 1
+    @item.count == 0 ? @item.delete : @item.save
+    @separated_item.save
+    @order = @item.order
+    @previous_order, @next_order = neighbour_orders(@order)
+    respond_to do |wants|
+      wants.js { render 'display_storno' }
     end
   end
 
@@ -135,6 +138,16 @@ class OrdersController < ApplicationController
 
 
   private
+
+    def neighbour_orders(order)
+      orders = Order.find_all_by_finished(true)
+      idx = orders.index(order)
+      previous_order = orders[idx-1]
+      previous_order = order if previous_order.nil?
+      next_order = orders[idx+1]
+      next_order = order if next_order.nil?
+      return previous_order, next_order
+    end
 
     def process_order(order)
       order.items.each { |i| i.delete if i.count.zero? }

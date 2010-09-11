@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   belongs_to :cost_center
   has_many :items
   has_one :order
+  belongs_to :cost_center
 
   validates_presence_of :user_id
 

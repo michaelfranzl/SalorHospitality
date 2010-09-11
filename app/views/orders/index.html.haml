@@ -1,9 +1,12 @@
 %div#functions
-  - if not ipod?
+  - if not ipod? and false
     %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
 
+  - if @last_finished_order and not ipod?
+    %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)}" }
+
   - if @last_finished_order
-    %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)} 1" }
+    %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
 
   %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
   %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }

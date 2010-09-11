@@ -1,5 +1,5 @@
 class CostCenter < ActiveRecord::Base
-  has_many :items
+  has_many :orders
 
   validates_presence_of :name
 end

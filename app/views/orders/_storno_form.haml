@@ -1,5 +1,4 @@
 %div.invoice
-
   - remote_form_for :order, storno_form, :url => table_order_path(storno_form.table_id, storno_form), :html => { :method => :put, :id => 'storno_form' } do |order_form|
   
     = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{storno_form.id}"
@@ -16,7 +15,7 @@
     %h3== #{ Order.human_name } ##{storno_form.id}
     %p= l storno_form.created_at, :format => :long
     
-    %table{ :class => 'invoice' }
+    %table
       %tr
         %th{ :style => 'width:20px; text-align:right' }
         %th{ :style => 'width:150px' }
@@ -33,10 +32,10 @@
         - color = item.storno_status == 2 ? '#FAA' : 'transparent'
         - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
         - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
-        %tr.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }
-          %td= item.count
+        %tr
+          %td.split= link_to_remote(item.count, :url => { :controller => :orders, :action => :separate_item, :id => item.id }, :submit => "storno_form", :html => { :class => 'count' })
           - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-          %td= "%20.20s" % [label]
+          %td.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }= "%20.20s" % [label]
           %td{ :style => 'text-align:right' }= number_to_currency p
           %td{ :style => 'text-align:right' }= number_to_currency sum
           - if storno_enabled

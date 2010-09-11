@@ -6,7 +6,7 @@
       
 %div#invoices
   - @unfinished_orders.each do |uo|
-    = render :partial => 'orders/invoice_form', :locals => { :invoice_form => uo }
+    = render :partial => 'orders/invoice_form', :locals => { :invoice_form => uo, :cost_centers => @cost_centers }
       
 %div#footer
   %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }

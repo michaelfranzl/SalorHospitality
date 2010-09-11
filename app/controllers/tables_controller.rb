@@ -6,7 +6,7 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => params[:id] })
-    @cost_centers = CostCenter.all
+    @cost_centers = CostCenter.find_all_by_active(true)
   end
 
   def new
