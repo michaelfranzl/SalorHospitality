@@ -8,19 +8,16 @@ class OrdersController < ApplicationController
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
     id = params[:id].to_i
-    from = id - 1
-    to = id + 1
-    order_range = Order.find(:all, :conditions => { :id => from..to })
-    @previous_order = order_range[0]
+    @order = Order.find(id)
+    @orders = Order.find_all_by_finished(true)
+    idx = @orders.index(@order)
+    @previous_order = @orders[idx-1]
     @previous_order = @order if @previous_order.nil?
-    @order = Order.all.last
-    @next_order = order_range[2]
+    @next_order = @orders[idx+1]
     @next_order = @order if @next_order.nil?
     respond_to do |wants|
       wants.html
-      wants.bon {
-        render :text => generate_escpos_invoice(@order)
-      }
+      wants.bon { render :text => generate_escpos_invoice(@order) }
     end
 
   end
