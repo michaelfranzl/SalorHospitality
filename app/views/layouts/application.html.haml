@@ -36,7 +36,7 @@
     #container
       #header
         %a#toggle_admin_interface{ :onclick => "toggle_admin_interface(); #{ remote_function(:url => { :controller => 'sessions', :action => 'toggle_admin_interface' }) }" }
-          %img{ :src => "/images/client_logos/#{ MyGlobals.client }.png" }
+          %img{ :src => "/images/client_logos/gastrohelper.png" }
         %img#logo{ :src => "/images/logo-small.png" }
         - if logged_in?
           #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
@@ -55,14 +55,12 @@
                 = link_to( t('activerecord.models.table.other'), tables_path)
                 = link_to( t('statistic'), statistics_path)
                 = link_to( t('client_data.menulabel'), '/client_data')
-                
+              = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout' if logged_in?
 
+      .flash
+        - if flash[:notice]
+          .flash_notice= flash[:notice]
+        - if flash[:error]
+          .flash_error= flash[:error]
       #main
-        = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout' if logged_in?
-
-        .flash
-          - if flash[:notice]
-            .flash_notice= flash[:notice]
-          - if flash[:error]
-            .flash_error= flash[:error]
         = yield

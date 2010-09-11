@@ -1,23 +1,25 @@
 %div#functions
+  = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
   - if not ipod? and false
     %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
 
-  - if @last_finished_order and not ipod?
+  - if not ipod?
     %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)}" }
-
-  - if @last_finished_order
     %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
-
-  %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
-  %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
-  %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
-  %a.iconbutton.room4_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
+    %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
+    %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
+    %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
+    %a.iconbutton.room4_button.last_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
 
 %h2= t('activerecord.models.order.other')
 
-%div#room1.room
-%div#room2.room
-%div#room3.room
-%div#room4.room
-    
+- 1.upto(4) do |i|
+  %div.room{ :id => "room#{ i }" }
+    - if ipod?
+      %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
+      %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
+      %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
+      %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
+    %a.iconbutton.room4_button.last_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
+
 = render @tables

@@ -7,24 +7,30 @@ body
   :background-image url('/images/bg.png')
   :background-repeat repeat-x
 
-div#container
-  //:width 320px
-
-
-
+div.flash
+  :margin-left 130px
+  :font-size 130%
 td table
   :margin-left 20px
 
 div#main
   :position relative
 
+div#container
+  :width 309px
+
+div#header
+  :display none
+
 h2
   :display none
 
+a.logout
+  :width 100%
+  :height 50px
 
 
 div.room
-  :border 1px solid grey
   :height 414px
 
 
@@ -72,7 +78,7 @@ div#login
   :font-size 150%
   :margin auto
   :width 300px
-  :margin-top 40px
+  :margin-top 20px
   label
     :display inline-block
     :margin-bottom -10px
@@ -92,16 +98,13 @@ div#login
     :height 40px
 
 img#logo
-  :margin 20px 0 0 15px
+  :margin 20px 0 0 110px
 
 a#toggle_admin_interface
   :display none
 
 select#order_user_id
   :display none
-
-img#logo
-  :width 100px
 
 div.invoice
   :width 280px

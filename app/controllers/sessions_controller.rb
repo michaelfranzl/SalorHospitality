@@ -12,12 +12,12 @@ skip_before_filter :fetch_logged_in_user
   
   def create
     @current_user = User.find_by_login_and_password params[:login], params[:password]
-
+    @users=User.all
     if @current_user
       session[:user_id] = @current_user.id
       (request.user_agent[0..6] != 'Mozilla' or request.user_agent[25..28] == 'MSIE') ? redirect_to('/session/browser_warning') : redirect_to(orders_path)
     else
-      flash[:error] = t(:user_not_found)
+      flash[:error] = t(:wrong_password)
       render :action => 'new'
     end
   end
