@@ -1,4 +1,5 @@
 %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
+%a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
 
 %h2= t :storno
 
@@ -8,3 +9,4 @@
 %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
 
 %div#footer
+  %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }

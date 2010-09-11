@@ -20,7 +20,7 @@
   = @client_data[:taxnumber]
 
 %h1== #{ t 'invoice' } ##{ @order.id }
-%p== #{ CostCenter.human_name }: #{ @order.cost_center.name }
+%p== #{ CostCenter.human_name }: #{ (@order.cost_center.name if @order.cost_center) }
 %p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
 %p= l @order.created_at, :format => :long
 

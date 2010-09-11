@@ -3,24 +3,20 @@
   
     = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{storno_form.id}"
   
-    %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
+
     %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
     %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
     %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
+    %br
     %a.iconbutton.previous_button{ :href => "/orders/storno/#{ @previous_order.id }", :title => (t '.previous_invoice') }
     %a.iconbutton.next_button{ :href => "/orders/storno/#{ @next_order.id }", :title => (t '.next_invoice') }
     = link_to_remote('', :url => { :controller => :orders, :action => :storno, :id => storno_form.id }, :submit => "storno_form", :html => { :class => 'iconbutton storno_button', :title => t(:storno) })
   
   
-    %h3== #{ Order.human_name } ##{storno_form.id}
+    %h3== #{ t(:invoice) } ##{storno_form.id}
     %p= l storno_form.created_at, :format => :long
     
     %table
-      %tr
-        %th{ :style => 'width:20px; text-align:right' }
-        %th{ :style => 'width:150px' }
-        %th{ :style => 'width:70px' }
-        %th{ :style => 'width:70px' }
       - subtotal = 0
       - order_form.fields_for :items do |item_form|
         - item = item_form.object
@@ -31,17 +27,16 @@
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         - color = item.storno_status == 2 ? '#FAA' : 'transparent'
         - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
-        - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
-        %tr
-          %td.split= link_to_remote(item.count, :url => { :controller => :orders, :action => :separate_item, :id => item.id }, :submit => "storno_form", :html => { :class => 'count' })
+        - onclick_action = storno_enabled ? "mark_item_for_storno(this.parentNode, #{order_form.object.id}, #{itemnumber})" : ''
+        %tr{ :style => "background-color: #{color}" }
+          %td.count= link_to_remote(item.count, :url => { :controller => :orders, :action => :separate_item, :id => item.id }, :submit => "storno_form")
           - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-          %td.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }= "%20.20s" % [label]
-          %td{ :style => 'text-align:right' }= number_to_currency p
-          %td{ :style => 'text-align:right' }= number_to_currency sum
+          %td.label{ :id => "item#{item.id}", :onclick => onclick_action }= "%20.20s" % [label]
+          %td.total{ :style => 'text-align:right' }= number_to_currency sum
           - if storno_enabled
             %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_storno_status", :name => "order[items_attributes][#{itemnumber}][storno_status]", :type => "hidden"} 
   
       %tr
-        %td{ :colspan => '3'}
+        %td{ :colspan => '2'}
         %td{ :style => 'text-align:right'}
           %b= number_to_currency subtotal

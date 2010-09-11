@@ -9,4 +9,5 @@
     = render :partial => 'orders/invoice_form', :locals => { :invoice_form => uo, :cost_centers => @cost_centers }
       
 %div#footer
+  %a.iconbutton.tables_button{ :href => orders_path, :title => t(:cancel_and_go_back) }
   %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }

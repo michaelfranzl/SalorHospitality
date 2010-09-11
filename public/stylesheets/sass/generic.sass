@@ -31,10 +31,8 @@ a.last_button
 
 a.scrolldown_button
   :position absolute
-  :top 15px
+  :top 0px
   :right 0px
-
-a.scrolldown_button
   :background-image url(/images/button_ipod_scrolldown.png)
 
 a.scrollup_button
@@ -103,7 +101,6 @@ a.room4_button
 
 div.invoice
   :background-color white
-  :float left
   :width 320px
   :font-family Monospace
   :font-size 150%
@@ -116,24 +113,32 @@ div.invoice
     :text-decoration none
   select#cost_center_for_invoice
     :position relative
-    :top -25px
-    :width 180px
+    :top -21px
+    :width 195px
     :height 54px
     :font-size 140%
   table
     :border-collapse collapse
     :margin-bottom 20px
     td
+      :white-space pre-wrap
       :cursor pointer
-    td:hover
+      :height 50px
+    td.label
+      :width 131px
+    td.price
+      :width 70px
+      :text-align right
+    td.total
+      :width 70px
+      :text-align right
+    td.count a
+      :display block
+      :text-align center
+      :padding-top 10px
+      :height 30px
+      :width 40px
       :background-color #EEE
-  a.count
-    :display block
-    :text-align center
-    :padding-top 12px
-    :width 50px
-    :height 28px
-    :background-color #EEE
 
 
 div.table a
