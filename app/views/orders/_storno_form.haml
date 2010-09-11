@@ -1,44 +1,48 @@
-- form_for :order, order, :url => table_order_path(order.table_id, order), :html => { :method => :put } do |order_form|
+%div.invoice
 
-  = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{order.id}"
-
-  %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
-  %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
-  %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
-  %a.iconbutton.storno_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='storno'; this.parentNode.submit();", :title => t(:save_and_go_back) }
-
-  %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
-
-  %h3== #{ Order.human_name } ##{order.id}
-  %p= l order.created_at, :format => :long
+  - remote_form_for :order, storno_form, :url => table_order_path(storno_form.table_id, storno_form), :html => { :method => :put, :id => 'storno_form' } do |order_form|
   
-  %table{ :class => 'invoice' }
-    %tr
-      %th{ :style => 'width:20px; text-align:right' }
-      %th{ :style => 'width:150px' }
-      %th{ :style => 'width:70px' }
-      %th{ :style => 'width:70px' }
-    - subtotal = 0
-    - order_form.fields_for :items do |item_form|
-      - item = item_form.object
-      - p = item.real_price
-      - p = -p if item.storno_status == 2
-      - sum = item.count * p
-      - subtotal += sum
-      - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
-      - color = item.storno_status == 2 ? '#FAA' : 'transparent'
-      - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
-      - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
-      %tr.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }
-        %td= item.count
-        - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-        %td= "%20.20s" % [label]
-        %td{ :style => 'text-align:right' }= number_to_currency p
-        %td{ :style => 'text-align:right' }= number_to_currency sum
-        - if storno_enabled
-          %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_storno_status", :name => "order[items_attributes][#{itemnumber}][storno_status]", :type => "hidden"} 
-
-    %tr
-      %td{ :colspan => '3'}
-      %td{ :style => 'text-align:right'}
-        %b= number_to_currency subtotal
+    = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{storno_form.id}"
+  
+    %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
+    %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
+    %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
+    %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{storno_form.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
+    %a.iconbutton.previous_button{ :href => "/orders/storno/#{ @previous_order.id }", :title => (t '.previous_invoice') }
+    %a.iconbutton.next_button{ :href => "/orders/storno/#{ @next_order.id }", :title => (t '.next_invoice') }
+    = link_to_remote('', :url => { :controller => :orders, :action => :storno, :id => storno_form.id }, :submit => "storno_form", :html => { :class => 'iconbutton storno_button', :title => t(:storno) })
+  
+  
+    %h3== #{ Order.human_name } ##{storno_form.id}
+    %p= l storno_form.created_at, :format => :long
+    
+    %table{ :class => 'invoice' }
+      %tr
+        %th{ :style => 'width:20px; text-align:right' }
+        %th{ :style => 'width:150px' }
+        %th{ :style => 'width:70px' }
+        %th{ :style => 'width:70px' }
+      - subtotal = 0
+      - order_form.fields_for :items do |item_form|
+        - item = item_form.object
+        - p = item.real_price
+        - p = -p if item.storno_status == 2
+        - sum = item.count * p
+        - subtotal += sum
+        - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+        - color = item.storno_status == 2 ? '#FAA' : 'transparent'
+        - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
+        - onclick_action = storno_enabled ? "mark_item_for_storno(this, #{order_form.object.id}, #{itemnumber})" : ''
+        %tr.simple_invoice{ :id => "item#{item.id}", :onclick => onclick_action, :style => "background-color: #{color}" }
+          %td= item.count
+          - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
+          %td= "%20.20s" % [label]
+          %td{ :style => 'text-align:right' }= number_to_currency p
+          %td{ :style => 'text-align:right' }= number_to_currency sum
+          - if storno_enabled
+            %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_storno_status", :name => "order[items_attributes][#{itemnumber}][storno_status]", :type => "hidden"} 
+  
+      %tr
+        %td{ :colspan => '3'}
+        %td{ :style => 'text-align:right'}
+          %b= number_to_currency subtotal

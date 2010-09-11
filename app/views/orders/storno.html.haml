@@ -3,8 +3,8 @@
 
 %h2= t :storno
 
-%div.invoice
-  = render :partial => 'orders/storno_form', :locals => { :order => @order }
+%div#invoices
+  = render :partial => 'orders/storno_form', :locals => { :storno_form => @order }
 
 %a.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
   %div.iconbutton.scrollup_button

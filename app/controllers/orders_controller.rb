@@ -7,8 +7,7 @@ class OrdersController < ApplicationController
 
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
-    id = params[:id].to_i
-    @order = Order.find(id)
+    @order = Order.find(params[:id])
     @orders = Order.find_all_by_finished(true)
     idx = @orders.index(@order)
     @previous_order = @orders[idx-1]
@@ -59,10 +58,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def storno
-    @order = Order.find(params[:id])
-  end
-
   def unsettled
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
     unsettled_userIDs = Array.new
@@ -106,6 +101,24 @@ class OrdersController < ApplicationController
     render 'split_invoice'
   end
 
+  def storno
+    @order = Order.find(params[:id])
+    @orders = Order.find_all_by_finished(true)
+    idx = @orders.index(@order)
+    @previous_order = @orders[idx-1]
+    @previous_order = @order if @previous_order.nil?
+    @next_order = @orders[idx+1]
+    @next_order = @order if @next_order.nil?
+    @order.update_attributes(params[:order])
+    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
+    make_storno(@order, items_for_storno)
+    @order = Order.find(params[:id]) # re-read
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
+  end
+
   def print
     @order = Order.find(params[:id])
     @order.update_attributes(params[:order])
@@ -132,10 +145,6 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         when 'go_to_invoice'
           redirect_to table_path(order.table)
-        when 'storno'
-          items_for_storno = Item.find(:all, :conditions => { :order_id => order.id, :storno_status => 1 })
-          make_storno(order, items_for_storno)
-          redirect_to "/orders/storno/#{order.id}"
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
