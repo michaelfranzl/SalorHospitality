@@ -2,20 +2,12 @@
 
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{order.id}"
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
-    %div.iconbutton.print_kitchen_button
+  %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print0'; this.parentNode.submit();", :title => t(:print) }
+  %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
+  %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
+  %a.iconbutton.storno_button{ :onclick => "document.getElementById('order_action_#{order.id}').value='storno'; this.parentNode.submit();", :title => t(:save_and_go_back) }
 
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print1'; this.parentNode.submit();", :title => t(:print) }
-    %div.iconbutton.print_bar_button
-
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='print2'; this.parentNode.submit();", :title => t(:print) }
-    %div.iconbutton.print_guestroom_button
-
-  %a{ :onclick => "document.getElementById('order_action_#{order.id}').value='storno'; this.parentNode.submit();", :title => t(:save_and_go_back) }
-    %div.iconbutton.storno_button
-
-  %a{ :href => "#{orders_path}", :title => t(:go_back) }
-    %div.iconbutton.tables_button
+  %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
 
   %h3== #{ Order.human_name } ##{order.id}
   %p= l order.created_at, :format => :long

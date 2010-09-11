@@ -6,19 +6,19 @@
     - if !invoice_form.finished
       %a.iconbutton.edit_button{ :href => edit_order_path(invoice_form), :title => t(:edit) }
 
-    %select#cost_center_for_invoice{ :name => 'cost_center_id', :title => t('.split_invoice') }
-      = options_from_collection_for_select(@cost_centers, :id, :name)
-
     %a.iconbutton.print_kitchen_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print0'; this.parentNode.submit();", :title => t(:print)}
     %a.iconbutton.print_bar_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print1'; this.parentNode.submit();", :title => t(:print)}
     %a.iconbutton.print_guestroom_button{ :onclick => "document.getElementById('order_action_#{invoice_form.id}').value='print2'; this.parentNode.submit();", :title => t(:print)}
 
-  - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :update }, :html => { :method => 'put', :id => 'form' } do |order_form|
+  - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
 
     %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.id}
     %p= l invoice_form.created_at, :format => :long
 
-    = link_to_remote('', :url => { :controller => :orders, :action => :split_invoice_all_at_once, :id => invoice_form.id }, :submit => "form", :html => { :class => 'iconbutton splitinvoice_button' })
+    %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/split_invoice_all_at_once/#{ invoice_form.id }', {asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
+      = options_from_collection_for_select(@cost_centers, :id, :name, invoice_form.cost_center.id)
+
+    = link_to_remote('', :url => { :controller => :orders, :action => :split_invoice_all_at_once, :id => invoice_form.id }, :submit => "invoice_form_#{ invoice_form.id }", :html => { :class => 'iconbutton splitinvoice_button' })
 
     %table{ :class => 'invoice' }
       %tr
@@ -33,7 +33,7 @@
         - subtotal += sum
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         %tr
-          %td= link_to_remote(item.count, :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "form")
+          %td.split= link_to_remote(item.count, :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "invoice_form_#{ invoice_form.id }", :html => { :class => 'split_item' })
           - label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
           %td.simple_invoice{ :id => "item#{item.id}", :onclick => "mark_item_for_split_invoice(this, #{order_form.object.id}, #{itemnumber})"}= "%20.20s" % [label]
           %td{ :style => 'text-align:right' }= number_to_currency item.real_price

@@ -92,6 +92,7 @@ class OrdersController < ApplicationController
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     items_for_split_invoice = Item.find(:all, :conditions => { :order_id => @order.id, :partial_order => true })
     make_split_invoice(@order, items_for_split_invoice, :all)
+    @order = Order.find(params[:id]) # re-read in case it was deleted
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
   end
