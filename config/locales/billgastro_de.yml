@@ -61,6 +61,10 @@ de:
         name: Name
       table:
         name: Name
+        abbreviation: Abkürzung
+        description: Beschreibung
+        width: Breite
+        height: Höhe
       category:
         name: Name
         tax_id: Steuerklasse

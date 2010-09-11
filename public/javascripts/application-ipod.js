@@ -9,5 +9,6 @@ function display_quantities(art_id) {
 
 function quantities_onmousedown(element) {
   //Effect.ScrollTo('items',75); highlight_button(element);
+  highlight_button(element);
   deselect_all_articles();
 }

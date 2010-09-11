@@ -61,6 +61,10 @@ en:
         name: Name
       table:
         name: Name
+        abbreviation: Abbreviation
+        description: Description
+        width: Width
+        height: Height
       category:
         name: Name
         tax_id: Tax

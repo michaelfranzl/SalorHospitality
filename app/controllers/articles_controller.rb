@@ -163,7 +163,7 @@ private
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.active_and_sorted.collect{ |qu|
-          %&<div id='quantity_#{ qu.id }' class='quantity' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
+          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown= 'quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
         }.to_s + '";'
       }.to_s
     }.to_s

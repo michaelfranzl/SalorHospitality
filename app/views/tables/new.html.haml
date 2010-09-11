@@ -11,6 +11,9 @@
       %td= table_form.label('description', Table.human_attribute_name(:description))
       %td= table_form.text_field :description, :size => '20'
     %tr
+      %td= table_form.label('description', Table.human_attribute_name(:abbreviation))
+      %td= table_form.text_field :abbreviation, :size => '20'
+    %tr
       %td= table_form.label('width', Table.human_attribute_name(:width))
       %td= table_form.text_field :width, :size => '10'
     %tr
