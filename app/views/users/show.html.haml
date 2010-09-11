@@ -6,10 +6,5 @@
   - sum = 0
   - @user.settlements.each do |s|
     %tr
-      %td{ :style => 'width:120px' }= l s.created_at, :format => :datetime_iso
-      %td{ :style => 'width:120px' }= link_to("#{ t :settlement } ##{s.id}", user_settlement_path(@user,s))
-      %td{ :class => 'colsum', :style => 'width:120px' }= number_to_currency s.revenue
-      - sum += s.revenue
-  %tr
-    %td{ :colspan => '2' }= t :sum
-    %td{ :class => 'sum' }= number_to_currency sum
+      %td{ :style => 'width:220px' }= l s.created_at, :format => :datetime_iso
+      %td{ :style => 'width:120px' }= link_to("#{ Settlement.human_name } ##{s.id}", user_settlement_path(@user,s))

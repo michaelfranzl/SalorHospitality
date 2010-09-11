@@ -3,7 +3,6 @@
     %th{ :style => 'width:200px' }= Item.human_name
     %th{ :style => 'width:30px' }= t '.count'
     %th{ :style => 'width:50px' }= t '.unit_price'
-    %th{ :style => 'width:80px' }= CostCenter.human_name
     %th{ :style => 'width:50px' }= t '.total'
     %th{ :style => 'width:80px' }= t '.revenue'
   - total = 0
@@ -12,6 +11,9 @@
     %tr
       %td.order_begin{ :colspan => 6 }
         = t('.order_number_on_table_on_date', :order => Order.human_name, :number => so.id, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
+        %br
+        == #{ CostCenter.human_name }: #{ so.cost_center.name }
+        %br
         = link_to t(:invoice), order_path(so)
         = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
@@ -26,7 +28,6 @@
           %td= item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
           %td.number= item.count
           %td.number= number_to_currency p
-          %td= item.cost_center.name
           %td.colsum= number_to_currency sum
     %tr
       %td.subtotal{ :colspan => 6 }= number_to_currency subtotal

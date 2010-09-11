@@ -13,16 +13,15 @@ class OrdersController < ApplicationController
       wants.html
       wants.bon { render :text => generate_escpos_invoice(@order) }
     end
-
   end
 
   def new
     @order = Order.new
-    @cost_centers = CostCenter.find_all_by_active(true)
     @categories = Category.find(:all, :order => :sort_order)
     @order.table_id = params[:table_id]
     @order.user = @current_user if ipod?
     @table = Table.find(@order.table_id)
+    @cost_centers = CostCenter.find_all_by_active(true)
   end
 
   def edit
@@ -36,7 +35,7 @@ class OrdersController < ApplicationController
     @order = Order.new(params[:order])
     session[:last_user_id] = @order.user_id
     @categories = Category.find(:all, :order => :sort_order)
-    @active_cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
     @order.save ? process_order(@order) : render(:new)

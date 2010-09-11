@@ -12,17 +12,17 @@ div#categories
 
 div#articles
   :display inline-block
-  :width 23%
+  :width 20%
   :vertical-align top
   
 div#quantities
   :display inline-block
-  :width 14%
+  :width 12%
   :vertical-align top
   
 div#items
   :display inline-block
-  :width 27%
+  :width 32%
   :border 1px solid !buttoncolor
   :vertical-align top
 
@@ -36,13 +36,11 @@ table#articlestable
   :border-spacing 1px
   :width 100%
 
-table#quantitiestable
-  :border-spacing 1px
-  :width 100%
-
 table#itemstable
   :border-spacing 1px
   :width 100%
+  td
+    :padding 5px
   
 
   
@@ -57,8 +55,8 @@ tr.item
   :cursor pointer
 
 div.category,
-td.article,
-td.quantity
+div.article,
+div.quantity
   :margin 1px 0px 0px 1px
   :background-color #27343b
   :background-repeat no-repeat
@@ -66,16 +64,18 @@ td.quantity
   :cursor pointer
 
 div.category,
-td.article,
-td.quantity,
+div.article,
+div.quantity,
 td.item_count,
-td.item_plusminus,
+td.item_minus,
 td.item_label,
-div.ordersum_container
+td.item_options,
+td.ordersum_container
   :border-top 2px solid #555
   :border-left 2px solid #555
   :border-right 2px solid #222
   :border-bottom 2px solid #222
+  :background-color #3A474D
 
 
 div.category
@@ -98,12 +98,12 @@ div.category_label
 
 
 
-td.article,
-td.quantity
+div.article,
+div.quantity
   :background-color = !buttoncolor
-  :height 30px
+  :height 25px
   :vertical-align middle
-  :padding-left 10px
+  :padding 8px 0 0 10px
 
 
 
@@ -113,16 +113,30 @@ td.item_count
   :background-color = #3a474d
   :text-align center
 
-td.item_plusminus
-  :width 30px
+td.item_minus
+  :width 20%
   :cursor pointer
-  :background-color = #3a474d
   :text-align center
+  :background-image url(/images/button_ipod_minus.png)
+  :background-position center
+  :background-repeat no-repeat
 
 td.item_label
   :cursor pointer
   :background-color = !articlelistbgcolor
   :min-height 30px
+
+td.item_options
+  :text-align center
+  :width 20%
+  select
+    :width 56px
+    :height 37px
+    :background-image url(/images/button_ipod_check.png)
+    :background-repeat no-repeat
+    :background-color transparent
+    :border 0px
+    :color transparent
   
   
 select#order_user_id
@@ -161,8 +175,8 @@ input#order_sum
   :background-color transparent
   :color white
   :border none
-  :font-size 110%
-  :width 150px
+  :font-size 122%
+  :width 200px
   :text-align right
   
 div.ordersum_container

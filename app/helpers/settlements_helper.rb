@@ -14,8 +14,8 @@ module SettlementsHelper
   
   def calculate_sums(s, s_net, s_gro, total_net, total_gro)
     s.orders.each do |o|
+      next if @selected_cost_center and o.cost_center != @selected_cost_center
       o.items.each do |i|
-        next if @selected_cost_center and i.cost_center != @selected_cost_center
         price = i.quantity_id ? i.quantity.price : i.article.price
         price = -price if i.storno_status == 2
         s_gro[i.article.category.tax.id] += i.count * price

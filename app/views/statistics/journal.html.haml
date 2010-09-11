@@ -8,5 +8,6 @@
     %option{ :value => '' }= t('settlements.index.all_cost_centers')
     = options_from_collection_for_select @cost_centers, :id, :name
   = render 'date_form'
+  = submit_tag 'file'
  
-= render :partial => 'settlements/detailed_list', :locals => { :orders => @orders_from_to, :selected_cost_center => @selected_cost_center }
+= render :partial => 'settlements/detailed_list', :locals => { :orders => @orders }

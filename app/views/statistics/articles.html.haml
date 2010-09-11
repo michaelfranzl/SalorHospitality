@@ -14,7 +14,16 @@
   - @articlesums.each do |articlesum|
     %tr
       - article = Article.find articlesum[0]
+      - next if article.quantity
       %td= article.name
       %td{ :style => 'text-align:right;' }= articlesum[1]
       %td{ :style => 'text-align:right;' }= number_to_currency article.price
       %td{ :style => 'text-align:right;' }= number_to_currency article.price * articlesum[1]
+
+  - @quantitysums.each do |qs|
+    %tr
+      - quantity = Quantity.find qs[0]
+      %td== #{ quantity.article.name} #{ quantity.name }
+      %td{ :style => 'text-align:right;' }= quantitysum[1]
+      %td{ :style => 'text-align:right;' }= number_to_currency quantity.price
+      %td{ :style => 'text-align:right;' }= number_to_currency quantity.price * quantitysum[1]
