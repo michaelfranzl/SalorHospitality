@@ -4,7 +4,7 @@ function category_onmousedown(category_id) {
 
 function display_quantities(art_id) {
   //document.getElementById('article_' + art_id + '_quantitylist').innerHTML = quantitylist[art_id];
-  $('article_' + art_id).insert({ after: quantitylist[art_id] });
+  $('article_' + art_id).innerHTML = quantitylist[art_id];
 }
 
 function quantities_onmousedown(element) {
