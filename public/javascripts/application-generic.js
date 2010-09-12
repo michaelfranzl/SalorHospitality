@@ -7,8 +7,6 @@ function display_articles(cat_id) {
 
 function add_new_item_q(qu_id, button) {
 
-  new Effect.Highlight(button);
-
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
   var desig = 'new_' + sort;
@@ -31,8 +29,6 @@ function add_new_item_q(qu_id, button) {
 }
 
 function add_new_item_a(art_id, button) {
-
-  new Effect.Highlight(button);
 
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
@@ -81,13 +77,7 @@ function decrement_item(desig) {
   };
 }
 
-function highlight_button(element) {
-   element.style.borderColor = "white";
-}
 
-function restore_button(element) {
-   element.style.borderColor = "#555555 #222222 #222222 #555555";
-}
 
 function deselect_all_categories() {
   var container = document.getElementById("categories");
@@ -172,20 +162,23 @@ function add_option_to_item(item_designator, select_tag) {
 // VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON IPOD
 
 function category_onmouseup(element) {
-  highlight_button(element);
+  highlight_border(element);
 }
 
 function articles_onmousedown(element) {
-  
-  deselect_all_articles();
+  new Effect.Highlight(element);
+  highlight_border(element);
 }
 
-function articles_onmouseup(element) {
-  highlight_button(element);
+function quantities_onmousedown(element) {
+  new Effect.Highlight(element);
+  highlight_border(element);
 }
 
-function quantities_onmouseup(element) {
-  restore_button(element);
+function highlight_border(element) {
+   element.style.borderColor = "white";
 }
 
-
+function restore_border(element) {
+   element.style.borderColor = "#555555 #222222 #222222 #555555";
+}

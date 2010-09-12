@@ -150,9 +150,8 @@ private
       cat.articles.find_in_menucard.collect{ |art|
         onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this);" : "display_quantities(#{ art.id });"
         onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
-        onmouseupaction = art.quantities.empty? ? "articles_onmouseup(this);" : ""
         image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
-        "<div id='article_#{ art.id }' class='article' onclick='#{ onclickaction }' onmousedown='#{ onmousedownaction }' onmouseup='#{ onmouseupaction }'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</div>"
+        "<div id='article_#{ art.id }' class='article' onclick='#{ onclickaction }' onmousedown='#{ onmousedownaction }'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</div><div id ='article_#{ art.id }_quantities'></div>"
       }.to_s + '";'
     }.to_s
 
@@ -163,7 +162,7 @@ private
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.active_and_sorted.collect{ |qu|
-          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown= 'quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
+          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown='quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
         }.to_s + '";'
       }.to_s
     }.to_s
