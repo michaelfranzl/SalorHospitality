@@ -126,7 +126,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update_attributes(params[:order])
     @order.update_attribute(:finished, true)
-    @order.order.order = nil # unlink parent order from me
+    @order.order.order = nil if @order.order # unlink parent order from me
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
       unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
@@ -276,7 +276,7 @@ class OrdersController < ApplicationController
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
         label = item.quantity_id ? "#{ item.quantity.article.name} #{ item.quantity.name}" : item.article.name
-        label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
+        #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,item.count,sum]
       end
 
@@ -308,12 +308,11 @@ class OrdersController < ApplicationController
       "\n" + client_data[:slogan1] + "\n" +
       "\e!\x08" + # emphasized
       "\n" + client_data[:slogan2] + "\n" +
-      "\e!\x88" + # underline, emphasized
       client_data[:internet] + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
-      #output = Iconv.conv('ISO-8859-15','UTF-8',output)
+      output = Iconv.conv('ISO-8859-15','UTF-8',footer)
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
       output.gsub!(/\xF6/,"\x94") #ö
