@@ -132,7 +132,7 @@ class OrdersController < ApplicationController
       redirect_to order_path(@order)
     end
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
-    `cat order.escpos > port#{ params[:port] }.escpos`
+    `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
 
 
@@ -160,10 +160,10 @@ class OrdersController < ApplicationController
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > out-bar.escpos`
+      `cat bar.escpos > /dev/ttyPS3`
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > out-kitchen.escpos`
+      `cat kitchen.escpos > /dev/ttyPS3`
 
       order.update_attribute( :sum, calculate_order_sum(order) )
     end
@@ -308,7 +308,7 @@ class OrdersController < ApplicationController
       "\n" + client_data[:slogan2] + "\n" +
       "\e!\x88" + # underline, emphasized
       client_data[:internet] + "\n\n\n\n\n\n\n" + 
-      "\x1DV\x00" # paper cut
+      "***PAPER CUT***" #"\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       #output = Iconv.conv('ISO-8859-15','UTF-8',output)
@@ -363,7 +363,7 @@ class OrdersController < ApplicationController
 
         output +=
         "\n\n\n\n\n\n" +
-        "\x1DV\x00" # paper cut at the end of each order/table
+        "*** PAPER CUT ***" #"\x1DV\x00" # paper cut at the end of each order/table
         output = '' if printed_items == 0
       end
 
