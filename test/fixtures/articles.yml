@@ -2939,6 +2939,21 @@ articles_203:
   waiterpad: "0"
   description: ""
   hidden: "0"
+articles_311: 
+  price: "0"
+  name: Generic
+  created_at: 2010-09-11 15:25:09
+  format_name: 
+  updated_at: 2010-09-11 15:25:09
+  format_division: 
+  id: "346"
+  menucard: "1"
+  category_id: "2"
+  blackboard: "0"
+  recipe: 
+  waiterpad: "0"
+  description: ""
+  hidden: "0"
 articles_230: 
   price: "14.5"
   name: "Geschmorter Lammschl\xC3\xB6gel"
