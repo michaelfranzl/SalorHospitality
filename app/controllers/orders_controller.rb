@@ -121,15 +121,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  # This function not only prints, but also finishes orders
   def print
     @order = Order.find(params[:id])
     @order.update_attributes(params[:order])
-    @order.update_attribute(:finished, true) and reduce_stocks @order
+    @order.update_attribute(:finished, true)
+    @order.order.order = nil # unlink parent order from me
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
       unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
     else
-      redirect_to order_path(@order)
+      redirect_to orders_path
     end
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
@@ -160,10 +162,10 @@ class OrdersController < ApplicationController
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > /dev/ttyPS3`
+      `cat bar.escpos > /dev/ttyPS2`
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > /dev/ttyPS3`
+      `cat kitchen.escpos > /dev/ttyPS2`
 
       order.update_attribute( :sum, calculate_order_sum(order) )
     end
@@ -308,7 +310,7 @@ class OrdersController < ApplicationController
       "\n" + client_data[:slogan2] + "\n" +
       "\e!\x88" + # underline, emphasized
       client_data[:internet] + "\n\n\n\n\n\n\n" + 
-      "***PAPER CUT***" #"\x1DV\x00" # paper cut
+      "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       #output = Iconv.conv('ISO-8859-15','UTF-8',output)
@@ -340,30 +342,30 @@ class OrdersController < ApplicationController
         "\e!\x00" +  # Font A
         "\e!\x08" +  # Font A, emphasized
         "%-25.25s %15s\n" % [order.user.title, order.table.name] +
-        "===========================\n\n\n"
+        "=========================================\n"
 
         printed_items = 0
         order.items.each do |i|
           next if i.count == i.printed_count or (i.category.food and type == :drink) or (!i.category.food and type == :food) # no need to print
           printed_items =+ 1
 
-          quantityname = i.quantity ? i.quantity.name : ''
           output +=
           "\e!\x38" +  # doube tall, double wide, bold
-          "%u %-17.17s\n" % [i.count - i.printed_count, i.article.name] +
-          "  %-17.17s\n" % [quantityname] +
-          "  * %-15.15s\n" % [i.comment]
+          "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
 
-          i.options.each { |o| output += "  - %-15.15s\n" % [o.name] }
+          output += "  %-18.18s\n" % [i.quantity.name] if i.quantity
+          output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
 
-          output += "---------------------------\n\n\n"
+          i.options.each { |o| output += "* %-18.18s\n" % [o.name] }
+
+          output += "---------------------\n"
 
           i.update_attribute :printed_count, i.count
         end
 
         output +=
-        "\n\n\n\n\n\n" +
-        "*** PAPER CUT ***" #"\x1DV\x00" # paper cut at the end of each order/table
+        "\n\n\n\n" +
+        "\x1DV\x00" # paper cut at the end of each order/table
         output = '' if printed_items == 0
       end
 
