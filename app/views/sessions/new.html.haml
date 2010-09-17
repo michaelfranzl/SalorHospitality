@@ -18,9 +18,7 @@
       %p
         = label_tag 'realname', (t '.realname')
         = text_field_tag 'realname', params[:realname]
-      %p
-        = t('.your_ip_address')
-        = `dig -x #{ request.remote_ip } | grep 'PTR.*.$'`
+      %p{ :style => 'font-size: 10px;' }== #{t('.your_ip_address') }: #{ request.remote_ip } #{ Time.now }
 
     %p
       = submit_tag t('.login'), :class => 'submit'

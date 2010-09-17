@@ -206,7 +206,7 @@ en:
 
   sessions:
     browser_warning:
-      warning: You don't use Firefox web browser. Bill Gastro was optimized for Firefox.
+      warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as web browser. Bill Gastro was optimized for those browsers exclusively.
       continue: Continue
     new:
       username: User

@@ -19,7 +19,7 @@ skip_before_filter :fetch_logged_in_user
       render :action => 'new'
     elsif @current_user
       session[:user_id] = @current_user.id
-      (request.user_agent[0..6] != 'Mozilla' or request.user_agent[25..28] == 'MSIE') ? redirect_to('/session/browser_warning') : redirect_to(orders_path)
+      (request.user_agent[0..6] == 'Mozilla' or request.user_agent[25..28] == 'MSIE') ? redirect_to('/session/browser_warning') : redirect_to(orders_path)
       Login.create(:ip => request.remote_ip, :email => params[:email], :reverselookup => `dig -x #{ request.remote_ip } | grep 'PTR.*.$'`, :loginname => params[:login], :realname => params[:realname], :referer => request.referer)
     else
       flash[:error] = t(:wrong_password)
