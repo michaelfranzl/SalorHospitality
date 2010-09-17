@@ -14,7 +14,7 @@ skip_before_filter :fetch_logged_in_user
     @current_user = User.find_by_login_and_password params[:login], params[:password]
     @users=User.all
 
-    if request.remote_ip != '127.0.0.1' and (params[:email].empty? or params[:realname].empty?)
+    if request.remote_ip != '127.0.0.1' and not ipod? and (params[:email].empty? or params[:realname].empty?)
       flash[:error] = t(:please_enter_email_and_realname)
       render :action => 'new'
     elsif @current_user

@@ -214,7 +214,6 @@ de:
       email: Ihre E-Mail
       realname: Ihr Name
       your_ip_address: Ihre IP Daten
-      please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
 
   statistic: Statistik
   statistics:
@@ -304,3 +303,5 @@ de:
 
   served_by_X_on_table_Y: Es bediente Sie {{waiter}} auf {{table}}
   invoice_numer_X_at_time: Rechnung Nr. {{number}} am {{datetime}}
+
+  please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
