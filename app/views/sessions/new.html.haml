@@ -9,5 +9,17 @@
     %p
       = label_tag 'password', (t '.password')
       = password_field_tag 'password', '', :size => 9
+
+    - if request.remote_ip != '127.0.0.1'
+      %p
+        = label_tag 'email', (t '.email')
+        = text_field_tag 'email', params[:email]
+      %p
+        = label_tag 'realname', (t '.realname')
+        = text_field_tag 'realname', params[:realname]
+      %p
+        = t('.your_ip_address')
+        = `dig -x #{ request.remote_ip } | grep 'PTR.*.$'`
+
     %p
       = submit_tag t('.login'), :class => 'submit'

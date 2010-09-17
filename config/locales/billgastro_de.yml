@@ -209,8 +209,12 @@ de:
       continue: weiter
     new:
       username: Benutzer
-      login: Name
+      login: Login
       password: Passwort
+      email: Ihre E-Mail
+      realname: Ihr Name
+      your_ip_address: Ihre IP Daten
+      please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
 
   statistic: Statistik
   statistics:

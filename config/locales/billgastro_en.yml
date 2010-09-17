@@ -212,6 +212,9 @@ en:
       username: User
       login: Login
       password: Password
+      email: Your E-Mail
+      realname: Your Name
+      your_ip_address: Your IP Data
 
   statistic: Statistic
   statistics:
