@@ -44,7 +44,7 @@ de:
     attributes:
       article:
         price: Preis
-        category_id: Kategorie
+        category: Kategorie
         name: Name
         hidden: löschen
         description: Beschreibung
