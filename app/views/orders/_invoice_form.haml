@@ -1,7 +1,7 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
 
   - if !invoice_form.finished
-    %a.iconbutton.edit_button{ :href => edit_order_path(invoice_form), :title => t(:edit) }
+    %a.iconbutton.order_button{ :href => edit_order_path(invoice_form), :title => t(:edit) }
   %a.iconbutton.print_kitchen_button{ :href => "/orders/print/#{ invoice_form.id }/0", :title => t(:print)}
   %a.iconbutton.print_bar_button{ :href => "/orders/print/#{ invoice_form.id }/1", :title => t(:print)}
   %a.iconbutton.print_guestroom_button{ :href => "/orders/print/#{ invoice_form.id }/2", :title => t(:print)}
