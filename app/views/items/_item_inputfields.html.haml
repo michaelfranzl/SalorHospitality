@@ -12,6 +12,6 @@
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_sort", :name => "order[items_attributes][#{ locals[:designator] }][sort]", :type => 'hidden', :value => "#{ locals[:sort] }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_price", :class => 'price', :name => "order[items_attributes][#{ locals[:designator] }][price]", :type => 'hidden', :value => "#{ @price }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_price", :class => 'price', :name => "order[items_attributes][#{ locals[:designator] }][price]", :type => 'hidden', :value => "#{ locals[:price] }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }__destroy", :name => "order[items_attributes][#{ locals[:designator] }][_destroy]", :type => 'hidden', :value => '0' }

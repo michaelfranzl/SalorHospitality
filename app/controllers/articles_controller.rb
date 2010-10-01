@@ -63,7 +63,6 @@ class ArticlesController < ApplicationController
   end
 
   def update
-debugger
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
@@ -204,10 +203,11 @@ private
 
   
   def compose_item_label(input)
-    if input.class == Quantity
-      label = "#{ input.article.name }<br><small>#{ input.price } EUR, #{ input.name }</small>"
+    price = "EUR #{ input.price }" if not (input.price.nil? or input.price.zero?)
+    if input.class == Article
+      label = "#{ input.name }<br><small>#{ price }</small>"
     else
-      label = "#{ input.name }<br><small>#{ input.price } EUR</small>"
+      label = "#{ input.article.name } #{ input.name }<br><small>#{ price }</small>"
     end
     return label
   end

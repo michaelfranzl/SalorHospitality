@@ -23,7 +23,8 @@
               %td
                 = article_form.label('price', Article.human_attribute_name(:price))
               %td
-                = article_form.text_field( :price, :size => 6 )
+                = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
+
           %tr
             %td
               = article_form.label('category_id', Article.human_attribute_name(:category))
@@ -56,7 +57,7 @@
         %td
           = quantity_form.label :price, Quantity.human_attribute_name(:price)
         %td
-          = quantity_form.text_field( :price, :size => '4')
+          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :size => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
         %td
           = quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td

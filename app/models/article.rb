@@ -5,14 +5,12 @@ class Article < ActiveRecord::Base
   has_many :quantities
   has_many :items
 
+  default_scope :conditions => { :hidden => false }
+
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
   end
 
-  def quantities
-    Quantity.find(:all, :conditions => { :hidden => false, :article_id => self.id })
-  end
-  
   def self.find_in_menucard
     find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'name') #updated_at DESC
   end
@@ -23,10 +21,6 @@ class Article < ActiveRecord::Base
 
   def self.find_in_waiterpad
     find(:all, :conditions => 'waiterpad = 1 AND hidden = false', :order => 'price')
-  end
-
-  def self.sorted_by_name
-    find(:all, :conditions => 'hidden => false', :order => 'name, description')
   end
   
   validates_presence_of :name, :type, :category_id

@@ -3,6 +3,8 @@ class Quantity < ActiveRecord::Base
   belongs_to :article
   has_many :items
 
+  default_scope :conditions => { :hidden => false }
+
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
   end
