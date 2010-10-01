@@ -87,7 +87,6 @@ en:
 
   articles:
     index:
-      quick_food_article_creation: Quick
       list_all: List all
       search_term: Search term
       preview: Preview
@@ -99,14 +98,6 @@ en:
       all_articles: List of all articles
     articles_search_results:
       variants: Variants
-    quick_foods:
-      quick_food_article_creation: Quick food article creation
-      there_are_x_foods_active:
-        one: There is {{count}} food article active
-        other: There are {{count}} food articles active
-      remove_all_foods_from_menucard: Remove all foods from menucard
-    quick_foods_search_results:
-      already_created_articles: Already created articles
 
   options:
     new:

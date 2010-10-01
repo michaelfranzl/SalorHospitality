@@ -20,26 +20,6 @@ class ArticlesController < ApplicationController
     @groups = Group.find(:all, :order => 'name ASC')
   end
 
-  def quick_foods
-    @foods_in_menucard = Article.find(:all, :conditions => { :menucard => true, :category_id => 1..3, :hidden => false }).size
-    starters = []
-    main_dishes = []
-    desserts = []
-    @food_count = 6
-    @food_count.times {
-      starters << Article.new( :category_id => 1, :blackboard => true)
-      main_dishes << Article.new( :category_id => 2, :blackboard => true)
-      desserts << Article.new( :category_id => 3, :blackboard => true)
-    }
-    @food_categories = [ starters, main_dishes, desserts ]
-  end
-
-  def remove_all_foods_from_menucard
-    Article.update_all "menucard = false, blackboard = false, waiterpad = false", :category_id => 1..3
-    flash[:notice] = t(:all_foods_were_removed_from_the_menucard)
-    redirect_to quick_foods_articles_path
-  end
-
   def create
     @article = Article.new(params[:article])
     @groups = Group.find(:all, :order => 'name ASC')

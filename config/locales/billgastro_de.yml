@@ -88,7 +88,6 @@ de:
 
   articles:
     index:
-      quick_food_article_creation: Schnell
       list_all: Alle auflisten
       search_term: Suchbegriff
       preview: Voransicht
@@ -100,14 +99,6 @@ de:
       all_articles: Liste aller Artikel
     articles_search_results:
       variants: Varianten
-    quick_foods:
-      quick_food_article_creation: Schnelle Artikelerzeugung
-      there_are_x_foods_active:
-        one: Es ist {{count}} Speise aktiv.
-        other: Es sind {{count}} Speisen aktiv.
-      remove_all_foods_from_menucard: Alle Speisen von der Speisekarte entfernen
-    quick_foods_search_results:
-      already_created_articles: Bereits angelegte Speisen
 
   options:
     new:

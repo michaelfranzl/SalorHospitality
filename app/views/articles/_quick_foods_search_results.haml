@@ -1,7 +1,0 @@
-- if @found_foods
-  %span.header_search_results= t '.already_created_articles'
-  %ul.search_results
-    - for article in @found_foods
-      - label = article.name
-      - info = article.quantities.empty? ? number_to_currency(article.price) : "#{article.quantities.size} Varianten"
-      %li== #{ link_to label, edit_article_path(article) } (#{ info })
