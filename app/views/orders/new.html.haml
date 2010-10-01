@@ -3,6 +3,7 @@
 - if ipod?
   %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back) }
   %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
+  %a.iconbutton.invoice_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :title => t(:finish_order) }
 
 %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
 

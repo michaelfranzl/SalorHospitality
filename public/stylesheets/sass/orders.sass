@@ -38,6 +38,7 @@ table#articlestable
 
 table#itemstable
   :border-spacing 1px
+  :table-layout fixed
   :width 100%
   td
     :padding 5px
@@ -123,8 +124,10 @@ td.item_minus
 
 td.item_label
   :cursor pointer
+  :overflow hidden
   :background-color = !articlelistbgcolor
   :min-height 30px
+  :word-wrap break-word
 
 td.item_options
   :text-align center

@@ -14,14 +14,14 @@
 
 %h2= t('activerecord.models.order.other')
 
-- 1.upto(4) do |i|
-  %div.room{ :id => "room#{ i }" }
+- rooms = 4
+- 1.upto(rooms) do |room|
+  %div.room{ :id => "room#{ room }" }
     - if ipod?
       - if @last_finished_order
         %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
-      %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
-      %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
-      %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
-      %a.iconbutton.room4_button.last_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
+      - 1.upto(rooms) do |icon|
+        - style = icon == room ? 'border: 2px solid white;' : ''
+        %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
 
 = render @tables

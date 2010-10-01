@@ -182,3 +182,10 @@ function highlight_border(element) {
 function restore_border(element) {
    element.style.borderColor = "#555555 #222222 #222222 #555555";
 }
+
+function highlight_button(element) {
+   new Effect.Highlight(element);
+}
+
+function restore_button(element) {
+}
