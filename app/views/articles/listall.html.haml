@@ -1,6 +1,6 @@
 %h2= t '.all_articles'
 
-%table
+%table{ :style => 'border-collapse: collapse;' }
   %tr
     %th{ :width => '250px' }
     %th{ :width => '250px' }
@@ -8,12 +8,19 @@
     %th{ :width => '50px' }
   - @articles.each do |ar|
     %tr
-      - label = ar.quantities.collect { |qu| "#{ qu.name}, " }
-      - if @current_user.role >= 2
-        %td== #{ link_to(ar.name, edit_article_path(ar)) } #{ label }
-      - else
-        %td= label
-      
-      %td= ar.description
-      %td= number_to_currency ar.price
-      %td= link_to ((t :delete), ar, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
+      %td{ :style => 'text-align: right;' }
+        - if @current_user.role >= 1
+          == #{ link_to ar.name, edit_article_path(ar) } (#{ link_to((t :delete), ar, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3 })
+        - else
+          = ar.name
+        %table{ :style => 'margin-right: 10px; width: 100%; border-collapse: collapse;' }
+          - ar.quantities.each do |qu|
+            %tr
+              %td= qu.name
+      %td{ :style => 'text-align: right; width: 60px;' }
+        %table{ :style => 'text-align: right; width: 60px;' }
+          %tr
+            %td{ :style => 'text-align: right;' }== #{ number_to_currency ar.price if ar.price }&nbsp;
+          - ar.quantities.each do |qu|
+            %tr
+              %td{ :style => 'text-align: right;' }= number_to_currency qu.price
