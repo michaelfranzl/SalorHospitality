@@ -148,7 +148,7 @@ private
     categories.collect{ |cat|
       "\narticleslist[#{ cat.id }] = \"" +
       cat.articles.find_in_menucard.collect{ |art|
-        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this);" : "display_quantities(#{ art.id });"
+        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this, enter_price);" : "display_quantities(#{ art.id });"
         onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
         image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
         "<div id='article_#{ art.id }' class='article' onclick='#{ onclickaction }' onmousedown='#{ onmousedownaction }'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</div><div id ='article_#{ art.id }_quantities'></div>"
@@ -197,7 +197,7 @@ private
       }.to_s + '";'
     }.to_s
 
-    return articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
+    return "var enter_price = '#{ t :enter_price }';\n\n" + articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
   end
 
 

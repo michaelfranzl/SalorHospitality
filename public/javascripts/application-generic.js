@@ -28,7 +28,7 @@ function add_new_item_q(qu_id, button) {
   $('order_sum').value = sum.toFixed(2).replace('.', ',');
 }
 
-function add_new_item_a(art_id, button) {
+function add_new_item_a(art_id, button, caption) {
 
   var timestamp = new Date().getTime();
   var sort = timestamp.toString().substr(-9,9);
@@ -48,7 +48,7 @@ function add_new_item_a(art_id, button) {
   $('itemstable').insert({ top: new_item_tablerow_modified });
   $('inputfields').insert({ top: new_item_inputfields_modified });
   if (itemdetails_a[art_id][3] == 0) {
-    $('order_items_attributes_' + desig + '_price').value = prompt('enter price');
+    $('order_items_attributes_' + desig + '_price').value = prompt(caption);
   }
   document.getElementById('quantities').innerHTML = '&nbsp;';
 
