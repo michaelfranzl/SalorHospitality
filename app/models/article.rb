@@ -9,8 +9,8 @@ class Article < ActiveRecord::Base
     write_attribute(:price, price.gsub(',', '.'))
   end
 
-  def self.find_visible
-    find_all_by_hidden(false)
+  def quantities
+    Quantity.find(:all, :conditions => { :hidden => false, :article_id => self.id })
   end
   
   def self.find_in_menucard

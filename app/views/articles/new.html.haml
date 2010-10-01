@@ -23,7 +23,7 @@
               %td
                 = article_form.label('price', Article.human_attribute_name(:price))
               %td
-                = @article.new_record? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
+                = article_form.text_field( :price, :size => 6 )
           %tr
             %td
               = article_form.label('category_id', Article.human_attribute_name(:category))
@@ -31,24 +31,14 @@
               = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
           %tr
             %td
-              = article_form.label('hidden', Article.human_attribute_name(:hidden))
-            %td
-              = article_form.check_box :hidden
-          %tr
-            %td
               = article_form.label('menucard', Article.human_attribute_name(:menucard))
             %td
               = article_form.check_box :menucard
           %tr
             %td
-              = article_form.label('blackboard', Article.human_attribute_name(:blackboard))
+              = article_form.label('hidden', Article.human_attribute_name(:hidden))
             %td
-              = article_form.check_box :blackboard
-          %tr
-            %td
-              = article_form.label('waiterpad', Article.human_attribute_name(:waiterpad))
-            %td
-              = article_form.check_box :waiterpad
+              = article_form.check_box :hidden
           %tr
             %td{ :colspan => '2' }
       %td#articles_search_results
@@ -62,19 +52,19 @@
         %td
           = quantity_form.label :name, Quantity.human_attribute_name(:name)
         %td
-          = quantity_form.text_field :name, :size => '7'
+          = quantity_form.text_field :name, :size => '14'
         %td
           = quantity_form.label :price, Quantity.human_attribute_name(:price)
         %td
-          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :size => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
+          = quantity_form.text_field( :price, :size => '4')
         %td
           = quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td
           = quantity_form.check_box :active
         %td
-          = article_form.label('hidden', Quantity.human_attribute_name(:hidden))
+          = quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
         %td
-          = article_form.check_box :hidden
+          = quantity_form.check_box :hidden
 
 
         - if @current_user.role > 4

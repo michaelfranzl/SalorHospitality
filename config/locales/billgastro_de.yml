@@ -46,7 +46,9 @@ de:
         price: Preis
         category_id: Kategorie
         name: Name
+        hidden: löschen
         description: Beschreibung
+        menucard: aktiv
       option:
         price: Preis
         category_id: Kategorie
@@ -55,7 +57,7 @@ de:
         name: Variantenname
         price: Variantenpreis
         active: aktiv
-        hidden: versteckt
+        hidden: löschen
       tax:
         percent: Steuer in %
         name: Name

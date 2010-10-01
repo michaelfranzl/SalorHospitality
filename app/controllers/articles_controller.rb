@@ -63,6 +63,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
+debugger
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
