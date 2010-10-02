@@ -310,7 +310,7 @@ class OrdersController < ApplicationController
       "\n" + client_data[:slogan2] + "\n" +
       client_data[:internet] + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
-debugger
+
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
       output.gsub!(/\xE4/,"\x84") #ä
