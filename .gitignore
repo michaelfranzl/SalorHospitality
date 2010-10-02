@@ -7,3 +7,4 @@ vendor/plugins
 public/stylesheets/*.css
 *.swp
 *.escpos
+client_data.yaml
