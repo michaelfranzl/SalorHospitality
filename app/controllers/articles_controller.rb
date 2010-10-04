@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
-    File.open('public/articles.js', 'w') { |out| generate_js_database(Category.all) }
+    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(Category.all)) }
     @groups = Group.find(:all, :order => 'name ASC')
     respond_to do |wants|
       wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
@@ -42,7 +42,7 @@ class ArticlesController < ApplicationController
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
     @article.update_attributes params[:article]
-    File.open('public/articles.js', 'w') { |out| generate_js_database(@categories) }
+    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
 
     respond_to do |wants|
       wants.html do #html request from new_articles_path
@@ -80,7 +80,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-    File.open('public/articles.js', 'w') { |out| generate_js_database(@categories) }
+    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
     redirect_to articles_path
   end
 

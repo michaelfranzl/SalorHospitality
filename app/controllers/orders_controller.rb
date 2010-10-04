@@ -333,65 +333,62 @@ class OrdersController < ApplicationController
 
 
     def generate_escpos_items(type)
-      output = ''
+      overall_output = ''
+
       Order.find_all_by_finished(false).each do |order|
-        output +=
+        per_order_output = ''
+        per_order_output +=
         "\e@"     +  # Initialize Printer
+        "\e!\x38" +  # doube tall, double wide, bold
 
-        "\e!\x00" +  # Font A
-        "\e!\x08" +  # Font A, emphasized
-        "%-25.25s %15s\n" % [order.user.title, order.table.name] +
-        "=========================================\n"
+        "%-6.6s %13s\n" % [l(Time.now, :format => :time_short), order.table.name] +
 
-        printed_items = 0
+        per_order_output += "=====================\n"
+
+        printed_items_in_this_order = 0
         order.items.each do |i|
-          next if i.count == i.printed_count or (i.category.food and type == :drink) or (!i.category.food and type == :food) # no need to print
-          printed_items =+ 1
+          next if (i.count == i.printed_count) or (i.category.food and type == :drink) or (!i.category.food and type == :food)
+          printed_items_in_this_order =+ 1
 
-          output +=
-          "\e!\x38" +  # doube tall, double wide, bold
-          "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
+          per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
+          per_order_output += "  %-18.18s\n" % [i.quantity.name] if i.quantity
+          per_order_output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
 
-          output += "  %-18.18s\n" % [i.quantity.name] if i.quantity
-          output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
+          i.options.each { |o| per_order_output += "* %-18.18s\n" % [o.name] }
 
-          i.options.each { |o| output += "* %-18.18s\n" % [o.name] }
-
-          output += "---------------------\n"
+          per_order_output += "---------------------\n"
 
           i.update_attribute :printed_count, i.count
         end
 
-        output +=
+        per_order_output +=
         "\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
-        output = '' if printed_items == 0
+        overall_output += per_order_output if printed_items_in_this_order != 0
       end
 
-      output = Iconv.conv('ISO-8859-15','UTF-8',output)
-      output.gsub!(/\xE4/,"\x84") #ä
-      output.gsub!(/\xFC/,"\x81") #ü
-      output.gsub!(/\xF6/,"\x94") #ö
-      output.gsub!(/\xC4/,"\x8E") #Ä
-      output.gsub!(/\xDC/,"\x9A") #Ü
-      output.gsub!(/\xD6/,"\x99") #Ö
-      output.gsub!(/\xDF/,"\xE1") #ß
-      output.gsub!(/\xE9/,"\x82") #é
-      output.gsub!(/\xE8/,"\x7A") #è
-      output.gsub!(/\xFA/,"\xA3") #ú
-      output.gsub!(/\xF9/,"\x97") #ù
-      output.gsub!(/\xC9/,"\x90") #É
-      return output
+      overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
+      overall_output.gsub!(/\xE4/,"\x84") #ä
+      overall_output.gsub!(/\xFC/,"\x81") #ü
+      overall_output.gsub!(/\xF6/,"\x94") #ö
+      overall_output.gsub!(/\xC4/,"\x8E") #Ä
+      overall_output.gsub!(/\xDC/,"\x9A") #Ü
+      overall_output.gsub!(/\xD6/,"\x99") #Ö
+      overall_output.gsub!(/\xDF/,"\xE1") #ß
+      overall_output.gsub!(/\xE9/,"\x82") #é
+      overall_output.gsub!(/\xE8/,"\x7A") #è
+      overall_output.gsub!(/\xFA/,"\xA3") #ú
+      overall_output.gsub!(/\xF9/,"\x97") #ù
+      overall_output.gsub!(/\xC9/,"\x90") #É
+      return overall_output
     end
 
 
 
-    def generate_escpos_test(order)
-      out =
-      "\e@"     +  # Initialize Printer
-      "\ea\x02"
+    def generate_escpos_test
+      out = "\e@" # Initialize Printer
       0.upto(255) { |i|
-        out += "\et%c %i\xDC\n" % [i,i]
+        out += i.to_s + i.chr
       }
       return out
     end
