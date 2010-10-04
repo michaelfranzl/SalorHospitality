@@ -29,7 +29,7 @@
 
 
     - if logged_in?
-      = javascript_include_tag "/articles.js?#{MyGlobals.last_js_change}" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
+      = javascript_include_tag "/articles.js" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
       %script{ :type => 'text/javascript' }= toggle_admin_interface
 
   %body

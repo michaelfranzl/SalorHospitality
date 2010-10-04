@@ -3,12 +3,8 @@ class ArticlesController < ApplicationController
   def index
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
-    respond_to do |wants|
-      wants.html {
-        @articles = Article.all
-      }
-      wants.js { render :text => generate_js_database(@categories) }
-    end
+    @articles = Article.all
+    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
   end
 
   def listall
@@ -22,8 +18,8 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
+    File.open('public/articles.js', 'w') { |out| generate_js_database(Category.all) }
     @groups = Group.find(:all, :order => 'name ASC')
-    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
     respond_to do |wants|
       wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
       wants.js do
@@ -37,7 +33,6 @@ class ArticlesController < ApplicationController
   def edit
     @article = Article.find(params[:id])
     @groups = Group.find(:all, :order => 'name ASC')
-    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new
   end
@@ -47,7 +42,7 @@ class ArticlesController < ApplicationController
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
     @article.update_attributes params[:article]
-    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
+    File.open('public/articles.js', 'w') { |out| generate_js_database(@categories) }
 
     respond_to do |wants|
       wants.html do #html request from new_articles_path
@@ -84,9 +79,8 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
-    MyGlobals.last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
-    flash[:notice] = t(:successfully_deleted, :what => @article.name)
     @article.destroy
+    File.open('public/articles.js', 'w') { |out| generate_js_database(@categories) }
     redirect_to articles_path
   end
 
