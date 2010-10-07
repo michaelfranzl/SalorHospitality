@@ -23,7 +23,7 @@
               %td
                 = article_form.label('price', Article.human_attribute_name(:price))
               %td
-                = @article.new_record? or @article.price.nil? ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
+                = (@article.new_record? or @article.price.nil?) ? article_form.text_field( :price, :size => 6 ) : article_form.text_field( :price, :size => 6, :readonly => 'readonly', :style => 'background-color: #DDD')
 
           %tr
             %td
