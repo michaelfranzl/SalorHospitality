@@ -44,7 +44,7 @@ class Article < ActiveRecord::Base
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
   accepts_nested_attributes_for :quantities, :allow_destroy => true,
-    :reject_if => proc { |attrs| attrs['name'] == '' && attrs['price'] == '' }
+    :reject_if => proc { |attrs| attrs['prefix'] == '' && attrs['price'] == '' }
 
   def name_description
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)

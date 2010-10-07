@@ -38,9 +38,11 @@ class ArticlesController < ApplicationController
   end
 
   def update
+
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
+
     @article.update_attributes params[:article]
     File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
 
@@ -136,7 +138,7 @@ private
         next if art.quantities.empty?
         "\nquantitylist[#{ art.id }] = \"" +
         art.quantities.active_and_sorted.collect{ |qu|
-          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown='quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.name }</div>&
+          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown='quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.prefix } #{ Helper.escape_javascript qu.postfix }</div>&
         }.to_s + '";'
       }.to_s
     }.to_s
@@ -147,7 +149,7 @@ private
     categories.collect{ |cat|
       cat.articles.find_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.name }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }');"
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.prefix }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }');"
         }.to_s
       }.to_s
     }.to_s
@@ -181,7 +183,7 @@ private
     if input.class == Article
       label = "#{ input.name }<br><small>#{ price }</small>"
     else
-      label = "#{ input.article.name } #{ input.name }<br><small>#{ price }</small>"
+      label = "#{ input.prefix } #{ input.article.name } #{ input.postfix } <br><small>#{ price }</small>"
     end
     return label
   end

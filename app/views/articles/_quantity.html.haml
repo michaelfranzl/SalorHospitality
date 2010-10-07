@@ -3,8 +3,8 @@
 
 - frm.fields_for :quantities, quantity do |f|
   %td= f.label :prefix, Quantity.human_attribute_name(:prefix)
-  %td= f.text_field :name
-  %td= f.label :name, Quantity.human_attribute_name(:name)
-  %td= f.text_field :name
+  %td= f.text_field :prefix, :class => 'prefix'
+  %td= f.label :postfix, Quantity.human_attribute_name(:postfix)
+  %td= f.text_field :postfix, :class => 'postfix'
   %td= f.label :price, Quantity.human_attribute_name(:price)
-  %td= f.text_field :price
+  %td= f.text_field :price, :class => 'price'

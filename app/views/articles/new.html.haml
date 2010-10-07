@@ -51,13 +51,17 @@
     - article_form.fields_for :quantities do |quantity_form|
       %tr
         %td
-          = quantity_form.label :name, Quantity.human_attribute_name(:name)
+          = quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
         %td
-          = quantity_form.text_field :name, :size => '14'
+          = quantity_form.text_field :prefix, :class => 'prefix'
+        %td
+          = quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
+        %td
+          = quantity_form.text_field :postfix, :class => 'postfix'
         %td
           = quantity_form.label :price, Quantity.human_attribute_name(:price)
         %td
-          = @article.new_record? ? quantity_form.text_field( :price, :price => '4') : quantity_form.text_field( :price, :size => '4', :readonly => 'readonly', :style => 'background-color: #DDD')
+          = @article.new_record? ? quantity_form.text_field(:price, :class => 'price') : quantity_form.text_field(:price, :readonly => 'readonly', :style => 'background-color: #DDD', :class => 'price')
         %td
           = quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td

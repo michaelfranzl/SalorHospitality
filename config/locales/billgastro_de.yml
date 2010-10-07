@@ -54,7 +54,8 @@ de:
         category_id: Kategorie
         name: Name
       quantity:
-        name: Variantenname
+        prefix: Name
+        postfix: Ergänzung
         price: Variantenpreis
         active: aktiv
         hidden: löschen
