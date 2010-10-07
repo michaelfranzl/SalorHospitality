@@ -254,7 +254,7 @@ de:
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
   menucard_generic_name: Speisekarte
-  unsettled_orders_generic_name: Offene Bestellungen
+  unsettled_orders_generic_name: Offene Abrechnungen
 
   print_kitchenlist: Küchenliste drucken
   recent_orders: Kürzliche Rechnugen ansehen

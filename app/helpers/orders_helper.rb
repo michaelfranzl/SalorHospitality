@@ -2,7 +2,7 @@ module OrdersHelper
 
   def compose_item_label(item)
     price = "EUR #{ item.real_price }" if not (item.real_price.zero? or item.real_price.nil?)
-    return "#{ item.article.name } #{ item.quantity.name if item.quantity }<br><small>#{ price } #{ item.comment }</small>"
+    return "#{ item.quantity.prefix if item.quantity } #{ item.article.name } #{ item.quantity.postfix if item.quantity }<br><small>#{ price } #{ item.comment }</small>"
   end
 
   def compose_option_names(item)

@@ -23,7 +23,7 @@
         %tr
           %td.count= link_to_remote(item.count, :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "invoice_form_#{ invoice_form.id }")
           - article_label = item.article.name[0..13]
-          - quantity_label = item.quantity.name[0..13] if item.quantity
+          - quantity_label = "#{item.quantity.prefix[0..9]}, #{item.quantity.postfix[0..9]}" if item.quantity
           %td.label{ :id => "item#{item.id}", :onclick => "mark_item_for_split_invoice(this.parentNode, #{order_form.object.id}, #{itemnumber})"}== #{ article_label }<br>#{ quantity_label }
           %td.price= number_to_currency item.real_price
           %td.total= number_to_currency sum
