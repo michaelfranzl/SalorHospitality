@@ -9,7 +9,7 @@ class Quantity < ActiveRecord::Base
     write_attribute(:price, price.gsub(',', '.'))
   end
 
-  #validates_presence_of :prefix
+  validates_presence_of :prefix
   validates_presence_of :price
   validates_numericality_of :price
 

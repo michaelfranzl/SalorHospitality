@@ -40,11 +40,9 @@ class Article < ActiveRecord::Base
   
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
   #This will prevent children_attributes with all empty values to be ignored
-  accepts_nested_attributes_for :ingredients, :allow_destroy => true,
-    :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
+  accepts_nested_attributes_for :ingredients, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
-  accepts_nested_attributes_for :quantities, :allow_destroy => true,
-    :reject_if => proc { |attrs| attrs['prefix'] == '' && attrs['price'] == '' }
+  accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '' }
 
   def name_description
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)

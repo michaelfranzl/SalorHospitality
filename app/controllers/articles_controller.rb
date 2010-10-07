@@ -38,7 +38,6 @@ class ArticlesController < ApplicationController
   end
 
   def update
-
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
@@ -48,11 +47,15 @@ class ArticlesController < ApplicationController
 
     respond_to do |wants|
       wants.html do #html request from new_articles_path
-        if session[:return_to]
-          redirect_to session[:return_to]
-          session[:return_to] = nil
+        if @article.save
+          if session[:return_to]
+            redirect_to session[:return_to]
+            session[:return_to] = nil
+          else
+            redirect_to orders_path
+          end
         else
-          redirect_to orders_path
+          render :new
         end
       end
 
