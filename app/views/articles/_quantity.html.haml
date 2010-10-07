@@ -2,6 +2,8 @@
 -# Note that the statement 'quantity' represents the name of this partial
 
 - frm.fields_for :quantities, quantity do |f|
+  %td= f.label :prefix, Quantity.human_attribute_name(:prefix)
+  %td= f.text_field :name
   %td= f.label :name, Quantity.human_attribute_name(:name)
   %td= f.text_field :name
   %td= f.label :price, Quantity.human_attribute_name(:price)

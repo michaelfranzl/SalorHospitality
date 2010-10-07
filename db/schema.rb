@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100917124349) do
+ActiveRecord::Schema.define(:version => 20101007200405) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -117,13 +117,14 @@ ActiveRecord::Schema.define(:version => 20100917124349) do
   end
 
   create_table "quantities", :force => true do |t|
-    t.string   "name"
+    t.string   "prefix"
     t.float    "price"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",     :default => true
     t.boolean  "hidden",     :default => false
+    t.string   "postfix"
   end
 
   create_table "settlements", :force => true do |t|
