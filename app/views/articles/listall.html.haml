@@ -16,7 +16,7 @@
         %table{ :style => 'margin-right: 10px; width: 100%; border-collapse: collapse;' }
           - ar.quantities.each do |qu|
             %tr
-              %td= qu.name
+              %td== #{qu.prefix}, #{qu.postfix}
       %td{ :style => 'text-align: right; width: 60px;' }
         %table{ :style => 'text-align: right; width: 60px;' }
           %tr
