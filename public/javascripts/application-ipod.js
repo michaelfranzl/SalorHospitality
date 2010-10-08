@@ -3,5 +3,9 @@ function category_onmousedown(category_id) {
 }
 
 function display_quantities(art_id) {
-  $('article_' + art_id + '_quantities').innerHTML = quantitylist[art_id];
+  if ($('article_' + art_id + '_quantities').innerHTML == '') {
+    $('article_' + art_id + '_quantities').innerHTML = quantitylist[art_id];
+  } else {
+    $('article_' + art_id + '_quantities').innerHTML = '';
+  }
 }
