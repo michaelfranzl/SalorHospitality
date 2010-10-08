@@ -351,7 +351,7 @@ class OrdersController < ApplicationController
           printed_items_in_this_order =+ 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
-          per_order_output += "  %-18.18s\n" % [i.quantity.prefix + i.quantity.postfix] if i.quantity
+          per_order_output += "  %-18.18s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
           per_order_output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
 
           i.options.each { |o| per_order_output += "* %-18.18s\n" % [o.name] }
