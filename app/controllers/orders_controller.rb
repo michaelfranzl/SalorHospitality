@@ -86,10 +86,10 @@ class OrdersController < ApplicationController
   end
 
   def split_invoice_one_at_a_time
-    item_to_split = Item.find(params[:id]) # find item on which was clicked
-    @order = item_to_split.order
+    @item_to_split = Item.find(params[:id]) # find item on which was clicked
+    @order = @item_to_split.order
     @cost_centers = CostCenter.find_all_by_active(true)
-    make_split_invoice(@order, [item_to_split], :one)
+    make_split_invoice(@order, [@item_to_split], :one)
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
   end

@@ -111,9 +111,6 @@ div.invoice
   :padding 30px 10px
   :margin 10px
   :letter-spacing -1.5px
-  a
-    :color #333
-    :text-decoration none
   select#cost_center_for_invoice
     :width 183px
     :height 49px
@@ -122,23 +119,27 @@ div.invoice
     :border-collapse collapse
     :margin-bottom 20px
     td
-      :cursor pointer
       :height 50px
+      :vertical-align middle
     td.label
       :width 131px
+    tr.item
+      a
+        :color #333
+        :text-decoration none
+        :display block
+        :height 30px
+        :padding-top 10px
     td.price
       :width 70px
       :text-align right
     td.total
       :width 70px
       :text-align right
-    td.count a
-      :display block
+    td.count
       :text-align center
-      :padding-top 10px
       :height 30px
       :width 40px
-      :background-color #EEE
 
 
 div.table a
