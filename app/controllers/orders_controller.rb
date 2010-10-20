@@ -123,9 +123,10 @@ class OrdersController < ApplicationController
 
   # This function not only prints, but also finishes orders
   def print
-    @order = Order.find(params[:id])
-    @order.update_attributes(params[:order])
-    @order.update_attribute(:finished, true)
+    @order = Order.find params[:id]
+    @order.update_attributes params[:order]
+    @order.update_attribute :finished, true
+    @order.update_attribute :user, @current_user
     @order.order.order = nil if @order.order # unlink parent order from me
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
