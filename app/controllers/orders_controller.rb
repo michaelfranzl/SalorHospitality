@@ -216,6 +216,8 @@ class OrdersController < ApplicationController
       end
       parent_order = Order.find(parent_order.id) # re-read
       parent_order.delete if parent_order.items.empty?
+      parent_order.update_attribute( :sum, calculate_order_sum(parent_order) ) if not parent_order.items.empty?
+      split_invoice.update_attribute( :sum, calculate_order_sum(split_invoice) )
     end
     
     # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
