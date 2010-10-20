@@ -32,7 +32,7 @@
 
 
     - if logged_in?
-      = javascript_include_tag "/articles.js" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
+      = javascript_include_tag "/articles.js?#{ l Time.now, :format => :datetime_iso2 }" if controller.controller_name == 'orders' and ( controller.action_name == 'new' or controller.action_name == 'edit' )
       %script{ :type => 'text/javascript' }= toggle_admin_interface
 
   %body
