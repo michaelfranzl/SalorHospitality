@@ -38,6 +38,7 @@ class OrdersController < ApplicationController
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
+    @order.table_id = params[:move_order_to_table] if params[:move_order_to_table]
     @order.save ? process_order(@order) : render(:new)
   end
 
@@ -45,8 +46,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.all
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.table_id = params[:move_items_to_table] if params[:move_items_to_table]
     if @order.update_attributes(params[:order])
+      @order.update_attribute(:table_id, params[:move_order_to_table]) if params[:move_order_to_table]
       @order = Order.find(params[:id]) # re-read
       process_order @order
     else

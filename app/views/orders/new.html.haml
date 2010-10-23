@@ -18,6 +18,7 @@
   %div.waiter
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
 
+
   .order_info
     = @order.id ? "#{Order.human_name} ##{@order.id}" : t('.new')
     %br
@@ -70,13 +71,15 @@
 
   %div#functions
     %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back) }
+
+    %select{ :id => "move_order_to_table", :name => "move_order_to_table", :onchange => "hide_tableselect(this); document.getElementById('order_action').value='save_and_go_back'; document.itemform.submit();" }
+      = options_from_collection_for_select(Table.all, 'id', 'abbreviation', @order.table.id)
+
     %a.iconbutton.invoice_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :title => t(:finish_order) }
     - if not ipod?
       %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
-      %a.iconbutton.tables2_button{ :onmouseup => "$('move_order_to_table').show();" }
 
-    %select{ :id => "move_order_to_table", :name => "move_order_to_table", :onchange => "hide_tableselect(this); document.getElementById('order_action').value='save_and_go_back'; document.itemform.submit();", :size => "#{ ipod? ? 1 : Table.all.size}", :style => "#{ 'display: none;' if not ipod? }" }
-      = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
+
 
 
 %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
