@@ -12,7 +12,7 @@
   %td{ :class => 'item_options' }
     - if not ipod?
       %a{ :onmouseup => "$('optionsselect_#{ locals[:designator] }').show();" }
-    %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)", :onmouseup => 'hide_optionsselect(this); this.hide();', :size => 12, :style => "#{ 'display: none;' if not ipod? }" }
+    %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)", :onmouseup => 'hide_optionsselect(this);', :size => 12, :style => "#{ 'display: none;' if not ipod? }" }
       %option{ :value => -1 } exit
       %option{ :value => 0 }= t('.no_options')
       = locals[:optionsselect]

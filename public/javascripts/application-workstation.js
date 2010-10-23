@@ -7,5 +7,9 @@ function display_quantities(art_id) {
 }
 
 function hide_optionsselect(what) {
-  what.hide;
+  what.hide();
+}
+
+function hide_tableselect(what) {
+  what.hide();
 }

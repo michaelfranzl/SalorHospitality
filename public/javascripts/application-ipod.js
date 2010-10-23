@@ -14,5 +14,9 @@ function display_quantities(art_id) {
 }
 
 function hide_optionsselect(what) {
-  // optionsselect should never be hidden on ipod
+  // this should never be hidden on ipod
+}
+
+function hide_tableselect(what) {
+  // this should never be hidden on ipod
 }

@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.all
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
+    @order.table_id = params[:move_items_to_table] if params[:move_items_to_table]
     if @order.update_attributes(params[:order])
       @order = Order.find(params[:id]) # re-read
       process_order @order
