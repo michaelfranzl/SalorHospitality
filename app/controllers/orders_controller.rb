@@ -350,7 +350,7 @@ class OrdersController < ApplicationController
 
         printed_items_in_this_order = 0
         order.items.each do |i|
-          next if (i.count == i.printed_count) or (i.category.food and type == :drink) or (!i.category.food and type == :food)
+          next if (i.count <= i.printed_count) or (i.category.food and type == :drink) or (!i.category.food and type == :food)
           printed_items_in_this_order =+ 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
@@ -359,7 +359,7 @@ class OrdersController < ApplicationController
 
           i.options.each { |o| per_order_output += "* %-18.18s\n" % [o.name] }
 
-          per_order_output += "---------------------\n"
+          #per_order_output += "---------------------\n"
 
           i.update_attribute :printed_count, i.count
         end
