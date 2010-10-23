@@ -9,3 +9,7 @@ function display_quantities(art_id) {
     $('article_' + art_id + '_quantities').innerHTML = '';
   }
 }
+
+function hide_optionsselect(what) {
+  // optionsselect should never be hidden on ipod
+}

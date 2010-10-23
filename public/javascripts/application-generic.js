@@ -186,6 +186,8 @@ function add_option_to_item(item_designator, select_tag) {
   if (select_tag.value == 0) {
     document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value = '';
     $('optionsnames_' + item_designator).innerHTML = '';
+  } else if (select_tag.value == -1 ) {
+      //do nothing
   } else {
     document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;

@@ -42,13 +42,6 @@ table#itemstable
   :width 100%
   td
     :padding 5px
-  
-
-  
-tr.item
-  :height 41px
-  select
-    :background-image url(/images/button_ipod_check.png)
 
 #save_order,
 #finish_order
@@ -115,7 +108,7 @@ td.item_count
   :font-size 150%
 
 td.item_minus
-  :width 20%
+  :width 17%
   :cursor pointer
   :text-align center
   :background-image url(/images/button_ipod_minus.png)
@@ -130,18 +123,24 @@ td.item_label
   :word-wrap break-word
 
 td.item_options
+  :width 15%
   :text-align center
-  :width 20%
-  select
-    :width 56px
-    :height 37px
+  a
     :background-image url(/images/button_ipod_check.png)
     :background-repeat no-repeat
-    :background-color transparent
+    :display block
+    :height 38px
+    :width 41px
+  select
+    :opacity .6
+    :background-color black
     :border 0px
-    :color transparent
+    :position relative
+    :left -245px
+    :width 295px
+    :z-index 10
     option
-      :color #ccc
+      :color white
       :font-size 200%
   
   

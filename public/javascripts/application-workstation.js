@@ -5,3 +5,7 @@ function category_onmousedown(category_id) {
 function display_quantities(art_id) {
   $('quantities').innerHTML = quantitylist[art_id];
 }
+
+function hide_optionsselect(what) {
+  what.hide;
+}
