@@ -46,6 +46,7 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     if @order.update_attributes(params[:order])
+      @order = Order.find(params[:id]) # re-read
       process_order @order
     else
       render(:new)
