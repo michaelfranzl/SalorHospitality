@@ -1,5 +1,5 @@
 = link_to User.human_name, '/statistics/users', :class => 'links'
 = link_to t('statistics.weekdays'), '/statistics/weekdays', :class => 'links'
 = link_to Table.human_name, '/statistics/tables', :class => 'links'
-= link_to Article.human_name, '/statistics/articles', :class => 'links'
+= link_to Article.human_name, '/statistics/articles', :class => 'links', :onclick => 'alert("Dieser Vorgang dauert etwa eine halbe Minute! Bitte warten, bis Artikel angezeigt werden.")'
 = link_to t('statistics.journal'), '/statistics/journal', :class => 'links'

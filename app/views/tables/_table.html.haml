@@ -20,7 +20,7 @@
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
       = table.abbreviation
   - else
-    %a{ :href => path }= table.abbreviation
+    %a{ :href => path, :onclick => 'this.parentNode.style.backgroundColor = "#ccc";' }= table.abbreviation
 
 
 - left_attribute = ipod? ? 'left_ipod' : 'left'
