@@ -8,17 +8,19 @@
 - else
   - path = table_path(table)
 
-- width  = ipod? ? table.width_ipod  : table.width
-- height = ipod? ? table.height_ipod : table.height
+- width  = table.width
+- #height = ipod? ? table.height_ipod : table.height
 - left   = ipod? ? table.left_ipod   : table.left
 - top    = ipod? ? table.top_ipod    : table.top
 
 - color_style = "background-color: #{ unfinished_orders.first.user.color }" if !unfinished_orders.empty?
 
-%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{height}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
+%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{width}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
   - if session[:admin_interface] == true
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
-  %a{ :href => path }= table.abbreviation
+      = table.abbreviation
+  - else
+    %a{ :href => path }= table.abbreviation
 
 
 - left_attribute = ipod? ? 'left_ipod' : 'left'
