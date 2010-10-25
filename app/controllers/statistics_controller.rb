@@ -4,7 +4,7 @@ class StatisticsController < ApplicationController
 
   def tables
     @from, @to = assign_from_to(params)
-    @tables = Table.find(:all)
+    @tables = Table.all
   end
 
   def weekdays
@@ -17,7 +17,7 @@ class StatisticsController < ApplicationController
 
   def users
     @from, @to = assign_from_to(params)
-    @users = User.find(:all)
+    @users = User.all
   end
 
   def journal
@@ -31,6 +31,20 @@ class StatisticsController < ApplicationController
     render '/statistics/journal.csv' if params[:commit] == 'file'
   end
 
+  def articles
+    @from, @to = assign_from_to(params)
+    Article.all.each do |a|
+      a.sort = Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id }).size
+      a.save
+      a.quantities.each do |q|
+        q.sort = Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id }).size
+        q.save
+      end
+    end
+    @articles_by_sort = Article.find(:all, :order => 'sort DESC')
+    @quantities_by_sort = Quantity.find(:all, :order => 'sort DESC')
+  end
+
   private
 
     def assign_from_to(p)
@@ -40,9 +54,8 @@ class StatisticsController < ApplicationController
       t = Date.civil( p[:to  ][:year ].to_i,
                       p[:to  ][:month].to_i,
                       p[:to  ][:day  ].to_i) if p[:to]
-      f ||= 1.day.ago
+      f ||= 1.month.ago
       t ||= 0.day.ago
-
       return f, t
     end
 

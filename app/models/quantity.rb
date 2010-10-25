@@ -14,7 +14,7 @@ class Quantity < ActiveRecord::Base
   validates_numericality_of :price
 
   def self.active_and_sorted
-    find(:all, :conditions => 'active = 1 AND hidden = false', :order => 'prefix')
+    find(:all, :conditions => 'active = 1 AND hidden = false', :order => 'sort DESC')
   end
 
 end

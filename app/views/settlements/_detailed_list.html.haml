@@ -25,7 +25,7 @@
         - subtotal += sum
         - total += sum
         %tr
-          %td= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix}" : item.article.name
+          %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix }" : item.article.name
           %td.number= item.count
           %td.number= number_to_currency p
           %td.colsum= number_to_currency sum

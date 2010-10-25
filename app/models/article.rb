@@ -12,7 +12,7 @@ class Article < ActiveRecord::Base
   end
 
   def self.find_in_menucard
-    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'name') #updated_at DESC
+    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'sort DESC')
   end
 
   def self.find_in_blackboard

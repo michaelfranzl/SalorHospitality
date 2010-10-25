@@ -1,8 +1,8 @@
-<% header = "date;user;table;order#;article name;quantity name;price;count;cost_center" -%>
+<% header = "date;user;table;order#;article name;variant name;price;count;cost_center" -%>
 <%= header %>
 <% @orders.each do |o| -%>
 <% o.items.each do |i| -%>
-<% line = sprintf('%s;%s;%s;%s;%s;%s;%.2f;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.id, i.article.name, i.quantity ? i.quantity.name : '-', i.quantity ? i.quantity.price : i.article.price, i.count, i.order.cost_center.name) -%>
+<% line = sprintf('%s;%s;%s;%s;%s;%s;%.2f;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.id, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.article.name } #{ i.quantity.postfix }" : '-', i.storno_status == 2 ? -i.price : i.price, i.count, i.order.cost_center.name) -%>
 <%= line %>
-<% end %>
-<% end %>
+<% end -%>
+<% end -%>
