@@ -176,7 +176,7 @@ private
       }.to_s + '";'
     }.to_s
 
-    return "var enter_price = '#{ t :enter_price }';\n\n" + articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
+    return "var enter_price = '#{ t :please_enter_item_price }';\nvar enter_comment = '#{ t :please_enter_item_comment }';\n" + articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
   end
 
 

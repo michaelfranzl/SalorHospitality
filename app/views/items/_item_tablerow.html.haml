@@ -2,7 +2,7 @@
 
   %td{ :id => "count_#{ locals[:designator] }", :class => 'item_count', :onclick => "increment_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= locals[:count]
 
-  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "add_details_to_item('#{ t('.please_enter_item_comment') }', '#{ t('.please_enter_item_price') }', '#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+  %td{ :id => "label_#{ locals[:designator] }", :class => 'item_label', :onclick => "add_details_to_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     = locals[:label]
     %div{ :id => "optionsnames_#{ locals[:designator] }" }
       = locals[:optionsnames]

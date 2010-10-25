@@ -37,6 +37,8 @@ function add_new_item_q(qu_id, button) {
 
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
+
+    if (itemdetails_q[qu_id][3] == 0) { add_details_to_item(desig); }
   }
   calculate_sum();
 }
@@ -80,6 +82,8 @@ function add_new_item_a(art_id, button, caption) {
 
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
+
+    if (itemdetails_a[art_id][3] == 0) { add_details_to_item(desig); }
   }
 
   document.getElementById('quantities').innerHTML = '&nbsp;';
@@ -159,9 +163,9 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 }
 
 
-function add_details_to_item(prompt_message_comment, prompt_message_price, item_designator) {
+function add_details_to_item(item_designator) {
   var fallback = document.getElementById('order_items_attributes_' + item_designator + '_comment').value;
-  var comment = prompt(prompt_message_comment, fallback);
+  var comment = prompt(enter_comment, fallback);
   if ( comment == null ) { comment = fallback };
   document.getElementById('order_items_attributes_' + item_designator + '_comment').value = comment;
 
@@ -175,7 +179,7 @@ function add_details_to_item(prompt_message_comment, prompt_message_price, item_
 
   if ( original_price == null || original_price == '' || original_price == 0) {
     var old_price = $('order_items_attributes_' + item_designator + '_price').value;
-    var price = prompt(prompt_message_price, old_price);
+    var price = prompt(enter_price, old_price);
     if ( price == null ) { price = old_price };
     document.getElementById('order_items_attributes_' + item_designator + '_price').value = price;
   }
