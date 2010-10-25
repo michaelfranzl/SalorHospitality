@@ -281,7 +281,7 @@ class OrdersController < ApplicationController
         subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
-        label = item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix}" : item.article.name
+        label = item.quantity_id ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
         #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,item.count,sum]
       end

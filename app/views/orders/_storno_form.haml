@@ -27,7 +27,7 @@
         - onclick_action = storno_enabled ? "mark_item_for_storno(this.parentNode, #{order_form.object.id}, #{itemnumber})" : ''
         %tr{ :style => "background-color: #{color}" }
           %td.count= link_to_remote(item.count, :url => { :controller => :orders, :action => :separate_item, :id => item.id }, :submit => "storno_form")
-          - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix }" : item.article.name
+          - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
           %td.label{ :id => "item#{item.id}", :onclick => onclick_action }= "%20.20s" % [label]
           %td.total{ :style => 'text-align:right' }= number_to_currency sum
           - if storno_enabled
