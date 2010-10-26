@@ -181,7 +181,10 @@ function add_details_to_item(item_designator) {
     var old_price = $('order_items_attributes_' + item_designator + '_price').value;
     if (old_price == 0) { old_price = '' }
     var price = prompt(enter_price, old_price);
-    if ( price == null ) { price = old_price };
+    if ( price == null ) {
+      price = old_price;
+      if ( price == '') { price = 0 };
+    }
     document.getElementById('order_items_attributes_' + item_designator + '_price').value = price;
   }
   calculate_sum();
