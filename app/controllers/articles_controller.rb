@@ -43,8 +43,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
 
     @article.update_attributes params[:article]
-    debugger
-
+debugger
     if @article.hidden
       @article.quantities.each do |q|
         q.update_parameter :hidden, true
@@ -160,7 +159,7 @@ private
     categories.collect{ |cat|
       cat.articles.find_in_menucard.collect{ |art|
         art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.prefix }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }');"
+          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.prefix }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }', '#{ qu.usage }');"
         }.to_s
       }.to_s
     }.to_s
@@ -170,7 +169,7 @@ private
     "\n\nvar itemdetails_a = new Array();" +
     categories.collect{ |cat|
       cat.articles.find_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }', '#{ cat.id }');"
+        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }', '#{ cat.id }', '#{ art.usage }');"
       }.to_s
     }.to_s
 

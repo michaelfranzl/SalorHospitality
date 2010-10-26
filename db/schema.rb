@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20101026130540) do
     t.datetime "updated_at"
     t.boolean  "hidden",          :default => false
     t.integer  "sort"
-    t.integer  "usage",           :default => 0
+    t.string   "usage"
   end
 
   create_table "categories", :force => true do |t|
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20101026130540) do
     t.boolean  "hidden",     :default => false
     t.string   "postfix"
     t.integer  "sort"
-    t.integer  "usage",      :default => 0
+    t.string   "usage"
   end
 
   create_table "settlements", :force => true do |t|

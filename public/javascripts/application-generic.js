@@ -28,7 +28,7 @@ function add_new_item_q(qu_id, button) {
     }
   };
 
-  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_q[qu_id][3] != 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' && $('order_items_attributes_' + matched_designator + '_optionslist').value == '' ) {
+  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' && $('order_items_attributes_' + matched_designator + '_optionslist').value == '' ) {
     increment_item(matched_designator);
   } else { // this quantity is not yet in list, so add it
     new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options);
@@ -38,7 +38,7 @@ function add_new_item_q(qu_id, button) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_q[qu_id][3] == 0) { add_details_to_item(desig); }
+    if (itemdetails_q[qu_id][7] == 'c') { add_details_to_item(desig); }
   }
   calculate_sum();
 }
@@ -72,7 +72,7 @@ function add_new_item_a(art_id, button, caption) {
     }
   };
 
-  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_a[art_id][3] != 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' && $('order_items_attributes_' + matched_designator + '_optionslist').value == '' ) {
+  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' && $('order_items_attributes_' + matched_designator + '_optionslist').value == '' ) {
     increment_item(matched_designator);
   } else {
     // this quantity is not yet in list, so add it
@@ -83,7 +83,7 @@ function add_new_item_a(art_id, button, caption) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_a[art_id][3] == 0) { add_details_to_item(desig); }
+    if (itemdetails_a[art_id][7] == 'c') { add_details_to_item(desig); }
   }
 
   document.getElementById('quantities').innerHTML = '&nbsp;';
@@ -171,13 +171,8 @@ function add_details_to_item(item_designator) {
 
   var article_id = $('order_items_attributes_' + item_designator + '_article_id').value;
   var quantity_id = $('order_items_attributes_' + item_designator + '_quantity_id').value;
-  if (quantity_id != '') {
-    var original_price = itemdetails_q[quantity_id][3];
-  } else {
-    var original_price = itemdetails_a[article_id][3];
-  }
 
-  if ( original_price == null || original_price == '' || original_price == 0) {
+  if ( itemdetails_q[quantity_id][7] == 'c' || itemdetails_a[quantity_id][7] == 'c' ) {
     var old_price = $('order_items_attributes_' + item_designator + '_price').value;
     if (old_price == 0) { old_price = '' }
     var price = prompt(enter_price, old_price);

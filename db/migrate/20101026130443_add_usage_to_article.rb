@@ -1,6 +1,6 @@
 class AddUsageToArticle < ActiveRecord::Migration
   def self.up
-    add_column :articles, :usage, :integer, :default => 0
+    add_column :articles, :usage, :string
   end
 
   def self.down

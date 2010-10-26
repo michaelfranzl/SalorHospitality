@@ -1,6 +1,6 @@
 class AddUsageToQuantity < ActiveRecord::Migration
   def self.up
-    add_column :quantities, :usage, :integer, :default => 0
+    add_column :quantities, :usage, :string
   end
 
   def self.down

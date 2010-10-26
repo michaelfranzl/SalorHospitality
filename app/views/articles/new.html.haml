@@ -58,7 +58,11 @@
         %td= quantity_form.label :price, Quantity.human_attribute_name(:price)
         %td= quantity_form.text_field(:price, :class => 'price')
         %td= quantity_form.label :usage, Quantity.human_attribute_name(:usage)
-        %td= select_tag "article_quantities_attributes_#{ quantitynumber }_usage", '<option value=0>normal</option><option value=1>mitnehmen</option>', :name => "article[quantities_attributes][#{ quantitynumber }][usage]"
+        %td
+          %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
+            %option{ :value => 'a', :selected => quantity_form.object.usage == 'a' } normal
+            %option{ :value => 'b', :selected => quantity_form.object.usage == 'b' } mitnehmen
+            %option{ :value => 'c', :selected => quantity_form.object.usage == 'c' } ab hof
         %td= quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td= quantity_form.check_box :active
         %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
