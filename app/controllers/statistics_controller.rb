@@ -33,12 +33,10 @@ class StatisticsController < ApplicationController
 
   def articles
     @from, @to = assign_from_to(params)
-    Article.all.each do |a|
-      a.sort = Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id }).size
-      a.save
+    Article.find_all_by_hidden(false).each do |a|
+      a.update_attribute :sort, Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id }).size
       a.quantities.each do |q|
-        q.sort = Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id }).size
-        q.save
+        q.update_attribute :sort, Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id }).size
       end
     end
     @articles_by_sort = Article.find(:all, :order => 'sort DESC')
