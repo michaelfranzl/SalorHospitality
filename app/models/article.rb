@@ -5,7 +5,7 @@ class Article < ActiveRecord::Base
   has_many :quantities
   has_many :items
 
-  default_scope :conditions => { :hidden => false }
+  #default_scope :conditions => { :hidden => false }
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))

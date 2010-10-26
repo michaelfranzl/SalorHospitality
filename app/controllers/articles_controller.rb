@@ -45,6 +45,12 @@ class ArticlesController < ApplicationController
     @article.update_attributes params[:article]
     File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
 
+    if @article.hidden
+      @article.quantities.each do |q|
+        #q.update_parameter :hidden, true
+      end
+    end
+
     respond_to do |wants|
       wants.html do #html request from new_articles_path
         if @article.save
