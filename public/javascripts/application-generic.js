@@ -28,7 +28,7 @@ function add_new_item_q(qu_id, button) {
     }
   };
 
-  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_q[qu_id][3] != 0) {
+  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_q[qu_id][3] != 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' ) {
     increment_item(matched_designator);
   } else { // this quantity is not yet in list, so add it
     new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options);
@@ -72,7 +72,7 @@ function add_new_item_a(art_id, button, caption) {
     }
   };
 
-  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_a[art_id][3] != 0) {
+  if (matched_designator && $('order_items_attributes_' + matched_designator + '__destroy').value == 0 && itemdetails_a[art_id][3] != 0 && $('order_items_attributes_' + matched_designator + '_comment').value == '' ) {
     increment_item(matched_designator);
   } else {
     // this quantity is not yet in list, so add it
