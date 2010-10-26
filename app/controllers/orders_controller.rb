@@ -166,10 +166,13 @@ class OrdersController < ApplicationController
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > /dev/ttyPS2`
+      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > /dev/ttyPS2`
+      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+
+      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(:takeaway)) }
+      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
 
       order.update_attribute( :sum, calculate_order_sum(order) )
     end
@@ -353,7 +356,12 @@ class OrdersController < ApplicationController
 
         printed_items_in_this_order = 0
         order.items.each do |i|
-          next if (i.count <= i.printed_count) or (i.category.food and type == :drink) or (!i.category.food and type == :food)
+          next if (i.count <= i.printed_count)
+          next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
+
+          usage = i.quantity ? i.quantity.usage : i.article.usage
+          next if (type == :takeaway and usage != 'b') or (type != :takeaway and usage == 'b')
+
           printed_items_in_this_order =+ 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
