@@ -8,3 +8,5 @@
   %td= f.text_field :postfix, :class => 'postfix'
   %td= f.label :price, Quantity.human_attribute_name(:price)
   %td= f.text_field :price, :class => 'price'
+  %td= f.label :usage, Quantity.human_attribute_name(:usage)
+  %td= select_tag 'usage', '<option value=0>normal</option><option value=1>mitnehmen</option>', :selected => f.object.usage
