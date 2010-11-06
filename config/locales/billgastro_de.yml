@@ -269,7 +269,7 @@ de:
   invoice: Rechnung
   invoices: Invoices
   storno: Storno
-  datetime: Datum
+  dateandtime: Datum
   sum: Summe
   count: Anzahl
 

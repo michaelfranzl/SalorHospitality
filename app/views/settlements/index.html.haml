@@ -15,7 +15,7 @@
 %table{ :class => 'settlements' }
   %tr
     %th{ :class => 'bb', :style => 'width:40px' }
-    %th{ :class => 'bb' }= t :datetime
+    %th{ :class => 'bb' }= t :dateandtime
     %th{ :class => 'br bb' }= User.human_name
     - @taxes.each do |tax|
       %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }

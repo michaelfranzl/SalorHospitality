@@ -72,7 +72,7 @@
   %div#functions
     %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back), :onmouseup => 'this.hide();' }
 
-    %select{ :id => "move_order_to_table", :name => "move_order_to_table", :onchange => "hide_tableselect(this); document.getElementById('order_action').value='save_and_go_back'; document.itemform.submit();" }
+    %select{ :id => "move_order_to_table", :name => "move_order_to_table", :onchange => "hide_tableselect(this); document.getElementById('order_action').value='move_order_to_table'; document.itemform.submit();" }
       = options_from_collection_for_select(Table.all, 'id', 'abbreviation', @order.table.id)
 
     %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :onmouseup => 'this.hide();', :title => t(:finish_order) }
