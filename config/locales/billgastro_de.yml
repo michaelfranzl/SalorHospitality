@@ -57,6 +57,7 @@ de:
         prefix: Name
         postfix: Ergänzung
         price: Variantenpreis
+        description: Beschreibung
         active: aktiv
         hidden: löschen
       tax:
