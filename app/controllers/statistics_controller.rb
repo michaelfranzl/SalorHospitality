@@ -41,6 +41,7 @@ class StatisticsController < ApplicationController
     end
     @articles_by_sort = Article.find(:all, :order => 'id ASC')
     @quantities_by_sort = Quantity.find(:all, :order => 'article_id ASC')
+    @buggy_quantities = Quantity.find(:all, :order => 'sort DESC')
   end
 
   private
