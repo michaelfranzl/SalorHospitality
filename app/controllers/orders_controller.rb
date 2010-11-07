@@ -163,7 +163,7 @@ class OrdersController < ApplicationController
           redirect_to table_path(order.table)
         when 'move_order_to_table'
           order = move_order_to_table(order, params[:target_table])
-          redirect_to table_path(params[:target_table])
+          redirect_to orders_path
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
@@ -180,6 +180,7 @@ class OrdersController < ApplicationController
 
     def move_order_to_table(order,table_id)
       @target_order = Order.find(:all, :conditions => { :table_id => table_id, :finished => false }).first
+      @target_order = Order.new(:table_id => table_id, :user_id => @current_user.id) if not @target_order
       order.items.each do |i|
         i.update_attribute :order, @target_order
       end
