@@ -166,10 +166,10 @@ class OrdersController < ApplicationController
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > /dev/ttyPS2`
+      `cat bar.escpos > /dev/ttyPS1`
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > /dev/ttyPS2`
+      `cat kitchen.escpos > /dev/ttyPS0`
 
       order.update_attribute( :sum, calculate_order_sum(order) )
     end
