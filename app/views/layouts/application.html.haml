@@ -5,8 +5,8 @@
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
 
-    - if controller.controller_name == 'orders' and controller.action_name == 'index' and not ipod?
-      %meta{ 'http-equiv' => 'refresh', :content => '60' }
+    - if controller.controller_name == 'orders' and controller.action_name == 'index'
+      %meta{ 'http-equiv' => 'refresh', :content => '30' }
 
     - if ipod?
       %meta{ 'name' => "viewport", :content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" }
