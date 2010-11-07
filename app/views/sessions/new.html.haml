@@ -11,7 +11,7 @@
       = password_field_tag 'password', '', :size => 9
 
 
-    - if request.remote_ip != '127.0.0.1' and not ipod?
+    - if request.remote_ip != '127.0.0.1' and request.remote_ip[0..2] != '192' and not ipod?
       %p
         = label_tag 'email', (t '.email')
         = text_field_tag 'email', params[:email]

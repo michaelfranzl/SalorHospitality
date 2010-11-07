@@ -38,7 +38,6 @@ class OrdersController < ApplicationController
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     @order.table_id = params[:table_id]
     @order.sum = calculate_order_sum @order
-    @order.table_id = params[:move_order_to_table] if params[:move_order_to_table]
     @order.save ? process_order(@order) : render(:new)
   end
 
@@ -47,7 +46,6 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     if @order.update_attributes(params[:order])
-      @order.update_attribute(:table_id, params[:move_order_to_table]) if params[:move_order_to_table]
       @order = Order.find(params[:id]) # re-read
       process_order @order
     else
@@ -163,15 +161,30 @@ class OrdersController < ApplicationController
           redirect_to orders_path
         when 'go_to_invoice'
           redirect_to table_path(order.table)
+        when 'move_order_to_table'
+          order = move_order_to_table(order, params[:target_table])
+          redirect_to table_path(params[:target_table])
       end
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > /dev/ttyPS1`
+      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
 
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > /dev/ttyPS0`
+      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+
+      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(:takeaway)) }
+      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
 
       order.update_attribute( :sum, calculate_order_sum(order) )
+    end
+
+    def move_order_to_table(order,table_id)
+      @target_order = Order.find(:all, :conditions => { :table_id => table_id, :finished => false }).first
+      order.items.each do |i|
+        i.update_attribute :order, @target_order
+      end
+      @order.destroy
+      return @target_order
     end
 
     def reduce_stocks(order)
@@ -353,7 +366,12 @@ class OrdersController < ApplicationController
 
         printed_items_in_this_order = 0
         order.items.each do |i|
-          next if (i.count <= i.printed_count) or (i.category.food and type == :drink) or (!i.category.food and type == :food)
+          next if (i.count <= i.printed_count)
+          next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
+
+          usage = i.quantity ? i.quantity.usage : i.article.usage
+          next if (type == :takeaway and usage != 'b') or (type != :takeaway and usage == 'b')
+
           printed_items_in_this_order =+ 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
