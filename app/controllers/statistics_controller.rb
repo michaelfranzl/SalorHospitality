@@ -11,7 +11,7 @@ class StatisticsController < ApplicationController
     @from, @to = assign_from_to(params)
     @weekdaysums = []
     0.upto 6 do |day|
-      @weekdaysums[day] = Order.sum( 'sum', :conditions => "WEEKDAY(created_at)=#{day}" )
+      @weekdaysums[day] = Order.sum( 'sum', :conditions => "WEEKDAY(created_at)=#{day} AND created_at BETWEEN '#{@from.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{@to.strftime('%Y-%m-%d %H:%M:%S')}'" )
     end
   end
 
