@@ -34,9 +34,15 @@ class StatisticsController < ApplicationController
   def articles
     @from, @to = assign_from_to(params)
     Article.all.each do |a|
-      a.update_attribute :sort, Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id }).size
+      @items = Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id })
+      count = 0
+      @items.each { |i| count += i.count }
+      a.update_attribute :sort, count
       a.quantities.each do |q|
-        q.update_attribute :sort, Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id }).size
+        @items = Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id })
+        count = 0
+        @items.each { |i| count += i.count }
+        q.update_attribute :sort, count
       end
     end
     @articles_by_sort = Article.find(:all, :order => 'id ASC')
