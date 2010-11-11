@@ -10,5 +10,5 @@
   - @options.each do |opt|
     %tr
       %td= @current_user.role >= 2 ? link_to(opt.name, edit_option_path(opt)) : opt.name
-      %td= opt.category.name
+      %td= opt.category.name if opt.category
       %td= link_to((t :delete), opt, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
