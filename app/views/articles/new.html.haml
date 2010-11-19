@@ -1,5 +1,6 @@
 %h2= @article.new_record? ? (t '.new_article') : (t '.edit_article')
 = error_messages_for 'article'
+= javascript_include_tag "/articles.js?#{ l Time.now, :format => :datetime_iso2 }"
 
 - form_for @article do |article_form|
   %table.article_new

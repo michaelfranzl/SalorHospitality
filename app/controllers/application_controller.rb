@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     end
 
     def ipod?
-      not (request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod]
+      not ((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
     end
 
     def route_not_found

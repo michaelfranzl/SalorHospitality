@@ -1,3 +1,6 @@
+= javascript_include_tag "/articles.js?#{ l Time.now, :format => :datetime_iso2 }"
+%script{ :type => 'text/javascript' }= generate_js_variables
+
 %div#functions
   - if not ipod? and false
     %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
@@ -27,4 +30,7 @@
 
 = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
 
-= periodically_call_remote(:url => { :action => 'update_tables' }, :frequency => 6, :condition => 'true' )
+#quick_order{ :style => 'display: none;' }
+  = render 'orders/new'
+
+= periodically_call_remote(:url => { :action => 'index' }, :frequency => 60, :condition => 'true == true' )

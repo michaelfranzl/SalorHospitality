@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   def index
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
+    @categories = Category.find(:all, :order => :sort_order)
   end
 
   def update_tables
@@ -144,8 +145,11 @@ class OrdersController < ApplicationController
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
 
-
-
+  def get_itemstable_and_inputfields
+    @table=Table.find(params[:id])
+    @order=Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }).last
+    render :text => '' if not @order
+  end
 
   private
 

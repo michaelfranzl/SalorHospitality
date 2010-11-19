@@ -1,0 +1,51 @@
+- if ipod?
+  %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+  %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
+  %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
+
+%a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
+
+- form_remote_tag :url => '/orders', :html => { :id => 'quick_order_form' } do
+
+  = hidden_field_tag 'order_action', 'not_set'
+
+  .order_info
+    = "#{Order.human_name} #{t('.new')}"
+
+  %div#categories
+    - @categories.each do |category|
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id })", :onmouseup => 'category_onmouseup(this)' }
+        %div{ :class => "category_label" }
+          %span= category.name
+  
+  %div#articles
+  
+  %div#quantities
+  
+  %div#items
+    %div.ordersum_container
+      = t '.sum'
+      = t 'number.currency.format.unit'
+      %input#order_sum{ :value => 0 }
+
+    %div#inputfields
+      %p alredy there
+    %table#itemstable
+
+  %div#functions
+    %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_back"; document.itemform.submit();', :title => t(:save_and_go_back), :onmouseup => 'this.style.border = "2px solid white";' }
+
+    %select{ :id => "target_table", :name => "target_table", :onchange => "hide_tableselect(this); document.getElementById('order_action').value='move_order_to_table'; document.itemform.submit();" }
+      = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
+
+    %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
+    - if not ipod?
+      %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
+
+= link_to_remote "Get items", :url => '/orders/get_itemstable', :update => 'itemstable'
+
+
+
+%a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
+
+%div#footer

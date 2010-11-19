@@ -66,7 +66,7 @@
 
     %table#itemstable
       - @parameters.each do |@p|
-        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :optionslist => @p[:optiosnlist], :optionsnames => @p[:optionsnames], :optionsselect => @p[:optionsselect] }
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :optionslist => @p[:optionslist], :optionsnames => @p[:optionsnames], :optionsselect => @p[:optionsselect] }
 
 
   %div#functions
