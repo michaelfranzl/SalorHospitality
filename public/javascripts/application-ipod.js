@@ -1,5 +1,5 @@
 function category_onmousedown(category_id) {
-  Effect.ScrollTo('articles',10);
+  Effect.ScrollTo('articles', { offset:-40});
   display_articles(category_id);
   deselect_all_categories();
 }
