@@ -7,7 +7,7 @@ function category_onmousedown(category_id) {
 function display_quantities(art_id) {
   if ($('article_' + art_id + '_quantities').innerHTML == '') {
     $('article_' + art_id + '_quantities').innerHTML = quantitylist[art_id];
-    Effect.ScrollTo('article_' + art_id + '_quantities');
+    Effect.ScrollTo('article_' + art_id + '_quantities', { offset:-50 });
   } else {
     $('article_' + art_id + '_quantities').innerHTML = '';
   }
