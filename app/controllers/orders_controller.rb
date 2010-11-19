@@ -5,6 +5,11 @@ class OrdersController < ApplicationController
     @last_finished_order = Order.find_all_by_finished(true).last
   end
 
+  def update_tables
+    @tables = Table.all
+    @last_finished_order = Order.find_all_by_finished(true).last
+  end
+
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
     @order = Order.find(params[:id])
@@ -138,6 +143,8 @@ class OrdersController < ApplicationController
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
+
+
 
 
   private

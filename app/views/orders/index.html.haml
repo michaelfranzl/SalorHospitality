@@ -22,6 +22,9 @@
         - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
         %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
 
-= render @tables
+#tables
+  = render @tables
 
 = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
+
+= periodically_call_remote(:url => { :action => 'update_tables' }, :frequency => 6, :condition => 'true' )
