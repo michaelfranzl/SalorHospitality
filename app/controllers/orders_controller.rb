@@ -46,8 +46,8 @@ class OrdersController < ApplicationController
     @categories = Category.all
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
     if @order.update_attributes(params[:order])
-      @order = Order.find(params[:id]) # re-read
-      process_order @order
+      @order_modified = Order.find(params[:id]) # re-read
+      process_order @order_modified
     else
       render(:new)
     end
@@ -127,7 +127,6 @@ class OrdersController < ApplicationController
     @order = Order.find params[:id]
     @order.update_attributes params[:order]
     @order.update_attribute :finished, true
-    @order.update_attribute :user, @current_user
     @order.order.order = nil if @order.order # unlink parent order from me
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
