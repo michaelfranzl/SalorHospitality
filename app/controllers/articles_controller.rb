@@ -43,7 +43,6 @@ class ArticlesController < ApplicationController
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
 
     @article.update_attributes params[:article]
-debugger
     if @article.hidden
       @article.quantities.each do |q|
         q.update_parameter :hidden, true

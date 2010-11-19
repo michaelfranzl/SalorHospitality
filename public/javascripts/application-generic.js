@@ -38,7 +38,7 @@ function add_new_item_q(qu_id, button) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_q[qu_id][7] == 'c') { add_details_to_item(desig); }
+    if (itemdetails_q[qu_id][7] == 'b') { add_details_to_item(desig); }
   }
   calculate_sum();
 }
@@ -83,7 +83,7 @@ function add_new_item_a(art_id, button, caption) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_a[art_id][7] == 'c') { add_details_to_item(desig); }
+    if (itemdetails_a[art_id][7] == 'b') { add_details_to_item(desig); }
   }
 
   document.getElementById('quantities').innerHTML = '&nbsp;';
@@ -172,7 +172,7 @@ function add_details_to_item(item_designator) {
   var article_id = $('order_items_attributes_' + item_designator + '_article_id').value;
   var quantity_id = $('order_items_attributes_' + item_designator + '_quantity_id').value;
 
-  if ( itemdetails_q[quantity_id][7] == 'c' || itemdetails_a[quantity_id][7] == 'c' ) {
+  if ( itemdetails_a[article_id][7] == 'b' || itemdetails_q[quantity_id][7] == 'b' ) { // order important!
     var old_price = $('order_items_attributes_' + item_designator + '_price').value;
     if (old_price == 0) { old_price = '' }
     var price = prompt(enter_price, old_price);

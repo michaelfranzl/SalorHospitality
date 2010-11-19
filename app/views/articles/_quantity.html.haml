@@ -14,4 +14,3 @@
     %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
       %option{ :value => 'a', :selected => f.object.usage == 'a' } normal
       %option{ :value => 'b', :selected => f.object.usage == 'b' } mitnehmen
-      %option{ :value => 'c', :selected => f.object.usage == 'c' } ab hof
