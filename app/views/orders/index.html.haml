@@ -15,22 +15,23 @@
 
 %h2= t('activerecord.models.order.other')
 
-- rooms = 4
-- 1.upto(rooms) do |room|
-  %div.room{ :id => "room#{ room }" }
-    - if ipod?
-      - if @last_finished_order
-        %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
-      - 1.upto(rooms) do |icon|
-        - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
-        %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
+#all_rooms
+  - rooms = 4
+  - 1.upto(rooms) do |room|
+    %div.room{ :id => "room#{ room }" }
+      - if ipod?
+        - if @last_finished_order
+          %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
+        - 1.upto(rooms) do |icon|
+          - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
+          %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
 
-#tables
+#all_tables
   = render @tables
-
-= link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
 
 #quick_order{ :style => 'display: none;' }
   = render 'orders/new'
 
-= periodically_call_remote(:url => { :action => 'index' }, :frequency => 60, :condition => 'true == true' )
+= link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
+
+= periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 60, :condition => 'true == true' )

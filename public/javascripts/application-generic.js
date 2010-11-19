@@ -233,6 +233,8 @@ function restore_button(element) {
 
 function show_quick_order(table_id) {
   $("quick_order").show();
+  $("all_tables").hide();
+  $("all_rooms").hide();
   new Ajax.Request('/orders/get_itemstable_and_inputfields/'+table_id, {asynchronous:true, evalScripts:true});
   //new Ajax.Updater('itemstable', '/orders/get_itemstable', {asynchronous:true, evalScripts:true});
   //new Ajax.Updater('inputfields', '/orders/get_inputfields', {asynchronous:true, evalScripts:true});

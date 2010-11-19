@@ -8,8 +8,14 @@
 - form_remote_tag :url => '/orders', :html => { :id => 'quick_order_form' } do
 
   = hidden_field_tag 'order_action', 'not_set'
+  = hidden_field_tag 'order_id'
 
-  .order_info
+  %div.waiter
+    %select#order_user_id
+      %option 'hello'
+    = #order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
+
+  #order_info
     = "#{Order.human_name} #{t('.new')}"
 
   %div#categories
@@ -19,17 +25,13 @@
           %span= category.name
   
   %div#articles
-  
   %div#quantities
-  
   %div#items
     %div.ordersum_container
       = t '.sum'
       = t 'number.currency.format.unit'
       %input#order_sum{ :value => 0 }
-
     %div#inputfields
-      %p alredy there
     %table#itemstable
 
   %div#functions
@@ -41,9 +43,6 @@
     %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="go_to_invoice"; document.itemform.submit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
     - if not ipod?
       %a.iconbutton.cancel_button{ :href => '/orders', :title => t(:cancel_and_go_back) }
-
-= link_to_remote "Get items", :url => '/orders/get_itemstable', :update => 'itemstable'
-
 
 
 %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }

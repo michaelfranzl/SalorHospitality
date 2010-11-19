@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     @categories = Category.find(:all, :order => :sort_order)
   end
 
-  def update_tables
+  def statusupdate_tables
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
   end
