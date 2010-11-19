@@ -49,6 +49,7 @@ de:
         hidden: löschen
         description: Beschreibung
         menucard: aktiv
+        usage: Verwendung
       option:
         price: Preis
         category_id: Kategorie
@@ -60,6 +61,7 @@ de:
         description: Beschreibung
         active: aktiv
         hidden: löschen
+        usage: Verwendung
       tax:
         percent: Steuer in %
         name: Name

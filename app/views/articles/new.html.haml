@@ -28,6 +28,7 @@
               %select{ :id => "article_usage", :name => "article[usage]" }
                 %option{ :value => 'a', :selected => article_form.object.usage == 'a' } normal
                 %option{ :value => 'b', :selected => article_form.object.usage == 'b' } mitnehmen
+                %option{ :value => 'c', :selected => article_form.object.usage == 'c' } abwiegen
           %tr
             %td= article_form.label('menucard', Article.human_attribute_name(:menucard))
             %td= article_form.check_box :menucard
@@ -43,6 +44,7 @@
   %h3= t('activerecord.models.quantity.other')
   %table#quantities_new
     - article_form.fields_for :quantities do |quantity_form|
+      - next if quantity_form.object.hidden
       - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
       %tr
         %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
@@ -56,7 +58,7 @@
           %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
             %option{ :value => 'a', :selected => quantity_form.object.usage == 'a' } normal
             %option{ :value => 'b', :selected => quantity_form.object.usage == 'b' } mitnehmen
-            %option{ :value => 'c', :selected => quantity_form.object.usage == 'c' } ab hof
+            %option{ :value => 'c', :selected => quantity_form.object.usage == 'c' } abwiegen
         %td= quantity_form.label('active', Quantity.human_attribute_name(:active))
         %td= quantity_form.check_box :active
         %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
