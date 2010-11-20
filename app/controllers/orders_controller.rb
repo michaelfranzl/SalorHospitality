@@ -125,8 +125,11 @@ class OrdersController < ApplicationController
   # This function not only prints, but also finishes orders
   def print
     @order = Order.find params[:id]
-    @order.update_attributes params[:order]
-    @order.update_attribute :finished, true
+    @order.update_attributes params[:order] #unnecessary i guess
+    @order.finished = true
+    @order.user = @current_user
+    @order.created_at = Time.now
+    @order.save
 
     if @order.order # unlink any parent relationships
       @order.items.each do |item|
