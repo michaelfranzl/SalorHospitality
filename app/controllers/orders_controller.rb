@@ -235,13 +235,16 @@ class OrdersController < ApplicationController
           else
             split_item = parent_item.clone
             split_item.count = 0
+            split_item.printed_count = 0
             split_item.save
             parent_item.item = split_item # make an association between parent and child
             split_item.item = parent_item # ... and vice versa
           end
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1
+          split_item.printed_count += 1
           parent_item.count -= 1
+          parent_item.printed_count -= 1
           parent_item.count == 0 ? parent_item.delete : parent_item.save
           split_item.save
       end
