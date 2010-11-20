@@ -126,7 +126,7 @@ class OrdersController < ApplicationController
   def print
     @order = Order.find params[:id]
     @order.update_attributes params[:order] #unnecessary i guess
-    if not @order.finished
+    if not @order.finished and ipod?
       @order.user = @current_user
       @order.created_at = Time.now
     end
