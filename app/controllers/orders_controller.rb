@@ -127,7 +127,22 @@ class OrdersController < ApplicationController
     @order = Order.find params[:id]
     @order.update_attributes params[:order]
     @order.update_attribute :finished, true
-    @order.order.order = nil if @order.order # unlink parent order from me
+
+    if @order.order # unlink any parent relationships
+      @order.items.each do |item|
+        item.item.update_attribute( :item_id, nil ) if item.item
+        item.update_attribute( :item_id, nil )
+      end
+
+      @order.order.items.each do |item|
+        item.item.update_attribute( :item_id, nil ) if item.item
+        item.update_attribute( :item_id, nil )
+      end
+
+      @order.order.update_attribute( :order_id, nil )
+      @order.update_attribute( :order_id, nil )
+    end
+
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
       unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
@@ -231,6 +246,7 @@ class OrdersController < ApplicationController
           split_item.save
       end
       parent_order = Order.find(parent_order.id) # re-read
+
       parent_order.delete if parent_order.items.empty?
       parent_order.update_attribute( :sum, calculate_order_sum(parent_order) ) if not parent_order.items.empty?
       split_invoice.update_attribute( :sum, calculate_order_sum(split_invoice) )
