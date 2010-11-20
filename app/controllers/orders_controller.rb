@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @categories = Category.find(:all, :order => :sort_order)
     @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    render :new
+    @order.finished ? redirect_to(orders_path) : render(:new)
   end
 
   def create
@@ -126,9 +126,11 @@ class OrdersController < ApplicationController
   def print
     @order = Order.find params[:id]
     @order.update_attributes params[:order] #unnecessary i guess
+    if not @order.finished
+      @order.user = @current_user
+      @order.created_at = Time.now
+    end
     @order.finished = true
-    @order.user = @current_user
-    @order.created_at = Time.now
     @order.save
 
     if @order.order # unlink any parent relationships
@@ -141,7 +143,6 @@ class OrdersController < ApplicationController
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
       end
-
       @order.order.update_attribute( :order_id, nil )
       @order.update_attribute( :order_id, nil )
     end
