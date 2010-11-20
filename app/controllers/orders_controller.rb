@@ -311,9 +311,9 @@ class OrdersController < ApplicationController
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
-        label = Iconv.conv('ISO-8859-15','UTF-8',label)
+        #label = Iconv.conv('ISO-8859-15','UTF-8',label)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,item.count,sum]
-        list_of_items = Iconv.conv('UTF-8','ISO-8859-15',list_of_items)
+        #list_of_items = Iconv.conv('UTF-8','ISO-8859-15',list_of_items)
       end
 
       sum =
