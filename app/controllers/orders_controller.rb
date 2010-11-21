@@ -87,10 +87,28 @@ class OrdersController < ApplicationController
   # This function not only prints, but also finishes orders
   def print
     @order = Order.find params[:id]
-    @order.update_attributes params[:order]
-    @order.update_attribute :finished, true
-    @order.update_attribute :user, @current_user
-    @order.order.order = nil if @order.order # unlink parent order from me
+    @order.update_attributes params[:order] #unnecessary i guess
+    if not @order.finished and ipod?
+      @order.user = @current_user
+      @order.created_at = Time.now
+    end
+    @order.finished = true
+    @order.save
+
+    if @order.order # unlink any parent relationships
+      @order.items.each do |item|
+        item.item.update_attribute( :item_id, nil ) if item.item
+        item.update_attribute( :item_id, nil )
+      end
+
+      @order.order.items.each do |item|
+        item.item.update_attribute( :item_id, nil ) if item.item
+        item.update_attribute( :item_id, nil )
+      end
+      @order.order.update_attribute( :order_id, nil )
+      @order.update_attribute( :order_id, nil )
+    end
+
     if /tables/.match(request.referer)
       unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
       unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
@@ -233,17 +251,21 @@ class OrdersController < ApplicationController
           else
             split_item = parent_item.clone
             split_item.count = 0
+            split_item.printed_count = 0
             split_item.save
             parent_item.item = split_item # make an association between parent and child
             split_item.item = parent_item # ... and vice versa
           end
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1
+          split_item.printed_count += 1
           parent_item.count -= 1
+          parent_item.printed_count -= 1
           parent_item.count == 0 ? parent_item.delete : parent_item.save
           split_item.save
       end
       parent_order = Order.find(parent_order.id) # re-read
+
       parent_order.delete if parent_order.items.empty?
       parent_order.update_attribute( :sum, calculate_order_sum(parent_order) ) if not parent_order.items.empty?
       split_invoice.update_attribute( :sum, calculate_order_sum(split_invoice) )
@@ -307,9 +329,19 @@ class OrdersController < ApplicationController
         subtotal += sum
         tax_id = item.article.category.tax.id
         sum_taxes[tax_id-1] += sum
-        label = item.quantity_id ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
-        #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8',label)
-        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64,label,p,item.count,sum]
+        label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
+
+        label.gsub!(/ö/,"oe") #ö
+        label.gsub!(/ä/,"ae") #ä
+        label.gsub!(/ü/,"ue") #ü
+        label.gsub!(/ß/,"sz") #ß
+        label.gsub!(/Ö/,"Oe") #Ö
+        label.gsub!(/Ä/,"Ae") #Ä
+        label.gsub!(/Ü/,"Ue") #Ü
+
+        #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8', label)
+        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64, label, p, item.count, sum]
+        #list_of_items = Iconv.conv('UTF-8','ISO-8859-15',list_of_items)
       end
 
       sum =

@@ -8,10 +8,18 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user
   helper_method :logged_in?, :ipod?
 
-  rescue_from ActionController::RoutingError, :with => :route_not_found
-  rescue_from ActionController::MethodNotAllowed, :with => :invalid_method
+  #rescue_from ActionController::RoutingError, :with => :route_not_found
+  #rescue_from ActionController::MethodNotAllowed, :with => :invalid_method
 
   private
+
+    def rescue_action_in_public(exception)
+      redirect_to orders_path
+    end
+
+    def local_request?
+      false
+    end
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
@@ -34,7 +42,6 @@ class ApplicationController < ActionController::Base
       redirect_to orders_path
     end
 
-    
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
