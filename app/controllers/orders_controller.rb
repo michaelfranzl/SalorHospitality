@@ -21,48 +21,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def new
-    @order = Order.new
-    @categories = Category.find(:all, :order => :sort_order)
-    @order.table_id = params[:table_id]
-    @order.user = @current_user if ipod?
-    @table = Table.find(@order.table_id)
-    @cost_centers = CostCenter.find_all_by_active(true)
-  end
-
-  def edit
-    @order = Order.find(params[:id])
-    @categories = Category.find(:all, :order => :sort_order)
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    render :new
-  end
-
-  def create
-    @order = Order.new(params[:order])
-    session[:last_user_id] = @order.user_id
-    @categories = Category.find(:all, :order => :sort_order)
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.table_id = params[:table_id]
-    if @order.save
-      process_order(@order)
-      conditional_redirect(@order)
-    else
-      render(:new)
-    end
-  end
-
-  def update
-    @order = Order.find(params[:id])
-    @categories = Category.all
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    if @order.update_attributes(params[:order])
-      process_order(@order)
-      conditional_redirect(@order)
-    else
-      render(:new)
-    end
-  end
-
   def unsettled
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
     unsettled_userIDs = Array.new
@@ -72,12 +30,6 @@ class OrdersController < ApplicationController
     unsettled_userIDs.uniq!
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
     flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
-  end
-  
-  def destroy
-    @order = Order.find(params[:id])
-    @order.destroy
-    redirect_to orders_path
   end
 
   def items
