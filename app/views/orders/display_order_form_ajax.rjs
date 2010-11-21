@@ -20,16 +20,13 @@ if @order
     @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
 
     @tablerows += render 'items/item_tablerow', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
-
-
   end
 end
 
-debugger
 page.insert_html :bottom, 'inputfields', @inputfields
 page.insert_html :bottom, 'itemstable', @tablerows
-page.replace_html 'order_info', @order.id if @order
 if @order
+  page.replace_html 'order_info', @order.id
   page << "$('order_id').value = #{ @order.id }"
-  page << "$('order_sum').value = #{ @order.sum }"
+  page << "$('order_sum').value = '#{ number_with_precision(@order.sum, :precision => 2) }'"
 end

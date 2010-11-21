@@ -155,20 +155,22 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
-    @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
     @tables = Table.all
-    if @order
-      #similar to update
-      @order.update_attributes(params[:order])
-    else
-      #similar to create
-      @order = Order.new(params[:order])
-      @order.user = @current_user
-      @order.sum = calculate_order_sum @order
-      @order.save
+    if not params[:order_action] == 'cancel_and_go_to_tables'
+      @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
+      if @order
+        #similar to update
+        @order.update_attributes(params[:order])
+      else
+        #similar to create
+        @order = Order.new(params[:order])
+        @order.user = @current_user
+        @order.sum = calculate_order_sum @order
+        @order.save
+      end
+      process_order(@order)
     end
-    process_order(@order)
-    #conditional_redirect_ajax(@order)
+    conditional_redirect_ajax(@order)
   end
 
 
@@ -203,9 +205,9 @@ class OrdersController < ApplicationController
 
     def conditional_redirect(order)
       case params[:order_action]
-        when 'save_and_go_back'
+        when 'save_and_go_to_tables'
           redirect_to orders_path
-        when 'go_to_invoice'
+        when 'save_and_go_to_invoice'
           redirect_to table_path(order.table)
         when 'move_order_to_table'
           order = move_order_to_table(order, params[:target_table])
@@ -215,14 +217,15 @@ class OrdersController < ApplicationController
 
     def conditional_redirect_ajax(order)
       case params[:order_action]
-        when 'save_and_go_back'
-          render 'save_and_go_back'
-        when 'go_to_invoice'
-          redirect_to table_path(order.table)
-          render 'display_to_invoice'
+        when 'save_and_go_to_tables'
+          render 'go_to_tables'
+        when 'cancel_and_go_to_tables'
+          render 'go_to_tables'
+        when 'save_and_go_to_invoice'
+          render 'go_to_invoice'
         when 'move_order_to_table'
           order = move_order_to_table(order, params[:target_table])
-          render 'save_and_go_back'
+          render 'go_to_tables'
       end
     end
 

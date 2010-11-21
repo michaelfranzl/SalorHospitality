@@ -1,6 +1,6 @@
 %div{ :id => "fields_for_item_#{ locals[:designator] }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_id", :class => 'count', :name => "order[items_attributes][#{ locals[:designator] }][id]", :type => 'hidden', :value => "#{ locals[:id] }" }
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_id", :class => 'id', :name => "order[items_attributes][#{ locals[:designator] }][id]", :type => 'hidden', :value => "#{ locals[:id] }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_count", :class => 'count', :name => "order[items_attributes][#{ locals[:designator] }][count]", :type => 'hidden', :value => "#{ locals[:count] }" }
 
