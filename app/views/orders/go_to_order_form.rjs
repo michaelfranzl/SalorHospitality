@@ -6,6 +6,7 @@
   page << "$('order_sum').value = '0';"
   page << "$('inputfields').innerHTML = '';"
   page << "$('itemstable').innerHTML = '';"
+  page.replace_html 'order_info', 'NEW'
 
 if @order
   @order.items.each do |item|

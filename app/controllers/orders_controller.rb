@@ -87,7 +87,7 @@ class OrdersController < ApplicationController
   # This function not only prints, but also finishes orders
   def print
     @order = Order.find params[:id]
-    @order.update_attributes params[:order] #unnecessary i guess
+    #@order.update_attributes params[:order] #unnecessary i guess
     if not @order.finished and ipod?
       @order.user = @current_user
       @order.created_at = Time.now
@@ -100,7 +100,6 @@ class OrdersController < ApplicationController
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
       end
-
       @order.order.items.each do |item|
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
@@ -109,17 +108,20 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if /tables/.match(request.referer)
-      unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
-      unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
-    else
-      redirect_to orders_path
-    end
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
+
+    @cost_centers = CostCenter.find_all_by_active(true)
+    @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    if @orders.empty?
+      @tables = Table.all
+      render('go_to_tables')
+    else
+      render('go_to_invoice_form')
+    end
   end
 
-  def go_to_table # go_to_invoice(s)
+  def go_to_table # go_to_invoice(s) OR go_to_order_form
     @table = Table.find(params[:id])
     @cost_centers = CostCenter.find_all_by_active(true)
     @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
@@ -147,6 +149,7 @@ class OrdersController < ApplicationController
       if @order
         #similar to update
         @order.update_attributes(params[:order])
+        @order.reload
       else
         #similar to create
         @order = Order.new(params[:order])
@@ -154,7 +157,6 @@ class OrdersController < ApplicationController
         @order.sum = calculate_order_sum @order
         @order.save
       end
-      @orders = Order.find(:all, :conditions => { :table_id => @order.table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
       process_order(@order)
     end
     conditional_redirect_ajax(@order)
@@ -176,8 +178,7 @@ class OrdersController < ApplicationController
     end
 
     def process_order(order)
-      order.items.each { |i| i.delete if i.count.zero? }
-      order.delete and redirect_to orders_path and return if order.items.size.zero?
+      order.delete and return if order.items.size.zero?
       order.update_attribute( :sum, calculate_order_sum(order) )
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
@@ -191,12 +192,14 @@ class OrdersController < ApplicationController
     end
 
     def conditional_redirect_ajax(order)
+      render('go_to_tables') and return if order.destroyed?
       case params[:order_action]
         when 'save_and_go_to_tables'
           render 'go_to_tables'
         when 'cancel_and_go_to_tables'
           render 'go_to_tables'
         when 'save_and_go_to_invoice'
+          @orders = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
           render 'go_to_invoice_form'
         when 'move_order_to_table'
           order = move_order_to_table(order, params[:target_table])
