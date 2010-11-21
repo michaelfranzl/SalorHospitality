@@ -101,13 +101,33 @@ class OrdersController < ApplicationController
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
 
+  def go_to_table
+    @table = Table.find(params[:id])
+    @cost_centers = CostCenter.find_all_by_active(true)
+    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
+    if @orders.size > 1
+      render 'go_to_invoice_form'
+    else
+      @order = @orders.first
+      render 'go_to_order_form'
+    end
+  end
+
   def go_to_order_form
-    @table=Table.find(params[:id])
-    @order=Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }).last
+    @table = Table.find(params[:id])
+    @cost_centers = CostCenter.find_all_by_active(true)
+    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
+    if @orders.size > 1
+      render 'go_to_invoice_form'
+    else
+      @order = @orders.first
+      render 'go_to_order_form'
+    end
   end
 
   def receive_order_attributes_ajax
     @tables = Table.all
+    #@unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
       @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?

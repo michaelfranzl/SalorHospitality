@@ -6,9 +6,9 @@
 %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
 
 - form_remote_tag :url => '/orders/receive_order_attributes_ajax', :html => { :id => 'order_form_ajax' } do
-  = text_field_tag 'order_action'
-  = text_field_tag 'order[id]'
-  = text_field_tag 'order[table_id]'
+  = hidden_field_tag 'order_action'
+  = hidden_field_tag 'order[id]'
+  = hidden_field_tag 'order[table_id]'
 
   %div.waiter
     %select#order_user_id

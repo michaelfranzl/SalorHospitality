@@ -32,7 +32,7 @@
 #orderform{ :style => 'display: none;' }
   = render 'new'
 
-#invoiceform
+#invoiceform{ :style => 'display: none;' }
   = render 'invoice'
 
 = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?

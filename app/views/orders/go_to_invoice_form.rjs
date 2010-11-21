@@ -1,1 +1,8 @@
-page.replace_html 'invoices', render(:partial => 'invoice_form', :locals => { :invoice_form => @order, :cost_centers => @cost_centers })
+@orders.each do |o|
+  page.insert_html :bottom, 'invoices', render(:partial => 'invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers })
+end
+
+page.show 'invoiceform'
+page.hide 'orderform'
+page.hide 'tables'
+page.hide 'rooms'

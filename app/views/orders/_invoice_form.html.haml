@@ -1,9 +1,9 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
 
-  %a.iconbutton.print_kitchen_button{ :href => "/orders/print/#{ invoice_form.id }/0", :title => t(:print)}
-  %a.iconbutton.print_bar_button{ :href => "/orders/print/#{ invoice_form.id }/1", :title => t(:print)}
-  %a.iconbutton.print_guestroom_button{ :href => "/orders/print/#{ invoice_form.id }/2", :title => t(:print)}
-  %a.iconbutton.finish_button{ :href => "/orders/print/#{ invoice_form.id }/3", :title => t(:print)}
+  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/0", :html => { :class => 'iconbutton print_kitchen_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/1", :html => { :class => 'iconbutton print_bar_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/2", :html => { :class => 'iconbutton print_guestroom_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/3", :html => { :class => 'iconbutton finish_button', :title => t(:print) }
 
 
   - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
@@ -11,7 +11,7 @@
     %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/split_invoice_all_at_once/#{ invoice_form.id }', {asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
       = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
     - if !invoice_form.finished
-      %a.iconbutton.order_button{ :href => edit_order_path(invoice_form), :title => t(:edit) }
+      %a.iconbutton.order_button{ :onclick => "go_to_order_form(#{invoice_form.table_id})", :title => t(:edit) }
 
     %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.id}, #{ invoice_form.table.name }
     %p= l invoice_form.created_at, :format => :long
