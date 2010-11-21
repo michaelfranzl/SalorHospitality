@@ -11,7 +11,7 @@
     %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/split_invoice_all_at_once/#{ invoice_form.id }', {asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
       = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
     - if !invoice_form.finished
-      %a.iconbutton.order_button{ :onclick => "go_to_order_form(#{invoice_form.table_id})", :title => t(:edit) }
+      = link_to_remote '', :url => "/orders/go_to_order_form/#{ invoice_form.id }", :html => { :class => 'iconbutton order_button', :title => t(:edit) }
 
     %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.id}, #{ invoice_form.table.name }
     %p= l invoice_form.created_at, :format => :long

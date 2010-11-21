@@ -119,10 +119,10 @@ class OrdersController < ApplicationController
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
 
-  def go_to_table
+  def go_to_table # go_to_invoice(s)
     @table = Table.find(params[:id])
     @cost_centers = CostCenter.find_all_by_active(true)
-    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
+    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
     if @orders.size > 1
       render 'go_to_invoice_form'
     else
@@ -131,16 +131,11 @@ class OrdersController < ApplicationController
     end
   end
 
-  def go_to_order_form
-    @table = Table.find(params[:id])
+  def go_to_order_form # to be called only with /id
+    @order = Order.find(params[:id])
+    @table = @order.table
     @cost_centers = CostCenter.find_all_by_active(true)
-    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
-    if @orders.size > 1
-      render 'go_to_invoice_form'
-    else
-      @order = @orders.first
-      render 'go_to_order_form'
-    end
+    render 'go_to_order_form'
   end
 
   def receive_order_attributes_ajax
@@ -159,6 +154,7 @@ class OrdersController < ApplicationController
         @order.sum = calculate_order_sum @order
         @order.save
       end
+      @orders = Order.find(:all, :conditions => { :table_id => @order.table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
       process_order(@order)
     end
     conditional_redirect_ajax(@order)

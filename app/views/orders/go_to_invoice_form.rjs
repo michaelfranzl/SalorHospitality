@@ -1,3 +1,5 @@
+page << '$("invoices").innerHTML = "";'
+
 @orders.each do |o|
   page.insert_html :bottom, 'invoices', render(:partial => 'invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers })
 end
