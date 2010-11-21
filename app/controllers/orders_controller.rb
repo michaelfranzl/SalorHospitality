@@ -157,7 +157,6 @@ class OrdersController < ApplicationController
   def receive_order_attributes_ajax
     @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
     @tables = Table.all
-    debugger
     if @order
       #similar to update
       @order.update_attributes(params[:order])

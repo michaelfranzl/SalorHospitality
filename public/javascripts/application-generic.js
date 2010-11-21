@@ -242,6 +242,8 @@ function display_order_form_ajax(table_id) {
   $("order_table_id").value = table_id;
   $("order_id").value = '';
   $("order_action").value = '';
+  $("articles").innerHTML = '';
+  $("order_sum").value = 0;
   new Ajax.Request('/orders/display_order_form_ajax/'+table_id, {asynchronous:true, evalScripts:true});
   //new Ajax.Updater('itemstable', '/orders/get_itemstable', {asynchronous:true, evalScripts:true});
   //new Ajax.Updater('inputfields', '/orders/get_inputfields', {asynchronous:true, evalScripts:true});
