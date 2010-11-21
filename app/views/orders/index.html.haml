@@ -1,4 +1,4 @@
-= javascript_include_tag "/articles.js?#{ l Time.now, :format => :datetime_iso2 }"
+= javascript_include_tag "/articles.js"
 %script{ :type => 'text/javascript' }= generate_js_variables
 
 %div#functions
@@ -15,7 +15,7 @@
 
 %h2= t('activerecord.models.order.other')
 
-#all_rooms
+#rooms
   - rooms = 4
   - 1.upto(rooms) do |room|
     %div.room{ :id => "room#{ room }" }
@@ -26,11 +26,14 @@
           - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
           %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
 
-#all_tables
+#tables
   = render @tables
 
-#quick_order{ :style => 'display: none;' }
-  = render 'orders/new'
+#orderform{ :style => 'display: none;' }
+  = render 'new'
+
+#invoiceform
+  = render 'invoice'
 
 = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
 

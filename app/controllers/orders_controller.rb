@@ -101,13 +101,14 @@ class OrdersController < ApplicationController
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
   end
 
-  def display_order_form_ajax
+  def go_to_order_form
     @table=Table.find(params[:id])
     @order=Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }).last
   end
 
   def receive_order_attributes_ajax
     @tables = Table.all
+    @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
       @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
       if @order
@@ -155,18 +156,6 @@ class OrdersController < ApplicationController
       `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
-    def conditional_redirect(order)
-      case params[:order_action]
-        when 'save_and_go_to_tables'
-          redirect_to orders_path
-        when 'save_and_go_to_invoice'
-          redirect_to table_path(order.table)
-        when 'move_order_to_table'
-          order = move_order_to_table(order, params[:target_table])
-          redirect_to orders_path
-      end
-    end
-
     def conditional_redirect_ajax(order)
       case params[:order_action]
         when 'save_and_go_to_tables'
@@ -174,7 +163,7 @@ class OrdersController < ApplicationController
         when 'cancel_and_go_to_tables'
           render 'go_to_tables'
         when 'save_and_go_to_invoice'
-          render 'go_to_invoice'
+          render 'go_to_invoice_form'
         when 'move_order_to_table'
           order = move_order_to_table(order, params[:target_table])
           render 'go_to_tables'

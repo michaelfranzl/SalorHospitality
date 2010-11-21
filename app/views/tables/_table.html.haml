@@ -20,7 +20,7 @@
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
       = table.abbreviation
   - else
-    %a{ :href => '#', :onclick => "display_order_form_ajax('#{table.id}');" }= table.abbreviation
+    %a{ :href => '#', :onclick => "go_to_order_form('#{table.id}');" }= table.abbreviation
 
 
 - left_attribute = ipod? ? 'left_ipod' : 'left'

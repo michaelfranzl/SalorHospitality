@@ -233,10 +233,11 @@ function restore_button(element) {
 
 
 //ajax call functions
-function display_order_form_ajax(table_id) {
-  $("quick_order").show();
-  $("all_tables").hide();
-  $("all_rooms").hide();
+function go_to_order_form(table_id) {
+  $("orderform").show();
+  $("tables").hide();
+  $("rooms").hide();
+
   $("inputfields").innerHTML = '';
   $("itemstable").innerHTML = '';
   $("order_table_id").value = table_id;
@@ -244,7 +245,14 @@ function display_order_form_ajax(table_id) {
   $("order_action").value = '';
   $("articles").innerHTML = '';
   $("order_sum").value = 0;
-  new Ajax.Request('/orders/display_order_form_ajax/'+table_id, {asynchronous:true, evalScripts:true});
-  //new Ajax.Updater('itemstable', '/orders/get_itemstable', {asynchronous:true, evalScripts:true});
-  //new Ajax.Updater('inputfields', '/orders/get_inputfields', {asynchronous:true, evalScripts:true});
+
+  new Ajax.Request('/orders/go_to_order_form/'+table_id, {asynchronous:true, evalScripts:true});
+}
+
+
+function display_invoice_form_ajax(table_id) {
+  $("invoiceform").show();
+  $("tables").hide();
+  $("rooms").hide();
+  $("orderform").hide();
 }

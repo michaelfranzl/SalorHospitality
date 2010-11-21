@@ -1,1 +1,1 @@
-page.replace_html 'all_tables', render(@tables)
+page.replace_html 'tables', render(@tables)
