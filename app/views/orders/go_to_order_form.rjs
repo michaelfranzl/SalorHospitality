@@ -2,6 +2,11 @@
 @inputfields = ''
 @tablerows = ''
 
+  page << "$('order_id').value = '';"
+  page << "$('order_sum').value = '0';"
+  page << "$('inputfields').innerHTML = '';"
+  page << "$('itemstable').innerHTML = '';"
+
 if @order
   @order.items.each do |item|
     @designator += 1
@@ -21,22 +26,15 @@ if @order
 
     @tablerows += render 'items/item_tablerow', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
   end
+
   page.insert_html :bottom, 'inputfields', @inputfields
   page.insert_html :bottom, 'itemstable', @tablerows
-end
-
-if @order
   page.replace_html 'order_info', @order.id
   page << "$('order_id').value = '#{ @order.id }';"
   page << "$('order_sum').value = '#{ number_with_precision(@order.sum, :precision => 2) }';"
-  page << "$('order_table_id').value = '#{ @order.table_id }';"
-else
-  page << "$('order_id').value = '';"
-  page << "$('order_sum').value = '0';"
-  page << "$('order_table_id').value = '';"
 end
 
-page << "$('inputfields').innerHTML = ''; $('itemstable').innerHTML = ''; $('order_action').value = ''; $('articles').innerHTML = '';"
+page << "$('order_action').value = ''; $('articles').innerHTML = ''; $('order_table_id').value = '#{ @table.id }';"
 
 page.show 'orderform'
 page.hide 'invoiceform', 'tables', 'rooms'
