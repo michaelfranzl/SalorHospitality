@@ -1,0 +1,3 @@
+page.hide 'quick_order'
+page.replace_html 'all_tables', render(@tables)
+page.show 'all_tables', 'all_rooms'

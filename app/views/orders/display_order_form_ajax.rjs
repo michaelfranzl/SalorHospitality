@@ -1,0 +1,29 @@
+@designator = 0
+@inputfields = ''
+@tablerows = ''
+
+if @order
+  @order.items.each do |item|
+    @sort = item.sort
+    @articleid = item.article_id
+    @price = item.real_price
+    @quantityid = item.quantity_id
+    @count = item.count
+    @comment = item.comment
+    @label = compose_item_label(item)
+    @optionslist = item.optionslist
+    @optionsnames = compose_option_names(item)
+    @optionsselect = compose_option_select(item)
+
+    @inputfields += render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+
+    @tablerows += render 'items/item_tablerow', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+
+    @designator += 1
+  end
+end
+
+page.insert_html :bottom, 'inputfields', @inputfields
+page.insert_html :bottom, 'itemstable', @tablerows
+page.replace_html 'order_info', @order.id if @order
+page << "$('order_id').value = #{ @order.id }" if @order
