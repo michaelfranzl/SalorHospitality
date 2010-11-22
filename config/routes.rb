@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :taxes
   map.resources :statistics, :collection => { :tables => :get, :weekdays => :get, :users => :get, :journal => :get, :articles => :get }
   map.resources :users, :has_many => :settlements
-  map.resources :tables, :has_many => :orders
+  map.resources :tables, :has_many => :orders, :collection => { :ipod => :get }
   map.resource :session, :collection => { :browser_warning => :get }
 
 

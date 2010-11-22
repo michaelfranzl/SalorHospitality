@@ -1,18 +1,19 @@
+- use_attributes_for_ipod = params[:ipod_drag_and_drop] or ipod?
+
 - width   = table.width
-- #height = ipod? ? table.height_ipod : table.height
-- left    = ipod? ? table.left_ipod   : table.left
-- top     = ipod? ? table.top_ipod    : table.top
+- height  = width
+- left    = use_attributes_for_ipod ? table.left_ipod   : table.left
+- top     = use_attributes_for_ipod ? table.top_ipod    : table.top
 
 - color_style = "background-color: #{ table.user.color }" if table.user
 - status = table.user ? 'occupied' : 'vacant'
 
-- left_attribute = ipod? ? 'left_ipod' : 'left'
-- top_attribute = ipod? ? 'top_ipod' : 'top'
-
-%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{width}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
-  - if session[:admin_interface] == true
+%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{height}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
+  - if session[:admin_interface] == true or params[:ipod_drag_and_drop]
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }= table.abbreviation
-    = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('tables/update', {parameters:'id=#{table.id}&table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'"
+    - left_attribute = use_attributes_for_ipod ? 'left_ipod' : 'left'
+    - top_attribute = use_attributes_for_ipod ? 'top_ipod' : 'top'
+    = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('/tables/update', {parameters:'id=#{table.id}&table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'"
 
   - else
     %a{ :onclick => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation
