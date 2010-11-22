@@ -230,3 +230,21 @@ function highlight_button(element) {
 
 function restore_button(element) {
 }
+
+//ajax support functions
+function go_to_order_form_preprocessing(table_id) {
+  $('order_sum').value = '0';
+
+  $('order_id').value = '';
+  $('order_action').value = '';
+  $('inputfields').innerHTML = '';
+  $('itemstable').innerHTML = '';
+  $('articles').innerHTML = '';
+
+  $('orderform').show();
+  $('invoiceform').hide();
+  $('tables').hide();
+  $('rooms').hide();
+
+new Ajax.Request('/orders/go_to_table/'+table_id, {asynchronous:true, evalScripts:true});
+}
