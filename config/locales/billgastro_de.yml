@@ -164,7 +164,7 @@ de:
 
   orders:
     served_by: Sie wurden bedient von
-    new:
+    order:
       sum: SUMME
       new: Neue Bestellung
     show:

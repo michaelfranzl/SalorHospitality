@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   def index
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
-    session[:admin_interface] = true
+    session[:admin_interface] = !ipod? # per default on on workstation
   end
 
   def login
@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
-      session[:admin_interface] = true
+      session[:admin_interface] = !ipod? # per default on on workstation
       render 'login_successful'
     else
       @users = User.all
