@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
 
   def index
+    @current_user = User.first
+    session[:user_id] = User.first
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
     @categories = Category.find(:all, :order => :sort_order)
@@ -84,16 +86,19 @@ class OrdersController < ApplicationController
     end
   end
 
-  # This function not only prints, but also finishes orders
-  def print
+
+
+
+
+  def print_and_finish
     @order = Order.find params[:id]
-    #@order.update_attributes params[:order] #unnecessary i guess
     if not @order.finished and ipod?
       @order.user = @current_user
       @order.created_at = Time.now
     end
     @order.finished = true
     @order.save
+    @order.table.update_attribute :user, nil
 
     if @order.order # unlink any parent relationships
       @order.items.each do |item|
@@ -141,7 +146,6 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
-    @tables = Table.all
     #@unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
@@ -152,10 +156,12 @@ class OrdersController < ApplicationController
         @order.reload
       else
         #similar to create
+        # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
         @order.user = @current_user
         @order.sum = calculate_order_sum @order
         @order.save
+        @order.table.update_attribute :user, @order.user
       end
       process_order(@order)
     end
@@ -167,18 +173,13 @@ class OrdersController < ApplicationController
 
   private
 
-    def neighbour_orders(order)
-      orders = Order.find_all_by_finished(true)
-      idx = orders.index(order)
-      previous_order = orders[idx-1]
-      previous_order = order if previous_order.nil?
-      next_order = orders[idx+1]
-      next_order = order if next_order.nil?
-      return previous_order, next_order
-    end
-
     def process_order(order)
-      order.delete and return if order.items.size.zero?
+      if order.items.size.zero?
+        order.delete
+        order.table.update_attribute :user, nil
+        return
+      end 
+
       order.update_attribute( :sum, calculate_order_sum(order) )
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
@@ -192,7 +193,8 @@ class OrdersController < ApplicationController
     end
 
     def conditional_redirect_ajax(order)
-      render('go_to_tables') and return if order.destroyed?
+      @tables = Table.all
+      render('go_to_tables') and return if not order or order.destroyed?
       case params[:order_action]
         when 'save_and_go_to_tables'
           render 'go_to_tables'
@@ -215,6 +217,16 @@ class OrdersController < ApplicationController
       end
       @order.destroy
       return @target_order
+    end
+
+    def neighbour_orders(order)
+      orders = Order.find_all_by_finished(true)
+      idx = orders.index(order)
+      previous_order = orders[idx-1]
+      previous_order = order if previous_order.nil?
+      next_order = orders[idx+1]
+      next_order = order if next_order.nil?
+      return previous_order, next_order
     end
 
     def reduce_stocks(order)

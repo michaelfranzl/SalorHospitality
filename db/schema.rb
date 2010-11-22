@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101026130540) do
+ActiveRecord::Schema.define(:version => 20101122092318) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20101026130540) do
     t.integer  "width_ipod",   :default => 100
     t.integer  "height_ipod",  :default => 60
     t.string   "abbreviation"
+    t.integer  "user_id"
   end
 
   create_table "taxes", :force => true do |t|

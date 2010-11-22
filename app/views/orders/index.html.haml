@@ -37,4 +37,4 @@
 
 = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
 
-= periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 60, :condition => 'true == true' )
+= periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'true == true' )

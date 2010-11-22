@@ -232,6 +232,8 @@ function restore_button(element) {
 }
 
 //ajax support functions
+
+//this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
   $('order_sum').value = '0';
 
@@ -240,6 +242,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('inputfields').innerHTML = '';
   $('itemstable').innerHTML = '';
   $('articles').innerHTML = '';
+  $('quantities').innerHTML = '';
 
   $('orderform').show();
   $('invoiceform').hide();

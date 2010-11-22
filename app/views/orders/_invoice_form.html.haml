@@ -1,9 +1,9 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
 
-  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/0", :html => { :class => 'iconbutton print_kitchen_button', :title => t(:print) }
-  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/1", :html => { :class => 'iconbutton print_bar_button', :title => t(:print) }
-  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/2", :html => { :class => 'iconbutton print_guestroom_button', :title => t(:print) }
-  = link_to_remote '', :url => "/orders/print/#{ invoice_form.id }/3", :html => { :class => 'iconbutton finish_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print_and_finish/#{ invoice_form.id }/0", :html => { :class => 'iconbutton print_kitchen_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print_and_finish/#{ invoice_form.id }/1", :html => { :class => 'iconbutton print_bar_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print_and_finish/#{ invoice_form.id }/2", :html => { :class => 'iconbutton print_guestroom_button', :title => t(:print) }
+  = link_to_remote '', :url => "/orders/print_and_finish/#{ invoice_form.id }/3", :html => { :class => 'iconbutton finish_button', :title => t(:print) }
 
 
   - remote_form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|

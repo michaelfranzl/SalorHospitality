@@ -1,24 +1,14 @@
-- unfinished_orders = Order.find_all_by_finished(false, :conditions => { :table_id => table.id })
-- status = unfinished_orders.empty? ? 'vacant' : 'occupied'
-
-- if unfinished_orders.size == 0
-  - path = new_table_order_path(table)
-- elsif unfinished_orders.size == 1
-  - path = edit_table_order_path(table, unfinished_orders.first.id)
-- else
-  - path = table_path(table)
-
-- width  = table.width
+- width   = table.width
 - #height = ipod? ? table.height_ipod : table.height
-- left   = ipod? ? table.left_ipod   : table.left
-- top    = ipod? ? table.top_ipod    : table.top
+- left    = ipod? ? table.left_ipod   : table.left
+- top     = ipod? ? table.top_ipod    : table.top
 
-- color_style = "background-color: #{ unfinished_orders.first.user.color }" if !unfinished_orders.empty?
+- color_style = "background-color: #{ table.user.color }" if table.user
+- status = table.user ? 'occupied' : 'vacant'
 
 %div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{width}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
   - if session[:admin_interface] == true
-    %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
-      = table.abbreviation
+    %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }= table.abbreviation
   - else
     %a{ :onclick => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation
 
