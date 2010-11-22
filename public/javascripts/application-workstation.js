@@ -1,3 +1,5 @@
+var tableupdates = false;
+
 function toggle_admin_interface() {
   tableupdates = !tableupdates;
   new Ajax.Request('/orders/toggle_admin_interface', {asynchronous:true, evalScripts:true});

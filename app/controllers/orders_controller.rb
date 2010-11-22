@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
+      session[:admin_interface] = true
       render 'login_successful'
     else
       @users = User.all
@@ -120,7 +121,9 @@ class OrdersController < ApplicationController
     end
     @order.finished = true
     @order.save
-    @order.table.update_attribute :user, nil
+
+    @unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @order.table.update_attribute :user, nil if @unfinished_orders_on_this_table.empty?
 
     if @order.order # unlink any parent relationships
       @order.items.each do |item|
@@ -168,7 +171,6 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
-    #@unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
       @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?

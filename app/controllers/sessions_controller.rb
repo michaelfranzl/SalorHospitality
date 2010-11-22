@@ -16,6 +16,8 @@ class SessionsController < ApplicationController
     if @current_user
       redirect_to '/'
       session[:user_id] = @current_user
+      flash[:error] = nil
+      flash[:notice] = nil
     else
       flash[:error] = t :wrong_password
       render :new

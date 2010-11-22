@@ -7,7 +7,7 @@
 %img#logo{ :src => "/images/logo-small.png" }
 
 - if logged_in?
-  #admin{ :style => "display: #{ session[:admin_interface] ? 'visible' : 'none' }" }
+  #admin{ :style => "display: 'visible';" }
     .adminlinks
       = link_to( t('activerecord.models.order.other'), '/')
       - if @current_user.role >= 1
