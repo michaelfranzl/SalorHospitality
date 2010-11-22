@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
 
   def index
-    @current_user = User.first
-    session[:user_id] = User.first
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
     @categories = Category.find(:all, :order => :sort_order)

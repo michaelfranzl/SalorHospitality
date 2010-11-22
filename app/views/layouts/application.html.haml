@@ -4,7 +4,6 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-
     - if ipod?
       %meta{ 'name' => "viewport", :content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
@@ -12,20 +11,18 @@
     %title Bill Gastro
 
     = stylesheet_link_tag('generic', :media => 'screen')
-    = stylesheet_link_tag 'print', :media => 'print'
     = javascript_include_tag 'application-generic.js'
     = javascript_include_tag 'prototype.js'
     = javascript_include_tag 'effects.js'
-    = javascript_include_tag 'dragdrop.js'
 
     - if ipod?
       = stylesheet_link_tag('ipod', :media => 'screen')
-      = stylesheet_link_tag('orders-ipod', :media => 'screen')
       = javascript_include_tag 'application-ipod.js'
     - else
+      = stylesheet_link_tag 'print', :media => 'print'
       = stylesheet_link_tag('workstation', :media => 'screen')
-      = stylesheet_link_tag('orders', :media => 'screen')
       = javascript_include_tag 'application-workstation.js'
+      = javascript_include_tag 'dragdrop.js'
 
     - if logged_in?
       %script{ :type => 'text/javascript' }= toggle_admin_interface
@@ -63,4 +60,4 @@
       #main
         = yield
       #copyright
-        %p Copright (C) 2010 <a href="http://michaelfranz.com" target="_blank">Dipl.-Ing. (FH) Michael Franzl e.U.</a>, FN 332235 g, Austria
+        %p Copright (C) 2010 <a href="http://michaelfranzl.com" target="_blank">Dipl.-Ing. (FH) Michael Franzl e.U.</a>, FN 332235 g, Austria

@@ -22,9 +22,8 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-      @current_user = User.first # User.find session[:user_id] if session[:user_id]
-session[:user_id] = @current_user.id
-      #redirect_to orders_path #redirect_to new_session_path and return unless @current_user
+      @current_user = User.find session[:user_id] if session[:user_id]
+      render 'login' unless @current_user
     end
 
     def logged_in?

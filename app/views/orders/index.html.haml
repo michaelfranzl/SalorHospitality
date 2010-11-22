@@ -1,40 +1,16 @@
 = javascript_include_tag "/articles.js"
 %script{ :type => 'text/javascript' }= generate_js_variables
 
-%div#functions
-  - if not ipod? and false
-    %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
-  - if not ipod?
-    - if @last_finished_order
-      %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)}" }
-      %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
-    %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
-    %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
-    %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
-    %a.iconbutton.room4_button.last_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }
-
-%h2= t('activerecord.models.order.other')
-
-#rooms
-  - rooms = 4
-  - 1.upto(rooms) do |room|
-    %div.room{ :id => "room#{ room }" }
-      - if ipod?
-        - if @last_finished_order
-          %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
-        - 1.upto(rooms) do |icon|
-          - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
-          %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
-
-#tables
-  = render @tables
-
-#orderform{ :style => 'display: none;' }
-  = render 'new'
-
-#invoiceform{ :style => 'display: none;' }
-  = render 'invoice'
-
-= link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
+- if not @current_user
+  #login
+    = render 'sessions/new'
+- else
+  #functions= render 'functions'
+  %h2= t('activerecord.models.order.other')
+  #rooms= render 'rooms'
+  #tables= render @tables
+  #orderform{ :style => 'display: none;' }= render 'order'
+  #invoiceform{ :style => 'display: none;' }= render 'invoice'
+  = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
 
 = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'true == true' )
