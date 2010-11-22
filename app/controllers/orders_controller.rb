@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   def index
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
+    session[:admin_interface] = true
   end
 
   def login

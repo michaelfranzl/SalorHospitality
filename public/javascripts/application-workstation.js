@@ -1,9 +1,14 @@
 var tableupdates = false;
 
 function toggle_admin_interface() {
-  tableupdates = !tableupdates;
+  //var tableupdates will be toggled based on session by remote function
   new Ajax.Request('/orders/toggle_admin_interface', {asynchronous:true, evalScripts:true});
-  Effect.toggle('admin', 'slide');
+  //Effect.toggle('admin', 'slide');
+  if(tableupdates==true) {
+    Effect.SlideDown('admin');
+  } else {
+    Effect.SlideUp('admin');
+  }
 }
 
 function category_onmousedown(category_id) {

@@ -1,4 +1,4 @@
-page << "tableupdates = #{ session[:admin_interface] == true ? 'false' : 'true' };"
 page.hide 'orderform', 'invoiceform'
 page.replace_html 'tables', render(@tables)
 page.show 'tables', 'rooms'
+page << "tableupdates = #{ session[:admin_interface] == true ? 'false' : 'true' };"
