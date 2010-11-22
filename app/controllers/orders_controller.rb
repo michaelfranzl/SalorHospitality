@@ -1,28 +1,27 @@
 class OrdersController < ApplicationController
 
+  def index
+    @tables = Table.all
+    @categories = Category.find(:all, :order => :sort_order)
+  end
+
   def login
-    @current_user = User.find_by_login_and_password params[:login], params[:password]
-    @users = User.all
+    @current_user = User.find_by_login_and_password(params[:login], params[:password])
     if @current_user
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
-      render 'orders/login_successful'
+      render 'login_successful'
     else
-      flash[:notice] = 'ERROR'
-      render 'orders/login_wrong'
+      @users = User.all
+      @errormessage = t :wrong_password
+      render 'login_wrong'
     end
   end
 
   def logout
     session[:user_id] = @current_user = nil
     render 'logout'
-  end
-
-  def index
-    @tables = Table.all
-    @last_finished_order = Order.find_all_by_finished(true).last
-    @categories = Category.find(:all, :order => :sort_order)
   end
 
   def statusupdate_tables

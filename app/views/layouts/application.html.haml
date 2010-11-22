@@ -26,16 +26,8 @@
       = stylesheet_link_tag('workstation', :media => 'screen')
       = javascript_include_tag 'application-workstation.js'
 
-
   %body
     #container
       #header= render 'layouts/header'
-      .flash
-        - if flash[:notice]
-          .flash_notice= flash[:notice]
-        - if flash[:error]
-          .flash_error= flash[:error]
-      #main
-        = yield
-      #copyright
-        %p Copright (C) 2010 <a href="http://michaelfranzl.com" target="_blank">Dipl.-Ing. (FH) Michael Franzl e.U.</a>, FN 332235 g, Austria
+      #main= yield
+      #copyright Copright (C) 2010 <a href="http://michaelfranzl.com" target="_blank">Dipl.-Ing. (FH) Michael Franzl e.U.</a>, FN 332235 g, Austria

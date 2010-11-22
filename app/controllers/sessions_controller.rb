@@ -14,10 +14,11 @@ class SessionsController < ApplicationController
     @current_user = User.find_by_login_and_password params[:login], params[:password]
     @users = User.all
     if @current_user
-      render 'orders/login_successful'
+      redirect_to '/'
+      session[:user_id] = @current_user
     else
-      flash[:notice] = 'ERROR'
-      render 'orders/login_wrong'
+      flash[:error] = t :wrong_password
+      render :new
     end
   end
 

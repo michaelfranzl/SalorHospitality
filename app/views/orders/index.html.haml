@@ -1,12 +1,14 @@
-#login
-  = render 'login_form' if not @current_user
+%script{ :type => 'text/javascript' } var tableupdates = true;
 
-- if @current_user
+#login
+  = render 'login_form' if not logged_in?
+
+- if logged_in?
   #functions= render 'functions'
   %h2= t('activerecord.models.order.other')
   #rooms= render 'rooms'
   #tables= render @tables
   #orderform{ :style => 'display: none;' }= render 'order'
   #invoiceform{ :style => 'display: none;' }= render 'invoice'
-  = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
+  = link_to_remote t(:logout, :who => @current_user.login), :url => 'orders/logout', :html => { :class => 'links logout' }, :style => "background-color: #{ @current_user.color };" if ipod?
   = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'tableupdates == true' )

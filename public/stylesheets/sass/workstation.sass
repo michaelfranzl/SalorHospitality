@@ -108,6 +108,7 @@ div#footer a
   :cursor pointer
 
 div#login
+  :font-size 160%
   :margin auto
   :width 300px
   :margin-top 130px
@@ -115,7 +116,12 @@ div#login
     :display inline-block
     :margin-bottom -10px
     :font-weight bold
-    :width 70px
+    :width 130px
+  select, input
+    :font-size 100%
+    :width 150px
+  input.submit
+    :margin-left 140px
   
 //normal style definitions =============================
 
@@ -137,7 +143,7 @@ a.links
   :color black
   :text-decoration none
   :text-transform uppercase
-  :font-size 70%
+  :font-size 100%
   :padding 8px
   :border 1px solid #666
 div.adminlinks a:hover,
@@ -271,10 +277,12 @@ a#toggle_admin_interface
 div.clear
   :clear both
 
-div.flash
+div#flash
   :width 970px
   :margin auto
   :padding-left 150px
+  :margin-top -20px
+  :float left
 
 
 select

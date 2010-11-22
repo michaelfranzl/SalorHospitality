@@ -2,22 +2,11 @@
   %img#logo{ :src => "/images/logo-small.png" }
 
 - form_remote_tag :url => '/orders/login' do
-  %p= flash[:notice]
   %p
     = label_tag 'login', (t '.username')
     = select_tag 'login', options_from_collection_for_select(User.all, 'login', 'login')
   %p
     = label_tag 'password', (t '.password')
     = password_field_tag 'password', '', :size => 9
-
-  - if request.remote_ip != '127.0.0.1' and request.remote_ip[0..2] != '192' and not ipod?
-    %p
-      = label_tag 'email', (t '.email')
-      = text_field_tag 'email', params[:email]
-    %p
-      = label_tag 'realname', (t '.realname')
-      = text_field_tag 'realname', params[:realname]
-    %p{ :style => 'font-size: 10px;' }== #{t('.your_ip_address') }: #{ request.remote_ip } #{ Time.now }
-
   %p
     = submit_tag t('.login'), :class => 'submit'
