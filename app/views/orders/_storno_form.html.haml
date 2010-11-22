@@ -1,0 +1,39 @@
+%div.invoice
+  %a.iconbutton.print_kitchen_button{ :href => "/orders/print/#{ storno_form.id }/0", :title => t(:print)}
+  %a.iconbutton.print_bar_button{ :href => "/orders/print/#{ storno_form.id }/1", :title => t(:print)}
+  %a.iconbutton.print_guestroom_button{ :href => "/orders/print/#{ storno_form.id }/2", :title => t(:print)}
+
+  - remote_form_for :order, storno_form, :url => table_order_path(storno_form.table_id, storno_form), :html => { :method => :put, :id => 'storno_form' } do |order_form|
+  
+    %a.iconbutton.previous_button{ :href => "/orders/storno/#{ @previous_order.id }", :title => (t '.previous_invoice') }
+    %a.iconbutton.next_button{ :href => "/orders/storno/#{ @next_order.id }", :title => (t '.next_invoice') }
+    = link_to_remote('', :url => { :controller => :orders, :action => :storno, :id => storno_form.id }, :submit => "storno_form", :html => { :class => 'iconbutton storno_button', :title => t(:storno) })
+  
+  
+    %h3== #{ t(:invoice) } ##{storno_form.id}
+    %p= l storno_form.created_at, :format => :long
+    
+    %table
+      - subtotal = 0
+      - order_form.fields_for :items do |item_form|
+        - item = item_form.object
+        - p = item.real_price
+        - p = -p if item.storno_status == 2
+        - sum = item.count * p
+        - subtotal += sum
+        - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+        - color = ((item.storno_status == 2) or (item.storno_status == 3)) ? '#FAA' : 'transparent'
+        - storno_enabled = (item.storno_status.nil? or item.storno_status.zero?)
+        - onclick_action = storno_enabled ? "mark_item_for_storno(this.parentNode, #{order_form.object.id}, #{itemnumber})" : ''
+        %tr{ :style => "background-color: #{color}" }
+          %td.count= link_to_remote(item.count, :url => { :controller => :orders, :action => :separate_item, :id => item.id }, :submit => "storno_form")
+          - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
+          %td.label{ :id => "item#{item.id}", :onclick => onclick_action }= "%20.20s" % [label]
+          %td.total{ :style => 'text-align:right' }= number_to_currency sum
+          - if storno_enabled
+            %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_storno_status", :name => "order[items_attributes][#{itemnumber}][storno_status]", :type => "hidden"} 
+  
+      %tr
+        %td{ :colspan => '2'}
+        %td{ :style => 'text-align:right'}
+          %b= number_to_currency subtotal

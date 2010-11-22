@@ -1,0 +1,3 @@
+page.replace_html 'main', render(:file => 'orders/index.html.haml')
+page.replace_html 'header', ''
+page << 'tableupdates = false;'

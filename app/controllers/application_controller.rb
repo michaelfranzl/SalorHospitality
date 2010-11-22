@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
-      render 'login' unless @current_user
+      #render 'login' unless @current_user
     end
 
     def logged_in?

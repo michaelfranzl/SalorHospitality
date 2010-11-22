@@ -1,0 +1,11 @@
+- if not ipod? and false
+  %a.iconbutton.kitchenlist_button{ :href => '/orders/items.bon', :title => t(:print_kitchenlist) }
+- if not ipod?
+  - if @last_finished_order
+    %a.iconbutton.print2_button{ :href => "#{ order_path(@last_finished_order) }", :title => "#{t(:invoices)}" }
+    %a.iconbutton.storno_button{ :href => "/orders/storno/#{ @last_finished_order.id }", :title => "#{t(:storno)}" }
+
+  %a.iconbutton.room1_button{ :onclick => 'Effect.ScrollTo("room1", 10);', :title => "#{t(:scroll_to_room)} 1" }
+  %a.iconbutton.room2_button{ :onclick => 'Effect.ScrollTo("room2", 10);', :title => "#{t(:scroll_to_room)} 2" }
+  %a.iconbutton.room3_button{ :onclick => 'Effect.ScrollTo("room3", 10);', :title => "#{t(:scroll_to_room)} 3" }
+  %a.iconbutton.room4_button.last_button{ :onclick => 'Effect.ScrollTo("room4", 10);', :title => "#{t(:scroll_to_room)} 4" }

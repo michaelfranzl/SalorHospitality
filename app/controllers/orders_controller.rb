@@ -1,5 +1,24 @@
 class OrdersController < ApplicationController
 
+  def login
+    @current_user = User.find_by_login_and_password params[:login], params[:password]
+    @users = User.all
+    if @current_user
+      @tables = Table.all
+      @categories = Category.find(:all, :order => :sort_order)
+      session[:user_id] = @current_user
+      render 'orders/login_successful'
+    else
+      flash[:notice] = 'ERROR'
+      render 'orders/login_wrong'
+    end
+  end
+
+  def logout
+    session[:user_id] = @current_user = nil
+    render 'logout'
+  end
+
   def index
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
@@ -84,9 +103,15 @@ class OrdersController < ApplicationController
     end
   end
 
-
-
-
+  def toggle_admin_interface
+    if session[:admin_interface]
+      session[:admin_interface] = !session[:admin_interface]
+    else
+      session[:admin_interface] = true
+    end
+    @tables = Table.all
+    render 'go_to_tables'
+  end
 
   def print_and_finish
     @order = Order.find params[:id]

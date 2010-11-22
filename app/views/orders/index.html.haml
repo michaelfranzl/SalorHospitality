@@ -1,10 +1,7 @@
-= javascript_include_tag "/articles.js"
-%script{ :type => 'text/javascript' }= generate_js_variables
+#login
+  = render 'login_form' if not @current_user
 
-- if not @current_user
-  #login
-    = render 'sessions/new'
-- else
+- if @current_user
   #functions= render 'functions'
   %h2= t('activerecord.models.order.other')
   #rooms= render 'rooms'
@@ -12,5 +9,4 @@
   #orderform{ :style => 'display: none;' }= render 'order'
   #invoiceform{ :style => 'display: none;' }= render 'invoice'
   = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete, :class => 'links logout', :style => "background-color: #{ @current_user.color };" if logged_in? and ipod?
-
-= periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'true == true' )
+  = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'tableupdates == true' )

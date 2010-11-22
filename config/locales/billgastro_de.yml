@@ -181,6 +181,13 @@ de:
       make_settlement: abrechnen
     invoice_form:
       split_invoice: Rechnung teilen
+    login_form:
+      username: Benutzer
+      login: Login
+      password: Passwort
+      email: Ihre E-Mail
+      realname: Ihr Name
+      your_ip_address: Ihre IP Daten
 
   settlements:
     index:
@@ -205,13 +212,6 @@ de:
     browser_warning:
       warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
       continue: weiter
-    new:
-      username: Benutzer
-      login: Login
-      password: Passwort
-      email: Ihre E-Mail
-      realname: Ihr Name
-      your_ip_address: Ihre IP Daten
 
   statistic: Statistik
   statistics:
