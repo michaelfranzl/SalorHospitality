@@ -265,5 +265,4 @@ function go_to_tables_offline() {
   $('functions_header_index').show();
   $('functions_header_order_form').hide();
   $('functions_footer').hide();
-  tableupdates = true;
 }

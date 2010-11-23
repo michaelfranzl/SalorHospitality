@@ -8,5 +8,3 @@ page.show 'invoices'
 page.hide 'orderform'
 page.hide 'tables'
 page.hide 'rooms'
-
-page << "tableupdates = false;"

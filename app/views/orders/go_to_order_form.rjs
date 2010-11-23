@@ -47,4 +47,3 @@ page << "$('order_table_id').value = '#{ @table.id }';"
 
 page.show 'orderform'
 page.hide 'invoices', 'tables', 'rooms'
-page << "tableupdates = false;"
