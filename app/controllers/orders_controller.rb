@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
 
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
-    if params[:id] != 'show'
+    if params[:id] != 'last'
       @order = Order.find(params[:id])
     else
       @order = Order.find_all_by_finished(true).last
@@ -206,6 +206,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
+    @last_orders = Order.find(:all, :conditions => { :user_id => @current_user.id, :finished => true }, :limit => 10, :order => 'created_at DESC')
   end
 
 

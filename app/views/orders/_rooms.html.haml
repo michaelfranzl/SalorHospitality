@@ -2,7 +2,7 @@
 - 1.upto(rooms) do |room|
   %div.room{ :id => "room#{ room }" }
     - if ipod? or params[:ipod_drag_and_drop]
-      = link_to_remote '', :url => 'orders/last_invoices', :html => { :class => 'iconbutton invoice_button' }
+      = link_to_remote '', :url => '/orders/last_invoices', :html => { :class => 'iconbutton invoice_button' }
       - 1.upto(rooms) do |icon|
         - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
         %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "Effect.ScrollTo('room#{icon}', 10);", :title => "#{t(:scroll_to_room)} #{ icon }" }
