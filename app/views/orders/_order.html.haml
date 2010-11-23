@@ -11,9 +11,8 @@
   = hidden_field_tag 'order[table_id]'
 
   %div.waiter
-    %select#order_user_id
-      %option 'hello'
-    = #order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
+    %select#order_user_id{ :name => 'order[user_id]' }
+      = options_from_collection_for_select User.all, :id, :login, { :include_blank => !ipod? }
 
   #order_info
     = "#{Order.human_name} #{t('.new')}"

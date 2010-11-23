@@ -1,3 +1,5 @@
+var tableupdates = false;
+
 function display_articles(cat_id) {
   $('articles').innerHTML = articleslist[cat_id];
   $('quantities').innerHTML = '&nbsp;';

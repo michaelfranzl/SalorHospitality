@@ -1,5 +1,3 @@
-var tableupdates = false; //should correlate with orders_controller, where you can see that session[:admin_interface] = true
-
 function toggle_admin_interface() {
   //var tableupdates will be toggled based on session by remote function
   new Ajax.Request('/orders/toggle_admin_interface', {asynchronous:true, evalScripts:true});

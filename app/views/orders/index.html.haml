@@ -1,4 +1,4 @@
-#login{ :style => 'display: none;' }
+#login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }
   = render 'login_form' if not logged_in?
 
 - if logged_in?
@@ -8,5 +8,4 @@
   #tables= render @tables
   #orderform{ :style => 'display: none;' }= render 'order'
   #invoiceform{ :style => 'display: none;' }= render 'invoice'
-  = link_to_remote t(:logout, :who => @current_user.login), :url => 'orders/logout', :html => { :class => 'links logout' }, :style => "background-color: #{ @current_user.color };" if ipod?
   = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'tableupdates == true' )

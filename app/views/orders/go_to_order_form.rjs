@@ -4,6 +4,7 @@
 
 page << "$('order_sum').value = '0';"
 page << "$('order_id').value = '';"
+page << "$('order_user_id').value = '';"
 page << "$('order_action').value = '';"
 
 page.replace_html 'order_info', 'NEW'
@@ -35,6 +36,7 @@ if @order
   page.insert_html :bottom, 'itemstable', @tablerows
   page.replace_html 'order_info', @order.id
   page << "$('order_id').value = '#{ @order.id }';"
+  page << "$('order_user_id').value = '#{ @order.user.id if @order.user }';"
   page << "$('order_sum').value = '#{ number_with_precision(@order.sum, :precision => 2) }';"
 end
 
@@ -42,3 +44,4 @@ page << "$('order_table_id').value = '#{ @table.id }';"
 
 page.show 'orderform'
 page.hide 'invoiceform', 'tables', 'rooms'
+page << "tableupdates = false;"

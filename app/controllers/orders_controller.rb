@@ -1,9 +1,11 @@
 class OrdersController < ApplicationController
 
+  skip_before_filter :fetch_logged_in_user, :only => [:login]
+
   def index
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
-    session[:admin_interface] = !ipod? # per default on on workstation
+    session[:admin_interface] = !ipod? # admin panel per default on on workstation
   end
 
   def login
@@ -12,21 +14,24 @@ class OrdersController < ApplicationController
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
-      session[:admin_interface] = !ipod? # per default on on workstation
+      session[:admin_interface] = !ipod? # admin panel per default on on workstation
       render 'login_successful'
     else
       @users = User.all
       @errormessage = t :wrong_password
       render 'login_wrong'
     end
+
   end
 
   def logout
     session[:user_id] = @current_user = nil
-    render 'logout'
+    render 'go_to_login'
   end
 
   def statusupdate_tables
+    puts "XXXXX"
+   puts session[:user_id]
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
   end
@@ -179,6 +184,7 @@ class OrdersController < ApplicationController
         #similar to update
         @order.update_attributes(params[:order])
         @order.reload
+        @order.table.update_attribute :user, @order.user
       else
         #similar to create
         # create new order OR (if order exists already on table) add items to existing order
