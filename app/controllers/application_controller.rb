@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   before_filter :fetch_logged_in_user
-  helper_method :logged_in?, :ipod?
+  helper_method :logged_in?, :ipod?, :workstation?
 
   private
 
@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
 
     def ipod?
       ((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
+    end
+
+    def workstation?
+      not ipod?
     end
 
   # Scrub sensitive parameters from your log

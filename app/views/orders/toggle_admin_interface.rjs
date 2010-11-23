@@ -1,4 +1,4 @@
-page.hide 'orderform', 'invoiceform'
+page.hide 'orderform', 'invoices'
 page.replace_html 'tables', render(@tables)
 page.show 'tables', 'rooms'
 page.replace_html 'order_info', t(:loading)

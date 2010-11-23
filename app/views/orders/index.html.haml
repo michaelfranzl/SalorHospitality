@@ -1,11 +1,18 @@
+%h2= t('activerecord.models.order.other')
+
 #login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }
   = render 'login_form' if not logged_in?
 
 - if logged_in?
-  #functions= render 'functions'
-  %h2= t('activerecord.models.order.other')
   #rooms= render 'rooms'
   #tables= render @tables
+  #functions
+    %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
+    %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
+    #functions_header_index= render 'functions_header_index' if workstation?
+    #functions_header_order_form{ :style => 'display: none;' }= render('functions_header_order_form')
   #orderform{ :style => 'display: none;' }= render 'order'
-  #invoiceform{ :style => 'display: none;' }= render 'invoice'
+  #functions_footer{ :style => 'display: none;' }= render('functions_footer') if ipod?
+
+  #invoices
   = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'tableupdates == true' )

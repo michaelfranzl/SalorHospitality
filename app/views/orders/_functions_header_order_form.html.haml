@@ -1,0 +1,5 @@
+%a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+%a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
+%a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
+%select{ :id => 'target_table', :name => 'target_table', :onchange => 'document.getElementById("order_action").value="move_order_to_table"; $("order_form_ajax").onsubmit();' }
+  = options_from_collection_for_select(Table.all, 'id', 'abbreviation')

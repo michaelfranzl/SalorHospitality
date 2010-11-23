@@ -4,7 +4,7 @@ page << '$("invoices").innerHTML = "";'
   page.insert_html :bottom, 'invoices', render(:partial => 'invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers })
 end
 
-page.show 'invoiceform'
+page.show 'invoices'
 page.hide 'orderform'
 page.hide 'tables'
 page.hide 'rooms'
