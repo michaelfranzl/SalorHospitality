@@ -1,5 +1,4 @@
 page.replace_html 'main', render(:file => 'orders/index.html.haml')
 page.replace_html 'header', render(:file => 'layouts/_header.html.haml')
 page.hide 'login'
-page << "tableupdates = #{ (session[:admin_interface] == true) ? 'false' : 'true' };" if not ipod? #on workstation only enable updates if admin panel is off
-page << "tableupdates = true;" if ipod? #on ipod always enable updates
+page << "tableupdates = #{ ipod? ? 'true' : 'false' };"

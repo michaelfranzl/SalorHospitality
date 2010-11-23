@@ -1,5 +1,9 @@
 page.hide 'orderform', 'invoiceform'
 page.replace_html 'tables', render(@tables)
 page.show 'tables', 'rooms'
-page << "tableupdates = #{ (session[:admin_interface] == true) ? 'false' : 'true' };" if not ipod? #on workstation only enable updates if admin panel is off
-#page << "tableupdates = true;" if ipod? #on ipod always enable updates
+page.replace_html 'order_info', t(:loading)
+if ipod?
+  page << "tableupdates = true;"
+else
+  page << "tableupdates = #{ (session[:admin_interface] == true) ? 'false' : 'true' };"
+end

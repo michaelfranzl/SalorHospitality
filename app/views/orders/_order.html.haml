@@ -1,7 +1,8 @@
 - if ipod?
-  %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
-  %a.iconbutton.cancel_button{ :onclick => 'document.getElementById("order_action").value="cancel_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
-  %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
+  #staticfunctions
+    %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+    %a.iconbutton.cancel_button{ :onclick => 'document.getElementById("order_action").value="cancel_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
+    %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
 
 %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
 
@@ -14,8 +15,7 @@
     %select#order_user_id{ :name => 'order[user_id]' }
       = options_from_collection_for_select User.all, :id, :login, { :include_blank => !ipod? }
 
-  #order_info
-    = "#{Order.human_name} #{t('.new')}"
+  #order_info= t :loading
 
   %div#categories
     - @categories.each do |category|
@@ -34,16 +34,16 @@
     %table#itemstable
 
   %div#functions
-  %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+    %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
 
-    %select{ :id => 'target_table', :name => 'target_table', :onchange => 'hide_tableselect(this); document.getElementById("order_action").value="move_order_to_table"; $("order_form_ajax").submit();' }
+    %select{ :id => 'target_table', :name => 'target_table', :onchange => 'document.getElementById("order_action").value="move_order_to_table"; $("order_form_ajax").onsubmit();' }
       = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
 
-  %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
+    %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
 
     - if not ipod?
       %a.iconbutton.cancel_button{ :onclick => 'document.getElementById("order_action").value="cancel_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
 
-%a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
+    %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
 
 %div#footer

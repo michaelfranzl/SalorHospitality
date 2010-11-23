@@ -21,7 +21,6 @@ class OrdersController < ApplicationController
       @errormessage = t :wrong_password
       render 'login_wrong'
     end
-
   end
 
   def logout
@@ -30,8 +29,6 @@ class OrdersController < ApplicationController
   end
 
   def statusupdate_tables
-    puts "XXXXX"
-   puts session[:user_id]
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
   end
@@ -235,19 +232,30 @@ class OrdersController < ApplicationController
           @orders = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
           render 'go_to_invoice_form'
         when 'move_order_to_table'
-          order = move_order_to_table(order, params[:target_table])
+          move_order_to_table(order, params[:target_table])
+          @tables = Table.all
           render 'go_to_tables'
       end
     end
 
-    def move_order_to_table(order,table_id)
-      @target_order = Order.find(:all, :conditions => { :table_id => table_id, :finished => false }).first
-      @target_order = Order.new(:table_id => table_id, :user_id => @current_user.id) if not @target_order
-      order.items.each do |i|
-        i.update_attribute :order, @target_order
+    def move_order_to_table(order,target_table_id)
+      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
+      if target_order
+        # mix items into existing order
+        order.items.each do |i|
+          i.update_attribute :order, target_order
+        end
+        order.destroy
+      else
+        # move order to empty table
+        order.update_attribute :table_id, target_table_id
       end
-      @order.destroy
-      return @target_order
+
+      unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
+      order.table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
+
+      unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })
+      Table.find(target_table_id).update_attribute :user, order.user
     end
 
     def neighbour_orders(order)
