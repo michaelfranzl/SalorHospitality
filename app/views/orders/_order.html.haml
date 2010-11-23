@@ -1,7 +1,7 @@
 - if ipod?
   #staticfunctions
     %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
-    %a.iconbutton.cancel_button{ :onclick => 'document.getElementById("order_action").value="cancel_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
+    %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
     %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
 
 %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
@@ -42,7 +42,7 @@
     %a.iconbutton.cash_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_invoice"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:finish_order) }
 
     - if not ipod?
-      %a.iconbutton.cancel_button{ :onclick => 'document.getElementById("order_action").value="cancel_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:cancel_and_go_back) }
+      %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :title => t(:cancel_and_go_back) }
 
     %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("categories", 10);', :title => t(:scroll_up) }
 

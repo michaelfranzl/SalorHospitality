@@ -1,12 +1,10 @@
-%h2 INVOICE
-
 %div#functions
-  %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+  %a.iconbutton.tables_button{ :onclick => 'go_to_tables_offline();', :title => t(:save_and_go_back) }
   %a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 100);', :title => t(:scroll_down) }
       
 %div#invoices
       
 %div#footer
   - if ipod?
-    %a.iconbutton.tables_button{ :onclick => 'document.getElementById("order_action").value="save_and_go_to_tables"; $("order_form_ajax").onsubmit();', :onmouseup => 'this.style.border = "2px solid white";', :title => t(:save_and_go_back) }
+    - # go back 
   %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("container", 100);', :title => t(:scroll_up) }

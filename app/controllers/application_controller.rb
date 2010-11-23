@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
-      #render 'go_to_login' if (request.xhr? and !@current_user) #only when user is logging out on ipod, for normal request let the views handle the login form diplay
+      render 'go_to_login' if (request.xhr? and !@current_user) #only when user is logging out on ipod, for normal request let the views handle the login form diplay
     end
 
     def logged_in?

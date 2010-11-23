@@ -253,3 +253,11 @@ function go_to_order_form_preprocessing(table_id) {
 
 new Ajax.Request('/orders/go_to_table/'+table_id, {asynchronous:true, evalScripts:true});
 }
+
+function go_to_tables_offline() {
+  $('orderform').hide();
+  $('invoiceform').hide();
+  $('tables').show();
+  $('rooms').show();
+  tableupdates = true;
+}
