@@ -7,7 +7,7 @@ page << "$('order_id').value = '';"
 page << "$('order_user_id').value = '';"
 page << "$('order_action').value = '';"
 
-page.replace_html 'order_info', t("orders.order.new")
+page.replace_html 'order_info', "#{ t('orders.order.new') } #{ @table.name }"
 page.replace_html 'inputfields', ''
 page.replace_html 'itemstable', ''
 page.replace_html 'articles', ''
@@ -34,7 +34,7 @@ if @order
 
   page.insert_html :bottom, 'inputfields', @inputfields
   page.insert_html :bottom, 'itemstable', @tablerows
-  page.replace_html 'order_info', "#{ Order.human_name } ##{ @order.id }"
+  page.replace_html 'order_info', "#{ Order.human_name } ##{ @order.id }  #{ @table.name }"
   page << "$('order_id').value = '#{ @order.id }';"
   page << "$('order_user_id').value = '#{ @order.user.id if @order.user }';"
   page << "$('order_sum').value = '#{ number_with_precision(@order.sum, :precision => 2) }';"

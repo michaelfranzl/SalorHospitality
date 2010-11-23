@@ -113,7 +113,6 @@ class OrdersController < ApplicationController
       session[:admin_interface] = true
     end
     @tables = Table.all
-    render 'go_to_tables'
   end
 
   def print_and_finish

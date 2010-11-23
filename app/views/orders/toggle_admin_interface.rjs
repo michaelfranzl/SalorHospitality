@@ -1,0 +1,17 @@
+page.hide 'orderform', 'invoiceform'
+page.replace_html 'tables', render(@tables)
+page.show 'tables', 'rooms'
+page.replace_html 'order_info', t(:loading)
+
+
+if ipod?
+  page << "tableupdates = true;"
+else
+  if session[:admin_interface] == false
+    page << "tableupdates = true;"
+    page << "Effect.SlideUp('admin');"
+  else
+    page << "tableupdates = false;"
+    page << "Effect.SlideDown('admin');"
+  end
+end
