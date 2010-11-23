@@ -3,9 +3,9 @@
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
 
 %div#buttons
-  %a.iconbutton.print_kitchen_button{ :href => "/orders/print/#{ @order.id }/0", :title => t(:print)}
-  %a.iconbutton.print_bar_button{ :href => "/orders/print/#{ @order.id }/1", :title => t(:print)}
-  %a.iconbutton.print_guestroom_button{ :href => "/orders/print/#{ @order.id }/2", :title => t(:print)}
+  %a.iconbutton.print_kitchen_button{ :href => "/orders/print_and_finish/#{ @order.id }/0", :title => t(:print)}
+  %a.iconbutton.print_bar_button{ :href => "/orders/print_and_finish/#{ @order.id }/1", :title => t(:print)}
+  %a.iconbutton.print_guestroom_button{ :href => "/orders/print_and_finish/#{ @order.id }/2", :title => t(:print)}
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
   %a.iconbutton.storno_button{ :href => "/orders/storno/#{@order.id}", :title => (t :storno) }

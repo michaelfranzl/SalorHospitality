@@ -35,7 +35,11 @@ class OrdersController < ApplicationController
 
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
-    @order = Order.find(params[:id])
+    if params[:id] != 'show'
+      @order = Order.find(params[:id])
+    else
+      @order = Order.find_all_by_finished(true).last
+    end
     @previous_order, @next_order = neighbour_orders(@order)
     respond_to do |wants|
       wants.html
@@ -77,19 +81,6 @@ class OrdersController < ApplicationController
     make_split_invoice(@order, [@item_to_split], :one)
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
-  end
-
-  def storno
-    @order = Order.find(params[:id])
-    @previous_order, @next_order = neighbour_orders(@order)
-    @order.update_attributes(params[:order])
-    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
-    make_storno(@order, items_for_storno)
-    @order = Order.find(params[:id]) # re-read
-    respond_to do |wants|
-      wants.html
-      wants.js { render 'display_storno' }
-    end
   end
 
   def separate_item
@@ -145,11 +136,17 @@ class OrdersController < ApplicationController
 
     @cost_centers = CostCenter.find_all_by_active(true)
     @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
-    if @orders.empty?
-      @tables = Table.all
-      render('go_to_tables')
-    else
-      render('go_to_invoice_form')
+
+    respond_to do |wants|
+      wants.html { redirect_to order_path @order }
+      wants.js {
+        if @orders.empty?
+          @tables = Table.all
+          render('go_to_tables')
+        else
+          render('go_to_invoice_form')
+        end
+      }
     end
   end
 
@@ -195,7 +192,21 @@ class OrdersController < ApplicationController
     conditional_redirect_ajax(@order)
   end
 
+  def storno
+    @order = Order.find(params[:id])
+    @previous_order, @next_order = neighbour_orders(@order)
+    @order.update_attributes(params[:order])
+    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
+    make_storno(@order, items_for_storno)
+    @order = Order.find(params[:id]) # re-read
+    respond_to do |wants|
+      wants.html
+      wants.js { render 'display_storno' }
+    end
+  end
 
+  def last_invoices
+  end
 
 
   private
