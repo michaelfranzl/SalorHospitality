@@ -1,4 +1,6 @@
 page.replace_html 'main', render(:file => 'orders/index.html.haml')
 page.replace_html 'header', render(:file => 'layouts/_header.html.haml')
+page.replace_html 'flash_notice', ''
+page.replace_html 'flash_error', ''
 page.hide 'login'
 page << "tableupdates = #{ ipod? ? 'true' : 'false' };"

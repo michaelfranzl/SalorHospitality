@@ -8,3 +8,9 @@ page.show 'invoices'
 page.hide 'orderform'
 page.hide 'tables'
 page.hide 'rooms'
+
+page.replace_html 'inputfields', ''
+page.replace_html 'itemstable', ''
+
+page.show 'functions_header_invoice_form'
+page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_index'

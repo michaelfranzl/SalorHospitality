@@ -9,4 +9,5 @@ page.hide 'orderform'
 page.hide 'tables'
 page.hide 'rooms'
 
-page << "tableupdates = false;"
+page.show 'functions_header_invoice_form'
+page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_index'

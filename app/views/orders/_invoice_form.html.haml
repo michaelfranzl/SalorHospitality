@@ -22,11 +22,15 @@
         - subtotal += sum
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}" }
-          %td.count= link_to_remote(item.count, :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "invoice_form_#{ invoice_form.id }")
+          %td.count= item.count
           - article_label = item.article.name[0..13]
           - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
           - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-          %td.label{ :id => "item#{item.id}"}= link_to_remote("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }", :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "invoice_form_#{ invoice_form.id }")
+          %td.label{ :id => "item#{item.id}"}
+            - if invoice_form.finished
+              == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
+            - else
+              = link_to_remote("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }", :url => { :controller => :orders, :action => :split_invoice_one_at_a_time, :id => item.id }, :submit => "invoice_form_#{ invoice_form.id }")
           %td.price= number_to_currency item.real_price
           %td.total= number_to_currency sum
           %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}

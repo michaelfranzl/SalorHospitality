@@ -283,5 +283,6 @@ function go_to_tables_offline() {
   $('rooms').show();
   $('functions_header_index').show();
   $('functions_header_order_form').hide();
+  $('functions_header_invoice_form').hide();
   $('functions_footer').hide();
 }
