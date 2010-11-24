@@ -221,13 +221,13 @@ class OrdersController < ApplicationController
 debugger
       order.update_attribute( :sum, calculate_order_sum(order) )
 
-      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
+      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
       `cat bar.escpos > /dev/ttyPS1` #1 = Bar
 
-      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
+      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
       `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
 
-      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(:takeaway)) }
+      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
       `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
@@ -457,10 +457,10 @@ debugger
 
 
 
-    def generate_escpos_items(type)
+    def generate_escpos_items(order, type)
       overall_output = ''
 
-      Order.find_all_by_finished(false).each do |order|
+      #Order.find_all_by_finished(false).each do |order|
         per_order_output = ''
         per_order_output +=
         "\e@"     +  # Initialize Printer
@@ -495,7 +495,7 @@ debugger
         "\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
         overall_output += per_order_output if printed_items_in_this_order != 0
-      end
+      #end
 
       overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
       overall_output.gsub!(/\xE4/,"\x84") #ä
