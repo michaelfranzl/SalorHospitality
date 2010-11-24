@@ -218,7 +218,7 @@ class OrdersController < ApplicationController
         order.table.update_attribute :user, nil
         return
       end 
-
+debugger
       order.update_attribute( :sum, calculate_order_sum(order) )
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
