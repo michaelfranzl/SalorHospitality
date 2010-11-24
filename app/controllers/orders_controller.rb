@@ -112,11 +112,6 @@ class OrdersController < ApplicationController
       @order.user = @current_user
       @order.created_at = Time.now
     end
-    @order.finished = true
-    @order.save
-
-    @unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
-    @order.table.update_attribute :user, nil if @unfinished_orders_on_this_table.empty?
 
     if @order.order # unlink any parent relationships
       @order.items.each do |item|
@@ -134,17 +129,27 @@ class OrdersController < ApplicationController
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
 
-    @cost_centers = CostCenter.find_all_by_active(true)
+    justfinished = false
+    if not @order.finished
+      @order.finished = true
+      justfinished = true
+      @order.save
+    end
+
     @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @order.table.update_attribute :user, nil if @orders.empty?
+    @cost_centers = CostCenter.find_all_by_active(true)
 
     respond_to do |wants|
       wants.html { redirect_to order_path @order }
       wants.js {
-        if @orders.empty?
+        if not justfinished
+          render :nothing => true
+        elsif not @orders.empty?
+          render('go_to_invoice_form')
+        else
           @tables = Table.all
           render('go_to_tables')
-        else
-          render('go_to_invoice_form')
         end
       }
     end
@@ -206,7 +211,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @last_orders = Order.find(:all, :conditions => { :user_id => @current_user.id, :finished => true }, :limit => 10, :order => 'created_at DESC')
+    @last_orders = Order.find(:all, :conditions => { :finished => true }, :limit => 10, :order => 'created_at DESC')
   end
 
 
@@ -218,7 +223,7 @@ class OrdersController < ApplicationController
         order.table.update_attribute :user, nil
         return
       end 
-debugger
+
       order.update_attribute( :sum, calculate_order_sum(order) )
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }

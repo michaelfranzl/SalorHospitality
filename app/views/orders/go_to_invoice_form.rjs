@@ -14,3 +14,6 @@ page.replace_html 'itemstable', ''
 
 page.show 'functions_header_invoice_form'
 page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_index'
+
+page.replace_html 'functions_header_order_form', render(:partial => 'functions_header_order_form')
+page.replace_html 'functions_footer', render(:partial => 'functions_footer')
