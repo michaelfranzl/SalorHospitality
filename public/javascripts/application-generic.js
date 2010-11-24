@@ -209,46 +209,11 @@ function add_option_to_item(item_designator, select_tag)
 
   } else if (select_tag.value == -2 ) {
     // exit, nothing
-
   } else if (select_tag.value == -1 ) {
-    // split all items apart except this one
-    var timestamp = new Date().getTime();
-    var sort = timestamp.toString().substr(-9,9);
-    var new_desig = 'new_' + sort;
-
-
-    //clone and change inputfields
-    var clone = itemfields.cloneNode(true);
-    itemfields.parentNode.insertBefore(clone, itemfields);
-    clone.id = 'fields_for_item_'+new_desig; // not evalutated by rails, so not needed
-    childs = clone.childNodes;
-    for(i in childs) {
-      if (childs[i].id) {
-        childs[i].id = childs[i].id.replace(/_new/,'').replace(/_\d+/,'').replace(/attributes/,'attributes_'+new_desig);
-        childs[i].name = childs[i].name.replace(/new_/,'').replace(/\d+/,'').replace(/\[\]/,'['+new_desig+']');
-      }
-    }
-    $('order_items_attributes_' + new_desig + '_id').value = ''; // rails needs that in order to create a new item
-    $('order_items_attributes_' + new_desig + '_count').value = $('order_items_attributes_' + item_designator + '_count').value - 1;
-    $('order_items_attributes_' + new_desig + '_sort').value = sort;
-    $('order_items_attributes_' + item_designator + '_count').value = 1;
-
-    //clone and change tablerow
-    var clone = tablerow.cloneNode(true);
-    tablerow.parentNode.insertBefore(clone, tablerow);
-    clone.id = 'item_'+new_desig; // not evalutated by rails, so not needed
-    childs = clone.childNodes;
-    for(i in childs) {
-      if (childs[i].id) {
-        childs[i].id = childs[i].id.replace(/_new/,'').replace(/_\d+/,'').replace(/tablerow/,'tablerow_'+new_desig);
-      }
-    }
-    $('tablerow_' + item_designator + '_count').innerHTML = $('order_items_attributes_' + item_designator + '_count').value;
-    $('tablerow_' + new_desig + '_count').innerHTML = $('order_items_attributes_' + new_desig + '_count').value;
-    $('tablerow_' + new_desig + '_minus').onclick = function() {decrement_item(new_desig);}
+    // special option: do not print
 
   } else {
-    document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
+    $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
     var text = $('optionsselect_' + item_designator).options[index].text;
     $('optionsnames_' + item_designator).insert('<br>'+text);

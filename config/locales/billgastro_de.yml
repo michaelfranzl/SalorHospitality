@@ -207,6 +207,8 @@ de:
   items:
     item_tablerow:
       no_options: Normal
+      exit: Exit
+      do_not_print: Fertig
 
   sessions:
     browser_warning:
