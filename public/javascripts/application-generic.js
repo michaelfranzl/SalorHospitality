@@ -211,7 +211,7 @@ function add_option_to_item(item_designator, select_tag)
     // exit, nothing
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-
+    $('order_items_attributes_' + item_designator + '_printed_count').value = 100;
   } else {
     $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
