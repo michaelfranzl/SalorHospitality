@@ -33,7 +33,7 @@ function add_new_item_q(qu_id, button) {
   if (matched_designator &&
       $('order_items_attributes_' + matched_designator + '__destroy').value == 0 &&
       $('order_items_attributes_' + matched_designator + '_comment').value == '' &&
-      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[art_id][3] &&
+      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[qu_id][3] &&
       $('order_items_attributes_' + matched_designator + '_optionslist').value == '')
   {
     increment_item(matched_designator);
@@ -92,9 +92,7 @@ function add_new_item_a(art_id, button, caption) {
   else
   {
     new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICEg/,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options);
-
     new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
-
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
@@ -106,7 +104,7 @@ function add_new_item_a(art_id, button, caption) {
 }
 
 function increment_item(desig) {
-  $('count_' + desig).innerHTML = $('order_items_attributes_' + desig + '_count').value++ + 1;
+  $('tablerow_'+desig+'_count').innerHTML = $('order_items_attributes_' + desig + '_count').value++ + 1;
   calculate_sum();
 }
 
@@ -119,7 +117,7 @@ function decrement_item(desig) {
   };
 
   if (i > 0) {
-    $('count_' + desig).innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
+    $('tablerow_'+desig+'_count').innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
     calculate_sum();
   };
 }
@@ -199,12 +197,56 @@ function add_price_to_item(item_designator) {
   calculate_sum();
 }
 
-function add_option_to_item(item_designator, select_tag) {
+function add_option_to_item(item_designator, select_tag)
+{
+  var tablerow = $('item_'+item_designator);
+  var itemfields = $('fields_for_item_'+item_designator);
+
   if (select_tag.value == 0) {
-    document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value = '';
+    // normal, delete all options
+    $('order_items_attributes_' + item_designator + '_optionslist').value = '';
     $('optionsnames_' + item_designator).innerHTML = '';
+
+  } else if (select_tag.value == -2 ) {
+    // exit, nothing
+
   } else if (select_tag.value == -1 ) {
-      //do nothing
+    // split all items apart except this one
+    var timestamp = new Date().getTime();
+    var sort = timestamp.toString().substr(-9,9);
+    var new_desig = 'new_' + sort;
+
+
+    //clone and change inputfields
+    var clone = itemfields.cloneNode(true);
+    itemfields.parentNode.insertBefore(clone, itemfields);
+    clone.id = 'fields_for_item_'+new_desig; // not evalutated by rails, so not needed
+    childs = clone.childNodes;
+    for(i in childs) {
+      if (childs[i].id) {
+        childs[i].id = childs[i].id.replace(/_new/,'').replace(/_\d+/,'').replace(/attributes/,'attributes_'+new_desig);
+        childs[i].name = childs[i].name.replace(/new_/,'').replace(/\d+/,'').replace(/\[\]/,'['+new_desig+']');
+      }
+    }
+    $('order_items_attributes_' + new_desig + '_id').value = ''; // rails needs that in order to create a new item
+    $('order_items_attributes_' + new_desig + '_count').value = $('order_items_attributes_' + item_designator + '_count').value - 1;
+    $('order_items_attributes_' + new_desig + '_sort').value = sort;
+    $('order_items_attributes_' + item_designator + '_count').value = 1;
+
+    //clone and change tablerow
+    var clone = tablerow.cloneNode(true);
+    tablerow.parentNode.insertBefore(clone, tablerow);
+    clone.id = 'item_'+new_desig; // not evalutated by rails, so not needed
+    childs = clone.childNodes;
+    for(i in childs) {
+      if (childs[i].id) {
+        childs[i].id = childs[i].id.replace(/_new/,'').replace(/_\d+/,'').replace(/tablerow/,'tablerow_'+new_desig);
+      }
+    }
+    $('tablerow_' + item_designator + '_count').innerHTML = $('order_items_attributes_' + item_designator + '_count').value;
+    $('tablerow_' + new_desig + '_count').innerHTML = $('order_items_attributes_' + new_desig + '_count').value;
+    $('tablerow_' + new_desig + '_minus').onclick = function() {decrement_item(new_desig);}
+
   } else {
     document.getElementById('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
