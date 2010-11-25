@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   default_scope :order => 'sort DESC'
   
   def real_price
-    if price.nil? or then
+    if price.nil?
       self.quantity ? self.quantity.price : self.article.price
     else
       price

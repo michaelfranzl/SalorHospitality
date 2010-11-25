@@ -1,6 +1,6 @@
 %table.detailed_list
   %tr
-    %th{ :style => 'width:200px' }= Item.human_name
+    %th{ :style => 'width:280px' }= Item.human_name
     %th{ :style => 'width:30px' }= t '.count'
     %th{ :style => 'width:50px' }= t '.unit_price'
     %th{ :style => 'width:50px' }= t '.total'
@@ -11,6 +11,8 @@
     %tr
       %td.order_begin{ :colspan => 6 }
         = t('.order_number_on_table_on_date', :order => Order.human_name, :number => so.id, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
+        %br
+        == #{ User.human_name }: #{ so.user.title }
         %br
         == #{ CostCenter.human_name }: #{ so.cost_center.name }
         %br
@@ -25,7 +27,7 @@
         - subtotal += sum
         - total += sum
         %tr
-          %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix }" : item.article.name
+          %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
           %td.number= item.count
           %td.number= number_to_currency p
           %td.colsum= number_to_currency sum
