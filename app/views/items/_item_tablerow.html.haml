@@ -4,6 +4,8 @@
 
   %td{ :id => "tablerow_#{ locals[:designator] }_label", :class => 'item_label', :onclick => "add_comment_to_item('#{ locals[:designator] }'); add_price_to_item('#{ locals[:designator] }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     = locals[:label]
+    %div{ :id => "comment_#{ locals[:designator] }" }
+      = locals[:comment]
     %div{ :id => "optionsnames_#{ locals[:designator] }" }
       = locals[:optionsnames]
 

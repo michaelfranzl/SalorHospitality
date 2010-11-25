@@ -15,4 +15,5 @@
   #functions_footer{ :style => 'display: none;' }= render('functions_footer') if ipod?
 
   #invoices
-  = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => 5, :condition => 'tableupdates == true' )
+  - f = ipod? ? 10 : 20
+  = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => f, :condition => 'tableupdates == true' )

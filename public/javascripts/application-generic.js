@@ -181,6 +181,7 @@ function add_comment_to_item(item_designator) {
   var comment = prompt(enter_comment, fallback);
   if ( comment == null ) { comment = fallback };
   document.getElementById('order_items_attributes_' + item_designator + '_comment').value = comment;
+  $('comment_' + item_designator).insert('<br>'+comment);
 }
 
 function add_price_to_item(item_designator) {
@@ -211,13 +212,15 @@ function add_option_to_item(item_designator, select_tag)
     // exit, nothing
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-    $('order_items_attributes_' + item_designator + '_printed_count').value = 100;
+    $('order_items_attributes_' + item_designator + '_printed_count').value = $('order_items_attributes_' + item_designator + '_printed_count').value;
+    $('optionsnames_' + item_designator).insert('<br>fertig');
   } else {
     $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
     var text = $('optionsselect_' + item_designator).options[index].text;
     $('optionsnames_' + item_designator).insert('<br>'+text);
   }
+  $('optionsselect_'+item_designator).value = -2;
 }
 
 
@@ -285,4 +288,5 @@ function go_to_tables_offline() {
   $('functions_header_order_form').hide();
   $('functions_header_invoice_form').hide();
   $('functions_footer').hide();
+  Effect.ScrollTo("header");
 }

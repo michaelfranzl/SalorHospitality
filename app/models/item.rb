@@ -18,7 +18,7 @@ class Item < ActiveRecord::Base
 
   def optionslist=(optionslist)
     self.options = []
-    optionslist.split.uniq.each do |o|
+    optionslist.split.each do |o|
       self.options << Option.find(o.to_i)
     end
   end

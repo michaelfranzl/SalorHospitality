@@ -471,7 +471,7 @@ class OrdersController < ApplicationController
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
 
-        "%-6.6s %13s\n" % [l(Time.now, :format => :time_short), order.table.name] +
+        "%-5.5s #%4i %5s %3.3s\n" % [l(Time.now, :format => :time_short), order.id, order.user.login, order.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
