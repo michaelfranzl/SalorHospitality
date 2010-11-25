@@ -177,7 +177,13 @@ class OrdersController < ApplicationController
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
-      @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
+#debugger
+      if params[:order][:id] == 'add_offline_items_to_order'
+        @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
+      else
+        @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
+      end
+
       if @order
         #similar to update
         @order.update_attributes(params[:order])
@@ -187,9 +193,8 @@ class OrdersController < ApplicationController
         #similar to create
         # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
-        #@order.user = @current_user
         @order.sum = calculate_order_sum @order
-        @order.cost_center = CostCenter.find_all_by_active(true).first
+        @order.cost_center = @cost_centers.first
         @order.save
         @order.table.update_attribute :user, @order.user
       end

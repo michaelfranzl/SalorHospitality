@@ -32,9 +32,7 @@ function add_new_item_q(qu_id, button) {
 
   if (matched_designator &&
       $('order_items_attributes_' + matched_designator + '__destroy').value == 0 &&
-      $('order_items_attributes_' + matched_designator + '_comment').value == '' &&
-      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[qu_id][3] &&
-      $('order_items_attributes_' + matched_designator + '_optionslist').value == '')
+      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[qu_id][3] )
   {
     increment_item(matched_designator);
   }
@@ -83,9 +81,7 @@ function add_new_item_a(art_id, button, caption) {
 
   if (matched_designator &&
       $('order_items_attributes_' + matched_designator + '__destroy').value == 0 &&
-      $('order_items_attributes_' + matched_designator + '_comment').value == '' &&
-      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_a[art_id][3] &&
-      $('order_items_attributes_' + matched_designator + '_optionslist').value == '')
+      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_a[art_id][3] )
   {
     increment_item(matched_designator);
   }
@@ -210,10 +206,12 @@ function add_option_to_item(item_designator, select_tag)
 
   } else if (select_tag.value == -2 ) {
     // exit, nothing
+
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-    $('order_items_attributes_' + item_designator + '_printed_count').value = $('order_items_attributes_' + item_designator + '_count').value;
+    $('order_items_attributes_' + item_designator + '_printed_count').value++;
     $('optionsnames_' + item_designator).insert('<br>fertig');
+
   } else {
     $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
@@ -261,8 +259,11 @@ function restore_button(element) {
 function go_to_order_form_preprocessing(table_id) {
   $('order_sum').value = '0';
 
-  $('order_id').value = '';
+  $('order_id').value = 'add_offline_items_to_order';
+  $('order_info').innerHTML = '...';
   $('order_action').value = '';
+  $('order_table_id').value = table_id;
+
   $('inputfields').innerHTML = '';
   $('itemstable').innerHTML = '';
   $('articles').innerHTML = '';
