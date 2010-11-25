@@ -4,17 +4,19 @@
 
   %td{ :id => "tablerow_#{ locals[:designator] }_label", :class => 'item_label', :onclick => "add_comment_to_item('#{ locals[:designator] }'); add_price_to_item('#{ locals[:designator] }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     = locals[:label]
-    %div{ :id => "comment_#{ locals[:designator] }" }
-      = locals[:comment]
-    %div{ :id => "optionsnames_#{ locals[:designator] }" }
-      = locals[:optionsnames]
+    %small
+      %br
+      €
+      %span{ :id => "price_#{ locals[:designator] }" }= locals[:price]
+      %span{ :id => "comment_#{ locals[:designator] }" }= locals[:comment]
+      %div{ :id => "optionsnames_#{ locals[:designator] }" }= locals[:optionsnames]
 
   %td{ :id => "tablerow_#{ locals[:designator] }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
   %td{ :id => "tablerow_#{ locals[:designator] }_options", :class => 'item_options' }
     - if not ipod?
       %a{ :onmouseup => "$('optionsselect_#{ locals[:designator] }').show();" }
-    %select{ :id => "optionsselect_#{ locals[:designator] }", :onclick => "add_option_to_item('#{ locals[:designator] }', this)", :onmouseup => 'hide_optionsselect(this);', :size => 12, :style => "#{ 'display: none;' if not ipod? }" }
+    %select{ :id => "optionsselect_#{ locals[:designator] }", :onchange => "add_option_to_item('#{ locals[:designator] }', this)", :onmouseup => 'hide_optionsselect(this);', :size => 12, :style => "#{ 'display: none;' if not ipod? }" }
       %option{ :value => -2 }= t('.exit')
       %option{ :value => -1 }= t('.do_not_print')
       %option{ :value => 0 }= t('.no_options')

@@ -91,8 +91,8 @@ function add_new_item_a(art_id, button, caption) {
   }
   else
   {
-    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICEg/,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options);
-    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
+    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options);
+    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'').replace(/PRICE/g,itemdetails_a[art_id][3]);
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
@@ -181,7 +181,7 @@ function add_comment_to_item(item_designator) {
   var comment = prompt(enter_comment, fallback);
   if ( comment == null ) { comment = fallback };
   document.getElementById('order_items_attributes_' + item_designator + '_comment').value = comment;
-  $('comment_' + item_designator).insert('<br>'+comment);
+  $('comment_' + item_designator).innerHTML = comment;
 }
 
 function add_price_to_item(item_designator) {
@@ -194,7 +194,7 @@ function add_price_to_item(item_designator) {
     if ( price == '') { price = 0 };
   }
   document.getElementById('order_items_attributes_' + item_designator + '_price').value = price;
-
+  $('price_' + item_designator).innerHTML = price;
   calculate_sum();
 }
 
