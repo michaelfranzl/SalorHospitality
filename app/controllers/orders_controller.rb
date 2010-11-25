@@ -187,7 +187,7 @@ class OrdersController < ApplicationController
         #similar to create
         # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
-        @order.user = @current_user
+        #@order.user = @current_user
         @order.sum = calculate_order_sum @order
         @order.cost_center = CostCenter.find_all_by_active(true).first
         @order.save
@@ -472,7 +472,7 @@ class OrdersController < ApplicationController
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
 
-        "%-5.5s #%4i %5s %3.3s\n" % [l(Time.now, :format => :time_short), order.id, order.user.login, order.table.abbreviation] +
+        "%-14.14s #%5i\n%-11.11s %8s\n" % [l(Time.now, :format => :time_short), order.id, @current_user.login, order.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
