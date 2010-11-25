@@ -189,6 +189,7 @@ class OrdersController < ApplicationController
         @order = Order.new(params[:order])
         @order.user = @current_user
         @order.sum = calculate_order_sum @order
+        @order.cost_center = CostCenter.find_all_by_active(true).first
         @order.save
         @order.table.update_attribute :user, @order.user
       end

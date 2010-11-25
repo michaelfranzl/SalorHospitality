@@ -14,7 +14,6 @@ page.show 'functions_header_order_form', 'functions_footer'
 
 page.replace_html 'order_info', "#{ t('orders.order.new') } #{ @table.name }"
 
-
 if @order
   @order.items.each do |item|
     @designator += 1

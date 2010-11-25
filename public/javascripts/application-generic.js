@@ -188,11 +188,11 @@ function add_price_to_item(item_designator) {
   var old_price = $('order_items_attributes_' + item_designator + '_price').value;
   if (old_price == 0) { old_price = '' }
   var price = prompt(enter_price, old_price);
-  price = price.replace(',', '.');
   if ( price == null ) {
     price = old_price;
     if ( price == '') { price = 0 };
   }
+  price = price.replace(',', '.');
   document.getElementById('order_items_attributes_' + item_designator + '_price').value = price;
   $('price_' + item_designator).innerHTML = price;
   calculate_sum();
@@ -212,7 +212,7 @@ function add_option_to_item(item_designator, select_tag)
     // exit, nothing
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-    $('order_items_attributes_' + item_designator + '_printed_count').value = $('order_items_attributes_' + item_designator + '_printed_count').value;
+    $('order_items_attributes_' + item_designator + '_printed_count').value = $('order_items_attributes_' + item_designator + '_count').value;
     $('optionsnames_' + item_designator).insert('<br>fertig');
   } else {
     $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
@@ -220,7 +220,7 @@ function add_option_to_item(item_designator, select_tag)
     var text = $('optionsselect_' + item_designator).options[index].text;
     $('optionsnames_' + item_designator).insert('<br>'+text);
   }
-  $('optionsselect_'+item_designator).value = -2;
+  $('optionsselect_'+item_designator).value = -2; //reset
 }
 
 

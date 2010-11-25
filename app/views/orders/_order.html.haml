@@ -26,5 +26,5 @@
     %table#itemstable
 
   %select{ :id => 'target_table', :name => 'target_table', :onchange => 'if (this.value != "") {document.getElementById("order_action").value="move_order_to_table"; $("order_form_ajax").onsubmit();}' }
-    %option{ :selected => true }
+    %option{ :value => '', :selected => true }
     = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
