@@ -42,7 +42,7 @@
     - sum_taxes[tax_id-1] += sum
     %tr
       %td.one= "%c" % [tax_id+64]
-      %td.two= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix}" : "#{ item.article.name }"
+      %td.two= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix} #{ item.comment}" : "#{ item.article.name } #{ item.comment}"
       %td.three= number_to_currency p
       %td.four= item.count
       %td.five= number_to_currency sum
