@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def local_request?
+      false
+    end
+
     def rescue_action_in_public(exception)
       redirect_to orders_path
     end
