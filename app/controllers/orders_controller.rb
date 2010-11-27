@@ -233,12 +233,11 @@ class OrdersController < ApplicationController
       order.update_attribute( :sum, calculate_order_sum(order) )
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
-
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-
       File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+
+      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
+      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
       `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
@@ -483,6 +482,7 @@ class OrdersController < ApplicationController
 
         printed_items_in_this_order = 0
         order.items.each do |i|
+
           next if (i.count <= i.printed_count)
           next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
 

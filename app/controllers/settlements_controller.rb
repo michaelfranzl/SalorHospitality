@@ -17,7 +17,7 @@ class SettlementsController < ApplicationController
   def new
     @settlement = Settlement.new
     @settlement.user_id = params[:user_id]
-    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
+    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true }, :order => 'created_at DESC')
   end
 
   def edit
