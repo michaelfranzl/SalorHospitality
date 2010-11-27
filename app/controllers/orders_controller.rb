@@ -132,7 +132,7 @@ class OrdersController < ApplicationController
     justfinished = false
     if not @order.finished
       @order.finished = true
-      @order.printed_from = "#{ request.remote_ip } on port #{ params[:port] }"
+      @order.printed_from = "#{ request.remote_ip } on printer #{ params[:port] }"
       justfinished = true
       @order.save
     end

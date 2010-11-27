@@ -16,6 +16,8 @@
         %br
         == #{ CostCenter.human_name }: #{ so.cost_center.name }
         %br
+        = so.printed_from if so.printed_from
+        %br
         = link_to t(:invoice), order_path(so)
         = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
