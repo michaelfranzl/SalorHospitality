@@ -132,6 +132,7 @@ class OrdersController < ApplicationController
     justfinished = false
     if not @order.finished
       @order.finished = true
+      @order.printed_from = "#{ request.remote_ip } on port #{ params[:port] }"
       justfinished = true
       @order.save
     end
@@ -177,7 +178,6 @@ class OrdersController < ApplicationController
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.find_all_by_active(true)
     if not params[:order_action] == 'cancel_and_go_to_tables'
-#debugger
       if params[:order][:id] == 'add_offline_items_to_order'
         @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
       else
