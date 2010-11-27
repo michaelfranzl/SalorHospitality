@@ -312,8 +312,9 @@ class OrdersController < ApplicationController
       case mode
         when :all
           split_items.each do |i|
-            i.update_attribute :order_id, split_invoice.id # move item to the new order
-            i.update_attribute :partial_order, false # after the item has moved to the new order, leave it alone
+            i.order_id = split_invoice.id # move item to the new order
+            i.partial_order = false # after the item has moved to the new order, leave it alone
+            i.save
           end
         when :one
           parent_item = split_items.first # in this mode there will only single items to split
@@ -330,10 +331,10 @@ class OrdersController < ApplicationController
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1
           split_item.printed_count += 1
+          split_item.save
           parent_item.count -= 1
           parent_item.printed_count -= 1
           parent_item.count == 0 ? parent_item.delete : parent_item.save
-          split_item.save
       end
       parent_order = Order.find(parent_order.id) # re-read
 
