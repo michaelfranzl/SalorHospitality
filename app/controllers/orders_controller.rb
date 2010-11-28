@@ -75,7 +75,7 @@ class OrdersController < ApplicationController
   end
 
   def split_invoice_one_at_a_time
-    @item_to_split = Item.find(params[:id]) # find item on which was clicked
+    @item_to_split = Item.find_by_id(params[:id]) # find item on which was clicked
     @order = @item_to_split.order
     @cost_centers = CostCenter.find_all_by_active(true)
     make_split_invoice(@order, [@item_to_split], :one)
@@ -300,7 +300,7 @@ class OrdersController < ApplicationController
 
 
     def make_split_invoice(parent_order, split_items, mode)
-      return if split_items.empty?
+      return if split_items.nil? or split_items.empty?
       if parent_order.order # if there already exists one child order, use it for the split invoice
         split_invoice = parent_order.order
       else # create a brand new split invoice, and make it belong to the parent order
