@@ -1,5 +1,5 @@
 - if logged_in?
-  %a#toggle_admin_interface{ :onclick => "toggle_admin_interface();" }
+  %a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and controller.action_name == 'index' }" }
     %img{ :src => "/images/client_logos/mohrsederl.png" }
 - else
   %img{ :src => "/images/client_logos/mohrsederl.png" }
