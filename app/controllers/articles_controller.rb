@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     @article.update_attributes params[:article]
     if @article.hidden
       @article.quantities.each do |q|
-        q.update_parameter :hidden, true
+        q.update_attribute :hidden, true
       end
     end
 
