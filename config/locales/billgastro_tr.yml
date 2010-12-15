@@ -1,0 +1,319 @@
+tr:
+  activerecord:
+    models:
+      table:
+        one: Masa
+        other: Masalar
+      user:
+        one: Kullanıcı
+        other: Kullanıcılar
+      tax:
+        one: Vergi derecesi
+        other: vergi dereceleri
+      cost_center:
+        one: Maliyet merkezi
+        other: Maliyet merkezleri
+      article:
+        one: Ürün
+        other: Ürünler
+      option:
+        one: Seçenek
+        other: Seçenekler
+      quantity:
+        one: Varyant
+        other: Varyantlar
+      category:
+        one: Kategori
+        other: Kategoriler
+      item:
+        one: Pozisyon
+        other: Pozisyonlar
+      settlement:
+        one: Hesaplaşma
+        other: Hesaplaşmalar
+      order:
+        one: Sipariş
+        other: Siparişler
+      stock:
+        one: Depo stoku
+        other: Depo stoklar
+      group:
+        one: Depo grubu
+        other: Depo grupları
+
+    attributes:
+      article:
+        price: Fiyat
+        category: Kategori
+        name: Isim
+        hidden: Silmek
+        description: Ürün tarifi
+        menucard: Aktif
+        usage: Kullanım
+      option:
+        price: Fiyat
+        category_id: Kategori
+        name: Isim
+      quantity:
+        prefix: Isim
+        postfix: Ek miktar
+        price: Varyant fiyatı
+        description: Tarif
+        active: Aktif
+        hidden: Silmek
+        usage: Kullanım
+      tax:
+        percent: Vergi yüzedesi %
+        name: Isim
+      table:
+        name: Isim
+        abbreviation: Kısaltma
+        description: Tarif
+        width: Genişlik
+        height: Yükseklik
+        width_ipod: Genişlik iPod
+        height_ipod: Yükseklik iPod
+      category:
+        name: Isim
+        tax_id: Vergi derecesi
+        sort_order: Bölümler
+        icon: Sembol
+        color: Renk
+        food: Yemek?
+      cost_center:
+        name: Isim
+        description: Tarif
+        active: aktif?
+      group:
+        name: Isim
+      user:
+        login: Giris yap
+        password: Sifre
+        role: Görev
+        title: Hitap
+
+  articles:
+    index:
+      list_all: Herseyi göster
+      search_term: Arama kelimesi
+      preview: Öngörüs
+    new:
+      new_article: Yeni ürün
+      edit_article: Ürün islemek
+      add_quantity: Varyant eklemek
+    listall:
+      all_articles: Bütün ürünlerin listesi
+    articles_search_results:
+      variants: Varyant
+
+  options:
+    new:
+      new_option: Yeni secenekler
+      edit_option: Seçeneğini islemek
+
+  blackboard:
+    index:
+      update: Güncelleme
+
+  categories:
+    index:
+      foods: Yemekler
+      drinks: Içecekler
+    new:
+      new_category: Yeni Kategori üretmek
+      edit_category: Kategori islemek
+      aperitif: Aperitif
+      sidedish: Ilave
+      starter: Ön yemekler
+      maindish: Ana yemek
+      childrendish: Cocuklar
+      dessert: Tatlilar
+      digestif: Digestif
+      beer: Bira
+      nonalcoholics: Alkoholsüz
+      cigarette: Sigara
+      rosewineglass: Gülrengi sarap
+      redwineglass: Kirmizi sarap
+      whitewineglass: Beyaz sarap
+      rosewinebottle: Sise Acikkirmizi sarap 
+      redwinebottle: Sise kirmizi sarap
+      whitewinebottle: Sise beyaz sarap
+      sparkling: Köpüklü sarap
+      coffee: Kahve
+      teapot: Caydanlik
+      tea: Cay bardagi
+      blank: bos
+
+  cost_centers:
+    index:
+      active: aktif
+      inactive: aktif degil
+    new:
+      new_cost_center: Yeni maliyet merkezi
+      edit_cost_center: Maliyet merkezi islemek
+
+  groups:
+    new:
+      new_group: Yeni depo grubu
+      edit_group: Depo grubu islemek
+
+  stocks:
+    new:
+      new_stock: Yeni depo ürünü
+      edit_stock: Depo ürünü islemek
+
+  orders:
+    served_by: Size hizmet gösteren
+    order:
+      sum: Toplam
+      new: Yeni Siparis
+    show:
+      print_invoice: Fatura basmak
+      print_business_invoice: Sirket fatura basmak
+      back: geri
+      previous_invoice: Önceki Fatura
+      next_invoice: Sonraki Fatura
+      unit_price: Tane
+      count: Miktar
+      sum: Toplam
+      list_of_taxes: Vergi listesi
+    unsettled:
+      make_settlement: Hesaplamak
+    invoice_form:
+      split_invoice: Faturayi paylasmak/bölmek
+    login_form:
+      username: Kullanici
+      login: Giris yap
+      password: Sifre
+      email: Sizin E-mailiniz
+      realname: Isminiz
+      your_ip_address: IP-Informasyonuz
+
+  settlements:
+    index:
+      start_date: Baslangic
+      end_date: Bitis
+      all_cost_centers: Hepsi
+      sum_total: Toplam hesap
+    new:
+      set_date: Hesap tarihi
+    detailed_list:
+      order_number_on_table_on_date: '{{order}} #{{number}} auf {{table}} am {{time}}'
+      count: Miktar
+      unit_price: Tane
+      total: Hepsi
+      revenue: Ciro
+
+  items:
+    item_tablerow:
+      no_options: Normal
+      exit: Cikis
+      do_not_print: Bitir
+
+  sessions:
+    browser_warning:
+      warning: Mozilla Firefox, Safari, Google Chrome veya Chromium Browser olarak kullanmiyorsunuz. Bill Gastro bu Browserlar icin hazirlanmisdir.
+      continue: Devam
+    new:
+      username: Kullanici
+      login: Giris Yap
+      password: Sifre
+      email: Sizin E-Mailiniz
+      realname: Isminiz
+      your_ip_address: IP-Informasyonuz
+
+  statistic: Istatistik
+  statistics:
+    weekdays: Is günleri
+    journal: Detayla (tarihli) liste
+
+  tables:
+    new:
+      new_table: Yeni masa
+      edit_table: Masa islemek
+
+  taxes:
+    new:
+      new_tax: Yeni vergi derecesi
+      edit_tax: Vergi derecesini islemek
+
+  users:
+    new:
+      new_user: Yeni kullanici
+      edit_user: Kullanici islemek
+
+  client_data:
+    menulabel: Belirtiler
+    index:
+      name: Isim
+      subtitle: Altyazi
+      address: Adres
+      taxnumber: Vergi numarasi
+      slogan: Fatura informasyonu
+      internet_address: Internet adresi
+      email: E-Mail adresi
+    update:
+      client_data_successfully_updated: Belirtiler yenilendi!
+
+  delete: Silmek
+  are_you_sure: 'Emin misiniz?'
+  edit: Islemek
+  create: Üretmek
+  new: Yeni
+  print: Basmak
+  display: Göstermek
+  logout: '{{who}} cikis yapmak'
+  
+  blackboard_generic_name: Menü tahtasi
+  waiterpad_generic_name: Siparis listesi
+  menucard_generic_name: Menü karti
+  unsettled_orders_generic_name: Acik hesaplar
+
+  print_kitchenlist: Mutfak listesi basmak
+  recent_orders: Hesaplari bak
+  scroll_down: Asayi in
+  scroll_up: Yukari cik
+  scroll_to_room: Odayi gir
+  save_and_go_back: Kayit et ve geriye cik
+  cancel_and_go_back: Iptal et ve geriye cik
+  finish_order: Siparisi bitir
+
+  invoice: Fatura
+  invoices: Faturalar
+  storno: Iptal
+  dateandtime: Tarih
+  sum: Toplam
+  count: Miktar
+
+  net: Net
+  value_added_tax: KDV
+  gross: Brüt
+
+  violet: Mor
+  orange: Portakal
+  pink: Pembe
+  green: esil
+  blue: Mavi
+  blank: Bos
+
+# TRANSLATIONS FOR MODELS
+  must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
+  is_no_number: Rakam degil
+
+# TRANSLATIONS FOR CONTROLLERS
+  all_foods_were_removed_from_the_menucard: Bütün yemekler menü kartindan cikartildi.
+  was_successfully_deleted: '{{what}} silindi.'
+  there_are_no_open_settlements: Acik hesap kalmadi.
+  logout_successful: Cikis yaptiniz.
+  user_not_found: Kullanici bulunmadi.
+  wrong_password: Yanlis sifre.
+
+  served_by_X_on_table_Y: Size {{table}} {{waiter}} hizmet etti. 
+  invoice_numer_X_at_time: Fatura No. {{number}},  {{datetime}}
+
+  please_enter_email_and_realname: Lütfen isminzi ve e-mail adresinizi yaziniz.
+
+  please_enter_item_comment: Özel istek
+  please_enter_item_price: Fiyet
+
+  loading: Isleniyor...
