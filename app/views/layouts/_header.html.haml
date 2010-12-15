@@ -1,4 +1,4 @@
-%a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' }" }
+%a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and ( controller.action_name == 'index' or controller.action_name == 'login' )}" }
   %img{ :src => "/images/client_logos/mohrsederl.png" }
 
 %img#logo{ :src => "/images/logo-small.png" }
