@@ -5,4 +5,5 @@ class Settlement < ActiveRecord::Base
   def price=(price)
     write_attribute(:revenue, price.gsub(',', '.'))
   end
+
 end
