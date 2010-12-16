@@ -19,9 +19,13 @@
 
 %h1== #{ t 'invoice' } ##{ @order.id }
 
-= text_field_tag 'client_data_1'
+= text_field_tag 'customer_data_1'
 %br
-= text_field_tag 'client_data_2'
+= text_field_tag 'customer_data_2'
+%br
+= text_field_tag 'customer_data_3'
+%br
+= text_field_tag 'customer_data_4'
 %br
 
 %p#cost_center== #{ CostCenter.human_name }: #{ (@order.cost_center.name if @order.cost_center) }
