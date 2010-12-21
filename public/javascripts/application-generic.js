@@ -257,6 +257,8 @@ function restore_button(element) {
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
+  Effect.ScrollTo("header");
+
   $('order_sum').value = '0';
 
   $('order_id').value = 'add_offline_items_to_order';
