@@ -292,4 +292,6 @@ function go_to_tables_offline() {
   $('functions_header_invoice_form').hide();
   $('functions_footer').hide();
   Effect.ScrollTo("header");
+  $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_ipod_tables.png')";
+  $('save_and_go_to_tables').style.border = "none";
 }
