@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(:version => 20110107114850) do
     t.integer  "cost_center_id"
     t.string   "printed_from"
     t.integer  "nr"
-    t.integer  "credit"
+    t.integer  "credit",          :default => 0
   end
 
   create_table "quantities", :force => true do |t|

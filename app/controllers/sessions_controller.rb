@@ -6,9 +6,6 @@ class SessionsController < ApplicationController
     @users = User.all
     redirect_to orders_path if session[:user_id]
   end
-
-  def browser_warning
-  end
   
   def create
     @current_user = User.find_by_login_and_password params[:login], params[:password]

@@ -188,6 +188,9 @@ de:
       email: Ihre E-Mail
       realname: Ihr Name
       your_ip_address: Ihre IP Daten
+    go_to_tables:
+      warning_only_x_orders_left_upgrade_here: "Achtung, nur noch %{credits} Bestellungen. Hier <a href='http://www.billgasto.com'>aufladen</a>"
+      warning_only_x_orders_left: "Achtung, nur noch %{credits} Bestellungen. Auf www.billgasto.com aufladen."
 
   settlements:
     index:
@@ -214,6 +217,8 @@ de:
     browser_warning:
       warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
       continue: weiter
+    no_credits_left:
+      no_credits_left: Die Nutzung für dieses Monat ist aufgebraucht. Bitte erweitern Sie Ihr BillGastro-Paket auf
     new:
       username: Benutzer
       login: Login

@@ -14,6 +14,7 @@
     - left_attribute = use_attributes_for_ipod ? 'left_ipod' : 'left'
     - top_attribute = use_attributes_for_ipod ? 'top_ipod' : 'top'
     = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('/tables/update', {parameters:'id=#{table.id}&table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'"
-
+  - elsif Order.last and Order.last.credit < 1 and not table.user
+    = table.abbreviation
   - else
     %a{ :onclick => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation

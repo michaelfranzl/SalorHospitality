@@ -6,6 +6,9 @@ class OrdersController < ApplicationController
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
     session[:admin_interface] = !ipod? # admin panel per default on on workstation
+    if MyGlobals::last_order_number.nil? # happens only at server restart
+      MyGlobals::last_order_number = Order.last ? Order.last.nr : 0
+    end
   end
 
   def login
@@ -177,6 +180,7 @@ class OrdersController < ApplicationController
 
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.find_all_by_active(true)
+    MyGlobals::credits_left = Order.last ? Order.last.credit : YAML.load_file('config/client_data.yaml')['start_credits']
     if not params[:order_action] == 'cancel_and_go_to_tables'
       if params[:order][:id] == 'add_offline_items_to_order'
         @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
@@ -194,7 +198,7 @@ class OrdersController < ApplicationController
         # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
         @order.nr = get_next_unique_and_reused_order_number
-        @order.credit = Order.last.credit - 1
+        @order.credit = MyGlobals::credits_left -= 1
         @order.sum = calculate_order_sum @order
         @order.cost_center = @cost_centers.first
         @order.save
@@ -263,12 +267,6 @@ class OrdersController < ApplicationController
       @tables = Table.all
 
       render('go_to_tables') and return if not order or order.destroyed?
-
-      if order.credit == 0
-        render 'go_to_credit_expiry' and return
-      elsif order.credit == 25
-        render 'go_to_credit_warning' and return
-      end
 
       case params[:order_action]
         when 'save_and_go_to_tables'

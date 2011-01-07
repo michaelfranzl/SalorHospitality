@@ -1,7 +1,7 @@
 class AddNrAndCreditToOrders < ActiveRecord::Migration
   def self.up
     add_column :orders, :nr, :integer
-    add_column :orders, :credit, :integer
+    add_column :orders, :credit, :integer, :default => 0
   end
 
   def self.down
