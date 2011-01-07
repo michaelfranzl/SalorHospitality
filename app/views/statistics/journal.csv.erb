@@ -2,7 +2,7 @@
 <%= header %>
 <% @orders.each do |o| -%>
 <% o.items.each do |i| -%>
-<% line = sprintf('%s;%s;%s;%s;%s;%s;%.2f;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.id, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.article.name } #{ i.quantity.postfix }" : '-', i.storno_status == 2 ? -i.price : i.price, i.count, i.order.cost_center.name) -%>
+<% line = sprintf('%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.id, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.article.name } #{ i.quantity.postfix }" : '-', number_with_precision((i.storno_status == 2 ? -i.price : i.price), :locale => :de), i.count, i.order.cost_center.name) -%>
 <%= line %>
 <% end -%>
 <% end -%>
