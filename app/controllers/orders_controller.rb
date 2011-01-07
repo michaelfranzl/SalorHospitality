@@ -194,6 +194,7 @@ class OrdersController < ApplicationController
         # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
         @order.nr = get_next_unique_and_reused_order_number
+        @order.credit = Order.last.credit - 1
         @order.sum = calculate_order_sum @order
         @order.cost_center = @cost_centers.first
         @order.save
@@ -245,7 +246,15 @@ class OrdersController < ApplicationController
 
     def conditional_redirect_ajax(order)
       @tables = Table.all
+
       render('go_to_tables') and return if not order or order.destroyed?
+
+      if order.credit == 0
+        render 'go_to_credit_expiry' and return
+      elsif order.credit == 25
+        render 'go_to_credit_warning' and return
+      end
+
       case params[:order_action]
         when 'save_and_go_to_tables'
           render 'go_to_tables'
