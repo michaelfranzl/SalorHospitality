@@ -165,7 +165,7 @@ en:
 
   orders:
     served_by: You were served by
-    new:
+    order:
       sum: SUM
       new: New order
     show:
