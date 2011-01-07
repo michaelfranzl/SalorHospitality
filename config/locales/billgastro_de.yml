@@ -217,8 +217,6 @@ de:
     browser_warning:
       warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
       continue: weiter
-    no_credits_left:
-      no_credits_left: Die Nutzung für dieses Monat ist aufgebraucht. Bitte erweitern Sie Ihr BillGastro-Paket auf
     new:
       username: Benutzer
       login: Login
@@ -319,6 +317,6 @@ de:
   please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
 
   please_enter_item_comment: Spezialwunsch
-  please_enter_item_price: Preis
+  please_enter_item_price: Spezialpreis
 
   loading: Lade ...
