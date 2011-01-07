@@ -27,13 +27,17 @@ class ApplicationController < ActionController::Base
       ! @current_user.nil?
     end
 
-    def ipod?
-      ((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
+    def workstation?
+       request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
+      #not ipod?
     end
 
-    def workstation?
-      not ipod?
+    def ipod?
+      not workstation?
+      #((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
     end
+
+
 
 
   # Scrub sensitive parameters from your log
