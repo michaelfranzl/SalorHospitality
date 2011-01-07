@@ -1,11 +1,20 @@
-h1, h6, #login_logout, .metanavi, div#admin, div#buttons {
+h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright {
   display: none; }
 
 table {
   border-spacing: 0px;
   font-size: small; }
 
+body {
+  font-family: Trebuchet MS; }
+
+h1 {
+  font-size: 110%; }
+
 a.logout {
+  display: none; }
+
+p#cost_center {
   display: none; }
 
 img#logo {

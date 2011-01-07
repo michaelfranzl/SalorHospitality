@@ -1,0 +1,30 @@
+- form_remote_tag :url => '/orders/receive_order_attributes_ajax', :html => { :id => 'order_form_ajax' } do
+  = hidden_field_tag 'order_action'
+  = hidden_field_tag 'order[id]'
+  = hidden_field_tag 'order[table_id]'
+
+  %div.waiter
+    %select#order_user_id{ :name => 'order[user_id]' }
+      = options_from_collection_for_select User.all, :id, :login, { :include_blank => !ipod? }
+
+  #order_info= t :loading
+
+  %div#categories
+    - @categories.each do |category|
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id })", :onmouseup => 'category_onmouseup(this)' }
+        %div{ :class => "category_label" }
+          %span= category.name
+  
+  %div#articles
+  %div#quantities
+  %div#items
+    %div.ordersum_container
+      = t '.sum'
+      = t 'number.currency.format.unit'
+      %input#order_sum{ :value => 0 }
+    %div#inputfields
+    %table#itemstable
+
+  %select{ :id => 'target_table', :name => 'target_table', :onchange => 'if (this.value != "") {document.getElementById("order_action").value="move_order_to_table"; $("order_form_ajax").onsubmit();}' }
+    %option{ :value => '', :selected => true }
+    = options_from_collection_for_select(Table.all, 'id', 'abbreviation')

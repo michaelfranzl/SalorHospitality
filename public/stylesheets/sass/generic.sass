@@ -8,11 +8,11 @@
 div.fieldWithErrors
   :border 5px solid red
 
-div.flash
+div#flash
   :font-style italic
-div.flash_notice
+div#flash_notice
   :color green
-div.flash_error
+div#flash_error
   :color red
 
 
@@ -20,7 +20,7 @@ div.flash_error
 a.iconbutton
   :width 50px
   :height 54px
-  :margin 4px 9px 3px 0px
+  :margin 14px 4px 0px 5px
   :cursor pointer
   :display inline-block
   :-moz-border-radius 5px
@@ -119,10 +119,13 @@ div.invoice
   :margin 10px
   :letter-spacing -1.5px
   select#cost_center_for_invoice
-    :width 183px
+    :width 188px
     :height 49px
     :font-size 140%
-    :margin -50px 10px 0px 0px
+    :position relative
+    :margin-right 8px
+    :top -16px
+    :left 4px
   table
     :border-collapse collapse
     :margin-bottom 20px
@@ -150,7 +153,6 @@ div.invoice
       :width 40px
       a
         :display block
-        :background-color #ccc
         :width 30px
         :height 25px
         :color #333

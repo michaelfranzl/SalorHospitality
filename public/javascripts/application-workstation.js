@@ -1,3 +1,7 @@
+function toggle_admin_interface() {
+  new Ajax.Request('/orders/toggle_admin_interface', {asynchronous:true, evalScripts:true});
+}
+
 function category_onmousedown(category_id) {
   display_articles(category_id); deselect_all_categories();
 }

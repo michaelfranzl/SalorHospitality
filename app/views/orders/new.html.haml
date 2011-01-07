@@ -18,12 +18,10 @@
   %div.waiter
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
 
-
-  .order_info
+  #order_info
     = @order.id ? "#{Order.human_name} ##{@order.id}" : t('.new')
     %br
     = @order.table.name
-
 
   %div#categories
     - @categories.each do |category|
@@ -66,7 +64,7 @@
 
     %table#itemstable
       - @parameters.each do |@p|
-        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :optionslist => @p[:optiosnlist], :optionsnames => @p[:optionsnames], :optionsselect => @p[:optionsselect] }
+        = render 'items/item_tablerow', :locals => { :sort => @p[:sort], :articleid => @p[:articleid], :quantityid => @p[:quantityid] , :itemname => @p[:itemname], :designator => @p[:designator], :count => @p[:count], :comment => @p[:comment], :price => @p[:price], :label => @p[:label], :optionslist => @p[:optionslist], :optionsnames => @p[:optionsnames], :optionsselect => @p[:optionsselect] }
 
 
   %div#functions

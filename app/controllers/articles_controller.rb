@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
     @article.update_attributes params[:article]
     if @article.hidden
       @article.quantities.each do |q|
-        q.update_parameter :hidden, true
+        q.update_attribute :hidden, true
       end
     end
 
@@ -188,11 +188,10 @@ private
 
   
   def compose_item_label(input)
-    price = "EUR #{ input.price }" if not (input.price.nil? or input.price.zero?)
     if input.class == Article
-      label = "#{ input.name }<br><small>#{ price }</small>"
+      label = "#{ input.name }"
     else
-      label = "#{ input.prefix } #{ input.article.name } #{ input.postfix } <br><small>#{ price }</small>"
+      label = "#{ input.prefix } #{ input.article.name } #{ input.postfix }"
     end
     return label
   end

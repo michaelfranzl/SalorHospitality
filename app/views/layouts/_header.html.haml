@@ -1,0 +1,23 @@
+%a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and ( controller.action_name == 'index' or controller.action_name == 'login' )}" }
+  %img{ :src => "/images/client_logos/mohrsederl.png" }
+
+%img#logo{ :src => "/images/logo-small.png" }
+
+- if logged_in?
+  #admin{ :style => "display: visible;" }
+    .adminlinks
+      = link_to( t('activerecord.models.order.other'), '/')
+      - if @current_user.role >= 1
+        = link_to( t('activerecord.models.article.other'), articles_path)
+        = link_to( t('activerecord.models.option.other'), options_path)
+        = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
+      - if @current_user.role >= 2
+        = link_to( t('activerecord.models.settlement.other'), settlements_path)
+        = link_to( t('activerecord.models.category.other'), categories_path)
+        = link_to( t('activerecord.models.tax.other'), taxes_path)
+        = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
+        = link_to( t('activerecord.models.user.other'), users_path)
+        = link_to( t('activerecord.models.table.other'), tables_path)
+        = link_to( t('statistic'), statistics_path)
+        = link_to( t('client_data.menulabel'), '/client_data')
+      = link_to_remote t(:logout, :who => @current_user.login), :url => '/orders/logout'

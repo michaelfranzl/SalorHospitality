@@ -12,12 +12,13 @@ class SettlementsController < ApplicationController
     @settlement = Settlement.find params[:id]
     params[:cost_center_id] ||= CostCenter.first.id
     @selected_cost_center = CostCenter.find(params[:cost_center_id])
+    @orders = Order.find(:all, :conditions => { :settlement_id => @settlement.id }, :order => 'created_at DESC')
   end
 
   def new
     @settlement = Settlement.new
     @settlement.user_id = params[:user_id]
-    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
+    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true }, :order => 'created_at DESC')
   end
 
   def edit

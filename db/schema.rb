@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101026130540) do
+ActiveRecord::Schema.define(:version => 20101127083915) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20101026130540) do
     t.integer  "parent_order_id"
     t.integer  "order_id"
     t.integer  "cost_center_id"
+    t.string   "printed_from"
   end
 
   create_table "quantities", :force => true do |t|
@@ -161,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20101026130540) do
     t.integer  "width_ipod",   :default => 100
     t.integer  "height_ipod",  :default => 60
     t.string   "abbreviation"
+    t.integer  "user_id"
   end
 
   create_table "taxes", :force => true do |t|

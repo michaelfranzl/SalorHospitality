@@ -3,26 +3,35 @@
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
 
 %div#buttons
-  %a.iconbutton.print_kitchen_button{ :href => "/orders/print/#{ @order.id }/0", :title => t(:print)}
-  %a.iconbutton.print_bar_button{ :href => "/orders/print/#{ @order.id }/1", :title => t(:print)}
-  %a.iconbutton.print_guestroom_button{ :href => "/orders/print/#{ @order.id }/2", :title => t(:print)}
+  %a.iconbutton.print_kitchen_button{ :href => "/orders/print_and_finish/#{ @order.id }/0", :title => t(:print)}
+  %a.iconbutton.print_bar_button{ :href => "/orders/print_and_finish/#{ @order.id }/1", :title => t(:print)}
+  %a.iconbutton.print_guestroom_button{ :href => "/orders/print_and_finish/#{ @order.id }/2", :title => t(:print)}
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
-  %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
+  %a.iconbutton.tables_button{ :href => "/", :title => t(:go_back) }
   %a.iconbutton.storno_button{ :href => "/orders/storno/#{@order.id}", :title => (t :storno) }
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
   
-%h3= @client_data[:name]
-
 %p
   = @client_data[:address]
   %br
   = @client_data[:taxnumber]
 
 %h1== #{ t 'invoice' } ##{ @order.id }
-%p== #{ CostCenter.human_name }: #{ (@order.cost_center.name if @order.cost_center) }
+
+= text_field_tag 'customer_data_1'
+%br
+= text_field_tag 'customer_data_2'
+%br
+= text_field_tag 'customer_data_3'
+%br
+= text_field_tag 'customer_data_4'
+%br
+
+%p#cost_center== #{ CostCenter.human_name }: #{ (@order.cost_center.name if @order.cost_center) }
 %p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
 %p= l @order.created_at, :format => :long
+
 
 %table.printed_invoice
   %tr
@@ -72,3 +81,8 @@
       %td.three= number_to_currency net
       %td.four= number_to_currency vat
       %td.five= number_to_currency gro
+
+%br
+%br
+
+%small Bill Gastro Gastronomiesysteme www.billgastro.com

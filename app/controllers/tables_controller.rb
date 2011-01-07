@@ -50,4 +50,8 @@ class TablesController < ApplicationController
     render :index
   end
 
+  def ipod
+    @tables = Table.all
+  end
+
 end

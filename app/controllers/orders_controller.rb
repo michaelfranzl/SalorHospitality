@@ -1,55 +1,49 @@
 class OrdersController < ApplicationController
 
+  skip_before_filter :fetch_logged_in_user, :only => [:login]
+
   def index
+    @tables = Table.all
+    @categories = Category.find(:all, :order => :sort_order)
+    session[:admin_interface] = !ipod? # admin panel per default on on workstation
+  end
+
+  def login
+    @current_user = User.find_by_login_and_password(params[:login], params[:password])
+    if @current_user
+      @tables = Table.all
+      @categories = Category.find(:all, :order => :sort_order)
+      session[:user_id] = @current_user
+      session[:admin_interface] = !ipod? # admin panel per default on on workstation
+      render 'login_successful'
+    else
+      @users = User.all
+      @errormessage = t :wrong_password
+      render 'login_wrong'
+    end
+  end
+
+  def logout
+    session[:user_id] = @current_user = nil
+    render 'go_to_login'
+  end
+
+  def statusupdate_tables
     @tables = Table.all
     @last_finished_order = Order.find_all_by_finished(true).last
   end
 
   def show
     @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
-    @order = Order.find(params[:id])
+    if params[:id] != 'last'
+      @order = Order.find(params[:id])
+    else
+      @order = Order.find_all_by_finished(true).last
+    end
     @previous_order, @next_order = neighbour_orders(@order)
     respond_to do |wants|
       wants.html
       wants.bon { render :text => generate_escpos_invoice(@order) }
-    end
-  end
-
-  def new
-    @order = Order.new
-    @categories = Category.find(:all, :order => :sort_order)
-    @order.table_id = params[:table_id]
-    @order.user = @current_user if ipod?
-    @table = Table.find(@order.table_id)
-    @cost_centers = CostCenter.find_all_by_active(true)
-  end
-
-  def edit
-    @order = Order.find(params[:id])
-    @categories = Category.find(:all, :order => :sort_order)
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.finished ? redirect_to(orders_path) : render(:new)
-  end
-
-  def create
-    @order = Order.new(params[:order])
-    session[:last_user_id] = @order.user_id
-    @categories = Category.find(:all, :order => :sort_order)
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    @order.table_id = params[:table_id]
-    @order.sum = calculate_order_sum @order
-    @order.save ? process_order(@order) : render(:new)
-  end
-
-  def update
-    @order = Order.find(params[:id])
-    @categories = Category.all
-    @cost_centers = CostCenter.find(:all, :conditions => { :active => 1 })
-    if @order.update_attributes(params[:order])
-      @order_modified = Order.find(params[:id]) # re-read
-      process_order @order_modified
-    else
-      render(:new)
     end
   end
 
@@ -62,12 +56,6 @@ class OrdersController < ApplicationController
     unsettled_userIDs.uniq!
     @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
     flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
-  end
-  
-  def destroy
-    @order = Order.find(params[:id])
-    @order.destroy
-    redirect_to orders_path
   end
 
   def items
@@ -87,25 +75,12 @@ class OrdersController < ApplicationController
   end
 
   def split_invoice_one_at_a_time
-    @item_to_split = Item.find(params[:id]) # find item on which was clicked
+    @item_to_split = Item.find_by_id(params[:id]) # find item on which was clicked
     @order = @item_to_split.order
     @cost_centers = CostCenter.find_all_by_active(true)
     make_split_invoice(@order, [@item_to_split], :one)
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
-  end
-
-  def storno
-    @order = Order.find(params[:id])
-    @previous_order, @next_order = neighbour_orders(@order)
-    @order.update_attributes(params[:order])
-    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
-    make_storno(@order, items_for_storno)
-    @order = Order.find(params[:id]) # re-read
-    respond_to do |wants|
-      wants.html
-      wants.js { render 'display_storno' }
-    end
   end
 
   def separate_item
@@ -122,23 +97,27 @@ class OrdersController < ApplicationController
     end
   end
 
-  # This function not only prints, but also finishes orders
-  def print
+  def toggle_admin_interface
+    if session[:admin_interface]
+      session[:admin_interface] = !session[:admin_interface]
+    else
+      session[:admin_interface] = true
+    end
+    @tables = Table.all
+  end
+
+  def print_and_finish
     @order = Order.find params[:id]
-    @order.update_attributes params[:order] #unnecessary i guess
     if not @order.finished and ipod?
       @order.user = @current_user
       @order.created_at = Time.now
     end
-    @order.finished = true
-    @order.save
 
     if @order.order # unlink any parent relationships
       @order.items.each do |item|
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
       end
-
       @order.order.items.each do |item|
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
@@ -147,18 +126,158 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if /tables/.match(request.referer)
-      unfinished_orders_on_same_table = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
-      unfinished_orders_on_same_table.empty? ? redirect_to(orders_path) : redirect_to(table_path(@order.table))
-    else
-      redirect_to orders_path
-    end
     File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     `cat order.escpos > /dev/ttyPS#{ params[:port] }`
+
+    justfinished = false
+    if not @order.finished
+      @order.finished = true
+      @order.printed_from = "#{ request.remote_ip } on printer #{ params[:port] }"
+      justfinished = true
+      @order.save
+    end
+
+    @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @order.table.update_attribute :user, nil if @orders.empty?
+    @cost_centers = CostCenter.find_all_by_active(true)
+
+    respond_to do |wants|
+      wants.html { redirect_to order_path @order }
+      wants.js {
+        if not justfinished
+          render :nothing => true
+        elsif not @orders.empty?
+          render('go_to_invoice_form')
+        else
+          @tables = Table.all
+          render('go_to_tables')
+        end
+      }
+    end
+  end
+
+  def go_to_table # go_to_invoice(s) OR go_to_order_form
+    @table = Table.find(params[:id])
+    @cost_centers = CostCenter.find_all_by_active(true)
+    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
+    if @orders.size > 1
+      render 'go_to_invoice_form'
+    else
+      @order = @orders.first
+      render 'go_to_order_form'
+    end
+  end
+
+  def go_to_order_form # to be called only with /id
+    @order = Order.find(params[:id])
+    @table = @order.table
+    @cost_centers = CostCenter.find_all_by_active(true)
+    render 'go_to_order_form'
+  end
+
+  def receive_order_attributes_ajax
+    @cost_centers = CostCenter.find_all_by_active(true)
+    if not params[:order_action] == 'cancel_and_go_to_tables'
+      if params[:order][:id] == 'add_offline_items_to_order'
+        @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
+      else
+        @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
+      end
+
+      if @order
+        #similar to update
+        @order.update_attributes(params[:order])
+        @order.reload
+        @order.table.update_attribute :user, @order.user
+      else
+        #similar to create
+        # create new order OR (if order exists already on table) add items to existing order
+        @order = Order.new(params[:order])
+        @order.sum = calculate_order_sum @order
+        @order.cost_center = @cost_centers.first
+        @order.save
+        @order.table.update_attribute :user, @order.user
+      end
+      process_order(@order)
+    end
+    conditional_redirect_ajax(@order)
+  end
+
+  def storno
+    @order = Order.find(params[:id])
+    @previous_order, @next_order = neighbour_orders(@order)
+    @order.update_attributes(params[:order])
+    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
+    make_storno(@order, items_for_storno)
+    @order = Order.find(params[:id]) # re-read
+    respond_to do |wants|
+      wants.html
+      wants.js { render 'display_storno' }
+    end
+  end
+
+  def last_invoices
+    @last_orders = Order.find(:all, :conditions => { :finished => true }, :limit => 10, :order => 'created_at DESC')
   end
 
 
   private
+
+    def process_order(order)
+      if order.items.size.zero?
+        order.delete
+        order.table.update_attribute :user, nil
+        return
+      end 
+
+      order.update_attribute( :sum, calculate_order_sum(order) )
+
+      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
+      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
+      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+
+      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
+      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
+    end
+
+    def conditional_redirect_ajax(order)
+      @tables = Table.all
+      render('go_to_tables') and return if not order or order.destroyed?
+      case params[:order_action]
+        when 'save_and_go_to_tables'
+          render 'go_to_tables'
+        when 'cancel_and_go_to_tables'
+          render 'go_to_tables'
+        when 'save_and_go_to_invoice'
+          @orders = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
+          render 'go_to_invoice_form'
+        when 'move_order_to_table'
+          move_order_to_table(order, params[:target_table])
+          @tables = Table.all
+          render 'go_to_tables'
+      end
+    end
+
+    def move_order_to_table(order,target_table_id)
+      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
+      if target_order
+        # mix items into existing order
+        order.items.each do |i|
+          i.update_attribute :order, target_order
+        end
+        order.destroy
+      else
+        # move order to empty table
+        order.update_attribute :table_id, target_table_id
+      end
+
+      unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
+      order.table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
+
+      unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })
+      Table.find(target_table_id).update_attribute :user, order.user
+    end
 
     def neighbour_orders(order)
       orders = Order.find_all_by_finished(true)
@@ -168,42 +287,6 @@ class OrdersController < ApplicationController
       next_order = orders[idx+1]
       next_order = order if next_order.nil?
       return previous_order, next_order
-    end
-
-    def process_order(order)
-      order.items.each { |i| i.delete if i.count.zero? }
-      order.delete and redirect_to orders_path and return if order.items.size.zero?
-
-      case params[:order_action]
-        when 'save_and_go_back'
-          redirect_to orders_path
-        when 'go_to_invoice'
-          redirect_to table_path(order.table)
-        when 'move_order_to_table'
-          order = move_order_to_table(order, params[:target_table])
-          redirect_to orders_path
-      end
-
-      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(:drink)) }
-      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
-
-      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(:food)) }
-      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-
-      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(:takeaway)) }
-      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
-
-      order.update_attribute( :sum, calculate_order_sum(order) )
-    end
-
-    def move_order_to_table(order,table_id)
-      @target_order = Order.find(:all, :conditions => { :table_id => table_id, :finished => false }).first
-      @target_order = Order.new(:table_id => table_id, :user_id => @current_user.id) if not @target_order
-      order.items.each do |i|
-        i.update_attribute :order, @target_order
-      end
-      @order.destroy
-      return @target_order
     end
 
     def reduce_stocks(order)
@@ -217,7 +300,7 @@ class OrdersController < ApplicationController
 
 
     def make_split_invoice(parent_order, split_items, mode)
-      return if split_items.empty?
+      return if split_items.nil? or split_items.empty?
       if parent_order.order # if there already exists one child order, use it for the split invoice
         split_invoice = parent_order.order
       else # create a brand new split invoice, and make it belong to the parent order
@@ -229,8 +312,9 @@ class OrdersController < ApplicationController
       case mode
         when :all
           split_items.each do |i|
-            i.update_attribute :order_id, split_invoice.id # move item to the new order
-            i.update_attribute :partial_order, false # after the item has moved to the new order, leave it alone
+            i.order_id = split_invoice.id # move item to the new order
+            i.partial_order = false # after the item has moved to the new order, leave it alone
+            i.save
           end
         when :one
           parent_item = split_items.first # in this mode there will only single items to split
@@ -247,10 +331,10 @@ class OrdersController < ApplicationController
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1
           split_item.printed_count += 1
+          split_item.save
           parent_item.count -= 1
           parent_item.printed_count -= 1
           parent_item.count == 0 ? parent_item.delete : parent_item.save
-          split_item.save
       end
       parent_order = Order.find(parent_order.id) # re-read
 
@@ -285,7 +369,7 @@ class OrdersController < ApplicationController
 
 
     def generate_escpos_invoice(order)
-      client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
+      client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
 
       header =
       "\e@"     +  # Initialize Printer
@@ -384,21 +468,22 @@ class OrdersController < ApplicationController
 
 
 
-    def generate_escpos_items(type)
+    def generate_escpos_items(order, type)
       overall_output = ''
 
-      Order.find_all_by_finished(false).each do |order|
+      #Order.find_all_by_finished(false).each do |order|
         per_order_output = ''
         per_order_output +=
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
 
-        "%-6.6s %13s\n" % [l(Time.now, :format => :time_short), order.table.name] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), order.id, @current_user.login, order.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
         printed_items_in_this_order = 0
         order.items.each do |i|
+
           next if (i.count <= i.printed_count)
           next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
 
@@ -422,7 +507,7 @@ class OrdersController < ApplicationController
         "\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
         overall_output += per_order_output if printed_items_in_this_order != 0
-      end
+      #end
 
       overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
       overall_output.gsub!(/\xE4/,"\x84") #ä
