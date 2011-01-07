@@ -232,24 +232,11 @@ class OrdersController < ApplicationController
 
       order.update_attribute( :sum, calculate_order_sum(order) )
 
-      # group identical items into one
-      items = order.items
-      n = items.size - 1
-      0.upto(n) do |i|
-        (i+1).upto(n) do |j|
-          if (items[i].article_id  == items[j].article_id and
-              items[i].quantity_id == items[j].quantity_id and
-              items[i].price       == items[j].price and
-              items[i].comment     == items[j].comment
-             )
-            items[i].count += items[j].count and items[j].delete
-          end
-        end         
-      end
-
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
       File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+
+      group_identical_items(order)
 
       `cat bar.escpos > /dev/ttyPS1` #1 = Bar
       `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
@@ -275,23 +262,41 @@ class OrdersController < ApplicationController
     end
 
     def move_order_to_table(order,target_table_id)
-      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
-      if target_order
+      @target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
+      if @target_order
         # mix items into existing order
         order.items.each do |i|
-          i.update_attribute :order, target_order
+          i.update_attribute :order, @target_order
         end
+        group_identical_items(@target_order)
         order.destroy
       else
         # move order to empty table
         order.update_attribute :table_id, target_table_id
       end
 
+      # change table users and colors
       unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
       order.table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
-
       unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })
       Table.find(target_table_id).update_attribute :user, order.user
+    end
+
+    def group_identical_items(o)
+      items = o.items
+      n = items.size - 1
+      0.upto(n) do |i|
+        (i+1).upto(n) do |j|
+          if (items[i].article_id  == items[j].article_id and
+              items[i].quantity_id == items[j].quantity_id and
+              items[i].price       == items[j].price and
+              items[i].comment     == items[j].comment
+             )
+            items[i].count += items[j].count and items[j].delete
+            items[i].save
+          end
+        end         
+      end
     end
 
     def neighbour_orders(order)
