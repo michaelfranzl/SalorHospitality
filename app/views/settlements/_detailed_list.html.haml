@@ -10,7 +10,7 @@
     %tr
     %tr
       %td.order_begin{ :colspan => 6 }
-        = t('.order_number_on_table_on_date', :order => Order.human_name, :number => so.id, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
+        = t('.order_number_on_table_on_date', :order => Order.human_name, :number => so.nr, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
         %br
         == #{ User.human_name }: #{ so.user.title }
         %br

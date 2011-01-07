@@ -193,6 +193,7 @@ class OrdersController < ApplicationController
         #similar to create
         # create new order OR (if order exists already on table) add items to existing order
         @order = Order.new(params[:order])
+        @order.nr = get_next_unique_and_reused_order_number
         @order.sum = calculate_order_sum @order
         @order.cost_center = @cost_centers.first
         @order.save
@@ -225,6 +226,7 @@ class OrdersController < ApplicationController
 
     def process_order(order)
       if order.items.size.zero?
+        MyGlobals::unused_order_numbers << order.nr
         order.delete
         order.table.update_attribute :user, nil
         return
@@ -305,6 +307,7 @@ class OrdersController < ApplicationController
         split_invoice = parent_order.order
       else # create a brand new split invoice, and make it belong to the parent order
         split_invoice = parent_order.clone
+        split_invoice.nr = get_next_unique_and_reused_order_number
         split_invoice.save
         parent_order.order = split_invoice  # make an association between parent and child
         split_invoice.order = parent_order  # ... and vice versa
@@ -338,7 +341,10 @@ class OrdersController < ApplicationController
       end
       parent_order = Order.find(parent_order.id) # re-read
 
-      parent_order.delete if parent_order.items.empty?
+      if parent_order.items.empty?
+        MyGlobals::unused_order_numbers << parent_order.nr
+        parent_order.delete
+      end
       parent_order.update_attribute( :sum, calculate_order_sum(parent_order) ) if not parent_order.items.empty?
       split_invoice.update_attribute( :sum, calculate_order_sum(split_invoice) )
     end
@@ -367,6 +373,17 @@ class OrdersController < ApplicationController
       return subtotal
     end
 
+    def get_next_unique_and_reused_order_number
+      if MyGlobals::unused_order_numbers.empty?
+        nr = MyGlobals::last_order_number += 1
+      else
+        nr = MyGlobals::unused_order_numbers.first
+        MyGlobals::unused_order_numbers.delete(nr)
+      end
+      return nr
+    end
+
+
 
     def generate_escpos_invoice(order)
       client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
@@ -386,7 +403,7 @@ class OrdersController < ApplicationController
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
-      t('invoice_numer_X_at_time', :number => order.id, :datetime => l(order.created_at, :format => :long)) + "\n\n" +
+      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at, :format => :long)) + "\n\n" +
 
       "\e!\x00" +  # Font A
       "               Artikel    EP    Stk   GP\n"
@@ -477,7 +494,7 @@ class OrdersController < ApplicationController
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
 
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), order.id, @current_user.login, order.table.abbreviation] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), order.nr, @current_user.login, order.table.abbreviation] +
 
         per_order_output += "=====================\n"
 

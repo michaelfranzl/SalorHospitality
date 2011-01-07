@@ -198,7 +198,7 @@ de:
     new:
       set_date: Datum für diese Abrechnung
     detailed_list:
-      order_number_on_table_on_date: '{{order}} #{{number}} auf {{table}} am {{time}}'
+      order_number_on_table_on_date: '%{order} %{number} auf %{table} am %{time}'
       count: Anzahl
       unit_price: Stück
       total: Gesamt
@@ -262,7 +262,7 @@ de:
   new: Neu
   print: Drucken
   display: Anzeigen
-  logout: '{{who}} abmelden'
+  logout: '%{who} abmelden'
   
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
@@ -302,14 +302,14 @@ de:
 
 # TRANSLATIONS FOR CONTROLLERS
   all_foods_were_removed_from_the_menucard: Alle Speisen wurden aus der Menükarte entfernt.
-  was_successfully_deleted: '{{what}} wurde erfolgreich gelöscht.'
+  was_successfully_deleted: '%{what} wurde erfolgreich gelöscht.'
   there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
   logout_successful: Sie haben sich erfolgreich abgemeldet.
   user_not_found: Benutzer nicht gefunden.
   wrong_password: Falsches Passwort.
 
-  served_by_X_on_table_Y: Es bediente Sie {{waiter}} auf {{table}}
-  invoice_numer_X_at_time: Rechnung Nr. {{number}} am {{datetime}}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
+  invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
 
   please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
 

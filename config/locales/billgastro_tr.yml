@@ -198,7 +198,7 @@ tr:
     new:
       set_date: Hesap tarihi
     detailed_list:
-      order_number_on_table_on_date: '{{order}} #{{number}} auf {{table}} am {{time}}'
+      order_number_on_table_on_date: '%{order} %{number} auf %{table} am %{time}'
       count: Miktar
       unit_price: Tane
       total: Hepsi
@@ -262,7 +262,7 @@ tr:
   new: Yeni
   print: Basmak
   display: Göstermek
-  logout: '{{who}} cikis yapmak'
+  logout: '%{who} cikis yapmak'
   
   blackboard_generic_name: Menü tahtasi
   waiterpad_generic_name: Siparis listesi
@@ -302,14 +302,14 @@ tr:
 
 # TRANSLATIONS FOR CONTROLLERS
   all_foods_were_removed_from_the_menucard: Bütün yemekler menü kartindan cikartildi.
-  was_successfully_deleted: '{{what}} silindi.'
+  was_successfully_deleted: '%{what} silindi.'
   there_are_no_open_settlements: Acik hesap kalmadi.
   logout_successful: Cikis yaptiniz.
   user_not_found: Kullanici bulunmadi.
   wrong_password: Yanlis sifre.
 
-  served_by_X_on_table_Y: Size {{table}} {{waiter}} hizmet etti. 
-  invoice_numer_X_at_time: Fatura No. {{number}},  {{datetime}}
+  served_by_X_on_table_Y: Size %{table} %{waiter} hizmet etti. 
+  invoice_numer_X_at_time: Fatura No. %{number},  %{datetime}
 
   please_enter_email_and_realname: Lütfen isminzi ve e-mail adresinizi yaziniz.
 

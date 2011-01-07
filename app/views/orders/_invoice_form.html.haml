@@ -12,7 +12,7 @@
         = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
       = link_to_remote '', :url => "/orders/go_to_order_form/#{ invoice_form.id }", :html => { :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
-    %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.id}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
+    %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
     %p= l invoice_form.created_at, :format => :long
     %table{ :class => 'invoice' }
       - subtotal = 0

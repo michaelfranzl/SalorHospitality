@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user
   helper_method :logged_in?, :ipod?, :workstation?
 
+  if not MyGlobals::last_order_number
+    MyGlobals::last_order_number = Order.last ? Order.last.nr : 0
+  end
+
   private
 
     def local_request?

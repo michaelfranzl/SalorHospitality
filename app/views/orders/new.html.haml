@@ -19,7 +19,7 @@
     = order_form.collection_select :user_id, User.all, :id, :login, { :include_blank => !ipod? }
 
   #order_info
-    = @order.id ? "#{Order.human_name} ##{@order.id}" : t('.new')
+    = @order.id ? "#{Order.human_name} ##{@order.nr}" : t('.new')
     %br
     = @order.table.name
 

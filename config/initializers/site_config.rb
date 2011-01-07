@@ -1,7 +1,7 @@
 require 'active_support'
 
 module MyGlobals
-  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :client, :last_js_change
+  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :client, :last_js_change, :last_order_number, :unused_order_numbers
 
   @@predefined_count = []
   0.upto(15) { |i|
@@ -17,5 +17,8 @@ module MyGlobals
   @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Fässer', 'Stueck' ]    
 
   @@client = "local"
+
+  @@last_order_number = nil
+  @@unused_order_numbers = Array.new
 
 end
