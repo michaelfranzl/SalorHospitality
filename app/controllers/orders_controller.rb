@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : {}
+    @client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : {}
     if params[:id] != 'last'
       @order = Order.find(params[:id])
     else
@@ -126,8 +126,8 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    File.open('order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
-    `cat order.escpos > /dev/ttyPS#{ params[:port] }`
+    File.open('tmp/order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
+    `cat tmp/order.escpos > /dev/ttyPS#{ params[:port] }`
 
     justfinished = false
     if not @order.finished
@@ -232,13 +232,13 @@ class OrdersController < ApplicationController
 
       order.update_attribute( :sum, calculate_order_sum(order) )
 
-      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+      File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
+      File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
+      File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
 
-      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
-      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
+      `cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
+      `cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+      `cat tmp/kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
     def conditional_redirect_ajax(order)
@@ -369,7 +369,7 @@ class OrdersController < ApplicationController
 
 
     def generate_escpos_invoice(order)
-      client_data = File.exist?('client_data.yaml') ? YAML.load_file( 'client_data.yaml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
+      client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
 
       header =
       "\e@"     +  # Initialize Printer
