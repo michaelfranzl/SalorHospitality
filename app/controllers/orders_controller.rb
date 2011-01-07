@@ -235,9 +235,24 @@ class OrdersController < ApplicationController
 
       order.update_attribute( :sum, calculate_order_sum(order) )
 
-      File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+      # group identical items into one
+      items = order.items
+      n = items.size - 1
+      0.upto(n) do |i|
+        (i+1).upto(n) do |j|
+          if (items[i].article_id  == items[j].article_id and
+              items[i].quantity_id == items[j].quantity_id and
+              items[i].price       == items[j].price and
+              items[i].comment     == items[j].comment
+             )
+            items[i].count += items[j].count and items[j].delete
+          end
+        end         
+      end
+
+      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
+      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
+      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
 
       `cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
       `cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
