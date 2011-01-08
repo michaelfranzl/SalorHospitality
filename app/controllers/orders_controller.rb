@@ -268,6 +268,7 @@ class OrdersController < ApplicationController
         order.items.each do |i|
           i.update_attribute :order, @target_order
         end
+        @target_order.update_attribute( :sum, calculate_order_sum(@target_order) )
         group_identical_items(@target_order)
         order.destroy
       else
