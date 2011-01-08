@@ -1,10 +1,7 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  # protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  # protect_from_forgery
 
+  helper :all # include all helpers, all the time
   before_filter :fetch_logged_in_user
   helper_method :logged_in?, :ipod?, :workstation?
 
@@ -36,10 +33,4 @@ class ApplicationController < ActionController::Base
       not workstation?
       #((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
     end
-
-
-
-
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
 end

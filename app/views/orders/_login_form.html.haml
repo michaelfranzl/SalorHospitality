@@ -1,7 +1,7 @@
 - if ipod?
   %img#logo{ :src => "/images/logo-small.png", :width => 200, :height => 77 }
 
-- form_remote_tag :url => '/orders/login' do
+= form_tag url_for(:controller => :orders, :action => :login), :remote => true do
   %p
     = label_tag 'login', (t '.username')
     = select_tag 'login', options_from_collection_for_select(User.all, 'login', 'login')

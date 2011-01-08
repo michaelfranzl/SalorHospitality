@@ -1,4 +1,3 @@
-!!! XML
 !!!
 
 %html
@@ -11,11 +10,12 @@
     %title Bill Gastro
 
     = stylesheet_link_tag('generic', :media => 'screen')
-    = javascript_include_tag 'prototype.js'
-    = javascript_include_tag 'effects.js'
+    = javascript_include_tag :defaults
     = javascript_include_tag 'application-generic.js'
     %script{ :type => 'text/javascript' }= generate_js_variables
     = javascript_include_tag "/articles.js"
+    = csrf_meta_tag
+
 
     - if ipod?
       = stylesheet_link_tag('ipod', :media => 'screen')

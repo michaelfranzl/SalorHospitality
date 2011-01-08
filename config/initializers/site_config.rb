@@ -19,7 +19,7 @@ module MyGlobals
 
   
   @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => '' }
-  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Fässer', 'Stueck' ]    
+  @@stock_units = [ '', 'Flaschen', 'Bouteille', 'Magnum', 'Doppler', 'Liter', 'ml', 'kg', 'dag', 'g', 'ml', 'Packungen', 'Faesser', 'Stueck' ]    
   @@client = "local"
 
 end

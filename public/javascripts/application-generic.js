@@ -296,3 +296,13 @@ function go_to_tables_offline() {
   $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_ipod_tables.png')";
   $('save_and_go_to_tables').style.border = "none";
 }
+
+$(document).ready(
+  function(){
+    setInterval(
+      function(){
+        alert('hallo'); //$('#seats').load("/flights/<%= @flight.id %>/seats");   = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => f, :condition => 'tableupdates == true' )
+      },
+    5000);
+  }
+);

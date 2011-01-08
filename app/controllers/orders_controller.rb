@@ -1,3 +1,4 @@
+# coding: utf-8
 class OrdersController < ApplicationController
 
   skip_before_filter :fetch_logged_in_user, :only => [:login]
@@ -493,18 +494,18 @@ class OrdersController < ApplicationController
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
-      output.gsub!(/\xE4/,"\x84") #ä
-      output.gsub!(/\xFC/,"\x81") #ü
-      output.gsub!(/\xF6/,"\x94") #ö
-      output.gsub!(/\xC4/,"\x8E") #Ä
-      output.gsub!(/\xDC/,"\x9A") #Ü
-      output.gsub!(/\xD6/,"\x99") #Ö
-      output.gsub!(/\xDF/,"\xE1") #ß
-      output.gsub!(/\xE9/,"\x82") #é
-      output.gsub!(/\xE8/,"\x7A") #è
-      output.gsub!(/\xFA/,"\xA3") #ú
-      output.gsub!(/\xF9/,"\x97") #ù
-      output.gsub!(/\xC9/,"\x90") #É
+      output.gsub!(/\x00E4/,"\x84") #ä
+      output.gsub!(/\x00FC/,"\x81") #ü
+      output.gsub!(/\x00F6/,"\x94") #ö
+      output.gsub!(/\x00C4/,"\x8E") #Ä
+      output.gsub!(/\x00DC/,"\x9A") #Ü
+      output.gsub!(/\x00D6/,"\x99") #Ö
+      output.gsub!(/\x00DF/,"\xE1") #ß
+      output.gsub!(/\x00E9/,"\x82") #é
+      output.gsub!(/\x00E8/,"\x7A") #è
+      output.gsub!(/\x00FA/,"\xA3") #ú
+      output.gsub!(/\x00F9/,"\x97") #ù
+      output.gsub!(/\x00C9/,"\x90") #É
       return output
     end
 
@@ -554,18 +555,18 @@ class OrdersController < ApplicationController
       #end
 
       overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
-      overall_output.gsub!(/\xE4/,"\x84") #ä
-      overall_output.gsub!(/\xFC/,"\x81") #ü
-      overall_output.gsub!(/\xF6/,"\x94") #ö
-      overall_output.gsub!(/\xC4/,"\x8E") #Ä
-      overall_output.gsub!(/\xDC/,"\x9A") #Ü
-      overall_output.gsub!(/\xD6/,"\x99") #Ö
-      overall_output.gsub!(/\xDF/,"\xE1") #ß
-      overall_output.gsub!(/\xE9/,"\x82") #é
-      overall_output.gsub!(/\xE8/,"\x7A") #è
-      overall_output.gsub!(/\xFA/,"\xA3") #ú
-      overall_output.gsub!(/\xF9/,"\x97") #ù
-      overall_output.gsub!(/\xC9/,"\x90") #É
+      overall_output.gsub!(/\x00E4/,"\x84") #ä
+      overall_output.gsub!(/\x00FC/,"\x81") #ü
+      overall_output.gsub!(/\x00F6/,"\x94") #ö
+      overall_output.gsub!(/\x00C4/,"\x8E") #Ä
+      overall_output.gsub!(/\x00DC/,"\x9A") #Ü
+      overall_output.gsub!(/\x00D6/,"\x99") #Ö
+      overall_output.gsub!(/\x00DF/,"\xE1") #ß
+      overall_output.gsub!(/\x00E9/,"\x82") #é
+      overall_output.gsub!(/\x00E8/,"\x7A") #è
+      overall_output.gsub!(/\x00FA/,"\xA3") #ú
+      overall_output.gsub!(/\x00F9/,"\x97") #ù
+      overall_output.gsub!(/\x00C9/,"\x90") #É
       return overall_output
     end
 
