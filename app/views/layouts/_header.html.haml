@@ -20,4 +20,4 @@
         = link_to( t('activerecord.models.table.other'), tables_path)
         = link_to( t('statistic'), statistics_path)
         = link_to( t('client_data.menulabel'), '/client_data')
-      = link_to t(:logout, :who => @current_user.login), :url => '/orders/logout', :remote => true
+      = link_to t(:logout, :who => @current_user.login), url_for(:controller => :orders, :action => :logout), :remote => true

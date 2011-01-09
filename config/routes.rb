@@ -42,8 +42,9 @@ Billgastro2::Application.routes.draw do
       get 'items'
       post 'toggle_admin_interface'
       post 'login'
+      get 'logout'
       get 'split_invoice_all_at_once'
-      get 'split_invoice_all_at_once'
+      post :statusupdate_tables
     end
   end
 
