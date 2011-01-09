@@ -2,7 +2,7 @@
 
 #message
 
-- form_remote_tag :url => { :action => :update }, :html => { :id => 'client_data_form' } do
+- form_tag :url => { :action => :update }, :remote => true, :html => { :id => 'client_data_form' } do
   = label_tag 'data_name', t('.name')
   = text_field_tag 'data[name]', @client_data[:name]
   %br

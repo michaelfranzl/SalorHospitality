@@ -48,16 +48,7 @@ Billgastro2::Application.routes.draw do
     end
   end
 
-  resources :options
-  resources :settlements
-  resources :categories
-  resources :groups
-  resources :stocks
-  resources :cost_centers
-  resources :taxes
-  resources :menucard
-  resources :waiterpad
-  resources :blackboard
+  resources :options, :settlements, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard
 
   resources :statistics do
     collection do
@@ -85,6 +76,8 @@ Billgastro2::Application.routes.draw do
       get :browser_warning
     end
   end
+
+  match 'client_data' => 'client_data#index'
 
   # Sample resource route with sub-resources:
   #   resources :products do
