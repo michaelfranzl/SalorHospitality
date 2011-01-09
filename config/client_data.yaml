@@ -1,10 +1,9 @@
---- !map:HashWithIndifferentAccess 
+--- !map:ActiveSupport::HashWithIndifferentAccess 
 name: Restaurant
+subtitle: Subtitle
 address: Adress
 taxnumber: Tax Number
 slogan1: Slogan 1
 slogan2: Slogan 2
 internet: Internet
-subtitle: Subtitle
 email: Email
-start_credits: 50
