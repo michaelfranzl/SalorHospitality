@@ -23,7 +23,7 @@ class Article < ActiveRecord::Base
     find(:all, :conditions => 'waiterpad = 1 AND hidden = false', :order => 'price')
   end
   
-  validates_presence_of :name, :type, :category_id
+  validates_presence_of :name, :category_id
   
   validates_each :price do |record, attr_name, value|
     record.errors.add(attr_name, I18n.t(:must_be_entered_either_for_article_or_for_quantity)) if record.quantities.empty? and !value
