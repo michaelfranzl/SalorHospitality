@@ -31,6 +31,7 @@ Billgastro2::Application.routes.draw do
       get 'remove_all_foods_from_menucard'
       get 'listall'
       post 'update'
+      post :find_articles
     end
   end
 
