@@ -202,7 +202,7 @@ en:
     new:
       set_date: Set a date for this settlement
     detailed_list:
-      order_number_on_table_on_date: '{{order}} number {{number}} on {{table}} at {{time}}'
+      order_number_on_table_on_date: '%{order} number %{number} on %{table} at %{time}'
       count: Count
       unit_price: Unit Price
       total: Total
@@ -307,14 +307,14 @@ en:
 
 # TRANSLATIONS FOR CONTROLLERS
   all_foods_were_removed_from_the_menucard: All foods were remove from the menucard.
-  successfully_deleted: '{{what}} was successfully deleted.'
+  successfully_deleted: '%{what} was successfully deleted.'
   there_are_no_open_settlements: There are no open settlements.
   logout_successful: You have logged off successfully.
   user_not_found: User not found
   wrong_password: Wrong password
 
-  served_by_X_on_table_Y: You were served by {{waiter}} on {{table}}
-  invoice_numer_X_at_time: Invoice No {{number}} at {{datetime}}
+  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
+  invoice_numer_X_at_time: Invoice No %{number} at %{datetime}
 
   please_enter_email_and_realname: Please enter your email address and real name.
 
