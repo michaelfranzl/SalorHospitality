@@ -45,6 +45,7 @@ Billgastro2::Application.routes.draw do
       get 'logout'
       get 'split_invoice_all_at_once'
       post :statusupdate_tables
+      post :go_to_table
     end
   end
 

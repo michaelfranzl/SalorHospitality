@@ -4,7 +4,10 @@ class ArticlesController < ApplicationController
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
     @articles = Article.all
-    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
   end
 
   def listall
@@ -18,7 +21,6 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
-    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(Category.all)) }
     @groups = Group.find(:all, :order => 'name ASC')
     respond_to do |wants|
       wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
@@ -49,8 +51,6 @@ class ArticlesController < ApplicationController
         q.update_attribute :hidden, true
       end
     end
-
-    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
 
     respond_to do |wants|
       wants.html do #html request from new_articles_path
@@ -118,84 +118,5 @@ class ArticlesController < ApplicationController
     end
       render :partial => 'quick_foods_search_results'
   end
-
-private
-
-  class Helper
-    class << self
-     #include Singleton - no need to do this, class objects are singletons
-     include ActionView::Helpers::JavaScriptHelper
-    end
-  end
-  
-  def generate_js_database(categories)
-    articleslist = 
-    "var articleslist = new Array();" +
-    categories.collect{ |cat|
-      "\narticleslist[#{ cat.id }] = \"" +
-      cat.articles.find_in_menucard.collect{ |art|
-        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this, enter_price);" : "display_quantities(#{ art.id });"
-        onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
-        image = art.quantities.empty? ? '' : '<img class="more" src="/images/more.png">'
-        "<div id='article_#{ art.id }' class='article' onclick='#{ onclickaction }' onmousedown='#{ onmousedownaction }'>#{ Helper.escape_javascript art.name } #{ Helper.escape_javascript image }</div><div id ='article_#{ art.id }_quantities'></div>"
-      }.to_s + '";'
-    }.to_s
-
-    quantitylist =
-    "\n\nvar quantitylist = new Array();" +
-    categories.collect{ |cat|
-      cat.articles.find_in_menucard.collect{ |art|
-        next if art.quantities.empty?
-        "\nquantitylist[#{ art.id }] = \"" +
-        art.quantities.active_and_sorted.collect{ |qu|
-          %&<div id='quantity_#{ qu.id }' class='quantity' onmousedown='quantities_onmousedown(this);' onclick='add_new_item_q(#{ qu.id }, this);'>#{ Helper.escape_javascript qu.prefix } #{ Helper.escape_javascript qu.postfix }</div>&
-        }.to_s + '";'
-      }.to_s
-    }.to_s
-
-
-    itemdetails_q =
-    "\n\nvar itemdetails_q = new Array();" +
-    categories.collect{ |cat|
-      cat.articles.find_in_menucard.collect{ |art|
-        art.quantities.collect{ |qu|
-          "\nitemdetails_q[#{ qu.id }] = new Array( '#{ qu.article.id }', '#{ Helper.escape_javascript qu.article.name }', '#{ Helper.escape_javascript qu.prefix }', '#{ qu.price }', '#{ Helper.escape_javascript qu.article.description }', '#{ Helper.escape_javascript compose_item_label(qu) }', '#{ cat.id }', '#{ qu.usage }');"
-        }.to_s
-      }.to_s
-    }.to_s
-    
-
-    itemdetails_a =
-    "\n\nvar itemdetails_a = new Array();" +
-    categories.collect{ |cat|
-      cat.articles.find_in_menucard.collect{ |art|
-        "\nitemdetails_a[#{ art.id }] = new Array( '#{ art.id }', '#{ Helper.escape_javascript art.name }', '#{ Helper.escape_javascript art.name }', '#{ art.price }', '#{ Helper.escape_javascript art.description }', '#{ Helper.escape_javascript compose_item_label(art) }', '#{ cat.id }', '#{ art.usage }');"
-      }.to_s
-    }.to_s
-
-    optionsselect =
-    "\n\nvar optionsselect = new Array();" +
-    categories.collect{ |cat|
-      next if cat.options.empty?
-      "\noptionsselect[#{ cat.id }] = \"" +
-      cat.options.collect{ |opt|
-          "<option value='#{ opt.id }'>#{ opt.name }</option>"
-      }.to_s + '";'
-    }.to_s
-
-    return "var enter_price = '#{ t :please_enter_item_price }';\nvar enter_comment = '#{ t :please_enter_item_comment }';\n" + articleslist + quantitylist + itemdetails_q + itemdetails_a + optionsselect
-  end
-
-
-  
-  def compose_item_label(input)
-    if input.class == Article
-      label = "#{ input.name }"
-    else
-      label = "#{ input.prefix } #{ input.article.name } #{ input.postfix }"
-    end
-    return label
-  end
-
 
 end

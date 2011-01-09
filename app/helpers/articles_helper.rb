@@ -1,5 +1,9 @@
 module ArticlesHelper
 
+  def compose_item_label(input)
+    input.class == Article ? "#{ input.name }" : "#{ input.prefix } #{ input.article.name } #{ input.postfix }"
+  end
+
   def add_ingredient_link(caption, frm)
     link_to_function caption do |page|
       ingredient = render(:partial => 'ingredient', :locals => { :frm => frm, :ingredient => Ingredient.new })

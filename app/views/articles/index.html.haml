@@ -8,7 +8,7 @@
 %table.articles
   %tr
     %td#drop_remove
-      = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
+      = #drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
       = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value="";'
       %script{ :type => 'text/javascript' }== new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('articles_search_results', '/articles/find_articles', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('search_spinner_').style.display='none'}, onLoading:function(request){document.getElementById('search_spinner_').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})
 
@@ -22,4 +22,4 @@
         = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
         %div{ :id => "#{scope}_list" }
           = render 'list', :locals => { :scope => @s }
-        = drop_receiving_element "drop_add_to_#{scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{scope}'"
+        = #drop_receiving_element "drop_add_to_#{scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{scope}'"
