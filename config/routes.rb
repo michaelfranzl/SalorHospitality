@@ -77,7 +77,6 @@ Billgastro2::Application.routes.draw do
     resources :orders
     collection do
       get :ipod
-      get :update
     end
   end
 
