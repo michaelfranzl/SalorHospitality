@@ -293,7 +293,9 @@ class OrdersController < ApplicationController
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment
              )
-            items[i].count += items[j].count and items[j].delete
+            items[i].count += items[j].count
+            items[i].printed_count += items[j].printed_count
+            items[j].delete
             items[i].save
           end
         end         
