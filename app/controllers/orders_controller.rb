@@ -228,15 +228,15 @@ class OrdersController < ApplicationController
         order.delete
         order.table.update_attribute :user, nil
         return
-      end 
+      end
 
       order.update_attribute( :sum, calculate_order_sum(order) )
+
+      group_identical_items(order)
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
       File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
-
-      group_identical_items(order)
 
       `cat bar.escpos > /dev/ttyPS1` #1 = Bar
       `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
@@ -287,6 +287,7 @@ class OrdersController < ApplicationController
       items = o.items
       n = items.size - 1
       0.upto(n) do |i|
+        items[i].printed_count = items[i].count if items[i].count < items[i].printed_count
         (i+1).upto(n) do |j|
           if (items[i].article_id  == items[j].article_id and
               items[i].quantity_id == items[j].quantity_id and
@@ -298,7 +299,7 @@ class OrdersController < ApplicationController
             items[j].delete
             items[i].save
           end
-        end         
+        end
       end
     end
 
