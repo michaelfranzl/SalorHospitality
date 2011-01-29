@@ -433,6 +433,7 @@ class OrdersController < ApplicationController
         label.gsub!(/Ö/,"Oe") #Ö
         label.gsub!(/Ä/,"Ae") #Ä
         label.gsub!(/Ü/,"Ue") #Ü
+        label.gsub!(/é/,"e")  #Ü
 
         #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8', label)
         list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64, label, p, item.count, sum]
@@ -471,6 +472,7 @@ class OrdersController < ApplicationController
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
+
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
       output.gsub!(/\xE4/,"\x84") #ä
       output.gsub!(/\xFC/,"\x81") #ü
@@ -484,6 +486,9 @@ class OrdersController < ApplicationController
       output.gsub!(/\xFA/,"\xA3") #ú
       output.gsub!(/\xF9/,"\x97") #ù
       output.gsub!(/\xC9/,"\x90") #É
+
+      logger.info "\n-------INVOICE #{ order.id } -------\n#{output}\n---------------\n"
+
       return output
     end
 
@@ -545,6 +550,9 @@ class OrdersController < ApplicationController
       overall_output.gsub!(/\xFA/,"\xA3") #ú
       overall_output.gsub!(/\xF9/,"\x97") #ù
       overall_output.gsub!(/\xC9/,"\x90") #É
+
+      logger.info "\n-------BON #{ type } -------\n#{overall_output}\n---------------\n"
+
       return overall_output
     end
 
