@@ -287,7 +287,6 @@ class OrdersController < ApplicationController
       items = o.items
       n = items.size - 1
       0.upto(n) do |i|
-        items[i].printed_count = items[i].count if items[i].count < items[i].printed_count
         (i+1).upto(n) do |j|
           if (items[i].article_id  == items[j].article_id and
               items[i].quantity_id == items[j].quantity_id and
@@ -513,7 +512,10 @@ class OrdersController < ApplicationController
         printed_items_in_this_order = 0
         order.items.each do |i|
 
-          next if (i.count <= i.printed_count)
+          i.update_attribute :printed_count, i.count if i.count < i.printed_count
+
+          next if i.count == i.printed_count
+
           next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
 
           usage = i.quantity ? i.quantity.usage : i.article.usage
@@ -527,9 +529,9 @@ class OrdersController < ApplicationController
 
           i.options.each { |o| per_order_output += "* %-18.18s\n" % [o.name] }
 
-          #per_order_output += "---------------------\n"
-
           i.update_attribute :printed_count, i.count
+
+          #per_order_output += "---------------------\n"
         end
 
         per_order_output +=
