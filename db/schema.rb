@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101127083915) do
+ActiveRecord::Schema.define(:version => 20110202124501) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -71,14 +71,22 @@ ActiveRecord::Schema.define(:version => 20101127083915) do
     t.boolean  "partial_order"
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status", :default => 0
+    t.integer  "storno_status",   :default => 0
     t.string   "comment"
     t.float    "price"
-    t.integer  "printed_count", :default => 0
+    t.integer  "printed_count",   :default => 0
     t.integer  "item_id"
+    t.string   "printed_options", :default => "--- []"
   end
 
   create_table "items_options", :id => false, :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "option_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items_printoptions", :id => false, :force => true do |t|
     t.integer  "item_id"
     t.integer  "option_id"
     t.datetime "created_at"
@@ -103,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20101127083915) do
     t.float    "price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "printed"
   end
 
   create_table "orders", :force => true do |t|
@@ -117,6 +126,8 @@ ActiveRecord::Schema.define(:version => 20101127083915) do
     t.integer  "order_id"
     t.integer  "cost_center_id"
     t.string   "printed_from"
+    t.integer  "nr"
+    t.integer  "credit",          :default => 0
   end
 
   create_table "quantities", :force => true do |t|

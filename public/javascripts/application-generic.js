@@ -202,6 +202,7 @@ function add_option_to_item(item_designator, select_tag)
   if (select_tag.value == 0) {
     // normal, delete all options
     $('order_items_attributes_' + item_designator + '_optionslist').value = '';
+    $('order_items_attributes_' + item_designator + '_printoptionslist').value = '';
     $('optionsnames_' + item_designator).innerHTML = '';
 
   } else if (select_tag.value == -2 ) {
@@ -213,7 +214,7 @@ function add_option_to_item(item_designator, select_tag)
     $('optionsnames_' + item_designator).insert('<br>fertig');
 
   } else {
-    $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
+    $('order_items_attributes_' + item_designator + '_printoptionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
     var text = $('optionsselect_' + item_designator).options[index].text;
     $('optionsnames_' + item_designator).insert('<br>'+text);

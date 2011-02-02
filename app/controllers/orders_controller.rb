@@ -527,9 +527,14 @@ class OrdersController < ApplicationController
           per_order_output += "  %-18.18s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
           per_order_output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
 
-          i.options.each { |o| per_order_output += "* %-18.18s\n" % [o.name] }
+          i.printoptions.each do |po|
+            per_order_output += "* %-18.18s\n" % [po.name]
+            i.options << po
+          end
 
-          i.update_attribute :printed_count, i.count
+          i.printoptions = []
+          i.printed_count = i.count
+          i.save
 
           #per_order_output += "---------------------\n"
         end

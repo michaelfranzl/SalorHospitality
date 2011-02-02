@@ -27,12 +27,14 @@ if @order
     @comment = item.comment
     @label = compose_item_label(item)
     @optionslist = item.optionslist
+    @printoptionslist = item.printoptionslist
     @optionsnames = compose_option_names(item)
     @optionsselect = compose_option_select(item)
 
-    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :printed_count => @printed_count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    @tablerows += render 'items/item_tablerow', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
 
-    @tablerows += render 'items/item_tablerow', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :printed_count => @printed_count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :printoptionslist => @printoptionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+
   end
 
   page.insert_html :bottom, 'inputfields', @inputfields
