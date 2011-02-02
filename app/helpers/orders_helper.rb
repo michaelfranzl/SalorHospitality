@@ -14,6 +14,7 @@ module OrdersHelper
   end
 
   def generate_js_variables
+    @id = ''
     @designator = 'DESIGNATOR'
     @sort = 'SORT'
     @articleid = 'ARTICLEID'
@@ -27,11 +28,11 @@ module OrdersHelper
     @optionsnames = ''
     @count = 1
 
-    new_item_tablerow = render 'items/item_tablerow', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    new_item_tablerow = render 'items/item_tablerow', :locals => { :label => @label, :designator => @designator, :count => @count, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
 
     new_item_tablerow_var = "\n\nvar new_item_tablerow = \"#{ escape_javascript new_item_tablerow }\""
 
-    new_item_inputfields = render 'items/item_inputfields', :locals => { :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :label => @label, :designator => @designator, :count => @count, :printed_count => @printed_count, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    new_item_inputfields = render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :designator => @designator, :count => @count, :printed_count => @printed_count, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist }
 
     new_item_inputfields_var = "\n\nvar new_item_inputfields = \"#{ escape_javascript new_item_inputfields }\""
 
