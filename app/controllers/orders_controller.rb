@@ -286,17 +286,18 @@ class OrdersController < ApplicationController
     def group_identical_items(o)
       items = o.items
       n = items.size - 1
-      0.upto(n) do |i|
+      0.upto(n-1) do |i|
         (i+1).upto(n) do |j|
-          if (items[i].article_id  == items[j].article_id and
+          if (items[i].frozen?     == false and
+              items[i].article_id  == items[j].article_id and
               items[i].quantity_id == items[j].quantity_id and
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment
              )
             items[i].count += items[j].count
             items[i].printed_count += items[j].printed_count
-            items[j].delete
             items[i].save
+            items[j].destroy
           end
         end
       end
@@ -511,6 +512,8 @@ class OrdersController < ApplicationController
 
         printed_items_in_this_order = 0
         order.items.each do |i|
+
+          next if i.frozen?
 
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
 
