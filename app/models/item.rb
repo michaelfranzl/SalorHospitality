@@ -24,7 +24,7 @@ class Item < ActiveRecord::Base
   end
 
   def optionslist
-    self.options.collect{ |o| "#{ o.id } " }.to_s
+    self.options.collect{ |o| "#{ o.id } " }.join
   end
 
   def category

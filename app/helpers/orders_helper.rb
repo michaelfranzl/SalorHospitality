@@ -5,11 +5,11 @@ module OrdersHelper
   end
 
   def compose_option_names(item)
-    item.options.collect{ |o| "<br>#{ o.name } " }.to_s
+    item.options.collect{ |o| "<br>#{ o.name } " }.join
   end
 
   def compose_option_select(item)
-    Option.find(:all, :conditions => { :category_id => item.category.id }).collect{ |o| "<option value=#{ o.id }>#{ o.name }</option>" }.to_s
+    Option.find(:all, :conditions => { :category_id => item.category.id }).collect{ |o| "<option value=#{ o.id }>#{ o.name }</option>" }.join
   end
 
   def generate_js_variables
