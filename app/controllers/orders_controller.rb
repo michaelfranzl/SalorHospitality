@@ -191,14 +191,8 @@ class OrdersController < ApplicationController
 
       if @order
         #similar to update
-
-puts "XXX"
-        puts @order.attributes = params[:order]
-@order.save
-@order = Order.find(params[:order][:id])
-puts "YYY"
-        puts @order.table.update_attribute :user, @order.user
-
+        @order.update_attributes(params[:order])
+        @order.table.update_attribute :user, @order.user
       else
         #similar to create
         # create new order OR (if order exists already on table) add items to existing order
@@ -236,6 +230,7 @@ puts "YYY"
   private
 
     def process_order(order)
+      order.reload
       if order.items.size.zero?
         MyGlobals::unused_order_numbers << order.nr
         order.delete
