@@ -2,10 +2,6 @@
 
 #message
 
-
-
-%a{ :onclick => '' } test
-
 = form_tag '/client_data', :remote => true, :id => 'client_data_form' do
   = label_tag 'data_name', t('.name')
   = text_field_tag 'data[name]', @client_data[:name]
