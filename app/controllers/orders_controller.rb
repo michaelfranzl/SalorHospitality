@@ -191,6 +191,7 @@ class OrdersController < ApplicationController
 
       if @order
         #similar to update
+debugger
         @order.update_attributes(params[:order])
         @order.reload
         @order.table.update_attribute :user, @order.user
