@@ -4,7 +4,9 @@
 = form_tag url_for(:controller => :orders, :action => :login), :remote => true do
   %p
     = label_tag 'login', (t '.username')
-    = select_tag 'login', options_from_collection_for_select(User.all, 'login', 'login')
+    %select{ :name => 'login' }
+      - @users.each do |u|
+        %option{ :value => u.login }== #{ u.login } (#{ MyGlobals::language_hash[u.language.to_s] })
   %p
     = label_tag 'password', (t '.password')
     = password_field_tag 'password', '', :size => 9

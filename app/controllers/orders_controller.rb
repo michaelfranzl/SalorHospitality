@@ -1,11 +1,12 @@
 # coding: utf-8
 class OrdersController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :only => [:login]
+  skip_before_filter :fetch_logged_in_user, :set_locale, :only => [:login]
 
   def index
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
+    @users = User.all
     session[:admin_interface] = !ipod? # admin panel per default on on workstation
     if MyGlobals::last_order_number.nil? # happens only at server restart
       MyGlobals::last_order_number = Order.last ? Order.last.nr : 0
@@ -19,6 +20,7 @@ class OrdersController < ApplicationController
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
       session[:admin_interface] = !ipod? # admin panel per default on on workstation
+      I18n.locale = @current_user.language
       render 'login_successful'
     else
       @users = User.all
@@ -29,6 +31,7 @@ class OrdersController < ApplicationController
 
   def logout
     session[:user_id] = @current_user = nil
+    @users = User.all
     render 'go_to_login'
   end
 

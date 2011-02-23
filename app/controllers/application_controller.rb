@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery
 
   helper :all # include all helpers, all the time
-  before_filter :fetch_logged_in_user
+  before_filter :fetch_logged_in_user, :set_locale
   helper_method :logged_in?, :ipod?, :workstation?
 
   private
@@ -31,6 +31,9 @@ class ApplicationController < ActionController::Base
 
     def ipod?
       not workstation?
-      #((request.user_agent[13..16] == 'iPod') or (request.user_agent[13..16] == 'iPho') or params[:ipod])
+    end
+
+    def set_locale
+      I18n.locale = @current_user.language if @current_user
     end
 end

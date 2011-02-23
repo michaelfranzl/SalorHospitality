@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user
+  skip_before_filter :fetch_logged_in_user, :set_locale
 
   def new
     @users = User.all
@@ -25,11 +25,6 @@ class SessionsController < ApplicationController
     session[:user_id] = @current_user = nil
     flash[:notice] = t(:logout_successful)
     redirect_to new_session_path
-  end
-
-  def set_language
-    I18n.locale = session[:language] = params[:id]
-    redirect_to orders_path
   end
 
 end

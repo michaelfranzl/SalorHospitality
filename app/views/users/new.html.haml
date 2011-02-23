@@ -2,7 +2,12 @@
 
 %h2= @user.new_record? ? (t '.new_user') : (t '.edit_user')
 
-= error_messages_for 'user'
+- if @user.errors.any?
+  .errors
+    %h3 There was a problem saving this article
+    %ul
+      - @user.errors.full_messages.each do |msg|
+        %li= msg
 
 - form_for @user do |user_form|
   %table
@@ -25,5 +30,11 @@
       %td
         %select#category_color{ :name => 'user[color]' }
           = options_for_select(get_color_array, user_form.object.color)
+
+    %tr
+      %td= user_form.label('language', User.human_attribute_name(:language))
+      %td
+        %select#category_color{ :name => 'user[language]' }
+          = options_for_select(MyGlobals::language_array, user_form.object.language)
             
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

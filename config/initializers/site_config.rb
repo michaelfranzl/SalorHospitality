@@ -1,7 +1,8 @@
+# coding: utf-8
 require 'active_support'
 
 module MyGlobals
-  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :client
+  mattr_accessor :predefined_count, :blackboard_messages, :user_roles, :stock_units, :client, :language_hash, :language_array
   mattr_accessor :last_js_change, :last_order_number, :unused_order_numbers, :credits_left
 
   @@last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
@@ -16,6 +17,9 @@ module MyGlobals
   }
 
   @@user_roles = [ ['',''], ['Restaurant',0], ['Kellner',1], ['Admin',2], ['Superuser',3] ]
+
+  @@language_array = [ ['English','en'], ['Deutsch','de'], ['Türkçe','tr'] ]
+  @@language_hash = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
 
   
   @@blackboard_messages = { :special => '', :title => 'Speisekarte', :date => '' }
