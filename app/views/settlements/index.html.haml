@@ -1,7 +1,7 @@
 - cost_center_header_text = "(#{ CostCenter.human_name }: #{@selected_cost_center.name})" if @selected_cost_center
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
-- form_tag '/settlements/index' do
+- form_tag settlements_path, :method => :get do
   = label('from', t('.start_date'))
   = select_date(@from, :prefix => 'from')
   = label('to', t('.end_date'))

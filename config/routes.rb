@@ -56,6 +56,7 @@ Billgastro2::Application.routes.draw do
     collection do
       get 'tables'
       get 'weekdays'
+      post 'weekdays'
       get 'users'
       get 'journal'
       get 'articles'

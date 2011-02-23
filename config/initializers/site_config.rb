@@ -7,9 +7,9 @@ module MyGlobals
 
   @@last_js_change = Time.now.strftime('%Y%m%dT%H%M%S')
 
-  @@last_order_number = nil
+  @@last_order_number = 0 #initial value if no orders yet present
   @@unused_order_numbers = Array.new
-  @@credits_left = nil
+  @@credits_left = 0
 
   @@predefined_count = []
   0.upto(15) { |i|
