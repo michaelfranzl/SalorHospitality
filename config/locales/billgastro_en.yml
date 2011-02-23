@@ -248,7 +248,7 @@ en:
 
   client_data:
     menulabel: Company Data
-    index:
+    show:
       name: Name
       subtitle: Invoice Subtitle
       address: Address
@@ -256,7 +256,7 @@ en:
       slogan: Invoice Slogan
       internet_address: Internet Address
       email: E-Mail
-    update:
+    create:
       client_data_successfully_updated: Data successfully updated!
 
   delete: Delete

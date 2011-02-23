@@ -244,7 +244,7 @@ tr:
 
   client_data:
     menulabel: Belirtiler
-    index:
+    show:
       name: Isim
       subtitle: Altyazi
       address: Adres
@@ -252,7 +252,7 @@ tr:
       slogan: Fatura informasyonu
       internet_address: Internet adresi
       email: E-Mail adresi
-    update:
+    create:
       client_data_successfully_updated: Belirtiler yenilendi!
 
   delete: Silmek

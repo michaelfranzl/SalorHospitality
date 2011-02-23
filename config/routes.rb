@@ -79,7 +79,7 @@ Billgastro2::Application.routes.draw do
     end
   end
 
-  match 'client_data' => 'client_data#index'
+  resource :client_data
 
   # Sample resource route with sub-resources:
   #   resources :products do

@@ -247,7 +247,7 @@ de:
 
   client_data:
     menulabel: Daten
-    index:
+    show:
       name: Name
       subtitle: Untertitel
       address: Adresse
@@ -255,7 +255,7 @@ de:
       slogan: Rechnung Nachricht
       internet_address: Internetadresse
       email: E-Mail Adresse
-    update:
+    create:
       client_data_successfully_updated: Daten erfolgreich aktualisiert!
 
   delete: Löschen

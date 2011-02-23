@@ -1,6 +1,6 @@
 class ClientDataController < ApplicationController
 
-  def index
+  def show
     File.open('config/client_data.yaml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
 
     if File.exist?('config/client_data.yaml')
@@ -8,6 +8,7 @@ class ClientDataController < ApplicationController
     else
       @client_data = {}
     end
+
   end
 
 end
