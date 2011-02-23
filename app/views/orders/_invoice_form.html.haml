@@ -1,16 +1,16 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
-  = link_to '', :url => "/orders/print_and_finish/#{ invoice_form.id }/0", :remote => true, :html => { :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";' }
-  = link_to '', :url => "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :html => { :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";' }
-  = link_to '', :url => "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :html => { :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";' }
+  = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
+  = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
+  = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
   - if !invoice_form.finished
-    = link_to '', :url => "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :html => { :class => 'iconbutton finish_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";' }
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :class => 'iconbutton finish_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
 
-  - form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
+  - form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :method => 'put', :id => "invoice_form_#{ invoice_form.id }" do |order_form|
 
     - if !invoice_form.finished
       %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/split_invoice_all_at_once/#{ invoice_form.id }', {asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
         = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-      = link_to '', :url => "/orders/go_to_order_form/#{ invoice_form.id }", :remote => true, :html => { :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
+      = link_to '', :url => "/orders/go_to_order_form/#{ invoice_form.id }", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
 
     %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
     %p= l invoice_form.created_at, :format => :long
