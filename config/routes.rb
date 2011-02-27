@@ -27,8 +27,6 @@ Billgastro2::Application.routes.draw do
 
   resources :articles do
     collection do
-      get 'quick_foods'
-      get 'remove_all_foods_from_menucard'
       get 'listall'
       post :find_articles
     end
@@ -43,7 +41,6 @@ Billgastro2::Application.routes.draw do
       post 'login'
       post :receive_order_attributes_ajax
       get 'logout'
-      post :statusupdate_tables
       post :go_to_table
     end
   end

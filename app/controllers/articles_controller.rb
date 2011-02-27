@@ -109,14 +109,4 @@ class ArticlesController < ApplicationController
       render :partial => 'articles_search_results'
   end
 
-  def find_foods
-    if params['foods_search_text'].strip.length > 0
-      search_terms = params['foods_search_text'].split.collect do |word|
-        "%#{ word.downcase }%"
-      end
-      @found_foods = Article.find( :all, :conditions => [ (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND '), * search_terms.flatten ], :order => 'name', :limit => 5 )
-    end
-      render :partial => 'quick_foods_search_results'
-  end
-
 end
