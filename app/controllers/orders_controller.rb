@@ -59,21 +59,6 @@ class OrdersController < ApplicationController
     flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
   end
 
-
-  def separate_item
-    @item=Item.find(params[:id])
-    @separated_item = @item.clone
-    @separated_item.count = 1
-    @item.count -= 1
-    @item.count == 0 ? @item.delete : @item.save
-    @separated_item.save
-    @order = @item.order
-    @previous_order, @next_order = neighbour_orders(@order)
-    respond_to do |wants|
-      wants.js { render 'display_storno' }
-    end
-  end
-
   def toggle_admin_interface
     if session[:admin_interface]
       session[:admin_interface] = !session[:admin_interface]

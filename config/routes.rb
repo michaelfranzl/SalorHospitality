@@ -34,11 +34,11 @@ Billgastro2::Application.routes.draw do
 
   resources :orders do
     collection do
-      get 'separate_item'
       get 'print'
       get 'unsettled'
       post 'toggle_admin_interface'
       post 'login'
+      get :storno
       post :receive_order_attributes_ajax
       get 'logout'
     end

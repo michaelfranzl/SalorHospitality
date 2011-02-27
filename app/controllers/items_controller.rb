@@ -6,13 +6,27 @@ class ItemsController < ApplicationController
     end
   end
 
-  def update
+  def update #this is actually splitting images
     @item_to_split = Item.find_by_id(params[:id]) # find item on which was clicked
     @order = @item_to_split.order
     @cost_centers = CostCenter.find_all_by_active(true)
     make_split_invoice(@order, @item_to_split)
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     render 'split_invoice'
+  end
+
+  def destroy # this is actually a storno of an item
+    @item=Item.find(params[:id])
+    @separated_item = @item.clone
+    @separated_item.count = 1
+    @item.count -= 1
+    @item.count == 0 ? @item.delete : @item.save
+    @separated_item.save
+    @order = @item.order
+    @previous_order, @next_order = neighbour_orders(@order)
+    respond_to do |wants|
+      wants.js
+    end
   end
 
   private
