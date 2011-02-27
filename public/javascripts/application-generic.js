@@ -297,4 +297,4 @@ function go_to_tables_offline() {
   $('save_and_go_to_tables').style.border = "none";
 }
 
-new PeriodicalExecuter(function() {if (tableupdates == true) { new Ajax.Request('/orders/statusupdate_tables', {asynchronous:true, evalScripts:true}); }}, 10)
+new PeriodicalExecuter(function() {if (tableupdates == true) { new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'}); }}, 20)

@@ -39,13 +39,10 @@ Billgastro2::Application.routes.draw do
       get 'separate_item'
       get 'print'
       get 'unsettled'
-      get 'items'
       post 'toggle_admin_interface'
       post 'login'
       post :receive_order_attributes_ajax
       get 'logout'
-      get 'split_invoice_all_at_once'
-      post 'split_invoice_one_at_a_time'
       post :statusupdate_tables
       post :go_to_table
     end

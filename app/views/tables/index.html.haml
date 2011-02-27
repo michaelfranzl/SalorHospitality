@@ -1,8 +1,8 @@
 %h2= t('activerecord.models.table.other')
 
 %p
-  = link_to ((t :new), new_table_path, :class => 'links')
-  = link_to ( 'iPod', '/tables/ipod?ipod_drag_and_drop=', :class => 'links')
+  = link_to(t(:new), new_table_path, :class => 'links')
+  = link_to 'iPod', '/tables/ipod?ipod_drag_and_drop=', :class => 'links'
 
 %table
   %tr
@@ -11,6 +11,6 @@
     %th{ :width => '120px' }
   - @tables.each do |ta|
     %tr
-      %td= link_to (ta.name, edit_table_path(ta))
+      %td= link_to ta.name, edit_table_path(ta)
       %td= ta.description
-      %td= link_to ((t :delete), ta, :confirm => t(:are_you_sure), :method => :delete)
+      %td= link_to(t(:delete), ta, :confirm => t(:are_you_sure), :method => :delete)
