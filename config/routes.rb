@@ -27,8 +27,8 @@ Billgastro2::Application.routes.draw do
 
   resources :articles do
     collection do
-      get 'listall'
-      post :find_articles
+      get :listall
+      post :find
     end
   end
 
@@ -41,7 +41,6 @@ Billgastro2::Application.routes.draw do
       post 'login'
       post :receive_order_attributes_ajax
       get 'logout'
-      post :go_to_table
     end
   end
 

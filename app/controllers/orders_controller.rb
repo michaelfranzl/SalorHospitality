@@ -1,4 +1,3 @@
-# coding: utf-8
 class OrdersController < ApplicationController
 
   skip_before_filter :fetch_logged_in_user, :set_locale, :only => [:login]
@@ -131,18 +130,6 @@ class OrdersController < ApplicationController
           render('go_to_tables')
         end
       }
-    end
-  end
-
-  def go_to_table # go_to_invoice(s) OR go_to_order_form
-    @table = Table.find(params[:id])
-    @cost_centers = CostCenter.find_all_by_active(true)
-    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
-    if @orders.size > 1
-      render 'go_to_invoice_form'
-    else
-      @order = @orders.first
-      render 'go_to_order_form'
     end
   end
 

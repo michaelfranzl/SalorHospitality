@@ -96,7 +96,7 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
-  def find_articles
+  def find
     if params['articles_search_text'].strip.length > 0
       search_terms = params['articles_search_text'].split.collect do |word|
         "%#{ word.downcase }%"
