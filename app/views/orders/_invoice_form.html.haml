@@ -30,7 +30,7 @@
             - if invoice_form.finished
               == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
             - else
-              = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), { :controller => :orders, :action => 'split_invoice_one_at_a_time', :id => item.id}, :method => 'post', :remote => true)
+              = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), item_path(item.id), :method => :put, :remote => true)
           %td.price= number_to_currency item.real_price
           %td.total= number_to_currency sum
           %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}

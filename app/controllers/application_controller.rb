@@ -36,4 +36,24 @@ class ApplicationController < ActionController::Base
     def set_locale
       I18n.locale = @current_user.language if @current_user
     end
+
+    def calculate_order_sum(order)
+      subtotal = 0
+      order.items.each do |item|
+        p = item.real_price
+        sum = item.count * p
+        subtotal += item.count * p
+      end
+      return subtotal
+    end
+
+    def get_next_unique_and_reused_order_number
+      if MyGlobals::unused_order_numbers.empty?
+        nr = MyGlobals::last_order_number += 1
+      else
+        nr = MyGlobals::unused_order_numbers.first
+        MyGlobals::unused_order_numbers.delete(nr)
+      end
+      return nr
+    end
 end
