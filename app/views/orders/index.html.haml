@@ -15,5 +15,16 @@
   #functions_footer{ :style => 'display: none;' }= render('functions_footer') if ipod?
 
   #invoices
-  - f = ipod? ? 10 : 20
-  = periodically_call_remote(:url => { :action => 'statusupdate_tables' }, :frequency => f, :condition => 'tableupdates == true' )
+  %script
+    new PeriodicalExecuter(
+    function(){
+    if (tableupdates > 0) {
+    new Ajax.Request('/orders/statusupdate_tables', {asynchronous:true, evalScripts:true});
+    $('flash_notice').innerHTML = '                              ' + tableupdates;
+    }
+    else if (tableupdates == 0) {
+    alert('Server kurzfristig überlastet.');
+    }
+    tableupdates -= 1;
+    }
+    , 15)
