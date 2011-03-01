@@ -156,6 +156,7 @@ class OrdersController < ApplicationController
   end
 
   def storno
+debugger
     @order = Order.find(params[:id])
     @previous_order, @next_order = neighbour_orders(@order)
     @order.update_attributes(params[:order])
