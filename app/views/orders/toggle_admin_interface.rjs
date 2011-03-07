@@ -2,10 +2,10 @@ page.replace_html 'tables', render(@tables)
 
 if workstation?
   if session[:admin_interface] == false
-    page << 'tableupdates = 3;'
+    page << 'tableupdates = 2;'
     page << "Effect.SlideUp('admin');"
   else
-    page << 'tableupdates = 0;'
+    page << 'tableupdates = -1;'
     page << "Effect.SlideDown('admin');"
   end
 end

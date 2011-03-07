@@ -11,3 +11,5 @@ page.show 'functions_header_index'
 page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_invoice_form'
 
 page.replace_html 'order_info', t(:loading)
+
+page << 'tableupdates = 2;'

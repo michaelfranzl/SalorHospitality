@@ -280,6 +280,8 @@ function go_to_order_form_preprocessing(table_id) {
   $('functions_header_order_form').show();
   $('functions_footer').show();
 
+  tableupdates = -1;
+
   new Ajax.Request('/orders/go_to_table/'+table_id, {asynchronous:true, evalScripts:true});
 }
 
@@ -295,4 +297,5 @@ function go_to_tables_offline() {
   Effect.ScrollTo("header");
   $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_ipod_tables.png')";
   $('save_and_go_to_tables').style.border = "none";
+  tableupdates = 2;
 }

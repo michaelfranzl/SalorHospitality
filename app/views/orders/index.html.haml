@@ -18,9 +18,9 @@
   %script
     new PeriodicalExecuter(
     function(){
+    //$('flash_notice').innerHTML = '                              ' + tableupdates;
     if (tableupdates > 0) {
     new Ajax.Request('/orders/statusupdate_tables', {asynchronous:true, evalScripts:true});
-    $('flash_notice').innerHTML = '                              ' + tableupdates;
     }
     else if (tableupdates == 0) {
     alert('Server kurzfristig überlastet.');

@@ -3,4 +3,4 @@ page.replace_html 'header', render(:file => 'layouts/_header.html.haml')
 page.replace_html 'flash_notice', ''
 page.replace_html 'flash_error', ''
 page.hide 'login'
-page << "tableupdates = #{ ipod? ? 'true' : 'false' };"
+page << "tableupdates = #{ ipod? ? 2 : -1 };"
