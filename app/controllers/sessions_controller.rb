@@ -35,4 +35,8 @@ class SessionsController < ApplicationController
     redirect_to orders_path
   end
 
+  def catcher
+    redirect_to '/'
+  end
+
 end

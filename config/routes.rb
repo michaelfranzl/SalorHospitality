@@ -61,4 +61,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'blackboard.:format/:action', :controller => 'blackboard'
   map.connect 'client_data', :controller => :client_data
 
+  map.connect '*path', :controller => 'sessions', :action => 'catcher'
+
+
 end

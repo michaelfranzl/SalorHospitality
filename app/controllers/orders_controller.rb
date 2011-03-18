@@ -76,9 +76,10 @@ class OrdersController < ApplicationController
 
   def split_invoice_one_at_a_time
     logger.info "XXX Started function split_invoice_one_at_a_time. I attempt to find item id #{params[:id]}"
-    @item_to_split = Item.find_by_id(params[:id]) # find item on which was clicked
-    logger.info "XXX I found @item_to_split = #{ @item_to_split.inspect }"
+    @item_to_split = Item.find_by_id(params[:id])
+    logger.info "XXX @item_to_split = #{ @item_to_split.inspect }"
     @order = @item_to_split.order
+    puts nil.order
     logger.info "XXX @order = @item_to_split.order = #{ @order.inspect }"
     @cost_centers = CostCenter.find_all_by_active(true)
     logger.info "XXX @cost_centers = #{ @cost_centers.inspect }"
@@ -386,8 +387,11 @@ class OrdersController < ApplicationController
 
       logger.info "XXX parent_order has #{ parent_order.items.size } items left."
 
-      parent_order.delete if parent_order.items.empty?
-      parent_order.update_attribute( :sum, calculate_order_sum(parent_order) ) if not parent_order.items.empty?
+      if parent_order.items.empty?
+        parent_order.delete
+      else
+        parent_order.update_attribute( :sum, calculate_order_sum(parent_order) )
+      end
       split_invoice.update_attribute( :sum, calculate_order_sum(split_invoice) )
     end
     
