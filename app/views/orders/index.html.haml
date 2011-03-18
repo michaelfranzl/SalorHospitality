@@ -23,8 +23,8 @@
     new Ajax.Request('/orders/statusupdate_tables', {asynchronous:true, evalScripts:true});
     }
     else if (tableupdates == 0) {
-    alert('Server kurzfristig überlastet.');
+    alert('Verbindung zum Server fehlgeschlagen.');
     }
     tableupdates -= 1;
     }
-    , 15)
+    , 20)

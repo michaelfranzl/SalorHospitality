@@ -1,2 +1,2 @@
 page.replace_html 'tables', render(@tables)
-page << 'tableupdates += 1;'
+page << 'tableupdates = 2;'

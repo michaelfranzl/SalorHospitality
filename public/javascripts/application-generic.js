@@ -280,7 +280,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('functions_header_order_form').show();
   $('functions_footer').show();
 
-  tableupdates = -1;
+  tableupdates = -1; //deactivate tableupdates
 
   new Ajax.Request('/orders/go_to_table/'+table_id, {asynchronous:true, evalScripts:true});
 }
