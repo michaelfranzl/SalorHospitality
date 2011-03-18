@@ -1,4 +1,4 @@
-var tableupdates = 2;
+var tableupdates = -1;
 
 function display_articles(cat_id) {
   $('articles').innerHTML = articleslist[cat_id];
