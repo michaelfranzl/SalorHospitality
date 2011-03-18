@@ -77,15 +77,16 @@ class OrdersController < ApplicationController
   def split_invoice_one_at_a_time
     logger.info "XXX Started function split_invoice_one_at_a_time. I attempt to find item id #{params[:id]}"
     @item_to_split = Item.find_by_id(params[:id])
+    raise "Dieses Item wurde nicht mehr gefunden. Oops! Möglicherweise wurde es mehrfach angeklickt und es ist bereits verschoben?" if not @item_to_split
     logger.info "XXX @item_to_split = #{ @item_to_split.inspect }"
     @order = @item_to_split.order
-    puts nil.order
+    raise "Dieses Item ist nicht mehr mit einer Bestellung verbunden. Oops!" if not @order
     logger.info "XXX @order = @item_to_split.order = #{ @order.inspect }"
-    @cost_centers = CostCenter.find_all_by_active(true)
-    logger.info "XXX @cost_centers = #{ @cost_centers.inspect }"
-    logger.info "XXX I'm going into the function make_split_invoice"
+
     make_split_invoice(@order, [@item_to_split], :one)
+
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    @cost_centers = CostCenter.find_all_by_active(true)
     render 'split_invoice'
   end
 
@@ -331,7 +332,6 @@ class OrdersController < ApplicationController
 
     def make_split_invoice(parent_order, split_items, mode)
       logger.info "XXX Now I am in the function make_split_invoice with the parameters parent_order #{ parent_order.inspect } and split_items #{ split_items.inspect } and mode = #{ mode.inspect }"
-      return if split_items.nil? or split_items.empty?
       logger.info "XXX parent_order.order.nil? is #{ parent_order.order.nil? }"
       if parent_order.order
         logger.info "XXX If: There already exists one child order, which is #{parent_order.order}"
@@ -339,10 +339,11 @@ class OrdersController < ApplicationController
       else
         logger.info "XXX If: I am going to create a brand new split_invoice, and make it belong to the parent order"
         split_invoice = parent_order.clone
-        result = split_invoice.save
-        logger.info "XXX the result of saving split_invoce is #{ result.inspect } and split_invoice itself is #{ split_invoice_inspect }."
-        parent_order.order = split_invoice  # make an association between parent and child
-        split_invoice.order = parent_order  # ... and vice versa
+        sisr1 = split_invoice.save
+        logger.info "XXX the result of saving split_invoce is #{ sisr1.inspect } and split_invoice itself is #{ split_invoice.inspect }."
+        raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
+        parent_order.update_attribute :order, split_invoice  # make an association between parent and child
+        split_invoice.update_attribute :order, parent_order  # ... and vice versa
       end
       case mode
         when :all
@@ -352,7 +353,7 @@ class OrdersController < ApplicationController
             i.save
           end
         when :one
-          parent_item = split_items.first # in this mode there will only single items to split
+          parent_item = split_items.first # in this mode there will be only single items to split
           logger.info "XXX parent_item is #{ parent_item.inspect }"
           split_item = parent_item.item
           logger.info "XXX this item's split_item is #{ split_item.inspect }."
@@ -361,16 +362,18 @@ class OrdersController < ApplicationController
             split_item = parent_item.clone
             split_item.count = 0
             split_item.printed_count = 0
-            sisr = split_item.save
-            logger.info "XXX The result of saving split_item is #{ sisr.inspect } and it is #{ split_item.inspect }."
+            sisr2 = split_item.save
+            logger.info "XXX The result of saving split_item is #{ sisr2.inspect } and it is #{ split_item.inspect }."
+            raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
             parent_item.item = split_item # make an association between parent and child
             split_item.item = parent_item # ... and vice versa
           end
           split_item.order = split_invoice # this is the actual moving to the new order
           split_item.count += 1
           split_item.printed_count += 1
-          sisr = split_item.save
-          logger.info "XXX The result of saving split_item is #{ sisr.inspect } and it is #{ split_item.inspect }."
+          sisr3 = split_item.save
+          logger.info "XXX The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
+          raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
           parent_item.count -= 1
           parent_item.printed_count -= 1
           logger.info "XXX parent_item.count = #{ parent_item.count.inspect }"
@@ -379,16 +382,18 @@ class OrdersController < ApplicationController
           else
             pisr = parent_item.save
             logger.info "XXX The result of saving parent_item is #{ pisr.inspect } and it is #{ parent_item.inspect }."
+            raise "Konnte das bereits bestehende Eltern-Item nicht überspeichern. Oops!" if not pisr
           end
       end
       logger.info "XXX parent_order before re-read is #{ parent_order.inspect }."
       parent_order = Order.find(parent_order.id) # re-read
       logger.info "XXX parent_order after re-read is #{ parent_order.inspect }."
-
+      raise "Konnte die Eltern-Bestellung nicht neu laden. Oops!" if not parent_order
       logger.info "XXX parent_order has #{ parent_order.items.size } items left."
 
       if parent_order.items.empty?
         parent_order.delete
+        logger.info "XXX deleted parent_order since there were no items left."
       else
         parent_order.update_attribute( :sum, calculate_order_sum(parent_order) )
       end

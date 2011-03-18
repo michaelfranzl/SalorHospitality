@@ -15,8 +15,11 @@ class ApplicationController < ActionController::Base
     end
 
     def rescue_action_in_public(exception)
-      #redirect_to orders_path
-      render 'layouts/error', :locals => { :exception => exception }
+      if request.xhr?
+        render 'sessions/error', :locals => { :exception => exception }
+      else
+        redirect_to orders_path
+      end
     end
 
     def fetch_logged_in_user
