@@ -15,17 +15,3 @@
   #functions_footer{ :style => 'display: none;' }= render('functions_footer') if ipod?
 
   #invoices
-
-  %script
-    new PeriodicalExecuter(
-    function(){
-    $('flash_notice').innerHTML = '                              ' + tableupdates;
-    if (tableupdates > 0) {
-    new Ajax.Request('/orders/statusupdate_tables', {asynchronous:true, evalScripts:true});
-    }
-    else if (tableupdates == 0) {
-    alert('Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.');
-    }
-    tableupdates -= 1;
-    }
-    , 5)

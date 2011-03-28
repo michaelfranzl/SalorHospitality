@@ -300,4 +300,15 @@ function go_to_tables_offline() {
   tableupdates = 2;
 }
 
-new PeriodicalExecuter(function() {if (tableupdates == true) { new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'}); }}, 20)
+new PeriodicalExecuter(
+  function() {
+    $('flash_notice').innerHTML = '                              ' + tableupdates;
+    if (tableupdates > 0) {
+      new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
+    }
+    else if (tableupdates == 0) {
+      alert('Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.');
+    }
+    tableupdates -= 1;
+  }
+, 10)
