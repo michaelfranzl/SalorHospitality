@@ -1,2 +1,3 @@
+debugger
 page.replace_html 'tables', render(@tables)
 page << 'tableupdates = 2;'

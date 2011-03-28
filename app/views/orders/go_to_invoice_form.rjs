@@ -17,3 +17,5 @@ page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_i
 
 page.replace_html 'functions_header_order_form', render(:partial => 'functions_header_order_form')
 page.replace_html 'functions_footer', render(:partial => 'functions_footer')
+
+page << "tableupdates = -1;"
