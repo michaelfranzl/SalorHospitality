@@ -30,9 +30,9 @@ if @order
     @optionsnames = compose_option_names(item)
     @optionsselect = compose_option_select(item)
 
-    @tablerows += render 'items/item_tablerow', :locals => { :label => @label, :designator => @designator, :count => @count, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    @tablerows += render 'items/item_tablerow', :locals => { :label => @label, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
 
-    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :designator => @designator, :count => @count, :printed_count => @printed_count, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist }
+    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :designator => @designator, :count => @count, :printed_count => @printed_count, :comment => @comment, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist }
 
   end
 

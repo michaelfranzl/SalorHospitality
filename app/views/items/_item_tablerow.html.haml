@@ -9,7 +9,7 @@
       €
       %span{ :id => "price_#{ locals[:designator] }" }= locals[:price]
       %span{ :id => "comment_#{ locals[:designator] }" }= locals[:comment]
-      %div{ :id => "optionsnames_#{ locals[:designator] }" }= locals[:optionsnames]
+      %div{ :id => "optionsnames_#{ locals[:designator] }" }= raw locals[:optionsnames]
 
   %td{ :id => "tablerow_#{ locals[:designator] }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ locals[:designator] }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 

@@ -36,7 +36,7 @@ class Item < ActiveRecord::Base
   end
 
   def printoptionslist
-    self.printoptions.collect{ |o| "#{ o.id } " }.to_s
+    self.printoptions.collect{ |o| "#{ o.id } " }.join
   end
 
   def category
