@@ -309,4 +309,4 @@ new PeriodicalExecuter(
     }
     tableupdates -= 1;
   }
-, 5)
+, 20)

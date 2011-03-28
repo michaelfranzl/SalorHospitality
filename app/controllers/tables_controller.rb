@@ -1,10 +1,8 @@
 class TablesController < ApplicationController
+
   def index
     @tables = Table.all
-    respond_to do |wants|
-      wants.html
-      wants.js { @last_finished_order = Order.find_all_by_finished(true).last }
-    end
+    @last_finished_order = Order.find_all_by_finished(true).last
   end
 
   def show
