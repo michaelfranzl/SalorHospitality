@@ -156,7 +156,6 @@ class OrdersController < ApplicationController
   end
 
   def storno
-debugger
     @order = Order.find(params[:id])
     @previous_order, @next_order = neighbour_orders(@order)
     @order.update_attributes(params[:order])
@@ -183,15 +182,15 @@ debugger
         order.delete
         order.table.update_attribute :user, nil
         return
-      end 
+      end
 
       order.update_attribute( :sum, calculate_order_sum(order) )
+
+      group_identical_items(order)
 
       File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
       File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
       File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
-
-      group_identical_items(order)
 
       `cat bar.escpos > /dev/ttyPS1` #1 = Bar
       `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
@@ -225,6 +224,7 @@ debugger
         order.items.each do |i|
           i.update_attribute :order, @target_order
         end
+        @target_order.update_attribute( :sum, calculate_order_sum(@target_order) )
         group_identical_items(@target_order)
         order.destroy
       else
@@ -242,17 +242,20 @@ debugger
     def group_identical_items(o)
       items = o.items
       n = items.size - 1
-      0.upto(n) do |i|
+      0.upto(n-1) do |i|
         (i+1).upto(n) do |j|
-          if (items[i].article_id  == items[j].article_id and
+          if (items[i].frozen?     == false and
+              items[i].article_id  == items[j].article_id and
               items[i].quantity_id == items[j].quantity_id and
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment
              )
-            items[i].count += items[j].count and items[j].delete
+            items[i].count += items[j].count
+            items[i].printed_count += items[j].printed_count
             items[i].save
+            items[j].destroy
           end
-        end         
+        end
       end
     end
 
@@ -275,9 +278,6 @@ debugger
       end
     end
 
-
-
-    
     # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
     #
     def make_storno(order, items_for_storno)

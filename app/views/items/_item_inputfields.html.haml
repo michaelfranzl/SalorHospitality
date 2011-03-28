@@ -8,6 +8,8 @@
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_optionslist", :name => "order[items_attributes][#{ locals[:designator] }][optionslist]", :type => 'hidden', :value => "#{ locals[:optionslist] }" }
 
+  %input{ :id => "order_items_attributes_#{ locals[:designator] }_printoptionslist", :name => "order[items_attributes][#{ locals[:designator] }][printoptionslist]", :type => 'hidden', :value => "#{ locals[:printoptionslist] }" }
+
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ locals[:designator] }][article_id]", :type => 'hidden', :value => "#{ locals[:articleid] }" }
 
   %input{ :id => "order_items_attributes_#{ locals[:designator] }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ locals[:designator] }][quantity_id]", :type => 'hidden', :value => "#{ locals[:quantityid] }" }

@@ -4,6 +4,7 @@ class Item < ActiveRecord::Base
   belongs_to :quantity
   has_one :item
   has_and_belongs_to_many :options
+  has_and_belongs_to_many :printoptions, :class_name => "Option", :join_table => "items_printoptions"
   validates_presence_of :count, :article_id
 
   default_scope :order => 'sort DESC'
@@ -25,6 +26,17 @@ class Item < ActiveRecord::Base
 
   def optionslist
     self.options.collect{ |o| "#{ o.id } " }.join
+  end
+
+  def printoptionslist=(printoptionslist)
+    self.printoptions = []
+    printoptionslist.split.each do |o|
+      self.printoptions << Option.find(o.to_i)
+    end
+  end
+
+  def printoptionslist
+    self.printoptions.collect{ |o| "#{ o.id } " }.to_s
   end
 
   def category

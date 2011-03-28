@@ -8,7 +8,6 @@ page << "$('order_user_id').value = '#{ @current_user.id }';"
 page << "$('order_action').value = '';"
 page << "$('target_table').value = '';"
 
-
 page.hide 'functions_header_index', 'functions_header_invoice_form'
 page.show 'functions_header_order_form', 'functions_footer'
 
@@ -27,12 +26,14 @@ if @order
     @comment = item.comment
     @label = compose_item_label(item)
     @optionslist = item.optionslist
+    @printoptionslist = item.printoptionslist
     @optionsnames = compose_option_names(item)
     @optionsselect = compose_option_select(item)
 
-    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :printed_count => @printed_count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    @tablerows += render 'items/item_tablerow', :locals => { :label => @label, :designator => @designator, :count => @count, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
 
-    @tablerows += render 'items/item_tablerow', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid , :itemname => @itemname, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :label => @label, :optionslist => @optionslist, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :designator => @designator, :count => @count, :printed_count => @printed_count, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist }
+
   end
 
   page.insert_html :bottom, 'inputfields', @inputfields

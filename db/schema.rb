@@ -86,6 +86,13 @@ ActiveRecord::Schema.define(:version => 20110223101418) do
     t.datetime "updated_at"
   end
 
+  create_table "items_printoptions", :id => false, :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "option_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "logins", :force => true do |t|
     t.string   "ip"
     t.string   "email"

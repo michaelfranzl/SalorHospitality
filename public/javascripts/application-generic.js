@@ -1,4 +1,4 @@
-var tableupdates = false;
+var tableupdates = -1;
 
 function display_articles(cat_id) {
   $('articles').innerHTML = articleslist[cat_id];
@@ -203,6 +203,7 @@ function add_option_to_item(item_designator, select_tag)
   if (select_tag.value == 0) {
     // normal, delete all options
     $('order_items_attributes_' + item_designator + '_optionslist').value = '';
+    $('order_items_attributes_' + item_designator + '_printoptionslist').value = '';
     $('optionsnames_' + item_designator).innerHTML = '';
 
   } else if (select_tag.value == -2 ) {
@@ -214,7 +215,7 @@ function add_option_to_item(item_designator, select_tag)
     $('optionsnames_' + item_designator).insert('<br>fertig');
 
   } else {
-    $('order_items_attributes_' + item_designator + '_optionslist').value += (select_tag.value+' ');
+    $('order_items_attributes_' + item_designator + '_printoptionslist').value += (select_tag.value+' ');
     var index = $('optionsselect_' + item_designator).selectedIndex;
     var text = $('optionsselect_' + item_designator).options[index].text;
     $('optionsnames_' + item_designator).insert('<br>'+text);
@@ -280,6 +281,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('functions_header_order_form').show();
   $('functions_footer').show();
 
+
   new Ajax.Request('/tables/'+table_id, {asynchronous:true, evalScripts:true, method:'get'});
 }
 
@@ -295,6 +297,7 @@ function go_to_tables_offline() {
   Effect.ScrollTo("header");
   $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_ipod_tables.png')";
   $('save_and_go_to_tables').style.border = "none";
+  tableupdates = 2;
 }
 
 new PeriodicalExecuter(function() {if (tableupdates == true) { new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'}); }}, 20)

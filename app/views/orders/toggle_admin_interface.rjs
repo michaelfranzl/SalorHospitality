@@ -1,13 +1,11 @@
 page.replace_html 'tables', render(@tables)
 
-if ipod?
-  page << "tableupdates = true;"
-else
+if workstation?
   if session[:admin_interface] == false
-    page << "tableupdates = true;"
+    page << 'tableupdates = 2;'
     page << "Effect.SlideUp('admin');"
   else
-    page << "tableupdates = false;"
+    page << 'tableupdates = -1;'
     page << "Effect.SlideDown('admin');"
   end
 end
