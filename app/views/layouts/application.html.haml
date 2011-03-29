@@ -13,7 +13,8 @@
     = javascript_include_tag :defaults
     = javascript_include_tag 'application-generic.js'
     %script{ :type => 'text/javascript' }= generate_js_variables
-    = javascript_include_tag "/articles.js"
+    - if controller.controller_name == 'orders'
+      = javascript_include_tag "/articles.js"
     = csrf_meta_tag
 
 

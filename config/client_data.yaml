@@ -1,5 +1,5 @@
 --- !map:ActiveSupport::HashWithIndifferentAccess 
-name: Restaurant2
+name: Restaurant3
 subtitle: Subtitle
 address: Adress
 taxnumber: Tax Number
