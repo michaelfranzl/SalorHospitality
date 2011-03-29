@@ -1,25 +1,25 @@
 %h2= t('activerecord.models.article.other')
 
 - if @current_user.role >= 1
-  =link_to((t :new), new_article_path, :class => 'links')
+  = link_to((t :new), new_article_path, :class => 'links')
 
-=link_to((t '.list_all'), listall_articles_path, :class => 'links')
+= link_to((t '.list_all'), listall_articles_path, :class => 'links')
 
 %table.articles
   %tr
     %td#drop_remove
-      = drop_receiving_element :drop_remove, :hoverclass => 'hover', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=remove'"
       = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value="";'
-      %script{ :type => 'text/javascript' }== new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('articles_search_results', '/articles/find', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('search_spinner_').style.display='none'}, onLoading:function(request){document.getElementById('search_spinner_').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})
-
-      %ul#articles_search_results
-        = render 'articles_search_results'
+      %ul#search_results
     
     - @scopes.each do |scope|
-    - @s = scope
       %td{ :id => "drop_add_to_#{scope}" }
+        %script{ :type => 'text/javascript' }== Droppables.add('drop_add_to_#{scope}', {hoverclass:'receiving', onDrop:function(element){new Ajax.Request('articles/'+element.id, { method: 'put', asynchronous:true, evalScripts:true, parameters:'drop_action=add_to_#{scope}'})}})
         %span.scope_title= t "#{scope}_generic_name".to_sym
         = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
-        %div{ :id => "#{scope}_list" }
-          = render 'list', :locals => { :scope => @s }
-        = #drop_receiving_element "drop_add_to_#{scope}", :hoverclass => 'receiving', :url => { :action => 'update' }, :with => "'id=' + element.id + '&drop_action=add_to_#{scope}'"
+        %div{ :id => "#{scope}_list" }= render :partial => 'list', :locals => { :scope => scope }
+
+
+%script{ :type => 'text/javascript' }
+  Droppables.add("drop_remove", {hoverclass:'hover', onDrop:function(element){new Ajax.Request('articles/'+element.id, {method: 'put', asynchronous:true, evalScripts:true, parameters:'drop_action=remove'})}})
+
+  new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('search_results', '/articles/find', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('search_spinner_').style.display='none'}, onLoading:function(request){document.getElementById('search_spinner_').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})

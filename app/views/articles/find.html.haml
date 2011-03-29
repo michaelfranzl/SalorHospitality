@@ -1,13 +1,12 @@
 - if @found_articles
   - @found_articles.each do |ar|
     %li{ :id => "drag_from_articles_#{ar.id}" }
-      %img{ :id => "handle_for_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
-      = link_to link_to ar.name, edit_article_path(ar)
+      %img{ :id => "handle_for_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move;' }
+      = link_to ar.name, edit_article_path(ar)
       %br
       - if !ar.description.nil? and !ar.description.empty?
         %i= ar.description
         %br
       - info = ar.quantities.empty? ? number_to_currency(ar.price) : "#{ar.quantities.size} #{t '.variants' }"
       == (#{info})
-        
-    = draggable_element "drag_from_articles_#{ar.id}", :revert => true, :ghosting => true, :handle => "'handle_for_article_#{ar.id}'"
+      %script== new Draggable('drag_from_articles_#{ar.id}', {ghosting:true, handle:'handle_for_article_#{ar.id}', revert:false})

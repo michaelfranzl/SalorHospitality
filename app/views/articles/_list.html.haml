@@ -1,10 +1,10 @@
 - @categories.each do |ca|
-  - articles = ca.articles.send "find_in_#{@s}".to_sym
+  - articles = ca.articles.send "find_in_#{scope}".to_sym
   - if !articles.empty?
     %p.category_title= ca.name
     %ul
       - articles.each do |ar|
-        %li{ :id => "drag_from_#{@s}_#{ar.id}" }
-          %img{ :id => "handle_for_#{@scope}_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+        %li{ :id => "drag_from_#{scope}_#{ar.id}" }
+          %img{ :id => "handle_for_#{scope}_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
           = link_to ar.name, edit_article_path(ar)
-          = draggable_element "drag_from_#{@s}_#{ar.id}", :revert => false, :ghosting => true, :handle => "'handle_for_#{@s}_article_#{ar.id}'"
+          %script== new Draggable('drag_from_#{scope}_#{ar.id}', {ghosting:true, handle:'handle_for_#{scope}_article_#{ar.id}', revert:false})

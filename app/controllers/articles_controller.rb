@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
     @categories = Category.find(:all, :order => 'sort_order')
     @scopes = ['menucard','waiterpad','blackboard']
 
-    @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We don't always get id's only.
+    @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We sometimes get id's only when submitting a normal form, OR we get things like "drag_from_menucard_352"
 
     @article.update_attributes params[:article]
     if @article.hidden
@@ -106,7 +106,7 @@ class ArticlesController < ApplicationController
       @found_articles = Article.find( :all,
         :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
     end
-      render :partial => 'articles_search_results'
+    render :layout => false
   end
 
 end

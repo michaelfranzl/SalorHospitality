@@ -104,7 +104,7 @@ en:
       add_quantity: Add Variant
     listall:
       all_articles: List of all articles
-    articles_search_results:
+    find:
       variants: Variants
 
   options:
