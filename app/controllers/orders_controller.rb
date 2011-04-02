@@ -13,7 +13,9 @@ class OrdersController < ApplicationController
   end
 
   def update
-debugger
+    @order = Order.find_by_id params[:id]
+    @order.update_attributes params[:order]
+    render :nothing => true
   end
 
   def login
