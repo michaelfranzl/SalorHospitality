@@ -7,4 +7,4 @@
   - @user.settlements.each do |s|
     %tr
       %td{ :style => 'width:220px' }= l s.created_at, :format => :datetime_iso
-      %td{ :style => 'width:120px' }= link_to("#{ Settlement.human_name } ##{s.id}", user_settlement_path(@user,s))
+      %td{ :style => 'width:120px' }= link_to("#{ Settlement.model_name.human } ##{s.id}", user_settlement_path(@user,s))

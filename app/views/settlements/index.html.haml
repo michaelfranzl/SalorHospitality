@@ -1,4 +1,4 @@
-- cost_center_header_text = "(#{ CostCenter.human_name }: #{@selected_cost_center.name})" if @selected_cost_center
+- cost_center_header_text = "(#{ CostCenter.model_name.human }: #{@selected_cost_center.name})" if @selected_cost_center
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 - form_tag settlements_path, :method => :get do
@@ -6,7 +6,7 @@
   = select_date(@from, :prefix => 'from')
   = label('to', t('.end_date'))
   = select_date(@to, :prefix => 'to')
-  = label('cc', CostCenter.human_name)
+  = label('cc', CostCenter.model_name.human)
   %select{ :name => 'cost_center_id' }
     %option{ :value => '' }= t '.all_cost_centers'
     = options_from_collection_for_select(@cost_centers, :id, :name)
@@ -16,7 +16,7 @@
   %tr
     %th{ :class => 'bb', :style => 'width:40px' }
     %th{ :class => 'bb' }= t :dateandtime
-    %th{ :class => 'br bb' }= User.human_name
+    %th{ :class => 'br bb' }= User.model_name.human
     - @taxes.each do |tax|
       %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{ t :net }
     %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :net }

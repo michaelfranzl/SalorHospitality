@@ -28,15 +28,15 @@
 = text_field_tag 'customer_data_4'
 %br
 
-%p#cost_center== #{ CostCenter.human_name }: #{ (@order.cost_center.name if @order.cost_center) }
+%p#cost_center== #{ CostCenter.model_name.human }: #{ (@order.cost_center.name if @order.cost_center) }
 %p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
 %p= l @order.created_at, :format => :long
 
 
 %table.printed_invoice
   %tr
-    %th.one= Tax.human_name
-    %th.two= Item.human_name
+    %th.one= Tax.model_name.human
+    %th.two= Item.model_name.human
     %th.three= t '.unit_price'
     %th.four= t '.count'
     %th.five= t '.sum'
@@ -63,7 +63,7 @@
 
 %table.printed_taxes
   %tr
-    %th.one= Tax.human_name
+    %th.one= Tax.model_name.human
     %th.two= Tax.human_attribute_name(:percent)
     %th.three= t(:net)
     %th.four= t(:value_added_tax)

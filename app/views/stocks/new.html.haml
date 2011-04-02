@@ -16,7 +16,7 @@
         %select{ :id => 'stock_unit', :name => 'stock[unit]' }
           = options_for_select MyGlobals::stock_units, @stock.unit
     %tr
-      %td= stock_form.label('group', Group.human_name)
+      %td= stock_form.label('group', Group.model_name.human)
       %td= stock_form.collection_select :group_id, Group.find(:all), :id, :name, { :include_blank => true }
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

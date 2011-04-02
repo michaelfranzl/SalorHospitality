@@ -3,7 +3,7 @@
 = render 'menu'
 
 - form_tag '/statistics/journal' do
-  = CostCenter.human_name
+  = CostCenter.model_name.human
   %select{ :name => 'cost_center_id' }
     %option{ :value => '' }= t('settlements.index.all_cost_centers')
     = options_from_collection_for_select @cost_centers, :id, :name
