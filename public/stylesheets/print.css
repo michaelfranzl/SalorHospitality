@@ -88,3 +88,16 @@ table.printed_taxes {
   table.printed_taxes .five {
     width: 30pt;
     text-align: right; }
+
+div.articles_listall {
+  margin: 10px;
+  padding: 5px;
+  background-color: #243239;
+  min-height: 100px;
+  float: left; }
+  div.articles_listall span.name {
+    width: 150px;
+    display: inline-block; }
+  div.articles_listall span.price {
+    width: 60px;
+    display: inline-block; }

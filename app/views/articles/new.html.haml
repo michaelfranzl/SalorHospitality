@@ -2,15 +2,12 @@
 
 - if @article.errors.any?
   .errors
-    %h3 There was a problem saving this article
+    %h3= t 'activerecord.errors.template.header', :count => @tax.errors.size, :model => Tax.model_name.human
     %ul
       - @article.errors.full_messages.each do |msg|
         %li= msg
 
-
-
-
-- form_for @article do |article_form|
+= form_for @article do |article_form|
   %table.article_new
     %tr
       %td
