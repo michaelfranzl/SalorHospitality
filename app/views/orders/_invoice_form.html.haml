@@ -5,7 +5,7 @@
   - if !invoice_form.finished
     = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :class => 'iconbutton finish_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
 
-  - form_for :order, invoice_form, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
+  = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
 
     - if !invoice_form.finished
       %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/split_invoice_all_at_once/#{ invoice_form.id }', {asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
@@ -16,16 +16,14 @@
     %p= l invoice_form.created_at, :format => :long
     %table{ :class => 'invoice' }
       - subtotal = 0
-      - order_form.fields_for :items do |item_form|
-        - item = item_form.object
+      - invoice_form.items.each do |item|
         - sum = item.count * item.real_price
         - subtotal += sum
-        - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
+        - article_label = item.article.name[0..13]
+        - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
+        - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
         %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}" }
           %td.count= item.count
-          - article_label = item.article.name[0..13]
-          - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
-          - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
           %td.label{ :id => "item#{item.id}"}
             - if invoice_form.finished
               == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
@@ -33,7 +31,6 @@
               = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), item_path(item.id), :method => :put, :remote => true)
           %td.price= number_to_currency item.real_price
           %td.total= number_to_currency sum
-          %input{ :id => "order_items_attributes_#{order_form.object.id}_#{itemnumber}_partial_order", :name => "order[items_attributes][#{itemnumber}][partial_order]", :type => "hidden"}
 
       %tr
         %td{ :colspan => '3'}

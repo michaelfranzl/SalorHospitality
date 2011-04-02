@@ -64,7 +64,6 @@ class ApplicationController < ActionController::Base
 
     def generate_escpos_items(order, type)
       overall_output = ''
-
       #Order.find_all_by_finished(false).each do |order|
         per_order_output = ''
         per_order_output +=
