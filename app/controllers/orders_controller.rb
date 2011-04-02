@@ -12,6 +12,10 @@ class OrdersController < ApplicationController
     end
   end
 
+  def update
+debugger
+  end
+
   def login
     @current_user = User.find_by_login_and_password(params[:login], params[:password])
     if @current_user

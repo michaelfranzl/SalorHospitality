@@ -46,8 +46,7 @@ Billgastro2::Application.routes.draw do
 
   resources :items
 
-  match ':controller/:action/:id/:port', :controller => 'orders', :action => 'print_and_finish'
-
+  match 'orders/print_and_finish/:id/:port', :controller => 'orders', :action => 'print_and_finish'
   resources :options, :settlements, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard
 
   resources :statistics do
