@@ -18,6 +18,12 @@ class OrdersController < ApplicationController
     render :nothing => true
   end
 
+  def edit
+    @order = Order.find_by_id params[:id]
+    @table = @order.table
+    render 'orders/go_to_order_form'
+  end
+
   def login
     @current_user = User.find_by_login_and_password(params[:login], params[:password])
     if @current_user

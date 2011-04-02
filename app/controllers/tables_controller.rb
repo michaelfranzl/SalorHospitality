@@ -8,16 +8,12 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @cost_centers = CostCenter.find_all_by_active(true)
-    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false }) # @orders array needed for view 'go_to_invoice_form'
-    respond_to do |wants|
-      wants.js {
-        if @orders.size > 1
-          render 'orders/go_to_invoice_form'
-        else
-          @order = @orders.first
-          render 'orders/go_to_order_form'
-        end
-      }
+    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
+    if @orders.size > 1
+      render 'orders/go_to_invoice_form'
+    else
+      @order = @orders.first
+      render 'orders/go_to_order_form'
     end
   end
 
