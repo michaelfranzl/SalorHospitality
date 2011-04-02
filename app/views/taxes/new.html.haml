@@ -1,6 +1,11 @@
 %h2= @tax.new_record? ? (t '.new_tax') : (t '.edit_tax')
 
-= error_messages_for 'tax'
+- if @tax.errors.any?
+  .errors
+    %h3 There was a problem saving this tax
+    %ul
+      - @tax.errors.full_messages.each do |msg|
+        %li= msg
 
 - form_for @tax do |tax_form|
   %table

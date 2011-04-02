@@ -1,6 +1,5 @@
 %h2= t('activerecord.models.settlement.other')
 
-= error_messages_for 'settlement'
 = render :partial => 'detailed_list', :locals => { :orders => @orders, :selected_cost_center => nil }
 
 - path = user_settlements_path @settlement.user
