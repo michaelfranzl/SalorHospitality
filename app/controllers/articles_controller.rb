@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
 
   def index
     @categories = Category.find(:all, :order => 'sort_order')
-    @scopes = ['menucard','waiterpad','blackboard']
+    @scopes = ['menucard','waiterpad']
     @articles = Article.all
     respond_to do |wants|
       wants.html
