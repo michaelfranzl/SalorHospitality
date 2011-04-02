@@ -103,7 +103,7 @@ de:
       add_quantity: Variante hinzufügen
     listall:
       all_articles: Liste aller Artikel
-    articles_search_results:
+    find:
       variants: Varianten
 
   options:

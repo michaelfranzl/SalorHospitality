@@ -7,10 +7,10 @@
 
 %table.articles
   %tr
-    %td#drop_remove
+    %td#drop_remove{ :colspan => 2 }
       = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value="";'
       %ul#search_results
-    
+  %tr
     - @scopes.each do |scope|
       %td{ :id => "drop_add_to_#{scope}" }
         %script{ :type => 'text/javascript' }== Droppables.add('drop_add_to_#{scope}', {hoverclass:'receiving', onDrop:function(element){new Ajax.Request('articles/'+element.id, { method: 'put', asynchronous:true, evalScripts:true, parameters:'drop_action=add_to_#{scope}'})}})

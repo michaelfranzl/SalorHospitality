@@ -8,7 +8,7 @@
       - else
         = ar.name
     %span.price
-      = ar.price if not ar.quantities.empty?
+      = number_to_currency ar.price if ar.quantities.empty?
     %br
     - ar.quantities.each do |qu|
       %span.name== #{qu.prefix}, #{qu.postfix}
