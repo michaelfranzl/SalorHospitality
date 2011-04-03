@@ -29,6 +29,7 @@ Billgastro2::Application.routes.draw do
     collection do
       get :listall
       post :find
+      post :change_scope
     end
   end
 
