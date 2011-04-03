@@ -41,9 +41,6 @@ class ArticlesController < ApplicationController
 
   def update
     @categories = Category.find(:all, :order => 'sort_order')
-    @scopes = ['menucard','waiterpad','blackboard']
-
-    @article = Article.find(/([0-9]*)$/.match(params[:id])[1]) #We sometimes get id's only when submitting a normal form, OR we get things like "drag_from_menucard_352"
 
     @article.update_attributes params[:article]
     if @article.hidden
@@ -52,40 +49,15 @@ class ArticlesController < ApplicationController
       end
     end
 
-    respond_to do |wants|
-      wants.html do #html request from new_articles_path
-        if @article.save
-          if session[:return_to]
-            redirect_to session[:return_to]
-            session[:return_to] = nil
-          else
-            redirect_to orders_path
-          end
-        else
-          render :new
-        end
+    if @article.save
+      if session[:return_to]
+        redirect_to session[:return_to]
+        session[:return_to] = nil
+      else
+        redirect_to orders_path
       end
-
-      wants.js do #xhr request from blackboard formatting OR drag/drop of articles
-        case params[:drop_action]
-        when 'add_to_menucard'
-          @article.update_attribute :menucard, true
-        when 'add_to_waiterpad'
-          @article.update_attribute :waiterpad, true
-        when 'add_to_blackboard'
-          @article.update_attribute :blackboard, true
-        when 'remove'
-          case params[:id]
-          when /drag_from_menucard.*/
-            @article.update_attributes({ :menucard => false, :blackboard => false, :waiterpad => false })
-          when /drag_from_waiterpad.*/
-            @article.update_attribute :waiterpad, false
-          when /drag_from_blackboard.*/
-            @article.update_attribute :blackboard, false
-          end
-        end
-        params[:drop_action] ? render('update_lists') : render( :nothing => true )
-      end
+    else
+      render :new
     end
   end
 
@@ -97,16 +69,40 @@ class ArticlesController < ApplicationController
   end
 
   def find
-    if params['articles_search_text'].strip.length > 0
-      search_terms = params['articles_search_text'].split.collect do |word|
-        "%#{ word.downcase }%"
-      end
+    if params['articles_search_text'].strip.length > 2
+      search_terms = params['articles_search_text'].split.collect { |word| "%#{ word.downcase }%" }
       conditions = 'hidden = false AND '
       conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
-      @found_articles = Article.find( :all,
-        :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
+      @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
+      render :layout => false
+    else
+      render :nothing => true
     end
-    render :layout => false
+  end
+
+  def change_scope
+    @scopes = ['menucard','waiterpad']
+    @categories = Category.find(:all, :order => 'sort_order')
+
+    @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
+
+    case params[:add_to]
+    when 'menucard'
+      @article.update_attribute :menucard, true
+    when 'waiterpad'
+      @article.update_attribute :waiterpad, true
+    when 'blackboard'
+      @article.update_attribute :blackboard, true
+    when 'remove'
+      case params[:id]
+      when /menucard.*/
+        @article.update_attributes({ :menucard => false, :blackboard => false, :waiterpad => false })
+      when /waiterpad.*/
+        @article.update_attribute :waiterpad, false
+      when /blackboard.*/
+        @article.update_attribute :blackboard, false
+      end
+    end
   end
 
 end
