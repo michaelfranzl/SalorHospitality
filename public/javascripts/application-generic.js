@@ -281,7 +281,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('functions_header_order_form').show();
   $('functions_footer').show();
 
-  new Ajax.Request('/tables/'+table_id, {asynchronous:true, evalScripts:true, method:'get'});
+  new Ajax.Request('/tables/'+table_id, {method:'get'});
 }
 
 function go_to_tables_offline() {

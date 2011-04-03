@@ -16,7 +16,7 @@
         %script{ :type => 'text/javascript' }== Droppables.add('drop_add_to_#{scope}', {hoverclass:'receiving', onDrop:function(element){new Ajax.Request('articles/change_scope', {parameters:{'scope':'#{scope}','id':element.id}})}})
         %span.scope_title= t "#{scope}_generic_name".to_sym
         = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
-        %div{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
+        %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
 
 
 %script{ :type => 'text/javascript' }

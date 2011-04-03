@@ -7,7 +7,7 @@
 
   = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
     - if !invoice_form.finished
-      %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', asynchronous:true, evalScripts:true, parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
+      %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
         = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
       = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
 

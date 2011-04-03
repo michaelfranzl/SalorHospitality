@@ -82,4 +82,4 @@
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-%script{ :type => 'text/javascript' }== new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('articles_search_results', '/articles/find', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('spinner').style.display='none'}, onLoading:function(request){document.getElementById('spinner').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})
+%script{ :type => 'text/javascript' }== new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('articles_search_results', '/articles/find', {onLoaded:function(request){document.getElementById('spinner').style.display='none'}, onLoading:function(request){document.getElementById('spinner').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})

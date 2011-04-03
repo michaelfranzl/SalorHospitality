@@ -1,5 +1,5 @@
 function toggle_admin_interface() {
-  new Ajax.Request('/orders/toggle_admin_interface', {asynchronous:true, evalScripts:true});
+  new Ajax.Request('/orders/toggle_admin_interface');
 }
 
 function category_onmousedown(category_id) {

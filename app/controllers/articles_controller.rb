@@ -82,7 +82,6 @@ class ArticlesController < ApplicationController
 
   def change_scope
     @categories = Category.find(:all, :order => 'sort_order')
-
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
 
     if params[:scope] == 'remove'
