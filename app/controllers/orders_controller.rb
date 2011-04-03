@@ -130,6 +130,10 @@ class OrdersController < ApplicationController
     end
   end
 
+  def storno
+    @order = Order.find_by_id params[:id]
+  end
+
   def go_to_order_form # to be called only with /id
     @order = Order.find(params[:id])
     @table = @order.table
@@ -167,23 +171,9 @@ class OrdersController < ApplicationController
     conditional_redirect_ajax(@order)
   end
 
-  def storno
-    @order = Order.find(params[:id])
-    @previous_order, @next_order = neighbour_orders(@order)
-    @order.update_attributes(params[:order])
-    items_for_storno = Item.find(:all, :conditions => { :order_id => @order.id, :storno_status => 1 })
-    make_storno(@order, items_for_storno)
-    @order = Order.find(params[:id]) # re-read
-    respond_to do |wants|
-      wants.html
-      wants.js { render 'display_storno' }
-    end
-  end
-
   def last_invoices
     @last_orders = Order.find(:all, :conditions => { :finished => true }, :limit => 10, :order => 'created_at DESC')
   end
-
 
   private
 
@@ -290,16 +280,4 @@ class OrdersController < ApplicationController
       end
     end
 
-    # storno_status: 1 = marked for storno, 2 = storno clone, 3 = storno original
-    #
-    def make_storno(order, items_for_storno)
-      return if items_for_storno.empty?
-      items_for_storno.each do |item|
-        next if item.storno_status == 3 # only one storno allowed per item
-        storno_item = item.clone
-        storno_item.save
-        storno_item.update_attribute :storno_status, 2 # tis is a storno clone
-        item.update_attribute :storno_status, 3 # this is a storno original
-      end
-    end
 end

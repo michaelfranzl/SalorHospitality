@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
     end
   end
 
+  #We'll use update for splitting of items into separate orders
   def update
     logger.info "XXX Started function update (actually split item). I attempt to find item id #{params[:id]}"
     @item = Item.find_by_id(params[:id])
@@ -21,22 +22,45 @@ class ItemsController < ApplicationController
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
   end
 
-  # We'll use destroy for separation of items
-  def destroy
-    @item = Item.find(params[:id])
-    @separated_item = @item.item
-    if @separated_item.nil?
-      @separated_item = @item.clone
-      @separated_item.count = 0
-      @separated_item.item = @item
-      @item.item = @separated_item
+  # We'll use edit for separation of items
+  def edit
+    item = Item.find(params[:id])
+    separated_item = item.item
+    if separated_item.nil?
+      separated_item = item.clone
+      separated_item.count = 0
+      separated_item.item = item
+      item.item = separated_item
     end
 
-    @item.count -= 1
-    @separated_item.count += 1
-    @order = @item.order
-    @item.count == 0 ? @item.delete : @item.save
-    @separated_item.save
+    item.count -= 1
+    separated_item.count += 1
+    @order = item.order
+    item.count == 0 ? item.delete : item.save
+    separated_item.save
+  end
+
+  # We'll use destroy for storno of items
+  # storno_status: 2 = storno clone, 3 = storno original
+  #
+  def destroy
+    i = Item.find_by_id params[:id]
+    if i.storno_status == 0
+      k = i.clone
+      k.storno_status = 2
+      k.storno_item = i
+      i.storno_item = k
+      i.storno_status = 3
+      k.save
+      i.item.update_attribute :item, nil
+    else
+      i.storno_item.delete
+      i.storno_item = nil
+      i.storno_status = 0
+    end   
+    i.save
+    @order = i.order
+    render 'edit'
   end
 
   private

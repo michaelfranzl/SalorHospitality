@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223101418) do
+ActiveRecord::Schema.define(:version => 20110403133224) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -72,11 +72,12 @@ ActiveRecord::Schema.define(:version => 20110223101418) do
     t.boolean  "partial_order"
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status", :default => 0
+    t.integer  "storno_status",  :default => 0
     t.string   "comment"
     t.float    "price"
-    t.integer  "printed_count", :default => 0
+    t.integer  "printed_count",  :default => 0
     t.integer  "item_id"
+    t.integer  "storno_item_id"
   end
 
   create_table "items_options", :id => false, :force => true do |t|

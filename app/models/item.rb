@@ -2,9 +2,10 @@ class Item < ActiveRecord::Base
   belongs_to :order
   belongs_to :article
   belongs_to :quantity
-  has_one :item
+  belongs_to :item
+  belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   has_and_belongs_to_many :options
-  has_and_belongs_to_many :printoptions, :class_name => "Option", :join_table => "items_printoptions"
+  has_and_belongs_to_many :printoptions, :class_name => 'Option', :join_table => 'items_printoptions'
   validates_presence_of :count, :article_id
 
   default_scope :order => 'sort DESC'
