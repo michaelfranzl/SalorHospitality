@@ -20,6 +20,6 @@
 
 
 %script{ :type => 'text/javascript' }
-  Droppables.add("drop_remove", {hoverclass:'hover', onDrop:function(element){new Ajax.Request('articles/change_scope', {parameters:{'scope':'remove','id':element.id}})}})
+  Droppables.add("drop_remove", {hoverclass:'hover', onDrop:function(element){element.remove(); new Ajax.Request('articles/change_scope', {parameters:{'scope':'remove','id':element.id}})}})
 
   new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('search_results', '/articles/find', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('search_spinner_').style.display='none'}, onLoading:function(request){document.getElementById('search_spinner_').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})

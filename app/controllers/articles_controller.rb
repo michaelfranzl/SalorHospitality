@@ -81,27 +81,16 @@ class ArticlesController < ApplicationController
   end
 
   def change_scope
-    @scopes = ['menucard','waiterpad']
     @categories = Category.find(:all, :order => 'sort_order')
 
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
 
-    case params[:add_to]
-    when 'menucard'
-      @article.update_attribute :menucard, true
-    when 'waiterpad'
-      @article.update_attribute :waiterpad, true
-    when 'blackboard'
-      @article.update_attribute :blackboard, true
-    when 'remove'
-      case params[:id]
-      when /menucard.*/
-        @article.update_attributes({ :menucard => false, :blackboard => false, :waiterpad => false })
-      when /waiterpad.*/
-        @article.update_attribute :waiterpad, false
-      when /blackboard.*/
-        @article.update_attribute :blackboard, false
-      end
+    if params[:scope] == 'remove'
+      @scope_of_dragged_article = /[^_]*/.match(params[:id])[0]
+      @article.update_attribute @scope_of_dragged_article.to_sym, false
+    else
+      @scope_of_dragged_article = params[:scope]
+      @article.update_attribute @scope_of_dragged_article.to_sym, true
     end
   end
 
