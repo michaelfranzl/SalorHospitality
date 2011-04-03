@@ -25,4 +25,3 @@ if MyGlobals::credits_left == 25 and ipod?
 end
 
 page << 'tableupdates = 2;'
-
