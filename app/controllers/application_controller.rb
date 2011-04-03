@@ -115,6 +115,7 @@ class ApplicationController < ActionController::Base
       overall_output.gsub!(/\x00FA/,"\xA3") #ú
       overall_output.gsub!(/\x00F9/,"\x97") #ù
       overall_output.gsub!(/\x00C9/,"\x90") #É
+      puts overall_output
       return overall_output
     end
 
@@ -219,6 +220,7 @@ class ApplicationController < ActionController::Base
       output.gsub!(/\x00FA/,"\xA3") #ú
       output.gsub!(/\x00F9/,"\x97") #ù
       output.gsub!(/\x00C9/,"\x90") #É
+      puts output
       return output
     end
 end

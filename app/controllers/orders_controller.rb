@@ -190,13 +190,13 @@ class OrdersController < ApplicationController
 
       group_identical_items(order)
 
-      File.open('bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      File.open('kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      File.open('kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+      File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
+      File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
+      File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
 
-      `cat bar.escpos > /dev/ttyPS1` #1 = Bar
-      `cat kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-      `cat kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
+      `cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
+      `cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+      `cat tmp/kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
     def conditional_redirect_ajax(order)

@@ -1,3 +1,2 @@
-#page.visual_effect :highlight, "invoice_#{@order.order.id}"
 page.replace_html 'invoices', render(:partial => 'orders/invoice_form', :collection => @orders )
 page.visual_effect :highlight, "order_#{ @order.id }_item_#{ @item_to_split.id }" if @item_to_split and not @item_to_split.count.zero?

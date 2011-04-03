@@ -32,12 +32,12 @@ class ItemsController < ApplicationController
       separated_item.item = item
       item.item = separated_item
     end
-
     item.count -= 1
-    separated_item.count += 1
-    @order = item.order
     item.count == 0 ? item.delete : item.save
+    separated_item.count += 1
     separated_item.save
+    separated_item.storno_item.update_attribute :count, separated_item.count if separated_item.storno_status != 0
+    @order = item.order
   end
 
   # We'll use destroy for storno of items
@@ -52,7 +52,6 @@ class ItemsController < ApplicationController
       i.storno_item = k
       i.storno_status = 3
       k.save
-      i.item.update_attribute :item, nil
     else
       i.storno_item.delete
       i.storno_item = nil

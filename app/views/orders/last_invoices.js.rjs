@@ -1,8 +1,7 @@
 page << '$("invoices").innerHTML = "";'
+page << 'tableupdates = -1;'
 
-@last_orders.each do |o|
-  page.insert_html :bottom, 'invoices', render(:partial => 'invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers })
-end
+page.insert_html :bottom, 'invoices', render(:partial => 'storno_form', :collection => @last_orders, :locals => { :cost_centers => @cost_centers })
 
 page.show 'invoices'
 page.hide 'orderform'

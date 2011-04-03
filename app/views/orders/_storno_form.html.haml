@@ -1,4 +1,4 @@
-%div.invoice
+%div.invoice{ :id => "invoice_#{storno_form.id}" }
   = link_to('', "/orders/print_and_finish/#{ storno_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
   = link_to '', "/orders/print_and_finish/#{ storno_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
   = link_to '', "/orders/print_and_finish/#{ storno_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
@@ -16,11 +16,11 @@
         - subtotal += sum
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         - color = item.storno_status.zero? ? 'transparent' : '#FAA'
-        - label = item.quantity ? "i#{ item.item_id } s#{ item.storno_item_id } #{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "i#{ item.item_id } s#{ item.storno_item_id } #{ item.article.name } #{ item.comment }"
+        - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
         - label = "%20.20s" % [label]
 
         %tr{ :style => "background-color: #{color}" }
-          %td.count
+          %td.count.grey
             - if item.storno_status.zero?
               = link_to item.count, edit_item_path(item), :method => 'get', :remote => true
             - else
