@@ -87,7 +87,7 @@ class OrdersController < ApplicationController
       @order.created_at = Time.now
     end
 
-    if @order.order # unlink any parent relationships
+    if @order.order # unlink any parent relationships or Order and Item
       @order.items.each do |item|
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
@@ -290,7 +290,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    # storno_status: 1 = marked for storno, 2 = is storno clone, 3 = storno original
+    # storno_status: 1 = marked for storno, 2 = storno clone, 3 = storno original
     #
     def make_storno(order, items_for_storno)
       return if items_for_storno.empty?

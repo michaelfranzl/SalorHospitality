@@ -21,18 +21,22 @@ class ItemsController < ApplicationController
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
   end
 
-  def destroy # this is actually a storno of an item
-    @item=Item.find(params[:id])
-    @separated_item = @item.clone
-    @separated_item.count = 1
+  # We'll use destroy for separation of items
+  def destroy
+    @item = Item.find(params[:id])
+    @separated_item = @item.item
+    if @separated_item.nil?
+      @separated_item = @item.clone
+      @separated_item.count = 0
+      @separated_item.item = @item
+      @item.item = @separated_item
+    end
+
     @item.count -= 1
+    @separated_item.count += 1
+    @order = @item.order
     @item.count == 0 ? @item.delete : @item.save
     @separated_item.save
-    @order = @item.order
-    @previous_order, @next_order = neighbour_orders(@order)
-    respond_to do |wants|
-      wants.js
-    end
   end
 
   private

@@ -64,7 +64,6 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-    File.open('public/articles.js', 'w') { |out| out.write(generate_js_database(@categories)) }
     redirect_to articles_path
   end
 
