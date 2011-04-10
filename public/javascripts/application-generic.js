@@ -318,7 +318,7 @@ function go_to_tables_offline() {
 
 new PeriodicalExecuter(
   function() {
-    $('flash_notice').innerHTML = '                              ' + tableupdates;
+    //$('flash_notice').innerHTML = '                              ' + tableupdates;
     if (tableupdates > 0) {
       new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
     }

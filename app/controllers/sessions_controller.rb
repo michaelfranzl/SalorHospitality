@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destroy
+  def show
     session[:user_id] = @current_user = nil
     flash[:notice] = t(:logout_successful)
     redirect_to new_session_path

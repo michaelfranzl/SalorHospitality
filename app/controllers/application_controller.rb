@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      I18n.locale = @current_user.language if @current_user
+      I18n.locale = @current_user ? @current_user.language : 'en'
     end
 
     def calculate_order_sum(order)

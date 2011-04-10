@@ -9,3 +9,4 @@ public/stylesheets/*.css
 *.escpos
 articles.js
 *.xcf
+*.lock
