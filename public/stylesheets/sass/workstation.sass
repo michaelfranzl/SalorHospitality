@@ -12,7 +12,7 @@ body
   :font-family Trebuchet MS
   :color #CCC
   :padding 0px
-  :margin 0px 30px
+  :margin 0px 50px
   :font-size 85%
   :background-color #0e1d25
   :background-image url('/images/bg.png')
@@ -58,7 +58,6 @@ div#main
   :padding 20px
   :background-color #0e1d25
   :min-height 560px
-  :width 930px
   :margin auto
   :position relative
 
@@ -73,15 +72,12 @@ div.metaelements
 
 div#header
   :height 130px
-  :width 970px
   :margin auto
   
 div#admin
   :border 3px solid white
   :border-top none
   :margin-left 130px
-  :position absolute
-  :width 835px
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
   
@@ -125,6 +121,7 @@ div.errors
       
 div.adminlinks
   :padding 10px
+  :background-color #0E1D25
 
 div.adminlinks a,
 a.links
@@ -441,7 +438,10 @@ table#quantities_new
     
 img#logo
   :float right
-  :margin-top 50px
+  :position absolute
+  :right 50px
+  :top 51px
+  :z-index -1
 
 form#client_data_form
   label
