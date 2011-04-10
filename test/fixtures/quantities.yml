@@ -1,678 +1,901 @@
 --- 
-quantities_072: 
-  price: "5"
-  prefix: Camel nat. flavour
-  created_at: 2010-05-01 16:53:36
-  updated_at: 2010-05-01 16:53:36
-  id: "72"
-  article_id: "345"
-  hidden: "0"
-  active: "1"
-quantities_007: 
-  price: "2.5"
-  prefix: 1/4l pur
-  created_at: 2010-04-30 13:08:06
-  updated_at: 2010-04-30 13:08:06
-  id: "7"
-  article_id: "324"
-  hidden: "0"
-  active: "1"
-quantities_030: 
-  price: "2.2"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:51:28
-  updated_at: 2010-04-30 13:51:28
-  id: "30"
-  article_id: "330"
-  hidden: "0"
-  active: "1"
-quantities_028: 
-  price: "3.7"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 13:49:35
-  updated_at: 2010-04-30 13:49:35
-  id: "28"
-  article_id: "329"
-  hidden: "0"
-  active: "1"
-quantities_051: 
-  price: "2.2"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 14:16:02
-  updated_at: 2010-04-30 14:16:02
-  id: "51"
-  article_id: "337"
-  hidden: "0"
-  active: "1"
-quantities_073: 
-  price: "2.2"
-  prefix: "0,2"
-  created_at: 2010-09-10 16:33:08
-  updated_at: 2010-09-10 16:33:08
-  id: "73"
-  article_id: "3"
-  hidden: "0"
-  active: "1"
-quantities_010: 
-  price: "2.3"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:31:09
-  updated_at: 2010-04-30 13:33:53
-  id: "10"
-  article_id: "325"
-  hidden: "0"
-  active: "1"
-quantities_008: 
-  price: "2.3"
-  prefix: 1/4l gespritzt
-  created_at: 2010-04-30 13:10:22
-  updated_at: 2010-04-30 13:10:22
-  id: "8"
-  article_id: "324"
-  hidden: "0"
-  active: "1"
-quantities_031: 
-  price: "2"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:51:28
-  updated_at: 2010-04-30 13:51:28
-  id: "31"
-  article_id: "330"
-  hidden: "0"
-  active: "1"
-quantities_029: 
-  price: "2.3"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:49:35
-  updated_at: 2010-04-30 13:49:35
-  id: "29"
-  article_id: "329"
-  hidden: "0"
-  active: "1"
-quantities_052: 
-  price: "1.1"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 14:16:02
-  updated_at: 2010-04-30 14:16:02
-  id: "52"
-  article_id: "337"
-  hidden: "0"
-  active: "1"
-quantities_074: 
-  price: "0.5"
-  prefix: "0,5"
-  created_at: 2010-09-10 16:33:08
-  updated_at: 2010-09-10 16:33:08
-  id: "74"
-  article_id: "3"
-  hidden: "0"
-  active: "1"
-quantities_011: 
-  price: "3.7"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 13:31:09
-  updated_at: 2010-04-30 13:33:53
-  id: "11"
-  article_id: "325"
-  hidden: "0"
-  active: "1"
-quantities_009: 
-  price: "3.7"
-  prefix: 1/2l gespritzt
-  created_at: 2010-04-30 13:28:42
-  updated_at: 2010-04-30 13:33:47
-  id: "9"
-  article_id: "324"
-  hidden: "0"
-  active: "1"
-quantities_032: 
-  price: "1.1"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:51:28
-  updated_at: 2010-04-30 13:51:28
-  id: "32"
-  article_id: "330"
-  hidden: "0"
-  active: "1"
-quantities_053: 
-  price: "21"
-  prefix: Flasche
-  created_at: 2010-04-30 14:16:53
-  updated_at: 2010-04-30 14:16:53
-  id: "53"
-  article_id: "320"
-  hidden: "0"
-  active: "1"
-quantities_075: 
-  price: "2.7"
-  prefix: "0,3"
-  created_at: 2010-09-10 16:33:08
-  updated_at: 2010-09-10 16:33:08
-  id: "75"
-  article_id: "3"
-  hidden: "0"
-  active: "1"
-quantities_012: 
-  price: "1.3"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:31:09
-  updated_at: 2010-04-30 13:33:53
-  id: "12"
-  article_id: "325"
-  hidden: "0"
-  active: "1"
-quantities_033: 
-  price: "3.7"
-  prefix: 1/2l gespritzt
-  created_at: 2010-04-30 13:51:28
-  updated_at: 2010-04-30 13:51:28
-  id: "33"
-  article_id: "330"
-  hidden: "0"
-  active: "1"
-quantities_054: 
-  price: "2.7"
-  prefix: "0,3"
-  created_at: 2010-04-30 14:18:09
-  updated_at: 2010-04-30 14:18:09
-  id: "54"
-  article_id: "338"
-  hidden: "0"
-  active: "1"
-quantities_013: 
-  price: "2.5"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:31:09
-  updated_at: 2010-04-30 13:33:53
-  id: "13"
-  article_id: "325"
-  hidden: "0"
-  active: "1"
-quantities_034: 
-  price: "27"
-  prefix: Flasche
-  created_at: 2010-04-30 13:52:14
-  updated_at: 2010-04-30 13:52:35
-  id: "34"
-  article_id: "319"
-  hidden: "0"
-  active: "1"
-quantities_055: 
-  price: "3.5"
-  prefix: "0,5"
-  created_at: 2010-04-30 14:18:09
-  updated_at: 2010-04-30 14:18:09
-  id: "55"
-  article_id: "338"
-  hidden: "0"
-  active: "1"
-quantities_014: 
-  price: "2.3"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:32:38
-  updated_at: 2010-04-30 13:33:06
-  id: "14"
-  article_id: "326"
-  hidden: "0"
-  active: "1"
-quantities_035: 
-  price: "3.5"
-  prefix: 1/8
-  created_at: 2010-04-30 13:53:37
-  updated_at: 2010-04-30 13:53:37
-  id: "35"
-  article_id: "331"
-  hidden: "0"
-  active: "1"
-quantities_056: 
-  price: "6.5"
-  prefix: 1/8
-  created_at: 2010-04-30 14:19:30
-  updated_at: 2010-04-30 14:19:30
-  id: "56"
-  article_id: "339"
-  hidden: "0"
-  active: "1"
-quantities_015: 
-  price: "2.5"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:32:38
-  updated_at: 2010-04-30 13:33:06
-  id: "15"
-  article_id: "326"
-  hidden: "0"
-  active: "1"
-quantities_036: 
-  price: "26"
-  prefix: Flasche
-  created_at: 2010-04-30 13:53:37
-  updated_at: 2010-04-30 13:53:37
-  id: "36"
-  article_id: "331"
-  hidden: "0"
-  active: "1"
-quantities_057: 
-  price: "42"
-  prefix: Flasche
-  created_at: 2010-04-30 14:19:30
-  updated_at: 2010-04-30 14:19:30
-  id: "57"
-  article_id: "339"
-  hidden: "0"
-  active: "1"
-quantities_037: 
-  price: "2.2"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:56:34
-  updated_at: 2010-04-30 13:56:34
-  id: "37"
-  article_id: "332"
-  hidden: "0"
-  active: "1"
-quantities_058: 
-  price: "3.4"
-  prefix: 1/8
-  created_at: 2010-04-30 14:20:52
-  updated_at: 2010-04-30 14:20:52
-  id: "58"
-  article_id: "340"
-  hidden: "0"
-  active: "1"
-quantities_016: 
-  price: "3.7"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 13:32:38
-  updated_at: 2010-04-30 13:33:06
-  id: "16"
-  article_id: "326"
-  hidden: "0"
-  active: "1"
-quantities_059: 
-  price: "26"
-  prefix: Flasche
-  created_at: 2010-04-30 14:20:52
-  updated_at: 2010-04-30 14:20:52
-  id: "59"
-  article_id: "340"
-  hidden: "0"
-  active: "1"
-quantities_038: 
-  price: "1.1"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:56:34
-  updated_at: 2010-04-30 13:56:34
-  id: "38"
-  article_id: "332"
-  hidden: "0"
-  active: "1"
-quantities_060: 
-  price: "10.5"
-  prefix: normal
-  created_at: 2010-04-30 14:22:28
-  updated_at: 2010-04-30 14:22:28
-  id: "60"
-  article_id: "341"
-  hidden: "0"
-  active: "1"
-quantities_017: 
-  price: "1.3"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:33:06
-  updated_at: 2010-04-30 13:33:58
-  id: "17"
-  article_id: "326"
-  hidden: "0"
-  active: "1"
-quantities_040: 
-  price: "2"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:56:34
-  updated_at: 2010-04-30 13:56:34
-  id: "40"
-  article_id: "332"
-  hidden: "0"
-  active: "1"
-quantities_061: 
-  price: "6.5"
-  prefix: klein
-  created_at: 2010-04-30 14:22:28
-  updated_at: 2010-04-30 14:22:28
-  id: "61"
-  article_id: "341"
-  hidden: "0"
-  active: "1"
-quantities_020: 
-  price: "1.3"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:44:28
-  updated_at: 2010-04-30 13:44:52
-  id: "20"
-  article_id: "327"
-  hidden: "0"
-  active: "1"
-quantities_018: 
-  price: "3.7"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 13:44:28
-  updated_at: 2010-04-30 13:44:52
-  id: "18"
-  article_id: "327"
-  hidden: "0"
-  active: "1"
-quantities_041: 
-  price: "3.5"
-  prefix: Soda
-  created_at: 2010-04-30 13:59:19
-  updated_at: 2010-04-30 13:59:19
-  id: "41"
-  article_id: "333"
-  hidden: "0"
-  active: "1"
-quantities_039: 
-  price: "3.7"
-  prefix: "1/2 gespritzt "
-  created_at: 2010-04-30 13:56:34
-  updated_at: 2010-04-30 13:56:34
-  id: "39"
-  article_id: "332"
-  hidden: "0"
-  active: "1"
-quantities_062: 
-  price: "3"
-  prefix: 1/2
-  created_at: 2010-04-30 14:26:52
-  updated_at: 2010-04-30 14:26:52
-  id: "62"
-  article_id: "342"
-  hidden: "0"
-  active: "1"
-quantities_021: 
-  price: "2.5"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:44:28
-  updated_at: 2010-04-30 13:44:52
-  id: "21"
-  article_id: "327"
-  hidden: "0"
-  active: "1"
-quantities_019: 
-  price: "2.3"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:44:28
-  updated_at: 2010-04-30 13:44:52
-  id: "19"
-  article_id: "327"
-  hidden: "0"
-  active: "1"
-quantities_042: 
-  price: "3.5"
-  prefix: Orange
-  created_at: 2010-04-30 13:59:19
-  updated_at: 2010-04-30 13:59:19
-  id: "42"
-  article_id: "333"
-  hidden: "0"
-  active: "1"
-quantities_063: 
-  price: "1.5"
-  prefix: 1/4
-  created_at: 2010-04-30 14:26:52
-  updated_at: 2010-04-30 14:26:52
-  id: "63"
-  article_id: "342"
-  hidden: "0"
-  active: "1"
 quantities_001: 
-  price: "4.2"
+  id: 1
   prefix: 1/8
-  created_at: 2010-04-30 12:41:36
-  updated_at: 2010-04-30 12:41:36
-  id: "1"
-  article_id: "319"
-  hidden: "0"
-  active: "1"
-quantities_022: 
-  price: "1.3"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:46:51
-  updated_at: 2010-04-30 13:47:07
-  id: "22"
-  article_id: "328"
-  hidden: "0"
-  active: "1"
-quantities_043: 
-  price: "7"
-  prefix: !binary |
-    Z3Jvw58=
-
-  created_at: 2010-04-30 14:04:16
-  updated_at: 2010-04-30 14:04:16
-  id: "43"
-  article_id: "334"
-  hidden: "0"
-  active: "1"
-quantities_064: 
-  price: "3.4"
-  prefix: 1/2 Zitron
-  created_at: 2010-04-30 14:26:52
-  updated_at: 2010-04-30 14:26:52
-  id: "64"
-  article_id: "342"
-  hidden: "0"
-  active: "1"
+  price: 4.2
+  article_id: 319
+  created_at: 2010-04-30 12:41:36 Z
+  updated_at: 2010-04-30 12:41:36 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
 quantities_002: 
-  price: "3"
+  id: 2
   prefix: 1/8
-  created_at: 2010-04-30 12:46:01
-  updated_at: 2010-04-30 12:46:01
-  id: "2"
-  article_id: "320"
-  hidden: "0"
-  active: "1"
-quantities_023: 
-  price: "3.7"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 13:46:51
-  updated_at: 2010-04-30 13:47:07
-  id: "23"
-  article_id: "328"
-  hidden: "0"
-  active: "1"
-quantities_044: 
-  price: "3.5"
-  prefix: klein
-  created_at: 2010-04-30 14:04:16
-  updated_at: 2010-04-30 14:04:16
-  id: "44"
-  article_id: "334"
-  hidden: "0"
-  active: "1"
-quantities_065: 
-  price: "1.7"
-  prefix: 1/4 Zitron
-  created_at: 2010-04-30 14:26:52
-  updated_at: 2010-04-30 14:26:52
-  id: "65"
-  article_id: "342"
-  hidden: "0"
-  active: "1"
+  price: 3.0
+  article_id: 320
+  created_at: 2010-04-30 12:46:01 Z
+  updated_at: 2010-04-30 12:46:01 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
 quantities_003: 
-  price: "2.2"
+  id: 3
   prefix: Flasche 0,35l
-  created_at: 2010-04-30 12:47:04
-  updated_at: 2010-04-30 12:58:01
-  id: "3"
-  article_id: "321"
-  hidden: "0"
-  active: "1"
-quantities_024: 
-  price: "2.3"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:46:51
-  updated_at: 2010-04-30 13:47:07
-  id: "24"
-  article_id: "328"
-  hidden: "0"
-  active: "1"
-quantities_045: 
-  price: "2.4"
-  prefix: 1/4
-  created_at: 2010-04-30 14:06:12
-  updated_at: 2010-04-30 14:06:12
-  id: "45"
-  article_id: "335"
-  hidden: "0"
-  active: "1"
-quantities_066: 
-  price: "1.5"
-  prefix: 1/4 gespritzt
-  created_at: 2010-04-30 14:28:02
-  updated_at: 2010-05-01 16:37:37
-  id: "66"
-  article_id: "343"
-  hidden: "0"
-  active: "1"
-quantities_067: 
-  price: "3.2"
-  prefix: 1/2 gespritzt
-  created_at: 2010-04-30 14:28:02
-  updated_at: 2010-04-30 14:28:02
-  id: "67"
-  article_id: "343"
-  hidden: "0"
-  active: "1"
+  price: 2.2
+  article_id: 321
+  created_at: 2010-04-30 12:47:04 Z
+  updated_at: 2010-04-30 12:58:01 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
 quantities_004: 
-  price: "3.7"
+  id: 4
   prefix: gespritzt 1/2
-  created_at: 2010-04-30 12:58:01
-  updated_at: 2010-04-30 12:58:01
-  id: "4"
-  article_id: "321"
-  hidden: "0"
-  active: "1"
-quantities_025: 
-  price: "2.5"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:46:51
-  updated_at: 2010-04-30 13:47:07
-  id: "25"
-  article_id: "328"
-  hidden: "0"
-  active: "1"
-quantities_046: 
-  price: "3.9"
-  prefix: 1/2
-  created_at: 2010-04-30 14:06:12
-  updated_at: 2010-04-30 14:06:12
-  id: "46"
-  article_id: "335"
-  hidden: "0"
-  active: "1"
-quantities_068: 
-  price: "3"
-  prefix: 1/2l gespritzt
-  created_at: 2010-05-01 16:46:50
-  updated_at: 2010-05-01 16:46:50
-  id: "68"
-  article_id: "344"
-  hidden: "0"
-  active: "1"
-quantities_026: 
-  price: "1.3"
-  prefix: 1/8 pur
-  created_at: 2010-04-30 13:49:35
-  updated_at: 2010-04-30 13:49:35
-  id: "26"
-  article_id: "329"
-  hidden: "0"
-  active: "1"
-quantities_047: 
-  price: "2.4"
-  prefix: 1/4
-  created_at: 2010-04-30 14:10:18
-  updated_at: 2010-04-30 14:10:18
-  id: "47"
-  article_id: "336"
-  hidden: "0"
-  active: "1"
+  price: 3.7
+  article_id: 321
+  created_at: 2010-04-30 12:58:01 Z
+  updated_at: 2010-04-30 12:58:01 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
 quantities_005: 
-  price: "5.8"
+  id: 5
   prefix: Gelb
-  created_at: 2010-04-30 12:59:55
-  updated_at: 2010-04-30 12:59:55
-  id: "5"
-  article_id: "322"
-  hidden: "0"
-  active: "1"
-quantities_070: 
-  price: "1.3"
-  prefix: 1/8l pur
-  created_at: 2010-05-01 16:49:07
-  updated_at: 2010-05-01 16:49:07
-  id: "70"
-  article_id: "324"
-  hidden: "0"
-  active: "1"
-quantities_069: 
-  price: "1.5"
-  prefix: 1/4l gespritzt
-  created_at: 2010-05-01 16:46:50
-  updated_at: 2010-05-01 16:46:50
-  id: "69"
-  article_id: "344"
-  hidden: "0"
-  active: "1"
-quantities_048: 
-  price: "3.9"
-  prefix: 1/2
-  created_at: 2010-04-30 14:10:18
-  updated_at: 2010-04-30 14:10:18
-  id: "48"
-  article_id: "336"
-  hidden: "0"
-  active: "1"
-quantities_027: 
-  price: "2.5"
-  prefix: 1/4 pur
-  created_at: 2010-04-30 13:49:35
-  updated_at: 2010-04-30 13:49:35
-  id: "27"
-  article_id: "329"
-  hidden: "0"
-  active: "1"
-quantities_071: 
-  price: "4.7"
-  prefix: Camel gelb
-  created_at: 2010-05-01 16:53:36
-  updated_at: 2010-05-01 16:53:36
-  id: "71"
-  article_id: "345"
-  hidden: "0"
-  active: "1"
+  price: 5.8
+  article_id: 322
+  created_at: 2010-04-30 12:59:55 Z
+  updated_at: 2010-04-30 12:59:55 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
 quantities_006: 
-  price: "3.5"
+  id: 6
   prefix: 1/4 gespritzt
-  created_at: 2010-04-30 13:05:40
-  updated_at: 2010-04-30 13:05:40
-  id: "6"
-  article_id: "323"
-  hidden: "0"
-  active: "1"
-quantities_050: 
-  price: "2"
+  price: 3.5
+  article_id: 323
+  created_at: 2010-04-30 13:05:40 Z
+  updated_at: 2010-04-30 13:05:40 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_007: 
+  id: 7
+  prefix: 1/4l pur
+  price: 2.5
+  article_id: 324
+  created_at: 2010-04-30 13:08:06 Z
+  updated_at: 2010-04-30 13:08:06 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_008: 
+  id: 8
+  prefix: 1/4l gespritzt
+  price: 2.3
+  article_id: 324
+  created_at: 2010-04-30 13:10:22 Z
+  updated_at: 2010-04-30 13:10:22 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_009: 
+  id: 9
+  prefix: 1/2l gespritzt
+  price: 3.7
+  article_id: 324
+  created_at: 2010-04-30 13:28:42 Z
+  updated_at: 2010-04-30 13:33:47 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_010: 
+  id: 10
   prefix: 1/4 gespritzt
-  created_at: 2010-04-30 14:16:02
-  updated_at: 2010-04-30 14:16:02
-  id: "50"
-  article_id: "337"
-  hidden: "0"
-  active: "1"
-quantities_049: 
-  price: "3.7"
+  price: 2.3
+  article_id: 325
+  created_at: 2010-04-30 13:31:09 Z
+  updated_at: 2010-04-30 13:33:53 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_011: 
+  id: 11
   prefix: 1/2 gespritzt
-  created_at: 2010-04-30 14:16:02
-  updated_at: 2010-04-30 14:16:02
-  id: "49"
-  article_id: "337"
-  hidden: "0"
-  active: "1"
+  price: 3.7
+  article_id: 325
+  created_at: 2010-04-30 13:31:09 Z
+  updated_at: 2010-04-30 13:33:53 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_012: 
+  id: 12
+  prefix: 1/8 pur
+  price: 1.3
+  article_id: 325
+  created_at: 2010-04-30 13:31:09 Z
+  updated_at: 2010-04-30 13:33:53 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_013: 
+  id: 13
+  prefix: 1/4 pur
+  price: 2.5
+  article_id: 325
+  created_at: 2010-04-30 13:31:09 Z
+  updated_at: 2010-04-30 13:33:53 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_014: 
+  id: 14
+  prefix: 1/4 gespritzt
+  price: 2.3
+  article_id: 326
+  created_at: 2010-04-30 13:32:38 Z
+  updated_at: 2010-04-30 13:33:06 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_015: 
+  id: 15
+  prefix: 1/4 pur
+  price: 2.5
+  article_id: 326
+  created_at: 2010-04-30 13:32:38 Z
+  updated_at: 2010-04-30 13:33:06 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_016: 
+  id: 16
+  prefix: 1/2 gespritzt
+  price: 3.7
+  article_id: 326
+  created_at: 2010-04-30 13:32:38 Z
+  updated_at: 2010-04-30 13:33:06 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_017: 
+  id: 17
+  prefix: 1/8 pur
+  price: 1.3
+  article_id: 326
+  created_at: 2010-04-30 13:33:06 Z
+  updated_at: 2010-04-30 13:33:58 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_018: 
+  id: 18
+  prefix: 1/2 gespritzt
+  price: 3.7
+  article_id: 327
+  created_at: 2010-04-30 13:44:28 Z
+  updated_at: 2010-04-30 13:44:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_019: 
+  id: 19
+  prefix: 1/4 gespritzt
+  price: 2.3
+  article_id: 327
+  created_at: 2010-04-30 13:44:28 Z
+  updated_at: 2010-04-30 13:44:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_020: 
+  id: 20
+  prefix: 1/8 pur
+  price: 1.3
+  article_id: 327
+  created_at: 2010-04-30 13:44:28 Z
+  updated_at: 2010-04-30 13:44:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_021: 
+  id: 21
+  prefix: 1/4 pur
+  price: 2.5
+  article_id: 327
+  created_at: 2010-04-30 13:44:28 Z
+  updated_at: 2010-04-30 13:44:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_022: 
+  id: 22
+  prefix: 1/8 pur
+  price: 1.3
+  article_id: 328
+  created_at: 2010-04-30 13:46:51 Z
+  updated_at: 2010-04-30 13:47:07 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_023: 
+  id: 23
+  prefix: 1/2 gespritzt
+  price: 3.7
+  article_id: 328
+  created_at: 2010-04-30 13:46:51 Z
+  updated_at: 2010-04-30 13:47:07 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_024: 
+  id: 24
+  prefix: 1/4 gespritzt
+  price: 2.3
+  article_id: 328
+  created_at: 2010-04-30 13:46:51 Z
+  updated_at: 2010-04-30 13:47:07 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_025: 
+  id: 25
+  prefix: 1/4 pur
+  price: 2.5
+  article_id: 328
+  created_at: 2010-04-30 13:46:51 Z
+  updated_at: 2010-04-30 13:47:07 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_026: 
+  id: 26
+  prefix: 1/8 pur
+  price: 1.3
+  article_id: 329
+  created_at: 2010-04-30 13:49:35 Z
+  updated_at: 2010-04-30 13:49:35 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_027: 
+  id: 27
+  prefix: 1/4 pur
+  price: 2.5
+  article_id: 329
+  created_at: 2010-04-30 13:49:35 Z
+  updated_at: 2010-04-30 13:49:35 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_028: 
+  id: 28
+  prefix: 1/2 gespritzt
+  price: 3.7
+  article_id: 329
+  created_at: 2010-04-30 13:49:35 Z
+  updated_at: 2010-04-30 13:49:35 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_029: 
+  id: 29
+  prefix: 1/4 gespritzt
+  price: 2.3
+  article_id: 329
+  created_at: 2010-04-30 13:49:35 Z
+  updated_at: 2010-04-30 13:49:35 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_030: 
+  id: 30
+  prefix: 1/4 pur
+  price: 2.2
+  article_id: 330
+  created_at: 2010-04-30 13:51:28 Z
+  updated_at: 2010-04-30 13:51:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_031: 
+  id: 31
+  prefix: 1/4 gespritzt
+  price: 2.0
+  article_id: 330
+  created_at: 2010-04-30 13:51:28 Z
+  updated_at: 2010-04-30 13:51:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_032: 
+  id: 32
+  prefix: 1/8 pur
+  price: 1.1
+  article_id: 330
+  created_at: 2010-04-30 13:51:28 Z
+  updated_at: 2010-04-30 13:51:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_033: 
+  id: 33
+  prefix: 1/2l gespritzt
+  price: 3.7
+  article_id: 330
+  created_at: 2010-04-30 13:51:28 Z
+  updated_at: 2010-04-30 13:51:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_034: 
+  id: 34
+  prefix: Flasche
+  price: 27.0
+  article_id: 319
+  created_at: 2010-04-30 13:52:14 Z
+  updated_at: 2010-04-30 13:52:35 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_035: 
+  id: 35
+  prefix: 1/8
+  price: 3.5
+  article_id: 331
+  created_at: 2010-04-30 13:53:37 Z
+  updated_at: 2010-04-30 13:53:37 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_036: 
+  id: 36
+  prefix: Flasche
+  price: 26.0
+  article_id: 331
+  created_at: 2010-04-30 13:53:37 Z
+  updated_at: 2010-04-30 13:53:37 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_037: 
+  id: 37
+  prefix: 1/4 pur
+  price: 2.2
+  article_id: 332
+  created_at: 2010-04-30 13:56:34 Z
+  updated_at: 2010-04-30 13:56:34 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_038: 
+  id: 38
+  prefix: 1/8 pur
+  price: 1.1
+  article_id: 332
+  created_at: 2010-04-30 13:56:34 Z
+  updated_at: 2010-04-30 13:56:34 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_039: 
+  id: 39
+  prefix: "1/2 gespritzt "
+  price: 3.7
+  article_id: 332
+  created_at: 2010-04-30 13:56:34 Z
+  updated_at: 2010-04-30 13:56:34 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_040: 
+  id: 40
+  prefix: 1/4 gespritzt
+  price: 2.0
+  article_id: 332
+  created_at: 2010-04-30 13:56:34 Z
+  updated_at: 2010-04-30 13:56:34 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_041: 
+  id: 41
+  prefix: Soda
+  price: 3.5
+  article_id: 333
+  created_at: 2010-04-30 13:59:19 Z
+  updated_at: 2010-04-30 13:59:19 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_042: 
+  id: 42
+  prefix: Orange
+  price: 3.5
+  article_id: 333
+  created_at: 2010-04-30 13:59:19 Z
+  updated_at: 2010-04-30 13:59:19 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_043: 
+  id: 43
+  prefix: "gro\xC3\x9F"
+  price: 7.0
+  article_id: 334
+  created_at: 2010-04-30 14:04:16 Z
+  updated_at: 2010-04-30 14:04:16 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_044: 
+  id: 44
+  prefix: klein
+  price: 3.5
+  article_id: 334
+  created_at: 2010-04-30 14:04:16 Z
+  updated_at: 2010-04-30 14:04:16 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_045: 
+  id: 45
+  prefix: 1/4
+  price: 2.4
+  article_id: 335
+  created_at: 2010-04-30 14:06:12 Z
+  updated_at: 2010-04-30 14:06:12 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_046: 
+  id: 46
+  prefix: 1/2
+  price: 3.9
+  article_id: 335
+  created_at: 2010-04-30 14:06:12 Z
+  updated_at: 2010-04-30 14:06:12 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_047: 
+  id: 47
+  prefix: 1/4
+  price: 2.4
+  article_id: 336
+  created_at: 2010-04-30 14:10:18 Z
+  updated_at: 2010-04-30 14:10:18 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_048: 
+  id: 48
+  prefix: 1/2
+  price: 3.9
+  article_id: 336
+  created_at: 2010-04-30 14:10:18 Z
+  updated_at: 2010-04-30 14:10:18 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_049: 
+  id: 49
+  prefix: 1/2 gespritzt
+  price: 3.7
+  article_id: 337
+  created_at: 2010-04-30 14:16:02 Z
+  updated_at: 2010-04-30 14:16:02 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_050: 
+  id: 50
+  prefix: 1/4 gespritzt
+  price: 2.0
+  article_id: 337
+  created_at: 2010-04-30 14:16:02 Z
+  updated_at: 2010-04-30 14:16:02 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_051: 
+  id: 51
+  prefix: 1/4 pur
+  price: 2.2
+  article_id: 337
+  created_at: 2010-04-30 14:16:02 Z
+  updated_at: 2010-04-30 14:16:02 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_052: 
+  id: 52
+  prefix: 1/8 pur
+  price: 1.1
+  article_id: 337
+  created_at: 2010-04-30 14:16:02 Z
+  updated_at: 2010-04-30 14:16:02 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_053: 
+  id: 53
+  prefix: Flasche
+  price: 21.0
+  article_id: 320
+  created_at: 2010-04-30 14:16:53 Z
+  updated_at: 2010-04-30 14:16:53 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_054: 
+  id: 54
+  prefix: "0,3"
+  price: 2.7
+  article_id: 338
+  created_at: 2010-04-30 14:18:09 Z
+  updated_at: 2010-04-30 14:18:09 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_055: 
+  id: 55
+  prefix: "0,5"
+  price: 3.5
+  article_id: 338
+  created_at: 2010-04-30 14:18:09 Z
+  updated_at: 2010-04-30 14:18:09 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_056: 
+  id: 56
+  prefix: 1/8
+  price: 6.5
+  article_id: 339
+  created_at: 2010-04-30 14:19:30 Z
+  updated_at: 2010-04-30 14:19:30 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_057: 
+  id: 57
+  prefix: Flasche
+  price: 42.0
+  article_id: 339
+  created_at: 2010-04-30 14:19:30 Z
+  updated_at: 2010-04-30 14:19:30 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_058: 
+  id: 58
+  prefix: 1/8
+  price: 3.4
+  article_id: 340
+  created_at: 2010-04-30 14:20:52 Z
+  updated_at: 2010-04-30 14:20:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_059: 
+  id: 59
+  prefix: Flasche
+  price: 26.0
+  article_id: 340
+  created_at: 2010-04-30 14:20:52 Z
+  updated_at: 2010-04-30 14:20:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_060: 
+  id: 60
+  prefix: normal
+  price: 10.5
+  article_id: 341
+  created_at: 2010-04-30 14:22:28 Z
+  updated_at: 2010-04-30 14:22:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_061: 
+  id: 61
+  prefix: klein
+  price: 6.5
+  article_id: 341
+  created_at: 2010-04-30 14:22:28 Z
+  updated_at: 2010-04-30 14:22:28 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_062: 
+  id: 62
+  prefix: 1/2
+  price: 3.0
+  article_id: 342
+  created_at: 2010-04-30 14:26:52 Z
+  updated_at: 2010-04-30 14:26:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_063: 
+  id: 63
+  prefix: 1/4
+  price: 1.5
+  article_id: 342
+  created_at: 2010-04-30 14:26:52 Z
+  updated_at: 2010-04-30 14:26:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_064: 
+  id: 64
+  prefix: 1/2 Zitron
+  price: 3.4
+  article_id: 342
+  created_at: 2010-04-30 14:26:52 Z
+  updated_at: 2010-04-30 14:26:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_065: 
+  id: 65
+  prefix: 1/4 Zitron
+  price: 1.7
+  article_id: 342
+  created_at: 2010-04-30 14:26:52 Z
+  updated_at: 2010-04-30 14:26:52 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_066: 
+  id: 66
+  prefix: 1/4 gespritzt
+  price: 1.5
+  article_id: 343
+  created_at: 2010-04-30 14:28:02 Z
+  updated_at: 2010-05-01 16:37:37 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_067: 
+  id: 67
+  prefix: 1/2 gespritzt
+  price: 3.2
+  article_id: 343
+  created_at: 2010-04-30 14:28:02 Z
+  updated_at: 2010-04-30 14:28:02 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_068: 
+  id: 68
+  prefix: 1/2l gespritzt
+  price: 3.0
+  article_id: 344
+  created_at: 2010-05-01 16:46:50 Z
+  updated_at: 2010-05-01 16:46:50 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_069: 
+  id: 69
+  prefix: 1/4l gespritzt
+  price: 1.5
+  article_id: 344
+  created_at: 2010-05-01 16:46:50 Z
+  updated_at: 2010-05-01 16:46:50 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_070: 
+  id: 70
+  prefix: 1/8l pur
+  price: 1.3
+  article_id: 324
+  created_at: 2010-05-01 16:49:07 Z
+  updated_at: 2010-05-01 16:49:07 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_071: 
+  id: 71
+  prefix: Camel gelb
+  price: 4.7
+  article_id: 345
+  created_at: 2010-05-01 16:53:36 Z
+  updated_at: 2010-05-01 16:53:36 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_072: 
+  id: 72
+  prefix: Camel nat. flavour
+  price: 5.0
+  article_id: 345
+  created_at: 2010-05-01 16:53:36 Z
+  updated_at: 2010-05-01 16:53:36 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_073: 
+  id: 73
+  prefix: "0,2"
+  price: 2.2
+  article_id: 3
+  created_at: 2010-09-10 16:33:08 Z
+  updated_at: 2010-09-10 16:33:08 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_074: 
+  id: 74
+  prefix: "0,5"
+  price: 0.5
+  article_id: 3
+  created_at: 2010-09-10 16:33:08 Z
+  updated_at: 2010-09-10 16:33:08 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 
+quantities_075: 
+  id: 75
+  prefix: "0,3"
+  price: 2.7
+  article_id: 3
+  created_at: 2010-09-10 16:33:08 Z
+  updated_at: 2010-09-10 16:33:08 Z
+  active: 1
+  hidden: 0
+  postfix: 
+  sort: 
+  usage: 

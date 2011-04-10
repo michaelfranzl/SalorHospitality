@@ -1,57 +1,49 @@
 --- 
-options_003: 
-  price: 
-  name: well done
-  created_at: 2010-09-10 16:31:28
-  updated_at: 2010-09-10 16:31:28
-  id: "3"
-  category_id: "2"
-  option_id: 
-options_004: 
-  price: 
-  name: medium
-  created_at: 2010-09-10 16:31:36
-  updated_at: 2010-09-10 16:31:36
-  id: "4"
-  category_id: "2"
-  option_id: 
-options_005: 
-  price: 
-  name: bloody
-  created_at: 2010-09-10 16:31:48
-  updated_at: 2010-09-10 16:31:48
-  id: "5"
-  category_id: "2"
-  option_id: 
-options_006: 
-  price: 
-  name: extra strong
-  created_at: 2010-09-10 16:32:00
-  updated_at: 2010-09-10 16:32:00
-  id: "6"
-  category_id: "9"
-  option_id: 
-options_007: 
-  price: 
-  name: with cream
-  created_at: 2010-09-10 16:32:11
-  updated_at: 2010-09-10 16:32:11
-  id: "7"
-  category_id: "9"
-  option_id: 
 options_001: 
-  price: 
+  id: 1
+  category_id: 2
+  option_id: 
   name: extra ketchup
-  created_at: 2010-09-10 16:31:12
-  updated_at: 2010-09-10 16:31:12
-  id: "1"
-  category_id: "2"
-  option_id: 
-options_002: 
   price: 
-  name: extra mustard
-  created_at: 2010-09-10 16:31:22
-  updated_at: 2010-09-10 16:31:22
-  id: "2"
-  category_id: "2"
+  created_at: 2010-09-10 16:31:12 Z
+  updated_at: 2010-09-10 16:31:12 Z
+options_002: 
+  id: 2
+  category_id: 2
   option_id: 
+  name: extra mustard
+  price: 
+  created_at: 2010-09-10 16:31:22 Z
+  updated_at: 2010-09-10 16:31:22 Z
+options_003: 
+  id: 3
+  category_id: 2
+  option_id: 
+  name: well done
+  price: 
+  created_at: 2010-09-10 16:31:28 Z
+  updated_at: 2010-09-10 16:31:28 Z
+options_004: 
+  id: 4
+  category_id: 2
+  option_id: 
+  name: medium
+  price: 
+  created_at: 2010-09-10 16:31:36 Z
+  updated_at: 2010-09-10 16:31:36 Z
+options_005: 
+  id: 6
+  category_id: 9
+  option_id: 
+  name: extra strong
+  price: 
+  created_at: 2010-09-10 16:32:00 Z
+  updated_at: 2010-09-10 16:32:00 Z
+options_006: 
+  id: 7
+  category_id: 9
+  option_id: 
+  name: with cream
+  price: 
+  created_at: 2010-09-10 16:32:11 Z
+  updated_at: 2010-09-10 16:32:11 Z
