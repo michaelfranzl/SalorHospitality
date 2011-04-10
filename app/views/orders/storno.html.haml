@@ -7,6 +7,3 @@
   = render :partial => 'orders/storno_form', :locals => { :storno_form => @order }
 
 %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
-
-%div#footer
-  %a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }

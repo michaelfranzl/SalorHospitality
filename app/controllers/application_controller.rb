@@ -145,7 +145,7 @@ class ApplicationController < ActionController::Base
     end
 
     def generate_escpos_invoice(order)
-      client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
+      client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
 
       header =
       "\e@"     +  # Initialize Printer

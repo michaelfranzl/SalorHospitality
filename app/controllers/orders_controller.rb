@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : {}
+    @client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : {}
     if params[:id] != 'last'
       @order = Order.find(params[:id])
     else
@@ -159,7 +159,7 @@ class OrdersController < ApplicationController
 
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.find_all_by_active(true)
-    MyGlobals::credits_left = Order.last ? Order.last.credit : YAML.load_file('config/initial_credits.yaml')['initial_credits']
+    MyGlobals::credits_left = Order.last ? Order.last.credit : YAML.load_file('config/initial_credits.yml')['initial_credits']
     if not params[:order_action] == 'cancel_and_go_to_tables'
       if params[:order][:id] == 'add_offline_items_to_order'
         @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first

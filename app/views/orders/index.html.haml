@@ -12,6 +12,8 @@
     #functions_header_order_form{ :style => 'display: none;' }= render('functions_header_order_form')
     #functions_header_invoice_form{ :style => 'display: none;' }= render('functions_header_invoice_form')
   #orderform{ :style => 'display: none;' }= render 'order'
-  #functions_footer{ :style => 'display: none;' }= render('functions_footer') if ipod?
-
+  #functions_footer{ :style => 'display: none;' }
+    %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
   #invoices
+    - if ipod?
+      = render('functions_footer')

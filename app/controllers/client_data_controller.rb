@@ -17,10 +17,10 @@
 class ClientDataController < ApplicationController
 
   def show
-    @client_data = File.exist?('config/client_data.yaml') ? YAML.load_file( 'config/client_data.yaml' ) : {}
+    @client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : {}
   end
 
   def create
-    File.open('config/client_data.yaml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
+    File.open('config/client_data.yml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
   end
 end

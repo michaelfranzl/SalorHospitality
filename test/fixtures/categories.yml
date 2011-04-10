@@ -1,0 +1,151 @@
+--- 
+categories_009: 
+  name: Tea
+  created_at: 2009-02-24 16:00:12
+  updated_at: 2010-05-16 15:43:49
+  sort_order: "120"
+  color: "#cd0052"
+  icon: teapot
+  id: "10"
+  tax_id: "2"
+  food: 
+categories_010: 
+  name: Tobacco
+  created_at: 2009-02-24 16:00:23
+  updated_at: 2010-05-16 15:44:04
+  sort_order: "130"
+  color: "#136880"
+  icon: cigarette
+  id: "11"
+  tax_id: "3"
+  food: 
+categories_011: 
+  name: Beer
+  created_at: 2009-02-24 16:15:26
+  updated_at: 2010-05-16 15:42:25
+  sort_order: "40"
+  color: "#ed8b00"
+  icon: beer
+  id: "13"
+  tax_id: "2"
+  food: 
+categories_012: 
+  name: Aperitiv
+  created_at: 2009-02-24 16:15:36
+  updated_at: 2010-05-16 15:43:19
+  sort_order: "90"
+  color: "#ed8b00"
+  icon: aperitif
+  id: "14"
+  tax_id: "2"
+  food: 
+categories_001: 
+  name: Starters
+  created_at: 2009-02-24 15:57:33
+  updated_at: 2010-09-10 16:30:27
+  sort_order: "10"
+  color: "#136880"
+  icon: starter
+  id: "1"
+  tax_id: "1"
+  food: "1"
+categories_013: 
+  name: White Wine
+  created_at: 2009-02-24 16:15:44
+  updated_at: 2010-05-16 15:42:58
+  sort_order: "70"
+  color: "#75b10d"
+  icon: whitewineglass
+  id: "15"
+  tax_id: "2"
+  food: 
+categories_002: 
+  name: Main Dish
+  created_at: 2009-02-24 15:57:43
+  updated_at: 2010-09-10 16:30:33
+  sort_order: "20"
+  color: "#136880"
+  icon: maindish
+  id: "2"
+  tax_id: "1"
+  food: "1"
+categories_014: 
+  name: Side Dish
+  created_at: 2010-02-02 21:04:34
+  updated_at: 2010-09-10 16:30:43
+  sort_order: "35"
+  color: "#136880"
+  icon: sidedish
+  id: "16"
+  tax_id: "1"
+  food: "1"
+categories_003: 
+  name: Desserts
+  created_at: 2009-02-24 15:57:53
+  updated_at: 2010-09-10 16:30:37
+  sort_order: "30"
+  color: "#136880"
+  icon: dessert
+  id: "3"
+  tax_id: "1"
+  food: "1"
+categories_015: 
+  name: Divers
+  created_at: 2010-02-06 19:33:53
+  updated_at: 2010-05-16 15:42:17
+  sort_order: "37"
+  color: "#27343b"
+  icon: blank
+  id: "17"
+  tax_id: "1"
+  food: 
+categories_004: 
+  name: "Ros\xC3\xA9 Wine"
+  created_at: 2009-02-24 15:58:00
+  updated_at: 2010-05-16 15:43:06
+  sort_order: "80"
+  color: "#75b10d"
+  icon: rosewineglass
+  id: "4"
+  tax_id: "2"
+  food: 
+categories_005: 
+  name: Red Wine
+  created_at: 2009-02-24 15:58:14
+  updated_at: 2010-05-16 15:42:47
+  sort_order: "60"
+  color: "#75b10d"
+  icon: redwineglass
+  id: "5"
+  tax_id: "2"
+  food: 
+categories_006: 
+  name: "Dig\xC3\xA9stif"
+  created_at: 2009-02-24 15:58:28
+  updated_at: 2010-05-16 15:43:25
+  sort_order: "100"
+  color: "#ed8b00"
+  icon: digestif
+  id: "6"
+  tax_id: "2"
+  food: 
+categories_007: 
+  name: Alcohol Free
+  created_at: 2009-02-24 15:58:37
+  updated_at: 2010-05-16 15:42:39
+  sort_order: "50"
+  color: "#80477d"
+  icon: nonalcoholics
+  id: "7"
+  tax_id: "2"
+  food: 
+categories_008: 
+  name: Coffee
+  created_at: 2009-02-24 15:59:59
+  updated_at: 2010-05-16 15:43:36
+  sort_order: "110"
+  color: "#cd0052"
+  icon: coffee
+  id: "9"
+  tax_id: "2"
+  food: 
