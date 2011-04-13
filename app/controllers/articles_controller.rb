@@ -57,10 +57,11 @@ class ArticlesController < ApplicationController
 
   def update
     @categories = Category.find(:all, :order => 'sort_order')
-
+    @article = Article.find_by_id params[:id]
     @article.update_attributes params[:article]
+
     if @article.hidden
-      @article.quantities.each do |q|
+      @article.quantities.existing.each do |q|
         q.update_attribute :hidden, true
       end
     end
@@ -89,7 +90,7 @@ class ArticlesController < ApplicationController
       conditions = 'hidden = false AND '
       conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
       @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
-      render :layout => false
+      render :partial => 'find', :layout => false
     else
       render :nothing => true
     end

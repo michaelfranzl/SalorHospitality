@@ -19,10 +19,10 @@ class Quantity < ActiveRecord::Base
   belongs_to :article
   has_many :items
 
-  #default_scope :conditions => { :hidden => false }
+  scope :existing, where(:hidden => false)
 
   def price=(price)
-    write_attribute(:price, price.gsub(',', '.'))
+    write_attribute(:price, price.to_s.gsub(',', '.'))
   end
 
   validates_presence_of :prefix

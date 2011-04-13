@@ -19,9 +19,11 @@ class Article < ActiveRecord::Base
   belongs_to :category
   has_many :ingredients
   has_many :quantities
+  has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
+
   has_many :items
 
-  #default_scope where(:hidden => false)
+  scope :existing, where(:hidden => false)
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
@@ -42,9 +44,13 @@ class Article < ActiveRecord::Base
   validates_presence_of :name, :category_id
   
   validates_each :price do |record, attr_name, value|
-    record.errors.add(attr_name, I18n.t(:must_be_entered_either_for_article_or_for_quantity)) if record.quantities.empty? and !value
+    #since some records are not saved yet, check manually if one of the quantities is hidden
+    existing_quantities = false
+    record.quantities.each { |qu| existing_quantities = true and break if not qu.hidden }
+
+    record.errors.add(attr_name, I18n.t(:must_be_entered_either_for_article_or_for_quantity)) if not existing_quantities and !value
     
-    if record.quantities.empty?
+    if not existing_quantities
       raw_value = record.send("#{attr_name}_before_type_cast") || value
       begin
         raw_value = Kernel.Float(raw_value)

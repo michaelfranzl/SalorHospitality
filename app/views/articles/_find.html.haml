@@ -3,5 +3,5 @@
     %img{ :id => "handle_for_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move;' }
     = link_to ar.name, edit_article_path(ar)
     %br
-    == (#{ar.quantities.empty? ? number_to_currency(ar.price) : "#{ar.quantities.size} #{t '.variants' }"})
+    == (#{ar.quantities.existing.empty? ? number_to_currency(ar.price) : "#{ar.quantities.existing.size} #{t '.variants', :count => ar.quantities.existing.size }"})
     %script== new Draggable('source_#{ar.id}', {handle:'handle_for_article_#{ar.id}', revert:true})

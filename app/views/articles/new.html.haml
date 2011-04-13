@@ -20,7 +20,9 @@
           %tr
             %td= article_form.label('description', Article.human_attribute_name(:description))
             %td= article_form.text_field :description
-          - if article_form.object.quantities.empty?    
+          - existing_quantities = false
+          - article_form.object.quantities.each { |qu| existing_quantities = true and break if not qu.hidden }
+          - if not existing_quantities
             %tr
               %td= article_form.label('price', Article.human_attribute_name(:price))
               %td= article_form.text_field( :price, :size => 6 )
@@ -50,9 +52,8 @@
   %h3= t('activerecord.models.quantity.other')
   %table#quantities_new
     - article_form.fields_for :quantities do |quantity_form|
-      - next if quantity_form.object.hidden
       - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
-      %tr
+      %tr{ :style => "#{'display: none' if quantity_form.object.hidden}" }
         %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
         %td= quantity_form.text_field :prefix, :class => 'prefix'
         %td= quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
@@ -72,10 +73,8 @@
 
 
         - if @current_user.role > 4
-          %td
-            = quantity_form.label('_destroy', (t :destroy))
-          %td
-            = quantity_form.check_box :_destroy
+          %td= quantity_form.label('_destroy', (t :destroy))
+          %td= quantity_form.check_box :_destroy
 
   %p
     %small= add_quantity_link((t '.add_quantity'), article_form)
