@@ -2,7 +2,12 @@
 
 %h2= @category.new_record? ? (t '.new_category') : (t '.edit_category')
 
-= error_messages_for 'category'
+- if @category.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @category.errors.size, :model => Category.model_name.human
+    %ul
+      - @category.errors.full_messages.each do |msg|
+        %li= msg
 
 - form_for @category do |category_form|
   %table

@@ -1,5 +1,12 @@
 %h2= t :settlement
-= error_messages_for 'settlement'
+
+- if @settlement.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @settlement.errors.size, :model => Settlement.model_name.human
+    %ul
+      - @settlement.errors.full_messages.each do |msg|
+        %li= msg
+
 = render :partial => 'detailed_list', :locals => { :orders => @settlement.orders, :selected_cost_center => @cost_center }
 
 - path = user_settlement_path(@settlement.user, @settlement)

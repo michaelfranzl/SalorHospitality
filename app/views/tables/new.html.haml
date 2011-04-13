@@ -1,6 +1,11 @@
 %h2= @table.new_record? ? (t '.new_table') : (t '.edit_table')
 
-= error_messages_for 'table'
+- if @table.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @table.errors.size, :model => Table.model_name.human
+    %ul
+      - @table.errors.full_messages.each do |msg|
+        %li= msg
 
 = form_for @table do |table_form|
   %table
