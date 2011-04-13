@@ -1,6 +1,11 @@
 %h2= @cost_center.new_record? ? (t '.new_cost_center') : (t '.edit_cost_center')
 
-= error_messages_for 'cost_center'
+- if @cost_center.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @cost_center.errors.size, :model => CostCenter.model_name.human
+    %ul
+      - @cost_center.errors.full_messages.each do |msg|
+        %li= msg
 
 - form_for @cost_center do |cost_center_form|
   %table
