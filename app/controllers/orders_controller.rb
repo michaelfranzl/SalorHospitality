@@ -110,8 +110,10 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    File.open('tmp/order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
-    `cat tmp/order.escpos > /dev/ttyPS#{ params[:port] }`
+    Billgastro2::Application::SP.write generate_escpos_invoice @order
+
+    #File.open('tmp/order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
+    #`cat tmp/order.escpos > /dev/ttyPS#{ params[:port] }`
 
     justfinished = false
     if not @order.finished
@@ -200,13 +202,17 @@ class OrdersController < ApplicationController
 
       #group_identical_items(order)
 
-      File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+      Billgastro2::Application::SP.write generate_escpos_items(order, :drink)
+      Billgastro2::Application::SP.write generate_escpos_items(order, :food)
+      Billgastro2::Application::SP.write generate_escpos_items(order, :takeaway)
 
-      `cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
-      `cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-      `cat tmp/kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
+      #File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
+      #File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
+      #File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+
+      #`cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
+      #`cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
+      #`cat tmp/kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
     def conditional_redirect_ajax(order)

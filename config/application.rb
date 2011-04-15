@@ -6,8 +6,11 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+#sp = SerialPort.new '/dev/ttyS0', 9600
+
 module Billgastro2
   class Application < Rails::Application
+    #SP = SerialPort.new '/dev/ttyUSB0', 9600
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
