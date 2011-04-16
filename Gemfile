@@ -8,6 +8,8 @@ gem 'rails', '3.0.6'
 gem 'mysql2'
 gem 'serialport'
 
+gem 'exception_notification', :require => 'exception_notifier'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

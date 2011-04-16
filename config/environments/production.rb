@@ -1,5 +1,21 @@
+BillGastro::Application.config.middleware.use ExceptionNotifier,
+  :email_prefix => "[BillGastro] ",
+  :sender_address => %{"BillGastro" <office@billgastro.com>},
+  :exception_recipients => %w{office@michaelfranzl.com}
+
 BillGastro::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+
+  config.action_mailer.delivery_method = :smtp #:sendmail
+
+  config.action_mailer.smtp_settings = {
+  :address              => "mail.michaelfranzl.com",
+  :port                 => 25,
+  :user_name            => 'exim',
+  :password             => 'pK9nQ3v5',
+  :authentication       => :login,
+  :domain               => 'billgastro.com',
+  :enable_starttls_auto => true  }
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
