@@ -1,0 +1,38 @@
+Template: billgastro/enter_database
+Type: string
+Default: billgastro_production
+Description: Please enter the name of the BillGastro database.
+ If you've already created a database for BillGastro, enter the name here, otherwise leave the default.
+Description-de.UTF-8: Bitte geben Sie den Namen der BillGastro Datenbank ein.
+ Wenn Sie schon eine Datenbank für BillGastro angelegt haben, geben Sie den Namen hier ein, ansonsten lassen Sie die Standardeinstellung.
+
+Template: billgastro/enter_username
+Type: string
+Default: root
+Description: Please enter the username for the database
+ If you've created a dedicated user for the BillGastro database, please enter the name here, otherwise leave the default value.
+Description-de.UTF-8: Bitte geben Sie den Benutzernamen für die BillGastro Datenbank ein.
+ Wenn Sie schon einen Datenbank-Benutzer für BillGastro angelegt haben, geben Sie den Namen hier ein, ansonsten lassen Sie die Standardeinstellung.
+
+Template: billgastro/enter_password
+Type: password
+Description: Please enter the password for the database user that you've set in the previous step.
+Description-de.UTF-8: Bitte geben Sie das Passwort für den Datenbank-Benutzer ein, den Sie im letzten Schritt angegeben haben.
+
+Template: billgastro/dataset
+Type: boolean
+Description: Populate database with a full set of example data?
+Description-de.UTF-8: Die Datenbank mit umfangreichen Beispieldaten befüllen?
+
+Template: billgastro/done
+Type: note
+Description: Installation of BillGastro is complete.
+ If everything went alright, you should be able to browse to http://billgastro and see the login screen.
+ Use Mozilla Firefox as browser for the workstation.
+ Use Chromium Browser to preview how BillGastro displays on mobile devices.
+ Login: su Password: su
+Description-de.UTF-8: Die Installation von BillGastro ist vollständig.
+ Wenn alles gut gegangen ist, sollten Sie auf http://billgastro browsen können und den Login-Bildschirm sehen.
+ Verwenden Sie Mozilla Firefox für das Kassen-Hauptgerät.
+ Verwenden Sie den Chromium Browser um zu sehen, wie BillGastro auf mobilen Geräten angezeigt wird.
+ Login: su Password: su

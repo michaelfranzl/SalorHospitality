@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+. /usr/share/debconf/confmodule
+
+case $1 in
+  upgrade)
+    # do something
+  ;;
+  remove)
+    # do something
+  ;;
+  purge)
+    db_get billgastro/enter_username
+    username=$RET
+    db_get billgastro/enter_password
+    password=$RET
+    db_get billgastro/enter_database
+    database=$RET
+    echo "Deleting BillGastro database $database ..."
+    mysql -u $username -p$password -Bse "drop database $database"
+    db_purge
+    exit 0
+  ;;
+  *)
+    echo "postrm called with unknown argument '$1'" 1>&2
+    exit 0
+  ;;
+esac

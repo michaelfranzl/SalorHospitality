@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+. /usr/share/debconf/confmodule
+
+case $1 in
+  remove)
+    #do something
+  ;;
+  upgrade)
+    db_input high billgastro/dbdump || true
+    db_go
+    cd /var/www/billgastro
+    export RAILS_ENV=production
+    rake db:dump
+  ;;
+  *)
+    echo "prerm called with unknown argument '$1'" 1>&2
+    exit 1
+  ;;
+esac

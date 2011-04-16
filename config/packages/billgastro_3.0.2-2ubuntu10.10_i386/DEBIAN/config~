@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+db_input high billgastro/enter_database || true
+db_go
+db_input high billgastro/enter_username || true
+db_go
+db_input high billgastro/enter_password || true
+db_go
+db_get billgastro/dataset || true
+db_go
