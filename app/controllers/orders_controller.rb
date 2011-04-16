@@ -204,9 +204,9 @@ class OrdersController < ApplicationController
       group_identical_items(order)
 
       if defined?(SP)
-        BillGastro::Application::SP.write generate_escpos_items(order, :drink)
-        BillGastro::Application::SP.write generate_escpos_items(order, :food)
-        BillGastro::Application::SP.write generate_escpos_items(order, :takeaway)
+        BillGastro::Application::SP.write generate_escpos_items(order, 0, 0) # drinks, normal
+        BillGastro::Application::SP.write generate_escpos_items(order, 1, 0) # foods,  normal
+        BillGastro::Application::SP.write generate_escpos_items(order, 1, 1) # foods,  takeaway
       end
 
       #File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }

@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
       return nr
     end
 
-    def generate_escpos_items(order, type)
+    def generate_escpos_items(order, category_usage, article_usage)
       overall_output = ''
       #Order.find_all_by_finished(false).each do |order|
         per_order_output = ''
@@ -98,11 +98,8 @@ class ApplicationController < ActionController::Base
         printed_items_in_this_order = 0
         order.items.each do |i|
 
-          next if (i.count <= i.printed_count)
-          next if (type == :drink and i.category.food) or (type == :food and !i.category.food)
-
-          usage = i.quantity ? i.quantity.usage : i.article.usage
-          next if (type == :takeaway and usage != 'b') or (type != :takeaway and usage == 'b')
+          item_usage = i.quantity ? i.quantity.usage : i.article.usage
+          next if (i.count <= i.printed_count) or (category_usage != i.category.usage) or (article_usage != item_usage)
 
           printed_items_in_this_order =+ 1
 

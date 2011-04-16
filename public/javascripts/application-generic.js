@@ -63,7 +63,7 @@ function add_new_item_q(qu_id, button) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_q[qu_id][7] == 'b' || itemdetails_q[qu_id][7] == 'c') { add_comment_to_item(desig); add_price_to_item(desig); }
+    if (itemdetails_q[qu_id][7] == 1 || itemdetails_q[qu_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
   }
   calculate_sum();
 }
@@ -110,7 +110,7 @@ function add_new_item_a(art_id, button, caption) {
     $('itemstable').insert({ top: new_item_tablerow_modified });
     $('inputfields').insert({ top: new_item_inputfields_modified });
 
-    if (itemdetails_a[art_id][7] == 'b' || itemdetails_a[art_id][7] == 'c') { add_comment_to_item(desig); add_price_to_item(desig); }
+    if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
   }
 
   document.getElementById('quantities').innerHTML = '&nbsp;';

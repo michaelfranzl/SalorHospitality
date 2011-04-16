@@ -301,6 +301,10 @@ de:
   blue: Blau
   blank: Leer
 
+  food: Speisen
+  drink: Getränke
+  tobacco: Tabak
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: muss entweder beim Artikel oder bei der Variante eingegeben werden.
   is_no_number: ist keine Zahl

@@ -42,6 +42,21 @@ module CategoriesHelper
     ]
   end
 
+  def usage_array_for_select
+    [
+      [t('.drink'), 0],
+      [t('.food'), 1],
+      [t('.tobacco'), 2]
+    ]
+  end
+
+  def usage_array
+    [ t(:drink),
+      t(:food),
+      t(:tobacco)
+    ]
+  end
+
   def get_color_array
     color_array = [
       [t(:violet), '#80477d'],

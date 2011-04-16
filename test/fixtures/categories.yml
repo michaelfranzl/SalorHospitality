@@ -8,7 +8,7 @@ categories_001:
   sort_order: 10
   icon: starter
   color: "#136880"
-  food: 1
+  usage: 1
 categories_002: 
   id: 2
   name: Main Dish
@@ -18,7 +18,7 @@ categories_002:
   sort_order: 20
   icon: maindish
   color: "#136880"
-  food: 1
+  usage: 1
 categories_003: 
   id: 3
   name: Desserts
@@ -28,7 +28,7 @@ categories_003:
   sort_order: 30
   icon: dessert
   color: "#136880"
-  food: 1
+  usage: 1
 categories_004: 
   id: 4
   name: "Ros\xC3\xA9 Wine"
@@ -38,7 +38,7 @@ categories_004:
   sort_order: 80
   icon: rosewineglass
   color: "#75b10d"
-  food: 
+  usage: 
 categories_005: 
   id: 5
   name: Red Wine
@@ -48,7 +48,7 @@ categories_005:
   sort_order: 60
   icon: redwineglass
   color: "#75b10d"
-  food: 
+  usage: 
 categories_006: 
   id: 6
   name: "Dig\xC3\xA9stif"
@@ -58,7 +58,7 @@ categories_006:
   sort_order: 100
   icon: digestif
   color: "#ed8b00"
-  food: 
+  usage: 
 categories_007: 
   id: 7
   name: Alcohol Free
@@ -68,7 +68,7 @@ categories_007:
   sort_order: 50
   icon: nonalcoholics
   color: "#80477d"
-  food: 
+  usage: 
 categories_008: 
   id: 9
   name: Coffee
@@ -78,7 +78,7 @@ categories_008:
   sort_order: 110
   icon: coffee
   color: "#cd0052"
-  food: 
+  usage: 
 categories_009: 
   id: 10
   name: Tea
@@ -88,7 +88,7 @@ categories_009:
   sort_order: 120
   icon: teapot
   color: "#cd0052"
-  food: 
+  usage: 
 categories_010: 
   id: 11
   name: Tobacco
@@ -98,7 +98,7 @@ categories_010:
   sort_order: 130
   icon: cigarette
   color: "#136880"
-  food: 
+  usage: 
 categories_011: 
   id: 13
   name: Beer
@@ -108,7 +108,7 @@ categories_011:
   sort_order: 40
   icon: beer
   color: "#ed8b00"
-  food: 
+  usage: 
 categories_012: 
   id: 14
   name: Aperitiv
@@ -118,7 +118,7 @@ categories_012:
   sort_order: 90
   icon: aperitif
   color: "#ed8b00"
-  food: 
+  usage: 
 categories_013: 
   id: 15
   name: White Wine
@@ -128,7 +128,7 @@ categories_013:
   sort_order: 70
   icon: whitewineglass
   color: "#75b10d"
-  food: 
+  usage: 
 categories_014: 
   id: 16
   name: Side Dish
@@ -138,7 +138,7 @@ categories_014:
   sort_order: 35
   icon: sidedish
   color: "#136880"
-  food: 1
+  usage: 1
 categories_015: 
   id: 17
   name: Divers
@@ -148,4 +148,4 @@ categories_015:
   sort_order: 37
   icon: blank
   color: "#27343b"
-  food: 
+  usage: 

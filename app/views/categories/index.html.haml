@@ -5,15 +5,15 @@
 %table
   %tr
     %th{ :style => 'width:200px' }= Category.human_attribute_name(:name)
-    %th{ :style => 'width:80px' }= Category.human_attribute_name(:food)
     %th{ :style => 'width:150px' }= Category.human_attribute_name(:percent)
+    %th{ :style => 'width:150px' }= Category.human_attribute_name(:usage)
     %th{ :style => 'width:150px' }= Category.human_attribute_name(:sort_order)
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }
   - @categories.each do |ca|
     %tr
       %td= @current_user.role >= 2 ? link_to(ca.name, edit_category_path(ca)) : ca.name
-      %td= ca.food ? t('.foods') : t('.drinks')
       %td= ca.tax.custom_name
+      %td= usage_array[ca.usage] if ca.usage
       %td= ca.sort_order
       %td= link_to((t :delete), ca, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
