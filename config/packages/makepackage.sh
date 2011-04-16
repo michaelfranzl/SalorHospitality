@@ -13,7 +13,7 @@ cp -rf ~/Public/pack/* $1
 
 echo "Copy BillGastro Source from git repository"
 mkdir -p $1/var/www
-git clone -b billgastro3 . $1/var/www
+git clone -b billgastro3 . $1/var/www/billgastro
 rm -rf $1/var/www/billgastro/.git
 
 dpkg -b $1

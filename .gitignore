@@ -8,3 +8,10 @@ public/stylesheets/*.css
 articles.js
 *.xcf
 *.lock
+*~
+config/packages/billgastro/etc
+config/packages/billgastro/usr
+config/packages/billgastro/var
+config/packages/publish/debian/db
+config/packages/publish/debian/dists
+config/packages/publish/debian/pool
