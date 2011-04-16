@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf /media/sf_Public/pack
 mkdir -p /media/sf_Public/pack/usr/local/lib/ruby/gems/1.9.1
 
 cp -vpr /usr/local/bin /media/sf_Public/pack/usr/local
