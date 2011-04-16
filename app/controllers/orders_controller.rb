@@ -241,16 +241,18 @@ class OrdersController < ApplicationController
     def move_order_to_table(order,target_table_id)
       target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
       if target_order
-        order.items.each do |i|
-          i.order = target_order
-          result = i.save
-          raise "Gruppieren von Item 1 schlug fehl. Oops!" if not result
+        Item.transaction do
+          order.items.each do |i|
+            i.order = target_order
+            result = i.save
+            raise "Gruppieren von Item 1 schlug fehl. Oops!" if not result
+          end
         end
 
         target_order.reload
         target_order.update_attribute( :sum, calculate_order_sum(target_order) )
         group_identical_items(target_order)
-        order.reload # important, otherwise rails deletes all assigned items because of as_many :items, :dependent => :destroy
+        order.reload # important before destroying, otherwise rails deletes all previously assigned items because of has_many :items, :dependent => :destroy
         order.destroy
       else
         # move order to empty table
@@ -269,16 +271,18 @@ class OrdersController < ApplicationController
       n = items.size - 1
       0.upto(n-1) do |i|
         (i+1).upto(n) do |j|
-          if (items[i].article_id  == items[j].article_id and
-              items[i].quantity_id == items[j].quantity_id and
-              items[i].price       == items[j].price and
-              items[i].comment     == items[j].comment
-             )
-            items[i].count += items[j].count
-            items[i].printed_count += items[j].printed_count
-            result = items[i].save
-            raise "Gruppieren von Item 2 schlug fehl. Oops!" if not result
-            items[j].destroy
+          Item.transaction do
+            if (items[i].article_id  == items[j].article_id and
+                items[i].quantity_id == items[j].quantity_id and
+                items[i].price       == items[j].price and
+                items[i].comment     == items[j].comment
+               )
+              items[i].count += items[j].count
+              items[i].printed_count += items[j].printed_count
+              result = items[i].save
+              raise "Gruppieren von Item 2 schlug fehl. Oops!" if not result
+              items[j].destroy
+            end
           end
         end
       end

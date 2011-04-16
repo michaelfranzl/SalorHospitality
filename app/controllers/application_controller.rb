@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ApplicationController < ActionController::Base
-  # protect_from_forgery
 
   helper :all # include all helpers, all the time
   before_filter :fetch_logged_in_user, :set_locale
@@ -39,7 +38,6 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
-      render 'go_to_login' if (request.xhr? and !@current_user) #only when user is logging out on ipod, for normal request let the views handle the login form diplay
     end
 
     def logged_in?

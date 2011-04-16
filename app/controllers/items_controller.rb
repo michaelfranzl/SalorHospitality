@@ -86,49 +86,54 @@ class ItemsController < ApplicationController
       logger.info "XXX parent_order = parent_item.order = #{ parent_order.inspect }"
       logger.info "XXX parent_order.order.nil? is #{ parent_order.order.nil? }"
 
+
       split_order = parent_order.order
       logger.info "XXX this parent_order's split_order is #{ split_order.inspect }."
       if split_order.nil?
         logger.info "XXX If: I am going to create a brand new split_order, and make it belong to the parent order"
-        split_order = parent_order.clone
-        split_order.nr = get_next_unique_and_reused_order_number
-        BillGastro::Application::largest_order_number = split_order.nr if split_order.nr > BillGastro::Application::largest_order_number
-        sisr1 = split_order.save
-        logger.info "XXX the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
-        raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
-        parent_order.update_attribute :order, split_order  # make an association between parent and child
-        split_order.update_attribute :order, parent_order  # ... and vice versa
+        Order.transaction do
+          split_order = parent_order.clone
+          split_order.nr = get_next_unique_and_reused_order_number
+          BillGastro::Application::largest_order_number = split_order.nr if split_order.nr > BillGastro::Application::largest_order_number
+          sisr1 = split_order.save
+          logger.info "XXX the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
+          raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
+          parent_order.update_attribute :order, split_order  # make an association between parent and child
+          split_order.update_attribute :order, parent_order  # ... and vice versa
+        end
       end
 
       split_item = parent_item.item
       logger.info "XXX this parent_item's split_item is #{ split_item.inspect }."
-      if split_item.nil?
-        logger.info "XXX Because split_item is nil, we're going to create one."
-        split_item = parent_item.clone
-        split_item.count = 0
-        split_item.printed_count = 0
-        sisr2 = split_item.save
-        logger.info "XXX The result of saving split_item is #{ sisr2.inspect } and it is #{ split_item.inspect }."
-        raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
-        parent_item.item = split_item # make an association between parent and child
-        split_item.item = parent_item # ... and vice versa
-      end
+      Item.transaction do
+        if split_item.nil?
+          logger.info "XXX Because split_item is nil, we're going to create one."
+          split_item = parent_item.clone
+          split_item.count = 0
+          split_item.printed_count = 0
+          sisr2 = split_item.save
+          logger.info "XXX The result of saving split_item is #{ sisr2.inspect } and it is #{ split_item.inspect }."
+          raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
+          parent_item.item = split_item # make an association between parent and child
+          split_item.item = parent_item # ... and vice versa
+        end
 
-      split_item.order = split_order # this is the actual moving to the new order
-      split_item.count += 1
-      split_item.printed_count += 1
-      sisr3 = split_item.save
-      logger.info "XXX The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
-      raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
-      parent_item.count -= 1
-      parent_item.printed_count -= 1
-      logger.info "XXX parent_item.count = #{ parent_item.count.inspect }"
-      if parent_item.count == 0 
-        parent_item.delete
-      else
-        pisr = parent_item.save
-        logger.info "XXX The result of saving parent_item is #{ pisr.inspect } and it is #{ parent_item.inspect }."
-        raise "Konnte das bereits bestehende parent_item nicht überspeichern. Oops!" if not pisr
+        split_item.order = split_order # this is the actual moving to the new order
+        split_item.count += 1
+        split_item.printed_count += 1
+        sisr3 = split_item.save
+        logger.info "XXX The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
+        raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
+        parent_item.count -= 1
+        parent_item.printed_count -= 1
+        logger.info "XXX parent_item.count = #{ parent_item.count.inspect }"
+        if parent_item.count == 0 
+          parent_item.delete
+        else
+          pisr = parent_item.save
+          logger.info "XXX The result of saving parent_item is #{ pisr.inspect } and it is #{ parent_item.inspect }."
+          raise "Konnte das bereits bestehende parent_item nicht überspeichern. Oops!" if not pisr
+        end
       end
 
       logger.info "XXX parent_order before re-read is #{ parent_order.inspect }."
