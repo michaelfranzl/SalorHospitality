@@ -1,9 +1,9 @@
 --- !map:ActiveSupport::HashWithIndifferentAccess 
-name: Restaurant4
-subtitle: Subtitle
-address: Adress
+name: BillGastro
+subtitle: The innovative POS Software
+address: Address
 taxnumber: Tax Number
 slogan1: Slogan 1
 slogan2: Slogan 2
-internet: Internet
-email: Email
+internet: Internet Address
+email: Email Address
