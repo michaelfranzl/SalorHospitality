@@ -86,9 +86,6 @@ class ItemsController < ApplicationController
       logger.info "XXX parent_order = parent_item.order = #{ parent_order.inspect }"
       logger.info "XXX parent_order.order.nil? is #{ parent_order.order.nil? }"
 
-raise "oops"
-nil.nix
-
       split_order = parent_order.order
       logger.info "XXX this parent_order's split_order is #{ split_order.inspect }."
       if split_order.nil?
