@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -6,11 +8,20 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-#sp = SerialPort.new '/dev/ttyS0', 9600
-
-module Billgastro2
+module BillGastro
   class Application < Rails::Application
-    #SP = SerialPort.new '/dev/ttyUSB0', 9600
+
+    mattr_accessor :unused_order_numbers, :largest_order_number
+
+    SP = SerialPort.new '/dev/ttyUSB0', 9600 if File.exists? '/dev/ttyUSB0'
+    INITIAL_CREDITS = 100
+    USER_ROLES = [ ['',''], ['Restaurant',0], ['Kellner',1], ['Admin',2], ['Superuser',3] ]
+    LANGUAGES_OPTIONS = [ ['English','en'], ['Deutsch','de'], ['Türkçe','tr'] ]
+    LANGUAGES_HASH = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
+
+    @@unused_order_numbers = Array.new
+    @@largest_order_number = 0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

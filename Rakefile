@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Billgastro2::Application.load_tasks
+BillGastro::Application.load_tasks

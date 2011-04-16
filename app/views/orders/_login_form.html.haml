@@ -6,7 +6,7 @@
     = label_tag 'login', (t '.username')
     %select{ :name => 'login' }
       - @users.each do |u|
-        %option{ :value => u.login }== #{ u.login } (#{ MyGlobals::language_hash[u.language.to_s] })
+        %option{ :value => u.login }== #{ u.login } (#{ BillGastro::Application::LANGUAGES_HASH[u.language.to_s] })
   %p
     = label_tag 'password', (t '.password')
     = password_field_tag 'password', '', :size => 9

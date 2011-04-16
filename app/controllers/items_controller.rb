@@ -92,6 +92,7 @@ class ItemsController < ApplicationController
         logger.info "XXX If: I am going to create a brand new split_order, and make it belong to the parent order"
         split_order = parent_order.clone
         split_order.nr = get_next_unique_and_reused_order_number
+        BillGastro::Application::largest_order_number = split_order.nr if split_order.nr > BillGastro::Application::largest_order_number
         sisr1 = split_order.save
         logger.info "XXX the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
         raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
@@ -139,7 +140,7 @@ class ItemsController < ApplicationController
       if parent_order.items.empty?
         parent_order.delete
         logger.info "XXX deleted parent_order since there were no items left."
-        MyGlobals::unused_order_numbers << parent_order.nr
+        BillGastro::Application::unused_order_numbers << parent_order.nr
       else
         parent_order.update_attribute( :sum, calculate_order_sum(parent_order) )
       end

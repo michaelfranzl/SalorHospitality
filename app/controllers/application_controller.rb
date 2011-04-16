@@ -70,11 +70,17 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
-      if MyGlobals::unused_order_numbers.empty?
-        nr = MyGlobals::last_order_number += 1
+      if not BillGastro::Application::unused_order_numbers.empty?
+        # reuse order numbers if present
+        nr = BillGastro::Application::unused_order_numbers.first
+        BillGastro::Application::unused_order_numbers.delete(nr)
+      elsif not BillGastro::Application::largest_order_number.zero?
+        # increment largest order number
+        nr = BillGastro::Application::largest_order_number + 1
       else
-        nr = MyGlobals::unused_order_numbers.first
-        MyGlobals::unused_order_numbers.delete(nr)
+        # find Order with largest nr attribute from database. this should happen only once per application instance.
+        last_order = Order.first(:order => 'nr DESC')
+        nr = last_order ? last_order.nr + 1 : 1
       end
       return nr
     end

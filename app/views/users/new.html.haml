@@ -24,7 +24,7 @@
         %td= user_form.label('role', User.human_attribute_name(:role))
         %td
           %select{ :id => 'user_role', :name => 'user[role]' }
-            = options_for_select MyGlobals::user_roles[0..@current_user.role+1], @user.role
+            = options_for_select BillGastro::Application::USER_ROLES[0..@current_user.role+1], @user.role
     %tr
       %td= user_form.label('color', User.human_attribute_name(:color))
       %td
@@ -35,6 +35,6 @@
       %td= user_form.label('language', User.human_attribute_name(:language))
       %td
         %select#category_color{ :name => 'user[language]' }
-          = options_for_select(MyGlobals::language_array, user_form.object.language)
+          = options_for_select(BillGastro::Application::LANGUAGES_OPTIONS, user_form.object.language)
             
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

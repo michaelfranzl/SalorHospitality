@@ -23,9 +23,6 @@ class OrdersController < ApplicationController
     @categories = Category.find(:all, :order => :sort_order)
     @users = User.all
     session[:admin_interface] = !ipod? # admin panel per default on on workstation
-    if MyGlobals::last_order_number.nil? # happens only at server restart
-      MyGlobals::last_order_number = Order.last ? Order.last.nr : 0
-    end
   end
 
   def update
@@ -92,6 +89,9 @@ class OrdersController < ApplicationController
 
   def print_and_finish
     @order = Order.find params[:id]
+
+    BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number 
+
     if not @order.finished and ipod?
       @order.user = @current_user
       @order.created_at = Time.now
@@ -110,7 +110,7 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    Billgastro2::Application::SP.write generate_escpos_invoice @order
+    BillGastro::Application::SP.write generate_escpos_invoice @order if defined? SP
 
     #File.open('tmp/order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
     #`cat tmp/order.escpos > /dev/ttyPS#{ params[:port] }`
@@ -154,8 +154,6 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
-    @cost_centers = CostCenter.find_all_by_active(true)
-    MyGlobals::credits_left = (Order.last and false) ? Order.last.credit : YAML.load_file('config/initial_credits.yml')['initial_credits']
     if not params[:order_action] == 'cancel_and_go_to_tables'
       if params[:order][:id] == 'add_offline_items_to_order'
         @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
@@ -163,21 +161,24 @@ class OrdersController < ApplicationController
         @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
       end
 
+      @cost_centers = CostCenter.find_all_by_active(true)
+
       if @order
-        #similar to update
+        # similar to update
         @order.update_attributes(params[:order])
         @order.table.update_attribute :user, @order.user
       else
-        #similar to create
-        # create new order OR (if order exists already on table) add items to existing order
+        # similar to create
+        # create new order or, if order exists already on table, add items to existing order
         @order = Order.new(params[:order])
         @order.nr = get_next_unique_and_reused_order_number
-        @order.credit = MyGlobals::credits_left -= 1
+        @order.credit = Order.last ? Order.last.credit - 1 : BillGastro::Application::INITIAL_CREDITS
         @order.sum = calculate_order_sum @order
         @order.cost_center = @cost_centers.first
         @order.save
         @order.table.update_attribute :user, @order.user
       end
+      BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number
       process_order(@order)
     end
     conditional_redirect_ajax(@order)
@@ -192,7 +193,7 @@ class OrdersController < ApplicationController
     def process_order(order)
       order.reload
       if order.items.size.zero?
-        MyGlobals::unused_order_numbers << order.nr
+        BillGastro::Application::unused_order_numbers << order.nr
         order.delete
         order.table.update_attribute :user, nil
         return
@@ -200,11 +201,13 @@ class OrdersController < ApplicationController
 
       order.update_attribute( :sum, calculate_order_sum(order) )
 
-      #group_identical_items(order)
+      group_identical_items(order)
 
-      Billgastro2::Application::SP.write generate_escpos_items(order, :drink)
-      Billgastro2::Application::SP.write generate_escpos_items(order, :food)
-      Billgastro2::Application::SP.write generate_escpos_items(order, :takeaway)
+      if defined?(SP)
+        BillGastro::Application::SP.write generate_escpos_items(order, :drink)
+        BillGastro::Application::SP.write generate_escpos_items(order, :food)
+        BillGastro::Application::SP.write generate_escpos_items(order, :takeaway)
+      end
 
       #File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
       #File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
