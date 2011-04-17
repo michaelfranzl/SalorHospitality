@@ -12,9 +12,9 @@ articles_001:
   blackboard: 0
   waiterpad: 1
   created_at: 2009-02-24 16:01:17 Z
-  updated_at: 2010-09-10 16:33:22 Z
+  updated_at: 2011-04-17 07:13:23 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_002: 
   id: 2
@@ -29,9 +29,9 @@ articles_002:
   blackboard: 0
   waiterpad: 1
   created_at: 2009-02-24 16:01:58 Z
-  updated_at: 2010-09-10 16:33:17 Z
+  updated_at: 2011-04-17 07:13:23 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_003: 
   id: 3
@@ -46,9 +46,9 @@ articles_003:
   blackboard: 0
   waiterpad: 1
   created_at: 2009-02-24 16:02:40 Z
-  updated_at: 2010-09-10 16:33:08 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
-  sort: 
+  sort: 2
   usage: 
 articles_004: 
   id: 4
@@ -63,9 +63,9 @@ articles_004:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:03:41 Z
-  updated_at: 2010-04-30 14:25:11 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_005: 
   id: 5
@@ -80,9 +80,9 @@ articles_005:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:05:02 Z
-  updated_at: 2009-03-18 15:16:20 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_006: 
   id: 16
@@ -97,9 +97,9 @@ articles_006:
   blackboard: 1
   waiterpad: 1
   created_at: 2009-02-24 16:28:44 Z
-  updated_at: 2010-03-01 17:45:48 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_007: 
   id: 21
@@ -114,9 +114,9 @@ articles_007:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:36:26 Z
-  updated_at: 2010-04-30 12:46:08 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_008: 
   id: 26
@@ -131,9 +131,9 @@ articles_008:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:46:35 Z
-  updated_at: 2010-04-05 16:22:32 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_009: 
   id: 27
@@ -148,9 +148,9 @@ articles_009:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:47:49 Z
-  updated_at: 2010-03-01 19:45:44 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_010: 
   id: 29
@@ -165,9 +165,9 @@ articles_010:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-24 16:55:49 Z
-  updated_at: 2010-04-30 14:05:42 Z
+  updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_011: 
   id: 32
@@ -182,9 +182,9 @@ articles_011:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 10:30:32 Z
-  updated_at: 2010-03-01 19:40:35 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_012: 
   id: 33
@@ -199,9 +199,9 @@ articles_012:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 10:34:33 Z
-  updated_at: 2010-03-01 19:40:11 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_013: 
   id: 34
@@ -216,9 +216,9 @@ articles_013:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 10:36:50 Z
-  updated_at: 2010-03-01 19:37:01 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_014: 
   id: 38
@@ -233,9 +233,9 @@ articles_014:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:34:56 Z
-  updated_at: 2010-03-01 19:36:25 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_015: 
   id: 39
@@ -250,9 +250,9 @@ articles_015:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:36:13 Z
-  updated_at: 2010-04-30 12:42:50 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_016: 
   id: 41
@@ -267,9 +267,9 @@ articles_016:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:44:13 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_017: 
   id: 42
@@ -284,9 +284,9 @@ articles_017:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:48:48 Z
-  updated_at: 2010-04-30 13:59:23 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_018: 
   id: 43
@@ -301,9 +301,9 @@ articles_018:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:49:36 Z
-  updated_at: 2010-04-30 13:59:02 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_019: 
   id: 44
@@ -318,9 +318,9 @@ articles_019:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:50:32 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_020: 
   id: 45
@@ -335,9 +335,9 @@ articles_020:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:51:28 Z
-  updated_at: 2010-04-30 16:53:23 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_021: 
   id: 46
@@ -352,9 +352,9 @@ articles_021:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:52:04 Z
-  updated_at: 2010-04-30 16:53:40 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_022: 
   id: 47
@@ -369,9 +369,9 @@ articles_022:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:53:24 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
-  sort: 
+  sort: 2
   usage: 
 articles_023: 
   id: 48
@@ -386,9 +386,9 @@ articles_023:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:54:16 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
-  sort: 
+  sort: 2
   usage: 
 articles_024: 
   id: 49
@@ -403,9 +403,9 @@ articles_024:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:55:33 Z
-  updated_at: 2010-04-30 14:12:35 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_025: 
   id: 50
@@ -420,9 +420,9 @@ articles_025:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:56:01 Z
-  updated_at: 2010-04-30 14:12:47 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_026: 
   id: 51
@@ -437,9 +437,9 @@ articles_026:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:56:39 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_027: 
   id: 52
@@ -454,9 +454,9 @@ articles_027:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 11:57:55 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_028: 
   id: 53
@@ -471,9 +471,9 @@ articles_028:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:05:31 Z
-  updated_at: 2010-04-30 13:51:32 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_029: 
   id: 54
@@ -488,9 +488,9 @@ articles_029:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:06:27 Z
-  updated_at: 2010-04-30 13:50:53 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_030: 
   id: 55
@@ -505,9 +505,9 @@ articles_030:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:07:06 Z
-  updated_at: 2010-04-30 13:50:36 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_031: 
   id: 56
@@ -522,9 +522,9 @@ articles_031:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:08:07 Z
-  updated_at: 2010-04-30 14:16:15 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_032: 
   id: 57
@@ -539,9 +539,9 @@ articles_032:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:08:41 Z
-  updated_at: 2010-04-30 14:15:48 Z
+  updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_033: 
   id: 58
@@ -556,9 +556,9 @@ articles_033:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:09:14 Z
-  updated_at: 2010-04-30 14:15:22 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_034: 
   id: 59
@@ -573,9 +573,9 @@ articles_034:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:11:48 Z
-  updated_at: 2010-04-30 13:56:38 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_035: 
   id: 60
@@ -590,9 +590,9 @@ articles_035:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:12:17 Z
-  updated_at: 2010-04-30 13:56:16 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_036: 
   id: 61
@@ -607,9 +607,9 @@ articles_036:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:12:42 Z
-  updated_at: 2010-04-30 13:55:47 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_037: 
   id: 62
@@ -624,9 +624,9 @@ articles_037:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:14:00 Z
-  updated_at: 2010-04-30 13:30:29 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_038: 
   id: 63
@@ -641,9 +641,9 @@ articles_038:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:21:19 Z
-  updated_at: 2010-04-30 13:31:18 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_039: 
   id: 64
@@ -658,9 +658,9 @@ articles_039:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:22:02 Z
-  updated_at: 2010-04-30 13:30:49 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_040: 
   id: 65
@@ -675,9 +675,9 @@ articles_040:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:23:02 Z
-  updated_at: 2010-04-30 13:08:00 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_041: 
   id: 66
@@ -692,9 +692,9 @@ articles_041:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:23:30 Z
-  updated_at: 2010-04-30 13:07:36 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_042: 
   id: 67
@@ -709,9 +709,9 @@ articles_042:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:24:00 Z
-  updated_at: 2010-04-30 13:07:09 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_043: 
   id: 68
@@ -726,9 +726,9 @@ articles_043:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:24:43 Z
-  updated_at: 2010-04-30 13:46:59 Z
+  updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_044: 
   id: 69
@@ -743,9 +743,9 @@ articles_044:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:25:22 Z
-  updated_at: 2010-04-30 13:46:33 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_045: 
   id: 70
@@ -760,9 +760,9 @@ articles_045:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:25:50 Z
-  updated_at: 2010-04-30 13:46:07 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_046: 
   id: 71
@@ -777,9 +777,9 @@ articles_046:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:26:28 Z
-  updated_at: 2009-03-19 17:28:28 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_047: 
   id: 72
@@ -794,9 +794,9 @@ articles_047:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:26:53 Z
-  updated_at: 2010-04-30 12:47:09 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_048: 
   id: 75
@@ -811,9 +811,9 @@ articles_048:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:32:24 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_049: 
   id: 76
@@ -828,9 +828,9 @@ articles_049:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:34:44 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_050: 
   id: 77
@@ -845,9 +845,9 @@ articles_050:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:35:20 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_051: 
   id: 78
@@ -862,9 +862,9 @@ articles_051:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:36:12 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_052: 
   id: 79
@@ -879,9 +879,9 @@ articles_052:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:37:01 Z
-  updated_at: 2010-04-30 13:54:44 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_053: 
   id: 80
@@ -896,9 +896,9 @@ articles_053:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:38:02 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_054: 
   id: 81
@@ -913,9 +913,9 @@ articles_054:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:38:44 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_055: 
   id: 82
@@ -930,9 +930,9 @@ articles_055:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:39:12 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_056: 
   id: 83
@@ -947,9 +947,9 @@ articles_056:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:39:38 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_057: 
   id: 84
@@ -964,9 +964,9 @@ articles_057:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:40:01 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_058: 
   id: 85
@@ -981,9 +981,9 @@ articles_058:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:44:52 Z
-  updated_at: 2010-02-02 15:59:48 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_059: 
   id: 86
@@ -998,9 +998,9 @@ articles_059:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:45:16 Z
-  updated_at: 2010-05-01 16:51:57 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_060: 
   id: 87
@@ -1015,9 +1015,9 @@ articles_060:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:45:35 Z
-  updated_at: 2009-03-13 11:04:46 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_061: 
   id: 88
@@ -1032,9 +1032,9 @@ articles_061:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:45:59 Z
-  updated_at: 2010-05-01 16:51:30 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_062: 
   id: 89
@@ -1049,9 +1049,9 @@ articles_062:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:46:47 Z
-  updated_at: 2010-04-30 12:59:59 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_063: 
   id: 91
@@ -1066,9 +1066,9 @@ articles_063:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-03-01 15:17:08 Z
-  updated_at: 2010-04-30 14:17:54 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_064: 
   id: 92
@@ -1083,9 +1083,9 @@ articles_064:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-03-01 15:17:08 Z
-  updated_at: 2010-04-30 14:18:12 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_065: 
   id: 99
@@ -1100,9 +1100,9 @@ articles_065:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:19:53 Z
-  updated_at: 2010-03-08 13:40:29 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_066: 
   id: 100
@@ -1117,9 +1117,9 @@ articles_066:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:20:15 Z
-  updated_at: 2010-02-16 17:46:28 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_067: 
   id: 101
@@ -1134,9 +1134,9 @@ articles_067:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:20:37 Z
-  updated_at: 2010-04-30 14:14:03 Z
+  updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_068: 
   id: 102
@@ -1151,9 +1151,9 @@ articles_068:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:21:12 Z
-  updated_at: 2010-02-16 17:40:41 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_069: 
   id: 103
@@ -1168,9 +1168,9 @@ articles_069:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:21:38 Z
-  updated_at: 2010-02-16 17:45:53 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_070: 
   id: 104
@@ -1185,9 +1185,9 @@ articles_070:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:22:00 Z
-  updated_at: 2010-02-16 17:44:21 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_071: 
   id: 105
@@ -1202,9 +1202,9 @@ articles_071:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:23:56 Z
-  updated_at: 2010-02-16 17:44:35 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_072: 
   id: 106
@@ -1219,9 +1219,9 @@ articles_072:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:25:06 Z
-  updated_at: 2010-03-01 17:45:40 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_073: 
   id: 107
@@ -1236,9 +1236,9 @@ articles_073:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:25:37 Z
-  updated_at: 2010-02-16 17:43:00 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_074: 
   id: 108
@@ -1253,9 +1253,9 @@ articles_074:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:27:56 Z
-  updated_at: 2010-03-15 16:41:06 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_075: 
   id: 109
@@ -1270,9 +1270,9 @@ articles_075:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:31:26 Z
-  updated_at: 2010-04-26 12:31:57 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_076: 
   id: 110
@@ -1287,9 +1287,9 @@ articles_076:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:32:28 Z
-  updated_at: 2010-04-26 12:27:43 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_077: 
   id: 111
@@ -1304,9 +1304,9 @@ articles_077:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:32:41 Z
-  updated_at: 2010-05-01 11:28:07 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_078: 
   id: 112
@@ -1321,9 +1321,9 @@ articles_078:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:32:58 Z
-  updated_at: 2010-02-16 17:53:00 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_079: 
   id: 113
@@ -1338,9 +1338,9 @@ articles_079:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:37:02 Z
-  updated_at: 2010-04-05 12:39:44 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_080: 
   id: 114
@@ -1355,9 +1355,9 @@ articles_080:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:37:56 Z
-  updated_at: 2010-04-19 13:02:47 Z
+  updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_081: 
   id: 115
@@ -1372,9 +1372,9 @@ articles_081:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:38:13 Z
-  updated_at: 2010-04-30 14:13:37 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_082: 
   id: 116
@@ -1389,9 +1389,9 @@ articles_082:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:39:20 Z
-  updated_at: 2010-03-01 17:45:55 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_083: 
   id: 117
@@ -1406,9 +1406,9 @@ articles_083:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:50:35 Z
-  updated_at: 2010-04-30 14:27:38 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_084: 
   id: 118
@@ -1423,9 +1423,9 @@ articles_084:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:51:31 Z
-  updated_at: 2010-04-30 13:32:47 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_085: 
   id: 119
@@ -1440,9 +1440,9 @@ articles_085:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:52:02 Z
-  updated_at: 2010-04-30 13:32:21 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_086: 
   id: 120
@@ -1457,9 +1457,9 @@ articles_086:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:52:28 Z
-  updated_at: 2010-04-30 13:31:54 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_087: 
   id: 121
@@ -1474,9 +1474,9 @@ articles_087:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:53:00 Z
-  updated_at: 2010-04-30 13:49:22 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_088: 
   id: 122
@@ -1491,9 +1491,9 @@ articles_088:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:53:20 Z
-  updated_at: 2010-04-30 13:48:58 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_089: 
   id: 123
@@ -1508,9 +1508,9 @@ articles_089:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:53:40 Z
-  updated_at: 2010-04-30 13:48:38 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_090: 
   id: 124
@@ -1525,9 +1525,9 @@ articles_090:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:54:05 Z
-  updated_at: 2010-04-30 13:44:13 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_091: 
   id: 125
@@ -1542,9 +1542,9 @@ articles_091:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:54:23 Z
-  updated_at: 2010-04-30 13:43:58 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_092: 
   id: 126
@@ -1559,9 +1559,9 @@ articles_092:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:54:40 Z
-  updated_at: 2010-04-30 13:43:32 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_093: 
   id: 127
@@ -1576,9 +1576,9 @@ articles_093:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 15:57:22 Z
-  updated_at: 2010-05-01 16:39:32 Z
+  updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_094: 
   id: 128
@@ -1593,9 +1593,9 @@ articles_094:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:03:48 Z
-  updated_at: 2010-02-02 16:03:48 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 16
   usage: 
 articles_095: 
   id: 129
@@ -1610,9 +1610,9 @@ articles_095:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:04:29 Z
-  updated_at: 2010-02-02 16:04:29 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 11
   usage: 
 articles_096: 
   id: 130
@@ -1627,9 +1627,9 @@ articles_096:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:09:37 Z
-  updated_at: 2010-03-01 19:45:28 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_097: 
   id: 132
@@ -1644,9 +1644,9 @@ articles_097:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:10:43 Z
-  updated_at: 2010-03-01 19:45:03 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_098: 
   id: 133
@@ -1661,9 +1661,9 @@ articles_098:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:11:31 Z
-  updated_at: 2010-03-01 19:36:06 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_099: 
   id: 134
@@ -1678,9 +1678,9 @@ articles_099:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:12:09 Z
-  updated_at: 2010-03-01 19:35:42 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_100: 
   id: 135
@@ -1695,9 +1695,9 @@ articles_100:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:12:56 Z
-  updated_at: 2010-03-01 19:35:28 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_101: 
   id: 136
@@ -1712,9 +1712,9 @@ articles_101:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:13:39 Z
-  updated_at: 2010-03-01 19:44:50 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_102: 
   id: 137
@@ -1729,9 +1729,9 @@ articles_102:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:15:43 Z
-  updated_at: 2010-04-30 14:20:15 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_103: 
   id: 138
@@ -1746,9 +1746,9 @@ articles_103:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:16:23 Z
-  updated_at: 2010-03-01 19:44:14 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_104: 
   id: 139
@@ -1763,9 +1763,9 @@ articles_104:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:17:16 Z
-  updated_at: 2010-03-01 19:35:08 Z
+  updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_105: 
   id: 140
@@ -1780,9 +1780,9 @@ articles_105:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:21:18 Z
-  updated_at: 2010-04-22 12:58:27 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_106: 
   id: 141
@@ -1797,9 +1797,9 @@ articles_106:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:23:05 Z
-  updated_at: 2010-02-02 16:23:05 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_107: 
   id: 142
@@ -1814,9 +1814,9 @@ articles_107:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 18:53:26 Z
-  updated_at: 2010-04-30 13:49:38 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_108: 
   id: 143
@@ -1831,9 +1831,9 @@ articles_108:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 18:59:08 Z
-  updated_at: 2010-04-30 13:50:16 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_109: 
   id: 144
@@ -1848,9 +1848,9 @@ articles_109:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:37:48 Z
-  updated_at: 2010-04-30 13:34:15 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_110: 
   id: 145
@@ -1865,9 +1865,9 @@ articles_110:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:38:20 Z
-  updated_at: 2010-04-30 13:44:30 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_111: 
   id: 146
@@ -1882,9 +1882,9 @@ articles_111:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:39:11 Z
-  updated_at: 2010-04-30 13:06:39 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_112: 
   id: 147
@@ -1899,9 +1899,9 @@ articles_112:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:39:57 Z
-  updated_at: 2010-04-30 13:30:02 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_113: 
   id: 148
@@ -1916,9 +1916,9 @@ articles_113:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:40:46 Z
-  updated_at: 2010-04-30 13:45:31 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_114: 
   id: 149
@@ -1933,9 +1933,9 @@ articles_114:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:42:10 Z
-  updated_at: 2010-04-30 13:55:13 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_115: 
   id: 150
@@ -1950,9 +1950,9 @@ articles_115:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:43:00 Z
-  updated_at: 2010-04-30 14:14:55 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_116: 
   id: 151
@@ -1967,9 +1967,9 @@ articles_116:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 20:46:07 Z
-  updated_at: 2010-04-30 13:05:43 Z
+  updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_117: 
   id: 152
@@ -1984,9 +1984,9 @@ articles_117:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 21:07:13 Z
-  updated_at: 2010-02-02 21:07:13 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_118: 
   id: 153
@@ -2001,9 +2001,9 @@ articles_118:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 21:09:24 Z
-  updated_at: 2010-02-02 21:09:24 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 4
   usage: 
 articles_119: 
   id: 154
@@ -2018,9 +2018,9 @@ articles_119:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 21:14:00 Z
-  updated_at: 2010-02-02 21:14:00 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 3
   usage: 
 articles_120: 
   id: 155
@@ -2035,9 +2035,9 @@ articles_120:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 21:15:22 Z
-  updated_at: 2010-03-08 17:33:49 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_121: 
   id: 156
@@ -2052,9 +2052,9 @@ articles_121:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-05 16:55:08 Z
-  updated_at: 2010-04-30 14:26:47 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_122: 
   id: 157
@@ -2069,9 +2069,9 @@ articles_122:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-05 16:57:36 Z
-  updated_at: 2010-04-30 14:26:37 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_123: 
   id: 158
@@ -2086,9 +2086,9 @@ articles_123:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-05 22:15:07 Z
-  updated_at: 2010-04-30 14:25:42 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_124: 
   id: 159
@@ -2103,9 +2103,9 @@ articles_124:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-06 19:36:46 Z
-  updated_at: 2010-04-30 14:04:13 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_125: 
   id: 160
@@ -2120,9 +2120,9 @@ articles_125:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-06 19:37:44 Z
-  updated_at: 2010-04-30 14:03:45 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_126: 
   id: 161
@@ -2137,9 +2137,9 @@ articles_126:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-06 19:40:42 Z
-  updated_at: 2010-02-06 19:40:42 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_127: 
   id: 162
@@ -2154,9 +2154,9 @@ articles_127:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-06 19:42:24 Z
-  updated_at: 2010-02-06 19:42:24 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_128: 
   id: 163
@@ -2171,9 +2171,9 @@ articles_128:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-06 19:43:05 Z
-  updated_at: 2010-02-06 19:43:05 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_129: 
   id: 164
@@ -2188,9 +2188,9 @@ articles_129:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:06:58 Z
-  updated_at: 2010-04-19 13:00:15 Z
+  updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_130: 
   id: 165
@@ -2205,9 +2205,9 @@ articles_130:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:08:25 Z
-  updated_at: 2010-03-22 13:13:50 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_131: 
   id: 166
@@ -2222,9 +2222,9 @@ articles_131:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:09:31 Z
-  updated_at: 2010-02-23 19:59:12 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_132: 
   id: 167
@@ -2239,9 +2239,9 @@ articles_132:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:10:55 Z
-  updated_at: 2010-02-23 19:59:26 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_133: 
   id: 168
@@ -2256,9 +2256,9 @@ articles_133:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:12:21 Z
-  updated_at: 2010-02-09 17:14:00 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_134: 
   id: 169
@@ -2273,9 +2273,9 @@ articles_134:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:14:47 Z
-  updated_at: 2010-04-05 12:27:21 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_135: 
   id: 170
@@ -2290,9 +2290,9 @@ articles_135:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:17:17 Z
-  updated_at: 2010-03-08 13:53:48 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_136: 
   id: 171
@@ -2307,9 +2307,9 @@ articles_136:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:17:56 Z
-  updated_at: 2010-04-08 15:40:53 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_137: 
   id: 172
@@ -2324,9 +2324,9 @@ articles_137:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:18:54 Z
-  updated_at: 2010-04-30 14:22:07 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_138: 
   id: 173
@@ -2341,9 +2341,9 @@ articles_138:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:20:11 Z
-  updated_at: 2010-03-22 13:21:31 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_139: 
   id: 174
@@ -2358,9 +2358,9 @@ articles_139:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:20:56 Z
-  updated_at: 2010-02-23 20:06:28 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_140: 
   id: 175
@@ -2375,9 +2375,9 @@ articles_140:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 17:24:39 Z
-  updated_at: 2010-02-23 20:07:13 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_141: 
   id: 176
@@ -2392,9 +2392,9 @@ articles_141:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 20:10:35 Z
-  updated_at: 2010-03-15 18:10:08 Z
+  updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_142: 
   id: 177
@@ -2409,9 +2409,9 @@ articles_142:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-09 21:07:25 Z
-  updated_at: 2010-02-09 21:07:25 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_143: 
   id: 178
@@ -2426,9 +2426,9 @@ articles_143:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-10 16:55:09 Z
-  updated_at: 2010-02-23 19:59:42 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_144: 
   id: 179
@@ -2443,9 +2443,9 @@ articles_144:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-12 19:48:38 Z
-  updated_at: 2010-02-23 20:06:35 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_145: 
   id: 180
@@ -2460,9 +2460,9 @@ articles_145:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-12 21:25:46 Z
-  updated_at: 2010-02-23 20:08:07 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_146: 
   id: 181
@@ -2477,9 +2477,9 @@ articles_146:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:25:04 Z
-  updated_at: 2010-04-30 14:21:05 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_147: 
   id: 182
@@ -2494,9 +2494,9 @@ articles_147:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:25:36 Z
-  updated_at: 2010-02-23 10:46:36 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_148: 
   id: 183
@@ -2511,9 +2511,9 @@ articles_148:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:26:55 Z
-  updated_at: 2010-02-23 10:46:28 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_149: 
   id: 184
@@ -2528,9 +2528,9 @@ articles_149:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:27:44 Z
-  updated_at: 2010-02-23 10:46:20 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_150: 
   id: 185
@@ -2545,9 +2545,9 @@ articles_150:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:28:23 Z
-  updated_at: 2010-04-30 14:07:03 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_151: 
   id: 186
@@ -2562,9 +2562,9 @@ articles_151:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:28:54 Z
-  updated_at: 2010-02-23 10:46:02 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_152: 
   id: 187
@@ -2579,9 +2579,9 @@ articles_152:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:30:27 Z
-  updated_at: 2010-02-23 10:52:17 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_153: 
   id: 188
@@ -2596,9 +2596,9 @@ articles_153:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:31:11 Z
-  updated_at: 2010-04-19 13:02:07 Z
+  updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_154: 
   id: 189
@@ -2613,9 +2613,9 @@ articles_154:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:31:43 Z
-  updated_at: 2010-02-23 10:51:48 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_155: 
   id: 190
@@ -2630,9 +2630,9 @@ articles_155:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:32:26 Z
-  updated_at: 2010-02-23 10:51:30 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_156: 
   id: 191
@@ -2647,9 +2647,9 @@ articles_156:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:33:14 Z
-  updated_at: 2010-02-23 10:56:12 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_157: 
   id: 192
@@ -2664,9 +2664,9 @@ articles_157:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 17:33:42 Z
-  updated_at: 2010-02-23 10:56:05 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_158: 
   id: 193
@@ -2681,9 +2681,9 @@ articles_158:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 18:42:17 Z
-  updated_at: 2010-02-16 18:42:17 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_159: 
   id: 194
@@ -2698,9 +2698,9 @@ articles_159:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 21:22:12 Z
-  updated_at: 2010-02-23 20:09:55 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_160: 
   id: 195
@@ -2715,9 +2715,9 @@ articles_160:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 22:54:09 Z
-  updated_at: 2010-02-16 22:55:03 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_161: 
   id: 196
@@ -2732,9 +2732,9 @@ articles_161:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-16 22:55:33 Z
-  updated_at: 2010-02-23 20:00:44 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_162: 
   id: 197
@@ -2749,9 +2749,9 @@ articles_162:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-17 22:37:32 Z
-  updated_at: 2010-02-23 20:06:49 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_163: 
   id: 198
@@ -2766,9 +2766,9 @@ articles_163:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:47:36 Z
-  updated_at: 2010-04-26 12:26:25 Z
+  updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_164: 
   id: 199
@@ -2783,9 +2783,9 @@ articles_164:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:48:32 Z
-  updated_at: 2010-03-08 13:40:38 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_165: 
   id: 200
@@ -2800,9 +2800,9 @@ articles_165:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:49:43 Z
-  updated_at: 2010-04-30 14:02:07 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_166: 
   id: 201
@@ -2817,9 +2817,9 @@ articles_166:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:50:17 Z
-  updated_at: 2010-03-01 13:15:33 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_167: 
   id: 202
@@ -2834,9 +2834,9 @@ articles_167:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:50:43 Z
-  updated_at: 2010-03-01 13:15:13 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_168: 
   id: 203
@@ -2851,9 +2851,9 @@ articles_168:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:53:37 Z
-  updated_at: 2010-03-01 13:19:48 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_169: 
   id: 204
@@ -2868,9 +2868,9 @@ articles_169:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:54:12 Z
-  updated_at: 2010-03-01 13:19:59 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_170: 
   id: 205
@@ -2885,9 +2885,9 @@ articles_170:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:55:06 Z
-  updated_at: 2010-04-26 12:34:01 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_171: 
   id: 206
@@ -2902,9 +2902,9 @@ articles_171:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:55:45 Z
-  updated_at: 2010-03-01 13:21:08 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_172: 
   id: 207
@@ -2919,9 +2919,9 @@ articles_172:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:57:01 Z
-  updated_at: 2010-03-15 16:42:50 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_173: 
   id: 208
@@ -2936,9 +2936,9 @@ articles_173:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 10:58:24 Z
-  updated_at: 2010-04-19 13:02:29 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_174: 
   id: 209
@@ -2953,9 +2953,9 @@ articles_174:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 17:11:34 Z
-  updated_at: 2010-02-23 20:01:56 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_175: 
   id: 210
@@ -2970,9 +2970,9 @@ articles_175:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 17:15:27 Z
-  updated_at: 2010-03-01 13:15:48 Z
+  updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_176: 
   id: 211
@@ -2987,9 +2987,9 @@ articles_176:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-23 23:04:43 Z
-  updated_at: 2010-03-01 17:57:32 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_177: 
   id: 212
@@ -3004,9 +3004,9 @@ articles_177:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:17:32 Z
-  updated_at: 2010-03-08 13:40:17 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_178: 
   id: 213
@@ -3021,9 +3021,9 @@ articles_178:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:18:03 Z
-  updated_at: 2010-04-30 14:06:42 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_179: 
   id: 214
@@ -3038,9 +3038,9 @@ articles_179:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:18:42 Z
-  updated_at: 2010-03-08 13:40:04 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_180: 
   id: 215
@@ -3055,9 +3055,9 @@ articles_180:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:19:18 Z
-  updated_at: 2010-03-22 13:18:32 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_181: 
   id: 216
@@ -3072,9 +3072,9 @@ articles_181:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:22:02 Z
-  updated_at: 2010-04-30 14:21:37 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_182: 
   id: 217
@@ -3089,9 +3089,9 @@ articles_182:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:22:40 Z
-  updated_at: 2010-04-19 13:02:15 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_183: 
   id: 218
@@ -3106,9 +3106,9 @@ articles_183:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:23:27 Z
-  updated_at: 2010-03-08 13:52:45 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_184: 
   id: 219
@@ -3123,9 +3123,9 @@ articles_184:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:24:54 Z
-  updated_at: 2010-03-08 13:50:00 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_185: 
   id: 220
@@ -3140,9 +3140,9 @@ articles_185:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 13:26:37 Z
-  updated_at: 2010-04-26 12:27:54 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_186: 
   id: 221
@@ -3157,9 +3157,9 @@ articles_186:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:38:27 Z
-  updated_at: 2010-04-30 13:53:35 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_187: 
   id: 222
@@ -3174,9 +3174,9 @@ articles_187:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:41:15 Z
-  updated_at: 2010-03-01 19:51:00 Z
+  updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_188: 
   id: 223
@@ -3191,9 +3191,9 @@ articles_188:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:41:54 Z
-  updated_at: 2010-03-01 19:50:42 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_189: 
   id: 224
@@ -3208,9 +3208,9 @@ articles_189:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:42:30 Z
-  updated_at: 2010-03-17 18:53:57 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_190: 
   id: 225
@@ -3225,9 +3225,9 @@ articles_190:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:43:02 Z
-  updated_at: 2010-04-30 14:19:25 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_191: 
   id: 226
@@ -3242,9 +3242,9 @@ articles_191:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:43:25 Z
-  updated_at: 2010-03-01 19:50:01 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_192: 
   id: 227
@@ -3259,9 +3259,9 @@ articles_192:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:46:51 Z
-  updated_at: 2010-03-01 19:47:16 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_193: 
   id: 228
@@ -3276,9 +3276,9 @@ articles_193:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:47:48 Z
-  updated_at: 2010-03-01 19:47:48 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_194: 
   id: 229
@@ -3293,9 +3293,9 @@ articles_194:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:48:38 Z
-  updated_at: 2010-03-01 19:48:38 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_195: 
   id: 230
@@ -3310,9 +3310,9 @@ articles_195:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:49:07 Z
-  updated_at: 2010-04-05 16:21:11 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_196: 
   id: 231
@@ -3327,9 +3327,9 @@ articles_196:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-01 19:49:40 Z
-  updated_at: 2010-04-30 14:20:47 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_197: 
   id: 232
@@ -3344,9 +3344,9 @@ articles_197:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-03 19:15:07 Z
-  updated_at: 2010-03-03 19:17:21 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_198: 
   id: 233
@@ -3361,9 +3361,9 @@ articles_198:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-03 21:02:41 Z
-  updated_at: 2010-03-03 21:02:41 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_199: 
   id: 234
@@ -3378,9 +3378,9 @@ articles_199:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:41:01 Z
-  updated_at: 2010-04-26 12:26:33 Z
+  updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_200: 
   id: 235
@@ -3395,9 +3395,9 @@ articles_200:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:41:56 Z
-  updated_at: 2010-03-15 16:42:09 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_201: 
   id: 236
@@ -3412,9 +3412,9 @@ articles_201:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:42:24 Z
-  updated_at: 2010-04-30 14:02:30 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_202: 
   id: 237
@@ -3429,9 +3429,9 @@ articles_202:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-03-08 13:43:18 Z
-  updated_at: 2010-04-26 12:30:40 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_203: 
   id: 238
@@ -3446,9 +3446,9 @@ articles_203:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:44:03 Z
-  updated_at: 2010-04-19 13:00:03 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_204: 
   id: 239
@@ -3463,9 +3463,9 @@ articles_204:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:44:56 Z
-  updated_at: 2010-03-15 16:41:18 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_205: 
   id: 240
@@ -3480,9 +3480,9 @@ articles_205:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:46:55 Z
-  updated_at: 2010-03-15 16:40:56 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_206: 
   id: 241
@@ -3497,9 +3497,9 @@ articles_206:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:47:26 Z
-  updated_at: 2010-03-15 16:40:48 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_207: 
   id: 242
@@ -3514,9 +3514,9 @@ articles_207:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:48:03 Z
-  updated_at: 2010-05-03 13:06:25 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_208: 
   id: 243
@@ -3531,9 +3531,9 @@ articles_208:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 13:48:54 Z
-  updated_at: 2010-03-15 16:40:39 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_209: 
   id: 244
@@ -3548,9 +3548,9 @@ articles_209:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 18:27:38 Z
-  updated_at: 2010-04-30 13:52:17 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_210: 
   id: 245
@@ -3565,9 +3565,9 @@ articles_210:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 20:57:58 Z
-  updated_at: 2010-04-30 14:28:06 Z
+  updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_211: 
   id: 246
@@ -3582,9 +3582,9 @@ articles_211:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-08 20:59:54 Z
-  updated_at: 2010-03-08 20:59:54 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_212: 
   id: 247
@@ -3599,9 +3599,9 @@ articles_212:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-13 14:57:57 Z
-  updated_at: 2010-03-13 15:01:02 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_213: 
   id: 248
@@ -3616,9 +3616,9 @@ articles_213:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-13 15:02:13 Z
-  updated_at: 2010-03-13 19:31:30 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_214: 
   id: 249
@@ -3633,9 +3633,9 @@ articles_214:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-13 19:32:14 Z
-  updated_at: 2010-03-15 18:10:42 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_215: 
   id: 250
@@ -3650,9 +3650,9 @@ articles_215:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:37:26 Z
-  updated_at: 2010-03-15 16:38:14 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_216: 
   id: 251
@@ -3667,9 +3667,9 @@ articles_216:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:43:31 Z
-  updated_at: 2010-04-05 12:26:24 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_217: 
   id: 252
@@ -3684,9 +3684,9 @@ articles_217:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:44:17 Z
-  updated_at: 2010-03-22 13:18:23 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_218: 
   id: 253
@@ -3701,9 +3701,9 @@ articles_218:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:44:53 Z
-  updated_at: 2010-04-19 13:00:47 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_219: 
   id: 254
@@ -3718,9 +3718,9 @@ articles_219:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:46:03 Z
-  updated_at: 2010-04-26 12:27:23 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_220: 
   id: 255
@@ -3735,9 +3735,9 @@ articles_220:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:47:23 Z
-  updated_at: 2010-03-22 13:21:42 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_221: 
   id: 256
@@ -3752,9 +3752,9 @@ articles_221:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-15 16:48:30 Z
-  updated_at: 2010-03-22 13:21:53 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_222: 
   id: 257
@@ -3769,9 +3769,9 @@ articles_222:
   blackboard: 1
   waiterpad: 0
   created_at: 2010-03-16 21:01:40 Z
-  updated_at: 2010-03-16 21:01:40 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_223: 
   id: 258
@@ -3786,9 +3786,9 @@ articles_223:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-17 18:55:15 Z
-  updated_at: 2010-04-05 16:14:39 Z
+  updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_224: 
   id: 259
@@ -3803,9 +3803,9 @@ articles_224:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:14:28 Z
-  updated_at: 2010-03-28 18:44:04 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_225: 
   id: 260
@@ -3820,9 +3820,9 @@ articles_225:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-03-22 13:15:09 Z
-  updated_at: 2010-04-26 12:29:11 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_226: 
   id: 261
@@ -3837,9 +3837,9 @@ articles_226:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:15:56 Z
-  updated_at: 2010-04-30 14:13:49 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_227: 
   id: 262
@@ -3854,9 +3854,9 @@ articles_227:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:16:45 Z
-  updated_at: 2010-03-28 18:44:33 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_228: 
   id: 263
@@ -3871,9 +3871,9 @@ articles_228:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:17:47 Z
-  updated_at: 2010-03-28 18:44:57 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_229: 
   id: 264
@@ -3888,9 +3888,9 @@ articles_229:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:20:12 Z
-  updated_at: 2010-05-03 13:31:02 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_230: 
   id: 265
@@ -3905,9 +3905,9 @@ articles_230:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:21:10 Z
-  updated_at: 2010-03-28 18:45:53 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_231: 
   id: 266
@@ -3922,9 +3922,9 @@ articles_231:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 13:22:34 Z
-  updated_at: 2010-04-12 12:30:25 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_232: 
   id: 267
@@ -3939,9 +3939,9 @@ articles_232:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 18:28:54 Z
-  updated_at: 2010-04-30 14:22:30 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_233: 
   id: 268
@@ -3956,9 +3956,9 @@ articles_233:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 18:54:23 Z
-  updated_at: 2010-04-20 16:13:58 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_234: 
   id: 269
@@ -3973,9 +3973,9 @@ articles_234:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 19:16:45 Z
-  updated_at: 2010-04-30 14:06:16 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_235: 
   id: 270
@@ -3990,9 +3990,9 @@ articles_235:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-22 20:07:40 Z
-  updated_at: 2010-03-22 20:07:40 Z
+  updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_236: 
   id: 271
@@ -4007,9 +4007,9 @@ articles_236:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-24 19:55:37 Z
-  updated_at: 2010-04-30 14:16:56 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_237: 
   id: 272
@@ -4024,9 +4024,9 @@ articles_237:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-24 21:00:21 Z
-  updated_at: 2010-04-30 12:58:11 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_238: 
   id: 273
@@ -4041,9 +4041,9 @@ articles_238:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:34:35 Z
-  updated_at: 2010-04-12 12:28:49 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_239: 
   id: 274
@@ -4058,9 +4058,9 @@ articles_239:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:35:04 Z
-  updated_at: 2010-04-12 12:28:58 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_240: 
   id: 275
@@ -4075,9 +4075,9 @@ articles_240:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:36:05 Z
-  updated_at: 2010-04-05 12:26:58 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_241: 
   id: 276
@@ -4092,9 +4092,9 @@ articles_241:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:37:07 Z
-  updated_at: 2010-04-05 12:27:08 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_242: 
   id: 277
@@ -4109,9 +4109,9 @@ articles_242:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:39:10 Z
-  updated_at: 2010-04-05 12:29:19 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_243: 
   id: 278
@@ -4126,9 +4126,9 @@ articles_243:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:39:37 Z
-  updated_at: 2010-04-19 13:01:57 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_244: 
   id: 279
@@ -4143,9 +4143,9 @@ articles_244:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:40:11 Z
-  updated_at: 2010-04-05 12:29:30 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_245: 
   id: 280
@@ -4160,9 +4160,9 @@ articles_245:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:42:14 Z
-  updated_at: 2010-04-05 12:30:05 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_246: 
   id: 281
@@ -4177,9 +4177,9 @@ articles_246:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:42:47 Z
-  updated_at: 2010-04-05 12:39:28 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_247: 
   id: 282
@@ -4194,9 +4194,9 @@ articles_247:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-28 18:43:17 Z
-  updated_at: 2010-04-05 12:26:05 Z
+  updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_248: 
   id: 283
@@ -4211,9 +4211,9 @@ articles_248:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-03-31 21:20:17 Z
-  updated_at: 2010-03-31 21:20:17 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_249: 
   id: 284
@@ -4228,9 +4228,9 @@ articles_249:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-02 17:27:54 Z
-  updated_at: 2010-04-30 14:08:48 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_250: 
   id: 285
@@ -4245,9 +4245,9 @@ articles_250:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-02 17:29:03 Z
-  updated_at: 2010-04-30 14:10:00 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_251: 
   id: 286
@@ -4262,9 +4262,9 @@ articles_251:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-02 18:26:47 Z
-  updated_at: 2010-04-02 18:26:47 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_252: 
   id: 287
@@ -4279,9 +4279,9 @@ articles_252:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 12:28:00 Z
-  updated_at: 2010-04-12 12:29:07 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_253: 
   id: 288
@@ -4296,9 +4296,9 @@ articles_253:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 12:29:03 Z
-  updated_at: 2010-04-12 12:29:16 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_254: 
   id: 289
@@ -4313,9 +4313,9 @@ articles_254:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 12:34:14 Z
-  updated_at: 2010-04-12 12:29:41 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_255: 
   id: 290
@@ -4330,9 +4330,9 @@ articles_255:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 12:34:47 Z
-  updated_at: 2010-04-08 11:37:52 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_256: 
   id: 291
@@ -4347,9 +4347,9 @@ articles_256:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 12:35:17 Z
-  updated_at: 2010-04-08 11:39:13 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_257: 
   id: 292
@@ -4364,9 +4364,9 @@ articles_257:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 16:08:01 Z
-  updated_at: 2010-04-30 13:53:10 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_258: 
   id: 293
@@ -4381,9 +4381,9 @@ articles_258:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 16:14:00 Z
-  updated_at: 2010-04-20 16:13:23 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_259: 
   id: 294
@@ -4398,9 +4398,9 @@ articles_259:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 16:15:14 Z
-  updated_at: 2010-04-05 16:15:14 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_260: 
   id: 295
@@ -4415,9 +4415,9 @@ articles_260:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 16:21:42 Z
-  updated_at: 2010-04-05 16:21:42 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 4
   usage: 
 articles_261: 
   id: 296
@@ -4432,9 +4432,9 @@ articles_261:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-08 11:44:40 Z
-  updated_at: 2010-04-12 12:29:30 Z
+  updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_262: 
   id: 297
@@ -4449,9 +4449,9 @@ articles_262:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-08 11:45:57 Z
-  updated_at: 2010-04-26 12:27:33 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_263: 
   id: 298
@@ -4466,9 +4466,9 @@ articles_263:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-09 22:47:16 Z
-  updated_at: 2010-04-30 14:19:12 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_264: 
   id: 299
@@ -4483,9 +4483,9 @@ articles_264:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-12 12:31:22 Z
-  updated_at: 2010-04-19 13:00:25 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_265: 
   id: 300
@@ -4500,9 +4500,9 @@ articles_265:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-12 12:32:20 Z
-  updated_at: 2010-04-19 13:00:35 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_266: 
   id: 301
@@ -4517,9 +4517,9 @@ articles_266:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-12 12:33:06 Z
-  updated_at: 2010-04-19 13:00:55 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_267: 
   id: 302
@@ -4534,9 +4534,9 @@ articles_267:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-12 12:37:16 Z
-  updated_at: 2010-04-16 16:37:10 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_268: 
   id: 303
@@ -4551,9 +4551,9 @@ articles_268:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-19 13:05:32 Z
-  updated_at: 2010-04-30 14:14:21 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 1
-  sort: 
+  sort: 0
   usage: 
 articles_269: 
   id: 304
@@ -4568,9 +4568,9 @@ articles_269:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-19 13:06:31 Z
-  updated_at: 2010-04-26 12:26:42 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_270: 
   id: 305
@@ -4585,9 +4585,9 @@ articles_270:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-19 13:17:14 Z
-  updated_at: 2010-04-26 12:26:51 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_271: 
   id: 306
@@ -4602,9 +4602,9 @@ articles_271:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-19 13:19:30 Z
-  updated_at: 2010-04-26 12:27:01 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_272: 
   id: 307
@@ -4619,9 +4619,9 @@ articles_272:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-19 13:33:04 Z
-  updated_at: 2010-04-26 12:28:02 Z
+  updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_273: 
   id: 308
@@ -4636,9 +4636,9 @@ articles_273:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-23 20:56:38 Z
-  updated_at: 2010-04-23 20:59:33 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 6
   usage: 
 articles_274: 
   id: 309
@@ -4653,9 +4653,9 @@ articles_274:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-25 11:19:47 Z
-  updated_at: 2010-04-25 11:19:47 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_275: 
   id: 310
@@ -4670,9 +4670,9 @@ articles_275:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-25 11:26:44 Z
-  updated_at: 2010-04-25 11:26:44 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_276: 
   id: 311
@@ -4687,9 +4687,9 @@ articles_276:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:28:49 Z
-  updated_at: 2011-04-10 14:39:38 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_277: 
   id: 312
@@ -4704,9 +4704,9 @@ articles_277:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:29:50 Z
-  updated_at: 2010-04-26 12:29:50 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_278: 
   id: 313
@@ -4721,9 +4721,9 @@ articles_278:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:30:19 Z
-  updated_at: 2010-04-26 12:30:19 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_279: 
   id: 314
@@ -4738,9 +4738,9 @@ articles_279:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-26 12:31:09 Z
-  updated_at: 2010-05-01 16:37:42 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_280: 
   id: 315
@@ -4755,9 +4755,9 @@ articles_280:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:31:43 Z
-  updated_at: 2010-04-26 12:31:43 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_281: 
   id: 316
@@ -4772,9 +4772,9 @@ articles_281:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:32:22 Z
-  updated_at: 2010-04-26 12:32:22 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_282: 
   id: 317
@@ -4789,9 +4789,9 @@ articles_282:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:33:02 Z
-  updated_at: 2010-04-26 12:33:02 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_283: 
   id: 318
@@ -4806,9 +4806,9 @@ articles_283:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:33:45 Z
-  updated_at: 2010-04-26 12:33:45 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_284: 
   id: 319
@@ -4823,9 +4823,9 @@ articles_284:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 12:41:36 Z
-  updated_at: 2010-04-30 13:52:14 Z
+  updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_285: 
   id: 320
@@ -4840,9 +4840,9 @@ articles_285:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 12:46:01 Z
-  updated_at: 2010-04-30 12:46:01 Z
+  updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
-  sort: 
+  sort: 2
   usage: 
 articles_286: 
   id: 321
@@ -4857,9 +4857,9 @@ articles_286:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 12:47:04 Z
-  updated_at: 2010-04-30 12:47:04 Z
+  updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_287: 
   id: 322
@@ -4874,9 +4874,9 @@ articles_287:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 12:59:55 Z
-  updated_at: 2010-04-30 12:59:55 Z
+  updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_288: 
   id: 323
@@ -4891,9 +4891,9 @@ articles_288:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:05:40 Z
-  updated_at: 2010-04-30 13:05:40 Z
+  updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_289: 
   id: 324
@@ -4908,9 +4908,9 @@ articles_289:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:08:06 Z
-  updated_at: 2010-04-30 13:08:06 Z
+  updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_290: 
   id: 325
@@ -4925,9 +4925,9 @@ articles_290:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:31:09 Z
-  updated_at: 2010-04-30 13:31:09 Z
+  updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
-  sort: 
+  sort: 1
   usage: 
 articles_291: 
   id: 326
@@ -4942,9 +4942,9 @@ articles_291:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:32:38 Z
-  updated_at: 2010-04-30 13:32:38 Z
+  updated_at: 2011-04-17 07:13:50 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_292: 
   id: 327
@@ -4959,9 +4959,9 @@ articles_292:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:44:28 Z
-  updated_at: 2010-04-30 13:44:28 Z
+  updated_at: 2011-04-17 07:13:50 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_293: 
   id: 328
@@ -4976,9 +4976,9 @@ articles_293:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:46:51 Z
-  updated_at: 2010-04-30 13:46:51 Z
+  updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_294: 
   id: 329
@@ -4993,9 +4993,9 @@ articles_294:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:49:35 Z
-  updated_at: 2010-04-30 13:49:35 Z
+  updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_295: 
   id: 330
@@ -5010,9 +5010,9 @@ articles_295:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:51:28 Z
-  updated_at: 2010-04-30 13:51:28 Z
+  updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_296: 
   id: 331
@@ -5027,9 +5027,9 @@ articles_296:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:53:37 Z
-  updated_at: 2010-04-30 13:53:37 Z
+  updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_297: 
   id: 332
@@ -5044,9 +5044,9 @@ articles_297:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:56:34 Z
-  updated_at: 2010-04-30 13:56:34 Z
+  updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_298: 
   id: 333
@@ -5061,9 +5061,9 @@ articles_298:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 13:59:19 Z
-  updated_at: 2010-04-30 13:59:19 Z
+  updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_299: 
   id: 334
@@ -5078,9 +5078,9 @@ articles_299:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:04:16 Z
-  updated_at: 2010-04-30 14:04:16 Z
+  updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_300: 
   id: 335
@@ -5095,9 +5095,9 @@ articles_300:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:06:12 Z
-  updated_at: 2010-04-30 14:06:12 Z
+  updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_301: 
   id: 336
@@ -5112,9 +5112,9 @@ articles_301:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:10:18 Z
-  updated_at: 2010-04-30 14:10:18 Z
+  updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_302: 
   id: 337
@@ -5129,9 +5129,9 @@ articles_302:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:16:02 Z
-  updated_at: 2010-04-30 14:16:02 Z
+  updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_303: 
   id: 338
@@ -5146,9 +5146,9 @@ articles_303:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:18:09 Z
-  updated_at: 2010-04-30 14:18:09 Z
+  updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
-  sort: 
+  sort: 5
   usage: 
 articles_304: 
   id: 339
@@ -5163,9 +5163,9 @@ articles_304:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:19:30 Z
-  updated_at: 2010-04-30 14:19:30 Z
+  updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_305: 
   id: 340
@@ -5180,9 +5180,9 @@ articles_305:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:20:52 Z
-  updated_at: 2010-04-30 14:20:52 Z
+  updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_306: 
   id: 341
@@ -5197,9 +5197,9 @@ articles_306:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:22:28 Z
-  updated_at: 2010-04-30 14:22:28 Z
+  updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_307: 
   id: 342
@@ -5214,9 +5214,9 @@ articles_307:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:26:52 Z
-  updated_at: 2010-04-30 14:26:52 Z
+  updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_308: 
   id: 343
@@ -5231,9 +5231,9 @@ articles_308:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:28:02 Z
-  updated_at: 2010-04-30 14:28:02 Z
+  updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_309: 
   id: 344
@@ -5248,9 +5248,9 @@ articles_309:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-05-01 16:46:50 Z
-  updated_at: 2010-05-01 16:46:50 Z
+  updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_310: 
   id: 345
@@ -5265,9 +5265,9 @@ articles_310:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-05-01 16:53:36 Z
-  updated_at: 2010-05-01 16:53:36 Z
+  updated_at: 2011-04-17 07:13:56 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 
 articles_311: 
   id: 346
@@ -5282,7 +5282,7 @@ articles_311:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-09-11 15:25:09 Z
-  updated_at: 2010-09-11 15:25:09 Z
+  updated_at: 2011-04-17 07:13:56 Z
   hidden: 0
-  sort: 
+  sort: 0
   usage: 

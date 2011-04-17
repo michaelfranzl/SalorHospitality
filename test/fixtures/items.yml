@@ -15,6 +15,7 @@ items_001:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_002: 
   id: 8
   count: 1
@@ -31,6 +32,7 @@ items_002:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_003: 
   id: 9
   count: 1
@@ -47,6 +49,7 @@ items_003:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_004: 
   id: 13
   count: 1
@@ -63,6 +66,7 @@ items_004:
   printed_count: 1
   item_id: 11
   storno_item_id: 
+  tax_id: 
 items_005: 
   id: 14
   count: 1
@@ -79,6 +83,7 @@ items_005:
   printed_count: 1
   item_id: 
   storno_item_id: 20
+  tax_id: 
 items_006: 
   id: 15
   count: 1
@@ -95,6 +100,7 @@ items_006:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_007: 
   id: 16
   count: 2
@@ -111,6 +117,7 @@ items_007:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_008: 
   id: 17
   count: 2
@@ -127,6 +134,7 @@ items_008:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_009: 
   id: 18
   count: 4
@@ -143,6 +151,7 @@ items_009:
   printed_count: 4
   item_id: 25
   storno_item_id: 26
+  tax_id: 
 items_010: 
   id: 19
   count: 2
@@ -159,6 +168,7 @@ items_010:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_011: 
   id: 20
   count: 1
@@ -175,6 +185,7 @@ items_011:
   printed_count: 1
   item_id: 
   storno_item_id: 14
+  tax_id: 
 items_012: 
   id: 21
   count: 1
@@ -191,6 +202,7 @@ items_012:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_013: 
   id: 22
   count: 1
@@ -207,6 +219,7 @@ items_013:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_014: 
   id: 23
   count: 1
@@ -223,6 +236,7 @@ items_014:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_015: 
   id: 26
   count: 4
@@ -239,6 +253,7 @@ items_015:
   printed_count: 4
   item_id: 25
   storno_item_id: 18
+  tax_id: 
 items_016: 
   id: 27
   count: 1
@@ -255,6 +270,7 @@ items_016:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_017: 
   id: 28
   count: 1
@@ -271,6 +287,7 @@ items_017:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_018: 
   id: 29
   count: 1
@@ -287,6 +304,7 @@ items_018:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_019: 
   id: 30
   count: 1
@@ -303,6 +321,7 @@ items_019:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_020: 
   id: 31
   count: 1
@@ -319,6 +338,7 @@ items_020:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_021: 
   id: 32
   count: 1
@@ -335,6 +355,7 @@ items_021:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_022: 
   id: 33
   count: 1
@@ -351,6 +372,7 @@ items_022:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_023: 
   id: 34
   count: 1
@@ -367,6 +389,7 @@ items_023:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_024: 
   id: 35
   count: 2
@@ -383,6 +406,7 @@ items_024:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_025: 
   id: 36
   count: 2
@@ -399,6 +423,7 @@ items_025:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_026: 
   id: 37
   count: 1
@@ -415,6 +440,7 @@ items_026:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_027: 
   id: 38
   count: 1
@@ -431,6 +457,7 @@ items_027:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_028: 
   id: 39
   count: 1
@@ -447,6 +474,7 @@ items_028:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_029: 
   id: 40
   count: 2
@@ -463,6 +491,7 @@ items_029:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_030: 
   id: 41
   count: 2
@@ -479,6 +508,7 @@ items_030:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_031: 
   id: 42
   count: 1
@@ -495,6 +525,7 @@ items_031:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_032: 
   id: 43
   count: 1
@@ -511,6 +542,7 @@ items_032:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_033: 
   id: 44
   count: 1
@@ -527,6 +559,7 @@ items_033:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_034: 
   id: 45
   count: 1
@@ -543,6 +576,7 @@ items_034:
   printed_count: 2
   item_id: 54
   storno_item_id: 
+  tax_id: 
 items_035: 
   id: 46
   count: 3
@@ -559,6 +593,7 @@ items_035:
   printed_count: 3
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_036: 
   id: 47
   count: 2
@@ -575,6 +610,7 @@ items_036:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_037: 
   id: 48
   count: 2
@@ -591,13 +627,14 @@ items_037:
   printed_count: 2
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_038: 
   id: 49
-  count: 1
+  count: 2
   article_id: 308
   order_id: 14
   created_at: 2011-04-10 15:35:31 Z
-  updated_at: 2011-04-10 15:35:32 Z
+  updated_at: 2011-04-17 07:15:06 Z
   partial_order: 
   sort: 449720541
   quantity_id: 
@@ -607,6 +644,7 @@ items_038:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_039: 
   id: 50
   count: 1
@@ -623,6 +661,7 @@ items_039:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_040: 
   id: 54
   count: 1
@@ -639,6 +678,7 @@ items_040:
   printed_count: 2
   item_id: 45
   storno_item_id: 55
+  tax_id: 
 items_041: 
   id: 55
   count: 1
@@ -655,6 +695,7 @@ items_041:
   printed_count: 2
   item_id: 45
   storno_item_id: 54
+  tax_id: 
 items_042: 
   id: 56
   count: 1
@@ -671,6 +712,7 @@ items_042:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_043: 
   id: 57
   count: 1
@@ -687,6 +729,7 @@ items_043:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_044: 
   id: 58
   count: 1
@@ -703,6 +746,7 @@ items_044:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_045: 
   id: 59
   count: 1
@@ -719,6 +763,7 @@ items_045:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_046: 
   id: 60
   count: 1
@@ -735,6 +780,7 @@ items_046:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 
 items_047: 
   id: 61
   count: 1
@@ -751,3 +797,4 @@ items_047:
   printed_count: 1
   item_id: 
   storno_item_id: 
+  tax_id: 

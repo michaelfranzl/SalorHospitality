@@ -4,16 +4,33 @@ taxes_001:
   percent: 10
   name: Foods
   created_at: 2009-02-24 14:56:45 Z
-  updated_at: 2010-05-16 15:37:06 Z
+  updated_at: 2011-04-17 07:22:03 Z
+  letter: A
 taxes_002: 
   id: 2
   percent: 20
   name: Drinks
   created_at: 2009-02-24 14:56:56 Z
-  updated_at: 2010-05-16 15:37:11 Z
+  updated_at: 2011-04-17 07:22:07 Z
+  letter: B
 taxes_003: 
   id: 3
   percent: 20
   name: Tobacco
   created_at: 2009-02-25 12:42:36 Z
-  updated_at: 2010-05-16 15:37:17 Z
+  updated_at: 2011-04-17 07:22:10 Z
+  letter: C
+taxes_004: 
+  id: 6
+  percent: 7
+  name: In house
+  created_at: 2011-04-17 07:22:30 Z
+  updated_at: 2011-04-17 07:22:44 Z
+  letter: H
+taxes_005: 
+  id: 7
+  percent: 19
+  name: Take away
+  created_at: 2011-04-17 07:22:40 Z
+  updated_at: 2011-04-17 07:22:40 Z
+  letter: T
