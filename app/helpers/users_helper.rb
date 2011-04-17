@@ -16,15 +16,14 @@
 
 module UsersHelper
 
-  def get_color_array
-    color_array = [
-      [t(:violet), '#80477d'],
-      [t(:orange), '#ed8b00'],
-      [t(:pink), '#cd0052'],
-      [t(:green), '#75b10d'],
-      [t(:blue), '#136880'],
-      [t(:blank), '#27343b']
-    ]
+  def get_colors
+    { '#80477d' => t(:violet),
+      '#ed8b00' => t(:orange),
+      '#cd0052' => t(:pink),
+      '#75b10d' => t(:green),
+      '#136880' => t(:blue),
+      '#27343b' => t(:blank),
+    }
   end
   
   def generate_color_style

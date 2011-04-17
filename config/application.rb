@@ -15,9 +15,8 @@ module BillGastro
 
     SP = SerialPort.new '/dev/ttyUSB0', 9600 if File.exists? '/dev/ttyUSB0'
     INITIAL_CREDITS = 100
-    USER_ROLES = [ ['',''], ['Restaurant',0], ['Kellner',1], ['Admin',2], ['Superuser',3] ]
-    LANGUAGES_OPTIONS = [ ['English','en'], ['Deutsch','de'], ['Türkçe','tr'] ]
-    LANGUAGES_HASH = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
+    USER_ROLES = { '' => '', 0 => 'Restaurant', 1 => 'Kellner', 2 => 'Admin', 3 => 'Superuser' }
+    LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
 
     @@unused_order_numbers = Array.new
     @@largest_order_number = 0

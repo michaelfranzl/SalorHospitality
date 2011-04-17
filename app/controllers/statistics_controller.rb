@@ -45,7 +45,7 @@ class StatisticsController < ApplicationController
       @orders = Order.find(:all, :conditions => { :created_at => @from..@to, :cost_center_id => params[:cost_center_id] })
     end
     @cost_centers = CostCenter.all
-    render '/statistics/journal.csv' if params[:commit] == 'file'
+    render '/statistics/journal.csv' if params[:commit] == 'CSV'
   end
 
   def articles

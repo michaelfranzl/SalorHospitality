@@ -4,7 +4,7 @@
 
 - if @user.errors.any?
   .errors
-    %h3 There was a problem saving this article
+    %h3= t 'activerecord.errors.template.header', :count => @user.errors.size, :model => User.model_name.human
     %ul
       - @user.errors.full_messages.each do |msg|
         %li= msg
@@ -24,17 +24,17 @@
         %td= user_form.label('role', User.human_attribute_name(:role))
         %td
           %select{ :id => 'user_role', :name => 'user[role]' }
-            = options_for_select BillGastro::Application::USER_ROLES[0..@current_user.role+1], @user.role
+            = options_for_select BillGastro::Application::USER_ROLES.invert.to_a[0..@current_user.role+1], @user.role
     %tr
       %td= user_form.label('color', User.human_attribute_name(:color))
       %td
         %select#category_color{ :name => 'user[color]' }
-          = options_for_select(get_color_array, user_form.object.color)
+          = options_for_select(get_colors.invert.to_a, user_form.object.color)
 
     %tr
       %td= user_form.label('language', User.human_attribute_name(:language))
       %td
         %select#category_color{ :name => 'user[language]' }
-          = options_for_select(BillGastro::Application::LANGUAGES_OPTIONS, user_form.object.language)
+          = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
             
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
