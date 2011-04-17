@@ -55,11 +55,15 @@ BillGastro::Application.routes.draw do
   resources :statistics do
     collection do
       get 'tables'
+      post 'tables'
       get 'weekdays'
       post 'weekdays'
       get 'users'
+      post 'users'
       get 'journal'
+      post 'journal'
       get 'articles'
+      post 'articles'
     end
   end
 

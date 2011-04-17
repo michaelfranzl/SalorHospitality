@@ -4,13 +4,11 @@
 
 %table
   %tr
-    %th{ :style => 'width:120px' }
-    %th{ :style => 'width:100px'  }
-    %th{ :style => 'width:100px'  }
-    %th{ :style => 'width:120px' }
+    %th{ :style => 'width:120px' }= Tax.human_attribute_name(:name)
+    %th{ :style => 'width:100px' }= Tax.human_attribute_name(:percent)
+    %th{ :style => 'width:100px' }= Tax.human_attribute_name(:letter)
   - @taxes.each do |ta|
     %tr
       %td= @current_user.role >= 2 ? link_to(ta.name, edit_taxis_path(ta)) : ta.name
       %td= number_to_percentage ta.percent, :precision => 0
       %td= ta.letter
-      %td= link_to((t :delete), ta, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3

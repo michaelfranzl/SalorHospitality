@@ -13,7 +13,7 @@
     %th{ :width => '300px', :style => 'text-align: right;' }= Article.human_attribute_name(:description)
     %th{ :width => '50px' }
   - @articles_by_sort.each do |ar|
-    - next if ar.category and ar.category.article_type == 1 # next if food
+    - next if ar.category and ar.category.usage == 1 # next if food
     %tr
       %td{ :style => 'text-align: right;' }= ar.id
       %td{ :style => 'text-align: right;' }= ar.name
@@ -27,7 +27,7 @@
     %th{ :width => '300px', :style => 'text-align: right;' }= Quantity.human_attribute_name(:description)
     %th{ :width => '50px' }
   - @quantities_by_sort.each do |q|
-    - next if q.article.category and q.article.category.article_type == 1 # next if food
+    - next if q.article.category and q.article.category.usage == 1 # next if food
     %tr
       %td{ :style => 'text-align: right;' }= q.article.id if q.article
       %td{ :style => 'text-align: right;' }== #{ q.prefix } #{ q.article.name } #{ q.postfix }

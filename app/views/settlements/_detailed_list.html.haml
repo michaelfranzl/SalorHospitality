@@ -10,6 +10,7 @@
     %tr
     %tr
       %td.order_begin{ :colspan => 6 }
+        -debugger if so.table.nil?
         = t('.order_number_on_table_on_date', :order => Order.model_name.human, :number => so.nr, :table => so.table.name, :time => l(so.created_at, :format => :datetime_iso))
         %br
         == #{ User.model_name.human }: #{ so.user.title }
@@ -19,7 +20,6 @@
         = so.printed_from if so.printed_from
         %br
         = link_to t(:invoice), order_path(so)
-        = link_to((t :delete), @order, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 3
 
       - subtotal = 0
       - so.items.each do |item|

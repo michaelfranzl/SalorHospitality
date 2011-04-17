@@ -2,6 +2,8 @@
 
 . /usr/share/debconf/confmodule
 
+export RAILS_ENV=production
+
 echo "Reading configuration from Debconf database ..."
 db_get billgastro/enter_username
 username=$RET
@@ -29,15 +31,13 @@ fi
 
 result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 
-export RAILS_ENV=production
-echo "Creating BillGastro database ..."
-rake db:create
-echo "Migrating BillGastro database ..."
-rake db:migrate
-
 if [ "$result" != "$database" ]
 then
-  echo "BillGastro database didn't exist before, so I'm populating it with seed data ..."
+  echo "BillGastro database didn't exist before, so I'm creating it ..."
+  rake db:create
+  echo "Migrating BillGastro database ..."
+  rake db:migrate
+  echo "Populating database with seed data ..."
   rake db:fixtures:load
   db_input high billgastro/dataset || true
   db_go
@@ -48,7 +48,7 @@ then
     mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;"
   fi
 else
-  echo "BillGastro database already exists, so I'm only migrating ..."
+  echo "BillGastro database already existed, so I'm only migrating ..."
   rake db:migrate
 fi
 

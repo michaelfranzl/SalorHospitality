@@ -9,7 +9,7 @@
       - @category.errors.full_messages.each do |msg|
         %li= msg
 
-- form_for @category do |category_form|
+= form_for @category do |category_form|
   %table
     %tr
       %td= category_form.label('name', Category.human_attribute_name(:name))
