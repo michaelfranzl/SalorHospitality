@@ -24,6 +24,11 @@ Type: boolean
 Description: Populate database with a full set of example data?
 Description-de.UTF-8: Die Datenbank mit umfangreichen Beispieldaten befüllen?
 
+Template: billgastro/exceptions
+Type: boolean
+Description: Send e-mail reports about errors automatically to the BillGastro developers so that they can fix them?
+Description-de.UTF-8: E-Mail Berichte über auftretende Fehler an die BillGastro Entwickler schicken, damit sie sie rasch beheben können?
+
 Template: billgastro/done
 Type: note
 Description: Installation of BillGastro is complete.

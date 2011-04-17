@@ -19,6 +19,7 @@ class Item < ActiveRecord::Base
   belongs_to :article
   belongs_to :quantity
   belongs_to :item
+  belongs_to :tax
   belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   has_and_belongs_to_many :options
   has_and_belongs_to_many :printoptions, :class_name => 'Option', :join_table => 'items_printoptions'
@@ -58,6 +59,14 @@ class Item < ActiveRecord::Base
 
   def category
     self.article.category
+  end
+
+  def real_tax
+    i = self.tax
+    return i if i
+    o = self.order.tax
+    return o if o
+    c = self.article.category.tax
   end
 
 end

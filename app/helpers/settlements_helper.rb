@@ -17,14 +17,14 @@
 module SettlementsHelper
 
   def initialize_total_variables
-    total_net = Array.new(@taxes.size + 1) { 0 }
-    total_gro = Array.new(@taxes.size + 1) { 0 }
+    total_net = Array.new(100) { 0 }
+    total_gro = Array.new(100) { 0 }
     return total_net, total_gro
   end
   
   def initialize_settlement_variables
-    s_net = Array.new(@taxes.size + 1) { 0 }
-    s_gro = Array.new(@taxes.size + 1) { 0 }
+    s_net = Array.new(100) { 0 }
+    s_gro = Array.new(100) { 0 }
     return s_net, s_gro
   end
   

@@ -1,4 +1,4 @@
-- form_for :order, @order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
+= form_for @order, :as => :order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
 
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
 
@@ -40,17 +40,17 @@
     %th.three= t '.unit_price'
     %th.four= t '.count'
     %th.five= t '.sum'
-  - sum_taxes = Array.new(Tax.count, 0)
+  - sum_taxes = Hash.new
+  - Tax.all.each { |t| sum_taxes[t.id] = 0 }
   - subtotal = 0
   - @order.items.each do |item|
     - p = item.real_price
     - p = -p if item.storno_status == 2
     - sum = item.count * p
     - subtotal += sum
-    - tax_id = item.article.category.tax.id
-    - sum_taxes[tax_id-1] += sum
+    - sum_taxes[item.real_tax.id] += sum
     %tr
-      %td.one= "%c" % [tax_id+64]
+      %td.one= item.real_tax.letter
       %td.two= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix} #{ item.comment}" : "#{ item.article.name } #{ item.comment}"
       %td.three= number_to_currency p
       %td.four= item.count
@@ -69,14 +69,13 @@
     %th.four= t(:value_added_tax)
     %th.five= t(:gross)
   - Tax.all.each do |tax|
-    - tax_id = tax.id - 1
-    - next if sum_taxes[tax_id] == 0
+    - next if sum_taxes[tax.id] == 0
     - fact = tax.percent/100.00
-    - net = sum_taxes[tax_id]/(1.00+fact)
-    - gro = sum_taxes[tax_id]
+    - net = sum_taxes[tax.id]/(1.00+fact)
+    - gro = sum_taxes[tax.id]
     - vat = gro-net
     %tr
-      %td.one= "%c:" % [tax.id+64]
+      %td.one= tax.letter
       %td.two= number_to_percentage tax.percent, :precision => 0
       %td.three= number_to_currency net
       %td.four= number_to_currency vat

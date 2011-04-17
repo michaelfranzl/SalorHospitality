@@ -168,7 +168,8 @@ class ApplicationController < ActionController::Base
       "\e!\x00" +  # Font A
       "               Artikel    EP    Stk   GP\n"
 
-      sum_taxes = Array.new(Tax.count, 0)
+      sum_taxes = Hash.new
+      Tax.all.each { |t| sum_taxes[t.id] = 0 }
       subtotal = 0
       list_of_items = ''
       order.items.each do |item|
@@ -176,8 +177,7 @@ class ApplicationController < ActionController::Base
         p = -p if item.storno_status == 2
         sum = item.count * p
         subtotal += sum
-        tax_id = item.article.category.tax.id
-        sum_taxes[tax_id-1] += sum
+        sum_taxes[item.real_tax.id] += sum
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
 
         label.gsub!(/ö/,"oe") #ö
@@ -189,7 +189,7 @@ class ApplicationController < ActionController::Base
         label.gsub!(/Ü/,"Ue") #Ü
 
         #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8', label)
-        list_of_items += "%c %20.20s %7.2f %3u %7.2f\n" % [tax_id+64, label, p, item.count, sum]
+        list_of_items += "%s %20.20s %7.2f %3u %7.2f\n" % [item.tax.letter, label, p, item.count, sum]
         #list_of_items = Iconv.conv('UTF-8','ISO-8859-15',list_of_items)
       end
 
@@ -205,14 +205,13 @@ class ApplicationController < ActionController::Base
 
       list_of_taxes = ''
       Tax.all.each do |tax|
-        tax_id = tax.id - 1
-        next if sum_taxes[tax_id] == 0
+        next if sum_taxes[tax.id] == 0
         fact = tax.percent/100.00
-        net = sum_taxes[tax_id]/(1.00+fact)
-        gro = sum_taxes[tax_id]
+        net = sum_taxes[tax.id]/(1.00+fact)
+        gro = sum_taxes[tax.id]
         vat = gro-net
 
-        list_of_taxes += "%c: %2i%% %7.2f %7.2f %8.2f\n" % [tax.id+64,tax.percent,net,vat,gro]
+        list_of_taxes += "%s: 2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
       end
 
       footer = 

@@ -15,5 +15,8 @@
     %tr
       %td= tax_form.label('percent', Tax.human_attribute_name(:percent))
       %td= tax_form.text_field :percent, :size => '10'
+    %tr
+      %td= tax_form.label('percent', Tax.human_attribute_name(:letter))
+      %td= tax_form.text_field :letter, :size => '10'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

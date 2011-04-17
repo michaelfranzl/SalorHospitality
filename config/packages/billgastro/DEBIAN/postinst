@@ -2,9 +2,6 @@
 
 . /usr/share/debconf/confmodule
 
-#echo "Stopping Apache Server ..."
-#/etc/init.d/apache2 stop
-
 echo "Reading configuration from Debconf database ..."
 db_get billgastro/enter_username
 username=$RET
@@ -20,8 +17,15 @@ sed -i -e "s/username:.*/username: $username/" config/database.yml
 sed -i -e "s/password:.*/password: $password/" config/database.yml
 sed -i -e "s/database: .*/database: $database/" config/database.yml
 
-echo "Changing behaviour of Exim E-Mail Server"
-sed -i -e "s/dc_eximconfig_configtype=.*$/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
+db_get billgastro/exceptions
+if [ "$RET" = "true" ]
+then
+  echo "Changing behaviour of Exim E-Mail Server for debugging reports ..."
+  sed -i -e "s/dc_eximconfig_configtype=.*$/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
+else
+  echo "Deactivating debugging reports ..."
+  sed -i -e 's/config.middleware.use ExceptionNotifier/#&/' config/environments/production.rb
+fi
 
 result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 
@@ -44,7 +48,8 @@ then
     mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;"
   fi
 else
-  echo "BillGastro database already exists, so I'm leaving it untouched ..."
+  echo "BillGastro database already exists, so I'm only migrating ..."
+  rake db:migrate
 fi
 
 echo "Changing Permissions ..."

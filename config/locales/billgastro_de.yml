@@ -65,6 +65,7 @@ de:
       tax:
         percent: Steuer in %
         name: Name
+        letter: Buchstabe
       table:
         name: Name
         abbreviation: Abkürzung
@@ -280,6 +281,7 @@ de:
   scroll_up: Hinaufscrollen
   scroll_to_room: Gehe in Raum
   save_and_go_back: Speichern und zurück
+  go_back: Zurück
   cancel_and_go_back: Abbrechen und zurück
   finish_order: Bestellung abschließen
 

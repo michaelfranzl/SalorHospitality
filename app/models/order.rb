@@ -19,10 +19,10 @@ class Order < ActiveRecord::Base
   belongs_to :table
   belongs_to :user
   belongs_to :cost_center
+  belongs_to :tax
   has_many :items, :dependent => :destroy
   has_one :order
   belongs_to :cost_center
-  belongs_to :tax
 
   validates_presence_of :user_id
 

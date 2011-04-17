@@ -9,5 +9,7 @@ db_input high billgastro/enter_username || true
 db_go
 db_input high billgastro/enter_password || true
 db_go
+db_input high billgastro/exceptions || true
+db_go
 db_get billgastro/dataset || true
 db_go
