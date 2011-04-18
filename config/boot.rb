@@ -6,6 +6,10 @@ begin
   ENV['BUNDLE_GEMFILE'] = gemfile
   require 'bundler'
   Bundler.setup
+
+  #Strange fix for Rails 3, from Stackoverflow
+  require 'yaml'
+  YAML::ENGINE.yamler= 'syck'
 rescue Bundler::GemNotFound => e
   STDERR.puts e.message
   STDERR.puts "Try running `bundle install`."

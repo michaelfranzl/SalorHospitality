@@ -9,10 +9,10 @@ tables_001:
   top: 119
   width: 55
   height: 55
-  left_ipod: 61
-  top_ipod: 311
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 61
+  top_mobile: 311
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: T1
   user_id: 1
 tables_002: 
@@ -25,10 +25,10 @@ tables_002:
   top: 276
   width: 55
   height: 80
-  left_ipod: 155
-  top_ipod: 312
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 155
+  top_mobile: 312
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: T2
   user_id: 
 tables_003: 
@@ -41,10 +41,10 @@ tables_003:
   top: 60
   width: 150
   height: 30
-  left_ipod: 60
-  top_ipod: 132
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 60
+  top_mobile: 132
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: Bar
   user_id: 
 tables_004: 
@@ -57,10 +57,10 @@ tables_004:
   top: 233
   width: 55
   height: 80
-  left_ipod: 67
-  top_ipod: 620
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 67
+  top_mobile: 620
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: T3
   user_id: 
 tables_005: 
@@ -73,10 +73,10 @@ tables_005:
   top: 163
   width: 55
   height: 80
-  left_ipod: 171
-  top_ipod: 620
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 171
+  top_mobile: 620
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: T4
   user_id: 7
 tables_006: 
@@ -89,9 +89,9 @@ tables_006:
   top: 163
   width: 55
   height: 55
-  left_ipod: 67
-  top_ipod: 724
-  width_ipod: 100
-  height_ipod: 60
+  left_mobile: 67
+  top_mobile: 724
+  width_mobile: 100
+  height_mobile: 60
   abbreviation: T5
   user_id: 
