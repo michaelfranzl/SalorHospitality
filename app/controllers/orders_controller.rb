@@ -110,10 +110,13 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    BillGastro::Application::SP.write generate_escpos_invoice @order if defined? SP
+    invoice = generate_escpos_invoice @order
 
-    #File.open('tmp/order.escpos', 'w') { |f| f.write(generate_escpos_invoice(@order)) }
-    #`cat tmp/order.escpos > /dev/ttyPS#{ params[:port] }`
+    BillGastro::Application::SP.write invoice if defined? SP
+
+    if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
+      File.open('/dev/usb/lp0', 'w') { |f| f.write invoice }
+    end
 
     justfinished = false
     if not @order.finished
@@ -213,13 +216,12 @@ class OrdersController < ApplicationController
         BillGastro::Application::SP.write drinks_takeaway
       end
 
-      #File.open('tmp/bar.escpos', 'w') { |f| f.write(generate_escpos_items(order, :drink)) }
-      #File.open('tmp/kitchen.escpos', 'w') { |f| f.write(generate_escpos_items(order, :food)) }
-      #File.open('tmp/kitchen-takeaway.escpos', 'w') { |f| f.write(generate_escpos_items(order, :takeaway)) }
+      if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
+        File.open('/dev/usb/lp0', 'w') { |f| f.write drinks_normal }
+        File.open('/dev/usb/lp0', 'w') { |f| f.write foods_normal }
+        File.open('/dev/usb/lp0', 'w') { |f| f.write foods_normal }
+      end
 
-      #`cat tmp/bar.escpos > /dev/ttyPS1` #1 = Bar
-      #`cat tmp/kitchen.escpos > /dev/ttyPS0` #0 = Kitchen
-      #`cat tmp/kitchen-takeaway.escpos > /dev/ttyPS0` #0 = Kitchen
     end
 
     def conditional_redirect_ajax(order)
