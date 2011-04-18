@@ -74,7 +74,7 @@ class TablesController < ApplicationController
     render :index
   end
 
-  def ipod
+  def mobile
     @tables = Table.all
   end
 

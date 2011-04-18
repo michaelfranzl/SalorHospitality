@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110418080101) do
+ActiveRecord::Schema.define(:version => 20110418170101) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -168,12 +168,12 @@ ActiveRecord::Schema.define(:version => 20110418080101) do
     t.datetime "updated_at"
     t.integer  "left"
     t.integer  "top"
-    t.integer  "width",        :default => 70
-    t.integer  "height",       :default => 45
-    t.integer  "left_ipod"
-    t.integer  "top_ipod"
-    t.integer  "width_ipod",   :default => 100
-    t.integer  "height_ipod",  :default => 60
+    t.integer  "width",         :default => 70
+    t.integer  "height",        :default => 45
+    t.integer  "left_mobile"
+    t.integer  "top_mobile"
+    t.integer  "width_mobile",  :default => 100
+    t.integer  "height_mobile", :default => 60
     t.string   "abbreviation"
     t.integer  "user_id"
   end

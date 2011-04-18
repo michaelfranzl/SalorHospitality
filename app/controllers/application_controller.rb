@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   before_filter :fetch_logged_in_user, :set_locale
-  helper_method :logged_in?, :ipod?, :workstation?
+  helper_method :logged_in?, :mobile?, :workstation?
 
   private
 
@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
 
     def workstation?
        request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
-      #not ipod?
+      #not mobile?
     end
 
-    def ipod?
+    def mobile?
       not workstation?
     end
 

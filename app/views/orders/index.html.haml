@@ -14,5 +14,5 @@
   #functions_footer{ :style => 'display: none;' }
     - if workstation?
       %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
-    - if ipod?
+    - if mobile?
       = render('functions_footer')

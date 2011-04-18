@@ -19,7 +19,7 @@ page.replace_html 'order_info', t(:loading)
 #   page.replace_html('flash_notice', MyGlobals::credits_left)
 #   page.replace_html('flash_error', '')
 # end
-# if MyGlobals::credits_left == 25 and ipod?
+# if MyGlobals::credits_left == 25 and mobile?
 #   page << "alert('#{ escape_javascript(t('.warning_only_x_orders_left', :credits => MyGlobals::credits_left)) }');"
 # end
 
