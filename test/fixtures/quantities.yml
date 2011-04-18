@@ -10,7 +10,7 @@ quantities_001:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_002: 
   id: 2
   prefix: 1/8
@@ -22,7 +22,7 @@ quantities_002:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_003: 
   id: 3
   prefix: Flasche 0,35l
@@ -34,7 +34,7 @@ quantities_003:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_004: 
   id: 4
   prefix: gespritzt 1/2
@@ -46,7 +46,7 @@ quantities_004:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_005: 
   id: 5
   prefix: Gelb
@@ -58,7 +58,7 @@ quantities_005:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_006: 
   id: 6
   prefix: 1/4 gespritzt
@@ -70,7 +70,7 @@ quantities_006:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_007: 
   id: 7
   prefix: 1/4l pur
@@ -82,7 +82,7 @@ quantities_007:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_008: 
   id: 8
   prefix: 1/4l gespritzt
@@ -94,7 +94,7 @@ quantities_008:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_009: 
   id: 9
   prefix: 1/2l gespritzt
@@ -106,7 +106,7 @@ quantities_009:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_010: 
   id: 10
   prefix: 1/4 gespritzt
@@ -118,7 +118,7 @@ quantities_010:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_011: 
   id: 11
   prefix: 1/2 gespritzt
@@ -130,7 +130,7 @@ quantities_011:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_012: 
   id: 12
   prefix: 1/8 pur
@@ -142,7 +142,7 @@ quantities_012:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_013: 
   id: 13
   prefix: 1/4 pur
@@ -154,7 +154,7 @@ quantities_013:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_014: 
   id: 14
   prefix: 1/4 gespritzt
@@ -166,7 +166,7 @@ quantities_014:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_015: 
   id: 15
   prefix: 1/4 pur
@@ -178,7 +178,7 @@ quantities_015:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_016: 
   id: 16
   prefix: 1/2 gespritzt
@@ -190,7 +190,7 @@ quantities_016:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_017: 
   id: 17
   prefix: 1/8 pur
@@ -202,7 +202,7 @@ quantities_017:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_018: 
   id: 18
   prefix: 1/2 gespritzt
@@ -214,7 +214,7 @@ quantities_018:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_019: 
   id: 19
   prefix: 1/4 gespritzt
@@ -226,7 +226,7 @@ quantities_019:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_020: 
   id: 20
   prefix: 1/8 pur
@@ -238,7 +238,7 @@ quantities_020:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_021: 
   id: 21
   prefix: 1/4 pur
@@ -250,7 +250,7 @@ quantities_021:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_022: 
   id: 22
   prefix: 1/8 pur
@@ -262,7 +262,7 @@ quantities_022:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_023: 
   id: 23
   prefix: 1/2 gespritzt
@@ -274,7 +274,7 @@ quantities_023:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_024: 
   id: 24
   prefix: 1/4 gespritzt
@@ -286,7 +286,7 @@ quantities_024:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_025: 
   id: 25
   prefix: 1/4 pur
@@ -298,7 +298,7 @@ quantities_025:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_026: 
   id: 26
   prefix: 1/8 pur
@@ -310,7 +310,7 @@ quantities_026:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_027: 
   id: 27
   prefix: 1/4 pur
@@ -322,7 +322,7 @@ quantities_027:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_028: 
   id: 28
   prefix: 1/2 gespritzt
@@ -334,7 +334,7 @@ quantities_028:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_029: 
   id: 29
   prefix: 1/4 gespritzt
@@ -346,7 +346,7 @@ quantities_029:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_030: 
   id: 30
   prefix: 1/4 pur
@@ -358,7 +358,7 @@ quantities_030:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_031: 
   id: 31
   prefix: 1/4 gespritzt
@@ -370,7 +370,7 @@ quantities_031:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_032: 
   id: 32
   prefix: 1/8 pur
@@ -382,7 +382,7 @@ quantities_032:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_033: 
   id: 33
   prefix: 1/2l gespritzt
@@ -394,7 +394,7 @@ quantities_033:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_034: 
   id: 34
   prefix: Flasche
@@ -406,7 +406,7 @@ quantities_034:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_035: 
   id: 35
   prefix: 1/8
@@ -418,7 +418,7 @@ quantities_035:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_036: 
   id: 36
   prefix: Flasche
@@ -430,7 +430,7 @@ quantities_036:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_037: 
   id: 37
   prefix: 1/4 pur
@@ -442,7 +442,7 @@ quantities_037:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_038: 
   id: 38
   prefix: 1/8 pur
@@ -454,7 +454,7 @@ quantities_038:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_039: 
   id: 39
   prefix: "1/2 gespritzt "
@@ -466,7 +466,7 @@ quantities_039:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_040: 
   id: 40
   prefix: 1/4 gespritzt
@@ -478,7 +478,7 @@ quantities_040:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_041: 
   id: 41
   prefix: Soda
@@ -490,7 +490,7 @@ quantities_041:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_042: 
   id: 42
   prefix: Orange
@@ -502,7 +502,7 @@ quantities_042:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_043: 
   id: 43
   prefix: "gro\xC3\x9F"
@@ -514,7 +514,7 @@ quantities_043:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_044: 
   id: 44
   prefix: klein
@@ -526,7 +526,7 @@ quantities_044:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_045: 
   id: 45
   prefix: 1/4
@@ -538,7 +538,7 @@ quantities_045:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_046: 
   id: 46
   prefix: 1/2
@@ -550,7 +550,7 @@ quantities_046:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_047: 
   id: 47
   prefix: 1/4
@@ -562,7 +562,7 @@ quantities_047:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_048: 
   id: 48
   prefix: 1/2
@@ -574,7 +574,7 @@ quantities_048:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_049: 
   id: 49
   prefix: 1/2 gespritzt
@@ -586,7 +586,7 @@ quantities_049:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_050: 
   id: 50
   prefix: 1/4 gespritzt
@@ -598,7 +598,7 @@ quantities_050:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_051: 
   id: 51
   prefix: 1/4 pur
@@ -610,7 +610,7 @@ quantities_051:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_052: 
   id: 52
   prefix: 1/8 pur
@@ -622,7 +622,7 @@ quantities_052:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_053: 
   id: 53
   prefix: Flasche
@@ -634,7 +634,7 @@ quantities_053:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_054: 
   id: 54
   prefix: "0,3"
@@ -646,7 +646,7 @@ quantities_054:
   hidden: 0
   postfix: 
   sort: 2
-  usage: 
+  usage: 0 
 quantities_055: 
   id: 55
   prefix: "0,5"
@@ -658,7 +658,7 @@ quantities_055:
   hidden: 0
   postfix: 
   sort: 3
-  usage: 
+  usage: 0 
 quantities_056: 
   id: 56
   prefix: 1/8
@@ -670,7 +670,7 @@ quantities_056:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_057: 
   id: 57
   prefix: Flasche
@@ -682,7 +682,7 @@ quantities_057:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_058: 
   id: 58
   prefix: 1/8
@@ -694,7 +694,7 @@ quantities_058:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_059: 
   id: 59
   prefix: Flasche
@@ -706,7 +706,7 @@ quantities_059:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_060: 
   id: 60
   prefix: normal
@@ -718,7 +718,7 @@ quantities_060:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_061: 
   id: 61
   prefix: klein
@@ -730,7 +730,7 @@ quantities_061:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_062: 
   id: 62
   prefix: 1/2
@@ -742,7 +742,7 @@ quantities_062:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_063: 
   id: 63
   prefix: 1/4
@@ -754,7 +754,7 @@ quantities_063:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_064: 
   id: 64
   prefix: 1/2 Zitron
@@ -766,7 +766,7 @@ quantities_064:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_065: 
   id: 65
   prefix: 1/4 Zitron
@@ -778,7 +778,7 @@ quantities_065:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_066: 
   id: 66
   prefix: 1/4 gespritzt
@@ -790,7 +790,7 @@ quantities_066:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_067: 
   id: 67
   prefix: 1/2 gespritzt
@@ -802,7 +802,7 @@ quantities_067:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_068: 
   id: 68
   prefix: 1/2l gespritzt
@@ -814,7 +814,7 @@ quantities_068:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_069: 
   id: 69
   prefix: 1/4l gespritzt
@@ -826,7 +826,7 @@ quantities_069:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_070: 
   id: 70
   prefix: 1/8l pur
@@ -838,7 +838,7 @@ quantities_070:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_071: 
   id: 71
   prefix: Camel gelb
@@ -850,7 +850,7 @@ quantities_071:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_072: 
   id: 72
   prefix: Camel nat. flavour
@@ -862,7 +862,7 @@ quantities_072:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_073: 
   id: 73
   prefix: "0,2"
@@ -874,7 +874,7 @@ quantities_073:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 
 quantities_074: 
   id: 74
   prefix: "0,5"
@@ -886,7 +886,7 @@ quantities_074:
   hidden: 0
   postfix: 
   sort: 0
-  usage: 
+  usage: 0 
 quantities_075: 
   id: 75
   prefix: "0,3"
@@ -898,4 +898,4 @@ quantities_075:
   hidden: 0
   postfix: 
   sort: 1
-  usage: 
+  usage: 0 

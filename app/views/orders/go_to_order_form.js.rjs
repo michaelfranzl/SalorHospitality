@@ -1,6 +1,6 @@
-@designator = 0
-@inputfields = ''
-@tablerows = ''
+designator = 0
+inputfields = ''
+tablerows = ''
 
 page << "$('order_sum').value = '0';"
 page << "$('order_id').value = '';"
@@ -15,29 +15,29 @@ page.replace_html 'order_info', "#{ t('orders.order.new') } #{ @table.name }"
 
 if @order
   @order.items.each do |item|
-    @designator += 1
-    @id = item.id
-    @sort = item.sort
-    @articleid = item.article_id
-    @price = item.real_price
-    @quantityid = item.quantity_id
-    @count = item.count
-    @printed_count = item.printed_count
-    @comment = item.comment
-    @label = compose_item_label(item)
-    @optionslist = item.optionslist
-    @printoptionslist = item.printoptionslist
-    @optionsnames = compose_option_names(item)
-    @optionsselect = compose_option_select(item)
+    designator += 1
+    id = item.id
+    sort = item.sort
+    articleid = item.article_id
+    price = item.real_price
+    quantityid = item.quantity_id
+    count = item.count
+    printed_count = item.printed_count
+    comment = item.comment
+    label = compose_item_label(item)
+    optionslist = item.optionslist
+    printoptionslist = item.printoptionslist
+    optionsnames = compose_option_names(item)
+    optionsselect = compose_option_select(item)
 
-    @tablerows += render 'items/item_tablerow', :locals => { :label => @label, :designator => @designator, :count => @count, :comment => @comment, :price => @price, :optionsnames => @optionsnames, :optionsselect => @optionsselect }
+    tablerows += render :partial => 'items/item_tablerow', :locals => { :label => label, :designator => designator, :count => count, :comment => comment, :price => price, :optionsnames => optionsnames, :optionsselect => optionsselect }
 
-    @inputfields += render 'items/item_inputfields', :locals => { :id => @id, :sort => @sort, :articleid => @articleid, :quantityid => @quantityid, :designator => @designator, :count => @count, :printed_count => @printed_count, :comment => @comment, :price => @price, :optionslist => @optionslist, :printoptionslist => @printoptionslist }
+    inputfields += render :partial => 'items/item_inputfields', :locals => { :id => id, :sort => sort, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :printoptionslist => printoptionslist }
 
   end
 
-  page.insert_html :bottom, 'inputfields', @inputfields
-  page.insert_html :bottom, 'itemstable', @tablerows
+  page.insert_html :bottom, 'inputfields', inputfields
+  page.insert_html :bottom, 'itemstable', tablerows
   page.replace_html 'order_info', "#{ Order.model_name.human } ##{ @order.nr }  #{ @table.name }"
   page << "$('order_id').value = '#{ @order.id }';"
   page << "$('order_user_id').value = '#{ @order.user.id if @order.user }';"

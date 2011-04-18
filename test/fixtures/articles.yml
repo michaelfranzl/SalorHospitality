@@ -15,7 +15,7 @@ articles_001:
   updated_at: 2011-04-17 07:13:23 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_002: 
   id: 2
   name: Schremser 0,3
@@ -32,7 +32,7 @@ articles_002:
   updated_at: 2011-04-17 07:13:23 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_003: 
   id: 3
   name: Schremser
@@ -49,7 +49,7 @@ articles_003:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
   sort: 2
-  usage: 
+  usage: 0 
 articles_004: 
   id: 4
   name: Soda
@@ -66,7 +66,7 @@ articles_004:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_005: 
   id: 5
   name: Mineral
@@ -83,7 +83,7 @@ articles_005:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_006: 
   id: 16
   name: "Topfenkn\xC3\xB6del"
@@ -100,7 +100,7 @@ articles_006:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_007: 
   id: 21
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
@@ -117,7 +117,7 @@ articles_007:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_008: 
   id: 26
   name: "S\xC3\xB6ll Welschriesling"
@@ -134,7 +134,7 @@ articles_008:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_009: 
   id: 27
   name: Chardonnay
@@ -151,7 +151,7 @@ articles_009:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_010: 
   id: 29
   name: G'Spritzter
@@ -168,7 +168,7 @@ articles_010:
   updated_at: 2011-04-17 07:13:24 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_011: 
   id: 32
   name: Pelzmann Zweigelt
@@ -185,7 +185,7 @@ articles_011:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_012: 
   id: 33
   name: "Weninger Blaufr\xC3\xA4nkisch"
@@ -202,7 +202,7 @@ articles_012:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_013: 
   id: 34
   name: Zweigelt
@@ -219,7 +219,7 @@ articles_013:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_014: 
   id: 38
   name: Big John Cuvee (Zw, CS, PN)
@@ -236,7 +236,7 @@ articles_014:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_015: 
   id: 39
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
@@ -253,7 +253,7 @@ articles_015:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_016: 
   id: 41
   name: Martini
@@ -270,7 +270,7 @@ articles_016:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_017: 
   id: 42
   name: Campari
@@ -287,7 +287,7 @@ articles_017:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_018: 
   id: 43
   name: Campari
@@ -304,7 +304,7 @@ articles_018:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_019: 
   id: 44
   name: Prosecco
@@ -321,7 +321,7 @@ articles_019:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_020: 
   id: 45
   name: Sekt
@@ -338,7 +338,7 @@ articles_020:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_021: 
   id: 46
   name: Frizzante
@@ -355,7 +355,7 @@ articles_021:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_022: 
   id: 47
   name: Sherry Manzanilla
@@ -372,7 +372,7 @@ articles_022:
   updated_at: 2011-04-17 07:13:25 Z
   hidden: 0
   sort: 2
-  usage: 
+  usage: 0 
 articles_023: 
   id: 48
   name: Pastis
@@ -389,7 +389,7 @@ articles_023:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
   sort: 2
-  usage: 
+  usage: 0 
 articles_024: 
   id: 49
   name: Grappa Nonino
@@ -406,7 +406,7 @@ articles_024:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_025: 
   id: 50
   name: Grappa Sarpa Riserva
@@ -423,7 +423,7 @@ articles_025:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_026: 
   id: 51
   name: Fernet Branca
@@ -440,7 +440,7 @@ articles_026:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_027: 
   id: 52
   name: Kaiserholzbirn
@@ -457,7 +457,7 @@ articles_027:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_028: 
   id: 53
   name: Apfelsaft
@@ -474,7 +474,7 @@ articles_028:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_029: 
   id: 54
   name: Apfelsaft
@@ -491,7 +491,7 @@ articles_029:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_030: 
   id: 55
   name: Apfelsaft
@@ -508,7 +508,7 @@ articles_030:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_031: 
   id: 56
   name: Orangensaft
@@ -525,7 +525,7 @@ articles_031:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_032: 
   id: 57
   name: Orangensaft
@@ -542,7 +542,7 @@ articles_032:
   updated_at: 2011-04-17 07:13:26 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_033: 
   id: 58
   name: Orangensaft
@@ -559,7 +559,7 @@ articles_033:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_034: 
   id: 59
   name: Birnensaft
@@ -576,7 +576,7 @@ articles_034:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_035: 
   id: 60
   name: Birnensaft
@@ -593,7 +593,7 @@ articles_035:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_036: 
   id: 61
   name: Birnensaft
@@ -610,7 +610,7 @@ articles_036:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_037: 
   id: 62
   name: Apfel-Holler
@@ -627,7 +627,7 @@ articles_037:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_038: 
   id: 63
   name: Apfel-Holler
@@ -644,7 +644,7 @@ articles_038:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_039: 
   id: 64
   name: Apfel-Holler
@@ -661,7 +661,7 @@ articles_039:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_040: 
   id: 65
   name: Apfel-Himbeere
@@ -678,7 +678,7 @@ articles_040:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_041: 
   id: 66
   name: Apfel-Himbeere
@@ -695,7 +695,7 @@ articles_041:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_042: 
   id: 67
   name: Apfel-Himbeere
@@ -712,7 +712,7 @@ articles_042:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_043: 
   id: 68
   name: "Apfel-Rote R\xC3\xBCbe"
@@ -729,7 +729,7 @@ articles_043:
   updated_at: 2011-04-17 07:13:27 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_044: 
   id: 69
   name: "Apfel-Rote R\xC3\xBCbe"
@@ -746,7 +746,7 @@ articles_044:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_045: 
   id: 70
   name: "Apfel-Rote R\xC3\xBCbe"
@@ -763,7 +763,7 @@ articles_045:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_046: 
   id: 71
   name: Coca Cola
@@ -780,7 +780,7 @@ articles_046:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_047: 
   id: 72
   name: Almdudler
@@ -797,7 +797,7 @@ articles_047:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_048: 
   id: 75
   name: Espresso
@@ -814,7 +814,7 @@ articles_048:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_049: 
   id: 76
   name: Kleiner Brauner
@@ -831,7 +831,7 @@ articles_049:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_050: 
   id: 77
   name: Grosser Brauner
@@ -848,7 +848,7 @@ articles_050:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_051: 
   id: 78
   name: Melange
@@ -865,7 +865,7 @@ articles_051:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_052: 
   id: 79
   name: Bio White Satin
@@ -882,7 +882,7 @@ articles_052:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_053: 
   id: 80
   name: Darjeeling First Flush
@@ -899,7 +899,7 @@ articles_053:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_054: 
   id: 81
   name: Oolong
@@ -916,7 +916,7 @@ articles_054:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_055: 
   id: 82
   name: Rotbusch
@@ -933,7 +933,7 @@ articles_055:
   updated_at: 2011-04-17 07:13:28 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_056: 
   id: 83
   name: Honigbusch
@@ -950,7 +950,7 @@ articles_056:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_057: 
   id: 84
   name: "Kr\xC3\xA4utertee"
@@ -967,7 +967,7 @@ articles_057:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_058: 
   id: 85
   name: Phillip Morris
@@ -984,7 +984,7 @@ articles_058:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_059: 
   id: 86
   name: Camel
@@ -1001,7 +1001,7 @@ articles_059:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_060: 
   id: 87
   name: Gauloises
@@ -1018,7 +1018,7 @@ articles_060:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_061: 
   id: 88
   name: "Camel "
@@ -1035,7 +1035,7 @@ articles_061:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_062: 
   id: 89
   name: American Spirit
@@ -1052,7 +1052,7 @@ articles_062:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_063: 
   id: 91
   name: Radler
@@ -1069,7 +1069,7 @@ articles_063:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_064: 
   id: 92
   name: Radler
@@ -1086,7 +1086,7 @@ articles_064:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_065: 
   id: 99
   name: Brokkolicremesuppe
@@ -1103,7 +1103,7 @@ articles_065:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_066: 
   id: 100
   name: "Klare H\xC3\xBChnersuppe"
@@ -1120,7 +1120,7 @@ articles_066:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_067: 
   id: 101
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
@@ -1137,7 +1137,7 @@ articles_067:
   updated_at: 2011-04-17 07:13:29 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_068: 
   id: 102
   name: "Blunzengr\xC3\xB6stl"
@@ -1154,7 +1154,7 @@ articles_068:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_069: 
   id: 103
   name: "Ger\xC3\xB6stete Kalbsleber"
@@ -1171,7 +1171,7 @@ articles_069:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_070: 
   id: 104
   name: Fisch Fritz
@@ -1188,7 +1188,7 @@ articles_070:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_071: 
   id: 105
   name: Forellenfilet gebraten
@@ -1205,7 +1205,7 @@ articles_071:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_072: 
   id: 106
   name: Bunter Blattsalat
@@ -1222,7 +1222,7 @@ articles_072:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_073: 
   id: 107
   name: "Erd\xC3\xA4pfel-Vogerlsalat"
@@ -1239,7 +1239,7 @@ articles_073:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_074: 
   id: 108
   name: Gnocchi Basilikumpesto
@@ -1256,7 +1256,7 @@ articles_074:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_075: 
   id: 109
   name: Tajarin Salsicciaragout
@@ -1273,7 +1273,7 @@ articles_075:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_076: 
   id: 110
   name: "Curryhuhn ged\xC3\xBCnstet"
@@ -1290,7 +1290,7 @@ articles_076:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_077: 
   id: 111
   name: Wiener Schnitzel
@@ -1307,7 +1307,7 @@ articles_077:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_078: 
   id: 112
   name: Zander Szegediner
@@ -1324,7 +1324,7 @@ articles_078:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_079: 
   id: 113
   name: Mousse au Chocolat
@@ -1341,7 +1341,7 @@ articles_079:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_080: 
   id: 114
   name: Crema Catalana
@@ -1358,7 +1358,7 @@ articles_080:
   updated_at: 2011-04-17 07:13:30 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_081: 
   id: 115
   name: Marillenpalatschinken
@@ -1375,7 +1375,7 @@ articles_081:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_082: 
   id: 116
   name: "Schluss mit K\xC3\xA4se"
@@ -1392,7 +1392,7 @@ articles_082:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_083: 
   id: 117
   name: Hollersaft
@@ -1409,7 +1409,7 @@ articles_083:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_084: 
   id: 118
   name: Apfel-Johannisbeere
@@ -1426,7 +1426,7 @@ articles_084:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_085: 
   id: 119
   name: Apfel-Johannisbeere
@@ -1443,7 +1443,7 @@ articles_085:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_086: 
   id: 120
   name: Apfel-Johannisbeere
@@ -1460,7 +1460,7 @@ articles_086:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_087: 
   id: 121
   name: Apfel-Weichsel
@@ -1477,7 +1477,7 @@ articles_087:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_088: 
   id: 122
   name: Apfel-Weichsel
@@ -1494,7 +1494,7 @@ articles_088:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_089: 
   id: 123
   name: Apfel-Weichsel
@@ -1511,7 +1511,7 @@ articles_089:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_090: 
   id: 124
   name: Apfel-Karotte
@@ -1528,7 +1528,7 @@ articles_090:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_091: 
   id: 125
   name: Apfel-Karotte
@@ -1545,7 +1545,7 @@ articles_091:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_092: 
   id: 126
   name: Apfel-Karotte
@@ -1562,7 +1562,7 @@ articles_092:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_093: 
   id: 127
   name: Himbeer-Soda
@@ -1579,7 +1579,7 @@ articles_093:
   updated_at: 2011-04-17 07:13:31 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_094: 
   id: 128
   name: Roggenbier
@@ -1596,7 +1596,7 @@ articles_094:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 16
-  usage: 
+  usage: 0 
 articles_095: 
   id: 129
   name: Beck's alkoholfrei
@@ -1613,7 +1613,7 @@ articles_095:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 11
-  usage: 
+  usage: 0 
 articles_096: 
   id: 130
   name: Schuster
@@ -1630,7 +1630,7 @@ articles_096:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_097: 
   id: 132
   name: Scarbolo
@@ -1647,7 +1647,7 @@ articles_097:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_098: 
   id: 133
   name: G. Triebaumer
@@ -1664,7 +1664,7 @@ articles_098:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_099: 
   id: 134
   name: Dopler
@@ -1681,7 +1681,7 @@ articles_099:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_100: 
   id: 135
   name: F.lli Rabino
@@ -1698,7 +1698,7 @@ articles_100:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_101: 
   id: 136
   name: Sabathi
@@ -1715,7 +1715,7 @@ articles_101:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_102: 
   id: 137
   name: Alphart
@@ -1732,7 +1732,7 @@ articles_102:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_103: 
   id: 138
   name: Schilhan Junker
@@ -1749,7 +1749,7 @@ articles_103:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_104: 
   id: 139
   name: Steindorfer
@@ -1766,7 +1766,7 @@ articles_104:
   updated_at: 2011-04-17 07:13:32 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_105: 
   id: 140
   name: Seher Riesling
@@ -1783,7 +1783,7 @@ articles_105:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_106: 
   id: 141
   name: Ettl
@@ -1800,7 +1800,7 @@ articles_106:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_107: 
   id: 142
   name: Apfel-Weichsel
@@ -1817,7 +1817,7 @@ articles_107:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_108: 
   id: 143
   name: Apfelsaft
@@ -1834,7 +1834,7 @@ articles_108:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_109: 
   id: 144
   name: Apfel-Johannisbeere
@@ -1851,7 +1851,7 @@ articles_109:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_110: 
   id: 145
   name: Apfel-Karotte
@@ -1868,7 +1868,7 @@ articles_110:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_111: 
   id: 146
   name: Apfel-Himbeere
@@ -1885,7 +1885,7 @@ articles_111:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_112: 
   id: 147
   name: Apfel-Holler
@@ -1902,7 +1902,7 @@ articles_112:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_113: 
   id: 148
   name: "Apfel-Rote R\xC3\xBCbe"
@@ -1919,7 +1919,7 @@ articles_113:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_114: 
   id: 149
   name: Birnensaft
@@ -1936,7 +1936,7 @@ articles_114:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_115: 
   id: 150
   name: Orangensaft
@@ -1953,7 +1953,7 @@ articles_115:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_116: 
   id: 151
   name: Aperol Spritzer
@@ -1970,7 +1970,7 @@ articles_116:
   updated_at: 2011-04-17 07:13:33 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_117: 
   id: 152
   name: "Port. Erd\xC3\xA4pfel"
@@ -1987,7 +1987,7 @@ articles_117:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_118: 
   id: 153
   name: Port. Nudeln
@@ -2004,7 +2004,7 @@ articles_118:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 4
-  usage: 
+  usage: 0 
 articles_119: 
   id: 154
   name: Port. Nockerl
@@ -2021,7 +2021,7 @@ articles_119:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 3
-  usage: 
+  usage: 0 
 articles_120: 
   id: 155
   name: Kinderschnitzel
@@ -2038,7 +2038,7 @@ articles_120:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_121: 
   id: 156
   name: Soda-Zitron
@@ -2055,7 +2055,7 @@ articles_121:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_122: 
   id: 157
   name: Soda-Zitron
@@ -2072,7 +2072,7 @@ articles_122:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_123: 
   id: 158
   name: Soda
@@ -2089,7 +2089,7 @@ articles_123:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_124: 
   id: 159
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl klein"
@@ -2106,7 +2106,7 @@ articles_124:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_125: 
   id: 160
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl gro\xC3\x9F"
@@ -2123,7 +2123,7 @@ articles_125:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_126: 
   id: 161
   name: "Ger\xC3\xB6stete Kalbsleber gro\xC3\x9F"
@@ -2140,7 +2140,7 @@ articles_126:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_127: 
   id: 162
   name: "Berliner Leber gro\xC3\x9F"
@@ -2157,7 +2157,7 @@ articles_127:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_128: 
   id: 163
   name: "Blunzengr\xC3\xB6stl gro\xC3\x9F"
@@ -2174,7 +2174,7 @@ articles_128:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_129: 
   id: 164
   name: Frittatensuppe
@@ -2191,7 +2191,7 @@ articles_129:
   updated_at: 2011-04-17 07:13:34 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_130: 
   id: 165
   name: "Erd\xC3\xA4pfel-Lauchsuppe"
@@ -2208,7 +2208,7 @@ articles_130:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_131: 
   id: 166
   name: Ziege frisch bespeckt
@@ -2225,7 +2225,7 @@ articles_131:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_132: 
   id: 167
   name: Saures Rind
@@ -2242,7 +2242,7 @@ articles_132:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_133: 
   id: 168
   name: Woba doba
@@ -2259,7 +2259,7 @@ articles_133:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_134: 
   id: 169
   name: Woba Doba
@@ -2276,7 +2276,7 @@ articles_134:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_135: 
   id: 170
   name: Berliner Leber
@@ -2293,7 +2293,7 @@ articles_135:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_136: 
   id: 171
   name: Risotto Verde
@@ -2310,7 +2310,7 @@ articles_136:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_137: 
   id: 172
   name: Gnocchi Birne Gorgonzola
@@ -2327,7 +2327,7 @@ articles_137:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_138: 
   id: 173
   name: Coq au vin
@@ -2344,7 +2344,7 @@ articles_138:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_139: 
   id: 174
   name: Geschmorte Lammkeule
@@ -2361,7 +2361,7 @@ articles_139:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_140: 
   id: 175
   name: Tortoni
@@ -2378,7 +2378,7 @@ articles_140:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_141: 
   id: 176
   name: "Ziege frisch bespeckt gro\xC3\x9F"
@@ -2395,7 +2395,7 @@ articles_141:
   updated_at: 2011-04-17 07:13:35 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_142: 
   id: 177
   name: "Topfenkn\xC3\xB6del gro\xC3\x9F"
@@ -2412,7 +2412,7 @@ articles_142:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_143: 
   id: 178
   name: Berliner Leber
@@ -2429,7 +2429,7 @@ articles_143:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_144: 
   id: 179
   name: "Woba doba gro\xC3\x9F"
@@ -2446,7 +2446,7 @@ articles_144:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_145: 
   id: 180
   name: "Faschierte Laberln Erdp\xC3\xBC"
@@ -2463,7 +2463,7 @@ articles_145:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_146: 
   id: 181
   name: "H\xC3\xBChnersuppe Grand Mere"
@@ -2480,7 +2480,7 @@ articles_146:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_147: 
   id: 182
   name: "Rote R\xC3\xBCbensuppe"
@@ -2497,7 +2497,7 @@ articles_147:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_148: 
   id: 183
   name: "Erd\xC3\xA4pfel, Speck, Fisolen"
@@ -2514,7 +2514,7 @@ articles_148:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_149: 
   id: 184
   name: Lasagne Zucchini
@@ -2531,7 +2531,7 @@ articles_149:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_150: 
   id: 185
   name: ger. Kalbsleber
@@ -2548,7 +2548,7 @@ articles_150:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_151: 
   id: 186
   name: Saibling Peter
@@ -2565,7 +2565,7 @@ articles_151:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_152: 
   id: 187
   name: "Risotto Ror\xC3\xBC, Ziegenk\xC3\xA4se"
@@ -2582,7 +2582,7 @@ articles_152:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_153: 
   id: 188
   name: "Krautrouladen mit Erd\xC3\xA4pfelp\xC3\xBCree"
@@ -2599,7 +2599,7 @@ articles_153:
   updated_at: 2011-04-17 07:13:36 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_154: 
   id: 189
   name: geschmortes Bratl
@@ -2616,7 +2616,7 @@ articles_154:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_155: 
   id: 190
   name: Saltimbocca m. Salbeispaghetti
@@ -2633,7 +2633,7 @@ articles_155:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_156: 
   id: 191
   name: Schokonusspalatschinken
@@ -2650,7 +2650,7 @@ articles_156:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_157: 
   id: 192
   name: Orangenmousse
@@ -2667,7 +2667,7 @@ articles_157:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_158: 
   id: 193
   name: Caffee Latte
@@ -2684,7 +2684,7 @@ articles_158:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_159: 
   id: 194
   name: Schokonusspalatschinken 1 Stk.
@@ -2701,7 +2701,7 @@ articles_159:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_160: 
   id: 195
   name: ger. Kalbsleber
@@ -2718,7 +2718,7 @@ articles_160:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_161: 
   id: 196
   name: ger. Kalbsleber
@@ -2735,7 +2735,7 @@ articles_161:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_162: 
   id: 197
   name: Wiener Schnitzel
@@ -2752,7 +2752,7 @@ articles_162:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_163: 
   id: 198
   name: Karotten-Ingwersuppe
@@ -2769,7 +2769,7 @@ articles_163:
   updated_at: 2011-04-17 07:13:37 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_164: 
   id: 199
   name: pik.Fischsuppe
@@ -2786,7 +2786,7 @@ articles_164:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_165: 
   id: 200
   name: "Cous Cous H\xC3\xBChnersalat"
@@ -2803,7 +2803,7 @@ articles_165:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_166: 
   id: 201
   name: Blunzenroulade
@@ -2820,7 +2820,7 @@ articles_166:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_167: 
   id: 202
   name: Sarde Ripiene
@@ -2837,7 +2837,7 @@ articles_167:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_168: 
   id: 203
   name: "Schnitzel m. Erd\xC3\xA4pfelsalat"
@@ -2854,7 +2854,7 @@ articles_168:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_169: 
   id: 204
   name: geschm. Safranhuhn
@@ -2871,7 +2871,7 @@ articles_169:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_170: 
   id: 205
   name: gebr. Kalbsleber
@@ -2888,7 +2888,7 @@ articles_170:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_171: 
   id: 206
   name: Fisch Fritz
@@ -2905,7 +2905,7 @@ articles_171:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_172: 
   id: 207
   name: Griessflammerie
@@ -2922,7 +2922,7 @@ articles_172:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_173: 
   id: 208
   name: Cappuccinoparfait
@@ -2939,7 +2939,7 @@ articles_173:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_174: 
   id: 209
   name: Karotten-Ingwersuppe
@@ -2956,7 +2956,7 @@ articles_174:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_175: 
   id: 210
   name: "mar. Ziegenfrischk\xC3\xA4se"
@@ -2973,7 +2973,7 @@ articles_175:
   updated_at: 2011-04-17 07:13:38 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_176: 
   id: 211
   name: Gr. Espresso
@@ -2990,7 +2990,7 @@ articles_176:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_177: 
   id: 212
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
@@ -3007,7 +3007,7 @@ articles_177:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_178: 
   id: 213
   name: gebr. Blunzenradeln
@@ -3024,7 +3024,7 @@ articles_178:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_179: 
   id: 214
   name: "gef\xC3\xBCllte Bl\xC3\xA4tterteighalbmonde"
@@ -3041,7 +3041,7 @@ articles_179:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_180: 
   id: 215
   name: gebr.Sardinen
@@ -3058,7 +3058,7 @@ articles_180:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_181: 
   id: 216
   name: Gnocchi Birne Gorgonzola
@@ -3075,7 +3075,7 @@ articles_181:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_182: 
   id: 217
   name: Zawinuls Chicken Report
@@ -3092,7 +3092,7 @@ articles_182:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_183: 
   id: 218
   name: gebr. Wolfsbarschfilet
@@ -3109,7 +3109,7 @@ articles_183:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_184: 
   id: 219
   name: "K\xC3\xBCrbiskernparfait"
@@ -3126,7 +3126,7 @@ articles_184:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_185: 
   id: 220
   name: Tiramisu
@@ -3143,7 +3143,7 @@ articles_185:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_186: 
   id: 221
   name: Artner ZWRC
@@ -3160,7 +3160,7 @@ articles_186:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_187: 
   id: 222
   name: Steindorfer BF
@@ -3177,7 +3177,7 @@ articles_187:
   updated_at: 2011-04-17 07:13:39 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_188: 
   id: 223
   name: Triebaumer Merlot
@@ -3194,7 +3194,7 @@ articles_188:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_189: 
   id: 224
   name: Scheiblhofer Big John
@@ -3211,7 +3211,7 @@ articles_189:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_190: 
   id: 225
   name: F.lli Rabino Roero
@@ -3228,7 +3228,7 @@ articles_190:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_191: 
   id: 226
   name: Dopler CS
@@ -3245,7 +3245,7 @@ articles_191:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_192: 
   id: 227
   name: Schuster SB
@@ -3262,7 +3262,7 @@ articles_192:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_193: 
   id: 228
   name: Schilhan Junker
@@ -3279,7 +3279,7 @@ articles_193:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_194: 
   id: 229
   name: Wohlmuth Chard.
@@ -3296,7 +3296,7 @@ articles_194:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_195: 
   id: 230
   name: Scarbolo PG
@@ -3313,7 +3313,7 @@ articles_195:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_196: 
   id: 231
   name: Alphart RG
@@ -3330,7 +3330,7 @@ articles_196:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_197: 
   id: 232
   name: "gebr.Sardinen gro\xC3\x9F"
@@ -3347,7 +3347,7 @@ articles_197:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_198: 
   id: 233
   name: Prosecco
@@ -3364,7 +3364,7 @@ articles_198:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_199: 
   id: 234
   name: Minestrone
@@ -3381,7 +3381,7 @@ articles_199:
   updated_at: 2011-04-17 07:13:40 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_200: 
   id: 235
   name: "H\xC3\xBChnersuppe Grand Mere"
@@ -3398,7 +3398,7 @@ articles_200:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_201: 
   id: 236
   name: "Cous Cous H\xC3\xBChnersalat"
@@ -3415,7 +3415,7 @@ articles_201:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_202: 
   id: 237
   name: Ziege frisch bespeckt
@@ -3432,7 +3432,7 @@ articles_202:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_203: 
   id: 238
   name: "Blunzengr\xC3\xB6stl"
@@ -3449,7 +3449,7 @@ articles_203:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_204: 
   id: 239
   name: gebr. Wolfsbarschfilet
@@ -3466,7 +3466,7 @@ articles_204:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_205: 
   id: 240
   name: Spaghetti m. Sardinen
@@ -3483,7 +3483,7 @@ articles_205:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_206: 
   id: 241
   name: Rindsgulasch
@@ -3500,7 +3500,7 @@ articles_206:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_207: 
   id: 242
   name: Berliner Leber
@@ -3517,7 +3517,7 @@ articles_207:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_208: 
   id: 243
   name: Lammkotlett Provence
@@ -3534,7 +3534,7 @@ articles_208:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_209: 
   id: 244
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
@@ -3551,7 +3551,7 @@ articles_209:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_210: 
   id: 245
   name: Hollersaft
@@ -3568,7 +3568,7 @@ articles_210:
   updated_at: 2011-04-17 07:13:41 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_211: 
   id: 246
   name: Sonstiges
@@ -3585,7 +3585,7 @@ articles_211:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_212: 
   id: 247
   name: Buffet 13.03.2010
@@ -3602,7 +3602,7 @@ articles_212:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_213: 
   id: 248
   name: Buffet 13.03.2010
@@ -3619,7 +3619,7 @@ articles_213:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_214: 
   id: 249
   name: Buffet 13.03.2010
@@ -3636,7 +3636,7 @@ articles_214:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_215: 
   id: 250
   name: Frittatensuppe
@@ -3653,7 +3653,7 @@ articles_215:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_216: 
   id: 251
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
@@ -3670,7 +3670,7 @@ articles_216:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_217: 
   id: 252
   name: Blunzenradeln mit Apfelsauerkraut
@@ -3687,7 +3687,7 @@ articles_217:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_218: 
   id: 253
   name: Saures Rindfleisch
@@ -3704,7 +3704,7 @@ articles_218:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_219: 
   id: 254
   name: Risotto Rucola
@@ -3721,7 +3721,7 @@ articles_219:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_220: 
   id: 255
   name: Kalbsleber Sherry
@@ -3738,7 +3738,7 @@ articles_220:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_221: 
   id: 256
   name: "Saibling Basilikumerd\xC3\xA4pfelp\xC3\xBCree"
@@ -3755,7 +3755,7 @@ articles_221:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_222: 
   id: 257
   name: Hauswein/GV
@@ -3772,7 +3772,7 @@ articles_222:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_223: 
   id: 258
   name: Scheiblhofer Andau
@@ -3789,7 +3789,7 @@ articles_223:
   updated_at: 2011-04-17 07:13:42 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_224: 
   id: 259
   name: "Fr\xC3\xBChlingszwiebelsuppe"
@@ -3806,7 +3806,7 @@ articles_224:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_225: 
   id: 260
   name: Pikante Fischsuppe
@@ -3823,7 +3823,7 @@ articles_225:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_226: 
   id: 261
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
@@ -3840,7 +3840,7 @@ articles_226:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_227: 
   id: 262
   name: Gerolltes Huhn
@@ -3857,7 +3857,7 @@ articles_227:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_228: 
   id: 263
   name: Woba Ingwertomate
@@ -3874,7 +3874,7 @@ articles_228:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_229: 
   id: 264
   name: "Schnitzel m. Erd\xC3\xA4pfelsalat"
@@ -3891,7 +3891,7 @@ articles_229:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_230: 
   id: 265
   name: "Geschmorter Lammschl\xC3\xB6gel"
@@ -3908,7 +3908,7 @@ articles_230:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_231: 
   id: 266
   name: Orangenparfait
@@ -3925,7 +3925,7 @@ articles_231:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_232: 
   id: 267
   name: Gnocchi Birne Gorgonzola
@@ -3942,7 +3942,7 @@ articles_232:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_233: 
   id: 268
   name: "Skoff Welschriesling S\xC3\xBCdstmk.2009 1/8 l"
@@ -3959,7 +3959,7 @@ articles_233:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_234: 
   id: 269
   name: "G'spritzter 1/2 "
@@ -3976,7 +3976,7 @@ articles_234:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_235: 
   id: 270
   name: "Woba Ingwertomate gro\xC3\x9F"
@@ -3993,7 +3993,7 @@ articles_235:
   updated_at: 2011-04-17 07:13:43 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_236: 
   id: 271
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
@@ -4010,7 +4010,7 @@ articles_236:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_237: 
   id: 272
   name: Almdudler gespritzt 1/2
@@ -4027,7 +4027,7 @@ articles_237:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_238: 
   id: 273
   name: "B\xC3\xA4rlauchsuppe"
@@ -4044,7 +4044,7 @@ articles_238:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_239: 
   id: 274
   name: "H\xC3\xBChnersuppe"
@@ -4061,7 +4061,7 @@ articles_239:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_240: 
   id: 275
   name: "Gef\xC3\xBCllte Bl\xC3\xA4tterteigtaschen"
@@ -4078,7 +4078,7 @@ articles_240:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_241: 
   id: 276
   name: gebr. Blunzenradeln
@@ -4095,7 +4095,7 @@ articles_241:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_242: 
   id: 277
   name: "Fr\xC3\xBChlingszwiebelrisotto"
@@ -4112,7 +4112,7 @@ articles_242:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_243: 
   id: 278
   name: "Gnocchi B\xC3\xA4rlauchpesto"
@@ -4129,7 +4129,7 @@ articles_243:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_244: 
   id: 279
   name: Karotten-Ingwerschwein
@@ -4146,7 +4146,7 @@ articles_244:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_245: 
   id: 280
   name: "Saibling B\xC3\xA4rlaucherd\xC3\xA4pfelp\xC3\xBCree"
@@ -4163,7 +4163,7 @@ articles_245:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_246: 
   id: 281
   name: Schokocannellono
@@ -4180,7 +4180,7 @@ articles_246:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_247: 
   id: 282
   name: "Erd\xC3\xA4pfel-Rucolasalat"
@@ -4197,7 +4197,7 @@ articles_247:
   updated_at: 2011-04-17 07:13:44 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_248: 
   id: 283
   name: Dessert Variation
@@ -4214,7 +4214,7 @@ articles_248:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_249: 
   id: 284
   name: "G\xC2\xB4spritzter 1/2 rot"
@@ -4231,7 +4231,7 @@ articles_249:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_250: 
   id: 285
   name: "G\xC2\xB4spritzter 1/4 rot"
@@ -4248,7 +4248,7 @@ articles_250:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_251: 
   id: 286
   name: Gnocchi Butter kl.
@@ -4265,7 +4265,7 @@ articles_251:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_252: 
   id: 287
   name: "Spinatfrischk\xC3\xA4setascherln"
@@ -4282,7 +4282,7 @@ articles_252:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_253: 
   id: 288
   name: "Woba Spinaterd\xC3\xA4pfel"
@@ -4299,7 +4299,7 @@ articles_253:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_254: 
   id: 289
   name: Szegediner Krautfleisch
@@ -4316,7 +4316,7 @@ articles_254:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_255: 
   id: 290
   name: "Lammleber B\xC3\xA4rlauchp\xC3\xBCree"
@@ -4333,7 +4333,7 @@ articles_255:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_256: 
   id: 291
   name: Geschmortes Milchlamm
@@ -4350,7 +4350,7 @@ articles_256:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_257: 
   id: 292
   name: Artner ZWRC
@@ -4367,7 +4367,7 @@ articles_257:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_258: 
   id: 293
   name: Skoff Welschriesling Sstmk.
@@ -4384,7 +4384,7 @@ articles_258:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_259: 
   id: 294
   name: Scheiblhofer Andau
@@ -4401,7 +4401,7 @@ articles_259:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_260: 
   id: 295
   name: Scarbolo PG
@@ -4418,7 +4418,7 @@ articles_260:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 4
-  usage: 
+  usage: 0 
 articles_261: 
   id: 296
   name: Risotto Primavera
@@ -4435,7 +4435,7 @@ articles_261:
   updated_at: 2011-04-17 07:13:45 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_262: 
   id: 297
   name: geb. Schweinsschnitzel
@@ -4452,7 +4452,7 @@ articles_262:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_263: 
   id: 298
   name: F.lli Rabino
@@ -4469,7 +4469,7 @@ articles_263:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_264: 
   id: 299
   name: Linsensuppe
@@ -4486,7 +4486,7 @@ articles_264:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_265: 
   id: 300
   name: "mar.Ziegenfrischk\xC3\xA4se"
@@ -4503,7 +4503,7 @@ articles_265:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_266: 
   id: 301
   name: Woba Ingwertomate
@@ -4520,7 +4520,7 @@ articles_266:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_267: 
   id: 302
   name: Buffet 12.04.2010
@@ -4537,7 +4537,7 @@ articles_267:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_268: 
   id: 303
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
@@ -4554,7 +4554,7 @@ articles_268:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 1
   sort: 0
-  usage: 
+  usage: 0 
 articles_269: 
   id: 304
   name: "Blunzenbl\xC3\xA4tterteigtaschen"
@@ -4571,7 +4571,7 @@ articles_269:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_270: 
   id: 305
   name: "Cous Cous H\xC3\xBChnersalat"
@@ -4588,7 +4588,7 @@ articles_270:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_271: 
   id: 306
   name: gebr. Saiblingsfilet
@@ -4605,7 +4605,7 @@ articles_271:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_272: 
   id: 307
   name: Mandelparfait
@@ -4622,7 +4622,7 @@ articles_272:
   updated_at: 2011-04-17 07:13:46 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_273: 
   id: 308
   name: Wohlmuth G.Muskateller
@@ -4639,7 +4639,7 @@ articles_273:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 6
-  usage: 
+  usage: 0 
 articles_274: 
   id: 309
   name: gebr.Saiblingsfilet gr.
@@ -4656,7 +4656,7 @@ articles_274:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_275: 
   id: 310
   name: Marillenpalatschinken
@@ -4673,7 +4673,7 @@ articles_275:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_276: 
   id: 311
   name: "Zucchinicr\xC3\xA8mesuppe"
@@ -4690,7 +4690,7 @@ articles_276:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_277: 
   id: 312
   name: Cous-cous-Salat
@@ -4707,7 +4707,7 @@ articles_277:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_278: 
   id: 313
   name: "Pikante H\xC3\xBChnerrolle"
@@ -4724,7 +4724,7 @@ articles_278:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_279: 
   id: 314
   name: Woba Fenchel/Tomate
@@ -4741,7 +4741,7 @@ articles_279:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_280: 
   id: 315
   name: Gnocchetti Minzpesto
@@ -4758,7 +4758,7 @@ articles_280:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_281: 
   id: 316
   name: Lammkotlett Provence
@@ -4775,7 +4775,7 @@ articles_281:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_282: 
   id: 317
   name: Haselnussparfait
@@ -4792,7 +4792,7 @@ articles_282:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_283: 
   id: 318
   name: Marillenpalatschinken
@@ -4809,7 +4809,7 @@ articles_283:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_284: 
   id: 319
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
@@ -4826,7 +4826,7 @@ articles_284:
   updated_at: 2011-04-17 07:13:47 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_285: 
   id: 320
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
@@ -4843,7 +4843,7 @@ articles_285:
   updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
   sort: 2
-  usage: 
+  usage: 0 
 articles_286: 
   id: 321
   name: Almdudler
@@ -4860,7 +4860,7 @@ articles_286:
   updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_287: 
   id: 322
   name: American Spirit
@@ -4877,7 +4877,7 @@ articles_287:
   updated_at: 2011-04-17 07:13:48 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_288: 
   id: 323
   name: Aperol
@@ -4894,7 +4894,7 @@ articles_288:
   updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_289: 
   id: 324
   name: Apfel-Himbeere
@@ -4911,7 +4911,7 @@ articles_289:
   updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_290: 
   id: 325
   name: Apfel-Holler
@@ -4928,7 +4928,7 @@ articles_290:
   updated_at: 2011-04-17 07:13:49 Z
   hidden: 0
   sort: 1
-  usage: 
+  usage: 0 
 articles_291: 
   id: 326
   name: Apfel-Johannisbeere
@@ -4945,7 +4945,7 @@ articles_291:
   updated_at: 2011-04-17 07:13:50 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_292: 
   id: 327
   name: Apfel-Karotte
@@ -4962,7 +4962,7 @@ articles_292:
   updated_at: 2011-04-17 07:13:50 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_293: 
   id: 328
   name: "Apfel-Rote R\xC3\xBCbe"
@@ -4979,7 +4979,7 @@ articles_293:
   updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_294: 
   id: 329
   name: Apfel-Weichsel
@@ -4996,7 +4996,7 @@ articles_294:
   updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_295: 
   id: 330
   name: Apfelsaft
@@ -5013,7 +5013,7 @@ articles_295:
   updated_at: 2011-04-17 07:13:51 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_296: 
   id: 331
   name: Artner ZWRC
@@ -5030,7 +5030,7 @@ articles_296:
   updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_297: 
   id: 332
   name: Birnensaft
@@ -5047,7 +5047,7 @@ articles_297:
   updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_298: 
   id: 333
   name: Campari
@@ -5064,7 +5064,7 @@ articles_298:
   updated_at: 2011-04-17 07:13:52 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_299: 
   id: 334
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl"
@@ -5081,7 +5081,7 @@ articles_299:
   updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_300: 
   id: 335
   name: G'Spritzter
@@ -5098,7 +5098,7 @@ articles_300:
   updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_301: 
   id: 336
   name: G'spritzter
@@ -5115,7 +5115,7 @@ articles_301:
   updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_302: 
   id: 337
   name: Orangensaft
@@ -5132,7 +5132,7 @@ articles_302:
   updated_at: 2011-04-17 07:13:53 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_303: 
   id: 338
   name: Radler
@@ -5149,7 +5149,7 @@ articles_303:
   updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
   sort: 5
-  usage: 
+  usage: 0 
 articles_304: 
   id: 339
   name: F.lli Rabino
@@ -5166,7 +5166,7 @@ articles_304:
   updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_305: 
   id: 340
   name: Alphart
@@ -5183,7 +5183,7 @@ articles_305:
   updated_at: 2011-04-17 07:13:54 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_306: 
   id: 341
   name: Gnocchi Birne Gorgonzola
@@ -5200,7 +5200,7 @@ articles_306:
   updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_307: 
   id: 342
   name: Soda
@@ -5217,7 +5217,7 @@ articles_307:
   updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_308: 
   id: 343
   name: Hollersaft
@@ -5234,7 +5234,7 @@ articles_308:
   updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_309: 
   id: 344
   name: Himbeer-Soda
@@ -5251,7 +5251,7 @@ articles_309:
   updated_at: 2011-04-17 07:13:55 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_310: 
   id: 345
   name: Camel
@@ -5268,7 +5268,7 @@ articles_310:
   updated_at: 2011-04-17 07:13:56 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 
 articles_311: 
   id: 346
   name: Generic
@@ -5285,4 +5285,4 @@ articles_311:
   updated_at: 2011-04-17 07:13:56 Z
   hidden: 0
   sort: 0
-  usage: 
+  usage: 0 

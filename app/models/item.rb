@@ -48,9 +48,7 @@ class Item < ActiveRecord::Base
 
   def printoptionslist=(printoptionslist)
     self.printoptions = []
-    printoptionslist.split.each do |o|
-      self.printoptions << Option.find(o.to_i)
-    end
+    printoptionslist.split.each { |o| self.options << Option.find(o.to_i) }
   end
 
   def printoptionslist

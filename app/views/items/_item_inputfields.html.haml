@@ -1,23 +1,23 @@
-%div{ :id => "fields_for_item_#{ locals[:designator] }" }
+%div{ :id => "fields_for_item_#{ designator }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_id", :class => 'id', :name => "order[items_attributes][#{ locals[:designator] }][id]", :type => 'hidden', :value => "#{ locals[:id] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_id", :class => 'id', :name => "order[items_attributes][#{ designator }][id]", :type => 'hidden', :value => "#{ id }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_count", :class => 'count', :name => "order[items_attributes][#{ locals[:designator] }][count]", :type => 'hidden', :value => "#{ locals[:count] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_count", :class => 'count', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_comment", :name => "order[items_attributes][#{ locals[:designator] }][comment]", :type => 'hidden', :value => "#{ locals[:comment] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_optionslist", :name => "order[items_attributes][#{ locals[:designator] }][optionslist]", :type => 'hidden', :value => "#{ locals[:optionslist] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_printoptionslist", :name => "order[items_attributes][#{ locals[:designator] }][printoptionslist]", :type => 'hidden', :value => "#{ locals[:printoptionslist] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_printoptionslist", :name => "order[items_attributes][#{ designator }][printoptionslist]", :type => 'hidden', :value => "#{ printoptionslist }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ locals[:designator] }][article_id]", :type => 'hidden', :value => "#{ locals[:articleid] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ locals[:designator] }][quantity_id]", :type => 'hidden', :value => "#{ locals[:quantityid] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ designator }][quantity_id]", :type => 'hidden', :value => "#{ quantityid }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_sort", :name => "order[items_attributes][#{ locals[:designator] }][sort]", :type => 'hidden', :value => "#{ locals[:sort] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_sort", :name => "order[items_attributes][#{ designator }][sort]", :type => 'hidden', :value => "#{ sort }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_price", :class => 'price', :name => "order[items_attributes][#{ locals[:designator] }][price]", :type => 'hidden', :value => "#{ locals[:price] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_price", :class => 'price', :name => "order[items_attributes][#{ designator }][price]", :type => 'hidden', :value => "#{ price }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ locals[:designator] }][printed_count]", :type => 'hidden', :value => "#{ locals[:printed_count] }" }
+  %input{ :id => "order_items_attributes_#{ designator }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ designator }][printed_count]", :type => 'hidden', :value => "#{ printed_count }" }
 
-  %input{ :id => "order_items_attributes_#{ locals[:designator] }__destroy", :name => "order[items_attributes][#{ locals[:designator] }][_destroy]", :type => 'hidden', :value => '0' }
+  %input{ :id => "order_items_attributes_#{ designator }__destroy", :name => "order[items_attributes][#{ designator }][_destroy]", :type => 'hidden', :value => '0' }

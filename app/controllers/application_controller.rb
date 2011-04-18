@@ -87,10 +87,11 @@ class ApplicationController < ActionController::Base
       overall_output = ''
       #Order.find_all_by_finished(false).each do |order|
         per_order_output = ''
-        per_order_output +=
+        header =
         "\e@"     +  # Initialize Printer
-        "\e!\x38" +  # doube tall, double wide, bold
+        "\e!\x38"    # doube tall, double wide, bold
 
+        per_order_output +=
         "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), order.nr, @current_user.login, order.table.abbreviation] +
 
         per_order_output += "=====================\n"
@@ -114,11 +115,13 @@ class ApplicationController < ActionController::Base
           i.update_attribute :printed_count, i.count
         end
 
-        per_order_output +=
+        footer =
         "\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
-        overall_output += per_order_output if printed_items_in_this_order != 0
+        overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
       #end
+
+      logger.info per_order_output + "\n\n"
 
       overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
       overall_output.gsub!(/\x00E4/,"\x84") #ä
@@ -133,9 +136,7 @@ class ApplicationController < ActionController::Base
       overall_output.gsub!(/\x00FA/,"\xA3") #ú
       overall_output.gsub!(/\x00F9/,"\x97") #ù
       overall_output.gsub!(/\x00C9/,"\x90") #É
-      puts overall_output
-      logger.error 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-      return overall_output
+      overall_output
     end
 
     def generate_escpos_test

@@ -1,16 +1,14 @@
 %h2= t('activerecord.models.order.other')
 
-#login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }
-  = render 'login_form' if not logged_in?
+#login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }= render 'login_form' if not logged_in?
 
 - if logged_in?
   #rooms= render 'rooms'
   #tables= render @tables
   #functions
-    //%a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
     #functions_header_index= render 'functions_header_index' if workstation?
-    #functions_header_order_form{ :style => 'display: none;' }= render('functions_header_order_form')
-    #functions_header_invoice_form{ :style => 'display: none;' }= render('functions_header_invoice_form')
+    #functions_header_order_form{ :style => 'display: none;' }= render 'functions_header_order_form'
+    #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
   #orderform{ :style => 'display: none;' }= render 'order'
   #invoices
   #functions_footer{ :style => 'display: none;' }
