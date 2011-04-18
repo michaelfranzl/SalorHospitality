@@ -1,6 +1,7 @@
 %h2= t('activerecord.models.order.other')
 
-#login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }= render 'login_form' if not logged_in?
+#login{ :style => "display: #{ logged_in? ? 'none' : 'visible' };" }
+  = render 'login_form' if not logged_in?
 
 - if logged_in?
   #rooms= render 'rooms'
