@@ -71,8 +71,8 @@ en:
         description: Description
         width: Width
         height: Height
-        width_ipod: Width iPod
-        height_ipod: Height iPod
+        width_mobile: Width mobile
+        height_mobile: Height mobile
       category:
         name: Name
         tax_id: Tax

@@ -32,9 +32,9 @@ function display_quantities(art_id) {
 }
 
 function hide_optionsselect(what) {
-  // this should never be hidden on ipod
+  // this should never be hidden on mobile
 }
 
 function hide_tableselect(what) {
-  // this should never be hidden on ipod
+  // this should never be hidden on mobile
 }

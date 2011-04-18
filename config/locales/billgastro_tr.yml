@@ -71,8 +71,8 @@ tr:
         description: Tarif
         width: Genişlik
         height: Yükseklik
-        width_ipod: Genişlik iPod
-        height_ipod: Yükseklik iPod
+        width_mobile: Genişlik mobile
+        height_mobile: Yükseklik mobile
       category:
         name: Isim
         tax_id: Vergi derecesi

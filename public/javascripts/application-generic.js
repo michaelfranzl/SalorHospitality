@@ -242,7 +242,7 @@ function add_option_to_item(item_designator, select_tag)
 }
 
 
-// VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON IPOD
+// VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON mobile
 
 function category_onmouseup(element) {
   highlight_border(element);
@@ -312,7 +312,7 @@ function go_to_tables_offline() {
   $('functions_header_invoice_form').hide();
   $('functions_footer').hide();
   Effect.ScrollTo("header");
-  $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_ipod_tables.png')";
+  $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_mobile_tables.png')";
   $('save_and_go_to_tables').style.border = "none";
 }
 
