@@ -134,6 +134,7 @@ class ApplicationController < ActionController::Base
       overall_output.gsub!(/\x00F9/,"\x97") #ù
       overall_output.gsub!(/\x00C9/,"\x90") #É
       puts overall_output
+      logger.error 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
       return overall_output
     end
 

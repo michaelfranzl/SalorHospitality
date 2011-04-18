@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110417061423) do
+ActiveRecord::Schema.define(:version => 20110418080101) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -20,14 +20,14 @@ ActiveRecord::Schema.define(:version => 20110417061423) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",        :default => true
+    t.boolean  "menucard",                     :default => true
     t.boolean  "blackboard"
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",          :default => false
+    t.boolean  "hidden",                       :default => false
     t.integer  "sort"
-    t.string   "usage"
+    t.integer  "usage",           :limit => 1, :default => 0
   end
 
   create_table "categories", :force => true do |t|
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20110417061423) do
     t.integer  "sort_order"
     t.string   "icon"
     t.string   "color"
-    t.integer  "usage"
+    t.integer  "usage",      :limit => 1, :default => 0
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20110417061423) do
   end
 
   create_table "items", :force => true do |t|
-    t.integer  "count"
+    t.integer  "count",          :limit => 1
     t.integer  "article_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -72,10 +72,10 @@ ActiveRecord::Schema.define(:version => 20110417061423) do
     t.boolean  "partial_order"
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status",  :default => 0
+    t.integer  "storno_status",  :limit => 1, :default => 0
     t.string   "comment"
     t.float    "price"
-    t.integer  "printed_count",  :default => 0
+    t.integer  "printed_count",  :limit => 1, :default => 0
     t.integer  "item_id"
     t.integer  "storno_item_id"
     t.integer  "tax_id"
@@ -138,11 +138,11 @@ ActiveRecord::Schema.define(:version => 20110417061423) do
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",     :default => true
-    t.boolean  "hidden",     :default => false
+    t.boolean  "active",                  :default => true
+    t.boolean  "hidden",                  :default => false
     t.string   "postfix"
     t.integer  "sort"
-    t.string   "usage"
+    t.integer  "usage",      :limit => 1, :default => 0
   end
 
   create_table "settlements", :force => true do |t|
