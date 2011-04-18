@@ -111,12 +111,8 @@ class OrdersController < ApplicationController
     end
 
     invoice = generate_escpos_invoice @order
-
-    BillGastro::Application::SP.write invoice if defined? SP
-
-    if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
-      File.open('/dev/usb/lp0', 'w') { |f| f.write invoice }
-    end
+    BillGastro::Application::SP.write invoice if defined? BillGastro::Application::SP
+    File.open('/dev/usb/lp0', 'w') { |f| f.write invoice } if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
 
     justfinished = false
     if not @order.finished
@@ -210,7 +206,7 @@ class OrdersController < ApplicationController
       foods_normal    = generate_escpos_items order, 1, 0
       drinks_takeaway = generate_escpos_items order, 1, 1
 
-      if defined?(SP)
+      if defined? BillGastro::Application::SP
         BillGastro::Application::SP.write drinks_normal
         BillGastro::Application::SP.write foods_normal
         BillGastro::Application::SP.write drinks_takeaway
@@ -219,7 +215,7 @@ class OrdersController < ApplicationController
       if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
         File.open('/dev/usb/lp0', 'w') { |f| f.write drinks_normal }
         File.open('/dev/usb/lp0', 'w') { |f| f.write foods_normal }
-        File.open('/dev/usb/lp0', 'w') { |f| f.write foods_normal }
+        File.open('/dev/usb/lp0', 'w') { |f| f.write drinks_takeaway }
       end
 
     end

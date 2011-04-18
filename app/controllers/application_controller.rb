@@ -99,8 +99,6 @@ class ApplicationController < ActionController::Base
         printed_items_in_this_order = 0
         order.items.each do |i|
 
-          printed_items_in_this_order =+ 1
-
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
           next if i.count == i.printed_count
 
@@ -108,6 +106,8 @@ class ApplicationController < ActionController::Base
           next if (i.count <= i.printed_count)         or
                   (category_usage != i.category.usage) or
                   (article_usage  != item_usage)
+
+          printed_items_in_this_order =+ 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += "  %-18.18s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
