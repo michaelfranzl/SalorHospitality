@@ -3,7 +3,7 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    - if ipod?
+    - if mobile?
       %meta{ 'name' => "viewport", :content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
 
@@ -18,9 +18,9 @@
     = csrf_meta_tag
 
 
-    - if ipod?
-      = stylesheet_link_tag('ipod', :media => 'screen')
-      = javascript_include_tag 'application-ipod.js'
+    - if mobile?
+      = stylesheet_link_tag('mobile', :media => 'screen')
+      = javascript_include_tag 'application-mobile.js'
     - else
       = javascript_include_tag 'dragdrop.js'
       = stylesheet_link_tag 'print', :media => 'print'
@@ -36,6 +36,6 @@
       #main= yield
       #footer
       #copyright
-        %p <a href='http://billgastro.com' target='_blank'>BillGastro 3.0.3</a> &mdash; The innovative Point Of Sales Software for your Restaurant
+        %p <a href='http://billgastro.com' target='_blank'>BillGastro 3.0.4</a> &mdash; The innovative Point Of Sales Software for your Restaurant
         %p== Copyright (C) 2011  <a href='mailto:michael@billgastro.com'>Michael Franzl</a>
         %small This program is free software: you can redistribute it and/or modify it under the terms of the <a href="http://www.gnu.org/licenses/agpl.html" target='_blank'>GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

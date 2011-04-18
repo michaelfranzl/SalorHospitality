@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
     @users = User.all
-    session[:admin_interface] = !ipod? # admin panel per default on on workstation
+    session[:admin_interface] = !mobile? # admin panel per default on on workstation
   end
 
   def update
@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user
-      session[:admin_interface] = !ipod? # admin panel per default on on workstation
+      session[:admin_interface] = !mobile? # admin panel per default on on workstation
       I18n.locale = @current_user.language
       render 'login_successful'
     else
@@ -92,7 +92,7 @@ class OrdersController < ApplicationController
 
     BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number 
 
-    if not @order.finished and ipod?
+    if not @order.finished and mobile?
       @order.user = @current_user
       @order.created_at = Time.now
     end

@@ -74,7 +74,7 @@ BillGastro::Application.routes.draw do
   resources :tables do
     resources :orders
     collection do
-      get :ipod
+      get :mobile
     end
   end
 
