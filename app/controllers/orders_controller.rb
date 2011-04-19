@@ -22,13 +22,18 @@ class OrdersController < ApplicationController
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
     @users = User.all
-    session[:admin_interface] = !mobile? # admin panel per default on on workstation
+    session[:admin_interface] = !mobile? # on workstation, switch admin panel on per default
   end
 
+  # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
     @order = Order.find_by_id params[:id]
     @order.update_attributes params[:order]
-    render :nothing => true
+    @order.tax = Tax.find_by_id params[:order][:tax_id] if params[:order][:tax_id] # explicit setting of tax so that setter method in order.rb is executed.
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
+    @cost_centers = CostCenter.all
+    @taxes = Tax.all
+    render 'items/update'
   end
 
   def edit
@@ -87,6 +92,18 @@ class OrdersController < ApplicationController
     @tables = Table.all
   end
 
+  def toggle_tax_colors
+    if session[:display_tax_colors]
+      session[:display_tax_colors] = !session[:display_tax_colors]
+    else
+      session[:display_tax_colors] = true
+    end
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
+    @cost_centers = CostCenter.all
+    @taxes = Tax.all
+    render 'items/update'
+  end
+
   def print_and_finish
     @order = Order.find params[:id]
 
@@ -125,6 +142,7 @@ class OrdersController < ApplicationController
     @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @order.table.update_attribute :user, nil if @orders.empty?
     @cost_centers = CostCenter.find_all_by_active(true)
+    @taxes = Tax.all
 
     respond_to do |wants|
       wants.html { redirect_to order_path @order }
@@ -161,6 +179,7 @@ class OrdersController < ApplicationController
       end
 
       @cost_centers = CostCenter.find_all_by_active(true)
+      @taxes = Tax.all
 
       if @order
         # similar to update

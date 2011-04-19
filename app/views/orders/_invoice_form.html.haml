@@ -1,4 +1,5 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
+  = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => 'iconbutton tables2_button', :title => '', :remote => true, :method => :post
   = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
   = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
   = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
@@ -6,14 +7,21 @@
     = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :class => 'iconbutton finish_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
 
   = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
+
     - if !invoice_form.finished
-      %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
-        = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
+
+      - if session[:display_tax_colors]
+        %select#tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[tax_id]', :title => t('.split_invoice') }
+          = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
+      - else
+        %select#cost_center_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
+          = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
+
       = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
-  %table{ :class => 'invoice' }
+  %table.invoice
     - subtotal = 0
     - invoice_form.items.each do |item|
       - sum = item.count * item.real_price
@@ -21,13 +29,14 @@
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-      %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}" }
+      %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.real_tax.color : '' }" }
         %td.count= item.count
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
-            = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), item_path(item.id), :method => :put, :remote => true)
+            - path = session[:display_tax_colors] ? "/items/rotate_tax/#{ item.id }" : item_path(item.id)
+            = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), path, :method => :put, :remote => true, :class => 'link', :id => item.id)
         %td.price= number_to_currency item.real_price
         %td.total= number_to_currency sum
 

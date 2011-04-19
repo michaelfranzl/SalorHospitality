@@ -24,6 +24,7 @@ class TablesController < ApplicationController
   def show
     @table = Table.find(params[:id])
     @cost_centers = CostCenter.find_all_by_active(true)
+    @taxes = Tax.all
     @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
     if @orders.size > 1
       render 'orders/go_to_invoice_form'

@@ -36,6 +36,7 @@ class ItemsController < ApplicationController
     split @item, @order
 
     @cost_centers = CostCenter.find_all_by_active(true)
+    @taxes = Tax.all
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
   end
 
@@ -77,6 +78,15 @@ class ItemsController < ApplicationController
     i.save
     @order = i.order
     render 'edit'
+  end
+
+  def rotate_tax
+    @item = Item.find_by_id params[:id]
+    tax_ids = Tax.all.collect { |t| t.id }
+    current_tax_id_index = tax_ids.index @item.real_tax.id
+    next_tax_id = tax_ids.rotate[current_tax_id_index]
+    @item.tax = Tax.find_by_id next_tax_id
+    @item.save
   end
 
   private

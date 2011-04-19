@@ -1,3 +1,4 @@
+%style= generate_tax_color_style
 %h2= @tax.new_record? ? (t '.new_tax') : (t '.edit_tax')
 
 - if @tax.errors.any?
@@ -18,5 +19,10 @@
     %tr
       %td= tax_form.label('percent', Tax.human_attribute_name(:letter))
       %td= tax_form.text_field :letter, :size => '10'
+    %tr
+      %td= tax_form.label('color', Tax.human_attribute_name(:color))
+      %td
+        %select#category_color{ :name => 'tax[color]' }
+          = options_for_select(get_tax_colors.invert.to_a, tax_form.object.color)
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

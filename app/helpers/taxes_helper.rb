@@ -14,24 +14,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Order < ActiveRecord::Base
-  belongs_to :settlement
-  belongs_to :table
-  belongs_to :user
-  belongs_to :cost_center
-  belongs_to :tax
-  has_many :items, :dependent => :destroy
-  has_one :order
-  belongs_to :cost_center
+module TaxesHelper
 
-  validates_presence_of :user_id
-
-  #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
-  #This will prevent children_attributes with all empty values to be ignored
-  accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
-
-  def tax=(tax)
-    self.items.each { |i| i.update_attribute :tax_id, nil }
+  def get_tax_colors
+    { '#e3bde1' => t(:violet),
+      '#f3d5ab' => t(:orange),
+      '#ffafcf' => t(:pink),
+      '#d2f694' => t(:green),
+      '#c2e8f3' => t(:blue),
+      '#c6c6c6' => t(:blank),
+    }
+  end
+  
+  def generate_tax_color_style
+    styles = "
+      option[value='#e3bde1'] { background-color: #e3bde1 }
+      option[value='#f3d5ab'] { background-color: #f3d5ab }
+      option[value='#ffafcf'] { background-color: #ffafcf }
+      option[value='#d2f694'] { background-color: #d2f694 }
+      option[value='#c2e8f3'] { background-color: #c2e8f3 }
+      option[value='#c6c6c6'] { background-color: #c6c6c6 }
+    "
   end
 
 end
