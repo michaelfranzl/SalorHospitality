@@ -1,9 +1,9 @@
 --- !map:ActiveSupport::HashWithIndifferentAccess 
 name: BillGastro
 subtitle: The innovative POS Software
-address: Address
+address: www.billgastro.com
 taxnumber: Tax Number
-slogan1: Slogan 1
-slogan2: Slogan 2
-internet: Internet Address
-email: Email Address
+slogan1: The innovative POS Software
+slogan2: Visit us at
+internet: www.billgastro.com
+email: office@billgastro.com

@@ -221,7 +221,7 @@ class ApplicationController < ActionController::Base
         gro = sum_taxes[tax.id]
         vat = gro-net
 
-        list_of_taxes += "%s: 2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
+        list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
       end
 
       footer = 
