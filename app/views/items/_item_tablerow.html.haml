@@ -6,8 +6,7 @@
     = label
     %small
       %br
-      €
-      %span{ :id => "price_#{ designator }" }= price
+      %span{ :id => "price_#{ designator }" }= number_to_currency price
       %span{ :id => "comment_#{ designator }" }= comment
       %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
 

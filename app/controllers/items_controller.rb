@@ -85,8 +85,9 @@ class ItemsController < ApplicationController
     tax_ids = Tax.all.collect { |t| t.id }
     current_tax_id_index = tax_ids.index @item.real_tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
-    @item.tax = Tax.find_by_id next_tax_id
-    @item.save
+    @item.update_attribute :tax_id, next_tax_id
+    @item.order.update_attribute :tax_id, nil
+    @item = Item.find_by_id params[:id] # re-read necessary
   end
 
   private

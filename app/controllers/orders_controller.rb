@@ -29,8 +29,8 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find_by_id params[:id]
     @order.update_attributes params[:order]
-    @order.tax = Tax.find_by_id params[:order][:tax_id] if params[:order][:tax_id] # explicit setting of tax so that setter method in order.rb is executed.
-    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
+    @order.tax = Tax.find_by_id params[:order][:tax_id] if params[:order][:tax_id] # explicit setting of tax so that setter method in order.rb is executed
+    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
     @cost_centers = CostCenter.all
     @taxes = Tax.all
     render 'items/update'
@@ -175,10 +175,10 @@ class OrdersController < ApplicationController
       if params[:order][:id] == 'add_offline_items_to_order'
         @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
       else
-        @order = Order.find(params[:order][:id]) if not params[:order][:id].empty?
+        @order = Order.find_by_id(params[:order][:id]) if not params[:order][:id].empty?
       end
 
-      @cost_centers = CostCenter.find_all_by_active(true)
+      @cost_centers = CostCenter.find_all_by_active true
       @taxes = Tax.all
 
       if @order
