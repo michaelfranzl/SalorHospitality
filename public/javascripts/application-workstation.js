@@ -22,6 +22,7 @@ function toggle_admin_interface() {
 
 function category_onmousedown(category_id) {
   display_articles(category_id); deselect_all_categories();
+  highlight_border(element);
 }
 
 function display_quantities(art_id) {

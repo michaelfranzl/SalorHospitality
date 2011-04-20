@@ -13,7 +13,8 @@
   #orderform{ :style => 'display: none;' }= render 'order'
   #invoices
   #functions_footer{ :style => 'display: none;' }
+    %img{ :src => '/images/send.gif', :style => 'display:none;' }
     - if workstation?
       %a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
-    - if mobile?
+    - else
       = render('functions_footer')

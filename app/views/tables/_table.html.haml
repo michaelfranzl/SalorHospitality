@@ -17,4 +17,4 @@
   - elsif Order.last and Order.last.credit < 1 and not table.user
     = table.abbreviation
   - else
-    %a{ :onclick => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation
+    %a{ :onmousedown => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation

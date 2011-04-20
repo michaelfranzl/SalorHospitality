@@ -27,7 +27,7 @@ h2
 
 
 div.room
-  :height 457px
+  :height 460px
 
 
 // table ------------
@@ -110,6 +110,8 @@ div.invoice
   :width 290px
   :font-size 120%
   :padding 10px 5px
+  select#cost_center_and_tax_for_invoice
+    :top -17px
 
 td.split
   :width 30px
@@ -117,7 +119,11 @@ td.split
 div#copyright
   :display none
 
-
+select.target_table
+  float: right
+  margin-right: 6px
+  height: 53px
+  width: 70px
 
 
 
@@ -225,7 +231,7 @@ td.item_minus
   :background-repeat no-repeat
 
 td.item_options
-  :text-align center
+  :text-aclign center
   :width 20%
   select
     :width 41px

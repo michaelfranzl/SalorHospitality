@@ -20,6 +20,7 @@ function category_onmousedown(category_id) {
   Effect.ScrollTo('articles', { offset:-40});
   display_articles(category_id);
   deselect_all_categories();
+  highlight_border(element);
 }
 
 function display_quantities(art_id) {

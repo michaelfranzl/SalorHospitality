@@ -244,10 +244,6 @@ function add_option_to_item(item_designator, select_tag)
 
 // VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON mobile
 
-function category_onmouseup(element) {
-  highlight_border(element);
-}
-
 function articles_onmousedown(element) {
   new Effect.Highlight(element);
   highlight_border(element);
