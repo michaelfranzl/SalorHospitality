@@ -125,25 +125,27 @@ class ApplicationController < ActionController::Base
 
         footer =
         "\n\n\n\n" +
-        "\x1DV\x00" # paper cut at the end of each order/table
+        "\x1DV\x00" + # paper cut at the end of each order/table
+        "\x16\x20105"
+
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
       #end
 
       logger.info per_order_output + "\n\n"
 
-      overall_output = Iconv.conv('ISO-8859-15','UTF-8',overall_output)
-      overall_output.gsub!(/\x00E4/,"\x84") #ä
-      overall_output.gsub!(/\x00FC/,"\x81") #ü
-      overall_output.gsub!(/\x00F6/,"\x94") #ö
-      overall_output.gsub!(/\x00C4/,"\x8E") #Ä
-      overall_output.gsub!(/\x00DC/,"\x9A") #Ü
-      overall_output.gsub!(/\x00D6/,"\x99") #Ö
-      overall_output.gsub!(/\x00DF/,"\xE1") #ß
-      overall_output.gsub!(/\x00E9/,"\x82") #é
-      overall_output.gsub!(/\x00E8/,"\x7A") #è
-      overall_output.gsub!(/\x00FA/,"\xA3") #ú
-      overall_output.gsub!(/\x00F9/,"\x97") #ù
-      overall_output.gsub!(/\x00C9/,"\x90") #É
+      overall_output.gsub!(/ä/,"ae")
+      overall_output.gsub!(/ü/,"ue")
+      overall_output.gsub!(/ö/,"oe")
+      overall_output.gsub!(/Ä/,"Ae")
+      overall_output.gsub!(/Ü/,"Ue")
+      overall_output.gsub!(/Ö/,"Oe")
+      overall_output.gsub!(/ß/,"sz")
+      overall_output.gsub!(/é/,"e")
+      overall_output.gsub!(/è/,"e")
+      overall_output.gsub!(/ú/,"u")
+      overall_output.gsub!(/ù/,"u")
+      overall_output.gsub!(/É/,"E")
+
       overall_output
     end
 
@@ -190,17 +192,20 @@ class ApplicationController < ActionController::Base
         sum_taxes[item.real_tax.id] += sum
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
 
-        label.gsub!(/ö/,"oe")
         label.gsub!(/ä/,"ae")
         label.gsub!(/ü/,"ue")
-        label.gsub!(/ß/,"sz")
-        label.gsub!(/Ö/,"Oe")
+        label.gsub!(/ö/,"oe")
         label.gsub!(/Ä/,"Ae")
         label.gsub!(/Ü/,"Ue")
+        label.gsub!(/Ö/,"Oe")
+        label.gsub!(/ß/,"sz")
+        label.gsub!(/é/,"e")
+        label.gsub!(/è/,"e")
+        label.gsub!(/ú/,"u")
+        label.gsub!(/ù/,"u")
+        label.gsub!(/É/,"E")
 
-        #label = Iconv.conv('ISO-8859-15//TRANSLIT','UTF-8', label)
         list_of_items += "%s %20.20s %7.2f %3u %7.2f\n" % [item.real_tax.letter, label, p, item.count, sum]
-        #list_of_items = Iconv.conv('UTF-8','ISO-8859-15',list_of_items)
       end
 
       sum =
@@ -235,6 +240,7 @@ class ApplicationController < ActionController::Base
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       logger.info output
+
       output = Iconv.conv('ISO-8859-15','UTF-8',output)
       output.gsub!(/\x00E4/,"\x84") #ä
       output.gsub!(/\x00FC/,"\x81") #ü

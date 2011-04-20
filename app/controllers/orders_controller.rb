@@ -232,9 +232,9 @@ class OrdersController < ApplicationController
       end
 
       if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
-        File.open('/dev/usb/lp0', 'w') { |f| f.write drinks_normal }
-        File.open('/dev/usb/lp0', 'w') { |f| f.write foods_normal }
-        File.open('/dev/usb/lp0', 'w') { |f| f.write drinks_takeaway }
+        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write drinks_normal }
+        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write foods_normal }
+        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write drinks_takeaway }
       end
 
     end
