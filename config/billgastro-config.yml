@@ -7,3 +7,6 @@ slogan1: The innovative POS Software
 slogan2: Visit us at
 internet: www.billgastro.com
 email: office@billgastro.com
+printer_kitchen: /dev/usblp1
+printer_bar: /dev/billgastro-printer-back-top-left
+printer_guestroom: /dev/ttyUSB1

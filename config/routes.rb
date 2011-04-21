@@ -87,7 +87,7 @@ BillGastro::Application.routes.draw do
     end
   end
 
-  resource :client_data
+  resource :config
 
   # Sample resource route with sub-resources:
   #   resources :products do

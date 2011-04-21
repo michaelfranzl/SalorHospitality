@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ClientDataController < ApplicationController
+class ConfigController < ApplicationController
 
   def show
-    @client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : {}
+    @config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
   end
 
   def create
-    File.open('config/client_data.yml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
+    File.open('config/billgastro-config.yml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
   end
 end

@@ -1,0 +1,39 @@
+%h1= t('config.menulabel')
+
+#message
+
+= form_tag '/config', :remote => true, :id => 'config_form' do
+  = label_tag 'data_name', t('.name')
+  = text_field_tag 'data[name]', @config[:name]
+  %br
+  = label_tag 'data_subtitle', t('.subtitle')
+  = text_field_tag 'data[subtitle]', @config[:subtitle]
+  %br
+  = label_tag 'data_address', t('.address')
+  = text_field_tag 'data[address]', @config[:address]
+  %br
+  = label_tag 'data_taxnumber', t('.taxnumber')
+  = text_field_tag 'data[taxnumber]', @config[:taxnumber]
+  %br
+  = label_tag 'data_slogan1', t('.slogan')
+  = text_field_tag 'data[slogan1]', @config[:slogan1]
+  %br
+  = label_tag 'data_slogan2', t('.slogan')
+  = text_field_tag 'data[slogan2]', @config[:slogan2]
+  %br
+  = label_tag 'data_internet', t('.internet_address')
+  = text_field_tag 'data[internet]', @config[:internet]
+  %br
+  = label_tag 'data_email', t('.email')
+  = text_field_tag 'data[email]', @config[:email]
+  %br
+  = label_tag 'data_printer_kitchen', t('.printer_kitchen')
+  = select_tag 'data[printer_kitchen]', options_for_select(['/dev/usblp0', '/dev/usblp1', '/dev/ttyUSB0', '/dev/ttyUSB1','/dev/billgastro-printer-front','/dev/billgastro-printer-back-top-left','/dev/billgastro-printer-back-top-right','/dev/billgastro-printer-back-bottom-left','/dev/billgastro-printer-back-bottom-right'], @config[:printer_kitchen])
+  %br
+  = label_tag 'data_printer_bar', t('.printer_bar')
+  = select_tag 'data[printer_bar]', options_for_select(['/dev/usblp0', '/dev/usblp1', '/dev/ttyUSB0', '/dev/ttyUSB1','/dev/billgastro-printer-front','/dev/billgastro-printer-back-top-left','/dev/billgastro-printer-back-top-right','/dev/billgastro-printer-back-bottom-left','/dev/billgastro-printer-back-bottom-right'], @config[:printer_bar])
+  %br
+  = label_tag 'data_printer_guestroom', t('.printer_guestroom')
+  = select_tag 'data[printer_guestroom]', options_for_select(['/dev/usblp0', '/dev/usblp1', '/dev/ttyUSB0', '/dev/ttyUSB1','/dev/billgastro-printer-front','/dev/billgastro-printer-back-top-left','/dev/billgastro-printer-back-top-right','/dev/billgastro-printer-back-bottom-left','/dev/billgastro-printer-back-bottom-right'], @config[:printer_guestroom])
+  %br
+  = submit_tag

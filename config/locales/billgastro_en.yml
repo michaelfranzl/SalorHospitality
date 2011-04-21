@@ -246,8 +246,8 @@ en:
       new_user: New User
       edit_user: Edit User
 
-  client_data:
-    menulabel: Company Data
+  config:
+    menulabel: Configuration
     show:
       name: Name
       subtitle: Invoice Subtitle
@@ -256,8 +256,11 @@ en:
       slogan: Invoice Slogan
       internet_address: Internet Address
       email: E-Mail
+      printer_kitchen: Printer Kitchen
+      printer_bar: Printer Bar
+      printer_guestroom: Printer Guestroom
     create:
-      client_data_successfully_updated: Data successfully updated!
+      config_successfully_updated: Data successfully updated!
 
   delete: Delete
   are_you_sure: 'Are you sure?'

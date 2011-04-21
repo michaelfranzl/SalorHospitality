@@ -248,8 +248,8 @@ de:
       new_user: Neuer Benutzer
       edit_user: Benutzer bearbeiten
 
-  client_data:
-    menulabel: Daten
+  config:
+    menulabel: Konfiguration
     show:
       name: Name
       subtitle: Untertitel
@@ -258,8 +258,11 @@ de:
       slogan: Rechnung Nachricht
       internet_address: Internetadresse
       email: E-Mail Adresse
+      printer_kitchen: Drucker Küche
+      printer_bar: Drucker Schank
+      printer_guestroom: Drucker Gastraum
     create:
-      client_data_successfully_updated: Daten erfolgreich aktualisiert!
+      config_successfully_updated: Konfiguration erfolgreich aktualisiert!
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

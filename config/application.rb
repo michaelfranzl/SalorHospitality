@@ -13,7 +13,26 @@ module BillGastro
 
     mattr_accessor :unused_order_numbers, :largest_order_number
 
-    SP = SerialPort.new '/dev/ttyUSB0', 9600 if File.exists? '/dev/ttyUSB0'
+    billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
+
+    begin
+      SERIAL_PRINTER_KITCHEN = SerialPort.new billgastro_config[:printer_kitchen], 9600
+    rescue
+      SERIAL_PRINTER_KITCHEN = nil
+    end
+
+    begin
+      SERIAL_PRINTER_BAR = SerialPort.new billgastro_config[:printer_bar], 9600
+    rescue
+      SERIAL_PRINTER_BAR = nil
+    end
+
+    begin
+      SERIAL_PRINTER_GUESTROOM = SerialPort.new billgastro_config[:printer_guestroom], 9600
+    rescue
+      SERIAL_PRINTER_GUESTROOM = nil
+    end
+
     INITIAL_CREDITS = 100
     USER_ROLES = { '' => '', 0 => 'Restaurant', 1 => 'Kellner', 2 => 'Admin', 3 => 'Superuser' }
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }

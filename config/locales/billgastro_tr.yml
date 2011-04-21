@@ -242,7 +242,7 @@ tr:
       new_user: Yeni kullanici
       edit_user: Kullanici islemek
 
-  client_data:
+  config:
     menulabel: Belirtiler
     show:
       name: Isim
@@ -253,7 +253,7 @@ tr:
       internet_address: Internet adresi
       email: E-Mail adresi
     create:
-      client_data_successfully_updated: Belirtiler yenilendi!
+      config_successfully_updated: Belirtiler yenilendi!
 
   delete: Silmek
   are_you_sure: 'Emin misiniz?'

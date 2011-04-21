@@ -128,8 +128,19 @@ class OrdersController < ApplicationController
     end
 
     invoice = generate_escpos_invoice @order
-    BillGastro::Application::SP.write invoice if defined? BillGastro::Application::SP
-    File.open('/dev/usb/lp0', 'w') { |f| f.write invoice } if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
+    billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
+
+    case params[:port]
+      when 0
+        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write invoice if BillGastro::Application::SERIAL_PRINTER_KITCHEN
+        File.open(billgastro_config[:printer_kitchen], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
+      when 1
+        BillGastro::Application::SERIAL_PRINTER_BAR.write invoice if BillGastro::Application::SERIAL_PRINTER_BAR
+        File.open(billgastro_config[:printer_bar], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
+      when 2
+        BillGastro::Application::SERIAL_PRINTER_GUESTROOM.write invoice if BillGastro::Application::SERIAL_PRINTER_GUESTROOM
+        File.open(billgastro_config[:printer_guestroom], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_guestroom] and File.writable? billgastro_config[:printer_guestroom]
+    end
 
     justfinished = false
     if not @order.finished
@@ -224,19 +235,26 @@ class OrdersController < ApplicationController
       drinks_normal   = generate_escpos_items order, 0, 0
       foods_normal    = generate_escpos_items order, 1, 0
       drinks_takeaway = generate_escpos_items order, 1, 1
-
-      if defined? BillGastro::Application::SP
-        BillGastro::Application::SP.write drinks_normal
-        BillGastro::Application::SP.write foods_normal
-        BillGastro::Application::SP.write drinks_takeaway
+      
+      if BillGastro::Application::SERIAL_PRINTER_KITCHEN
+        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_normal 
+        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_takeaway
+      end
+      if BillGastro::Application::SERIAL_PRINTER_BAR
+        BillGastro::Application::SERIAL_PRINTER_BAR.write drinks_normal
       end
 
-      if File.exists? '/dev/usb/lp0' and File.writable? '/dev/usb/lp0'
-        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write drinks_normal }
-        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write foods_normal }
-        File.open('/dev/usb/lp0', 'w:ISO8859-15') { |f| f.write drinks_takeaway }
-      end
+      billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
 
+      if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
+        File.open(billgastro_config[:printer_kitchen], 'w:ISO8859-15') do |f|
+          f.write foods_normal
+          f.write foods_takeaway
+        end
+      end
+      if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
+        File.open(billgastro_config[:printer_bar], 'w:ISO8859-15') { |f| f.write drinks_normal }
+      end
     end
 
     def conditional_redirect_ajax(order)
