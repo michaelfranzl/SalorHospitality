@@ -33,6 +33,23 @@ module BillGastro
       SERIAL_PRINTER_GUESTROOM = nil
     end
 
+
+    if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
+      USB_PRINTER_KITCHEN =  File.open(billgastro_config[:printer_kitchen], 'w:ISO8859-15')
+    else
+      USB_PRINTER_KITCHEN = nil
+    end
+    if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
+      USB_PRINTER_BAR =  File.open(billgastro_config[:printer_bar], 'w:ISO8859-15')
+    else
+      USB_PRINTER_BAR = nil
+    end
+    if File.exists? billgastro_config[:printer_guestroom] and File.writable? billgastro_config[:printer_guestroom]
+      USB_PRINTER_GUESTROOM =  File.open(billgastro_config[:printer_guestroom], 'w:ISO8859-15')
+    else
+      USB_PRINTER_GUESTROOM = nil
+    end
+
     INITIAL_CREDITS = 100
     USER_ROLES = { '' => '', 0 => 'Restaurant', 1 => 'Kellner', 2 => 'Admin', 3 => 'Superuser' }
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }

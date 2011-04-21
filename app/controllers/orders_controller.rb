@@ -244,16 +244,12 @@ class OrdersController < ApplicationController
         BillGastro::Application::SERIAL_PRINTER_BAR.write drinks_normal
       end
 
-      billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
-
-      if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
-        File.open(billgastro_config[:printer_kitchen], 'w:ISO8859-15') do |f|
-          f.write foods_normal
-          f.write foods_takeaway
-        end
+      if BillGastro::Application::USB_PRINTER_KITCHEN
+        BillGastro::Application::USB_PRINTER_KITCHEN.write foods_normal
+        BillGastro::Application::USB_PRINTER_KITCHEN.write foods_takeaway
       end
-      if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
-        File.open(billgastro_config[:printer_bar], 'w:ISO8859-15') { |f| f.write drinks_normal }
+      if BillGastro::Application::USB_PRINTER_BAR
+        BillGastro::Application::USB_PRINTER_BAR.write drinks_normal
       end
     end
 
