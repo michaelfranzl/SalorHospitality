@@ -1,10 +1,13 @@
+- if @sum
+  %h1= number_to_currency @sum
+
 %div.invoice{ :id => "invoice_#{storno_form.id}" }
   = link_to('', "/orders/print_and_finish/#{ storno_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
   = link_to '', "/orders/print_and_finish/#{ storno_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
   = link_to '', "/orders/print_and_finish/#{ storno_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
 
   = form_for storno_form, :as => :order, :url => "/orders/storno/#{storno_form.id}", :html => { :method => :put, :id => 'storno_form' }, :remote => true do |order_form|
-    %h3== #{ t(:invoice) } ##{storno_form.nr}
+    %h3== #{ t(:invoice) } ##{storno_form.nr}, #{ storno_form.table.name }
     %p= l storno_form.created_at, :format => :long
     %table
       - subtotal = 0

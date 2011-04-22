@@ -214,7 +214,8 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @last_orders = Order.find(:all, :conditions => { :finished => true }, :limit => 10, :order => 'created_at DESC')
+    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
+    @sum = @unsettled_orders.sum(&:sum)
   end
 
   private
