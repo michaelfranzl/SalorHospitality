@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
     @previous_order, @next_order = neighbour_orders(@order)
     respond_to do |wants|
       wants.html
-      wants.bon { render :text => generate_escpos_invoice(@order) }
+      wants.bill { render :text => generate_escpos_invoice(@order) }
     end
   end
 
@@ -233,24 +233,26 @@ class OrdersController < ApplicationController
 
       group_identical_items(order)
 
-      drinks_normal   = generate_escpos_items order, 0, 0
-      foods_normal    = generate_escpos_items order, 1, 0
-      drinks_takeaway = generate_escpos_items order, 1, 1
+      if not saas?
+        drinks_normal   = generate_escpos_items order, 0, 0
+        foods_normal    = generate_escpos_items order, 1, 0
+        drinks_takeaway = generate_escpos_items order, 1, 1
       
-      if BillGastro::Application::SERIAL_PRINTER_KITCHEN
-        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_normal 
-        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_takeaway
-      end
-      if BillGastro::Application::SERIAL_PRINTER_BAR
-        BillGastro::Application::SERIAL_PRINTER_BAR.write drinks_normal
-      end
+        if BillGastro::Application::SERIAL_PRINTER_KITCHEN
+          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_normal 
+          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_takeaway
+        end
+        if BillGastro::Application::SERIAL_PRINTER_BAR
+          BillGastro::Application::SERIAL_PRINTER_BAR.write drinks_normal
+        end
 
-      if BillGastro::Application::USB_PRINTER_KITCHEN
-        BillGastro::Application::USB_PRINTER_KITCHEN.write foods_normal
-        BillGastro::Application::USB_PRINTER_KITCHEN.write foods_takeaway
-      end
-      if BillGastro::Application::USB_PRINTER_BAR
-        BillGastro::Application::USB_PRINTER_BAR.write drinks_normal
+        if BillGastro::Application::USB_PRINTER_KITCHEN
+          BillGastro::Application::USB_PRINTER_KITCHEN.write foods_normal
+          BillGastro::Application::USB_PRINTER_KITCHEN.write foods_takeaway
+        end
+        if BillGastro::Application::USB_PRINTER_BAR
+          BillGastro::Application::USB_PRINTER_BAR.write drinks_normal
+        end
       end
     end
 

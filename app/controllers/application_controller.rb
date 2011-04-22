@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
+      @current_company = @current_user.company if @current_user
     end
 
     def logged_in?
@@ -46,11 +47,14 @@ class ApplicationController < ActionController::Base
 
     def workstation?
        request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
-      #not mobile?
     end
 
     def mobile?
       not workstation?
+    end
+
+    def saas?
+      @current_company.saas
     end
 
     def set_locale
@@ -83,29 +87,32 @@ class ApplicationController < ActionController::Base
       return nr
     end
 
-    def generate_escpos_items(order, category_usage, article_usage)
+    def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)
+      orders = order ? [order] : Order.find_all_by_finished(false)
       overall_output = ''
-      #Order.find_all_by_finished(false).each do |order|
+      orders.each do |o|
         per_order_output = ''
         header =
         "\e@"     +  # Initialize Printer
         "\e!\x38"    # doube tall, double wide, bold
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), order.nr, @current_user.login, order.table.abbreviation] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
         printed_items_in_this_order = 0
-        order.items.each do |i|
-
+        o.items.each do |i|
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
           next if i.count == i.printed_count
 
-          item_usage = i.quantity ? i.quantity.usage : i.article.usage
-          next if (i.count <= i.printed_count)         or
+          article_quantity_usage = i.quantity ? i.quantity.usage : i.article.usage
+
+          next if category_usage and
+                  article_usage and
+                  ((i.count <= i.printed_count)         or
                   (category_usage != i.category.usage) or
-                  (article_usage  != item_usage)
+                  (article_usage  != article_quantity_usage))
 
           printed_items_in_this_order =+ 1
 
@@ -129,9 +136,8 @@ class ApplicationController < ActionController::Base
         "\x16\x20105"
 
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
-      #end
-
-      logger.info per_order_output + "\n\n"
+        logger.info per_order_output + "\n\n"
+      end
 
       overall_output.gsub!(/ä/,"ae")
       overall_output.gsub!(/ü/,"ue")
@@ -158,19 +164,19 @@ class ApplicationController < ActionController::Base
     end
 
     def generate_escpos_invoice(order)
-      client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
+      billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
 
       header =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      client_data[:name] + "\n" +
+      billgastro_config[:name] + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + client_data[:subtitle] + "\n" +
-      "\n" + client_data[:address] + "\n\n" +
-      client_data[:taxnumber] + "\n\n" +
+      "\n" + billgastro_config[:subtitle] + "\n" +
+      "\n" + billgastro_config[:address] + "\n\n" +
+      billgastro_config[:taxnumber] + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
@@ -232,10 +238,10 @@ class ApplicationController < ActionController::Base
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + client_data[:slogan1] + "\n" +
+      "\n" + billgastro_config[:slogan1] + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + client_data[:slogan2] + "\n" +
-      client_data[:internet] + "\n\n\n\n\n\n\n" + 
+      "\n" + billgastro_config[:slogan2] + "\n" +
+      billgastro_config[:internet] + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer

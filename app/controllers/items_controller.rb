@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
 
   def index
     respond_to do |wants|
-      wants.bon { render :text => generate_escpos_items(:drink) }
+      wants.bill { render :text => generate_escpos_items }
     end
   end
 
