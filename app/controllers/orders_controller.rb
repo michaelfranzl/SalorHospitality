@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
   def login
     @current_user = User.find_by_login_and_password(params[:login], params[:password])
     if @current_user
+      @current_company = @current_user.company
       @tables = Table.all
       @categories = Category.find(:all, :order => :sort_order)
       session[:user_id] = @current_user

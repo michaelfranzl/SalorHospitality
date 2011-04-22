@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     end
 
     def saas?
-      @current_company.saas
+      @current_company.saas if @current_company
     end
 
     def set_locale
