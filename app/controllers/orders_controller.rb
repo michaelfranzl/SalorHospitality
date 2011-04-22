@@ -141,7 +141,7 @@ class OrdersController < ApplicationController
           BillGastro::Application::SERIAL_PRINTER_GUESTROOM.write invoice if BillGastro::Application::SERIAL_PRINTER_GUESTROOM
           BillGastro::Application::USB_PRINTER_GUESTROOM.write invoice if BillGastro::Application::USB_PRINTER_GUESTROOM
       end
-    else
+    elsif params[:port] != 3
       BillGastro::Application::print_order_numbers << @order.id
     end
 
