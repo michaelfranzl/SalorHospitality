@@ -18,9 +18,15 @@
 
 class ItemsController < ApplicationController
 
+  # Return a file that contains all not yet printed Items and all Orders that are marked for printing
   def index
     respond_to do |wants|
-      wants.bill { render :text => generate_escpos_items }
+      wants.bill {
+        items = generate_escpos_items
+        invoices = BillGastro::Application::print_order_numbers.collect{ |id| generate_escpos_invoice Order.find_by_id(id) }.join
+        BillGastro::Application::print_order_numbers = []
+        render :text => invoices + items
+      }
     end
   end
 

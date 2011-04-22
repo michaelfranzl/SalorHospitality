@@ -1,1 +1,3 @@
 %a.iconbutton.invoice_button{ :href=>"/orders/last" }
+- if saas?
+  %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';" }

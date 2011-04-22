@@ -107,7 +107,8 @@ class OrdersController < ApplicationController
   def print_and_finish
     @order = Order.find params[:id]
 
-    BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number 
+    BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number
+
 
     if not @order.finished and mobile?
       @order.user = @current_user
@@ -127,19 +128,21 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    invoice = generate_escpos_invoice @order
-    billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
-
-    case params[:port]
-      when 0
-        BillGastro::Application::SERIAL_PRINTER_KITCHEN.write invoice if BillGastro::Application::SERIAL_PRINTER_KITCHEN
-        File.open(billgastro_config[:printer_kitchen], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
-      when 1
-        BillGastro::Application::SERIAL_PRINTER_BAR.write invoice if BillGastro::Application::SERIAL_PRINTER_BAR
-        File.open(billgastro_config[:printer_bar], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
-      when 2
-        BillGastro::Application::SERIAL_PRINTER_GUESTROOM.write invoice if BillGastro::Application::SERIAL_PRINTER_GUESTROOM
-        File.open(billgastro_config[:printer_guestroom], 'w') { |f| f.write invoice } if File.exists? billgastro_config[:printer_guestroom] and File.writable? billgastro_config[:printer_guestroom]
+    if not saas?
+      invoice = generate_escpos_invoice @order
+      case params[:port]
+        when 0
+          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write invoice if BillGastro::Application::SERIAL_PRINTER_KITCHEN
+          BillGastro::Application::USB_PRINTER_KITCHEN.write invoice if BillGastro::Application::USB_PRINTER_KITCHEN
+        when 1
+          BillGastro::Application::SERIAL_PRINTER_BAR.write invoice if BillGastro::Application::SERIAL_PRINTER_BAR
+          BillGastro::Application::USB_PRINTER_BAR.write invoice if BillGastro::Application::USB_PRINTER_BAR
+        when 2
+          BillGastro::Application::SERIAL_PRINTER_GUESTROOM.write invoice if BillGastro::Application::SERIAL_PRINTER_GUESTROOM
+          BillGastro::Application::USB_PRINTER_GUESTROOM.write invoice if BillGastro::Application::USB_PRINTER_GUESTROOM
+      end
+    else
+      BillGastro::Application::print_order_numbers << @order.id
     end
 
     justfinished = false

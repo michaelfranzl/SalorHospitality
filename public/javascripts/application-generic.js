@@ -316,6 +316,7 @@ new PeriodicalExecuter(
   function() {
     //$('flash_notice').innerHTML = '                              ' + tableupdates;
     if (tableupdates > 0) {
+      window.location.href = '/items.bill';
       new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
     }
     else if (tableupdates == 0) {
@@ -323,6 +324,6 @@ new PeriodicalExecuter(
     }
     tableupdates -= 1;
   }
-, 20)
+, 30)
 
 

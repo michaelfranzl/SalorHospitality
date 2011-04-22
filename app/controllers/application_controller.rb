@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   before_filter :fetch_logged_in_user, :set_locale
-  helper_method :logged_in?, :mobile?, :workstation?
+  helper_method :logged_in?, :mobile?, :workstation?, :saas?
 
   private
 

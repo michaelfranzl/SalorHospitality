@@ -11,7 +11,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
-    mattr_accessor :unused_order_numbers, :largest_order_number
+    mattr_accessor :unused_order_numbers, :largest_order_number, :print_order_numbers
 
     billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
 
@@ -55,6 +55,7 @@ module BillGastro
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
 
     @@unused_order_numbers = Array.new
+    @@print_order_numbers = Array.new
     @@largest_order_number = 0
 
     # Settings in config/environments/* take precedence over those specified here.
