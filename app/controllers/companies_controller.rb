@@ -14,16 +14,17 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ConfigController < ApplicationController
+class CompaniesController < ApplicationController
 
-  def show
-    @config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
+  def index
+    @company = Company.all.first
+    render :edit
   end
 
-  def create
-    if params[:config]
-      File.open('config/billgastro-config.yml', 'w') { |out| YAML.dump(params[:config], out) } 
-      BillGastro::Application::saas_automatic_printing = params[:config][:automatic_printing]
-    end
+  def update
+    @company = Company.all.first
+    @company.update_attributes params[:company]
+    session[:automatic_printing] = @company.automatic_printing
   end
+
 end

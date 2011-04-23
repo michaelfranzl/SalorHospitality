@@ -1,6 +1,6 @@
 class AddSaasToCompany < ActiveRecord::Migration
   def self.up
-    add_column :companies, :saas, :boolean
+    add_column :companies, :saas, :boolean, :default => true
   end
 
   def self.down

@@ -143,7 +143,7 @@ class OrdersController < ApplicationController
           BillGastro::Application::USB_PRINTER_GUESTROOM.write invoice if BillGastro::Application::USB_PRINTER_GUESTROOM
       end
     elsif params[:port] != 3
-      BillGastro::Application::print_order_numbers << @order.id
+      @order.update_attribute :print_pending, true
     end
 
     justfinished = false
@@ -227,7 +227,8 @@ class OrdersController < ApplicationController
     def process_order(order)
       order.reload
       if order.items.size.zero?
-        BillGastro::Application::unused_order_numbers << order.nr
+        @current_company.unused_order_numbers << order.nr
+        @current_company.save
         order.delete
         order.table.update_attribute :user, nil
         return

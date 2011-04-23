@@ -7,6 +7,9 @@ de:
       user:
         one: Benutzer
         other: Benutzer
+      company:
+        one: Firma
+        other: Firmen
       tax:
         one: Steuerklasse
         other: Steuerklassen
@@ -92,6 +95,21 @@ de:
         password: Passwort
         role: Rolle
         title: Anrede
+      company:
+        name: Firmenname
+        subdomain: Subdomain
+        saas: Online-Variante
+        automatic_printing: Automatisches Drucken
+        printer_guestroom: Drucker Gastraum
+        printer_bar: Drucker Bar
+        printer_kitchen: Drucker Küche
+        email: E-Mail
+        internet_address: Internetadresse
+        invoice_slogan1: Rechnungsmitteilung 1
+        invoice_slogan2: Rechnungsmitteilung 2
+        invoice_subtitle: Rechnungs-Untertitel
+        revenue_service_tax_number: UID Nummer
+        address: Adresse
 
   articles:
     index:
@@ -248,21 +266,9 @@ de:
       new_user: Neuer Benutzer
       edit_user: Benutzer bearbeiten
 
-  config:
-    menulabel: Konfiguration
-    show:
-      name: Name
-      subtitle: Untertitel
-      address: Adresse
-      taxnumber: Steuernummer
-      slogan: Rechnung Nachricht
-      internet_address: Internetadresse
-      email: E-Mail Adresse
-      printer_kitchen: Drucker Küche
-      printer_bar: Drucker Schank
-      printer_guestroom: Drucker Gastraum
+  company:
     create:
-      config_successfully_updated: Konfiguration erfolgreich aktualisiert!
+      config_successfully_updated: Firmendaten erfolgreich aktualisiert!
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

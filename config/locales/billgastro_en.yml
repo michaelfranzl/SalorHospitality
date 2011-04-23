@@ -7,6 +7,9 @@ en:
       user:
         one: User
         other: Users
+      company:
+        one: Company
+        other: Companies
       tax:
         one: Tax Class
         other: Tax Classes
@@ -91,6 +94,21 @@ en:
         password: Password
         role: Role
         title: Title
+      company:
+        name: Name
+        subdomain: Subdomain
+        saas: Online-Variant
+        automatic_printing: Automatic printing
+        printer_guestroom: Printer Guestroom
+        printer_bar: Printer Bar
+        printer_kitchen: Printer Kitchen
+        email: e-mail
+        internet_address: Internet address
+        invoice_slogan1: Invoice Slogan 1
+        invoice_slogan2: Invoice Slogan 2
+        invoice_subtitle: Invoice Subtitle
+        revenue_service_tax_number: Revenue service tax number
+        address: Address
 
 
   articles:

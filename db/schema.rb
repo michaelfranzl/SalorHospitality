@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110422115205) do
+ActiveRecord::Schema.define(:version => 20110423190413) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -46,7 +46,20 @@ ActiveRecord::Schema.define(:version => 20110422115205) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "saas"
+    t.boolean  "saas",                       :default => true
+    t.string   "invoice_subtitle"
+    t.string   "address"
+    t.string   "revenue_service_tax_number"
+    t.string   "invoice_slogan1"
+    t.string   "invoice_slogan2"
+    t.string   "internet_address",           :default => "www.billgastro.com"
+    t.string   "email",                      :default => "office@billgastro.com"
+    t.string   "printer_kitchen",            :default => "/dev/usblp0"
+    t.string   "printer_bar",                :default => "/dev/usblp0"
+    t.string   "printer_guestroom",          :default => "/dev/usblp0"
+    t.boolean  "automatic_printing",         :default => false
+    t.integer  "largest_order_number",       :default => 0
+    t.string   "unused_order_numbers",       :default => "--- []\n\n"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -138,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20110422115205) do
     t.integer  "nr"
     t.integer  "credit",          :default => 0
     t.integer  "tax_id"
+    t.boolean  "print_pending"
   end
 
   create_table "quantities", :force => true do |t|

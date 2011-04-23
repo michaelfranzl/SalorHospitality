@@ -22,10 +22,11 @@ class ItemsController < ApplicationController
   def index
     respond_to do |wants|
       wants.bill {
-        items = generate_escpos_items
-        invoices = BillGastro::Application::print_order_numbers.collect{ |id| generate_escpos_invoice Order.find_by_id(id) }.join
-        BillGastro::Application::print_order_numbers = []
-        render :text => invoices + items
+        items_code = generate_escpos_items
+        pending_invoices = Order.find_all_by_print_pending(true)
+        invoices_code = pending_invoices.collect{ |i| generate_escpos_invoice i }.join
+        pending_invoices.each { |i| i.update_attribute :print_pending, false }
+        render :text => invoices_code + items_code
       }
     end
   end
@@ -161,7 +162,8 @@ class ItemsController < ApplicationController
       if parent_order.items.empty?
         parent_order.delete
         logger.info "XXX deleted parent_order since there were no items left."
-        BillGastro::Application::unused_order_numbers << parent_order.nr
+        @current_company.unused_order_numbers << parent_order.nr
+        @current_company.save
       else
         parent_order.update_attribute( :sum, calculate_order_sum(parent_order) )
       end

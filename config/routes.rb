@@ -46,14 +46,12 @@ BillGastro::Application.routes.draw do
     end
   end
 
-  resources :items
-
   match 'orders/print_and_finish/:id/:port' => 'orders#print_and_finish'
   match "orders/storno/:id" => "orders#storno"
   match "items/rotate_tax/:id" => "items#rotate_tax"
   match "orders/toggle_tax_colors/:id" => "orders#toggle_tax_colors"
 
- resources :options, :settlements, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard
+ resources :items, :companies, :options, :settlements, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard
 
   resources :statistics do
     collection do
@@ -86,8 +84,6 @@ BillGastro::Application.routes.draw do
       get :browser_warning
     end
   end
-
-  resource :config
 
   # Sample resource route with sub-resources:
   #   resources :products do

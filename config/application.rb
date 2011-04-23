@@ -11,53 +11,10 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
-    mattr_accessor :unused_order_numbers, :largest_order_number, :print_order_numbers, :saas_automatic_printing
-
-    billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
-
-    begin
-      SERIAL_PRINTER_KITCHEN = SerialPort.new billgastro_config[:printer_kitchen], 9600
-    rescue
-      SERIAL_PRINTER_KITCHEN = nil
-    end
-
-    begin
-      SERIAL_PRINTER_BAR = SerialPort.new billgastro_config[:printer_bar], 9600
-    rescue
-      SERIAL_PRINTER_BAR = nil
-    end
-
-    begin
-      SERIAL_PRINTER_GUESTROOM = SerialPort.new billgastro_config[:printer_guestroom], 9600
-    rescue
-      SERIAL_PRINTER_GUESTROOM = nil
-    end
-
-
-    if File.exists? billgastro_config[:printer_kitchen] and File.writable? billgastro_config[:printer_kitchen]
-      USB_PRINTER_KITCHEN =  File.open(billgastro_config[:printer_kitchen], 'w:ISO8859-15')
-    else
-      USB_PRINTER_KITCHEN = nil
-    end
-    if File.exists? billgastro_config[:printer_bar] and File.writable? billgastro_config[:printer_bar]
-      USB_PRINTER_BAR =  File.open(billgastro_config[:printer_bar], 'w:ISO8859-15')
-    else
-      USB_PRINTER_BAR = nil
-    end
-    if File.exists? billgastro_config[:printer_guestroom] and File.writable? billgastro_config[:printer_guestroom]
-      USB_PRINTER_GUESTROOM =  File.open(billgastro_config[:printer_guestroom], 'w:ISO8859-15')
-    else
-      USB_PRINTER_GUESTROOM = nil
-    end
-
+    DEVICE_NODES = ['/dev/usblp0', '/dev/usblp1', '/dev/ttyUSB0', '/dev/ttyUSB1','/dev/billgastro-printer-front','/dev/billgastro-printer-back-top-left','/dev/billgastro-printer-back-top-right','/dev/billgastro-printer-back-bottom-left','/dev/billgastro-printer-back-bottom-right']
     INITIAL_CREDITS = 100
     USER_ROLES = { '' => '', 0 => 'Restaurant', 1 => 'Kellner', 2 => 'Admin', 3 => 'Superuser' }
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
-
-    @@unused_order_numbers = Array.new
-    @@print_order_numbers = Array.new
-    @@largest_order_number = 0
-    @@saas_automatic_printing = billgastro_config[:automatic_printing]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

@@ -19,7 +19,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
-  before_filter :fetch_logged_in_user, :set_locale
+  before_filter :fetch_logged_in_user, :set_locale, :set_automatic_printing
   helper_method :logged_in?, :mobile?, :workstation?, :saas?
 
   private
@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base
       I18n.locale = @current_user ? @current_user.language : 'en'
     end
 
+    def set_automatic_printing
+      session[:automatic_printing] = @current_company.automatic_printing
+    end
+
     def calculate_order_sum(order)
       subtotal = 0
       order.items.each do |item|
@@ -72,13 +76,14 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
-      if not BillGastro::Application::unused_order_numbers.empty?
+      if not @current_company.unused_order_numbers.empty?
         # reuse order numbers if present
-        nr = BillGastro::Application::unused_order_numbers.first
-        BillGastro::Application::unused_order_numbers.delete(nr)
-      elsif not BillGastro::Application::largest_order_number.zero?
+        nr = @current_company.unused_order_numbers.first
+        @current_company.unused_order_numbers.delete(nr)
+        @current_company.save
+      elsif not @current_company.largest_order_number.zero?
         # increment largest order number
-        nr = BillGastro::Application::largest_order_number + 1
+        nr = @current_company.largest_order_number + 1
       else
         # find Order with largest nr attribute from database. this should happen only once per application instance.
         last_order = Order.first(:order => 'nr DESC')
