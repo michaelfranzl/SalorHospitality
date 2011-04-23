@@ -129,7 +129,7 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if params[:port] != 3
+    if params[:port].to_i != 3
       # print button pressed
       if local_variant?
         # print immediately
@@ -207,6 +207,7 @@ class OrdersController < ApplicationController
         @order.table.update_attribute :user, @order.user
       end
       @current_company.largest_order_number = @order.nr if @order.nr > @current_company.largest_order_number
+      process_order(@order)
     end
     conditional_redirect_ajax(@order)
   end
@@ -219,7 +220,6 @@ class OrdersController < ApplicationController
   private
 
     def process_order(order)
-debugger
       order.reload
       if order.items.size.zero?
         @current_company.unused_order_numbers << order.nr
@@ -234,10 +234,9 @@ debugger
       group_identical_items(order)
 
       if local_variant?
-        drinks_normal   = generate_escpos_items order, 0, 0
         foods_normal    = generate_escpos_items order, 1, 0
-        drinks_takeaway = generate_escpos_items order, 1, 1
-
+        foods_takeaway  = generate_escpos_items order, 1, 1
+        drinks_normal   = generate_escpos_items order, 0, 0
         BillGastro::Application::printers[0].write foods_normal
         BillGastro::Application::printers[0].write foods_takeaway
         BillGastro::Application::printers[1].write drinks_normal
