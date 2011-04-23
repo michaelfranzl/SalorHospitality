@@ -11,10 +11,14 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
+    mattr_accessor :printers
+
     DEVICE_NODES = ['/dev/usblp0', '/dev/usblp1', '/dev/ttyUSB0', '/dev/ttyUSB1','/dev/billgastro-printer-front','/dev/billgastro-printer-back-top-left','/dev/billgastro-printer-back-top-right','/dev/billgastro-printer-back-bottom-left','/dev/billgastro-printer-back-bottom-right']
     INITIAL_CREDITS = 100
     USER_ROLES = { '' => '', 0 => 'Restaurant', 1 => 'Kellner', 2 => 'Admin', 3 => 'Superuser' }
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
+
+    @@printers = []
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

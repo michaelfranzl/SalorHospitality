@@ -129,27 +129,22 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if not saas?
-      invoice = generate_escpos_invoice @order
-      case params[:port]
-        when 0
-          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write invoice if BillGastro::Application::SERIAL_PRINTER_KITCHEN
-          BillGastro::Application::USB_PRINTER_KITCHEN.write invoice if BillGastro::Application::USB_PRINTER_KITCHEN
-        when 1
-          BillGastro::Application::SERIAL_PRINTER_BAR.write invoice if BillGastro::Application::SERIAL_PRINTER_BAR
-          BillGastro::Application::USB_PRINTER_BAR.write invoice if BillGastro::Application::USB_PRINTER_BAR
-        when 2
-          BillGastro::Application::SERIAL_PRINTER_GUESTROOM.write invoice if BillGastro::Application::SERIAL_PRINTER_GUESTROOM
-          BillGastro::Application::USB_PRINTER_GUESTROOM.write invoice if BillGastro::Application::USB_PRINTER_GUESTROOM
+    if params[:port] != 3
+      # print button pressed
+      if local_variant?
+        # print immediately
+        invoice = generate_escpos_invoice @order
+        BillGastro::Application::printers[params[:port]].write invoice if BillGastro::Application::printers[params[:port]]
+      else
+        # print later
+        @order.update_attribute :print_pending, true
       end
-    elsif params[:port] != 3
-      @order.update_attribute :print_pending, true
     end
 
     justfinished = false
     if not @order.finished
       @order.finished = true
-      @order.printed_from = "#{ request.remote_ip } on printer #{ params[:port] }"
+      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
       justfinished = true
       @order.save
     end
@@ -238,26 +233,13 @@ class OrdersController < ApplicationController
 
       group_identical_items(order)
 
-      if not saas?
+      if local_variant?
         drinks_normal   = generate_escpos_items order, 0, 0
         foods_normal    = generate_escpos_items order, 1, 0
         drinks_takeaway = generate_escpos_items order, 1, 1
-      
-        if BillGastro::Application::SERIAL_PRINTER_KITCHEN
-          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_normal 
-          BillGastro::Application::SERIAL_PRINTER_KITCHEN.write foods_takeaway
-        end
-        if BillGastro::Application::SERIAL_PRINTER_BAR
-          BillGastro::Application::SERIAL_PRINTER_BAR.write drinks_normal
-        end
-
-        if BillGastro::Application::USB_PRINTER_KITCHEN
-          BillGastro::Application::USB_PRINTER_KITCHEN.write foods_normal
-          BillGastro::Application::USB_PRINTER_KITCHEN.write foods_takeaway
-        end
-        if BillGastro::Application::USB_PRINTER_BAR
-          BillGastro::Application::USB_PRINTER_BAR.write drinks_normal
-        end
+        BillGastro::Application::printers[0].write foods_normal if BillGastro::Application::printers[0]
+        BillGastro::Application::printers[0].write foods_takeaway if BillGastro::Application::printers[0]
+        BillGastro::Application::printers[1].write drinks_normal if BillGastro::Application::printers[1]
       end
     end
 

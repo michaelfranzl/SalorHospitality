@@ -19,7 +19,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
-  before_filter :fetch_logged_in_user, :set_locale, :set_automatic_printing
+  before_filter :fetch_logged_in_user, :set_locale, :set_automatic_printing, :initialize_printers
   helper_method :logged_in?, :mobile?, :workstation?, :saas?
 
   private
@@ -53,8 +53,12 @@ class ApplicationController < ActionController::Base
       not workstation?
     end
 
-    def saas?
+    def saas_variant?
       @current_company.saas if @current_company
+    end
+
+    def local_variant?
+      not saas?
     end
 
     def set_locale
@@ -62,7 +66,7 @@ class ApplicationController < ActionController::Base
     end
 
     def set_automatic_printing
-      session[:automatic_printing] = @current_company.automatic_printing
+      session[:automatic_printing] = @current_company.automatic_printing if session[:automatic_printing].nil? and @current_company
     end
 
     def calculate_order_sum(order)
@@ -90,6 +94,26 @@ class ApplicationController < ActionController::Base
         nr = last_order ? last_order.nr + 1 : 1
       end
       return nr
+    end
+
+    def initialize_printers
+      return if saas_variant?
+      return if not BillGastro::Application::printers.empty?
+debugger
+      printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
+      (0..2).each { |i|
+        begin
+          BillGastro::Application::printers[i] = SerialPort.new printer_paths[i], 9600
+        rescue
+          BillGastro::Application::printers[i] = nil
+        end
+
+        begin
+          BillGastro::Application::printers[i] = File.open printer_paths[i], 'w:ISO8859-15'
+        rescue
+          BillGastro::Application::printers[i] = nil
+        end
+      }
     end
 
     def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)
@@ -169,19 +193,17 @@ class ApplicationController < ActionController::Base
     end
 
     def generate_escpos_invoice(order)
-      billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : { :name => '', :subtitle => '', :address => '', :taxnumber => '', :slogan1 => '', :slogan2 => '', :internet => '' }
-
       header =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      billgastro_config[:name] + "\n" +
+      @current_company.name + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + billgastro_config[:subtitle] + "\n" +
-      "\n" + billgastro_config[:address] + "\n\n" +
-      billgastro_config[:taxnumber] + "\n\n" +
+      "\n" + @current_company.invoice_subtitle + "\n" +
+      "\n" + @current_company.address + "\n\n" +
+      @current_company.revenue_service_tax_number + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
@@ -243,10 +265,10 @@ class ApplicationController < ActionController::Base
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + billgastro_config[:slogan1] + "\n" +
+      "\n" + @current_company.invoice_slogan1 + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + billgastro_config[:slogan2] + "\n" +
-      billgastro_config[:internet] + "\n\n\n\n\n\n\n" + 
+      "\n" + @current_company.invoice_slogan2 + "\n" +
+      @current_company.internet_address + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer

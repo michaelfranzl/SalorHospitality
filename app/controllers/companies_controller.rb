@@ -25,6 +25,7 @@ class CompaniesController < ApplicationController
     @company = Company.all.first
     @company.update_attributes params[:company]
     session[:automatic_printing] = @company.automatic_printing
+    BillGastro::Application::printers = [] # initialize printers at next request
   end
 
 end
