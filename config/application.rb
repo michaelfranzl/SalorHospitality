@@ -51,4 +51,16 @@ module BillGastro
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end
+
+  class DummyPrinter
+    def initialize(port)
+      @port = port
+    end
+
+    def write(code)
+      f = File.open "tmp/dummy-printer-#{@port}.txt", 'a:ISO8859-15'
+      f.write code
+      f.close
+    end
+  end
 end

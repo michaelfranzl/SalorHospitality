@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
   before_filter :fetch_logged_in_user, :set_locale, :set_automatic_printing, :initialize_printers
-  helper_method :logged_in?, :mobile?, :workstation?, :saas?
+  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :test_printers
 
   private
 
@@ -58,7 +58,8 @@ class ApplicationController < ActionController::Base
     end
 
     def local_variant?
-      not saas?
+debugger
+      not saas_variant?
     end
 
     def set_locale
@@ -99,21 +100,33 @@ class ApplicationController < ActionController::Base
     def initialize_printers
       return if saas_variant?
       return if not BillGastro::Application::printers.empty?
-debugger
+
       printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
       (0..2).each { |i|
+        # try to open serial port
         begin
           BillGastro::Application::printers[i] = SerialPort.new printer_paths[i], 9600
         rescue
           BillGastro::Application::printers[i] = nil
         end
 
+        next if BillGastro::Application::printers[i]
+
+        # try to open USB port
         begin
           BillGastro::Application::printers[i] = File.open printer_paths[i], 'w:ISO8859-15'
         rescue
-          BillGastro::Application::printers[i] = nil
+          BillGastro::Application::printers[i] = BillGastro::DummyPrinter.new i
         end
       }
+    end
+
+    def test_printers
+      file = File.open('public/test.bill', 'rb')
+      test_invoice = file.read
+      BillGastro::Application::printers = []
+      initialize_printers
+      (0..2).each { |i| BillGastro::Application::printers[i].write test_invoice }
     end
 
     def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)

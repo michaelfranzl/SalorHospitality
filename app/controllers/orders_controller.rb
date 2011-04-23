@@ -108,7 +108,7 @@ class OrdersController < ApplicationController
   def print_and_finish
     @order = Order.find params[:id]
 
-    BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number
+    @current_company.largest_order_number = @order.nr if @order.nr > @current_company.largest_order_number
 
 
     if not @order.finished and mobile?
@@ -134,7 +134,7 @@ class OrdersController < ApplicationController
       if local_variant?
         # print immediately
         invoice = generate_escpos_invoice @order
-        BillGastro::Application::printers[params[:port]].write invoice if BillGastro::Application::printers[params[:port]]
+        BillGastro::Application::printers[params[:port].to_i].write invoice
       else
         # print later
         @order.update_attribute :print_pending, true
@@ -206,8 +206,7 @@ class OrdersController < ApplicationController
         @order.save
         @order.table.update_attribute :user, @order.user
       end
-      BillGastro::Application::largest_order_number = @order.nr if @order.nr > BillGastro::Application::largest_order_number
-      process_order(@order)
+      @current_company.largest_order_number = @order.nr if @order.nr > @current_company.largest_order_number
     end
     conditional_redirect_ajax(@order)
   end
@@ -220,6 +219,7 @@ class OrdersController < ApplicationController
   private
 
     def process_order(order)
+debugger
       order.reload
       if order.items.size.zero?
         @current_company.unused_order_numbers << order.nr
@@ -237,9 +237,10 @@ class OrdersController < ApplicationController
         drinks_normal   = generate_escpos_items order, 0, 0
         foods_normal    = generate_escpos_items order, 1, 0
         drinks_takeaway = generate_escpos_items order, 1, 1
-        BillGastro::Application::printers[0].write foods_normal if BillGastro::Application::printers[0]
-        BillGastro::Application::printers[0].write foods_takeaway if BillGastro::Application::printers[0]
-        BillGastro::Application::printers[1].write drinks_normal if BillGastro::Application::printers[1]
+
+        BillGastro::Application::printers[0].write foods_normal
+        BillGastro::Application::printers[0].write foods_takeaway
+        BillGastro::Application::printers[1].write drinks_normal
       end
     end
 
