@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 var tableupdates = -1;
+var automatic_printing = 0;
 
 function display_articles(cat_id) {
   $('articles').innerHTML = articleslist[cat_id];
@@ -315,8 +316,10 @@ function go_to_tables_offline() {
 new PeriodicalExecuter(
   function() {
     //$('flash_notice').innerHTML = '                              ' + tableupdates;
-    if (tableupdates > 0) {
+    if ( automatic_printing == 1 ) {
       window.location.href = '/items.bill';
+    }
+    if (tableupdates > 0) {
       new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
     }
     else if (tableupdates == 0) {

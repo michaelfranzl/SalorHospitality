@@ -21,6 +21,9 @@ class ConfigController < ApplicationController
   end
 
   def create
-    File.open('config/billgastro-config.yml', 'w') { |out|  YAML.dump(params[:data], out) } if params[:data]
+    if params[:config]
+      File.open('config/billgastro-config.yml', 'w') { |out| YAML.dump(params[:config], out) } 
+      BillGastro::Application::saas_automatic_printing = params[:config][:automatic_printing]
+    end
   end
 end

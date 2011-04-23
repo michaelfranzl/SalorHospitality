@@ -11,7 +11,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
-    mattr_accessor :unused_order_numbers, :largest_order_number, :print_order_numbers
+    mattr_accessor :unused_order_numbers, :largest_order_number, :print_order_numbers, :saas_automatic_printing
 
     billgastro_config = File.exist?('config/billgastro-config.yml') ? YAML.load_file( 'config/billgastro-config.yml' ) : {}
 
@@ -57,6 +57,7 @@ module BillGastro
     @@unused_order_numbers = Array.new
     @@print_order_numbers = Array.new
     @@largest_order_number = 0
+    @@saas_automatic_printing = billgastro_config[:automatic_printing]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

@@ -9,4 +9,5 @@ internet: www.billgastro.com
 email: office@billgastro.com
 printer_kitchen: /dev/usblp1
 printer_bar: /dev/billgastro-printer-back-top-left
-printer_guestroom: /dev/ttyUSB1
+printer_guestroom: /dev/usblp0
+automatic_printing: "1"
