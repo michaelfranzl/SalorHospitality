@@ -30,6 +30,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+    @user.company = @current_company
     @user.save ? redirect_to(users_path) : render(:new)
   end
 

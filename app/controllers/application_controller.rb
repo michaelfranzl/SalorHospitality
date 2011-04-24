@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
       if @current_user
         @current_company = @current_user.company
         if not @current_company
+          # this may occur only for the first user. all later users get @current_company as company. see UsersController#create
           @current_company = Company.create
           @current_user.company = @current_company
           @current_user.save
