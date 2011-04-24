@@ -18,14 +18,12 @@ class CompaniesController < ApplicationController
 
   def index
     # the saas variant always has exactly 1 company
-    @company = Company.all.first
     render :edit
   end
 
   def update
-    @company = Company.all.first
-    @company.update_attributes params[:company]
-    session[:automatic_printing] = @company.automatic_printing
+    @current_company.update_attributes params[:company]
+    session[:automatic_printing] = @current_company.automatic_printing
     test_printers if local_variant?
   end
 

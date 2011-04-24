@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(:version => 20110423190413) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string   "name"
-    t.string   "subdomain"
+    t.string   "name",                       :default => "Bill Gastro"
+    t.string   "subdomain",                  :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "saas",                       :default => false

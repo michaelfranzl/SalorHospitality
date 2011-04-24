@@ -39,6 +39,11 @@ class ApplicationController < ActionController::Base
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
       @current_company = @current_user.company if @current_user
+      if not @current_company
+        @current_company = Company.create
+        @current_user.company = @current_company
+        @current_user.save
+      end
     end
 
     def logged_in?
@@ -97,9 +102,7 @@ class ApplicationController < ActionController::Base
     end
 
     def initialize_printers
-      return if saas_variant?
-      return if not @current_company
-      return if not BillGastro::Application::printers.empty?
+      return if saas_variant? or not @current_company or not BillGastro::Application::printers.empty?
 
       printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
       (0..2).each { |i|

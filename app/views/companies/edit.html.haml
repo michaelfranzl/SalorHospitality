@@ -2,7 +2,7 @@
 
 #message
 
-= form_for @company, :remote => true do |company_form|
+= form_for @current_company, :remote => true do |company_form|
   %p
     = company_form.label :name, Company.human_attribute_name(:name)
     = company_form.text_field :name
@@ -31,15 +31,15 @@
     %p
       = company_form.label :printer_kitchen, Table.human_attribute_name(:printer_kitchen)
       %select#company_printer_kitchen{ :name => 'company[printer_kitchen]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @company.printer_kitchen
+        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_kitchen
     %p
       = company_form.label :printer_bar, Table.human_attribute_name(:printer_bar)
       %select#company_printer_bar{ :name => 'company[printer_bar]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @company.printer_bar
+        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_bar
     %p
       = company_form.label :printer_guestroom, Table.human_attribute_name(:printer_guestroom)
       %select#company_printer_guestroom{ :name => 'company[printer_guestroom]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @company.printer_guestroom
+        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_guestroom
   - else
     %p
       = company_form.label :automatic_printing, Table.human_attribute_name(:automatic_printing)
