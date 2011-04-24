@@ -121,7 +121,6 @@ class ApplicationController < ActionController::Base
     end
 
     def test_printers
-      return if saas_variant?
       file = File.open('public/test.bill', 'rb')
       test_invoice = file.read
       BillGastro::Application::printers = []

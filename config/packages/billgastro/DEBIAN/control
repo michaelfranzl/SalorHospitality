@@ -1,7 +1,7 @@
 Package: billgastro
-Version: 3.0.6
+Version: 3.0.8
 Architecture: i386
-Maintainer: Michael Franzl <office@michaelfranzl.com>
+Maintainer: DI(FH) Michael Franzl <office@michaelfranzl.com>
 Installed-Size: 182000000
 Depends: apache2, mysql-server, debconf, git, exim4
 Suggests: gitk, vim, bind9, sshd, ttf-mscorefonts-installer

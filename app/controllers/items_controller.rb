@@ -111,7 +111,7 @@ class ItemsController < ApplicationController
         Order.transaction do
           split_order = parent_order.clone
           split_order.nr = get_next_unique_and_reused_order_number
-          BillGastro::Application::largest_order_number = split_order.nr if split_order.nr > BillGastro::Application::largest_order_number
+          @current_company.largest_order_number = split_order.nr if split_order.nr > @current_company.largest_order_number
           sisr1 = split_order.save
           logger.info "XXX the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
           raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1

@@ -60,12 +60,12 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @client_data = File.exist?('config/client_data.yml') ? YAML.load_file( 'config/client_data.yml' ) : {}
     if params[:id] != 'last'
       @order = Order.find(params[:id])
     else
       @order = Order.find_all_by_finished(true).last
     end
+    redirect_to '/' and return if not @order
     @previous_order, @next_order = neighbour_orders(@order)
     respond_to do |wants|
       wants.html
@@ -241,6 +241,7 @@ class OrdersController < ApplicationController
         BillGastro::Application::printers[0].write foods_takeaway
         BillGastro::Application::printers[1].write drinks_normal
       end
+      # if saas_variant, printing of items will happen after requesting items.bill
     end
 
     def conditional_redirect_ajax(order)
@@ -264,18 +265,22 @@ class OrdersController < ApplicationController
     end
 
     def move_order_to_table(order,target_table_id)
+      this_table = order.table
       target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
       if target_order
+        # merge orders
         Item.transaction do
           order.items.each do |i|
             i.order = target_order
+            i.item = nil # unlink in case it was an splitted Item
             result = i.save
             raise "Gruppieren von Item 1 schlug fehl. Oops!" if not result
           end
         end
 
         target_order.reload
-        target_order.update_attribute( :sum, calculate_order_sum(target_order) )
+        target_order.update_attribute :sum, calculate_order_sum(target_order)
+        target_order.update_attribute :order_id, nil
         group_identical_items(target_order)
         order.reload # important before destroying, otherwise rails deletes all previously assigned items because of has_many :items, :dependent => :destroy
         order.destroy
@@ -284,9 +289,29 @@ class OrdersController < ApplicationController
         order.update_attribute :table_id, target_table_id
       end
 
+      # unlink in case it was an splitted Item/Order
+      split_order = order.order
+      if split_order
+        Item.transaction do
+          split_order.items.each do |i|
+            i.update_attribute :item_id, nil
+          end
+        end
+      split_order.update_attribute :order_id, nil
+      split_order.reload
+      end
+
+      order.update_attribute :order_id, nil
+      Item.transaction do
+        order.items.each do |i|
+          i.update_attribute :item_id, nil
+        end
+      end
+
+
       # change table users and colors
-      unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
-      order.table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
+      unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => this_table.id, :finished => false })
+      this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
       unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })
       Table.find(target_table_id).update_attribute :user, order.user
     end

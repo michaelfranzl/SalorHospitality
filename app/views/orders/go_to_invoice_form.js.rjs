@@ -16,6 +16,6 @@ page.show 'functions_header_invoice_form'
 page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_index'
 
 page.replace_html 'functions_header_order_form', render(:partial => '/orders/functions_header_order_form')
-page.replace_html 'functions_footer', render(:partial => '/orders/functions_footer')
+page.replace_html 'functions_footer', render(:partial => '/orders/functions_footer') if mobile?
 
 page << "tableupdates = -1;"

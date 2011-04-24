@@ -3,9 +3,12 @@
   = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
 
 %div#buttons
-  %a.iconbutton.print_kitchen_button{ :href => "/orders/print_and_finish/#{ @order.id }/0", :title => t(:print)}
-  %a.iconbutton.print_bar_button{ :href => "/orders/print_and_finish/#{ @order.id }/1", :title => t(:print)}
-  %a.iconbutton.print_guestroom_button{ :href => "/orders/print_and_finish/#{ @order.id }/2", :title => t(:print)}
+  - if local_variant?
+    %a.iconbutton.print_kitchen_button{ :href => "/orders/print_and_finish/#{ @order.id }/0", :title => t(:print)}
+    %a.iconbutton.print_bar_button{ :href => "/orders/print_and_finish/#{ @order.id }/1", :title => t(:print)}
+    %a.iconbutton.print_guestroom_button{ :href => "/orders/print_and_finish/#{ @order.id }/2", :title => t(:print)}
+  - else
+    %a.iconbutton.print_guestroom_button{ :href => "/orders/#{ @order.id }.bill", :title => t(:print)}
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => "/", :title => t(:go_back) }
   = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton storno_button', :title => t(:storno)
@@ -13,9 +16,9 @@
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
   
 %p
-  = @client_data[:address]
+  = @current_company.address
   %br
-  = @client_data[:taxnumber]
+  = @current_company.revenue_service_tax_number
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 
@@ -24,8 +27,6 @@
 = text_field_tag 'customer_data_2'
 %br
 = text_field_tag 'customer_data_3'
-%br
-= text_field_tag 'customer_data_4'
 %br
 
 %p#cost_center== #{ CostCenter.model_name.human }: #{ (@order.cost_center.name if @order.cost_center) }

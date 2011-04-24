@@ -25,8 +25,8 @@ class SettlementsController < ApplicationController
 
   def show
     @settlement = Settlement.find params[:id]
-    params[:cost_center_id] ||= CostCenter.first.id
-    @selected_cost_center = CostCenter.find(params[:cost_center_id])
+    params[:cost_center_id] ||= CostCenter.first.id if CostCenter.first
+    @selected_cost_center = CostCenter.find(params[:cost_center_id]) if CostCenter.first
     @orders = Order.find(:all, :conditions => { :settlement_id => @settlement.id }, :order => 'created_at DESC')
   end
 
