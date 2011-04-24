@@ -296,19 +296,18 @@ class ApplicationController < ActionController::Base
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       logger.info output
 
-      output = Iconv.conv('ISO-8859-15','UTF-8',output)
-      output.gsub!(/\x00E4/,"\x84") #ä
-      output.gsub!(/\x00FC/,"\x81") #ü
-      output.gsub!(/\x00F6/,"\x94") #ö
-      output.gsub!(/\x00C4/,"\x8E") #Ä
-      output.gsub!(/\x00DC/,"\x9A") #Ü
-      output.gsub!(/\x00D6/,"\x99") #Ö
-      output.gsub!(/\x00DF/,"\xE1") #ß
-      output.gsub!(/\x00E9/,"\x82") #é
-      output.gsub!(/\x00E8/,"\x7A") #è
-      output.gsub!(/\x00FA/,"\xA3") #ú
-      output.gsub!(/\x00F9/,"\x97") #ù
-      output.gsub!(/\x00C9/,"\x90") #É
+      output.gsub!(/ä/,"ae")
+      output.gsub!(/ü/,"ue")
+      output.gsub!(/ö/,"oe")
+      output.gsub!(/Ä/,"Ae")
+      output.gsub!(/Ü/,"Ue")
+      output.gsub!(/Ö/,"Oe")
+      output.gsub!(/ß/,"sz")
+      output.gsub!(/é/,"e")
+      output.gsub!(/è/,"e")
+      output.gsub!(/ú/,"u")
+      output.gsub!(/ù/,"u")
+      output.gsub!(/É/,"E")
       output
     end
 end
