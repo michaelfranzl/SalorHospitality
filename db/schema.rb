@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20110423190413) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "saas",                       :default => true
+    t.boolean  "saas",                       :default => false
     t.string   "invoice_subtitle"
     t.string   "address"
     t.string   "revenue_service_tax_number"

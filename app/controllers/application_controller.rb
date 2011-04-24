@@ -98,6 +98,7 @@ class ApplicationController < ActionController::Base
 
     def initialize_printers
       return if saas_variant?
+      return if not @current_company
       return if not BillGastro::Application::printers.empty?
 
       printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
