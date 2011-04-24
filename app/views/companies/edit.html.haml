@@ -7,42 +7,42 @@
     = company_form.label :name, Company.human_attribute_name(:name)
     = company_form.text_field :name
   %p
-    = company_form.label :invoice_subtitle, Table.human_attribute_name(:invoice_subtitle)
+    = company_form.label :invoice_subtitle, Company.human_attribute_name(:invoice_subtitle)
     = company_form.text_field :invoice_subtitle
   %p
-    = company_form.label :address, Table.human_attribute_name(:address)
+    = company_form.label :address, Company.human_attribute_name(:address)
     = company_form.text_field :address
   %p
-    = company_form.label :revenue_service_tax_number, Table.human_attribute_name(:revenue_service_tax_number)
+    = company_form.label :revenue_service_tax_number, Company.human_attribute_name(:revenue_service_tax_number)
     = company_form.text_field :revenue_service_tax_number
   %p
-    = company_form.label :invoice_slogan1, Table.human_attribute_name(:invoice_slogan1)
+    = company_form.label :invoice_slogan1, Company.human_attribute_name(:invoice_slogan1)
     = company_form.text_field :invoice_slogan1
   %p
-    = company_form.label :invoice_slogan2, Table.human_attribute_name(:invoice_slogan2)
+    = company_form.label :invoice_slogan2, Company.human_attribute_name(:invoice_slogan2)
     = company_form.text_field :invoice_slogan2
   %p
-    = company_form.label :internet_address, Table.human_attribute_name(:internet_address)
+    = company_form.label :internet_address, Company.human_attribute_name(:internet_address)
     = company_form.text_field :internet_address
   %p
-    = company_form.label :email, Table.human_attribute_name(:email)
+    = company_form.label :email, Company.human_attribute_name(:email)
     = company_form.text_field :email
   - if local_variant?
     %p
-      = company_form.label :printer_kitchen, Table.human_attribute_name(:printer_kitchen)
+      = company_form.label :printer_kitchen, Company.human_attribute_name(:printer_kitchen)
       %select#company_printer_kitchen{ :name => 'company[printer_kitchen]' }
         = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_kitchen
     %p
-      = company_form.label :printer_bar, Table.human_attribute_name(:printer_bar)
+      = company_form.label :printer_bar, Company.human_attribute_name(:printer_bar)
       %select#company_printer_bar{ :name => 'company[printer_bar]' }
         = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_bar
     %p
-      = company_form.label :printer_guestroom, Table.human_attribute_name(:printer_guestroom)
+      = company_form.label :printer_guestroom, Company.human_attribute_name(:printer_guestroom)
       %select#company_printer_guestroom{ :name => 'company[printer_guestroom]' }
         = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_guestroom
   - else
     %p
-      = company_form.label :automatic_printing, Table.human_attribute_name(:automatic_printing)
+      = company_form.label :automatic_printing, Company.human_attribute_name(:automatic_printing)
       = company_form.check_box :automatic_printing
   %p
-    = submit_tag
+    = submit_tag t :edit
