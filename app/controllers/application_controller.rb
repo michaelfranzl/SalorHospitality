@@ -19,7 +19,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
-  before_filter :fetch_logged_in_user, :set_locale, :set_automatic_printing, :initialize_printers
+  before_filter :fetch_logged_in_user, :select_current_company, :set_locale, :set_automatic_printing, :initialize_printers
   helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :test_printers
 
   private
@@ -38,13 +38,19 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find session[:user_id] if session[:user_id]
-      @current_company = @current_user.company if @current_user
-      if not @current_company
-        @current_company = Company.create
-        @current_user.company = @current_company
-        @current_user.save
+    end
+
+    def select_current_company
+      if @current_user
+        @current_company = @current_user.company
+        if not @current_company
+          @current_company = Company.create
+          @current_user.company = @current_company
+          @current_user.save
+        end
       end
     end
+
 
     def logged_in?
       ! @current_user.nil?
