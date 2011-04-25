@@ -1,10 +1,10 @@
 class AddConfigToCompany < ActiveRecord::Migration
   def self.up
-    add_column :companies, :invoice_subtitle, :string
-    add_column :companies, :address, :string
-    add_column :companies, :revenue_service_tax_number, :string
-    add_column :companies, :invoice_slogan1, :string
-    add_column :companies, :invoice_slogan2, :string
+    add_column :companies, :invoice_subtitle, :string, :default => ''
+    add_column :companies, :address, :string, :default => ''
+    add_column :companies, :revenue_service_tax_number, :string, :default => ''
+    add_column :companies, :invoice_slogan1, :string, :default => ''
+    add_column :companies, :invoice_slogan2, :string, :default => ''
     add_column :companies, :internet_address, :string, :default => 'www.billgastro.com'
     add_column :companies, :email, :string, :default => 'office@billgastro.com'
     add_column :companies, :printer_kitchen, :string, :default => '/dev/usblp0'

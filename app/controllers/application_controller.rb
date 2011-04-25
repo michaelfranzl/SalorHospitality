@@ -192,6 +192,9 @@ class ApplicationController < ActionController::Base
       if printer.class == SerialPort
         printer.write escpos_code
       end
+      if printer.class == BillGastro::DummyPrinter
+        printer.write escpos_code
+      end
     end
 
     def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)
