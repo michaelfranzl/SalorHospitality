@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
     end
 
     def initialize_printers
-      return false if saas_variant? or BillGastro::Application::printers != [nil, nil, nil, nil]
+      return false if saas_variant? or (BillGastro::Application::printers != [nil, nil, nil, nil]) or not @current_company
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
