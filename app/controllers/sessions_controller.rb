@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
   def show
     session[:user_id] = @current_user = nil
     flash[:notice] = t(:logout_successful)
-    redirect_to orders_path
+    redirect_to '/'
   end
 
   def catcher

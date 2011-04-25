@@ -1,0 +1,23 @@
+--- 
+companies_001: 
+  id: 46
+  name: Bill Gastro
+  subdomain: demo
+  created_at: 2011-04-25 10:53:04 Z
+  updated_at: 2011-04-25 11:13:18 Z
+  saas: 0
+  invoice_subtitle: The innovative POS Software for your Restaurant
+  address: Address
+  revenue_service_tax_number: Tax service number
+  invoice_slogan1: Thank you for your visit!
+  invoice_slogan2: Visit our website
+  internet_address: www.billgastro.com
+  email: office@billgastro.com
+  printer_kitchen: /dev/usblp0
+  printer_bar: /dev/ttyUSB0
+  printer_guestroom: /dev/usblp0
+  automatic_printing: 0
+  largest_order_number: 0
+  unused_order_numbers: |+
+    --- []
+    

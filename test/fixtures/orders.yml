@@ -1,273 +1,341 @@
 --- 
 orders_001: 
-  id: 1
+  id: 138
   finished: 1
   table_id: 6
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 14:49:45 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 25.7
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 1
-  credit: 49
-  tax_id: 
-orders_002: 
-  id: 3
-  finished: 1
-  table_id: 6
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 14:49:45 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 21.0
-  parent_order_id: 
-  order_id: 1
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 2
-  credit: 49
-  tax_id: 
-orders_003: 
-  id: 4
-  finished: 1
-  table_id: 5
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 14:51:54 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 6.2
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 3
-  credit: 48
-  tax_id: 
-orders_004: 
-  id: 5
-  finished: 1
-  table_id: 6
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:07:30 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 58.5
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 4
-  credit: 47
-  tax_id: 
-orders_005: 
-  id: 6
-  finished: 1
-  table_id: 5
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:28:42 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 6.2
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 5
-  credit: 46
-  tax_id: 
-orders_006: 
-  id: 7
-  finished: 1
-  table_id: 6
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:28:47 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 6.7
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 6
-  credit: 45
-  tax_id: 
-orders_007: 
-  id: 8
-  finished: 1
-  table_id: 4
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:31:38 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 6.2
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 7
-  credit: 49
-  tax_id: 
-orders_008: 
-  id: 9
-  finished: 1
-  table_id: 2
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:31:43 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 6.2
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 8
-  credit: 49
-  tax_id: 
-orders_009: 
-  id: 10
-  finished: 1
-  table_id: 6
-  user_id: 1
-  settlement_id: 1
-  created_at: 2011-04-10 15:33:59 Z
-  updated_at: 2011-04-10 15:34:46 Z
-  sum: 13.4
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 9
-  credit: 49
-  tax_id: 
-orders_010: 
-  id: 11
-  finished: 1
-  table_id: 4
   user_id: 1
   settlement_id: 
-  created_at: 2011-04-10 15:34:25 Z
-  updated_at: 2011-04-10 15:35:10 Z
+  created_at: 2011-04-23 23:59:36 Z
+  updated_at: 2011-04-24 00:00:43 Z
   sum: 7.0
   parent_order_id: 
   order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 10
-  credit: 49
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 78
+  credit: 100
   tax_id: 
-orders_011: 
-  id: 12
+  print_pending: 
+orders_002: 
+  id: 139
   finished: 1
-  table_id: 5
+  table_id: 1
   user_id: 1
   settlement_id: 
-  created_at: 2011-04-10 15:35:04 Z
-  updated_at: 2011-04-10 15:35:07 Z
-  sum: 22.2
+  created_at: 2011-04-23 23:59:36 Z
+  updated_at: 2011-04-24 00:00:38 Z
+  sum: 6.2
+  parent_order_id: 
+  order_id: 140
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 79
+  credit: 100
+  tax_id: 
+  print_pending: 
+orders_003: 
+  id: 141
+  finished: 1
+  table_id: 4
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 00:00:50 Z
+  updated_at: 2011-04-24 00:05:08 Z
+  sum: 7.0
   parent_order_id: 
   order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 11
-  credit: 49
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 79
+  credit: 99
   tax_id: 
-orders_012: 
-  id: 13
+  print_pending: 
+orders_004: 
+  id: 144
+  finished: 1
+  table_id: 2
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 00:00:50 Z
+  updated_at: 2011-04-24 00:01:51 Z
+  sum: 5.8
+  parent_order_id: 
+  order_id: 143
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 79
+  credit: 99
+  tax_id: 
+  print_pending: 
+orders_005: 
+  id: 147
+  finished: 1
+  table_id: 1
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 00:00:50 Z
+  updated_at: 2011-04-24 00:04:57 Z
+  sum: 3.5
+  parent_order_id: 
+  order_id: 148
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 79
+  credit: 99
+  tax_id: 
+  print_pending: 
+orders_006: 
+  id: 148
+  finished: 1
+  table_id: 1
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 00:00:50 Z
+  updated_at: 2011-04-24 00:04:54 Z
+  sum: 3.5
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 80
+  credit: 99
+  tax_id: 
+  print_pending: 
+orders_007: 
+  id: 149
   finished: 1
   table_id: 6
   user_id: 1
   settlement_id: 
-  created_at: 2011-04-10 15:35:16 Z
-  updated_at: 2011-04-10 15:35:18 Z
-  sum: 19.0
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:15:49 Z
+  sum: 30.3
+  parent_order_id: 
+  order_id: 159
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 81
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_008: 
+  id: 150
+  finished: 1
+  table_id: 1
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-24 13:07:48 Z
+  sum: 3.1
+  parent_order_id: 
+  order_id: 151
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 82
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_009: 
+  id: 151
+  finished: 1
+  table_id: 1
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-24 13:07:47 Z
+  sum: 2.7
   parent_order_id: 
   order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 12
-  credit: 49
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 83
+  credit: 98
   tax_id: 
+  print_pending: 
+orders_010: 
+  id: 152
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:00:25 Z
+  sum: 14.9
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 2
+  nr: 84
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_011: 
+  id: 153
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:00:41 Z
+  sum: 14.9
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 2
+  nr: 85
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_012: 
+  id: 154
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:01:37 Z
+  sum: 14.9
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 2
+  nr: 86
+  credit: 98
+  tax_id: 
+  print_pending: 
 orders_013: 
-  id: 14
+  id: 155
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:04:51 Z
+  sum: 14.9
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 2
+  nr: 87
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_014: 
+  id: 156
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:05:00 Z
+  sum: 14.9
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 88
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_015: 
+  id: 157
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:08:42 Z
+  sum: 5.0
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 0
+  nr: 89
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_016: 
+  id: 158
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:08:53 Z
+  sum: 5.2
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 90
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_017: 
+  id: 159
+  finished: 1
+  table_id: 6
+  user_id: 1
+  settlement_id: 
+  created_at: 2011-04-24 13:05:12 Z
+  updated_at: 2011-04-25 11:08:57 Z
+  sum: 3.5
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 1
+  nr: 91
+  credit: 98
+  tax_id: 
+  print_pending: 
+orders_018: 
+  id: 160
+  finished: 1
+  table_id: 6
+  user_id: 10
+  settlement_id: 
+  created_at: 2011-04-25 11:11:40 Z
+  updated_at: 2011-04-25 11:12:02 Z
+  sum: 71.5
+  parent_order_id: 
+  order_id: 
+  cost_center_id: 
+  printed_from: 127.0.0.1 -> 3
+  nr: 92
+  credit: 97
+  tax_id: 
+  print_pending: 
+orders_019: 
+  id: 161
   finished: 0
   table_id: 5
-  user_id: 7
+  user_id: 1
   settlement_id: 
-  created_at: 2011-04-10 15:35:31 Z
-  updated_at: 2011-04-17 07:15:06 Z
-  sum: 19.0
+  created_at: 2011-04-25 11:14:33 Z
+  updated_at: 2011-04-25 11:14:33 Z
+  sum: 54.2
   parent_order_id: 
   order_id: 
-  cost_center_id: 1
+  cost_center_id: 
   printed_from: 
-  nr: 13
-  credit: 49
+  nr: 93
+  credit: 96
   tax_id: 
-orders_014: 
-  id: 15
-  finished: 1
-  table_id: 1
-  user_id: 1
-  settlement_id: 
-  created_at: 2011-04-10 16:22:59 Z
-  updated_at: 2011-04-10 16:23:00 Z
-  sum: 10.5
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 10.42.43.10 on printer 3
-  nr: 14
-  credit: 49
-  tax_id: 
-orders_015: 
-  id: 16
-  finished: 1
-  table_id: 1
-  user_id: 1
-  settlement_id: 
-  created_at: 2011-04-10 16:12:45 Z
-  updated_at: 2011-04-17 07:20:33 Z
-  sum: 0.0
-  parent_order_id: 
-  order_id: 
-  cost_center_id: 1
-  printed_from: 127.0.0.1 on printer 3
-  nr: 15
-  credit: 49
-  tax_id: 
-orders_016: 
-  id: 17
-  finished: 1
-  table_id: 3
-  user_id: 1
-  settlement_id: 
-  created_at: 2011-04-10 16:23:16 Z
-  updated_at: 2011-04-10 16:23:17 Z
-  sum: 19.7
-  parent_order_id: 
-  order_id: 15
-  cost_center_id: 1
-  printed_from: 10.42.43.10 on printer 1
-  nr: 16
-  credit: 49
-  tax_id: 
-orders_017: 
-  id: 18
+  print_pending: 
+orders_020: 
+  id: 162
   finished: 0
-  table_id: 1
-  user_id: 1
+  table_id: 4
+  user_id: 12
   settlement_id: 
-  created_at: 2011-04-10 16:23:33 Z
-  updated_at: 2011-04-10 16:23:45 Z
-  sum: 8.0
+  created_at: 2011-04-25 11:14:48 Z
+  updated_at: 2011-04-25 11:14:53 Z
+  sum: 74.8
   parent_order_id: 
   order_id: 
-  cost_center_id: 2
+  cost_center_id: 
   printed_from: 
-  nr: 17
-  credit: 49
+  nr: 94
+  credit: 95
   tax_id: 
+  print_pending: 

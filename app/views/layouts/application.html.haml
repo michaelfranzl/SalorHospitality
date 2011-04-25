@@ -13,7 +13,7 @@
     = javascript_include_tag :defaults
     = javascript_include_tag 'application-generic.js'
     %script= generate_js_variables
-    - if controller.controller_name == 'orders' and controller.action_name == 'index'
+    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
       = javascript_include_tag "/articles.js"
     %script== automatic_printing = #{ session[:automatic_printing] ? 'true' : 'false' };
     = csrf_meta_tag

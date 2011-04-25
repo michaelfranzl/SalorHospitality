@@ -5,47 +5,52 @@ users_001:
   password: su
   title: Mister Superuser
   created_at: 2009-02-24 14:54:46 Z
-  updated_at: 2011-04-10 14:38:35 Z
+  updated_at: 2011-04-25 10:53:04 Z
   role: 3
   color: "#cd0052"
   language: en
+  company_id: 46
 users_002: 
   id: 7
   login: restaurant
   password: restaurant
   title: "-"
   created_at: 2009-05-18 11:00:48 Z
-  updated_at: 2011-04-10 14:38:22 Z
+  updated_at: 2011-04-25 10:54:31 Z
   role: 0
   color: "#80477d"
   language: en
+  company_id: 46
 users_003: 
   id: 10
   login: admin
   password: admin
   title: Mr. Admin
   created_at: 2010-05-16 15:35:24 Z
-  updated_at: 2011-04-10 14:38:32 Z
+  updated_at: 2011-04-25 10:54:47 Z
   role: 2
   color: "#75b10d"
   language: de
+  company_id: 46
 users_004: 
   id: 11
   login: waiter1
   password: waiter1
   title: Mrs. Waiter 1
   created_at: 2010-05-16 15:35:46 Z
-  updated_at: 2011-04-10 14:38:25 Z
+  updated_at: 2011-04-25 10:54:51 Z
   role: 1
   color: "#cd0052"
   language: de
+  company_id: 46
 users_005: 
   id: 12
   login: waiter2
   password: waiter2
   title: Mr. Waiter 2
   created_at: 2010-05-16 15:36:22 Z
-  updated_at: 2011-04-10 14:38:29 Z
+  updated_at: 2011-04-25 10:54:53 Z
   role: 1
   color: "#ed8b00"
   language: tr
+  company_id: 46

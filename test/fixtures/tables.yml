@@ -4,9 +4,9 @@ tables_001:
   name: Table 1
   description: 2-3 Personen
   created_at: 2009-02-24 14:56:08 Z
-  updated_at: 2011-04-10 16:23:34 Z
-  left: 655
-  top: 119
+  updated_at: 2011-04-25 11:15:18 Z
+  left: 324
+  top: 297
   width: 55
   height: 55
   left_mobile: 61
@@ -14,19 +14,19 @@ tables_001:
   width_mobile: 100
   height_mobile: 60
   abbreviation: T1
-  user_id: 1
+  user_id: 
 tables_002: 
   id: 2
   name: Table 2
   description: 5-6 Persons
   created_at: 2009-02-24 14:56:17 Z
-  updated_at: 2011-04-10 15:33:27 Z
-  left: 571
-  top: 276
+  updated_at: 2011-04-25 11:15:10 Z
+  left: 221
+  top: 297
   width: 55
   height: 80
-  left_mobile: 155
-  top_mobile: 312
+  left_mobile: 145
+  top_mobile: 308
   width_mobile: 100
   height_mobile: 60
   abbreviation: T2
@@ -36,9 +36,9 @@ tables_003:
   name: Bar
   description: ""
   created_at: 2009-02-24 14:56:22 Z
-  updated_at: 2011-04-10 16:23:34 Z
-  left: 388
-  top: 60
+  updated_at: 2011-04-25 11:15:17 Z
+  left: 314
+  top: 49
   width: 150
   height: 30
   left_mobile: 60
@@ -52,9 +52,9 @@ tables_004:
   name: Table 3
   description: 5 Personen
   created_at: 2009-02-25 11:59:30 Z
-  updated_at: 2011-04-10 15:35:11 Z
-  left: 396
-  top: 233
+  updated_at: 2011-04-25 11:14:53 Z
+  left: 128
+  top: 293
   width: 55
   height: 80
   left_mobile: 67
@@ -62,15 +62,15 @@ tables_004:
   width_mobile: 100
   height_mobile: 60
   abbreviation: T3
-  user_id: 
+  user_id: 12
 tables_005: 
   id: 5
   name: Table 4
   description: 5-6 Personen
   created_at: 2009-02-25 11:59:36 Z
-  updated_at: 2011-04-10 15:37:31 Z
-  left: 197
-  top: 163
+  updated_at: 2011-04-25 11:15:12 Z
+  left: 129
+  top: 212
   width: 55
   height: 80
   left_mobile: 171
@@ -78,15 +78,15 @@ tables_005:
   width_mobile: 100
   height_mobile: 60
   abbreviation: T4
-  user_id: 7
+  user_id: 1
 tables_006: 
   id: 6
   name: Table 5
   description: 3 Personen
   created_at: 2009-02-25 11:59:42 Z
-  updated_at: 2011-04-10 15:35:18 Z
-  left: 129
-  top: 163
+  updated_at: 2011-04-25 11:15:11 Z
+  left: 130
+  top: 129
   width: 55
   height: 55
   left_mobile: 67
