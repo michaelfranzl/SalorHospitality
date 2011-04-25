@@ -316,7 +316,7 @@ function go_to_tables_offline() {
 new PeriodicalExecuter(
   function() {
     //$('flash_notice').innerHTML = '                              ' + tableupdates;
-    if ( automatic_printing == 1 ) {
+    if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {

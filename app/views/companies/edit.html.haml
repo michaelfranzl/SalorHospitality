@@ -40,9 +40,5 @@
       = company_form.label :printer_guestroom, Company.human_attribute_name(:printer_guestroom)
       %select#company_printer_guestroom{ :name => 'company[printer_guestroom]' }
         = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_guestroom
-  - else
-    %p
-      = company_form.label :automatic_printing, Company.human_attribute_name(:automatic_printing)
-      = company_form.check_box :automatic_printing
   %p
     = submit_tag t :edit

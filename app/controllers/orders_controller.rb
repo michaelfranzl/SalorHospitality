@@ -110,7 +110,6 @@ class OrdersController < ApplicationController
 
     @current_company.largest_order_number = @order.nr if @order.nr > @current_company.largest_order_number
 
-
     if not @order.finished and mobile?
       @order.user = @current_user
       @order.created_at = Time.now

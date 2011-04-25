@@ -1,2 +1,1 @@
-#debugger
 page << "alert('Es ist ein unerwarteter Fehler aufgetreten. Der Fehler wurde aufgezeichnet.\\n\\n#{escape_javascript exception.clean_message}');"

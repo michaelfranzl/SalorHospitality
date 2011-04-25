@@ -15,7 +15,7 @@
     %script= generate_js_variables
     - if controller.controller_name == 'orders' and controller.action_name == 'index'
       = javascript_include_tag "/articles.js"
-    %script== automatic_printing = #{ @current_company and @current_company.saas and session[:automatic_printing] ? 1 : 0 };
+    %script== automatic_printing = #{ session[:automatic_printing] ? 'true' : 'false' };
     = csrf_meta_tag
 
 
