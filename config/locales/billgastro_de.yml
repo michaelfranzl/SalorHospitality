@@ -316,6 +316,11 @@ de:
   drink: Getränke
   tobacco: Tabak
 
+  guestroom: Gastraum
+  kitchen: Kueche
+  bar: Schank
+  dummy: Dummy
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: muss entweder beim Artikel oder bei der Variante eingegeben werden.
   is_no_number: ist keine Zahl

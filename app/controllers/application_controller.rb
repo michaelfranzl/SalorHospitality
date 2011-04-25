@@ -19,7 +19,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all # include all helpers, all the time
-  before_filter :fetch_logged_in_user, :select_current_company, :set_locale, :set_automatic_printing
+  before_filter :fetch_logged_in_user, :select_current_company, :set_locale, :initialize_printers
   helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :test_printers
 
   private
@@ -45,14 +45,11 @@ class ApplicationController < ActionController::Base
         @current_company = @current_user.company
         if not @current_company
           @current_company = Company.create
-          # this may occur only for the first user. all later users get @current_company as company. see UsersController#create
           @current_user.company = @current_company
           @current_user.save
         end
-        initialize_printers
       end
     end
-
 
     def logged_in?
       ! @current_user.nil?
@@ -76,10 +73,6 @@ class ApplicationController < ActionController::Base
 
     def set_locale
       I18n.locale = @current_user ? @current_user.language : 'en'
-    end
-
-    def set_automatic_printing
-      session[:automatic_printing] = @current_company.automatic_printing if session[:automatic_printing].nil? and @current_company
     end
 
     def calculate_order_sum(order)
@@ -110,40 +103,95 @@ class ApplicationController < ActionController::Base
     end
 
     def test_printers
-      logger.info "Testing1"
-      file = File.open('public/test.bill', 'rb')
-      test_invoice = file.read
-      BillGastro::Application::printers = []
-      initialize_printers
-      (0..2).each { |i|
-        logger.info "Testing"
-        result = BillGastro::Application::printers[i].write test_invoice
-        logger.info result
-      }
+      logger.info "[PRINTING]============"
+      logger.info "[PRINTING]TESTING Printers..."
+      logger.info "[PRINTING]  Printers before: #{ BillGastro::Application::printers.inspect }"
+      close_printers
+      logger.info "[PRINTING]  Printers closed: #{ BillGastro::Application::printers.inspect }"
+      return if not initialize_printers
+      logger.info "[PRINTING]  Printers initialized: #{ BillGastro::Application::printers.inspect }"
+      printernames = [:kitchen, :bar, :guestroom, :dummy]
+      (0..3).each do |id|
+        test_printout =
+        "\e@"     +  # Initialize Printer
+        "\e!\x38" +  # doube tall, double wide, bold
+        "Bill Gastro\r\n#{ t printernames[id] }\r\n" +
+        "\e!\x00" +  # Font A
+        "#{ BillGastro::Application::printers[id].inspect }" +
+        "\n\n\n\n\n\n" +
+        "\x1DV\x00" # paper cut at the end of each order/table
+        logger.info "[PRINTING]  Testing #{ BillGastro::Application::printers[id].inspect }"
+        print test_printout, id
+      end
+    end
+
+    def close_printers
+      logger.info "[PRINTING]============"
+      logger.info "[PRINTING]CLOSING Printers..."
+      (0..3).each do |i|
+        begin
+          BillGastro::Application::printers[i].close if BillGastro::Application::printers[i].class == File
+          logger.info "[PRINTING]  Closing file #{ BillGastro::Application::printers[i].inspect }"
+        rescue Exception => e
+          logger.info "[PRINTING]  Closing file #{ BillGastro::Application::printers[i].inspect } failed with #{ e.inspect }"
+        ensure
+          BillGastro::Application::printers[i] = nil
+        end
+      end
     end
 
     def initialize_printers
+      return false if saas_variant? or BillGastro::Application::printers != [nil, nil, nil, nil]
+      logger.info "[PRINTING]============"
+      logger.info "[PRINTING]INITIALIZE Printers..."
+
       printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
-      (0..2).each { |i|
-#debugger
-        # try to open serial port
+      (0..3).each do |i|
+        logger.info "[PRINTING]  Trying to open #{ printer_paths[i] }..."
+        # try to open USB/Serial adapter
         begin
           BillGastro::Application::printers[i] = SerialPort.new printer_paths[i], 9600
+          logger.info "[PRINTING]    Success for SerialPort: #{ BillGastro::Application::printers[i].inspect }"
         rescue Exception => e
-          logger.info e.inspect
+          logger.info "[PRINTING]    Failed to open as SerialPort: #{ e.inspect }"
           BillGastro::Application::printers[i] = nil
         end
 
         next if BillGastro::Application::printers[i]
 
-        # try to open USB port
+        # try to open USB port as regular file
         begin
           BillGastro::Application::printers[i] = File.open printer_paths[i], 'w:ISO8859-15'
+          logger.info "[PRINTING]    Success for USB File: #{ BillGastro::Application::printers[i].inspect }"
+        rescue Errno::EBUSY
+          logger.info "[PRINTING]    The USB file #{ printer_paths[i] } apparently is already open."
+          (0..i-1).each do |j|
+            logger.info "[PRINTING]      Trying to reuse #{ BillGastro::Application::printers[j].inspect }"
+            if BillGastro::Application::printers[j] and (BillGastro::Application::printers[j].class == File)
+              logger.info "[PRINTING]      Reused."
+              BillGastro::Application::printers[i] = BillGastro::Application::printers[j]
+              break
+            end
+          end       
         rescue Exception => e
-          logger.info e.inspect
           BillGastro::Application::printers[i] = BillGastro::DummyPrinter.new i
+          logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ BillGastro::Application::printers[i].inspect } instead."
         end
-      }
+      end
+    end
+
+    def print(escpos_code, printer_id)
+      printer = BillGastro::Application::printers[printer_id]
+      logger.info "[PRINTING]============"
+      logger.info "[PRINTING]PRINTING..."
+      logger.info "[PRINTING]  Printing on #{ printer.inspect }"
+      if printer.class == File
+        printer.write escpos_code
+        printer.flush
+      end
+      if printer.class == SerialPort
+        printer.write escpos_code
+      end
     end
 
     def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)
@@ -195,7 +243,7 @@ class ApplicationController < ActionController::Base
         "\x16\x20105"
 
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
-        logger.info per_order_output + "\n\n"
+        #logger.info per_order_output + "\n\n"
       end
 
       overall_output.gsub!(/ä/,"ae")
@@ -302,20 +350,21 @@ class ApplicationController < ActionController::Base
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
-      logger.info output
+      #logger.info output
 
-      output.gsub!(/ä/,"ae")
-      output.gsub!(/ü/,"ue")
-      output.gsub!(/ö/,"oe")
-      output.gsub!(/Ä/,"Ae")
-      output.gsub!(/Ü/,"Ue")
-      output.gsub!(/Ö/,"Oe")
-      output.gsub!(/ß/,"sz")
-      output.gsub!(/é/,"e")
-      output.gsub!(/è/,"e")
-      output.gsub!(/ú/,"u")
-      output.gsub!(/ù/,"u")
-      output.gsub!(/É/,"E")
+      output = Iconv.conv('ISO-8859-15','UTF-8',output)
+      output.gsub!(/\x00E4/,"\x84") #ä
+      output.gsub!(/\x00FC/,"\x81") #ü
+      output.gsub!(/\x00F6/,"\x94") #ö
+      output.gsub!(/\x00C4/,"\x8E") #Ä
+      output.gsub!(/\x00DC/,"\x9A") #Ü
+      output.gsub!(/\x00D6/,"\x99") #Ö
+      output.gsub!(/\x00DF/,"\xE1") #ß
+      output.gsub!(/\x00E9/,"\x82") #é
+      output.gsub!(/\x00E8/,"\x7A") #è
+      output.gsub!(/\x00FA/,"\xA3") #ú
+      output.gsub!(/\x00F9/,"\x97") #ù
+      output.gsub!(/\x00C9/,"\x90") #É
       output
     end
 end

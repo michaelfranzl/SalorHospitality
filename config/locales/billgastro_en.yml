@@ -321,6 +321,10 @@ en:
   blue: Blue
   blank: blank
 
+  guestroom: Guestroom
+  kitchen: Kitchen
+  bar: Bar
+  dummy: Dummy
 
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the Article or for the Variant.

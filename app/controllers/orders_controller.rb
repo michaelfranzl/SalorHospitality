@@ -11,7 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
-# You should have received a copy of the GNU Affero General Public License
+# You should have received a copy of the GNU Affero General Publwic License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class OrdersController < ApplicationController
@@ -128,16 +128,12 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if params[:port].to_i != 3
-      # print button pressed
-      if local_variant?
-        # print immediately
-        invoice = generate_escpos_invoice @order
-        BillGastro::Application::printers[params[:port].to_i].write invoice
-      else
-        # print later
-        @order.update_attribute :print_pending, true
-      end
+    if local_variant?
+      # print immediately
+      print generate_escpos_invoice(@order), params[:port].to_i
+    else
+      # print later
+      @order.update_attribute :print_pending, true
     end
 
     justfinished = false
@@ -236,9 +232,9 @@ class OrdersController < ApplicationController
         foods_normal    = generate_escpos_items order, 1, 0
         foods_takeaway  = generate_escpos_items order, 1, 1
         drinks_normal   = generate_escpos_items order, 0, 0
-        BillGastro::Application::printers[0].write foods_normal
-        BillGastro::Application::printers[0].write foods_takeaway
-        BillGastro::Application::printers[1].write drinks_normal
+        print foods_normal, 0
+        print foods_takeaway, 0
+        print drinks_normal, 1
       end
       # if saas_variant, printing of items will happen after requesting items.bill
     end
