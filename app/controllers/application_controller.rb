@@ -185,15 +185,21 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       logger.info "[PRINTING]  Printing on #{ printer.inspect }"
-      if printer.class == File
-        printer.write escpos_code
-        printer.flush
-      end
-      if printer.class == SerialPort
-        printer.write escpos_code
-      end
-      if printer.class == BillGastro::DummyPrinter
-        printer.write escpos_code
+      begin
+        if printer.class == File
+          printer.write escpos_code
+          printer.flush
+        end
+        if printer.class == SerialPort
+          printer.write escpos_code
+        end
+        if printer.class == BillGastro::DummyPrinter
+          printer.write escpos_code
+        end
+      rescue
+        close_printers
+        initialize_printers
+        print(escpos_code, printer_id)
       end
     end
 
