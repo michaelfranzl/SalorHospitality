@@ -17,7 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 function toggle_admin_interface() {
-  new Ajax.Request('/orders/toggle_admin_interface');
+ // new Ajax.Request('/orders/toggle_admin_interface');
+  $.ajax({ type: "POST", url:'/orders/toggle_admin_interface' });
 }
 
 function category_onmousedown(category_id) {
