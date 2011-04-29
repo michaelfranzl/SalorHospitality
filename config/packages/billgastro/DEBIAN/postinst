@@ -37,6 +37,8 @@ then
   rake db:create
   echo "Migrating BillGastro database ..."
   rake db:migrate
+  echo "Backing up database for the unlikely case that the database exists anyway."
+  rake db:dump
   echo "Populating database with seed data ..."
   rake db:fixtures:load
   db_input high billgastro/dataset || true

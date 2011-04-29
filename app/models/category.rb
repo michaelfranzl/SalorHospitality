@@ -19,4 +19,5 @@ class Category < ActiveRecord::Base
   has_many :articles
   has_many :options
   validates_presence_of :name
+  validates_presence_of :tax_id
 end
