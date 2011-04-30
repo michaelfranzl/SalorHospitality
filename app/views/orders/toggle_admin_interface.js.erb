@@ -1,0 +1,11 @@
+$('tables').replaceWith("<p>abc</p>");
+
+<% if workstation? %>
+  <% if session[:admin_interface] == false %>
+    tableupdates = 2;
+    $('container').animate({scrollTop: '0px'}, 500);
+  <% else %>
+    tableupdates = -1;
+    $('container').animate({scrollTop: $('container').height()}, 500);
+  <% end %>
+<% end %>

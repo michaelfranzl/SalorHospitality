@@ -342,7 +342,7 @@ class ApplicationController < ActionController::Base
       Tax.all.each do |tax|
         next if sum_taxes[tax.id] == 0
         fact = tax.percent/100.00
-        net = sum_taxes[tax.id]/(1.00+fact)
+        net = sum_taxes[tax.id] / (1.00+fact)
         gro = sum_taxes[tax.id]
         vat = gro-net
 
