@@ -1,3 +1,3 @@
 page.replace_html 'message', t('.config_successfully_updated')
 page.visual_effect :highlight, 'message'
-page << "automatic_printing = #{ @current_company and @current_company.saas and session[:automatic_printing] ? 1 : 0 };"
+page << "automatic_printing = #{ @current_company and @current_company.automatic_printing ? 'true' : 'false' };"
