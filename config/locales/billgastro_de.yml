@@ -51,6 +51,7 @@ de:
         name: Name
         hidden: löschen
         description: Beschreibung
+        category_id: Kategorie
         menucard: aktiv
         usage: Verwendung
       option:
@@ -69,6 +70,7 @@ de:
         percent: Steuer in %
         name: Name
         letter: Buchstabe
+        color: Farbe
       table:
         name: Name
         abbreviation: Abkürzung
@@ -84,6 +86,7 @@ de:
         icon: Symbol
         color: Farbe
         food: Speise?
+        usage: Typ
       cost_center:
         name: Name
         description: Beschreibung
@@ -120,6 +123,9 @@ de:
       new_article: Neuer Artikel
       edit_article: Artikel bearbeiten
       add_quantity: Variante hinzufügen
+      normal: normal
+      takeaway: mitnehmen
+      weighing: abwiegen
     listall:
       all_articles: Liste aller Artikel
     find:
@@ -200,6 +206,7 @@ de:
       list_of_taxes: Liste der Steuern
     unsettled:
       make_settlement: abrechnen
+      order_abbreviation: Best.
     invoice_form:
       split_invoice: Rechnung teilen
     login_form:
@@ -273,7 +280,7 @@ de:
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'
   edit: Bearbeiten
-  create: Erzeugen
+  create: Anlegen
   new: Neu
   print: Drucken
   display: Anzeigen
@@ -341,6 +348,6 @@ de:
   please_enter_item_comment: Spezialwunsch
   please_enter_item_price: Spezialpreis
 
-  server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.
+  server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
 
   loading: Lade ...

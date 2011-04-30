@@ -1,4 +1,4 @@
-- frm.fields_for :quantities, quantity do |f|
+= frm.fields_for :quantities, quantity do |f|
   - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(f.object_name)[1]
   %td= f.label :prefix, Quantity.human_attribute_name(:prefix)
   %td= f.text_field :prefix, :class => 'prefix'

@@ -44,9 +44,9 @@ module CategoriesHelper
 
   def usage_array_for_select
     [
-      [t('.drink'), 0],
-      [t('.food'), 1],
-      [t('.tobacco'), 2]
+      [t(:drink), 0],
+      [t(:food), 1],
+      [t(:tobacco), 2]
     ]
   end
 

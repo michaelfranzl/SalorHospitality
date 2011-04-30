@@ -8,7 +8,7 @@
       - @tax.errors.full_messages.each do |msg|
         %li= msg
 
-- form_for @tax do |tax_form|
+= form_for @tax do |tax_form|
   %table
     %tr
       %td= tax_form.label('name',Tax.human_attribute_name(:name))
