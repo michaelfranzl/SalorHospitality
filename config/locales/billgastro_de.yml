@@ -341,4 +341,6 @@ de:
   please_enter_item_comment: Spezialwunsch
   please_enter_item_price: Spezialpreis
 
+  server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.
+
   loading: Lade ...

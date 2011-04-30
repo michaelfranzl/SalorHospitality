@@ -323,7 +323,7 @@ new PeriodicalExecuter(
       new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
     }
     else if (tableupdates == 0) {
-      alert('Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.');
+      alert(server_no_response);
     }
     tableupdates -= 1;
   }
