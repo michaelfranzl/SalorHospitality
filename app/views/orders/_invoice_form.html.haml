@@ -1,29 +1,30 @@
 %div.invoice{ :id => "invoice_#{invoice_form.id}" }
   - if local_variant?
-    = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
+    = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t('.print_and_finish'), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t('.print_and_finish'), :onmouseup => 'this.style.border = "2px solid black";'
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish'), :onmouseup => 'this.style.border = "2px solid black";'
   - else
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
-  - if !invoice_form.finished
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :class => 'iconbutton finish_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish'), :onmouseup => 'this.style.border = "2px solid black";'
+  - if not invoice_form.finished
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/3", :remote => true, :class => 'iconbutton finish_button', :title => t('.just_finish'), :onmouseup => 'this.style.border = "2px solid black";'
 
   = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
 
     - if !invoice_form.finished
 
       - if session[:display_tax_colors]
-        %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[tax_id]', :title => t('.split_invoice') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[tax_id]', :title => t('.set_tax_for_all') }
           - if invoice_form.tax.nil?
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
       - else
-        %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
 
       = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
-      - buttonclass = session[:display_tax_colors] ? 'tables2_button' : 'splitinvoice_button'
-      = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post
+      - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
+      - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
+      = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
@@ -42,7 +43,8 @@
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
             - path = session[:display_tax_colors] ? "/items/rotate_tax/#{ item.id }" : item_path(item.id)
-            = link_to(raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), path, :method => :put, :remote => true, :class => 'link', :id => item.id)
+            - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
+            = link_to raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
         %td.price= number_to_currency item.real_price
         %td.total= number_to_currency sum
 

@@ -1,3 +1,4 @@
-%a.iconbutton.invoice_button{ :href=>"/orders/last" }
+%a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order') }
+
 - if saas_variant?
-  %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';" }
+  %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';", :title => t('.print_now') }

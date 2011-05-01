@@ -46,8 +46,3 @@ var optionsselect = new Array();
   <%- next if cat.options.empty? %>
     optionsselect[<%= cat.id %>] = "<%- cat.options.each do |opt| %><option value='<%= opt.id %>'><%= escape_javascript opt.name %></option><%- end %>"
 <%- end %>
-
-
-var enter_price = '<%= escape_javascript t :please_enter_item_price %>';
-
-var enter_comment = '<%= escape_javascript t :please_enter_item_comment %>';

@@ -47,10 +47,10 @@ en:
     attributes:
       article:
         price: Price
-        category_id: Category
         name: Name
         hidden: delete
         description: Description
+        category_id: Category
         menucard: active
         usage: Usage
       option:
@@ -66,8 +66,10 @@ en:
         hidden: delete
         usage: usage
       tax:
-        percent: Tax
+        percent: Tax in %
         name: Name
+        letter: Abbreviation
+        color: Color
       table:
         name: Name
         abbreviation: Abbreviation
@@ -83,10 +85,11 @@ en:
         icon: Icon
         color: Color
         food: Food?
+        usage: Type
       cost_center:
         name: Name
         description: Description
-        active: Active?
+        active: active?
       group:
         name: Name
       user:
@@ -94,6 +97,8 @@ en:
         password: Password
         role: Role
         title: Title
+        color: Color
+        language: Language
       company:
         name: Name
         subdomain: Subdomain
@@ -110,7 +115,6 @@ en:
         revenue_service_tax_number: Revenue service tax number
         address: Address
 
-
   articles:
     index:
       list_all: List all
@@ -120,10 +124,15 @@ en:
       new_article: New article
       edit_article: Edit article
       add_quantity: Add Variant
+      normal: normal
+      takeaway: take away
+      weighing: weighing
     listall:
       all_articles: List of all articles
     find:
-      variants: Variants
+      variants:
+        one: Variant
+        other: Variants
 
   options:
     new:
@@ -198,6 +207,7 @@ en:
       list_of_taxes: List of taxes
     unsettled:
       make_settlement: Make settlement
+      order_abbreviation: Ord.
     invoice_form:
       split_invoice: Split invoice
     login_form:
@@ -208,8 +218,25 @@ en:
       realname: Your Name
       your_ip_address: Your IP Data
     go_to_tables:
-      warning_only_x_orders_left_upgrade_here: "Warning, only %{credits} order left. Get more from <a href='http://www.billgasto.com'>billgasto.com</a>"
-      warning_only_x_orders_left: "Warning, only %{credits} order left. Get more from www.billgasto.com."
+      warning_only_x_orders_left: "Warning, only %{credits} orders left."
+      warning_only_x_orders_left_upgrade_here: "Warning, only %{credits} orders left. Get more from <a href='http://www.billgasto.com'>billgasto.com</a>"
+    functions_header_index:
+      show_last_order: Show last order
+      print_now: Print now
+    functions_header_order_form:
+      move_order: Move order to other table
+    storno_form:
+      do_separate_items: Separate this item
+      do_storno: Make storno
+    invoice_form:
+      set_cost_center: Set cost center for this order
+      print_and_finish: Print and finish this order
+      just_finish: Just finish order
+      set_taxes: Set cost center
+      split_invoice: Split invoice
+      set_tax_for_all: Set cost center for all items
+      split_this_item: Click to split this item one at a time
+      switch_tax_for_this_item: Click to change the tax for this item
 
   settlements:
     index:
@@ -264,21 +291,9 @@ en:
       new_user: New User
       edit_user: Edit User
 
-  config:
-    menulabel: Configuration
-    show:
-      name: Name
-      subtitle: Invoice Subtitle
-      address: Address
-      taxnumber: Tax Number
-      slogan: Invoice Slogan
-      internet_address: Internet Address
-      email: E-Mail
-      printer_kitchen: Printer Kitchen
-      printer_bar: Printer Bar
-      printer_guestroom: Printer Guestroom
-    create:
-      config_successfully_updated: Data successfully updated!
+  companies:
+    update:
+      config_successfully_updated: Company data successfully updated!
 
   delete: Delete
   are_you_sure: 'Are you sure?'
@@ -299,7 +314,8 @@ en:
   scroll_down: Scroll down
   scroll_up: Scroll up
   scroll_to_room: Go to room
-  save_and_go_back: Save and go back
+  send_and_go_back: Save and go back
+  go_back: Go back
   cancel_and_go_back: Cancel and go back
   finish_order: Finish order
 
@@ -321,6 +337,10 @@ en:
   blue: Blue
   blank: blank
 
+  food: Foods
+  drink: Drinks
+  tobacco: Tobacco
+
   guestroom: Guestroom
   kitchen: Kitchen
   bar: Bar
@@ -331,19 +351,21 @@ en:
   is_no_number: is not a number.
 
 # TRANSLATIONS FOR CONTROLLERS
-  all_foods_were_removed_from_the_menucard: All foods were remove from the menucard.
   successfully_deleted: '%{what} was successfully deleted.'
   there_are_no_open_settlements: There are no open settlements.
   logout_successful: You have logged off successfully.
   user_not_found: User not found
-  wrong_password: Wrong password
+  wrong_password: Wrong login data
 
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
-  invoice_numer_X_at_time: Invoice No %{number} at %{datetime}
+  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
 
   please_enter_email_and_realname: Please enter your email address and real name.
 
   please_enter_item_comment: Special Wish
   please_enter_item_price: Special Price
 
-  loading: Lade ...
+  server_no_response: 'The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.'
+  quick_order: Quck Order
+
+  loading: Loading ...

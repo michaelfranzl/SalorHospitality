@@ -279,7 +279,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('order_sum').value = '0';
 
   $('order_id').value = 'add_offline_items_to_order';
-  $('order_info').innerHTML = 'Schnellbestellung';
+  $('order_info').innerHTML = quick_order;
   $('order_action').value = '';
   $('order_table_id').value = table_id;
 

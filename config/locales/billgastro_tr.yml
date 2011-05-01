@@ -7,6 +7,9 @@ tr:
       user:
         one: Kullanıcı
         other: Kullanıcılar
+      company:
+        one: FirmaXXX
+        other: FirmenXXX
       tax:
         one: Vergi derecesi
         other: vergi dereceleri
@@ -44,10 +47,10 @@ tr:
     attributes:
       article:
         price: Fiyat
-        category: Kategori
         name: Isim
         hidden: Silmek
         description: Ürün tarifi
+        category_id: Kategori
         menucard: Aktif
         usage: Kullanım
       option:
@@ -65,6 +68,8 @@ tr:
       tax:
         percent: Vergi yüzedesi %
         name: Isim
+        letter: BuchstabeXXX
+        color: FarbeXXX
       table:
         name: Isim
         abbreviation: Kısaltma
@@ -80,6 +85,7 @@ tr:
         icon: Sembol
         color: Renk
         food: Yemek?
+        usage: TypXXX
       cost_center:
         name: Isim
         description: Tarif
@@ -91,6 +97,23 @@ tr:
         password: Sifre
         role: Görev
         title: Hitap
+        color: FarbeXXX
+        language: SpracheXXX
+      company:
+        name: FirmennameXXX
+        subdomain: SubdomainXXX
+        saas: Online-VarianteXXX
+        automatic_printing: Automatisches DruckenXXX
+        printer_guestroom: Drucker GastraumXXX
+        printer_bar: Drucker BarXXX
+        printer_kitchen: Drucker KücheXXX
+        email: E-MailXXX
+        internet_address: InternetadresseXXX
+        invoice_slogan1: Rechnungsmitteilung 1XXX
+        invoice_slogan2: Rechnungsmitteilung 2XXX
+        invoice_subtitle: Rechnungs-UntertitelXXX
+        revenue_service_tax_number: UID NummerXXX
+        address: AdresseXXX
 
   articles:
     index:
@@ -101,10 +124,15 @@ tr:
       new_article: Yeni ürün
       edit_article: Ürün islemek
       add_quantity: Varyant eklemek
+      normal: normalXXX
+      takeaway: mitnehmenXXX
+      weighing: abwiegenXXX
     listall:
       all_articles: Bütün ürünlerin listesi
-    articles_search_results:
-      variants: Varyant
+    find:
+      variants:
+        one: VarianteXXX
+        other: VariantenXXX
 
   options:
     new:
@@ -188,6 +216,26 @@ tr:
       email: Sizin E-mailiniz
       realname: Isminiz
       your_ip_address: IP-Informasyonuz
+    go_to_tables:
+      warning_only_x_orders_left: "Achtung, nur noch %{credits} Bestellungen. Auf www.billgasto.com aufladen.XXX"
+      warning_only_x_orders_left_upgrade_here: "Achtung, nur noch %{credits} Bestellungen. Hier <a href='http://www.billgasto.com'>aufladen</a>XXX"
+    functions_header_index:
+      show_last_order: Letzte Bestellung anzeigenXXX
+      print_now: Sofort druckenXXX
+    functions_header_order_form:
+      move_order: Bestellung verschiebenXXX
+    storno_form:
+      do_separate_items: Posten separierenXXX
+      do_storno: Storno durchführenXXX
+    invoice_form:
+      set_cost_center: Kostenkreis für diese Bestellung festlegenXXX
+      print_and_finish: Drucken und Rechnung abschließenXXX
+      just_finish: Rechnung nur abschließenXXX
+      set_taxes: Steuerklassen festlegenXXX
+      split_invoice: Rechnung splittenXXX
+      set_tax_for_all: Steuerklasse für alle Posten festlegenXXX
+      split_this_item: Klicken um ein Stück dieses Postens splittenXXX
+      switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechselnXXX
 
   settlements:
     index:
@@ -242,17 +290,8 @@ tr:
       new_user: Yeni kullanici
       edit_user: Kullanici islemek
 
-  config:
-    menulabel: Belirtiler
-    show:
-      name: Isim
-      subtitle: Altyazi
-      address: Adres
-      taxnumber: Vergi numarasi
-      slogan: Fatura informasyonu
-      internet_address: Internet adresi
-      email: E-Mail adresi
-    create:
+  companies:
+    update:
       config_successfully_updated: Belirtiler yenilendi!
 
   delete: Silmek
@@ -274,7 +313,8 @@ tr:
   scroll_down: Asayi in
   scroll_up: Yukari cik
   scroll_to_room: Odayi gir
-  save_and_go_back: Kayit et ve geriye cik
+  send_and_go_back: Kayit et ve geriye cikXXXSenden anstatt von Speichern
+  go_back: ZurückXXX
   cancel_and_go_back: Iptal et ve geriye cik
   finish_order: Siparisi bitir
 
@@ -296,12 +336,20 @@ tr:
   blue: Mavi
   blank: Bos
 
+  food: SpeisenXXX
+  drink: GetränkeXXX
+  tobacco: TabakXXX
+
+  guestroom: GastraumXXX
+  kitchen: KuecheXXX
+  bar: SchankXXX
+  dummy: DummyXXX
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
   is_no_number: Rakam degil
 
 # TRANSLATIONS FOR CONTROLLERS
-  all_foods_were_removed_from_the_menucard: Bütün yemekler menü kartindan cikartildi.
   was_successfully_deleted: '%{what} silindi.'
   there_are_no_open_settlements: Acik hesap kalmadi.
   logout_successful: Cikis yaptiniz.
@@ -315,5 +363,8 @@ tr:
 
   please_enter_item_comment: Özel istek
   please_enter_item_price: Fiyet
+
+  server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.XXX'
+  quick_order: SchnellbestellungXXX
 
   loading: Isleniyor...

@@ -47,7 +47,6 @@ de:
     attributes:
       article:
         price: Preis
-        category: Kategorie
         name: Name
         hidden: löschen
         description: Beschreibung
@@ -94,10 +93,12 @@ de:
       group:
         name: Name
       user:
-        login: Einloggen
+        login: Log-in Name
         password: Passwort
         role: Rolle
         title: Anrede
+        color: Farbe
+        language: Sprache
       company:
         name: Firmenname
         subdomain: Subdomain
@@ -217,8 +218,25 @@ de:
       realname: Ihr Name
       your_ip_address: Ihre IP Daten
     go_to_tables:
-      warning_only_x_orders_left_upgrade_here: "Achtung, nur noch %{credits} Bestellungen. Hier <a href='http://www.billgasto.com'>aufladen</a>"
       warning_only_x_orders_left: "Achtung, nur noch %{credits} Bestellungen. Auf www.billgasto.com aufladen."
+      warning_only_x_orders_left_upgrade_here: "Achtung, nur noch %{credits} Bestellungen. Hier <a href='http://www.billgasto.com'>aufladen</a>"
+    functions_header_index:
+      show_last_order: Letzte Bestellung anzeigen
+      print_now: Sofort drucken
+    functions_header_order_form:
+      move_order: Bestellung verschieben
+    storno_form:
+      do_separate_items: Posten separieren
+      do_storno: Storno durchführen
+    invoice_form:
+      set_cost_center: Kostenkreis für diese Bestellung festlegen
+      print_and_finish: Drucken und Rechnung abschließen
+      just_finish: Rechnung nur abschließen
+      set_taxes: Steuerklassen festlegen
+      split_invoice: Rechnung splitten
+      set_tax_for_all: Steuerklasse für alle Posten festlegen
+      split_this_item: Klicken um ein Stück dieses Postens splitten
+      switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechseln
 
   settlements:
     index:
@@ -273,8 +291,8 @@ de:
       new_user: Neuer Benutzer
       edit_user: Benutzer bearbeiten
 
-  company:
-    create:
+  companies:
+    update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
 
   delete: Löschen
@@ -296,7 +314,7 @@ de:
   scroll_down: Hinunterscrollen
   scroll_up: Hinaufscrollen
   scroll_to_room: Gehe in Raum
-  save_and_go_back: Speichern und zurück
+  send_and_go_back: Senden und zurück
   go_back: Zurück
   cancel_and_go_back: Abbrechen und zurück
   finish_order: Bestellung abschließen
@@ -333,12 +351,11 @@ de:
   is_no_number: ist keine Zahl
 
 # TRANSLATIONS FOR CONTROLLERS
-  all_foods_were_removed_from_the_menucard: Alle Speisen wurden aus der Menükarte entfernt.
   was_successfully_deleted: '%{what} wurde erfolgreich gelöscht.'
   there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
   logout_successful: Sie haben sich erfolgreich abgemeldet.
   user_not_found: Benutzer nicht gefunden.
-  wrong_password: Falsches Passwort.
+  wrong_password: Falsche Logindaten.
 
   served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
   invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
@@ -349,5 +366,6 @@ de:
   please_enter_item_price: Spezialpreis
 
   server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
+  quick_order: Schnellbestellung
 
   loading: Lade ...
