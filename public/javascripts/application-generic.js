@@ -313,18 +313,21 @@ function go_to_tables_offline() {
   $('save_and_go_to_tables').style.border = "none";
 }
 
-new PeriodicalExecuter(
+window.setInterval(
   function() {
-    //$('flash_notice').innerHTML = '                              ' + tableupdates;
+    $('flash_notice').innerHTML = '                              ' + tableupdates;
     if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {
-      new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
+      $.ajax({
+        type: 'GET',
+        url: '/tables'
+      });
     }
     else if (tableupdates == 0) {
       alert('Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.');
     }
     tableupdates -= 1;
   }
-, 20)
+, 10000)

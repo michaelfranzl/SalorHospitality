@@ -11,6 +11,7 @@
 
     = stylesheet_link_tag('generic', :media => 'screen')
     = javascript_include_tag :defaults
+    = javascript_include_tag 'jquery-ui.js'
     = javascript_include_tag 'application-generic.js'
     %script= generate_js_variables
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
@@ -23,7 +24,6 @@
       = stylesheet_link_tag('mobile', :media => 'screen')
       = javascript_include_tag 'application-mobile.js'
     - else
-      = javascript_include_tag 'dragdrop.js'
       = stylesheet_link_tag 'print', :media => 'print'
       = stylesheet_link_tag('workstation', :media => 'screen')
       = javascript_include_tag 'application-workstation.js'

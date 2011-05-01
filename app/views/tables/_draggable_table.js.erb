@@ -5,11 +5,13 @@ left_attribute = use_attributes_for_mobile ? 'left_mobile' : 'left'
 top_attribute  = use_attributes_for_mobile ? 'top_mobile' : 'top'
 %>
 $('table<%= table.id %>').draggable({
-  stop: function(el){
+  stop: function(event, ui){
     $.ajax({
       type: "PUT",
       url: "/tables/<%= table.id %>",
       data: "name=John&location=Boston"
+    });
+   }
  });
 
 //table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'"
