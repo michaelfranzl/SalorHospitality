@@ -253,25 +253,25 @@ function add_option_to_item(item_designator, select_tag)
 // VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON mobile
 
 function articles_onmousedown(element) {
-  new Effect.Highlight(element);
+  element.effect('highlight', {}, 3000);
   highlight_border(element);
 }
 
 function quantities_onmousedown(element) {
-  new Effect.Highlight(element);
+  element.effect('highlight', {}, 3000);
   highlight_border(element);
 }
 
 function highlight_border(element) {
-   element.style.borderColor = "white";
+  element.css({ borderColor:'white' });
 }
 
 function restore_border(element) {
-   element.style.borderColor = "#555555 #222222 #222222 #555555";
+  element.css({ borderColor:'#555555 #222222 #222222 #555555' });
 }
 
 function highlight_button(element) {
-   new Effect.Highlight(element);
+  element.effect('highlight', {}, 3000);
 }
 
 function restore_button(element) {
