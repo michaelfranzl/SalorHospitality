@@ -15,7 +15,7 @@
     = javascript_include_tag 'application-generic.js'
     %script= generate_js_variables
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
-      = javascript_include_tag "/articles.js"
+      = javascript_include_tag '/articles.js'
     %script== automatic_printing = #{ session[:automatic_printing] ? 'true' : 'false' };
     = csrf_meta_tag
 
@@ -30,6 +30,7 @@
 
   %body
     #container
+      %a{ :onclick => "$.ajax({ type: 'GET', url: '/tables' });" } test
       #header= render 'layouts/header'
       #flash
         #flash_notice= flash[:notice]
