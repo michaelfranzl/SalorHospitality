@@ -1,7 +1,5 @@
 = BillGastro -- The innovative Point Of Sales Software for your Restaurant
 
-![Bill Gastro Schreenshot POS Point of Sales](http://billgastro.com/images/billgastro/screenshot1-small.jpg)
-
 BillGastro is a fully fledged POS Point of Sales Software which helps you manage your daily business in your Restaurant, Bar or Shop. On the client side it is based on HTML, CSS and Javascript, on the server side it is based on Ruby on Rails and a SQL database. Because it is based on standard web technologies, it can immediately be used with a wide variety of cheap devices without much adaption: desktops, laptops, handhelds, tablet PC's and smartphones. Just fire up your browser and enter the BillGastro URL. BillGastro supports the ESCPOS language of invoice thermo printers.
 
 BillGastro features the newest web technologies. Being ported to Ruby 1.9, Rails 3, a brand new fully AJAX-ified user interface and being a lightweight of only 220k bytes of code, it delivers optimal performance while having a rich set of essential features.
