@@ -7,6 +7,9 @@ tr:
       user:
         one: Kullanıcı
         other: Kullanıcılar
+      company:
+        one: Şirket
+        other: Şirketler
       tax:
         one: Vergi derecesi
         other: vergi dereceleri
@@ -44,10 +47,10 @@ tr:
     attributes:
       article:
         price: Fiyat
-        category: Kategori
         name: Isim
         hidden: Silmek
         description: Ürün tarifi
+        category_id: Kategori
         menucard: Aktif
         usage: Kullanım
       option:
@@ -65,6 +68,8 @@ tr:
       tax:
         percent: Vergi yüzedesi %
         name: Isim
+        letter: harf
+        color: renk
       table:
         name: Isim
         abbreviation: Kısaltma
@@ -80,6 +85,7 @@ tr:
         icon: Sembol
         color: Renk
         food: Yemek?
+        usage: model
       cost_center:
         name: Isim
         description: Tarif
@@ -91,6 +97,23 @@ tr:
         password: Sifre
         role: Görev
         title: Hitap
+        color: Renk
+        language: Dil
+      company:
+        name: Şirket
+        subdomain: Subdomain
+        saas: Online Versiyonu
+        automatic_printing: Otomatik basma imkanı
+        printer_guestroom: Basma makinası müşteri odasında
+        printer_bar: Basma makinası barda
+        printer_kitchen: Basma makinası mutfakda
+        email: E-Mail
+        internet_address: Internet adresi
+        invoice_slogan1: Fatura informasyonu1
+        invoice_slogan2: Fatura informasyonu2
+        invoice_subtitle: Fatura Fatura informasyonu3
+        revenue_service_tax_number: VAT numarısı
+        address: adres
 
   articles:
     index:
@@ -101,10 +124,15 @@ tr:
       new_article: Yeni ürün
       edit_article: Ürün islemek
       add_quantity: Varyant eklemek
+      normal: normal
+      takeaway: götürmek için
+      weighing: tartmak için
     listall:
       all_articles: Bütün ürünlerin listesi
-    articles_search_results:
-      variants: Varyant
+    find:
+      variants:
+        one: Varyant
+        other: Varyant
 
   options:
     new:
@@ -140,8 +168,8 @@ tr:
       whitewinebottle: Sise beyaz sarap
       sparkling: Köpüklü sarap
       coffee: Kahve
-      teapot: Caydanlik
-      tea: Cay bardagi
+      teapot: Caydanlık
+      tea: Cay bardagı
       blank: bos
 
   cost_centers:
@@ -166,10 +194,10 @@ tr:
     served_by: Size hizmet gösteren
     order:
       sum: Toplam
-      new: Yeni Siparis
+      new: Yeni Sipariş
     show:
       print_invoice: Fatura basmak
-      print_business_invoice: Sirket fatura basmak
+      print_business_invoice: Şirket fatura basmak
       back: geri
       previous_invoice: Önceki Fatura
       next_invoice: Sonraki Fatura
@@ -182,12 +210,32 @@ tr:
     invoice_form:
       split_invoice: Faturayi paylasmak/bölmek
     login_form:
-      username: Kullanici
+      username: Kullanıcı
       login: Giris yap
       password: Sifre
       email: Sizin E-mailiniz
       realname: Isminiz
-      your_ip_address: IP-Informasyonuz
+      your_ip_address: IP-Informasyon
+    go_to_tables:
+      warning_only_x_orders_left: "Dikkat, sadece %{credits} sipariş etmek icin hakkiniz var. Hemen www.billgastro.com sipariş kontürlerinizi doldurunuz."
+      warning_only_x_orders_left_upgrade_here: "Dikkat, sadece %{credits} sipariş etmek icin hakkiniz var. Buradan <a href='http://www.billgasto.com'>sipariş kontürlerinizi doldurunuz.</a>"
+    functions_header_index:
+      show_last_order: Son siparişi göster
+      print_now: Hemen basin
+    functions_header_order_form:
+      move_order: siparişi kaydır
+    storno_form:
+      do_separate_items: Posizyonu ayır
+      do_storno: Iptal et
+    invoice_form:
+      set_cost_center: Sipariş icin maliyet merkezini ayarla
+      print_and_finish: Fişi bas ve siparişi sonucla
+      just_finish: Fişi sonucla
+      set_taxes: Vergi derecesini kararlaştır
+      split_invoice: Faturayi paylasmak/bölmek
+      set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
+      split_this_item: Posizyonları  
+      switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
 
   settlements:
     index:
@@ -242,17 +290,8 @@ tr:
       new_user: Yeni kullanici
       edit_user: Kullanici islemek
 
-  config:
-    menulabel: Belirtiler
-    show:
-      name: Isim
-      subtitle: Altyazi
-      address: Adres
-      taxnumber: Vergi numarasi
-      slogan: Fatura informasyonu
-      internet_address: Internet adresi
-      email: E-Mail adresi
-    create:
+  companies:
+    update:
       config_successfully_updated: Belirtiler yenilendi!
 
   delete: Silmek
@@ -274,7 +313,8 @@ tr:
   scroll_down: Asayi in
   scroll_up: Yukari cik
   scroll_to_room: Odayi gir
-  save_and_go_back: Kayit et ve geriye cik
+  send_and_go_back: Kayit et ve geriye cik
+  go_back: Geri
   cancel_and_go_back: Iptal et ve geriye cik
   finish_order: Siparisi bitir
 
@@ -296,12 +336,20 @@ tr:
   blue: Mavi
   blank: Bos
 
+  food: Yemekler
+  drink: Içecekler
+  tobacco: Tütün
+
+  guestroom: Müşteri odası
+  kitchen: Mutfak
+  bar: Bar
+  dummy: Deneme
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
   is_no_number: Rakam degil
 
 # TRANSLATIONS FOR CONTROLLERS
-  all_foods_were_removed_from_the_menucard: Bütün yemekler menü kartindan cikartildi.
   was_successfully_deleted: '%{what} silindi.'
   there_are_no_open_settlements: Acik hesap kalmadi.
   logout_successful: Cikis yaptiniz.
@@ -315,5 +363,8 @@ tr:
 
   please_enter_item_comment: Özel istek
   please_enter_item_price: Fiyet
+
+  server_no_response: 'Server bağlantısı kesildi'
+  quick_order: Hızlı sipariş
 
   loading: Isleniyor...
