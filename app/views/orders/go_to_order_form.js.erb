@@ -1,19 +1,23 @@
+<%
 designator = 0
 inputfields = ''
 tablerows = ''
+%>
 
-page << "$('order_sum').value = '0';"
-page << "$('order_id').value = '';"
-page << "$('order_user_id').value = '#{ @current_user.id }';"
-page << "$('order_action').value = '';"
-page << "$('target_table').value = '';"
+$('#order_sum').value = '0';
+$('#order_id').value = '';
+$('#order_user_id').value = '#{ @current_user.id }';
+$('#order_action').value = '';
+$('#target_table').value = '';
 
-page.hide 'functions_header_index', 'functions_header_invoice_form'
-page.show 'functions_header_order_form', 'functions_footer'
+$('#functions_header_index').hide();
+$('#functions_header_invoice_form').hide();
+$('#functions_header_order_form').show();
+$('#functions_footer').show();
 
-page.replace_html 'order_info', "#{ t('orders.order.new') } #{ @table.name }"
+$('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
-if @order
+<% if @order
   @order.items.each do |item|
     designator += 1
     id = item.id
@@ -34,19 +38,23 @@ if @order
 
     inputfields += render :partial => 'items/item_inputfields', :locals => { :id => id, :sort => sort, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :printoptionslist => printoptionslist }
 
-  end
+  end %>
 
-  page.insert_html :bottom, 'inputfields', inputfields
-  page.insert_html :bottom, 'itemstable', tablerows
-  page.replace_html 'order_info', "#{ Order.model_name.human } ##{ @order.nr }  #{ @table.name }"
-  page << "$('order_id').value = '#{ @order.id }';"
-  page << "$('order_user_id').value = '#{ @order.user.id if @order.user }';"
-  page << "$('order_sum').value = '#{ number_with_precision(@order.sum, :precision => 2) }';"
-end
+$('#inputfields').append('<%= escape_javascript inputfields %>');
+$('#itemstable').append('<%= escape_javascript tablerows %>');
 
-page << "$('order_table_id').value = '#{ @table.id }';"
+$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
+$('#order_id').value = '<%= @order.id %>';
+$('#order_user_id').value = '<%= @order.user.id if @order.user %>';
+$('#order_sum').value = '<%= number_with_precision(@order.sum, :precision => 2) %>';
 
-page.show 'orderform'
-page.hide 'invoices', 'tables', 'rooms'
+<% end %>
 
-page << "tableupdates = -1;"
+$('#order_table_id').value = '<%= @table.id %>';
+
+$('#orderform').show;
+$('#invoices').hide;
+$('#tables').hide;
+$('#rooms').hide;
+
+tableupdates = -1;

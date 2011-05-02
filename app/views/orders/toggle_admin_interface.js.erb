@@ -6,4 +6,5 @@
     tableupdates = -1;
     $('#admin').slideDown('slow');
   <% end %>
+  $('#tables').html('<%= escape_javascript render @tables %>');
 <% end %>

@@ -27,8 +27,8 @@ var tableupdates = -1;
 var automatic_printing = 0;
 
 function display_articles(cat_id) {
-  $('articles').innerHTML = articleslist[cat_id];
-  $('quantities').innerHTML = '&nbsp;';
+  $('#articles').html(articleslist[cat_id]);
+  $('#quantities').html('&nbsp;');
 }
 
 function add_new_item_q(qu_id, button) {
@@ -121,7 +121,7 @@ function add_new_item_a(art_id, button, caption) {
     if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
   }
 
-  document.getElementById('quantities').innerHTML = '&nbsp;';
+  $('#quantities').html('&nbsp;');
   calculate_sum();
 }
 
@@ -281,48 +281,50 @@ function restore_button(element) {
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
-  Effect.ScrollTo("header");
+  $('html, body').animate({scrollTop: 0}, 500);
 
-  $('order_sum').value = '0';
+  $('#order_sum').value = '0';
 
-  $('order_id').value = 'add_offline_items_to_order';
-  $('order_info').innerHTML = 'Schnellbestellung';
-  $('order_action').value = '';
-  $('order_table_id').value = table_id;
+  $('#order_id').value = 'add_offline_items_to_order';
+  $('#order_info').innerHTML = 'Schnellbestellung';
+  $('#order_action').value = '';
+  $('#order_table_id').value = table_id;
 
-  $('inputfields').innerHTML = '';
-  $('itemstable').innerHTML = '';
-  $('articles').innerHTML = '';
-  $('quantities').innerHTML = '';
+  $('#inputfields').innerHTML = '';
+  $('#itemstable').innerHTML = '';
+  $('#articles').innerHTML = '';
+  $('#quantities').innerHTML = '';
 
-  $('orderform').show();
-  $('invoices').hide();
-  $('tables').hide();
-  $('rooms').hide();
-  $('functions_header_index').hide();
-  $('functions_header_order_form').show();
-  $('functions_footer').show();
-
-  new Ajax.Request('/tables/'+table_id, {method:'get'});
+  $('#orderform').show();
+  $('#invoices').hide();
+  $('#tables').hide();
+  $('#rooms').hide();
+  $('#functions_header_index').hide();
+  $('#functions_header_order_form').show();
+  $('#functions_footer').show();
+  $.ajax({
+    type: 'GET',
+    url: '/tables/' + table_id
+  });
 }
 
 function go_to_tables_offline() {
-  $('orderform').hide();
-  $('invoices').hide();
-  $('tables').show();
-  $('rooms').show();
-  $('functions_header_index').show();
-  $('functions_header_order_form').hide();
-  $('functions_header_invoice_form').hide();
-  $('functions_footer').hide();
-  Effect.ScrollTo("header");
-  $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_mobile_tables.png')";
-  $('save_and_go_to_tables').style.border = "none";
+  $('#orderform').hide();
+  $('#invoices').hide();
+  $('#tables').show();
+  $('#rooms').show();
+  $('#functions_header_index').show();
+  $('#functions_header_order_form').hide();
+  $('#functions_header_invoice_form').hide();
+  $('#functions_footer').hide();
+  $('html, body').animate({scrollTop: 0}, 500);
+  $('#save_and_go_to_tables').style.backgroundImage = "url('/images/button_mobile_tables.png')";
+  $('#save_and_go_to_tables').style.border = "none";
 }
 
 window.setInterval(
   function() {
-    $('flash_notice').innerHTML = '                              ' + tableupdates;
+    $('#flash_notice').html('                              ' + tableupdates);
     if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
