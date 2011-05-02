@@ -272,15 +272,15 @@ function go_to_order_form_preprocessing(table_id) {
 
   $('#order_sum').value = '0';
 
-  $('#order_id').value = 'add_offline_items_to_order';
-  $('#order_info').innerHTML = 'Schnellbestellung';
-  $('#order_action').value = '';
-  $('#order_table_id').value = table_id;
+  $('#order_id').val('add_offline_items_to_order');
+  $('#order_info').html('Schnellbestellung');
+  $('#order_action').val('');
+  $('#order_table_id').val(table_id);
 
-  $('#inputfields').innerHTML = '';
-  $('#itemstable').innerHTML = '';
-  $('#articles').innerHTML = '';
-  $('#quantities').innerHTML = '';
+  $('#inputfields').html('');
+  $('#itemstable').html('');
+  $('#articles').html('');
+  $('#quantities').html('');
 
   $('#orderform').show();
   $('#invoices').hide();
@@ -289,10 +289,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('#functions_header_index').hide();
   $('#functions_header_order_form').show();
   $('#functions_footer').show();
-  $.ajax({
-    type: 'GET',
-    url: '/tables/' + table_id
-  });
+  $.ajax({ type: 'GET', url: '/tables/' + table_id });
 }
 
 function go_to_tables_offline() {
