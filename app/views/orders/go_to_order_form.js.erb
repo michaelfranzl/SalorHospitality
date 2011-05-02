@@ -4,11 +4,11 @@ inputfields = ''
 tablerows = ''
 %>
 
-$('#order_sum').value = '0';
-$('#order_id').value = '';
-$('#order_user_id').value = '#{ @current_user.id }';
-$('#order_action').value = '';
-$('#target_table').value = '';
+$('#order_sum').val(0);
+$('#order_id').val('');
+$('#order_user_id').val(<%= @current_user.id %>);
+$('#order_action').val('');
+$('#target_table').val('');
 
 $('#functions_header_index').hide();
 $('#functions_header_invoice_form').hide();
@@ -40,17 +40,17 @@ $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape
 
   end %>
 
-$('#inputfields').append('<%= escape_javascript inputfields %>');
-$('#itemstable').append('<%= escape_javascript tablerows %>');
+$('#inputfields').append('<%= escape_javascript raw inputfields %>');
+$('#itemstable').append('<%= escape_javascript raw tablerows %>');
 
 $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
-$('#order_id').value = '<%= @order.id %>';
-$('#order_user_id').value = '<%= @order.user.id if @order.user %>';
-$('#order_sum').value = '<%= number_with_precision(@order.sum, :precision => 2) %>';
+$('#order_id').val('<%= @order.id %>');
+$('#order_user_id').val('<%= @order.user.id if @order.user %>');
+$('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
 
 <% end %>
 
-$('#order_table_id').value = '<%= @table.id %>';
+$('#order_table_id').val(<%= @table.id %>);
 
 $('#orderform').show;
 $('#invoices').hide;
