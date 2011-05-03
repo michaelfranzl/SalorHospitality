@@ -8,7 +8,7 @@
 %table.articles
   %tr
     %td#drop_remove{ :colspan => 2 }
-      = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value="";'
+      = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value="";', :onkeypress => 'enable_articles_search = true;'
       %ul#search_results
   %tr
     - @scopes.each do |scope|
@@ -18,12 +18,4 @@
         = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
 
-
-%script{ :type => 'text/javascript' }
-  $('#drop_remove').droppable({ hoverClass: 'hover', drop: function(event,ui){
-  ui.draggable.remove();
-  $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'scope=remove&id=' + ui.draggable.attr('id') });
-  }
-  });
-
-  //new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('search_results', '/articles/find', {asynchronous:true, evalScripts:true, onLoaded:function(request){document.getElementById('search_spinner_').style.display='none'}, onLoading:function(request){document.getElementById('search_spinner_').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})
+= javascript_include_tag 'article-management.js'

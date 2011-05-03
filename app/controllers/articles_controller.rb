@@ -90,7 +90,7 @@ class ArticlesController < ApplicationController
       conditions = 'hidden = false AND '
       conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
       @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
-      render :partial => 'find', :layout => false
+      #render :partial => 'find', :layout => false
     else
       render :nothing => true
     end
@@ -103,6 +103,8 @@ class ArticlesController < ApplicationController
     @drag_from = /[^_]*/.match(params[:id])[0]
     if params[:scope] == 'remove'
       @article.update_attribute @drag_from.to_sym, false
+      render :nothing => true
+    elsif @drag_from == params[:scope]
       render :nothing => true
     else
       @drag_to = params[:scope]

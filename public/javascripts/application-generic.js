@@ -308,7 +308,7 @@ function go_to_tables_offline() {
 
 window.setInterval(
   function() {
-    $('#flash_notice').html('                              ' + tableupdates);
+    //$('#flash_notice').html('                              ' + tableupdates);
     if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
@@ -320,4 +320,4 @@ window.setInterval(
     }
     tableupdates -= 1;
   }
-, 10000)
+, 10000);
