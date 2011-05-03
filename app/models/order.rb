@@ -30,8 +30,4 @@ class Order < ActiveRecord::Base
   #This will prevent children_attributes with all empty values to be ignored
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
-  def tax=(tax)
-    self.items.each { |i| i.update_attribute :tax_id, nil }
-  end
-
 end
