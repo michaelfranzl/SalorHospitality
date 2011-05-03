@@ -1,0 +1,1 @@
+$('#invoice_<%= @order.id %>').replaceWith('<%= escape_javascript render :partial => 'orders/storno_form', :locals => { :storno_form => @order } %>');

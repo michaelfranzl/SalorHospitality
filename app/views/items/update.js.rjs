@@ -1,2 +1,0 @@
-page.replace_html 'invoices', render(:partial => 'orders/invoice_form', :collection => @orders )
-page.visual_effect :highlight, "order_#{ @order.id }_item_#{ @item.id }" if @item and not @item.count.zero?

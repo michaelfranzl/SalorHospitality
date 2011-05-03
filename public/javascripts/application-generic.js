@@ -313,10 +313,7 @@ window.setInterval(
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {
-      $.ajax({
-        type: 'GET',
-        url: '/tables'
-      });
+      $.ajax({ url: '/tables' });
     }
     else if (tableupdates == 0) {
       alert('Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.');

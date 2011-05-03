@@ -94,6 +94,7 @@ class ApplicationController < ActionController::Base
       elsif not @current_company.largest_order_number.zero?
         # increment largest order number
         nr = @current_company.largest_order_number + 1
+        @current_company.update_attribute :largest_order_number, nr
       else
         # find Order with largest nr attribute from database. this should happen only once per application instance.
         last_order = Order.first(:order => 'nr DESC')

@@ -28,12 +28,13 @@ class OrdersController < ApplicationController
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
     @order = Order.find_by_id params[:id]
-    @order.update_attributes params[:order]
-    @order.tax = Tax.find_by_id params[:order][:tax_id] if params[:order][:tax_id] # explicit setting of tax so that setter method in order.rb is executed
-    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
-    @cost_centers = CostCenter.all
-    @taxes = Tax.all
-    render 'items/update'
+    @order.tax = Tax.find_by_id params[:order][:tax_id] if params[:order][:tax_id] # explicit setting of tax so that special setter method in order.rb is executed
+    @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]
+    #@orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    #@cost_centers = CostCenter.all
+    #@taxes = Tax.all
+    #render 'items/update'
+    render :nothing => true
   end
 
   def edit

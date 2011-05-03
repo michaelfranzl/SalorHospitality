@@ -1,2 +1,0 @@
-page << "$('order_#{ @item.order.id }_item_#{ @item.id }').style.backgroundColor = '#{ @item.real_tax.color }'"
-page << "$('order_#{ @item.order.id }_item_#{ @item.id }').select('.count')[0].innerHTML= '#{ @item.real_tax.letter }'"

@@ -1,21 +1,24 @@
-page << '$("invoices").innerHTML = "";'
+$('#invoices').html('');
 
-@orders.each do |o|
-  page.insert_html :bottom, 'invoices', render(:partial => '/orders/invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers })
-end
+<% @orders.each do |o| %>
+  $('#invoices').append('<%= escape_javascript render :partial => '/orders/invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers } %>');
+<% end %>
 
-page.show 'invoices'
-page.hide 'orderform'
-page.hide 'tables'
-page.hide 'rooms'
+$('#invoices').show();
+$('#orderform').hide();
+$('#tables').hide();
+$('#rooms').hide();
 
-page.replace_html 'inputfields', ''
-page.replace_html 'itemstable', ''
+$('#inputfields').html('');
+$('#itemstable').html('');
 
-page.show 'functions_header_invoice_form'
-page.hide 'functions_header_order_form', 'functions_footer', 'functions_header_index'
+$('#functions_header_invoice_form').show();
+$('#functions_header_order_form').hide();
+$('#functions_footer').hide();
+$('#functions_header_index').hide();
 
-page.replace_html 'functions_header_order_form', render(:partial => '/orders/functions_header_order_form')
-page.replace_html 'functions_footer', render(:partial => '/orders/functions_footer') if mobile?
+$('functions_header_order_form').html('<%= escape_javascript render :partial => '/orders/functions_header_order_form' %>');
 
-page << "tableupdates = -1;"
+$('functions_footer').html('<%= escape_javascript render(:partial => '/orders/functions_footer') if mobile? %>');
+
+tableupdates = -1;

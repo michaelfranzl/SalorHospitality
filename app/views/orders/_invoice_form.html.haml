@@ -18,7 +18,7 @@
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
       - else
-        %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.split_invoice') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[cost_center_id]='+$(this).val() });", :title => t('.split_invoice') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
 
       = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
