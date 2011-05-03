@@ -1,1 +1,0 @@
-page.replace_html "#{@scope_of_dragged_article}_list", :partial => 'scope_list', :locals => { :scope => @scope_of_dragged_article }

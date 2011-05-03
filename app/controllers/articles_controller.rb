@@ -100,12 +100,13 @@ class ArticlesController < ApplicationController
     @categories = Category.find(:all, :order => 'sort_order')
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
 
+    @drag_from = /[^_]*/.match(params[:id])[0]
     if params[:scope] == 'remove'
-      @scope_of_dragged_article = /[^_]*/.match(params[:id])[0]
-      @article.update_attribute @scope_of_dragged_article.to_sym, false
+      @article.update_attribute @drag_from.to_sym, false
+      render :nothing => true
     else
-      @scope_of_dragged_article = params[:scope]
-      @article.update_attribute @scope_of_dragged_article.to_sym, true
+      @drag_to = params[:scope]
+      @article.update_attribute @drag_to.to_sym, true
     end
   end
 
