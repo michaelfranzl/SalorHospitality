@@ -71,11 +71,6 @@
         %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
         %td= quantity_form.check_box :hidden
 
-
-        - if @current_user.role > 4
-          %td= quantity_form.label('_destroy', (t :destroy))
-          %td= quantity_form.check_box :_destroy
-
   %p
     %small= add_quantity_link((t '.add_quantity'), article_form)
 
