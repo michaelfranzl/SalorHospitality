@@ -3,7 +3,7 @@
 - @articles.each do |ar|
   %div.articles_listall
     %span.name
-      - if @current_user.role >= 20
+      - if @current_user.role >= 50
         == #{ link_to ar.name, edit_article_path(ar) }
       - else
         = ar.name

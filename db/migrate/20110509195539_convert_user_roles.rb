@@ -5,11 +5,11 @@ class ConvertUserRoles < ActiveRecord::Migration
       when 0
         u.update_attribute :role, 10
       when 1
-        u.update_attribute :role, 20
+        u.update_attribute :role, 30
       when 2
-        u.update_attribute :role, 50
-      when 3
         u.update_attribute :role, 60
+      when 3
+        u.update_attribute :role, 70
       end
     end     
   end
@@ -19,11 +19,11 @@ class ConvertUserRoles < ActiveRecord::Migration
       case u.role
       when 10
         u.update_attribute :role, 0
-      when 20
+      when 30
         u.update_attribute :role, 1
-      when 50
-        u.update_attribute :role, 2
       when 60
+        u.update_attribute :role, 2
+      when 70
         u.update_attribute :role, 3
       end
     end   

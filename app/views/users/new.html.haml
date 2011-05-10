@@ -24,7 +24,9 @@
         %td= user_form.label('role', User.human_attribute_name(:role))
         %td
           %select{ :id => 'user_role', :name => 'user[role]' }
-            = options_for_select BillGastro::Application::USER_ROLES.invert.to_a[0..@current_user.role+1], @user.role
+            - BillGastro::Application::USER_ROLES.each do |k,v|
+              - if k <= @current_user.role
+                %option{ :selected => k == user_form.object.role, :value => k }= t(BillGastro::Application::USER_ROLES[k])
     %tr
       %td= user_form.label('color', User.human_attribute_name(:color))
       %td

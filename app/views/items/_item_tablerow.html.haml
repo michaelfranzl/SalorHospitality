@@ -10,7 +10,8 @@
       %span{ :id => "comment_#{ designator }" }= comment
       %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
 
-  %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+  - if @current_user.role >= 20
+    %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
   %td{ :id => "tablerow_#{ designator }_options", :class => 'item_options' }
     - if workstation?

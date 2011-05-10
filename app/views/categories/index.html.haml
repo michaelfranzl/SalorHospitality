@@ -16,4 +16,4 @@
       %td= ca.tax.custom_name if ca.tax # if ca.tax can be deleted in the next release
       %td= usage_array[ca.usage] if ca.usage
       %td= ca.sort_order
-      %td= link_to((t :delete), ca, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 60
+      %td= link_to((t :delete), ca, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 70

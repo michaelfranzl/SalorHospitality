@@ -345,6 +345,14 @@ tr:
   bar: SchankXXX
   dummy: DummyXXX
 
+  restaurant: Restaurant
+  auxiliary_waiter: Auxiliary Waiter
+  waiter: Waiter
+  chief_waiter: Chief waiter
+  host: Host
+  admin: Admin
+  superuser: Superuser
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
   is_no_number: Rakam degil

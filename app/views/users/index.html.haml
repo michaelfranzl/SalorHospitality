@@ -1,12 +1,12 @@
 %h2= t('activerecord.models.user.other')
 
-%p= link_to((t :new), new_user_path, :class => 'links') if @current_user.role >= 50
+%p= link_to((t :new), new_user_path, :class => 'links') if @current_user.role >= 60
 
 %table
   %tr
     %th{ :style => 'width:100px' }
     %th{ :style => 'width:150px' }= User.human_attribute_name(:title)
-    %th{ :style => 'width:100px' }= User.human_attribute_name(:role)
+    %th{ :style => 'width:150px' }= User.human_attribute_name(:role)
     %th{ :style => 'width:100px' }= User.human_attribute_name(:color)
     %th{ :style => 'width:100px' }= User.human_attribute_name(:language)
   - @users.each do |u|
@@ -14,6 +14,6 @@
       - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
       %td= disclose ? link_to(u.login, edit_user_path(u)) : u.login
       %td= u.title
-      %td= BillGastro::Application::USER_ROLES[u.role]
+      %td= t BillGastro::Application::USER_ROLES[u.role]
       %td= get_colors[u.color]
       %td= BillGastro::Application::LANGUAGES[u.language]

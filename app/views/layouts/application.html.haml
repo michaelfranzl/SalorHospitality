@@ -15,9 +15,10 @@
     - if controller.controller_name == 'orders' and controller.action_name == 'index'
       = javascript_include_tag "/articles.js"
     %script
-      = generate_js_variables
+      == var new_item_tablerow = '';
+      == var new_item_inputfields = '';
       = render :partial => 'layouts/translations.js'
-      == automatic_printing = #{ @current_company and @current_company.automatic_printing and workstation? ? 'true' : 'false' };
+      == automatic_printing = #{ (@current_company and @current_company.automatic_printing and workstation?) ? 'true' : 'false' };
     = csrf_meta_tag
 
 

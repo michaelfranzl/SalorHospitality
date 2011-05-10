@@ -346,6 +346,14 @@ de:
   bar: Schank
   dummy: Dummy
 
+  restaurant: Restaurant
+  auxiliary_waiter: Hilfskellner
+  waiter: Kellner
+  chief_waiter: Oberkellner
+  host: Wirt
+  admin: Administrator
+  superuser: Superuser
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: muss entweder beim Artikel oder bei der Variante eingegeben werden.
   is_no_number: ist keine Zahl

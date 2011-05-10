@@ -5,7 +5,7 @@
   = hidden_field_tag 'target_table'
 
   %div.waiter
-    %select#order_user_id{ :name => 'order[user_id]' }
+    %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role >= 40 ? 'visible' : 'none' }"}
       = options_from_collection_for_select User.all, :id, :login, { :include_blank => !mobile? }
 
   #order_info= t :loading

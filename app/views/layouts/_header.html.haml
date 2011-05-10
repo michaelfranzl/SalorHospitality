@@ -6,15 +6,15 @@
 - if logged_in?
   #admin{ :style => "display: visible;" }
     .adminlinks
-      = link_to( t('activerecord.models.order.other'), '/')
-      - if @current_user.role >= 50
+      - if @current_user.role >= 40
+        = link_to( t('activerecord.models.order.other'), '/')
         = link_to( t('activerecord.models.table.other'), tables_path)
+      - if @current_user.role >= 50
         = link_to( t('activerecord.models.category.other'), categories_path)
-      - if @current_user.role >= 20
         = link_to( t('activerecord.models.article.other'), articles_path)
         = link_to( t('activerecord.models.option.other'), options_path)
         = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
-      - if @current_user.role >= 50
+      - if @current_user.role >= 60
         = link_to( t('activerecord.models.settlement.other'), settlements_path)
         = link_to( t('activerecord.models.tax.other'), taxes_path)
         = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)

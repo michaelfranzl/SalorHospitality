@@ -8,6 +8,8 @@ page << "$('order_user_id').value = '#{ @current_user.id }';"
 page << "$('order_action').value = '';"
 page << "$('target_table').value = '';"
 
+page << "#{ generate_js_variables }"
+
 page.hide 'functions_header_index', 'functions_header_invoice_form'
 page.show 'functions_header_order_form', 'functions_footer'
 

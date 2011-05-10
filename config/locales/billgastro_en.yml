@@ -346,6 +346,14 @@ en:
   bar: Bar
   dummy: Dummy
 
+  restaurant: Restaurant
+  auxiliary_waiter: Auxiliary Waiter
+  waiter: Waiter
+  chief_waiter: Chief waiter
+  host: Host
+  admin: Admin
+  superuser: Superuser
+
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the Article or for the Variant.
   is_no_number: is not a number.
