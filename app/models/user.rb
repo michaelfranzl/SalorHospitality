@@ -18,5 +18,6 @@ class User < ActiveRecord::Base
   has_many :settlements
   has_many :orders
   belongs_to :company
-  validates_presence_of :login, :password, :role, :title
+  belongs_to :role
+  validates_presence_of :login, :password, :title
 end

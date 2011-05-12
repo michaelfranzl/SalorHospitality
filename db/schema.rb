@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110512180131) do
+ActiveRecord::Schema.define(:version => 20110512203044) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -168,6 +168,14 @@ ActiveRecord::Schema.define(:version => 20110512180131) do
     t.integer  "usage",      :limit => 1, :default => 0
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "permissions", :limit => 1000, :default => "--- []\n\n"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "settlements", :force => true do |t|
     t.float    "revenue"
     t.integer  "user_id"
@@ -216,7 +224,7 @@ ActiveRecord::Schema.define(:version => 20110512180131) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role"
+    t.integer  "role_id"
     t.string   "color"
     t.string   "language"
     t.integer  "company_id"

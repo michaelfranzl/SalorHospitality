@@ -1,0 +1,11 @@
+%h2= t('activerecord.models.role.other')
+
+%p= link_to((t :new), new_role_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:150px' }= Role.human_attribute_name(:name)
+  - @roles.each do |r|
+    %tr
+      %td
+        %a{ :href => edit_role_path(r) }= r.name

@@ -9,7 +9,7 @@
       - @user.errors.full_messages.each do |msg|
         %li= msg
 
-- form_for @user do |user_form|
+= form_for @user do |user_form|
   %table
     %tr
       %td= user_form.label('login', User.human_attribute_name(:login))
@@ -20,23 +20,15 @@
     %tr
       %td= user_form.label('password', User.human_attribute_name(:password))
       %td= user_form.text_field :password, :size => '20'
-      %tr
-        %td= user_form.label('role', User.human_attribute_name(:role))
-        %td
-          %select{ :id => 'user_role', :name => 'user[role]' }
-            - BillGastro::Application::USER_ROLES.each do |k,v|
-              - if k <= @current_user.role
-                %option{ :selected => k == user_form.object.role, :value => k }= t(BillGastro::Application::USER_ROLES[k])
     %tr
       %td= user_form.label('color', User.human_attribute_name(:color))
       %td
-        %select#category_color{ :name => 'user[color]' }
+        %select#user_color{ :name => 'user[color]' }
           = options_for_select(get_colors.invert.to_a, user_form.object.color)
-
     %tr
-      %td= user_form.label('language', User.human_attribute_name(:language))
+      %td= user_form.label('role', User.human_attribute_name(:role))
       %td
-        %select#category_color{ :name => 'user[language]' }
-          = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
+        %select#user_role_id{ :name => 'user[role_id]' }
+          = options_from_collection_for_select Role.all, 'id', 'name', user_form.object.role_id
             
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

@@ -17,7 +17,7 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.find(:all, :order => :role)
+    @users = User.find(:all, :order => :id)
   end
 
   def new

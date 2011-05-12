@@ -1,0 +1,107 @@
+%h2= @role.new_record? ? (t '.new_role') : (t '.edit_role')
+
+- if @role.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @role.errors.size, :model => Role.model_name.human
+    %ul
+      - @role.errors.full_messages.each do |msg|
+        %li= msg
+
+= form_for @role do |role_form|
+  %table
+    %tr
+      %td= role_form.label('name', Role.human_attribute_name(:name))
+      %td= role_form.text_field :name, :size => '20'
+    %tr
+      %td
+        %label{ :for => 'permissions_take_orders' }= t '.take_orders'
+      %td
+        %input#permissions_take_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'take_orders', :checked => role_form.object.permissions.include?('take_orders') }
+    %tr
+      %td
+        %label{ :for => 'permissions_reduce_items' }= t '.decrement_items'
+      %td
+        %input#permissions_decrement_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'decrement_items', :checked => role_form.object.permissions.include?('decrement_items') }
+    %tr
+      %td
+        %label{ :for => 'permissions_save_orders' }= t '.save_orders'
+      %td
+        %input#permissions_save_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'save_orders', :checked => role_form.object.permissions.include?('save_orders') }
+    %tr
+      %td
+        %label{ :for => 'permissions_split_items' }= t '.split_items'
+      %td
+        %input#permissions_split_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'split_items', :checked => role_form.object.permissions.include?('split_items') }
+    %tr
+      %td
+        %label{ :for => 'permissions_move_tables' }= t '.move_tables'
+      %td
+        %input#permissions_move_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'move_tables', :checked => role_form.object.permissions.include?('move_tables') }
+    %tr
+      %td
+        %label{ :for => 'permissions_make_storno' }= t '.make_storno'
+      %td
+        %input#permissions_make_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_storno', :checked => role_form.object.permissions.include?('make_storno') }
+    %tr
+      %td
+        %label{ :for => 'permissions_assign_cost_center' }= t '.assign_cost_center'
+      %td
+        %input#permissions_assign_cost_center{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_cost_center', :checked => role_form.object.permissions.include?('assign_cost_center') }
+    %tr
+      %td
+        %label{ :for => 'permissions_move_order' }= t '.move_order'
+      %td
+        %input#permissions_move_order{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'move_order', :checked => role_form.object.permissions.include?('move_order') }
+    %tr
+      %td
+        %label{ :for => 'permissions_change_waiter' }= t '.change_waiter'
+      %td
+        %input#permissions_change_waiter{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'change_waiter', :checked => role_form.object.permissions.include?('change_waiter') }
+    %tr
+      %td
+        %label{ :for => 'permissions_manage_articles_categories_options' }= t '.manage_articles_categories_options'
+      %td
+        %input#permissions_manage_articles_categories_options{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_articles_categories_options', :checked => role_form.object.permissions.include?('manage_articles_categories_options') }
+    %tr
+      %td
+        %label{ :for => 'permissions_finish_own_settlement' }= t '.finish_own_settlement'
+      %td
+        %input#permissions_finish_own_settlement{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_own_settlement', :checked => role_form.object.permissions.include?('finish_own_settlement') }
+    %tr
+      %td
+        %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
+      %td
+        %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
+    %tr
+      %td
+        %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
+      %td
+        %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
+    %tr
+      %td
+        %label{ :for => 'permissions_view_all_settlements' }= t '.view_all_settlements'
+      %td
+        %input#permissions_view_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'view_all_settlements', :checked => role_form.object.permissions.include?('view_all_settlements') }
+    %tr
+      %td
+        %label{ :for => 'permissions_manage_business_invoice' }= t '.manage_business_invoice'
+      %td
+        %input#permissions_manage_business_invoice{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_business_invoice', :checked => role_form.object.permissions.include?('manage_business_invoice') }
+    %tr
+      %td
+        %label{ :for => 'permissions_view_statistics' }= t '.view_statistics'
+      %td
+        %input#permissions_view_statistics{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'view_statistics', :checked => role_form.object.permissions.include?('view_statistics') }
+    %tr
+      %td
+        %label{ :for => 'permissions_manage_users' }= t '.manage_users'
+      %td
+        %input#permissions_manage_users{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_users', :checked => role_form.object.permissions.include?('manage_users') }
+    %tr
+      %td
+        %label{ :for => 'permissions_manage_settings' }= t '.manage_settings'
+      %td
+        %input#permissions_manage_settings{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_settings', :checked => role_form.object.permissions.include?('manage_settings') }
+
+            
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
