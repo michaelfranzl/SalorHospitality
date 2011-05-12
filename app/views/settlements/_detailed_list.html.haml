@@ -1,7 +1,7 @@
 %table.detailed_list
   %tr
     %th{ :style => 'width:280px' }= Item.model_name.human
-    %th{ :style => 'width:30px' }= t '.count'
+    %th{ :style => 'width:70px' }= t '.count'
     %th{ :style => 'width:50px' }= t '.unit_price'
     %th{ :style => 'width:50px' }= t '.total'
     %th{ :style => 'width:80px' }= t '.revenue'
@@ -29,7 +29,7 @@
         - total += sum
         %tr
           %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-          %td.number= item.count
+          %td.number== #{ item.count } #{ '(max. ' + item.max_count.to_s + ')' if item.max_count != item.count }
           %td.number= number_to_currency p
           %td.colsum= number_to_currency sum
     %tr

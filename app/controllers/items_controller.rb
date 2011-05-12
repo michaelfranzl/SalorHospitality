@@ -136,14 +136,18 @@ class ItemsController < ApplicationController
         end
 
         split_item.order = split_order # this is the actual moving to the new order
-        split_item.count += 1
-        split_item.printed_count += 1
+        if parent_item.count > 0 # proper handling of zero count items
+          split_item.count += 1
+          split_item.printed_count += 1
+        end
         split_item.max_count = parent_item.max_count if split_item.max_count = 0
         sisr3 = split_item.save
         logger.info "XXX The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
         raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
-        parent_item.count -= 1
-        parent_item.printed_count -= 1
+        if parent_item.count > 0 # proper handling of zero count items
+          parent_item.count -= 1
+          parent_item.printed_count -= 1
+        end
         logger.info "XXX parent_item.count = #{ parent_item.count.inspect }"
         if parent_item.count == 0
           parent_item.delete
