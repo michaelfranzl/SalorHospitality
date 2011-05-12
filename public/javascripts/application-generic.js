@@ -50,7 +50,6 @@ function add_new_item_q(qu_id, button) {
   };
 
   if (matched_designator &&
-      $('order_items_attributes_' + matched_designator + '__destroy').value == 0 &&
       $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[qu_id][3] )
   {
     increment_item(matched_designator);
@@ -99,7 +98,6 @@ function add_new_item_a(art_id, button, caption) {
   };
 
   if (matched_designator &&
-      $('order_items_attributes_' + matched_designator + '__destroy').value == 0 &&
       $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_a[art_id][3] )
   {
     increment_item(matched_designator);
@@ -125,11 +123,6 @@ function increment_item(desig) {
 
 function decrement_item(desig) {
   var i = parseInt($('order_items_attributes_' + desig + '_count').value);
-
-  if (i < 2) {
-    Effect.DropOut('item_' + desig );
-    $('order_items_attributes_' + desig + '__destroy').value = 1;
-  };
 
   if (i > 0) {
     $('tablerow_'+desig+'_count').innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
@@ -160,13 +153,6 @@ function deselect_all_articles() {
   }
 }
 
-function remove_item(desig) {
-  Effect.DropOut('item_' + desig );
-  //$('item_' + desig ).remove();
-  $('order_items_attributes_' + desig + '__destroy').value = 1;
-  $('order_items_attributes_' + desig + '_count').value = 0;
-  calculate_sum();
-}
 
 function calculate_sum() {
   var prices = $$("#inputfields .price");

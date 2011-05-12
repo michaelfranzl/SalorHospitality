@@ -26,6 +26,7 @@ class Item < ActiveRecord::Base
   validates_presence_of :count, :article_id
 
   default_scope :order => 'sort DESC'
+
   
   def real_price
     if price.nil?
@@ -69,9 +70,8 @@ class Item < ActiveRecord::Base
 
   def count=(count)
     c = count.to_i
-    self.update_attribute :count, c
-    self.max_count = c if c > self.max_count
-    self.save
+    write_attribute :count, c
+    write_attribute(:max_count, c) if c > self.max_count
   end
 
 end

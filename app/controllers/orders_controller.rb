@@ -224,7 +224,7 @@ class OrdersController < ApplicationController
         return
       end
 
-      order.update_attribute( :sum, calculate_order_sum(order) )
+      order.update_attribute :sum, calculate_order_sum(order)
 
       group_identical_items(order)
 

@@ -6,7 +6,7 @@ users_001:
   title: Mister Superuser
   created_at: 2009-02-24 14:54:46 Z
   updated_at: 2011-04-25 10:53:04 Z
-  role: 3
+  role: 70
   color: "#cd0052"
   language: en
   company_id: 46
