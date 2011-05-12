@@ -67,4 +67,11 @@ class Item < ActiveRecord::Base
     c = self.article.category.tax
   end
 
+  def count=(count)
+    c = count.to_i
+    self.update_attribute :count, c
+    self.max_count = c if c > self.max_count
+    self.save
+  end
+
 end
