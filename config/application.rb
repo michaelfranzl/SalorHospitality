@@ -4,6 +4,9 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# for jquery-rails gem generator
+# OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)

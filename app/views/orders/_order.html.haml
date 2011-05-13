@@ -12,7 +12,7 @@
 
   %div#categories
     - @categories.each do |category|
-      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id })" }
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
         %div{ :class => "category_label" }
           %span= category.name
   

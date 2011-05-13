@@ -16,12 +16,19 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+jQuery.ajaxSetup({
+    'beforeSend': function(xhr) {
+        xhr.setRequestHeader("Accept", "text/javascript")
+    }
+})
+
+
 var tableupdates = -1;
 var automatic_printing = 0;
 
 function display_articles(cat_id) {
-  $('articles').innerHTML = articleslist[cat_id];
-  $('quantities').innerHTML = '&nbsp;';
+  $('#articles').html(articleslist[cat_id]);
+  $('#quantities').html('&nbsp;');
 }
 
 function add_new_item_q(qu_id, button) {
@@ -38,7 +45,7 @@ function add_new_item_q(qu_id, button) {
   }
 
   // search if quantity_id is already in the inputfields div
-  var all_quantity_ids = $$("#inputfields .quantity_id");
+  var all_quantity_ids = $('#inputfields .quantity_id');
 
   for(i=0; i<all_quantity_ids.length; i++) {
     if (qu_id == all_quantity_ids[i].value) {
@@ -50,7 +57,8 @@ function add_new_item_q(qu_id, button) {
   };
 
   if (matched_designator &&
-      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_q[qu_id][3] )
+      $('#order_items_attributes_' + matched_designator + '__destroy').val() == 0 &&
+      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_q[qu_id][3] )
   {
     increment_item(matched_designator);
   }
@@ -60,8 +68,8 @@ function add_new_item_q(qu_id, button) {
 
     new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
 
-    $('itemstable').insert({ top: new_item_tablerow_modified });
-    $('inputfields').insert({ top: new_item_inputfields_modified });
+    $('#itemstable').prepend(new_item_tablerow_modified);
+    $('#inputfields').prepend(new_item_inputfields_modified);
 
     if (itemdetails_q[qu_id][7] == 1 || itemdetails_q[qu_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
   }
@@ -86,7 +94,7 @@ function add_new_item_a(art_id, button, caption) {
 
 
   // search if article_id is already in the inputfields div
-  var all_article_ids = $$("#inputfields .article_id");
+  var all_article_ids = $('#inputfields .article_id');
 
   for(i=0; i<all_article_ids.length; i++) {
     if (art_id == all_article_ids[i].value) {
@@ -98,7 +106,8 @@ function add_new_item_a(art_id, button, caption) {
   };
 
   if (matched_designator &&
-      $('order_items_attributes_' + matched_designator + '_price').value == itemdetails_a[art_id][3] )
+      $('#order_items_attributes_' + matched_designator + '__destroy').val() == 0 &&
+      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_a[art_id][3] )
   {
     increment_item(matched_designator);
   }
@@ -106,62 +115,54 @@ function add_new_item_a(art_id, button, caption) {
   {
     new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options);
     new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'').replace(/PRICE/g,itemdetails_a[art_id][3]);
-    $('itemstable').insert({ top: new_item_tablerow_modified });
-    $('inputfields').insert({ top: new_item_inputfields_modified });
+    $('#itemstable').prepend(new_item_tablerow_modified);
+    $('#inputfields').prepend(new_item_inputfields_modified);
 
     if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
   }
 
-  document.getElementById('quantities').innerHTML = '&nbsp;';
+  $('#quantities').html('&nbsp;');
   calculate_sum();
 }
 
 function increment_item(desig) {
-  $('tablerow_'+desig+'_count').innerHTML = $('order_items_attributes_' + desig + '_count').value++ + 1;
+  var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
+  i++;
+  $('#order_items_attributes_' + desig + '_count').val(i);
+  $('#tablerow_' + desig + '_count').html(i);
   calculate_sum();
 }
 
 function decrement_item(desig) {
-  var i = parseInt($('order_items_attributes_' + desig + '_count').value);
-
-  if (i > 0) {
-    $('tablerow_'+desig+'_count').innerHTML = $('order_items_attributes_' + desig + '_count').value-- - 1;
-    calculate_sum();
+  var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
+  i--;
+  $('#order_items_attributes_' + desig + '_count').val(i);
+  $('#tablerow_' + desig + '_count').html(i);
+  if (i == 0) {
+    $('#order_items_attributes_' + desig + '__destroy').val(1);
+    $('#item_' + desig).hide();
   };
+  calculate_sum();
 }
-
-
 
 function deselect_all_categories() {
-  var container = document.getElementById("categories");
-  var cats = container.children;
+  var container = $('#categories');
+  var cats = container.children();
   for(c in cats) {
     if (cats[c].style) {
-      cats[c].style.borderColor = "#555555 #222222 #222222 #555555";
+      cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
     }
   }
 }
-
-
-function deselect_all_articles() {
-  var container = document.getElementById("articles");
-  var arts = container.rows;
-  for(count in arts) {
-    if (arts[count].firstChild) {
-      arts[count].firstChild.style.borderColor = "#555555 #222222 #222222 #555555";
-    }
-  }
-}
-
 
 function calculate_sum() {
-  var prices = $$("#inputfields .price");
-  var counts = $$("#inputfields .count");
+  var prices = $('#inputfields .price');
+  var counts = $('#inputfields .count');
   var sum = 0;
   for(i=0; i<prices.length; i++) {
     sum += parseFloat(prices[i].value) * parseFloat(counts[i].value);
   };
-  $('order_sum').value = sum.toFixed(2).replace('.', ',');
+  $('#order_sum').val(sum.toFixed(2).replace('.', ','));
   return sum;
 }
 
@@ -232,25 +233,24 @@ function add_option_to_item(item_designator, select_tag)
 // VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON mobile
 
 function articles_onmousedown(element) {
-  new Effect.Highlight(element);
   highlight_border(element);
 }
 
 function quantities_onmousedown(element) {
-  new Effect.Highlight(element);
   highlight_border(element);
 }
 
 function highlight_border(element) {
-   element.style.borderColor = "white";
+  //$(element).effect('highlight', {}, 3000);
+  $(element).css('borderColor', 'white');
 }
 
 function restore_border(element) {
-   element.style.borderColor = "#555555 #222222 #222222 #555555";
+  $('element').css({ borderColor:'#555555 #222222 #222222 #555555' });
 }
 
 function highlight_button(element) {
-   new Effect.Highlight(element);
+  //$('element').effect('highlight', {}, 3000);
 }
 
 function restore_button(element) {
@@ -260,57 +260,56 @@ function restore_button(element) {
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
-  Effect.ScrollTo("header");
+  $('html, body').animate({scrollTop: 0}, 500);
 
-  $('order_sum').value = '0';
+  $('#order_sum').value = '0';
 
-  $('order_id').value = 'add_offline_items_to_order';
-  $('order_info').innerHTML = quick_order;
-  $('order_action').value = '';
-  $('order_table_id').value = table_id;
+  $('#order_id').val('add_offline_items_to_order');
+  $('#order_info').html('Schnellbestellung');
+  $('#order_action').val('');
+  $('#order_table_id').val(table_id);
 
-  $('inputfields').innerHTML = '';
-  $('itemstable').innerHTML = '';
-  $('articles').innerHTML = '';
-  $('quantities').innerHTML = '';
+  $('#inputfields').html('');
+  $('#itemstable').html('');
+  $('#articles').html('');
+  $('#quantities').html('');
 
-  $('orderform').show();
-  $('invoices').hide();
-  $('tables').hide();
-  $('rooms').hide();
-  $('functions_header_index').hide();
-  $('functions_header_order_form').show();
-  $('functions_footer').show();
-
-  new Ajax.Request('/tables/'+table_id, {method:'get'});
+  $('#orderform').show();
+  $('#invoices').hide();
+  $('#tables').hide();
+  $('#rooms').hide();
+  $('#functions_header_index').hide();
+  $('#functions_header_order_form').show();
+  $('#functions_footer').show();
+  $.ajax({ type: 'GET', url: '/tables/' + table_id });
 }
 
 function go_to_tables_offline() {
-  $('orderform').hide();
-  $('invoices').hide();
-  $('tables').show();
-  $('rooms').show();
-  $('functions_header_index').show();
-  $('functions_header_order_form').hide();
-  $('functions_header_invoice_form').hide();
-  $('functions_footer').hide();
-  Effect.ScrollTo("header");
-  $('save_and_go_to_tables').style.backgroundImage = "url('/images/button_mobile_tables.png')";
-  $('save_and_go_to_tables').style.border = "none";
+  $('#orderform').hide();
+  $('#invoices').hide();
+  $('#tables').show();
+  $('#rooms').show();
+  $('#functions_header_index').show();
+  $('#functions_header_order_form').hide();
+  $('#functions_header_invoice_form').hide();
+  $('#functions_footer').hide();
+  $('html, body').animate({scrollTop: 0}, 500);
+  $('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
+  $('#save_and_go_to_tables').css('border','none');
 }
 
-new PeriodicalExecuter(
+window.setInterval(
   function() {
-    //$('flash_notice').innerHTML = '                              ' + tableupdates;
+    //$('#flash_notice').html('                              ' + tableupdates);
     if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {
-      new Ajax.Request('/tables', {asynchronous:true, evalScripts:true, method:'get'});
+      $.ajax({ url: '/tables' });
     }
     else if (tableupdates == 0) {
       alert(server_no_response);
     }
     tableupdates -= 1;
   }
-, 20)
+, 10000);

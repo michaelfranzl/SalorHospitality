@@ -1,0 +1,6 @@
+$('#main').html('<%= escape_javascript render :file => 'orders/index.html.haml' %>');
+$('#header').html('<%= escape_javascript render :file => 'layouts/_header.html.haml' %>');
+$('#flash_notice').html('');
+$('#flash_error').html('');
+$('#login').hide();
+tableupdates = <%= mobile? ? 2 : -1 %>;

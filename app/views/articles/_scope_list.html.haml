@@ -7,4 +7,4 @@
         %li{ :id => "#{scope}_#{ar.id}" }
           %img{ :id => "handle_for_#{scope}_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
           = link_to ar.name, edit_article_path(ar)
-          %script== new Draggable('#{scope}_#{ar.id}', {handle:'handle_for_#{scope}_article_#{ar.id}', revert:true})
+          %script== $('##{scope}_#{ar.id}').draggable({handle: 'handle_for_#{scope}_article_#{ar.id}', revert: true});

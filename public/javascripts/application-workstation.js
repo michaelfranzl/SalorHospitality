@@ -17,16 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 function toggle_admin_interface() {
-  new Ajax.Request('/orders/toggle_admin_interface');
+  $.ajax({ type: 'POST', url:'/orders/toggle_admin_interface' });
 }
 
-function category_onmousedown(category_id) {
-  display_articles(category_id); deselect_all_categories();
-  highlight_border(element);
+function category_onmousedown(category_id, element) {
+  display_articles(category_id);
+  deselect_all_categories();
+  $(element).css('border','2px solid white');
 }
 
 function display_quantities(art_id) {
-  $('quantities').innerHTML = quantitylist[art_id];
+  $('#quantities').html(quantitylist[art_id]);
 }
 
 function hide_optionsselect(what) {
