@@ -232,6 +232,7 @@ class OrdersController < ApplicationController
           render 'go_to_tables'
         when 'save_and_go_to_invoice'
           @orders = Order.find(:all, :conditions => { :table_id => order.table.id, :finished => false })
+          session[:display_tax_colors] = @current_company.country == 'gn'
           render 'go_to_invoice_form'
         when 'move_order_to_table'
           move_order_to_table(order, params[:target_table])

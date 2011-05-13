@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110512203044) do
+ActiveRecord::Schema.define(:version => 20110513200843) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20110512203044) do
     t.boolean  "automatic_printing",         :default => false
     t.integer  "largest_order_number",       :default => 0
     t.string   "unused_order_numbers",       :default => "--- []\n\n"
+    t.string   "country"
   end
 
   create_table "cost_centers", :force => true do |t|

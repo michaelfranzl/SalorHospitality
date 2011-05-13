@@ -43,6 +43,9 @@ de:
       group:
         one: Lagergruppe
         other: Lagergruppen
+      role:
+        one: Rolle
+        other: Rollen
 
     attributes:
       article:
@@ -114,6 +117,8 @@ de:
         invoice_subtitle: Rechnungs-Untertitel
         revenue_service_tax_number: UID Nummer
         address: Adresse
+      role:
+        name: Name
 
   articles:
     index:
@@ -295,6 +300,26 @@ de:
     update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
 
+  roles:
+    new:
+      take_orders: Bestellungen aufnehmen
+      decrement_items: Artikelanzahl reduzieren
+      finish_orders: Besltellungen abschließen
+      split_items: Rechnung splitten
+      move_tables: Tische verschieben
+      make_storno: Artikel stornieren
+      assign_cost_center: Kostenstelle zuweisen
+      move_order: Bestellung verschieben
+      change_waiter: Bestellungen anderen Kellner zuweisen
+      manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
+      finish_all_settlements: Alle Abrechnungen abschließen
+      finish_own_settlement: Eigene Abrechnung abschließen
+      view_all_settlements: Alle Abrechnungen ansehen
+      manage_business_invoice: Geschäftsrechnungen verwalten
+      view_statistics: Statistiken ansehen
+      manage_users: Benutzer verwalten
+      manage_settings: Grundeinstellungen vornehmen
+
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'
   edit: Bearbeiten
@@ -375,5 +400,9 @@ de:
 
   server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
   quick_order: Schnellbestellung
+
+  default: Allgemein
+  germany: Deutschland
+  austria: Österreich
 
   loading: Lade ...

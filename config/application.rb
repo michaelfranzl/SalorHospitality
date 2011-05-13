@@ -15,8 +15,8 @@ module BillGastro
 
     DEVICE_NODES = ['/dev/usblp0', '/dev/usblp1', '/dev/usblp2', '/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/billgastro-printer-front', '/dev/billgastro-printer-back-top-left', '/dev/billgastro-printer-back-top-right', '/dev/billgastro-printer-back-bottom-left', '/dev/billgastro-printer-back-bottom-right']
     INITIAL_CREDITS = 100
-    USER_ROLES = { 10 => :restaurant, 20 => :auxiliary_waiter, 30 => :waiter, 40 => :chief_waiter, 50 => :host, 60 => :admin, 70 => :superuser }
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
+    COUNTRIES = { 'cc' => :default, 'gn' => :germany, 'at' => :austria }
 
     @@printers = [nil, nil, nil, nil]
 

@@ -12,19 +12,20 @@
 
     - if !invoice_form.finished
 
+      - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
+      - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
+      = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
+
+      = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
+
       - if session[:display_tax_colors]
         %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[tax_id]', :title => t('.set_tax_for_all') }
           - if invoice_form.tax.nil?
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
-      - else
+      - elsif @current_user.role.permissions.include? 'assign_cost_center'
         %select#cost_center_and_tax_for_invoice{ :onchange => "new Ajax.Request('/orders/#{ invoice_form.id }', {method:'put', parameters:Form.serialize('invoice_form_#{ invoice_form.id }')}); return false;", :name => 'order[cost_center_id]', :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-
-      = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
-      - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
-      - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
-      = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
@@ -44,7 +45,11 @@
           - else
             - path = session[:display_tax_colors] ? "/items/rotate_tax/#{ item.id }" : item_path(item.id)
             - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
-            = link_to raw("#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
+            - linktext = "#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"
+            - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
+              = link_to raw(linktext), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
+            - else
+              = raw(linktext)
         %td.price= number_to_currency item.real_price
         %td.total= number_to_currency sum
 

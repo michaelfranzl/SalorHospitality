@@ -27,6 +27,12 @@
   %p
     = company_form.label :email, Company.human_attribute_name(:email)
     = company_form.text_field :email
+  %p
+    = company_form.label :country, Company.human_attribute_name(:country)
+    %select#category_color{ :name => 'company[country]' }
+      - BillGastro::Application::COUNTRIES.each do |key, val|
+        %option{ :value => key, :selected => company_form.object.country == key }= t val
+
   - if local_variant?
     %p
       = company_form.label :printer_kitchen, Company.human_attribute_name(:printer_kitchen)

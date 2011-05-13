@@ -24,12 +24,16 @@
 
         %tr{ :style => "background-color: #{color}" }
           %td.count.grey
-            - if item.storno_status.zero?
+            - if item.storno_status.zero? and @current_user.role.permissions.include? 'make_storno'
               = link_to item.count, edit_item_path(item), :method => 'get', :remote => true, :title => t('.do_separate_items')
             - else
               = item.count
 
-          %td.label{ :id => "item#{item.id}" }= link_to(label, item_path(item), :method => 'delete', :remote => true, :title => t('.do_storno'))
+          %td.label{ :id => "item#{item.id}" }
+            - if @current_user.role.permissions.include? 'make_storno'
+              = link_to label, item_path(item), :method => 'delete', :remote => true, :title => t('.do_storno')
+            - else
+              = label
           %td.total{ :style => 'text-align:right' }= number_to_currency sum
   
       %tr
