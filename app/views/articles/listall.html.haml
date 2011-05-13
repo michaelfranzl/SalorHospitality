@@ -2,13 +2,8 @@
 
 - @articles.each do |ar|
   %div.articles_listall
-    %span.name
-      - if @current_user.role >= 50
-        == #{ link_to ar.name, edit_article_path(ar) }
-      - else
-        = ar.name
-    %span.price
-      = number_to_currency ar.price if ar.quantities.empty?
+    %span.name== #{ link_to ar.name, edit_article_path(ar) }
+    %span.price= number_to_currency ar.price if ar.quantities.empty?
     %br
     - ar.quantities.each do |qu|
       %span.name== #{qu.prefix}, #{qu.postfix}

@@ -1,6 +1,6 @@
 %h2= t('activerecord.models.cost_center.other')
 
-=link_to((t :new), new_cost_center_path, :class => 'links') if @current_user.role >= 60
+= link_to (t :new), new_cost_center_path, :class => 'links'
 
 %table
   %tr
@@ -8,11 +8,9 @@
     %th{ :style => 'width:100px' }
     %th{ :style => 'width:200px' }
     %th{ :style => 'width:100px' }
-    %th{ :style => 'width:100px' }
   - @cost_centers.each do |cc|
     %tr
       %td= @current_user.role >= 60 ? link_to(cc.name, edit_cost_center_path(cc)) : cc.name
       %td= cc.active ? t('.active') : t('.inactive')
       %td= cc.description
       %td= link_to((t :edit), edit_cost_center_path(cc)) if @current_user.role >= 60
-      %td= link_to((t :delete), cc, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 70

@@ -13,7 +13,7 @@
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }= table.abbreviation
     - left_attribute = use_attributes_for_mobile ? 'left_mobile' : 'left'
     - top_attribute = use_attributes_for_mobile ? 'top_mobile' : 'top'
-    - if @current_user.role >= 40
+    - if @current_user.role.permissions.include? 'move_tables'
       = draggable_element "table#{table.id}", :revert => "function(el){new Ajax.Request('/tables/#{table.id}', {method: 'put', parameters:'table[#{left_attribute}]=' + document.getElementById('table#{table.id}').style.left + '&table[#{top_attribute}]=' + document.getElementById('table#{table.id}').style.top }); return false;}", :handle => "'handle_for_table#{table.id}'"
   - elsif Order.last and Order.last.credit < 1 and not table.user
     = table.abbreviation

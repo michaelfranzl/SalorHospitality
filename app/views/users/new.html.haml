@@ -30,5 +30,10 @@
       %td
         %select#user_role_id{ :name => 'user[role_id]' }
           = options_from_collection_for_select Role.all, 'id', 'name', user_form.object.role_id
-            
+    %tr
+      %td= user_form.label('language', User.human_attribute_name(:language))
+      %td
+        %select#category_color{ :name => 'user[language]' }
+          = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
+
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

@@ -16,7 +16,7 @@
 
 class OrdersController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :set_locale, :only => [:login]
+  skip_before_filter :fetch_logged_in_user, :set_locale
 
   def index
     @tables = Table.all

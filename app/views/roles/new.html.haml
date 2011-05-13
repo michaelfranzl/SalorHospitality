@@ -24,9 +24,9 @@
         %input#permissions_decrement_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'decrement_items', :checked => role_form.object.permissions.include?('decrement_items') }
     %tr
       %td
-        %label{ :for => 'permissions_save_orders' }= t '.save_orders'
+        %label{ :for => 'permissions_finish_orders' }= t '.finish_orders'
       %td
-        %input#permissions_save_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'save_orders', :checked => role_form.object.permissions.include?('save_orders') }
+        %input#permissions_finish_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_orders', :checked => role_form.object.permissions.include?('finish_orders') }
     %tr
       %td
         %label{ :for => 'permissions_split_items' }= t '.split_items'
@@ -64,19 +64,14 @@
         %input#permissions_manage_articles_categories_options{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_articles_categories_options', :checked => role_form.object.permissions.include?('manage_articles_categories_options') }
     %tr
       %td
+        %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
+      %td
+        %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
+    %tr
+      %td
         %label{ :for => 'permissions_finish_own_settlement' }= t '.finish_own_settlement'
       %td
         %input#permissions_finish_own_settlement{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_own_settlement', :checked => role_form.object.permissions.include?('finish_own_settlement') }
-    %tr
-      %td
-        %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
-      %td
-        %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
-    %tr
-      %td
-        %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
-      %td
-        %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
     %tr
       %td
         %label{ :for => 'permissions_view_all_settlements' }= t '.view_all_settlements'

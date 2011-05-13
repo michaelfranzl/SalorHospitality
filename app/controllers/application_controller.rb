@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
     end
 
     def rescue_action_in_public(exception)
+      # this does not yet work in rails 3
       if request.xhr?
         render 'sessions/error', :locals => { :exception => exception }
       else
@@ -37,7 +38,8 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-      @current_user = User.find session[:user_id] if session[:user_id]
+      @current_user = User.find(session[:user_id]) if session[:user_id]
+      redirect_to '/' if @current_user.nil?
     end
 
     def select_current_company

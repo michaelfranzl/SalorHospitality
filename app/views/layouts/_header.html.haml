@@ -6,20 +6,30 @@
 - if logged_in?
   #admin{ :style => "display: visible;" }
     .adminlinks
-      - if @current_user.role >= 40
-        = link_to( t('activerecord.models.order.other'), '/')
+      = link_to( t('activerecord.models.order.other'), '/')
+
+      - if @current_user.role.permissions.include? 'manage_settings'
         = link_to( t('activerecord.models.table.other'), tables_path)
-      - if @current_user.role >= 50
+
+      - if @current_user.role.permissions.include? 'manage_articles_categories_options'
         = link_to( t('activerecord.models.category.other'), categories_path)
         = link_to( t('activerecord.models.article.other'), articles_path)
         = link_to( t('activerecord.models.option.other'), options_path)
+
+      - if @current_user.role.permissions.include? 'finish_own_settlement'
         = link_to( (t :unsettled_orders_generic_name), '/orders/unsettled')
-      - if @current_user.role >= 60
+
+      - if @current_user.role.permissions.include? 'view_all_settlements'
         = link_to( t('activerecord.models.settlement.other'), settlements_path)
+
+      - if @current_user.role.permissions.include? 'view_statistics'
+        = link_to( t('statistic'), statistics_path)
+
+      - if @current_user.role.permissions.include? 'manage_settings'
         = link_to( t('activerecord.models.tax.other'), taxes_path)
         = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
         = link_to( t('activerecord.models.user.other'), users_path)
         = link_to( t('activerecord.models.role.other'), roles_path)
-        = link_to( t('statistic'), statistics_path)
         = link_to( t('activerecord.models.company.one'), companies_path)
+
       = link_to t(:logout, :who => @current_user.login), session_path

@@ -1,6 +1,6 @@
 %h2= t('activerecord.models.option.other')
 
-=link_to((t :new), new_option_path, :class => 'links') if @current_user.role >= 50
+=link_to (t :new), new_option_path, :class => 'links'
 
 %table
   %tr
@@ -11,4 +11,4 @@
     %tr
       %td= @current_user.role >= 50 ? link_to(opt.name, edit_option_path(opt)) : opt.name
       %td= opt.category.name if opt.category
-      %td= link_to((t :delete), opt, :confirm => (t :are_you_sure), :method => :delete) if @current_user.role >= 70
+      %td= link_to((t :delete), opt, :confirm => (t :are_you_sure), :method => :delete)

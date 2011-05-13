@@ -1,4 +1,4 @@
-- if @current_user.role >= 50
+- if @current_user.role.permissions.include? 'manage_business_invoice'
   %a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order') }
 
 - if saas_variant?

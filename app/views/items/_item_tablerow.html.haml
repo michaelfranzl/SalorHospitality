@@ -10,7 +10,7 @@
       %span{ :id => "comment_#{ designator }" }= comment
       %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
 
-  - if @current_user.role >= 20
+  - if @current_user.role.permissions.include? 'decrement_items'
     %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
   %td{ :id => "tablerow_#{ designator }_options", :class => 'item_options' }

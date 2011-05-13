@@ -1,6 +1,6 @@
 %h2= t('activerecord.models.tax.other')
 
-%p= link_to((t :new), new_taxis_path, :class => 'links') if @current_user.role >= 60
+%p= link_to((t :new), new_taxis_path, :class => 'links')
 
 %table
   %tr
@@ -9,6 +9,6 @@
     %th{ :style => 'width:100px' }= Tax.human_attribute_name(:letter)
   - @taxes.each do |ta|
     %tr
-      %td= @current_user.role >= 60 ? link_to(ta.name, edit_taxis_path(ta)) : ta.name
+      %td= link_to ta.name, edit_taxis_path(ta)
       %td= number_to_percentage ta.percent, :precision => 0
       %td= ta.letter

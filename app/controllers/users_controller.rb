@@ -16,6 +16,8 @@
 
 class UsersController < ApplicationController
 
+  before_filter :check_permissions
+
   def index
     @users = User.find(:all, :order => :id)
   end
@@ -49,5 +51,11 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_settings'
+    end
 
 end
