@@ -16,8 +16,6 @@
 
 class OrdersController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :set_locale
-
   def index
     @tables = Table.all
     @categories = Category.find(:all, :order => :sort_order)
@@ -40,23 +38,6 @@ class OrdersController < ApplicationController
     @order = Order.find_by_id params[:id]
     @table = @order.table
     render 'orders/go_to_order_form'
-  end
-
-  def login
-    @current_user = User.find_by_login_and_password(params[:login], params[:password])
-    if @current_user
-      @current_company = @current_user.company
-      @tables = Table.all
-      @categories = Category.find(:all, :order => :sort_order)
-      session[:user_id] = @current_user
-      session[:admin_interface] = !mobile? # admin panel per default on on workstation
-      I18n.locale = @current_user.language
-      render 'login_successful'
-    else
-      @users = User.all
-      @errormessage = t :wrong_password
-      render 'login_wrong'
-    end
   end
 
   def show

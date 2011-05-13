@@ -81,11 +81,7 @@ BillGastro::Application.routes.draw do
     end
   end
 
-  resource :session do
-    collection do
-      get :browser_warning
-    end
-  end
+  resource :session
 
   # Sample resource route with sub-resources:
   #   resources :products do
@@ -110,7 +106,7 @@ BillGastro::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "orders#index"
+  root :to => 'sessions#new'
 
   # See how all your routes lay out with "rake routes"
 
@@ -119,6 +115,6 @@ BillGastro::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 
-  match '*path' => 'sessions#catcher'
+  match '*path' => 'session#catcher'
 
 end

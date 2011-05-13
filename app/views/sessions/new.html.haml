@@ -1,0 +1,14 @@
+#login
+  - if mobile?
+    %img#logo{ :src => "/images/logo-small.png", :width => 200, :height => 77 }
+
+  = form_tag '/session' do
+    %p
+      = label_tag 'login', (t '.username')
+      %select{ :name => 'login' }
+        - @users.each do |u|
+          %option{ :value => u.login }== #{ u.login } (#{ BillGastro::Application::LANGUAGES[u.language.to_s] })
+    %p
+      = label_tag 'password', (t '.password')
+      = password_field_tag 'password', '', :size => 9
+    %p= submit_tag t('.login'), :class => 'submit'

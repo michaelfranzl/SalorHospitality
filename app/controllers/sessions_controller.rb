@@ -20,26 +20,26 @@ class SessionsController < ApplicationController
 
   def new
     @users = User.all
-    redirect_to orders_path if session[:user_id]
   end
-  
+
   def create
     @current_user = User.find_by_login_and_password params[:login], params[:password]
     @users = User.all
     if @current_user
-      redirect_to '/'
       session[:user_id] = @current_user
+      I18n.locale = @current_user.language
+      session[:admin_interface] = !mobile? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = nil
+      redirect_to '/orders'
     else
       flash[:error] = t :wrong_password
       render :new
     end
   end
 
-  def show
-    session[:user_id] = @current_user = nil
-    flash[:notice] = t(:logout_successful)
+  def destroy
+    @current_user = session[:user_id] = nil
     redirect_to '/'
   end
 

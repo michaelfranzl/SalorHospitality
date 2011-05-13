@@ -6,7 +6,7 @@
 - if logged_in?
   #admin{ :style => "display: visible;" }
     .adminlinks
-      = link_to( t('activerecord.models.order.other'), '/')
+      = link_to( t('activerecord.models.order.other'), '/orders')
 
       - if @current_user.role.permissions.include? 'manage_settings'
         = link_to( t('activerecord.models.table.other'), tables_path)
@@ -32,4 +32,4 @@
         = link_to( t('activerecord.models.role.other'), roles_path)
         = link_to( t('activerecord.models.company.one'), companies_path)
 
-      = link_to t(:logout, :who => @current_user.login), session_path
+      = link_to t(:logout, :who => @current_user.login), session_path, :method => :delete

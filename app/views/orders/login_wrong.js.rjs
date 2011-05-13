@@ -1,2 +1,0 @@
-page.replace_html 'login', render('login_form')
-page.replace_html 'flash_error', @errormessage
