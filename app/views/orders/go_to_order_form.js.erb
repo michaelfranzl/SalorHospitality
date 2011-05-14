@@ -34,9 +34,8 @@ $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape
     optionslist = item.optionslist
     printoptionslist = item.printoptionslist
     optionsnames = compose_option_names(item)
-    optionsselect = compose_option_select(item)
 
-    tablerows += render :partial => 'items/item_tablerow', :locals => { :label => label, :designator => designator, :count => count, :comment => comment, :price => price, :optionsnames => optionsnames, :optionsselect => optionsselect }
+    tablerows += render :partial => 'items/item_tablerow', :locals => { :item => item, :label => label, :designator => designator, :count => count, :comment => comment, :price => price, :optionsnames => optionsnames }
 
     inputfields += render :partial => 'items/item_inputfields', :locals => { :id => id, :sort => sort, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :printoptionslist => printoptionslist }
 

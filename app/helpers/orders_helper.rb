@@ -25,10 +25,6 @@ module OrdersHelper
     item.options.collect{ |o| "<br>#{ o.name } " }.join
   end
 
-  def compose_option_select(item)
-    Option.find(:all, :conditions => { :category_id => item.category.id }).collect{ |o| "<option value=#{ o.id }>#{ o.name }</option>" }.join
-  end
-
   def generate_js_variables
     id = ''
     designator = 'DESIGNATOR'
@@ -44,7 +40,7 @@ module OrdersHelper
     optionsnames = ''
     count = 1
 
-    new_item_tablerow = render :partial => 'items/item_tablerow', :locals => { :sort => sort, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil }
+    new_item_tablerow = render :partial => 'items/item_tablerow', :locals => { :item => nil, :sort => sort, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil }
     new_item_tablerow_var = raw("new_item_tablerow = \"#{ escape_javascript new_item_tablerow }\";")
 
     new_item_inputfields = render :partial => 'items/item_inputfields', :locals => { :sort => sort, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :printed_count => printed_count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil, :id => nil, :printoptionslist => nil }

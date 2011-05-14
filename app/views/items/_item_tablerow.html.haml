@@ -15,10 +15,26 @@
     %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
   %td{ :id => "tablerow_#{ designator }_options", :class => 'item_options' }
+
     - if workstation?
-      %a{ :onmouseup => "$('#optionsselect_#{ designator }').show();" }
-    %select{ :id => "optionsselect_#{ designator }", :onchange => "add_option_to_item('#{ designator }', this)", :onmouseup => "$('#optionsselect_#{ designator }').hide();", :size => 12, :style => "#{ 'display: none;' if workstation? }" }
-      %option{ :value => -2 }= t('.done')
-      %option{ :value => 0 }= t('.clear')
-      %option{ :value => -1 }= t('.no_printing')
-      = raw optionsselect
+      %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
+      %div.optionsselect{ :id => "optionsselect_div_#{ designator }", :style => 'display: none' }
+        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, '#{t('.done')}')" }= t('.done')
+        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, '#{t('.clear')}')" }= t('.clear')
+        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, '#{t('.no_printing')}')" }= t('.no_printing')
+        - if item
+          - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
+            %div{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, '#{ o.name }')" }= o.name
+        - else
+          OPTIONSDIV
+
+    - else
+      %select{ :id => "optionsselect_select_#{ designator }", :onchange => "add_option_to_item_from_select('#{ designator }', this)", :size => 12 }
+        %option{ :value => -2 }= t('.done')
+        %option{ :value => 0 }= t('.clear')
+        %option{ :value => -1 }= t('.no_printing')
+        - if item
+          - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
+            %option{ :value => o.id }= o.name
+        - else
+          = optionsselect

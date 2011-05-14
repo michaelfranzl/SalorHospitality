@@ -39,9 +39,15 @@ function add_new_item_q(qu_id, button) {
   var category_id = itemdetails_q[qu_id][6];
 
   if (optionsselect[category_id]) {
-    var options = optionsselect[category_id];
+    var options_select = optionsselect[category_id];
   } else {
-    var options = ' ';
+    var options_select = ' ';
+  }
+
+  if (optionsdiv[category_id]) {
+    var options_div = optionsdiv[category_id];
+  } else {
+    var options_div = ' ';
   }
 
   // search if quantity_id is already in the inputfields div
@@ -63,7 +69,7 @@ function add_new_item_q(qu_id, button) {
   }
   else
   {
-    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options);
+    new_item_tablerow_modified = new_item_tablerow.replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
 
     new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
 
@@ -86,9 +92,15 @@ function add_new_item_a(art_id, button, caption) {
   var category_id = itemdetails_a[art_id][6];
 
   if (optionsselect[category_id]) {
-    var options = optionsselect[category_id];
+    var options_select = optionsselect[category_id];
   } else {
-    var options = ' ';
+    var options_select = ' ';
+  }
+
+  if (optionsdiv[category_id]) {
+    var options_div = optionsdiv[category_id];
+  } else {
+    var options_div = ' ';
   }
 
 
@@ -111,7 +123,7 @@ function add_new_item_a(art_id, button, caption) {
   }
   else
   {
-    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options);
+    new_item_tablerow_modified = new_item_tablerow.replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
     new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'').replace(/PRICE/g,itemdetails_a[art_id][3]);
     $('#itemstable').prepend(new_item_tablerow_modified);
     $('#inputfields').prepend(new_item_inputfields_modified);
@@ -196,7 +208,7 @@ function add_price_to_item(item_designator) {
   calculate_sum();
 }
 
-function add_option_to_item(item_designator, select_tag)
+function add_option_to_item_from_select(item_designator, select_tag)
 {
   var tablerow = $('#item_' + item_designator);
   var itemfields = $('#fields_for_item_' + item_designator);
@@ -224,6 +236,36 @@ function add_option_to_item(item_designator, select_tag)
     $('#optionsnames_' + item_designator).append('<br>' + text);
   }
   $('#optionsselect_' + item_designator).val(-2); //reset
+  $('#optionsselect_select_' + item_designator).hide();
+}
+
+function add_option_to_item_from_div(item_designator, value, text)
+{
+  var tablerow = $('#item_' + item_designator);
+  var itemfields = $('#fields_for_item_' + item_designator);
+
+  if (value == 0) {
+    // normal, delete all options
+    $('#order_items_attributes_' + item_designator + '_optionslist').val('');
+    $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
+    $('#optionsnames_' + item_designator).html('');
+
+  } else if (value == -2 ) {
+    // exit, nothing
+
+  } else if (value == -1 ) {
+    // special option: do not print
+    printedcount = parseInt($('#order_items_attributes_' + item_designator + '_printed_count').val());
+    $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
+    $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
+
+  } else {
+    printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
+    $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + value + ' ');
+    $('#optionsnames_' + item_designator).append('<br>' + text);
+  }
+  $('#optionsselect_' + item_designator).val(-2); //reset
+  $('#optionsselect_div_' + item_designator).slideUp();
 }
 
 
