@@ -4,6 +4,8 @@ inputfields = ''
 tablerows = ''
 %>
 
+<%= generate_js_variables %>
+
 $('#order_sum').val(0);
 $('#order_id').val('');
 $('#order_user_id').val(<%= @current_user.id %>);

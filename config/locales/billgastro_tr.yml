@@ -392,11 +392,8 @@ tr:
   server_no_response: 'Server bağlantısı kesildi'
   quick_order: Hızlı sipariş
 
-<<<<<<< HEAD
   default: XXXDefault
   germany: XXXGermany
   austria: XXXAustria
 
-=======
->>>>>>> jquery
   loading: Isleniyor...

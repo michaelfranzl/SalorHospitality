@@ -16,8 +16,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function category_onmousedown(category_id) {
-  Effect.ScrollTo('articles', { offset:-40});
+function category_onmousedown(category_id, element) {
+  $('html, body').animate({scrollTop: $('#articles').offset().top - 40}, 500);
   display_articles(category_id);
   deselect_all_categories();
   highlight_border(element);
@@ -26,7 +26,7 @@ function category_onmousedown(category_id) {
 function display_quantities(art_id) {
   if ($('article_' + art_id + '_quantities').innerHTML == '') {
     $('article_' + art_id + '_quantities').innerHTML = quantitylist[art_id];
-    Effect.ScrollTo('article_' + art_id + '_quantities', { offset:-50 });
+    $('html, body').animate({scrollTop: $('#article_' + art_id + '_quantities').offset().top - 40}, 500);
   } else {
     $('article_' + art_id + '_quantities').innerHTML = '';
   }
