@@ -26,7 +26,7 @@
           - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
             %div{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, '#{ o.name }')" }= o.name
         - else
-          OPTIONSDIV
+          OPTIONSDIV # this special string will be replaced by the JS UI
 
     - else
       %select{ :id => "optionsselect_select_#{ designator }", :onchange => "add_option_to_item_from_select('#{ designator }', this)", :size => 12 }
@@ -37,4 +37,4 @@
           - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
             %option{ :value => o.id }= o.name
         - else
-          = optionsselect
+          OPTIONSSELECT # this special string will be replaced by the JS UI

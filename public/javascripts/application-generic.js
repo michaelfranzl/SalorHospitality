@@ -231,11 +231,11 @@ function add_option_to_item_from_select(item_designator, select_tag)
   } else {
     printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + select_tag.value + ' ');
-    var index = $('#optionsselect_' + item_designator).attr('selectedIndex');
-    var text = $('#optionsselect_' + item_designator).attr('options')[index].text;
+    var index = $('#optionsselect_select_' + item_designator).attr('selectedIndex');
+    var text = $('#optionsselect_select_' + item_designator).attr('options')[index].text;
     $('#optionsnames_' + item_designator).append('<br>' + text);
   }
-  $('#optionsselect_' + item_designator).val(-2); //reset
+  $('#optionsselect_select_' + item_designator).val(-2); //reset
   $('#optionsselect_select_' + item_designator).hide();
 }
 
@@ -264,7 +264,6 @@ function add_option_to_item_from_div(item_designator, value, text)
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + value + ' ');
     $('#optionsnames_' + item_designator).append('<br>' + text);
   }
-  $('#optionsselect_' + item_designator).val(-2); //reset
   $('#optionsselect_div_' + item_designator).slideUp();
 }
 
