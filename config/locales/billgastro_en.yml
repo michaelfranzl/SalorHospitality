@@ -260,9 +260,9 @@ en:
 
   items:
     item_tablerow:
-      no_options: Normal
-      exit: Exit
-      do_not_print: no printing
+      clear: Clear
+      done: Done
+      no_printing: no printing
 
   sessions:
     browser_warning:
@@ -395,14 +395,13 @@ en:
 
   please_enter_email_and_realname: Please enter your email address and real name.
 
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
-
-  server_no_response: 'The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.'
-  quick_order: Quick Order
-
   default: Default
   germany: Germany
   austria: Austria
 
-  loading: Loading ...
+  # Translations for Javascript files
+  please_enter_item_comment: Special Wish
+  please_enter_item_price: Special Price
+  server_no_response: 'The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.'
+  just_order: Just order
+  no_printing: No printing

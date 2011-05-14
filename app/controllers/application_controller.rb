@@ -214,7 +214,7 @@ class ApplicationController < ActionController::Base
         printed_items_in_this_order = 0
         o.items.each do |i|
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
-          next if i.count == i.printed_count
+          next if i.count == i.printed_count or i.count == 0
 
           article_quantity_usage = i.quantity ? i.quantity.usage : i.article.usage
 
@@ -299,6 +299,7 @@ class ApplicationController < ActionController::Base
       subtotal = 0
       list_of_items = ''
       order.items.each do |item|
+        next if item.count == 0
         p = item.real_price
         p = -p if item.storno_status == 2
         sum = item.count * p

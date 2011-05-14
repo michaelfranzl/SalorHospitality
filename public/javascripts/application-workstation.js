@@ -29,11 +29,3 @@ function category_onmousedown(category_id, element) {
 function display_quantities(art_id) {
   $('#quantities').html(quantitylist[art_id]);
 }
-
-function hide_optionsselect(what) {
-  what.hide();
-}
-
-function hide_tableselect(what) {
-  what.hide();
-}

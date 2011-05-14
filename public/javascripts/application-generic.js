@@ -175,54 +175,55 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 
 
 function add_comment_to_item(item_designator) {
-  var fallback = document.getElementById('order_items_attributes_' + item_designator + '_comment').value;
-  var comment = prompt(enter_comment, fallback);
+  var fallback = $('#order_items_attributes_' + item_designator + '_comment').val();
+  var comment = prompt(i18n_enter_comment, fallback);
   if ( comment == null ) { comment = fallback };
-  document.getElementById('order_items_attributes_' + item_designator + '_comment').value = comment;
-  $('comment_' + item_designator).innerHTML = comment;
+  $('#order_items_attributes_' + item_designator + '_comment').val(comment);
+  $('#comment_' + item_designator).html(comment);
 }
 
 
 function add_price_to_item(item_designator) {
-  var old_price = $('order_items_attributes_' + item_designator + '_price').value;
+  var old_price = $('#order_items_attributes_' + item_designator + '_price').val();
   if (old_price == 0) { old_price = '' }
-  var price = prompt(enter_price, old_price);
-  if ( price == null ) {
+  var price = prompt(i18n_enter_price, old_price);
+  if ( price == null || price == '' ) {
     price = old_price;
-    if ( price == '') { price = 0 };
   }
   price = price.replace(',', '.');
-  document.getElementById('order_items_attributes_' + item_designator + '_price').value = price;
-  $('price_' + item_designator).innerHTML = price;
+  $('#order_items_attributes_' + item_designator + '_price').val(price);
+  $('#price_' + item_designator).html(price);
   calculate_sum();
 }
 
 function add_option_to_item(item_designator, select_tag)
 {
-  var tablerow = $('item_'+item_designator);
-  var itemfields = $('fields_for_item_'+item_designator);
+  var tablerow = $('#item_' + item_designator);
+  var itemfields = $('#fields_for_item_' + item_designator);
 
   if (select_tag.value == 0) {
     // normal, delete all options
-    $('order_items_attributes_' + item_designator + '_optionslist').value = '';
-    $('order_items_attributes_' + item_designator + '_printoptionslist').value = '';
-    $('optionsnames_' + item_designator).innerHTML = '';
+    $('#order_items_attributes_' + item_designator + '_optionslist').val('');
+    $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
+    $('#optionsnames_' + item_designator).html('');
 
   } else if (select_tag.value == -2 ) {
     // exit, nothing
 
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-    $('order_items_attributes_' + item_designator + '_printed_count').value++;
-    $('optionsnames_' + item_designator).insert('<br>fertig');
+    printedcount = parseInt($('#order_items_attributes_' + item_designator + '_printed_count').val());
+    $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
+    $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else {
-    $('order_items_attributes_' + item_designator + '_printoptionslist').value += (select_tag.value+' ');
-    var index = $('optionsselect_' + item_designator).selectedIndex;
-    var text = $('optionsselect_' + item_designator).options[index].text;
-    $('optionsnames_' + item_designator).insert('<br>'+text);
+    printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
+    $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + select_tag.value + ' ');
+    var index = $('#optionsselect_' + item_designator).attr('selectedIndex');
+    var text = $('#optionsselect_' + item_designator).attr('options')[index].text;
+    $('#optionsnames_' + item_designator).append('<br>' + text);
   }
-  $('optionsselect_'+item_designator).value = -2; //reset
+  $('#optionsselect_' + item_designator).val(-2); //reset
 }
 
 
@@ -230,14 +231,23 @@ function add_option_to_item(item_designator, select_tag)
 
 function articles_onmousedown(element) {
   highlight_border(element);
+  $(element).css({ backgroundColor: '#AAAA4D' });
 }
 
 function quantities_onmousedown(element) {
   highlight_border(element);
+  $(element).css({ backgroundColor: '#AAAA4D' });
+}
+
+function articles_onmouseup(element) {
+  $(element).css({ backgroundColor: '#27343B' });
+}
+
+function quantities_onmouseup(element) {
+  $(element).css({ backgroundColor: '#27343B' });
 }
 
 function highlight_border(element) {
-  //$(element).effect('highlight', {}, 3000);
   $(element).css('borderColor', 'white');
 }
 
@@ -262,7 +272,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('#order_sum').value = '0';
 
   $('#order_id').val('add_offline_items_to_order');
-  $('#order_info').html('Schnellbestellung');
+  $('#order_info').html(i18n_just_order);
   $('#order_action').val('');
   $('#order_table_id').val(table_id);
 
@@ -305,7 +315,7 @@ window.setInterval(
       $.ajax({ url: '/tables' });
     }
     else if (tableupdates == 0) {
-      alert(server_no_response);
+      alert(i18n_server_no_response);
     }
     tableupdates -= 1;
   }

@@ -259,9 +259,9 @@ tr:
 
   items:
     item_tablerow:
-      no_options: Normal
-      exit: Cikis
-      do_not_print: Bitir
+      clear: XXXClear
+      done: XXXDone
+      no_printing: XXXNo printing
 
   sessions:
     browser_warning:
@@ -386,14 +386,13 @@ tr:
 
   please_enter_email_and_realname: Lütfen isminzi ve e-mail adresinizi yaziniz.
 
-  please_enter_item_comment: Özel istek
-  please_enter_item_price: Fiyet
-
-  server_no_response: 'Server bağlantısı kesildi'
-  quick_order: Hızlı sipariş
-
   default: XXXDefault
   germany: XXXGermany
   austria: XXXAustria
 
-  loading: Isleniyor...
+  # Translations for Javascript files
+  please_enter_item_comment: Özel istek
+  please_enter_item_price: Fiyet
+  server_no_response: 'Server bağlantısı kesildi'
+  just_order: XXXJust order
+  no_printing: XXXNo printing

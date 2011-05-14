@@ -8,7 +8,7 @@
     %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role.permissions.include?('change_waiter') ? 'visible' : 'none' }"}
       = options_from_collection_for_select User.all, :id, :login, { :include_blank => !mobile? }
 
-  #order_info= t :loading
+  #order_info= t :just_order
 
   %div#categories
     - @categories.each do |category|

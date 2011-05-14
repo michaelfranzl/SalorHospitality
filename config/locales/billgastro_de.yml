@@ -260,9 +260,9 @@ de:
 
   items:
     item_tablerow:
-      no_options: Normal
-      exit: Exit
-      do_not_print: Fertig
+      clear: Normal
+      done: Fertig
+      no_printing: Kein Druck
 
   sessions:
     browser_warning:
@@ -395,14 +395,13 @@ de:
 
   please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse ein.
 
-  please_enter_item_comment: Spezialwunsch
-  please_enter_item_price: Spezialpreis
-
-  server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
-  quick_order: Schnellbestellung
-
   default: Allgemein
   germany: Deutschland
   austria: Österreich
 
-  loading: Lade ...
+  # Translations for Javascript files
+  please_enter_item_comment: Spezialwunsch
+  please_enter_item_price: Spezialpreis
+  server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
+  just_order: Nur bestellen
+  no_printing: Kein Druck
