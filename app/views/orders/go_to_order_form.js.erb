@@ -12,11 +12,6 @@ $('#order_user_id').val(<%= @current_user.id %>);
 $('#order_action').val('');
 $('#target_table').val('');
 
-$('#functions_header_index').hide();
-$('#functions_header_invoice_form').hide();
-$('#functions_header_order_form').show();
-$('#functions_footer').show();
-
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
 <% if @order
@@ -52,10 +47,5 @@ $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>')
 <% end %>
 
 $('#order_table_id').val(<%= @table.id %>);
-
-$('#orderform').show();
-$('#invoices').hide();
-$('#tables').hide();
-$('#rooms').hide();
 
 tableupdates = -1;

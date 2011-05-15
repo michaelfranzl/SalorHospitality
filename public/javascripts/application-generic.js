@@ -327,6 +327,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('#tables').hide();
   $('#rooms').hide();
   $('#functions_header_index').hide();
+  $('#functions_header_invoice_form').hide();
   $('#functions_header_order_form').show();
   $('#functions_footer').show();
   $.ajax({ type: 'GET', url: '/tables/' + table_id });
