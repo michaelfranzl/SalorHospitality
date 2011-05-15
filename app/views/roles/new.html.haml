@@ -19,7 +19,7 @@
         %input#permissions_take_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'take_orders', :checked => role_form.object.permissions.include?('take_orders') }
     %tr
       %td
-        %label{ :for => 'permissions_reduce_items' }= t '.decrement_items'
+        %label{ :for => 'permissions_decrement_items' }= t '.decrement_items'
       %td
         %input#permissions_decrement_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'decrement_items', :checked => role_form.object.permissions.include?('decrement_items') }
     %tr
