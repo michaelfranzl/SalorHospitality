@@ -46,9 +46,9 @@ articles_003:
   blackboard: 0
   waiterpad: 1
   created_at: 2009-02-24 16:02:40 Z
-  updated_at: 2011-04-23 22:54:10 Z
+  updated_at: 2011-05-15 11:04:31 Z
   hidden: 0
-  sort: 9
+  sort: 8
   usage: 0
 articles_004: 
   id: 4
@@ -913,9 +913,9 @@ articles_054:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:38:44 Z
-  updated_at: 2011-04-17 07:13:28 Z
+  updated_at: 2011-05-15 11:04:32 Z
   hidden: 0
-  sort: 0
+  sort: 3
   usage: 0
 articles_055: 
   id: 82
@@ -930,9 +930,9 @@ articles_055:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:39:12 Z
-  updated_at: 2011-04-23 22:54:11 Z
+  updated_at: 2011-05-15 11:04:32 Z
   hidden: 0
-  sort: 0
+  sort: 2
   usage: 0
 articles_056: 
   id: 83
@@ -947,9 +947,9 @@ articles_056:
   blackboard: 0
   waiterpad: 0
   created_at: 2009-02-25 12:39:38 Z
-  updated_at: 2011-04-23 22:54:11 Z
+  updated_at: 2011-05-15 11:04:32 Z
   hidden: 0
-  sort: 0
+  sort: 4
   usage: 0
 articles_057: 
   id: 84
@@ -1219,9 +1219,9 @@ articles_072:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:25:06 Z
-  updated_at: 2011-04-17 07:13:30 Z
+  updated_at: 2011-05-15 11:04:32 Z
   hidden: 0
-  sort: 0
+  sort: 2
   usage: 0
 articles_073: 
   id: 107
@@ -1338,9 +1338,9 @@ articles_079:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-02-02 15:37:02 Z
-  updated_at: 2011-04-23 22:54:11 Z
+  updated_at: 2011-05-15 11:04:33 Z
   hidden: 0
-  sort: 0
+  sort: 1
   usage: 0
 articles_080: 
   id: 114
@@ -1610,9 +1610,9 @@ articles_095:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:04:29 Z
-  updated_at: 2011-04-23 22:54:12 Z
+  updated_at: 2011-05-15 11:04:33 Z
   hidden: 0
-  sort: 3
+  sort: 10
   usage: 0
 articles_096: 
   id: 130
@@ -1797,9 +1797,9 @@ articles_106:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-02-02 16:23:05 Z
-  updated_at: 2011-04-17 07:13:33 Z
+  updated_at: 2011-05-15 11:04:33 Z
   hidden: 0
-  sort: 0
+  sort: 1
   usage: 0
 articles_107: 
   id: 142
@@ -4415,9 +4415,9 @@ articles_260:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-05 16:21:42 Z
-  updated_at: 2011-04-23 22:54:13 Z
+  updated_at: 2011-05-15 11:04:34 Z
   hidden: 0
-  sort: 0
+  sort: 2
   usage: 0
 articles_261: 
   id: 296
@@ -4687,9 +4687,9 @@ articles_276:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:28:49 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:34 Z
   hidden: 0
-  sort: 0
+  sort: 3
   usage: 0
 articles_277: 
   id: 312
@@ -4772,9 +4772,9 @@ articles_281:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:32:22 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:35 Z
   hidden: 0
-  sort: 0
+  sort: 14
   usage: 0
 articles_282: 
   id: 317
@@ -4789,9 +4789,9 @@ articles_282:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:33:02 Z
-  updated_at: 2011-04-17 07:13:47 Z
+  updated_at: 2011-05-15 11:04:35 Z
   hidden: 0
-  sort: 0
+  sort: 3
   usage: 0
 articles_283: 
   id: 318
@@ -4806,9 +4806,9 @@ articles_283:
   blackboard: 1
   waiterpad: 1
   created_at: 2010-04-26 12:33:45 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:35 Z
   hidden: 0
-  sort: 0
+  sort: 2
   usage: 0
 articles_284: 
   id: 319
@@ -4840,9 +4840,9 @@ articles_285:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 12:46:01 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:35 Z
   hidden: 0
-  sort: 0
+  sort: 4
   usage: 0
 articles_286: 
   id: 321
@@ -5146,9 +5146,9 @@ articles_303:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:18:09 Z
-  updated_at: 2011-04-23 22:54:16 Z
+  updated_at: 2011-05-15 11:04:36 Z
   hidden: 0
-  sort: 0
+  sort: 30
   usage: 0
 articles_304: 
   id: 339
@@ -5180,9 +5180,9 @@ articles_305:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-04-30 14:20:52 Z
-  updated_at: 2011-04-17 07:13:54 Z
+  updated_at: 2011-05-15 11:04:36 Z
   hidden: 0
-  sort: 0
+  sort: 3
   usage: 0
 articles_306: 
   id: 341
@@ -5282,9 +5282,9 @@ articles_311:
   blackboard: 0
   waiterpad: 0
   created_at: 2010-09-11 15:25:09 Z
-  updated_at: 2011-04-17 07:13:56 Z
+  updated_at: 2011-05-15 11:04:37 Z
   hidden: 0
-  sort: 0
+  sort: 1
   usage: 0
 articles_312: 
   id: 347

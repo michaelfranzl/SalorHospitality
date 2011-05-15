@@ -7,10 +7,8 @@
     %th{ :style => 'width:150px' }
     %th{ :style => 'width:100px' }
     %th{ :style => 'width:200px' }
-    %th{ :style => 'width:100px' }
   - @cost_centers.each do |cc|
     %tr
-      %td= @current_user.role >= 60 ? link_to(cc.name, edit_cost_center_path(cc)) : cc.name
+      %td= link_to cc.name, edit_cost_center_path(cc)
       %td= cc.active ? t('.active') : t('.inactive')
       %td= cc.description
-      %td= link_to((t :edit), edit_cost_center_path(cc)) if @current_user.role >= 60

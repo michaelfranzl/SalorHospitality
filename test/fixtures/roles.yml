@@ -1,11 +1,124 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+--- 
+roles_001: 
+  id: 1
+  name: Auxiliary waiter
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
 
-one:
-  name: MyString
-  description: MyText
-  permissions: MyString
+  created_at: 2011-05-13 17:18:47 Z
+  updated_at: 2011-05-13 19:34:11 Z
+roles_002: 
+  id: 2
+  name: Superuser
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
+    - split_items
+    - move_tables
+    - make_storno
+    - assign_cost_center
+    - move_order
+    - change_waiter
+    - manage_articles_categories_options
+    - finish_all_settlements
+    - finish_own_settlement
+    - view_all_settlements
+    - manage_business_invoice
+    - view_statistics
+    - manage_users
+    - manage_settings
 
-two:
-  name: MyString
-  description: MyText
-  permissions: MyString
+  created_at: 2011-05-13 17:19:04 Z
+  updated_at: 2011-05-13 19:32:33 Z
+roles_003: 
+  id: 3
+  name: Waiter
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
+    - split_items
+    - finish_own_settlement
+
+  created_at: 2011-05-13 17:20:08 Z
+  updated_at: 2011-05-13 19:32:27 Z
+roles_004: 
+  id: 4
+  name: Chief waiter
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
+    - split_items
+    - move_tables
+    - make_storno
+    - finish_own_settlement
+
+  created_at: 2011-05-13 17:21:12 Z
+  updated_at: 2011-05-13 19:32:22 Z
+roles_005: 
+  id: 5
+  name: Host
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
+    - split_items
+    - move_tables
+    - make_storno
+    - assign_cost_center
+    - move_order
+    - change_waiter
+    - manage_articles_categories_options
+
+  created_at: 2011-05-13 17:21:27 Z
+  updated_at: 2011-05-13 19:24:38 Z
+roles_006: 
+  id: 6
+  name: Owner
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+    - decrement_items
+    - finish_orders
+    - split_items
+    - move_tables
+    - make_storno
+    - assign_cost_center
+    - move_order
+    - change_waiter
+    - manage_articles_categories_options
+    - finish_all_settlements
+    - finish_own_settlement
+    - view_all_settlements
+    - manage_business_invoice
+    - view_statistics
+    - manage_users
+    - manage_settings
+
+  created_at: 2011-05-13 17:22:01 Z
+  updated_at: 2011-05-13 19:32:11 Z
+roles_007: 
+  id: 7
+  name: Restaurant
+  description: 
+  permissions: |
+    --- 
+    - take_orders
+
+  created_at: 2011-05-13 19:34:23 Z
+  updated_at: 2011-05-13 19:34:23 Z

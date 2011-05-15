@@ -1,12 +1,12 @@
 --- 
 users_001: 
   id: 1
-  login: su
-  password: su
-  title: Mister Superuser
+  login: owner
+  password: owner
+  title: Mister Owner
   created_at: 2009-02-24 14:54:46 Z
-  updated_at: 2011-04-25 10:53:04 Z
-  role: 70
+  updated_at: 2011-05-13 17:26:38 Z
+  role_id: 6
   color: "#cd0052"
   language: en
   company_id: 46
@@ -16,41 +16,52 @@ users_002:
   password: restaurant
   title: "-"
   created_at: 2009-05-18 11:00:48 Z
-  updated_at: 2011-04-25 10:54:31 Z
-  role: 0
+  updated_at: 2011-05-13 19:35:08 Z
+  role_id: 7
   color: "#80477d"
   language: en
   company_id: 46
 users_003: 
   id: 10
-  login: admin
-  password: admin
-  title: Mr. Admin
+  login: host
+  password: host
+  title: Mr. Host
   created_at: 2010-05-16 15:35:24 Z
-  updated_at: 2011-04-25 10:54:47 Z
-  role: 2
+  updated_at: 2011-05-13 17:26:22 Z
+  role_id: 5
   color: "#75b10d"
   language: de
   company_id: 46
 users_004: 
   id: 11
-  login: waiter1
-  password: waiter1
+  login: chiefwaiter
+  password: chiefwaiter
   title: Mrs. Waiter 1
   created_at: 2010-05-16 15:35:46 Z
-  updated_at: 2011-04-25 10:54:51 Z
-  role: 1
+  updated_at: 2011-05-13 17:26:04 Z
+  role_id: 4
   color: "#cd0052"
   language: de
   company_id: 46
 users_005: 
   id: 12
-  login: waiter2
-  password: waiter2
+  login: waiter
+  password: waiter
   title: Mr. Waiter 2
   created_at: 2010-05-16 15:36:22 Z
-  updated_at: 2011-04-25 10:54:53 Z
-  role: 1
+  updated_at: 2011-05-13 17:45:28 Z
+  role_id: 3
   color: "#ed8b00"
-  language: tr
+  language: en
+  company_id: 46
+users_006: 
+  id: 13
+  login: aux
+  password: aux
+  title: Mr. Aux
+  created_at: 2011-05-13 19:35:31 Z
+  updated_at: 2011-05-13 19:35:31 Z
+  role_id: 1
+  color: "#80477d"
+  language: en
   company_id: 46

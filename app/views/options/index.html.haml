@@ -1,14 +1,12 @@
 %h2= t('activerecord.models.option.other')
 
-=link_to (t :new), new_option_path, :class => 'links'
+= link_to (t :new), new_option_path, :class => 'links'
 
 %table
   %tr
     %th{ :style => 'width:250px' }= Option.human_attribute_name(:name)
     %th{ :style => 'width:150px' }= Option.human_attribute_name(:category)
-    %th{ :style => 'width:120px' }
   - @options.each do |opt|
     %tr
-      %td= @current_user.role >= 50 ? link_to(opt.name, edit_option_path(opt)) : opt.name
+      %td= link_to opt.name, edit_option_path(opt)
       %td= opt.category.name if opt.category
-      %td= link_to((t :delete), opt, :confirm => (t :are_you_sure), :method => :delete)

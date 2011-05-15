@@ -17,11 +17,11 @@ quantities_002:
   price: 3.0
   article_id: 320
   created_at: 2010-04-30 12:46:01 Z
-  updated_at: 2011-04-23 22:54:15 Z
+  updated_at: 2011-05-15 11:04:35 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 1
   usage: 0
 quantities_003: 
   id: 3
@@ -629,11 +629,11 @@ quantities_053:
   price: 21.0
   article_id: 320
   created_at: 2010-04-30 14:16:53 Z
-  updated_at: 2011-04-23 22:54:15 Z
+  updated_at: 2011-05-15 11:04:35 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 3
   usage: 0
 quantities_054: 
   id: 54
@@ -641,11 +641,11 @@ quantities_054:
   price: 2.7
   article_id: 338
   created_at: 2010-04-30 14:18:09 Z
-  updated_at: 2011-04-23 22:54:16 Z
+  updated_at: 2011-05-15 11:04:36 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 11
   usage: 0
 quantities_055: 
   id: 55
@@ -653,11 +653,11 @@ quantities_055:
   price: 3.5
   article_id: 338
   created_at: 2010-04-30 14:18:09 Z
-  updated_at: 2011-04-23 22:54:16 Z
+  updated_at: 2011-05-15 11:04:36 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 19
   usage: 0
 quantities_056: 
   id: 56
@@ -689,11 +689,11 @@ quantities_058:
   price: 3.4
   article_id: 340
   created_at: 2010-04-30 14:20:52 Z
-  updated_at: 2011-04-17 07:13:54 Z
+  updated_at: 2011-05-15 11:04:36 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 1
   usage: 0
 quantities_059: 
   id: 59
@@ -701,11 +701,11 @@ quantities_059:
   price: 26.0
   article_id: 340
   created_at: 2010-04-30 14:20:52 Z
-  updated_at: 2011-04-17 07:13:55 Z
+  updated_at: 2011-05-15 11:04:36 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 0
+  sort: 2
   usage: 0
 quantities_060: 
   id: 60
@@ -869,11 +869,11 @@ quantities_073:
   price: 2.2
   article_id: 3
   created_at: 2010-09-10 16:33:08 Z
-  updated_at: 2011-04-20 18:24:56 Z
+  updated_at: 2011-05-15 11:04:31 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 3
+  sort: 0
   usage: 0
 quantities_074: 
   id: 74
@@ -881,11 +881,11 @@ quantities_074:
   price: 0.5
   article_id: 3
   created_at: 2010-09-10 16:33:08 Z
-  updated_at: 2011-04-23 22:54:10 Z
+  updated_at: 2011-05-15 11:04:32 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 3
+  sort: 6
   usage: 0
 quantities_075: 
   id: 75
@@ -893,11 +893,11 @@ quantities_075:
   price: 2.7
   article_id: 3
   created_at: 2010-09-10 16:33:08 Z
-  updated_at: 2011-04-23 22:54:10 Z
+  updated_at: 2011-05-15 11:04:32 Z
   active: 1
   hidden: 0
   postfix: 
-  sort: 3
+  sort: 2
   usage: 0
 quantities_076: 
   id: 76
@@ -905,11 +905,11 @@ quantities_076:
   price: 1.5
   article_id: 311
   created_at: 2011-04-21 16:52:48 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:35 Z
   active: 1
   hidden: 0
   postfix: ""
-  sort: 0
+  sort: 2
   usage: 0
 quantities_077: 
   id: 77
@@ -917,11 +917,11 @@ quantities_077:
   price: 2.0
   article_id: 311
   created_at: 2011-04-21 16:52:48 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-05-15 11:04:35 Z
   active: 1
   hidden: 0
   postfix: ""
-  sort: 0
+  sort: 1
   usage: 0
 quantities_078: 
   id: 78
