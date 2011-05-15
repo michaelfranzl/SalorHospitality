@@ -1,3 +1,3 @@
-%a.iconbutton.scrolldown_button{ :onclick => 'Effect.ScrollTo("footer", 10);', :title => t(:scroll_down) }
+%a.iconbutton.scrolldown_button{ :onclick => '$("html, body").animate({scrollTop: $("#footer").offset().top}, 500);', :title => t(:scroll_down) }
 %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();' }
-%a.iconbutton.scrollup_button{ :onclick => 'Effect.ScrollTo("header", 10);', :title => t(:scroll_up) }
+%a.iconbutton.scrollup_button{ :onclick => '$("html, body").animate({scrollTop: $("#header").offset().top}, 500);', :title => t(:scroll_up) }
