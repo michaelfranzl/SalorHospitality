@@ -5,9 +5,9 @@ gem 'rails', '3.0.6'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
-gem 'serialport'
-gem 'jquery-rails'
+gem 'mysql2', '0.2.6'
+gem 'serialport', '1.0.4'
+gem 'jquery-rails', '0.2.7'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
@@ -19,7 +19,7 @@ gem 'exception_notification', :require => 'exception_notifier'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
-# gem 'ruby-debug19'
+gem 'ruby-debug19', '0.11.6'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -34,4 +34,4 @@ gem 'exception_notification', :require => 'exception_notifier'
 #   gem 'webrat'
 # end
 
-gem 'haml'
+gem 'haml', '3.0.25'
