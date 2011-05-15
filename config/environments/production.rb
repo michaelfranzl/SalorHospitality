@@ -5,7 +5,7 @@ BillGastro::Application.configure do
 
   config.action_mailer.delivery_method = :sendmail
 
-  config.middleware.use ExceptionNotifier, :email_prefix => "[BillGastro] ", :sender_address => %{"BillGastro" <office@michaelfranzl.com>}, :exception_recipients => %w{office@michaelfranzl.com}
+  config.middleware.use ExceptionNotifier, :email_prefix => "[BillGastro] ", :sender_address => %{"BillGastro" <michael@billgastro.com>}, :exception_recipients => %w{michael@billgastro.com}
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
