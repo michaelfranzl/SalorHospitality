@@ -29,5 +29,3 @@ reprepro -b publish/debian includedeb maverick billgastro-bin.deb
 # local hosting for quick virtualbox testing
 rm -rf /var/www/80/debian
 cp -r publish/debian /var/www/80
-
-#ncftpput -R -u billgastroweb-www -p QXP3mSUq -m billgastro.com public publish/debian
