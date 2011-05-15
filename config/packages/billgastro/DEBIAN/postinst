@@ -17,7 +17,7 @@ cd /var/www/billgastro
 cp config/database-default.yml config/database.yml
 sed -i -e "s/username:.*/username: $username/" config/database.yml
 sed -i -e "s/password:.*/password: $password/" config/database.yml
-sed -i -e "s/database: .*/database: $database/" config/database.yml
+sed -i -e "s/database:.*/database: $database/" config/database.yml
 
 db_get billgastro/exceptions
 if [ "$RET" = "true" ]
@@ -33,12 +33,10 @@ result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 
 if [ "$result" != "$database" ]
 then
-  echo "BillGastro database didn't exist before, so I'm creating it ..."
+  echo "BillGastro database doesn't exist, so I'm creating it ..."
   rake db:create
   echo "Migrating BillGastro database ..."
   rake db:migrate
-  echo "Backing up database for the unlikely case that the database exists anyway."
-  rake db:dump
   echo "Populating database with seed data ..."
   rake db:fixtures:load
   db_input high billgastro/dataset || true
@@ -50,7 +48,7 @@ then
     mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;"
   fi
 else
-  echo "BillGastro database already existed, so I'm only migrating ..."
+  echo "BillGastro database already exists, so I'm only migrating ..."
   rake db:migrate
 fi
 
