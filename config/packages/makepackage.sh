@@ -1,27 +1,32 @@
 #!/bin/sh
 
-rm -rf $1/var/www/billgastro
-rm -f $1.deb
-rm -rf $1/../publish/debian/db
-rm -rf $1/../publish/debian/dists
-rm -rf $1/../publish/debian/pool
+cd config/packages
 
-mkdir -p $1/../publish/debian
+# remove old build products
+rm -f *.deb
+rm -rf publish/debian/db
+rm -rf publish/debian/dists
+rm -rf publish/debian/pool
 
 echo "Copy compiled Ruby, Gems and configuration files"
-cp -rf ~/Public/pack/* $1
+cp -r ~/Public/pack/usr billgastro-bin
 
 echo "Copy BillGastro Source from git repository"
-mkdir -p $1/var/www
-git clone -b billgastro3 . $1/var/www/billgastro
-rm -rf $1/var/www/billgastro/.git
+rm -rf billgastro-src/var
+mkdir -p billgastro-src/var/www
+git clone ../.. billgastro-src/var/www/billgastro
+rm -rf billgastro-src/var/www/billgastro/.git
 
-dpkg -b $1
-reprepro -b $1/../publish/debian includedeb maverick $1.deb
+dpkg -b billgastro
+dpkg -b billgastro-src
+dpkg -b billgastro-bin
 
+reprepro -b publish/debian includedeb maverick billgastro.deb
+reprepro -b publish/debian includedeb maverick billgastro-src.deb
+reprepro -b publish/debian includedeb maverick billgastro-bin.deb
+
+# local hosting for quick virtualbox testing
 rm -rf /var/www/80/debian
-cp -r $1/../publish/debian /var/www/80
+cp -r publish/debian /var/www/80
 
-ncftpput -R -u billgastroweb-www -p QXP3mSUq -m billgastro.com public $1/../publish/debian
-
-rm -f $1.deb
+ncftpput -R -u billgastroweb-www -p QXP3mSUq -m billgastro.com public publish/debian

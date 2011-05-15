@@ -1,0 +1,10 @@
+Package: billgastro-src
+Version: 3.1.2
+Architecture: i386
+Maintainer: DI(FH) Michael Franzl <office@michaelfranzl.com>
+Installed-Size: 1200000
+Section: ruby
+Priority: optional
+Homepage: http://www.billgastro.com
+Description: Sources for Bill Gastro
+ The innovative Point Of Sales Software for your Restaurant
