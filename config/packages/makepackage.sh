@@ -10,6 +10,7 @@ rm -rf publish/debian/pool
 
 echo "Copy compiled Ruby, Gems and configuration files"
 cp -r ~/Public/pack/usr billgastro-bin
+cp -r ~/Public/pack/etc billgastro-src
 
 echo "Copy BillGastro Source from git repository"
 rm -rf billgastro-src/var
