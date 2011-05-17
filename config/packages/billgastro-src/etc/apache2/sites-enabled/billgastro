@@ -1,0 +1,5 @@
+<VirtualHost *:80>
+  ServerName billgastro
+  DocumentRoot /var/www/billgastro/public
+  RailsEnv production
+</VirtualHost>

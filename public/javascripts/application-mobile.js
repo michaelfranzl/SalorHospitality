@@ -24,11 +24,11 @@ function category_onmousedown(category_id, element) {
 }
 
 function display_quantities(art_id) {
-  if ($('article_' + art_id + '_quantities').innerHTML == '') {
-    $('article_' + art_id + '_quantities').innerHTML = quantitylist[art_id];
+  if ($('#article_' + art_id + '_quantities').html() == '') {
+    $('#article_' + art_id + '_quantities').html(quantitylist[art_id]);
     $('html, body').animate({scrollTop: $('#article_' + art_id + '_quantities').offset().top - 40}, 500);
   } else {
-    $('article_' + art_id + '_quantities').innerHTML = '';
+    $('#article_' + art_id + '_quantities').html('');
   }
 }
 

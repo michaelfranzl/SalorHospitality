@@ -1,1 +1,0 @@
-page.replace_html 'invoices', render(:partial => 'storno_form', :locals => { :storno_form => @order } )

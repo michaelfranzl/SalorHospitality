@@ -10,7 +10,6 @@ articles.js
 *.lock
 *~
 config/packages/billgastro-bin/usr
-config/packages/billgastro-src/etc
 config/packages/billgastro-src/var
 config/packages/publish/debian/db
 config/packages/publish/debian/dists

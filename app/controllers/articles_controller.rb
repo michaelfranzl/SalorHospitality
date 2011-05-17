@@ -38,14 +38,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(params[:article])
     @groups = Group.find(:all, :order => 'name ASC')
-    respond_to do |wants|
-      wants.html { @article.save ? redirect_to(articles_path) : render(:new) }
-      wants.js do
-        @id = params[:id]
-        @article.save
-        @foods_in_menucard = Article.find(:all, :conditions => { :menucard => true, :category_id => 1..3 }).size
-      end
-    end
+    @article.save ? redirect_to(articles_path) : render(:new)
   end
 
   def edit

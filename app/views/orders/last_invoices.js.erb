@@ -1,0 +1,14 @@
+$('#invoices').html('');
+tableupdates = -1;
+
+$('#invoices').html('<%= escape_javascript render(:partial => 'storno_form', :collection => @unsettled_orders) %>');
+
+$('#invoices').show();
+$('#orderform').hide();
+$('#tables').hide();
+$('#rooms').hide();
+
+$('#functions_header_invoice_form').show();
+$('#functions_header_order_form').hide();
+$('#functions_footer').hide();
+$('#functions_header_index').hide();

@@ -44,11 +44,11 @@ then
   db_get billgastro/dataset
   if [ "$RET" = "false" ]
   then
-    echo "User selected minimal dataset. Truncating all tables except 'users'."
+    echo "User selected minimal dataset. Truncating all tables except 'users' and 'roles'."
     mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;"
   fi
 else
-  echo "BillGastro database already exists, so I'm only migrating ..."
+  echo "BillGastro database already exists, so I'm just migrating ..."
   rake db:migrate
 fi
 
@@ -57,11 +57,13 @@ chown -R www-data:www-data /var/www/billgastro
 chmod -R 755 /var/www/billgastro
 
 echo "Modifying /etc/hosts ..."
-echo "127.0.0.1 billgastro" >> /etc/hosts
+echo "127.0.0.1 localhost billgastro" > /etc/hosts
 echo "Restarting Apache ..."
 service apache2 restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
 echo "Restarting Exim4 ..."
 service exim4 restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
+echo "Restarting udev ..."
+service udev restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
 
 db_input high billgastro/done || true
 db_go
