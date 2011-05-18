@@ -99,7 +99,7 @@ div#footer a
 div#login
   :font-size 160%
   :margin auto
-  :width 300px
+  :width 330px
   :margin-top 130px
   label
     :display inline-block
@@ -111,6 +111,14 @@ div#login
     :width 150px
   input.submit
     :margin-left 140px
+  p
+    :margin 0px
+    :padding 10px 0px
+
+img#password_display_keyboard
+  :padding 20px 10px
+  :vertical-align middle
+  :cursor pointer
   
 //normal style definitions =============================
 
@@ -754,3 +762,33 @@ div.scope_list
     :display inline-block
     :margin-right 10px
   :padding-top 20px
+
+div.ui-keyboard
+  :text-align center
+  :background-color rgba(0, 0, 0, 0.7)
+  :border 1px solid #DDD
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :background-repeat repeat-x
+  :padding 10px
+  input.ui-keyboard-input
+    :margin 5px 30px
+    :font-size 20px
+  input.ui-keyboard-input:hover
+    :background-color white
+  input.ui-keyboard-space
+    :width 200px
+  input.ui-keyboard-button
+    :cursor pointer
+    :min-width 50px
+    :min-height 40px
+    :background-color rgba(32,59,73,0.8)
+    :font-size 20px
+    :color white
+    :padding 5px
+    :margin 2px
+    :border none
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+  input:hover, input.ui-keyboard-accept, input.ui-keyboard-cancel
+    :background-color rgba(99,127,142,0.8)

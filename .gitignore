@@ -2,7 +2,10 @@ config/database.yml
 *.*~
 vendor/plugins
 *.sql
-public/stylesheets/*.css
+generic.css
+mobile.css
+print.css
+workstation.css
 *.swp
 *.escpos
 articles.js

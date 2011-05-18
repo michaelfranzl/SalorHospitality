@@ -10,5 +10,11 @@
           %option{ :value => u.login }== #{ u.login } (#{ BillGastro::Application::LANGUAGES[u.language.to_s] })
     %p
       = label_tag 'password', (t '.password')
-      = password_field_tag 'password', '', :size => 9
+      = password_field_tag 'password', '', :size => 9, :class => 'qwerty ui-keyboard-input'
+      %img#password_display_keyboard{ :src => 'images/keyboard.png' }
     %p= submit_tag t('.login'), :class => 'submit'
+
+- if workstation?
+  %script
+    == $('#password').keyboard( {openOn: '' } );
+    $('#password_display_keyboard').click(function(){  $('#password').getkeyboard().reveal();  } );
