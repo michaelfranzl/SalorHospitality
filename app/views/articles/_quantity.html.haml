@@ -1,14 +1,35 @@
-= frm.fields_for :quantities, quantity do |f|
-  - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(f.object_name)[1]
-  %td= f.label :prefix, Quantity.human_attribute_name(:prefix)
-  %td= f.text_field :prefix, :class => 'prefix'
-  %td= f.label :postfix, Quantity.human_attribute_name(:postfix)
-  %td= f.text_field :postfix, :class => 'postfix'
-  %td= f.label :price, Quantity.human_attribute_name(:price)
-  %td= f.text_field :price, :class => 'price'
-  %td= f.label :usage, Quantity.human_attribute_name(:usage)
+= frm.fields_for :quantities, quantity do |quantity_form|
+  - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
+  %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
+  %td
+    = quantity_form.text_field :prefix, :class => 'prefix'
+    %span#article_quantities_attributes_1_prefix_display_keyboard.display_keyboard
+  %td= quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
+  %td= quantity_form.text_field :postfix, :class => 'postfix'
+  %td= quantity_form.label :price, Quantity.human_attribute_name(:price)
+  %td= quantity_form.text_field :price, :class => 'price'
+  %td= quantity_form.label :usage, Quantity.human_attribute_name(:usage)
   %td
     %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
-      %option{ :value => 0, :selected => f.object.usage == 0 } normal
-      %option{ :value => 1, :selected => f.object.usage == 1 } mitnehmen
-      %option{ :value => 2, :selected => f.object.usage == 2 } abwiegen
+      %option{ :value => 0, :selected => quantity_form.object.usage == 0 } normal
+      %option{ :value => 1, :selected => quantity_form.object.usage == 1 } mitnehmen
+      %option{ :value => 2, :selected => quantity_form.object.usage == 2 } abwiegen
+
+      - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
+      %tr{ :style => "#{'display: none' if quantity_form.object.hidden}" }
+        %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
+        %td= quantity_form.text_field :prefix, :class => 'prefix'
+        %td= quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
+        %td= quantity_form.text_field :postfix, :class => 'postfix'
+        %td= quantity_form.label :price, Quantity.human_attribute_name(:price)
+        %td= quantity_form.text_field(:price, :class => 'price')
+        %td= quantity_form.label :usage, Quantity.human_attribute_name(:usage)
+        %td
+          %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
+            %option{ :value => 0, :selected => quantity_form.object.usage == 0 }= t '.normal'
+            %option{ :value => 1, :selected => quantity_form.object.usage == 1 }= t '.takeaway'
+            %option{ :value => 2, :selected => quantity_form.object.usage == 2 }= t '.weighing'
+        %td= quantity_form.label('active', Quantity.human_attribute_name(:active))
+        %td= quantity_form.check_box :active
+        %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
+        %td= quantity_form.check_box :hidden

@@ -14,18 +14,24 @@
         %table
           %tr
             %td.labels= article_form.label( 'name', Article.human_attribute_name(:name))
-            %td.input_fields= article_form.text_field :name
+            %td.input_fields
+              = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;'
+              %span#article_name_display_keyboard.display_keyboard
             %td.spinner
               %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
           %tr
             %td= article_form.label('description', Article.human_attribute_name(:description))
-            %td= article_form.text_field :description
+            %td
+              = article_form.text_field :description
+              %span#article_description_display_keyboard.display_keyboard
           - existing_quantities = false
           - article_form.object.quantities.each { |qu| existing_quantities = true and break if not qu.hidden }
           - if not existing_quantities
             %tr
               %td= article_form.label('price', Article.human_attribute_name(:price))
-              %td= article_form.text_field( :price, :size => 6 )
+              %td
+                = article_form.text_field( :price, :size => 6 )
+                %span#article_price_display_keyboard.display_keyboard
 
           %tr
             %td= article_form.label('category_id', Article.human_attribute_name(:category))
@@ -45,7 +51,7 @@
             %td= article_form.check_box :hidden
           %tr
             %td{ :colspan => '2' }
-      %td#articles_search_results
+      %td#search_results
 
 
 
@@ -71,9 +77,12 @@
         %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
         %td= quantity_form.check_box :hidden
 
+  %script== var quantity_fields = '#{ escape_javascript render :partial => 'quantity', :locals => { :frm => article_form, :quantity => Quantity.new } }'
   %p
-    %small= add_quantity_link((t '.add_quantity'), article_form)
+    %a#add_quantity= t '.add_quantity'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-%script{ :type => 'text/javascript' }== new Form.Element.Observer('article_name', 2, function(element, value) {new Ajax.Updater('articles_search_results', '/articles/find', {onLoaded:function(request){document.getElementById('spinner').style.display='none'}, onLoading:function(request){document.getElementById('spinner').style.display='inline'}, parameters:'articles_search_text=' + escape(value)})})
+
+= javascript_include_tag 'articles-new.js'
+

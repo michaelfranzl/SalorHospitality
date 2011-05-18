@@ -20,8 +20,8 @@ module ArticlesHelper
     link_to_function caption do |page|
       ingredient = render(:partial => 'ingredient', :locals => { :frm => frm, :ingredient => Ingredient.new })
       page << %{
-        var new_ingredient_id = "new_" + new Date().getTime();
-        $('ingredients').insert({ bottom: '<tr id="' + new_ingredient_id + '">#{ escape_javascript ingredient }</tr>'.replace(/\\d/g, new_ingredient_id) });
+        var new_ingredient_id = 'new_' + new Date().getTime();
+        $('#ingredients').append('<tr id="' + new_ingredient_id + '">#{ escape_javascript ingredient }</tr>'.replace(/\\d/g, new_ingredient_id));
       }
     end
   end
@@ -30,8 +30,7 @@ module ArticlesHelper
     link_to_function caption do |page|
       quantity = render(:partial => 'quantity', :locals => { :frm => frm, :quantity => Quantity.new })
       page << %{
-        var new_quantity_id = "new_" + new Date().getTime();
-        $('quantities_new').insert({ bottom: '<tr id="' + new_quantity_id + '">#{ escape_javascript quantity }</tr>'.replace(/\\d/g, new_quantity_id) });
+        
       }
     end
   end

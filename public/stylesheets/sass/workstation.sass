@@ -115,11 +115,7 @@ div#login
     :margin 0px
     :padding 10px 0px
 
-img#password_display_keyboard
-  :padding 20px 10px
-  :vertical-align middle
-  :cursor pointer
-  
+ 
 //normal style definitions =============================
 
 
@@ -417,10 +413,10 @@ table.article_new
   td.labels
     :width 125px
   td.input_fields
-    :width 280px
+    :width 300px
   td.spinner
     :width 20px
-  td#articles_search_results
+  td#search_results
     :width 300px
   td
     :vertical-align top
@@ -792,3 +788,13 @@ div.ui-keyboard
     :-webkit-border-radius 5px
   input:hover, input.ui-keyboard-accept, input.ui-keyboard-cancel
     :background-color rgba(99,127,142,0.8)
+
+span.display_keyboard
+  :display inline-block
+  :width 30px
+  :height 30px
+  :vertical-align middle
+  :cursor pointer
+  :background-image url(/images/keyboard.png)
+  :background-repeat no-repeat
+  :background-position 7px 7px

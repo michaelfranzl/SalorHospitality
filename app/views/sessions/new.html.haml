@@ -11,7 +11,7 @@
     %p
       = label_tag 'password', (t '.password')
       = password_field_tag 'password', '', :size => 9, :class => 'qwerty ui-keyboard-input'
-      %img#password_display_keyboard{ :src => 'images/keyboard.png' }
+      %span#password_display_keyboard.display_keyboard
     %p= submit_tag t('.login'), :class => 'submit'
 
 - if workstation?
