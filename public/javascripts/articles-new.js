@@ -30,7 +30,7 @@ $('#article_price_display_keyboard').click(function(){
 
 $('#add_quantity').click(function(){
   var new_quantity_id = new Date().getTime();
-  var quantity_template = '<tr id="new_' + new_quantity_id + '">' + quantity_fields + '</tr>';
+  var quantity_template =  quantity_fields;
   $('#quantities_new').append(quantity_template.replace(/\d/g, 'new_' + new_quantity_id));
   $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').keyboard( {openOn: '' } );
   $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix_display_keyboard').click(function(){

@@ -54,35 +54,19 @@
       %td#search_results
 
 
+    %h3= t('activerecord.models.quantity.other')
+    %table#quantities_new
+      = render :partial => 'quantity', :locals => { :article_form => article_form }
 
-  %h3= t('activerecord.models.quantity.other')
-  %table#quantities_new
-    = article_form.fields_for :quantities do |quantity_form|
-      - quantitynumber = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
-      %tr{ :style => "#{'display: none' if quantity_form.object.hidden}" }
-        %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
-        %td= quantity_form.text_field :prefix, :class => 'prefix'
-        %td= quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
-        %td= quantity_form.text_field :postfix, :class => 'postfix'
-        %td= quantity_form.label :price, Quantity.human_attribute_name(:price)
-        %td= quantity_form.text_field(:price, :class => 'price')
-        %td= quantity_form.label :usage, Quantity.human_attribute_name(:usage)
-        %td
-          %select{ :id => "article_quantities_attributes_#{ quantitynumber }_usage", :name => "article[quantities_attributes][#{ quantitynumber }][usage]" }
-            %option{ :value => 0, :selected => quantity_form.object.usage == 0 }= t '.normal'
-            %option{ :value => 1, :selected => quantity_form.object.usage == 1 }= t '.takeaway'
-            %option{ :value => 2, :selected => quantity_form.object.usage == 2 }= t '.weighing'
-        %td= quantity_form.label('active', Quantity.human_attribute_name(:active))
-        %td= quantity_form.check_box :active
-        %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
-        %td= quantity_form.check_box :hidden
+    %script== var quantity_fields = '#{ escape_javascript render :partial => 'quantity', :locals => { :article_form => article_form, :quantity => Quantity.new } }'
 
-  %script== var quantity_fields = '#{ escape_javascript render :partial => 'quantity', :locals => { :frm => article_form, :quantity => Quantity.new } }'
   %p
     %a#add_quantity= t '.add_quantity'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
-
 = javascript_include_tag 'articles-new.js'
+
+
+
 
