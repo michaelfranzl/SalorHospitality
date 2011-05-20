@@ -11,16 +11,29 @@
   %table
     %tr
       %td= table_form.label('name', Table.human_attribute_name(:name))
-      %td= table_form.text_field :name, :size => '20'
+      %td
+        = table_form.text_field :name, :size => '20'
+        %span#table_name_display_keyboard.display_keyboard
     %tr
       %td= table_form.label('description', Table.human_attribute_name(:description))
-      %td= table_form.text_field :description, :size => '20'
+      %td
+        = table_form.text_field :description, :size => '20'
+        %span#table_description_display_keyboard.display_keyboard
     %tr
       %td= table_form.label('description', Table.human_attribute_name(:abbreviation))
-      %td= table_form.text_field :abbreviation, :size => '20'
+      %td
+        = table_form.text_field :abbreviation, :size => '20'
+        %span#table_abbreviation_display_keyboard.display_keyboard
     %tr
       %td= table_form.label('width', Table.human_attribute_name(:width))
-      %td= table_form.text_field :width, :size => '10'
+      %td
+        = table_form.text_field :width, :size => '10'
+        %span#table_width_display_keyboard.display_keyboard
+    %tr
+      %td= table_form.label('height', Table.human_attribute_name(:height))
+      %td
+        = table_form.text_field :height, :size => '10'
+        %span#table_height_display_keyboard.display_keyboard
     %tr
       %td
       %td= table_form.hidden_field :top, :size => '10'
@@ -29,3 +42,5 @@
       %td= table_form.hidden_field :left, :size => '10'
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+= javascript_include_tag 'tables-new.js'

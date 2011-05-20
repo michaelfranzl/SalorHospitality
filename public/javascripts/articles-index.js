@@ -23,4 +23,9 @@ window.setInterval(
       });
     }
   }
-, 3000);
+, 2000);
+
+$('#article_name').keyboard( {openOn: '' } );
+$('#article_name_display_keyboard').click(function(){
+  $('#article_name').getkeyboard().reveal();
+});

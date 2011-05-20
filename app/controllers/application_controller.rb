@@ -246,7 +246,6 @@ class ApplicationController < ActionController::Base
         "\x16\x20105"
 
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
-        #logger.info per_order_output + "\n\n"
       end
 
       overall_output.gsub!(/ä/,"ae")
@@ -356,7 +355,11 @@ class ApplicationController < ActionController::Base
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
       #logger.info output
 
-      output = Iconv.conv('ISO-8859-15','UTF-8',output)
+      begin
+        output = Iconv.conv('ISO-8859-15','UTF-8',output)
+      rescue Exception => e
+        output = e.inspect
+      end
       output.gsub!(/\x00E4/,"\x84") #ä
       output.gsub!(/\x00FC/,"\x81") #ü
       output.gsub!(/\x00F6/,"\x94") #ö
