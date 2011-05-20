@@ -1,6 +1,6 @@
 %tr{ :id => "item_#{ designator }", :class => "item" }
 
-  %td{ :id => "tablerow_#{ designator }_count", :class => 'item_count', :onclick => "increment_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)', :ondblclick => 'alert("test");' }= count
+  %td{ :id => "tablerow_#{ designator }_count", :class => 'item_count', :onclick => "increment_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= count
 
   %td{ :id => "tablerow_#{ designator }_label", :class => 'item_label', :onclick => "add_comment_to_item('#{ designator }'); add_price_to_item('#{ designator }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     %span= label
@@ -42,14 +42,14 @@
 - if workstation?
   %div.comment_for_item{ :id => "comment_for_item_#{ designator }" }
     %p= t :please_enter_item_comment
-    %input{ :id => "comment_for_item_#{ designator }" }
     %span.display_keyboard{ :id => "comment_for_item_#{ designator }_display_keyboard" }
-    %p{ :id => "enter_comment_for_item_#{ designator }" } Done
+    %input{ :id => "comment_for_item_#{ designator }" }
+    %div.enter_comment_or_price{ :id => "enter_comment_for_item_#{ designator }" }
   %div.price_for_item{ :id => "price_for_item_#{ designator }" }
     %p= t :please_enter_item_price
-    %input{ :id => "price_for_item_#{ designator }" }
     %span.display_keyboard{ :id => "price_for_item_#{ designator }_display_keyboard" }
-    %p{ :id => "enter_price_for_item_#{ designator }" } Done
+    %input{ :id => "price_for_item_#{ designator }" }
+    %div.enter_comment_or_price{ :id => "enter_price_for_item_#{ designator }" }
 
   :javascript
     enable_keyboard_for_items('#{ designator}');
