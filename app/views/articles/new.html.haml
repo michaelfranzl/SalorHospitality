@@ -15,7 +15,7 @@
           %tr
             %td.labels= article_form.label( 'name', Article.human_attribute_name(:name))
             %td.input_fields
-              = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;'
+              = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
               %span#article_name_display_keyboard.display_keyboard
             %td.spinner
               %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }

@@ -23,3 +23,7 @@ $('#table_height_display_keyboard').click(function(){
   $('#table_height').getkeyboard().reveal();
 });
 
+$('#abc').keyboard();
+$('#def').click(function(){
+  $('#abc').getkeyboard().reveal();
+});
