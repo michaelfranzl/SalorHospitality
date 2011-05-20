@@ -560,7 +560,6 @@ $.keyboard = function(el, options){
 					.addClass('placeholder')
 					.val(base.inPlaceholder);
 			}
-			base.el.onchange(); // modification for BillGastro
 		}
 	};
 

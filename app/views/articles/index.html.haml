@@ -7,7 +7,7 @@
 %table.articles
   %tr
     %td#drop_remove{ :colspan => 2 }
-      = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
+      = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
       %ul#search_results
   %tr
@@ -18,4 +18,35 @@
         = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
 
-= javascript_include_tag 'articles-index.js'
+:javascript
+  var enable_articles_search = false;
+
+  $('#drop_remove').droppable({
+    hoverClass: 'hover',
+    drop: function(event,ui){
+      ui.draggable.remove();
+      $.ajax({
+        type: 'POST',
+        url: '/articles/change_scope',
+        data: 'scope=remove&id=' + ui.draggable.attr('id')
+      });
+    }
+  });
+
+  window.setInterval(
+    function() {
+      if (enable_articles_search == true) {
+        enable_articles_search = false;
+        $.ajax({
+          type: 'POST',
+          url: '/articles/find',
+          data: 'articles_search_text=' + $('#article_name').val()
+        });
+      }
+    }
+  , 2000);
+
+  $('#article_name').keyboard( {openOn: '', accepted: function(){ enable_articles_search = true } } );
+  $('#article_name_display_keyboard').click(function(){
+    $('#article_name').getkeyboard().reveal();
+  });
