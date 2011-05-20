@@ -185,29 +185,6 @@ function mark_item_for_storno(list_id, order_id, item_id) {
   }
 }
 
-
-function add_comment_to_item(item_designator) {
-  var fallback = $('#order_items_attributes_' + item_designator + '_comment').val();
-  var comment = prompt(i18n_enter_comment, fallback);
-  if ( comment == null ) { comment = fallback };
-  $('#order_items_attributes_' + item_designator + '_comment').val(comment);
-  $('#comment_' + item_designator).html(comment);
-}
-
-
-function add_price_to_item(item_designator) {
-  var old_price = $('#order_items_attributes_' + item_designator + '_price').val();
-  if (old_price == 0) { old_price = '' }
-  var price = prompt(i18n_enter_price, old_price);
-  if ( price == null || price == '' ) {
-    price = old_price;
-  }
-  price = price.replace(',', '.');
-  $('#order_items_attributes_' + item_designator + '_price').val(price);
-  $('#price_' + item_designator).html(price);
-  calculate_sum();
-}
-
 function add_option_to_item_from_select(item_designator, select_tag)
 {
   var tablerow = $('#item_' + item_designator);

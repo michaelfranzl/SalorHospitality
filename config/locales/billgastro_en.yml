@@ -240,7 +240,7 @@ en:
       set_taxes: Set cost center
       split_invoice: Split invoice
       set_tax_for_all: Set cost center for all items
-      split_this_item: Click to split this item one at a time
+      split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
 
   settlements:

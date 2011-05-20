@@ -2,10 +2,8 @@
 
   %td{ :id => "tablerow_#{ designator }_count", :class => 'item_count', :onclick => "increment_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)', :ondblclick => 'alert("test");' }= count
 
-  %script== $('tablerow_#{ designator }_count').keyboard();
-
   %td{ :id => "tablerow_#{ designator }_label", :class => 'item_label', :onclick => "add_comment_to_item('#{ designator }'); add_price_to_item('#{ designator }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
-    = label
+    %span= label
     %small
       %br
       = t 'number.currency.format.unit'
@@ -20,7 +18,7 @@
 
     - if workstation?
       %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
-      %div.optionsselect{ :id => "optionsselect_div_#{ designator }", :style => 'display: none' }
+      %div.optionsselect{ :id => "optionsselect_div_#{ designator }" }
         %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, '#{t('.done')}')" }= t('.done')
         %div{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, '#{t('.clear')}')" }= t('.clear')
         %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, '#{t('.no_printing')}')" }= t('.no_printing')
@@ -40,3 +38,32 @@
             %option{ :value => o.id }= o.name
         - else
           OPTIONSSELECT
+
+- if workstation?
+  %div.comment_for_item{ :id => "comment_for_item_#{ designator }" }
+    %p= t :please_enter_item_comment
+    %input{ :id => "comment_for_item_#{ designator }" }
+    %span.display_keyboard{ :id => "comment_for_item_#{ designator }_display_keyboard" }
+    %p{ :id => "enter_comment_for_item_#{ designator }" } Done
+  %div.price_for_item{ :id => "price_for_item_#{ designator }" }
+    %p= t :please_enter_item_price
+    %input{ :id => "price_for_item_#{ designator }" }
+    %span.display_keyboard{ :id => "price_for_item_#{ designator }_display_keyboard" }
+    %p{ :id => "enter_price_for_item_#{ designator }" } Done
+
+  :javascript
+    enable_keyboard_for_items('#{ designator}');
+    $('#enter_comment_for_item_#{ designator}').click(function(){
+      comment = $('input#comment_for_item_#{ designator}').val();
+      $('#order_items_attributes_#{ designator}_comment').val(comment);
+      $('#comment_#{ designator}').html(comment);
+      $('#comment_for_item_#{ designator}').slideUp();
+    });
+    $('#enter_price_for_item_#{ designator}').click(function(){
+      price = $('input#price_for_item_#{ designator}').val();
+      $('#price_#{ designator}').html(price);
+      price = price.replace(',', '.');
+      $('#order_items_attributes_#{ designator}_price').val(price);
+      calculate_sum();
+      $('#price_for_item_#{ designator}').slideUp();
+    });

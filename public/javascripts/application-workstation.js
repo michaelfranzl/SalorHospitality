@@ -29,3 +29,26 @@ function category_onmousedown(category_id, element) {
 function display_quantities(art_id) {
   $('#quantities').html(quantitylist[art_id]);
 }
+
+function add_comment_to_item(item_designator) {
+  var old_comment = $('#order_items_attributes_' + item_designator + '_comment').val();
+  $('input#comment_for_item_' + item_designator).val(old_comment);
+  $('#comment_for_item_' + item_designator).slideDown();
+}
+
+function add_price_to_item(item_designator) {
+  var old_price = $('#order_items_attributes_' + item_designator + '_price').val();
+  $('input#price_for_item_' + item_designator).val(old_price);
+  $('#price_for_item_' + item_designator).slideDown();
+}
+
+function enable_keyboard_for_items(item_designator) {
+  $('input#comment_for_item_' + item_designator).keyboard({openOn: '' });
+  $('#comment_for_item_' + item_designator + '_display_keyboard').click(function(){
+    $('input#comment_for_item_' + item_designator).getkeyboard().reveal();
+  });
+  $('input#price_for_item_' + item_designator).keyboard({openOn: '', layout: 'num' });
+  $('#price_for_item_' + item_designator + '_display_keyboard').click(function(){
+    $('input#price_for_item_' + item_designator).getkeyboard().reveal();
+  });
+}

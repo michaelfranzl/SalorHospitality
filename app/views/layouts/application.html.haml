@@ -14,7 +14,7 @@
     = javascript_include_tag 'jquery-ui.js'
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
-      = javascript_include_tag 'keyboard-layouts/german.js'
+      = javascript_include_tag 'jquery.keyboard.config.js'
     = javascript_include_tag 'application-generic.js'
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
       = javascript_include_tag "/articles.js"

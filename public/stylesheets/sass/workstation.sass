@@ -604,16 +604,6 @@ td.item_options
     :display block
     :height 38px
     :width 41px
-  div.optionsselect
-    :opacity .6
-    :background-color black
-    :position absolute
-    :margin -20px 0px 0px -20px
-    :font-size 25px
-    :padding 5px
-    div
-      :cursor pointer
-      :white-space nowrap
   select
     :opacity .6
     :background-color black
@@ -625,6 +615,32 @@ td.item_options
     option
       :color white
       :font-size 200%
+
+div.optionsselect, div.comment_for_item, div.price_for_item
+  :display none
+  :background-color rgba(0, 0, 0, 0.7)
+  :position absolute
+  :margin -20px 0px 0px 0px
+  :font-size 25px
+  :padding 5px
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :border 1px solid #777
+  div
+    :cursor pointer
+    :white-space nowrap
+  p
+    :margin 0px
+
+div.comment_for_item
+  :margin 20px 0px 0px 0px
+
+div.price_for_item
+  :margin -70px 0px 0px 0px
+  div.ui-keyboard-input
+    :width 100px
+    input
+    :width 50px
   
   
 select#order_user_id
@@ -764,13 +780,13 @@ div.scope_list
 div.ui-keyboard
   :text-align center
   :background-color rgba(0, 0, 0, 0.7)
-  :border 1px solid #DDD
+  :border 1px solid #777
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
   :background-repeat repeat-x
   :padding 10px
   input.ui-keyboard-input
-    :margin 5px 30px
+    :margin 5px 10px
     :font-size 20px
   input.ui-keyboard-input:hover
     :background-color white
@@ -800,3 +816,5 @@ span.display_keyboard
   :background-image url(/images/keyboard.png)
   :background-repeat no-repeat
   :background-position 7px 7px
+
+

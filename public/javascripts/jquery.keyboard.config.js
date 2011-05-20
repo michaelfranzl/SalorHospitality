@@ -1,15 +1,4 @@
-/* German keyboard layouts
- * contains layout: 'german-qwertz-1' & 'german-qwertz-2'
- *
- * To use:
- *  Point to this js file into your page header: <script src="layouts/german.js" type="text/javascript"></script>
- *  Initialize the keyboard using: $('input').keyboard({ layout: 'german-qwertz-1' });
- *
- * license for this file: WTFPL, unless the source layout site has a problem with me using them as a reference
- */
-
-/* from http://ascii-table.com/keyboard.php/129 */
-$.keyboard.layouts['german-qwertz-1'] = {
+$.keyboard.layouts['gn'] = {
 	'default' : [
 		"\u0302 1 2 3 4 5 6 7 8 9 0 \u00df \u0301 {b}",
 		"{tab} q w e r t z u i o p \u00fc +",
@@ -33,12 +22,22 @@ $.keyboard.layouts['german-qwertz-1'] = {
 	]
 };
 
+$.keyboard.layouts['num'] = {
+	'default' : [
+		"7 8 9",
+		"4 5 6",
+		"1 3 5",
+		"{clear} 0 ,",
+		"{c} {a}"
+	]
+};
+
 
 
 	$.keyboard.defaultOptions = {
 
 		// *** choose layout & positioning ***
-		layout       : 'german-qwertz-1',
+		layout       : 'gn',
 		customLayout : null,
 
 		position     : {
@@ -128,3 +127,7 @@ $.keyboard.layouts['german-qwertz-1'] = {
 		beforeClose: null
 
 	};
+
+
+
+

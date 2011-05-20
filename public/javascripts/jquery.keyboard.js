@@ -188,7 +188,7 @@ $.keyboard = function(el, options){
 
 		// adjust keyboard preview window width - save width so IE won't keep expanding (fix issue #6)
 		if (base.options.usePreview) {
-			base.$preview.css('width', base.$keyboard.width()); // set preview width to fill keyboard IE7 thinks 100% means across the screen
+			base.$preview.css('width', base.$keyboard.width()*0.5); // set preview width to fill keyboard IE7 thinks 100% means across the screen, modified for billgastro
 		}
 		base.preview.focus();
 		base.isVisible = true;
