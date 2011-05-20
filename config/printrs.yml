@@ -1,0 +1,3 @@
+kitchen: "/dev/null"
+bar: "/dev/null"
+guest_room: "/dev/null"
