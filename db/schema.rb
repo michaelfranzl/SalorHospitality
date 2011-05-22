@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110513200843) do
+ActiveRecord::Schema.define(:version => 20110520135529) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20110513200843) do
     t.integer  "sort_order"
     t.string   "icon"
     t.string   "color"
-    t.integer  "usage",      :limit => 1, :default => 0
+    t.integer  "vendor_printer_id", :limit => 1, :default => 0
   end
 
   create_table "companies", :force => true do |t|
@@ -54,9 +54,6 @@ ActiveRecord::Schema.define(:version => 20110513200843) do
     t.string   "invoice_slogan2",            :default => ""
     t.string   "internet_address",           :default => "www.billgastro.com"
     t.string   "email",                      :default => "office@billgastro.com"
-    t.string   "printer_kitchen",            :default => "/dev/usblp0"
-    t.string   "printer_bar",                :default => "/dev/usblp0"
-    t.string   "printer_guestroom",          :default => "/dev/usblp0"
     t.boolean  "automatic_printing",         :default => false
     t.integer  "largest_order_number",       :default => 0
     t.string   "unused_order_numbers",       :default => "--- []\n\n"
@@ -235,6 +232,7 @@ ActiveRecord::Schema.define(:version => 20110513200843) do
     t.string   "name"
     t.string   "path"
     t.integer  "company_id"
+    t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

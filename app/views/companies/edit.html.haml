@@ -1,8 +1,6 @@
 %h1= Company.model_name.human
 
-#message
-
-= form_for @current_company, :remote => true do |company_form|
+= form_for @current_company do |company_form|
   %p
     = company_form.label :name, Company.human_attribute_name(:name)
     = company_form.text_field :name
@@ -34,21 +32,27 @@
         %option{ :value => key, :selected => company_form.object.country == key }= t val
 
   - if local_variant?
+    %h3= t('activerecord.models.vendor_printer.other')
+    %div#printers_new
+      = company_form.fields_for :vendor_printers do |f|
+        = render :partial => 'vendor_printer', :locals => { :f => f }
+
+    %script== var printer_template = '#{ generate_template(company_form, :vendor_printers) }'
+
     %p
-      = company_form.label :printer_kitchen, Company.human_attribute_name(:printer_kitchen)
-      %select#company_printer_kitchen{ :name => 'company[printer_kitchen]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_kitchen
-    %p
-      = company_form.label :printer_bar, Company.human_attribute_name(:printer_bar)
-      %select#company_printer_bar{ :name => 'company[printer_bar]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_bar
-    %p
-      = company_form.label :printer_guestroom, Company.human_attribute_name(:printer_guestroom)
-      %select#company_printer_guestroom{ :name => 'company[printer_guestroom]' }
-        = options_for_select BillGastro::Application::DEVICE_NODES, @current_company.printer_guestroom
+      %a#add_printer= t '.add_printer'
+
+
   - else
     %p
       = company_form.label :automatic_printing, Company.human_attribute_name(:automatic_printing)
       = company_form.check_box :automatic_printing
+
   %p
     = submit_tag t :edit
+
+:javascript
+  $('#add_printer').click(function(){
+    var new_printer_id = new Date().getTime();
+    $('#printers_new').append(printer_template.replace(/NEW_RECORD/g, 'new_' + new_printer_id));
+  });

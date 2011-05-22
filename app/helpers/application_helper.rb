@@ -14,16 +14,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class CompaniesController < ApplicationController
+module ApplicationHelper
 
-  def index
-    render :edit
+  def generate_html(form_builder, method, options = {})
+    options[:object] ||= form_builder.object.class.reflect_on_association(method).klass.new
+    options[:partial] ||= method.to_s.singularize
+    options[:form_builder_local] ||= :f  
+
+    form_builder.fields_for(method, options[:object], :child_index => 'NEW_RECORD') do |f|
+      render(:partial => options[:partial], :locals => { options[:form_builder_local] => f })
+    end
   end
 
-  def update
-    @current_company.update_attributes params[:company]
-
-    render :edit
+  def generate_template(form_builder, method, options = {})
+    escape_javascript generate_html(form_builder, method, options)
   end
-
+  
 end

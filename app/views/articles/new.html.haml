@@ -58,7 +58,7 @@
     %table#quantities_new
       = render :partial => 'quantity', :locals => { :article_form => article_form }
 
-    %script== var quantity_fields = '#{ escape_javascript render :partial => 'quantity', :locals => { :article_form => article_form, :quantity => Quantity.new } }'
+    %script== var quantity_template = '#{ escape_javascript render :partial => 'quantity', :locals => { :article_form => article_form, :quantity => Quantity.new } }'
 
   %p
     %a#add_quantity= t '.add_quantity'
@@ -99,7 +99,6 @@
 
   $('#add_quantity').click(function(){
     var new_quantity_id = new Date().getTime();
-    var quantity_template =  quantity_fields;
     $('#quantities_new').append(quantity_template.replace(/\d/g, 'new_' + new_quantity_id));
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').keyboard( {openOn: '' } );
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix_display_keyboard').click(function(){
