@@ -56,9 +56,10 @@
 
     %h3= t('activerecord.models.quantity.other')
     %table#quantities_new
-      = render :partial => 'quantity', :locals => { :article_form => article_form }
+      = article_form.fields_for :quantities do |quantity_form|
+        = render :partial => 'quantity', :locals => { :f => quantity_form }
 
-    %script== var quantity_template = '#{ escape_javascript render :partial => 'quantity', :locals => { :article_form => article_form, :quantity => Quantity.new } }'
+    %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
 
   %p
     %a#add_quantity= t '.add_quantity'

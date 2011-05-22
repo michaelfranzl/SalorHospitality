@@ -1,36 +1,34 @@
-= article_form.fields_for :quantities, quantity do |quantity_form|
-  - next if quantity_form.object.hidden
-  - quantity_id = /article\[quantities_attributes\]\[(.*)\]/.match(quantity_form.object_name)[1]
-  %tr
-    %td= quantity_form.label :prefix, Quantity.human_attribute_name(:prefix)
-    %td
-      = quantity_form.text_field :prefix, :class => 'prefix'
-      %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_prefix_display_keyboard" }
-    %td= quantity_form.label :postfix, Quantity.human_attribute_name(:postfix)
-    %td
-      = quantity_form.text_field :postfix, :class => 'postfix'
-      %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_postfix_display_keyboard" }
-    %td= quantity_form.label :price, Quantity.human_attribute_name(:price)
-    %td
-      = quantity_form.text_field(:price, :class => 'price')
-      %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_price_display_keyboard" }
-    %td= quantity_form.label :usage, Quantity.human_attribute_name(:usage)
-    %td
-      %select{ :id => "article_quantities_attributes_#{ quantity_id }_usage", :name => "article[quantities_attributes][#{ quantity_id }][usage]" }
-        %option{ :value => 0, :selected => quantity_form.object.usage == 0 }= t '.normal'
-        %option{ :value => 1, :selected => quantity_form.object.usage == 1 }= t '.takeaway'
-        %option{ :value => 2, :selected => quantity_form.object.usage == 2 }= t '.weighing'
+- quantity_id = /article\[quantities_attributes\]\[(.*)\]/.match(f.object_name)[1]
+%tr
+  %td= f.label :prefix, Quantity.human_attribute_name(:prefix)
+  %td
+    = f.text_field :prefix, :class => 'prefix'
+    %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_prefix_display_keyboard" }
+  %td= f.label :postfix, Quantity.human_attribute_name(:postfix)
+  %td
+    = f.text_field :postfix, :class => 'postfix'
+    %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_postfix_display_keyboard" }
+  %td= f.label :price, Quantity.human_attribute_name(:price)
+  %td
+    = f.text_field(:price, :class => 'price')
+    %span.display_keyboard{ :id => "article_quantities_attributes_#{ quantity_id }_price_display_keyboard" }
+  %td= f.label :usage, Quantity.human_attribute_name(:usage)
+  %td
+    %select{ :id => "article_quantities_attributes_#{ quantity_id }_usage", :name => "article[quantities_attributes][#{ quantity_id }][usage]" }
+      %option{ :value => 0, :selected => f.object.usage == 0 }= t '.normal'
+      %option{ :value => 1, :selected => f.object.usage == 1 }= t '.takeaway'
+      %option{ :value => 2, :selected => f.object.usage == 2 }= t '.weighing'
 
-    - if not quantity_form.object.new_record?
-      %td= quantity_form.label('active', Quantity.human_attribute_name(:active))
-      %td= quantity_form.check_box :active
-      %td= quantity_form.label('hidden', Quantity.human_attribute_name(:hidden))
-      %td= quantity_form.check_box :hidden
+  - unless f.object.new_record?
+    %td= f.label('active', Quantity.human_attribute_name(:active))
+    %td= f.check_box :active
+    %td= f.label('hidden', Quantity.human_attribute_name(:hidden))
+    %td= f.check_box :hidden
 
-    %script
-      == $('#article_quantities_attributes_#{ quantity_id }_prefix').keyboard( {openOn: '' } );
-      == $('#article_quantities_attributes_#{ quantity_id }_prefix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_prefix').getkeyboard().reveal(); });
-      == $('#article_quantities_attributes_#{ quantity_id }_postfix').keyboard( {openOn: '' } );
-      == $('#article_quantities_attributes_#{ quantity_id }_postfix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_postfix').getkeyboard().reveal(); });
-      == $('#article_quantities_attributes_#{ quantity_id }_price').keyboard( {openOn: '' } );
-      == $('#article_quantities_attributes_#{ quantity_id }_price_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_price').getkeyboard().reveal(); });
+  %script
+    == $('#article_quantities_attributes_#{ quantity_id }_prefix').keyboard( {openOn: '' } );
+    == $('#article_quantities_attributes_#{ quantity_id }_prefix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_prefix').getkeyboard().reveal(); });
+    == $('#article_quantities_attributes_#{ quantity_id }_postfix').keyboard( {openOn: '' } );
+    == $('#article_quantities_attributes_#{ quantity_id }_postfix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_postfix').getkeyboard().reveal(); });
+    == $('#article_quantities_attributes_#{ quantity_id }_price').keyboard( {openOn: '', layout: 'num' } );
+    == $('#article_quantities_attributes_#{ quantity_id }_price_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ quantity_id }_price').getkeyboard().reveal(); });
