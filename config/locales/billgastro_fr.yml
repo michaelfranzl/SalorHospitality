@@ -14,8 +14,8 @@ en:
         one: Type de taxe
         other: Types de taxes
       cost_center:
-        one: Centre de coûts
-        other: Centres de coûts
+        one: Centre de coÃ»ts
+        other: Centres de coÃ»ts
       article:
         one: Article
         other: Articles
@@ -26,8 +26,8 @@ en:
         one: Variante
         other: Variantes
       category:
-        one: Catégorie
-        other: Catégories
+        one: CatÃ©gorie
+        other: CatÃ©gories
       item:
         one: Item
         other: Items
@@ -44,8 +44,8 @@ en:
         one: Groupe de stock
         other: Groupes de stock
       role:
-        one: Rôle
-        other: Rôles
+        one: RÃ´le
+        other: RÃ´les
 
     attributes:
       article:
@@ -53,16 +53,16 @@ en:
         name: Nom
         hidden: Effacer
         description: Description
-        category_id: Catégorie
+        category_id: CatÃ©gorie
         menucard: actif
         usage: Utilisation
       option:
         price: Prix
-        category_id: Catégorie
+        category_id: CatÃ©gorie
         name: Nom
       quantity:
         prefix: Nom
-        postfix: Description supplémentaire
+        postfix: Description supplÃ©mentaire
         price: Prix optionnel
         description: Description
         active: actif
@@ -71,11 +71,11 @@ en:
       tax:
         percent: Taxe en %
         name: Nom
-        letter: Abréviation
+        letter: AbrÃ©viation
         color: Couleur
       table:
         name: Nom
-        abbreviation: Abréviation
+        abbreviation: AbrÃ©viation
         description: Description
         width: Largeur
         height: Hauteur
@@ -85,7 +85,7 @@ en:
         name: Nom
         tax_id: Taxe
         sort_order: Ranger par
-        icon: Icône
+        icon: IcÃ´ne
         color: Couleur
         food: Repas
         usage: Type
@@ -98,7 +98,7 @@ en:
       user:
         login: Nom d'utilisateur
         password: Mot de passe
-        role: Rôle
+        role: RÃ´le
         title: Titre
         color: Couleur
         language: Langue
@@ -115,7 +115,7 @@ en:
         invoice_slogan1: Slogan facture 1
         invoice_slogan2: Slogan facture 2
         invoice_subtitle: Sous-titre facture
-        revenue_service_tax_number: Nro. impôt sur les revenus
+        revenue_service_tax_number: Nro. impÃ´t sur les revenus
         address: Adresse
       role:
         name: Nom
@@ -124,13 +124,13 @@ en:
     index:
       list_all: Lister tous
       search_term: Rechercher un mot
-      preview: Voir aperçu
+      preview: Voir aperÃ§u
     new:
       new_article: Nouvel article
       edit_article: Editer article
       add_quantity: Ajouter option
       normal: normal
-      takeaway: à emporter
+      takeaway: Ã  emporter
       weighing: peser
     listall:
       all_articles: Lister tous les articles
@@ -146,35 +146,35 @@ en:
 
   blackboard:
     index:
-      update: Mettre à jour
+      update: Mettre Ã  jour
 
   categories:
     index:
       foods: nourriture
       drinks: boissons
     new:
-      new_category: Nouvelle catégorie
-      edit_category: Editer catégorie
-      aperitif: Apéritif
+      new_category: Nouvelle catÃ©gorie
+      edit_category: Editer catÃ©gorie
+      aperitif: ApÃ©ritif
       sidedish: Accompagnement
-      starter: Entrée
+      starter: EntrÃ©e
       maindish: Plat principal
       childrendish: Repas enfant
       dessert: Dessert
       digestif: Digestif
-      beer: Bière
+      beer: BiÃ¨re
       nonalcoholics: Sans alcohol
       cigarette: Tabac
-      rosewineglass: Vin rosé
+      rosewineglass: Vin rosÃ©
       redwineglass: Vin rouge
       whitewineglass: Vin blanc
-      rosewinebottle: Bouteille rosé
+      rosewinebottle: Bouteille rosÃ©
       redwinebottle: Bouteille rouge
       whitewinebottle: Bouteille blanc
-      sparkling: Vin pétillant
-      coffee: Café
-      teapot: Théière
-      tea: Tasse de thé
+      sparkling: Vin pÃ©tillant
+      coffee: CafÃ©
+      teapot: ThÃ©iÃ¨re
+      tea: Tasse de thÃ©
       blank: Rien
 
   cost_centers:
@@ -182,8 +182,8 @@ en:
       active: Actif
       inactive: Inactif
     new:
-      new_cost_center: Nouveau débiteur
-      edit_cost_center: Editer débiteur
+      new_cost_center: Nouveau dÃ©biteur
+      edit_cost_center: Editer dÃ©biteur
 
   groups:
     new:
@@ -196,7 +196,7 @@ en:
       edit_stock: Editer stock
 
   orders:
-    served_by: Vous avez été servi par
+    served_by: Vous avez Ã©tÃ© servi par
     order:
       sum: TOTAL
       new: Nouvelle commande
@@ -204,10 +204,10 @@ en:
       print_invoice: Imprimer facture
       print_business_invoice: Imprimer facture entreprise
       back: Retour
-      previous_invoice: Facture précédente
+      previous_invoice: Facture prÃ©cÃ©dente
       next_invoice: Facture suivante
       unit_price: Prix unitaire
-      count: Quantité
+      count: QuantitÃ©
       sum: TOTAL
       list_of_taxes: Liste de taxes
     unsettled:
@@ -221,39 +221,39 @@ en:
       password: Mot de passe
       email: Votre e-mail
       realname: Votre Nom
-      your_ip_address: Vos coordonnées IP
+      your_ip_address: Vos coordonnÃ©es IP
     go_to_tables:
       warning_only_x_orders_left: "Attention, il ne reste que %{credits} commandes."
       warning_only_x_orders_left_upgrade_here: "Attention, il ne reste que %{credits} commandes. En obtenez plus depuis <a href='http://www.billgasto.com'>billgasto.com</a>"
     functions_header_index:
-      show_last_order: Afficher dernière commande
+      show_last_order: Afficher derniÃ¨re commande
       print_now: Imprimer maintenant
     functions_header_order_form:
-      move_order: Déplacer commande à une autre table
+      move_order: DÃ©placer commande Ã  une autre table
     storno_form:
-      do_separate_items: Séparer cet item
+      do_separate_items: SÃ©parer cet item
       do_storno: Annuler item
     invoice_form:
-      set_cost_center: Déterminer centre de coûts pour cette commande
+      set_cost_center: DÃ©terminer centre de coÃ»ts pour cette commande
       print_and_finish: Imprimer et finaliser cette commande
       just_finish: Finaliser commande uniquement
-      set_taxes: Déterminer centre de coûts
+      set_taxes: DÃ©terminer centre de coÃ»ts
       split_invoice: Diviser facture
-      set_tax_for_all: Déterminer centre de coûts pour tous les items
-      split_this_item: Cliquez pour séparer un item à la fois
+      set_tax_for_all: DÃ©terminer centre de coÃ»ts pour tous les items
+      split_this_item: Cliquez pour sÃ©parer un item Ã  la fois
       switch_tax_for_this_item: Cliquez pour modifier la taxe dans cet item
 
   settlements:
     index:
-      start_date: Date du début
+      start_date: Date du dÃ©but
       end_date: Date finale
       all_cost_centers: Tous
       sum_total: Addition totale
     new:
       set_date: Configurer date pour ce bilan
     detailed_list:
-      order_number_on_table_on_date: 'Commande numéro %{number} dans %{table} à %{time}'
-      count: Quantité
+      order_number_on_table_on_date: 'Commande numÃ©ro %{number} dans %{table} Ã  %{time}'
+      count: QuantitÃ©
       unit_price: Prix unitaire
       total: Total
       revenue: Revenue
@@ -266,7 +266,7 @@ en:
 
   sessions:
     browser_warning:
-      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a exclusivement été configuré pour ces navigateurs.
+      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a exclusivement Ã©tÃ© configurÃ© pour ces navigateurs.
       continue: Continuer
     new:
       username: Utilisateur
@@ -274,7 +274,7 @@ en:
       password: Mot de passe
       email: Votre e-mail
       realname: Votre nom
-      your_ip_address: Vos coordonnées IP
+      your_ip_address: Vos coordonnÃ©es IP
 
   statistic: Statistique
   statistics:
@@ -298,20 +298,20 @@ en:
 
   companies:
     update:
-      config_successfully_updated: Les données sur l'entreprise ont bien été mises à jour !
+      config_successfully_updated: Les donnÃ©es sur l'entreprise ont bien Ã©tÃ© mises Ã  jour !
 
   roles:
     new:
       take_orders: Prendre des commandes
-      decrement_items: Items décroissants
+      decrement_items: Items dÃ©croissants
       finish_orders: Finaliser commandes
       split_items: Diviser items
       move_tables: Changer tables
       make_storno: Annuler item
-      assign_cost_center: Assigner centre de coûts
-      move_order: Déplacer commande
+      assign_cost_center: Assigner centre de coÃ»ts
+      move_order: DÃ©placer commande
       change_waiter: Changer de serveur
-      manage_articles_categories_options: Gestion d'articles, catégories et options
+      manage_articles_categories_options: Gestion d'articles, catÃ©gories et options
       finish_all_settlements: Fermer tous les bilans
       finish_own_settlement: Fermer bilan propre
       view_all_settlements: Afficher tous les bilans
@@ -321,13 +321,13 @@ en:
       manage_settings: Configuration
 
   delete: Effacer
-  are_you_sure: 'Êtes-vous sûr ?'
+  are_you_sure: 'ÃŠtes-vous sÃ»r ?'
   edit: Editer
-  create: Créer
+  create: CrÃ©er
   new: Nouveau
   print: Imprimer
-  display: Montrer apperçu
-  logout: 'Déconnecter %{who}'
+  display: Montrer apperÃ§u
+  logout: 'DÃ©connecter %{who}'
   
   blackboard_generic_name: Tableau
   waiterpad_generic_name: Calepin de commandes
@@ -335,7 +335,7 @@ en:
   unsettled_orders_generic_name: Commandes sans bilan
 
   print_kitchenlist: Imprimer liste items cuisine
-  recent_orders: Voir commandes récentes
+  recent_orders: Voir commandes rÃ©centes
   scroll_down: Descendre
   scroll_up: Monter
   scroll_to_room: Aller dans salle
@@ -349,7 +349,7 @@ en:
   storno: Annulation items
   datetime: Date
   sum: Total
-  count: Quantité
+  count: QuantitÃ©
 
   net: Net
   value_added_tax: TVA
@@ -375,7 +375,7 @@ en:
   auxiliary_waiter: Serveur auxiliaire
   waiter: Serveur
   chief_waiter: Chef de service
-  host: Hôte
+  host: HÃ´te
   admin: Administrateur
   superuser: Super-utilisateur
 
@@ -384,24 +384,24 @@ en:
   is_no_number: n'est pas un chiffre.
 
 # TRANSLATIONS FOR CONTROLLERS
-  successfully_deleted: '%{what} a été effacé avec succès'
+  successfully_deleted: '%{what} a Ã©tÃ© effacÃ© avec succÃ¨s'
   there_are_no_open_settlements: Il n'y a pas de bilans ouverts
-  logout_successful: Vous vous êtes déconnecté avec succès.
+  logout_successful: Vous vous Ãªtes dÃ©connectÃ© avec succÃ¨s.
   user_not_found: Utilisateur introuvable
-  wrong_password: Données de connexion incorrectes
+  wrong_password: DonnÃ©es de connexion incorrectes
 
-  served_by_X_on_table_Y: Vous avez été servi par %{waiter} dans %{table}
+  served_by_X_on_table_Y: Vous avez Ã©tÃ© servi par %{waiter} dans %{table}
   invoice_numer_X_at_time: Facture No. %{number} le %{datetime}
 
   please_enter_email_and_realname: Veuillez rentrer votre adresse e-mail et votre vrai nom.
 
-  default: Par défaut
+  default: Par dÃ©faut
   germany: Allemagne
   austria: Autriche
 
   # Translations for Javascript files
-  please_enter_item_comment: Voeux spécial
-  please_enter_item_price: Prix spécial
-  server_no_response: 'Le serveur Bill Gastro ne répond plus. La ligne est occupée, ou bien le signal wi-fi est interrompu.'
+  please_enter_item_comment: Voeux spÃ©cial
+  please_enter_item_price: Prix spÃ©cial
+  server_no_response: 'Le serveur Bill Gastro ne rÃ©pond plus. La ligne est occupÃ©e, ou bien le signal wi-fi est interrompu.'
   just_order: Juste la commande
   no_printing: Ne pas imprimer
