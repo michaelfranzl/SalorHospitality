@@ -1,0 +1,408 @@
+en:
+  activerecord:
+    models:
+      table:
+        one: Mesa
+        other: Mesas
+      user:
+        one: Usuario
+        other: Usuarios
+      company:
+        one: Empresa
+        other: Empresas
+      tax:
+        one: Tipo de impuesto
+        other: Tipos de impuesto
+      cost_center:
+        one: Centro de coste
+        other: Centros de coste
+      article:
+        one: Artículo
+        other: Artículos
+      option:
+        one: Opción
+        other: Opciones
+      quantity:
+        one: Variante
+        other: Variantes
+      category:
+        one: Categoría
+        other: Categorías
+      item:
+        one: Item
+        other: Items
+      settlement:
+        one: Balance
+        other: Balances
+      pedido:
+        one: Pedido
+        other: Pedidos
+      stock:
+        one: Stock
+        other: Stocks
+      group:
+        one: Grupo de stock
+        other: Grupos de stock
+      role:
+        one: Rol
+        other: Rol
+
+    attributes:
+      article:
+        price: Precio
+        name: Nombre
+        hidden: borrar
+        description: Descripción
+        category_id: Categoría
+        menucard: activo
+        usage: Uso
+      option:
+        price: Precio
+        category_id: Categoría
+        name: Nombre
+      quantity:
+        prefix: Nombre
+        postfix: Descripción extra
+        price: Precio opcional
+        description: Descripción
+        active: activo
+        hidden: borrar
+        usage: uso
+      tax:
+        percent: IVA en %
+        name: Nombre
+        letter: Abreviación
+        color: Color
+      table:
+        name: Nombre
+        abbreviation: Abreviación
+        description: Descripción
+        width: Ancho
+        height: Altura
+        width_mobile: ancho del aparato móvil
+        height_mobile: altura del aparato móvil
+      category:
+        name: Nombre
+        tax_id: IVA
+        sort_pedido: Ordenar según
+        icon: Ícono
+        color: Color
+        food: comida?
+        usage: Tipo
+      cost_center:
+        name: Nombre
+        description: Descripción
+        active: activo?
+      group:
+        name: Nombre
+      user:
+        login: Nombre de usuario
+        password: Clave
+        role: Rol
+        title: Título
+        color: Color
+        language: Idioma
+      company:
+        name: Nombre
+        subdomain: Subdominio
+        saas: Opción en línea
+        automatic_printing: Impresión automática
+        printer_guestroom: Impresora sala principal
+        printer_bar: Impresora bar
+        printer_kitchen: Impresora cocina
+        email: e-mail
+        internet_address: dirección e-mail
+        invoice_slogan1: Eslogan factura 1
+        invoice_slogan2: Eslogan factura 2
+        invoice_subtitle: Subtítulo factura
+        revenue_service_tax_number: Nro. impuesto al ingreso
+        address: Dirección
+      role:
+        name: Nombre
+
+  articles:
+    index:
+      list_all: Listar todo
+      search_term: Buscar término
+      preview: Vista previa
+    new:
+      new_article: Nuevo artículo
+      edit_article: Editar artículo
+      add_quantity: Añadir variante
+      normal: normal
+      takeaway: para llevar
+      weighing: pesar
+    listall:
+      all_articles: Listar todos los artículos
+    find:
+      variants:
+        one: Variante
+        other: Variantes
+
+  options:
+    new:
+      new_option: Nueva opción
+      edit_option: Editar opción
+
+  blackboard:
+    index:
+      update: Actualizar
+
+  categories:
+    index:
+      foods: comidas
+      drinks: bebidas
+    new:
+      new_category: Nueva categoría
+      edit_category: Editar categoría
+      aperitif: Aperitivo
+      sidedish: Guarnición
+      starter: Entrada
+      maindish: Plato principal
+      childrendish: Comida niño
+      dessert: Postre
+      digestif: Digestivo
+      beer: Cerveza
+      nonalcoholics: Sin alcohol
+      cigarette: Tabaco
+      rosewineglass: Vino rosado
+      redwineglass: Vino tinto
+      whitewineglass: Vino blanco
+      rosewinebottle: Botella rosado
+      redwinebottle: Botella tinto
+      whitewinebottle: Botella blanco
+      sparkling: Vino espumoso
+      coffee: Café
+      teapot: Tetera
+      tea: Taza de té
+      blank: nada
+
+  cost_centers:
+    index:
+      active: Activo
+      inactive: Inactivo
+    new:
+      new_cost_center: Nuevo centro de coste
+      edit_cost_center: Editar centro de coste
+
+  groups:
+    new:
+      new_group: Nuevo grupo
+      edit_group: Editar grupo
+
+  stocks:
+    new:
+      new_stock: Nuevo stock
+      edit_stock: Editar stock
+
+  pedidos:
+    served_by: Ud. fue atendido por
+    pedido:
+      sum: TOTAL
+      new: Nuevo pedido
+    show:
+      print_invoice: Imprimir factura
+      print_business_invoice: Imprimir factura para empresa
+      back: Volver
+      previous_invoice: Factura anterior
+      next_invoice: Factura siguiente
+      unit_price: Precio unitario
+      count: Cantidad
+      sum: Total
+      list_of_taxes: Lista de impuestos
+    unsettled:
+      make_settlement: Generar balance
+      pedido_abbreviation: Pdo.
+    invoice_form:
+      split_invoice: Dividir factura
+    login_form:
+      username: Nombre de usuario
+      login: seudónimo
+      password: Clave
+      email: Su e-mail
+      realname: Su nombre
+      your_ip_address: Sus datos IP 
+    go_to_tables:
+      warning_only_x_pedidos_left: "Atención, sólo quedan %{credits} pedidos."
+      warning_only_x_pedidos_left_upgrade_here: "Atención, sólo quedan %{credits} pedidos. Puede obtener más en <a href='http://www.billgasto.com'>billgasto.com</a>"
+    functions_header_index:
+      show_last_pedido: Mostrar último pedido
+      print_now: Imprimir ahora
+    functions_header_pedido_form:
+      move_pedido: Mover pedido hacia otra mesa
+    storno_form:
+      do_separate_items: Separar este item
+      do_storno: Anular item
+    invoice_form:
+      set_cost_center: Determinar centro de coste para este pedido
+      print_and_finish: Imprimir y finalizar este pedido
+      just_finish: Sólo finalizar pedido
+      set_taxes: Determinar centro de coste
+      split_invoice: Dividir factura
+      set_tax_for_all: Determinar centro de coste para todos los items
+      split_this_item: Haga clic para dividir estos items uno por uno
+      switch_tax_for_this_item: Haga clic para cambiar el % de impuesto
+	  
+settlements:
+    index:
+      start_date: Fecha de inicio
+      end_date: Fecha final
+      all_cost_centers: Todos
+      sum_total: Suma total
+    new:
+      set_date: Fechar este balance
+    detailed_list:
+      order_number_on_table_on_date: 'Pedido número %{number} en %{table} a las %{time}'
+      count: Cantidad
+      unit_price: Precio unitario
+      total: Total
+      revenue: Ganancia
+
+  items:
+    item_tablerow:
+      clear: Borrar
+      done: Finalizado
+      no_printing: no imprimir
+
+  sessions:
+    browser_warning:
+      warning: Ud. no utiliza Mozilla Firefox, Safari, Google Chrome ni Chromium como navegador. Bill Gastro ha sido concebido únicamente para dichos navegadores.
+      continue: Continar
+    new:
+      username: Nombre de usuario
+      login: seudónimo
+      password: Clave
+      email: Su e-mail
+      realname: Su nombre
+      your_ip_address: Sus datos IP 
+
+  statistic: Estadística
+  statistics:
+    weekdays: Día de la semana
+    journal: Diario (orden cronológico)
+
+  tables:
+    new:
+      new_table: Nueva mesa
+      edit_table: Editar mesa
+
+  taxes:
+    new:
+      new_tax: Nuevo impuesto
+      edit_tax: Editar impuesto
+
+  users:
+    new:
+      new_user: Nuevo usuario
+      edit_user: Editar usuario
+
+  companies:
+    update:
+      config_successfully_updated: ¡Los datos de la companía han sido actualizados con éxito!
+
+  roles:
+    new:
+      take_orders: Tomar pedidos
+      decrement_items: items decreyentes
+      finish_orders: Finalizar pedidos
+      split_items: Separar artículos
+      move_tables: Mover mesas
+      make_storno: Anular item
+      assign_cost_center: Designar centro de coste
+      move_order: Mover pedido
+      change_waiter: Cambiar mozo
+      manage_articles_categories_options: Gestión de artículos, categorías y opciones
+      finish_all_settlements: Cerrar todos los balances
+      finish_own_settlement: Cerrar balance propio
+      view_all_settlements: Ver todos los balances
+      manage_business_invoice: Gestion factura para empresa
+      view_statistics: Ver estadísticas
+      manage_users: Gestión usuarios
+      manage_settings: Configuración
+
+  delete: Borrar
+  are_you_sure: '¿Está seguro?'
+  edit: Editar
+  create: Crear
+  new: Nuevo
+  print: Imprimir
+  display: Mostrar
+  logout: 'Desconectar a %{who}'
+  
+  blackboard_generic_name: Pizarra
+  waiterpad_generic_name: Libreta de pedidos
+  menucard_generic_name: carta
+  unsettled_orders_generic_name: Pedidos sin balance
+
+  print_kitchenlist: Imprimir lista de items cocina
+  recent_orders: Ver pedidos recientes
+  scroll_down: Bajar
+  scroll_up: Subir
+  scroll_to_room: Ir a sala
+  send_and_go_back: Guardar y volver
+  go_back: Volver
+  cancel_and_go_back: Cancelar y volver
+  finish_order: Finalizar pedido
+
+  invoice: Factura
+  invoices: Facturas
+  storno: Anulación items
+  datetime: Fecha
+  sum: Total
+  count: Cantidad
+
+  net: Neto
+  value_added_tax: IVA
+  gross: Bruto
+
+  violet: Violeta
+  orange: Naranja
+  pink: Rosado
+  green: Verde
+  blue: Azul
+  blank: nada
+
+  food: Comidas
+  drink: Bebidas
+  tobacco: Tabaco
+
+  guestroom: Sala principal
+  kitchen: Cocina
+  bar: Bar
+  dummy: auxiliar
+
+  restaurant: Restaurant
+  auxiliary_waiter: Mozo auxiliar
+  waiter: Mozo
+  chief_waiter: Jefe de mozos
+  host: huésped
+  admin: Administrador
+  superuser: Súper-utilizador
+
+# TRANSLATIONS FOR MODELS
+  must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo o bien para la variante.
+  is_no_number: no es un número.
+
+# TRANSLATIONS FOR CONTROLLERS
+  successfully_deleted: '%{what} fue borrado con éxito.'
+  there_are_no_open_settlements: No hay balances abiertos.
+  logout_successful: Ud. se ha desconectado con éxito.
+  user_not_found: usuario no encontrado
+  wrong_password: datos de conexión incorrectos
+
+  served_by_X_on_table_Y: %{waiter} lo ha servido en %{table}
+  invoice_numer_X_at_time: Factura No. %{number} el %{datetime}
+
+  please_enter_email_and_realname: Por favor ingrese su dirección de e-mail y su nombre verdadero.
+
+  default: Predeterminado
+  germany: Alemania
+  austria: Austria
+
+  # Translations for Javascript files
+  please_enter_item_comment: Deseo especial
+  please_enter_item_price: Precio especial
+  server_no_response: 'El servidor Bill Gastro ha dejado de responder. La línea está ocupada o bien el vínculo inalámbrico se ha interrumpido.'
+  just_order: Sólo el pedido
+  no_printing: No imprimir
+
