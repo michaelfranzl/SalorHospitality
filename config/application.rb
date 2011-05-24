@@ -14,14 +14,9 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
-    mattr_accessor :printers
-
-    DEVICE_NODES = ['/dev/usblp0', '/dev/usblp1', '/dev/usblp2', '/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/billgastro-printer-front', '/dev/billgastro-printer-back-top-left', '/dev/billgastro-printer-back-top-right', '/dev/billgastro-printer-back-bottom-left', '/dev/billgastro-printer-back-bottom-right']
     INITIAL_CREDITS = 100
-    LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe' }
-    COUNTRIES = { 'cc' => :default, 'gn' => :germany, 'at' => :austria }
-
-    @@printers = [nil, nil, nil, nil]
+    LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español' }
+    COUNTRIES = { 'cc' => :default, 'gn' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -53,17 +48,5 @@ module BillGastro
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-  end
-
-  class DummyPrinter
-    def initialize(port)
-      @port = port
-    end
-
-    def write(code)
-      f = File.open "tmp/dummy-printer-#{@port}.txt", 'a:ISO8859-15'
-      f.write code
-      f.close
-    end
   end
 end

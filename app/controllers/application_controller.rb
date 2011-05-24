@@ -97,103 +97,89 @@ class ApplicationController < ActionController::Base
     end
 
     def test_printers
+      printers = initialize_printers
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]TESTING Printers..."
-      logger.info "[PRINTING]  Printers before: #{ BillGastro::Application::printers.inspect }"
-      close_printers
-      logger.info "[PRINTING]  Printers closed: #{ BillGastro::Application::printers.inspect }"
-      return if not initialize_printers
-      logger.info "[PRINTING]  Printers initialized: #{ BillGastro::Application::printers.inspect }"
-      printernames = [:kitchen, :bar, :guestroom, :dummy]
-      (0..3).each do |id|
-        test_printout =
+      printers.each do |key, value|
+        text =
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
-        "Bill Gastro\r\n#{ t printernames[id] }\r\n" +
+        "Bill Gastro\r\n#{ value[:name] }\r\n" +
         "\e!\x00" +  # Font A
-        "#{ BillGastro::Application::printers[id].inspect }" +
+        "#{ value[:device].inspect }" +
         "\n\n\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
-        logger.info "[PRINTING]  Testing #{ BillGastro::Application::printers[id].inspect }"
-        print test_printout, id
-      end
-    end
-
-    def close_printers
-      logger.info "[PRINTING]============"
-      logger.info "[PRINTING]CLOSING Printers..."
-      (0..3).each do |i|
-        begin
-          BillGastro::Application::printers[i].close if BillGastro::Application::printers[i].class == File
-          logger.info "[PRINTING]  Closing file #{ BillGastro::Application::printers[i].inspect }"
-        rescue Exception => e
-          logger.info "[PRINTING]  Closing file #{ BillGastro::Application::printers[i].inspect } failed with #{ e.inspect }"
-        ensure
-          BillGastro::Application::printers[i] = nil
-        end
+        logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
+        print printers, key, text
       end
     end
 
     def initialize_printers
-      return false if saas_variant? or (BillGastro::Application::printers != [nil, nil, nil, nil]) or not @current_company
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      printer_paths = [@current_company.printer_kitchen, @current_company.printer_bar, @current_company.printer_guestroom]
-      (0..3).each do |i|
-        logger.info "[PRINTING]  Trying to open #{ printer_paths[i] }..."
-        # try to open USB/Serial adapter
+      avaliable_printers = @current_company.vendor_printers
+      open_printers = Hash.new
+
+      avaliable_printers.each do |p|
+        logger.info "[PRINTING]  Trying to open #{ p.name } @ #{ p.path } ..."
+        # try to open USB/SerialPort converter
         begin
-          BillGastro::Application::printers[i] = SerialPort.new printer_paths[i], 9600
-          logger.info "[PRINTING]    Success for SerialPort: #{ BillGastro::Application::printers[i].inspect }"
+          printer = SerialPort.new p.path, 9600
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          logger.info "[PRINTING]    Success for SerialPort: #{ printer.inspect }"
+          next
         rescue Exception => e
           logger.info "[PRINTING]    Failed to open as SerialPort: #{ e.inspect }"
-          BillGastro::Application::printers[i] = nil
         end
 
-        next if BillGastro::Application::printers[i]
-
-        # try to open USB port as regular file
+        # try to open USB or regular file as File
         begin
-          BillGastro::Application::printers[i] = File.open printer_paths[i], 'w:ISO8859-15'
-          logger.info "[PRINTING]    Success for USB File: #{ BillGastro::Application::printers[i].inspect }"
+          printer = File.open p.path, 'w:ISO8859-15'
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
+          next
         rescue Errno::EBUSY
-          logger.info "[PRINTING]    The USB file #{ printer_paths[i] } apparently is already open."
-          (0..i-1).each do |j|
-            logger.info "[PRINTING]      Trying to reuse #{ BillGastro::Application::printers[j].inspect }"
-            if BillGastro::Application::printers[j] and (BillGastro::Application::printers[j].class == File)
+          logger.info "[PRINTING]    The File #{ p.path } is already open."
+          previously_opened_printers = open_printers.clone
+          previously_opened_printers.each do |key, val|
+            logger.info "[PRINTING]      Trying to reuse previously open printer id #{ key }: #{ val.inspect }"
+            if val[:path] == p[:path] and val[:device].class == File
               logger.info "[PRINTING]      Reused."
-              BillGastro::Application::printers[i] = BillGastro::Application::printers[j]
+              open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => val[:device] }
               break
             end
-          end       
+          end
+          next
         rescue Exception => e
-          BillGastro::Application::printers[i] = BillGastro::DummyPrinter.new i
-          logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ BillGastro::Application::printers[i].inspect } instead."
+          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ISO8859-15')
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
         end
       end
+      return open_printers
     end
 
-    def print(escpos_code, printer_id)
-      printer = BillGastro::Application::printers[printer_id]
+    def print(open_printers, printer_id, text)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
-      logger.info "[PRINTING]  Printing on #{ printer.inspect }"
-      begin
-        if printer.class == File
-          printer.write escpos_code
-          printer.flush
+      printer = open_printers[printer_id]
+      logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:path] }: #{ printer[:device] }"
+      open_printers[printer_id][:device].write text
+      open_printers[printer_id][:device].flush
+    end
+
+    def close_printers(open_printers)
+      logger.info "[PRINTING]============"
+      logger.info "[PRINTING]CLOSING Printers..."
+      printers.each do |key, value|
+        begin
+          value[:device].close
+          printers.delete(key)
+          logger.info "[PRINTING]  Closing #{ value.inspect }"
+        rescue Exception => e
+          logger.info "[PRINTING]  Error during closing of #{ value.inspect }: #{ e.inspect }"
         end
-        if printer.class == SerialPort
-          printer.write escpos_code
-        end
-        if printer.class == BillGastro::DummyPrinter
-          printer.write escpos_code
-        end
-      rescue
-        close_printers
-        initialize_printers
-        print(escpos_code, printer_id)
       end
     end
 

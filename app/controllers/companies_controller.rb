@@ -22,8 +22,9 @@ class CompaniesController < ApplicationController
 
   def update
     @current_company.update_attributes params[:company]
-    redirect_to companies_path
+    test_printers
     flash[:notice] = t 'companies.update.config_successfully_updated'
+    redirect_to companies_path
   end
 
 end
