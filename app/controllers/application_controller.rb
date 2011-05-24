@@ -1,4 +1,4 @@
-# coding: utf-8
+# coding: ASCII-8BIT
 
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
@@ -175,20 +175,19 @@ class ApplicationController < ActionController::Base
       printer = open_printers[printer_id]
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:path] }: #{ printer[:device] }"
 
-      #text.force_encoding 'ASCII-8BIT'
+      text.force_encoding 'ASCII-8BIT'
 
-      text.gsub!(/ä/,"\x84")
-      text.gsub!(/ü/,"\x81")
-      #overall_output.gsub!(/ö/,"oe")
-      #overall_output.gsub!(/Ä/,"Ae")
-      #overall_output.gsub!(/Ü/,"Ue")
-      #overall_output.gsub!(/Ö/,"Oe")
-      #overall_output.gsub!(/ß/,"sz")
-      #overall_output.gsub!(/é/,"e")
-      #overall_output.gsub!(/è/,"e")
-      #overall_output.gsub!(/ú/,"u")
-      #overall_output.gsub!(/ù/,"u")
-      #overall_output.gsub!(/É/,"E")
+      sanitize_tokens = [/ä/,"\x84",/ü/,"\x81",/ö/,"\x94",/Ä/,"\x8E",/Ü/,"\x9A",/Ö/,"\x99",/ß/,"\xE1",/é/,"\x82",/è/,"\x8A",/ú/,"\xA3",/ù/,"\x97",/á/,"\xA0",/à/,"\x85",/í/,"\xA1",/ì/,"\x8D",/ó/,"\xA2",/ò/,"\x95",/â/,"\x83",/ê/,"\x88",/î/,"\x8C",/ô/,"\x93",/û/,"\x96",/ñ/,"\xA4"]
+
+      begin
+        i = 0
+        begin
+          text.gsub!(sanitize_tokens[i], sanitize_tokens[i+1])
+          i += 2
+        end while i < sanitize_tokens.length
+      rescue Exception => e
+        logger.info "[Printr] Error in sanitize"
+      end
 
       open_printers[printer_id][:device].write text
       open_printers[printer_id][:device].flush
