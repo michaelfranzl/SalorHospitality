@@ -46,6 +46,9 @@ en:
       role:
         one: Rol
         other: Rol
+      vendor_printer:
+        one: XXXPrinter
+        other: XXXPrinters
 
     attributes:
       article:
@@ -88,7 +91,7 @@ en:
         icon: Ícono
         color: Color
         food: comida?
-        usage: Tipo
+        vendor_printer_id: XXXPrinter
       cost_center:
         name: Nombre
         description: Descripción
@@ -114,6 +117,9 @@ en:
         internet_address: dirección e-mail
         invoice_slogan1: Eslogan factura 1
         invoice_slogan2: Eslogan factura 2
+        bank_account1: XXXBank account detail 1
+        bank_account2: XXXBank account detail 2
+        country: XXXRules for country
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
         address: Dirección
@@ -297,6 +303,8 @@ en:
       edit_user: Editar usuario
 
   companies:
+    edit:
+      add_printer: XXXAdd printer
     update:
       config_successfully_updated: ¡Los datos de la companía han sido actualizados con éxito!
 

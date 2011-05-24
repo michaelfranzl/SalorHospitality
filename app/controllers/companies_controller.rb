@@ -22,8 +22,8 @@ class CompaniesController < ApplicationController
 
   def update
     @current_company.update_attributes params[:company]
-
-    render :edit
+    redirect_to companies_path
+    flash[:notice] = t 'companies.update.config_successfully_updated'
   end
 
 end

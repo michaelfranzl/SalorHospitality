@@ -46,6 +46,9 @@ tr:
       role:
         one: XXXRole
         other: XXXRoles
+      vendor_printer:
+        one: XXXPrinter
+        other: XXXPrinters
 
     attributes:
       article:
@@ -88,7 +91,7 @@ tr:
         icon: Sembol
         color: Renk
         food: Yemek?
-        usage: model
+        vendor_printer_id: XXXPrinter
       cost_center:
         name: Isim
         description: Tarif
@@ -114,6 +117,9 @@ tr:
         internet_address: Internet adresi
         invoice_slogan1: Fatura informasyonu1
         invoice_slogan2: Fatura informasyonu2
+        bank_account1: XXXBank account detail 1
+        bank_account2: XXXBank account detail 2
+        country: XXXRules for country
         invoice_subtitle: Fatura Fatura informasyonu3
         revenue_service_tax_number: VAT numarısı
         address: adres
@@ -296,6 +302,8 @@ tr:
       edit_user: Kullanici islemek
 
   companies:
+    edit:
+      add_printer: XXXAdd printer
     update:
       config_successfully_updated: Belirtiler yenilendi!
 

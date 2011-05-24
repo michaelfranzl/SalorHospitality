@@ -17,7 +17,7 @@
 module CategoriesHelper
 
   def get_icon_array
-    icon_array = [
+    [
       [t('.aperitif'), 'aperitif'],
       [t('.sidedish'), 'sidedish'],
       [t('.starter'), 'starter'],
@@ -42,23 +42,8 @@ module CategoriesHelper
     ]
   end
 
-  def usage_array_for_select
-    [
-      [t(:drink), 0],
-      [t(:food), 1],
-      [t(:tobacco), 2]
-    ]
-  end
-
-  def usage_array
-    [ t(:drink),
-      t(:food),
-      t(:tobacco)
-    ]
-  end
-
   def get_color_array
-    color_array = [
+    [
       [t(:violet), '#80477d'],
       [t(:orange), '#ed8b00'],
       [t(:pink), '#cd0052'],
@@ -69,8 +54,7 @@ module CategoriesHelper
   end
 
   def generate_item_style
-
-    styles = "
+    "
       option[value='aperitif']:before { content:url('/images/category_aperitif.png'); }
       option[value='sidedish']:before { content:url('/images/category_sidedish.png'); }
       option[value='starter']:before { content:url('/images/category_starter.png'); }

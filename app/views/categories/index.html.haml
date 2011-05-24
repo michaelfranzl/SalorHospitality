@@ -6,12 +6,12 @@
   %tr
     %th{ :style => 'width:200px' }= Category.human_attribute_name(:name)
     %th{ :style => 'width:150px' }= Category.human_attribute_name(:percent)
-    %th{ :style => 'width:150px' }= Category.human_attribute_name(:usage)
+    %th{ :style => 'width:150px' }= Category.human_attribute_name(:printer_id)
     %th{ :style => 'width:150px' }= Category.human_attribute_name(:sort_order)
     %th{ :style => 'width:120px' }
   - @categories.each do |ca|
     %tr
       %td= link_to ca.name, edit_category_path(ca)
       %td= ca.tax.custom_name
-      %td= usage_array[ca.usage] if ca.usage
+      %td= ca.vendor_printer.name if ca.vendor_printer
       %td= ca.sort_order

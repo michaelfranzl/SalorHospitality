@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520135529) do
+ActiveRecord::Schema.define(:version => 20110524080017) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20110520135529) do
     t.integer  "largest_order_number",       :default => 0
     t.string   "unused_order_numbers",       :default => "--- []\n\n"
     t.string   "country"
+    t.string   "bank_account1"
+    t.string   "bank_account2"
   end
 
   create_table "cost_centers", :force => true do |t|

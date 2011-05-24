@@ -16,6 +16,7 @@
 
 class Category < ActiveRecord::Base
   belongs_to :tax
+  belongs_to :vendor_printer
   has_many :articles
   has_many :options
   validates_presence_of :name
