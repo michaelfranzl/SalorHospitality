@@ -17,7 +17,6 @@
     %select{ :id => "article_quantities_attributes_#{ quantity_id }_usage", :name => "article[quantities_attributes][#{ quantity_id }][usage]" }
       %option{ :value => 0, :selected => f.object.usage == 0 }= t '.normal'
       %option{ :value => 1, :selected => f.object.usage == 1 }= t '.takeaway'
-      %option{ :value => 2, :selected => f.object.usage == 2 }= t '.weighing'
 
   - unless f.object.new_record?
     %td= f.label('active', Quantity.human_attribute_name(:active))

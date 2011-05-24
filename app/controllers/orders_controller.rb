@@ -101,7 +101,7 @@ class OrdersController < ApplicationController
       @order.created_at = Time.now
     end
 
-    if @order.order # unlink any parent relationships or Order and Item
+    if @order.order # unlink any parent relationships of Order and Item
       @order.items.each do |item|
         item.item.update_attribute( :item_id, nil ) if item.item
         item.update_attribute( :item_id, nil )
@@ -114,12 +114,19 @@ class OrdersController < ApplicationController
       @order.update_attribute( :order_id, nil )
     end
 
-    if local_variant?
-      # print immediately
-      print generate_escpos_invoice(@order), params[:port].to_i
-    else
-      # print later
-      @order.update_attribute :print_pending, true
+    if params[:port].to_i != 0
+      if local_variant?
+        # print immediately
+        selected_printer = VendorPrinter.find_by_id(params[:port].to_i)
+        printer_id = selected_printer.id if selected_printer
+        all_printers = initialize_printers
+        text = generate_escpos_invoice(@order)
+        print(all_printers, printer_id, text)
+        close_printers(all_printers)
+      else
+        # print later
+        @order.update_attribute :print_pending, true
+      end
     end
 
     justfinished = false
@@ -215,12 +222,14 @@ class OrdersController < ApplicationController
       group_identical_items(order)
 
       if local_variant?
-        foods_normal    = generate_escpos_items order, 1, 0
-        foods_takeaway  = generate_escpos_items order, 1, 1
-        drinks_normal   = generate_escpos_items order, 0, 0
-        print foods_normal, 0
-        print foods_takeaway, 0
-        print drinks_normal, 1
+        printers = initialize_printers
+        printers.each do |id, params|
+          normal   = generate_escpos_items order, id, 0
+          takeaway = generate_escpos_items order, id, 1
+          print printers, id, normal
+          print printers, id, takeaway
+        end
+        close_printers(printers)
       end
       # if saas_variant, printing of items will happen after requesting items.bill
     end

@@ -111,7 +111,16 @@ class ApplicationController < ActionController::Base
         "\x1DV\x00" # paper cut at the end of each order/table
         logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
         print printers, key, text
+        #print printers, key, generate_escpos_test
       end
+    end
+
+    def generate_escpos_test
+      out = "\e@" # Initialize Printer
+      0.upto(255) { |i|
+        out += i.to_s(16) + ' ' + i.chr
+      }
+      return out
     end
 
     def initialize_printers
@@ -135,7 +144,7 @@ class ApplicationController < ActionController::Base
 
         # try to open USB or regular file as File
         begin
-          printer = File.open p.path, 'w:ISO8859-15'
+          printer = File.open p.path, 'w:ASCII-8BIT'
           open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
           logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
           next
@@ -165,6 +174,22 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:path] }: #{ printer[:device] }"
+
+      #text.force_encoding 'ASCII-8BIT'
+
+      text.gsub!(/ä/,"\x84")
+      text.gsub!(/ü/,"\x81")
+      #overall_output.gsub!(/ö/,"oe")
+      #overall_output.gsub!(/Ä/,"Ae")
+      #overall_output.gsub!(/Ü/,"Ue")
+      #overall_output.gsub!(/Ö/,"Oe")
+      #overall_output.gsub!(/ß/,"sz")
+      #overall_output.gsub!(/é/,"e")
+      #overall_output.gsub!(/è/,"e")
+      #overall_output.gsub!(/ú/,"u")
+      #overall_output.gsub!(/ù/,"u")
+      #overall_output.gsub!(/É/,"E")
+
       open_printers[printer_id][:device].write text
       open_printers[printer_id][:device].flush
     end
@@ -172,10 +197,9 @@ class ApplicationController < ActionController::Base
     def close_printers(open_printers)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]CLOSING Printers..."
-      printers.each do |key, value|
+      open_printers.each do |key, value|
         begin
           value[:device].close
-          printers.delete(key)
           logger.info "[PRINTING]  Closing #{ value.inspect }"
         rescue Exception => e
           logger.info "[PRINTING]  Error during closing of #{ value.inspect }: #{ e.inspect }"
@@ -183,7 +207,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def generate_escpos_items(order = nil, category_usage = nil, article_usage = nil)
+    def generate_escpos_items(order, printer_id, usage)
       orders = order ? [order] : Order.find_all_by_finished(false)
       overall_output = ''
       orders.each do |o|
@@ -202,22 +226,20 @@ class ApplicationController < ActionController::Base
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
           next if i.count == i.printed_count or i.count == 0
 
-          article_quantity_usage = i.quantity ? i.quantity.usage : i.article.usage
+          item_usage = i.quantity ? i.quantity.usage : i.article.usage
 
-          next if category_usage and
-                  article_usage and
-                  ((i.count <= i.printed_count)         or
-                  (category_usage != i.category.usage) or
-                  (article_usage  != article_quantity_usage))
+          next if (i.count <= i.printed_count)          or
+                  (printer_id != i.category.vendor_printer_id) or
+                  (usage != item_usage)
 
-          printed_items_in_this_order =+ 1
+          printed_items_in_this_order += 1
 
-          per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
-          per_order_output += "  %-18.18s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
-          per_order_output += "! %-18.18s\n" % [i.comment] if i.comment and not i.comment.empty?
+          per_order_output += "%i %-17.17s\n" % [ i.count - i.printed_count, i.article.name]
+          per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
+          per_order_output += " ! %-17.17s\n" % [i.comment] if i.comment and not i.comment.empty?
 
           i.printoptions.each do |po|
-            per_order_output += "* %-18.18s\n" % [po.name]
+            per_order_output += " * %-17.17s\n" % [po.name]
             i.options << po
           end
 
@@ -233,19 +255,6 @@ class ApplicationController < ActionController::Base
 
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
       end
-
-      overall_output.gsub!(/ä/,"ae")
-      overall_output.gsub!(/ü/,"ue")
-      overall_output.gsub!(/ö/,"oe")
-      overall_output.gsub!(/Ä/,"Ae")
-      overall_output.gsub!(/Ü/,"Ue")
-      overall_output.gsub!(/Ö/,"Oe")
-      overall_output.gsub!(/ß/,"sz")
-      overall_output.gsub!(/é/,"e")
-      overall_output.gsub!(/è/,"e")
-      overall_output.gsub!(/ú/,"u")
-      overall_output.gsub!(/ù/,"u")
-      overall_output.gsub!(/É/,"E")
 
       overall_output
     end
@@ -292,19 +301,6 @@ class ApplicationController < ActionController::Base
         sum_taxes[item.real_tax.id] += sum
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
 
-        label.gsub!(/ä/,"ae")
-        label.gsub!(/ü/,"ue")
-        label.gsub!(/ö/,"oe")
-        label.gsub!(/Ä/,"Ae")
-        label.gsub!(/Ü/,"Ue")
-        label.gsub!(/Ö/,"Oe")
-        label.gsub!(/ß/,"sz")
-        label.gsub!(/é/,"e")
-        label.gsub!(/è/,"e")
-        label.gsub!(/ú/,"u")
-        label.gsub!(/ù/,"u")
-        label.gsub!(/É/,"E")
-
         list_of_items += "%s %20.20s %7.2f %3u %7.2f\n" % [item.real_tax.letter, label, p, item.count, sum]
       end
 
@@ -339,25 +335,7 @@ class ApplicationController < ActionController::Base
       "\x1DV\x00" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
-      #logger.info output
 
-      begin
-        output = Iconv.conv('ISO-8859-15','UTF-8',output)
-      rescue Exception => e
-        output = e.inspect
-      end
-      output.gsub!(/\x00E4/,"\x84") #ä
-      output.gsub!(/\x00FC/,"\x81") #ü
-      output.gsub!(/\x00F6/,"\x94") #ö
-      output.gsub!(/\x00C4/,"\x8E") #Ä
-      output.gsub!(/\x00DC/,"\x9A") #Ü
-      output.gsub!(/\x00D6/,"\x99") #Ö
-      output.gsub!(/\x00DF/,"\xE1") #ß
-      output.gsub!(/\x00E9/,"\x82") #é
-      output.gsub!(/\x00E8/,"\x7A") #è
-      output.gsub!(/\x00FA/,"\xA3") #ú
-      output.gsub!(/\x00F9/,"\x97") #ù
-      output.gsub!(/\x00C9/,"\x90") #É
       output
     end
 end

@@ -42,7 +42,6 @@
               %select{ :id => "article_usage", :name => "article[usage]" }
                 %option{ :value => 0, :selected => article_form.object.usage == 0 }= t '.normal'
                 %option{ :value => 1, :selected => article_form.object.usage == 1 }= t '.takeaway'
-                %option{ :value => 2, :selected => article_form.object.usage == 2 }= t '.weighing'
           %tr
             %td= article_form.label('menucard', Article.human_attribute_name(:menucard))
             %td= article_form.check_box :menucard
