@@ -169,6 +169,8 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
+    @cost_centers = CostCenter.find_all_by_active true
+
     if params[:order][:id] == 'add_offline_items_to_order'
       @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     elsif not params[:order][:id].empty?
@@ -193,6 +195,8 @@ class OrdersController < ApplicationController
       @current_company.update_attribute :largest_order_number, @order.nr 
     end
 
+    @tables = Table.all
+
     if @order.items.size.zero?
       @current_company.unused_order_numbers << @order.nr
       @current_company.save
@@ -215,6 +219,7 @@ class OrdersController < ApplicationController
       close_printers printers
     end
 
+    @taxes = Tax.all
 
     case params[:order_action]
       when 'save_and_go_to_tables'
@@ -228,9 +233,6 @@ class OrdersController < ApplicationController
         @tables = Table.all
         render 'go_to_tables'
     end
-    @cost_centers = CostCenter.find_all_by_active true
-    @taxes = Tax.all
-    @tables = Table.all
   end
 
   def last_invoices
@@ -241,7 +243,6 @@ class OrdersController < ApplicationController
   private
 
     def move_order_to_table(order, target_table_id)
-      this_table = order.table
       target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
       if target_order
         # merge orders
@@ -285,6 +286,7 @@ class OrdersController < ApplicationController
       end
 
       # update table users and colors
+      this_table = order.table
       unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => this_table.id, :finished => false })
       this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
       unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })

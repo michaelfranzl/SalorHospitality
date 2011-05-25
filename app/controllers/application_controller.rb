@@ -1,4 +1,4 @@
-# coding: UTF-8
+# coding: ASCII-8BIT
 
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
@@ -110,18 +110,15 @@ class ApplicationController < ActionController::Base
         "\n\n\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
         logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
+        out = "\e@" # Initialize Printer
+        0.upto(255) { |i|
+          out += i.to_s(16) + ' ' + i.chr
+        }
         print printers, key, text
         #print printers, key, generate_escpos_test
       end
     end
 
-    def generate_escpos_test
-      out = "\e@" # Initialize Printer
-      0.upto(255) { |i|
-        out += i.to_s(16) + ' ' + i.chr
-      }
-      return out
-    end
 
     def initialize_printers
       logger.info "[PRINTING]============"
@@ -152,7 +149,7 @@ class ApplicationController < ActionController::Base
           logger.info "[PRINTING]    The File #{ p.path } is already open."
           previously_opened_printers = open_printers.clone
           previously_opened_printers.each do |key, val|
-            logger.info "[PRINTING]      Trying to reuse previously open printer id #{ key }: #{ val.inspect }"
+            logger.info "[PRINTING]      Trying to reuse already opened File #{ key }: #{ val.inspect }"
             if val[:path] == p[:path] and val[:device].class == File
               logger.info "[PRINTING]      Reused."
               open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => val[:device] }
@@ -173,21 +170,16 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
-      logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:path] }: #{ printer[:device] }"
+      logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect }."
 
       text.force_encoding 'ASCII-8BIT'
 
       sanitize_tokens = [/ä/,"\x84",/ü/,"\x81",/ö/,"\x94",/Ä/,"\x8E",/Ü/,"\x9A",/Ö/,"\x99",/ß/,"\xE1",/é/,"\x82",/è/,"\x8A",/ú/,"\xA3",/ù/,"\x97",/á/,"\xA0",/à/,"\x85",/í/,"\xA1",/ì/,"\x8D",/ó/,"\xA2",/ò/,"\x95",/â/,"\x83",/ê/,"\x88",/î/,"\x8C",/ô/,"\x93",/û/,"\x96",/ñ/,"\xA4"]
-
+      i = 0
       begin
-        i = 0
-        begin
-          text.gsub!(sanitize_tokens[i], sanitize_tokens[i+1])
-          i += 2
-        end while i < sanitize_tokens.length
-      rescue Exception => e
-        logger.info "[PRINTING] Error in sanitize: #{ e.inspect }"
-      end
+        text.gsub!(sanitize_tokens[i], sanitize_tokens[i+1])
+        i += 2
+      end while i < sanitize_tokens.length
 
       open_printers[printer_id][:device].write text
       open_printers[printer_id][:device].flush
@@ -199,10 +191,9 @@ class ApplicationController < ActionController::Base
       open_printers.each do |key, value|
         begin
           value[:device].close
-debugger
-          logger.info "[PRINTING]  Closing #{ value.inspect }"
+          logger.info "[PRINTING]  Closing #{ value[:name] } @ #{ value[:device].inspect }"
         rescue Exception => e
-          logger.info "[PRINTING]  Error during closing of #{ value.inspect }: #{ e.inspect }"
+          logger.info "[PRINTING]  Error during closing of #{ value[:name] } @ #{ value[:device].inspect }: #{ e.inspect }"
         end
       end
     end
@@ -250,6 +241,7 @@ debugger
 
         footer =
         "\n\n\n\n" +
+        "\x1B\x70\x00\xFF\x00" + # beep
         "\x1DV\x00" + # paper cut at the end of each order/table
         "\x16\x20105"
 
