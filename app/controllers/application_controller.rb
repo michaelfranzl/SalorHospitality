@@ -1,4 +1,4 @@
-# coding: ASCII-8BIT
+# coding: UTF-8
 
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
@@ -161,7 +161,7 @@ class ApplicationController < ActionController::Base
           end
           next
         rescue Exception => e
-          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ISO8859-15')
+          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ASCII-8BIT')
           open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
           logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
         end
@@ -186,7 +186,7 @@ class ApplicationController < ActionController::Base
           i += 2
         end while i < sanitize_tokens.length
       rescue Exception => e
-        logger.info "[Printr] Error in sanitize"
+        logger.info "[PRINTING] Error in sanitize: #{ e.inspect }"
       end
 
       open_printers[printer_id][:device].write text
@@ -199,6 +199,7 @@ class ApplicationController < ActionController::Base
       open_printers.each do |key, value|
         begin
           value[:device].close
+debugger
           logger.info "[PRINTING]  Closing #{ value.inspect }"
         rescue Exception => e
           logger.info "[PRINTING]  Error during closing of #{ value.inspect }: #{ e.inspect }"
