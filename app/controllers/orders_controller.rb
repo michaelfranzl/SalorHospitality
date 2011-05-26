@@ -244,6 +244,30 @@ class OrdersController < ApplicationController
 
     def move_order_to_table(order, target_table_id)
       target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
+
+      # unlink in case it was an splitted Item/Order
+      parent_order = order.order
+      if parent_order
+        Item.transaction do
+          parent_order.items.each do |i|
+            i.update_attribute :item_id, nil
+          end
+        end
+
+        Item.transaction do
+          order.items.each do |i|
+            i.update_attribute :item_id, nil
+          end
+        end
+        #puts "XXX #{ parent_order.inspect }"
+        #puts "XXX #{ order.inspect }"
+        # don't exchange the order of the next two instructions
+        order.update_attribute :order_id, nil
+        parent_order.update_attribute :order_id, nil
+        #puts "XXX #{ parent_order.inspect }"
+        #puts "XXX #{ order.inspect }"
+      end
+
       if target_order
         # merge orders
         Item.transaction do
@@ -263,24 +287,6 @@ class OrdersController < ApplicationController
       else
         # just move whole order to empty table
         order.update_attribute :table_id, target_table_id
-      end
-
-      # unlink in case it was an splitted Item/Order
-      if order.order
-        Item.transaction do
-          order.order.items.each do |i|
-            i.update_attribute :item_id, nil
-          end
-        end
-
-        Item.transaction do
-          order.items.each do |i|
-            i.update_attribute :item_id, nil
-          end
-        end
-
-        order.update_attribute :order_id, nil
-        order.order.update_attribute :order_id, nil
       end
 
       # update table users and colors
