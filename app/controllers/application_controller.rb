@@ -1,4 +1,4 @@
-# coding: ASCII-8BIT
+# coding: UTF-8
 
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-       request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
+       request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.nil?
     end
 
     def mobile?
@@ -170,16 +170,18 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
-      logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect }."
+      logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
 
       text.force_encoding 'ASCII-8BIT'
-
-      sanitize_tokens = [/ä/,"\x84",/ü/,"\x81",/ö/,"\x94",/Ä/,"\x8E",/Ü/,"\x9A",/Ö/,"\x99",/ß/,"\xE1",/é/,"\x82",/è/,"\x8A",/ú/,"\xA3",/ù/,"\x97",/á/,"\xA0",/à/,"\x85",/í/,"\xA1",/ì/,"\x8D",/ó/,"\xA2",/ò/,"\x95",/â/,"\x83",/ê/,"\x88",/î/,"\x8C",/ô/,"\x93",/û/,"\x96",/ñ/,"\xA4"]
+      char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'ß', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ']
+      replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\xE1", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4"]
       i = 0
       begin
-        text.gsub!(sanitize_tokens[i], sanitize_tokens[i+1])
+        rx = Regexp.new(char[i].force_encoding('ASCII-8BIT'))
+        rep = replacement[i].force_encoding('ASCII-8BIT')
+        text.gsub!(rx, rep)
         i += 2
-      end while i < sanitize_tokens.length
+      end while i < char.length
 
       open_printers[printer_id][:device].write text
       open_printers[printer_id][:device].flush
@@ -191,9 +193,9 @@ class ApplicationController < ActionController::Base
       open_printers.each do |key, value|
         begin
           value[:device].close
-          logger.info "[PRINTING]  Closing #{ value[:name] } @ #{ value[:device].inspect }"
+          logger.info "[PRINTING]  Closing  #{ value[:name] } @ #{ value[:device].inspect }"
         rescue Exception => e
-          logger.info "[PRINTING]  Error during closing of #{ value[:name] } @ #{ value[:device].inspect }: #{ e.inspect }"
+          logger.info "[PRINTING]  Error during closing of #{ value[:device].inspect.force_encoding('UTF-8') }: #{ e.inspect }"
         end
       end
     end

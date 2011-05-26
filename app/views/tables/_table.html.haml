@@ -4,6 +4,7 @@
 - top     = use_attributes_for_mobile ? table.top_mobile    : table.top
 
 - color_style = "background-color: #{ table.user.color }" if table.user
+- color_style = "background-color: black" if not table.enabled
 - status = table.user ? 'occupied' : 'vacant'
 
 %div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
@@ -12,5 +13,5 @@
     %script= render :partial => 'tables/draggable_table.js', :locals => { :table => table }
   - elsif Order.last and Order.last.credit < 1 and not table.user
     = table.abbreviation
-  - else
+  - elsif table.enabled
     %a{ :onmousedown => "go_to_order_form_preprocessing(#{ table.id })" }= table.abbreviation

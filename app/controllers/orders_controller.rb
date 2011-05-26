@@ -266,23 +266,21 @@ class OrdersController < ApplicationController
       end
 
       # unlink in case it was an splitted Item/Order
-      split_order = order.order
-      if split_order
-        split_order.order_id = nil
+      if order.order
         Item.transaction do
-          split_order.items.each do |i|
-            i.item_id = nil
+          order.order.items.each do |i|
+            i.update_attribute :item_id, nil
           end
         end
-        split_order.save
 
-        order.order_id = nil
         Item.transaction do
           order.items.each do |i|
-            i.item_id = nil
+            i.update_attribute :item_id, nil
           end
         end
-        order.save
+
+        order.update_attribute :order_id, nil
+        order.order.update_attribute :order_id, nil
       end
 
       # update table users and colors

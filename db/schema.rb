@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524080017) do
+ActiveRecord::Schema.define(:version => 20110526120520) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -138,19 +138,18 @@ ActiveRecord::Schema.define(:version => 20110524080017) do
   end
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",        :default => false
+    t.boolean  "finished",       :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "sum",             :default => 0.0
-    t.integer  "parent_order_id"
+    t.float    "sum",            :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
     t.string   "printed_from"
     t.integer  "nr"
-    t.integer  "credit",          :default => 0
+    t.integer  "credit",         :default => 0
     t.integer  "tax_id"
     t.boolean  "print_pending"
   end
@@ -207,6 +206,8 @@ ActiveRecord::Schema.define(:version => 20110524080017) do
     t.integer  "height_mobile", :default => 60
     t.string   "abbreviation"
     t.integer  "user_id"
+    t.boolean  "enabled",       :default => true
+    t.boolean  "hidden",        :default => false
   end
 
   create_table "taxes", :force => true do |t|

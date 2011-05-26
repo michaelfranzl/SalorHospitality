@@ -84,6 +84,8 @@ de:
         height: Höhe
         width_mobile: Breite mobile
         height_mobile: Höhe mobile
+        enabled: aktiv?
+        hidden: löschen?
       category:
         name: Name
         tax_id: Steuerklasse
