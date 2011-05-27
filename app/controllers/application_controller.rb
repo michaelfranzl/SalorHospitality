@@ -191,8 +191,8 @@ class ApplicationController < ActionController::Base
 
     def sanitize_character_encoding(text)
       text.encode! 'ISO-8859-15'
-      char = ['ö', 'ä', 'ü', 'Ä', 'Ü', 'Ö', 'ß', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ']
-      replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\xE1", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4"]
+      char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ', 'ß']
+      replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4", "\xE1"]
       i = 0
       begin
         rx = Regexp.new(char[i].encode('ISO-8859-15'))
@@ -200,6 +200,7 @@ class ApplicationController < ActionController::Base
         text.gsub!(rx, rep)
         i += 1
       end while i < char.length
+debugger
       return text
     end
 
