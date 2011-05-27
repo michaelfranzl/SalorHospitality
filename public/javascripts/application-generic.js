@@ -245,24 +245,22 @@ function add_option_to_item_from_div(item_designator, value, text)
 }
 
 
-// VISUAL EFFECTS FUNCTINOS THAT MIGHT BE DIFFERENT ON mobile
+// VISUAL EFFECTS FUNCTIONS THAT MIGHT BE DIFFERENT ON mobile
 
 function articles_onmousedown(element) {
   highlight_border(element);
-  $(element).css({ backgroundColor: '#AAAA4D' });
 }
 
 function quantities_onmousedown(element) {
   highlight_border(element);
-  $(element).css({ backgroundColor: '#AAAA4D' });
 }
 
 function articles_onmouseup(element) {
-  $(element).css({ backgroundColor: '#27343B' });
+  $(element).effect("highlight", {}, 300);
 }
 
 function quantities_onmouseup(element) {
-  $(element).css({ backgroundColor: '#27343B' });
+  $(element).effect("highlight", {}, 300);
 }
 
 function highlight_border(element) {
@@ -274,7 +272,7 @@ function restore_border(element) {
 }
 
 function highlight_button(element) {
-  $(element).css({ backgroundColor: '#AAAA4D' });
+  $(element).effect("highlight", {}, 300);
 }
 
 function restore_button(element) {
