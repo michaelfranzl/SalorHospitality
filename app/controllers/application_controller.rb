@@ -200,7 +200,6 @@ class ApplicationController < ActionController::Base
         text.gsub!(rx, rep)
         i += 1
       end while i < char.length
-debugger
       return text
     end
 
@@ -258,7 +257,7 @@ debugger
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
       end
 
-      sanitize_character_encoding(text)
+      sanitize_character_encoding(overall_output)
     end
 
     def generate_escpos_invoice(order)
@@ -330,6 +329,6 @@ debugger
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
 
-      sanitize_character_encoding(text)
+      sanitize_character_encoding(output)
     end
 end

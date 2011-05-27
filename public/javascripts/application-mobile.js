@@ -17,16 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 function category_onmousedown(category_id, element) {
-  $('html, body').animate({scrollTop: $('#articles').offset().top - 40}, 500);
   display_articles(category_id);
   deselect_all_categories();
   highlight_border(element);
+  scroll_to('#articles', 7);
 }
 
 function display_quantities(art_id) {
   if ($('#article_' + art_id + '_quantities').html() == '') {
     $('#article_' + art_id + '_quantities').html(quantitylist[art_id]);
-    $('html, body').animate({scrollTop: $('#article_' + art_id + '_quantities').offset().top - 40}, 500);
+    scroll_to('#article_' + art_id + '_quantities', 15);
   } else {
     $('#article_' + art_id + '_quantities').html('');
   }

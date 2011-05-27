@@ -5,4 +5,4 @@
       = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
       - 1.upto(rooms) do |icon|
         - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
-        %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "$('html, body').animate({scrollTop: $('#room#{ icon }').offset().top}, 500);", :title => "#{t(:scroll_to_room)} #{ icon }" }
+        %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "scroll_to('#room#{ icon }',10)", :title => "#{t(:scroll_to_room)} #{ icon }" }

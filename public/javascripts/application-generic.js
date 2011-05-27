@@ -245,8 +245,6 @@ function add_option_to_item_from_div(item_designator, value, text)
 }
 
 
-// VISUAL EFFECTS FUNCTIONS THAT MIGHT BE DIFFERENT ON mobile
-
 function articles_onmousedown(element) {
   highlight_border(element);
 }
@@ -283,8 +281,7 @@ function restore_button(element) {
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
-  $('html, body').animate({scrollTop: 0}, 500);
-
+  window.scrollTo(0,0);
   $('#order_sum').value = '0';
 
   $('#order_id').val('add_offline_items_to_order');
@@ -309,6 +306,7 @@ function go_to_order_form_preprocessing(table_id) {
 }
 
 function go_to_tables_offline() {
+  window.scrollTo(0,0);
   $('#orderform').hide();
   $('#invoices').hide();
   $('#tables').show();
@@ -317,7 +315,6 @@ function go_to_tables_offline() {
   $('#functions_header_order_form').hide();
   $('#functions_header_invoice_form').hide();
   $('#functions_footer').hide();
-  $('html, body').animate({scrollTop: 0}, 500);
   $('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
   $('#save_and_go_to_tables').css('border','none');
 }
@@ -337,3 +334,16 @@ window.setInterval(
     tableupdates -= 1;
   }
 , 10000);
+
+function scroll_to(element, speed) {
+  target_y = $(window).scrollTop();
+  current_y = $(element).offset().top;
+  do_scroll(current_y - target_y, speed);
+}
+
+function do_scroll(diff, speed) {
+  window.scrollBy(0,diff/speed);
+  newdiff = (speed-1)*diff/speed;
+  scrollAnimation = setTimeout(function(){ do_scroll(newdiff, speed) }, 20);
+  if(Math.abs(diff) < 1) { clearTimeout(scrollAnimation); }
+}

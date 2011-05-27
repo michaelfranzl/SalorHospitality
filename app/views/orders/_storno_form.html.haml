@@ -1,10 +1,9 @@
 %div.invoice{ :id => "invoice_#{storno_form.id}" }
   - if local_variant?
-    = link_to('', "/orders/print_and_finish/#{ storno_form.id }/0", :class => 'iconbutton print_kitchen_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";', :remote => true)
-    = link_to '', "/orders/print_and_finish/#{ storno_form.id }/1", :remote => true, :class => 'iconbutton print_bar_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
-    = link_to '', "/orders/print_and_finish/#{ storno_form.id }/2", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print), :onmouseup => 'this.style.border = "2px solid black";'
-  - else
-    = link_to '', "/orders/#{ storno_form.id }.bill", :class => 'iconbutton print_guestroom_button', :title => t(:print)
+    - i = 0
+    - @current_company.vendor_printers.each do |p|
+      - i += 1
+      = link_to('', "/orders/print_and_finish/#{ storno_form.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => t(:print), :remote => true)
 
   = form_for storno_form, :as => :order, :url => "/orders/storno/#{storno_form.id}", :html => { :method => :put, :id => 'storno_form' }, :remote => true do |order_form|
     %h3== #{ t(:invoice) } ##{storno_form.nr}, #{ storno_form.table.name }

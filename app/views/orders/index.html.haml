@@ -12,6 +12,6 @@
 #functions_footer{ :style => 'display: none;' }
   %img{ :src => '/images/send.gif', :style => 'display:none;' }
   - if workstation?
-    %a.iconbutton.scrollup_button{ :onclick => '$("html, body").animate({scrollTop: $("container").height()}, 500);', :title => t(:scroll_up) }
+    %a.iconbutton.scrollup_button{ :onclick => 'scroll_to("#container",10);', :title => t(:scroll_up) }
   - else
     = render('functions_footer')
