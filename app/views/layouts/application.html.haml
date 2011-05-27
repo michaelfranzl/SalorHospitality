@@ -10,7 +10,8 @@
     %title Bill Gastro
 
     = stylesheet_link_tag('generic', :media => 'screen')
-    = javascript_include_tag :defaults
+    = javascript_include_tag 'jquery.js'
+    = javascript_include_tag 'rails.js'
     = javascript_include_tag 'jquery-ui.js'
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
@@ -40,6 +41,6 @@
       #main= yield
       #footer
       #copyright
-        %p <a href='http://billgastro.com' target='_blank'>BillGastro 3.1.6</a> &mdash; The innovative Point Of Sale Software for your Restaurant
+        %p <a href='http://billgastro.com' target='_blank'>BillGastro 3.2.0</a> &mdash; The innovative Point Of Sale Software for your Restaurant
         %p== Copyright (C) 2011  <a href='mailto:michael@billgastro.com'>Michael Franzl</a>
         %small This program is free software: you can redistribute it and/or modify it under the terms of the <a href="http://www.gnu.org/licenses/agpl.html" target='_blank'>GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

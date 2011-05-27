@@ -2,7 +2,7 @@
 
 = render 'menu'
 
-- form_tag '/statistics/users' do
+= form_tag '/statistics/users' do
   = render 'date_form'
 
 %table
@@ -11,6 +11,5 @@
     %th{ :style => 'width:100px' }
   - @users.each do |u|
     %tr
-      - disclose = ((@current_user.role > u.role) or (@current_user.login == u.login))
-      %td= disclose ? link_to(u.login, user_path(u)) : u.login
+      %td= link_to u.login, user_path(u)
       %td= number_to_currency Order.sum( 'sum', :conditions => { :user_id => u.id, :created_at => @from..@to })

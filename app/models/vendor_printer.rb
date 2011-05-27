@@ -17,4 +17,5 @@
 class VendorPrinter < ActiveRecord::Base
   belongs_to :company
   has_many :categories
+  default_scope where(:hidden => false)
 end

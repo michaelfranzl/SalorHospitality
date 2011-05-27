@@ -111,11 +111,11 @@ class ApplicationController < ActionController::Base
         "\x1DV\x00" # paper cut at the end of each order/table
         logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
         out = "\e@" # Initialize Printer
-        0.upto(255) { |i|
-          out += i.to_s(16) + ' ' + i.chr
-        }
+        0.upto(255) { |i| out += i.to_s(16) + i.chr }
+
+        sanitize_character_encoding(text)
         print printers, key, text
-        #print printers, key, generate_escpos_test
+        #print printers, key, out
       end
     end
 
@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
 
         # try to open USB or regular file as File
         begin
-          printer = File.open p.path, 'w:ASCII-8BIT'
+          printer = File.open p.path, 'w:ISO-8859-15'
           open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
           logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
           next
@@ -158,7 +158,7 @@ class ApplicationController < ActionController::Base
           end
           next
         rescue Exception => e
-          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ASCII-8BIT')
+          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ISO-8859-15')
           open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
           logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
         end
@@ -171,18 +171,7 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
-
-      text.force_encoding 'ASCII-8BIT'
-      char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'ß', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ']
-      replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\xE1", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4"]
-      i = 0
-      begin
-        rx = Regexp.new(char[i].force_encoding('ASCII-8BIT'))
-        rep = replacement[i].force_encoding('ASCII-8BIT')
-        text.gsub!(rx, rep)
-        i += 2
-      end while i < char.length
-
+      text.force_encoding 'ISO-8859-15'
       open_printers[printer_id][:device].write text
       open_printers[printer_id][:device].flush
     end
@@ -200,9 +189,24 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def sanitize_character_encoding(text)
+      text.encode! 'ISO-8859-15'
+      char = ['ö', 'ä', 'ü', 'Ä', 'Ü', 'Ö', 'ß', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ']
+      replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\xE1", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4"]
+      i = 0
+      begin
+        rx = Regexp.new(char[i].encode('ISO-8859-15'))
+        rep = replacement[i].force_encoding('ISO-8859-15')
+        text.gsub!(rx, rep)
+        i += 1
+      end while i < char.length
+      return text
+    end
+
     def generate_escpos_items(order, printer_id, usage)
       orders = order ? [order] : Order.find_all_by_finished(false)
       overall_output = ''
+      overall_output.encode 'ISO-8859-15'
       orders.each do |o|
         per_order_output = ''
         header =
@@ -244,21 +248,16 @@ class ApplicationController < ActionController::Base
         footer =
         "\n\n\n\n" +
         "\x1B\x70\x00\xFF\x00" + # beep
-        "\x1DV\x00" + # paper cut at the end of each order/table
-        "\x16\x20105"
+        "\x1DV\x00" # paper cut at the end of each order/table
+
+        header.force_encoding 'ISO-8859-15'
+        footer.force_encoding 'ISO-8859-15'
+        per_order_output.encode! 'ISO-8859-15'
 
         overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
       end
 
-      overall_output
-    end
-
-    def generate_escpos_test
-      out = "\e@" # Initialize Printer
-      0.upto(255) { |i|
-        out += i.to_s + i.chr
-      }
-      return out
+      sanitize_character_encoding(text)
     end
 
     def generate_escpos_invoice(order)
@@ -330,6 +329,6 @@ class ApplicationController < ActionController::Base
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
 
-      output
+      sanitize_character_encoding(text)
     end
 end

@@ -7,9 +7,6 @@ gem 'rails', '3.0.6'
 
 gem 'mysql2', '0.2.6'
 gem 'serialport', '1.0.4'
-gem 'jquery-rails', '0.2.7'
-
-gem 'printr'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
