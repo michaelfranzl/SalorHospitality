@@ -125,6 +125,10 @@ es:
         address: Dirección
       role:
         name: Nombre
+      vendor_printer:
+        name: XXXName
+        path: XXXPath
+        hidden: XXXDelete
 
   articles:
     index:

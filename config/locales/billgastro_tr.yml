@@ -125,6 +125,10 @@ tr:
         address: adres
       role:
         name: XXXName
+      vendor_printer:
+        name: XXXName
+        path: XXXPath
+        hidden: XXXDelete
 
   articles:
     index:

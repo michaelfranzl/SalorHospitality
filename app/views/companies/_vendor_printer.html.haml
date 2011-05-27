@@ -3,8 +3,8 @@
   %span= f.label :name, VendorPrinter.human_attribute_name(:name)
   %span= f.text_field :name
 
-  %select#company_printer_kitchen{ :name => "company[vendor_printers_attributes][#{ id }][path]" }
-    = options_for_select BillGastro::Application::DEVICE_NODES, f.object.path
+  %span= f.label :path, VendorPrinter.human_attribute_name(:path)
+  %span= f.text_field :path
 
   - unless f.object.new_record?
     %td= f.label('hidden', VendorPrinter.human_attribute_name(:hidden))

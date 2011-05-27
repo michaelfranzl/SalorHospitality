@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all
   before_filter :fetch_logged_in_user, :select_current_company, :set_locale
-  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :test_printers
+  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?
 
   private
 
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
         "\e!\x38" +  # doube tall, double wide, bold
         "Bill Gastro\r\n#{ value[:name] }\r\n" +
         "\e!\x00" +  # Font A
-        "#{ value[:device].inspect }" +
+        "#{ value[:device].inspect.force_encoding('UTF-8') }" +
         "\n\n\n\n\n\n" +
         "\x1DV\x00" # paper cut at the end of each order/table
         logger.info "[PRINTING]  Testing #{ value[:device].inspect }"

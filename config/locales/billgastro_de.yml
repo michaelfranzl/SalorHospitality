@@ -127,6 +127,10 @@ de:
         address: Adresse
       role:
         name: Name
+      vendor_printer:
+        name: Name
+        path: Pfad
+        hidden: Löschen
 
   articles:
     index:

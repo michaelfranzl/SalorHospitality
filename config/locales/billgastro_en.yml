@@ -125,6 +125,10 @@ en:
         address: Address
       role:
         name: Name
+      vendor_printer:
+        name: Name
+        path: Path
+        hidden: Delete
 
   articles:
     index:
