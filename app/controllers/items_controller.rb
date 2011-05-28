@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
     respond_to do |wants|
       wants.bill {
         items_code = generate_escpos_items
-        pending_invoices = Order.find_all_by_print_pending(true)
+        pending_invoices = Order.find_all_by_print_pending true
         invoices_code = pending_invoices.collect{ |i| generate_escpos_invoice i }.join
         pending_invoices.each { |i| i.update_attribute :print_pending, false }
         render :text => invoices_code + items_code
@@ -110,7 +110,9 @@ class ItemsController < ApplicationController
         Order.transaction do
           split_order = parent_order.clone
           split_order.nr = get_next_unique_and_reused_order_number
-          @current_company.largest_order_number = split_order.nr if split_order.nr > @current_company.largest_order_number
+          if split_order.nr > @current_company.largest_order_number
+            @current_company.update_attribute :largest_order_number, split_order.nr
+          end
           sisr1 = split_order.save
           logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
           raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1

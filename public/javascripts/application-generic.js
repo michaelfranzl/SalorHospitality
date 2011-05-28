@@ -333,7 +333,7 @@ window.setInterval(
     }
     tableupdates -= 1;
   }
-, 10000);
+, 30000);
 
 function scroll_to(element, speed) {
   target_y = $(window).scrollTop();

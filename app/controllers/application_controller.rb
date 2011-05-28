@@ -203,7 +203,7 @@ class ApplicationController < ActionController::Base
       return text
     end
 
-    def generate_escpos_items(order, printer_id, usage)
+    def generate_escpos_items(order=nil, printer_id=nil, usage=nil)
       orders = order ? [order] : Order.find_all_by_finished(false)
       overall_output = ''
       overall_output.encode 'ISO-8859-15'
@@ -225,9 +225,11 @@ class ApplicationController < ActionController::Base
 
           item_usage = i.quantity ? i.quantity.usage : i.article.usage
 
-          next if (i.count <= i.printed_count)          or
+          next if printer_id and
+                  usage and
+                  ((i.count <= i.printed_count)          or
                   (printer_id != i.category.vendor_printer_id) or
-                  (usage != item_usage)
+                  (usage != item_usage))
 
           printed_items_in_this_order += 1
 

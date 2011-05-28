@@ -94,12 +94,15 @@ class OrdersController < ApplicationController
   def print_and_finish
     @order = Order.find params[:id]
 
-    @current_company.largest_order_number = @order.nr if @order.nr > @current_company.largest_order_number
-
-    if not @order.finished and mobile?
-      @order.user = @current_user
-      @order.created_at = Time.now
+    if @order.nr > @current_company.largest_order_number
+      @current_company.update_attribute :largest_order_number, @order.nr 
     end
+
+    @order.created_at = Time.now
+    @order.user = @current_user if mobile?
+    @order.finished = true
+    @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
+    @order.save
 
     if @order.order # unlink any parent relationships of Order and Item
       @order.items.each do |item|
@@ -129,25 +132,14 @@ class OrdersController < ApplicationController
       end
     end
 
-    justfinished = false
-    if not @order.finished
-      @order.finished = true
-      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
-      justfinished = true
-      @order.save
-    end
-
     @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @order.table.update_attribute :user, nil if @orders.empty?
     @cost_centers = CostCenter.find_all_by_active(true)
     @taxes = Tax.all
 
     respond_to do |wants|
-      wants.html { redirect_to order_path @order }
       wants.js {
-        if not justfinished
-          render :nothing => true
-        elsif not @orders.empty?
+        if not @orders.empty?
           render('go_to_invoice_form')
         else
           @tables = Table.all
