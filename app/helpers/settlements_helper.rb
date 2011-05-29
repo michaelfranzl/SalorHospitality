@@ -20,9 +20,7 @@ module SettlementsHelper
     s.orders.each do |o|
       next if @selected_cost_center and o.cost_center != @selected_cost_center
       o.items.each do |i|
-        price = i.real_price
-        price = -price if i.storno_status == 2
-        s_gro[i.real_tax.id] += i.count * price
+        s_gro[i.real_tax.id] += i.count * i.real_price
       end
     end
     

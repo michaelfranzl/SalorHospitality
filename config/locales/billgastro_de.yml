@@ -107,6 +107,8 @@ de:
         title: Anrede
         color: Farbe
         language: Sprache
+        active: aktiv?
+        hidden: löschen?
       company:
         name: Firmenname
         subdomain: Subdomain
@@ -222,9 +224,6 @@ de:
       count: Anzahl
       sum: Summe
       list_of_taxes: Liste der Steuern
-    unsettled:
-      make_settlement: abrechnen
-      order_abbreviation: Best.
     invoice_form:
       split_invoice: Rechnung teilen
     login_form:
@@ -269,6 +268,9 @@ de:
       unit_price: Stück
       total: Gesamt
       revenue: Umsatz
+    open:
+      make_settlement: abrechnen
+      order_abbreviation: Best.
 
   items:
     item_tablerow:

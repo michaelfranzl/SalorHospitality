@@ -62,6 +62,19 @@ class SettlementsController < ApplicationController
       render :new
     end
   end
+
+  def open
+    @users = @current_company.users.active
+    if @current_user.role.permissions.include? 'finish_all_settlements'
+      @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
+    else
+      @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
+    end
+    unsettled_userIDs = @unsettled_orders.collect { |uo| uo.user_id }
+    unsettled_userIDs.uniq!
+    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
+    flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
+  end
   
   private
 

@@ -84,6 +84,8 @@ en:
         height: Height
         width_mobile: Width mobile
         height_mobile: Height mobile
+        enabled: active?
+        hidden: delete?
       category:
         name: Name
         tax_id: Tax
@@ -105,6 +107,8 @@ en:
         title: Title
         color: Color
         language: Language
+        active: active?
+        hidden: delete?
       company:
         name: Name
         subdomain: Subdomain
@@ -220,9 +224,6 @@ en:
       count: Count
       sum: Sum
       list_of_taxes: List of taxes
-    unsettled:
-      make_settlement: Make settlement
-      order_abbreviation: Ord.
     invoice_form:
       split_invoice: Split invoice
     login_form:
@@ -267,6 +268,9 @@ en:
       unit_price: Unit Price
       total: Total
       revenue: Revenue
+    open:
+      make_settlement: Make settlement
+      order_abbreviation: Ord.
 
   items:
     item_tablerow:

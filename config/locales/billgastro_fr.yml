@@ -84,6 +84,8 @@ fr:
         height: Hauteur
         width_mobile: Langeur de l'appareil mobile
         height_mobile: Hauteur de l'appareil mobile
+        enabled: XXXactive?
+        hidden: XXXdelete?
       category:
         name: Nom
         tax_id: Taxe
@@ -105,6 +107,8 @@ fr:
         title: Titre
         color: Couleur
         language: Langue
+        enabled: XXXactive?
+        hidden: XXXdelete?
       company:
         name: Nom
         subdomain: Sous-domaine
@@ -220,9 +224,6 @@ fr:
       count: Quantité
       sum: TOTAL
       list_of_taxes: Liste de taxes
-    unsettled:
-      make_settlement: Annuler item
-      order_abbreviation: Cmde.
     invoice_form:
       split_invoice: Diviser facture
     login_form:
@@ -267,6 +268,9 @@ fr:
       unit_price: Prix unitaire
       total: Total
       revenue: Revenue
+    open:
+      make_settlement: Annuler item
+      order_abbreviation: Cmde.
 
   items:
     item_tablerow:

@@ -59,16 +59,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def unsettled
-    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
-    unsettled_userIDs = Array.new
-    @unsettled_orders.each do |uo|
-      unsettled_userIDs << uo.user_id
-    end
-    unsettled_userIDs.uniq!
-    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
-    flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
-  end
+
 
   def toggle_admin_interface
     if session[:admin_interface]
@@ -251,13 +242,9 @@ class OrdersController < ApplicationController
             i.update_attribute :item_id, nil
           end
         end
-        #puts "XXX #{ parent_order.inspect }"
-        #puts "XXX #{ order.inspect }"
-        # don't exchange the order of the next two instructions
+        # don't change the order of the next two instructions
         order.update_attribute :order_id, nil
         parent_order.update_attribute :order_id, nil
-        #puts "XXX #{ parent_order.inspect }"
-        #puts "XXX #{ order.inspect }"
       end
 
       if target_order

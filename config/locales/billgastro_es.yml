@@ -84,6 +84,8 @@ es:
         height: Altura
         width_mobile: ancho del aparato móvil
         height_mobile: altura del aparato móvil
+        enabled: XXXactive?
+        hidden: XXXdelete?
       category:
         name: Nombre
         tax_id: IVA
@@ -105,6 +107,8 @@ es:
         title: Título
         color: Color
         language: Idioma
+        enabled: XXXactive?
+        hidden: XXXdelete?
       company:
         name: Nombre
         subdomain: Subdominio
@@ -220,9 +224,6 @@ es:
       count: Cantidad
       sum: Total
       list_of_taxes: Lista de impuestos
-    unsettled:
-      make_settlement: Generar balance
-      pedido_abbreviation: Pdo.
     invoice_form:
       split_invoice: Dividir factura
     login_form:
@@ -267,6 +268,9 @@ es:
       unit_price: Precio unitario
       total: Total
       revenue: Ganancia
+    open:
+      make_settlement: Generar balance
+      order_abbreviation: Pdo.
 
   items:
     item_tablerow:

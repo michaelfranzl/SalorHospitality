@@ -35,5 +35,11 @@
       %td
         %select#category_color{ :name => 'user[language]' }
           = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
+    %tr
+      %td= user_form.label('active', User.human_attribute_name(:active))
+      %td= user_form.check_box :active
+    %tr
+      %td= user_form.label('hidden', User.human_attribute_name(:hidden))
+      %td= user_form.check_box :hidden
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

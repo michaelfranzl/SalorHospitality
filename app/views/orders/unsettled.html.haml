@@ -1,9 +1,0 @@
-%h1= t :unsettled_orders_generic_name
-%table#unsettled_orders
-  %tr
-  - @unsettled_users.each do |uu|
-    %td
-      %span.username= uu.login
-      = link_to t('.make_settlement'), "#{user_settlements_path(uu)}/new", :class => 'make_settlement'
-      - Order.find_all_by_user_id(uu.id, :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' ).each do |uo|
-        %p= link_to "#{ t '.order_abbreviation' } ##{uo.nr}", order_path(uo)

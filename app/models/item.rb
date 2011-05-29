@@ -30,10 +30,11 @@ class Item < ActiveRecord::Base
   
   def real_price
     if price.nil?
-      self.quantity ? self.quantity.price : self.article.price
+      p = self.quantity ? self.quantity.price : self.article.price
     else
-      price
+      p = price
     end
+    return self.storno_status == 2 ? -p : p
   end
 
   def optionslist=(optionslist)

@@ -45,9 +45,7 @@
   - Tax.all.each { |t| sum_taxes[t.id] = 0 }
   - subtotal = 0
   - @order.items.each do |item|
-    - p = item.real_price
-    - p = -p if item.storno_status == 2
-    - sum = item.count * p
+    - sum = item.count * item.real_price
     - subtotal += sum
     - sum_taxes[item.real_tax.id] += sum
     %tr

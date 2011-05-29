@@ -38,7 +38,6 @@ BillGastro::Application.routes.draw do
   resources :orders do
     collection do
       get :print
-      get :unsettled
       post :toggle_admin_interface
       post :login
       get :storno
@@ -48,12 +47,17 @@ BillGastro::Application.routes.draw do
     end
   end
 
+  resources :settlements do
+    collection do
+      get :open
+    end
+  end
+
   match 'orders/print_and_finish/:id/:port' => 'orders#print_and_finish'
   match "orders/storno/:id" => "orders#storno"
   match "items/rotate_tax/:id" => "items#rotate_tax"
   match "orders/toggle_tax_colors/:id" => "orders#toggle_tax_colors"
-
- resources :items, :companies, :options, :settlements, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard
+ resources :items, :companies, :options, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard, :users
 
   resources :statistics do
     collection do
@@ -68,10 +72,6 @@ BillGastro::Application.routes.draw do
       get 'articles'
       post 'articles'
     end
-  end
-
-  resources :users do
-    resources :settlements
   end
 
   resources :tables do

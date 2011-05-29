@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110526120520) do
+ActiveRecord::Schema.define(:version => 20110529080952) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -229,6 +229,8 @@ ActiveRecord::Schema.define(:version => 20110526120520) do
     t.string   "color"
     t.string   "language"
     t.integer  "company_id"
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden",     :default => false
   end
 
   create_table "vendor_printers", :force => true do |t|
