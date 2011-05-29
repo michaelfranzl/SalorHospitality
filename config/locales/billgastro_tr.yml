@@ -268,7 +268,7 @@ tr:
       unit_price: Tane
       total: Hepsi
       revenue: Ciro
-    open:
+    settlement:
       make_settlement: XXXMake settlement
       order_abbreviation: XXXOrd.
 

@@ -268,7 +268,7 @@ es:
       unit_price: Precio unitario
       total: Total
       revenue: Ganancia
-    open:
+    settlement:
       make_settlement: Generar balance
       order_abbreviation: Pdo.
 

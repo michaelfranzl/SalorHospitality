@@ -268,7 +268,7 @@ en:
       unit_price: Unit Price
       total: Total
       revenue: Revenue
-    open:
+    settlement:
       make_settlement: Make settlement
       order_abbreviation: Ord.
 

@@ -47,17 +47,18 @@ BillGastro::Application.routes.draw do
     end
   end
 
+  match 'orders/print_and_finish/:id/:port' => 'orders#print_and_finish'
+  match 'orders/storno/:id' => 'orders#storno'
+  match 'items/rotate_tax/:id' => 'items#rotate_tax'
+  match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
+  match 'settlements/detailed_list' => 'settlements#detailed_list'
+ resources :items, :companies, :options, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard, :users
+
   resources :settlements do
     collection do
       get :open
     end
   end
-
-  match 'orders/print_and_finish/:id/:port' => 'orders#print_and_finish'
-  match "orders/storno/:id" => "orders#storno"
-  match "items/rotate_tax/:id" => "items#rotate_tax"
-  match "orders/toggle_tax_colors/:id" => "orders#toggle_tax_colors"
- resources :items, :companies, :options, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard, :users
 
   resources :statistics do
     collection do

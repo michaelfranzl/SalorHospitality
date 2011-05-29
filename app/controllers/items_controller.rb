@@ -65,7 +65,7 @@ class ItemsController < ApplicationController
     @order = item.order
   end
 
-  # We'll use destroy for storno of items
+  # We'll use this method for storno of items only, we're not going to destroy them really
   # storno_status: 2 = storno clone, 3 = storno original
   #
   def destroy
@@ -84,6 +84,7 @@ class ItemsController < ApplicationController
     end   
     i.save
     @order = i.order
+    @order.update_attribute :sum, calculate_order_sum(@order)
     render 'edit'
   end
 

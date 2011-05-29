@@ -268,8 +268,9 @@ de:
       unit_price: Stück
       total: Gesamt
       revenue: Umsatz
-    open:
-      make_settlement: abrechnen
+    settlement:
+      start: Starten
+      finish: Abschließen
       order_abbreviation: Best.
 
   items:

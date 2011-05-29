@@ -1,0 +1,5 @@
+- if @settlement
+  %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.id }
+- else
+  %h2== #{ t('activerecord.models.settlement.one') } #{ @user.login }
+= render :partial => 'detailed_list', :locals => { :orders => @orders }

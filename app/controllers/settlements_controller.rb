@@ -23,11 +23,19 @@ class SettlementsController < ApplicationController
     @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
 
-  def show
-    @settlement = Settlement.find params[:id]
+  def detailed_list
+    if params[:settlement_id]
+      @settlement = Settlement.find_by_id params[:settlement_id]
+      @orders = @settlement.orders # :order => 'created_at DESC')
+    elsif params[:user_id]
+      @user = User.find_by_id params[:user_id]
+      @orders = Order.find_all_by_user_id(params[:user_id], :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' )
+    else
+      render :nothing => true
+      return
+    end
     params[:cost_center_id] ||= CostCenter.first.id if CostCenter.first
     @selected_cost_center = CostCenter.find(params[:cost_center_id]) if CostCenter.first
-    @orders = Order.find(:all, :conditions => { :settlement_id => @settlement.id }, :order => 'created_at DESC')
   end
 
   def new
@@ -37,6 +45,7 @@ class SettlementsController < ApplicationController
   end
 
   def edit
+    # should never happen
     @settlement = Settlement.find params[:id]
     @orders = Order.find_all_by_settlement_id @settlement.id
   end
@@ -44,6 +53,10 @@ class SettlementsController < ApplicationController
   def update
     @settlement = Settlement.find params[:id]
     @settlement.update_attributes params[:settlement]
+    @settlement.update_attribute :finished, true
+    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
+    @orders.each { |o| o.update_attribute :settlement_id, @settlement.id }
+    @settlement = Settlement.new :user_id => @settlement.user_id
     respond_to do |wants|
       wants.js
     end
@@ -51,12 +64,6 @@ class SettlementsController < ApplicationController
 
   def create
     @settlement = Settlement.create params[:settlement]
-    
-    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
-    @orders.each { |so| so.update_attribute :settlement_id, @settlement.id }
-
-    @settlement.update_attribute :finished => true
-
     respond_to do |wants|
       wants.js
     end
