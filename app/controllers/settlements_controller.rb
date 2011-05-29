@@ -42,38 +42,28 @@ class SettlementsController < ApplicationController
   end
 
   def update
-    @settlement = Settlement.find(params[:id])
-    @settlement.update_attributes(params[:settlement])
-    redirect_to settlements_path
+    @settlement = Settlement.find params[:id]
+    @settlement.update_attributes params[:settlement]
+    respond_to do |wants|
+      wants.js
+    end
   end
 
   def create
-    @settlement = Settlement.new(params[:settlement])
+    @settlement = Settlement.create params[:settlement]
     
-    @settlement.user_id = params[:user_id]
     @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
-    if @settlement.save
-      @orders.each do |so|
-        so.settlement_id = @settlement.id
-        so.save
-      end
-      redirect_to '/orders/unsettled'
-    else
-      render :new
+    @orders.each { |so| so.update_attribute :settlement_id, @settlement.id }
+
+    @settlement.update_attribute :finished => true
+
+    respond_to do |wants|
+      wants.js
     end
   end
 
   def open
     @users = @current_company.users.active
-    if @current_user.role.permissions.include? 'finish_all_settlements'
-      @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true })
-    else
-      @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
-    end
-    unsettled_userIDs = @unsettled_orders.collect { |uo| uo.user_id }
-    unsettled_userIDs.uniq!
-    @unsettled_users = User.find(:all, :conditions => { :id => unsettled_userIDs })
-    flash[:notice] = t(:there_are_no_open_settlements) if @unsettled_users.empty?
   end
   
   private

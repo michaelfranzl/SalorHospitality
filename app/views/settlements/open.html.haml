@@ -1,7 +1,9 @@
-%h1= t :unsettled_orders_generic_name
+%script== $.datepicker.setDefaults({#{ raw generate_default_calendar_options.join(", ") }});
+
+
+%h1= t('activerecord.models.settlement.other')
 - @users.each do |u|
-  - unsettled_orders = Order.find_all_by_user_id(u.id, :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' )
   %div.unsettled_orders{ :id => "user_#{ u.id }" }
-    %p.username= u.login
-    %p.revenue= number_to_currency unsettled_orders.sum(&:sum)
-    = #link_to t('.make_settlement'), new_user_settlement_path(u), :class => 'make_settlement'
+    - settlement = Settlement.find(:all, :conditions => { :finished => nil, :user_id => u.id }).last
+    - settlement = Settlement.new( :user_id => u.id ) if settlement.nil?
+    = render :partial => settlement

@@ -1,0 +1,18 @@
+- orders = Order.find_all_by_user_id(settlement.user.id, :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' )
+- sum = orders.sum(&:sum)
+
+= form_for settlement, :remote => true do |settlement_form|
+  %p.username== #{ settlement.user.login }
+  - if orders.size > 0
+    = settlement_form.text_field :initial_cash
+    = settlement_form.hidden_field :user_id, :value => settlement.user.id
+    %p.revenue== #{ orders.size } #{ t('activerecord.models.order.other') }:<br>#{ number_to_currency sum }
+    = settlement_form.text_field :revenue
+    = settlement_form.text_field :created_at, :class => 'datepicker'
+
+
+    %p Print
+    %p Details
+    = settlement_form.submit
+
+%script $('.datepicker').each(function() { $(this).datepicker(); });
