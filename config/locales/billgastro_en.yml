@@ -133,6 +133,9 @@ en:
         name: Name
         path: Path
         hidden: Delete
+      settlement:
+        initial_cash: Initial amount
+        revenue: End amount
 
   articles:
     index:
@@ -269,8 +272,9 @@ en:
       total: Total
       revenue: Revenue
     settlement:
-      make_settlement: Make settlement
-      order_abbreviation: Ord.
+      start: Start
+      finish: Finish
+      print: Print
 
   items:
     item_tablerow:

@@ -133,6 +133,9 @@ es:
         name: XXXName
         path: XXXPath
         hidden: XXXDelete
+      settlement:
+        initial_cash: XXXInitial amount
+        revenue: End XXXamount
 
   articles:
     index:
@@ -269,8 +272,9 @@ es:
       total: Total
       revenue: Ganancia
     settlement:
-      make_settlement: Generar balance
-      order_abbreviation: Pdo.
+      start: XXXStart
+      finish: XXXFinish
+      print: XXXPrint
 
   items:
     item_tablerow:

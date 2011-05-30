@@ -133,6 +133,9 @@ fr:
         name: XXXName
         path: XXXPath
         hidden: XXXDelete
+      settlement:
+        initial_cash: XXXInitial amount
+        revenue: XXXEnd amount
 
   articles:
     index:
@@ -269,8 +272,9 @@ fr:
       total: Total
       revenue: Revenue
     settlement:
-      make_settlement: Annuler item
-      order_abbreviation: Cmde.
+      start: XXXStart
+      finish: XXXFinish
+      print: XXXPrint
 
   items:
     item_tablerow:

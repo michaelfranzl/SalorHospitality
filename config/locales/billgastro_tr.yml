@@ -133,6 +133,9 @@ tr:
         name: XXXName
         path: XXXPath
         hidden: XXXDelete
+      settlement:
+        initial_cash: XXXInitial amount
+        revenue: XXXEnd amount
 
   articles:
     index:
@@ -269,8 +272,9 @@ tr:
       total: Hepsi
       revenue: Ciro
     settlement:
-      make_settlement: XXXMake settlement
-      order_abbreviation: XXXOrd.
+      start: XXXStart
+      finish: XXXFinish
+      print: XXXPrint
 
   items:
     item_tablerow:

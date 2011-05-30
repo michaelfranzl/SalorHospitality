@@ -35,6 +35,8 @@
     - s_gro = {}
     - Tax.all.each { |t| s_gro[t.id] = 0 }
     - s_gro, total_net, total_gro = calculate_sums(s, s_net, s_gro, total_net, total_gro)
+
+    - next if s_gro.to_a.sum { |g| g[1] } == 0
       
     %tr
       %td= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
