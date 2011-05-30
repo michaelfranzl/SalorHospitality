@@ -133,6 +133,9 @@ de:
         name: Name
         path: Pfad
         hidden: Löschen
+      settlement:
+        initial_cash: Startbetrag
+        revenue: Endbetrag
 
   articles:
     index:
@@ -271,6 +274,7 @@ de:
     settlement:
       start: Starten
       finish: Abschließen
+      print: Drucken
       order_abbreviation: Best.
 
   items:

@@ -115,7 +115,7 @@ class OrdersController < ApplicationController
         printer_id = selected_printer.id if selected_printer
         all_printers = initialize_printers
         text = generate_escpos_invoice(@order)
-        print(all_printers, printer_id, text)
+        do_print(all_printers, printer_id, text)
         close_printers(all_printers)
       else
         # print later

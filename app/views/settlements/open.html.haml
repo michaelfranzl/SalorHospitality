@@ -4,5 +4,3 @@
     - settlement = Settlement.find(:all, :conditions => { :finished => nil, :user_id => u.id }).last
     - settlement = Settlement.new( :user_id => u.id ) if settlement.nil?
     = render :partial => settlement
-
-%script== $.datepicker.setDefaults({#{ raw generate_default_calendar_options.join(", ") }});

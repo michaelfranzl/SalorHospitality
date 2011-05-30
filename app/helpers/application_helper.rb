@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ApplicationHelper
-
+  #%script== $.datepicker.setDefaults({#{ raw generate_default_calendar_options.join(", ") }});
   def generate_html(form_builder, method, options = {})
     options[:object] ||= form_builder.object.class.reflect_on_association(method).klass.new
     options[:partial] ||= method.to_s.singularize

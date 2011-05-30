@@ -3,9 +3,8 @@
 
 %img#logo{ :src => "/images/logo-small.png" }
 
-- perms = @current_user.role.permissions
-
 - if logged_in?
+  - perms = @current_user.role.permissions
   #admin{ :style => "display: visible;" }
     .adminlinks
       = link_to( t('activerecord.models.order.other'), '/orders')

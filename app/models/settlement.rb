@@ -18,8 +18,12 @@ class Settlement < ActiveRecord::Base
   belongs_to :user
   has_many :orders
 
-  def price=(price)
-    write_attribute(:revenue, price.gsub(',', '.'))
+  def revenue=(revenue)
+    write_attribute(:revenue, revenue.gsub(',', '.'))
+  end
+
+  def initial_cash=(initial_cash)
+    write_attribute(:initial_cash, initial_cash.gsub(',', '.'))
   end
 
 end

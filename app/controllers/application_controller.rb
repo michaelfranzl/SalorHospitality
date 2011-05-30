@@ -114,8 +114,8 @@ class ApplicationController < ActionController::Base
         0.upto(255) { |i| out += i.to_s(16) + i.chr }
 
         sanitize_character_encoding(text)
-        print printers, key, text
-        #print printers, key, out
+        do_print printers, key, text
+        #do_print printers, key, out
       end
     end
 
@@ -166,10 +166,11 @@ class ApplicationController < ActionController::Base
       return open_printers
     end
 
-    def print(open_printers, printer_id, text)
+    def do_print(open_printers, printer_id, text)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
+      raise 'Mismatch between open_printers and printer_id' if printer.nil?
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
       text.force_encoding 'ISO-8859-15'
       open_printers[printer_id][:device].write text

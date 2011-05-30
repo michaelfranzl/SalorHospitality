@@ -52,6 +52,7 @@ BillGastro::Application.routes.draw do
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/detailed_list' => 'settlements#detailed_list'
+  match 'settlements/print/:id' => 'settlements#print'
  resources :items, :companies, :options, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard, :users
 
   resources :settlements do

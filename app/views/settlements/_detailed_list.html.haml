@@ -6,7 +6,8 @@
     %th{ :style => 'width:50px' }= t '.total'
     %th{ :style => 'width:80px' }= t '.revenue'
   - total = 0
-  - orders.each do |so|
+  - @orders.each do |so|
+    - next if @selected_cost_center and o.cost_center != @selected_cost_center
     %tr
     %tr
       %td.order_begin{ :colspan => 6 }

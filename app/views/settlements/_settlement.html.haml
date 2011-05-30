@@ -2,22 +2,31 @@
 - sum = orders.sum(&:sum)
 
 = form_for settlement, :remote => true, :html => { :id => "form_user_#{ settlement.user.id }" } do |settlement_form|
-  %p.username== #{ settlement.user.login }
+  - if settlement.new_record?
+    %p.username== #{ settlement.user.login }
+  - else
+    %p.username== #{ settlement.user.login } (#{ t('activerecord.models.settlement.one') } ##{ settlement.id })
 
   = settlement_form.label :initial_cash, Settlement.human_attribute_name(:initial_cash)
   = settlement_form.text_field :initial_cash
 
   - if not orders.empty?
-    %p.username= link_to "#{ orders.size } #{ t('activerecord.models.order', :count => orders.size) }", "/settlements/detailed_list?user_id=#{settlement.user.id}"
+    %p.orders= link_to "#{ orders.size } #{ t('activerecord.models.order', :count => orders.size) }", "/settlements/detailed_list?user_id=#{settlement.user.id}"
     %p.revenue= number_to_currency sum
 
   %div{ :id => "finish_#{ settlement.user.id }", :style => "#{ 'display: none' if settlement.new_record? }" }
     %p
       = settlement_form.label :revenue, Settlement.human_attribute_name(:revenue)
       = settlement_form.text_field :revenue
-    %p
-      = settlement_form.label :created_at, Settlement.human_attribute_name(:created_at)
-      = settlement_form.text_field :created_at, :class => 'datepicker', :id => "settlement_created_at_#{ settlement.user.id }"
     = settlement_form.hidden_field :user_id, :value => settlement.user.id
+    %input{ :type => 'hidden', :id => "finished_#{ settlement.user.id }", :name => 'settlement[finished]' }
+    %input{ :type => 'hidden', :id => "port_#{ settlement.user.id }", :name => 'port', :value => @current_company.vendor_printers.first.id }
+    %input{ :type => 'hidden', :id => "print_#{ settlement.user.id }", :name => 'print' }
 
-  %p= settlement_form.submit (settlement.new_record? ? t('.start') : t('.finish')), :class => 'submitbutton'
+
+  - if settlement.new_record?
+    %p= settlement_form.submit t('.start'), :class => 'submitbutton'
+  - else
+    %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1)"
+  - if orders.size > 0 and not settlement.new_record?
+    %p= settlement_form.submit t('.print'), :class => 'submitbutton', :onclick => "$('#print_#{ settlement.user.id }').val(1)"
