@@ -1,4 +1,3 @@
-%script= render :partial => 'translations.js'
 %h2= t('activerecord.models.order.other')
 
 #rooms= render 'rooms'
@@ -15,3 +14,11 @@
     %a.iconbutton.scrollup_button{ :onclick => 'scroll_to("#container",10);', :title => t(:scroll_up) }
   - else
     = render('functions_footer')
+
+:javascript
+  var i18n_server_no_response = '#{ escape_javascript t :server_no_response }';
+  var i18n_just_order         = '#{ escape_javascript t :just_order }';
+  var i18n_enter_price        = '#{ escape_javascript t :please_enter_item_price }';
+  var i18n_enter_comment      = '#{ escape_javascript t :please_enter_item_comment }>';
+  var i18n_no_printing        = '#{ escape_javascript t :no_printing }';
+  var permission_immediate_storno = #{ @current_user.role.permissions.include?("make_immediate_storno") ? "true" : "false" };

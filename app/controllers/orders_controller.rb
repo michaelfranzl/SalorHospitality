@@ -196,8 +196,8 @@ class OrdersController < ApplicationController
       printers.each do |id, params|
         normal   = generate_escpos_items @order, id, 0
         takeaway = generate_escpos_items @order, id, 1
-        print printers, id, normal
-        print printers, id, takeaway
+        do_print printers, id, normal
+        do_print printers, id, takeaway
       end
       close_printers printers
     end
@@ -220,7 +220,13 @@ class OrdersController < ApplicationController
 
   def last_invoices
     @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
-    @sum = @unsettled_orders.sum(&:sum)
+    if @current_user.role.permissions.include? 'finish_all_settlements'
+      @users = @current_company.users
+    elsif @current_user.role.permissions.include? 'finish_own_settlement'
+      @users = [@current_user]
+    else
+      @users = []
+    end
   end
 
   private

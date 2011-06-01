@@ -275,6 +275,7 @@ fr:
       start: XXXStart
       finish: XXXFinish
       print: XXXPrint
+      started_at: XXXStarted at
 
   items:
     item_tablerow:
@@ -328,6 +329,7 @@ fr:
       split_items: Diviser items
       move_tables: Changer tables
       make_storno: Annuler item
+      make_immediate_storno: XXXCancel items immediately
       assign_cost_center: Assigner centre de coûts
       move_order: Déplacer commande
       change_waiter: Changer de serveur
@@ -352,7 +354,7 @@ fr:
   blackboard_generic_name: Tableau
   waiterpad_generic_name: Calepin de commandes
   menucard_generic_name: Carte
-  unsettled_orders_generic_name: Commandes sans bilan
+  unsettled_orders_generic_name: XXXShifts
 
   print_kitchenlist: Imprimer liste items cuisine
   recent_orders: Voir commandes récentes

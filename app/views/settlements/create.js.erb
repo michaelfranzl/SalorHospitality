@@ -1,2 +1,2 @@
-$('#user_<%= @settlement.user.id %>').html('<%= escape_javascript render :partial => @settlement %>');
+$('#user_<%= @settlement.user.id %>').replaceWith('<%= escape_javascript render(:partial => 'settlement', :locals => { :u => @settlement.user }) %>');
 $('#user_<%= @settlement.user.id %>').effect("highlight", {}, 1000);

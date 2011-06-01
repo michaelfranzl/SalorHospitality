@@ -275,6 +275,7 @@ es:
       start: XXXStart
       finish: XXXFinish
       print: XXXPrint
+      started_at: XXXStarted at
 
   items:
     item_tablerow:
@@ -328,6 +329,7 @@ es:
       split_items: Separar artículos
       move_tables: Mover mesas
       make_storno: Anular item
+      make_immediate_storno: XXXCancel items immediately
       assign_cost_center: Designar centro de coste
       move_order: Mover pedido
       change_waiter: Cambiar mozo
@@ -352,7 +354,7 @@ es:
   blackboard_generic_name: Pizarra
   waiterpad_generic_name: Libreta de pedidos
   menucard_generic_name: carta
-  unsettled_orders_generic_name: Pedidos sin balance
+  unsettled_orders_generic_name: XXXShifts
 
   print_kitchenlist: Imprimir lista de items cocina
   recent_orders: Ver pedidos recientes

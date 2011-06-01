@@ -275,6 +275,7 @@ tr:
       start: XXXStart
       finish: XXXFinish
       print: XXXPrint
+      started_at: XXXStarted at
 
   items:
     item_tablerow:
@@ -328,6 +329,7 @@ tr:
       split_items: XXXSplit items
       move_tables: XXXMove tables
       make_storno: XXXMake storno
+      make_immediate_storno: XXXCancel items immediately
       assign_cost_center: XXXAssign cost center
       move_order: XXXMove order
       change_waiter: XXXChange waiter
@@ -352,7 +354,7 @@ tr:
   blackboard_generic_name: Menü tahtasi
   waiterpad_generic_name: Siparis listesi
   menucard_generic_name: Menü karti
-  unsettled_orders_generic_name: Acik hesaplar
+  unsettled_orders_generic_name: XXXShifts
 
   print_kitchenlist: Mutfak listesi basmak
   recent_orders: Hesaplari bak

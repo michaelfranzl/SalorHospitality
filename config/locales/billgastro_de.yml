@@ -275,6 +275,7 @@ de:
       start: Starten
       finish: Abschließen
       print: Drucken
+      started_at: Gestartet am
 
   items:
     item_tablerow:
@@ -328,6 +329,7 @@ de:
       split_items: Rechnung splitten
       move_tables: Tische verschieben
       make_storno: Artikel stornieren
+      make_immediate_storno: Artikel sofort stornieren
       assign_cost_center: Kostenstelle zuweisen
       move_order: Bestellung verschieben
       change_waiter: Bestellungen anderen Kellner zuweisen
@@ -352,7 +354,7 @@ de:
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
   menucard_generic_name: Speisekarte
-  unsettled_orders_generic_name: Offene Abrechnungen
+  unsettled_orders_generic_name: Schichten
 
   print_kitchenlist: Küchenliste drucken
   recent_orders: Kürzliche Rechnugen ansehen

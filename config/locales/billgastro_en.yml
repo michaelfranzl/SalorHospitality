@@ -275,6 +275,7 @@ en:
       start: Start
       finish: Finish
       print: Print
+      started_at: Started at
 
   items:
     item_tablerow:
@@ -327,7 +328,8 @@ en:
       finish_orders: Finish orders
       split_items: Split items
       move_tables: Move tables
-      make_storno: Make storno
+      make_storno: Cancel items
+      make_immediate_storno: Cancel items immediately
       assign_cost_center: Assign cost center
       move_order: Move order
       change_waiter: Change waiter
@@ -352,7 +354,7 @@ en:
   blackboard_generic_name: Blackboard
   waiterpad_generic_name: Waiterpad
   menucard_generic_name: Menucard
-  unsettled_orders_generic_name: Unsettled orders
+  unsettled_orders_generic_name: Shifts
 
   print_kitchenlist: Print Kitchen Item List
   recent_orders: View recent orders

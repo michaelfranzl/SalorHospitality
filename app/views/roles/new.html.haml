@@ -44,6 +44,11 @@
         %input#permissions_make_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_storno', :checked => role_form.object.permissions.include?('make_storno') }
     %tr
       %td
+        %label{ :for => 'permissions_make_immediate_storno' }= t '.make_immediate_storno'
+      %td
+        %input#permissions_make_immediate_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_immediate_storno', :checked => role_form.object.permissions.include?('make_immediate_storno') }
+    %tr
+      %td
         %label{ :for => 'permissions_assign_cost_center' }= t '.assign_cost_center'
       %td
         %input#permissions_assign_cost_center{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_cost_center', :checked => role_form.object.permissions.include?('assign_cost_center') }
