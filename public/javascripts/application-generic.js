@@ -145,7 +145,7 @@ function increment_item(desig) {
 
 function decrement_item(desig) {
   var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
-  if (i > 0) {
+  if (i > 1) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
@@ -342,6 +342,10 @@ function scroll_to(element, speed) {
   target_y = $(window).scrollTop();
   current_y = $(element).offset().top;
   do_scroll(current_y - target_y, speed);
+}
+
+function scroll_for(distance, speed) {
+  do_scroll(distance, speed);
 }
 
 function do_scroll(diff, speed) {

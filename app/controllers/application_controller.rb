@@ -299,7 +299,6 @@ class ApplicationController < ActionController::Base
       order.items.each do |item|
         next if item.count == 0
         p = item.real_price
-        p = -p if item.storno_status == 2
         sum = item.count * p
         subtotal += sum
         sum_taxes[item.real_tax.id] += sum

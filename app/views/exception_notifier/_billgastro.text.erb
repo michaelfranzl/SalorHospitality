@@ -1,0 +1,5 @@
+BillGastro Version <%= File.open('VERSION', 'r').read %>
+
+<%= @current_company.name if @current_company %>
+
+<%= @current_user.login if @current_user %>

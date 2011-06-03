@@ -85,27 +85,16 @@ class OrdersController < ApplicationController
   def print_and_finish
     @order = Order.find params[:id]
 
-    if @order.nr > @current_company.largest_order_number
-      @current_company.update_attribute :largest_order_number, @order.nr 
-    end
-
-    @order.created_at = Time.now
-    @order.user = @current_user if mobile?
-    @order.finished = true
-    @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
-    @order.save
-
-    if @order.order # unlink any parent relationships of Order and Item
-      @order.items.each do |item|
-        item.item.update_attribute( :item_id, nil ) if item.item
-        item.update_attribute( :item_id, nil )
+    if not @order.finished
+      if @order.nr > @current_company.largest_order_number
+        @current_company.update_attribute :largest_order_number, @order.nr 
       end
-      @order.order.items.each do |item|
-        item.item.update_attribute( :item_id, nil ) if item.item
-        item.update_attribute( :item_id, nil )
-      end
-      @order.order.update_attribute( :order_id, nil )
-      @order.update_attribute( :order_id, nil )
+      @order.created_at = Time.now
+      @order.user = @current_user if mobile?
+      @order.finished = true
+      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
+      @order.save
+      unlink_orders(@order)
     end
 
     if params[:port].to_i != 0
@@ -137,6 +126,7 @@ class OrdersController < ApplicationController
           render('go_to_tables')
         end
       }
+      wants.html { redirect_to @order }
     end
   end
 

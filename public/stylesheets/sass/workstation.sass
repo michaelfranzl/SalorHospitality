@@ -82,7 +82,7 @@ div#admin
   
 div#functions
   :float right
-  :width 4%
+  :width 30px
   :margin-right 8px
   a, div
     :cursor pointer
@@ -123,7 +123,7 @@ div.errors
   :color red
       
 div.adminlinks
-  :padding 10px
+  :padding 10px 50px 10px 10px
   :background-color #0E1D25
   form, div
     :display inline
@@ -322,6 +322,12 @@ a#go_back img
 
 div.invoice
   :display inline-block
+  :text-align left
+  :width 340px
+  :letter-spacing -1px
+
+div#invoices
+  :text-align center
   
 select#cost_center_for_invoice
   :vertical-align middle
@@ -479,7 +485,7 @@ form.new_company
 div#company_data
   :vertical-align top
   :display inline-block
-  :width 500px
+  :width 450px
 
 div#company_printers
   :vertical-align top
@@ -733,7 +739,7 @@ input#order_sum
   :color white
   :border none
   :font-size 122%
-  :width 50%
+  :width 70%
   :text-align right
   
 div.ordersum_container
@@ -777,7 +783,11 @@ div.unsettled_orders
 img.more
   :float right
   :margin-top 2px
-  
+
+input#customer_data_1,
+input#customer_data_2,
+input#customer_data_3
+  :width 400px
   
 table.printed_invoice
   :border 2px solid #7e868a
@@ -881,5 +891,16 @@ span.display_keyboard
   :background-image url(/images/keyboard.png)
   :background-repeat no-repeat
   :background-position 7px 7px
+
+
+a.scrolldown_button
+  :position fixed
+  :right 22px
+  :top 0px
+
+a.scrollup_button
+  :position fixed
+  :right 22px
+  :bottom 0px
 
 

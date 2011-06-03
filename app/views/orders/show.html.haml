@@ -4,11 +4,12 @@
 
 %div#buttons
   - if local_variant?
-    %a.iconbutton.print_kitchen_button{ :href => "/orders/print_and_finish/#{ @order.id }/0", :title => t(:print)}
-    %a.iconbutton.print_bar_button{ :href => "/orders/print_and_finish/#{ @order.id }/1", :title => t(:print)}
-    %a.iconbutton.print_guestroom_button{ :href => "/orders/print_and_finish/#{ @order.id }/2", :title => t(:print)}
+    - i = 0
+    - @current_company.vendor_printers.each do |p|
+      - i += 1
+      = link_to('', "/orders/print_and_finish/#{ @order.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }", :remote => true)
   - else
-    %a.iconbutton.print_guestroom_button{ :href => "/orders/#{ @order.id }.bill", :title => t(:print)}
+    = link_to '', "/orders/print_and_finish/#{ order_form.id }/1", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
   = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton storno_button', :title => t(:storno)
