@@ -2,6 +2,9 @@
 
 . /usr/share/debconf/confmodule
 
+export RAILS_ENV=production
+export PATH=$PATH:/opt/billgastro/bin
+
 case $1 in
   upgrade)
     # do something
@@ -17,7 +20,7 @@ case $1 in
     db_get billgastro/enter_database
     database=$RET
     echo "Backing up database."
-    rake db:dump
+    rake-billgastro db:dump
     echo "Deleting BillGastro database $database ..."
     mysql -u $username -p$password -Bse "drop database $database"
     db_purge

@@ -2,6 +2,9 @@
 
 . /usr/share/debconf/confmodule
 
+export RAILS_ENV=production
+export PATH=$PATH:/opt/billgastro/bin
+
 case $1 in
   remove)
     #do something
@@ -11,7 +14,7 @@ case $1 in
     db_go
     cd /var/www/billgastro
     export RAILS_ENV=production
-    rake db:dump
+    rake-billgastro db:dump
   ;;
   *)
     echo "prerm called with unknown argument '$1'" 1>&2
