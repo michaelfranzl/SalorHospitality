@@ -21,5 +21,5 @@ class User < ActiveRecord::Base
   belongs_to :role
   validates_presence_of :login, :password, :title
   scope :active, where(:active => true)
-  default_scope where(:hidden => false)
+  scope :available, where(:hidden => false)
 end
