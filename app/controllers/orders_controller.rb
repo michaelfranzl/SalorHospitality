@@ -162,7 +162,13 @@ class OrdersController < ApplicationController
 
     if @order
       # similar to orders#update
-      @order.update_attributes params[:order]
+      begin
+        @order.update_attributes params[:order]
+      rescue
+        logger.info "Trying to prevent FROZEN HASH error"
+        sleep 1
+        @order.update_attributes params[:order]
+      end
     else
       # similar to orders#create
       @order = Order.new params[:order]
@@ -231,46 +237,29 @@ class OrdersController < ApplicationController
 
   private
 
-    def move_order_to_table(order, target_table_id)
-      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
-
-      # unlink in case it was an splitted Item/Order
+    def unlink_orders(order)
       parent_order = order.order
+      order.items.each { |i| i.update_attribute :item_id, nil }
+      order.update_attribute :order_id, nil
+      order.reload # unlink also in memory
       if parent_order
-        Item.transaction do
-          parent_order.items.each do |i|
-            i.update_attribute :item_id, nil
-          end
-        end
-
-        Item.transaction do
-          order.items.each do |i|
-            i.update_attribute :item_id, nil
-          end
-        end
-        # don't change the order of the next two instructions
-        order.update_attribute :order_id, nil
+        parent_order.items.each { |i| i.update_attribute :item_id, nil }
         parent_order.update_attribute :order_id, nil
       end
+    end
+
+    def move_order_to_table(order, target_table_id)
+      unlink_orders(order)
+      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
 
       if target_order
-        # merge orders
-        Item.transaction do
-          order.items.each do |i|
-            i.update_attribute :order, target_order
-          end
-        end
-
-        target_order.reload
+        order.items.each { |i| i.update_attribute :order, target_order }
+        order.reload # unlink items also in memory
+        order.destroy
         target_order.sum = calculate_order_sum(target_order)
-        target_order.order_id = nil
         target_order.save
         group_identical_items(target_order)
-
-        order.reload # important before destroying, otherwise rails deletes all no longer associated items because of has_many :items, :dependent => :destroy
-        order.destroy
       else
-        # just move whole order to empty table
         order.update_attribute :table_id, target_table_id
       end
 

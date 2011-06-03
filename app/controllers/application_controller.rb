@@ -221,7 +221,14 @@ class ApplicationController < ActionController::Base
 
         printed_items_in_this_order = 0
         o.items.each do |i|
-          i.update_attribute :printed_count, i.count if i.count < i.printed_count
+          begin
+            i.update_attribute :printed_count, i.count if i.count < i.printed_count
+          rescue
+            logger.info "Trying to prevent FROZEN HASH error"
+            sleep 1
+            i.update_attribute :printed_count, i.count if i.count < i.printed_count
+          end
+
           next if i.count == i.printed_count or i.count == 0
 
           item_usage = i.quantity ? i.quantity.usage : i.article.usage
