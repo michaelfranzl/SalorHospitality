@@ -59,7 +59,7 @@ chown -R www-data:www-data /opt/billgastro/billgastro
 chmod -R 755 /opt/billgastro/billgastro
 
 echo "Modifying /etc/hosts ..."
-result=`cat /etc/hosts | grep -c 'billgastro'`
+result=`cat /etc/hosts | grep -c 'localhost billgastro'`
 if [ $result -eq 0 ]; then
   echo "127.0.0.1 localhost billgastro" >> /etc/hosts;
 fi

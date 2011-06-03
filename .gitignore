@@ -19,4 +19,5 @@ config/packages/publish/debian/pool
 *.deb
 .bundle
 tmp/sass-cache
+tmp/pids
 vendor/bundle

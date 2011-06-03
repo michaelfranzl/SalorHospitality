@@ -13,9 +13,6 @@ companies_001:
   invoice_slogan2: Visit our website
   internet_address: www.billgastro.com
   email: office@billgastro.com
-  printer_kitchen: /dev/usblp0
-  printer_bar: /dev/ttyUSB0
-  printer_guestroom: /dev/usblp0
   automatic_printing: 0
   largest_order_number: 113
   unused_order_numbers: |+
