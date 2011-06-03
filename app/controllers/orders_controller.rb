@@ -176,22 +176,23 @@ class OrdersController < ApplicationController
       @order.credit = Order.last ? Order.last.credit - 1 : BillGastro::Application::INITIAL_CREDITS
       @order.cost_center = @cost_centers.first
     end
+
     @order.sum = calculate_order_sum @order
     @order.table.update_attribute :user, @order.user
     @order.save
+    @order.reload
 
     if @order.nr > @current_company.largest_order_number
       @current_company.update_attribute :largest_order_number, @order.nr 
     end
 
-    @tables = Table.all
-
     if @order.items.size.zero?
       @current_company.unused_order_numbers << @order.nr
       @current_company.save
       @order.delete
-      @order.table.update_attribute :user, nil
-      render('go_to_tables') and return
+      @order.table.update_attribute :user_id, nil
+      @tables = Table.all
+      render 'go_to_tables' and return
     end
 
     group_identical_items @order
@@ -209,6 +210,7 @@ class OrdersController < ApplicationController
     end
 
     @taxes = Tax.all
+    @tables = Table.all
 
     case params[:order_action]
       when 'save_and_go_to_tables'
