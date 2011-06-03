@@ -9,6 +9,7 @@ rm -rf publish/debian/dists
 rm -rf publish/debian/pool
 
 echo "Copy compiled Ruby and essential Gems"
+rm -rf billgastro-bin/opt
 cp -r ~/Public/opt billgastro-bin
 
 echo "Copy BillGastro Source from git repository"
