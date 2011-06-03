@@ -13,8 +13,9 @@ password=$RET
 db_get billgastro/enter_database
 database=$RET
 
-echo "Setting username and password for BillGastro database ..."
 cd /opt/billgastro/billgastro
+
+echo "Setting username and password for BillGastro database ..."
 cp config/database-default.yml config/database.yml
 sed -i -e "s/username:.*/username: $username/" config/database.yml
 sed -i -e "s/password:.*/password: $password/" config/database.yml
@@ -29,6 +30,8 @@ else
   echo "Deactivating debugging reports ..."
   sed -i -e 's/config.middleware.use ExceptionNotifier/#&/' config/environments/production.rb
 fi
+
+bundle install
 
 result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 

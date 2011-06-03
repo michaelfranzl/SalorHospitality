@@ -1,10 +1,10 @@
 #!/bin/sh
 
-bundle install --deployment
+bundle package
 
 cd config/packages
 
-# remove old build products
+echo "Removing old build products"
 rm -f *.deb
 rm -rf publish/debian/db
 rm -rf publish/debian/dists
@@ -18,6 +18,7 @@ rm -rf billgastro-src/opt
 mkdir -p billgastro-src/opt/billgastro
 git clone ../.. billgastro-src/opt/billgastro/billgastro
 rm -rf billgastro-src/opt/billgastro/billgastro/.git
+cp -r ../../vendor/bundle billgastro-src/opt/billgastro/billgastro/vendor
 
 dpkg -b billgastro
 dpkg -b billgastro-src
