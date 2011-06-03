@@ -10,7 +10,6 @@ workstation.css
 *.escpos
 articles.js
 *.xcf
-*.lock
 *~
 config/packages/billgastro-bin/usr
 config/packages/billgastro-src/var
@@ -18,3 +17,4 @@ config/packages/publish/debian/db
 config/packages/publish/debian/dists
 config/packages/publish/debian/pool
 *.deb
+.bundle

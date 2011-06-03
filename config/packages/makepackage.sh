@@ -1,5 +1,7 @@
 #!/bin/sh
 
+bundle install --deployment
+
 cd config/packages
 
 # remove old build products
@@ -8,15 +10,14 @@ rm -rf publish/debian/db
 rm -rf publish/debian/dists
 rm -rf publish/debian/pool
 
-echo "Copy compiled Ruby, Gems and configuration files"
-cp -r ~/Public/pack/usr billgastro-bin
-cp -r ~/Public/pack/etc billgastro-src
+echo "Copy compiled Ruby and essential Gems"
+cp -r ~/Public/opt billgastro-bin
 
 echo "Copy BillGastro Source from git repository"
-rm -rf billgastro-src/var
-mkdir -p billgastro-src/var/www
-git clone ../.. billgastro-src/var/www/billgastro
-rm -rf billgastro-src/var/www/billgastro/.git
+rm -rf billgastro-src/opt
+mkdir -p billgastro-src/opt/billgastro
+git clone ../.. billgastro-src/opt/billgastro/billgastro
+rm -rf billgastro-src/opt/billgastro/billgastro/.git
 
 dpkg -b billgastro
 dpkg -b billgastro-src

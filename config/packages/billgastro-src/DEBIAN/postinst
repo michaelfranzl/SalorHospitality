@@ -13,7 +13,7 @@ db_get billgastro/enter_database
 database=$RET
 
 echo "Setting username and password for BillGastro database ..."
-cd /var/www/billgastro
+cd /opt/billgastro/billgastro
 cp config/database-default.yml config/database.yml
 sed -i -e "s/username:.*/username: $username/" config/database.yml
 sed -i -e "s/password:.*/password: $password/" config/database.yml
@@ -24,6 +24,8 @@ if [ "$RET" = "true" ]
 then
   echo "Changing behaviour of Exim E-Mail Server for debugging reports ..."
   sed -i -e "s/dc_eximconfig_configtype=.*$/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
+  db_get billgastro/companyname
+  sed -i -e "s/[BillGastro]/[BillGastro $RET]/" config/environments/production.rb
 else
   echo "Deactivating debugging reports ..."
   sed -i -e 's/config.middleware.use ExceptionNotifier/#&/' config/environments/production.rb
@@ -45,7 +47,7 @@ then
   if [ "$RET" = "false" ]
   then
     echo "User selected minimal dataset. Truncating all tables except 'users' and 'roles'."
-    mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;"
+    mysql -u $username -p$password $database -Bse "truncate table articles; truncate table quantities; truncate table items; truncate table orders; truncate table options; truncate table taxes; truncate table tables; truncate table categories; truncate table settlements; truncate table cost_centers;  truncate table vendor_printers;"
   fi
 else
   echo "BillGastro database already exists, so I'm just migrating ..."
@@ -53,11 +55,15 @@ else
 fi
 
 echo "Changing Permissions ..."
-chown -R www-data:www-data /var/www/billgastro
-chmod -R 755 /var/www/billgastro
+chown -R www-data:www-data /opt/billgastro/billgastro
+chmod -R 755 /opt/billgastro/billgastro
 
 echo "Modifying /etc/hosts ..."
-echo "127.0.0.1 localhost billgastro" > /etc/hosts
+result=`cat /etc/hosts | grep -c 'billgastro'`
+if [ $result -eq 0 ]; then
+  echo "127.0.0.1 localhost billgastro" >> /etc/hosts;
+fi
+
 echo "Restarting Apache ..."
 service apache2 restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
 echo "Restarting Exim4 ..."

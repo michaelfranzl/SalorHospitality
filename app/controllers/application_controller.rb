@@ -250,8 +250,9 @@ class ApplicationController < ActionController::Base
 
         footer =
         "\n\n\n\n" +
-        "\x1B\x70\x00\xFF\x00" + # beep
-        "\x1DV\x00" # paper cut at the end of each order/table
+        "\x1DV\x00" + # paper cut at the end of each order/table
+        "\x1B\x70\x00\xFF\xFF" # beep
+
 
         header.force_encoding 'ISO-8859-15'
         footer.force_encoding 'ISO-8859-15'
