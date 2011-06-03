@@ -20,4 +20,3 @@ config/packages/publish/debian/pool
 .bundle
 tmp/sass-cache
 vendor/bundle
-*.lock
