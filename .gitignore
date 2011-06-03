@@ -21,3 +21,4 @@ config/packages/publish/debian/pool
 tmp/sass-cache
 tmp/pids
 vendor/bundle
+*.log

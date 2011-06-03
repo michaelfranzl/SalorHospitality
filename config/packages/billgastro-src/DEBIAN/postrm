@@ -20,7 +20,7 @@ case $1 in
     db_get billgastro/enter_database
     database=$RET
     echo "Backing up database."
-    rake-billgastro db:dump
+    mysqldump -u $username -p$password $database > database-backup.sql
     echo "Deleting BillGastro database $database ..."
     mysql -u $username -p$password -Bse "drop database $database"
     db_purge
