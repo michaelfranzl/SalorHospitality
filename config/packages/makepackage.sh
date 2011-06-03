@@ -1,7 +1,5 @@
 #!/bin/sh
 
-bundle package
-
 cd config/packages
 
 echo "Removing old build products"
@@ -18,7 +16,6 @@ rm -rf billgastro-src/opt
 mkdir -p billgastro-src/opt/billgastro
 git clone ../.. billgastro-src/opt/billgastro/billgastro
 rm -rf billgastro-src/opt/billgastro/billgastro/.git
-cp -r ../../vendor/bundle billgastro-src/opt/billgastro/billgastro/vendor
 
 dpkg -b billgastro
 dpkg -b billgastro-src
