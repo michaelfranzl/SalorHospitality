@@ -24,8 +24,6 @@ if [ "$RET" = "true" ]
 then
   echo "Changing behaviour of Exim E-Mail Server for debugging reports ..."
   sed -i -e "s/dc_eximconfig_configtype=.*$/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
-  db_get billgastro/companyname
-  sed -i -e "s/[BillGastro]/[BillGastro $RET]/" config/environments/production.rb
 else
   echo "Deactivating debugging reports ..."
   sed -i -e 's/config.middleware.use ExceptionNotifier/#&/' config/environments/production.rb

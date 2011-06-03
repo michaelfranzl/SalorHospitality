@@ -26,8 +26,8 @@ Description-de.UTF-8: Die Datenbank mit umfangreichen Beispieldaten befüllen?
 
 Template: billgastro/exceptions
 Type: boolean
-Description: Send e-mail reports about errors automatically to the BillGastro developers so that they can fix them?
-Description-de.UTF-8: E-Mail Berichte über auftretende Fehler an die BillGastro Entwickler schicken, damit sie sie rasch beheben können?
+Description: Send error reports automatically to the BillGastro developers so that they can fix them?
+Description-de.UTF-8: Fehlerberichte automatisch an die BillGastro-Entwickler schicken, damit sie sie rasch beheben können?
 
 Template: billgastro/done
 Type: note
@@ -41,8 +41,3 @@ Description-de.UTF-8: Die Installation von BillGastro ist vollständig.
  Verwenden Sie Mozilla Firefox für das Kassen-Hauptgerät.
  Verwenden Sie den Chromium Browser um zu sehen, wie BillGastro auf mobilen Geräten angezeigt wird.
  Login: su Password: su
-
-Template: billgastro/companyname
-Type: string
-Description: Please enter a short name of your company
-Description-de.UTF-8: Bitte geben Sie den Namen Ihrer Firma ein
