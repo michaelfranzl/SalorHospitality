@@ -35,11 +35,11 @@ result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 if [ "$result" != "$database" ]
 then
   echo "BillGastro database doesn't exist, so I'm creating it ..."
-  rake db:create
+  rake-billgastro db:create
   echo "Migrating BillGastro database ..."
-  rake db:migrate
+  rake-billgastro db:migrate
   echo "Populating database with seed data ..."
-  rake db:fixtures:load
+  rake-billgastro db:fixtures:load
   db_input high billgastro/dataset || true
   db_go
   db_get billgastro/dataset
@@ -50,7 +50,7 @@ then
   fi
 else
   echo "BillGastro database already exists, so I'm just migrating ..."
-  rake db:migrate
+  rake-billgastro db:migrate
 fi
 
 echo "Changing Permissions ..."
