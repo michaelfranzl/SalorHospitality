@@ -31,8 +31,6 @@ else
   sed -i -e 's/config.middleware.use ExceptionNotifier/#&/' config/environments/production.rb
 fi
 
-bundle install
-
 result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
 
 if [ "$result" != "$database" ]
