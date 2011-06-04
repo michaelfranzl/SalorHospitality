@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "postinst called with $1"
+
 . /usr/share/debconf/confmodule
 
 export RAILS_ENV=production

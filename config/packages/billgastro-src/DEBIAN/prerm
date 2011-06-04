@@ -7,13 +7,14 @@ export PATH=$PATH:/opt/billgastro/bin
 
 case $1 in
   remove)
+    echo "prerm called with remove"
     #do something
   ;;
   upgrade)
+    echo "prerm called with upgrade"
     db_input high billgastro/dbdump || true
     db_go
     cd /var/www/billgastro
-    export RAILS_ENV=production
     rake-billgastro db:dump
   ;;
   *)

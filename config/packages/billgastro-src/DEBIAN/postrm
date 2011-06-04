@@ -7,12 +7,15 @@ export PATH=$PATH:/opt/billgastro/bin
 
 case $1 in
   upgrade)
+    echo "postrm called with upgrade"
     # do something
   ;;
   remove)
+    echo "postrm called with remove"
     # do something
   ;;
   purge)
+    echo "postrm called with purge"
     db_get billgastro/enter_username
     username=$RET
     db_get billgastro/enter_password

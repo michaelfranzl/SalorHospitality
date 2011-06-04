@@ -4,11 +4,13 @@
 
 case $1 in
   install)
+    echo "preinst called with install"
     echo "Removing default Apache site..."
     rm -f /etc/apache2/sites-enabled/000-default
     echo "Done."
   ;;
   upgrade)
+    echo "preinst called with upgrade"
     #do something
   ;;
   *)
