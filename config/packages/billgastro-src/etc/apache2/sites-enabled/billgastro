@@ -2,4 +2,8 @@
   ServerName billgastro
   DocumentRoot /opt/billgastro/billgastro/public
   RailsEnv production
+  PassengerMinInstances 1
+  PassengerHighPerformance on
 </VirtualHost>
+
+PassengerPreStart http://billgastro/
