@@ -14,8 +14,9 @@ case $1 in
     echo "prerm called with upgrade"
     db_input high billgastro/dbdump || true
     db_go
-    cd /var/www/billgastro
-    rake-billgastro db:dump
+    cd /opt/billgastro/billgastro
+    echo "Backing up database."
+    mysqldump -u $username -p$password $database > database-backup.sql
   ;;
   *)
     echo "prerm called with unknown argument '$1'" 1>&2

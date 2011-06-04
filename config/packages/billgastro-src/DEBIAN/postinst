@@ -1,11 +1,11 @@
 #!/bin/sh
 
-echo "postinst called with $1"
-
 . /usr/share/debconf/confmodule
 
 export RAILS_ENV=production
 export PATH=$PATH:/opt/billgastro/bin
+
+echo "postinst called with $1"
 
 echo "Reading configuration from Debconf database ..."
 db_get billgastro/enter_username
