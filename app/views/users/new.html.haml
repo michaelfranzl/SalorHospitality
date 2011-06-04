@@ -13,23 +13,23 @@
   %table
     %tr
       %td= user_form.label('login', User.human_attribute_name(:login))
-      %td= user_form.text_field :login, :size => '20'
+      %td= user_form.text_field :login
     %tr
       %td= user_form.label('title', User.human_attribute_name(:title))
-      %td= user_form.text_field :title, :size => '20'
+      %td= user_form.text_field :title
     %tr
       %td= user_form.label('password', User.human_attribute_name(:password))
-      %td= user_form.text_field :password, :size => '20'
-    %tr
-      %td= user_form.label('color', User.human_attribute_name(:color))
-      %td
-        %select#user_color{ :name => 'user[color]' }
-          = options_for_select(get_colors.invert.to_a, user_form.object.color)
+      %td= user_form.text_field :password
     %tr
       %td= user_form.label('role', User.human_attribute_name(:role))
       %td
         %select#user_role_id{ :name => 'user[role_id]' }
           = options_from_collection_for_select Role.all, 'id', 'name', user_form.object.role_id
+    %tr
+      %td= user_form.label('color', User.human_attribute_name(:color))
+      %td
+        %select#user_color{ :name => 'user[color]' }
+          = options_for_select(get_colors.invert.to_a, user_form.object.color)
     %tr
       %td= user_form.label('language', User.human_attribute_name(:language))
       %td

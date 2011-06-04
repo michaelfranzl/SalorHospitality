@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @users = User.find(:all, :order => :id)
+    @users = @current_company.users.available
   end
 
   def new
