@@ -1,9 +1,9 @@
 Package: billgastro
-Version: 3.2.0
+Version: 3.2.1
 Architecture: i386
 Maintainer: DI(FH) Michael Franzl <office@michaelfranzl.com>
 Installed-Size: 100
-Depends: billgastro-src (= 3.2.0)
+Depends: billgastro-src (= 3.2.1)
 Suggests: onboard, gitk, vim, bind9, sshd, ttf-mscorefonts-installer
 Conflicts: ruby
 Section: ruby
