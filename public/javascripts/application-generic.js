@@ -284,7 +284,7 @@ function restore_button(element) {
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
-  scroll_to($('#main'),40);
+  scroll_to($('#container'),20);
   $('#order_sum').value = '0';
 
   $('#order_id').val('add_offline_items_to_order');
@@ -309,7 +309,7 @@ function go_to_order_form_preprocessing(table_id) {
 }
 
 function go_to_tables_offline() {
-  scroll_to($('#main'),40);
+  scroll_to($('#container'),20);
   $('#orderform').hide();
   $('#invoices').hide();
   $('#tables').show();
