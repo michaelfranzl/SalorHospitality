@@ -16,15 +16,23 @@ case $1 in
   ;;
   purge)
     echo "postrm called with purge"
+
+    echo "Backing up database."
+
     db_get billgastro/enter_username
     username=$RET
+    echo "username is $username"
     db_get billgastro/enter_password
     password=$RET
+    echo "password is $password"
     db_get billgastro/enter_database
     database=$RET
-    echo "Backing up database."
+    echo "database is $database"
+
+    cd /opt/billgastro/billgastro
     mysqldump -u $username -p$password $database > database-backup.sql
-    echo "Deleting BillGastro database $database ..."
+
+    echo "Dropping BillGastro database $database ..."
     mysql -u $username -p$password -Bse "drop database $database"
     db_purge
     exit 0

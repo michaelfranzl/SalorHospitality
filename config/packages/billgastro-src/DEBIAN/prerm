@@ -12,11 +12,25 @@ case $1 in
   ;;
   upgrade)
     echo "prerm called with upgrade"
-    db_input high billgastro/dbdump || true
-    db_go
-    cd /opt/billgastro/billgastro
+
     echo "Backing up database."
+
+    db_get billgastro/enter_username
+    username=$RET
+    echo "username is $username"
+    db_get billgastro/enter_password
+    password=$RET
+    echo "password is $password"
+    db_get billgastro/enter_database
+    database=$RET
+    echo "database is $database"
+
+    cd /opt/billgastro/billgastro
     mysqldump -u $username -p$password $database > database-backup.sql
+  ;;
+  failed-upgrade)
+    echo "prerm called with failed-upgrade"
+    #do something
   ;;
   *)
     echo "prerm called with unknown argument '$1'" 1>&2
