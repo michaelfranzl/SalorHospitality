@@ -17,7 +17,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.all
+    @tables = Table.find(:all, :conditions => { :hidden => false })
     @categories = Category.find(:all, :order => :sort_order)
     @users = User.all
     session[:admin_interface] = !mobile? # on workstation, switch admin panel on per default
@@ -67,7 +67,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = Table.all
+    @tables = Table.find(:all, :conditions => { :hidden => false })
   end
 
   def toggle_tax_colors
