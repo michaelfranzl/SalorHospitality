@@ -122,7 +122,7 @@ class OrdersController < ApplicationController
         if not @orders.empty?
           render('go_to_invoice_form')
         else
-          @tables = Table.all
+          @tables = Table.find(:all, :conditions => { :hidden => false })
           render('go_to_tables')
         end
       }
@@ -181,7 +181,7 @@ class OrdersController < ApplicationController
       @current_company.save
       @order.delete
       @order.table.update_attribute :user_id, nil
-      @tables = Table.all
+      @tables = Table.find(:all, :conditions => { :hidden => false })
       render 'go_to_tables' and return
     end
 
@@ -200,7 +200,7 @@ class OrdersController < ApplicationController
     end
 
     @taxes = Tax.all
-    @tables = Table.all
+    @tables = Table.find(:all, :conditions => { :hidden => false })
 
     case params[:order_action]
       when 'save_and_go_to_tables'
@@ -211,7 +211,7 @@ class OrdersController < ApplicationController
         render 'go_to_invoice_form'
       when 'move_order_to_table'
         move_order_to_table @order, params[:target_table]
-        @tables = Table.all
+        @tables = Table.find(:all, :conditions => { :hidden => false })
         render 'go_to_tables'
     end
   end
