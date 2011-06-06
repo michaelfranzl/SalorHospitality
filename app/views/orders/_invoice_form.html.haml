@@ -3,12 +3,11 @@
     - i = 0
     - @current_company.vendor_printers.each do |p|
       - i += 1
-      = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => t(:print), :remote => true)
-
+      = link_to('', "/orders/print_and_finish/#{ invoice_form.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }", :remote => true)
   - else
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
-  - if !invoice_form.finished
-    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/0", :remote => true, :class => 'iconbutton finish_button', :title => t(:print)
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/1", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish')
+  - if not invoice_form.finished
+    = link_to '', "/orders/print_and_finish/#{ invoice_form.id }/0", :remote => true, :class => 'iconbutton finish_button', :title => t('.just_finish')
 
   = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
 
@@ -56,6 +55,5 @@
         %td.total= number_to_currency sum
 
     %tr
-      %td{ :colspan => '3'}
-      %td{ :style => 'text-align:right'}
+      %td{ :colspan => '4', :style => 'text-align:right'}
         %span.subtotal= number_to_currency subtotal

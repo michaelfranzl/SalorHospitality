@@ -242,6 +242,7 @@ class OrdersController < ApplicationController
 
     def move_order_to_table(order, target_table_id)
       unlink_orders(order)
+      this_table = order.table
       target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
 
       if target_order
@@ -256,11 +257,10 @@ class OrdersController < ApplicationController
       end
 
       # update table users and colors
-      this_table = order.table
       unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => this_table.id, :finished => false })
       this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
-      unfinished_orders_on_target_table = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false })
-      Table.find(target_table_id).update_attribute :user, order.user
+
+      Table.find_by_id(target_table_id).update_attribute :user, order.user
     end
 
     def group_identical_items(o)

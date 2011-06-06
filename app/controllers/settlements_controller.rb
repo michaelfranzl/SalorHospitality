@@ -60,7 +60,7 @@ class SettlementsController < ApplicationController
       @orders.each { |o| o.update_attribute :settlement_id, @settlement.id }
       @settlement = Settlement.new :user_id => @settlement.user_id
     end
-    if params[:print] != ''
+    if params[:print] != '' and not saas?
       printers = initialize_printers
       text = generate_escpos_settlement(@settlement, @orders)
       do_print printers, params[:port].to_i, text
