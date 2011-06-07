@@ -85,7 +85,9 @@ class OrdersController < ApplicationController
   def print_and_finish
     @order = Order.find params[:id]
 
-    if not @order.finished
+    is_finished = @order.finished
+
+    if not is_finished
       if @order.nr > @current_company.largest_order_number
         @current_company.update_attribute :largest_order_number, @order.nr 
       end
@@ -119,14 +121,18 @@ class OrdersController < ApplicationController
 
     respond_to do |wants|
       wants.js {
-        if not @orders.empty?
-          render('go_to_invoice_form')
-        else
+        if is_finished
+          # is the case for storno_form
+          render :nothing => true
+        elsif @orders.empty?
+          # is the case for invoice_form
           @tables = Table.find(:all, :conditions => { :hidden => false })
-          render('go_to_tables')
+          render 'go_to_tables'
+        else
+          # is the case for invoice_form
+          render 'go_to_invoice_form'
         end
       }
-      wants.html { redirect_to @order }
     end
   end
 

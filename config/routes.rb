@@ -37,7 +37,6 @@ BillGastro::Application.routes.draw do
 
   resources :orders do
     collection do
-      get :print
       post :toggle_admin_interface
       post :login
       get :storno

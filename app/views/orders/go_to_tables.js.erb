@@ -11,7 +11,9 @@ $('#functions_header_index').show();
 $('#tables').html('<%= escape_javascript render @tables %>');
 
 $('#functions_header_order_form').html('<%= escape_javascript render :partial => 'functions_header_order_form' %>')
-$('#functions_footer').html('<%= escape_javascript render(:partial => 'functions_footer') if mobile? %>');
+<% if mobile? %>
+  $('#functions_footer').html('<%= escape_javascript render(:partial => 'functions_footer') %>');
+<% end %>
 
 $('#order_info').html('<%= escape_javascript t :loading %>');
 
