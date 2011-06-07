@@ -1,5 +1,4 @@
 BillGastro Version <%= File.open('VERSION', 'r').read %>
+User: <%= @request.session[:user_id].login if @request.session[:user_id]  %>
 
-<%= @current_company.name if @current_company %>
-
-<%= @current_user.login if @current_user %>
+Company: <%= @request.session[:user_id].company.name if @request.session[:user_id]  %>
