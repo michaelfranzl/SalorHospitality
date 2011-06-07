@@ -80,7 +80,7 @@ class TablesController < ApplicationController
   end
 
   def mobile
-    @tables = Table.all
+    @tables = Table.find(:all, :conditions => { :hidden => false })
   end
 
 end

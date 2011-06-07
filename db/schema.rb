@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110529112055) do
+ActiveRecord::Schema.define(:version => 20110607092332) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -204,12 +204,13 @@ ActiveRecord::Schema.define(:version => 20110529112055) do
     t.integer  "height",        :default => 45
     t.integer  "left_mobile"
     t.integer  "top_mobile"
-    t.integer  "width_mobile",  :default => 100
-    t.integer  "height_mobile", :default => 60
+    t.integer  "width_mobile",  :default => 70
+    t.integer  "height_mobile", :default => 45
     t.string   "abbreviation"
     t.integer  "user_id"
     t.boolean  "enabled",       :default => true
     t.boolean  "hidden",        :default => false
+    t.boolean  "rotate"
   end
 
   create_table "taxes", :force => true do |t|

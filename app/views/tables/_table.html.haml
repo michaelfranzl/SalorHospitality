@@ -2,12 +2,18 @@
 
 - left    = use_attributes_for_mobile ? table.left_mobile   : table.left
 - top     = use_attributes_for_mobile ? table.top_mobile    : table.top
+- width    = use_attributes_for_mobile ? table.width_mobile   : table.width
+- height     = use_attributes_for_mobile ? table.height_mobile    : table.height
+- if table.rotate
+  - temp = width
+  - width = height
+  - height = temp
 
 - color_style = "background-color: #{ table.user.color }" if table.user
 - color_style = "background-color: black" if not table.enabled
 - status = table.user ? 'occupied' : 'vacant'
 
-%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{table.width}px;height:#{table.height}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
+%div{ :id => "table#{table.id}", :class => "table #{status}", :style => "width:#{width}px;height:#{height}px;left:#{left}px;top:#{top}px;position:absolute;font-size:small;#{color_style}"}
   - if (session[:admin_interface] == true or params[:mobile_drag_and_drop]) and @current_user.role.permissions.include? 'move_tables'
     %div.handle_for_table{ :id => "handle_for_table#{table.id}", :style => 'cursor:move' }= table.abbreviation
     %script= render :partial => 'tables/draggable_table.js', :locals => { :table => table }

@@ -35,6 +35,19 @@
         = table_form.text_field :height, :size => '10'
         %span#table_height_display_keyboard.display_keyboard
     %tr
+      %td= table_form.label :width_mobile, Table.human_attribute_name(:width_mobile)
+      %td
+        = table_form.text_field :width_mobile, :size => '10'
+        %span#table_width_mobile_display_keyboard.display_keyboard
+    %tr
+      %td= table_form.label :height_mobile, Table.human_attribute_name(:height_mobile)
+      %td
+        = table_form.text_field :height_mobile, :size => '10'
+        %span#table_height_mobile_display_keyboard.display_keyboard
+    %tr
+      %td= table_form.label :rotate, Table.human_attribute_name(:rotate)
+      %td= table_form.check_box :rotate
+    %tr
       %td= table_form.label :enabled, Table.human_attribute_name(:enabled)
       %td= table_form.check_box :enabled
     %tr
@@ -73,4 +86,14 @@
   $('#table_height').keyboard( {openOn: '', layout: 'num' } );
   $('#table_height_display_keyboard').click(function(){
     $('#table_height').getkeyboard().reveal();
+  });
+
+  $('#table_width_mobile').keyboard( {openOn: '', layout: 'num' } );
+  $('#table_width_mobile_display_keyboard').click(function(){
+    $('#table_width_mobile').getkeyboard().reveal();
+  });
+
+  $('#table_height_mobile').keyboard( {openOn: '', layout: 'num' } );
+  $('#table_height_mobile_display_keyboard').click(function(){
+    $('#table_height_mobile').getkeyboard().reveal();
   });
