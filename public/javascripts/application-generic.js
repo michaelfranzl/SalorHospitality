@@ -150,6 +150,8 @@ function decrement_item(desig) {
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
   } else if (permission_immediate_storno) {
+    i--;
+    $('#order_items_attributes_' + desig + '_count').val(i);
     $('#order_items_attributes_' + desig + '__destroy').val(1);
     $('#item_' + desig).fadeOut("slow");
   };
