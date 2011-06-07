@@ -1,4 +1,8 @@
-%a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+- if workstation?
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+- else
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
+
 %a#save_and_go_to_tables.iconbutton.tables_button{ :onclick => '$("#order_action").val("save_and_go_to_tables"); $("#order_form_ajax").submit();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:send_and_go_back) }
 - if @current_user.role.permissions.include? 'finish_orders'
   %a.iconbutton.cash_button{ :onclick => '$("#order_action").val("save_and_go_to_invoice"); $("#order_form_ajax").submit();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:finish_order) }

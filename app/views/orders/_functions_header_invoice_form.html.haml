@@ -1,3 +1,9 @@
-%a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+- if workstation?
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+- else
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
+
 %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :title => t(:cancel_and_go_back) }
-%a.iconbutton.scrollup_button{ :onclick => 'scroll_for(-200,20)', :title => t(:scroll_up) }
+
+- if workstation?
+  %a.iconbutton.scrollup_button{ :onclick => 'scroll_for(-200,20)', :title => t(:scroll_up) }
