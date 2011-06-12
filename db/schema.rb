@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110607092332) do
+ActiveRecord::Schema.define(:version => 20110611091247) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20110607092332) do
     t.integer  "sort_order"
     t.string   "icon"
     t.string   "color"
-    t.integer  "vendor_printer_id", :limit => 1, :default => 0
+    t.integer  "vendor_printer_id", :default => 0
   end
 
   create_table "companies", :force => true do |t|

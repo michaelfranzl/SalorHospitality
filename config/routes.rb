@@ -53,6 +53,7 @@ BillGastro::Application.routes.draw do
   match 'settlements/detailed_list' => 'settlements#detailed_list'
   match 'settlements/print/:id' => 'settlements#print'
   match 'sessions/exception_test' => 'sessions#exception_test'
+  match 'companies/backup_database' => 'companies#backup_database'
  resources :items, :companies, :options, :categories, :groups, :stocks, :cost_centers, :taxes, :menucard, :waiterpad, :blackboard, :users
 
   resources :settlements do

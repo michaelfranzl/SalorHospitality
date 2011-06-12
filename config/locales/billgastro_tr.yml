@@ -318,6 +318,7 @@ tr:
   companies:
     edit:
       add_printer: XXXAdd printer
+      backup_database: XXXBackup database
     update:
       config_successfully_updated: Belirtiler yenilendi!
 

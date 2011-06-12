@@ -27,4 +27,9 @@ class CompaniesController < ApplicationController
     redirect_to companies_path
   end
 
+  def backup_database
+    `rake db:backup`
+    send_file 'public/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
+  end
+
 end

@@ -318,6 +318,7 @@ fr:
   companies:
     edit:
       add_printer: XXXAdd printer
+      backup_database: XXXBackup database
     update:
       config_successfully_updated: Les données sur l'entreprise ont bien été mises à jour !
 

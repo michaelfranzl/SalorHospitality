@@ -17,5 +17,5 @@
 class VendorPrinter < ActiveRecord::Base
   belongs_to :company
   has_many :categories
-  scope :available, where(:hidden => false)
+  scope :available, where('hidden=0 or hidden is NULL')
 end

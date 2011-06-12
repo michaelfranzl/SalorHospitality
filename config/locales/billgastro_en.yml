@@ -318,6 +318,7 @@ en:
   companies:
     edit:
       add_printer: Add printer
+      backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
 
