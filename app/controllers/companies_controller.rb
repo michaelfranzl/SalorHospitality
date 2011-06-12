@@ -28,7 +28,12 @@ class CompaniesController < ApplicationController
   end
 
   def backup_database
-    `rake db:backup`
+    dbconfig = YAML::load(File.open('config/database.yml'))
+    mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
+    username = dbconfig[mode]['username']
+    password = dbconfig[mode]['password']
+    database = dbconfig[mode]['database']
+    `mysqldump -u #{username} -p#{password} #{database} > public/backup.sql`
     send_file 'public/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
   end
 
