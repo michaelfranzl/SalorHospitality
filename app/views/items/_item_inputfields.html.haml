@@ -21,3 +21,8 @@
   %input{ :id => "order_items_attributes_#{ designator }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ designator }][printed_count]", :type => 'hidden', :value => "#{ printed_count }" }
 
   %input{ :id => "order_items_attributes_#{ designator }__destroy", :class => '_destroy', :name => "order[items_attributes][#{ designator }][_destroy]", :type => 'hidden' }
+
+  %div{ :id => "options_for_item_#{ designator }" }
+    - if item
+      - (item.printoptions + item.options).each do |o|
+        %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price }

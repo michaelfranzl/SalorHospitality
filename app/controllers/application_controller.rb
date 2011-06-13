@@ -74,6 +74,9 @@ class ApplicationController < ActionController::Base
         p = item.real_price
         sum = item.count * p
         subtotal += item.count * p
+        (item.options + item.printoptions).each do |o|
+          subtotal += o.price * item.count
+        end
       end
       return subtotal
     end
@@ -250,9 +253,17 @@ class ApplicationController < ActionController::Base
             i.options << po
           end
 
-          i.printoptions = []
-          i.printed_count = i.count 
-          i.save
+          begin
+            i.printoptions = []
+            i.printed_count = i.count 
+            i.save
+          rescue
+            logger.info "Trying to prevent FROZEN HASH error"
+            sleep 1
+            i.printoptions = []
+            i.printed_count = i.count 
+            i.save
+          end
         end
 
         footer =

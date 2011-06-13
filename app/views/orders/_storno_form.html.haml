@@ -1,7 +1,7 @@
 %div.invoice{ :id => "invoice_#{storno_form.id}" }
   - if local_variant?
     - i = 0
-    - @current_company.vendor_printers.each do |p|
+    - @current_company.vendor_printers.available.each do |p|
       - i += 1
       = link_to('', "/orders/print_and_finish/#{ storno_form.id }/#{ p.id }", :remote => true, :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" )
   - else

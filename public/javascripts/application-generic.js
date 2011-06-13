@@ -63,7 +63,12 @@ function add_new_item_q(qu_id, button) {
   };
 
   if (matched_designator &&
-      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_q[qu_id][3] )
+      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_q[qu_id][3] &&
+      $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
+      $('#order_items_attributes_' + matched_designator + '_printoptionslist').val() == '' &&
+      $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
+      $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
+     )
   {
     increment_item(matched_designator);
   }
@@ -117,7 +122,12 @@ function add_new_item_a(art_id, button, caption) {
   };
 
   if (matched_designator &&
-      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_a[art_id][3] )
+      $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_a[art_id][3] &&
+      $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
+      $('#order_items_attributes_' + matched_designator + '_printoptionslist').val() == '' &&
+      $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
+      $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
+     )
   {
     increment_item(matched_designator);
   }
@@ -168,14 +178,24 @@ function deselect_all_categories() {
   }
 }
 
+
 function calculate_sum() {
-  var prices = $('#inputfields .price');
-  var counts = $('#inputfields .count');
+  var items = $('#inputfields > div');
   var sum = 0;
-  for(i=0; i<prices.length; i++) {
-    sum += parseFloat(prices[i].value) * parseFloat(counts[i].value);
-  };
-  $('#order_sum').val(sum.toFixed(2).replace('.', ','));
+  var itemcount;
+  var itemprice;
+  var options;
+  for(i=0; i<items.length; i++) {
+    itemcount = parseFloat($(items[i]).children('.count')[0].value);
+    itemprice = parseFloat($(items[i]).children('.price')[0].value);
+    sum += itemcount * itemprice;
+    options = $(items[i]).children('div').children('.optionprice');
+    for(j=0; j<options.length; j++) {
+      optionprice = parseFloat(options[j].value);
+      sum += optionprice * itemcount;
+    }
+  }
+  $('#order_sum').val(sum.toFixed(2).replace('.', i18n_decimal_separator));
   return sum;
 }
 
@@ -196,13 +216,13 @@ function add_option_to_item_from_select(item_designator, select_tag)
   var itemfields = $('#fields_for_item_' + item_designator);
 
   if (select_tag.value == 0) {
-    // normal, delete all options
+    // delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
     $('#optionsnames_' + item_designator).html('');
 
   } else if (select_tag.value == -2 ) {
-    // exit, nothing
+    // just exit, do nothing
 
   } else if (select_tag.value == -1 ) {
     // special option: do not print
@@ -211,6 +231,7 @@ function add_option_to_item_from_select(item_designator, select_tag)
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else {
+    // options from database
     printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + select_tag.value + ' ');
     var index = $('#optionsselect_select_' + item_designator).attr('selectedIndex');
@@ -221,19 +242,21 @@ function add_option_to_item_from_select(item_designator, select_tag)
   $('#optionsselect_select_' + item_designator).hide();
 }
 
-function add_option_to_item_from_div(item_designator, value, text)
+function add_option_to_item_from_div(item_designator, value, price, text)
 {
   var tablerow = $('#item_' + item_designator);
   var itemfields = $('#fields_for_item_' + item_designator);
+  var itemoptions = $('#options_for_item_' + item_designator);
 
   if (value == 0) {
     // normal, delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
     $('#optionsnames_' + item_designator).html('');
+    itemoptions.html('');
 
   } else if (value == -2 ) {
-    // exit, nothing
+    // just exit, do nothing
 
   } else if (value == -1 ) {
     // special option: do not print
@@ -245,7 +268,9 @@ function add_option_to_item_from_div(item_designator, value, text)
     printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
     $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + value + ' ');
     $('#optionsnames_' + item_designator).append('<br>' + text);
+    itemoptions.append('<input id="item_' + item_designator + '_option_' + value + '" class="optionprice" type="hidden" value="' + price + '">');
   }
+  calculate_sum();
   $('#optionsselect_div_' + item_designator).slideUp();
 }
 
