@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
         sum = item.count * p
         subtotal += item.count * p
         (item.options + item.printoptions).each do |o|
-          subtotal += o.price * item.count
+          subtotal += (o.price || 0) * item.count
         end
       end
       return subtotal

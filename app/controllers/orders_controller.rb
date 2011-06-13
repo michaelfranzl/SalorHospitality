@@ -277,6 +277,7 @@ class OrdersController < ApplicationController
           Item.transaction do
             if (items[i].article_id  == items[j].article_id and
                 items[i].quantity_id == items[j].quantity_id and
+                items[i].options     == items[j].options and
                 items[i].price       == items[j].price and
                 items[i].comment     == items[j].comment
                )

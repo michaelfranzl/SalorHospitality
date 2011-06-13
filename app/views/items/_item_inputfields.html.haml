@@ -25,4 +25,4 @@
   %div{ :id => "options_for_item_#{ designator }" }
     - if item
       - (item.printoptions + item.options).each do |o|
-        %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price }
+        %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price || 0 }

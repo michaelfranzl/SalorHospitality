@@ -21,8 +21,8 @@ module OrdersHelper
   end
 
   def compose_option_names(item)
-    item.printoptions.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join +
-    item.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
+    item.printoptions.collect{ |o| "<br>#{ o.name } #{ number_to_currency(o.price || 0) }" }.join +
+    item.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency(o.price || 0) }" }.join
   end
 
   def generate_js_variables
