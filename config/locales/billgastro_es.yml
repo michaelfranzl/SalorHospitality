@@ -127,6 +127,7 @@ es:
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
         address: Dirección
+        time_offset: XXXTime Offset
       role:
         name: Nombre
       vendor_printer:

@@ -57,28 +57,19 @@ class ApplicationController < ActionController::Base
     end
 
     def saas_variant?
-      @current_company.saas if @current_company
+      @current_company.mode == 'saas' if @current_company
+    end
+
+    def demo_variant?
+      @current_company.mode == 'demo' if @current_company
     end
 
     def local_variant?
-      not saas_variant?
+      @current_company.mode.nil? if @current_company
     end
 
     def set_locale
       I18n.locale = @current_user ? @current_user.language : 'en'
-    end
-
-    def calculate_order_sum(order)
-      subtotal = 0
-      order.items.each do |item|
-        p = item.real_price
-        sum = item.count * p
-        subtotal += item.count * p
-        (item.options + item.printoptions).each do |o|
-          subtotal += (o.price || 0) * item.count
-        end
-      end
-      return subtotal
     end
 
     def get_next_unique_and_reused_order_number
@@ -111,14 +102,13 @@ class ApplicationController < ActionController::Base
         "\e!\x00" +  # Font A
         "#{ value[:device].inspect.force_encoding('UTF-8') }" +
         "\n\n\n\n\n\n" +
-        "\x1DV\x00" # paper cut at the end of each order/table
+        "\x1D\x56\x00" # paper cut at the end of each order/table
         logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
         out = "\e@" # Initialize Printer
-        0.upto(255) { |i| out += i.to_s(16) + i.chr }
+        #0.upto(255) { |i| out += i.to_s(16) + i.chr }
 
         sanitize_character_encoding(text)
         do_print printers, key, text
-        #do_print printers, key, out
       end
     end
 
@@ -127,7 +117,7 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = @current_company.vendor_printers
+      avaliable_printers = @current_company.vendor_printers.available
       open_printers = Hash.new
 
       avaliable_printers.each do |p|
@@ -218,7 +208,7 @@ class ApplicationController < ActionController::Base
         "\e!\x38"    # doube tall, double wide, bold
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_company.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
@@ -244,7 +234,7 @@ class ApplicationController < ActionController::Base
 
           printed_items_in_this_order += 1
 
-          per_order_output += "%i %-17.17s\n" % [ i.count - i.printed_count, i.article.name]
+          per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
           per_order_output += " ! %-17.17s\n" % [i.comment] if i.comment and not i.comment.empty?
 
@@ -268,9 +258,8 @@ class ApplicationController < ActionController::Base
 
         footer =
         "\n\n\n\n" +
-        "\x1DV\x00" + # paper cut at the end of each order/table
-        "\x1B\x70\x00\xFF\xFF" # beep
-
+        "\x1B\x70\x00\x99\x99" + # beep
+        "\x1D\x56\x00"           # paper cut at the end of each order
 
         header.force_encoding 'ISO-8859-15'
         footer.force_encoding 'ISO-8859-15'
@@ -298,10 +287,10 @@ class ApplicationController < ActionController::Base
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
-      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at, :format => :long)) + "\n\n" +
+      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + @current_company.time_offset.hours, :format => :long)) + "\n\n" +
 
       "\e!\x00" +  # Font A
-      "               Artikel    EP    Stk   GP\n"
+      "                 Artikel  EP     Stk   GP\n"
 
       sum_taxes = Hash.new
       Tax.all.each { |t| sum_taxes[t.id] = 0 }
@@ -309,13 +298,16 @@ class ApplicationController < ActionController::Base
       list_of_items = ''
       order.items.each do |item|
         next if item.count == 0
-        p = item.real_price
-        sum = item.count * p
-        subtotal += sum
-        sum_taxes[item.real_tax.id] += sum
+        list_of_options = ''
+        item.all_options.each do |o|
+          list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, item.total_options_price] unless o.price == 0
+        end
+        sum_taxes[item.tax.id] += item.full_price
+        subtotal += item.full_price
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
 
-        list_of_items += "%s %20.20s %7.2f %3u %7.2f\n" % [item.real_tax.letter, label, p, item.count, sum]
+        list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, p, item.count, item.total_price]
+        list_of_items += list_of_options
       end
 
       sum =

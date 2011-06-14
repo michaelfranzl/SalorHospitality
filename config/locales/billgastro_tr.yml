@@ -127,6 +127,7 @@ tr:
         invoice_subtitle: Fatura Fatura informasyonu3
         revenue_service_tax_number: VAT numarısı
         address: adres
+        time_offset: XXXTime Offset
       role:
         name: XXXName
       vendor_printer:

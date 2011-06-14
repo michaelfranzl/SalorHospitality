@@ -1,2 +1,2 @@
-$('#order_<%= @item.order.id %>_item_<%= @item.id %>').css('backgroundColor', '<%= @item.real_tax.color %>');
-$('#order_<%= @item.order.id %>_item_<%= @item.id %> .count').html('<%= @item.real_tax.letter %>');
+$('#order_<%= @item.order.id %>_item_<%= @item.id %>').css('backgroundColor', '<%= @item.tax.color %>');
+$('#order_<%= @item.order.id %>_item_<%= @item.id %> .count').html('<%= @item.tax.letter %>');

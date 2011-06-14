@@ -42,22 +42,31 @@
     %th.three= t '.unit_price'
     %th.four= t '.count'
     %th.five= t '.sum'
+
   - sum_taxes = Hash.new
   - Tax.all.each { |t| sum_taxes[t.id] = 0 }
-  - subtotal = 0
+
   - @order.items.each do |item|
-    - sum = item.count * item.real_price
-    - subtotal += sum
-    - sum_taxes[item.real_tax.id] += sum
+    - sum_taxes[item.tax.id] += item.full_price
     %tr
-      %td.one= item.real_tax.letter
-      %td.two= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix} #{ item.comment}" : "#{ item.article.name } #{ item.comment}"
-      %td.three= number_to_currency p
+      %td.one= item.tax.letter
+      %td.two= item.quantity_id ? "#{ item.quantity.prefix} #{ item.quantity.article.name} #{ item.quantity.postfix} #{ item.comment}" : "#{ item.article.name } #{ item.comment }"
+      %td.three= number_to_currency item.price
       %td.four= item.count
-      %td.five= number_to_currency sum
+      %td.five= number_to_currency item.total_price
+
+    - item.options.each do |o|
+      - next if o.price == 0
+      %tr
+        %td.one= item.tax.letter
+        %td.two= o.name
+        %td.three= number_to_currency o.price
+        %td.four= item.count
+        %td.five= number_to_currency item.total_options_price
+
   %tr
     %td{ :colspan => 4 }
-    %td.five= number_to_currency subtotal
+    %td.five= number_to_currency @order.sum
 
 %p= t '.list_of_taxes'
 

@@ -127,6 +127,7 @@ de:
         invoice_subtitle: Rechnungs-Untertitel
         revenue_service_tax_number: UID Nummer
         address: Adresse
+        time_offset: Zeitkorrektur
       role:
         name: Name
       vendor_printer:

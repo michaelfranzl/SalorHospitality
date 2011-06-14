@@ -30,4 +30,9 @@ class Order < ActiveRecord::Base
   #This will prevent children_attributes with all empty values to be ignored
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
+  def cache_sum
+    self.sum = self.items.collect{ |i| i.full_price }.sum
+    self.save
+  end
+
 end

@@ -1,6 +1,7 @@
 %h1= Company.model_name.human
 
 %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
+%p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
 
 = form_for @current_company do |company_form|
   %div#company_data
@@ -39,6 +40,9 @@
       %select#category_color{ :name => 'company[country]' }
         - BillGastro::Application::COUNTRIES.each do |key, val|
           %option{ :value => key, :selected => company_form.object.country == key }= t val
+    %p
+      = company_form.label :time_offset, Company.human_attribute_name(:time_offset)
+      = company_form.text_field :time_offset, :size => 2
 
     - if saas_variant?
       %p

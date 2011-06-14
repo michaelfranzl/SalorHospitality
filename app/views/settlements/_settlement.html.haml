@@ -27,7 +27,7 @@
         = settlement_form.text_field :revenue
       = settlement_form.hidden_field :user_id, :value => settlement.user.id
       %input{ :type => 'hidden', :id => "finished_#{ settlement.user.id }", :name => 'settlement[finished]' }
-      %input{ :type => 'hidden', :id => "port_#{ settlement.user.id }", :name => 'port', :value => "#{ @current_company.vendor_printers.first.id if @current_company.vendor_printers.first }" }
+      %input{ :type => 'hidden', :id => "port_#{ settlement.user.id }", :name => 'port', :value => "#{ @current_company.vendor_printers.available.first.id if @current_company.vendor_printers.available.first }" }
       %input{ :type => 'hidden', :id => "print_#{ settlement.user.id }", :name => 'print' }
 
 

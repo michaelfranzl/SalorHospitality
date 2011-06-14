@@ -11,15 +11,13 @@
     %h3== #{ t(:invoice) } ##{storno_form.nr}, #{ storno_form.table.name }
     %p= l storno_form.created_at, :format => :long
     %table
-      - subtotal = 0
       = order_form.fields_for :items do |item_form|
         - item = item_form.object
-        - sum = item.count * item.real_price
-        - subtotal += sum
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         - color = item.storno_status.zero? ? 'transparent' : '#FAA'
         - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-        - label = "%20.20s" % [label]
+        - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+        - label = raw "%20.20s%s" % [label, optionslabel]
 
         %tr{ :style => "background-color: #{color}" }
           %td.count.grey
@@ -33,9 +31,12 @@
               = link_to label, item_path(item), :method => 'delete', :remote => true, :title => t('.do_storno')
             - else
               = label
-          %td.total{ :style => 'text-align:right' }= number_to_currency sum
+          %td.total{ :style => 'text-align:right' }= number_to_currency item.full_price
+
+
+       
   
       %tr
         %td{ :colspan => '2'}
         %td{ :style => 'text-align:right'}
-          %b= number_to_currency subtotal
+          %b= number_to_currency storno_form.sum

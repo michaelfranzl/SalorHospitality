@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110611091247) do
+ActiveRecord::Schema.define(:version => 20110614202004) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20110611091247) do
     t.string   "subdomain",                  :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "saas",                       :default => false
     t.string   "invoice_subtitle",           :default => ""
     t.string   "address",                    :default => ""
     t.string   "revenue_service_tax_number", :default => ""
@@ -60,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20110611091247) do
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
+    t.integer  "time_offset",                :default => 0
+    t.string   "mode"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -132,7 +133,7 @@ ActiveRecord::Schema.define(:version => 20110611091247) do
     t.integer  "category_id"
     t.integer  "option_id"
     t.string   "name"
-    t.float    "price"
+    t.float    "price",       :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -53,6 +53,7 @@ class ItemsController < ApplicationController
     separated_item = item.item
     if separated_item.nil?
       separated_item = item.clone
+      separated_item.options = item.options
       separated_item.count = 0
       separated_item.item = item
       item.item = separated_item
@@ -72,6 +73,7 @@ class ItemsController < ApplicationController
     i = Item.find_by_id params[:id]
     if i.storno_status == 0
       k = i.clone
+      k.options = i.options
       k.storno_status = 2
       k.storno_item = i
       i.storno_item = k
@@ -84,14 +86,14 @@ class ItemsController < ApplicationController
     end   
     i.save
     @order = i.order
-    @order.update_attribute :sum, calculate_order_sum(@order)
+    @order.cache_sum
     render 'edit'
   end
 
   def rotate_tax
     @item = Item.find_by_id params[:id]
     tax_ids = Tax.all.collect { |t| t.id }
-    current_tax_id_index = tax_ids.index @item.real_tax.id
+    current_tax_id_index = tax_ids.index @item.tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
     @item = Item.find_by_id params[:id] # re-read necessary
@@ -172,9 +174,9 @@ class ItemsController < ApplicationController
         @current_company.unused_order_numbers << parent_order.nr
         @current_company.save
       else
-        parent_order.update_attribute( :sum, calculate_order_sum(parent_order) )
+        parent_order.cache_sum
       end
-      split_order.update_attribute( :sum, calculate_order_sum(split_order) )
+      split_order.cache_sum
     end
 
 end

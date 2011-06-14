@@ -173,7 +173,7 @@ class OrdersController < ApplicationController
       @order.cost_center = @cost_centers.first
     end
 
-    @order.sum = calculate_order_sum @order
+    @order.cache_sum
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
@@ -194,7 +194,7 @@ class OrdersController < ApplicationController
     group_identical_items @order
 
     if local_variant?
-      # print
+      # print coupons for kitchen, bar, etc.
       printers = initialize_printers
       printers.each do |id, params|
         normal   = generate_escpos_items @order, id, 0
@@ -255,7 +255,7 @@ class OrdersController < ApplicationController
         order.items.each { |i| i.update_attribute :order, target_order }
         order.reload # unlink items also in memory
         order.destroy
-        target_order.sum = calculate_order_sum(target_order)
+        target_order.cache_sum
         target_order.save
         group_identical_items(target_order)
       else

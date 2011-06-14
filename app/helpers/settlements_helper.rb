@@ -20,7 +20,7 @@ module SettlementsHelper
     s.orders.each do |o|
       next if @selected_cost_center and o.cost_center != @selected_cost_center
       o.items.each do |i|
-        s_gro[i.real_tax.id] += i.count * i.real_price
+        s_gro[i.tax.id] += i.total_price
       end
     end
     

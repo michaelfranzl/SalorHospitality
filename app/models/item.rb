@@ -27,14 +27,48 @@ class Item < ActiveRecord::Base
 
   default_scope :order => 'sort DESC'
 
-  
-  def real_price
-    if price.nil?
-      p = self.quantity ? self.quantity.price : self.article.price
-    else
-      p = price
+  def price
+    p = read_attribute :price
+    if p.nil?
+      p = self.article.price if self.article
+      p = self.quantity.price if self.quantity
     end
     return self.storno_status == 2 ? -p : p
+  end
+
+  def tax
+    t = read_attribute :tax
+    return t if t
+    t = self.order.tax
+    return t if t
+    return self.article.category.tax
+  end
+
+  def count=(count)
+    c = count.to_i
+    write_attribute :count, c
+    write_attribute(:max_count, c) if c > self.max_count
+  end
+
+  def all_options
+    self.printoptions + self.options
+  end
+
+  def total_price
+    self.price * self.count
+  end
+
+  def options_price
+    sum = (self.options + self.printoptions).collect{ |o| o.price }.sum
+    return self.storno_status == 2 ? -sum : sum
+  end
+
+  def total_options_price
+    self.options_price * self.count
+  end
+
+  def full_price
+    self.total_price + self.total_options_price
   end
 
   def optionslist=(optionslist)
@@ -59,20 +93,6 @@ class Item < ActiveRecord::Base
 
   def category
     self.article.category
-  end
-
-  def real_tax
-    i = self.tax
-    return i if i
-    o = self.order.tax
-    return o if o
-    c = self.article.category.tax
-  end
-
-  def count=(count)
-    c = count.to_i
-    write_attribute :count, c
-    write_attribute(:max_count, c) if c > self.max_count
   end
 
 end

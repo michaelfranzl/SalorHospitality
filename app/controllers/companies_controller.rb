@@ -37,4 +37,8 @@ class CompaniesController < ApplicationController
     send_file 'public/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
   end
 
+  def backup_logfile
+    send_file 'log/production.log', :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
+  end
+
 end

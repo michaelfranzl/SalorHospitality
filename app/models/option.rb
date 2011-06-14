@@ -22,4 +22,8 @@ class Option < ActiveRecord::Base
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
   end
+
+  def price
+    (read_attribute :price) || 0
+  end
 end

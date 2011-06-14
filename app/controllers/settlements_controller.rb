@@ -47,7 +47,7 @@ class SettlementsController < ApplicationController
     @orders = @settlement.orders
     printers = initialize_printers
     text = generate_escpos_settlement(@settlement, @orders)
-    do_print printers, @current_company.vendor_printers.first.id, text
+    do_print printers, @current_company.vendor_printers.available.first.id, text
     close_printers printers
     redirect_to settlements_path
   end

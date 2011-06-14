@@ -8,6 +8,7 @@
   - total = 0
   - @orders.each do |so|
     - next if @selected_cost_center and o.cost_center != @selected_cost_center
+    - total += so.sum
     %tr
     %tr
       %td.order_begin{ :colspan => 6 }
@@ -21,18 +22,20 @@
         %br
         = link_to t(:invoice), order_path(so)
 
-      - subtotal = 0
       - so.items.each do |item|
-        - sum = item.count * item.real_price
-        - subtotal += sum
-        - total += sum
         %tr
           %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
           %td.number== #{ item.count } #{ '(max. ' + item.max_count.to_s + ')' if item.max_count != item.count }
-          %td.number= number_to_currency p
-          %td.colsum= number_to_currency sum
+          %td.number= number_to_currency item.price
+          %td.colsum= number_to_currency item.total_price
+        - item.options do |o|
+          %tr
+            %td= o.name
+            %td.number= item.count
+            %td.number= number_to_currency o.price
+            %td.colsum= number_to_currency o.price * item.count
     %tr
-      %td.subtotal{ :colspan => 6 }= number_to_currency subtotal
+      %td.subtotal{ :colspan => 6 }= number_to_currency so.sum
         
   %tr.total
     %td.total{ :colspan => 6 }= number_to_currency total

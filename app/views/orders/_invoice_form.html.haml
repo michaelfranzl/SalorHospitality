@@ -31,15 +31,12 @@
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
   %table.invoice
-    - subtotal = 0
     - invoice_form.items.each do |item|
-      - sum = item.count * item.real_price
-      - subtotal += sum
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-      %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.real_tax.color : '' }" }
-        %td.count= session[:display_tax_colors] ? item.real_tax.letter : item.count
+      %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.tax.color : '' }" }
+        %td.count= session[:display_tax_colors] ? item.tax.letter : item.count
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
@@ -51,9 +48,9 @@
               = link_to raw(linktext), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
             - else
               = raw(linktext)
-        %td.price= number_to_currency item.real_price
-        %td.total= number_to_currency sum
+        %td.price= number_to_currency item.price
+        %td.total= number_to_currency item.total_price
 
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
-        %span.subtotal= number_to_currency subtotal
+        %span.subtotal= number_to_currency invoice_form.sum

@@ -127,6 +127,7 @@ fr:
         invoice_subtitle: Sous-titre facture
         revenue_service_tax_number: Nro. impôt sur les revenus
         address: Adresse
+        time_offset: XXXTime Offset
       role:
         name: Nom
       vendor_printer:
