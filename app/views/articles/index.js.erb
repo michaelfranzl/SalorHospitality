@@ -2,7 +2,7 @@ var articleslist = new Array();
 
 <%- @categories.each do |cat| %>
   articleslist[<%= cat.id %>] = "<%- cat.articles.find_in_menucard.each do |art|
-        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id }, this, i18n_enter_price);" : "display_quantities(#{ art.id });"
+        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
         onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
         image = "<img class='more' src='/images/more.png'>" if not art.quantities.empty?
   %><div id='article_<%= art.id %>' class='article' onclick='<%= onclickaction %>' onmousedown='<%= onmousedownaction %>' onmouseup='articles_onmouseup(this);'><%= art.name %> <%= raw image %></div><div id='article_<%= art.id %>_quantities'></div><% end %>"
@@ -15,7 +15,7 @@ var quantitylist = new Array();
 <%- @categories.each do |cat| %>
   <%- cat.articles.find_in_menucard.each do |art| %>
     <%- next if art.quantities.empty? %>
-    quantitylist[<%= art.id %>] = "<%- art.quantities.active_and_sorted.each do |qu| %><div id='quantity_<%= qu.id %>' class='quantity' onmousedown='quantities_onmousedown(this);' onmouseup='quantities_onmouseup(this);' onclick='add_new_item_q(<%= qu.id %>, this);'><%= qu.prefix %> <%= qu.postfix %></div><%- end %>"
+    quantitylist[<%= art.id %>] = "<%- art.quantities.active_and_sorted.each do |qu| %><div id='quantity_<%= qu.id %>' class='quantity' onmousedown='quantities_onmousedown(this);' onmouseup='quantities_onmouseup(this);' onclick='add_new_item_q(<%= qu.id %>);'><%= qu.prefix %> <%= qu.postfix %></div><%- end %>"
   <%- end %>
 <%- end %>
 
