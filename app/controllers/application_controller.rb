@@ -302,11 +302,12 @@ class ApplicationController < ActionController::Base
         item.all_options.each do |o|
           list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, item.total_options_price] unless o.price == 0
         end
+
         sum_taxes[item.tax.id] += item.full_price
         subtotal += item.full_price
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
 
-        list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, p, item.count, item.total_price]
+        list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.total_price]
         list_of_items += list_of_options
       end
 

@@ -43,13 +43,18 @@
           - else
             - path = session[:display_tax_colors] ? "/items/rotate_tax/#{ item.id }" : item_path(item.id)
             - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
-            - linktext = "#{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }"
+            - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
+            - optionslabel = item.all_options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+            - optionsprices = item.all_options.collect { |o| "<br>#{ number_to_currency o.price }" unless o.price.zero? }.join
+            - label = raw "%20.20s%s" % [label, optionslabel]
             - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
-              = link_to raw(linktext), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
+              = link_to raw(label), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
             - else
               = raw(linktext)
-        %td.price= number_to_currency item.price
-        %td.total= number_to_currency item.total_price
+        %td.price
+          = number_to_currency item.price
+          = raw optionsprices
+        %td.total= number_to_currency item.full_price
 
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}

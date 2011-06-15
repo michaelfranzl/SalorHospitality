@@ -16,7 +16,7 @@
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         - color = item.storno_status.zero? ? 'transparent' : '#FAA'
         - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-        - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+        - optionslabel = item.all_options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
         - label = raw "%20.20s%s" % [label, optionslabel]
 
         %tr{ :style => "background-color: #{color}" }

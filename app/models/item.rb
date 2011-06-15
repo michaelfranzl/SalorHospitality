@@ -33,15 +33,15 @@ class Item < ActiveRecord::Base
       p = self.article.price if self.article
       p = self.quantity.price if self.quantity
     end
-    return self.storno_status == 2 ? -p : p
+    p
   end
 
   def tax
-    t = read_attribute :tax
+    t = Tax.find_by_id (read_attribute :tax_id)
     return t if t
-    t = self.order.tax
+    t = self.order.tax if self.order
     return t if t
-    return self.article.category.tax
+    return self.article.category.tax if self.article
   end
 
   def count=(count)
@@ -55,12 +55,13 @@ class Item < ActiveRecord::Base
   end
 
   def total_price
-    self.price * self.count
+    p = self.price * self.count
+    return self.storno_status == 2 ? -p : p
   end
 
   def options_price
-    sum = (self.options + self.printoptions).collect{ |o| o.price }.sum
-    return self.storno_status == 2 ? -sum : sum
+    p = (self.options + self.printoptions).collect{ |o| o.price }.sum
+    return self.storno_status == 2 ? -p : p
   end
 
   def total_options_price

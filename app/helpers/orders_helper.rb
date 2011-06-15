@@ -17,12 +17,15 @@
 module OrdersHelper
 
   def compose_item_label(item)
-    return "#{ item.quantity.prefix if item.quantity } #{ item.article.name } #{ item.quantity.postfix if item.quantity }"
+    if item.quantity
+      "#{ item.quantity.prefix } #{ item.article.name } #{ item.quantity.postfix }"
+    else
+      item.article.name
+    end
   end
 
   def compose_option_names(item)
-    item.printoptions.collect{ |o| "<br>#{ o.name } #{ number_to_currency(o.price || 0) }" }.join +
-    item.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency(o.price || 0) }" }.join
+    item.all_options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
   end
 
   def generate_js_variables

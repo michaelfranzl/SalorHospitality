@@ -96,7 +96,7 @@ class ItemsController < ApplicationController
     current_tax_id_index = tax_ids.index @item.tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
-    @item = Item.find_by_id params[:id] # re-read necessary
+    @item = Item.find_by_id params[:id] # re-read is necessary
   end
 
   private
@@ -130,6 +130,7 @@ class ItemsController < ApplicationController
         if split_item.nil?
           logger.info "[Split] Because split_item is nil, we're going to create one."
           split_item = parent_item.clone
+          split_item.options = parent_item.options
           split_item.count = 0
           split_item.printed_count = 0
           sisr2 = split_item.save
