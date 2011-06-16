@@ -45,6 +45,8 @@ class Item < ActiveRecord::Base
   end
 
   def count=(count)
+#puts "inside item.rb #{ self.inspect } #{ self.frozen? }"
+#debugger
     c = count.to_i
     write_attribute :count, c
     write_attribute(:max_count, c) if c > self.max_count
