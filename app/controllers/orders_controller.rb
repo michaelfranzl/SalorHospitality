@@ -276,16 +276,10 @@ class OrdersController < ApplicationController
     end
 
     def group_identical_items(o)
-#debugger
       items = o.items
-puts o.inspect
-puts o.items.collect{ |i| "id#{ i.id }   count#{ i.count }   article#{ i.article_id }   quantity#{ i.quantity_id }   options#{ i.options.count }   price#{i.price}   comment#{ i.comment} "}.join "\n"
-puts o.items.size
       n = items.size - 1
       0.upto(n-1) do |i|
-puts "=========== i#{ i } items[#{items[i].id }]"
         (i+1).upto(n) do |j|
-puts "   ---- j#{ j } items[#{items[j].id}]"
           Item.transaction do
             if (items[i].article_id  == items[j].article_id and
                 items[i].quantity_id == items[j].quantity_id and
@@ -294,7 +288,6 @@ puts "   ---- j#{ j } items[#{items[j].id}]"
                 items[i].comment     == items[j].comment and
                 not items[i].destroyed?
                )
-puts "     MATCHING"
               items[i].count += items[j].count
               items[i].printed_count += items[j].printed_count
               result = items[i].save
