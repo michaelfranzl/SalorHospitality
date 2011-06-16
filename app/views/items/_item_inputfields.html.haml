@@ -8,8 +8,6 @@
 
   %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }
 
-  %input{ :id => "order_items_attributes_#{ designator }_printoptionslist", :name => "order[items_attributes][#{ designator }][printoptionslist]", :type => 'hidden', :value => "#{ printoptionslist }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }" }
 
   %input{ :id => "order_items_attributes_#{ designator }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ designator }][quantity_id]", :type => 'hidden', :value => "#{ quantityid }" }
@@ -24,5 +22,5 @@
 
   %div{ :id => "options_for_item_#{ designator }" }
     - if item
-      - (item.printoptions + item.options).each do |o|
+      - item.options.each do |o|
         %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price || 0 }

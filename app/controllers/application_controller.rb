@@ -238,28 +238,18 @@ class ApplicationController < ActionController::Base
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
           per_order_output += " ! %-17.17s\n" % [i.comment] if i.comment and not i.comment.empty?
 
-          i.printoptions.each do |po|
+          i.options.each do |po|
             per_order_output += " * %-17.17s\n" % [po.name]
-            i.options << po
           end
 
-          begin
-            i.printoptions = []
-            i.printed_count = i.count 
-            i.save
-          rescue
-            logger.info "Trying to prevent FROZEN HASH error"
-            sleep 1
-            i.printoptions = []
-            i.printed_count = i.count 
-            i.save
-          end
+          i.printed_count = i.count
+          i.save
         end
 
         footer =
         "\n\n\n\n" +
-        "\x1B\x70\x00\x99\x99" + # beep
-        "\x1D\x56\x00"           # paper cut at the end of each order
+        "\x1D\x56\x00" +        # paper cut at the end of each order
+        "\x1B\x70\x00\x99\x99"  # beep
 
         header.force_encoding 'ISO-8859-15'
         footer.force_encoding 'ISO-8859-15'
@@ -299,7 +289,7 @@ class ApplicationController < ActionController::Base
       order.items.each do |item|
         next if item.count == 0
         list_of_options = ''
-        item.all_options.each do |o|
+        item.options.each do |o|
           list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, item.total_options_price] unless o.price == 0
         end
 

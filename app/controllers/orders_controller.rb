@@ -156,8 +156,6 @@ class OrdersController < ApplicationController
       @order = Order.find_by_id params[:order][:id]
     end
 
-#debugger
-
     if @order
       # similar to orders#update
       begin
@@ -175,12 +173,10 @@ class OrdersController < ApplicationController
       @order.cost_center = @cost_centers.first
     end
 
-    @order.cache_sum
+    @order.sum = @order.calculate_sum
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
-
-#debugger
 
     if @order.nr > @current_company.largest_order_number
       @current_company.update_attribute :largest_order_number, @order.nr 
@@ -261,7 +257,7 @@ class OrdersController < ApplicationController
         order.items.each { |i| i.update_attribute :order, target_order }
         order.reload # unlink items also in memory
         order.destroy
-        target_order.cache_sum
+        target_order.sum = target_order.calculate_sum
         target_order.save
         group_identical_items(target_order)
       else

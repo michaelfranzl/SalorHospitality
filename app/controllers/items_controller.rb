@@ -86,7 +86,7 @@ class ItemsController < ApplicationController
     end   
     i.save
     @order = i.order
-    @order.cache_sum
+    @order.update_attribute :sum, @order.calculate_sum
     render 'edit'
   end
 
@@ -175,9 +175,9 @@ class ItemsController < ApplicationController
         @current_company.unused_order_numbers << parent_order.nr
         @current_company.save
       else
-        parent_order.cache_sum
+        parent_order.update_attribute :sum, parent_order.calculate_sum
       end
-      split_order.cache_sum
+      split_order.update_attribute :sum, split_order.calculate_sum
     end
 
 end

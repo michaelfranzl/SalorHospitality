@@ -66,7 +66,6 @@ function add_new_item_q(qu_id, add_new) {
       !add_new &&
       $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_q[qu_id][3] &&
       $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
-      $('#order_items_attributes_' + matched_designator + '_printoptionslist').val() == '' &&
       $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
       $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
      )
@@ -127,7 +126,6 @@ function add_new_item_a(art_id, add_new) {
       !add_new &&
       $('#order_items_attributes_' + matched_designator + '_price').val() == itemdetails_a[art_id][3] &&
       $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
-      $('#order_items_attributes_' + matched_designator + '_printoptionslist').val() == '' &&
       $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
       $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
      )
@@ -222,7 +220,6 @@ function add_option_to_item_from_select(item_designator, select_tag)
   if (select_tag.value == 0) {
     // delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
-    $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
     $('#optionsnames_' + item_designator).html('');
 
   } else if (select_tag.value == -2 ) {
@@ -236,8 +233,8 @@ function add_option_to_item_from_select(item_designator, select_tag)
 
   } else {
     // options from database
-    printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
-    $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + select_tag.value + ' ');
+    optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
+    $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + select_tag.value + ' ');
     var index = $('#optionsselect_select_' + item_designator).attr('selectedIndex');
     var text = $('#optionsselect_select_' + item_designator).attr('options')[index].text;
     $('#optionsnames_' + item_designator).append('<br>' + text);
@@ -249,7 +246,7 @@ function add_option_to_item_from_select(item_designator, select_tag)
 function add_option_to_item_from_div(item_designator, value, price, text)
 {
 
-  if ($('#order_items_attributes_' + item_designator + '_printoptionslist').val() == '' && $('#order_items_attributes_' + item_designator + '_optionslist').val() == '' && value > 0) {
+  if ($('#order_items_attributes_' + item_designator + '_optionslist').val() == '' && $('#order_items_attributes_' + item_designator + '_count').val() != 1 && value > 0) {
 
     var quantity_id = $('#order_items_attributes_' + item_designator + '_quantity_id').val();
   
@@ -274,7 +271,6 @@ function add_option_to_item_from_div(item_designator, value, price, text)
   if (value == 0) {
     // normal, delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
-    $('#order_items_attributes_' + item_designator + '_printoptionslist').val('');
     $('#optionsnames_' + item_designator).html('');
     itemoptions.html('');
 
@@ -288,8 +284,8 @@ function add_option_to_item_from_div(item_designator, value, price, text)
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else {
-    printoptionslist = $('#order_items_attributes_' + item_designator + '_printoptionslist').val();
-    $('#order_items_attributes_' + item_designator + '_printoptionslist').val(printoptionslist + value + ' ');
+    optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
+    $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + value + ' ');
     $('#optionsnames_' + item_designator).append('<br>' + text);
     itemoptions.append('<input id="item_' + item_designator + '_option_' + value + '" class="optionprice" type="hidden" value="' + price + '">');
   }
