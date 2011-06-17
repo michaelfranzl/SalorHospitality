@@ -87,6 +87,7 @@ class ItemsController < ApplicationController
     i.save
     @order = i.order
     @order.update_attribute :sum, @order.calculate_sum
+    @order.update_attribute :storno_sum, @order.calculate_storno_sum
     render 'edit'
   end
 

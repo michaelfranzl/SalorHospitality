@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110614202004) do
+ActiveRecord::Schema.define(:version => 20110617192435) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20110614202004) do
     t.integer  "credit",         :default => 0
     t.integer  "tax_id"
     t.boolean  "print_pending"
+    t.float    "storno_sum",     :default => 0.0
   end
 
   create_table "quantities", :force => true do |t|

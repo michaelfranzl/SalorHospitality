@@ -34,4 +34,8 @@ class Order < ActiveRecord::Base
     self.items.collect{ |i| i.full_price }.sum
   end
 
+  def calculate_storno_sum
+    self.items.collect{ |i| i.storno_status == 2 ? - i.full_price : 0 }.sum
+  end
+
 end
