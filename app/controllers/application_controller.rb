@@ -249,7 +249,7 @@ class ApplicationController < ActionController::Base
         footer =
         "\n\n\n\n" +
         "\x1D\x56\x00" +        # paper cut at the end of each order
-        "\x1B\x70\x00\x99\x99"  # beep
+        "\x1B\x70\x00\x99\x99\x0C"  # beep
 
         header.force_encoding 'ISO-8859-15'
         footer.force_encoding 'ISO-8859-15'
@@ -329,7 +329,7 @@ class ApplicationController < ActionController::Base
       "\e!\x08" + # emphasized
       "\n" + @current_company.invoice_slogan2 + "\n" +
       @current_company.internet_address + "\n\n\n\n\n\n\n" + 
-      "\x1DV\x00" # paper cut
+      "\x1DV\x00\x0C" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer
 

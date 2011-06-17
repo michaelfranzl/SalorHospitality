@@ -12,6 +12,7 @@ $('#order_user_id').val(<%= @current_user.id %>);
 $('#order_action').val('');
 $('#target_table').val('');
 
+
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
 <% if @order
@@ -55,3 +56,4 @@ $('#functions_header_order_form').show();
 $('#functions_footer').show();
 
 tableupdates = -1;
+new_order = <%= @order ? 'false' : 'true' %>;

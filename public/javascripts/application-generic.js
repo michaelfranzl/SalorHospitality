@@ -25,6 +25,7 @@ jQuery.ajaxSetup({
 
 var tableupdates = -1;
 var automatic_printing = 0;
+var new_order = true;
 
 function display_articles(cat_id) {
   $('#articles').html(articleslist[cat_id]);
@@ -161,7 +162,7 @@ function decrement_item(desig) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
-  } else if (permission_immediate_storno) {
+  } else if (permission_immediate_storno || new_order) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#order_items_attributes_' + desig + '__destroy').val(1);
@@ -214,13 +215,31 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 
 function add_option_to_item_from_select(item_designator, select_tag)
 {
+  original_designator = item_designator;
+
+  if ($('#order_items_attributes_' + item_designator + '_optionslist').val() == '' && $('#order_items_attributes_' + item_designator + '_count').val() != 1 && select_tag.value > 0) {
+
+    var quantity_id = $('#order_items_attributes_' + item_designator + '_quantity_id').val();
+  
+    if ( quantity_id != '') {
+      cloned_item_designator = add_new_item_q(quantity_id, true);
+    } else {
+      var article_id = $('#order_items_attributes_' + item_designator + '_article_id').val();
+      cloned_item_designator = add_new_item_a(article_id, true);
+    }
+    decrement_item(item_designator);
+    item_designator = cloned_item_designator;
+  }
+
   var tablerow = $('#item_' + item_designator);
   var itemfields = $('#fields_for_item_' + item_designator);
+  var itemoptions = $('#options_for_item_' + item_designator);
 
   if (select_tag.value == 0) {
     // delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
     $('#optionsnames_' + item_designator).html('');
+    itemoptions.html('');
 
   } else if (select_tag.value == -2 ) {
     // just exit, do nothing
@@ -235,12 +254,13 @@ function add_option_to_item_from_select(item_designator, select_tag)
     // options from database
     optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
     $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + select_tag.value + ' ');
-    var index = $('#optionsselect_select_' + item_designator).attr('selectedIndex');
-    var text = $('#optionsselect_select_' + item_designator).attr('options')[index].text;
+    var index = $('#optionsselect_select_' + original_designator).attr('selectedIndex');
+    var text = $('#optionsselect_select_' + original_designator).attr('options')[index].text;
     $('#optionsnames_' + item_designator).append('<br>' + text);
+    itemoptions.append('<input id="item_' + item_designator + '_option_' + select_tag.value + '" class="optionprice" type="hidden" value="' + optionsdetails[select_tag.value][0] + '">');
   }
   $('#optionsselect_select_' + item_designator).val(-2); //reset
-  $('#optionsselect_select_' + item_designator).hide();
+  calculate_sum();
 }
 
 function add_option_to_item_from_div(item_designator, value, price, text)
@@ -259,7 +279,6 @@ function add_option_to_item_from_div(item_designator, value, price, text)
     decrement_item(item_designator);
     $('#optionsselect_div_' + item_designator).slideUp();
     item_designator = cloned_item_designator;
-
   }
 
   $('#optionsselect_div_' + item_designator).slideUp();
