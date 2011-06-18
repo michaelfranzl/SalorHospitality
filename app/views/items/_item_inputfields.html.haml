@@ -4,6 +4,8 @@
 
   %input{ :id => "order_items_attributes_#{ designator }_count", :class => 'count', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }
 
+  %input{ :id => "item_#{ designator }_start_count", :type => 'hidden', :value => "#{ count }" }
+
   %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }" }
 
   %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }

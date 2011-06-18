@@ -26,7 +26,7 @@ var itemdetails_q = new Array();
 <%- @categories.each do |cat| %>
   <%- cat.articles.find_in_menucard.each do |art| %>
     <%- art.quantities.each do |qu| %>
-      itemdetails_q[<%= qu.id %>] = new Array( '<%= qu.article.id %>', '<%= escape_javascript qu.article.name %>', '<%= escape_javascript qu.prefix %>', '<%= number_with_precision qu.price, :precision => 2 %>', '<%= escape_javascript qu.article.description %>', '<%= escape_javascript qu.prefix %> <%= escape_javascript qu.article.name %> <%= escape_javascript qu.postfix %>', '<%= cat.id %>', '<%= qu.usage %>');
+      itemdetails_q[<%= qu.id %>] = new Array( '<%= qu.article.id %>', '<%= escape_javascript qu.article.name %>', '<%= escape_javascript qu.prefix %>', '<%= number_with_precision qu.price, :precision => 2, :locale => :en %>', '<%= escape_javascript qu.article.description %>', '<%= escape_javascript qu.prefix %> <%= escape_javascript qu.article.name %> <%= escape_javascript qu.postfix %>', '<%= cat.id %>', '<%= qu.usage %>');
     <%- end %>
   <%- end %>
 <%- end %>
@@ -35,7 +35,7 @@ var itemdetails_q = new Array();
 var itemdetails_a = new Array();
 <%- @categories.each do |cat| %>
   <%- cat.articles.find_in_menucard.each do |art| %>
-    itemdetails_a[<%= art.id %>] = new Array( '<%= art.id %>', '<%= escape_javascript art.name %>', '<%= escape_javascript art.name %>', '<%= number_with_precision art.price, :precision => 2 %>', '<%= escape_javascript art.description %>', '<%= escape_javascript art.name %>', '<%= cat.id %>', '<%= art.usage %>');
+    itemdetails_a[<%= art.id %>] = new Array( '<%= art.id %>', '<%= escape_javascript art.name %>', '<%= escape_javascript art.name %>', '<%= number_with_precision art.price, :precision => 2, :locale => :en %>', '<%= escape_javascript art.description %>', '<%= escape_javascript art.name %>', '<%= cat.id %>', '<%= art.usage %>');
   <%- end %>
 <%- end %>
 

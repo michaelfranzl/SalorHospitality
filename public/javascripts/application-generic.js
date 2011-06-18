@@ -158,11 +158,12 @@ function increment_item(desig) {
 
 function decrement_item(desig) {
   var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
-  if (i > 1) {
+  var start_count = parseInt($('#item_' + desig + '_start_count').val());
+  if ( i > 1 && ( permission_immediate_storno || i > start_count ) ) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
-  } else if (permission_immediate_storno || new_order) {
+  } else if ( i == 1 && ( permission_immediate_storno || (desig.search(/new_.+/) != -1 ))) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#order_items_attributes_' + desig + '__destroy').val(1);
@@ -189,8 +190,8 @@ function calculate_sum() {
   var itemprice;
   var options;
   for(i=0; i<items.length; i++) {
-    itemcount = parseFloat($(items[i]).children('.count')[0].value.replace(i18n_decimal_separator, '.'));
-    itemprice = parseFloat($(items[i]).children('.price')[0].value.replace(i18n_decimal_separator, '.'));
+    itemcount = parseFloat($(items[i]).children('.count')[0].value);
+    itemprice = parseFloat($(items[i]).children('.price')[0].value);
     sum += itemcount * itemprice;
     options = $(items[i]).children('div').children('.optionprice');
     for(j=0; j<options.length; j++) {
