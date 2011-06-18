@@ -35,6 +35,10 @@ class Item < ActiveRecord::Base
     p
   end
 
+  def price=(price)
+    write_attribute :price, price.gsub(',', '.')
+  end
+
   def tax
     t = Tax.find_by_id (read_attribute :tax_id)
     return t if t

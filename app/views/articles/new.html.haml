@@ -24,8 +24,10 @@
             %td
               = article_form.text_field :description
               %span#article_description_display_keyboard.display_keyboard
+
           - existing_quantities = false
           - article_form.object.quantities.each { |qu| existing_quantities = true and break if not qu.hidden }
+
           - if not existing_quantities
             %tr
               %td= article_form.label('price', Article.human_attribute_name(:price))
@@ -55,7 +57,7 @@
 
     %h3= t('activerecord.models.quantity.other')
     %table#quantities_new
-      = article_form.fields_for :quantities do |quantity_form|
+      = article_form.fields_for :quantities, article_form.object.quantities.existing do |quantity_form|
         = render :partial => 'quantity', :locals => { :f => quantity_form }
 
     %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
@@ -99,7 +101,7 @@
 
   $('#add_quantity').click(function(){
     var new_quantity_id = new Date().getTime();
-    $('#quantities_new').append(quantity_template.replace(/\d/g, 'new_' + new_quantity_id));
+    $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, 'new_' + new_quantity_id));
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').keyboard( {openOn: '' } );
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix_display_keyboard').click(function(){
       $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').getkeyboard().reveal();

@@ -189,8 +189,8 @@ function calculate_sum() {
   var itemprice;
   var options;
   for(i=0; i<items.length; i++) {
-    itemcount = parseFloat($(items[i]).children('.count')[0].value);
-    itemprice = parseFloat($(items[i]).children('.price')[0].value);
+    itemcount = parseFloat($(items[i]).children('.count')[0].value.replace(i18n_decimal_separator, '.'));
+    itemprice = parseFloat($(items[i]).children('.price')[0].value.replace(i18n_decimal_separator, '.'));
     sum += itemcount * itemprice;
     options = $(items[i]).children('div').children('.optionprice');
     for(j=0; j<options.length; j++) {

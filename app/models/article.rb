@@ -26,7 +26,7 @@ class Article < ActiveRecord::Base
   scope :existing, where(:hidden => false)
 
   def price=(price)
-    write_attribute(:price, price.gsub(',', '.'))
+    write_attribute :price, price.gsub(',', '.')
   end
 
   def self.find_in_menucard
