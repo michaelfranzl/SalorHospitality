@@ -11,7 +11,7 @@
 #functions_footer{ :style => 'display: none;' }
   %img{ :src => '/images/send.gif', :style => 'display:none;' }
   - if workstation?
-    %a.iconbutton.scrollup_button{ :onclick => 'scroll_to("#container",10);', :title => t(:scroll_up) }
+    %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20);', :title => t(:scroll_down) }
   - else
     = render('functions_footer')
 

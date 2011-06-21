@@ -1,5 +1,5 @@
 - if workstation?
-  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+  %a.iconbutton.scrollup_button{ :onclick => 'scroll_for(-200,20)', :title => t(:scroll_up) }
 - else
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
 

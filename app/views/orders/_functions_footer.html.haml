@@ -10,4 +10,4 @@
     = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
 
 - if workstation?
-  %a.iconbutton.scrollup_button{ :onclick => 'scroll_for(-200,20)', :title => t(:scroll_up) }
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

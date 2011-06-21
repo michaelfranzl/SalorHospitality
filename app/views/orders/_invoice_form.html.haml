@@ -45,16 +45,16 @@
             - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
             - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
             - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
-            - optionsprices = item.options.collect { |o| "<br>#{ number_to_currency o.price }" unless o.price.zero? }.join
+            - optionsprices = item.options.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
             - label = raw "%20.20s%s" % [label, optionslabel]
             - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
               = link_to raw(label), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
             - else
               = raw(linktext)
         %td.price
-          = number_to_currency item.price
+          = number_with_precision item.price, :precision => 2
           = raw optionsprices
-        %td.total= number_to_currency item.full_price
+        %td.total= number_with_precision item.full_price, :precision => 2
 
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
