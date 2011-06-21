@@ -2,8 +2,12 @@
   ServerName billgastro
   DocumentRoot /opt/billgastro/billgastro/public
   RailsEnv production
-  PassengerMinInstances 1
   PassengerHighPerformance on
+  PassengerSpawnMethod conservative
+  PassengerMaxPoolSize 30
+  PassengerMinInstances 10
+  PassengerPoolIdleTime 0
+  PassengerStatThrottleRate 120
 </VirtualHost>
 
 PassengerPreStart http://billgastro/

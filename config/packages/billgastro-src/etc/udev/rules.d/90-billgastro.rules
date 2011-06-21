@@ -21,4 +21,5 @@ KERNELS=="4-1:1.0", DRIVERS=="pl2303", MODE="0777", SYMLINK="billgastro-printer-
 
 # Device nodes for unknown drivers
 KERNEL=="usblp?", MODE="0777"
+KERNEL=="lp?", MODE="0777"
 KERNEL=="ttyUSB?", MODE="0777"

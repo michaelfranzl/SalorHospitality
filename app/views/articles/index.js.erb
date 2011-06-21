@@ -2,7 +2,7 @@ var articleslist = new Array();
 
 <%- @categories.each do |cat| %>
   articleslist[<%= cat.id %>] = "<%- cat.articles.find_in_menucard.each do |art|
-        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id });"
+        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id },this);"
         onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
         image = "<img class='more' src='/images/more.png'>" if not art.quantities.empty?
   %><div id='article_<%= art.id %>' class='article' onclick='<%= onclickaction %>' onmousedown='<%= onmousedownaction %>' onmouseup='articles_onmouseup(this);'><%= art.name %> <%= raw image %></div><div id='article_<%= art.id %>_quantities'></div><% end %>"
@@ -44,14 +44,14 @@ var optionsselect = new Array();
 
 <%- @categories.each do |cat| %>
   <%- next if cat.options.empty? %>
-    optionsselect[<%= cat.id %>] = "<%- cat.options.each do |o| %><option value='<%= o.id %>'><%= escape_javascript o.name %> <%= escape_javascript number_to_currency o.price %></option><%- end %>";
+    optionsselect[<%= cat.id %>] = "<%- cat.options.each do |o| %><option value='<%= o.id %>'><%= escape_javascript o.name %></option><%- end %>";
 <%- end %>
 
 var optionsdiv = new Array();
 
 <%- @categories.each do |cat| %>
   <%- next if cat.options.empty? %>
-    optionsdiv[<%= cat.id %>] = "<%- cat.options.each do |o| %><div onclick=\"add_option_to_item_from_div('DESIGNATOR', <%= o.id %>, <%= o.price %>, '<%= escape_javascript o.name %> <%= escape_javascript number_to_currency o.price %>')\"><%= escape_javascript o.name %> <%= escape_javascript number_to_currency o.price %></div><%- end %>";
+    optionsdiv[<%= cat.id %>] = "<%- cat.options.each do |o| %><span class='option' onclick=\"add_option_to_item_from_div('DESIGNATOR', <%= o.id %>, <%= o.price %>, '<%= escape_javascript o.name %> <%= escape_javascript number_to_currency o.price %>')\"><%= escape_javascript o.name %></span><%- end %>";
 <%- end %>
 
 var optionsdetails = new Array();

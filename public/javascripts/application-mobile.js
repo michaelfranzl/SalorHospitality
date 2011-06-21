@@ -23,7 +23,7 @@ function category_onmousedown(category_id, element) {
   scroll_to('#articles', 7);
 }
 
-function display_quantities(art_id) {
+function display_quantities(art_id, article_div) {
   if ($('#article_' + art_id + '_quantities').html() == '') {
     $('#article_' + art_id + '_quantities').html(quantitylist[art_id]);
     scroll_to('#article_' + art_id + '_quantities', 15);

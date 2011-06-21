@@ -19,12 +19,12 @@
     - if workstation?
       %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
       %div.optionsselect{ :id => "optionsselect_div_#{ designator }" }
-        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, null, '#{t('.done')}')" }= t('.done')
-        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
-        %div{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
+        %span.done{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, null, '#{t('.done')}')" }
+        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
+        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
         - if item
           - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
-            %div{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name } #{ escape_javascript number_to_currency o.price }')" }== #{ o.name } #{ number_to_currency o.price }
+            %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name } #{ escape_javascript number_to_currency o.price }')" }== #{ o.name }
         - else
           OPTIONSDIV
 
