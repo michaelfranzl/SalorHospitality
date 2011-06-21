@@ -41,4 +41,8 @@ class CompaniesController < ApplicationController
     send_file 'log/production.log', :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
   end
 
+  def logo
+    send_data @current_company.image, :type  => @current_company.content_type, :filename => 'abc', :disposition => 'inline'
+  end
+
 end

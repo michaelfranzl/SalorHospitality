@@ -3,38 +3,41 @@
 %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
 %p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
 
-= form_for @current_company do |company_form|
+= form_for @current_company, :html => { :multipart => true } do |company_form|
   %div#company_data
     %p
+      = company_form.label :logo, Company.human_attribute_name(:logo)
+      = company_form.file_field :logo, :size => 15
+    %p
       = company_form.label :name, Company.human_attribute_name(:name)
-      = company_form.text_field :name
+      = company_form.text_field :name, :size => 30
     %p
       = company_form.label :invoice_subtitle, Company.human_attribute_name(:invoice_subtitle)
-      = company_form.text_field :invoice_subtitle
+      = company_form.text_field :invoice_subtitle, :size => 30
     %p
       = company_form.label :address, Company.human_attribute_name(:address)
-      = company_form.text_field :address
+      = company_form.text_field :address, :size => 30
     %p
       = company_form.label :revenue_service_tax_number, Company.human_attribute_name(:revenue_service_tax_number)
-      = company_form.text_field :revenue_service_tax_number
+      = company_form.text_field :revenue_service_tax_number, :size => 30
     %p
       = company_form.label :invoice_slogan1, Company.human_attribute_name(:invoice_slogan1)
-      = company_form.text_field :invoice_slogan1
+      = company_form.text_field :invoice_slogan1, :size => 30
     %p
       = company_form.label :invoice_slogan2, Company.human_attribute_name(:invoice_slogan2)
-      = company_form.text_field :invoice_slogan2
+      = company_form.text_field :invoice_slogan2, :size => 30
     %p
       = company_form.label :bank_account1, Company.human_attribute_name(:bank_account1)
-      = company_form.text_field :bank_account1
+      = company_form.text_field :bank_account1, :size => 30
     %p
       = company_form.label :bank_account2, Company.human_attribute_name(:bank_account2)
-      = company_form.text_field :bank_account2
+      = company_form.text_field :bank_account2, :size => 30
     %p
       = company_form.label :internet_address, Company.human_attribute_name(:internet_address)
-      = company_form.text_field :internet_address
+      = company_form.text_field :internet_address, :size => 30
     %p
       = company_form.label :email, Company.human_attribute_name(:email)
-      = company_form.text_field :email
+      = company_form.text_field :email, :size => 30
     %p
       = company_form.label :country, Company.human_attribute_name(:country)
       %select#category_color{ :name => 'company[country]' }

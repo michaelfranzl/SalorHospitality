@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110621134306) do
+ActiveRecord::Schema.define(:version => 20110621160653) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20110621134306) do
     t.string   "bank_account2"
     t.integer  "time_offset",                :default => 0
     t.string   "mode"
+    t.string   "content_type"
+    t.binary   "image"
   end
 
   create_table "cost_centers", :force => true do |t|
