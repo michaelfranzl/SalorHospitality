@@ -51,7 +51,7 @@ var optionsdiv = new Array();
 
 <%- @categories.each do |cat| %>
   <%- next if cat.options.empty? %>
-    optionsdiv[<%= cat.id %>] = "<%- cat.options.each do |o| %><span class='option' onclick=\"add_option_to_item_from_div('DESIGNATOR', <%= o.id %>, <%= o.price %>, '<%= escape_javascript o.name %> <%= escape_javascript number_to_currency o.price %>')\"><%= escape_javascript o.name %></span><%- end %>";
+    optionsdiv[<%= cat.id %>] = "<%- cat.options.each do |o| %><span class='option' onclick=\"add_option_to_item_from_div('DESIGNATOR', <%= o.id %>, <%= o.price %>, '<%= escape_javascript o.name %>')\"><%= escape_javascript o.name %></span><%- end %>";
 <%- end %>
 
 var optionsdetails = new Array();

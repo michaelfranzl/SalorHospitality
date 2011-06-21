@@ -17,7 +17,7 @@
 class TablesController < ApplicationController
 
   def index
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = Table.where( :hidden => false )
     @last_finished_order = Order.find_all_by_finished(true).last
     respond_to do |wants|
       wants.html
@@ -63,8 +63,7 @@ class TablesController < ApplicationController
 
   def destroy
     @table = Table.find(params[:id])
-    flash[:notice] = t(:successfully_deleted, :what => @table.name)
-    @table.destroy
+    @table.update_attribute :hidden, true
     redirect_to tables_path
   end
 

@@ -76,6 +76,7 @@ en:
         name: Name
         letter: Abbreviation
         color: Color
+        hidden: delete
       table:
         name: Name
         abbreviation: Abbreviation
@@ -85,7 +86,7 @@ en:
         width_mobile: Width mobile
         height_mobile: Height mobile
         enabled: active?
-        hidden: delete?
+        hidden: delete
       category:
         name: Name
         tax_id: Tax
@@ -161,6 +162,7 @@ en:
     new:
       new_option: New Option
       edit_option: Edit Option
+      hidden: delete
 
   blackboard:
     index:

@@ -76,6 +76,7 @@ de:
         name: Name
         letter: Buchstabe
         color: Farbe
+        hidden: löschen
       table:
         name: Name
         abbreviation: Abkürzung
@@ -85,7 +86,7 @@ de:
         width_mobile: Breite mobile
         height_mobile: Höhe mobile
         enabled: aktiv?
-        hidden: löschen?
+        hidden: löschen
       category:
         name: Name
         tax_id: Steuerklasse
@@ -161,6 +162,7 @@ de:
     new:
       new_option: Neue Option
       edit_option: Option bearbeiten
+      hidden: löschen
 
   blackboard:
     index:

@@ -6,10 +6,11 @@
 
 %table
   %tr
-    %th{ :width => '100px' }
-    %th{ :width => '250px' }
-    %th{ :width => '120px' }
+    %th{ :width => '150px' }
+    %th{ :width => '150px' }
+    %th{ :width => '50px' }
   - @tables.each do |ta|
     %tr
       %td= link_to ta.name, edit_table_path(ta)
       %td= ta.description
+      %td= link_to Table.human_attribute_name(:hidden), table_path(ta), :method => :delete

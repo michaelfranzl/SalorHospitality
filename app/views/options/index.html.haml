@@ -4,9 +4,11 @@
 
 %table
   %tr
-    %th{ :style => 'width:250px' }= Option.human_attribute_name(:name)
-    %th{ :style => 'width:150px' }= Option.human_attribute_name(:category)
+    %th{ :style => 'width:150px' }= Option.human_attribute_name(:name)
+    %th{ :style => 'width:120px' }= Option.human_attribute_name(:category)
+    %th{ :style => 'width:50px' }
   - @options.each do |opt|
     %tr
       %td= link_to opt.name, edit_option_path(opt)
       %td= opt.category.name if opt.category
+      %td= link_to Option.human_attribute_name(:delete), option_path(opt), :method => :delete

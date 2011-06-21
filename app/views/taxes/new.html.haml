@@ -24,5 +24,8 @@
       %td
         %select#category_color{ :name => 'tax[color]' }
           = options_for_select(get_tax_colors.invert.to_a, tax_form.object.color)
+    %tr
+      %td= tax_form.label('hidden', Tax.human_attribute_name(:hidden))
+      %td= tax_form.check_box :hidden
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

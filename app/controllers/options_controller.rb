@@ -16,7 +16,7 @@
 
 class OptionsController < ApplicationController
   def index
-    @options = Option.all
+    @options = Option.where(:hidden => false)
   end
 
   def new
@@ -41,8 +41,7 @@ class OptionsController < ApplicationController
 
   def destroy
     @option = Option.find(params[:id])
-    flash[:notice] = t(:successfully_deleted, :what => @option.name)
-    @option.destroy
+    @option.update_attribute :hidden, true
     redirect_to options_path
   end
 

@@ -76,6 +76,7 @@ fr:
         name: Nom
         letter: Abréviation
         color: Couleur
+        hidden: XXXdelete
       table:
         name: Nom
         abbreviation: Abréviation
@@ -161,6 +162,7 @@ fr:
     new:
       new_option: Nouvelle option
       edit_option: Editer option
+      hidden: XXXdelete
 
   blackboard:
     index:

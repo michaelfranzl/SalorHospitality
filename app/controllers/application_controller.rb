@@ -205,7 +205,8 @@ class ApplicationController < ActionController::Base
         per_order_output = ''
         header =
         "\e@"     +  # Initialize Printer
-        "\e!\x38"    # doube tall, double wide, bold
+        "\e!\x38" +  # doube tall, double wide, bold
+        "\n\n"
 
         per_order_output +=
         "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_company.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +

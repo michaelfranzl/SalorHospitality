@@ -40,7 +40,7 @@ class TaxesController < ApplicationController
 
   def destroy
     @tax = Tax.find(params[:id])
-    @tax.destroy
+    @tax.update_attribute :hidden, true
     redirect_to taxes_path
   end
 

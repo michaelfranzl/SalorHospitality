@@ -76,6 +76,7 @@ tr:
         name: Isim
         letter: harf
         color: renk
+        hidden: XXXdelete
       table:
         name: Isim
         abbreviation: Kısaltma
@@ -161,6 +162,7 @@ tr:
     new:
       new_option: Yeni secenekler
       edit_option: Seçeneğini islemek
+      hidden: XXXdelete
 
   blackboard:
     index:
