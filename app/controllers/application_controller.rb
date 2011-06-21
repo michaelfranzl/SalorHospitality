@@ -166,7 +166,9 @@ class ApplicationController < ActionController::Base
       raise 'Mismatch between open_printers and printer_id' if printer.nil?
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
       text.force_encoding 'ISO-8859-15'
-      open_printers[printer_id][:device].write text
+      VendorPrinter.find_by_id(printer_id).copies.times do |i|
+        open_printers[printer_id][:device].write text
+      end
       open_printers[printer_id][:device].flush
     end
 
