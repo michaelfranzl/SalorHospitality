@@ -431,3 +431,4 @@ en:
   server_no_response: 'The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.'
   just_order: Just order
   no_printing: No printing
+  copy: Copy

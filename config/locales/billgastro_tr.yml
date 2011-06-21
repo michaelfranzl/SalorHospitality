@@ -423,3 +423,4 @@ tr:
   server_no_response: 'Server bağlantısı kesildi'
   just_order: XXXJust order
   no_printing: XXXNo printing
+  copy: XXXCopy

@@ -94,7 +94,7 @@ class OrdersController < ApplicationController
       @order.created_at = Time.now
       @order.user = @current_user if mobile?
       @order.finished = true
-      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }"
+      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
       @order.save
       unlink_orders(@order)
     end
