@@ -42,7 +42,7 @@ class CompaniesController < ApplicationController
   end
 
   def logo
-    send_data @current_company.image, :type  => @current_company.content_type, :filename => 'abc', :disposition => 'inline'
+    send_data @current_company.image, :type => @current_company.content_type, :filename => 'abc', :disposition => 'inline'
   end
 
 end

@@ -281,7 +281,6 @@ class ApplicationController < ActionController::Base
       "\e!\x01" +  # Font B
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
       t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + @current_company.time_offset.hours, :format => :long)) +
-      " (#{ t ':copy' })" unless order.printed_from.nil? +
       "\n\n" +
 
       "\e!\x00" +  # Font A
