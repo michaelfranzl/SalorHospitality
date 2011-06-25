@@ -25,6 +25,8 @@ module CategoriesHelper
       [t('.maindish'), 'maindish'],
       [t('.fish'), 'fish'],
       [t('.pizza'), 'pizza'],
+      [t('.noodles'), 'noodles'],
+      [t('.salad'), 'salad'],
       [t('.childrendish'), 'childrendish'],
       [t('.dessert'), 'dessert'],
       [t('.digestif'), 'digestif'],
@@ -65,6 +67,8 @@ module CategoriesHelper
       option[value='maindish']:before { content:url('/images/category_maindish.png'); }
       option[value='fish']:before { content:url('/images/category_fish.png'); }
       option[value='pizza']:before { content:url('/images/category_pizza.png'); }
+      option[value='noodles']:before { content:url('/images/category_noodles.png'); }
+      option[value='salad']:before { content:url('/images/category_salad.png'); }
       option[value='childrendish']:before { content:url('/images/category_childrendish.png'); }
       option[value='dessert']:before { content:url('/images/category_dessert.png'); }
       option[value='digestif']:before { content:url('/images/category_digestif.png'); }

@@ -2,9 +2,9 @@ var articleslist = new Array();
 
 <%- @categories.each do |cat| %>
   articleslist[<%= cat.id %>] = "<%- cat.articles.find_in_menucard.each do |art|
-        onclickaction = art.quantities.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id },this);"
-        onmousedownaction = art.quantities.empty? ? "articles_onmousedown(this);" : ""
-        image = "<img class='more' src='/images/more.png'>" if not art.quantities.empty?
+        onclickaction = art.quantities.existing.empty? ? "add_new_item_a(#{ art.id });" : "display_quantities(#{ art.id },this);"
+        onmousedownaction = art.quantities.existing.empty? ? "articles_onmousedown(this);" : ""
+        image = "<img class='more' src='/images/more.png'>" if not art.quantities.existing.empty?
   %><div id='article_<%= art.id %>' class='article' onclick='<%= onclickaction %>' onmousedown='<%= onmousedownaction %>' onmouseup='articles_onmouseup(this);'><%= art.name %> <%= raw image %></div><div id='article_<%= art.id %>_quantities'></div><% end %>"
 <% end %>
 
