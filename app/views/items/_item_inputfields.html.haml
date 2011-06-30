@@ -8,6 +8,8 @@
 
   %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }" }
 
+  %input{ :id => "order_items_attributes_#{ designator }_usage", :name => "order[items_attributes][#{ designator }][usage]", :type => 'hidden', :value => "#{ usage }" }
+
   %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }
 
   %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }" }

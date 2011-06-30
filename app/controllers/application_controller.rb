@@ -228,18 +228,17 @@ class ApplicationController < ActionController::Base
 
           next if i.count == i.printed_count or i.count == 0
 
-          item_usage = i.quantity ? i.quantity.usage : i.article.usage
-
           next if printer_id and
                   usage and
                   ((i.count <= i.printed_count)          or
                   (printer_id != i.category.vendor_printer_id) or
-                  (usage != item_usage))
+                  (usage != i.usage))
 
           printed_items_in_this_order += 1
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
+          per_order_output += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
           per_order_output += " ! %-17.17s\n" % [i.comment] if i.comment and not i.comment.empty?
 
           i.options.each do |po|

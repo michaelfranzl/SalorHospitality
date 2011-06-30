@@ -303,6 +303,10 @@ function add_option_to_item_from_div(item_designator, value, price, text)
     $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
+  } else if (value == -3 ) {
+    // special option: takeaway
+    $('#order_items_attributes_' + item_designator + '_usage').val(1);
+    $('#optionsnames_' + item_designator).append('<br>' + i18n_takeaway);
   } else {
     optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
     $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + value + ' ');

@@ -82,4 +82,12 @@ class Item < ActiveRecord::Base
     self.article.category
   end
 
+  def usage
+    u = read_attribute :usage
+    return u if u
+    u = self.quantity.usage if self.quantity
+    return u if u
+    return self.article.usage if self.article
+  end
+
 end

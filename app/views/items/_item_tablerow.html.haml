@@ -22,6 +22,7 @@
         %span.done{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, null, '#{t('.done')}')" }
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
+        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
         - if item
           - Option.find(:all, :conditions => { :category_id => item.category.id, :hidden => false }, :order => 'position ASC' ).each do |o|
             %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
@@ -33,6 +34,7 @@
         %option{ :value => -2 }= t('.done')
         %option{ :value => 0 }= t('.clear')
         %option{ :value => -1 }= t('.no_printing')
+        %option{ :value => -3 }= t('articles.new.takeaway')
         - if item
           - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
             %option{ :value => o.id }== #{ o.name } #{ number_to_currency o.price }
