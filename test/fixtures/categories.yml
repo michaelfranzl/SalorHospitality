@@ -5,7 +5,6 @@ categories_001:
   tax_id: 1
   created_at: 2009-02-24 15:57:33 Z
   updated_at: 2010-09-10 16:30:27 Z
-  sort_order: 10
   icon: starter
   color: "#136880"
   vendor_printer_id: 1
@@ -15,7 +14,6 @@ categories_002:
   tax_id: 1
   created_at: 2009-02-24 15:57:43 Z
   updated_at: 2010-09-10 16:30:33 Z
-  sort_order: 20
   icon: maindish
   color: "#136880"
   vendor_printer_id: 1
@@ -25,7 +23,6 @@ categories_003:
   tax_id: 1
   created_at: 2009-02-24 15:57:53 Z
   updated_at: 2010-09-10 16:30:37 Z
-  sort_order: 30
   icon: dessert
   color: "#136880"
   vendor_printer_id: 1
@@ -35,7 +32,6 @@ categories_004:
   tax_id: 2
   created_at: 2009-02-24 15:58:00 Z
   updated_at: 2011-04-17 07:21:27 Z
-  sort_order: 80
   icon: rosewineglass
   color: "#75b10d"
   vendor_printer_id: 0
@@ -45,7 +41,6 @@ categories_005:
   tax_id: 2
   created_at: 2009-02-24 15:58:14 Z
   updated_at: 2011-04-17 07:21:18 Z
-  sort_order: 60
   icon: redwineglass
   color: "#75b10d"
   vendor_printer_id: 0
@@ -55,7 +50,6 @@ categories_006:
   tax_id: 2
   created_at: 2009-02-24 15:58:28 Z
   updated_at: 2011-04-17 07:21:39 Z
-  sort_order: 100
   icon: digestif
   color: "#ed8b00"
   vendor_printer_id: 0
@@ -65,7 +59,6 @@ categories_007:
   tax_id: 2
   created_at: 2009-02-24 15:58:37 Z
   updated_at: 2011-04-17 07:21:15 Z
-  sort_order: 50
   icon: nonalcoholics
   color: "#80477d"
   vendor_printer_id: 0
@@ -75,7 +68,6 @@ categories_008:
   tax_id: 2
   created_at: 2009-02-24 15:59:59 Z
   updated_at: 2011-04-17 07:21:43 Z
-  sort_order: 110
   icon: coffee
   color: "#cd0052"
   vendor_printer_id: 0
@@ -85,7 +77,6 @@ categories_009:
   tax_id: 2
   created_at: 2009-02-24 16:00:12 Z
   updated_at: 2011-04-17 07:21:48 Z
-  sort_order: 120
   icon: teapot
   color: "#cd0052"
   vendor_printer_id: 0
@@ -95,7 +86,6 @@ categories_010:
   tax_id: 3
   created_at: 2009-02-24 16:00:23 Z
   updated_at: 2011-04-17 07:21:54 Z
-  sort_order: 130
   icon: cigarette
   color: "#136880"
   vendor_printer_id: 2
@@ -105,7 +95,6 @@ categories_011:
   tax_id: 2
   created_at: 2009-02-24 16:15:26 Z
   updated_at: 2011-04-17 07:21:11 Z
-  sort_order: 40
   icon: beer
   color: "#ed8b00"
   vendor_printer_id: 0
@@ -115,7 +104,6 @@ categories_012:
   tax_id: 2
   created_at: 2009-02-24 16:15:36 Z
   updated_at: 2011-04-17 07:21:31 Z
-  sort_order: 90
   icon: aperitif
   color: "#ed8b00"
   vendor_printer_id: 0
@@ -125,7 +113,6 @@ categories_013:
   tax_id: 2
   created_at: 2009-02-24 16:15:44 Z
   updated_at: 2011-04-17 07:21:23 Z
-  sort_order: 70
   icon: whitewineglass
   color: "#75b10d"
   vendor_printer_id: 0
@@ -135,7 +122,6 @@ categories_014:
   tax_id: 1
   created_at: 2010-02-02 21:04:34 Z
   updated_at: 2010-09-10 16:30:43 Z
-  sort_order: 35
   icon: sidedish
   color: "#136880"
   vendor_printer_id: 1
@@ -145,7 +131,6 @@ categories_015:
   tax_id: 1
   created_at: 2010-02-06 19:33:53 Z
   updated_at: 2011-04-17 07:21:06 Z
-  sort_order: 37
   icon: blank
   color: "#27343b"
   vendor_printer_id: 0

@@ -64,8 +64,8 @@ de:
         category_id: Kategorie
         name: Name
       quantity:
-        prefix: Name
-        postfix: Ergänzung
+        prefix: Präfix
+        postfix: Postfix
         price: Preis
         description: Beschreibung
         active: aktiv

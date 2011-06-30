@@ -34,3 +34,4 @@ gem 'ruby-debug19', '0.11.6'
 # end
 
 gem 'haml', '3.0.25'
+gem 'acts_as_list', '0.1.2'

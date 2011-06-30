@@ -8,64 +8,57 @@
         %li= msg
 
 = form_for @article do |article_form|
-  %table.article_new
-    %tr
-      %td
-        %table
-          %tr
-            %td.labels= article_form.label( 'name', Article.human_attribute_name(:name))
-            %td.input_fields
-              = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
-              %span#article_name_display_keyboard.display_keyboard
-            %td.spinner
-              %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
-          %tr
-            %td= article_form.label('description', Article.human_attribute_name(:description))
-            %td
-              = article_form.text_field :description
-              %span#article_description_display_keyboard.display_keyboard
+  %div.article_new
+    %div.search_results
+      %ul#search_results
+    %div
+      %span.label_width= article_form.label( 'name', Article.human_attribute_name(:name))
+      %span.input_fields
+        = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
+        %span#article_name_display_keyboard.display_keyboard
+        %span.spinner
+          %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+    %div
+      %span.label_width= article_form.label('description', Article.human_attribute_name(:description))
+      %span.input_fields
+        = article_form.text_field :description
+        %span#article_description_display_keyboard.display_keyboard
 
-          - existing_quantities = false
-          - article_form.object.quantities.each { |qu| existing_quantities = true and break if not qu.hidden }
+    - if not @article.quantities.existing.any?
+      %div
+        %span.label_width= article_form.label('price', Article.human_attribute_name(:price))
+        %span.input_fields
+          = article_form.text_field( :price, :size => 6 )
+          %span#article_price_display_keyboard.display_keyboard
 
-          - if not existing_quantities
-            %tr
-              %td= article_form.label('price', Article.human_attribute_name(:price))
-              %td
-                = article_form.text_field( :price, :size => 6 )
-                %span#article_price_display_keyboard.display_keyboard
+    %div
+      %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
+      %span.input_fields
+        = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
+    %div
+      %span.label_width= article_form.label :usage, Quantity.human_attribute_name(:usage)
+      %span.input_fields
+        %select{ :id => "article_usage", :name => "article[usage]" }
+          %option{ :value => 0, :selected => article_form.object.usage == 0 }= t '.normal'
+          %option{ :value => 1, :selected => article_form.object.usage == 1 }= t '.takeaway'
 
-          %tr
-            %td= article_form.label('category_id', Article.human_attribute_name(:category))
-            %td= article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
-          %tr
-            %td= article_form.label :usage, Quantity.human_attribute_name(:usage)
-            %td
-              %select{ :id => "article_usage", :name => "article[usage]" }
-                %option{ :value => 0, :selected => article_form.object.usage == 0 }= t '.normal'
-                %option{ :value => 1, :selected => article_form.object.usage == 1 }= t '.takeaway'
-          %tr
-            %td= article_form.label('menucard', Article.human_attribute_name(:menucard))
-            %td= article_form.check_box :menucard
-          %tr
-            %td= article_form.label('hidden', Article.human_attribute_name(:hidden))
-            %td= article_form.check_box :hidden
-          %tr
-            %td{ :colspan => '2' }
-      %td#search_results
+    %div
+      %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))
+      %span.input_fields= article_form.check_box :menucard
+    %div
+      = link_to Article.human_attribute_name(:hidden), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete'
 
 
-    %h3= t('activerecord.models.quantity.other')
-    %table#quantities_new
-      = article_form.fields_for :quantities, article_form.object.quantities.existing do |quantity_form|
-        = render :partial => 'quantity', :locals => { :f => quantity_form }
-
-    %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
-
-  %p
+  %div.add_quantity
     %a#add_quantity= t '.add_quantity'
 
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  %ul#quantities_new
+    = article_form.fields_for :quantities, article_form.object.quantities do |quantity_form|
+      = render :partial => 'quantity', :locals => { :f => quantity_form }
+
+  %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
+
+  %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
 :javascript
 
@@ -105,5 +98,27 @@
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').keyboard( {openOn: '' } );
     $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix_display_keyboard').click(function(){
       $('#article_quantities_attributes_new_' + new_quantity_id + '_prefix').getkeyboard().reveal();
+    });
+  });
+
+  $(document).ready(function(){
+    $('#quantities_new').sortable({
+      axis: 'y',
+      dropOnEmpty: false,
+      handle: '.handle',
+      cursor: 'crosshair',
+      items: 'li',
+      opacity: 0.4,
+      scroll: true,
+      update: function(){
+        $.ajax({
+          type: 'post',
+          data: $('#quantities_new').sortable('serialize'),
+          dataType: 'script',
+          complete: function(request){
+            //$('#quantities_new').effect('highlight', {}, 300);
+          },
+        url: '/quantities/sort'})
+      }
     });
   });

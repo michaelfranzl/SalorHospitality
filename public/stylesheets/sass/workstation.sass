@@ -253,6 +253,10 @@ div.vacant:hover
 span.small
   :font-size 90%
 
+div.search_results
+  :float right
+  :width 400px
+
 ul#search_results
   :list-style-type none
   :padding 0
@@ -430,38 +434,48 @@ div.articles_listall
     :width 60px
     :display inline-block
       
-table.article_new
+div.article_new
+  :padding 5px
   :background-color #243239
   :border 1px solid #7e868a
   :border-spacing 10px
-  td.labels
-    :width 125px
-  td.input_fields
-    :width 300px
-  td.spinner
-    :width 20px
-  td#search_results
-    :width 300px
-  td
-    :vertical-align top
-    a
-      :text-decoration none
-    li
-      :list-style-type none
-      :padding-top 5px
-    ul
-      :list-style-type none
-      :padding-left 0px
-    span.header_search_results
-      :text-transform uppercase
-      :font-weight bold
+  div
+    :margin 3px 0px
+  div.field_with_errors
+    :border 1px solid red
+    :display inline-block
+  span.label
+    :display inline-block
+    div.field_with_errors
+      :border-style none
+      label
+        :color red
 
-table#quantities_new
+span.input_fields
+  :display inline-block
+
+span.label_width
+  :display inline-block
+  :width 90px
+
+ul#quantities_new
+  :margin 0px 0px 20px 0px
+  :padding 5px
+  :min-height 50px
   :background-color #243239
   :border 1px solid #7e868a
   :border-collapse collapse
-  td
-    :padding 10px 4px
+  :list-style-type none
+  div.field_with_errors
+    :border 1px solid red
+    :display inline-block
+  span.label
+    :display inline-block
+    div.field_with_errors
+      :border-style none
+      label
+        :color red
+
     
 img#logo
   :float right
@@ -502,13 +516,13 @@ p#add_printer
 
 
 input.prefix
-  :width 100px
+  :width 90px
 
 input.postfix
-  :width 120px
+  :width 110px
 
 input.price
-  :width 45px
+  :width 30px
 
 
 select#move_order_to_table
@@ -520,8 +534,13 @@ form#quick_order_form
   :display none
   :cursor pointer
 
+div.add_quantity
+  :margin 20px 20px 10px 0px
+
 a#add_quantity
   :text-decoration underline
+  :cursor pointer
+  :padding 20px 20px 10px 0px
 
 
 // =========== ORDERS VIEW ===================
@@ -914,7 +933,7 @@ div.ui-keyboard
 
 span.display_keyboard
   :display inline-block
-  :width 30px
+  :width 40px
   :height 30px
   :vertical-align middle
   :cursor pointer
@@ -932,4 +951,21 @@ a.scrolldown_button
   :right 22px
   :bottom 0px
 
+ul#categories
+  :list-style-type none
+  span
+    :display inline-block
 
+span.handle
+  :background-image url(/images/drag_handle.png)
+  :display inline-block
+  :width 20px
+  :height 21px
+  :background-repeat no-repeat
+
+span.handle:hover
+  :cursor move
+
+a.delete
+  :display inline-block
+  :padding 15px 50px 15px 0px

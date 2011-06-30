@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110621160653) do
+ActiveRecord::Schema.define(:version => 20110630092100) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20110621160653) do
     t.boolean  "hidden",                       :default => false
     t.integer  "sort"
     t.integer  "usage",           :limit => 1, :default => 0
+    t.integer  "position"
   end
 
   create_table "categories", :force => true do |t|
@@ -35,10 +36,10 @@ ActiveRecord::Schema.define(:version => 20110621160653) do
     t.integer  "tax_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sort_order"
     t.string   "icon"
     t.string   "color"
     t.integer  "vendor_printer_id", :default => 0
+    t.integer  "position"
   end
 
   create_table "companies", :force => true do |t|
@@ -170,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20110621160653) do
     t.string   "postfix"
     t.integer  "sort"
     t.integer  "usage",      :limit => 1, :default => 0
+    t.integer  "position"
   end
 
   create_table "roles", :force => true do |t|

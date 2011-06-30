@@ -14,12 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Category < ActiveRecord::Base
-  belongs_to :tax
-  belongs_to :vendor_printer
-  has_many :articles
-  has_many :options
-  validates_presence_of :name
-  validates_presence_of :tax_id
-  acts_as_list
+class QuantitiesController < ApplicationController
+
+  def sort
+    @quantities = Quantity.all
+    params['quantity'].each do |id|
+      q = Quantity.find_by_id id
+      q.position = params['quantity'].index(q.id.to_s) + 1
+      q.save
+    end
+    render :nothing => true
+  end
+
 end

@@ -49,7 +49,8 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
+       #request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh')
+       request.user_agent.nil? or not request.user_agent.include?('iPod') or not request.user_agent.include?('iPad') or not request.user_agent.include?('iPhone')
     end
 
     def mobile?

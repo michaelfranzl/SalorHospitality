@@ -21,9 +21,6 @@
       %td= category_form.label('usage', Category.human_attribute_name(:vendor_printer_id))
       %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.available, :id, :name
     %tr
-      %td= category_form.label('sort_order', Category.human_attribute_name(:sort_order))
-      %td= category_form.text_field :sort_order, :size => '3'
-    %tr
       %td= category_form.label('icon', Category.human_attribute_name(:icon))
       %td
         %select#category_icon{ :name => 'category[icon]', :size => 2 }

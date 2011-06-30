@@ -17,7 +17,7 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.find(:all, :order => 'sort_order')
+    @categories = Category.find(:all, :order => 'position')
     @scopes = ['menucard','waiterpad']
     @articles = Article.all
     respond_to do |wants|
@@ -44,12 +44,13 @@ class ArticlesController < ApplicationController
   def edit
     @article = Article.find(params[:id])
     @groups = Group.find(:all, :order => 'name ASC')
+    @quantities = Quantity.where(:article_id => params[:id], :hidden => false)
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new
   end
 
   def update
-    @categories = Category.find(:all, :order => 'sort_order')
+    @categories = Category.find(:all, :order => 'position')
     @article = Article.find_by_id params[:id]
     @article.update_attributes params[:article]
 
@@ -73,7 +74,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
-    @article.destroy
+    @article.update_attribute :hidden, true
     redirect_to articles_path
   end
 
@@ -90,7 +91,7 @@ class ArticlesController < ApplicationController
   end
 
   def change_scope
-    @categories = Category.find(:all, :order => 'sort_order')
+    @categories = Category.find(:all, :order => 'position')
     @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
 
     @drag_from = /[^_]*/.match(params[:id])[0]

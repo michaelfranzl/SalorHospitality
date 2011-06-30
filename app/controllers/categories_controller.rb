@@ -16,7 +16,7 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.find(:all, :order => :sort_order)
+    @categories = Category.find(:all, :order => :position)
   end
 
   def new
@@ -43,6 +43,15 @@ class CategoriesController < ApplicationController
     flash[:notice] = t(:successfully_deleted, :what => @category.name)
     @category.destroy
     redirect_to categories_path
+  end
+
+  def sort
+    @categories = Category.all
+    @categories.each do |c|
+      c.position = params['category'].index(c.id.to_s) + 1
+      c.save
+    end
+  render :nothing => true
   end
 
 end
