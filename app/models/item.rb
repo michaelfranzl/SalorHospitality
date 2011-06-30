@@ -24,7 +24,7 @@ class Item < ActiveRecord::Base
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
-  default_scope :order => 'sort DESC'
+  scope :prioritized, order('priority ASC')
 
   def price
     p = read_attribute :price

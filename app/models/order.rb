@@ -38,4 +38,10 @@ class Order < ActiveRecord::Base
     self.items.collect{ |i| i.storno_status == 2 ? - i.full_price : 0 }.sum
   end
 
+  def set_priorities
+    self.items.each do |i|
+      i.priority = i.category.position
+    end
+  end
+
 end

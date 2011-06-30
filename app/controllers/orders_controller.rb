@@ -174,6 +174,7 @@ class OrdersController < ApplicationController
     end
 
     @order.sum = @order.calculate_sum
+    @order.set_priorities
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
