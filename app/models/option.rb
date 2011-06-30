@@ -18,7 +18,7 @@ class Option < ActiveRecord::Base
   belongs_to :category
   has_and_belongs_to_many :items
   validates_presence_of :name, :category_id
-  scope :available, where(:hidden => false)
+  scope :existing, where(:hidden => false).order('position ASC')
 
 
   def price=(price)

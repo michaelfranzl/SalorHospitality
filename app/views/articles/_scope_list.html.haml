@@ -1,5 +1,5 @@
 - @categories.each do |ca|
-  - articles = ca.articles.send "find_in_#{scope}".to_sym
+  - articles = ca.articles.send "#{scope}".to_sym
   - if !articles.empty?
     %p.category_title= ca.name
     %ul

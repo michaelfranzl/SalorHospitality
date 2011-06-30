@@ -109,10 +109,8 @@
           type: 'post',
           data: $('#quantities_new').sortable('serialize'),
           dataType: 'script',
-          complete: function(request){
-            //$('#quantities_new').effect('highlight', {}, 300);
-          },
-        url: '/quantities/sort'})
+          url: '/quantities/sort'
+        })
       }
     });
   });

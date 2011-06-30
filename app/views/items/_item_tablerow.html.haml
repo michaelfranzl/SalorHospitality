@@ -23,7 +23,7 @@
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
         - if item
-          - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
+          - Option.find(:all, :conditions => { :category_id => item.category.id, :hidden => false }, :order => 'position ASC' ).each do |o|
             %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
         - else
           OPTIONSDIV

@@ -16,7 +16,7 @@
 
 class OptionsController < ApplicationController
   def index
-    @options = Option.where(:hidden => false)
+    @categories = Category.all
   end
 
   def new
@@ -43,6 +43,15 @@ class OptionsController < ApplicationController
     @option = Option.find(params[:id])
     @option.update_attribute :hidden, true
     redirect_to options_path
+  end
+
+  def sort
+    params['option'].each do |id|
+      o = Option.find_by_id id
+      o.position = params['option'].index(o.id.to_s) + 1
+      o.save
+    end
+    render :nothing => true
   end
 
 end
