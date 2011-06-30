@@ -29,8 +29,10 @@ BillGastro::Application.routes.draw do
 
   resources :articles do
     collection do
-      get :listall
+      get  :listall
       post :find
+      post :sort
+      get  :sort_index
       post :change_scope
     end
   end

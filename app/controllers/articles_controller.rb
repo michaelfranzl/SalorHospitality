@@ -106,4 +106,17 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def sort
+    params['article'].each do |id|
+      a = Article.find_by_id id
+      a.position = params['article'].index(a.id.to_s) + 1
+      a.save
+    end
+    render :nothing => true
+  end
+
+  def sort_index
+    @categories = Category.all
+  end
+
 end

@@ -144,6 +144,7 @@ es:
       list_all: Listar todo
       search_term: Buscar término
       preview: Vista previa
+      sort: XXXSort
     new:
       new_article: Nuevo artículo
       edit_article: Editar artículo
@@ -157,6 +158,7 @@ es:
       variants:
         one: Variante
         other: Variantes
+      sort: XXXSort articles
 
   options:
     new:

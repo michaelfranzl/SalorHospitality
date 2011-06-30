@@ -20,25 +20,14 @@ class Article < ActiveRecord::Base
   has_many :ingredients
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
-
   has_many :items
 
-  scope :existing, where(:hidden => false)
+  scope :existing, where(:hidden => false).order('position ASC')
+  scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
+  scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   def price=(price)
     write_attribute :price, price.gsub(',', '.')
-  end
-
-  def self.find_in_menucard
-    find(:all, :conditions => 'menucard = 1 AND hidden = false', :order => 'sort DESC')
-  end
-
-  def self.find_in_blackboard
-    find(:all, :conditions => 'blackboard = 1 AND hidden = false', :order => 'price')
-  end
-
-  def self.find_in_waiterpad
-    find(:all, :conditions => 'waiterpad = 1 AND hidden = false', :order => 'price')
   end
   
   validates_presence_of :name, :category_id

@@ -144,6 +144,7 @@ tr:
       list_all: Herseyi göster
       search_term: Arama kelimesi
       preview: Öngörüs
+      sort: XXXSort
     new:
       new_article: Yeni ürün
       edit_article: Ürün islemek
@@ -157,6 +158,7 @@ tr:
       variants:
         one: Varyant
         other: Varyant
+      sort: XXXSort articles
 
   options:
     new:

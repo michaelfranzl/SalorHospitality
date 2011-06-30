@@ -141,8 +141,9 @@ de:
 
   articles:
     index:
-      list_all: Alle auflisten
+      list_all: Alle
       search_term: Suchbegriff
+      sort: Sortieren
       preview: Voransicht
     new:
       new_article: Neuer Artikel
@@ -157,6 +158,8 @@ de:
       variants:
         one: Variante
         other: Varianten
+    sort_index:
+      sort: Artikel sortieren
 
   options:
     new:

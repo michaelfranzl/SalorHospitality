@@ -10,7 +10,7 @@
     %tr{ :class => 'category' }
       %td{ :colspan => '3' }
         %b= ca.name
-    - ca.articles.find_in_menucard.each do |ar|
+    - ca.articles.menucard.each do |ar|
       %tr{ :valign => 'top' }
         %td= ar.name
         %td= ar.description
