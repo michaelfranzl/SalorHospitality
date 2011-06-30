@@ -56,7 +56,7 @@ de:
         name: Name
         hidden: löschen
         description: Beschreibung
-        category_id: Kategorie
+        category: Kategorie
         menucard: aktiv
         usage: Verwendung
       option:

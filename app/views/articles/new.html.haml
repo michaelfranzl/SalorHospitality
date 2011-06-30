@@ -35,12 +35,6 @@
       %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
       %span.input_fields
         = article_form.collection_select :category_id, Category.find(:all), :id, :name, { :include_blank => true }
-    %div
-      %span.label_width= article_form.label :usage, Quantity.human_attribute_name(:usage)
-      %span.input_fields
-        %select{ :id => "article_usage", :name => "article[usage]" }
-          %option{ :value => 0, :selected => article_form.object.usage == 0 }= t '.normal'
-          %option{ :value => 1, :selected => article_form.object.usage == 1 }= t '.takeaway'
 
     %div
       %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))

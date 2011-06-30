@@ -17,11 +17,6 @@
   %span.input_fields
     = f.text_field(:price, :class => 'price')
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_price_display_keyboard" }
-  %span.label= f.label :usage, Quantity.human_attribute_name(:usage)
-  %span.input_fields
-    %select{ :id => "article_quantities_attributes_#{ index }_usage", :name => "article[quantities_attributes][#{ index }][usage]" }
-      %option{ :value => 0, :selected => f.object.usage == 0 }= t '.normal'
-      %option{ :value => 1, :selected => f.object.usage == 1 }= t '.takeaway'
 
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= Quantity.human_attribute_name(:hidden)
