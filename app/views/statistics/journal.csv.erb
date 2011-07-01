@@ -1,8 +1,13 @@
-<% header = "date;user;table;order#;article name;variant name;price;count;cost_center" -%>
+<% header = "date;user;table;order#;article name;variant name;option name;price;count;cost_center" -%>
 <%= header %>
 <% @orders.each do |o| -%>
 <% o.items.each do |i| -%>
-<% line = sprintf('%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.nr, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.article.name } #{ i.quantity.postfix }" : '-', number_with_precision(i.full_price), :locale => :de), i.count, i.order.cost_center.name) -%>
+<% line = sprintf('%s;%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.nr, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.postfix }" : '-', '-', number_with_precision(i.price, :precision => 2, :locale => 'de'), i.count, i.order.cost_center.name) %>
 <%= line %>
+<%
+i.options.each do |o|
+option = sprintf('%s;%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.nr, '-', '-', o.name, number_with_precision(o.price, :precision => 2, :locale => 'de'), i.count, i.order.cost_center.name) -%>
+<%= option %>
+<% end %>
 <% end -%>
 <% end -%>

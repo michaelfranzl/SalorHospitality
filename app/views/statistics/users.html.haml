@@ -11,5 +11,5 @@
     %th{ :style => 'width:100px' }
   - @users.each do |u|
     %tr
-      %td= link_to u.login, user_path(u)
+      %td= u.login
       %td= number_to_currency Order.sum( 'sum', :conditions => { :user_id => u.id, :created_at => @from..@to })

@@ -28,7 +28,7 @@
           %td.number== #{ item.count } #{ '(max. ' + item.max_count.to_s + ')' if item.max_count != item.count }
           %td.number= number_to_currency item.price
           %td.colsum= number_to_currency item.total_price
-        - item.options do |o|
+        - item.options.each do |o|
           %tr
             %td= o.name
             %td.number= item.count

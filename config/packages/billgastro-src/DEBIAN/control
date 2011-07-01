@@ -1,9 +1,9 @@
 Package: billgastro-src
-Version: 3.2.10
+Version: 3.2.11
 Architecture: i386
 Maintainer: DI(FH) Michael Franzl <office@michaelfranzl.com>
 Installed-Size: 1200000
-Depends: billgastro-bin (= 1.0.1), apache2, mysql-server, debconf, git, exim4
+Depends: billgastro-bin (= 1.0.2), apache2, mysql-server, debconf, git, exim4
 Section: ruby
 Priority: optional
 Homepage: http://www.billgastro.com

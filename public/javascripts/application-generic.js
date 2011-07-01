@@ -251,6 +251,11 @@ function add_option_to_item_from_select(item_designator, select_tag)
     $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
+  } else if (select_tag.value == -3 ) {
+    // special option: takeaway
+    $('#order_items_attributes_' + item_designator + '_usage').val(1);
+    $('#optionsnames_' + item_designator).append('<br>' + i18n_takeaway);
+
   } else {
     // options from database
     optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
