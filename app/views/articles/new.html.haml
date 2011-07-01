@@ -24,7 +24,7 @@
         = article_form.text_field :description
         %span#article_description_display_keyboard.display_keyboard
 
-    - if not @article.quantities.existing.any?
+    - if not @article.quantities.collect{ |q| q.hidden }.include? false
       %div
         %span.label_width= article_form.label('price', Article.human_attribute_name(:price))
         %span.input_fields
@@ -48,8 +48,8 @@
 
   %ul#quantities_new
     = article_form.fields_for :quantities, article_form.object.quantities do |quantity_form|
-      = render :partial => 'quantity', :locals => { :f => quantity_form }
-
+      = quantity_form.hidden_field :hidden
+      = render :partial => 'quantity', :locals => { :f => quantity_form } unless quantity_form.object.hidden
   %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
 
   %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

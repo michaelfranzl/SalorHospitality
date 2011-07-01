@@ -20,7 +20,6 @@
 
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= Quantity.human_attribute_name(:hidden)
-    %span.input_fields= f.hidden_field :hidden
 
 :javascript
   $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );

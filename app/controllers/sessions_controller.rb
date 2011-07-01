@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
   end
 
   def exception_test
-    nil.throw_whiny_nil_error_please_thanks
+    nil.throw_whiny_nil_error_please
   end
 
   def catcher
