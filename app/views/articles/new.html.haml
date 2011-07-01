@@ -40,7 +40,7 @@
       %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))
       %span.input_fields= article_form.check_box :menucard
     %div
-      = link_to Article.human_attribute_name(:hidden), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete'
+      = link_to Article.human_attribute_name(:hidden), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
 
 
   %div.add_quantity

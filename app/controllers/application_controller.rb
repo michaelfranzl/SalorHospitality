@@ -284,7 +284,7 @@ class ApplicationController < ActionController::Base
       "\n\n" +
 
       "\e!\x00" +  # Font A
-      "                 Artikel  EP     Stk   GP\n"
+      "                  Artikel  EP     Stk   GP\n"
 
       sum_taxes = Hash.new
       Tax.all.each { |t| sum_taxes[t.id] = 0 }
@@ -299,7 +299,7 @@ class ApplicationController < ActionController::Base
 
         sum_taxes[item.tax.id] += item.full_price
         subtotal += item.full_price
-        label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : item.article.name
+        label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }#{ ' ' unless item.comment.empty? }#{ item.comment }" : "#{ item.article.name }#{ ' ' unless item.comment.empty? }#{ item.comment }"
 
         list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.total_price]
         list_of_items += list_of_options

@@ -429,7 +429,7 @@ de:
   austria: Österreich
 
   # Translations for Javascript files
-  please_enter_item_comment: Spezialwunsch
+  please_enter_item_comment: Notiz
   please_enter_item_price: Spezialpreis
   server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
   just_order: Nur bestellen
