@@ -1,7 +1,8 @@
 %h1= Company.model_name.human
 
-%p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
-%p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
+- if not demo_variant?
+  %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
+  %p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
 
 = form_for @current_company, :html => { :multipart => true } do |company_form|
   %div#company_data

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all
   before_filter :fetch_logged_in_user, :select_current_company, :set_locale
-  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?
+  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :demo_variant?
 
   private
 

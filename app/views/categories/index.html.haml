@@ -7,7 +7,7 @@
     %li{ :id => "category_#{ ca.id }" }
       %span.handle
       %span.inline= link_to ca.name, edit_category_path(ca)
-      %span.inline== #{ t('activerecord.models.vendor_printer.one') }: #{ ca.vendor_printer.name }
+      %span.inline== #{ t('activerecord.models.vendor_printer.one') }: #{ ca.vendor_printer ? ca.vendor_printer.name : '-' }
       %span.inline== #{ t('activerecord.models.tax.one') }: #{ ca.tax.name } (#{ ca.tax.percent }%)
 
 :javascript
