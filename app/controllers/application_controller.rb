@@ -74,6 +74,7 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
+debugger
       if not @current_company.unused_order_numbers.empty?
         # reuse order numbers if present
         nr = @current_company.unused_order_numbers.first
@@ -86,7 +87,7 @@ class ApplicationController < ActionController::Base
       else
         # find Order with largest nr attribute from database. this should happen only once per application instance.
         last_order = Order.first(:order => 'nr DESC')
-        nr = last_order ? last_order.nr + 1 : 1
+        nr = last_order ? (last_order.nr || 0) + 1 : 1
       end
       return nr
     end
