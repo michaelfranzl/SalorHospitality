@@ -169,7 +169,6 @@ class OrdersController < ApplicationController
       # similar to orders#create
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
-      @order.credit = Order.last ? Order.last.credit - 1 : BillGastro::Application::INITIAL_CREDITS
       @order.cost_center = @cost_centers.first
     end
 

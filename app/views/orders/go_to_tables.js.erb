@@ -17,16 +17,5 @@ $('#functions_header_order_form').html('<%= escape_javascript render :partial =>
 
 $('#order_info').html('<%= escape_javascript t :loading %>');
 
-// if (MyGlobals::credits_left <= 25) and workstation?
-//   page.replace_html('flash_error', t('.warning_only_x_orders_left_upgrade_here', :credits => MyGlobals::credits_left))
-//   page.replace_html('flash_notice', '')
-// else
-//   page.replace_html('flash_notice', MyGlobals::credits_left)
-//   page.replace_html('flash_error', '')
-// end
-// if MyGlobals::credits_left == 25 and mobile?
-//   page << "alert('#{ escape_javascript(t('.warning_only_x_orders_left', :credits => MyGlobals::credits_left)) }');"
-// end
-
 tableupdates = 2;
 scroll_to('#container',10);
