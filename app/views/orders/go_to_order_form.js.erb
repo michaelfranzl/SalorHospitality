@@ -16,7 +16,7 @@ $('#target_table').val('');
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
 <% if @order
-  @order.items.each do |item|
+  @order.items.sequence.each do |item|
     designator += 1
     id = item.id
     sort = item.sort

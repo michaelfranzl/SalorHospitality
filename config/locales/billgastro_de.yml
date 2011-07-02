@@ -371,6 +371,7 @@ de:
   send_and_go_back: Senden und zurück
   go_back: Zurück
   cancel_and_go_back: Abbrechen und zurück
+  clear_order_and_go_back: Bestellung löschen und zurück
   finish_order: Bestellung abschließen
 
   invoice: Rechnung

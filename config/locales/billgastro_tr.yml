@@ -370,6 +370,7 @@ tr:
   send_and_go_back: Kayit et ve geriye cik
   go_back: Geri
   cancel_and_go_back: Iptal et ve geriye cik
+  clear_order_and_go_back: XXXClear order and go back
   finish_order: Siparisi bitir
 
   invoice: Fatura

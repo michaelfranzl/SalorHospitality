@@ -159,6 +159,7 @@ class OrdersController < ApplicationController
     if @order
       # similar to orders#update
       begin
+        params[:order][:user_id] = @current_user.id
         @order.update_attributes params[:order]
       rescue
         logger.info "Trying to prevent FROZEN HASH error"
@@ -173,10 +174,10 @@ class OrdersController < ApplicationController
     end
 
     @order.sum = @order.calculate_sum
-    @order.set_priorities
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
+    @order.set_priorities
 
     if @order.nr > @current_company.largest_order_number
       @current_company.update_attribute :largest_order_number, @order.nr 
@@ -217,6 +218,11 @@ class OrdersController < ApplicationController
         @orders = Order.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
         session[:display_tax_colors] = true if @current_company.country == 'gn'
         render 'go_to_invoice_form'
+      when 'clear_order_and_go_back'
+        @order.table.update_attribute :user_id, nil
+        @tables = Table.find(:all, :conditions => { :hidden => false })
+        @order.destroy
+        render 'go_to_tables'
       when 'move_order_to_table'
         move_order_to_table @order, params[:target_table]
         @tables = Table.find(:all, :conditions => { :hidden => false })
@@ -280,6 +286,7 @@ class OrdersController < ApplicationController
             if (items[i].article_id  == items[j].article_id and
                 items[i].quantity_id == items[j].quantity_id and
                 items[i].options     == items[j].options and
+                items[i].usage       == items[j].usage and
                 items[i].price       == items[j].price and
                 items[i].comment     == items[j].comment and
                 not items[i].destroyed?

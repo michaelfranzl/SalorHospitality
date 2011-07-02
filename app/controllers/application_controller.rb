@@ -74,7 +74,6 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
-debugger
       if not @current_company.unused_order_numbers.empty?
         # reuse order numbers if present
         nr = @current_company.unused_order_numbers.first

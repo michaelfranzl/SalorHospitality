@@ -371,6 +371,7 @@ en:
   send_and_go_back: Save and go back
   go_back: Go back
   cancel_and_go_back: Cancel and go back
+  clear_order_and_go_back: Clear order and go back
   finish_order: Finish order
 
   invoice: Invoice

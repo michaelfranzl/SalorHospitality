@@ -25,7 +25,7 @@ module OrdersHelper
   end
 
   def compose_option_names(item)
-    usage = "<br>#{ t 'articles.new.takeaway' }"
+    usage = item.usage == 1 ? "<br>#{ t 'articles.new.takeaway' }" : ''
     options = item.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
     usage + options
   end

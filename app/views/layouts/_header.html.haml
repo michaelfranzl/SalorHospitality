@@ -1,4 +1,4 @@
-- if logged_in?
+- if logged_in? and workstation?
   %a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and ( controller.action_name == 'index' or controller.action_name == 'login' )}" }
     %img{ :src => "/company/logo" }
 

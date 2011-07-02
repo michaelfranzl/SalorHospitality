@@ -370,6 +370,7 @@ fr:
   send_and_go_back: Enregistrer et retourner
   go_back: Retour
   cancel_and_go_back: Annuler et retourner
+  clear_order_and_go_back: XXXClear order and go back
   finish_order: Finaliser commande
 
   invoice: Facture
