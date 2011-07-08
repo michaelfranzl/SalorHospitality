@@ -294,7 +294,7 @@ class ApplicationController < ActionController::Base
         next if item.count == 0
         list_of_options = ''
         item.options.each do |o|
-          list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, item.total_options_price] unless o.price == 0
+          list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, o.price * item.count] unless o.price == 0
         end
 
         sum_taxes[item.tax.id] += item.full_price
