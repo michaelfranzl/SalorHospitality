@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
     @articles = Article.all
     #File.open('test.txt','w') { |f| f.write render_to_string 'articles/index.js' }
     @current_company.update_attribute :cache, render_to_string('articles/index.js')
-    render :nothing => true
+    redirect_to orders_path
   end
 
   def listall

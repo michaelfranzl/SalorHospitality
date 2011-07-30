@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
   def index
     @tables = Table.find(:all, :conditions => { :hidden => false })
     @categories = Category.find(:all, :order => :position)
-    @users = User.all
+    @users = User.active
     session[:admin_interface] = false
   end
 

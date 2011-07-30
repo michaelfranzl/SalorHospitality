@@ -20,6 +20,6 @@ class User < ActiveRecord::Base
   belongs_to :company
   belongs_to :role
   validates_presence_of :login, :password, :title
-  scope :active, where(:active => true)
+  scope :active, where(:active => true, :hidden => false)
   scope :available, where(:hidden => false)
 end

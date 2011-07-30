@@ -6,7 +6,7 @@
 
   %div.waiter
     %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role.permissions.include?('change_waiter') ? 'visible' : 'none' }"}
-      = options_from_collection_for_select User.all, :id, :login, { :include_blank => !mobile? }
+      = options_from_collection_for_select @users, :id, :login, { :include_blank => !mobile? }
 
     - if @current_user.role.permissions.include?('move_order') and workstation?
       %select.target_table{ :onchange => 'if (this.value != "") {$("#order_action").val("move_order_to_table"); $("#target_table").val(this.value); $("#order_form_ajax").submit();}' }
