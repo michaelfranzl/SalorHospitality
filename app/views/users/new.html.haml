@@ -13,13 +13,19 @@
   %table
     %tr
       %td= user_form.label('login', User.human_attribute_name(:login))
-      %td= user_form.text_field :login
+      %td
+        = user_form.text_field :login
+        %span#user_login_display_keyboard.display_keyboard
     %tr
       %td= user_form.label('title', User.human_attribute_name(:title))
-      %td= user_form.text_field :title
+      %td
+        = user_form.text_field :title
+        %span#user_title_display_keyboard.display_keyboard
     %tr
       %td= user_form.label('password', User.human_attribute_name(:password))
-      %td= user_form.text_field :password
+      %td
+        = user_form.text_field :password
+        %span#user_password_display_keyboard.display_keyboard
     %tr
       %td= user_form.label('role', User.human_attribute_name(:role))
       %td
@@ -43,3 +49,19 @@
       %td= user_form.check_box :hidden
 
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+:javascript
+  $('#user_login').keyboard( {openOn: '' } );
+  $('#user_login_display_keyboard').click(function(){
+    $('#user_login').getkeyboard().reveal();
+  });
+
+  $('#user_title').keyboard( {openOn: '' } );
+  $('#user_title_display_keyboard').click(function(){
+    $('#user_title').getkeyboard().reveal();
+  });
+
+  $('#user_password').keyboard( {openOn: '' } );
+  $('#user_password_display_keyboard').click(function(){
+    $('#user_password').getkeyboard().reveal();
+  });

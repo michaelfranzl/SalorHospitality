@@ -63,6 +63,7 @@ en:
         price: Price
         category_id: Category
         name: Name
+        hidden: Delete
       quantity:
         prefix: Name
         postfix: Postfix
@@ -144,7 +145,8 @@ en:
       list_all: List all
       search_term: Search term
       preview: Preview
-      sort: Sortieren
+      sort: Sort
+      update: Update!
     new:
       new_article: New article
       edit_article: Edit article

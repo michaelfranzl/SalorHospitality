@@ -22,8 +22,19 @@ class ArticlesController < ApplicationController
     @articles = Article.all
     respond_to do |wants|
       wants.html
-      wants.js
+      wants.js {
+        send_data @current_company.cache, :content_type => 'text/javascript', :disposition => 'inline'
+      }
     end
+  end
+
+  def update_cache
+    @categories = Category.find(:all, :order => 'position')
+    @scopes = ['menucard','waiterpad']
+    @articles = Article.all
+    #File.open('test.txt','w') { |f| f.write render_to_string 'articles/index.js' }
+    @current_company.update_attribute :cache, render_to_string('articles/index.js')
+    render :nothing => true
   end
 
   def listall

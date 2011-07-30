@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
     @tables = Table.find(:all, :conditions => { :hidden => false })
     @categories = Category.find(:all, :order => :position)
     @users = User.all
-    session[:admin_interface] = !mobile? # on workstation, switch admin panel on per default
+    session[:admin_interface] = false
   end
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
@@ -159,7 +159,7 @@ class OrdersController < ApplicationController
     if @order
       # similar to orders#update
       begin
-        params[:order][:user_id] = @current_user.id
+        params[:order][:user_id] = @current_user.id if mobile?
         @order.update_attributes params[:order]
       rescue
         logger.info "Trying to prevent FROZEN HASH error"

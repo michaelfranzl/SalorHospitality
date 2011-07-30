@@ -11,15 +11,30 @@
   %table
     %tr
       %td= option_form.label('name', Option.human_attribute_name(:name))
-      %td= option_form.text_field :name, :size => '20'
+      %td
+        = option_form.text_field :name, :size => '20'
+        %span#option_name_display_keyboard.display_keyboard
     %tr
       %td= option_form.label('category_id', Option.human_attribute_name(:category_id))
       %td= option_form.collection_select :category_id, Category.all, :id, :name, { :include_blank => true }
     %tr
       %td= option_form.label('price', Option.human_attribute_name(:price))
-      %td= option_form.text_field :price, :size => '5'
+      %td
+        = option_form.text_field :price, :size => '5'
+        %span#option_price_display_keyboard.display_keyboard
     %tr
       %td= option_form.label('hidden', Option.human_attribute_name(:hidden))
       %td= option_form.check_box :hidden
           
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+:javascript
+  $('#option_name').keyboard( {openOn: '' } );
+  $('#option_name_display_keyboard').click(function(){
+    $('#option_name').getkeyboard().reveal();
+  });
+
+  $('#option_price').keyboard( {openOn: '', layout: 'num'} );
+  $('#option_price_display_keyboard').click(function(){
+    $('#option_price').getkeyboard().reveal();
+  });

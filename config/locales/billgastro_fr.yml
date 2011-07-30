@@ -63,6 +63,7 @@ fr:
         price: Prix
         category_id: Catégorie
         name: Nom
+        hidden: XXXDelete
       quantity:
         prefix: Nom
         postfix: Description supplémentaire
@@ -145,6 +146,7 @@ fr:
       search_term: Rechercher un mot
       preview: Voir aperçu
       sort: XXXSort
+      update: XXXUpdate!
     new:
       new_article: Nouvel article
       edit_article: Editer article

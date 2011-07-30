@@ -22,7 +22,6 @@ class Order < ActiveRecord::Base
   belongs_to :tax
   has_many :items, :dependent => :destroy
   has_one :order
-  belongs_to :cost_center
 
   validates_presence_of :user_id
 

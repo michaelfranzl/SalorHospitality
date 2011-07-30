@@ -28,7 +28,7 @@ function category_onmousedown(category_id, element) {
 
 function display_quantities(art_id, article_div) {
   $('#quantities').html(quantitylist[art_id]);
-  $('#quantities').css('padding-top', $(article_div).position().top-44);
+  $('#quantities').css('padding-top', $(article_div).position().top/2);
 }
 
 function add_comment_to_item(item_designator) {

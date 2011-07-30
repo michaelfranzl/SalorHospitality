@@ -63,6 +63,7 @@ es:
         price: Precio
         category_id: Categoría
         name: Nombre
+        hidden: XXXDelete
       quantity:
         prefix: Nombre
         postfix: Descripción extra
@@ -145,6 +146,7 @@ es:
       search_term: Buscar término
       preview: Vista previa
       sort: XXXSort
+      update: XXXUpdate!
     new:
       new_article: Nuevo artículo
       edit_article: Editar artículo

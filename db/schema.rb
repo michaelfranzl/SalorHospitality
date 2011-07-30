@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110702090253) do
+ActiveRecord::Schema.define(:version => 20110730200048) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20110702090253) do
     t.string   "mode"
     t.string   "content_type"
     t.binary   "image"
+    t.text     "cache"
   end
 
   create_table "cost_centers", :force => true do |t|

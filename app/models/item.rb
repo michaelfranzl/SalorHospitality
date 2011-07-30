@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
     write_attribute(:max_count, c) if c > self.max_count
   end
 
-  def total_price
+  def total_price # missing
     p = self.price * self.count
     return self.storno_status == 2 ? -p : p
   end

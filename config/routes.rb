@@ -33,6 +33,7 @@ BillGastro::Application.routes.draw do
       post :find
       post :sort
       get  :sort_index
+      get  :update_cache
       post :change_scope
     end
   end

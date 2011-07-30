@@ -63,6 +63,7 @@ tr:
         price: Fiyat
         category_id: Kategori
         name: Isim
+        hidden: XXXDelete
       quantity:
         prefix: Isim
         postfix: Ek miktar
@@ -145,6 +146,7 @@ tr:
       search_term: Arama kelimesi
       preview: Öngörüs
       sort: XXXSort
+      update: XXXUpdate!
     new:
       new_article: Yeni ürün
       edit_article: Ürün islemek
