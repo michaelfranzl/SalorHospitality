@@ -21,19 +21,23 @@ class OptionsController < ApplicationController
 
   def new
     @option = Option.new
+    @categories = Category.all
   end
 
   def create
+    @categories = Category.all
     @option = Option.new(params[:option])
     @option.save ? redirect_to(options_path) : render(:new)
   end
 
   def edit
+    @categories = Category.all
     @option = Option.find(params[:id])
     render :new
   end
 
   def update
+    @categories = Category.all
     @option = Option.find(params[:id])
     success = @option.update_attributes(params[:option])
     success ? redirect_to(options_path) : render(:new)

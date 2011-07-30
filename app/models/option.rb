@@ -15,9 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Option < ActiveRecord::Base
-  belongs_to :category
+  has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
-  validates_presence_of :name, :category_id
+  validates_presence_of :name
   scope :existing, where(:hidden => false).order('position ASC')
 
 
@@ -27,5 +27,13 @@ class Option < ActiveRecord::Base
 
   def price
     (read_attribute :price) || 0
+  end
+
+  def set_categories=(array)
+    self.categories = []
+    array.each do |c|
+      self.categories << Category.find_by_id(c.to_i)
+    end
+    self.save
   end
 end
