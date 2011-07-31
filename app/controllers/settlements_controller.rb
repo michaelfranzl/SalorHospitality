@@ -127,7 +127,7 @@ class SettlementsController < ApplicationController
       orders.each do |o|
         cc = o.cost_center.name
         t = l(o.created_at, :format => :time_short)
-        list_of_orders += "#%6u %4s %7s %12.12s %8.2f\n" % [o.nr, o.table.abbreviation, t, cc, o.sum]
+        list_of_orders += "#%6u %4s %7s %8.8s %8.2f\n" % [o.nr, o.table.abbreviation, t, cc, o.sum]
         total_costcenter[o.cost_center.id] += o.sum
         storno_sum += o.storno_sum
       end
