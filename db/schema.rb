@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110730225959) do
+ActiveRecord::Schema.define(:version => 20110731152427) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -50,28 +50,28 @@ ActiveRecord::Schema.define(:version => 20110730225959) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string   "name",                       :default => "Bill Gastro"
-    t.string   "subdomain",                  :default => "demo"
+    t.string   "name",                                           :default => "Bill Gastro"
+    t.string   "subdomain",                                      :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invoice_subtitle",           :default => ""
-    t.string   "address",                    :default => ""
-    t.string   "revenue_service_tax_number", :default => ""
-    t.string   "invoice_slogan1",            :default => ""
-    t.string   "invoice_slogan2",            :default => ""
-    t.string   "internet_address",           :default => "www.billgastro.com"
-    t.string   "email",                      :default => "office@billgastro.com"
-    t.boolean  "automatic_printing",         :default => false
-    t.integer  "largest_order_number",       :default => 0
-    t.string   "unused_order_numbers",       :default => "--- []\n\n"
+    t.string   "invoice_subtitle",                               :default => ""
+    t.string   "address",                                        :default => ""
+    t.string   "revenue_service_tax_number",                     :default => ""
+    t.string   "invoice_slogan1",                                :default => ""
+    t.string   "invoice_slogan2",                                :default => ""
+    t.string   "internet_address",                               :default => "www.billgastro.com"
+    t.string   "email",                                          :default => "office@billgastro.com"
+    t.boolean  "automatic_printing",                             :default => false
+    t.integer  "largest_order_number",                           :default => 0
+    t.string   "unused_order_numbers",                           :default => "--- []\n\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
-    t.integer  "time_offset",                :default => 0
+    t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
     t.string   "content_type"
     t.binary   "image"
-    t.text     "cache"
+    t.text     "cache",                      :limit => 16777215
   end
 
   create_table "cost_centers", :force => true do |t|

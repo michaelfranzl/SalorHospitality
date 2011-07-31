@@ -49,6 +49,7 @@ $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>')
 
 $('#order_table_id').val(<%= @table.id %>);
 
+$('.target_table').val('');
 $('#orderform').show();
 $('#invoices').hide();
 $('#functions_header_index').hide();

@@ -11,7 +11,9 @@
   %table
     %tr
       %td= role_form.label('name', Role.human_attribute_name(:name))
-      %td= role_form.text_field :name, :size => '20'
+      %td
+        = role_form.text_field :name, :size => '20'
+        %span#role_name_display_keyboard.display_keyboard
     %tr
       %td
         %label{ :for => 'permissions_take_orders' }= t '.take_orders'
@@ -22,6 +24,16 @@
         %label{ :for => 'permissions_decrement_items' }= t '.decrement_items'
       %td
         %input#permissions_decrement_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'decrement_items', :checked => role_form.object.permissions.include?('decrement_items') }
+    %tr
+      %td
+        %label{ :for => 'permissions_make_immediate_storno' }= t '.make_immediate_storno'
+      %td
+        %input#permissions_make_immediate_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_immediate_storno', :checked => role_form.object.permissions.include?('make_immediate_storno') }
+    %tr
+      %td
+        %label{ :for => 'permissions_cancel_all_items_in_active_order' }= t '.cancel_all_items_in_active_order'
+      %td
+        %input#permissions_cancel_all_items_in_active_order{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'cancel_all_items_in_active_order', :checked => role_form.object.permissions.include?('cancel_all_items_in_active_order') }
     %tr
       %td
         %label{ :for => 'permissions_finish_orders' }= t '.finish_orders'
@@ -42,11 +54,6 @@
         %label{ :for => 'permissions_make_storno' }= t '.make_storno'
       %td
         %input#permissions_make_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_storno', :checked => role_form.object.permissions.include?('make_storno') }
-    %tr
-      %td
-        %label{ :for => 'permissions_make_immediate_storno' }= t '.make_immediate_storno'
-      %td
-        %input#permissions_make_immediate_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_immediate_storno', :checked => role_form.object.permissions.include?('make_immediate_storno') }
     %tr
       %td
         %label{ :for => 'permissions_assign_cost_center' }= t '.assign_cost_center'
@@ -105,3 +112,9 @@
 
             
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+:javascript
+  $('#role_name').keyboard( {openOn: '' } );
+  $('#role_name_display_keyboard').click(function(){
+    $('#role_name').getkeyboard().reveal();
+  });

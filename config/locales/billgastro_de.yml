@@ -334,11 +334,12 @@ de:
     new:
       take_orders: Bestellungen aufnehmen
       decrement_items: Artikelanzahl reduzieren
-      finish_orders: Besltellungen abschließen
+      finish_orders: Bestellungen abschließen
       split_items: Rechnung splitten
       move_tables: Tische verschieben
       make_storno: Artikel stornieren
-      make_immediate_storno: Artikel sofort stornieren
+      make_immediate_storno: Artikelanzahl nach Bestellung reduzieren
+      cancel_all_items_in_active_order: Alle Artikel einer aktiven Bestellung löschen
       assign_cost_center: Kostenstelle zuweisen
       move_order: Bestellung verschieben
       change_waiter: Bestellungen anderen Kellner zuweisen
