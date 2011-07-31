@@ -49,5 +49,6 @@
 
   $('#article_name').keyboard( {openOn: '', accepted: function(){ enable_articles_search = true } } );
   $('#article_name_display_keyboard').click(function(){
+    $('#article_name').val('');
     $('#article_name').getkeyboard().reveal();
   });

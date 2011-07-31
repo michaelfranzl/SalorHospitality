@@ -25,3 +25,4 @@
   var permission_immediate_storno = #{ @current_user.role.permissions.include?("make_immediate_storno") ? "true" : "false" };
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';
+  var mobile_special = #{ mobile_special? ? "true" : "false" };

@@ -20,7 +20,12 @@ function category_onmousedown(category_id, element) {
   display_articles(category_id);
   deselect_all_categories();
   highlight_border(element);
-  scroll_to('#articles', 7);
+  if ( mobile_special ) {
+    y = $('#articles').position().top;
+    window.scrollTo(0,y);
+  } else {
+    scroll_to('#articles', 7);
+  }
 }
 
 function display_quantities(art_id, article_div) {
