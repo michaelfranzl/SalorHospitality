@@ -11,6 +11,7 @@
       %span{ :id => "comment_#{ designator }" }= comment
       %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
 
+
   - if @current_user.role.permissions.include? 'decrement_items'
     %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
@@ -41,17 +42,17 @@
         - else
           OPTIONSSELECT
 
-- if workstation?
-  %div.comment_for_item{ :id => "comment_for_item_#{ designator }" }
-    %p= t :please_enter_item_comment
-    %span.display_keyboard{ :id => "comment_for_item_#{ designator }_display_keyboard" }
-    %input{ :id => "comment_for_item_#{ designator }" }
-    %div.enter_comment_or_price{ :id => "enter_comment_for_item_#{ designator }" }
-  %div.price_for_item{ :id => "price_for_item_#{ designator }" }
-    %p= t :please_enter_item_price
-    %span.display_keyboard{ :id => "price_for_item_#{ designator }_display_keyboard" }
-    %input{ :id => "price_for_item_#{ designator }" }
-    %div.enter_comment_or_price{ :id => "enter_price_for_item_#{ designator }" }
+    - if workstation?
+      %div.comment_for_item{ :id => "comment_for_item_#{ designator }" }
+        %p= t :please_enter_item_comment
+        %span.display_keyboard{ :id => "comment_for_item_#{ designator }_display_keyboard" }
+        %input{ :id => "comment_for_item_#{ designator }" }
+        %div.enter_comment_or_price{ :id => "enter_comment_for_item_#{ designator }" }
+      %div.price_for_item{ :id => "price_for_item_#{ designator }" }
+        %p= t :please_enter_item_price
+        %span.display_keyboard{ :id => "price_for_item_#{ designator }_display_keyboard" }
+        %input{ :id => "price_for_item_#{ designator }" }
+        %div.enter_comment_or_price{ :id => "enter_price_for_item_#{ designator }" }
 
   :javascript
     enable_keyboard_for_items('#{ designator}');
