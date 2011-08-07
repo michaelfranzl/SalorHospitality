@@ -16,7 +16,7 @@
 
 class TaxesController < ApplicationController
   def index
-    @taxes = Tax.find(:all)
+    @taxes = Tax.available
   end
 
   def new
