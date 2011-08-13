@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   helper :all
   before_filter :fetch_logged_in_user, :select_current_company, :set_locale
-  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :local_variant?, :demo_variant?, :mobile_special?
+  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :saas_basic_varian?, :saas_plus_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :mobile_special?
 
   private
 
@@ -61,7 +61,19 @@ class ApplicationController < ActionController::Base
     end
 
     def saas_variant?
-      @current_company.mode == 'saas' if @current_company
+      @current_company.mode == 'saas' or @current_company.mode == 'saas_basic' or @current_company.mode == 'saas_plus' or @current_company.mode == 'saas_pro' if @current_company
+    end
+
+    def saas_basic_variant?
+      @current_company.mode == 'saas_basic' if @current_company
+    end
+
+    def saas_plus_variant?
+      @current_company.mode == 'saas_plus' if @current_company
+    end
+
+    def saas_pro_variant?
+      @current_company.mode == 'saas_pro' if @current_company
     end
 
     def demo_variant?
