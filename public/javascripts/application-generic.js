@@ -394,6 +394,7 @@ function go_to_order_form_preprocessing(table_id) {
   $('#functions_header_order_form').show();
   $('#functions_footer').show();
   $.ajax({ type: 'GET', url: '/tables/' + table_id });
+  screenlock_counter = -1;
 }
 
 function go_to_tables_offline() {
@@ -408,6 +409,7 @@ function go_to_tables_offline() {
   $('#functions_footer').hide();
   $('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
   $('#save_and_go_to_tables').css('border','none');
+  screenlock_counter = screenlock_timeout;
 }
 
 window.setInterval(

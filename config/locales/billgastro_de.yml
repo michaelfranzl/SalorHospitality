@@ -129,7 +129,8 @@ de:
         invoice_subtitle: Rechnungs-Untertitel
         revenue_service_tax_number: UID Nummer
         address: Adresse
-        time_offset: Zeitkorrektur
+        time_offset: Zeitkorrektur (Stunden)
+        timeout: Zeit bis Bildschirmsperre (Sekunden)
       role:
         name: Name
       vendor_printer:
@@ -342,7 +343,7 @@ de:
       cancel_all_items_in_active_order: Alle Artikel einer aktiven Bestellung löschen
       assign_cost_center: Kostenstelle zuweisen
       move_order: Bestellung verschieben
-      change_waiter: Bestellungen anderen Kellner zuweisen
+      change_waiter: Zugehörigkeit der Bestellung verändern
       manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
       finish_all_settlements: Alle Abrechnungen abschließen
       finish_own_settlement: Eigene Abrechnung abschließen

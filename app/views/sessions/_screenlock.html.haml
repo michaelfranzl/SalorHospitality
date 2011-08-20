@@ -1,0 +1,9 @@
+#screenlock
+  = button_to '', session_path, :method => :delete
+
+:javascript
+  $('#table_name').keyboard( {openOn: '' } );
+  $('#screenlock').click(function(){
+    $('#screenlock').hide();
+    $('#screenlock .button_to').submit();
+  });

@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @current_user = User.find_by_login_and_password params[:login], params[:password]
+    @current_user = User.find_by_password params[:password]
     @users = User.all
     if @current_user
       session[:user_id] = @current_user
@@ -41,6 +41,11 @@ class SessionsController < ApplicationController
   def destroy
     @current_user = session[:user_id] = nil
     redirect_to '/'
+  end
+
+  def exit
+    `killall chromium-browser`
+    `killall firefox-bin`
   end
 
   def exception_test

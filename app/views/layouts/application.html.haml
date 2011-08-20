@@ -33,6 +33,7 @@
       = javascript_include_tag 'application-workstation.js'
 
   %body
+    = render 'sessions/screenlock' if controller.controller_name == 'orders'
     #container
       #header= render 'layouts/header'
       #flash

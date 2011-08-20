@@ -129,7 +129,8 @@ en:
         invoice_subtitle: Invoice Subtitle
         revenue_service_tax_number: Revenue service tax number
         address: Address
-        time_offset: Time Offset
+        time_offset: Time Offset (hours)
+        timeout: Screenlock Timeout (seconds)
       role:
         name: Name
       vendor_printer:

@@ -3,3 +3,5 @@
 
 - if saas_variant?
   %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';", :title => t('.print_now') }
+
+= button_to '', session_path, :method => :delete

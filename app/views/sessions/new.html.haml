@@ -6,17 +6,16 @@
 
   = form_tag '/session' do
     %p
-      = label_tag 'login', (t '.username')
-      %select{ :name => 'login' }
-        - @users.each do |u|
-          %option{ :value => u.login }== #{ u.login } (#{ BillGastro::Application::LANGUAGES[u.language.to_s] })
-    %p
       = label_tag 'password', (t '.password')
       = password_field_tag 'password', '', :size => 9, :class => 'qwerty ui-keyboard-input'
       %span#password_display_keyboard.display_keyboard
     %p= submit_tag t('.login'), :class => 'submit'
 
 - if workstation?
-  %script
-    == $('#password').keyboard( {openOn: '' } );
+  :javascript
+    $('#password').keyboard( {openOn: '', position: { at: 'center bottom' }, accepted: function(){ $('#login form').submit(); } } );
     $('#password_display_keyboard').click(function(){  $('#password').getkeyboard().reveal();  } );
+
+- unless demo_variant?
+  :javascript
+    $('#password').getkeyboard().reveal();

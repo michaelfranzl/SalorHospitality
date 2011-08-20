@@ -128,8 +128,8 @@ es:
         country: XXXRules for country
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
-        address: Dirección
-        time_offset: XXXTime Offset
+        time_offset: XXXTime Offset (hours)
+        timeout: XXXScreenlock Timeout (seconds)
       role:
         name: Nombre
       vendor_printer:
