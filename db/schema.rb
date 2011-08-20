@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.string   "content_type"
     t.binary   "image"
     t.text     "cache",                      :limit => 16777215
-    t.integer  "timeout",                                        :default => 0
+    t.integer  "timeout",                                        :default => -1
   end
 
   create_table "cost_centers", :force => true do |t|

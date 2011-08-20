@@ -34,4 +34,4 @@
         = link_to( t('activerecord.models.role.other'), roles_path)
         = link_to( t('activerecord.models.company.one'), companies_path)
 
-      = button_to t(:logout, :who => @current_user.login), session_path, :method => :delete
+      = link_to( t(:exit), 'sessions/exit')

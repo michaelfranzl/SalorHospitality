@@ -44,8 +44,8 @@ class SessionsController < ApplicationController
   end
 
   def exit
-    `killall chromium-browser`
-    `killall firefox-bin`
+    `killall -s TERM chromium-browser`
+    `killall -s TERM firefox-bin`
   end
 
   def exception_test

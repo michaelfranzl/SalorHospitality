@@ -1,9 +1,10 @@
-# coding: utf-8
+- if workstation?
+  .adminlinks
+    = link_to( t(:exit), 'sessions/exit')
 
 #login
   - if mobile?
     %img#logo{ :src => "/images/logo-small.png", :width => 200, :height => 77 }
-
   = form_tag '/session' do
     %p
       = label_tag 'password', (t '.password')
@@ -16,6 +17,6 @@
     $('#password').keyboard( {openOn: '', position: { at: 'center bottom' }, accepted: function(){ $('#login form').submit(); } } );
     $('#password_display_keyboard').click(function(){  $('#password').getkeyboard().reveal();  } );
 
-- unless demo_variant?
+- if workstation? and not demo_variant?
   :javascript
     $('#password').getkeyboard().reveal();
