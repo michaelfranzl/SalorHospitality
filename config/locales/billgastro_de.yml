@@ -376,6 +376,7 @@ de:
   go_back: Zurück
   cancel_and_go_back: Abbrechen und zurück
   clear_order_and_go_back: Bestellung löschen und zurück
+  move_order_to_table: Bestellung auf anderen Tisch verschieben
   finish_order: Bestellung abschließen
 
   invoice: Rechnung

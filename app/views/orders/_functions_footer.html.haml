@@ -5,9 +5,9 @@
 %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :title => t(:cancel_and_go_back) }
 
 - if @current_user.role.permissions.include? 'move_order'
-  %select.target_table{ :onchange => 'if (this.value != "") {$("#order_action").val("move_order_to_table"); $("#target_table").val(this.value); $("#order_form_ajax").submit();}' }
+  %select.target_table{ :onchange => 'move_order_to_table(this.value);' }
     %option{ :value => '', :selected => true }
-    = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
+    = options_from_collection_for_select(Table.available, 'id', 'abbreviation')
 
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

@@ -444,3 +444,11 @@ function do_scroll(diff, speed) {
   scrollAnimation = setTimeout(function(){ do_scroll(newdiff, speed) }, 20);
   if(Math.abs(diff) < 1) { clearTimeout(scrollAnimation); }
 }
+
+function move_order_to_table(id) {
+  if ( id != "" ) {
+    $("#order_action").val("move_order_to_table");
+    $("#target_table").val(id);
+    $("#order_form_ajax").submit();
+  }
+}

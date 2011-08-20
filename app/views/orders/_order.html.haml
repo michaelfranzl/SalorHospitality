@@ -8,12 +8,13 @@
     %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role.permissions.include?('change_waiter') ? 'visible' : 'none' }"}
       = options_from_collection_for_select @users, :id, :login, { :include_blank => !mobile? }
 
-    - if @current_user.role.permissions.include?('move_order') and workstation?
-      %select.target_table{ :onchange => 'if (this.value != "") {$("#order_action").val("move_order_to_table"); $("#target_table").val(this.value); $("#order_form_ajax").submit();}' }
-        %option{ :value => '', :selected => true }
-        = options_from_collection_for_select(Table.all, 'id', 'abbreviation')
-
   #order_info= t :just_order
+
+  %div.tablesselect
+    %h3= t :move_order_to_table
+    %span.done{ :onclick => "$('.tablesselect').slideUp();" }
+    - Table.available.each do |t|
+      %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
 
   %div#categories
     - @categories.each do |category|

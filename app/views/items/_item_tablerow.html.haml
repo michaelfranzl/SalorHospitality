@@ -20,6 +20,7 @@
     - if workstation?
       %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
       %div.optionsselect{ :id => "optionsselect_div_#{ designator }" }
+        %h3= t 'activerecord.models.option.other'
         %span.done{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, null, '#{t('.done')}')" }
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
         %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')

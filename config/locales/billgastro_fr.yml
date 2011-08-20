@@ -374,6 +374,7 @@ fr:
   go_back: Retour
   cancel_and_go_back: Annuler et retourner
   clear_order_and_go_back: XXXClear order and go back
+  move_order_to_table: XXXMove order to different table
   finish_order: Finaliser commande
 
   invoice: Facture
