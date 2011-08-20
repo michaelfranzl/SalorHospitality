@@ -34,6 +34,4 @@
     - if settlement.new_record?
       %p= settlement_form.submit t('.start'), :class => 'submitbutton'
     - else
-      %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1)"
-    - if orders.size > 0 and not settlement.new_record?
-      %p= settlement_form.submit t('.print'), :class => 'submitbutton', :onclick => "$('#print_#{ settlement.user.id }').val(1)"
+      %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1); $('#print_#{ settlement.user.id }').val(1);"
