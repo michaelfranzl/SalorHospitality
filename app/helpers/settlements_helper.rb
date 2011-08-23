@@ -22,7 +22,7 @@ module SettlementsHelper
       o.items.each do |i|
         s_gro[i.tax.id] += i.total_price
         i.options.each do |opt|
-          s_gro[i.tax.id] += i.count * opt.price
+          s_gro[i.tax.id] += (i.storno_status == 2 ? -(i.count * opt.price) : (i.count * opt.price))
         end
       end
     end

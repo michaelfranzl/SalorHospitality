@@ -33,7 +33,7 @@
             %td= o.name
             %td.number= item.count
             %td.number= number_to_currency o.price
-            %td.colsum= number_to_currency o.price * item.count
+            %td.colsum= number_to_currency item.storno_status == 2 ? -(o.price * item.count) : o.price * item.count
     %tr
       %td.subtotal{ :colspan => 6 }= number_to_currency so.sum
         

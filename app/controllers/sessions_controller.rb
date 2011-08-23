@@ -43,11 +43,6 @@ class SessionsController < ApplicationController
     redirect_to '/'
   end
 
-  def exit
-    `killall -s TERM chromium-browser`
-    `killall -s TERM firefox-bin`
-  end
-
   def exception_test
     nil.throw_whiny_nil_error_please
   end

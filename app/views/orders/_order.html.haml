@@ -10,11 +10,12 @@
 
   #order_info= t :just_order
 
-  %div.tablesselect
-    %h3= t :move_order_to_table
-    %span.done{ :onclick => "$('.tablesselect').slideUp();" }
-    - Table.available.each do |t|
-      %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
+  - if workstation?
+    %div.tablesselect
+      %h3= t :move_order_to_table
+      %span.done{ :onclick => "$('.tablesselect').slideUp();" }
+      - Table.available.each do |t|
+        %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
 
   %div#categories
     - @categories.each do |category|
