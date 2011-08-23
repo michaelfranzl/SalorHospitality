@@ -1,0 +1,2 @@
+#!/bin/sh
+chromium-browser --kiosk --incognito -start-maximized http://billgastro

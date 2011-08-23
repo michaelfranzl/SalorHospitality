@@ -2,4 +2,7 @@
   %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.id } #{ @settlement.user.login }
 - else
   %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login }
+
+%p= link_to t(:print), "/settlements/print/#{ @settlement.id }"
+
 = render :partial => 'detailed_list', :locals => { :orders => @orders }

@@ -19,7 +19,7 @@
         = link_to( t('activerecord.models.option.other'), options_path)
 
       - if perms.include?('finish_own_settlement') or perms.include?('finish_all_settlements')
-        = link_to( (t :unsettled_orders_generic_name), '/settlements/open')
+        = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
 
       - if perms.include? 'view_all_settlements'
         = link_to( t('activerecord.models.settlement.other'), settlements_path)

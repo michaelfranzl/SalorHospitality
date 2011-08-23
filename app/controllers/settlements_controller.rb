@@ -17,7 +17,8 @@
 class SettlementsController < ApplicationController
   def index
     @from, @to = assign_from_to(params)
-    @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to })
+    @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to})
+    @to -= 1.day
     @taxes = Tax.all
     @cost_centers = CostCenter.all
     @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
@@ -56,15 +57,15 @@ class SettlementsController < ApplicationController
     @settlement = Settlement.find params[:id]
     @settlement.update_attributes params[:settlement]
     @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
-    if @settlement.finished
-      @orders.each { |o| o.update_attribute :settlement_id, @settlement.id }
-      @settlement = Settlement.new :user_id => @settlement.user_id
-    end
     if params[:print] != '' and local_variant?
       printers = initialize_printers
       text = generate_escpos_settlement(@settlement, @orders)
       do_print printers, params[:port].to_i, text
       close_printers printers
+    end
+    if @settlement.finished
+      @orders.each { |o| o.update_attribute :settlement_id, @settlement.id }
+      @settlement = Settlement.new :user_id => @settlement.user_id
     end
     respond_to do |wants|
       wants.js
@@ -91,10 +92,10 @@ class SettlementsController < ApplicationController
                       p[:from][:day  ].to_i) if p[:from]
       t = Date.civil( p[:to  ][:year ].to_i,
                       p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) if p[:to]
+                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
 
-      f ||= 1.week.ago
-      t ||= 0.week.ago
+      f ||= DateTime.now.beginning_of_day
+      t ||= f + 1.day
 
       return f, t
     end
@@ -115,9 +116,9 @@ class SettlementsController < ApplicationController
       "\e!\x00"    # Font A
 
       string += "Gestartet:     #{ l(settlement.created_at, :format => :datetime_iso) }\n"
-      string += "Abgeschlossen: #{ l(settlement.updated_at, :format => :datetime_iso) }\n" if settlement.finished?
+      string += "Abgeschlossen: #{ l(settlement.updated_at, :format => :datetime_iso) }\n"
 
-      string += "\nNr.    Tisch   Zeit  Kostenstelle    Summe\n"
+      string += "\nNr.     Tisch   Zeit  Kostenstelle   Summe\n"
 
       total_costcenter = Hash.new
       CostCenter.all.each { |cc| total_costcenter[cc.id] = 0 }
@@ -127,7 +128,7 @@ class SettlementsController < ApplicationController
       orders.each do |o|
         cc = o.cost_center.name
         t = l(o.created_at, :format => :time_short)
-        list_of_orders += "#%6u %4s %7s %8.8s %8.2f\n" % [o.nr, o.table.abbreviation, t, cc, o.sum]
+        list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [o.nr, o.table.abbreviation, t, cc, o.sum]
         total_costcenter[o.cost_center.id] += o.sum
         storno_sum += o.storno_sum
       end
