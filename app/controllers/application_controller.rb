@@ -232,6 +232,7 @@ class ApplicationController < ActionController::Base
         per_order_output += "=====================\n"
 
         printed_items_in_this_order = 0
+        j = i
         o.items.prioritized.each do |i|
           begin
             i.update_attribute :printed_count, i.count if i.count < i.printed_count
@@ -251,7 +252,7 @@ class ApplicationController < ActionController::Base
 
           printed_items_in_this_order += 1
 
-          per_order_output += "---------------------\n" if i.options.any?
+          per_order_output += "---------------------\n" if j.options.any? or j.quantity
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
@@ -262,8 +263,11 @@ class ApplicationController < ActionController::Base
             per_order_output += " * %-17.17s\n" % [po.name]
           end
 
+          per_order_output += "---------------------\n" if i.options.any? or i.quantity
+
           i.printed_count = i.count
           i.save
+          j = i
         end
 
         footer =
