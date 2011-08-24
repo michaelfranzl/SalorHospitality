@@ -21,13 +21,13 @@
       %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
       %div.optionsselect{ :id => "optionsselect_div_#{ designator }" }
         %h3= t 'activerecord.models.option.other'
-        %span.done{ :onclick => "add_option_to_item_from_div('#{ designator }', -2, null, '#{t('.done')}')" }
-        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
-        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
-        %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
+        %span.done{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -2, null, '#{t('.done')}')" }
+        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
+        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
+        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
         - if item
           - Option.find(:all, :conditions => { :category_id => item.category.id, :hidden => false }, :order => 'position ASC' ).each do |o|
-            %span.option{ :onclick => "add_option_to_item_from_div('#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
+            %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
         - else
           OPTIONSDIV
 

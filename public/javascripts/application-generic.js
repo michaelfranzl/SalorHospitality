@@ -281,7 +281,7 @@ function add_option_to_item_from_select(item_designator, select_tag)
   calculate_sum();
 }
 
-function add_option_to_item_from_div(item_designator, value, price, text)
+function add_option_to_item_from_div(button, item_designator, value, price, text)
 {
 
   if ($('#order_items_attributes_' + item_designator + '_optionslist').val() == '' && $('#order_items_attributes_' + item_designator + '_count').val() != 1 && value > 0) {
@@ -300,8 +300,6 @@ function add_option_to_item_from_div(item_designator, value, price, text)
     item_designator = cloned_item_designator;
   }
 
-  $('#optionsselect_div_' + item_designator).slideUp();
-
   var tablerow = $('#item_' + item_designator);
   var itemfields = $('#fields_for_item_' + item_designator);
   var itemoptions = $('#options_for_item_' + item_designator);
@@ -313,7 +311,7 @@ function add_option_to_item_from_div(item_designator, value, price, text)
     itemoptions.html('');
 
   } else if (value == -2 ) {
-    // just exit, do nothing
+    $('#optionsselect_div_' + item_designator).slideUp(); // just exit
 
   } else if (value == -1 ) {
     // special option: do not print
@@ -333,6 +331,7 @@ function add_option_to_item_from_div(item_designator, value, price, text)
   }
 
   calculate_sum();
+  $(button).effect("highlight", {}, 1000);
 }
 
 

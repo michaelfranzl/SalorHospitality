@@ -39,7 +39,7 @@ class Order < ActiveRecord::Base
 
   def set_priorities
     self.items.each do |i|
-      i.priority = i.category.position
+      i.update_attribute :priority, i.category.position
     end
   end
 

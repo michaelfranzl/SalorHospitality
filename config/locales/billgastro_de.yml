@@ -435,7 +435,7 @@ de:
 
   # Translations for Javascript files
   please_enter_item_comment: Notiz
-  please_enter_item_price: Spezialpreis
+  please_enter_item_price: Preis
   server_no_response: 'Der Server antwortet nicht mehr. Der Server ist entweder überlastet oder die Funkverbindung ist abgerissen.'
   just_order: Nur bestellen
   no_printing: Kein Druck
