@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('iPad')
+       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end
 
     def mobile?
@@ -250,6 +250,8 @@ class ApplicationController < ActionController::Base
                   (usage != i.usage))
 
           printed_items_in_this_order += 1
+
+          per_order_output += "---------------------\n" if i.options.any?
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
