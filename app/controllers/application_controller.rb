@@ -233,7 +233,6 @@ class ApplicationController < ActionController::Base
 
         printed_items_in_this_order = 0
         o.items.prioritized.each do |i|
-          j = i if j.nil?
           begin
             i.update_attribute :printed_count, i.count if i.count < i.printed_count
           rescue
@@ -251,8 +250,6 @@ class ApplicationController < ActionController::Base
                   (usage != i.usage))
 
           printed_items_in_this_order += 1
-
-          per_order_output += "---------------------\n" if j.options.any? or j.quantity
 
           per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
           per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
