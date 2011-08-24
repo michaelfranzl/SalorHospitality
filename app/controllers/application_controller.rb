@@ -232,8 +232,8 @@ class ApplicationController < ActionController::Base
         per_order_output += "=====================\n"
 
         printed_items_in_this_order = 0
-        j = i
         o.items.prioritized.each do |i|
+          j = i if j.nil?
           begin
             i.update_attribute :printed_count, i.count if i.count < i.printed_count
           rescue
