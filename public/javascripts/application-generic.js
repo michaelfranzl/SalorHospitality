@@ -446,6 +446,7 @@ function do_scroll(diff, speed) {
 
 function move_order_to_table(id) {
   if ( id != "" ) {
+    $(".tablesselect").slideUp();
     $("#order_action").val("move_order_to_table");
     $("#target_table").val(id);
     $("#order_form_ajax").submit();
