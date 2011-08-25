@@ -26,9 +26,12 @@ class Article < ActiveRecord::Base
   scope :existing, where(:hidden => false).order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
+  include Scope
+  include Base
 
   def price=(price)
-    write_attribute :price, price.gsub(',', '.')
+    price =  price.gsub(',', '.') if price.class == String
+      write_attribute :price, price
   end
   
   validates_presence_of :name, :category_id

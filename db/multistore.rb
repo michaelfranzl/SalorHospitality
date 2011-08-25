@@ -113,3 +113,34 @@ t3.save
 puts "# There are #{Tax.count} taxes"
 puts "# #{$COMPANY.id} has #{$COMPANY.taxes.count} taxes"
 
+puts "Creating some categories"
+cat1 = Category.new( {
+    :name => "Category 1",
+    :tax_id => $COMPANY.taxes.first.id
+} )
+cat1.set_model_owner
+cat1.save
+
+cat2 = Category.new( {
+    :name => "Category 2",
+    :tax_id => c3.taxes.first.id
+} )
+cat2.set_model_owner(owner2,c3)
+cat2.save
+
+puts "# Company #{$COMPANY.id} has a category '#{$COMPANY.categories.first.name}'"
+puts "# Company #{c3.id} has a category '#{c3.categories.first.name}'"
+puts "# Creating som Articles"
+
+a1 = Article.new({
+    :name => "Test Article",
+    :category_id => cat1.id,
+    :price => 3.49
+})
+a1.set_model_owner
+if not a1.save then
+  puts "a1 failed to save"
+end
+
+puts "#{$COMPANY.id} has #{$COMPANY.articles.count} articles"
+
