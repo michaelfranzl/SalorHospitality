@@ -144,3 +144,23 @@ end
 
 puts "#{$COMPANY.id} has #{$COMPANY.articles.count} articles"
 
+puts "Creating some cost centers"
+cc = CostCenter.new({
+    :name => "Something Something Dark Side"
+})
+cc.set_model_owner
+cc.save
+
+puts "#{$COMPANY.id} has #{$COMPANY.cost_centers.count} cost centers"
+
+puts "# Create some tables"
+
+table = Table.new( {
+    :name => "test table"
+} )
+table.set_model_owner
+table.save
+puts "#{$COMPANY.id} has #{$COMPANY.tables.count} tables"
+puts "#{c3.id} has #{c3.tables.count} tables"
+
+puts "#{$COMPANY.id} has #{Table.scopied.count} tables"

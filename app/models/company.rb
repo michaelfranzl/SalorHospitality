@@ -4,6 +4,8 @@ class Company < ActiveRecord::Base
   has_many :categories
   has_many :taxes, :class_name => "Tax"
   has_many :articles
+  has_many :cost_centers
+  has_many :tables
   serialize :unused_order_numbers
 
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }

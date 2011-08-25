@@ -17,6 +17,8 @@
 class Table < ActiveRecord::Base
   has_many :orders
   belongs_to :user
+  belongs_to :company
   validates_presence_of :name
-  scope :available, where(:hidden => false)
+  include Scope
+  include Base
 end
