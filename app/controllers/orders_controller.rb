@@ -17,21 +17,21 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.find(:all, :conditions => { :hidden => false })
-    @categories = Category.find(:all, :order => :position)
+    @tables = Table.scopied
+    @categories = Category.scopied.find(:all, :order => :position)
     @users = User.active
     session[:admin_interface] = false
   end
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
-    @order = Order.find_by_id params[:id]
+    @order = Order.scopied.find_by_id params[:id]
     if params[:order][:tax_id]
       @order.update_attribute :tax_id, params[:order][:tax_id] 
       @order.items.each { |i| i.update_attribute :tax_id, nil }
-      @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
-      @cost_centers = CostCenter.all
-      @taxes = Tax.all
+      @orders = Order.scopied.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+      @cost_centers = CostCenter.scopied.all
+      @taxes = Tax.scopied.all
       render 'items/update'
     else
       @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]  
@@ -40,16 +40,16 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.find_by_id params[:id]
+    @order = Order.scopied.find_by_id params[:id]
     @table = @order.table
     render 'orders/go_to_order_form'
   end
 
   def show
     if params[:id] != 'last'
-      @order = Order.find(params[:id])
+      @order = Order.scopied.find(params[:id])
     else
-      @order = Order.find_all_by_finished(true).last
+      @order = Order.scopied.find_all_by_finished(true).last
     end
     redirect_to '/' and return if not @order
     @previous_order, @next_order = neighbour_orders(@order)
@@ -76,20 +76,20 @@ class OrdersController < ApplicationController
     else
       session[:display_tax_colors] = true
     end
-    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
-    @cost_centers = CostCenter.all
-    @taxes = Tax.all
+    @orders = Order.scopied.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
+    @cost_centers = CostCenter.scopied.all
+    @taxes = Tax.scopied.all
     render 'items/update'
   end
 
   def print_and_finish
-    @order = Order.find params[:id]
+    @order = Order.scopied.find params[:id]
 
     is_finished = @order.finished
 
     if not is_finished
-      if @order.nr > @current_company.largest_order_number
-        @current_company.update_attribute :largest_order_number, @order.nr 
+      if @order.nr > $COMPANY.largest_order_number
+        $COMPANY.update_attribute :largest_order_number, @order.nr 
       end
       @order.created_at = Time.now
       @order.user = @current_user if mobile?
@@ -114,10 +114,10 @@ class OrdersController < ApplicationController
       end
     end
 
-    @orders = Order.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @orders = Order.scopied.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @order.table.update_attribute :user, nil if @orders.empty?
-    @cost_centers = CostCenter.find_all_by_active(true)
-    @taxes = Tax.all
+    @cost_centers = CostCenter.scopied.find_all_by_active(true)
+    @taxes = Tax.scopied.all
 
     respond_to do |wants|
       wants.js {
@@ -137,23 +137,23 @@ class OrdersController < ApplicationController
   end
 
   def storno
-    @order = Order.find_by_id params[:id]
+    @order = Order.scopied.find_by_id params[:id]
   end
 
   def go_to_order_form # to be called only with /id
-    @order = Order.find(params[:id])
+    @order = Order.scopied.find(params[:id])
     @table = @order.table
     @cost_centers = CostCenter.find_all_by_active(true)
     render 'go_to_order_form'
   end
 
   def receive_order_attributes_ajax
-    @cost_centers = CostCenter.find_all_by_active true
+    @cost_centers = CostCenter.scopied.find_all_by_active true
 
     if params[:order][:id] == 'add_offline_items_to_order'
-      @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
+      @order = Order.scopied.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     elsif not params[:order][:id].empty?
-      @order = Order.find_by_id params[:order][:id]
+      @order = Order.scopied.find_by_id params[:order][:id]
     end
 
     if @order
@@ -168,7 +168,7 @@ class OrdersController < ApplicationController
       end
     else
       # similar to orders#create
-      @order = Order.new params[:order]
+      @order = Order.scopied.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @cost_centers.first
     end
@@ -179,13 +179,13 @@ class OrdersController < ApplicationController
     @order.reload
     @order.set_priorities
 
-    if @order.nr > @current_company.largest_order_number
-      @current_company.update_attribute :largest_order_number, @order.nr 
+    if @order.nr > $COMPANY.largest_order_number
+      $COMPANY.update_attribute :largest_order_number, @order.nr 
     end
 
     if @order.items.size.zero?
-      @current_company.unused_order_numbers << @order.nr
-      @current_company.save
+      $COMPANY.unused_order_numbers << @order.nr
+      $COMPANY.save
       @order.delete
       @order.table.update_attribute :user_id, nil
       @tables = Table.find(:all, :conditions => { :hidden => false })
@@ -208,32 +208,32 @@ class OrdersController < ApplicationController
       close_printers printers
     end
 
-    @taxes = Tax.all
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @taxes = Tax.scopied.all
+    @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
 
     case params[:order_action]
       when 'save_and_go_to_tables'
         render 'go_to_tables'
       when 'save_and_go_to_invoice'
-        @orders = Order.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
-        session[:display_tax_colors] = true if @current_company.country == 'gn'
+        @orders = Order.scopied.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
+        session[:display_tax_colors] = true if $COMPANY.country == 'gn'
         render 'go_to_invoice_form'
       when 'clear_order_and_go_back'
         @order.table.update_attribute :user_id, nil
-        @tables = Table.find(:all, :conditions => { :hidden => false })
+        @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
         @order.destroy
         render 'go_to_tables'
       when 'move_order_to_table'
         move_order_to_table @order, params[:target_table]
-        @tables = Table.find(:all, :conditions => { :hidden => false })
+        @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
         render 'go_to_tables'
     end
   end
 
   def last_invoices
-    @unsettled_orders = Order.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
+    @unsettled_orders = Order.scopied.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
     if @current_user.role.permissions.include? 'finish_all_settlements'
-      @users = @current_company.users
+      @users = $COMPANY.users
     elsif @current_user.role.permissions.include? 'finish_own_settlement'
       @users = [@current_user]
     else
@@ -274,7 +274,7 @@ class OrdersController < ApplicationController
       unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => this_table.id, :finished => false })
       this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
 
-      Table.find_by_id(target_table_id).update_attribute :user, order.user
+      Table.scopied.find_by_id(target_table_id).update_attribute :user, order.user
     end
 
     def group_identical_items(o)
@@ -304,7 +304,7 @@ class OrdersController < ApplicationController
     end
 
     def neighbour_orders(order)
-      orders = Order.find_all_by_finished(true)
+      orders = Order.scopied.find_all_by_finished(true)
       idx = orders.index(order)
       previous_order = orders[idx-1]
       previous_order = order if previous_order.nil?

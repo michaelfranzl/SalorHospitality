@@ -20,6 +20,27 @@ class CompanyIds < ActiveRecord::Migration
     
     add_column(:taxes, :company_id, :integer)
     add_index(:taxes, :company_id, :name => "index_taxes_company_id")
+    
+     add_column(:groups, :company_id, :integer)
+    add_index(:groups, :company_id, :name => "index_groups_company_id")
+    
+     add_column(:items, :company_id, :integer)
+    add_index(:items, :company_id, :name => "index_items_company_id")
+    
+     add_column(:quantities, :company_id, :integer)
+    add_index(:quantities, :company_id, :name => "index_quantities_company_id")
+    
+     add_column(:settlements, :company_id, :integer)
+    add_index(:settlements, :company_id, :name => "index_settlements_company_id")
+    
+
+    add_column(:stocks, :company_id, :integer)
+    add_index(:stocks, :company_id, :name => "index_stocks_company_id")
+    
+    add_column(:options, :company_id, :integer)
+    add_index(:options, :company_id, :name => "index_options_company_id")
+    
+    
   end
 
   def self.down

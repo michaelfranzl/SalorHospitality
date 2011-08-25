@@ -17,7 +17,7 @@
 class GroupsController < ApplicationController
 
   def index
-    @groups = Group.find(:all)
+    @groups = Group.scopied.find(:all)
   end
 
   def new
@@ -30,17 +30,17 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
+    @group = Group.scopied.find(params[:id])
     render :new
   end
 
   def update
-    @group = Group.find(params[:id])
+    @group = Group.scopied.find(params[:id])
     @group.update_attributes(params[:group]) ? redirect_to(groups_path) : render(:new)
   end
 
   def destroy
-    @group = Group.find(params[:id])
+    @group = Group.scopied.find(params[:id])
     @group.destroy
     redirect_to groups_path
   end

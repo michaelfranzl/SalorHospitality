@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
   #We'll use update for splitting of items into separate orders
   def update
     logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"
-    @item = Item.find_by_id(params[:id])
+    @item = Item.scopied.find_by_id(params[:id])
     logger.info "[Split] @item = #{ @item.inspect }"
     raise "Dieses Item wurde nicht mehr gefunden. Oops! Möglicherweise wurde es mehrfach angewählt und es ist bereits in einer anderen Rechnung?" if not @item
     @order = @item.order
@@ -42,14 +42,14 @@ class ItemsController < ApplicationController
 
     split @item, @order
 
-    @cost_centers = CostCenter.find_all_by_active(true)
-    @taxes = Tax.all
+    @cost_centers = CostCenter.scopied
+    @taxes = Tax.scopied.all
     @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
   end
 
   # We'll use edit for separation of items
   def edit
-    item = Item.find(params[:id])
+    item = Item.scopied.find(params[:id])
     separated_item = item.item
     if separated_item.nil?
       separated_item = item.clone
@@ -70,7 +70,7 @@ class ItemsController < ApplicationController
   # storno_status: 2 = storno clone, 3 = storno original
   #
   def destroy
-    i = Item.find_by_id params[:id]
+    i = Item.scopied.find_by_id params[:id]
     if i.storno_status == 0
       k = i.clone
       k.options = i.options
@@ -92,12 +92,12 @@ class ItemsController < ApplicationController
   end
 
   def rotate_tax
-    @item = Item.find_by_id params[:id]
+    @item = Item.scopied.find_by_id params[:id]
     tax_ids = Tax.all.collect { |t| t.id }
     current_tax_id_index = tax_ids.index @item.tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
-    @item = Item.find_by_id params[:id] # re-read is necessary
+    @item.reload # re-read is necessary
   end
 
   private
@@ -114,8 +114,8 @@ class ItemsController < ApplicationController
         Order.transaction do
           split_order = parent_order.clone
           split_order.nr = get_next_unique_and_reused_order_number
-          if split_order.nr > @current_company.largest_order_number
-            @current_company.update_attribute :largest_order_number, split_order.nr
+          if split_order.nr > $COMPANY.largest_order_number
+            $COMPANY.update_attribute :largest_order_number, split_order.nr
           end
           sisr1 = split_order.save
           logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
@@ -173,8 +173,8 @@ class ItemsController < ApplicationController
       if parent_order.items.empty?
         parent_order.delete
         logger.info "[Split] deleted parent_order since there were no items left."
-        @current_company.unused_order_numbers << parent_order.nr
-        @current_company.save
+        $COMPANY.unused_order_numbers << parent_order.nr
+        $COMPANY.save
       else
         parent_order.update_attribute :sum, parent_order.calculate_sum
       end

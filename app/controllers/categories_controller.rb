@@ -16,7 +16,7 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.find(:all, :order => :position)
+    @categories = Category.scopied.find(:all, :order => :position)
   end
 
   def new
@@ -29,24 +29,24 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
+    @category = Category.scopied.find(params[:id])
     render :new
   end
 
   def update
-    @category = Category.find(params[:id])
+    @category = Category.scopied.find(params[:id])
     @category.update_attributes(params[:category]) ? redirect_to(categories_path) : render(:new)
   end
 
   def destroy
-    @category = Category.find(params[:id])
+    @category = Category.scopied.find(params[:id])
     flash[:notice] = t(:successfully_deleted, :what => @category.name)
     @category.destroy
     redirect_to categories_path
   end
 
   def sort
-    @categories = Category.all
+    @categories = Category.scopied.all
     @categories.each do |c|
       c.position = params['category'].index(c.id.to_s) + 1
       c.save

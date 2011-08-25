@@ -99,7 +99,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
+
+  add_index "groups", ["company_id"], :name => "index_groups_company_id"
 
   create_table "ingredients", :force => true do |t|
     t.float    "amount"
@@ -128,7 +131,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.integer  "max_count",                   :default => 0
     t.integer  "usage"
     t.integer  "priority"
+    t.integer  "company_id"
   end
+
+  add_index "items", ["company_id"], :name => "index_items_company_id"
 
   create_table "items_options", :id => false, :force => true do |t|
     t.integer  "item_id"
@@ -164,7 +170,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.datetime "updated_at"
     t.boolean  "hidden",      :default => false
     t.integer  "position"
+    t.integer  "company_id"
   end
+
+  add_index "options", ["company_id"], :name => "index_options_company_id"
 
   create_table "orders", :force => true do |t|
     t.boolean  "finished",       :default => false
@@ -198,7 +207,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.integer  "sort"
     t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
+    t.integer  "company_id"
   end
+
+  add_index "quantities", ["company_id"], :name => "index_quantities_company_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -218,7 +230,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.datetime "updated_at"
     t.boolean  "finished"
     t.float    "initial_cash"
+    t.integer  "company_id"
   end
+
+  add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
 
   create_table "stocks", :force => true do |t|
     t.float    "balance"
@@ -227,7 +242,10 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
+
+  add_index "stocks", ["company_id"], :name => "index_stocks_company_id"
 
   create_table "tables", :force => true do |t|
     t.string   "name"

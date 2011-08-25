@@ -17,43 +17,43 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.find(:all, :order => 'position')
+    @categories = Category.scopied.find(:all, :order => 'position')
     @scopes = ['menucard','waiterpad']
-    @articles = Article.all
+    @articles = Article.scopied.all
     respond_to do |wants|
       wants.html
       wants.js {
-        send_data @current_company.cache, :content_type => 'text/javascript', :disposition => 'inline'
+        send_data $COMPANY.cache, :content_type => 'text/javascript', :disposition => 'inline'
       }
     end
   end
 
   def update_cache
-    @categories = Category.find(:all, :order => 'position')
+    @categories = Category.scopied.find(:all, :order => 'position')
     @scopes = ['menucard','waiterpad']
-    @articles = Article.all
+    @articles = Article.scopied.all
     #File.open('test.txt','w') { |f| f.write render_to_string 'articles/index.js' }
-    @current_company.update_attribute :cache, render_to_string('articles/index.js')
+    $COMPANY.update_attribute :cache, render_to_string('articles/index.js')
     redirect_to orders_path
   end
 
   def listall
-    @articles = Article.find(:all, :order => 'name, description, price', :conditions => { :hidden => false })
+    @articles = Article.scopied.find(:all, :order => 'name, description, price', :conditions => { :hidden => false })
   end
 
   def new
     @article = Article.new
-    @groups = Group.find(:all, :order => 'name ASC')
+    @groups = Group.scopied.find(:all, :order => 'name ASC')
   end
 
   def create
     @article = Article.new(params[:article])
-    @groups = Group.find(:all, :order => 'name ASC')
+    @groups = Group.scopied.find(:all, :order => 'name ASC')
     @article.save ? redirect_to(articles_path) : render(:new)
   end
 
   def edit
-    @article = Article.find(params[:id])
+    @article = Article.scopied.find(params[:id])
     @groups = Group.find(:all, :order => 'name ASC')
     @quantities = Quantity.where(:article_id => params[:id], :hidden => false)
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
@@ -61,8 +61,8 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @categories = Category.find(:all, :order => 'position')
-    @article = Article.find_by_id params[:id]
+    @categories = Category.scopied.find(:all, :order => 'position')
+    @article = Article.scopied.find_by_id params[:id]
     @article.update_attributes params[:article]
 
     if @article.hidden
@@ -84,7 +84,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
+    @article = Article.scopied.find(params[:id])
     @article.update_attribute :hidden, true
     redirect_to articles_path
   end
@@ -94,7 +94,7 @@ class ArticlesController < ApplicationController
       search_terms = params['articles_search_text'].split.collect { |word| "%#{ word.downcase }%" }
       conditions = 'hidden = false AND '
       conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
-      @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
+      @found_articles = Article.scopied.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
       #render :partial => 'find', :layout => false
     else
       render :nothing => true
@@ -102,8 +102,8 @@ class ArticlesController < ApplicationController
   end
 
   def change_scope
-    @categories = Category.find(:all, :order => 'position')
-    @article = Article.find(/([0-9]*)$/.match(params[:id])[1])
+    @categories = Category.scopied.find(:all, :order => 'position')
+    @article = Article.scopied.find(/([0-9]*)$/.match(params[:id])[1])
 
     @drag_from = /[^_]*/.match(params[:id])[0]
     if params[:scope] == 'remove'
@@ -119,7 +119,7 @@ class ArticlesController < ApplicationController
 
   def sort
     params['article'].each do |id|
-      a = Article.find_by_id id
+      a = Article.scopied.find_by_id id
       a.position = params['article'].index(a.id.to_s) + 1
       a.save
     end
@@ -127,7 +127,7 @@ class ArticlesController < ApplicationController
   end
 
   def sort_index
-    @categories = Category.all
+    @categories = Category.scopied.all
   end
 
 end

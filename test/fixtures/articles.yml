@@ -1,6 +1,7 @@
 --- 
 articles_001: 
-  id: 1
+
+  company_id: 46
   name: Schremser 0,5
   format_name: ""
   format_division: ""
@@ -18,7 +19,7 @@ articles_001:
   usage: 0
   company_id: 46
 articles_002: 
-  id: 2
+  company_id: 46
   name: Schremser 0,3
   format_name: ""
   format_division: ""
@@ -36,7 +37,8 @@ articles_002:
   usage: 0
   company_id: 46
 articles_003: 
-  id: 3
+
+  company_id: 46
   name: Schremser
   format_name: ""
   format_division: ""
@@ -54,7 +56,8 @@ articles_003:
   usage: 0
   company_id: 46
 articles_004: 
-  id: 4
+
+  company_id: 46
   name: Soda
   format_name: ""
   format_division: ""
@@ -72,7 +75,8 @@ articles_004:
   usage: 0
   company_id: 46
 articles_005: 
-  id: 5
+
+  company_id: 46
   name: Mineral
   format_name: ""
   format_division: ""
@@ -90,7 +94,8 @@ articles_005:
   usage: 0
   company_id: 46
 articles_006: 
-  id: 16
+
+  company_id: 466
   name: "Topfenkn\xC3\xB6del"
   format_name: ""
   format_division: ""
@@ -107,7 +112,8 @@ articles_006:
   sort: 0
   usage: 0
 articles_007: 
-  id: 21
+
+  company_id: 461
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
   format_name: ""
   format_division: ""
@@ -124,7 +130,8 @@ articles_007:
   sort: 0
   usage: 0
 articles_008: 
-  id: 26
+
+  company_id: 466
   name: "S\xC3\xB6ll Welschriesling"
   format_name: ""
   format_division: ""
@@ -141,7 +148,8 @@ articles_008:
   sort: 0
   usage: 0
 articles_009: 
-  id: 27
+
+  company_id: 467
   name: Chardonnay
   format_name: ""
   format_division: ""
@@ -158,7 +166,8 @@ articles_009:
   sort: 0
   usage: 0
 articles_010: 
-  id: 29
+
+  company_id: 469
   name: G'Spritzter
   format_name: ""
   format_division: ""
@@ -175,7 +184,8 @@ articles_010:
   sort: 0
   usage: 0
 articles_011: 
-  id: 32
+
+  company_id: 462
   name: Pelzmann Zweigelt
   format_name: ""
   format_division: ""
@@ -192,7 +202,8 @@ articles_011:
   sort: 0
   usage: 0
 articles_012: 
-  id: 33
+
+  company_id: 463
   name: "Weninger Blaufr\xC3\xA4nkisch"
   format_name: ""
   format_division: ""
@@ -209,7 +220,8 @@ articles_012:
   sort: 0
   usage: 0
 articles_013: 
-  id: 34
+
+  company_id: 464
   name: Zweigelt
   format_name: ""
   format_division: ""
@@ -226,7 +238,8 @@ articles_013:
   sort: 0
   usage: 0
 articles_014: 
-  id: 38
+
+  company_id: 468
   name: Big John Cuvee (Zw, CS, PN)
   format_name: ""
   format_division: ""
@@ -243,7 +256,8 @@ articles_014:
   sort: 0
   usage: 0
 articles_015: 
-  id: 39
+
+  company_id: 469
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
   format_name: ""
   format_division: ""
@@ -260,7 +274,8 @@ articles_015:
   sort: 0
   usage: 0
 articles_016: 
-  id: 41
+
+  company_id: 461
   name: Martini
   format_name: ""
   format_division: ""
@@ -277,7 +292,8 @@ articles_016:
   sort: 0
   usage: 0
 articles_017: 
-  id: 42
+
+  company_id: 462
   name: Campari
   format_name: ""
   format_division: ""
@@ -294,7 +310,8 @@ articles_017:
   sort: 0
   usage: 0
 articles_018: 
-  id: 43
+
+  company_id: 463
   name: Campari
   format_name: ""
   format_division: ""
@@ -311,7 +328,8 @@ articles_018:
   sort: 0
   usage: 0
 articles_019: 
-  id: 44
+
+  company_id: 464
   name: Prosecco
   format_name: ""
   format_division: ""
@@ -328,7 +346,8 @@ articles_019:
   sort: 0
   usage: 0
 articles_020: 
-  id: 45
+
+  company_id: 465
   name: Sekt
   format_name: ""
   format_division: ""
@@ -345,7 +364,8 @@ articles_020:
   sort: 0
   usage: 0
 articles_021: 
-  id: 46
+
+  company_id: 466
   name: Frizzante
   format_name: ""
   format_division: ""
@@ -362,7 +382,8 @@ articles_021:
   sort: 0
   usage: 0
 articles_022: 
-  id: 47
+
+  company_id: 467
   name: Sherry Manzanilla
   format_name: ""
   format_division: ""
@@ -379,7 +400,8 @@ articles_022:
   sort: 0
   usage: 0
 articles_023: 
-  id: 48
+
+  company_id: 468
   name: Pastis
   format_name: ""
   format_division: ""
@@ -396,7 +418,8 @@ articles_023:
   sort: 0
   usage: 0
 articles_024: 
-  id: 49
+
+  company_id: 469
   name: Grappa Nonino
   format_name: ""
   format_division: ""
@@ -413,7 +436,8 @@ articles_024:
   sort: 0
   usage: 0
 articles_025: 
-  id: 50
+
+  company_id: 460
   name: Grappa Sarpa Riserva
   format_name: ""
   format_division: ""
@@ -430,7 +454,8 @@ articles_025:
   sort: 0
   usage: 0
 articles_026: 
-  id: 51
+
+  company_id: 461
   name: Fernet Branca
   format_name: ""
   format_division: ""
@@ -447,7 +472,8 @@ articles_026:
   sort: 0
   usage: 0
 articles_027: 
-  id: 52
+
+  company_id: 462
   name: Kaiserholzbirn
   format_name: ""
   format_division: ""
@@ -464,7 +490,8 @@ articles_027:
   sort: 0
   usage: 0
 articles_028: 
-  id: 53
+
+  company_id: 463
   name: Apfelsaft
   format_name: ""
   format_division: ""
@@ -481,7 +508,8 @@ articles_028:
   sort: 0
   usage: 0
 articles_029: 
-  id: 54
+
+  company_id: 464
   name: Apfelsaft
   format_name: ""
   format_division: ""
@@ -498,7 +526,8 @@ articles_029:
   sort: 0
   usage: 0
 articles_030: 
-  id: 55
+
+  company_id: 465
   name: Apfelsaft
   format_name: ""
   format_division: ""
@@ -515,7 +544,8 @@ articles_030:
   sort: 0
   usage: 0
 articles_031: 
-  id: 56
+
+  company_id: 466
   name: Orangensaft
   format_name: ""
   format_division: ""
@@ -532,7 +562,8 @@ articles_031:
   sort: 0
   usage: 0
 articles_032: 
-  id: 57
+
+  company_id: 467
   name: Orangensaft
   format_name: ""
   format_division: ""
@@ -549,7 +580,8 @@ articles_032:
   sort: 0
   usage: 0
 articles_033: 
-  id: 58
+
+  company_id: 468
   name: Orangensaft
   format_name: ""
   format_division: ""
@@ -566,7 +598,8 @@ articles_033:
   sort: 0
   usage: 0
 articles_034: 
-  id: 59
+
+  company_id: 469
   name: Birnensaft
   format_name: ""
   format_division: ""
@@ -583,7 +616,8 @@ articles_034:
   sort: 0
   usage: 0
 articles_035: 
-  id: 60
+
+  company_id: 460
   name: Birnensaft
   format_name: ""
   format_division: ""
@@ -600,7 +634,8 @@ articles_035:
   sort: 0
   usage: 0
 articles_036: 
-  id: 61
+
+  company_id: 461
   name: Birnensaft
   format_name: ""
   format_division: ""
@@ -617,7 +652,8 @@ articles_036:
   sort: 0
   usage: 0
 articles_037: 
-  id: 62
+
+  company_id: 462
   name: Apfel-Holler
   format_name: ""
   format_division: ""
@@ -634,7 +670,8 @@ articles_037:
   sort: 0
   usage: 0
 articles_038: 
-  id: 63
+
+  company_id: 463
   name: Apfel-Holler
   format_name: ""
   format_division: ""
@@ -651,7 +688,8 @@ articles_038:
   sort: 0
   usage: 0
 articles_039: 
-  id: 64
+
+  company_id: 464
   name: Apfel-Holler
   format_name: ""
   format_division: ""
@@ -668,7 +706,8 @@ articles_039:
   sort: 0
   usage: 0
 articles_040: 
-  id: 65
+
+  company_id: 465
   name: Apfel-Himbeere
   format_name: ""
   format_division: ""
@@ -685,7 +724,8 @@ articles_040:
   sort: 0
   usage: 0
 articles_041: 
-  id: 66
+
+  company_id: 466
   name: Apfel-Himbeere
   format_name: ""
   format_division: ""
@@ -702,7 +742,8 @@ articles_041:
   sort: 0
   usage: 0
 articles_042: 
-  id: 67
+
+  company_id: 467
   name: Apfel-Himbeere
   format_name: ""
   format_division: ""
@@ -719,7 +760,8 @@ articles_042:
   sort: 0
   usage: 0
 articles_043: 
-  id: 68
+
+  company_id: 468
   name: "Apfel-Rote R\xC3\xBCbe"
   format_name: ""
   format_division: ""
@@ -736,7 +778,8 @@ articles_043:
   sort: 0
   usage: 0
 articles_044: 
-  id: 69
+
+  company_id: 469
   name: "Apfel-Rote R\xC3\xBCbe"
   format_name: ""
   format_division: ""
@@ -753,7 +796,8 @@ articles_044:
   sort: 0
   usage: 0
 articles_045: 
-  id: 70
+
+  company_id: 460
   name: "Apfel-Rote R\xC3\xBCbe"
   format_name: ""
   format_division: ""
@@ -770,7 +814,8 @@ articles_045:
   sort: 0
   usage: 0
 articles_046: 
-  id: 71
+
+  company_id: 461
   name: Coca Cola
   format_name: ""
   format_division: ""
@@ -787,7 +832,8 @@ articles_046:
   sort: 0
   usage: 0
 articles_047: 
-  id: 72
+
+  company_id: 462
   name: Almdudler
   format_name: ""
   format_division: ""
@@ -804,7 +850,8 @@ articles_047:
   sort: 0
   usage: 0
 articles_048: 
-  id: 75
+
+  company_id: 465
   name: Espresso
   format_name: ""
   format_division: ""
@@ -821,7 +868,8 @@ articles_048:
   sort: 0
   usage: 0
 articles_049: 
-  id: 76
+
+  company_id: 466
   name: Kleiner Brauner
   format_name: ""
   format_division: ""
@@ -838,7 +886,8 @@ articles_049:
   sort: 0
   usage: 0
 articles_050: 
-  id: 77
+
+  company_id: 467
   name: Grosser Brauner
   format_name: ""
   format_division: ""
@@ -855,7 +904,8 @@ articles_050:
   sort: 0
   usage: 0
 articles_051: 
-  id: 78
+
+  company_id: 468
   name: Melange
   format_name: ""
   format_division: ""
@@ -872,7 +922,8 @@ articles_051:
   sort: 0
   usage: 0
 articles_052: 
-  id: 79
+
+  company_id: 469
   name: Bio White Satin
   format_name: ""
   format_division: ""
@@ -889,7 +940,8 @@ articles_052:
   sort: 0
   usage: 0
 articles_053: 
-  id: 80
+
+  company_id: 460
   name: Darjeeling First Flush
   format_name: ""
   format_division: ""
@@ -906,7 +958,8 @@ articles_053:
   sort: 0
   usage: 0
 articles_054: 
-  id: 81
+
+  company_id: 461
   name: Oolong
   format_name: ""
   format_division: ""
@@ -923,7 +976,8 @@ articles_054:
   sort: 3
   usage: 0
 articles_055: 
-  id: 82
+
+  company_id: 462
   name: Rotbusch
   format_name: ""
   format_division: ""
@@ -940,7 +994,8 @@ articles_055:
   sort: 2
   usage: 0
 articles_056: 
-  id: 83
+
+  company_id: 463
   name: Honigbusch
   format_name: ""
   format_division: ""
@@ -957,7 +1012,8 @@ articles_056:
   sort: 4
   usage: 0
 articles_057: 
-  id: 84
+
+  company_id: 464
   name: "Kr\xC3\xA4utertee"
   format_name: ""
   format_division: ""
@@ -974,7 +1030,8 @@ articles_057:
   sort: 0
   usage: 0
 articles_058: 
-  id: 85
+
+  company_id: 465
   name: Phillip Morris
   format_name: ""
   format_division: ""
@@ -991,7 +1048,8 @@ articles_058:
   sort: 0
   usage: 0
 articles_059: 
-  id: 86
+
+  company_id: 466
   name: Camel
   format_name: ""
   format_division: ""
@@ -1008,7 +1066,8 @@ articles_059:
   sort: 0
   usage: 0
 articles_060: 
-  id: 87
+
+  company_id: 467
   name: Gauloises
   format_name: ""
   format_division: ""
@@ -1025,7 +1084,8 @@ articles_060:
   sort: 0
   usage: 0
 articles_061: 
-  id: 88
+
+  company_id: 468
   name: "Camel "
   format_name: ""
   format_division: ""
@@ -1042,7 +1102,8 @@ articles_061:
   sort: 0
   usage: 0
 articles_062: 
-  id: 89
+
+  company_id: 469
   name: American Spirit
   format_name: ""
   format_division: ""
@@ -1059,7 +1120,8 @@ articles_062:
   sort: 0
   usage: 0
 articles_063: 
-  id: 91
+
+  company_id: 461
   name: Radler
   format_name: ""
   format_division: ""
@@ -1076,7 +1138,8 @@ articles_063:
   sort: 0
   usage: 0
 articles_064: 
-  id: 92
+
+  company_id: 462
   name: Radler
   format_name: ""
   format_division: ""
@@ -1093,7 +1156,8 @@ articles_064:
   sort: 0
   usage: 0
 articles_065: 
-  id: 99
+
+  company_id: 469
   name: Brokkolicremesuppe
   format_name: ""
   format_division: ""
@@ -1110,7 +1174,8 @@ articles_065:
   sort: 0
   usage: 0
 articles_066: 
-  id: 100
+
+  company_id: 4600
   name: "Klare H\xC3\xBChnersuppe"
   format_name: ""
   format_division: ""
@@ -1127,7 +1192,8 @@ articles_066:
   sort: 0
   usage: 0
 articles_067: 
-  id: 101
+
+  company_id: 4601
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
   format_name: ""
   format_division: ""
@@ -1144,7 +1210,8 @@ articles_067:
   sort: 0
   usage: 0
 articles_068: 
-  id: 102
+
+  company_id: 4602
   name: "Blunzengr\xC3\xB6stl"
   format_name: ""
   format_division: ""
@@ -1161,7 +1228,8 @@ articles_068:
   sort: 0
   usage: 0
 articles_069: 
-  id: 103
+
+  company_id: 4603
   name: "Ger\xC3\xB6stete Kalbsleber"
   format_name: ""
   format_division: ""
@@ -1178,7 +1246,8 @@ articles_069:
   sort: 0
   usage: 0
 articles_070: 
-  id: 104
+
+  company_id: 4604
   name: Fisch Fritz
   format_name: ""
   format_division: ""
@@ -1195,7 +1264,8 @@ articles_070:
   sort: 0
   usage: 0
 articles_071: 
-  id: 105
+
+  company_id: 4605
   name: Forellenfilet gebraten
   format_name: ""
   format_division: ""
@@ -1212,7 +1282,8 @@ articles_071:
   sort: 0
   usage: 0
 articles_072: 
-  id: 106
+
+  company_id: 4606
   name: Bunter Blattsalat
   format_name: ""
   format_division: ""
@@ -1229,7 +1300,8 @@ articles_072:
   sort: 2
   usage: 0
 articles_073: 
-  id: 107
+
+  company_id: 4607
   name: "Erd\xC3\xA4pfel-Vogerlsalat"
   format_name: ""
   format_division: ""
@@ -1246,7 +1318,8 @@ articles_073:
   sort: 0
   usage: 0
 articles_074: 
-  id: 108
+
+  company_id: 4608
   name: Gnocchi Basilikumpesto
   format_name: ""
   format_division: ""
@@ -1263,7 +1336,8 @@ articles_074:
   sort: 0
   usage: 0
 articles_075: 
-  id: 109
+
+  company_id: 4609
   name: Tajarin Salsicciaragout
   format_name: ""
   format_division: ""
@@ -1280,7 +1354,8 @@ articles_075:
   sort: 0
   usage: 0
 articles_076: 
-  id: 110
+
+  company_id: 4610
   name: "Curryhuhn ged\xC3\xBCnstet"
   format_name: ""
   format_division: ""
@@ -1297,7 +1372,8 @@ articles_076:
   sort: 0
   usage: 0
 articles_077: 
-  id: 111
+
+  company_id: 4611
   name: Wiener Schnitzel
   format_name: ""
   format_division: ""
@@ -1314,7 +1390,8 @@ articles_077:
   sort: 0
   usage: 0
 articles_078: 
-  id: 112
+
+  company_id: 4612
   name: Zander Szegediner
   format_name: ""
   format_division: ""
@@ -1331,7 +1408,8 @@ articles_078:
   sort: 0
   usage: 0
 articles_079: 
-  id: 113
+
+  company_id: 4613
   name: Mousse au Chocolat
   format_name: ""
   format_division: ""
@@ -1348,7 +1426,8 @@ articles_079:
   sort: 1
   usage: 0
 articles_080: 
-  id: 114
+
+  company_id: 4614
   name: Crema Catalana
   format_name: ""
   format_division: ""
@@ -1365,7 +1444,8 @@ articles_080:
   sort: 0
   usage: 0
 articles_081: 
-  id: 115
+
+  company_id: 4615
   name: Marillenpalatschinken
   format_name: ""
   format_division: ""
@@ -1382,7 +1462,8 @@ articles_081:
   sort: 0
   usage: 0
 articles_082: 
-  id: 116
+
+  company_id: 4616
   name: "Schluss mit K\xC3\xA4se"
   format_name: ""
   format_division: ""
@@ -1399,7 +1480,8 @@ articles_082:
   sort: 0
   usage: 0
 articles_083: 
-  id: 117
+
+  company_id: 4617
   name: Hollersaft
   format_name: ""
   format_division: ""
@@ -1416,7 +1498,8 @@ articles_083:
   sort: 0
   usage: 0
 articles_084: 
-  id: 118
+
+  company_id: 4618
   name: Apfel-Johannisbeere
   format_name: ""
   format_division: ""
@@ -1433,7 +1516,8 @@ articles_084:
   sort: 0
   usage: 0
 articles_085: 
-  id: 119
+
+  company_id: 4619
   name: Apfel-Johannisbeere
   format_name: ""
   format_division: ""
@@ -1450,7 +1534,8 @@ articles_085:
   sort: 0
   usage: 0
 articles_086: 
-  id: 120
+
+  company_id: 4620
   name: Apfel-Johannisbeere
   format_name: ""
   format_division: ""
@@ -1467,7 +1552,8 @@ articles_086:
   sort: 0
   usage: 0
 articles_087: 
-  id: 121
+
+  company_id: 4621
   name: Apfel-Weichsel
   format_name: ""
   format_division: ""
@@ -1484,7 +1570,8 @@ articles_087:
   sort: 0
   usage: 0
 articles_088: 
-  id: 122
+
+  company_id: 4622
   name: Apfel-Weichsel
   format_name: ""
   format_division: ""
@@ -1501,7 +1588,8 @@ articles_088:
   sort: 0
   usage: 0
 articles_089: 
-  id: 123
+
+  company_id: 4623
   name: Apfel-Weichsel
   format_name: ""
   format_division: ""
@@ -1518,7 +1606,8 @@ articles_089:
   sort: 0
   usage: 0
 articles_090: 
-  id: 124
+
+  company_id: 4624
   name: Apfel-Karotte
   format_name: ""
   format_division: ""
@@ -1535,7 +1624,8 @@ articles_090:
   sort: 0
   usage: 0
 articles_091: 
-  id: 125
+
+  company_id: 4625
   name: Apfel-Karotte
   format_name: ""
   format_division: ""
@@ -1552,7 +1642,8 @@ articles_091:
   sort: 0
   usage: 0
 articles_092: 
-  id: 126
+
+  company_id: 4626
   name: Apfel-Karotte
   format_name: ""
   format_division: ""
@@ -1569,7 +1660,8 @@ articles_092:
   sort: 0
   usage: 0
 articles_093: 
-  id: 127
+
+  company_id: 4627
   name: Himbeer-Soda
   format_name: ""
   format_division: ""
@@ -1586,7 +1678,8 @@ articles_093:
   sort: 0
   usage: 0
 articles_094: 
-  id: 128
+
+  company_id: 4628
   name: Roggenbier
   format_name: ""
   format_division: ""
@@ -1603,7 +1696,8 @@ articles_094:
   sort: 0
   usage: 0
 articles_095: 
-  id: 129
+
+  company_id: 4629
   name: Beck's alkoholfrei
   format_name: ""
   format_division: ""
@@ -1620,7 +1714,8 @@ articles_095:
   sort: 10
   usage: 0
 articles_096: 
-  id: 130
+
+  company_id: 4630
   name: Schuster
   format_name: ""
   format_division: ""
@@ -1637,7 +1732,8 @@ articles_096:
   sort: 0
   usage: 0
 articles_097: 
-  id: 132
+
+  company_id: 4632
   name: Scarbolo
   format_name: ""
   format_division: ""
@@ -1654,7 +1750,8 @@ articles_097:
   sort: 0
   usage: 0
 articles_098: 
-  id: 133
+
+  company_id: 4633
   name: G. Triebaumer
   format_name: ""
   format_division: ""
@@ -1671,7 +1768,8 @@ articles_098:
   sort: 0
   usage: 0
 articles_099: 
-  id: 134
+
+  company_id: 4634
   name: Dopler
   format_name: ""
   format_division: ""
@@ -1688,7 +1786,8 @@ articles_099:
   sort: 0
   usage: 0
 articles_100: 
-  id: 135
+
+  company_id: 4635
   name: F.lli Rabino
   format_name: ""
   format_division: ""
@@ -1705,7 +1804,8 @@ articles_100:
   sort: 0
   usage: 0
 articles_101: 
-  id: 136
+
+  company_id: 4636
   name: Sabathi
   format_name: ""
   format_division: ""
@@ -1722,7 +1822,8 @@ articles_101:
   sort: 0
   usage: 0
 articles_102: 
-  id: 137
+
+  company_id: 4637
   name: Alphart
   format_name: ""
   format_division: ""
@@ -1739,7 +1840,8 @@ articles_102:
   sort: 0
   usage: 0
 articles_103: 
-  id: 138
+
+  company_id: 4638
   name: Schilhan Junker
   format_name: ""
   format_division: ""
@@ -1756,7 +1858,8 @@ articles_103:
   sort: 0
   usage: 0
 articles_104: 
-  id: 139
+
+  company_id: 4639
   name: Steindorfer
   format_name: ""
   format_division: ""
@@ -1773,7 +1876,8 @@ articles_104:
   sort: 0
   usage: 0
 articles_105: 
-  id: 140
+
+  company_id: 4640
   name: Seher Riesling
   format_name: ""
   format_division: ""
@@ -1790,7 +1894,8 @@ articles_105:
   sort: 0
   usage: 0
 articles_106: 
-  id: 141
+
+  company_id: 4641
   name: Ettl
   format_name: ""
   format_division: ""
@@ -1807,7 +1912,8 @@ articles_106:
   sort: 1
   usage: 0
 articles_107: 
-  id: 142
+
+  company_id: 4642
   name: Apfel-Weichsel
   format_name: ""
   format_division: ""
@@ -1824,7 +1930,8 @@ articles_107:
   sort: 0
   usage: 0
 articles_108: 
-  id: 143
+
+  company_id: 4643
   name: Apfelsaft
   format_name: ""
   format_division: ""
@@ -1841,7 +1948,8 @@ articles_108:
   sort: 0
   usage: 0
 articles_109: 
-  id: 144
+
+  company_id: 4644
   name: Apfel-Johannisbeere
   format_name: ""
   format_division: ""
@@ -1858,7 +1966,8 @@ articles_109:
   sort: 0
   usage: 0
 articles_110: 
-  id: 145
+
+  company_id: 4645
   name: Apfel-Karotte
   format_name: ""
   format_division: ""
@@ -1875,7 +1984,8 @@ articles_110:
   sort: 0
   usage: 0
 articles_111: 
-  id: 146
+
+  company_id: 4646
   name: Apfel-Himbeere
   format_name: ""
   format_division: ""
@@ -1892,7 +2002,8 @@ articles_111:
   sort: 0
   usage: 0
 articles_112: 
-  id: 147
+
+  company_id: 4647
   name: Apfel-Holler
   format_name: ""
   format_division: ""
@@ -1909,7 +2020,8 @@ articles_112:
   sort: 0
   usage: 0
 articles_113: 
-  id: 148
+
+  company_id: 4648
   name: "Apfel-Rote R\xC3\xBCbe"
   format_name: ""
   format_division: ""
@@ -1926,7 +2038,8 @@ articles_113:
   sort: 0
   usage: 0
 articles_114: 
-  id: 149
+
+  company_id: 4649
   name: Birnensaft
   format_name: ""
   format_division: ""
@@ -1943,7 +2056,8 @@ articles_114:
   sort: 0
   usage: 0
 articles_115: 
-  id: 150
+
+  company_id: 4650
   name: Orangensaft
   format_name: ""
   format_division: ""
@@ -1960,7 +2074,8 @@ articles_115:
   sort: 0
   usage: 0
 articles_116: 
-  id: 151
+
+  company_id: 4651
   name: Aperol Spritzer
   format_name: ""
   format_division: ""
@@ -1977,7 +2092,8 @@ articles_116:
   sort: 0
   usage: 0
 articles_117: 
-  id: 152
+
+  company_id: 4652
   name: "Port. Erd\xC3\xA4pfel"
   format_name: ""
   format_division: ""
@@ -1994,7 +2110,8 @@ articles_117:
   sort: 0
   usage: 0
 articles_118: 
-  id: 153
+
+  company_id: 4653
   name: Port. Nudeln
   format_name: ""
   format_division: ""
@@ -2011,7 +2128,8 @@ articles_118:
   sort: 0
   usage: 0
 articles_119: 
-  id: 154
+
+  company_id: 4654
   name: Port. Nockerl
   format_name: ""
   format_division: ""
@@ -2028,7 +2146,8 @@ articles_119:
   sort: 0
   usage: 0
 articles_120: 
-  id: 155
+
+  company_id: 4655
   name: Kinderschnitzel
   format_name: ""
   format_division: ""
@@ -2045,7 +2164,8 @@ articles_120:
   sort: 0
   usage: 0
 articles_121: 
-  id: 156
+
+  company_id: 4656
   name: Soda-Zitron
   format_name: ""
   format_division: ""
@@ -2062,7 +2182,8 @@ articles_121:
   sort: 0
   usage: 0
 articles_122: 
-  id: 157
+
+  company_id: 4657
   name: Soda-Zitron
   format_name: ""
   format_division: ""
@@ -2079,7 +2200,8 @@ articles_122:
   sort: 0
   usage: 0
 articles_123: 
-  id: 158
+
+  company_id: 4658
   name: Soda
   format_name: ""
   format_division: ""
@@ -2096,7 +2218,8 @@ articles_123:
   sort: 0
   usage: 0
 articles_124: 
-  id: 159
+
+  company_id: 4659
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl klein"
   format_name: ""
   format_division: ""
@@ -2113,7 +2236,8 @@ articles_124:
   sort: 0
   usage: 0
 articles_125: 
-  id: 160
+
+  company_id: 4660
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2130,7 +2254,8 @@ articles_125:
   sort: 0
   usage: 0
 articles_126: 
-  id: 161
+
+  company_id: 4661
   name: "Ger\xC3\xB6stete Kalbsleber gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2147,7 +2272,8 @@ articles_126:
   sort: 0
   usage: 0
 articles_127: 
-  id: 162
+
+  company_id: 4662
   name: "Berliner Leber gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2164,7 +2290,8 @@ articles_127:
   sort: 0
   usage: 0
 articles_128: 
-  id: 163
+
+  company_id: 4663
   name: "Blunzengr\xC3\xB6stl gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2181,7 +2308,8 @@ articles_128:
   sort: 0
   usage: 0
 articles_129: 
-  id: 164
+
+  company_id: 4664
   name: Frittatensuppe
   format_name: ""
   format_division: ""
@@ -2198,7 +2326,8 @@ articles_129:
   sort: 0
   usage: 0
 articles_130: 
-  id: 165
+
+  company_id: 4665
   name: "Erd\xC3\xA4pfel-Lauchsuppe"
   format_name: ""
   format_division: ""
@@ -2215,7 +2344,8 @@ articles_130:
   sort: 0
   usage: 0
 articles_131: 
-  id: 166
+
+  company_id: 4666
   name: Ziege frisch bespeckt
   format_name: ""
   format_division: ""
@@ -2232,7 +2362,8 @@ articles_131:
   sort: 0
   usage: 0
 articles_132: 
-  id: 167
+
+  company_id: 4667
   name: Saures Rind
   format_name: ""
   format_division: ""
@@ -2249,7 +2380,8 @@ articles_132:
   sort: 0
   usage: 0
 articles_133: 
-  id: 168
+
+  company_id: 4668
   name: Woba doba
   format_name: ""
   format_division: ""
@@ -2266,7 +2398,8 @@ articles_133:
   sort: 0
   usage: 0
 articles_134: 
-  id: 169
+
+  company_id: 4669
   name: Woba Doba
   format_name: ""
   format_division: ""
@@ -2283,7 +2416,8 @@ articles_134:
   sort: 0
   usage: 0
 articles_135: 
-  id: 170
+
+  company_id: 4670
   name: Berliner Leber
   format_name: ""
   format_division: ""
@@ -2300,7 +2434,8 @@ articles_135:
   sort: 0
   usage: 0
 articles_136: 
-  id: 171
+
+  company_id: 4671
   name: Risotto Verde
   format_name: ""
   format_division: ""
@@ -2317,7 +2452,8 @@ articles_136:
   sort: 0
   usage: 0
 articles_137: 
-  id: 172
+
+  company_id: 4672
   name: Gnocchi Birne Gorgonzola
   format_name: ""
   format_division: ""
@@ -2334,7 +2470,8 @@ articles_137:
   sort: 0
   usage: 0
 articles_138: 
-  id: 173
+
+  company_id: 4673
   name: Coq au vin
   format_name: ""
   format_division: ""
@@ -2351,7 +2488,8 @@ articles_138:
   sort: 0
   usage: 0
 articles_139: 
-  id: 174
+
+  company_id: 4674
   name: Geschmorte Lammkeule
   format_name: ""
   format_division: ""
@@ -2368,7 +2506,8 @@ articles_139:
   sort: 0
   usage: 0
 articles_140: 
-  id: 175
+
+  company_id: 4675
   name: Tortoni
   format_name: ""
   format_division: ""
@@ -2385,7 +2524,8 @@ articles_140:
   sort: 0
   usage: 0
 articles_141: 
-  id: 176
+
+  company_id: 4676
   name: "Ziege frisch bespeckt gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2402,7 +2542,8 @@ articles_141:
   sort: 0
   usage: 0
 articles_142: 
-  id: 177
+
+  company_id: 4677
   name: "Topfenkn\xC3\xB6del gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2419,7 +2560,8 @@ articles_142:
   sort: 0
   usage: 0
 articles_143: 
-  id: 178
+
+  company_id: 4678
   name: Berliner Leber
   format_name: ""
   format_division: ""
@@ -2436,7 +2578,8 @@ articles_143:
   sort: 0
   usage: 0
 articles_144: 
-  id: 179
+
+  company_id: 4679
   name: "Woba doba gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -2453,7 +2596,8 @@ articles_144:
   sort: 0
   usage: 0
 articles_145: 
-  id: 180
+
+  company_id: 4680
   name: "Faschierte Laberln Erdp\xC3\xBC"
   format_name: ""
   format_division: ""
@@ -2470,7 +2614,8 @@ articles_145:
   sort: 0
   usage: 0
 articles_146: 
-  id: 181
+
+  company_id: 4681
   name: "H\xC3\xBChnersuppe Grand Mere"
   format_name: ""
   format_division: ""
@@ -2487,7 +2632,8 @@ articles_146:
   sort: 0
   usage: 0
 articles_147: 
-  id: 182
+
+  company_id: 4682
   name: "Rote R\xC3\xBCbensuppe"
   format_name: ""
   format_division: ""
@@ -2504,7 +2650,8 @@ articles_147:
   sort: 0
   usage: 0
 articles_148: 
-  id: 183
+
+  company_id: 4683
   name: "Erd\xC3\xA4pfel, Speck, Fisolen"
   format_name: ""
   format_division: ""
@@ -2521,7 +2668,8 @@ articles_148:
   sort: 0
   usage: 0
 articles_149: 
-  id: 184
+
+  company_id: 4684
   name: Lasagne Zucchini
   format_name: ""
   format_division: ""
@@ -2538,7 +2686,8 @@ articles_149:
   sort: 0
   usage: 0
 articles_150: 
-  id: 185
+
+  company_id: 4685
   name: ger. Kalbsleber
   format_name: ""
   format_division: ""
@@ -2555,7 +2704,8 @@ articles_150:
   sort: 0
   usage: 0
 articles_151: 
-  id: 186
+
+  company_id: 4686
   name: Saibling Peter
   format_name: ""
   format_division: ""
@@ -2572,7 +2722,8 @@ articles_151:
   sort: 0
   usage: 0
 articles_152: 
-  id: 187
+
+  company_id: 4687
   name: "Risotto Ror\xC3\xBC, Ziegenk\xC3\xA4se"
   format_name: ""
   format_division: ""
@@ -2589,7 +2740,8 @@ articles_152:
   sort: 0
   usage: 0
 articles_153: 
-  id: 188
+
+  company_id: 4688
   name: "Krautrouladen mit Erd\xC3\xA4pfelp\xC3\xBCree"
   format_name: ""
   format_division: ""
@@ -2606,7 +2758,8 @@ articles_153:
   sort: 0
   usage: 0
 articles_154: 
-  id: 189
+
+  company_id: 4689
   name: geschmortes Bratl
   format_name: ""
   format_division: ""
@@ -2623,7 +2776,8 @@ articles_154:
   sort: 0
   usage: 0
 articles_155: 
-  id: 190
+
+  company_id: 4690
   name: Saltimbocca m. Salbeispaghetti
   format_name: ""
   format_division: ""
@@ -2640,7 +2794,8 @@ articles_155:
   sort: 0
   usage: 0
 articles_156: 
-  id: 191
+
+  company_id: 4691
   name: Schokonusspalatschinken
   format_name: ""
   format_division: ""
@@ -2657,7 +2812,8 @@ articles_156:
   sort: 0
   usage: 0
 articles_157: 
-  id: 192
+
+  company_id: 4692
   name: Orangenmousse
   format_name: ""
   format_division: ""
@@ -2674,7 +2830,8 @@ articles_157:
   sort: 0
   usage: 0
 articles_158: 
-  id: 193
+
+  company_id: 4693
   name: Caffee Latte
   format_name: ""
   format_division: ""
@@ -2691,7 +2848,8 @@ articles_158:
   sort: 0
   usage: 0
 articles_159: 
-  id: 194
+
+  company_id: 4694
   name: Schokonusspalatschinken 1 Stk.
   format_name: ""
   format_division: ""
@@ -2708,7 +2866,8 @@ articles_159:
   sort: 0
   usage: 0
 articles_160: 
-  id: 195
+
+  company_id: 4695
   name: ger. Kalbsleber
   format_name: ""
   format_division: ""
@@ -2725,7 +2884,8 @@ articles_160:
   sort: 0
   usage: 0
 articles_161: 
-  id: 196
+
+  company_id: 4696
   name: ger. Kalbsleber
   format_name: ""
   format_division: ""
@@ -2742,7 +2902,8 @@ articles_161:
   sort: 0
   usage: 0
 articles_162: 
-  id: 197
+
+  company_id: 4697
   name: Wiener Schnitzel
   format_name: ""
   format_division: ""
@@ -2759,7 +2920,8 @@ articles_162:
   sort: 0
   usage: 0
 articles_163: 
-  id: 198
+
+  company_id: 4698
   name: Karotten-Ingwersuppe
   format_name: ""
   format_division: ""
@@ -2776,7 +2938,8 @@ articles_163:
   sort: 0
   usage: 0
 articles_164: 
-  id: 199
+
+  company_id: 4699
   name: pik.Fischsuppe
   format_name: ""
   format_division: ""
@@ -2793,7 +2956,8 @@ articles_164:
   sort: 0
   usage: 0
 articles_165: 
-  id: 200
+
+  company_id: 4600
   name: "Cous Cous H\xC3\xBChnersalat"
   format_name: ""
   format_division: ""
@@ -2810,7 +2974,8 @@ articles_165:
   sort: 0
   usage: 0
 articles_166: 
-  id: 201
+
+  company_id: 4601
   name: Blunzenroulade
   format_name: ""
   format_division: ""
@@ -2827,7 +2992,8 @@ articles_166:
   sort: 0
   usage: 0
 articles_167: 
-  id: 202
+
+  company_id: 4602
   name: Sarde Ripiene
   format_name: ""
   format_division: ""
@@ -2844,7 +3010,8 @@ articles_167:
   sort: 0
   usage: 0
 articles_168: 
-  id: 203
+
+  company_id: 4603
   name: "Schnitzel m. Erd\xC3\xA4pfelsalat"
   format_name: ""
   format_division: ""
@@ -2861,7 +3028,8 @@ articles_168:
   sort: 0
   usage: 0
 articles_169: 
-  id: 204
+
+  company_id: 4604
   name: geschm. Safranhuhn
   format_name: ""
   format_division: ""
@@ -2878,7 +3046,8 @@ articles_169:
   sort: 0
   usage: 0
 articles_170: 
-  id: 205
+
+  company_id: 4605
   name: gebr. Kalbsleber
   format_name: ""
   format_division: ""
@@ -2895,7 +3064,8 @@ articles_170:
   sort: 0
   usage: 0
 articles_171: 
-  id: 206
+
+  company_id: 4606
   name: Fisch Fritz
   format_name: ""
   format_division: ""
@@ -2912,7 +3082,8 @@ articles_171:
   sort: 0
   usage: 0
 articles_172: 
-  id: 207
+
+  company_id: 4607
   name: Griessflammerie
   format_name: ""
   format_division: ""
@@ -2929,7 +3100,8 @@ articles_172:
   sort: 0
   usage: 0
 articles_173: 
-  id: 208
+
+  company_id: 4608
   name: Cappuccinoparfait
   format_name: ""
   format_division: ""
@@ -2946,7 +3118,8 @@ articles_173:
   sort: 0
   usage: 0
 articles_174: 
-  id: 209
+
+  company_id: 4609
   name: Karotten-Ingwersuppe
   format_name: ""
   format_division: ""
@@ -2963,7 +3136,8 @@ articles_174:
   sort: 0
   usage: 0
 articles_175: 
-  id: 210
+
+  company_id: 4610
   name: "mar. Ziegenfrischk\xC3\xA4se"
   format_name: ""
   format_division: ""
@@ -2980,7 +3154,8 @@ articles_175:
   sort: 0
   usage: 0
 articles_176: 
-  id: 211
+
+  company_id: 4611
   name: Gr. Espresso
   format_name: ""
   format_division: ""
@@ -2997,7 +3172,8 @@ articles_176:
   sort: 0
   usage: 0
 articles_177: 
-  id: 212
+
+  company_id: 4612
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
   format_name: ""
   format_division: ""
@@ -3014,7 +3190,8 @@ articles_177:
   sort: 0
   usage: 0
 articles_178: 
-  id: 213
+
+  company_id: 4613
   name: gebr. Blunzenradeln
   format_name: ""
   format_division: ""
@@ -3031,7 +3208,8 @@ articles_178:
   sort: 0
   usage: 0
 articles_179: 
-  id: 214
+
+  company_id: 4614
   name: "gef\xC3\xBCllte Bl\xC3\xA4tterteighalbmonde"
   format_name: ""
   format_division: ""
@@ -3048,7 +3226,8 @@ articles_179:
   sort: 0
   usage: 0
 articles_180: 
-  id: 215
+
+  company_id: 4615
   name: gebr.Sardinen
   format_name: ""
   format_division: ""
@@ -3065,7 +3244,8 @@ articles_180:
   sort: 0
   usage: 0
 articles_181: 
-  id: 216
+
+  company_id: 4616
   name: Gnocchi Birne Gorgonzola
   format_name: ""
   format_division: ""
@@ -3082,7 +3262,8 @@ articles_181:
   sort: 0
   usage: 0
 articles_182: 
-  id: 217
+
+  company_id: 4617
   name: Zawinuls Chicken Report
   format_name: ""
   format_division: ""
@@ -3099,7 +3280,8 @@ articles_182:
   sort: 0
   usage: 0
 articles_183: 
-  id: 218
+
+  company_id: 4618
   name: gebr. Wolfsbarschfilet
   format_name: ""
   format_division: ""
@@ -3116,7 +3298,8 @@ articles_183:
   sort: 0
   usage: 0
 articles_184: 
-  id: 219
+
+  company_id: 4619
   name: "K\xC3\xBCrbiskernparfait"
   format_name: ""
   format_division: ""
@@ -3133,7 +3316,8 @@ articles_184:
   sort: 0
   usage: 0
 articles_185: 
-  id: 220
+
+  company_id: 4620
   name: Tiramisu
   format_name: ""
   format_division: ""
@@ -3150,7 +3334,8 @@ articles_185:
   sort: 0
   usage: 0
 articles_186: 
-  id: 221
+
+  company_id: 4621
   name: Artner ZWRC
   format_name: ""
   format_division: ""
@@ -3167,7 +3352,8 @@ articles_186:
   sort: 0
   usage: 0
 articles_187: 
-  id: 222
+
+  company_id: 4622
   name: Steindorfer BF
   format_name: ""
   format_division: ""
@@ -3184,7 +3370,8 @@ articles_187:
   sort: 0
   usage: 0
 articles_188: 
-  id: 223
+
+  company_id: 4623
   name: Triebaumer Merlot
   format_name: ""
   format_division: ""
@@ -3201,7 +3388,8 @@ articles_188:
   sort: 0
   usage: 0
 articles_189: 
-  id: 224
+
+  company_id: 4624
   name: Scheiblhofer Big John
   format_name: ""
   format_division: ""
@@ -3218,7 +3406,8 @@ articles_189:
   sort: 0
   usage: 0
 articles_190: 
-  id: 225
+
+  company_id: 4625
   name: F.lli Rabino Roero
   format_name: ""
   format_division: ""
@@ -3235,7 +3424,8 @@ articles_190:
   sort: 0
   usage: 0
 articles_191: 
-  id: 226
+
+  company_id: 4626
   name: Dopler CS
   format_name: ""
   format_division: ""
@@ -3252,7 +3442,8 @@ articles_191:
   sort: 0
   usage: 0
 articles_192: 
-  id: 227
+
+  company_id: 4627
   name: Schuster SB
   format_name: ""
   format_division: ""
@@ -3269,7 +3460,8 @@ articles_192:
   sort: 0
   usage: 0
 articles_193: 
-  id: 228
+
+  company_id: 4628
   name: Schilhan Junker
   format_name: ""
   format_division: ""
@@ -3286,7 +3478,8 @@ articles_193:
   sort: 0
   usage: 0
 articles_194: 
-  id: 229
+
+  company_id: 4629
   name: Wohlmuth Chard.
   format_name: ""
   format_division: ""
@@ -3303,7 +3496,8 @@ articles_194:
   sort: 0
   usage: 0
 articles_195: 
-  id: 230
+
+  company_id: 4630
   name: Scarbolo PG
   format_name: ""
   format_division: ""
@@ -3320,7 +3514,8 @@ articles_195:
   sort: 0
   usage: 0
 articles_196: 
-  id: 231
+
+  company_id: 4631
   name: Alphart RG
   format_name: ""
   format_division: ""
@@ -3337,7 +3532,8 @@ articles_196:
   sort: 0
   usage: 0
 articles_197: 
-  id: 232
+
+  company_id: 4632
   name: "gebr.Sardinen gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -3354,7 +3550,8 @@ articles_197:
   sort: 0
   usage: 0
 articles_198: 
-  id: 233
+
+  company_id: 4633
   name: Prosecco
   format_name: ""
   format_division: ""
@@ -3371,7 +3568,8 @@ articles_198:
   sort: 0
   usage: 0
 articles_199: 
-  id: 234
+
+  company_id: 4634
   name: Minestrone
   format_name: ""
   format_division: ""
@@ -3388,7 +3586,8 @@ articles_199:
   sort: 0
   usage: 0
 articles_200: 
-  id: 235
+
+  company_id: 4635
   name: "H\xC3\xBChnersuppe Grand Mere"
   format_name: ""
   format_division: ""
@@ -3405,7 +3604,8 @@ articles_200:
   sort: 0
   usage: 0
 articles_201: 
-  id: 236
+
+  company_id: 4636
   name: "Cous Cous H\xC3\xBChnersalat"
   format_name: ""
   format_division: ""
@@ -3422,7 +3622,8 @@ articles_201:
   sort: 0
   usage: 0
 articles_202: 
-  id: 237
+
+  company_id: 4637
   name: Ziege frisch bespeckt
   format_name: ""
   format_division: ""
@@ -3439,7 +3640,8 @@ articles_202:
   sort: 0
   usage: 0
 articles_203: 
-  id: 238
+
+  company_id: 4638
   name: "Blunzengr\xC3\xB6stl"
   format_name: ""
   format_division: ""
@@ -3456,7 +3658,8 @@ articles_203:
   sort: 0
   usage: 0
 articles_204: 
-  id: 239
+
+  company_id: 4639
   name: gebr. Wolfsbarschfilet
   format_name: ""
   format_division: ""
@@ -3473,7 +3676,8 @@ articles_204:
   sort: 0
   usage: 0
 articles_205: 
-  id: 240
+
+  company_id: 4640
   name: Spaghetti m. Sardinen
   format_name: ""
   format_division: ""
@@ -3490,7 +3694,8 @@ articles_205:
   sort: 0
   usage: 0
 articles_206: 
-  id: 241
+
+  company_id: 4641
   name: Rindsgulasch
   format_name: ""
   format_division: ""
@@ -3507,7 +3712,8 @@ articles_206:
   sort: 0
   usage: 0
 articles_207: 
-  id: 242
+
+  company_id: 4642
   name: Berliner Leber
   format_name: ""
   format_division: ""
@@ -3524,7 +3730,8 @@ articles_207:
   sort: 0
   usage: 0
 articles_208: 
-  id: 243
+
+  company_id: 4643
   name: Lammkotlett Provence
   format_name: ""
   format_division: ""
@@ -3541,7 +3748,8 @@ articles_208:
   sort: 0
   usage: 0
 articles_209: 
-  id: 244
+
+  company_id: 4644
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
   format_name: ""
   format_division: ""
@@ -3558,7 +3766,8 @@ articles_209:
   sort: 0
   usage: 0
 articles_210: 
-  id: 245
+
+  company_id: 4645
   name: Hollersaft
   format_name: ""
   format_division: ""
@@ -3575,7 +3784,8 @@ articles_210:
   sort: 0
   usage: 0
 articles_211: 
-  id: 246
+
+  company_id: 4646
   name: Sonstiges
   format_name: ""
   format_division: ""
@@ -3592,7 +3802,8 @@ articles_211:
   sort: 0
   usage: 0
 articles_212: 
-  id: 247
+
+  company_id: 4647
   name: Buffet 13.03.2010
   format_name: ""
   format_division: ""
@@ -3609,7 +3820,8 @@ articles_212:
   sort: 0
   usage: 0
 articles_213: 
-  id: 248
+
+  company_id: 4648
   name: Buffet 13.03.2010
   format_name: ""
   format_division: ""
@@ -3626,7 +3838,8 @@ articles_213:
   sort: 0
   usage: 0
 articles_214: 
-  id: 249
+
+  company_id: 4649
   name: Buffet 13.03.2010
   format_name: ""
   format_division: ""
@@ -3643,7 +3856,8 @@ articles_214:
   sort: 0
   usage: 0
 articles_215: 
-  id: 250
+
+  company_id: 4650
   name: Frittatensuppe
   format_name: ""
   format_division: ""
@@ -3660,7 +3874,8 @@ articles_215:
   sort: 0
   usage: 0
 articles_216: 
-  id: 251
+
+  company_id: 4651
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
   format_name: ""
   format_division: ""
@@ -3677,7 +3892,8 @@ articles_216:
   sort: 0
   usage: 0
 articles_217: 
-  id: 252
+
+  company_id: 4652
   name: Blunzenradeln mit Apfelsauerkraut
   format_name: ""
   format_division: ""
@@ -3694,7 +3910,8 @@ articles_217:
   sort: 0
   usage: 0
 articles_218: 
-  id: 253
+
+  company_id: 4653
   name: Saures Rindfleisch
   format_name: ""
   format_division: ""
@@ -3711,7 +3928,8 @@ articles_218:
   sort: 0
   usage: 0
 articles_219: 
-  id: 254
+
+  company_id: 4654
   name: Risotto Rucola
   format_name: ""
   format_division: ""
@@ -3728,7 +3946,8 @@ articles_219:
   sort: 0
   usage: 0
 articles_220: 
-  id: 255
+
+  company_id: 4655
   name: Kalbsleber Sherry
   format_name: ""
   format_division: ""
@@ -3745,7 +3964,8 @@ articles_220:
   sort: 0
   usage: 0
 articles_221: 
-  id: 256
+
+  company_id: 4656
   name: "Saibling Basilikumerd\xC3\xA4pfelp\xC3\xBCree"
   format_name: ""
   format_division: ""
@@ -3762,7 +3982,8 @@ articles_221:
   sort: 0
   usage: 0
 articles_222: 
-  id: 257
+
+  company_id: 4657
   name: Hauswein/GV
   format_name: ""
   format_division: ""
@@ -3779,7 +4000,8 @@ articles_222:
   sort: 0
   usage: 0
 articles_223: 
-  id: 258
+
+  company_id: 4658
   name: Scheiblhofer Andau
   format_name: ""
   format_division: ""
@@ -3796,7 +4018,8 @@ articles_223:
   sort: 0
   usage: 0
 articles_224: 
-  id: 259
+
+  company_id: 4659
   name: "Fr\xC3\xBChlingszwiebelsuppe"
   format_name: ""
   format_division: ""
@@ -3813,7 +4036,8 @@ articles_224:
   sort: 0
   usage: 0
 articles_225: 
-  id: 260
+
+  company_id: 4660
   name: Pikante Fischsuppe
   format_name: ""
   format_division: ""
@@ -3830,7 +4054,8 @@ articles_225:
   sort: 0
   usage: 1
 articles_226: 
-  id: 261
+
+  company_id: 4661
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
   format_name: ""
   format_division: ""
@@ -3847,7 +4072,8 @@ articles_226:
   sort: 0
   usage: 0
 articles_227: 
-  id: 262
+
+  company_id: 4662
   name: Gerolltes Huhn
   format_name: ""
   format_division: ""
@@ -3864,7 +4090,8 @@ articles_227:
   sort: 0
   usage: 0
 articles_228: 
-  id: 263
+
+  company_id: 4663
   name: Woba Ingwertomate
   format_name: ""
   format_division: ""
@@ -3881,7 +4108,8 @@ articles_228:
   sort: 0
   usage: 0
 articles_229: 
-  id: 264
+
+  company_id: 4664
   name: "Schnitzel m. Erd\xC3\xA4pfelsalat"
   format_name: ""
   format_division: ""
@@ -3898,7 +4126,8 @@ articles_229:
   sort: 0
   usage: 0
 articles_230: 
-  id: 265
+
+  company_id: 4665
   name: "Geschmorter Lammschl\xC3\xB6gel"
   format_name: ""
   format_division: ""
@@ -3915,7 +4144,8 @@ articles_230:
   sort: 0
   usage: 0
 articles_231: 
-  id: 266
+
+  company_id: 4666
   name: Orangenparfait
   format_name: ""
   format_division: ""
@@ -3932,7 +4162,8 @@ articles_231:
   sort: 0
   usage: 0
 articles_232: 
-  id: 267
+
+  company_id: 4667
   name: Gnocchi Birne Gorgonzola
   format_name: ""
   format_division: ""
@@ -3949,7 +4180,8 @@ articles_232:
   sort: 0
   usage: 0
 articles_233: 
-  id: 268
+
+  company_id: 4668
   name: "Skoff Welschriesling S\xC3\xBCdstmk.2009 1/8 l"
   format_name: ""
   format_division: ""
@@ -3966,7 +4198,8 @@ articles_233:
   sort: 0
   usage: 0
 articles_234: 
-  id: 269
+
+  company_id: 4669
   name: "G'spritzter 1/2 "
   format_name: ""
   format_division: ""
@@ -3983,7 +4216,8 @@ articles_234:
   sort: 0
   usage: 0
 articles_235: 
-  id: 270
+
+  company_id: 4670
   name: "Woba Ingwertomate gro\xC3\x9F"
   format_name: ""
   format_division: ""
@@ -4000,7 +4234,8 @@ articles_235:
   sort: 0
   usage: 0
 articles_236: 
-  id: 271
+
+  company_id: 4671
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
   format_name: ""
   format_division: ""
@@ -4017,7 +4252,8 @@ articles_236:
   sort: 0
   usage: 0
 articles_237: 
-  id: 272
+
+  company_id: 4672
   name: Almdudler gespritzt 1/2
   format_name: ""
   format_division: ""
@@ -4034,7 +4270,8 @@ articles_237:
   sort: 0
   usage: 0
 articles_238: 
-  id: 273
+
+  company_id: 4673
   name: "B\xC3\xA4rlauchsuppe"
   format_name: ""
   format_division: ""
@@ -4051,7 +4288,8 @@ articles_238:
   sort: 0
   usage: 0
 articles_239: 
-  id: 274
+
+  company_id: 4674
   name: "H\xC3\xBChnersuppe"
   format_name: ""
   format_division: ""
@@ -4068,7 +4306,8 @@ articles_239:
   sort: 0
   usage: 0
 articles_240: 
-  id: 275
+
+  company_id: 4675
   name: "Gef\xC3\xBCllte Bl\xC3\xA4tterteigtaschen"
   format_name: ""
   format_division: ""
@@ -4085,7 +4324,8 @@ articles_240:
   sort: 0
   usage: 0
 articles_241: 
-  id: 276
+
+  company_id: 4676
   name: gebr. Blunzenradeln
   format_name: ""
   format_division: ""
@@ -4102,7 +4342,8 @@ articles_241:
   sort: 0
   usage: 0
 articles_242: 
-  id: 277
+
+  company_id: 4677
   name: "Fr\xC3\xBChlingszwiebelrisotto"
   format_name: ""
   format_division: ""
@@ -4119,7 +4360,8 @@ articles_242:
   sort: 0
   usage: 0
 articles_243: 
-  id: 278
+
+  company_id: 4678
   name: "Gnocchi B\xC3\xA4rlauchpesto"
   format_name: ""
   format_division: ""
@@ -4136,7 +4378,8 @@ articles_243:
   sort: 0
   usage: 0
 articles_244: 
-  id: 279
+
+  company_id: 4679
   name: Karotten-Ingwerschwein
   format_name: ""
   format_division: ""
@@ -4153,7 +4396,8 @@ articles_244:
   sort: 0
   usage: 0
 articles_245: 
-  id: 280
+
+  company_id: 4680
   name: "Saibling B\xC3\xA4rlaucherd\xC3\xA4pfelp\xC3\xBCree"
   format_name: ""
   format_division: ""
@@ -4170,7 +4414,8 @@ articles_245:
   sort: 0
   usage: 0
 articles_246: 
-  id: 281
+
+  company_id: 4681
   name: Schokocannellono
   format_name: ""
   format_division: ""
@@ -4187,7 +4432,8 @@ articles_246:
   sort: 0
   usage: 0
 articles_247: 
-  id: 282
+
+  company_id: 4682
   name: "Erd\xC3\xA4pfel-Rucolasalat"
   format_name: ""
   format_division: ""
@@ -4204,7 +4450,8 @@ articles_247:
   sort: 0
   usage: 0
 articles_248: 
-  id: 283
+
+  company_id: 4683
   name: Dessert Variation
   format_name: ""
   format_division: ""
@@ -4221,7 +4468,8 @@ articles_248:
   sort: 0
   usage: 0
 articles_249: 
-  id: 284
+
+  company_id: 4684
   name: "G\xC2\xB4spritzter 1/2 rot"
   format_name: ""
   format_division: ""
@@ -4238,7 +4486,8 @@ articles_249:
   sort: 0
   usage: 0
 articles_250: 
-  id: 285
+
+  company_id: 4685
   name: "G\xC2\xB4spritzter 1/4 rot"
   format_name: ""
   format_division: ""
@@ -4255,7 +4504,8 @@ articles_250:
   sort: 0
   usage: 0
 articles_251: 
-  id: 286
+
+  company_id: 4686
   name: Gnocchi Butter kl.
   format_name: ""
   format_division: ""
@@ -4272,7 +4522,8 @@ articles_251:
   sort: 0
   usage: 0
 articles_252: 
-  id: 287
+
+  company_id: 4687
   name: "Spinatfrischk\xC3\xA4setascherln"
   format_name: ""
   format_division: ""
@@ -4289,7 +4540,8 @@ articles_252:
   sort: 0
   usage: 0
 articles_253: 
-  id: 288
+
+  company_id: 4688
   name: "Woba Spinaterd\xC3\xA4pfel"
   format_name: ""
   format_division: ""
@@ -4306,7 +4558,8 @@ articles_253:
   sort: 0
   usage: 0
 articles_254: 
-  id: 289
+
+  company_id: 4689
   name: Szegediner Krautfleisch
   format_name: ""
   format_division: ""
@@ -4323,7 +4576,8 @@ articles_254:
   sort: 0
   usage: 0
 articles_255: 
-  id: 290
+
+  company_id: 4690
   name: "Lammleber B\xC3\xA4rlauchp\xC3\xBCree"
   format_name: ""
   format_division: ""
@@ -4340,7 +4594,8 @@ articles_255:
   sort: 0
   usage: 0
 articles_256: 
-  id: 291
+
+  company_id: 4691
   name: Geschmortes Milchlamm
   format_name: ""
   format_division: ""
@@ -4357,7 +4612,8 @@ articles_256:
   sort: 0
   usage: 0
 articles_257: 
-  id: 292
+
+  company_id: 4692
   name: Artner ZWRC
   format_name: ""
   format_division: ""
@@ -4374,7 +4630,8 @@ articles_257:
   sort: 0
   usage: 0
 articles_258: 
-  id: 293
+
+  company_id: 4693
   name: Skoff Welschriesling Sstmk.
   format_name: ""
   format_division: ""
@@ -4391,7 +4648,8 @@ articles_258:
   sort: 0
   usage: 0
 articles_259: 
-  id: 294
+
+  company_id: 4694
   name: Scheiblhofer Andau
   format_name: ""
   format_division: ""
@@ -4408,7 +4666,8 @@ articles_259:
   sort: 0
   usage: 0
 articles_260: 
-  id: 295
+
+  company_id: 4695
   name: Scarbolo PG
   format_name: ""
   format_division: ""
@@ -4425,7 +4684,8 @@ articles_260:
   sort: 2
   usage: 0
 articles_261: 
-  id: 296
+
+  company_id: 4696
   name: Risotto Primavera
   format_name: ""
   format_division: ""
@@ -4442,7 +4702,8 @@ articles_261:
   sort: 0
   usage: 0
 articles_262: 
-  id: 297
+
+  company_id: 4697
   name: geb. Schweinsschnitzel
   format_name: ""
   format_division: ""
@@ -4459,7 +4720,8 @@ articles_262:
   sort: 0
   usage: 0
 articles_263: 
-  id: 298
+
+  company_id: 4698
   name: F.lli Rabino
   format_name: ""
   format_division: ""
@@ -4476,7 +4738,8 @@ articles_263:
   sort: 0
   usage: 0
 articles_264: 
-  id: 299
+
+  company_id: 4699
   name: Linsensuppe
   format_name: ""
   format_division: ""
@@ -4493,7 +4756,8 @@ articles_264:
   sort: 0
   usage: 0
 articles_265: 
-  id: 300
+
+  company_id: 4600
   name: "mar.Ziegenfrischk\xC3\xA4se"
   format_name: ""
   format_division: ""
@@ -4510,7 +4774,8 @@ articles_265:
   sort: 0
   usage: 0
 articles_266: 
-  id: 301
+
+  company_id: 4601
   name: Woba Ingwertomate
   format_name: ""
   format_division: ""
@@ -4527,7 +4792,8 @@ articles_266:
   sort: 0
   usage: 0
 articles_267: 
-  id: 302
+
+  company_id: 4602
   name: Buffet 12.04.2010
   format_name: ""
   format_division: ""
@@ -4544,7 +4810,8 @@ articles_267:
   sort: 0
   usage: 0
 articles_268: 
-  id: 303
+
+  company_id: 4603
   name: "Ziegenfrischk\xC3\xA4seb\xC3\xA4llchen"
   format_name: ""
   format_division: ""
@@ -4561,7 +4828,8 @@ articles_268:
   sort: 0
   usage: 0
 articles_269: 
-  id: 304
+
+  company_id: 4604
   name: "Blunzenbl\xC3\xA4tterteigtaschen"
   format_name: ""
   format_division: ""
@@ -4578,7 +4846,8 @@ articles_269:
   sort: 0
   usage: 0
 articles_270: 
-  id: 305
+
+  company_id: 4605
   name: "Cous Cous H\xC3\xBChnersalat"
   format_name: ""
   format_division: ""
@@ -4595,7 +4864,8 @@ articles_270:
   sort: 0
   usage: 0
 articles_271: 
-  id: 306
+
+  company_id: 4606
   name: gebr. Saiblingsfilet
   format_name: ""
   format_division: ""
@@ -4612,7 +4882,8 @@ articles_271:
   sort: 0
   usage: 0
 articles_272: 
-  id: 307
+
+  company_id: 4607
   name: Mandelparfait
   format_name: ""
   format_division: ""
@@ -4629,7 +4900,8 @@ articles_272:
   sort: 0
   usage: 0
 articles_273: 
-  id: 308
+
+  company_id: 4608
   name: Wohlmuth G.Muskateller
   format_name: ""
   format_division: ""
@@ -4646,7 +4918,8 @@ articles_273:
   sort: 0
   usage: 0
 articles_274: 
-  id: 309
+
+  company_id: 4609
   name: gebr.Saiblingsfilet gr.
   format_name: ""
   format_division: ""
@@ -4663,7 +4936,8 @@ articles_274:
   sort: 0
   usage: 0
 articles_275: 
-  id: 310
+
+  company_id: 4610
   name: Marillenpalatschinken
   format_name: ""
   format_division: ""
@@ -4680,7 +4954,8 @@ articles_275:
   sort: 0
   usage: 0
 articles_276: 
-  id: 311
+
+  company_id: 4611
   name: "Zucchinicr\xC3\xA8mesuppe"
   format_name: ""
   format_division: ""
@@ -4697,7 +4972,8 @@ articles_276:
   sort: 3
   usage: 0
 articles_277: 
-  id: 312
+
+  company_id: 4612
   name: Cous-cous-Salat
   format_name: ""
   format_division: ""
@@ -4714,7 +4990,8 @@ articles_277:
   sort: 0
   usage: 0
 articles_278: 
-  id: 313
+
+  company_id: 4613
   name: "Pikante H\xC3\xBChnerrolle"
   format_name: ""
   format_division: ""
@@ -4731,7 +5008,8 @@ articles_278:
   sort: 0
   usage: 0
 articles_279: 
-  id: 314
+
+  company_id: 4614
   name: Woba Fenchel/Tomate
   format_name: ""
   format_division: ""
@@ -4748,7 +5026,8 @@ articles_279:
   sort: 0
   usage: 0
 articles_280: 
-  id: 315
+
+  company_id: 4615
   name: Gnocchetti Minzpesto
   format_name: ""
   format_division: ""
@@ -4765,7 +5044,8 @@ articles_280:
   sort: 0
   usage: 0
 articles_281: 
-  id: 316
+
+  company_id: 4616
   name: Lammkotlett Provence
   format_name: ""
   format_division: ""
@@ -4782,7 +5062,8 @@ articles_281:
   sort: 14
   usage: 0
 articles_282: 
-  id: 317
+
+  company_id: 4617
   name: Haselnussparfait
   format_name: ""
   format_division: ""
@@ -4799,7 +5080,8 @@ articles_282:
   sort: 3
   usage: 0
 articles_283: 
-  id: 318
+
+  company_id: 4618
   name: Marillenpalatschinken
   format_name: ""
   format_division: ""
@@ -4816,7 +5098,8 @@ articles_283:
   sort: 2
   usage: 0
 articles_284: 
-  id: 319
+
+  company_id: 4619
   name: "Artner Cuv\xC3\xA9e Barrique (Zw, CS)"
   format_name: 
   format_division: 
@@ -4833,7 +5116,8 @@ articles_284:
   sort: 0
   usage: 0
 articles_285: 
-  id: 320
+
+  company_id: 4620
   name: "Zi\xC3\x9F Gr\xC3\xBCner Veltliner"
   format_name: 
   format_division: 
@@ -4850,7 +5134,8 @@ articles_285:
   sort: 4
   usage: 0
 articles_286: 
-  id: 321
+
+  company_id: 4621
   name: Almdudler
   format_name: 
   format_division: 
@@ -4867,7 +5152,8 @@ articles_286:
   sort: 0
   usage: 0
 articles_287: 
-  id: 322
+
+  company_id: 4622
   name: American Spirit
   format_name: 
   format_division: 
@@ -4884,7 +5170,8 @@ articles_287:
   sort: 0
   usage: 0
 articles_288: 
-  id: 323
+
+  company_id: 4623
   name: Aperol
   format_name: 
   format_division: 
@@ -4901,7 +5188,8 @@ articles_288:
   sort: 0
   usage: 0
 articles_289: 
-  id: 324
+
+  company_id: 4624
   name: Apfel-Himbeere
   format_name: 
   format_division: 
@@ -4918,7 +5206,8 @@ articles_289:
   sort: 0
   usage: 0
 articles_290: 
-  id: 325
+
+  company_id: 4625
   name: Apfel-Holler
   format_name: 
   format_division: 
@@ -4935,7 +5224,8 @@ articles_290:
   sort: 0
   usage: 0
 articles_291: 
-  id: 326
+
+  company_id: 4626
   name: Apfel-Johannisbeere
   format_name: 
   format_division: 
@@ -4952,7 +5242,8 @@ articles_291:
   sort: 0
   usage: 0
 articles_292: 
-  id: 327
+
+  company_id: 4627
   name: Apfel-Karotte
   format_name: 
   format_division: 
@@ -4969,7 +5260,8 @@ articles_292:
   sort: 0
   usage: 0
 articles_293: 
-  id: 328
+
+  company_id: 4628
   name: "Apfel-Rote R\xC3\xBCbe"
   format_name: 
   format_division: 
@@ -4986,7 +5278,8 @@ articles_293:
   sort: 0
   usage: 0
 articles_294: 
-  id: 329
+
+  company_id: 4629
   name: Apfel-Weichsel
   format_name: 
   format_division: 
@@ -5003,7 +5296,8 @@ articles_294:
   sort: 0
   usage: 0
 articles_295: 
-  id: 330
+
+  company_id: 4630
   name: Apfelsaft
   format_name: 
   format_division: 
@@ -5020,7 +5314,8 @@ articles_295:
   sort: 0
   usage: 0
 articles_296: 
-  id: 331
+
+  company_id: 4631
   name: Artner ZWRC
   format_name: 
   format_division: 
@@ -5037,7 +5332,8 @@ articles_296:
   sort: 0
   usage: 0
 articles_297: 
-  id: 332
+
+  company_id: 4632
   name: Birnensaft
   format_name: 
   format_division: 
@@ -5054,7 +5350,8 @@ articles_297:
   sort: 0
   usage: 0
 articles_298: 
-  id: 333
+
+  company_id: 4633
   name: Campari
   format_name: 
   format_division: 
@@ -5071,7 +5368,8 @@ articles_298:
   sort: 0
   usage: 0
 articles_299: 
-  id: 334
+
+  company_id: 4634
   name: "Erd\xC3\xA4pfelgr\xC3\xB6stl"
   format_name: 
   format_division: 
@@ -5088,7 +5386,8 @@ articles_299:
   sort: 0
   usage: 0
 articles_300: 
-  id: 335
+
+  company_id: 4635
   name: G'Spritzter
   format_name: 
   format_division: 
@@ -5105,7 +5404,8 @@ articles_300:
   sort: 0
   usage: 0
 articles_301: 
-  id: 336
+
+  company_id: 4636
   name: G'spritzter
   format_name: 
   format_division: 
@@ -5122,7 +5422,8 @@ articles_301:
   sort: 0
   usage: 0
 articles_302: 
-  id: 337
+
+  company_id: 4637
   name: Orangensaft
   format_name: 
   format_division: 
@@ -5139,7 +5440,8 @@ articles_302:
   sort: 0
   usage: 0
 articles_303: 
-  id: 338
+
+  company_id: 4638
   name: Radler
   format_name: 
   format_division: 
@@ -5156,7 +5458,8 @@ articles_303:
   sort: 30
   usage: 0
 articles_304: 
-  id: 339
+
+  company_id: 4639
   name: F.lli Rabino
   format_name: 
   format_division: 
@@ -5173,7 +5476,8 @@ articles_304:
   sort: 0
   usage: 0
 articles_305: 
-  id: 340
+
+  company_id: 4640
   name: Alphart
   format_name: 
   format_division: 
@@ -5190,7 +5494,8 @@ articles_305:
   sort: 3
   usage: 0
 articles_306: 
-  id: 341
+
+  company_id: 4641
   name: Gnocchi Birne Gorgonzola
   format_name: 
   format_division: 
@@ -5207,7 +5512,8 @@ articles_306:
   sort: 0
   usage: 0
 articles_307: 
-  id: 342
+
+  company_id: 4642
   name: Soda
   format_name: 
   format_division: 
@@ -5224,7 +5530,8 @@ articles_307:
   sort: 0
   usage: 0
 articles_308: 
-  id: 343
+
+  company_id: 4643
   name: Hollersaft
   format_name: 
   format_division: 
@@ -5241,7 +5548,8 @@ articles_308:
   sort: 0
   usage: 0
 articles_309: 
-  id: 344
+
+  company_id: 4644
   name: Himbeer-Soda
   format_name: 
   format_division: 
@@ -5258,7 +5566,8 @@ articles_309:
   sort: 0
   usage: 0
 articles_310: 
-  id: 345
+
+  company_id: 4645
   name: Camel
   format_name: 
   format_division: 
@@ -5275,7 +5584,8 @@ articles_310:
   sort: 0
   usage: 0
 articles_311: 
-  id: 346
+
+  company_id: 4646
   name: Generic
   format_name: 
   format_division: 
@@ -5292,7 +5602,8 @@ articles_311:
   sort: 1
   usage: 0
 articles_312: 
-  id: 347
+
+  company_id: 4647
   name: "abc\xC3\xB6\xC3\xA4\xC3\xBC\xC3\x96\xC3\x84\xC3\x9C\xC3\x9F"
   format_name: 
   format_division: 

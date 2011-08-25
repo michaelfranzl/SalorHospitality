@@ -30,17 +30,19 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find(session[:user_id]) if session[:user_id]
+      $USER = @current_user
       redirect_to '/' if @current_user.nil?
     end
 
     def select_current_company
       if @current_user
-        @current_company = @current_user.company
-        if not @current_company
-          @current_company = Company.create
-          @current_user.company = @current_company
-          @current_user.save
+        $COMPANY = @current_user.get_owner.companies.first
+        if not $COMPANY
+          $COMPANY = Company.create
+          $COMPANY.user = @current_user
+          $COMPANY.save
         end
+        @current_company = $COMPANY
       end
     end
 
@@ -61,27 +63,27 @@ class ApplicationController < ActionController::Base
     end
 
     def saas_variant?
-      @current_company.mode == 'saas' or @current_company.mode == 'saas_basic' or @current_company.mode == 'saas_plus' or @current_company.mode == 'saas_pro' if @current_company
+      $COMPANY.mode == 'saas' or $COMPANY.mode == 'saas_basic' or $COMPANY.mode == 'saas_plus' or $COMPANY.mode == 'saas_pro' if $COMPANY
     end
 
     def saas_basic_variant?
-      @current_company.mode == 'saas_basic' if @current_company
+      $COMPANY.mode == 'saas_basic' if $COMPANY
     end
 
     def saas_plus_variant?
-      @current_company.mode == 'saas_plus' if @current_company
+      $COMPANY.mode == 'saas_plus' if $COMPANY
     end
 
     def saas_pro_variant?
-      @current_company.mode == 'saas_pro' if @current_company
+      $COMPANY.mode == 'saas_pro' if $COMPANY
     end
 
     def demo_variant?
-      @current_company.mode == 'demo' if @current_company
+      $COMPANY.mode == 'demo' if $COMPANY
     end
 
     def local_variant?
-      @current_company.mode.nil? if @current_company
+      $COMPANY.mode.nil? if $COMPANY
     end
 
     def set_locale
@@ -89,15 +91,15 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
-      if not @current_company.unused_order_numbers.empty?
+      if not $COMPANY.unused_order_numbers.empty?
         # reuse order numbers if present
-        nr = @current_company.unused_order_numbers.first
-        @current_company.unused_order_numbers.delete(nr)
-        @current_company.save
-      elsif not @current_company.largest_order_number.zero?
+        nr = $COMPANY.unused_order_numbers.first
+        $COMPANY.unused_order_numbers.delete(nr)
+        $COMPANY.save
+      elsif not $COMPANY.largest_order_number.zero?
         # increment largest order number
-        nr = @current_company.largest_order_number + 1
-        @current_company.update_attribute :largest_order_number, nr
+        nr = $COMPANY.largest_order_number + 1
+        $COMPANY.update_attribute :largest_order_number, nr
       else
         # find Order with largest nr attribute from database. this should happen only once per application instance.
         last_order = Order.first(:order => 'nr DESC')
@@ -133,7 +135,7 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = @current_company.vendor_printers.available
+      avaliable_printers = $COMPANY.vendor_printers.available
       open_printers = Hash.new
 
       avaliable_printers.each do |p|
@@ -227,7 +229,7 @@ class ApplicationController < ActionController::Base
         "\n\n"
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_company.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + $COMPANY.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
 
         per_order_output += "=====================\n"
 
@@ -288,17 +290,17 @@ class ApplicationController < ActionController::Base
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      @current_company.name + "\n" +
+      $COMPANY.name + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + @current_company.invoice_subtitle + "\n" +
-      "\n" + @current_company.address + "\n\n" +
-      @current_company.revenue_service_tax_number + "\n\n" +
+      "\n" + $COMPANY.invoice_subtitle + "\n" +
+      "\n" + $COMPANY.address + "\n\n" +
+      $COMPANY.revenue_service_tax_number + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
-      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + @current_company.time_offset.hours, :format => :long)) +
+      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + $COMPANY.time_offset.hours, :format => :long)) +
       "\n\n" +
 
       "\e!\x00" +  # Font A
@@ -347,10 +349,10 @@ class ApplicationController < ActionController::Base
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + @current_company.invoice_slogan1 + "\n" +
+      "\n" + $COMPANY.invoice_slogan1 + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + @current_company.invoice_slogan2 + "\n" +
-      @current_company.internet_address + "\n\n\n\n\n\n\n" + 
+      "\n" + $COMPANY.invoice_slogan2 + "\n" +
+      $COMPANY.internet_address + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00\x0C" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer

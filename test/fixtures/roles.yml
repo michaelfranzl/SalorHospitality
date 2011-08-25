@@ -11,6 +11,7 @@ roles_001:
 
   created_at: 2011-05-13 17:18:47 Z
   updated_at: 2011-05-13 19:34:11 Z
+  company_id: 46
 roles_002: 
   id: 2
   name: Superuser
@@ -37,6 +38,7 @@ roles_002:
 
   created_at: 2011-05-13 17:19:04 Z
   updated_at: 2011-05-13 19:32:33 Z
+  company_id: 46
 roles_003: 
   id: 3
   name: Waiter
@@ -51,6 +53,7 @@ roles_003:
 
   created_at: 2011-05-13 17:20:08 Z
   updated_at: 2011-05-13 19:32:27 Z
+  company_id: 46
 roles_004: 
   id: 4
   name: Chief waiter
@@ -67,6 +70,7 @@ roles_004:
 
   created_at: 2011-05-13 17:21:12 Z
   updated_at: 2011-05-13 19:32:22 Z
+  company_id: 46
 roles_005: 
   id: 5
   name: Host
@@ -86,6 +90,7 @@ roles_005:
 
   created_at: 2011-05-13 17:21:27 Z
   updated_at: 2011-05-13 19:24:38 Z
+  company_id: 46
 roles_006: 
   id: 6
   name: Owner
@@ -112,6 +117,7 @@ roles_006:
 
   created_at: 2011-05-13 17:22:01 Z
   updated_at: 2011-05-13 19:32:11 Z
+  company_id: 46
 roles_007: 
   id: 7
   name: Restaurant
@@ -122,3 +128,4 @@ roles_007:
 
   created_at: 2011-05-13 19:34:23 Z
   updated_at: 2011-05-13 19:34:23 Z
+  company_id: 46

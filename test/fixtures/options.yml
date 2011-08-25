@@ -1,6 +1,7 @@
 --- 
 options_001: 
   id: 1
+  company_id: 46
   category_id: 2
   option_id: 
   name: extra ketchup
@@ -9,6 +10,7 @@ options_001:
   updated_at: 2010-09-10 16:31:12 Z
 options_002: 
   id: 2
+  company_id: 46
   category_id: 2
   option_id: 
   name: extra mustard
@@ -17,6 +19,7 @@ options_002:
   updated_at: 2010-09-10 16:31:22 Z
 options_003: 
   id: 3
+  company_id: 46
   category_id: 2
   option_id: 
   name: well done
@@ -25,6 +28,7 @@ options_003:
   updated_at: 2010-09-10 16:31:28 Z
 options_004: 
   id: 4
+  company_id: 46
   category_id: 2
   option_id: 
   name: medium
@@ -33,6 +37,7 @@ options_004:
   updated_at: 2010-09-10 16:31:36 Z
 options_005: 
   id: 6
+  company_id: 46
   category_id: 9
   option_id: 
   name: extra strong
@@ -41,6 +46,7 @@ options_005:
   updated_at: 2010-09-10 16:32:00 Z
 options_006: 
   id: 7
+  company_id: 46
   category_id: 9
   option_id: 
   name: with cream
