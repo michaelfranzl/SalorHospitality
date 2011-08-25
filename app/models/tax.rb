@@ -18,18 +18,21 @@ class Tax < ActiveRecord::Base
   has_many :categories
   has_many :items
   has_many :orders
+  belongs_to :company
 
   validates_presence_of :name, :percent
   validates_numericality_of :percent
 
-  scope :available, where('hidden=false or hidden is NULL')
+  include Scope
+  include Base
 
   def custom_name
     @custom_name = percent.to_s + '%, ' + name
   end
   
   def percent=(percent)
-    write_attribute(:percent, percent.gsub(',', '.'))
+      percent = percent.gsub(',', '.') if percent.class == String
+      write_attribute(:percent, percent)
   end
 
 end

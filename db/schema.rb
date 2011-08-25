@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110820140953) do
+ActiveRecord::Schema.define(:version => 20110825130816) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -29,7 +29,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.integer  "sort"
     t.integer  "usage",           :limit => 1, :default => 0
     t.integer  "position"
+    t.integer  "company_id"
   end
+
+  add_index "articles", ["company_id"], :name => "index_articles_company_id"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -40,7 +43,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.string   "color"
     t.integer  "vendor_printer_id", :default => 0
     t.integer  "position"
+    t.integer  "company_id"
   end
+
+  add_index "categories", ["company_id"], :name => "index_categories_company_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
     t.integer  "category_id"
@@ -73,7 +79,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.binary   "image"
     t.text     "cache",                      :limit => 16777215
     t.integer  "timeout",                                        :default => -1
+    t.integer  "user_id"
   end
+
+  add_index "companies", ["user_id"], :name => "index_company_user_id"
 
   create_table "cost_centers", :force => true do |t|
     t.string   "name"
@@ -81,7 +90,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
+    t.integer  "company_id"
   end
+
+  add_index "cost_centers", ["company_id"], :name => "index_cost_centers_company_id"
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -169,7 +181,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.integer  "tax_id"
     t.boolean  "print_pending"
     t.float    "storno_sum",     :default => 0.0
+    t.integer  "company_id"
   end
+
+  add_index "orders", ["company_id"], :name => "index_orders_company_id"
 
   create_table "quantities", :force => true do |t|
     t.string   "prefix"
@@ -191,7 +206,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.string   "permissions", :limit => 1000, :default => "--- []\n\n"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
+
+  add_index "roles", ["company_id"], :name => "index_roles_company_id"
 
   create_table "settlements", :force => true do |t|
     t.float    "revenue"
@@ -229,7 +247,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.boolean  "enabled",       :default => true
     t.boolean  "hidden",        :default => false
     t.boolean  "rotate"
+    t.integer  "company_id"
   end
+
+  add_index "tables", ["company_id"], :name => "index_tables_company_id"
 
   create_table "taxes", :force => true do |t|
     t.integer  "percent"
@@ -239,7 +260,10 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.string   "letter"
     t.string   "color"
     t.boolean  "hidden"
+    t.integer  "company_id"
   end
+
+  add_index "taxes", ["company_id"], :name => "index_taxes_company_id"
 
   create_table "users", :force => true do |t|
     t.string   "login"
@@ -250,9 +274,11 @@ ActiveRecord::Schema.define(:version => 20110820140953) do
     t.integer  "role_id"
     t.string   "color"
     t.string   "language"
-    t.integer  "company_id"
-    t.boolean  "active",     :default => true
-    t.boolean  "hidden",     :default => false
+    t.boolean  "active",             :default => true
+    t.boolean  "hidden",             :default => false
+    t.integer  "current_company_id"
+    t.boolean  "is_owner",           :default => false
+    t.integer  "owner_id"
   end
 
   create_table "vendor_printers", :force => true do |t|

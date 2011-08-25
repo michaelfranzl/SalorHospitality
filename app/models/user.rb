@@ -17,9 +17,11 @@
 class User < ActiveRecord::Base
   has_many :settlements
   has_many :orders
-  belongs_to :company
+  has_many :companies
+  has_many :employees, :class_name => "User", :foreign_key => :owner_id
+  belongs_to :owner, :class_name => "User", :foreign_key => :owner_id
   belongs_to :role
   validates_presence_of :login, :password, :title
-  scope :active, where(:active => true, :hidden => false)
-  scope :available, where(:hidden => false)
+  include Scope
+  include Base
 end

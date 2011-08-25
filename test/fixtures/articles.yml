@@ -16,6 +16,7 @@ articles_001:
   hidden: 1
   sort: 0
   usage: 0
+  company_id: 46
 articles_002: 
   id: 2
   name: Schremser 0,3
@@ -33,6 +34,7 @@ articles_002:
   hidden: 1
   sort: 0
   usage: 0
+  company_id: 46
 articles_003: 
   id: 3
   name: Schremser
@@ -50,6 +52,7 @@ articles_003:
   hidden: 0
   sort: 8
   usage: 0
+  company_id: 46
 articles_004: 
   id: 4
   name: Soda
@@ -67,6 +70,7 @@ articles_004:
   hidden: 1
   sort: 0
   usage: 0
+  company_id: 46
 articles_005: 
   id: 5
   name: Mineral
@@ -84,6 +88,7 @@ articles_005:
   hidden: 0
   sort: 0
   usage: 0
+  company_id: 46
 articles_006: 
   id: 16
   name: "Topfenkn\xC3\xB6del"

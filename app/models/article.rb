@@ -17,6 +17,7 @@
 class Article < ActiveRecord::Base
 
   belongs_to :category
+  belongs_to :company
   has_many :ingredients
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
