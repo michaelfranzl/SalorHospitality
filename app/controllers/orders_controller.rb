@@ -216,7 +216,7 @@ class OrdersController < ApplicationController
         render 'go_to_tables'
       when 'save_and_go_to_invoice'
         @orders = Order.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
-        session[:display_tax_colors] = true if @current_company.country == 'gn'
+        session[:display_tax_colors] = @current_company.country == 'de' or @current_company.country == 'cc'
         render 'go_to_invoice_form'
       when 'clear_order_and_go_back'
         @order.table.update_attribute :user_id, nil
