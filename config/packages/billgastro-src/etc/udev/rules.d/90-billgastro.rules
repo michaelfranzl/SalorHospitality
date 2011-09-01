@@ -1,18 +1,23 @@
-# Generic USB Printer support
-KERNELS=="4-2:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-front"
-KERNELS=="3-3:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-top-right"
-KERNELS=="4-3:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-top-left"
 KERNELS=="3-2:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-bottom-right"
 KERNELS=="4-1:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-bottom-left"
 
-# Digitus USB-2.0 USB to Serial Adapter
+# Digitus USB-2.0 USB to Serial Adapter, Zotac ZBOX V1
 KERNELS=="4-2:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-front"
 KERNELS=="3-3:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-top-right"
 KERNELS=="4-3:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-top-left"
 KERNELS=="3-2:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-bottom-right"
 KERNELS=="4-1:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-bottom-left"
 
-# Digitus USB-1.1 USB to Serial Adapter
+# Digitus USB-2.0 USB to Serial Adapter, Zotac ZBOX V2
+KERNELS=="5-2:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-front"
+KERNELS=="5-1:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-top"
+KERNELS=="6-1.2:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-top-right"
+KERNELS=="6-1.3:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-top-left"
+KERNELS=="3-1:1.0", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-bottom-right"
+KERNELS=="3-1:1.1", DRIVERS=="ftdi_sio", MODE="0777", SYMLINK="billgastro-printer-back-bottom-left"
+
+
+# Digitus USB-1.1 USB to Serial Adapter, Zotac ZBOX V1
 KERNELS=="4-2:1.0", DRIVERS=="pl2303", MODE="0777", SYMLINK="billgastro-printer-front"
 KERNELS=="3-3:1.0", DRIVERS=="pl2303", MODE="0777", SYMLINK="billgastro-printer-back-top-right"
 KERNELS=="4-3:1.0", DRIVERS=="pl2303", MODE="0777", SYMLINK="billgastro-printer-back-top-left"
