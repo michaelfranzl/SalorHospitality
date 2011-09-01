@@ -16,7 +16,7 @@ module BillGastro
 
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español' }
-    COUNTRIES = { 'cc' => :default, 'gn' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
+    COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
