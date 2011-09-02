@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110825130816) do
+ActiveRecord::Schema.define(:version => 20110831144936) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -94,6 +94,31 @@ ActiveRecord::Schema.define(:version => 20110825130816) do
   end
 
   add_index "cost_centers", ["company_id"], :name => "index_cost_centers_company_id"
+
+  create_table "coupons", :force => true do |t|
+    t.string   "name"
+    t.float    "amount",              :default => 0.0
+    t.integer  "ctype"
+    t.string   "sku"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "more_than_1_allowed", :default => true
+    t.integer  "article_id"
+    t.boolean  "time_based",          :default => false
+    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "coupons", ["company_id"], :name => "coupons_company_id_index"
+
+  create_table "coupons_orders", :id => false, :force => true do |t|
+    t.integer "coupon_id"
+    t.integer "order_id"
+  end
+
+  add_index "coupons_orders", ["coupon_id"], :name => "coupons_orders_coupon_id_index"
+  add_index "coupons_orders", ["order_id"], :name => "coupons_orders_order_id_index"
 
   create_table "groups", :force => true do |t|
     t.string   "name"

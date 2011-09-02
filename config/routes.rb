@@ -1,4 +1,6 @@
 BillGastro::Application.routes.draw do
+  resources :coupons
+
   resources :roles
 
   # The priority is based upon order of creation:

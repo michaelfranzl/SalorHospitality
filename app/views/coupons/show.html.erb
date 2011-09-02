@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @coupon.name %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @coupon.amount %>
+</p>
+
+<p>
+  <b>Ctype:</b>
+  <%= @coupon.ctype %>
+</p>
+
+<p>
+  <b>Sku:</b>
+  <%= @coupon.sku %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%= @coupon.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @coupon.end_date %>
+</p>
+
+<p>
+  <b>More than 1 allowed:</b>
+  <%= @coupon.more_than_1_allowed %>
+</p>
+
+
+<p>
+  <b>Applies to:</b>
+  <%= @coupon.article_id %>
+</p>
+
+<p>
+  <b>Time based:</b>
+  <%= @coupon.time_based %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @coupon.company_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
+<%= link_to 'Back', coupons_path %>

@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  amount: 1.5
+  ctype: 0
+  sku: MyString
+  start_date: 2011-08-31 16:49:36
+  end_date: 2011-08-31 16:49:36
+  more_than_1_allowed: true
+  article_id: articles_001
+  time_based: false
+  company_id: 46
+two:
+  name: MyString
+  amount: 1.5
+  ctype: 1
+  sku: MyString2
+  start_date: 2011-08-31 16:49:36
+  end_date: 2011-08-31 16:49:36
+  more_than_1_allowed: false
+  article_id: articles_002
+  time_based: true
+  company_id: 46
