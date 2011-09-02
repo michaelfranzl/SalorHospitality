@@ -168,7 +168,7 @@ class OrdersController < ApplicationController
       end
     else
       # similar to orders#create
-      @order = Order.scopied.new params[:order]
+      @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @cost_centers.first
     end

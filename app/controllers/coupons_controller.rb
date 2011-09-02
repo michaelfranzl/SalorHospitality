@@ -2,7 +2,7 @@ class CouponsController < ApplicationController
   # GET /coupons
   # GET /coupons.xml
   def index
-    @coupons = Coupon.all
+    @coupons = Coupon.scopied
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class CouponsController < ApplicationController
   # GET /coupons/1
   # GET /coupons/1.xml
   def show
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.scopied.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,14 +34,14 @@ class CouponsController < ApplicationController
 
   # GET /coupons/1/edit
   def edit
-    @coupon = Coupon.find(params[:id])
+    @coupon = Coupon.scopied.find(params[:id])
   end
 
   # POST /coupons
   # POST /coupons.xml
   def create
     @coupon = Coupon.new(params[:coupon])
-
+    @coupon.set_model_owner
     respond_to do |format|
       if @coupon.save
         format.html { redirect_to(@coupon, :notice => 'Coupon was successfully created.') }
@@ -56,8 +56,8 @@ class CouponsController < ApplicationController
   # PUT /coupons/1
   # PUT /coupons/1.xml
   def update
-    @coupon = Coupon.find(params[:id])
-
+    @coupon = Coupon.scopied.find(params[:id])
+    @coupon.set_model_owner
     respond_to do |format|
       if @coupon.update_attributes(params[:coupon])
         format.html { redirect_to(@coupon, :notice => 'Coupon was successfully updated.') }
@@ -72,12 +72,17 @@ class CouponsController < ApplicationController
   # DELETE /coupons/1
   # DELETE /coupons/1.xml
   def destroy
-    @coupon = Coupon.find(params[:id])
-    @coupon.destroy
+    @coupon = Coupon.scopied.find(params[:id])
+    @coupon.destroy if @coupon
 
     respond_to do |format|
       format.html { redirect_to(coupons_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def coupons_list
+    @coupons = Coupon.scopied
+    render :text => @coupons.to_json
   end
 end

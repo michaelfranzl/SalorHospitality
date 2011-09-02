@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :ctype %><br />
-    <%= f.text_field :ctype %>
+    <%= f.select :ctype,Coupon::CTYPES.collect {|ct| [ct[1],ct[0]]} %>
   </div>
   <div class="field">
     <%= f.label :sku %><br />

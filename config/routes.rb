@@ -1,4 +1,5 @@
 BillGastro::Application.routes.draw do
+  get "coupons/coupons_list"
   resources :coupons
 
   resources :roles

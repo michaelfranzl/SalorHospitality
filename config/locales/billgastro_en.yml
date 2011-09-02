@@ -49,6 +49,9 @@ en:
       vendor_printer:
         one: Printer
         other: Printers
+      coupon:
+        one: Coupon
+        other: Coupons
 
     attributes:
       article:
@@ -330,6 +333,11 @@ en:
       backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
+  coupons:
+    ctypes:
+      fixed: "Fixed"
+      percent: "Percent"
+      b1g1: "Buy 1 Get 1"
 
   roles:
     new:

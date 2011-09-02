@@ -17,7 +17,7 @@
 class TablesController < ApplicationController
 
   def index
-    @tables = Table.where( :hidden => false )
+    @tables = Table.scopied.where( :hidden => false )
     @last_finished_order = Order.find_all_by_finished(true).last
     respond_to do |wants|
       wants.html
@@ -26,10 +26,10 @@ class TablesController < ApplicationController
   end
 
   def show
-    @table = Table.find(params[:id])
+    @table = Table.scopied.find(params[:id])
     @cost_centers = CostCenter.find_all_by_active(true)
-    @taxes = Tax.all
-    @orders = Order.find(:all, :conditions => { :table_id => @table.id, :finished => false })
+    @taxes = Tax.scopied
+    @orders = Order.scopied.find(:all, :conditions => { :table_id => @table.id, :finished => false })
     if @orders.size > 1
       render 'orders/go_to_invoice_form'
     else
@@ -48,12 +48,12 @@ class TablesController < ApplicationController
   end
 
   def edit
-    @table = Table.find(params[:id])
+    @table = Table.scopied.find(params[:id])
     render :new
   end
 
   def update
-    @table = Table.find(params[:id])
+    @table = Table.scopied.find(params[:id])
     success = @table.update_attributes(params[:table])
     respond_to do |wants|
       wants.html{ success ? redirect_to(tables_path) : render(:new)}
@@ -62,7 +62,7 @@ class TablesController < ApplicationController
   end
 
   def destroy
-    @table = Table.find(params[:id])
+    @table = Table.scopied.find(params[:id])
     @table.update_attribute :hidden, true
     redirect_to tables_path
   end
@@ -74,12 +74,12 @@ class TablesController < ApplicationController
     @to =   Date.civil( params[:to  ][:year ].to_i,
                         params[:to  ][:month].to_i,
                         params[:to  ][:day  ].to_i) if params[:to]
-    @tables = Table.find(:all)
+    @tables = Table.scopied.find(:all)
     render :index
   end
 
   def mobile
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
   end
 
 end

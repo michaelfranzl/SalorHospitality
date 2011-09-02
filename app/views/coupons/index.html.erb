@@ -13,7 +13,6 @@
     <th>Time based</th>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @coupons.each do |coupon| %>
@@ -27,7 +26,6 @@
     <td><%= coupon.more_than_1_allowed %></td>
     <td><%= coupon.article_id %></td>
     <td><%= coupon.time_based %></td>
-    <td><%= link_to 'Show', coupon %></td>
     <td><%= link_to 'Edit', edit_coupon_path(coupon) %></td>
     <td><%= link_to 'Destroy', coupon, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
