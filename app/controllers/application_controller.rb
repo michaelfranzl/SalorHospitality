@@ -260,7 +260,7 @@ class ApplicationController < ActionController::Base
             per_order_output += " * %-17.17s\n" % [po.name]
           end
 
-          per_order_output += "---------------------\n" if i.options.any? or i.quantity
+          per_order_output += "--------------- %2.2f\n" % i.full_price
 
           i.printed_count = i.count
           i.save
