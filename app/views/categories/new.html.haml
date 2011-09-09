@@ -13,7 +13,9 @@
   %table
     %tr
       %td= category_form.label('name', Category.human_attribute_name(:name))
-      %td= category_form.text_field :name, :size => '20'
+      %td
+        = category_form.text_field :name, :size => '20'
+        %span#category_name_display_keyboard.display_keyboard
     %tr
       %td= category_form.label('tax_id', Category.human_attribute_name(:tax_id))
       %td= category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
@@ -32,3 +34,9 @@
           = options_for_select(get_color_array, category_form.object.color)
           
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+:javascript
+  $('#category_name').keyboard( {openOn: '' } );
+  $('#category_name_display_keyboard').click(function(){
+    $('#category_name').getkeyboard().reveal();
+  });

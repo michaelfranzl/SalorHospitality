@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20110909111308) do
     t.string   "color"
     t.integer  "vendor_printer_id", :default => 0
     t.integer  "position"
-    t.boolean  "hidden"
+    t.boolean  "hidden",            :default => false
   end
 
   create_table "categories_options", :id => false, :force => true do |t|

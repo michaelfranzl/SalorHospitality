@@ -96,6 +96,7 @@ en:
         color: Color
         food: Food?
         vendor_printer_id: Printer
+        hidden: delete
       cost_center:
         name: Name
         description: Description

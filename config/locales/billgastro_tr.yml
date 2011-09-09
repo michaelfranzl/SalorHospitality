@@ -96,6 +96,7 @@ tr:
         color: Renk
         food: Yemek?
         vendor_printer_id: XXXPrinter
+        hidden: XXXdelete
       cost_center:
         name: Isim
         description: Tarif

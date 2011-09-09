@@ -16,7 +16,7 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.find(:all, :order => :position)
+    @categories = Category.existing
   end
 
   def new
@@ -40,8 +40,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = Category.find(params[:id])
-    flash[:notice] = t(:successfully_deleted, :what => @category.name)
-    @category.destroy
+    @category.update_attribute :hidden, true
     redirect_to categories_path
   end
 

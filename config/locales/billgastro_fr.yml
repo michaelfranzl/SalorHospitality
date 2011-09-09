@@ -96,6 +96,7 @@ fr:
         color: Couleur
         food: Repas
         vendor_printer_id: XXXPrinter
+        hidden: XXXdelete
       cost_center:
         name: Nom
         description: Description

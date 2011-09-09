@@ -9,6 +9,7 @@
       %span.inline= link_to ca.name, edit_category_path(ca)
       %span.inline== #{ t('activerecord.models.vendor_printer.one') }: #{ ca.vendor_printer ? ca.vendor_printer.name : '-' }
       %span.inline== #{ t('activerecord.models.tax.one') }: #{ ca.tax.name } (#{ ca.tax.percent }%)
+      %span.inline= link_to Category.human_attribute_name(:hidden), category_path(ca), :method => :delete
 
 :javascript
   $(document).ready(function(){
