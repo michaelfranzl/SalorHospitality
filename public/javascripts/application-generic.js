@@ -376,6 +376,7 @@ function go_to_order_form_preprocessing(table_id) {
 
   $('#order_id').val('add_offline_items_to_order');
   $('#order_info').html(i18n_just_order);
+  $('#order_note').val('');
   $('#order_action').val('');
   $('#order_table_id').val(table_id);
 

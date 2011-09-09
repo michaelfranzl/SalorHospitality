@@ -696,7 +696,8 @@ td.item_options
 div.optionsselect,
 div.tablesselect,
 div.comment_for_item,
-div.price_for_item
+div.price_for_item,
+div#note_for_order
   :display none
   :z-index 100
   :background-color rgba(0, 0, 0, 0.8)
@@ -722,7 +723,8 @@ div.price_for_item
     :vertical-align middle
   span:hover
     :background-color #0e1d25
-  span.done
+  span.done,
+  span.finish
     :cursor pointer
     :vertical-align middle
     :display inline-block
@@ -731,8 +733,18 @@ div.price_for_item
     :height 38px
     :background-repeat no-repeat
     :background-position center center
+  span.finish
+    :background-image url(/images/button_mobile_finish-small.png)
   p
     :margin 0px
+
+div#note_for_order
+  :position absolute
+  :margin-top -90px
+  :width 200px
+  :right 50%
+  :top 50px
+  
 
 div.enter_comment_or_price
   :background-image url(/images/button_mobile_finish-small.png)
