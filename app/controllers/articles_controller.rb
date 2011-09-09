@@ -17,7 +17,7 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.find(:all, :order => 'position')
+    @categories = Category.existing
     @scopes = ['menucard','waiterpad']
     @articles = Article.all
     respond_to do |wants|

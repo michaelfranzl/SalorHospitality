@@ -26,7 +26,7 @@
         %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
         %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
         - if item
-          - Option.find(:all, :conditions => { :category_id => item.category.id, :hidden => false }, :order => 'position ASC' ).each do |o|
+          - item.category.options.each do |o|
             %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
         - else
           OPTIONSDIV
@@ -38,7 +38,7 @@
         %option{ :value => -1 }= t('.no_printing')
         %option{ :value => -3 }= t('articles.new.takeaway')
         - if item
-          - Option.find(:all, :conditions => { :category_id => item.category.id }).each do |o|
+          - item.category.options.each do |o|
             %option{ :value => o.id }== #{ o.name } #{ number_to_currency o.price }
         - else
           OPTIONSSELECT

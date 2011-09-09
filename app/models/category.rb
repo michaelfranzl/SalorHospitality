@@ -22,4 +22,6 @@ class Category < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :tax_id
   acts_as_list
+
+  scope :existing, where(:hidden => false).order('position ASC')
 end
