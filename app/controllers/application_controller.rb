@@ -262,7 +262,7 @@ class ApplicationController < ActionController::Base
             per_order_output += " * %-17.17s\n" % [po.name]
           end
 
-          per_order_output += "--------------- %2.2f\n" % i.full_price
+          per_order_output += "---------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
 
           i.printed_count = i.count
           i.save
