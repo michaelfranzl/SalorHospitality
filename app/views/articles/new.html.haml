@@ -47,7 +47,7 @@
     %a#add_quantity= t '.add_quantity'
 
   %ul#quantities_new
-    = article_form.fields_for :quantities, article_form.object.quantities do |quantity_form|
+    = article_form.fields_for :quantities, article_form.object.quantities.active_and_sorted do |quantity_form|
       = quantity_form.hidden_field :hidden
       = render :partial => 'quantity', :locals => { :f => quantity_form } unless quantity_form.object.hidden
   %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
