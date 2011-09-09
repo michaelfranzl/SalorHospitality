@@ -27,14 +27,14 @@
     <%= f.label :sku %><br />
     <%= f.text_field :sku %>
   </div>
-  <div class="field">
+  <!-- <div class="field">
     <%= f.label :start_date %><br />
     <%= f.datetime_select :start_date %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br />
     <%= f.datetime_select :end_date %>
-  </div>
+  </div> -->
   <div class="field">
     <%= f.label :more_than_1_allowed %><br />
     <%= f.check_box :more_than_1_allowed %>
@@ -43,10 +43,10 @@
     <%= f.label :article_id %><br />
     <%= f.text_field :article_id %>
   </div>
-  <div class="field">
+  <!-- <div class="field">
     <%= f.label :time_based %><br />
     <%= f.check_box :time_based %>
-  </div>
+  </div> -->
     <%= f.hidden_field :company_id, :value => $COMPANY.id %>
   <div class="actions">
     <%= f.submit %>

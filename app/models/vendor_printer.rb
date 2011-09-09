@@ -19,4 +19,5 @@ class VendorPrinter < ActiveRecord::Base
   has_many :categories
   include Scope
   include Base
+  before_create :set_model_owner
 end

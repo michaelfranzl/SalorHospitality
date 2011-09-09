@@ -18,8 +18,10 @@ class Option < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
   validates_presence_of :name
+  include Scope
+  include Base
+  before_create :set_model_owner
   scope :existing, where(:hidden => false).order('position ASC')
-
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))

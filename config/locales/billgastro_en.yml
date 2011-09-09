@@ -52,6 +52,9 @@ en:
       coupon:
         one: Coupon
         other: Coupons
+      discount:
+        one: Discount
+        other: Discounts
 
     attributes:
       article:
@@ -134,6 +137,9 @@ en:
         address: Address
         time_offset: Time Offset (hours)
         timeout: Screenlock Timeout (seconds)
+        res_fetch_url: Fetch Reservations
+        res_confirm_url: Confirm Reservations
+        
       role:
         name: Name
       vendor_printer:
@@ -338,6 +344,10 @@ en:
       fixed: "Fixed"
       percent: "Percent"
       b1g1: "Buy 1 Get 1"
+  discounts:
+    dtypes:
+      fixed: "Fixed"
+      percent: "Percent"
 
   roles:
     new:

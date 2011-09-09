@@ -2,6 +2,7 @@ class Coupon < ActiveRecord::Base
   has_and_belongs_to_many :orders
   include Scope
   include Base
+  before_create :set_model_owner
   CTYPES = [
     [0,I18n.t("coupons.ctypes.fixed")],
     [1,I18n.t("coupons.ctypes.percent")],

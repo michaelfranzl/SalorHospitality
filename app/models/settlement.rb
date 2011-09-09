@@ -17,7 +17,9 @@
 class Settlement < ActiveRecord::Base
   belongs_to :user
   has_many :orders
-
+  include Scope
+  include Base
+  before_create :set_model_owner
   def revenue=(revenue)
     write_attribute(:revenue, revenue.gsub(',', '.'))
   end

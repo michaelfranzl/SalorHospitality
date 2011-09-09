@@ -18,7 +18,9 @@ class Stock < ActiveRecord::Base
   belongs_to :group
 
   validates_presence_of :name, :balance, :unit
-
+  include Scope
+  include Base
+  before_create :set_model_owner
   def custom_name
     @custom_name = unit + ' ' + name
   end

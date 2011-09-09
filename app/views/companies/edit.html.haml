@@ -51,6 +51,13 @@
     %p
       = company_form.label :timeout, Company.human_attribute_name(:timeout)
       = company_form.text_field :timeout, :size => 2
+      
+    %p
+      = company_form.label :res_fetch_url, I18n.t("activerecord.attributes.company.res_fetch_url")
+      = company_form.text_field :res_fetch_url, :size => 55
+    %p
+      = company_form.label :res_confirm_url, I18n.t("activerecord.attributes.company.res_confirm_url")
+      = company_form.text_field :res_confirm_url, :size => 55
 
     - if saas_pro_variant?
       %p

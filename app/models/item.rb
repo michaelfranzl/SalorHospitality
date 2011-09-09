@@ -26,6 +26,9 @@ class Item < ActiveRecord::Base
 
   scope :prioritized, order('priority ASC')
   scope :sequence, order('sort ASC')
+  include Scope
+  include Base
+  before_create :set_model_owner
 
   def price
     p = read_attribute :price

@@ -303,7 +303,7 @@ function add_option_to_item_from_div(button, item_designator, value, price, text
   var tablerow = $('#item_' + item_designator);
   var itemfields = $('#fields_for_item_' + item_designator);
   var itemoptions = $('#options_for_item_' + item_designator);
-
+  alert(value);
   if (value == 0) {
     // normal, delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');

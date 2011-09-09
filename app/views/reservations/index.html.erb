@@ -1,0 +1,45 @@
+<h1>Listing reservations</h1>
+
+<table>
+  <tr>
+    <th>When</th>
+    <th>Party size</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Table</th>
+    <th>Diet restrictions</th>
+    <th>Occasion</th>
+    <th>Honor</th>
+    <th>Allergies</th>
+    <th>Other</th>
+    <th>Menu selection</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reservations.each do |reservation| %>
+  <tr>
+    <td><%= reservation.when %></td>
+    <td><%= reservation.party_size %></td>
+    <td><%= reservation.name %></td>
+    <td><%= reservation.email %></td>
+    <td><%= reservation.phone %></td>
+    <td><%= reservation.table %></td>
+    <td><%= reservation.diet_restrictions %></td>
+    <td><%= reservation.occasion %></td>
+    <td><%= reservation.honor %></td>
+    <td><%= reservation.allergies %></td>
+    <td><%= reservation.other %></td>
+    <td><%= reservation.menu_selection %></td>
+    <td><%= link_to 'Show', reservation %></td>
+    <td><%= link_to 'Edit', edit_reservation_path(reservation) %></td>
+    <td><%= link_to 'Destroy', reservation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reservation', new_reservation_path %>

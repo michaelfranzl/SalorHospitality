@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @discount.name %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @discount.amount %>
+</p>
+
+<p>
+  <b>Dtype:</b>
+  <%= @discount.dtype %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @discount.category_id %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @discount.company_id %>
+</p>
+
+<p>
+  <b>Article:</b>
+  <%= @discount.article_id %>
+</p>
+
+<p>
+  <b>Time based:</b>
+  <%= @discount.time_based %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @discount.start_time %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @discount.end_time %>
+</p>
+
+
+<%= link_to 'Edit', edit_discount_path(@discount) %> |
+<%= link_to 'Back', discounts_path %>

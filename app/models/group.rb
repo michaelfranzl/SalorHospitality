@@ -17,4 +17,7 @@
 class Group < ActiveRecord::Base
   has_many :stocks
   validates_presence_of :name
+  include Scope
+  include Base
+  before_create :set_model_owner
 end

@@ -20,9 +20,11 @@ class Category < ActiveRecord::Base
   belongs_to :company
   has_and_belongs_to_many :options
   has_many :articles
+  has_many :discounts
   validates_presence_of :name
   validates_presence_of :tax_id
   acts_as_list
   include Scope
   include Base
+  before_create :set_model_owner
 end

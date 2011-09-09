@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110831144936) do
+ActiveRecord::Schema.define(:version => 20110908132301) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(:version => 20110831144936) do
     t.text     "cache",                      :limit => 16777215
     t.integer  "timeout",                                        :default => -1
     t.integer  "user_id"
+    t.string   "res_fetch_url"
+    t.string   "res_confirm_url"
   end
 
   add_index "companies", ["user_id"], :name => "index_company_user_id"
@@ -119,6 +121,31 @@ ActiveRecord::Schema.define(:version => 20110831144936) do
 
   add_index "coupons_orders", ["coupon_id"], :name => "coupons_orders_coupon_id_index"
   add_index "coupons_orders", ["order_id"], :name => "coupons_orders_order_id_index"
+
+  create_table "discounts", :force => true do |t|
+    t.string   "name"
+    t.float    "amount"
+    t.integer  "dtype"
+    t.integer  "category_id"
+    t.integer  "company_id"
+    t.integer  "article_id"
+    t.boolean  "time_based"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "discounts", ["article_id"], :name => "index_discounts_article_id"
+  add_index "discounts", ["category_id"], :name => "index_discounts_category_id"
+  add_index "discounts", ["company_id"], :name => "index_discounts_company_id"
+
+  create_table "discounts_orders", :id => false, :force => true do |t|
+    t.integer "order_id"
+    t.integer "discount_id"
+  end
+
+  add_index "discounts_orders", ["order_id"], :name => "index_discounts_orders_order_id"
 
   create_table "groups", :force => true do |t|
     t.string   "name"

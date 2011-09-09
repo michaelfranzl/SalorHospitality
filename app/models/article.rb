@@ -22,12 +22,14 @@ class Article < ActiveRecord::Base
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
   has_many :items
+  has_many :discounts
 
   scope :existing, where(:hidden => false).order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
   include Scope
   include Base
+  before_create :set_model_owner
 
   def price=(price)
     price =  price.gsub(',', '.') if price.class == String

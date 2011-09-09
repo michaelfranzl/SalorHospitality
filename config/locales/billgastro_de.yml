@@ -52,6 +52,9 @@ de:
       coupon:
         one: Coupon
         other: Coupons
+      discount:
+        one: Discount
+        other: Discountsl
 
     attributes:
       article:
@@ -338,6 +341,10 @@ de:
       fixed: "Fixed"
       percent: "Percent"
       b1g1: "Buy 1 Get 1"
+  discounts:
+    dtypes:
+      fixed: "Fixed"
+      percent: "Percent"
   roles:
     new:
       take_orders: Bestellungen aufnehmen

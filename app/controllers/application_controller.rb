@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
           $COMPANY.save
         end
         @current_company = $COMPANY
+        $DISCOUNTS = Discount.scopied
       end
     end
 

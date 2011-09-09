@@ -25,6 +25,7 @@ class Tax < ActiveRecord::Base
 
   include Scope
   include Base
+  before_create :set_model_owner
 
   def custom_name
     @custom_name = percent.to_s + '%, ' + name
