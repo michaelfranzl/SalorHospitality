@@ -17,8 +17,8 @@ $('#functions_header_order_form').hide();
 $('#functions_header_index').hide();
 $('#functions_footer').hide();
 
-$('#functions_header_order_form').html('<%= escape_javascript render 'functions_header_order_form' %>');
-$('#functions_footer').html('<%= escape_javascript render 'functions_footer' %>');
+$('#functions_header_order_form').html('<%= escape_javascript render :partial => 'orders/functions_header_order_form' %>');
+$('#functions_footer').html('<%= escape_javascript render :partial => 'orders/functions_footer' %>');
 
 tableupdates = -1;
 screenlock_counter = -1;

@@ -7,7 +7,7 @@ tablerows = ''
 <%= generate_js_variables %>
 
 $('#order_sum').val('0' + i18n_decimal_separator + '00');
-$('#order_id').val('');
+//$('#order_id').val('');
 $('#order_user_id').val(<%= @current_user.id %>);
 $('#order_action').val('');
 $('#target_table').val('');
@@ -38,14 +38,14 @@ $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape
 
   end %>
 
-$('#inputfields').append('<%= escape_javascript raw inputfields %>');
-$('#itemstable').append('<%= escape_javascript raw tablerows %>');
-
+$('#order_id').val('<%= @order.id %>');
 $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
 $('#order_note').val('<%= escape_javascript @order.note %>');
-$('#order_id').val('<%= @order.id %>');
 $('#order_user_id').val('<%= @order.user.id if @order.user %>');
 $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
+
+$('#inputfields').append('<%= escape_javascript raw inputfields %>');
+$('#itemstable').append('<%= escape_javascript raw tablerows %>');
 
 <% end %>
 
