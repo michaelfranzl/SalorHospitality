@@ -150,9 +150,9 @@ class OrdersController < ApplicationController
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.find_all_by_active true
 
-    if params[:order][:id] == 'add_offline_items_to_order'
+    if params[:order][:id] == 'add_offline_items_to_order' or params[:order][:id].empty?
       @order = Order.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
-    elsif not params[:order][:id].empty?
+    else
       @order = Order.find_by_id params[:order][:id]
     end
 

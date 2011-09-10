@@ -431,7 +431,8 @@ window.setInterval(
 function scroll_to(element, speed) {
   target_y = $(window).scrollTop();
   current_y = $(element).offset().top;
-  do_scroll(current_y - target_y, speed);
+  //do_scroll(current_y - target_y, speed);
+  window.scrollTo(current_y - target_y, 0);
 }
 
 function scroll_for(distance, speed) {
