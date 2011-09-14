@@ -1,3 +1,5 @@
+require 'net/http'
+require 'json'
 class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.xml
@@ -80,4 +82,32 @@ class ReservationsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def fetch
+    path = "/billgastro/fetch_reservations.php"
+    cpath = "/billgastro/confirm_reservation"
+    host = "allenbranson.com"
+    port = 80
+    req = Net::HTTP::Get.new(path, initheader = {'Content-Type' =>'application/json'})
+    response = Net::HTTP.new(host, port).start {|http| http.request(req) }
+    response = JSON.parse(response.body)
+    if response.any? then
+      response.each do |res|
+        r = Reservation.new
+        r.from_json(res)
+        if r.save then
+          req2 = Net::HTTP::Get.new(cpath + "?id=#{res["id"]}&confirm=1", initheader = {'Content-Type' =>'application/json'})
+          resp2 = Net::HTTP.new(host, 80).start {|http| http.request(req2) }
+        end
+      end
+    end
+    redirect_to :action => :index
+  end
+  private
+  def http_get(domain,path,params)
+      return Net::HTTP.get(domain, "#{path}?".concat(params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&'))) if not params.nil?
+      return Net::HTTP.get(domain, path)
+  end
+
 end
+

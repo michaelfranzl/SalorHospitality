@@ -18,6 +18,7 @@ class Table < ActiveRecord::Base
   has_many :orders
   belongs_to :user
   belongs_to :company
+  has_many :reservations
   validates_presence_of :name
   include Scope
   include Base

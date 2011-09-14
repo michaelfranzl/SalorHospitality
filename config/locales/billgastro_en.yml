@@ -55,6 +55,9 @@ en:
       discount:
         one: Discount
         other: Discounts
+      reservation:
+        one: Reservation
+        other: Reservations
 
     attributes:
       article:

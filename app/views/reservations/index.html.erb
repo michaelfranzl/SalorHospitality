@@ -21,7 +21,7 @@
 
 <% @reservations.each do |reservation| %>
   <tr>
-    <td><%= reservation.when %></td>
+    <td><%= reservation.res_datetime %></td>
     <td><%= reservation.party_size %></td>
     <td><%= reservation.name %></td>
     <td><%= reservation.email %></td>
@@ -42,4 +42,4 @@
 
 <br />
 
-<%= link_to 'New Reservation', new_reservation_path %>
+<%= link_to 'New Reservation', new_reservation_path %> | <a href="/reservations/fetch">Update Reservations</a>

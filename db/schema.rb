@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110908132301) do
+ActiveRecord::Schema.define(:version => 20110908133627) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -263,6 +263,26 @@ ActiveRecord::Schema.define(:version => 20110908132301) do
   end
 
   add_index "quantities", ["company_id"], :name => "index_quantities_company_id"
+
+  create_table "reservations", :force => true do |t|
+    t.datetime "res_datetime"
+    t.integer  "party_size"
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.integer  "table_id"
+    t.integer  "company_id"
+    t.text     "diet_restrictions"
+    t.string   "occasion"
+    t.string   "honor"
+    t.text     "allergies"
+    t.text     "other"
+    t.text     "menu_selection"
+    t.string   "fb_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "fb_res_id"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"

@@ -13,6 +13,7 @@ one:
   allergies: MyText
   other: MyText
   menu_selection: MyText
+  company_id: 46
 
 two:
   when: 2011-09-08 15:36:27
@@ -27,3 +28,4 @@ two:
   allergies: MyText
   other: MyText
   menu_selection: MyText
+  company_id: 46

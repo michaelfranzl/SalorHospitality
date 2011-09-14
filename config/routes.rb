@@ -1,4 +1,5 @@
 BillGastro::Application.routes.draw do
+  get "reservations/fetch"
   resources :reservations
 
   resources :discounts
