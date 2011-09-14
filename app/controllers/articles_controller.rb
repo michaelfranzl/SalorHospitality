@@ -53,8 +53,8 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.scopied.find(params[:id])
-    @groups = Group.find(:all, :order => 'name ASC')
+    @article = Article.scopied.find_by_id(params[:id])
+    @groups = Group.scopied.find(:all, :order => 'name ASC')
     @quantities = Quantity.where(:article_id => params[:id], :hidden => false)
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new

@@ -241,6 +241,24 @@ class OrdersController < ApplicationController
     end
   end
 
+  def attach_coupon
+    c = Coupon.scopied.find_by_id(params[:coupon_id])
+    o = Order.scopied.find_by_id(params[:order_id])
+    if c and o then
+      o.coupons << c
+      o.coupons.save
+    end
+  end
+  def attach_discount
+    c = Discount.scopied.find_by_id(params[:discount_id])
+    o = Order.scopied.find_by_id(params[:order_id])
+    if c and o then
+      if not o.discount_ids.include? c.id then
+        o.discounts << c 
+        o.save
+      end
+    end
+  end
   private
 
     def unlink_orders(order)

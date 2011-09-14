@@ -79,7 +79,7 @@ class Order < ActiveRecord::Base
     if self.discounts.any? then
       self.discounts.each do |d|
         if d.dtype == 0 then
-          puts "Applying discount #{d.name} with amount #{amnt} which is fixed"
+          puts "Applying discount #{d.name} with amount #{d.amount} which is fixed"
           ttl -= d.amount #doesn't matter, as it's a fixed amount...
         elsif d.dtype == 1 then
           if d.article_id or d.category_id then
