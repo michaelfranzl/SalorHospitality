@@ -133,7 +133,7 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = @current_company.vendor_printers.available
+      avaliable_printers = @current_company.vendor_printers.existing
       open_printers = Hash.new
 
       avaliable_printers.each do |p|

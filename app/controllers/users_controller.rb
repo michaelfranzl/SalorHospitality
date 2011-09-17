@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @users = @current_company.users.available
+    @users = @current_company.users.existing
   end
 
   def new

@@ -18,5 +18,5 @@ class Table < ActiveRecord::Base
   has_many :orders
   belongs_to :user
   validates_presence_of :name
-  scope :available, where(:hidden => false)
+  scope :existing, where('hidden=false or hidden is NULL')
 end

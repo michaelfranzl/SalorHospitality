@@ -21,7 +21,7 @@
       %td= category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
     %tr
       %td= category_form.label('usage', Category.human_attribute_name(:vendor_printer_id))
-      %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.available, :id, :name
+      %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.existing, :id, :name
     %tr
       %td= category_form.label('icon', Category.human_attribute_name(:icon))
       %td

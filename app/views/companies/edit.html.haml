@@ -62,7 +62,7 @@
       %h3= t('activerecord.models.vendor_printer.other')
       %p#add_printer
         %span.link= t '.add_printer'
-      = company_form.fields_for :vendor_printers, company_form.object.vendor_printers.available do |f|
+      = company_form.fields_for :vendor_printers, company_form.object.vendor_printers.existing do |f|
         = render :partial => 'vendor_printer', :locals => { :f => f }
       %script== var printer_template = '#{ generate_template(company_form, :vendor_printers) }'
 
