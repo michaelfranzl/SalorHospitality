@@ -19,7 +19,7 @@ class SettlementsController < ApplicationController
     @from, @to = assign_from_to(params)
     @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to})
     @to -= 1.day
-    @taxes = Tax.all
+    @taxes = Tax.available
     @cost_centers = CostCenter.all
     @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
