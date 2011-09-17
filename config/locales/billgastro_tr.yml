@@ -101,6 +101,7 @@ tr:
         name: Isim
         description: Tarif
         active: aktif?
+        hidden: XXXdelete
       group:
         name: Isim
       user:

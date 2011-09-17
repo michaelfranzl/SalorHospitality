@@ -5,6 +5,7 @@
 !middlegray = #444
 !background = #333
 !adminbackground = #222
+!billgastroblue1 = #27343B
 
 //global settings==============================
 
@@ -63,6 +64,11 @@ div#main
   :min-height 560px
   :margin auto
   :position relative
+  :font-size 110%
+
+div#orderform,
+div#invoices
+  :font-size 90%
 
 div#container
   :margin 0px 15px
@@ -180,7 +186,7 @@ a.logout
 table.settlements
   :border-collapse collapse
   td
-    :width 30px
+    :padding 5px 5px
     :text-align right
   .subtotal
     :font
@@ -192,11 +198,10 @@ table.settlements
   .total td
     :border-top 1px solid darkgrey
     :font-weight bold
-
-
   th
     :border 1px solid !darkgray
-    :text-align center
+    :text-align right
+    :padding 0px 5px
 
 table.waiterpad
   :border-spacing 0px

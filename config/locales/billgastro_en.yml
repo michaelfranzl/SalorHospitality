@@ -101,6 +101,7 @@ en:
         name: Name
         description: Description
         active: active?
+        hidden: delete
       group:
         name: Name
       user:

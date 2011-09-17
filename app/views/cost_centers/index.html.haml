@@ -12,3 +12,4 @@
       %td= link_to cc.name, edit_cost_center_path(cc)
       %td= cc.active ? t('.active') : t('.inactive')
       %td= cc.description
+      %td= link_to CostCenter.human_attribute_name(:hidden), cost_center_path(cc), :method => :delete

@@ -17,4 +17,6 @@
 class CostCenter < ActiveRecord::Base
   has_many :orders
   validates_presence_of :name
+
+  scope :existing, where('hidden=false or hidden is NULL')
 end

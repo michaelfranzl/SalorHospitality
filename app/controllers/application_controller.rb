@@ -176,6 +176,7 @@ class ApplicationController < ActionController::Base
     end
 
     def do_print(open_printers, printer_id, text)
+      return if printer_id == 0
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]

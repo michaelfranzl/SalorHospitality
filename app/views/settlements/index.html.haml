@@ -50,10 +50,10 @@
       %td{ :class => 'br colsum' }= number_to_currency s_gro.to_a.sum { |g| g[1] }
 
   %tr
-    %td{ :colspan => 3, :class => 'br sum' }= t('.sum_total')
+    %th{ :colspan => 3, :class => 'br sum' }= t('.sum_total')
     - @taxes.each do |tax|
-      %td{ :class => 'sum' }= number_to_currency total_net[tax.id]
-    %td{ :class => 'sum colsum br' }= number_to_currency total_net.to_a.sum { |n| n[1] }
+      %th{ :class => 'sum' }= number_to_currency total_net[tax.id]
+    %th{ :class => 'sum colsum br' }= number_to_currency total_net.to_a.sum { |n| n[1] }
     - @taxes.each do |tax|
-      %td{ :class => 'sum' }= number_to_currency total_gro[tax.id]
-    %td{ :class => 'sum colsum br' }= number_to_currency total_gro.to_a.sum { |g| g[1] }
+      %th{ :class => 'sum' }= number_to_currency total_gro[tax.id]
+    %th{ :class => 'sum colsum br' }= number_to_currency total_gro.to_a.sum { |g| g[1] }
