@@ -1,3 +1,7 @@
+# Generic USB Printer support, Zotac ZBOX V1
+KERNELS=="4-2:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-front"
+KERNELS=="3-3:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-top-right"
+KERNELS=="4-3:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-top-left"
 KERNELS=="3-2:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-bottom-right"
 KERNELS=="4-1:1.0", DRIVERS=="usblp", MODE="0777", SYMLINK="billgastro-printer-back-bottom-left"
 

@@ -135,6 +135,7 @@ class ApplicationController < ActionController::Base
         sanitize_character_encoding(text)
         do_print printers, key, text
       end
+      close_printers(printers)
     end
 
 

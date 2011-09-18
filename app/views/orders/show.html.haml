@@ -15,11 +15,17 @@
   = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton storno_button', :title => t(:storno)
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
-  
+
+%p= @current_company.name
+%p= @current_company.invoice_subtitle
 %p
   = @current_company.address
   %br
   = @current_company.revenue_service_tax_number
+  %br
+  = @current_company.bank_account1
+  %br
+  = @current_company.bank_account2
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 
@@ -93,4 +99,4 @@
 %br
 %br
 
-%small Bill Gastro Gastronomiesysteme www.billgastro.com
+%small Bill Gastro: Das innovative Gastronomiesystem. www.billgastro.com
