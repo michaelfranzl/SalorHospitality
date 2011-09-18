@@ -2,7 +2,7 @@
 
   %td{ :id => "tablerow_#{ designator }_count", :class => 'item_count', :onclick => "increment_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= count
 
-  %td{ :id => "tablerow_#{ designator }_label", :class => 'item_label', :onclick => "add_comment_to_item('#{ designator }'); add_price_to_item('#{ designator }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+  %td{ :id => "tablerow_#{ designator }_label", :class => "item_label #{ 'warning' if price != 'PRICE' and price.zero? }", :onclick => "add_comment_to_item('#{ designator }'); add_price_to_item('#{ designator }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
     %span= label
     %small
       %br

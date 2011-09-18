@@ -88,6 +88,8 @@ function add_new_item_q(qu_id, add_new, position, sort) {
     $('#inputfields').prepend(new_item_inputfields_modified);
 
     if (itemdetails_q[qu_id][7] == 1 || itemdetails_q[qu_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
+
+    $('#tablerow_' + desig + '_count').addClass('updated');
   }
   calculate_sum();
   return desig;
@@ -152,6 +154,8 @@ function add_new_item_a(art_id, add_new, position, sort) {
     $('#inputfields').prepend(new_item_inputfields_modified);
 
     if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
+
+    $('#tablerow_' + desig + '_count').addClass('updated');
   }
 
   $('#quantities').html('&nbsp;');
@@ -164,6 +168,7 @@ function increment_item(desig) {
   i++;
   $('#order_items_attributes_' + desig + '_count').val(i);
   $('#tablerow_' + desig + '_count').html(i);
+  $('#tablerow_' + desig + '_count').addClass('updated');
   calculate_sum();
 }
 
@@ -174,6 +179,7 @@ function decrement_item(desig) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
+    $('#tablerow_' + desig + '_count').addClass('updated');
   } else if ( i == 1 && ( permission_immediate_storno || (desig.search(/new_.+/) != -1 ))) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
