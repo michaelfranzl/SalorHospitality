@@ -395,6 +395,10 @@ es:
   green: Verde
   blue: Azul
   blank: nada
+  white: XXXWhite
+  black: XXXBlack
+  yellow: XXXYellow
+  winered: XXXWine Red
 
   food: Comidas
   drink: Bebidas

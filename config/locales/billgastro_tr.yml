@@ -396,6 +396,10 @@ tr:
   green: esil
   blue: Mavi
   blank: Bos
+  white: XXXWhite
+  black: XXXBlack
+  yellow: XXXYellow
+  winered: XXXWine Red
 
   food: Yemekler
   drink: Içecekler

@@ -23,6 +23,10 @@ module UsersHelper
       '#75b10d' => t(:green),
       '#136880' => t(:blue),
       '#27343b' => t(:blank),
+      '#BBBBBB' => t(:white),
+      '#000000' => t(:black),
+      '#d9d43d' => t(:yellow),
+      '#801212' => t(:winered)
     }
   end
   
@@ -34,6 +38,10 @@ module UsersHelper
       option[value='#75b10d'] { background-color: #75b10d }
       option[value='#136880'] { background-color: #136880 }
       option[value='#27343b'] { background-color: #27343b }
+      option[value='#BBBBBB'] { background-color: #BBBBBB }
+      option[value='#000000'] { background-color: #000000 }
+      option[value='#d9d43d'] { background-color: #d9d43d }
+      option[value='#801212'] { background-color: #801212 }
     "
   end
 

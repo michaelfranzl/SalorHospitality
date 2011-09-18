@@ -396,6 +396,10 @@ fr:
   green: Vert
   blue: Bleu
   blank: rien
+  white: XXXWhite
+  black: XXXBlack
+  yellow: XXXYellow
+  winered: XXXWine Red
 
   food: Nourriture
   drink: Boissons
