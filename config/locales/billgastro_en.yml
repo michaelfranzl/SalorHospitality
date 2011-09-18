@@ -238,6 +238,7 @@ en:
       count: Count
       sum: Sum
       list_of_taxes: List of taxes
+      search_by_number: Search by number
     invoice_form:
       split_invoice: Split invoice
     login_form:

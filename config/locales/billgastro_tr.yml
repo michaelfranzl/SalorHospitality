@@ -237,6 +237,7 @@ tr:
       count: Miktar
       sum: Toplam
       list_of_taxes: Vergi listesi
+      search_by_number: XXXSearch by number
     invoice_form:
       split_invoice: Faturayi paylasmak/bölmek
     login_form:

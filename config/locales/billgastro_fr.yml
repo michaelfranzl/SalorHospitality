@@ -237,6 +237,7 @@ fr:
       count: Quantité
       sum: TOTAL
       list_of_taxes: Liste de taxes
+      search_by_number: XXXSearch by number
     invoice_form:
       split_invoice: Diviser facture
     login_form:

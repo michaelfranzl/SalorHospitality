@@ -1,6 +1,6 @@
-= form_for @order, :as => :order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
-
-  = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
+- form_tag 'by_nr', :id => 'search_by_nr' do
+  = text_field_tag 'nr', t('.search_by_number')
+  %span#nr_display_keyboard.display_keyboard
 
 %div#buttons
   - if local_variant?
@@ -99,4 +99,14 @@
 %br
 %br
 
-%small Bill Gastro: Das innovative Gastronomiesystem. www.billgastro.com
+%small Bill Gastro: Das innovative Gastronomiesystem auf www.billgastro.com
+
+:javascript
+  $('#nr').keyboard( {openOn: '', accepted: function(){ $('form#search_by_nr').submit(); } } );
+  $('#nr_display_keyboard').click(function(){
+    $('#nr').val('');
+    $('#nr').getkeyboard().reveal();
+  });
+  $('#nr').click(function(){
+    $('#nr').val('');
+  });

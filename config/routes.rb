@@ -46,6 +46,7 @@ BillGastro::Application.routes.draw do
       get :last_invoices
       post :receive_order_attributes_ajax
       get :logout
+      post :by_nr
     end
   end
 

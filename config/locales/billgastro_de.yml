@@ -238,6 +238,7 @@ de:
       count: Anzahl
       sum: Summe
       list_of_taxes: Liste der Steuern
+      search_by_number: Suche nach Bestellnummer
     invoice_form:
       split_invoice: Rechnung teilen
     login_form:

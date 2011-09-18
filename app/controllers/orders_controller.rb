@@ -59,6 +59,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def by_nr
+    @order = Order.find_by_nr params[:nr]
+    if @order
+      redirect_to order_path(@order)
+    else
+      redirect_to order_path(Order.last)
+    end
+  end
+
 
 
   def toggle_admin_interface

@@ -221,9 +221,9 @@ es:
       new_stock: Nuevo stock
       edit_stock: Editar stock
 
-  pedidos:
+  orders:
     served_by: Ud. fue atendido por
-    pedido:
+    order:
       sum: TOTAL
       new: Nuevo pedido
     show:
@@ -236,6 +236,7 @@ es:
       count: Cantidad
       sum: Total
       list_of_taxes: Lista de impuestos
+      search_by_number: XXXSearch by number
     invoice_form:
       split_invoice: Dividir factura
     login_form:
