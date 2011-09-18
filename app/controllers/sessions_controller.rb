@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @current_user = User.find_by_password params[:password]
+    @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     @users = User.all
     if @current_user
       session[:user_id] = @current_user
