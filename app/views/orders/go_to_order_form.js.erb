@@ -56,7 +56,10 @@ $('#invoices').hide();
 $('#functions_header_index').hide();
 $('#functions_header_invoice_form').hide();
 $('#functions_header_order_form').show();
-$('#functions_footer').show();
+
+<% if mobile? %>
+  $('#functions_footer').show();
+<% end %>
 
 tableupdates = -1;
 screenlock_counter = -1;
