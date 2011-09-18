@@ -184,10 +184,14 @@ a.logout
   :text-transform none
 
 table.settlements
+  :font-size 80%
   :border-collapse collapse
   td
-    :padding 5px 5px
+    :padding 7px 5px
     :text-align right
+  td.link a
+    :padding 5px 10px
+    :background-color !adminbackground
   .subtotal
     :font
       :weight bold
@@ -201,7 +205,7 @@ table.settlements
   th
     :border 1px solid !darkgray
     :text-align right
-    :padding 0px 5px
+    :padding 10px 5px
 
 table.waiterpad
   :border-spacing 0px
@@ -507,7 +511,9 @@ form.new_company
     :margin 3px 0
   label
     :display inline-block
-    :width 160px
+    :width 190px
+  input
+    :width 190px
   a#add_printer
     :text-decoration underline
     :cursor pointer
@@ -522,9 +528,9 @@ div#company_printers
   :vertical-align top
   :display inline-block
   label
-    :width 40px
-  select
-    :width 180px
+    :width 100px
+  input
+    :width 120px
 
 p#add_printer
   :margin 10px 0 10px 0
@@ -1017,13 +1023,14 @@ ul.sort_options
 
 span.inline
   :display inline-block
-  :width 200px
+  :width 150px
 
 
 
 
 ::-webkit-scrollbar 
   width: 25px
+  height: 25px
   background-color: white
 
 ::-webkit-scrollbar-thumb:vertical 
@@ -1037,6 +1044,18 @@ span.inline
 ::-webkit-scrollbar-button:vertical:decrement 
 
 ::-webkit-scrollbar-button:vertical:increment
+
+::-webkit-scrollbar-thumb:horizontal 
+  background-color: #304345
+
+::-webkit-scrollbar-track:horizontal 
+  background-color: #0E1D25
+
+::-webkit-scrollbar-button:horizontal 
+
+::-webkit-scrollbar-button:horizontal:decrement 
+
+::-webkit-scrollbar-button:horizontal:increment
 
 
 div#screenlock

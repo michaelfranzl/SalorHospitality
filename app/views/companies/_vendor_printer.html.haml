@@ -2,13 +2,16 @@
 %div{ :id => "vendor_printer_#{ id }" }
   %span= f.label :name, VendorPrinter.human_attribute_name(:name)
   %span= f.text_field :name, :size => 9
+  %br
 
   %span= f.label :path, VendorPrinter.human_attribute_name(:path)
   %span= f.text_field :path, :size => 7
-
+  %br
   %span= f.label :copies, VendorPrinter.human_attribute_name(:copies)
   %span= f.text_field :copies, :size => 1
-
+  %br
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#company_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= VendorPrinter.human_attribute_name(:hidden)
     %span= f.hidden_field :hidden
+    %br
+  %br

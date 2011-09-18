@@ -106,16 +106,25 @@ class ApplicationController < ActionController::Base
       return nr
     end
 
-    def test_printers
-      printers = initialize_printers
+    def test_printers(mode)
+      if mode == :all
+        printercollection = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/usblp0', '/dev/usblp1', '/dev/usblp2', '/dev/billgastro-printer-front', '/dev/billgastro-printer-top', '/dev/billgastro-printer-back-top-right', '/dev/billgastro-printer-back-top-left', '/dev/billgastro-printer-back-bottom-left', '/dev/billgastro-printer-back-bottom-right'].collect do |path|
+          p = VendorPrinter.new :name => /\/dev\/(.*)/.match(path)[1], :path => path, :copies => 1
+          p.id = p.name.sum # fake id
+          p
+        end
+      end
+
+      printers = initialize_printers(printercollection)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]TESTING Printers..."
       printers.each do |key, value|
         text =
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
-        "Bill Gastro\r\n#{ value[:name] }\r\n" +
+        "#{ t :printing_test }\r\n" +
         "\e!\x00" +  # Font A
+        "#{ value[:name] }\r\n" +
         "#{ value[:device].inspect.force_encoding('UTF-8') }" +
         "\n\n\n\n\n\n" +
         "\x1D\x56\x00" # paper cut at the end of each order/table
@@ -129,11 +138,11 @@ class ApplicationController < ActionController::Base
     end
 
 
-    def initialize_printers
+    def initialize_printers(printerset=nil)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = @current_company.vendor_printers.existing
+      avaliable_printers = printerset ? printerset : @current_company.vendor_printers.existing
       open_printers = Hash.new
 
       avaliable_printers.each do |p|
@@ -141,7 +150,7 @@ class ApplicationController < ActionController::Base
         # try to open USB/SerialPort converter
         begin
           printer = SerialPort.new p.path, 9600
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Success for SerialPort: #{ printer.inspect }"
           next
         rescue Exception => e
@@ -151,7 +160,7 @@ class ApplicationController < ActionController::Base
         # try to open USB or regular file as File
         begin
           printer = File.open p.path, 'w:ISO-8859-15'
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
           next
         rescue Errno::EBUSY
@@ -161,14 +170,14 @@ class ApplicationController < ActionController::Base
             logger.info "[PRINTING]      Trying to reuse already opened File #{ key }: #{ val.inspect }"
             if val[:path] == p[:path] and val[:device].class == File
               logger.info "[PRINTING]      Reused."
-              open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => val[:device] }
+              open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => val[:device] }
               break
             end
           end
           next
         rescue Exception => e
-          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ISO-8859-15')
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
         end
       end
@@ -176,14 +185,14 @@ class ApplicationController < ActionController::Base
     end
 
     def do_print(open_printers, printer_id, text)
-      return if printer_id == 0
+      return if open_printers == {}
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
       raise 'Mismatch between open_printers and printer_id' if printer.nil?
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
       text.force_encoding 'ISO-8859-15'
-      VendorPrinter.find_by_id(printer_id).copies.times do |i|
+      printer[:copies].times do |i|
         open_printers[printer_id][:device].write text
       end
       open_printers[printer_id][:device].flush

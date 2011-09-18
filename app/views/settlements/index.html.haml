@@ -39,7 +39,7 @@
     - next if s_gro.to_a.sum { |g| g[1] } == 0
       
     %tr
-      %td= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
+      %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
       %td= l s.created_at, :format => :date_iso
       %td{ :class => 'br' }= s.user.login
       - @taxes.each do |tax|
