@@ -17,7 +17,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables
     @categories = Category.existing
     @users = User.active
     session[:admin_interface] = false
@@ -76,7 +76,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables
   end
 
   def toggle_tax_colors
@@ -135,7 +135,7 @@ class OrdersController < ApplicationController
           render :nothing => true
         elsif @orders.empty?
           # is the case for invoice_form
-          @tables = Table.find(:all, :conditions => { :hidden => false })
+          @tables = @current_user.tables
           render 'go_to_tables'
         else
           # is the case for invoice_form
@@ -197,7 +197,7 @@ class OrdersController < ApplicationController
       @current_company.save
       @order.delete
       @order.table.update_attribute :user_id, nil
-      @tables = Table.find(:all, :conditions => { :hidden => false })
+      @tables = @current_user.tables
       render 'go_to_tables' and return
     end
 
@@ -218,7 +218,7 @@ class OrdersController < ApplicationController
     end
 
     @taxes = Tax.all
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables
 
     case params[:order_action]
       when 'save_and_go_to_tables'
@@ -229,12 +229,12 @@ class OrdersController < ApplicationController
         render 'go_to_invoice_form'
       when 'clear_order_and_go_back'
         @order.table.update_attribute :user_id, nil
-        @tables = Table.find(:all, :conditions => { :hidden => false })
+        @tables = @current_user.tables
         @order.destroy
         render 'go_to_tables'
       when 'move_order_to_table'
         move_order_to_table @order, params[:target_table]
-        @tables = Table.find(:all, :conditions => { :hidden => false })
+        @tables = @current_user.tables
         render 'go_to_tables'
     end
   end

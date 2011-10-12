@@ -58,6 +58,7 @@ $('#functions_header_invoice_form').hide();
 $('#functions_header_order_form').show();
 
 <% if mobile? %>
+  $('#functions_footer').html('<%= escape_javascript render :partial => 'orders/functions_footer' %>');
   $('#functions_footer').show();
 <% end %>
 

@@ -16,7 +16,7 @@
     %div.tablesselect
       %h3= t :move_order_to_table
       %span.done{ :onclick => "$('.tablesselect').slideUp();" }
-      - Table.existing.each do |t|
+      - @current_user.tables.each do |t|
         %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
 
   %div#categories
