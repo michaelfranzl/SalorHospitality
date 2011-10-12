@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012124207) do
+ActiveRecord::Schema.define(:version => 20111012125407) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -232,6 +232,13 @@ ActiveRecord::Schema.define(:version => 20111012124207) do
     t.boolean  "hidden",         :default => false
     t.boolean  "rotate"
     t.integer  "active_user_id"
+  end
+
+  create_table "tables_users", :id => false, :force => true do |t|
+    t.integer  "table_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taxes", :force => true do |t|

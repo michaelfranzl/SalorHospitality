@@ -23,4 +23,11 @@ class User < ActiveRecord::Base
   validates_presence_of :login, :password, :title
   scope :active, where(:active => true, :hidden => false)
   scope :existing, where('hidden=false or hidden is NULL')
+
+  def tables_array=(ids)
+    self.tables = []
+    ids.each do |id|
+      self.tables << Table.find_by_id(id.to_i)
+    end
+  end
 end

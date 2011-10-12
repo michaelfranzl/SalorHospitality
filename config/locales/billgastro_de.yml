@@ -111,6 +111,7 @@ de:
         title: Anrede
         color: Farbe
         language: Sprache
+        tables: Tische
         active: aktiv?
         hidden: löschen?
       company:

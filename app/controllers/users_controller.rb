@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @tables = Table.all
   end
 
   def show
@@ -38,6 +39,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @tables = Table.all
     render :new
   end
 
