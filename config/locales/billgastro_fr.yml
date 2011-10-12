@@ -111,6 +111,7 @@ fr:
         title: Titre
         color: Couleur
         language: Langue
+        tables: XXXTables
         enabled: XXXactive?
         hidden: XXXdelete?
       company:
@@ -133,6 +134,7 @@ fr:
         address: Adresse
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        use_order_numbers: XXXUse order numbers?
       role:
         name: Nom
       vendor_printer:

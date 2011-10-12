@@ -111,6 +111,7 @@ es:
         title: Título
         color: Color
         language: Idioma
+        tables: XXXTables
         enabled: XXXactive?
         hidden: XXXdelete?
       company:
@@ -132,6 +133,7 @@ es:
         revenue_service_tax_number: Nro. impuesto al ingreso
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        use_order_numbers: XXXUse order numbers?
       role:
         name: Nombre
       vendor_printer:

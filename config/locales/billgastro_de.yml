@@ -134,6 +134,7 @@ de:
         address: Adresse
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
+        use_order_numbers: Bestellnummern verwenden?
       role:
         name: Name
       vendor_printer:

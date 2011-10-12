@@ -111,6 +111,7 @@ tr:
         title: Hitap
         color: Renk
         language: Dil
+        tables: XXXTables
         active: XXXactive?
         hidden: XXXdelete?
       company:
@@ -133,6 +134,7 @@ tr:
         address: adres
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        use_order_numbers: XXXUse order numbers?
       role:
         name: XXXName
       vendor_printer:

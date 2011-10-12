@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012125407) do
+ActiveRecord::Schema.define(:version => 20111012140226) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20111012125407) do
     t.binary   "image"
     t.text     "cache",                      :limit => 16777215
     t.integer  "timeout",                                        :default => -1
+    t.boolean  "use_order_numbers",                              :default => true
   end
 
   create_table "cost_centers", :force => true do |t|

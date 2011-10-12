@@ -89,6 +89,7 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
+      return 0 if not @current_company.use_order_numbers
       if not @current_company.unused_order_numbers.empty?
         # reuse order numbers if present
         nr = @current_company.unused_order_numbers.first
@@ -238,7 +239,7 @@ class ApplicationController < ActionController::Base
         "\n\n"
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_company.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation]
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_company.time_offset.hours, :format => :time_short), o.nr if @current_company.use_order_numbers, @current_user.login, o.table.abbreviation]
 
         per_order_output += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
 
@@ -311,7 +312,7 @@ class ApplicationController < ActionController::Base
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
-      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + @current_company.time_offset.hours, :format => :long)) +
+      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + @current_company.time_offset.hours, :format => :long)) if @current_company.use_order_numbers +
       "\n\n" +
 
       "\e!\x00" +  # Font A

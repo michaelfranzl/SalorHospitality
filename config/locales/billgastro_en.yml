@@ -111,6 +111,7 @@ en:
         title: Title
         color: Color
         language: Language
+        tables: Tables
         active: active?
         hidden: delete?
       company:
@@ -133,6 +134,7 @@ en:
         address: Address
         time_offset: Time Offset (hours)
         timeout: Screenlock Timeout (seconds)
+        use_order_numbers: Use order numbers?
       role:
         name: Name
       vendor_printer:
