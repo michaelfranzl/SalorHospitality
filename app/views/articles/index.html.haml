@@ -3,7 +3,9 @@
 = link_to (t :new), new_article_path, :class => 'links'
 = link_to (t '.list_all'), listall_articles_path, :class => 'links'
 = link_to (t '.sort'), sort_index_articles_path, :class => 'links'
-= link_to (t '.update'), update_cache_articles_path, :class => 'links'
+= link_to (t '.update'), update_cache_articles_path, :class => 'links', :onclick => '$("#update_cache_progress").show();'
+
+%img#update_cache_progress{ :src => '/images/ajax-loader2.gif', :style => 'display: none;' }
 
 %table.articles
   %tr
