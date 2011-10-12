@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917163533) do
+ActiveRecord::Schema.define(:version => 20111012124207) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -220,17 +220,18 @@ ActiveRecord::Schema.define(:version => 20110917163533) do
     t.datetime "updated_at"
     t.integer  "left"
     t.integer  "top"
-    t.integer  "width",         :default => 70
-    t.integer  "height",        :default => 45
+    t.integer  "width",          :default => 70
+    t.integer  "height",         :default => 45
     t.integer  "left_mobile"
     t.integer  "top_mobile"
-    t.integer  "width_mobile",  :default => 70
-    t.integer  "height_mobile", :default => 45
+    t.integer  "width_mobile",   :default => 70
+    t.integer  "height_mobile",  :default => 45
     t.string   "abbreviation"
     t.integer  "user_id"
-    t.boolean  "enabled",       :default => true
-    t.boolean  "hidden",        :default => false
+    t.boolean  "enabled",        :default => true
+    t.boolean  "hidden",         :default => false
     t.boolean  "rotate"
+    t.integer  "active_user_id"
   end
 
   create_table "taxes", :force => true do |t|
