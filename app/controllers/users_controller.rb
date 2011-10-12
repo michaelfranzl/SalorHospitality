@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    @tables = Table.all
+    @tables = Table.existing
     render :new
   end
 
