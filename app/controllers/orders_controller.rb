@@ -196,7 +196,8 @@ class OrdersController < ApplicationController
       @current_company.unused_order_numbers << @order.nr
       @current_company.save
       @order.delete
-      @order.table.update_attribute :user_id, nil
+      @order.table.user = nil
+      @order.table.save
       @tables = @current_user.tables.existing
       render 'go_to_tables' and return
     end
