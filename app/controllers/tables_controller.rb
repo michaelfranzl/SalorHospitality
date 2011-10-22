@@ -17,7 +17,7 @@
 class TablesController < ApplicationController
 
   def index
-    @tables = Table.existing
+    @tables = @current_user.tables.existing
     @last_finished_order = Order.find_all_by_finished(true).last
     respond_to do |wants|
       wants.html
