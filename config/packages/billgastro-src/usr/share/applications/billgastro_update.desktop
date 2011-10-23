@@ -8,7 +8,7 @@ Version=1.0
 Name=BillGastro Update
 GenericName=Point Of Sale Software
 Icon=/opt/billgastro/billgastro/public/images/app-billgastro-update.png
-Exec=billgastro_update
+Exec=sudo billgastro_update
 Terminal=true
 # Categorie entry according to version 1.0 of
 # http://www.freedesktop.org/wiki/Specifications/menu-spec
