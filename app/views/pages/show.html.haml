@@ -1,0 +1,3 @@
+%div#page
+  - @partials.each do |par|
+    %div.partial{ :style => "left: #{ par.x }px; top: #{ par.y }px" }= raw @partial_htmls[par.id]

@@ -1,4 +1,10 @@
 BillGastro::Application.routes.draw do
+  get "pages/index"
+
+  get "pages/edit"
+
+  get "pages/update"
+
   resources :roles
 
   # The priority is based upon order of creation:
@@ -61,7 +67,7 @@ BillGastro::Application.routes.draw do
   match 'companies/backup_logfile' => 'companies#backup_logfile'
   match 'company/logo' => 'companies#logo'
 
-  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad
+  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :pages, :partials
 
   resources :categories do
     collection do

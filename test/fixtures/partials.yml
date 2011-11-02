@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  x: 1
+  y: 1
+  code: MyText
+  template: MyText
+  active: false
+  hidden: false
+
+two:
+  x: 1
+  y: 1
+  code: MyText
+  template: MyText
+  active: false
+  hidden: false

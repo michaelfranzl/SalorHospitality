@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012140226) do
+ActiveRecord::Schema.define(:version => 20111102215234) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -20,15 +20,17 @@ ActiveRecord::Schema.define(:version => 20111012140226) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",                     :default => true
+    t.boolean  "menucard",                        :default => true
     t.boolean  "blackboard"
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                       :default => false
+    t.boolean  "hidden",                          :default => false
     t.integer  "sort"
-    t.integer  "usage",           :limit => 1, :default => 0
+    t.integer  "usage",              :limit => 1, :default => 0
     t.integer  "position"
+    t.binary   "image"
+    t.string   "image_content_type"
   end
 
   create_table "categories", :force => true do |t|
@@ -149,11 +151,13 @@ ActiveRecord::Schema.define(:version => 20111012140226) do
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
-    t.float    "price",      :default => 0.0
+    t.float    "price",              :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",     :default => false
+    t.boolean  "hidden",             :default => false
     t.integer  "position"
+    t.binary   "image"
+    t.string   "image_content_type"
   end
 
   create_table "orders", :force => true do |t|
@@ -174,18 +178,41 @@ ActiveRecord::Schema.define(:version => 20111012140226) do
     t.string   "note"
   end
 
+  create_table "pages", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages_partials", :id => false, :force => true do |t|
+    t.integer "page_id"
+    t.integer "partial_id"
+  end
+
+  create_table "partials", :force => true do |t|
+    t.integer  "x"
+    t.integer  "y"
+    t.text     "code"
+    t.text     "template"
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "quantities", :force => true do |t|
     t.string   "prefix"
     t.float    "price"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",                  :default => true
-    t.boolean  "hidden",                  :default => false
+    t.boolean  "active",                          :default => true
+    t.boolean  "hidden",                          :default => false
     t.string   "postfix"
     t.integer  "sort"
-    t.integer  "usage",      :limit => 1, :default => 0
+    t.integer  "usage",              :limit => 1, :default => 0
     t.integer  "position"
+    t.binary   "image"
+    t.string   "image_content_type"
   end
 
   create_table "roles", :force => true do |t|
