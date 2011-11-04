@@ -1,1 +1,23 @@
-.partial{ :style => "left: #{ @partial.left }px; top: #{ @partial.top }px" }= raw @partial_html
+.partial{ :id => "partial_#{ partial.id }", :model_id => "#{ model_id }", :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
+  %select{ :id => "presentation_for_partial_#{ partial.id }", :class => 'presentation_for_partial', :name => 'partial[presentation_id]' }
+    = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id  
+  %br
+  = raw markup
+  
+  
+:javascript
+  $("#presentation_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'POST',
+      url: '/partials/change_presentation',
+      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id=" + $("#presentation_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#page").mouseout( function(){
+    //$("#presentation_for_partial_#{ partial.id }").hide();
+  });
+  
+  $("#partial_#{ partial.id }").mouseover( function(){
+    $("#presentation_for_partial_#{ partial.id }").show();
+  });

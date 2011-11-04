@@ -280,6 +280,8 @@ ul#search_results
   :list-style-type none
   :padding 0
   :margin 0
+  li.ui-draggable-dragging a
+    :color #BBB
 
 .hover
   :background-color #FFFFCC
@@ -1080,7 +1082,12 @@ div.partial
   :position absolute
   
 div#page
-  :width 400px
-  :height 300px
+  :width 500px
+  :height 400px
   :background-color white
   :color black
+  
+select.presentation_for_partial
+  :display none
+  :position absolute
+  :top 5px

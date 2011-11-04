@@ -1,0 +1,4 @@
+.partial{ :style => "left: #{ @partial.left }px; top: #{ @partial.top }px" }
+  %select#presentation_id{ :name => 'partial[presentation_id]' }
+    = options_from_collection_for_select Presentation.existing, 'id', 'name', @partial.presentation_id
+  = raw markup

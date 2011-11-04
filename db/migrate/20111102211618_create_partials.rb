@@ -5,7 +5,7 @@ class CreatePartials < ActiveRecord::Migration
       t.integer :top
       t.text :code, :default => ''
       t.integer :presentation_id, :default => 1
-      t.text :presentation, :default => ''
+      t.text :markup, :default => ''
       t.text :blurb
       t.boolean :active, :default => true
       t.boolean :hidden

@@ -1,1 +1,1 @@
-$('#page').append('<%= escape_javascript render :partial => 'partial', :layout => false %>');
+$('#page').append('<%= escape_javascript render :partial => 'partial', :locals => { :partial => @partial, :markup => @partial_html, :model_id => @model_id, :presentations => @presentations } %>');

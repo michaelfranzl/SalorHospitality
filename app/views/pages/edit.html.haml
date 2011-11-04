@@ -3,7 +3,7 @@
     %td
       #page
         - @partials.each do |par|
-          %div.partial{ :style => "left: #{ par.left }px; top: #{ par.top }px" }= raw @partial_htmls[par.id]
+          = render :partial => '/partials/partial', :locals => { :partial => par, :markup => @partial_htmls[par.id], :model_id => par.model_id, :presentations => Presentation.existing.find_all_by_model( par.presentation.model) }
           
     %td#drop_remove
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'

@@ -19,7 +19,9 @@ class PagesController < ApplicationController
     @page = Page.find_by_id params[:id]
     @partials = @page.partials
     @partial_htmls = []
+    # precalculate partial_html because binding doesn't seem to work in views
     @partials.each do |par|
+      # the following 3 class varibles are needed for rendering the _partial partial
       @partial = par
       @model_id = @partial.model_id
       eval @partial.presentation.code
