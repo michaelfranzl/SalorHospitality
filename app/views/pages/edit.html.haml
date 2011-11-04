@@ -3,7 +3,7 @@
     %td
       #page
         - @partials.each do |par|
-          %div.partial{ :style => "left: #{ par.x }px; top: #{ par.y }px" }= raw @partial_htmls[par.id]
+          %div.partial{ :style => "left: #{ par.left }px; top: #{ par.top }px" }= raw @partial_htmls[par.id]
           
     %td#drop_remove
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
@@ -28,9 +28,9 @@
     hoverClass: 'hover',
     drop: function(event,ui){
       $.ajax({
-        type: 'PUT',
-        url: '/partials/' + ui.draggable.attr('model_id'),
-        data: 'page_id=#{ @page.id }&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
+        type: 'POST',
+        url: '/partials/',
+        data: 'model_id=' + ui.draggable.attr('model_id') + '&page_id=#{ @page.id }&model=' + ui.draggable.attr('model') + '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
       });
     }          
   });

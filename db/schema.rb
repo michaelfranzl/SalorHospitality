@@ -192,17 +192,15 @@ ActiveRecord::Schema.define(:version => 20111104134026) do
     t.integer  "left"
     t.integer  "top"
     t.text     "code"
-    t.integer  "template_id", :default => 1
-    t.text     "template"
+    t.integer  "presentation_id", :default => 1
+    t.text     "presentation"
     t.text     "blurb"
-    t.boolean  "active",      :default => true
+    t.boolean  "active",          :default => true
     t.boolean  "hidden"
+    t.integer  "model_id"
+    t.string   "model_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id"
-    t.string   "article_id"
-    t.string   "quantity_id"
-    t.string   "option_id"
   end
 
   create_table "presentations", :force => true do |t|

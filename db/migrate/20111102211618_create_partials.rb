@@ -4,11 +4,13 @@ class CreatePartials < ActiveRecord::Migration
       t.integer :left
       t.integer :top
       t.text :code, :default => ''
-      t.integer :template_id, :default => 1
-      t.text :template, :default => ''
+      t.integer :presentation_id, :default => 1
+      t.text :presentation, :default => ''
       t.text :blurb
       t.boolean :active, :default => true
       t.boolean :hidden
+      t.integer :model_id
+      t.string :model_name
 
       t.timestamps
     end

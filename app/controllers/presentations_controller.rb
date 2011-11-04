@@ -24,6 +24,7 @@ class PresentationsController < ApplicationController
   def update
     @presentation = Presentation.find_by_id params[:id]
     @presentation.update_attributes params[:presentation]
+    redirect_to presentations_path
   end
 
   def destroy
