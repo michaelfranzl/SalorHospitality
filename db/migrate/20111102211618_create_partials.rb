@@ -1,10 +1,11 @@
 class CreatePartials < ActiveRecord::Migration
   def self.up
     create_table :partials do |t|
-      t.integer :x
-      t.integer :y
-      t.text :code
-      t.text :template
+      t.integer :left
+      t.integer :top
+      t.text :code, :default => ''
+      t.integer :template_id, :default => 1
+      t.text :template, :default => ''
       t.text :blurb
       t.boolean :active, :default => true
       t.boolean :hidden

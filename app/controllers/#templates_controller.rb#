@@ -1,0 +1,24 @@
+class TemplatesController < ApplicationController
+  def index
+    @templates = Template.all
+  end
+  
+  def show
+    @template = Template.find_by_id params[:id]
+  end
+  
+  def new
+    @template = Template.new
+  end
+
+  def edit
+    @template = Template.find_by_id params[:id]
+  end
+
+  def update
+  end
+
+  def delete
+  end
+
+end

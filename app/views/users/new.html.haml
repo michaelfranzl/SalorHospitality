@@ -40,7 +40,7 @@
     %tr
       %td= user_form.label('language', User.human_attribute_name(:language))
       %td
-        %select#category_color{ :name => 'user[language]' }
+        %select#language{ :name => 'user[language]' }
           = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
     %tr
       %td= user_form.label('active', User.human_attribute_name(:active))

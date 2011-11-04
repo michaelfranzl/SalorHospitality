@@ -21,6 +21,7 @@ class Article < ActiveRecord::Base
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
   has_many :items
+  has_many :partials
 
   scope :existing, where(:hidden => false).order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')

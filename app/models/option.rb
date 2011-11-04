@@ -17,6 +17,7 @@
 class Option < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
+  has_many :partials
   validates_presence_of :name
   scope :existing, where(:hidden => false).order('position ASC')
 

@@ -19,6 +19,7 @@ class Category < ActiveRecord::Base
   belongs_to :vendor_printer
   has_and_belongs_to_many :options
   has_many :articles
+  has_many :partials
   validates_presence_of :name
   validates_presence_of :tax_id
   acts_as_list

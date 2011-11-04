@@ -1,11 +1,19 @@
 BillGastro::Application.routes.draw do
+  get "templates/index"
+
+  get "templates/show"
+
+  get "templates/edit"
+
+  get "templates/update"
+
+  get "templates/delete"
+
+  get "partials/delete"
+  get "partials/update"
   get "pages/index"
-
   get "pages/edit"
-
   get "pages/update"
-
-  resources :roles
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -67,7 +75,13 @@ BillGastro::Application.routes.draw do
   match 'companies/backup_logfile' => 'companies#backup_logfile'
   match 'company/logo' => 'companies#logo'
 
-  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :pages, :partials
+  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :pages, :partials, :roles, :presentations
+  
+  resources :pages do
+    collection do
+      post :find
+    end
+  end
 
   resources :categories do
     collection do

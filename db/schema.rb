@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102215234) do
+ActiveRecord::Schema.define(:version => 20111104134026) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -189,11 +189,29 @@ ActiveRecord::Schema.define(:version => 20111102215234) do
   end
 
   create_table "partials", :force => true do |t|
-    t.integer  "x"
-    t.integer  "y"
+    t.integer  "left"
+    t.integer  "top"
     t.text     "code"
+    t.integer  "template_id", :default => 1
     t.text     "template"
-    t.boolean  "active",     :default => true
+    t.text     "blurb"
+    t.boolean  "active",      :default => true
+    t.boolean  "hidden"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "category_id"
+    t.string   "article_id"
+    t.string   "quantity_id"
+    t.string   "option_id"
+  end
+
+  create_table "presentations", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.text     "markup"
+    t.text     "code"
+    t.string   "model"
+    t.boolean  "active",      :default => true
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"

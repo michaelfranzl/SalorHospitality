@@ -1,0 +1,59 @@
+%h2= @presentation.new_record? ? (t '.new_Presentation') : (t '.edit_Presentation')
+
+- if @presentation.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.Presentation.header', :count => @presentation.errors.size, :model => Presentation.model_name.human
+    %ul
+      - @presentation.errors.full_messages.each do |msg|
+        %li= msg
+
+= form_for @presentation do |presentation_form|
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  %table
+    %tr
+      %td= presentation_form.label('login', Presentation.human_attribute_name(:name))
+      %td
+        = presentation_form.text_field :name
+        %span#Presentation_name_display_keyboard.display_keyboard
+    %tr
+      %td= presentation_form.label('model', Presentation.human_attribute_name(:model))
+      %td
+        %select#Presentation_model_id{ :name => 'Presentation[model_id]' }
+          = options_for_select(get_model_names.invert.to_a, presentation_form.object.model)
+    %tr
+      %td= presentation_form.label('description', Presentation.human_attribute_name(:description))
+      %td
+        = presentation_form.text_field :description
+        %span#Presentation_description_display_keyboard.display_keyboard
+    %tr
+      %td= presentation_form.label('code', Presentation.human_attribute_name(:code))
+      %td
+        = presentation_form.text_area :code
+        %span#Presentation_code_display_keyboard.display_keyboard
+    %tr
+      %td= presentation_form.label('markup', Presentation.human_attribute_name(:markup))
+      %td
+        = presentation_form.text_area :markup
+        %span#Presentation_markup_display_keyboard.display_keyboard
+    %tr
+      %td= presentation_form.label('active', Presentation.human_attribute_name(:active))
+      %td= presentation_form.check_box :active
+    %tr
+      %td= presentation_form.label('hidden', Presentation.human_attribute_name(:hidden))
+      %td= presentation_form.check_box :hidden
+
+:javascript
+  $('#Presentation_login').keyboard( {openOn: '' } );
+  $('#Presentation_login_display_keyboard').click(function(){
+    $('#Presentation_login').getkeyboard().reveal();
+  });
+
+  $('#Presentation_title').keyboard( {openOn: '' } );
+  $('#Presentation_title_display_keyboard').click(function(){
+    $('#Presentation_title').getkeyboard().reveal();
+  });
+
+  $('#Presentation_password').keyboard( {openOn: '' } );
+  $('#Presentation_password_display_keyboard').click(function(){
+    $('#Presentation_password').getkeyboard().reveal();
+  });
