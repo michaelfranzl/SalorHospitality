@@ -1,17 +1,17 @@
 class PagesController < ApplicationController
   def index
-    @page = Page.existing.first
-    @partial_htmls = evaluate_partial_htmls @page
+    redirect_to page_path(Page.existing.first)
+  end
+  
+  def new
+    @page = Page.create
+    render :edit
   end
   
   def show
     @page = Page.find_by_id params[:id]
-    @partials = @page.partials
-    @partial_htmls = []
-    @partials.each do |par|
-      eval par.code
-      @partial_htmls[par.id] = ERB.new(par.template).result binding
-    end
+    @partial_htmls = evaluate_partial_htmls @page
+    @previous_page, @next_page = neighbour_pages @page
   end
 
   def edit
@@ -46,6 +46,16 @@ class PagesController < ApplicationController
       partial_htmls[partial.id] = ERB.new(partial.presentation.markup).result binding
     end
     return partial_htmls
+  end
+  
+  def neighbour_pages(page)
+    pages = Page.existing
+    idx = pages.index(page)
+    previous_page = pages[idx-1]
+    previous_page = page if idx.zero?
+    next_page = pages[idx+1]
+    next_page = page if next_page.nil?
+    return previous_page, next_page
   end
 
 end

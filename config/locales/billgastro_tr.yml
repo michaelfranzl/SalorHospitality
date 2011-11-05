@@ -287,6 +287,11 @@ tr:
     new:
       new_presentation: XXXNew Template
       edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
 
   settlements:
     index:

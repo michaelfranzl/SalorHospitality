@@ -75,7 +75,7 @@ BillGastro::Application.routes.draw do
   match 'companies/backup_logfile' => 'companies#backup_logfile'
   match 'company/logo' => 'companies#logo'
 
-  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :pages, :roles, :presentations
+  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
   
   resources :partials do
     collection do

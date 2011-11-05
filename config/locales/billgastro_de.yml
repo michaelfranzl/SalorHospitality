@@ -375,6 +375,11 @@ de:
     new:
       new_presentation: Neue Elementvorlage
       edit_presentation: Elementvorlage bearbeiten
+      
+  pages:
+    edit:
+      edit_page: Karte bearbeiten
+      view: Anzeigen
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

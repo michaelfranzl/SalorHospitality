@@ -374,6 +374,11 @@ fr:
     new:
       new_presentation: XXXNew Template
       edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
 
   delete: Effacer
   are_you_sure: 'Êtes-vous sûr ?'

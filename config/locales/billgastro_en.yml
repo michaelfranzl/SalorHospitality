@@ -375,6 +375,11 @@ en:
     new:
       new_presentation: New Template
       edit_presentation: Edit Template
+      
+  pages:
+    edit:
+      edit_page: Edit Page
+      view: View
 
   delete: Delete
   are_you_sure: 'Are you sure?'
