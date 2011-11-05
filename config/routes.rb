@@ -80,6 +80,7 @@ BillGastro::Application.routes.draw do
   resources :partials do
     collection do
       post :change_presentation
+      post :move
     end
   end
   

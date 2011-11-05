@@ -6,8 +6,8 @@ class PartialsController < ApplicationController
 
   def create
     @presentations = Presentation.existing.find_all_by_model params[:model]
-    render :nothing => true and return if @presentations.empty?
-    debugger
+    render :no_presentation_found and return if @presentations.empty?
+
     # the following 3 class variables are needed for rendering _partial partial
     @model_id = params[:model_id]
     @partial = Partial.new params[:partial]
@@ -30,10 +30,25 @@ class PartialsController < ApplicationController
     @presentation = Presentation.find_by_id params[:presentation_id]
     @partial.presentation = @presentation
     @partial.save
-    @model_id = params[:model_id]
+    
+    #@model_id = params[:model_id]
+    @model_id = @partial.model_id
+    
     eval @partial.presentation.code
     @partial_html = ERB.new(@partial.presentation.markup).result binding
     @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
+    render :update
+  end
+  
+  def move
+    @partial = Partial.find_by_id params[:id]
+    @partial.update_attributes params[:partial]
+    @model_id = @partial.model_id
+    
+    eval @partial.presentation.code
+    @partial_html = ERB.new(@partial.presentation.markup).result binding
+    @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
+    render :update
   end
 
 end

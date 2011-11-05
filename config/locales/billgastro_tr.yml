@@ -49,6 +49,15 @@ tr:
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
 
     attributes:
       article:
@@ -269,6 +278,15 @@ tr:
       set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
       split_this_item: Posizyonları  
       switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
+      
+  partials:
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
 
   settlements:
     index:
@@ -344,6 +362,7 @@ tr:
       move_tables: XXXMove tables
       make_storno: XXXMake storno
       make_immediate_storno: XXXCancel items immediately
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: XXXAssign cost center
       move_order: XXXMove order
       change_waiter: XXXChange waiter

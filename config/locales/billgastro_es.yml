@@ -49,6 +49,15 @@ es:
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
 
     attributes:
       article:
@@ -343,6 +352,7 @@ es:
       move_tables: Mover mesas
       make_storno: Anular item
       make_immediate_storno: XXXCancel items immediately
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: Designar centro de coste
       move_order: Mover pedido
       change_waiter: Cambiar mozo
@@ -354,6 +364,15 @@ es:
       view_statistics: Ver estadísticas
       manage_users: Gestión usuarios
       manage_settings: Configuración
+      
+  partials:
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
 
   delete: Borrar
   are_you_sure: '¿Está seguro?'

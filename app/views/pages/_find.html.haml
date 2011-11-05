@@ -1,23 +1,23 @@
 - @found_articles.each do |ar|
-  %li{ :id => "article_#{ar.id}", :model => 'Article', :model_id => "#{ar.id}" }
+  %li{ :id => "article_#{ar.id}", :model => 'Article', :model_id => "#{ar.id}", :type => 'search_result' }
     %img{ :id => "handle_for_article_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
     = link_to ar.name, edit_article_path(ar)
     %script== $('#article_#{ar.id}').draggable({ handle: 'handle_for_article_#{ar.id}', revert: true });
     %ul
     - ar.quantities.each do |qu|
-      %li{ :id => "quantity#{ar.id}", :model => 'Quantity', :model_id => "#{qu.id}" }
+      %li{ :id => "quantity_#{qu.id}", :model => 'Quantity', :model_id => "#{qu.id}", :type => 'search_result' }
         %img{ :id => "handle_for_quantity_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
-        = link_to qu.prefix, edit_article_path(ar)
-        %script== $('#quantity_#{qu.id}').draggable({ handle: 'handle_for_quantity_#{ar.id}', revert: true });
+        = link_to qu.prefix, edit_article_path(qu)
+        %script== $('#quantity_#{qu.id}').draggable({ handle: 'handle_for_quantity_#{qu.id}', revert: true });
     
 - @found_options.each do |opt|
-  %li{ :id => "option_#{opt.id}", :model => 'Option', :model_id => "#{opt.id}" }
+  %li{ :id => "option_#{opt.id}", :model => 'Option', :model_id => "#{opt.id}", :type => 'search_result' }
     %img{ :id => "handle_for_option_#{opt.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to opt.name, edit_option_path(opt)
     %script== $('#option_#{opt.id}').draggable({ handle: 'handle_for_option_#{opt.id}', revert: true });
     
 - @found_categories.each do |cat|
-  %li{ :id => "category_#{cat.id}", :model => 'Category', :model_id => "#{cat.id}" }
+  %li{ :id => "category_#{cat.id}", :model => 'Category', :model_id => "#{cat.id}", :type => 'search_result' }
     %img{ :id => "handle_for_category_#{cat.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to cat.name, edit_category_path(cat)
     %script== $('#category_#{cat.id}').draggable({ handle: 'handle_for_category_#{cat.id}', revert: true });

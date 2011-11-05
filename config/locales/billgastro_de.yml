@@ -49,6 +49,15 @@ de:
       vendor_printer:
         one: Drucker
         other: Drucker
+      page:
+        one: Karte
+        other: Karten
+      partial:
+        one: Element
+        other: Elemente
+      presentation:
+        one: Vorlage
+        other: Vorlagen
 
     attributes:
       article:
@@ -357,6 +366,15 @@ de:
       view_statistics: Statistiken ansehen
       manage_users: Benutzer verwalten
       manage_settings: Grundeinstellungen vornehmen
+      
+  partials:
+    no_presentation_found:
+      no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
+      
+  presentations:
+    new:
+      new_presentation: Neue Elementvorlage
+      edit_presentation: Elementvorlage bearbeiten
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

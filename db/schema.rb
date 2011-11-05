@@ -179,6 +179,8 @@ ActiveRecord::Schema.define(:version => 20111104134026) do
   end
 
   create_table "pages", :force => true do |t|
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -193,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20111104134026) do
     t.integer  "top"
     t.text     "code"
     t.integer  "presentation_id", :default => 1
-    t.text     "presentation"
+    t.text     "markup"
     t.text     "blurb"
     t.boolean  "active",          :default => true
     t.boolean  "hidden"

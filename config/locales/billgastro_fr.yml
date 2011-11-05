@@ -49,6 +49,15 @@ fr:
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
 
     attributes:
       article:
@@ -344,6 +353,7 @@ fr:
       move_tables: Changer tables
       make_storno: Annuler item
       make_immediate_storno: XXXCancel items immediately
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: Assigner centre de coûts
       move_order: Déplacer commande
       change_waiter: Changer de serveur
@@ -355,6 +365,15 @@ fr:
       view_statistics: Afficher statistiques
       manage_users: Gestion utilisateurs
       manage_settings: Configuration
+      
+  partials:
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
 
   delete: Effacer
   are_you_sure: 'Êtes-vous sûr ?'
