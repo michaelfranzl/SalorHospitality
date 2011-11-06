@@ -14,7 +14,6 @@
  
   
 :javascript
-
   $('#partial_#{ partial.id }').draggable({
     handle: 'handle_for_partial_#{ partial.id }',
     revert: false

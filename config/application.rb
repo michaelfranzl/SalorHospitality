@@ -17,6 +17,7 @@ module BillGastro
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español' }
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
+    FONTS = Dir.glob("public/fonts/*.ttf").collect{ |f| "#{ /public\/fonts\/(.*).ttf/.match(f)[1]}" }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
