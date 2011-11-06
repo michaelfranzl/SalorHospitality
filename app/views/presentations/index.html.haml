@@ -4,11 +4,12 @@
 
 %table
   %tr
-    %th{ :style => 'width:100px' }
     %th{ :style => 'width:150px' }= Presentation.human_attribute_name(:name)
     %th{ :style => 'width:100px' }= Presentation.human_attribute_name(:model)
+    %th{ :style => 'width:100px' }= Presentation.human_attribute_name(:description)
   - @presentations.each do |p|
     %tr
       %td= link_to p.name, edit_presentation_path(p)
       %td= p.model
+      %td= p.description
       %td= link_to Presentation.human_attribute_name(:hidden), presentation_path(p), :method => :delete, :confirm => t(:are_you_sure)

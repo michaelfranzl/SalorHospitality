@@ -1,12 +1,16 @@
 %h2= t '.edit_page'
 
 = link_to (t '.view'), page_path(@page), :class => 'links'
-%table.page
+
+%table
   %tr
     %td
       #page= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
-          
-    %td#drop_remove
+    %td
+      %span#blurb{ :type => 'blurb' }
+        blurb
+        %img{ :id => "handle_for_blurb", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
+        %script== $('#blurb').draggable({ handle: 'handle_for_blurb', revert: true });
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
       %ul#search_results
@@ -28,17 +32,17 @@
     $('#page').droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
-      if (ui.draggable.attr('type') == 'search_result') {
-        $.ajax({
-          type: 'POST',
-          url: '/partials/',
-          data: 'model_id=' + ui.draggable.attr('model_id') + '&page_id=#{ @page.id }&model=' + ui.draggable.attr('model') + '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
-        });
-      } else if (ui.draggable.attr('type') == 'partial') {
+      if (ui.draggable.attr('type') == 'partial') {
         $.ajax({
           type: 'POST',
           url: '/partials/move',
           data: 'id=' + ui.draggable.attr('partial_id') + '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
+        });
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: '/partials/',
+          data: 'model_id=' + ui.draggable.attr('model_id') + '&page_id=#{ @page.id }&model=' + ui.draggable.attr('model') + '&type=' + ui.draggable.attr('type') + '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
         });
       }
     }          

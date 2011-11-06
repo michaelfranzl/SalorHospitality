@@ -193,14 +193,11 @@ ActiveRecord::Schema.define(:version => 20111104134026) do
   create_table "partials", :force => true do |t|
     t.integer  "left"
     t.integer  "top"
-    t.text     "code"
     t.integer  "presentation_id", :default => 1
-    t.text     "markup"
     t.text     "blurb"
     t.boolean  "active",          :default => true
     t.boolean  "hidden"
     t.integer  "model_id"
-    t.string   "model_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

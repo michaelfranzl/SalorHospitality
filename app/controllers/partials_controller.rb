@@ -6,23 +6,18 @@ class PartialsController < ApplicationController
 
   def create
     @presentations = Presentation.existing.find_all_by_model params[:model]
-    render :no_presentation_found and return if @presentations.empty?
+    render :no_presentation_found and return if @presentations.empty? and not params[:type] == 'blurb'
 
-    # the following 3 class variables are needed for rendering _partial partial
-    @model_id = params[:model_id]
     @partial = Partial.new params[:partial]
-    @partial.presentation = Presentation.existing.find_by_model params[:model]
-
-    @partial.model_id = @model_id
+    @partial.model_id = params[:model_id]
+    @partial.presentation = @presentations.first
     @partial.save
     
-    @page = Page.find_by_id(params[:page_id])
+    @page = Page.find_by_id params[:page_id]
     @page.partials << @partial
     @page.save
     
-    # for rendering _partial
-    eval @partial.presentation.code
-    @partial_html = ERB.new(@partial.presentation.markup).result binding
+    @partial_html = evaluate_partial_html @partial
   end
   
   def change_presentation
@@ -31,11 +26,8 @@ class PartialsController < ApplicationController
     @partial.presentation = @presentation
     @partial.save
     
-    #@model_id = params[:model_id]
-    @model_id = @partial.model_id
+    @partial_html = evaluate_partial_html @partial
     
-    eval @partial.presentation.code
-    @partial_html = ERB.new(@partial.presentation.markup).result binding
     @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
     render :update
   end
@@ -43,12 +35,25 @@ class PartialsController < ApplicationController
   def move
     @partial = Partial.find_by_id params[:id]
     @partial.update_attributes params[:partial]
-    @model_id = @partial.model_id
     
-    eval @partial.presentation.code
-    @partial_html = ERB.new(@partial.presentation.markup).result binding
+    @partial_html = evaluate_partial_html @partial
+    
     @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
     render :update
+  end
+  
+  private
+  
+  def evaluate_partial_html(partial)
+    # this goes here because binding doesn't seem to work in views
+    record = partial.presentation.model.constantize.find_by_id partial.model_id
+    
+    begin
+      eval partial.presentation.code
+      partial_html = ERB.new( partial.presentation.markup).result binding
+    rescue Exception => e
+      partial_html = t('presentations.error_during_evaluation') + e.message
+    end
   end
 
 end

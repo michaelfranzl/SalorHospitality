@@ -5,5 +5,5 @@
 
 .page
   .previous_page_button= link_to '<', page_path(@previous_page) unless @previous_page == @page
-  = render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+  #page= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
   .next_page_button= link_to '>', page_path(@next_page) unless @next_page == @page

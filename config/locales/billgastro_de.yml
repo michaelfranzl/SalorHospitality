@@ -153,6 +153,21 @@ de:
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
+      presentation:
+        name: Name
+        description: Beschreibung
+        markup: ERB Markup
+        code: Ruby Code
+        model: Typ
+        active: aktiv
+        hidden: löschen
+      page:
+        active: aktiv
+        hidden: löschen
+      partial:
+        blurb: Blurb
+        active: aktiv
+        hidden: löschen
 
   articles:
     index:
@@ -368,6 +383,7 @@ de:
       manage_settings: Grundeinstellungen vornehmen
       
   partials:
+    error_during_evaluation: 'Fehler: '
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
       
@@ -375,6 +391,7 @@ de:
     new:
       new_presentation: Neue Elementvorlage
       edit_presentation: Elementvorlage bearbeiten
+      blurb: Text
       
   pages:
     edit:

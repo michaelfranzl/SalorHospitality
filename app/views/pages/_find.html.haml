@@ -21,3 +21,9 @@
     %img{ :id => "handle_for_category_#{cat.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to cat.name, edit_category_path(cat)
     %script== $('#category_#{cat.id}').draggable({ handle: 'handle_for_category_#{cat.id}', revert: true });
+    
+- @found_presentations.each do |pre|
+  %li{ :id => "presentation_#{pre.id}", :model => 'Presentation', :model_id => "#{pre.id}", :type => 'search_result' }
+    %img{ :id => "handle_for_presentation_#{pre.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
+    = link_to pre.name, edit_presentation_path(pre)
+    %script== $('#presentation_#{pre.id}').draggable({ handle: 'handle_for_presentation_#{pre.id}', revert: true });

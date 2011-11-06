@@ -153,6 +153,21 @@ tr:
       settlement:
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount
+      presentation:
+        name: XXXName
+        description: XXXDescription
+        markup: XXXERB Markup
+        code: XXXRuby code
+        model: XXXType
+        active: XXXactive
+        hidden: XXXdelete
+      page:
+        active: XXXactive
+        hidden: XXXdelete
+      partial:
+        blurb: XXXBlurb
+        active: XXXaktiv
+        hidden: XXXdelete
 
   articles:
     index:
@@ -280,6 +295,7 @@ tr:
       switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
       
   partials:
+    error_during_evaluation: 'XXXError: '
     no_presentation_found:
       no_presentations_found: XXXNo template defined for this partial.
       
@@ -292,6 +308,7 @@ tr:
     edit:
       edit_page: XXXEdit Page
       view: XXXView
+      blurb: XXXBlurb
 
   settlements:
     index:

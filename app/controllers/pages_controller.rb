@@ -1,6 +1,12 @@
 class PagesController < ApplicationController
   def index
-    redirect_to page_path(Page.existing.first)
+    pages = Page.existing
+    if pages.empty?
+      @page = Page.create
+      redirect_to edit_page_path @page
+    else
+      redirect_to page_path(pages.first)
+    end
   end
   
   def new
@@ -24,9 +30,10 @@ class PagesController < ApplicationController
       search_terms = params['search_text'].split.collect { |word| "%#{ word.downcase }%" }
       conditions = 'hidden = false AND '
       conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
-      @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 3 )
-      @found_options = Option.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 3 )
-      @found_categories = Category.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 3 )
+      @found_articles = Article.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
+      @found_options = Option.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
+      @found_categories = Category.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
+      @found_presentations = Presentation.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
     else
       render :nothing => true
     end
@@ -40,10 +47,14 @@ class PagesController < ApplicationController
     partial_htmls = []
     partials.each do |par|
       # the following 3 class varibles are needed for rendering the _partial partial
+      record = par.presentation.model.constantize.find_by_id par.model_id
+      begin
+        eval par.presentation.code
+        partial_htmls[par.id] = ERB.new(par.presentation.markup).result binding
+      rescue Exception => e
+        partial_htmls[par.id] = t('partials.error_during_evaluation') + e.message
+      end
       partial = par
-      model_id = partial.model_id
-      eval partial.presentation.code
-      partial_htmls[partial.id] = ERB.new(partial.presentation.markup).result binding
     end
     return partial_htmls
   end

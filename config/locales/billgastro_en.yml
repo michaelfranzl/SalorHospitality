@@ -153,6 +153,21 @@ en:
       settlement:
         initial_cash: Initial amount
         revenue: End amount
+      presentation:
+        name: Name
+        description: Description
+        markup: ERB Markup
+        code: Ruby code
+        model: Type
+        active: aktiv
+        hidden: delete
+      page:
+        active: active
+        hidden: delete
+      partial:
+        blurb: Blurb
+        active: aktiv
+        hidden: delete
 
   articles:
     index:
@@ -368,6 +383,7 @@ en:
       manage_settings: Manage settings
       
   partials:
+    error_during_evaluation: 'Error: '
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
       
@@ -375,6 +391,7 @@ en:
     new:
       new_presentation: New Template
       edit_presentation: Edit Template
+      blurb: Blurb
       
   pages:
     edit:
