@@ -59,4 +59,9 @@ class Article < ActiveRecord::Base
     name + descr
   end
   
+  def image=(data)
+    write_attribute :image_content_type, data.content_type.chomp
+    write_attribute :image, data.read
+  end
+  
 end

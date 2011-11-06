@@ -25,4 +25,9 @@ class Category < ActiveRecord::Base
   acts_as_list
 
   scope :existing, where(:hidden => false).order('position ASC')
+  
+  def logo=(data)
+    write_attribute :image_content_type, data.content_type.chomp
+    write_attribute :image, data.read
+  end
 end

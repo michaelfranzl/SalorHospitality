@@ -129,5 +129,10 @@ class ArticlesController < ApplicationController
   def sort_index
     @categories = Category.all
   end
+  
+  def image
+    @article = Article.find_by_id params[:id]
+    send_data @article.image, :type => @article.image_content_type, :disposition => 'inline'
+  end
 
 end

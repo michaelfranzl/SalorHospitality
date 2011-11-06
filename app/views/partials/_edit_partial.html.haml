@@ -1,20 +1,26 @@
+:css
+  div#partial_{ partial.id } img { width: #{ partial.image_size }px; }
+
 .partial{ :id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
-  %img{ :id => "handle_for_partial_#{ partial.id }", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
-  %select{ :id => "presentation_for_partial_#{ partial.id }", :class => 'option_for_partial', :name => 'partial[presentation_id]' }
-    = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
-  %select{ :id => "font_for_partial_#{ partial.id }", :class => 'option_for_partial', :name => 'partial[font]' }
-    = options_for_select BillGastro::Application::FONTS, partial.font
-  %select{ :id => "size_for_partial_#{ partial.id }", :class => 'option_for_partial', :name => 'partial[font]' }
-    - sizearray = [100,150,200,250,300,350,400,500,600,700]
-    = options_for_select sizearray, partial.size
-  %br
+  .options
+    %img.handle{ :id => "handle_for_partial_#{ partial.id }", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
+    %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
+      = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
+    %br
+    %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
+      = options_for_select BillGastro::Application::FONTS, partial.font
+    %br
+    %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]' }
+      = options_for_select [100,150,200,250,300,350,400,500,600,700], partial.size
+    %br
+    %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]' }
+      = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.image_size
   %span{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font };" }= raw markup
   - if partial.presentation.model == 'Presentation'
     %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
  
   
 :javascript
-
   $('#partial_#{ partial.id }').draggable({
     handle: 'handle_for_partial_#{ partial.id }',
     revert: false
@@ -41,6 +47,14 @@
       type: 'PUT',
       url: "/partials/#{ partial.id }",
       data: "partial[size]=" + $("#size_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#image_size_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[image_size]=" + $("#image_size_for_partial_#{ partial.id }").val()
     });
   });
   

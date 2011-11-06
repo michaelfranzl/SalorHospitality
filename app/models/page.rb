@@ -3,4 +3,9 @@ class Page < ActiveRecord::Base
   
   scope :active, where(:active => true, :hidden => false)
   scope :existing, where('hidden=false or hidden is NULL')
+  
+  def logo=(data)
+    write_attribute :image_content_type, data.content_type.chomp
+    write_attribute :image, data.read
+  end
 end

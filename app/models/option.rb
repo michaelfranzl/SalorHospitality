@@ -37,4 +37,9 @@ class Option < ActiveRecord::Base
     end
     self.save
   end
+  
+  def logo=(data)
+    write_attribute :image_content_type, data.content_type.chomp
+    write_attribute :image, data.read
+  end
 end

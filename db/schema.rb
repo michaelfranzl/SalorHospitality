@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106134415) do
+ActiveRecord::Schema.define(:version => 20111106164019) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -40,9 +40,11 @@ ActiveRecord::Schema.define(:version => 20111106134415) do
     t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
-    t.integer  "vendor_printer_id", :default => 0
+    t.integer  "vendor_printer_id",  :default => 0
     t.integer  "position"
-    t.boolean  "hidden",            :default => false
+    t.boolean  "hidden",             :default => false
+    t.binary   "image"
+    t.string   "image_content_type"
   end
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -179,10 +181,12 @@ ActiveRecord::Schema.define(:version => 20111106134415) do
   end
 
   create_table "pages", :force => true do |t|
-    t.boolean  "active",     :default => true
+    t.boolean  "active",             :default => true
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.binary   "image"
+    t.string   "image_content_type"
   end
 
   create_table "pages_partials", :id => false, :force => true do |t|
@@ -202,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20111106134415) do
     t.datetime "updated_at"
     t.string   "font"
     t.integer  "size"
+    t.integer  "image_size"
   end
 
   create_table "presentations", :force => true do |t|

@@ -7,8 +7,9 @@
       - @article.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @article do |article_form|
+= form_for @article, :html => { :multipart => true } do |article_form|
   %div.article_new
+    %img.asset{ :src => 'image' }
     %div.search_results
       %ul#search_results
     %div
@@ -35,6 +36,12 @@
       %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
       %span.input_fields
         = article_form.collection_select :category_id, Category.existing, :id, :name, { :include_blank => true }
+    
+    %div
+      %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
+      %span.input_fields
+        = article_form.file_field :image, :size => 15
+    %p
 
     %div
       %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))

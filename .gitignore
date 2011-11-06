@@ -1,6 +1,8 @@
 config/database.yml
 *.*~
 *.ttf
+#.*
+*.#
 vendor/plugins
 *.sql
 generic.css
