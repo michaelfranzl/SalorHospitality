@@ -1,6 +1,10 @@
 %h2= t '.edit_page'
 
+= link_to (t '.slideshow'), pages_path, :class => 'links'
+= link_to (t :new), new_page_path, :class => 'links'
 = link_to (t '.view'), page_path(@page), :class => 'links'
+= link_to (t :delete), page_path(@page), :method => :delete, :confirm => t(:are_you_sure), :class => 'links'
+
 
 = form_for @page, :html => { :multipart => true } do |page_form|
   %div
@@ -12,12 +16,15 @@
   %div
     %span.label_width= page_form.label( 'height', Page.human_attribute_name(:height))
     %span.input_fields= page_form.text_field :height, :size => 4
+  %div
+    %span.label_width= page_form.label( 'color', Page.human_attribute_name(:color))
+    %span.input_fields= page_form.text_field :color, :size => 4
   = submit_tag t :edit
   
 %table.page
   %tr
     %td
-      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; background-image: url('/pages/#{ @page.id}/image');" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; background-image: url('/pages/#{ @page.id }/image'); background-color: #{ @page.color }" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
     %td#remove
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
@@ -74,4 +81,8 @@
     $('#article_name').val('');
     $('#article_name').getkeyboard().reveal();
   });
-  
+
+  $("#page_color").modcoder_excolor({
+   hue_bar : 4,
+   shadow : false
+  });

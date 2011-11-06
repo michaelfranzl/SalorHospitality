@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.create
-    render :edit
+    redirect_to edit_page_path @page
   end
   
   def show

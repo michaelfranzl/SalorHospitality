@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106172630) do
+ActiveRecord::Schema.define(:version => 20111106205810) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20111106172630) do
     t.string   "image_content_type"
     t.integer  "width"
     t.integer  "height"
+    t.string   "color"
   end
 
   create_table "pages_partials", :id => false, :force => true do |t|
