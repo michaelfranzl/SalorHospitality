@@ -1,8 +1,8 @@
 class AddImagesToCategoryPage < ActiveRecord::Migration
   def self.up
-    add_column :categories, :image, :binary
+    add_column :categories, :image, :binary, :limit => 500000
     add_column :categories, :image_content_type, :string
-    add_column :pages, :image, :binary
+    add_column :pages, :image, :binary, :limit => 500000
     add_column :pages, :image_content_type, :string
   end
 

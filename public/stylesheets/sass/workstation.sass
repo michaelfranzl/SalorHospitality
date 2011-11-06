@@ -1097,27 +1097,29 @@ div.partial
     :top 39px
   div.options
     :text-align right
-    :left -120px
+    :left -190px
     :position absolute
     :opacity 0.4
   div.options:hover
     :opacity 1
-  img.handle
-    :width 18px
-    :height 22px
+
   
-div#page
+div.page
   :width 800px
   :height 480px
-  :background-color #DDD
+  :background-color white
   :color black
-  :border 3px solid transparent
   :position relative
+  :background-repeat no-repeat
+  :background-size 100%
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 10px
+  :float left
   
-div#page.hover
+div.page.hover
   :border 3px solid white
-  
-
   
 div.previous_page_button,
 div.next_page_button

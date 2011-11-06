@@ -4,20 +4,20 @@
 
 = form_for @page, :html => { :multipart => true } do |page_form|
   %div
-    %span.label= page_form.label( 'image', Page.human_attribute_name(:image))
+    %span.label_width= page_form.label( 'image', Page.human_attribute_name(:image))
     %span.input_fields= page_form.file_field :image
   %div
-    %span.label= page_form.label( 'width', Page.human_attribute_name(:width))
-    %span.input_fields= page_form.text_field :width, :size => 4, :class => 'color'
+    %span.label_width= page_form.label( 'width', Page.human_attribute_name(:width))
+    %span.input_fields= page_form.text_field :width, :size => 4
   %div
-    %span.label= page_form.label( 'height', Page.human_attribute_name(:height))
-    %span.input_fields= page_form.text_field :height
+    %span.label_width= page_form.label( 'height', Page.human_attribute_name(:height))
+    %span.input_fields= page_form.text_field :height, :size => 4
   = submit_tag t :edit
   
 %table.page
   %tr
     %td
-      #page{ :style => "width: #{ @page.width }; height: #{ @page.height }"}= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; background-image: url('/pages/#{ @page.id}/image');" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
     %td#remove
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
@@ -37,7 +37,7 @@
     }
   });
   
-    $('#page').droppable({
+    $("#page_#{ @page.id }").droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
       if (ui.draggable.attr('type') == 'partial') {

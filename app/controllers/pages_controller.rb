@@ -1,12 +1,18 @@
 class PagesController < ApplicationController
   def index
-    pages = Page.existing
-    if pages.empty?
-      @page = Page.create
-      redirect_to edit_page_path @page
-    else
-      redirect_to page_path(pages.first)
-    end
+    @pages = Page.existing
+    @partial_htmls_pages = []
+    @pages.each do |p|
+      @partial_htmls_pages[p.id] = evaluate_partial_htmls p
+    end      
+    @pages_ids = @pages.collect{ |p| p.id }
+  end
+  
+  def update
+    @page = Page.find_by_id params[:id]
+    @page.update_attributes params[:page]
+    @partial_htmls = evaluate_partial_htmls @page
+    redirect_to edit_page_path @page
   end
   
   def new
@@ -37,6 +43,17 @@ class PagesController < ApplicationController
     else
       render :nothing => true
     end
+  end
+  
+  def destroy
+    @page = Page.find_by_id params[:id]
+    @page.destroy
+    redirect_to pages_path
+  end
+  
+  def image
+    @page = Page.find_by_id params[:id]
+    send_data @page.image, :type => @page.image_content_type, :disposition => 'inline'
   end
   
   private

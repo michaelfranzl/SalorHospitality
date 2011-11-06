@@ -1,0 +1,13 @@
+- @pages.each do |p|
+  - partial_htmls = @partial_htmls_pages[p.id]
+  .page{ :id => "page_#{ p.id }", :style => "position:absolute;display: none; width: #{ p.width }px; height: #{ p.height }px; background-image: url('/pages/#{ p.id}/image');" }= render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
+
+:javascript
+  
+  slide(#{ @pages_ids.inspect }, #{ @pages.count }, 0);
+  
+  function slide(ids, count, current) {
+    $('#page_' + ids[current]).fadeIn(1000).delay(6000).fadeOut(1000);
+    if (current == (count - 1)) { current = 0 } else { current += 1; }
+      setTimeout(function(){ slide(ids, count, current); }, 7000);
+  }

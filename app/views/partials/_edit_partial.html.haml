@@ -8,7 +8,7 @@
     %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
-    %input{ :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
+    %input{ :style => 'display:none', :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
     %br
     %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
       = options_for_select BillGastro::Application::FONTS, partial.font

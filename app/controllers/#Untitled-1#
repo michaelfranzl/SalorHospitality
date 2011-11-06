@@ -1,0 +1,20 @@
+- @pages.each do |p|
+  - partial_htmls = @partial_htmls_pages[p.id]
+  .page{ :id => "page_#{ p.id }", :style => "width: #{ p.width }px; height: #{ p.height }px; background-image: url('/pages/#{ p.id}/image');" }= render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
+
+:javascript
+
+  start_slideshow(#{ @pages_ids.inspect }, #{ @pages.count }, 2000);
+    
+  function start_slideshow(frames, count, delay) {
+    setTimeout(switch_slides(frames[0], frames, 1, count, delay), delay);
+  }
+                            
+  function switch_slides(frame, frames, current, count, delay) {
+    return (function() {
+        $('#page_' + current).fadeIn(2000);
+        if (current == count - 1) { current = 0 } else { current += 1; }
+        setTimeout($('#page_" + current + "');", 850);
+        setTimeout(switch_slides(frame, start_frame, end_frame, delay), delay + 850);
+    })
+  }
