@@ -38,6 +38,7 @@ GEM
     exception_notification (2.4.0)
     haml (3.0.25)
     i18n (0.5.0)
+    kramdown (0.13.3)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
     mail (2.2.19)
@@ -90,6 +91,7 @@ DEPENDENCIES
   acts_as_list (= 0.1.3)
   exception_notification
   haml (= 3.0.25)
+  kramdown (= 0.13.3)
   mysql2 (= 0.2.6)
   rails (= 3.0.6)
   ruby-debug19 (= 0.11.6)

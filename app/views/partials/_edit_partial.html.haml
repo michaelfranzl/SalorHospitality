@@ -3,7 +3,8 @@
   %select{ :id => "presentation_for_partial_#{ partial.id }", :class => 'presentation_for_partial', :name => 'partial[presentation_id]' }
     = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id  
   %br
-  = raw markup
+  %span{ :id => "html_for_partial_#{ partial.id }" }= raw markup
+  %textarea{ :id => "textbox_for_partial_#{ partial.id }" } abc
   %script== $('#partial_#{ partial.id }').draggable({ handle: 'handle_for_partial_#{ partial.id }', revert: false });
   
   
@@ -12,10 +13,18 @@
     $.ajax({
       type: 'POST',
       url: '/partials/change_presentation',
-      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id=" + $("#presentation_for_partial_#{ partial.id }").val()
+      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id]=" + $("#presentation_for_partial_#{ partial.id }").val()
     });
   });
   
   $("#partial_#{ partial.id }").mouseover( function(){
     $("#presentation_for_partial_#{ partial.id }").show();
+  });
+  
+  $("#html_for_partial_#{ partial.id }").blur( function(){
+    $.ajax({
+      type: 'POST',
+      url: '/partials/change_presentation',
+      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id=" + $("#presentation_for_partial_#{ partial.id }").val()
+    });
   });

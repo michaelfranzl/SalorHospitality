@@ -45,16 +45,15 @@ class PagesController < ApplicationController
     # this goes here because binding doesn't seem to work in views
     partials = page.partials
     partial_htmls = []
-    partials.each do |par|
+    partials.each do |partial|
       # the following 3 class varibles are needed for rendering the _partial partial
-      record = par.presentation.model.constantize.find_by_id par.model_id
+      record = partial.presentation.model.constantize.find_by_id partial.model_id
       begin
-        eval par.presentation.code
-        partial_htmls[par.id] = ERB.new(par.presentation.markup).result binding
+        eval partial.presentation.code
+        partial_htmls[partial.id] = ERB.new(partial.presentation.markup).result binding
       rescue Exception => e
-        partial_htmls[par.id] = t('partials.error_during_evaluation') + e.message
+        partial_htmls[partial.id] = t('partials.error_during_evaluation') + e.message
       end
-      partial = par
     end
     return partial_htmls
   end

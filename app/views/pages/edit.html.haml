@@ -7,10 +7,6 @@
     %td
       #page= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
     %td
-      %span#blurb{ :type => 'blurb' }
-        blurb
-        %img{ :id => "handle_for_blurb", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
-        %script== $('#blurb').draggable({ handle: 'handle_for_blurb', revert: true });
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
       %ul#search_results

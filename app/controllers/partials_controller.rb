@@ -6,7 +6,7 @@ class PartialsController < ApplicationController
 
   def create
     @presentations = Presentation.existing.find_all_by_model params[:model]
-    render :no_presentation_found and return if @presentations.empty? and not params[:type] == 'blurb'
+    render :no_presentation_found and return if @presentations.empty?
 
     @partial = Partial.new params[:partial]
     @partial.model_id = params[:model_id]

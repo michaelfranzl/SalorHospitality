@@ -7,6 +7,7 @@ gem 'rails', '3.0.6'
 
 gem 'mysql2', '0.2.6'
 gem 'serialport', '1.0.4'
+gem 'kramdown', '0.13.3'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
