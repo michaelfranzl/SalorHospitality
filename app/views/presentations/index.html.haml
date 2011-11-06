@@ -6,7 +6,7 @@
   %tr
     %th{ :style => 'width:150px' }= Presentation.human_attribute_name(:name)
     %th{ :style => 'width:100px' }= Presentation.human_attribute_name(:model)
-    %th{ :style => 'width:100px' }= Presentation.human_attribute_name(:description)
+    %th{ :style => 'width:200px' }= Presentation.human_attribute_name(:description)
   - @presentations.each do |p|
     %tr
       %td= link_to p.name, edit_presentation_path(p)

@@ -30,9 +30,9 @@
     drop: function(event,ui){
       if (ui.draggable.attr('type') == 'partial') {
         $.ajax({
-          type: 'POST',
-          url: '/partials/move',
-          data: 'id=' + ui.draggable.attr('partial_id') + '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
+          type: 'PUT',
+          url: '/partials/' + ui.draggable.attr('partial_id'),
+          data: '&partial[left]=' + ui.draggable.position().left + '&partial[top]=' + ui.draggable.position().top
         });
       } else {
         $.ajax({

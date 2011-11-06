@@ -383,6 +383,7 @@ fr:
       
   partials:
     error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
     no_presentation_found:
       no_presentations_found: XXXNo template defined for this partial.
       
@@ -390,7 +391,6 @@ fr:
     new:
       new_presentation: XXXNew Template
       edit_presentation: XXXEdit Template
-      blurb: XXXBlurb
       
   pages:
     edit:

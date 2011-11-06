@@ -384,6 +384,7 @@ de:
       
   partials:
     error_during_evaluation: 'Fehler: '
+    default_blurb: Text
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
       
@@ -391,7 +392,6 @@ de:
     new:
       new_presentation: Neue Elementvorlage
       edit_presentation: Elementvorlage bearbeiten
-      blurb: Text
       
   pages:
     edit:

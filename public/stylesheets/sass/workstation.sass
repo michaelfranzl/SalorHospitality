@@ -1084,16 +1084,22 @@ div#screenlock
     
 div.partial
   :position absolute
+  textarea
+    :display none
+    :border none
+    :background-color transparent
+    :position absolute
+    :top 39px
   
 div#page
   :width 500px
   :height 400px
-  :background-color white
+  :background-color #DDD
   :color black
-
+  :border 3px solid transparent
   
 div#page.hover
-  :background-color red
+  :border 3px solid white
   
 
   
@@ -1116,3 +1122,5 @@ select.presentation_for_partial
   :display none
   :position absolute
   :top 5px
+
+

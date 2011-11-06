@@ -4,27 +4,44 @@
     = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id  
   %br
   %span{ :id => "html_for_partial_#{ partial.id }" }= raw markup
-  %textarea{ :id => "textbox_for_partial_#{ partial.id }" } abc
-  %script== $('#partial_#{ partial.id }').draggable({ handle: 'handle_for_partial_#{ partial.id }', revert: false });
-  
+  - if partial.presentation.model == 'Presentation'
+    %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
+ 
   
 :javascript
+
+  $('#partial_#{ partial.id }').draggable({
+    handle: 'handle_for_partial_#{ partial.id }',
+    revert: false
+  });
+
   $("#presentation_for_partial_#{ partial.id }").change( function(){
     $.ajax({
-      type: 'POST',
-      url: '/partials/change_presentation',
-      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id]=" + $("#presentation_for_partial_#{ partial.id }").val()
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[presentation_id]=" + $("#presentation_for_partial_#{ partial.id }").val()
     });
   });
   
   $("#partial_#{ partial.id }").mouseover( function(){
     $("#presentation_for_partial_#{ partial.id }").show();
   });
+
   
-  $("#html_for_partial_#{ partial.id }").blur( function(){
-    $.ajax({
-      type: 'POST',
-      url: '/partials/change_presentation',
-      data: "id=#{ partial.id }&model_id=#{ model_id }&presentation_id=" + $("#presentation_for_partial_#{ partial.id }").val()
+- if partial.presentation.model == 'Presentation'
+  :javascript
+    $("#html_for_partial_#{ partial.id }").click( function(){
+      $(this).hide();
+      $("#textbox_for_partial_#{ partial.id }").show();
+      $("#textbox_for_partial_#{ partial.id }").focus();    
     });
-  });
+    
+    $("#textbox_for_partial_#{ partial.id }").blur( function(){
+      $("#textbox_for_partial_#{ partial.id }").hide();
+      $("#html_for_partial_#{ partial.id }").show();
+      $.ajax({
+        type: 'PUT',
+        url: "/partials/#{ partial.id }",
+        data: "partial[blurb]=" + $(this).val()
+      });
+    });

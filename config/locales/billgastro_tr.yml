@@ -296,6 +296,7 @@ tr:
       
   partials:
     error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
     no_presentation_found:
       no_presentations_found: XXXNo template defined for this partial.
       
@@ -308,7 +309,6 @@ tr:
     edit:
       edit_page: XXXEdit Page
       view: XXXView
-      blurb: XXXBlurb
 
   settlements:
     index:

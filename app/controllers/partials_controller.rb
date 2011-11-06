@@ -7,10 +7,11 @@ class PartialsController < ApplicationController
   def create
     @presentations = Presentation.existing.find_all_by_model params[:model]
     render :no_presentation_found and return if @presentations.empty?
-
+    debugger
     @partial = Partial.new params[:partial]
     @partial.model_id = params[:model_id]
     @partial.presentation = @presentations.first
+    @partial.blurb = t('partials.default_blurb') if params[:model] == 'Presentation'
     @partial.save
     
     @page = Page.find_by_id params[:page_id]
@@ -20,26 +21,13 @@ class PartialsController < ApplicationController
     @partial_html = evaluate_partial_html @partial
   end
   
-  def change_presentation
-    @partial = Partial.find_by_id params[:id]
-    @presentation = Presentation.find_by_id params[:presentation_id]
-    @partial.presentation = @presentation
-    @partial.save
-    
-    @partial_html = evaluate_partial_html @partial
-    
-    @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
-    render :update
-  end
-  
-  def move
+  def update
     @partial = Partial.find_by_id params[:id]
     @partial.update_attributes params[:partial]
     
     @partial_html = evaluate_partial_html @partial
     
     @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
-    render :update
   end
   
   private
