@@ -1102,9 +1102,7 @@ div.partial
     :opacity 0.4
   div.options:hover
     :opacity 1
-  img.handle
-    :width 18px
-    :height 22px
+
   
 div#page
   :width 800px
