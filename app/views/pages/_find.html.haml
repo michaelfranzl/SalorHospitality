@@ -1,6 +1,6 @@
 - @found_articles.each do |ar|
   %li{ :id => "article_#{ar.id}", :model => 'Article', :model_id => "#{ar.id}", :type => 'search_result' }
-    %img{ :id => "handle_for_article_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
+    %img.handle{ :id => "handle_for_article_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:true;' }
     = link_to ar.name, edit_article_path(ar)
     %script== $('#article_#{ar.id}').draggable({ handle: 'handle_for_article_#{ar.id}', revert: true });
     %ul
@@ -12,18 +12,18 @@
     
 - @found_options.each do |opt|
   %li{ :id => "option_#{opt.id}", :model => 'Option', :model_id => "#{opt.id}", :type => 'search_result' }
-    %img{ :id => "handle_for_option_#{opt.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
+    %img.handle{ :id => "handle_for_option_#{opt.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to opt.name, edit_option_path(opt)
     %script== $('#option_#{opt.id}').draggable({ handle: 'handle_for_option_#{opt.id}', revert: true });
     
 - @found_categories.each do |cat|
   %li{ :id => "category_#{cat.id}", :model => 'Category', :model_id => "#{cat.id}", :type => 'search_result' }
-    %img{ :id => "handle_for_category_#{cat.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
+    %img.handle{ :id => "handle_for_category_#{cat.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to cat.name, edit_category_path(cat)
     %script== $('#category_#{cat.id}').draggable({ handle: 'handle_for_category_#{cat.id}', revert: true });
     
 - @found_presentations.each do |pre|
   %li{ :id => "presentation_#{pre.id}", :model => 'Presentation', :model_id => "#{pre.id}", :type => 'search_result' }
-    %img{ :id => "handle_for_presentation_#{pre.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
+    %img.handle{ :id => "handle_for_presentation_#{pre.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to pre.name, edit_presentation_path(pre)
     %script== $('#presentation_#{pre.id}').draggable({ handle: 'handle_for_presentation_#{pre.id}', revert: true });

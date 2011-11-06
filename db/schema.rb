@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106164019) do
+ActiveRecord::Schema.define(:version => 20111106172630) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -187,6 +187,8 @@ ActiveRecord::Schema.define(:version => 20111106164019) do
     t.datetime "updated_at"
     t.binary   "image"
     t.string   "image_content_type"
+    t.integer  "width"
+    t.integer  "height"
   end
 
   create_table "pages_partials", :id => false, :force => true do |t|
@@ -207,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20111106164019) do
     t.string   "font"
     t.integer  "size"
     t.integer  "image_size"
+    t.string   "color"
   end
 
   create_table "presentations", :force => true do |t|

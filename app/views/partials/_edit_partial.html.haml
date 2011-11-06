@@ -7,12 +7,13 @@
     %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
+    %input{ :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :class => 'color' }
+    %br
     %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
       = options_for_select BillGastro::Application::FONTS, partial.font
     %br
     %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]' }
       = options_for_select [100,150,200,250,300,350,400,500,600,700], partial.size
-    %br
     %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]' }
       = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.image_size
   %span{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font };" }= raw markup
@@ -21,6 +22,7 @@
  
   
 :javascript
+
   $('#partial_#{ partial.id }').draggable({
     handle: 'handle_for_partial_#{ partial.id }',
     revert: false
@@ -55,6 +57,14 @@
       type: 'PUT',
       url: "/partials/#{ partial.id }",
       data: "partial[image_size]=" + $("#image_size_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#color_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[color]=" + $("#color_for_partial_#{ partial.id }").val()
     });
   });
   

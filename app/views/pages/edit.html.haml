@@ -2,11 +2,23 @@
 
 = link_to (t '.view'), page_path(@page), :class => 'links'
 
-%table
+= form_for @page, :html => { :multipart => true } do |page_form|
+  %div
+    %span.label= page_form.label( 'image', Page.human_attribute_name(:image))
+    %span.input_fields= page_form.file_field :image
+  %div
+    %span.label= page_form.label( 'width', Page.human_attribute_name(:width))
+    %span.input_fields= page_form.text_field :width, :size => 4, :class => 'color'
+  %div
+    %span.label= page_form.label( 'height', Page.human_attribute_name(:height))
+    %span.input_fields= page_form.text_field :height
+  = submit_tag t :edit
+  
+%table.page
   %tr
     %td
-      #page= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
-    %td
+      #page{ :style => "width: #{ @page.width }; height: #{ @page.height }"}= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+    %td#remove
       = text_field_tag 'search_text', 'su', :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
       %ul#search_results
@@ -14,13 +26,13 @@
 :javascript
   var enable_articles_search = false;
   
-  $('#drop_remove').droppable({
+  $('#remove').droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
+      ui.draggable.remove();
       $.ajax({
         type: 'DELETE',
-        url: '/partials/' + ui.draggable.attr('model_id'),
-        data: 'page_id=#{ @page.id }'
+        url: '/partials/' + ui.draggable.attr('partial_id')
       });
     }
   });

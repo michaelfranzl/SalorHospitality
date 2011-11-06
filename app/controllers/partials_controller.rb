@@ -1,7 +1,9 @@
 class PartialsController < ApplicationController
+  
   def destroy
-    #article = Article.find(/([0-9]*)$/.match(params[:id])[1])
-    #partial = Partial.find_by_article_id])
+    partial = Partial.find_by_id params[:id]
+    partial.delete
+    render :nothing => true
   end
 
   def create

@@ -1083,7 +1083,12 @@ div#screenlock
     :display none
 
     
-    
+table.page
+  :position relative
+  td
+    :vertical-align top
+  td#remove.hover
+    :background-color #304345
     
     
 div.partial
@@ -1095,17 +1100,20 @@ div.partial
     :position absolute
     :top 39px
   div.options
+    :text-align right
+    :left -120px
     :position absolute
     :opacity 0.4
   div.options:hover
     :opacity 1
   
 div#page
-  :width 500px
-  :height 400px
+  :width 800px
+  :height 480px
   :background-color #DDD
   :color black
   :border 3px solid transparent
+  :position relative
   
 div#page.hover
   :border 3px solid white
