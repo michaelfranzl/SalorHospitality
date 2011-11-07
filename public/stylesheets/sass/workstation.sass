@@ -1134,7 +1134,14 @@ div.next_page_button a
   :display block
   :height 400px
   :width 50px
-  :background-color #AAA
+  :background-repeat no-repeat
+  :background-position center center
+  
+div.next_page_button a
+  :background-image url('/images/arrow_page_right.png')
+  
+div.previous_page_button a
+  :background-image url('/images/arrow_page_left.png')
   
 select.presentation_for_partial
   :display none

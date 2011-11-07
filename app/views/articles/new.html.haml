@@ -9,7 +9,8 @@
 
 = form_for @article, :html => { :multipart => true } do |article_form|
   %div.article_new
-    %img.asset{ :src => 'image' }
+    - if article_form.object.image
+      %img.asset{ :src => 'image' }
     %div.search_results
       %ul#search_results
     %div
