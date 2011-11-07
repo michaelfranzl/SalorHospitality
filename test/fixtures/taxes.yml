@@ -7,6 +7,7 @@ taxes_001:
   updated_at: 2011-04-25 11:13:27 Z
   letter: A
   color: "#e3bde1"
+  hidden: 
 taxes_002: 
   id: 2
   percent: 20
@@ -15,6 +16,7 @@ taxes_002:
   updated_at: 2011-04-25 11:13:40 Z
   letter: B
   color: "#f3d5ab"
+  hidden: 
 taxes_003: 
   id: 3
   percent: 20
@@ -23,6 +25,7 @@ taxes_003:
   updated_at: 2011-04-25 11:13:47 Z
   letter: C
   color: "#ffafcf"
+  hidden: 
 taxes_004: 
   id: 6
   percent: 19
@@ -31,6 +34,7 @@ taxes_004:
   updated_at: 2011-04-25 11:13:56 Z
   letter: H
   color: "#d2f694"
+  hidden: 
 taxes_005: 
   id: 7
   percent: 7
@@ -39,3 +43,4 @@ taxes_005:
   updated_at: 2011-04-25 11:14:03 Z
   letter: T
   color: "#c2e8f3"
+  hidden: 

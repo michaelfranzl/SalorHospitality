@@ -10,6 +10,8 @@ users_001:
   color: "#cd0052"
   language: en
   company_id: 46
+  active: 1
+  hidden: 0
 users_002: 
   id: 7
   login: restaurant
@@ -21,6 +23,8 @@ users_002:
   color: "#80477d"
   language: en
   company_id: 46
+  active: 1
+  hidden: 0
 users_003: 
   id: 10
   login: host
@@ -32,6 +36,8 @@ users_003:
   color: "#75b10d"
   language: de
   company_id: 46
+  active: 1
+  hidden: 0
 users_004: 
   id: 11
   login: chiefwaiter
@@ -43,6 +49,8 @@ users_004:
   color: "#cd0052"
   language: de
   company_id: 46
+  active: 1
+  hidden: 0
 users_005: 
   id: 12
   login: waiter
@@ -54,6 +62,8 @@ users_005:
   color: "#ed8b00"
   language: en
   company_id: 46
+  active: 1
+  hidden: 0
 users_006: 
   id: 13
   login: aux
@@ -65,3 +75,5 @@ users_006:
   color: "#80477d"
   language: en
   company_id: 46
+  active: 1
+  hidden: 0

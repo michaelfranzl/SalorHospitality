@@ -8,6 +8,10 @@ categories_001:
   icon: starter
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_002: 
   id: 2
   name: Main Dish
@@ -17,6 +21,10 @@ categories_002:
   icon: maindish
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_003: 
   id: 3
   name: Desserts
@@ -26,6 +34,10 @@ categories_003:
   icon: dessert
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_004: 
   id: 4
   name: "Ros\xC3\xA9 Wine"
@@ -35,6 +47,10 @@ categories_004:
   icon: rosewineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_005: 
   id: 5
   name: Red Wine
@@ -44,6 +60,10 @@ categories_005:
   icon: redwineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_006: 
   id: 6
   name: "Dig\xC3\xA9stif"
@@ -53,6 +73,10 @@ categories_006:
   icon: digestif
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_007: 
   id: 7
   name: Alcohol Free
@@ -62,6 +86,10 @@ categories_007:
   icon: nonalcoholics
   color: "#80477d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_008: 
   id: 9
   name: Coffee
@@ -71,6 +99,10 @@ categories_008:
   icon: coffee
   color: "#cd0052"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_009: 
   id: 10
   name: Tea
@@ -80,6 +112,10 @@ categories_009:
   icon: teapot
   color: "#cd0052"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_010: 
   id: 11
   name: Tobacco
@@ -89,6 +125,10 @@ categories_010:
   icon: cigarette
   color: "#136880"
   vendor_printer_id: 2
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_011: 
   id: 13
   name: Beer
@@ -98,6 +138,10 @@ categories_011:
   icon: beer
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_012: 
   id: 14
   name: Aperitiv
@@ -107,6 +151,10 @@ categories_012:
   icon: aperitif
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_013: 
   id: 15
   name: White Wine
@@ -116,6 +164,10 @@ categories_013:
   icon: whitewineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_014: 
   id: 16
   name: Side Dish
@@ -125,6 +177,10 @@ categories_014:
   icon: sidedish
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
 categories_015: 
   id: 17
   name: Divers
@@ -134,3 +190,7 @@ categories_015:
   icon: blank
   color: "#27343b"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  image: 
+  image_content_type: 
