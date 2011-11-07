@@ -1,6 +1,5 @@
 config/database.yml
 *.*~
-*.ttf
 #.*
 *.#
 vendor/plugins
