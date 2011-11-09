@@ -4,7 +4,7 @@ class AddStatusToItem < ActiveRecord::Migration
     add_column :items, :to_preparation_list, :boolean, :default => true
     add_column :items, :on_delivery_list, :boolean
     add_column :items, :to_delivery_list, :boolean
-    add_column :items, :prepared, :boolean
+    add_column :items, :delivered, :boolean
     add_column :items, :finished, :boolean
     add_column :items, :updated, :boolean
     add_column :items, :prepared_count, :integer
@@ -17,7 +17,7 @@ class AddStatusToItem < ActiveRecord::Migration
     remove_column :items, :to_preparation_list
     remove_column :items, :on_delivery_list
     remove_column :items, :to_delivery_list
-    remove_column :items, :prepared
+    remove_column :items, :delivered
     remove_column :items, :prepared_count
     remove_column :items, :delivered_count
     remove_column :items, :finished

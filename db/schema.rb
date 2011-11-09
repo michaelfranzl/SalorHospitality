@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(:version => 20111108232257) do
     t.boolean  "to_preparation_list",              :default => true
     t.boolean  "on_delivery_list"
     t.boolean  "to_delivery_list"
-    t.boolean  "prepared"
+    t.boolean  "delivered"
     t.boolean  "finished"
     t.boolean  "updated"
     t.integer  "prepared_count"

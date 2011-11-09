@@ -86,6 +86,8 @@ BillGastro::Application.routes.draw do
     collection do
       get :preparation_list
       post :prepared
+      get :delivery_list
+      post :delivered
     end
   end
   

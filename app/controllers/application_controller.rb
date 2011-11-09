@@ -249,7 +249,7 @@ class ApplicationController < ActionController::Base
         o.items.prioritized.each do |i|
           i.update_attribute :printed_count, i.count if i.count < i.printed_count
 
-          next if i.count == i.printed_count or i.count == 0 or i.prepared
+          next if i.count == i.printed_count or i.count == 0 or i.delivered
 
           next if printer_id and
                   usage and
