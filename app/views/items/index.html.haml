@@ -1,0 +1,18 @@
+%h2= t('activerecord.models.item.other')
+
+#on_preparation_list
+#to_preparation_list
+  
+:javascript
+  window.setInterval(
+    function(){
+      $.ajax({
+        type: 'GET',
+        url: '/items/preparation_list'
+      });
+    }
+  , 5000);
+  
+  function display_incoming(data, textStatus, jqXHR) {
+    alert(data);
+  }

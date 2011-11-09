@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106205810) do
+ActiveRecord::Schema.define(:version => 20111108232257) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20111106205810) do
   end
 
   create_table "items", :force => true do |t|
-    t.integer  "count",          :limit => 1
+    t.integer  "count",               :limit => 1
     t.integer  "article_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -113,16 +113,26 @@ ActiveRecord::Schema.define(:version => 20111106205810) do
     t.boolean  "partial_order"
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status",  :limit => 1, :default => 0
+    t.integer  "storno_status",       :limit => 1, :default => 0
     t.string   "comment"
     t.float    "price"
-    t.integer  "printed_count",  :limit => 1, :default => 0
+    t.integer  "printed_count",       :limit => 1, :default => 0
     t.integer  "item_id"
     t.integer  "storno_item_id"
     t.integer  "tax_id"
-    t.integer  "max_count",                   :default => 0
+    t.integer  "max_count",                        :default => 0
     t.integer  "usage"
     t.integer  "priority"
+    t.boolean  "on_preparation_list"
+    t.boolean  "to_preparation_list",              :default => true
+    t.boolean  "on_delivery_list"
+    t.boolean  "to_delivery_list"
+    t.boolean  "prepared"
+    t.boolean  "finished"
+    t.boolean  "updated"
+    t.integer  "prepared_count"
+    t.integer  "delivered_count"
+    t.string   "preparation_comment"
   end
 
   create_table "items_options", :id => false, :force => true do |t|

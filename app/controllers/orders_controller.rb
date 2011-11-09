@@ -167,14 +167,8 @@ class OrdersController < ApplicationController
 
     if @order
       # similar to orders#update
-      begin
-        params[:order][:user_id] = @current_user.id if mobile?
-        @order.update_attributes params[:order]
-      rescue
-        logger.info "Trying to prevent FROZEN HASH error"
-        sleep 1
-        @order.update_attributes params[:order]
-      end
+      params[:order][:user_id] = @current_user.id if mobile?
+      @order.update_attributes params[:order]
     else
       # similar to orders#create
       @order = Order.new params[:order]
