@@ -3,7 +3,7 @@ presentations_001:
   id: 1
   name: Article Name
   description: displays just Article name
-  markup: <%= record.name %>
+  markup: %LPEREQ% record.name %RPER%
   code: ""
   model: Article
   active: 1
@@ -15,9 +15,9 @@ presentations_002:
   name: Variant List
   description: displays variants belonging to an article
   markup: |-
-    <% record.quantities.each do |q| %>
-    <%= q.prefix %><br/>
-    <% end %>
+    %LPER% record.quantities.each do |q| %RPER%
+    %LPEREQ% q.prefix %RPER%<br/>
+    %LPER% end %RPER%
   code: ""
   model: Article
   active: 1
@@ -28,7 +28,7 @@ presentations_003:
   id: 3
   name: Generic Text Blurb
   description: ""
-  markup: <%= Kramdown::Document.new(partial.blurb).to_html %>
+  markup: %LPEREQ% Kramdown::Document.new(partial.blurb).to_html %RPER%
   code: ""
   model: Presentation
   active: 1
@@ -40,7 +40,7 @@ presentations_004:
   name: Category Title
   description: ""
   markup: |
-    <%= record.name %>
+    %LPEREQ% record.name %RPER%
 
   code: ""
   model: Category
@@ -53,12 +53,12 @@ presentations_005:
   name: Article full
   description: displays Article with name, price and image
   markup: |-
-    <b><%= record.name %></b><br />
-    EUR <%= record.price %>
-    <% if record.image %>
+    <b>%LPEREQ% record.name %RPER%</b><br />
+    EUR %LPEREQ% record.price %RPER%
+    %LPER% if record.image %RPER%
     <br/>
-    <img src="/articles/<%= record.id %>/image">
-    <% end %>
+    <img src="/articles/%LPEREQ% record.id %RPER%/image">
+    %LPER% end %RPER%
   code: ""
   model: Article
   active: 1
@@ -71,15 +71,15 @@ presentations_006:
   description: ""
   markup: |
     <table width=300 border=0>
-    <% record.articles.menucard.each do |a| %>
+    %LPER% record.articles.menucard.each do |a| %RPER%
     <tr>
-    <td><br/><b><big><%= a.name %></big></b></td>
-    <td width=100 rowspan=2 align=right><br/><i>EUR <%= a.price %></i></td>
+    <td><br/><b><big>%LPEREQ% a.name %RPER%</big></b></td>
+    <td width=100 rowspan=2 align=right><br/><i>EUR %LPEREQ% a.price %RPER%</i></td>
     </tr>
     <tr>
-    <td><br/><small><%= a.description %></small></td>
+    <td><br/><small>%LPEREQ% a.description %RPER%</small></td>
     </tr>
-    <% end %>
+    %LPER% end %RPER%
     </table>
 
   code: ""
