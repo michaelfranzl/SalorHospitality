@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108232257) do
+ActiveRecord::Schema.define(:version => 20111109123719) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -90,6 +90,28 @@ ActiveRecord::Schema.define(:version => 20111108232257) do
     t.boolean  "hidden"
   end
 
+  create_table "customers", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "company_name"
+    t.text     "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postalcode"
+    t.string   "m_number"
+    t.string   "m_points"
+    t.string   "email"
+    t.string   "telephone"
+    t.string   "cellphone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customers_orders", :id => false, :force => true do |t|
+    t.integer "customer_id"
+    t.integer "order_id"
+  end
+
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -133,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20111108232257) do
     t.integer  "prepared_count"
     t.integer  "delivered_count"
     t.string   "preparation_comment"
+    t.integer  "customer_id"
   end
 
   create_table "items_options", :id => false, :force => true do |t|
@@ -188,6 +211,8 @@ ActiveRecord::Schema.define(:version => 20111108232257) do
     t.boolean  "print_pending"
     t.float    "storno_sum",     :default => 0.0
     t.string   "note"
+    t.integer  "customer_id"
+    t.integer  "m_points"
   end
 
   create_table "pages", :force => true do |t|

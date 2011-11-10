@@ -1,6 +1,9 @@
 en:
   activerecord:
     models:
+      customer:
+        one: Customer
+        other: Customers
       table:
         one: Table
         other: Tables

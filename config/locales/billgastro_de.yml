@@ -1,6 +1,9 @@
 de:
   activerecord:
     models:
+      customer:
+        one: Kunde
+        other: Kunden
       table:
         one: Tisch
         other: Tische
