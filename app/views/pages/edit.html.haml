@@ -1,3 +1,5 @@
+= javascript_include_tag 'edit_page'
+
 %h2= t '.edit_page'
 
 = link_to (t '.slideshow'), pages_path, :class => 'links'
@@ -24,27 +26,16 @@
 %table.page
   %tr
     %td
-      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; background-image: url('/pages/#{ @page.id }/image'); background-color: #{ @page.color }" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+      - background = @page.image ? "background-image: url('/pages/#{ @page.id }/image');" : ''
+      - color = @page.color ? "background-color: #{ @page.color }" : ''
+      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; #{ background } #{ color }" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
     %td#remove
       = text_field_tag 'search_text', t('articles.index.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
-      %span#article_name_display_keyboard.display_keyboard
+      %span#search_text_display_keyboard.display_keyboard
       %ul#search_results
         
 :javascript
-  var enable_articles_search = false;
-  
-  $('#remove').droppable({
-    hoverClass: 'hover',
-    drop: function(event,ui){
-      ui.draggable.remove();
-      $.ajax({
-        type: 'DELETE',
-        url: '/partials/' + ui.draggable.attr('partial_id')
-      });
-    }
-  });
-  
-    $("#page_#{ @page.id }").droppable({
+  $("#page_#{ @page.id }").droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
       if (ui.draggable.attr('type') == 'partial') {
@@ -61,28 +52,4 @@
         });
       }
     }          
-  });
-
-  window.setInterval(
-    function() {
-      if (enable_articles_search == true) {
-        enable_articles_search = false;
-        $.ajax({
-          type: 'POST',
-          url: '/pages/find',
-          data: 'search_text=' + $('#search_text').val()
-        });
-      }
-    }
-  , 2000);
-
-  $('#article_name').keyboard( {openOn: '', accepted: function(){ enable_articles_search = true } } );
-  $('#article_name_display_keyboard').click(function(){
-    $('#article_name').val('');
-    $('#article_name').getkeyboard().reveal();
-  });
-
-  $("#page_color").modcoder_excolor({
-   hue_bar : 4,
-   shadow : false
   });

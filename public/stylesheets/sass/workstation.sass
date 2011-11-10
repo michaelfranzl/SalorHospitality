@@ -744,8 +744,6 @@ div#note_for_order
     :padding 4px 10px
     :margin 5px 0px
     :vertical-align middle
-  span:hover
-    :background-color #0e1d25
   span.done,
   span.finish
     :cursor pointer
@@ -760,6 +758,15 @@ div#note_for_order
     :background-image url(/images/button_mobile_finish-small.png)
   p
     :margin 0px
+    
+   
+div.optionsselect,
+div.tablesselect,
+div.comment_for_item,
+div.price_for_item,
+div#note_for_order
+  span:hover
+    :background-color #0e1d25
 
 div#note_for_order
   :position absolute
@@ -1087,13 +1094,14 @@ table.page
   :position relative
   td
     :vertical-align top
+  td#remove
+    :background-color #243239
   td#remove.hover
     :background-color #304345
     
     
 div.partial
   :position absolute
-  :cursor pointer
   textarea
     :display none
     :border none
@@ -1124,9 +1132,7 @@ div.page
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 10px
   :float left
-  
-div.page.hover
-  :border 3px solid white
+
   
 div.previous_page_button,
 div.next_page_button
@@ -1182,4 +1188,16 @@ div.delivery
   :height 50px
   :background-color #333
   
-
+div.partial_toolbox
+  padding: 10px
+  display: none
+  background-color: rgba(255,255,255,0.5)
+  span.finish
+    :cursor pointer
+    :vertical-align middle
+    :display inline-block
+    :background-image url(/images/button_mobile_cancel-tiny.png)
+    :width 20px
+    :height 22px
+    :background-repeat no-repeat
+    :background-position center center

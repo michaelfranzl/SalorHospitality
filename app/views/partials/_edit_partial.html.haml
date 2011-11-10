@@ -1,12 +1,11 @@
 :css
   div#partial_#{ partial.id } img { width: #{ partial.image_size }px; }
   div#partial_#{ partial.id } { color: #{ partial.color } }
-  .partial-toolbox{ padding: 21px;display: none; background-color: grey;}
 
 .partial{:id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
   .options
     %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
-  .partial-toolbox{ :id => "toolbox-partial-#{partial.id}"}
+  .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}
     %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
@@ -24,36 +23,6 @@
     %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
   
 :javascript
-  $(function () {
-    $('span.handle').each(function () {
-      if (!$(this).hasClass('toolbox-done')) {
-          $(this).click(function (event) {
-          $('span.handle').each(function () {
-              var id = $(this).attr('href');
-             $(id).hide();
-          });
-          $(this).attr('old_z_index',$(this).css('z-index'));
-          var id = $(this).attr('href');
-          var x = parseInt($(this).position().left) - 20;
-          var y = parseInt($(this).position().top) - 5;
-          var cbtn = $("<div class='close-button'> X </div>");
-          cbtn.css({cursor: 'pointer', 
-          position: 'relative', 
-          bottom: 0, 
-          right: 0});
-          $(id).append(cbtn);
-          cbtn.click(function () {
-            $(this).parent().hide();
-            $(this).remove();
-          });
-          $(id).show();
-          $(id).css({position: 'absolute', top: y, left: x, 'z-index': 1001});
-          $(this).css('z-index',1002);
-          });
-          $(this).addClass('toolbox-done')
-        }
-      });
-  });
   $("#color_for_partial_#{ partial.id }").modcoder_excolor({
    hue_bar : 4,
    shadow : false,
