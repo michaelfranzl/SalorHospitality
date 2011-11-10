@@ -1,3 +1,5 @@
+= javascript_include_tag 'order'
+
 %h2= @current_user.login
 
 #rooms= render 'rooms'
@@ -14,9 +16,8 @@
     %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20);', :title => t(:scroll_down) }
   - else
     = render('functions_footer')
-
+    
 :javascript
-  $('#admin').hide();
   var i18n_server_no_response = '#{ escape_javascript t :server_no_response }';
   var i18n_just_order         = '#{ escape_javascript t :just_order }';
   var i18n_enter_price        = '#{ escape_javascript t :please_enter_item_price }';
@@ -25,17 +26,14 @@
   var permission_immediate_storno = #{ @current_user.role.permissions.include?("make_immediate_storno") ? "true" : "false" };
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';
+
   var mobile_special = #{ mobile_special? ? "true" : "false" };
 
   var screenlock_timeout = #{ @current_company.timeout };
   var screenlock_counter = screenlock_timeout;
-
   window.setInterval(
     function() {
-      if (screenlock_counter == 0) {
-        // $('#screenlock').show(); // display semi-transparent screen
-        $('#screenlock form').submit(); // log out directly
-      }
+      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
       screenlock_counter -= 1;
     }
   , 1001);
