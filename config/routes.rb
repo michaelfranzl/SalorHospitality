@@ -1,4 +1,6 @@
 BillGastro::Application.routes.draw do
+  resources :customers
+
   get "templates/index"
 
   get "templates/show"

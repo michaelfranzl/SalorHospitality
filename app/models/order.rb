@@ -22,8 +22,10 @@ class Order < ActiveRecord::Base
   belongs_to :tax
   has_many :items, :dependent => :destroy
   has_one :order
+  has_and_belongs_to_many :customers
 
   validates_presence_of :user_id
+  after_save :set_customers_up
 
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
   #This will prevent children_attributes with all empty values to be ignored
@@ -42,5 +44,14 @@ class Order < ActiveRecord::Base
       i.update_attribute :priority, i.category.position
     end
   end
-
+  def customer_set=(h)
+    @customers_hash = h
+  end
+  def set_customers_up
+    return if @customers_hash.nil?
+    @customers_hash.each do |cus|
+      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus["id"]} and order_id = #{self.id}")
+      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus["id"]}, #{self.id})")
+    end
+  end
 end

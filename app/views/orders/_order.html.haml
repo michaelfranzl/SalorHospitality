@@ -11,14 +11,12 @@
   #order_info{ :onclick => '$("#note_for_order").slideDown()'}= t(:just_order)
 
   #note_for_order= render 'note'
-
   - if workstation?
     %div.tablesselect
       %h3= t :move_order_to_table
       %span.done{ :onclick => "$('.tablesselect').slideUp();" }
       - @current_user.tables.each do |t|
         %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
-
   %div#categories
     - @categories.each do |category|
       %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
@@ -33,3 +31,4 @@
       %input#order_sum{ :value => 0 }
     %div#inputfields
     %table#itemstable
+  = render :partial => 'customers/customer_list'
