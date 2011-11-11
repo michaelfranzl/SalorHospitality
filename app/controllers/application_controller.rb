@@ -247,15 +247,9 @@ class ApplicationController < ActionController::Base
 
         printed_items_in_this_order = 0
         o.items.prioritized.each do |i|
-          begin
-            i.update_attribute :printed_count, i.count if i.count < i.printed_count
-          rescue
-            logger.info "Trying to prevent FROZEN HASH error"
-            sleep 1
-            i.update_attribute :printed_count, i.count if i.count < i.printed_count
-          end
+          i.update_attribute :printed_count, i.count if i.count < i.printed_count
 
-          next if i.count == i.printed_count or i.count == 0
+          next if i.count == i.printed_count or i.count == 0 or i.delivered
 
           next if printer_id and
                   usage and

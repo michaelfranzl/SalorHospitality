@@ -1,0 +1,42 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+customer_one:
+  first_name: John
+  last_name: Doe
+  company_name: Bosch
+  address: 6633 Maple Drive
+  city: Cincinatti
+  state: Ohio
+  postalcode: 10105
+  m_number: J1234
+  m_points: 150
+  email: john@doe.com
+  telephone: 555-5368
+  cellphone: 555-1923
+
+customer_two:
+  first_name: Jane
+  last_name: Doe
+  company_name: Flowers By Irene
+  address: 6633 Maple Drive
+  city: Cincinatti
+  state: Ohio
+  postalcode: 10105
+  m_number: J1235
+  m_points: 150
+  email: jane@doe.com
+  telephone: 555-5368
+  cellphone: 555-1923
+customer_three:
+  first_name: Mary
+  last_name: Magdalen
+  company_name: Customer Information Architects
+  address: 6633 Maple Drive
+  city: Cincinatti
+  state: Ohio
+  postalcode: 10105
+  m_number: J1235
+  m_points: 150
+  email: mary@magdalen.com
+  telephone: 555-5368
+  cellphone: 555-1923

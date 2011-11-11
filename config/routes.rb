@@ -1,4 +1,6 @@
 BillGastro::Application.routes.draw do
+  resources :customers
+
   get "templates/index"
 
   get "templates/show"
@@ -80,7 +82,16 @@ BillGastro::Application.routes.draw do
   match 'quantities/:id/image' => 'quantities#image'
   match 'pages/:id/image' => 'pages#image'
 
-  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
+  resources :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
+  
+  resources :items do
+    collection do
+      get :preparation_list
+      post :prepared
+      get :delivery_list
+      post :delivered
+    end
+  end
   
   resources :partials do
     collection do

@@ -1,0 +1,10 @@
+%div.delivery{ :id => "item_#{ delivery.id }_delivery", :style => "#{ hidden ? 'display: none' : '' }" }
+  - if delivery.quantity
+    %p
+      == #{ delivery.quantity.prefix } #{ delivery.article.name } #{ delivery.quantity.postfix }
+      = link_to 'delivered', "/items/delivered?id=#{ delivery.id }", :remote => true, :method => :post
+  - else
+    %p
+      = delivery.article.name
+      = link_to 'delivered', "/items/delivered?id=#{ delivery.id }", :remote => true, :method => :post
+  

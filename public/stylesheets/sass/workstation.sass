@@ -17,7 +17,7 @@ body
   :margin 0px
   :font-size 85%
   :background-color #0e1d25
-  :background-image url('/images/bg.png')
+  :background-image url('/images/body_bg.png')
   :background-repeat repeat-x
   :-moz-user-select none
   :-khtml-user-select none
@@ -129,7 +129,7 @@ div#functions
   :margin-right 8px
   a, div
     :cursor pointer
-    :margin-bottom 30px
+    :margin-bottom 5px
 
 div#footer
   :clear both
@@ -741,11 +741,13 @@ td.item_options
     option
       :color white
       :font-size 200%
-
+      
+      
 div.optionsselect,
 div.tablesselect,
 div.comment_for_item,
 div.price_for_item,
+div.customer_list,
 div#note_for_order
   :display none
   :z-index 100
@@ -770,8 +772,6 @@ div#note_for_order
     :padding 4px 10px
     :margin 5px 0px
     :vertical-align middle
-  span:hover
-    :background-color #0e1d25
   span.done,
   span.finish
     :cursor pointer
@@ -786,6 +786,15 @@ div#note_for_order
     :background-image url(/images/button_mobile_finish-small.png)
   p
     :margin 0px
+    
+   
+div.optionsselect,
+div.tablesselect,
+div.comment_for_item,
+div.price_for_item,
+div#note_for_order
+  span:hover
+    :background-color #0e1d25
 
 div#note_for_order
   :position absolute
@@ -817,6 +826,8 @@ div.price_for_item
     :width 100px
     input
     :width 50px
+    
+
   
   
 select#order_user_id
@@ -1111,6 +1122,8 @@ table.page
   :position relative
   td
     :vertical-align top
+  td#remove
+    :background-color #243239
   td#remove.hover
     :background-color #304345
     
@@ -1125,11 +1138,13 @@ div.partial
     :top 39px
   div.options
     :text-align right
-    :left -190px
+    :left -20px
     :position absolute
     :opacity 0.4
   div.options:hover
-    :opacity 1
+    :opacity 0.8
+  div.partial-toolbox
+    opacity: 0.6
 
   
 div.page
@@ -1145,9 +1160,7 @@ div.page
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 10px
   :float left
-  
-div.page.hover
-  :border 3px solid white
+
   
 div.previous_page_button,
 div.next_page_button
@@ -1185,3 +1198,34 @@ img.asset
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 10px
 
+div.kitchen
+  :clear both
+  :float left
+  :padding 10px
+  :background-color black
+  
+div.waiter2
+  :float right
+  :padding 10px
+  :background-color black
+  
+div.preparation,
+div.delivery
+  :width 200px
+  :margin 5px
+  :height 50px
+  :background-color #333
+  
+div.partial_toolbox
+  padding: 10px
+  display: none
+  background-color: rgba(255,255,255,0.5)
+  span.finish
+    :cursor pointer
+    :vertical-align middle
+    :display inline-block
+    :background-image url(/images/button_mobile_cancel-tiny.png)
+    :width 20px
+    :height 22px
+    :background-repeat no-repeat
+    :background-position center center

@@ -167,14 +167,8 @@ class OrdersController < ApplicationController
 
     if @order
       # similar to orders#update
-      begin
-        params[:order][:user_id] = @current_user.id if mobile?
-        @order.update_attributes params[:order]
-      rescue
-        logger.info "Trying to prevent FROZEN HASH error"
-        sleep 1
-        @order.update_attributes params[:order]
-      end
+      params[:order][:user_id] = @current_user.id if mobile?
+      @order.update_attributes params[:order]
     else
       # similar to orders#create
       @order = Order.new params[:order]
@@ -316,9 +310,9 @@ class OrdersController < ApplicationController
     def neighbour_orders(order)
       orders = Order.find_all_by_finished(true)
       idx = orders.index(order)
-      previous_order = orders[idx-1]
+      previous_order = orders[idx-1] if idx
       previous_order = order if previous_order.nil?
-      next_order = orders[idx+1]
+      next_order = orders[idx+1] if idx
       next_order = order if next_order.nil?
       return previous_order, next_order
     end

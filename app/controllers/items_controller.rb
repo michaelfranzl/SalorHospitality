@@ -28,6 +28,7 @@ class ItemsController < ApplicationController
         pending_invoices.each { |i| i.update_attribute :print_pending, false }
         render :text => invoices_code + items_code
       }
+      wants.html
     end
   end
 
@@ -98,6 +99,32 @@ class ItemsController < ApplicationController
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
     @item = Item.find_by_id params[:id] # re-read is necessary
+  end
+  
+  def preparation_list
+    # hack needed because update_all would modify standard queries
+    @on_list = Item.where("on_preparation_list = 1").collect{ |l| l }
+    @to_list = Item.where("to_preparation_list = 1").collect{ |l| l }
+    Item.where(:to_preparation_list => true).update_all :to_preparation_list => false, :on_preparation_list => true
+  end
+  
+  def prepared
+    @item = Item.find_by_id params[:id]
+    @item.update_attributes :on_preparation_list => false, :to_preparation_list => false, :to_delivery_list => true
+    render :nothing => true
+  end
+  
+  def delivery_list
+    # hack needed because update_all would modify standard queries
+    @on_list = Item.where("on_delivery_list = 1").collect{ |l| l }
+    @to_list = Item.where("to_delivery_list = 1").collect{ |l| l }
+    Item.where(:to_delivery_list => true).update_all :to_delivery_list => false, :on_delivery_list => true
+  end
+  
+  def delivered
+    @item = Item.find_by_id params[:id]
+    @item.update_attributes :on_delivery_list => false, :to_delivery_list => false, :delivered => true
+    render :nothing => true
   end
 
   private

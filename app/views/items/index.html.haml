@@ -1,0 +1,42 @@
+%h2= t('activerecord.models.item.other')
+
+.clear
+
+.kitchen
+  %p preparation
+  #on_preparation_list
+  #to_preparation_list
+
+.waiter2
+  %p delivery
+  #on_delivery_list
+  #to_delivery_list
+  
+:javascript
+  window.setInterval(
+    function(){
+      $.ajax({
+        type: 'GET',
+        url: '/items/preparation_list'
+      });
+      $.ajax({
+        type: 'GET',
+        url: '/items/delivery_list'
+      });
+    }
+  , 2000);
+  
+  $(document).ready(function(){
+    $.ajax({
+      type: 'GET',
+      url: '/items/preparation_list'
+    });
+    $.ajax({
+      type: 'GET',
+      url: '/items/delivery_list'
+    });
+  })
+  
+  function display_incoming(data, textStatus, jqXHR) {
+    alert(data);
+  }

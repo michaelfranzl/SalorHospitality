@@ -1,0 +1,10 @@
+%div.preparation{ :id => "item_#{ preparation.id }_preparation", :style => "#{ hidden ? 'display: none' : '' }" }
+  - if preparation.quantity
+    %p
+      == #{ preparation.quantity.prefix } #{ preparation.article.name } #{ preparation.quantity.postfix }
+      = link_to 'prepared', "/items/prepared?id=#{ preparation.id }", :remote => true, :method => :post
+  - else
+    %p
+      = preparation.article.name
+      = link_to 'prepared', "/items/prepared?id=#{ preparation.id }", :remote => true, :method => :post
+  

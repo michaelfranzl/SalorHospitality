@@ -99,6 +99,28 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.boolean  "hidden"
   end
 
+  create_table "customers", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "company_name"
+    t.text     "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postalcode"
+    t.string   "m_number"
+    t.string   "m_points"
+    t.string   "email"
+    t.string   "telephone"
+    t.string   "cellphone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "customers_orders", :id => false, :force => true do |t|
+    t.integer "customer_id"
+    t.integer "order_id"
+  end
+
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -119,7 +141,7 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "count",          :limit => 1
+    t.integer  "count",               :limit => 1
     t.integer  "article_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -127,16 +149,27 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.boolean  "partial_order"
     t.integer  "sort"
     t.integer  "quantity_id"
-    t.integer  "storno_status",  :limit => 1, :default => 0
+    t.integer  "storno_status",       :limit => 1, :default => 0
     t.string   "comment"
     t.float    "price"
-    t.integer  "printed_count",  :limit => 1, :default => 0
+    t.integer  "printed_count",       :limit => 1, :default => 0
     t.integer  "item_id"
     t.integer  "storno_item_id"
     t.integer  "tax_id"
-    t.integer  "max_count",                   :default => 0
+    t.integer  "max_count",                        :default => 0
     t.integer  "usage"
     t.integer  "priority"
+    t.boolean  "on_preparation_list"
+    t.boolean  "to_preparation_list",              :default => true
+    t.boolean  "on_delivery_list"
+    t.boolean  "to_delivery_list"
+    t.boolean  "delivered"
+    t.boolean  "finished"
+    t.boolean  "updated"
+    t.integer  "prepared_count"
+    t.integer  "delivered_count"
+    t.string   "preparation_comment"
+    t.integer  "customer_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -204,6 +237,8 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.boolean  "print_pending"
     t.float    "storno_sum",     :default => 0.0
     t.string   "note"
+    t.integer  "customer_id"
+    t.integer  "m_points"
   end
 
   add_index "orders", ["cost_center_id"], :name => "index_orders_on_cost_center_id"

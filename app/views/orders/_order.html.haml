@@ -4,32 +4,36 @@
   = hidden_field_tag 'order[table_id]'
   = hidden_field_tag 'target_table'
 
-  %div.waiter
+  .waiter
     %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role.permissions.include?('change_waiter') ? 'visible' : 'none' }"}
       = options_from_collection_for_select @users, :id, :login, { :include_blank => !mobile? }
 
   #order_info{ :onclick => '$("#note_for_order").slideDown()'}= t(:just_order)
 
   #note_for_order= render 'note'
-
   - if workstation?
-    %div.tablesselect
+    .customer_list
+      %h3= t 'activerecord.models.customer.other'
+      = text_field_tag 'customer_search'
+      %span#customer_search_display_keyboard.display_keyboard
+      #customer_list_target
+      %span.done{ :onclick => "$('.customer_list').slideUp();" }
+    .tablesselect
       %h3= t :move_order_to_table
       %span.done{ :onclick => "$('.tablesselect').slideUp();" }
       - @current_user.tables.each do |t|
         %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
-
-  %div#categories
+  #categories
     - @categories.each do |category|
       %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
         %div{ :class => "category_label" }
           %span= category.name
   
-  %div#articles
-  %div#quantities
-  %div#items
-    %div.ordersum_container
+  #articles
+  #quantities
+  #items
+    .ordersum_container
       %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
       %input#order_sum{ :value => 0 }
-    %div#inputfields
+    #inputfields
     %table#itemstable

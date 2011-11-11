@@ -2,9 +2,10 @@
   div#partial_#{ partial.id } img { width: #{ partial.image_size }px; }
   div#partial_#{ partial.id } { color: #{ partial.color } }
 
-.partial{ :id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
+.partial{:id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
   .options
-    %span.handle{ :id => "handle_for_partial_#{ partial.id }" }
+    %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
+  .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}
     %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
@@ -20,10 +21,8 @@
   %span{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font };" }= raw markup
   - if partial.presentation.model == 'Presentation'
     %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
- 
   
 :javascript
-
   $("#color_for_partial_#{ partial.id }").modcoder_excolor({
    hue_bar : 4,
    shadow : false,

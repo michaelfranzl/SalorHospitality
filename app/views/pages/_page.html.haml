@@ -2,3 +2,5 @@
 
 - page.partials.each do |par|
   = render :partial => partial, :locals => { :partial => par, :markup => partial_htmls[par.id], :model_id => par.model_id, :presentations => Presentation.existing.find_all_by_model( par.presentation.model) }
+  
+

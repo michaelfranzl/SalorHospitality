@@ -1,29 +1,17 @@
 %div{ :id => "fields_for_item_#{ designator }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_id", :class => 'id', :name => "order[items_attributes][#{ designator }][id]", :type => 'hidden', :value => "#{ id }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_count", :class => 'count', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }
-
   %input{ :id => "item_#{ designator }_start_count", :type => 'hidden', :value => "#{ count }" }
-
+  %input{ :id => "item_#{ designator }_delivered", :name => "order[items_attributes][#{ designator }][delivered]", :type => 'hidden', :value => 0 }
   %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_usage", :name => "order[items_attributes][#{ designator }][usage]", :type => 'hidden', :value => "#{ usage }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ designator }][quantity_id]", :type => 'hidden', :value => "#{ quantityid }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_sort", :name => "order[items_attributes][#{ designator }][sort]", :type => 'hidden', :value => "#{ sort }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_price", :class => 'price', :name => "order[items_attributes][#{ designator }][price]", :type => 'hidden', :value => "#{ price }" }
-
   %input{ :id => "order_items_attributes_#{ designator }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ designator }][printed_count]", :type => 'hidden', :value => "#{ printed_count }" }
-
   %input{ :id => "order_items_attributes_#{ designator }__destroy", :class => '_destroy', :name => "order[items_attributes][#{ designator }][_destroy]", :type => 'hidden' }
-
   %div{ :id => "options_for_item_#{ designator }" }
     - if item
       - item.options.each do |o|

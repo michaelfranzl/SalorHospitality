@@ -265,8 +265,7 @@ function add_option_to_item_from_select(item_designator, select_tag)
 
   } else if (select_tag.value == -1 ) {
     // special option: do not print
-    printedcount = parseInt($('#order_items_attributes_' + item_designator + '_printed_count').val());
-    $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
+    $('#item_' + item_designator + '_prepared').val(1);
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else if (select_tag.value == -3 ) {
@@ -321,8 +320,7 @@ function add_option_to_item_from_div(button, item_designator, value, price, text
 
   } else if (value == -1 ) {
     // special option: do not print
-    printedcount = parseInt($('#order_items_attributes_' + item_designator + '_printed_count').val());
-    $('#order_items_attributes_' + item_designator + '_printed_count').val(printedcount + 1);
+    $('#item_' + item_designator + '_prepared').val(1);
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else if (value == -3 ) {
