@@ -53,3 +53,10 @@ function enable_keyboard_for_items(item_designator) {
     $('input#price_for_item_' + item_designator).getkeyboard().reveal();
   });
 }
+
+$(document).ready(function() {
+  // ":not([safari])" is desirable but not necessary selector
+  $('input:checkbox:not([safari])').checkbox();
+  $('input[safari]:checkbox').checkbox({cls:'jquery-safari-checkbox'});
+  $('input:radio').checkbox();
+})
