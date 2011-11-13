@@ -720,6 +720,7 @@ div.tablesselect,
 div.comment_for_item,
 div.price_for_item,
 div.customer_list,
+div#items_notifications,
 div#note_for_order
   :display none
   :z-index 100
@@ -1170,23 +1171,29 @@ img.asset
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 10px
 
-div.kitchen
-  :clear both
-  :float left
-  :padding 10px
-  :background-color black
-  
-div.waiter2
-  :float right
-  :padding 10px
-  :background-color black
-  
-div.preparation,
-div.delivery
-  :width 200px
-  :margin 5px
-  :height 50px
-  :background-color #333
+div#items_notifications
+  :display block
+  :vertical-align top
+  #preparation_list,
+  #delivery_list
+    :font-size 50%
+    :display inline-block
+    :vertical-align top
+ 
+div.item_notification
+  :vertical-align top
+  .ordered,
+  .in_progress
+    :vertical-align top
+    :border 1px solid #777
+    :display inline-block
+    :margin 5px
+    :width 100px
+    :background-color #333
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+  .in_progress
+    :display none
   
 div.partial_toolbox
   padding: 10px

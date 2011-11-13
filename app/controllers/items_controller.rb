@@ -101,29 +101,16 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id params[:id] # re-read is necessary
   end
   
-  def preparation_list
-    # hack needed because update_all would modify standard queries
-    @on_list = Item.where("on_preparation_list = 1").collect{ |l| l }
-    @to_list = Item.where("to_preparation_list = 1").collect{ |l| l }
-    Item.where(:to_preparation_list => true).update_all :to_preparation_list => false, :on_preparation_list => true
+  def list
+    @list = case params[:type]
+      when 'preparation' then Item.where("count > preparation_count OR preparation_count IS NULL")
+      when 'delivery' then Item.where("preparation_count > delivery_count")
+    end
   end
   
-  def prepared
+  def set_attribute
     @item = Item.find_by_id params[:id]
-    @item.update_attributes :on_preparation_list => false, :to_preparation_list => false, :to_delivery_list => true
-    render :nothing => true
-  end
-  
-  def delivery_list
-    # hack needed because update_all would modify standard queries
-    @on_list = Item.where("on_delivery_list = 1").collect{ |l| l }
-    @to_list = Item.where("to_delivery_list = 1").collect{ |l| l }
-    Item.where(:to_delivery_list => true).update_all :to_delivery_list => false, :on_delivery_list => true
-  end
-  
-  def delivered
-    @item = Item.find_by_id params[:id]
-    @item.update_attributes :on_delivery_list => false, :to_delivery_list => false, :delivered => true
+    @item.update_attribute params[:attribute], params[:value]
     render :nothing => true
   end
 

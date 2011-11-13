@@ -175,6 +175,10 @@ class OrdersController < ApplicationController
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @cost_centers.first
     end
+    
+    @order.items.where( :user_id => nil ).update_all :user_id => @current_user.id
+    
+    @order.items.where( :preparation_user_id => nil ).each { |i| i.update_attribute :preparation_user_id, i.article.category.id }
 
     @order.sum = @order.calculate_sum
     @order.table.update_attribute :user, @order.user

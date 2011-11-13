@@ -86,10 +86,8 @@ BillGastro::Application.routes.draw do
   
   resources :items do
     collection do
-      get :preparation_list
-      post :prepared
-      get :delivery_list
-      post :delivered
+      get :list
+      get :set_attribute
     end
   end
   

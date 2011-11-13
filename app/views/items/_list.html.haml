@@ -1,0 +1,28 @@
+- i = list
+.item_notification{ :id => "item_#{ i.id }_preparation" }
+  %div{ :id => "item_list_ordered_#{ i.id }" }
+    = i.order.table.abbreviation
+  %div.in_progress{ :style => "#{ i.preparation_count == nil ? '' : 'display: none;' }" }
+    %div{ :id => "item_list_count_button_#{ i.id}" }= i.count
+    = hidden_field_tag  "item_list_count_#{ i.id }", i.count
+    %div= i.quantity ? "#{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }" : i.article.name
+
+:javascript
+  $("#item_list_ordered_#{ i.id }").click(function(){
+    $(this).slideUp();
+    $(this).parent().children('.in_progress').slideDown();
+    $.ajax({
+      type: 'GET',
+      url: '/items/set_attribute?id=#{ i.id }&attribute=#{ type }_count&value=0'
+    });
+  })
+  
+  $("#item_list_count_button_#{ i.id }").click(function(){
+    $(this).slideUp();
+    $.ajax({
+      type: 'GET',
+      url: '/items/set_attribute?id=#{ i.id }&attribute=#{ type }_count&value=' + $('item_list_count_#{ i.id }')
+    });
+  })
+  
+

@@ -1,7 +1,13 @@
-= javascript_include_tag 'order'
+= javascript_include_tag 'orders'
 
 %h2= @current_user.login
 
+#items_notifications
+  %h3 test
+  #preparation_list
+  #delivery_list
+  %span.done{ :onclick => "$('#items_notifications').slideUp();" }
+  
 #rooms= render 'rooms'
 #tables= render @tables
 #functions
@@ -26,14 +32,5 @@
   var permission_immediate_storno = #{ @current_user.role.permissions.include?("make_immediate_storno") ? "true" : "false" };
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';
-
   var mobile_special = #{ mobile_special? ? "true" : "false" };
-
   var screenlock_timeout = #{ @current_company.timeout };
-  var screenlock_counter = screenlock_timeout;
-  window.setInterval(
-    function() {
-      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
-      screenlock_counter -= 1;
-    }
-  , 1001);

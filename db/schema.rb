@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109123719) do
+ActiveRecord::Schema.define(:version => 20111113090249) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20111109123719) do
     t.boolean  "hidden",             :default => false
     t.binary   "image"
     t.string   "image_content_type"
+    t.integer  "user_id"
   end
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -145,17 +146,12 @@ ActiveRecord::Schema.define(:version => 20111109123719) do
     t.integer  "max_count",                        :default => 0
     t.integer  "usage"
     t.integer  "priority"
-    t.boolean  "on_preparation_list"
-    t.boolean  "to_preparation_list",              :default => true
-    t.boolean  "on_delivery_list"
-    t.boolean  "to_delivery_list"
-    t.boolean  "delivered"
-    t.boolean  "finished"
-    t.boolean  "updated"
-    t.integer  "prepared_count"
-    t.integer  "delivered_count"
+    t.integer  "preparation_count"
+    t.integer  "delivery_count"
     t.string   "preparation_comment"
     t.integer  "customer_id"
+    t.integer  "user_id"
+    t.integer  "preparation_user_id"
   end
 
   create_table "items_options", :id => false, :force => true do |t|

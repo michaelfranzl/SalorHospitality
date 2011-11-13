@@ -1,0 +1,5 @@
+$('#on_delivery_list').html('<%= escape_javascript render :partial => 'item_notification', :collection => @on_list, :locals => { :hidden => false } %>');
+
+$('#to_delivery_list').html('<%= escape_javascript render :partial => 'item_notification', :collection => @to_list, :locals => { :hidden => true } %>');
+
+$('#to_delivery_list .delivery').slideDown();
