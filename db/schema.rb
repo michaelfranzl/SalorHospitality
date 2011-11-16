@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111113090249) do
+ActiveRecord::Schema.define(:version => 20111116135322) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -20,16 +20,16 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",                        :default => true
+    t.boolean  "menucard",                               :default => true
     t.boolean  "blackboard"
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                          :default => false
+    t.boolean  "hidden",                                 :default => false
     t.integer  "sort"
-    t.integer  "usage",              :limit => 1, :default => 0
+    t.integer  "usage",              :limit => 1,        :default => 0
     t.integer  "position"
-    t.binary   "image"
+    t.binary   "image",              :limit => 16777215
     t.string   "image_content_type"
   end
 
@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
     t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
-    t.integer  "vendor_printer_id",  :default => 0
+    t.integer  "vendor_printer_id",                       :default => 0
     t.integer  "position"
-    t.boolean  "hidden",             :default => false
-    t.binary   "image"
+    t.boolean  "hidden",                                  :default => false
+    t.binary   "image",               :limit => 16777215
     t.string   "image_content_type"
-    t.integer  "user_id"
+    t.integer  "preparation_user_id"
   end
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
     t.integer  "customer_id"
     t.integer  "user_id"
     t.integer  "preparation_user_id"
+    t.integer  "delivery_user_id"
   end
 
   create_table "items_options", :id => false, :force => true do |t|
@@ -182,12 +183,12 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
-    t.float    "price",              :default => 0.0
+    t.float    "price",                                  :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",             :default => false
+    t.boolean  "hidden",                                 :default => false
     t.integer  "position"
-    t.binary   "image"
+    t.binary   "image",              :limit => 16777215
     t.string   "image_content_type"
   end
 
@@ -212,11 +213,11 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
   end
 
   create_table "pages", :force => true do |t|
-    t.boolean  "active",             :default => true
+    t.boolean  "active",                                 :default => true
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.binary   "image"
+    t.binary   "image",              :limit => 16777215
     t.string   "image_content_type"
     t.integer  "width"
     t.integer  "height"
@@ -262,13 +263,13 @@ ActiveRecord::Schema.define(:version => 20111113090249) do
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",                          :default => true
-    t.boolean  "hidden",                          :default => false
+    t.boolean  "active",                                 :default => true
+    t.boolean  "hidden",                                 :default => false
     t.string   "postfix"
     t.integer  "sort"
-    t.integer  "usage",              :limit => 1, :default => 0
+    t.integer  "usage",              :limit => 1,        :default => 0
     t.integer  "position"
-    t.binary   "image"
+    t.binary   "image",              :limit => 16777215
     t.string   "image_content_type"
   end
 

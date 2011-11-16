@@ -4,12 +4,12 @@
 - reference_count_method = scope == 'preparation' ? 'count' : 'preparation_count'
 
 .item_list{ :id => "item_list_#{ scope }_#{ id }" }
-  %div.unconfirmed{ :id => "item_list_#{ scope }_#{ id }_unconfirmed", :style => "#{ i.send(count_method) == nil ? '' : 'display: none;' }" }
+  .unconfirmed{ :id => "item_list_#{ scope }_#{ id }_unconfirmed", :style => "#{ i.send(count_method) == nil ? '' : 'display: none;' }" }
     == ##{ id } #{ i.order.table.abbreviation }
-  %div.confirmed{ :style => "#{ i.send(count_method) == nil ? 'display: none;' : '' }" }
-    %div.reference_count= i.send reference_count_method
-    %div.increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }= i.send(count_method)
-    %div.update{ :id => "item_list_#{ scope }_#{ id }_update_button" } X
+  .confirmed{ :style => "#{ i.send(count_method) == nil ? 'display: none;' : '' }" }
+    .reference_count= i.send reference_count_method
+    .increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }= i.send(count_method)
+    .update{ :id => "item_list_#{ scope }_#{ id }_update_button" } X
     %div= i.quantity ? "#{ i.id } #{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }" : "#{ i.id } #{ i.article.name }"
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ count_method }", i.send(count_method)
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ reference_count_method }", i.send(reference_count_method)
@@ -35,8 +35,6 @@
   $("#item_list_#{ scope }_#{ id }_update_button").click(function(){
     var r = parseInt($("#item_list_#{ scope }_#{ id }_#{ reference_count_method }").val());
     var c = parseInt($("#item_list_#{ scope }_#{ id }_#{ count_method }").val());
-    //alert(r);
-    //alert(c);
     if( c >= r ) { $(this).parent().slideUp(); }
     $.ajax({
       scope: 'GET',
