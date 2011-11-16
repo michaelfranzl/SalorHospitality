@@ -102,9 +102,9 @@ class ItemsController < ApplicationController
   end
   
   def list
-    @list = case params[:type]
+    @list = case params[:scope]
       when 'preparation' then Item.where("count > preparation_count OR preparation_count IS NULL")
-      when 'delivery' then Item.where("preparation_count > delivery_count")
+      when 'delivery' then Item.where("preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count IS NOT NULL)")
     end
   end
   

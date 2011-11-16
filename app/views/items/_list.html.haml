@@ -1,28 +1,49 @@
 - i = list
-.item_notification{ :id => "item_#{ i.id }_preparation" }
-  %div{ :id => "item_list_ordered_#{ i.id }" }
-    = i.order.table.abbreviation
-  %div.in_progress{ :style => "#{ i.preparation_count == nil ? '' : 'display: none;' }" }
-    %div{ :id => "item_list_count_button_#{ i.id}" }= i.count
-    = hidden_field_tag  "item_list_count_#{ i.id }", i.count
-    %div= i.quantity ? "#{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }" : i.article.name
+- id = i.id
+- count_method = scope + '_count'
+- reference_count_method = scope == 'preparation' ? 'count' : 'preparation_count'
+
+.item_list{ :id => "item_list_#{ scope }_#{ id }" }
+  %div.unconfirmed{ :id => "item_list_#{ scope }_#{ id }_unconfirmed", :style => "#{ i.send(count_method) == nil ? '' : 'display: none;' }" }
+    == ##{ id } #{ i.order.table.abbreviation }
+  %div.confirmed{ :style => "#{ i.send(count_method) == nil ? 'display: none;' : '' }" }
+    %div.reference_count= i.send reference_count_method
+    %div.increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }= i.send(count_method)
+    %div.update{ :id => "item_list_#{ scope }_#{ id }_update_button" } X
+    %div= i.quantity ? "#{ i.id } #{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }" : "#{ i.id } #{ i.article.name }"
+    = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ count_method }", i.send(count_method)
+    = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ reference_count_method }", i.send(reference_count_method)
 
 :javascript
-  $("#item_list_ordered_#{ i.id }").click(function(){
-    $(this).slideUp();
-    $(this).parent().children('.in_progress').slideDown();
+  $("#item_list_#{ scope }_#{ id }_unconfirmed").click(function(){
+    $(this).hide();
+    $('#item_list_#{ scope }_#{ id }_#{ scope }_count').val(0); // don't wait for the ajax refresh
+    $('#item_list_#{ scope }_#{ id }_increment_button').html(0);
+    $(this).parent().children('.confirmed').slideDown();
     $.ajax({
-      type: 'GET',
-      url: '/items/set_attribute?id=#{ i.id }&attribute=#{ type }_count&value=0'
+      scope: 'GET',
+      url: '/items/set_attribute?id=#{ id }&attribute=#{ count_method }&value=0'
     });
   })
   
-  $("#item_list_count_button_#{ i.id }").click(function(){
-    $(this).slideUp();
+  $("#item_list_#{ scope }_#{ id }_increment_button").click(function(){
+    var c = parseInt($('#item_list_#{ scope }_#{ id }_#{ count_method }').val());
+    $('#item_list_#{ scope }_#{ id }_#{ count_method }').val(c + 1);
+    $(this).html(c + 1);
+  })
+  
+  $("#item_list_#{ scope }_#{ id }_update_button").click(function(){
+    var r = parseInt($("#item_list_#{ scope }_#{ id }_#{ reference_count_method }").val());
+    var c = parseInt($("#item_list_#{ scope }_#{ id }_#{ count_method }").val());
+    //alert(r);
+    //alert(c);
+    if( c >= r ) { $(this).parent().slideUp(); }
     $.ajax({
-      type: 'GET',
-      url: '/items/set_attribute?id=#{ i.id }&attribute=#{ type }_count&value=' + $('item_list_count_#{ i.id }')
+      scope: 'GET',
+      url: '/items/set_attribute?id=#{ id }&attribute=#{ count_method }&value=' + $('#item_list_#{ scope }_#{ id }_#{ count_method }').val()
     });
   })
+  
+
   
 

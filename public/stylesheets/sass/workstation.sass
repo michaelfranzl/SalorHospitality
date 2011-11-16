@@ -1180,10 +1180,10 @@ div#items_notifications
     :display inline-block
     :vertical-align top
  
-div.item_notification
+div.item_list
   :vertical-align top
-  .ordered,
-  .in_progress
+  .confirmed,
+  .unconfirmed
     :vertical-align top
     :border 1px solid #777
     :display inline-block
@@ -1192,13 +1192,15 @@ div.item_notification
     :background-color #333
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
-  .in_progress
-    :display none
+    .increment, .reference_count
+      :display inline-block
+      :width 30px
+      :height 30px
   
 div.partial_toolbox
-  padding: 10px
-  display: none
-  background-color: rgba(255,255,255,0.5)
+  :padding 10px
+  :display none
+  :background-color rgba(255,255,255,0.5)
   span.finish
     :cursor pointer
     :vertical-align middle

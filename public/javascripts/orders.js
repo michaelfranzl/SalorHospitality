@@ -450,22 +450,22 @@ $(function(){
     function(){
       $.ajax({
         type: 'GET',
-        url: '/items/list?type=preparation'
+        url: '/items/list?scope=preparation'
       });
       $.ajax({
         type: 'GET',
-        url: '/items/list?type=delivery'
+        url: '/items/list?scope=delivery'
       });
     }
-  , 10000);
+  , 20000);
   
   // display initial items notifications
   $.ajax({
     type: 'GET',
-    url: '/items/list?type=preparation'
+    url: '/items/list?scope=preparation'
   });
   $.ajax({
     type: 'GET',
-    url: '/items/list?type=delivery'
+    url: '/items/list?scope=delivery'
   });
 })
