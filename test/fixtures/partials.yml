@@ -47,14 +47,14 @@ partials_003:
 partials_004: 
   id: 25
   left: 284
-  top: 31
+  top: 32
   presentation_id: 3
   blurb: about us
   active: 1
   hidden: 
   model_id: 3
   created_at: 2011-11-06 18:52:45 Z
-  updated_at: 2011-11-07 23:02:23 Z
+  updated_at: 2011-11-16 14:01:38 Z
   font: aaaiight
   size: 350
   image_size: 
@@ -226,15 +226,15 @@ partials_015:
   color: "#d11f43"
 partials_016: 
   id: 41
-  left: 248
-  top: 10
+  left: 245
+  top: 16
   presentation_id: 4
   blurb: 
   active: 1
   hidden: 
   model_id: 1
   created_at: 2011-11-07 22:29:44 Z
-  updated_at: 2011-11-07 22:30:09 Z
+  updated_at: 2011-11-16 14:01:20 Z
   font: Rolina
   size: 700
   image_size: 

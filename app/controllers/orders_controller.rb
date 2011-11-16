@@ -175,15 +175,14 @@ class OrdersController < ApplicationController
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @cost_centers.first
     end
-    
-    @order.items.where( :user_id => nil ).update_all :user_id => @current_user.id
-    
-    @order.items.where( :preparation_user_id => nil ).each { |i| i.update_attribute :preparation_user_id, i.article.category.id }
 
     @order.sum = @order.calculate_sum
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
+    @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
+      i.update_attributes :user_id => @current_user.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
+    end
     @order.set_priorities
 
     if @order.nr > @current_company.largest_order_number
