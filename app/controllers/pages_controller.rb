@@ -75,6 +75,7 @@ class PagesController < ApplicationController
       rescue Exception => e
         partial_htmls[partial.id] = t('partials.error_during_evaluation') + e.message
       end
+      partial_htmls[partial.id].force_encoding('UTF-8')
     end
     return partial_htmls
   end

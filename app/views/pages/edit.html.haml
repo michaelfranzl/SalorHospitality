@@ -33,6 +33,7 @@
       = text_field_tag 'search_text', t('articles.index.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#search_text_display_keyboard.display_keyboard
       %ul#search_results
+
         
 :javascript
   $("#page_#{ @page.id }").droppable({
