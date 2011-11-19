@@ -29,6 +29,12 @@ module OrdersHelper
     options = item.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
     usage + options
   end
+  
+  def compose_option_names_without_price(item)
+    usage = item.usage == 1 ? "<br>#{ t 'articles.new.takeaway' }" : ''
+    options = item.options.collect{ |o| "<br>#{ o.name }" }.join
+    usage + options
+  end
 
   def generate_js_variables
     id = ''

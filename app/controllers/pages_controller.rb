@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+  
+  #skip_before_filter :fetch_logged_in_user, :only => :index
+  
   def index
     @pages = Page.existing
     @partial_htmls_pages = []
@@ -6,6 +9,7 @@ class PagesController < ApplicationController
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
     end      
     @pages_ids = @pages.collect{ |p| p.id }
+    render :layout => 'iframe' unless @current_user
   end
   
   def update
@@ -53,7 +57,7 @@ class PagesController < ApplicationController
   
   def image
     @page = Page.find_by_id params[:id]
-    send_data @page.image, :type => @page.image_content_type, :disposition => 'inline'
+    send_data @page.image, :type => @page.image_content_type, :disposition => 'inline' if @page.image
   end
   
   private

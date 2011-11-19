@@ -11,7 +11,7 @@
 //global settings==============================
 
 body
-  :font-family Trebuchet MS
+  :font-family Ubuntu-R, Trebuchet MS
   :color #CCC
   :padding 0px
   :margin 0px
@@ -750,6 +750,9 @@ div#note_for_order
     :cursor pointer
     :vertical-align middle
     :display inline-block
+    :position absolute
+    :right 2px
+    :top 2px
     :background-image url(/images/button_mobile_cancel-small.png)
     :width 38px
     :height 38px
@@ -1172,7 +1175,7 @@ img.asset
   :-webkit-border-radius 10px
 
 div#items_notifications
-  :display block
+  :display none
   :vertical-align top
   #preparation_list,
   #delivery_list
@@ -1182,20 +1185,36 @@ div#items_notifications
  
 div.item_list
   :vertical-align top
+  :display inline-block
+  .unconfirmed
+    :cursor pointer
   .confirmed,
   .unconfirmed
     :vertical-align top
     :border 1px solid #777
     :display inline-block
     :margin 5px
-    :width 100px
+    :min-width 100px
+    :min-height 30px
     :background-color #333
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+    :padding 3px
+    .increment, .reference_count, .update
+      :cursor pointer
+      :text-align center
+      :font-size 150%
+      :border-top 2px solid #555
+      :border-left 2px solid #555
+      :border-right 2px solid #222
+      :border-bottom 2px solid #222
     .increment, .reference_count
-      :display inline-block
       :width 30px
-      :height 30px
+    .increment, .update
+      :background-color #3A474D
+    .update
+      :font-size 80%
+      :text-align left
   
 div.partial_toolbox
   :padding 10px

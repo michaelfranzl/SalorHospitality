@@ -5,14 +5,19 @@
 
 .item_list{ :id => "item_list_#{ scope }_#{ id }" }
   .unconfirmed{ :id => "item_list_#{ scope }_#{ id }_unconfirmed", :style => "#{ i.send(count_method) == nil ? '' : 'display: none;' }" }
-    == ##{ id } #{ i.order.table.abbreviation }
+    == #{ Order.human_name } ##{ id }, #{ Table.human_name } #{ i.order.table.abbreviation }
   .confirmed{ :style => "#{ i.send(count_method) == nil ? 'display: none;' : '' }" }
-    .reference_count= i.send reference_count_method
-    .increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }= i.send(count_method)
-    .update{ :id => "item_list_#{ scope }_#{ id }_update_button" } X
-    %div= i.quantity ? "#{ i.id } #{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }" : "#{ i.id } #{ i.article.name }"
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ count_method }", i.send(count_method)
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ reference_count_method }", i.send(reference_count_method)
+    == #{ Order.human_name } ##{ id }, #{ Table.human_name } #{ i.order.table.abbreviation }
+    %table
+      %tr
+        %td.reference_count
+          = i.send reference_count_method
+        %td.increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }
+          = i.send(count_method)
+        %td.update{ :id => "item_list_#{ scope }_#{ id }_update_button" }
+          = raw i.quantity ? "#{ i.quantity.prefix } #{ i.article.name } #{ i.quantity.postfix }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }" : "#{ i.article.name }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }"
 
 :javascript
   $("#item_list_#{ scope }_#{ id }_unconfirmed").click(function(){
@@ -27,19 +32,28 @@
   })
   
   $("#item_list_#{ scope }_#{ id }_increment_button").click(function(){
+    var r = parseInt($("#item_list_#{ scope }_#{ id }_#{ reference_count_method }").val());
     var c = parseInt($('#item_list_#{ scope }_#{ id }_#{ count_method }').val());
-    $('#item_list_#{ scope }_#{ id }_#{ count_method }').val(c + 1);
-    $(this).html(c + 1);
+    if ( c < r ) {
+      $('#item_list_#{ scope }_#{ id }_#{ count_method }').val(c + 1);
+      $(this).html(c + 1);
+      $(this).css('background-color','#74101B');
+      $(this).effect('highlight');
+    }
   })
   
   $("#item_list_#{ scope }_#{ id }_update_button").click(function(){
     var r = parseInt($("#item_list_#{ scope }_#{ id }_#{ reference_count_method }").val());
     var c = parseInt($("#item_list_#{ scope }_#{ id }_#{ count_method }").val());
-    if( c >= r ) { $(this).parent().slideUp(); }
+    if( c >= r ) {
+      $("#item_list_#{ scope }_#{ id }").slideUp();
+    }
     $.ajax({
       scope: 'GET',
       url: '/items/set_attribute?id=#{ id }&attribute=#{ count_method }&value=' + $('#item_list_#{ scope }_#{ id }_#{ count_method }').val()
     });
+    $("#item_list_#{ scope }_#{ id }_increment_button").css('background-color','#3a4d3a');
+    $("#item_list_#{ scope }_#{ id }_increment_button").effect('highlight');
   })
   
 

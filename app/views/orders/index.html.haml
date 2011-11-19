@@ -3,8 +3,9 @@
 %h2= @current_user.login
 
 #items_notifications
-  %h3 test
+  %h3= t '.preparation_list'
   #preparation_list
+  %h3= t '.delivery_list'
   #delivery_list
   %span.done{ :onclick => "$('#items_notifications').slideUp();" }
   
