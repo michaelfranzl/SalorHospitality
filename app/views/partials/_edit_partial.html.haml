@@ -6,19 +6,32 @@
   .options
     %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
   .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}
+    P
     %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
+    C
     %input{ :style => 'display:none', :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
     %br
+    F
     %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
       = options_for_select BillGastro::Application::FONTS, partial.font
     %br
+    S
     %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]' }
       = options_for_select [100,150,200,250,300,350,400,500,600,700], partial.size
+    F
     %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]' }
       = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.image_size
-  %span{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font };" }= raw markup
+    %br
+    W
+    %select{ :id => "width_for_partial_#{ partial.id }", :name => 'partial[width]' }
+      = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.width
+    A
+    %select{ :id => "align_for_partial_#{ partial.id }", :name => 'partial[width]' }
+      = options_for_select ['left','center','right','justify'], partial.align
+
+  %div{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font }; width: #{ partial.width }px; text-align:  #{ partial.align }" }= raw markup
   - if partial.presentation.model == 'Presentation'
     %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
   
@@ -69,6 +82,22 @@
       type: 'PUT',
       url: "/partials/#{ partial.id }",
       data: "partial[image_size]=" + $("#image_size_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#width_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[width]=" + $("#width_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#align_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[align]=" + $("#align_for_partial_#{ partial.id }").val()
     });
   });
   

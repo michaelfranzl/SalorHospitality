@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111116135322) do
+ActiveRecord::Schema.define(:version => 20111119194420) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -243,6 +243,8 @@ ActiveRecord::Schema.define(:version => 20111116135322) do
     t.integer  "size"
     t.integer  "image_size"
     t.string   "color"
+    t.integer  "width"
+    t.string   "align"
   end
 
   create_table "presentations", :force => true do |t|
