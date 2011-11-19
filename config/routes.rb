@@ -2,20 +2,13 @@ BillGastro::Application.routes.draw do
   resources :customers
 
   get "templates/index"
-
   get "templates/show"
-
   get "templates/edit"
-
   get "templates/update"
-
   get "templates/delete"
 
   get "partials/delete"
   get "partials/update"
-  get "pages/index"
-  get "pages/edit"
-  get "pages/update"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -101,6 +94,7 @@ BillGastro::Application.routes.draw do
   resources :pages do
     collection do
       post :find
+      get :iframe
     end
   end
 

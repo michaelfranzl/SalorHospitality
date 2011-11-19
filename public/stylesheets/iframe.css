@@ -4,4 +4,6 @@ div.partial {
 div.page {
   width: 800px;
   height: 480px;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  position: absolute;
+  display: none; }

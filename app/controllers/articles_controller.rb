@@ -16,6 +16,8 @@
 
 class ArticlesController < ApplicationController
 
+  skip_before_filter :fetch_logged_in_user, :image
+
   def index
     @categories = Category.existing
     @scopes = ['menucard','waiterpad']
