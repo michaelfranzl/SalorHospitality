@@ -1,12 +1,20 @@
 %h1= Company.model_name.human
 
-= form_for @current_company, :html => { :multipart => true } do |company_form|
+- if @current_company.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @current_company.errors.size, :model => Company.model_name.human
+    %ul
+      - @current_company.errors.full_messages.each do |msg|
+        %li= msg
+
+= form_for nest_image(@current_company), :html => { :multipart => true } do |company_form|
   %div#company_data
     %p= submit_tag t :edit
     %br
     %p
-      = company_form.label :logo, Company.human_attribute_name(:logo)
-      = company_form.file_field :logo, :size => 15
+      = company_form.fields_for :images do |image_form|
+        = image_form.label :logo, Company.human_attribute_name(:logo)
+        = image_form.file_field :file_data, :size => 15
     %p
       = company_form.label :name, Company.human_attribute_name(:name)
       = company_form.text_field :name, :size => 30

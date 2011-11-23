@@ -9,7 +9,7 @@
       - @category.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @category do |category_form|
+= form_for nest_image(@category), :html => { :multipart => true } do |category_form|
   %table
     %tr
       %td= category_form.label('name', Category.human_attribute_name(:name))
@@ -27,6 +27,16 @@
       %td
         %select#category_icon{ :name => 'category[icon]', :size => 2 }
           = options_for_select(get_icon_array, category_form.object.icon)
+    %tr
+      = category_form.fields_for :images do |image_form|
+        %td
+          %span.label_width= image_form.label('image', Category.human_attribute_name(:custom_icon))
+        %td
+          - if @category.icon == 'custom'
+            %div{:style => "float:left; height:90px; width:90px; margin-bottom:4px; background-color: #{@category.color}; background-image: url('#{@category.icon_path}')"}
+            %br
+          %span.input_fields
+            = image_form.file_field :file_data, :size => 15
     %tr
       %td= category_form.label('color', Category.human_attribute_name(:color))
       %td

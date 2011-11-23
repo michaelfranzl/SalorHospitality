@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(params[:category])
+    @category = Category.new(Category.process_custom_icon(params[:category]))
     @category.save ? redirect_to(categories_path) : render(:new)
   end
 
@@ -35,7 +35,7 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-    @category.update_attributes(params[:category]) ? redirect_to(categories_path) : render(:new)
+    @category.update_attributes(Category.process_custom_icon(params[:category])) ? redirect_to(categories_path) : render(:new)
   end
 
   def destroy

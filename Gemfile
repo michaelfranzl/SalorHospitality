@@ -36,3 +36,4 @@ gem 'ruby-debug19', '0.11.6'
 
 gem 'haml', '3.0.25'
 gem 'acts_as_list', '0.1.3'
+gem 'rmagick', '2.13.1'

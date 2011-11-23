@@ -31,6 +31,9 @@ tr:
       item:
         one: Pozisyon
         other: Pozisyonlar
+      image:
+        one: Görüntü
+        other: Görüntüler
       settlement:
         one: Hesaplaşma
         other: Hesaplaşmalar
@@ -102,6 +105,7 @@ tr:
         tax_id: Vergi derecesi
         sort_order: Bölümler
         icon: Sembol
+        custom_icon: Benim Sembol
         color: Renk
         food: Yemek?
         vendor_printer_id: XXXPrinter
@@ -396,6 +400,11 @@ tr:
       view_statistics: XXXView statistics
       manage_users: XXXManage users
       manage_settings: XXXManage settings
+
+  images:
+    errempty: Geçersiz dosya
+    errsize: Geçersiz dosya boyutu
+    errtype: Geçersiz dosya türü
 
   delete: Silmek
   are_you_sure: 'Emin misiniz?'

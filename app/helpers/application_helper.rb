@@ -52,5 +52,11 @@ module ApplicationHelper
   def generate_calendar_date_format
     format = t("date.formats.default")
   end
-  
+
+  def nest_image(object)
+    object.tap do |o|
+      o.images.build if o.images.empty?
+    end
+  end
+
 end

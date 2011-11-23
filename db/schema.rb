@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110110322) do
+ActiveRecord::Schema.define(:version => 20111122205853) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -20,17 +20,15 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",                               :default => true
+    t.boolean  "menucard",                     :default => true
     t.boolean  "blackboard"
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                                 :default => false
+    t.boolean  "hidden",                       :default => false
     t.integer  "sort"
-    t.integer  "usage",              :limit => 1,        :default => 0
+    t.integer  "usage",           :limit => 1, :default => 0
     t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -44,11 +42,9 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
-    t.integer  "vendor_printer_id",                      :default => 0
+    t.integer  "vendor_printer_id", :default => 0
     t.integer  "position"
-    t.boolean  "hidden",                                 :default => false
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
+    t.boolean  "hidden",            :default => false
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name"
@@ -83,8 +79,6 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.string   "bank_account2"
     t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
-    t.string   "content_type"
-    t.binary   "image"
     t.text     "cache",                      :limit => 16777215
     t.integer  "timeout",                                        :default => -1
     t.boolean  "use_order_numbers",                              :default => true
@@ -128,6 +122,16 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name"
+
+  create_table "images", :force => true do |t|
+    t.string   "name"
+    t.string   "imageable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "imageable_id"
+  end
+
+  add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
 
   create_table "ingredients", :force => true do |t|
     t.float    "amount"
@@ -209,13 +213,11 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
-    t.float    "price",                                  :default => 0.0
+    t.float    "price",      :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                                 :default => false
+    t.boolean  "hidden",     :default => false
     t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
   end
 
   add_index "options", ["name"], :name => "index_options_on_name"
@@ -242,6 +244,7 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
   end
 
   add_index "orders", ["cost_center_id"], :name => "index_orders_on_cost_center_id"
+  add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
   add_index "orders", ["nr"], :name => "index_orders_on_nr"
   add_index "orders", ["order_id"], :name => "index_orders_on_order_id"
   add_index "orders", ["settlement_id"], :name => "index_orders_on_settlement_id"
@@ -250,12 +253,10 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "pages", :force => true do |t|
-    t.boolean  "active",                                 :default => true
+    t.boolean  "active",     :default => true
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
     t.integer  "width"
     t.integer  "height"
     t.string   "color"
@@ -306,14 +307,12 @@ ActiveRecord::Schema.define(:version => 20111110110322) do
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",                                 :default => true
-    t.boolean  "hidden",                                 :default => false
+    t.boolean  "active",                  :default => true
+    t.boolean  "hidden",                  :default => false
     t.string   "postfix"
     t.integer  "sort"
-    t.integer  "usage",              :limit => 1,        :default => 0
+    t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"

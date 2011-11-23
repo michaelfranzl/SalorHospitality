@@ -25,7 +25,7 @@
         %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
   #categories
     - @categories.each do |category|
-      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('/images/category_#{category.icon}.png')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
+      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
         %div{ :class => "category_label" }
           %span= category.name
   

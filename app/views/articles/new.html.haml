@@ -7,10 +7,10 @@
       - @article.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @article, :html => { :multipart => true } do |article_form|
+= form_for nest_image(@article), :html => { :multipart => true } do |article_form|
   %div.article_new
     - if article_form.object.image
-      %img.asset{ :src => 'image' }
+      %img.asset{ :src => @article.image }
     %div.search_results
       %ul#search_results
     %div
@@ -39,16 +39,18 @@
         = article_form.collection_select :category_id, Category.existing, :id, :name, { :include_blank => true }
     
     %div
-      %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
-      %span.input_fields
-        = article_form.file_field :image, :size => 15
+      = article_form.fields_for :images do |image_form|
+        %span.label_width= image_form.label('image', Article.human_attribute_name(:image))
+        %span.input_fields
+          = image_form.file_field :file_data, :size => 15
+
     %p
 
     %div
       %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))
       %span.input_fields= article_form.check_box :menucard
     %div
-      = link_to Article.human_attribute_name(:hidden), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
+      = link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
 
 
   %div.add_quantity

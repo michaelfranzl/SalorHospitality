@@ -22,6 +22,8 @@ class Article < ActiveRecord::Base
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
   has_many :items
   has_many :partials
+  has_many :images, :as => :imageable
+  include ImageMethods
 
   scope :existing, where(:hidden => false).order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
@@ -53,15 +55,12 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :ingredients, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
   accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '' }
+  
+  accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
   def name_description
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)
     name + descr
-  end
-  
-  def image=(data)
-    write_attribute :image_content_type, data.content_type.chomp
-    write_attribute :image, data.read
   end
   
 end

@@ -2,7 +2,7 @@
 
 - @pages.each do |p|
   - partial_htmls = @partial_htmls_pages[p.id]
-  .page{ :id => "page_#{ p.id }", :style => "position:absolute;top:80px;display: none; width: #{ p.width }px; height: #{ p.height }px; background-image: url('/pages/#{ p.id}/image'); background-color: #{ p.color };" }= render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
+  .page{ :id => "page_#{ p.id }", :style => "position:absolute;top:80px;display: none; width: #{ p.width }px; height: #{ p.height }px; background-image: url('#{p.image}'); background-color: #{ p.color };" }= render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
   
 - @pages.each do |p|
   = link_to p.id, edit_page_path(p)

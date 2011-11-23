@@ -34,6 +34,9 @@ en:
       item:
         one: Item
         other: Items
+      image:
+        one: Image
+        other: Images
       settlement:
         one: Settlement
         other: Settlements
@@ -105,6 +108,7 @@ en:
         tax_id: Tax
         sort_order: Sort Order
         icon: Icon
+        custom_icon: My Icon
         color: Color
         food: Food?
         vendor_printer_id: Printer
@@ -400,6 +404,11 @@ en:
     edit:
       edit_page: Edit Page
       view: View
+
+  images:
+    errempty: Invalid file
+    errsize: Invalid file size
+    errtype: Invalid file type
 
   delete: Delete
   are_you_sure: 'Are you sure?'

@@ -34,6 +34,9 @@ de:
       item:
         one: Posten
         other: Posten
+      image:
+        one: Bild
+        other: Bilder
       settlement:
         one: Abrechnung
         other: Übersicht
@@ -104,7 +107,8 @@ de:
         name: Name
         tax_id: Steuerklasse
         sort_order: Sortierwert
-        icon: Symbol
+        icon: Icon
+        custom_icon: Mein Icon
         color: Farbe
         food: Speise?
         vendor_printer_id: Drucker
@@ -400,6 +404,11 @@ de:
     edit:
       edit_page: Karte bearbeiten
       view: Anzeigen
+
+  images:
+    errempty: Ungültige Datei
+    errsize: Ungültige Dateigröße
+    errtype: Ungültige Dateityp
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

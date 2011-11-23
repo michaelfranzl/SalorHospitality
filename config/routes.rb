@@ -77,10 +77,10 @@ BillGastro::Application.routes.draw do
   match 'companies/backup_logfile' => 'companies#backup_logfile'
   
   match 'company/logo' => 'companies#logo'
-  match 'articles/:id/image' => 'articles#image'
-  match 'options/:id/image' => 'options#image'
-  match 'quantities/:id/image' => 'quantities#image'
-  match 'pages/:id/image' => 'pages#image'
+#  match 'articles/:id/image' => 'articles#image'
+#  match 'options/:id/image' => 'options#image'
+#  match 'quantities/:id/image' => 'quantities#image'
+#  match 'pages/:id/image' => 'pages#image'
 
   resources :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
   
