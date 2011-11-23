@@ -16,12 +16,14 @@
 
 module ImageMethods
   def image
+    return File.join("images", "empty.png") if self.id.nil?
     return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
-    return File.join("images", "empty.png")    
+    return File.join("images", "empty.png")
   end
 
   def thumb
+    return File.join("images", "empty.png") if self.id.nil?
     return self.images.first.thumb unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
-    return File.join("images", "empty.png")    
+    return File.join("images", "empty.png")
   end
 end
