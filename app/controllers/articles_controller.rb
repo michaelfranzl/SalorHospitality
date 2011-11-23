@@ -16,8 +16,6 @@
 
 class ArticlesController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :image
-
   def index
     @categories = Category.existing
     @scopes = ['menucard','waiterpad']
@@ -130,11 +128,6 @@ class ArticlesController < ApplicationController
 
   def sort_index
     @categories = Category.all
-  end
-  
-  def image
-    @article = Article.find_by_id params[:id]
-    send_data @article.image, :type => @article.image_content_type, :disposition => 'inline'
   end
 
 end

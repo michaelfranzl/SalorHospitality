@@ -20,28 +20,15 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-<<<<<<< HEAD
-    t.boolean  "menucard",                               :default => true
-=======
     t.boolean  "menucard",                     :default => true
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
     t.boolean  "blackboard"
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-    t.boolean  "hidden",                                 :default => false
-    t.integer  "sort"
-    t.integer  "usage",              :limit => 1,        :default => 0
-    t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
-=======
     t.boolean  "hidden",                       :default => false
     t.integer  "sort"
     t.integer  "usage",           :limit => 1, :default => 0
     t.integer  "position"
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -55,18 +42,10 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
-<<<<<<< HEAD
-    t.integer  "vendor_printer_id",                       :default => 0
+    t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
-    t.boolean  "hidden",                                  :default => false
-    t.binary   "image",               :limit => 16777215
-    t.string   "image_content_type"
+    t.boolean  "hidden",              :default => false
     t.integer  "preparation_user_id"
-=======
-    t.integer  "vendor_printer_id", :default => 0
-    t.integer  "position"
-    t.boolean  "hidden",            :default => false
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name"
@@ -231,21 +210,11 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
-<<<<<<< HEAD
-    t.float    "price",                                  :default => 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "hidden",                                 :default => false
-    t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
-=======
     t.float    "price",      :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "hidden",     :default => false
     t.integer  "position"
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
   end
 
   add_index "options", ["name"], :name => "index_options_on_name"
@@ -281,19 +250,10 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "pages", :force => true do |t|
-<<<<<<< HEAD
-    t.boolean  "active",                                 :default => true
-    t.boolean  "hidden"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
-=======
     t.boolean  "active",     :default => true
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
     t.integer  "width"
     t.integer  "height"
     t.string   "color"
@@ -346,23 +306,12 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-    t.boolean  "active",                                 :default => true
-    t.boolean  "hidden",                                 :default => false
-    t.string   "postfix"
-    t.integer  "sort"
-    t.integer  "usage",              :limit => 1,        :default => 0
-    t.integer  "position"
-    t.binary   "image",              :limit => 16777215
-    t.string   "image_content_type"
-=======
     t.boolean  "active",                  :default => true
     t.boolean  "hidden",                  :default => false
     t.string   "postfix"
     t.integer  "sort"
     t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
->>>>>>> c434ebf9c83360dd6b78c2a2b1d10bfe58dfe2ac
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"
