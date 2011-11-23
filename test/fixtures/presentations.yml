@@ -15,9 +15,9 @@ presentations_002:
   name: Variant List
   description: displays variants belonging to an article
   markup: |-
-    <% record.quantities.each do |q| ->
+    <- record.quantities.each do |q| ->
     <-= q.prefix -><br/>
-    <% end ->
+    <- end ->
   code: ""
   model: Article
   active: 1
@@ -55,10 +55,10 @@ presentations_005:
   markup: |-
     <b><-= record.name -></b><br />
     EUR <-= record.price ->
-    <% if record.image ->
+    <- if record.image ->
     <br/>
     <img src="<-= record.image ->">
-    <% end ->
+    <- end ->
   code: ""
   model: Article
   active: 1
@@ -71,7 +71,7 @@ presentations_006:
   description: ""
   markup: |
     <table width=300 border=0>
-    <% record.articles.menucard.each do |a| ->
+    <- record.articles.menucard.each do |a| ->
     <tr>
     <td><br/><b><big><-= a.name -></big></b></td>
     <td width=100 rowspan=2 align=right><br/><i>EUR <-= a.price -></i></td>
@@ -79,7 +79,7 @@ presentations_006:
     <tr>
     <td><br/><small><-= a.description -></small></td>
     </tr>
-    <% end ->
+    <- end ->
     </table>
 
   code: ""
