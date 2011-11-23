@@ -47,3 +47,19 @@ customers_003:
   cellphone: 555-1923
   created_at: 2011-11-16 14:00:52 Z
   updated_at: 2011-11-16 14:00:52 Z
+customers_004: 
+  id: 899667976
+  first_name: Max
+  last_name: Mustermann
+  company_name: ""
+  address: ""
+  city: ""
+  state: ""
+  postalcode: ""
+  m_number: ""
+  m_points: ""
+  email: ""
+  telephone: ""
+  cellphone: ""
+  created_at: 2011-11-23 20:03:46 Z
+  updated_at: 2011-11-23 20:03:46 Z

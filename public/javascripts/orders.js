@@ -402,6 +402,8 @@ function go_to_tables_offline() {
   $('#functions_header_order_form').hide();
   $('#functions_header_invoice_form').hide();
   $('#functions_footer').hide();
+  $('#customer_list').hide();
+  $('#tablesselect').hide();
   $('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
   $('#save_and_go_to_tables').css('border','none');
   screenlock_counter = screenlock_timeout;
