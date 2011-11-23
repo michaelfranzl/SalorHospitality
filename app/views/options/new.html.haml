@@ -9,6 +9,7 @@
 
 = form_for nest_image(@option), :html => { :multipart => true } do |option_form|
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  - debugger
   - if option_form.object.image
     %img.asset{ :src => @option.image }
   %table

@@ -10,8 +10,6 @@ categories_001:
   vendor_printer_id: 1
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_002: 
   id: 2
@@ -24,8 +22,6 @@ categories_002:
   vendor_printer_id: 1
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_003: 
   id: 3
@@ -38,8 +34,6 @@ categories_003:
   vendor_printer_id: 1
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_004: 
   id: 4
@@ -52,8 +46,6 @@ categories_004:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_005: 
   id: 5
@@ -66,8 +58,6 @@ categories_005:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_006: 
   id: 6
@@ -80,8 +70,6 @@ categories_006:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_007: 
   id: 7
@@ -94,8 +82,6 @@ categories_007:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_008: 
   id: 9
@@ -108,8 +94,6 @@ categories_008:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_009: 
   id: 10
@@ -122,8 +106,6 @@ categories_009:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_010: 
   id: 11
@@ -136,8 +118,6 @@ categories_010:
   vendor_printer_id: 2
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_011: 
   id: 13
@@ -150,8 +130,6 @@ categories_011:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_012: 
   id: 14
@@ -164,8 +142,6 @@ categories_012:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_013: 
   id: 15
@@ -178,8 +154,6 @@ categories_013:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_014: 
   id: 16
@@ -192,8 +166,6 @@ categories_014:
   vendor_printer_id: 1
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1
 categories_015: 
   id: 17
@@ -206,6 +178,4 @@ categories_015:
   vendor_printer_id: 0
   position: 
   hidden: 0
-  image: 
-  image_content_type: 
   preparation_user_id: 1

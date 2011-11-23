@@ -1,34 +1,38 @@
 --- 
 partials_001: 
   id: 20
-  left: 161
-  top: 188
+  left: 95
+  top: 172
   presentation_id: 5
   blurb: 
   active: 1
   hidden: 
   model_id: 311
   created_at: 2011-11-06 16:30:51 Z
-  updated_at: 2011-11-07 22:31:13 Z
+  updated_at: 2011-11-23 19:15:43 Z
   font: Rolina
   size: 200
-  image_size: 150
+  image_size: 200
   color: "#f7bc81"
+  width: 
+  align: 
 partials_002: 
   id: 23
-  left: 578
-  top: 197
+  left: 456
+  top: 211
   presentation_id: 2
   blurb: 
   active: 1
   hidden: 
   model_id: 324
   created_at: 2011-11-06 18:18:25 Z
-  updated_at: 2011-11-07 22:31:18 Z
+  updated_at: 2011-11-23 16:39:53 Z
   font: Rolina
   size: 200
   image_size: 
   color: "#f7bc81"
+  width: 
+  align: 
 partials_003: 
   id: 24
   left: 220
@@ -44,6 +48,8 @@ partials_003:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_004: 
   id: 25
   left: 284
@@ -59,6 +65,8 @@ partials_004:
   size: 350
   image_size: 
   color: "#b5fcb1"
+  width: 
+  align: 
 partials_005: 
   id: 27
   left: 154
@@ -74,6 +82,8 @@ partials_005:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_006: 
   id: 28
   left: 140
@@ -89,6 +99,8 @@ partials_006:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_007: 
   id: 29
   left: 129
@@ -104,6 +116,8 @@ partials_007:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_008: 
   id: 30
   left: 416
@@ -119,6 +133,8 @@ partials_008:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_009: 
   id: 31
   left: 273
@@ -134,6 +150,8 @@ partials_009:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_010: 
   id: 32
   left: 290
@@ -149,6 +167,8 @@ partials_010:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_011: 
   id: 33
   left: 241
@@ -164,6 +184,8 @@ partials_011:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_012: 
   id: 34
   left: 460
@@ -179,6 +201,8 @@ partials_012:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_013: 
   id: 35
   left: 290
@@ -194,6 +218,8 @@ partials_013:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_014: 
   id: 37
   left: 321
@@ -209,6 +235,8 @@ partials_014:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_015: 
   id: 38
   left: 94
@@ -224,21 +252,25 @@ partials_015:
   size: 600
   image_size: 
   color: "#d11f43"
+  width: 
+  align: 
 partials_016: 
   id: 41
-  left: 245
-  top: 16
+  left: 203
+  top: 30
   presentation_id: 4
   blurb: 
   active: 1
   hidden: 
   model_id: 1
   created_at: 2011-11-07 22:29:44 Z
-  updated_at: 2011-11-16 14:01:20 Z
+  updated_at: 2011-11-19 18:58:59 Z
   font: Rolina
   size: 700
   image_size: 
   color: "#f6ffc2"
+  width: 
+  align: 
 partials_017: 
   id: 42
   left: 197
@@ -254,18 +286,56 @@ partials_017:
   size: 
   image_size: 
   color: 
+  width: 
+  align: 
 partials_018: 
   id: 43
-  left: 44
-  top: 203
+  left: 53
+  top: 197
   presentation_id: 3
   blurb: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   active: 1
   hidden: 
   model_id: 3
   created_at: 2011-11-07 23:02:11 Z
-  updated_at: 2011-11-07 23:03:09 Z
+  updated_at: 2011-11-19 19:48:15 Z
   font: 
   size: 150
   image_size: 
   color: "#ffffff"
+  width: 700
+  align: justify
+partials_019: 
+  id: 56
+  left: 3
+  top: 26
+  presentation_id: 3
+  blurb: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-19 19:48:46 Z
+  updated_at: 2011-11-19 19:52:01 Z
+  font: 
+  size: 
+  image_size: 
+  color: "#2db56a"
+  width: 250
+  align: justify
+partials_020: 
+  id: 57
+  left: 404
+  top: 118
+  presentation_id: 1
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 273
+  created_at: 2011-11-23 19:15:15 Z
+  updated_at: 2011-11-23 19:17:57 Z
+  font: Ubuntu-R
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
