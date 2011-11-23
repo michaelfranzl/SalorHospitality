@@ -26,3 +26,4 @@ tmp/pids
 vendor/bundle
 *.log
 *.bill
+/nbproject/private/

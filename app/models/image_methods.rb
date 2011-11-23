@@ -14,32 +14,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Option < ActiveRecord::Base
-  has_and_belongs_to_many :categories
-  has_and_belongs_to_many :items
-  has_many :partials
-  has_many :images, :as => :imageable
-  include ImageMethods
-  validates_presence_of :name
-  
-  scope :existing, where(:hidden => false).order('position ASC')
-
-  accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
-
-  def price=(price)
-    write_attribute(:price, price.gsub(',', '.'))
+module ImageMethods
+  def image
+    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    return File.join("images", "empty.png")    
   end
 
-  def price
-    (read_attribute :price) || 0
+  def thumb
+    return self.images.first.thumb unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    return File.join("images", "empty.png")    
   end
-
-  def set_categories=(array)
-    self.categories = []
-    array.each do |c|
-      self.categories << Category.find_by_id(c.to_i)
-    end
-    self.save
-  end
-
 end

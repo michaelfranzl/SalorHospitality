@@ -31,6 +31,9 @@ fr:
       item:
         one: Item
         other: Items
+      image:
+        one: Image
+        other: Images
       settlement:
         one: Bilan
         other: Bilans
@@ -102,6 +105,7 @@ fr:
         tax_id: Taxe
         sort_order: Ranger par
         icon: Icône
+        custom_icon: Mon Icône
         color: Couleur
         food: Repas
         vendor_printer_id: XXXPrinter
@@ -396,6 +400,11 @@ fr:
     edit:
       edit_page: XXXEdit Page
       view: XXXView
+
+  images:
+    errempty: Fichier non valide
+    errsize: Taille du fichier non valide
+    errtype: Type de fichier non valide
 
   delete: Effacer
   are_you_sure: 'Êtes-vous sûr ?'

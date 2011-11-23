@@ -23,7 +23,11 @@ class PagesController < ApplicationController
   
   def update
     @page = Page.find_by_id params[:id]
-    @page.update_attributes params[:page]
+    unless @page.update_attributes params[:page]
+      @page.images.reload
+      @partial_htmls = evaluate_partial_htmls @page
+      render(:edit) and return 
+    end    
     @partial_htmls = evaluate_partial_htmls @page
     redirect_to edit_page_path @page
   end
@@ -62,11 +66,6 @@ class PagesController < ApplicationController
     @page = Page.find_by_id params[:id]
     @page.destroy
     redirect_to pages_path
-  end
-  
-  def image
-    @page = Page.find_by_id params[:id]
-    send_data @page.image, :type => @page.image_content_type, :disposition => 'inline' if @page.image
   end
   
   private

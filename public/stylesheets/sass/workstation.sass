@@ -52,7 +52,35 @@ label
 th
   :text-align left
 
+.jquery-checkbox
+  :display inline
+  :font-size 25px
+  :line-height 25px
+  :cursor pointer
+  :cursor hand
 
+.jquery-checkbox .mark
+  :display inline
+
+.jquery-checkbox img
+  :vertical-align middle
+  :width 60px
+  :height 25px
+
+.jquery-checkbox img
+  :background transparent url(/images/checkbox.png) no-repeat
+
+.jquery-checkbox img
+  :background-position 0px 0px
+
+.jquery-checkbox-checked img
+  :background-position 0px -50px
+
+.jquery-checkbox-disabled img
+  :background-position 0px -100px
+
+.jquery-checkbox-checked .jquery-checkbox-disabled img
+  :background-position 0px -125px
 
 //main layout ==================================
 
@@ -530,6 +558,7 @@ div#company_data
 div#company_printers
   :vertical-align top
   :display inline-block
+  :padding-left 130px
   label
     :width 100px
   input

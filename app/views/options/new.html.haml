@@ -7,7 +7,10 @@
       - @option.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @option do |option_form|
+= form_for nest_image(@option), :html => { :multipart => true } do |option_form|
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  - if option_form.object.image
+    %img.asset{ :src => @option.image }
   %table
     %tr
       %td= option_form.label('name', Option.human_attribute_name(:name))
@@ -19,6 +22,13 @@
       %td
         = option_form.text_field :price, :size => '5'
         %span#option_price_display_keyboard.display_keyboard
+    %tr
+      = option_form.fields_for :images do |image_form|
+        %td
+          %span.label_width= image_form.label('image', Option.human_attribute_name(:image))
+        %td
+          %span.input_fields
+            = image_form.file_field :file_data, :size => 15
 
     - @categories.each do |c|
       %tr
@@ -27,7 +37,7 @@
         %td
           %input{ :id => "category_#{ c.id }", :type => 'checkbox', :name => 'option[set_categories][]', :value => c.id, :checked => option_form.object.categories.include?(c) }
     %tr
-      %td= link_to Option.human_attribute_name(:hidden), option_path(option_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless option_form.object.new_record?
+      %td= link_to image_tag('button_small_delete.png', :title => Option.human_attribute_name(:hidden), :alt => Option.human_attribute_name(:hidden)), option_path(option_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless option_form.object.new_record?
           
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 

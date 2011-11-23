@@ -95,5 +95,5 @@ module CategoriesHelper
       option[value='#27343b']:before { content:url('/images/color_blank.png'); }
     "
   end
-  
+
 end

@@ -21,7 +21,10 @@ class CompaniesController < ApplicationController
   end
 
   def update
-    @current_company.update_attributes params[:company]
+    unless @current_company.update_attributes params[:company]
+      @current_company.images.reload
+      render(:edit) and return 
+    end
     test_printers :all
     test_printers :existing
     flash[:notice] = t 'companies.update.config_successfully_updated'
@@ -40,10 +43,6 @@ class CompaniesController < ApplicationController
 
   def backup_logfile
     send_file 'log/production.log', :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
-  end
-
-  def logo
-    send_data @current_company.image, :type => @current_company.content_type, :disposition => 'inline'
   end
 
 end
