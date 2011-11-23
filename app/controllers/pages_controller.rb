@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  skip_before_filter :fetch_logged_in_user, :only => [:iframe, :image]
+  skip_before_filter :fetch_logged_in_user, :only => [:show, :index]
   
   def index
     @pages = Page.existing
@@ -9,10 +9,14 @@ class PagesController < ApplicationController
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
     end      
     @pages_ids = @pages.collect{ |p| p.id }
+    
+    @current_user = User.find(session[:user_id]) if session[:user_id]
+    select_current_company
+    render :index, :layout => 'iframe' unless @current_user
   end
 
   def iframe
-    @pages = Page.existing
+    @pages = params[:id] ? Page.existing.find_all_by_id(params[:id]) : Page.existing
     @partial_htmls_pages = []
     @pages.each do |p|
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
@@ -41,6 +45,10 @@ class PagesController < ApplicationController
     @page = Page.find_by_id params[:id]
     @partial_htmls = evaluate_partial_htmls @page
     @previous_page, @next_page = neighbour_pages @page
+    
+    @current_user = User.find(session[:user_id]) if session[:user_id]
+    select_current_company
+    render :show, :layout => 'iframe' unless @current_user
   end
 
   def edit

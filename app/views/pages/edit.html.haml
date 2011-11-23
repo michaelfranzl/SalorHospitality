@@ -36,7 +36,9 @@
     %td
       - background = @page.image ? "background-image: url(#{@page.image});" : ''
       - color = @page.color ? "background-color: #{ @page.color }" : ''
-      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; #{ background } #{ color }" }= render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+      .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; #{ background } #{ color }; display: block;" }
+        = render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+        
     %td#remove
       = text_field_tag 'search_text', t('articles.index.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#search_text_display_keyboard.display_keyboard
