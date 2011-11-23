@@ -180,6 +180,9 @@ class OrdersController < ApplicationController
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
+    @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
+      i.update_attributes :user_id => @current_user.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
+    end
     @order.set_priorities
 
     if @order.nr > @current_company.largest_order_number

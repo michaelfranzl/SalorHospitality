@@ -12,6 +12,7 @@ categories_001:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_002: 
   id: 2
   name: Main Dish
@@ -25,6 +26,7 @@ categories_002:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_003: 
   id: 3
   name: Desserts
@@ -38,6 +40,7 @@ categories_003:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_004: 
   id: 4
   name: "Ros\xC3\xA9 Wine"
@@ -51,6 +54,7 @@ categories_004:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_005: 
   id: 5
   name: Red Wine
@@ -64,6 +68,7 @@ categories_005:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_006: 
   id: 6
   name: "Dig\xC3\xA9stif"
@@ -77,6 +82,7 @@ categories_006:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_007: 
   id: 7
   name: Alcohol Free
@@ -90,6 +96,7 @@ categories_007:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_008: 
   id: 9
   name: Coffee
@@ -103,6 +110,7 @@ categories_008:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_009: 
   id: 10
   name: Tea
@@ -116,6 +124,7 @@ categories_009:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_010: 
   id: 11
   name: Tobacco
@@ -129,6 +138,7 @@ categories_010:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_011: 
   id: 13
   name: Beer
@@ -142,6 +152,7 @@ categories_011:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_012: 
   id: 14
   name: Aperitiv
@@ -155,6 +166,7 @@ categories_012:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_013: 
   id: 15
   name: White Wine
@@ -168,6 +180,7 @@ categories_013:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_014: 
   id: 16
   name: Side Dish
@@ -181,6 +194,7 @@ categories_014:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1
 categories_015: 
   id: 17
   name: Divers
@@ -194,3 +208,4 @@ categories_015:
   hidden: 0
   image: 
   image_content_type: 
+  preparation_user_id: 1

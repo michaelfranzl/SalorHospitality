@@ -42,9 +42,10 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
-    t.integer  "vendor_printer_id", :default => 0
+    t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
-    t.boolean  "hidden",            :default => false
+    t.boolean  "hidden",              :default => false
+    t.integer  "preparation_user_id"
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name"
@@ -163,17 +164,13 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.integer  "max_count",                        :default => 0
     t.integer  "usage"
     t.integer  "priority"
-    t.boolean  "on_preparation_list"
-    t.boolean  "to_preparation_list",              :default => true
-    t.boolean  "on_delivery_list"
-    t.boolean  "to_delivery_list"
-    t.boolean  "delivered"
-    t.boolean  "finished"
-    t.boolean  "updated"
-    t.integer  "prepared_count"
-    t.integer  "delivered_count"
+    t.integer  "preparation_count"
+    t.integer  "delivery_count"
     t.string   "preparation_comment"
     t.integer  "customer_id"
+    t.integer  "user_id"
+    t.integer  "preparation_user_id"
+    t.integer  "delivery_user_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -281,6 +278,8 @@ ActiveRecord::Schema.define(:version => 20111122205853) do
     t.integer  "size"
     t.integer  "image_size"
     t.string   "color"
+    t.integer  "width"
+    t.string   "align"
   end
 
   add_index "partials", ["model_id"], :name => "index_partials_on_model_id"

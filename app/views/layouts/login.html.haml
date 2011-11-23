@@ -1,0 +1,41 @@
+!!!
+
+%html
+  %head
+    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+    - if mobile?
+      %meta{ 'name' => "viewport", :content => "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" }
+      %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
+
+    %title BillGastro
+
+    = stylesheet_link_tag('generic', :media => 'screen')
+    = javascript_include_tag 'jquery.js'
+    = javascript_include_tag 'rails.js'
+    = javascript_include_tag 'jquery-ui.js'
+    - if workstation?
+      = javascript_include_tag 'jquery.keyboard.js'
+      = javascript_include_tag 'jquery.keyboard.config.js'
+    = javascript_include_tag 'application-generic.js'
+    
+    %style= render :file => 'app/views/layouts/_fonts.css.erb', :content_type => 'text/css' 
+    = csrf_meta_tag
+
+    - if mobile?
+      = stylesheet_link_tag('mobile', :media => 'screen')
+    - else
+      = stylesheet_link_tag('workstation', :media => 'screen')
+
+  %body
+    #container
+      #header
+        %img#logo{ :src => "/images/logo-small.png" }
+      #flash
+        #flash_notice= flash[:notice]
+        #flash_error= flash[:error]
+      #main= yield
+      #footer
+      #copyright
+        %p== BillGastro #{ File.open('VERSION', 'r').read } &mdash; The innovative Point Of Sale Software for your Restaurant
+        %p== Copyright (C) 2011  Michael Franzl
+        %small This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

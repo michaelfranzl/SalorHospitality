@@ -11,7 +11,7 @@
 //global settings==============================
 
 body
-  :font-family Trebuchet MS
+  :font-family Ubuntu-R, Trebuchet MS
   :color #CCC
   :padding 0px
   :margin 0px
@@ -511,13 +511,12 @@ span.label_width
 
 ul#quantities_new
   :margin 0px 0px 20px 0px
-  :padding 5px
+  :padding 5px 0px 5px 5px
   :min-height 50px
   :background-color #243239
   :border 1px solid #7e868a
   :border-collapse collapse
   :list-style-type none
-  :width 90%
   div.field_with_errors
     :border 1px solid red
     :display inline-block
@@ -571,13 +570,13 @@ p#add_printer
 
 
 input.prefix
-  :width 110px
+  :width 80px
 
 input.postfix
-  :width 110px
+  :width 90px
 
 input.price
-  :width 30px
+  :width 40px
 
 
 select#move_order_to_table
@@ -749,6 +748,7 @@ div.tablesselect,
 div.comment_for_item,
 div.price_for_item,
 div.customer_list,
+div#items_notifications,
 div#note_for_order
   :display none
   :z-index 100
@@ -778,6 +778,9 @@ div#note_for_order
     :cursor pointer
     :vertical-align middle
     :display inline-block
+    :position absolute
+    :right 2px
+    :top 2px
     :background-image url(/images/button_mobile_cancel-small.png)
     :width 38px
     :height 38px
@@ -1027,13 +1030,13 @@ div.ui-keyboard
 
 span.display_keyboard
   :display inline-block
-  :width 60px
+  :width 38px
   :height 30px
+  :background-position center center
   :vertical-align middle
   :cursor pointer
   :background-image url(/images/keyboard.png)
   :background-repeat no-repeat
-  :background-position 10px center
 
 a.scrollup_button
   :position fixed
@@ -1127,7 +1130,22 @@ table.page
     :background-color #243239
   td#remove.hover
     :background-color #304345
-    
+  .page
+    :position relative
+
+div.page
+  :width 800px
+  :height 480px
+  :float left
+  :background-color white
+  :display none
+  :color black
+  :background-repeat no-repeat
+  :background-size 100%
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 10px
     
 div.partial
   :position absolute
@@ -1144,23 +1162,13 @@ div.partial
     :opacity 0.4
   div.options:hover
     :opacity 0.8
-  div.partial-toolbox
-    opacity: 0.6
-
+  img
+    :-moz-box-shadow 0px 0px 8px black
+    :-moz-border-radius 10px
+    :-webkit-box-shadow 0px 0px 8px black
+    :-webkit-border-radius 10px
   
-div.page
-  :width 800px
-  :height 480px
-  :background-color white
-  :color black
-  :position relative
-  :background-repeat no-repeat
-  :background-size 100%
-  :-moz-box-shadow 0px 0px 8px black
-  :-moz-border-radius 10px
-  :-webkit-box-shadow 0px 0px 8px black
-  :-webkit-border-radius 10px
-  :float left
+
 
   
 div.previous_page_button,
@@ -1199,28 +1207,54 @@ img.asset
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 10px
 
-div.kitchen
-  :clear both
-  :float left
-  :padding 10px
-  :background-color black
-  
-div.waiter2
-  :float right
-  :padding 10px
-  :background-color black
-  
-div.preparation,
-div.delivery
-  :width 200px
-  :margin 5px
-  :height 50px
-  :background-color #333
+div#items_notifications
+  :display none
+  :vertical-align top
+  #preparation_list,
+  #delivery_list
+    :font-size 50%
+    :display inline-block
+    :vertical-align top
+ 
+div.item_list
+  :vertical-align top
+  :display inline-block
+  .unconfirmed
+    :cursor pointer
+  .confirmed,
+  .unconfirmed
+    :vertical-align top
+    :border 1px solid #777
+    :display inline-block
+    :margin 5px
+    :min-width 100px
+    :min-height 30px
+    :background-color #333
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+    :padding 3px
+    .increment, .reference_count, .update
+      :cursor pointer
+      :text-align center
+      :font-size 150%
+      :border-top 2px solid #555
+      :border-left 2px solid #555
+      :border-right 2px solid #222
+      :border-bottom 2px solid #222
+    .increment, .reference_count
+      :width 30px
+    .increment, .update
+      :background-color #3A474D
+    .update
+      :font-size 80%
+      :text-align left
   
 div.partial_toolbox
-  padding: 10px
-  display: none
-  background-color: rgba(255,255,255,0.5)
+  :padding 10px
+  :display none
+  :background-color rgba(255,255,255,0.7)
+  :color black
+  :width 220px
   span.finish
     :cursor pointer
     :vertical-align middle

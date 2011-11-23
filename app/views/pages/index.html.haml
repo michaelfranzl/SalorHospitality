@@ -1,15 +1,23 @@
-= link_to (t :new), new_page_path, :class => 'links'
-
+- if @current_user
+  = link_to (t :new), new_page_path, :class => 'links'
+  - @pages.each do |p|
+    = link_to p.id, edit_page_path(p)
+    
 - @pages.each do |p|
   - partial_htmls = @partial_htmls_pages[p.id]
-  .page{ :id => "page_#{ p.id }", :style => "position:absolute;top:80px;display: none; width: #{ p.width }px; height: #{ p.height }px; background-image: url('#{p.image}'); background-color: #{ p.color };" }= render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
-  
-- @pages.each do |p|
-  = link_to p.id, edit_page_path(p)
+  - background_image = "background-image: url('#{ p.image }');" if p.image
+  .page{ :id => "page_#{ p.id }", :style => "width: #{ p.width }px; height: #{ p.height }px; #{ background_image } background-color: #{ p.color }; position: absolute;" }
+    = render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
 
 :javascript
+  var count = #{ @pages.count };
+  var ids = #{ @pages_ids.inspect };
   
-  slide(#{ @pages_ids.inspect }, #{ @pages.count }, 0);
+  if (count == 1) {
+    $('#page_' + ids[0]).fadeIn(1000);
+  } else {
+    slide(ids, count, 0);
+  }
   
   function slide(ids, count, current) {
     $('#page_' + ids[current]).fadeIn(1000).delay(6000).fadeOut(1000);

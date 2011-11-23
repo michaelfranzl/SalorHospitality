@@ -43,6 +43,7 @@ class PartialsController < ApplicationController
     rescue Exception => e
       partial_html = t('presentations.error_during_evaluation') + e.message
     end
+    partial_html.force_encoding('UTF-8')
   end
 
 end

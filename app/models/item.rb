@@ -91,5 +91,9 @@ class Item < ActiveRecord::Base
     return u if u
     return self.article.usage if self.article
   end
-
+  
+  def formatted_comment
+    self.comment ? '<br/>' + self.comment : ''
+  end
+  
 end

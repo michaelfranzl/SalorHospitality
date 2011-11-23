@@ -3,7 +3,7 @@ presentations_001:
   id: 1
   name: Article Name
   description: displays just Article name
-  markup: %LPEREQ% record.name %RPER%
+  markup: "%LPEREQ% record.name %RPER%"
   code: ""
   model: Article
   active: 1
@@ -28,7 +28,7 @@ presentations_003:
   id: 3
   name: Generic Text Blurb
   description: ""
-  markup: %LPEREQ% Kramdown::Document.new(partial.blurb).to_html %RPER%
+  markup: "%LPEREQ% Kramdown::Document.new(partial.blurb).to_html %RPER%"
   code: ""
   model: Presentation
   active: 1

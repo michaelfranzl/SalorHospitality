@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find(session[:user_id]) if session[:user_id]
-      redirect_to '/' if @current_user.nil?
+      redirect_to '/session/new' unless @current_user
     end
 
     def select_current_company
@@ -42,10 +42,6 @@ class ApplicationController < ActionController::Base
           @current_user.save
         end
       end
-    end
-
-    def logged_in?
-      ! @current_user.nil?
     end
 
     def workstation?

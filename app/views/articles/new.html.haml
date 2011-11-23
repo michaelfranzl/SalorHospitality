@@ -14,6 +14,9 @@
     %div.search_results
       %ul#search_results
     %div
+      %div
+        %span.label_width= article_form.label( 'active', Article.human_attribute_name(:active))
+        %span.input_fields= article_form.check_box :menucard
       %span.label_width= article_form.label( 'name', Article.human_attribute_name(:name))
       %span.input_fields
         = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
@@ -44,13 +47,9 @@
         %span.input_fields
           = image_form.file_field :file_data, :size => 15
 
-    %p
-
     %div
-      %span.label_width= article_form.label('menucard', Article.human_attribute_name(:menucard))
-      %span.input_fields= article_form.check_box :menucard
-    %div
-      = link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
+      %span.label_width
+      %span= link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
 
 
   %div.add_quantity
