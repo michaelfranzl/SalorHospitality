@@ -11,7 +11,8 @@
   %span= f.text_field :copies, :size => 1
   %br
   - unless f.object.new_record?
-    %span.link{ :onclick => "$('#company_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= VendorPrinter.human_attribute_name(:hidden)
+    %span.link{ :onclick => "$('#company_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => VendorPrinter.human_attribute_name(:hidden), :alt => VendorPrinter.human_attribute_name(:hidden))
+
     %span= f.hidden_field :hidden
     %br
   %br
