@@ -11,7 +11,7 @@ class Company < ActiveRecord::Base
 
   def image
     return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
-    return File.join("images", "client_logo.png")
+    "/images/client_logo.png"
   end
 
 end
