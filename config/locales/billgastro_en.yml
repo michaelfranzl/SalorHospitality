@@ -257,6 +257,9 @@ en:
       edit_stock: Edit Stock
 
   orders:
+    index:
+      preparation_list: Preparation list
+      delivery_list: Delivery list
     served_by: You were served by
     order:
       sum: SUM

@@ -1,6 +1,9 @@
 fr:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Table
         other: Tables
@@ -193,7 +196,8 @@ fr:
       variants:
         one: Variante
         other: Variantes
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -253,6 +257,9 @@ fr:
       edit_stock: Editer stock
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Vous avez été servi par
     order:
       sum: TOTAL

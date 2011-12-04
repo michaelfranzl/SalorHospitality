@@ -1,6 +1,9 @@
 es:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Mesa
         other: Mesas
@@ -37,7 +40,7 @@ es:
       settlement:
         one: Balance
         other: Balances
-      pedido:
+      order:
         one: Pedido
         other: Pedidos
       stock:
@@ -144,6 +147,7 @@ es:
         country: XXXRules for country
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
+        address: XXXAddress
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
         use_order_numbers: XXXUse order numbers?
@@ -192,7 +196,8 @@ es:
       variants:
         one: Variante
         other: Variantes
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -252,6 +257,9 @@ es:
       edit_stock: Editar stock
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Ud. fue atendido por
     order:
       sum: TOTAL

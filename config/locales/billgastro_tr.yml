@@ -1,6 +1,9 @@
 tr:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Masa
         other: Masalar
@@ -193,7 +196,8 @@ tr:
       variants:
         one: Varyant
         other: Varyant
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -253,6 +257,9 @@ tr:
       edit_stock: Depo ürünü islemek
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Size hizmet gösteren
     order:
       sum: Toplam
@@ -298,22 +305,6 @@ tr:
       split_this_item: Posizyonları  
       switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
       
-  partials:
-    error_during_evaluation: 'XXXError: '
-    default_blurb: XXXDefault Text
-    no_presentation_found:
-      no_presentations_found: XXXNo template defined for this partial.
-      
-  presentations:
-    new:
-      new_presentation: XXXNew Template
-      edit_presentation: XXXEdit Template
-      
-  pages:
-    edit:
-      edit_page: XXXEdit Page
-      view: XXXView
-
   settlements:
     index:
       start_date: Baslangic
@@ -401,6 +392,22 @@ tr:
       manage_users: XXXManage users
       manage_settings: XXXManage settings
 
+  partials:
+    error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
+
   images:
     errempty: Geçersiz dosya
     errsize: Geçersiz dosya boyutu
@@ -462,6 +469,14 @@ tr:
   kitchen: Mutfak
   bar: Bar
   dummy: Deneme
+
+  restaurant: Restaurant
+  auxiliary_waiter: Auxiliary Waiter
+  waiter: Waiter
+  chief_waiter: Chief waiter
+  host: Host
+  admin: Admin
+  superuser: Superuser
 
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
