@@ -1,14 +1,9 @@
-= javascript_include_tag 'orders'
+= javascript_include_tag 'orders-generic'
+- if workstation?
+  = javascript_include_tag 'orders-workstation'
 
 %h2= @current_user.login
 
-#items_notifications
-  %h3= t '.preparation_list'
-  #preparation_list
-  %h3= t '.delivery_list'
-  #delivery_list
-  %span.done{ :onclick => "$('#items_notifications').slideUp();" }
-  
 #rooms= render 'rooms'
 #tables= render @tables
 #functions
@@ -23,6 +18,13 @@
     %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20);', :title => t(:scroll_down) }
   - else
     = render('functions_footer')
+    
+#items_notifications
+  %h3= t '.preparation_list'
+  #preparation_list
+  %h3= t '.delivery_list'
+  #delivery_list
+  %span.done{ :onclick => "$('#items_notifications').slideUp();" }
     
 :javascript
   var i18n_server_no_response = '#{ escape_javascript t :server_no_response }';

@@ -362,8 +362,6 @@ function restore_button(element) {
   $(element).css({ backgroundColor: '#3A474D' });
 }
 
-//ajax support functions
-
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {
   scroll_to($('#container'),20);
@@ -426,28 +424,6 @@ function change_item_status(id,status) {
 }
 
 $(function(){
-  $('#admin').hide();
-  
-  $("#customer_search").keyup(function () {
-    if ($(this).val().length > 2) {
-      customer_list_update();
-    }            
-  });
-  
-  $('#customer_search').keyboard( {openOn: '', accepted: function(){ customer_list_update(); } } );
-  $('#customer_search_display_keyboard').click(function(){
-    $('#customer_search').val('');
-    $('#customer_search').getkeyboard().reveal();
-  });
-  
-  var screenlock_counter = screenlock_timeout;
-  window.setInterval(
-    function() {
-      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
-      screenlock_counter -= 1;
-    }
-  , 1001);
-  
   window.setInterval(
     function(){
       $.ajax({

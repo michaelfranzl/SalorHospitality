@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
       redirect_to '/'
     else
       flash[:error] = t :wrong_password
-      render :new
+      render :new, :layout => 'login'
     end
   end
 

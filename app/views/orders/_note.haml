@@ -1,9 +1,3 @@
 %input{ :id => 'order_note', :name => 'order[note]' }
 %span#order_note_display_keyboard.display_keyboard
 %span.finish{ :onclick => "$('#note_for_order').slideUp();" }
-
-:javascript
-  $('input#order_note').keyboard( {openOn: '' } );
-  $('#order_note_display_keyboard').click(function(){
-    $('input#order_note').getkeyboard().reveal();
-  });
