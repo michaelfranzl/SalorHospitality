@@ -5,7 +5,7 @@ class AddSortToArticlesAndQuantities < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :articles, :sort, :integer
-    remove_column :quantities, :sort, :integer
+    remove_column :articles, :sort
+    remove_column :quantities, :sort
   end
 end
