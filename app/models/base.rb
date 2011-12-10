@@ -6,15 +6,15 @@ module Base
     if c.nil? then
       c = $COMPANY
     end
-    if self.respond_to? :user_id then
+    if self.respond_to? :user_id and self.user_id.nil? then
       self.user_id = u.id
     end
-    if self.respond_to? :owner_id then
+    if self.respond_to? :owner_id  and self.owner_id.nil? then
       self.owner_id = u.get_owner.id
     end
     # $COMPANY must be set whenever this is called, which
     # should only be called when creating/saving models
-    if self.respond_to? :company_id then
+    if self.respond_to? :company_id  and self.company_id.nil? then
       self.company_id = c.id if c
     end
   end
