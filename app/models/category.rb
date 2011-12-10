@@ -20,6 +20,7 @@ class Category < ActiveRecord::Base
   belongs_to :company
   has_and_belongs_to_many :options
   has_many :articles
+
   has_many :discounts
   validates_presence_of :name
   validates_presence_of :tax_id
@@ -27,4 +28,27 @@ class Category < ActiveRecord::Base
   include Scope
   include Base
   before_create :set_model_owner
+
+  has_many :partials
+  has_many :images, :as => :imageable
+  validates_presence_of :name
+  validates_presence_of :tax_id
+  acts_as_list
+  include ImageMethods
+
+  scope :existing, where(:hidden => false).order('position ASC')
+
+  accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+
+  def icon_path
+    return self.images.first.thumb if self.icon == 'custom'
+    return "/images/category_blank.png" if self.icon.nil?
+    "/images/category_#{self.icon}.png"
+  end
+
+  def self.process_custom_icon(params)
+    params[:icon] = 'custom' unless params[:images_attributes]['0'][:file_data].blank?
+    params
+  end
+
 end

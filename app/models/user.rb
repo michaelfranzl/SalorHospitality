@@ -21,7 +21,17 @@ class User < ActiveRecord::Base
   has_many :employees, :class_name => "User", :foreign_key => :owner_id
   belongs_to :owner, :class_name => "User", :foreign_key => :owner_id
   belongs_to :role
+  has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
   include Scope
   include Base
+  scope :active, where(:active => true, :hidden => false)
+  scope :existing, where('hidden=false or hidden is NULL')
+
+  def tables_array=(ids)
+    self.tables = []
+    ids.each do |id|
+      self.tables << Table.find_by_id(id.to_i)
+    end
+  end
 end

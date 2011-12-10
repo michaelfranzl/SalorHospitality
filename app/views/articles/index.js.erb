@@ -44,7 +44,7 @@ var optionsselect = new Array();
 
 <%- @categories.each do |cat| %>
   <%- next if cat.options.empty? %>
-    optionsselect[<%= cat.id %>] = "<%- cat.options.each do |o| %><option value='<%= o.id %>'><%= escape_javascript o.name %></option><%- end %>";
+    optionsselect[<%= cat.id %>] = "<%- cat.options.existing.each do |o| %><option value='<%= o.id %>'><%= escape_javascript o.name %></option><%- end %>";
 <%- end %>
 
 var optionsdiv = new Array();
@@ -56,6 +56,6 @@ var optionsdiv = new Array();
 
 var optionsdetails = new Array();
 
-<%- Option.all.each do |o| %>
+<%- Option.existing.each do |o| %>
   optionsdetails[<%= o.id %>] = "<%= o.price %>, <%= escape_javascript o.name %>";
 <%- end %>

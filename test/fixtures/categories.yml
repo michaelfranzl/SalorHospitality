@@ -9,6 +9,9 @@ categories_001:
   icon: starter
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_002: 
   id: 2
   company_id: 46
@@ -19,6 +22,9 @@ categories_002:
   icon: maindish
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_003: 
   id: 3
   company_id: 46
@@ -29,6 +35,9 @@ categories_003:
   icon: dessert
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_004: 
   id: 4
   company_id: 46
@@ -39,6 +48,9 @@ categories_004:
   icon: rosewineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_005: 
   id: 5
   company_id: 46
@@ -49,6 +61,9 @@ categories_005:
   icon: redwineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_006: 
   id: 6
   company_id: 46
@@ -59,6 +74,9 @@ categories_006:
   icon: digestif
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_007: 
   id: 7
   company_id: 46
@@ -69,6 +87,9 @@ categories_007:
   icon: nonalcoholics
   color: "#80477d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_008: 
   id: 9
   company_id: 46
@@ -79,6 +100,9 @@ categories_008:
   icon: coffee
   color: "#cd0052"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_009: 
   id: 10
   company_id: 46
@@ -89,6 +113,9 @@ categories_009:
   icon: teapot
   color: "#cd0052"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_010: 
   id: 11
   company_id: 46
@@ -99,6 +126,9 @@ categories_010:
   icon: cigarette
   color: "#136880"
   vendor_printer_id: 2
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_011: 
   id: 13
   company_id: 46
@@ -109,6 +139,9 @@ categories_011:
   icon: beer
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_012: 
   id: 14
   company_id: 46
@@ -119,6 +152,9 @@ categories_012:
   icon: aperitif
   color: "#ed8b00"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_013: 
   id: 15
   company_id: 46
@@ -129,6 +165,9 @@ categories_013:
   icon: whitewineglass
   color: "#75b10d"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_014: 
   id: 16
   company_id: 46
@@ -139,6 +178,9 @@ categories_014:
   icon: sidedish
   color: "#136880"
   vendor_printer_id: 1
+  position: 
+  hidden: 0
+  preparation_user_id: 1
 categories_015: 
   id: 17
   company_id: 46
@@ -149,3 +191,6 @@ categories_015:
   icon: blank
   color: "#27343b"
   vendor_printer_id: 0
+  position: 
+  hidden: 0
+  preparation_user_id: 1

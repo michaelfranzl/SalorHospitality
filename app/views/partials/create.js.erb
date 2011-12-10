@@ -1,0 +1,2 @@
+$('#page_<%= @page.id %>').append('<%= escape_javascript render :partial => 'edit_partial', :locals => { :partial => @partial, :markup => @partial_html, :model_id => @model_id, :presentations => @presentations } %>');
+set_handles();

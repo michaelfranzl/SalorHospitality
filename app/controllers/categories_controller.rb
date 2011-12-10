@@ -16,7 +16,7 @@
 
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.scopied.find(:all, :order => :position)
+    @categories = Category.scopied.existing
   end
 
   def new
@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(params[:category])
+    @category = Category.new(Category.process_custom_icon(params[:category]))
     @category.save ? redirect_to(categories_path) : render(:new)
   end
 
@@ -35,13 +35,12 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.scopied.find(params[:id])
-    @category.update_attributes(params[:category]) ? redirect_to(categories_path) : render(:new)
+    @category.update_attributes(Category.process_custom_icon(params[:category])) ? redirect_to(categories_path) : render(:new)
   end
 
   def destroy
     @category = Category.scopied.find(params[:id])
-    flash[:notice] = t(:successfully_deleted, :what => @category.name)
-    @category.destroy
+    @category.update_attribute :hidden, true
     redirect_to categories_path
   end
 

@@ -1,0 +1,10 @@
+%h2= @user.login
+
+%p== Rolle: <i>#{ @user.role }
+
+%table{ :class => 'settlements' }
+  - sum = 0
+  - @user.settlements.each do |s|
+    %tr
+      %td{ :style => 'width:220px' }= l s.created_at, :format => :datetime_iso
+      %td{ :style => 'width:120px' }= link_to("#{ Settlement.model_name.human } ##{s.id}", user_settlement_path(@user,s))

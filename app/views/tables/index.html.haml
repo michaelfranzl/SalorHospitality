@@ -13,4 +13,4 @@
     %tr
       %td= link_to ta.name, edit_table_path(ta)
       %td= ta.description
-      %td= link_to Table.human_attribute_name(:hidden), table_path(ta), :method => :delete
+      %td= link_to image_tag('button_small_delete.png', :title => Table.human_attribute_name(:hidden), :alt => Table.human_attribute_name(:hidden)), table_path(ta), :method => :delete, :confirm => t(:are_you_sure)

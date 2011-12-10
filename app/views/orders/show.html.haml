@@ -1,11 +1,11 @@
-= form_for @order, :as => :order, :url => table_order_path(@order.table_id, @order), :html => { :method => :put, :name => 'order_form' } do |order_form|
-
-  = hidden_field_tag 'order_action', 'not_set', :id => "order_action_#{@order.id}"
+- form_tag 'by_nr', :id => 'search_by_nr' do
+  = text_field_tag 'nr', t('.search_by_number')
+  %span#nr_display_keyboard.display_keyboard
 
 %div#buttons
   - if local_variant?
     - i = 0
-    - @current_company.vendor_printers.available.each do |p|
+    - @current_company.vendor_printers.existing.each do |p|
       - i += 1
       = link_to('', "/orders/print_and_finish/#{ @order.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }", :remote => true)
   - else
@@ -15,11 +15,17 @@
   = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton storno_button', :title => t(:storno)
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
-  
+
+%p= @current_company.name
+%p= @current_company.invoice_subtitle
 %p
   = @current_company.address
   %br
   = @current_company.revenue_service_tax_number
+  %br
+  = @current_company.bank_account1
+  %br
+  = @current_company.bank_account2
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 
@@ -93,4 +99,14 @@
 %br
 %br
 
-%small Bill Gastro Gastronomiesysteme www.billgastro.com
+%small Bill Gastro: Das innovative Gastronomiesystem auf www.billgastro.com
+
+:javascript
+  $('#nr').keyboard( {openOn: '', accepted: function(){ $('form#search_by_nr').submit(); } } );
+  $('#nr_display_keyboard').click(function(){
+    $('#nr').val('');
+    $('#nr').getkeyboard().reveal();
+  });
+  $('#nr').click(function(){
+    $('#nr').val('');
+  });

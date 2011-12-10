@@ -4,7 +4,7 @@ tables_001:
   name: Table 1
   description: 2-3 Personen
   created_at: 2009-02-24 14:56:08 Z
-  updated_at: 2011-05-15 09:16:57 Z
+  updated_at: 2011-11-19 10:58:09 Z
   left: 133
   top: 86
   width: 55
@@ -15,13 +15,20 @@ tables_001:
   height_mobile: 60
   abbreviation: T1
   user_id: 1
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 1
+>>>>>>> master
 tables_002: 
   id: 2
   name: Table 2
   description: 5-6 Persons
   created_at: 2009-02-24 14:56:17 Z
-  updated_at: 2011-05-15 08:58:54 Z
+  updated_at: 2011-11-19 11:59:22 Z
   left: 131
   top: 161
   width: 55
@@ -32,7 +39,14 @@ tables_002:
   height_mobile: 60
   abbreviation: T2
   user_id: 
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 1
+>>>>>>> master
 tables_003: 
   id: 3
   name: Bar
@@ -49,7 +63,14 @@ tables_003:
   height_mobile: 60
   abbreviation: Bar
   user_id: 
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 
+>>>>>>> master
 tables_004: 
   id: 4
   name: Table 3
@@ -66,7 +87,14 @@ tables_004:
   height_mobile: 60
   abbreviation: T3
   user_id: 
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 
+>>>>>>> master
 tables_005: 
   id: 5
   name: Table 4
@@ -83,13 +111,20 @@ tables_005:
   height_mobile: 60
   abbreviation: T4
   user_id: 
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 
+>>>>>>> master
 tables_006: 
   id: 6
   name: Table 5
   description: 3 Personen
   created_at: 2009-02-25 11:59:42 Z
-  updated_at: 2011-05-15 09:16:09 Z
+  updated_at: 2011-11-19 10:57:54 Z
   left: 567
   top: 291
   width: 55
@@ -100,4 +135,11 @@ tables_006:
   height_mobile: 60
   abbreviation: T5
   user_id: 
+<<<<<<< HEAD
   company_id: 46
+=======
+  enabled: 1
+  hidden: 0
+  rotate: 
+  active_user_id: 
+>>>>>>> master

@@ -19,7 +19,7 @@ class SettlementsController < ApplicationController
     @from, @to = assign_from_to(params)
     @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to})
     @to -= 1.day
-    @taxes = Tax.all
+    @taxes = Tax.existing
     @cost_centers = CostCenter.all
     @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
@@ -48,7 +48,7 @@ class SettlementsController < ApplicationController
     @orders = @settlement.orders
     printers = initialize_printers
     text = generate_escpos_settlement(@settlement, @orders)
-    do_print printers, @current_company.vendor_printers.available.first.id, text
+    do_print printers, @current_company.vendor_printers.existing.first.id, text
     close_printers printers
     redirect_to settlements_path
   end

@@ -28,6 +28,7 @@ class ItemsController < ApplicationController
         pending_invoices.each { |i| i.update_attribute :print_pending, false }
         render :text => invoices_code + items_code
       }
+      wants.html
     end
   end
 
@@ -98,6 +99,19 @@ class ItemsController < ApplicationController
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
     @item.reload # re-read is necessary
+  end
+  
+  def list
+    @list = case params[:scope]
+      when 'preparation' then Item.where("preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
+      when 'delivery' then Item.where("delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
+    end
+  end
+  
+  def set_attribute
+    @item = Item.find_by_id params[:id]
+    @item.update_attribute params[:attribute], params[:value]
+    render :nothing => true
   end
 
   private

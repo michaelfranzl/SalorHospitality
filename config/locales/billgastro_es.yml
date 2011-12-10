@@ -1,6 +1,9 @@
 es:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Mesa
         other: Mesas
@@ -31,24 +34,45 @@ es:
       item:
         one: Item
         other: Items
+      image:
+        one: Imagen
+        other: Imágenes
       settlement:
         one: Balance
         other: Balances
-      pedido:
+      order:
         one: Pedido
         other: Pedidos
       stock:
-        one: Stock
-        other: Stocks
+        one: XXXStock
+        other: XXXStocks
       group:
-        one: Grupo de stock
-        other: Grupos de stock
+        one: XXXStock Group
+        other: XXXStock Groups
       role:
-        one: Rol
-        other: Rol
+        one: XXXRole
+        other: XXXRoles
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      coupon:
+        one: XXXCoupon
+        other: XXXCoupons
+      discount:
+        one: XXXDiscount
+        other: XXXDiscounts
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      reservation:
+        one: XXXReservation
+        other: XXXReservations
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
 
     attributes:
       article:
@@ -93,13 +117,16 @@ es:
         tax_id: IVA
         sort_pedido: Ordenar según
         icon: Ícono
+        custom_icon: Mi Ícono
         color: Color
         food: comida?
         vendor_printer_id: XXXPrinter
+        hidden: XXXdelete
       cost_center:
         name: Nombre
         description: Descripción
         active: activo?
+        hidden: XXXdelete
       group:
         name: Nombre
       user:
@@ -109,6 +136,7 @@ es:
         title: Título
         color: Color
         language: Idioma
+        tables: XXXTables
         enabled: XXXactive?
         hidden: XXXdelete?
       company:
@@ -128,8 +156,12 @@ es:
         country: XXXRules for country
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
+        address: XXXAddress
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        res_fetch_url: Fetch Reservations
+        res_confirm_url: Confirm Reservations
+        use_order_numbers: XXXUse order numbers?
       role:
         name: Nombre
       vendor_printer:
@@ -139,6 +171,21 @@ es:
       settlement:
         initial_cash: XXXInitial amount
         revenue: End XXXamount
+      presentation:
+        name: XXXName
+        description: XXXDescription
+        markup: XXXERB Markup
+        code: XXXRuby code
+        model: XXXType
+        active: XXXactive
+        hidden: XXXdelete
+      page:
+        active: XXXactive
+        hidden: XXXdelete
+      partial:
+        blurb: XXXBlurb
+        active: XXXaktiv
+        hidden: XXXdelete
 
   articles:
     index:
@@ -160,7 +207,8 @@ es:
       variants:
         one: Variante
         other: Variantes
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -219,9 +267,12 @@ es:
       new_stock: Nuevo stock
       edit_stock: Editar stock
 
-  pedidos:
+  orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Ud. fue atendido por
-    pedido:
+    order:
       sum: TOTAL
       new: Nuevo pedido
     show:
@@ -234,6 +285,7 @@ es:
       count: Cantidad
       sum: Total
       list_of_taxes: Lista de impuestos
+      search_by_number: XXXSearch by number
     invoice_form:
       split_invoice: Dividir factura
     login_form:
@@ -328,6 +380,15 @@ es:
       backup_database: XXXBackup database
     update:
       config_successfully_updated: ¡Los datos de la companía han sido actualizados con éxito!
+  coupons:
+    ctypes:
+      fixed: "XXXFixed"
+      percent: "XXXPercent"
+      b1g1: "XXXBuy 1 Get 1"
+  discounts:
+    dtypes:
+      fixed: "XXXFixed"
+      percent: "XXXPercent"
 
   roles:
     new:
@@ -338,6 +399,7 @@ es:
       move_tables: Mover mesas
       make_storno: Anular item
       make_immediate_storno: XXXCancel items immediately
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: Designar centro de coste
       move_order: Mover pedido
       change_waiter: Cambiar mozo
@@ -349,6 +411,27 @@ es:
       view_statistics: Ver estadísticas
       manage_users: Gestión usuarios
       manage_settings: Configuración
+      
+  partials:
+    error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
+
+  images:
+    errempty: Archivo no válido
+    errsize: Tamaño de archivo no válido
+    errtype: Tipo de archivo no válido
 
   delete: Borrar
   are_you_sure: '¿Está seguro?'
@@ -393,6 +476,10 @@ es:
   green: Verde
   blue: Azul
   blank: nada
+  white: XXXWhite
+  black: XXXBlack
+  yellow: XXXYellow
+  winered: XXXWine Red
 
   food: Comidas
   drink: Bebidas
@@ -439,3 +526,4 @@ es:
   no_printing: No imprimir
   copy: XXXCopy
   exit: XXXExit
+  printing_test: XXXPrinting test

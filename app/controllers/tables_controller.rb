@@ -17,7 +17,7 @@
 class TablesController < ApplicationController
 
   def index
-    @tables = Table.scopied.where( :hidden => false )
+    @tables = @current_user.tables.existing
     @last_finished_order = Order.find_all_by_finished(true).last
     respond_to do |wants|
       wants.html
@@ -79,7 +79,7 @@ class TablesController < ApplicationController
   end
 
   def mobile
-    @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables
   end
 
 end

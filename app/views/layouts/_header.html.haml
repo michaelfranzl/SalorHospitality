@@ -1,40 +1,40 @@
-- if logged_in? and workstation?
+- if workstation?
   %a#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and ( controller.action_name == 'index' or controller.action_name == 'login' )}" }
-    %img{ :src => "/company/logo" }
+    %img{ :src => @current_company.image }
 
-%img#logo{ :src => "/images/logo-small.png" }
+- perms = @current_user.role.permissions
+#admin{ :style => "display: visible;" }
+  .adminlinks
+    = link_to( t('activerecord.models.order.other'), '/orders')
 
-- if logged_in?
-  - perms = @current_user.role.permissions
-  #admin{ :style => "display: visible;" }
-    .adminlinks
-      = link_to( t('activerecord.models.order.other'), '/orders')
+    - if perms.include? 'manage_settings'
+      = link_to( t('activerecord.models.table.other'), tables_path)
 
-      - if perms.include? 'manage_settings'
-        = link_to( t('activerecord.models.table.other'), tables_path)
+    - if perms.include? 'manage_articles_categories_options'
+      = link_to( t('activerecord.models.category.other'), categories_path)
+      = link_to( t('activerecord.models.article.other'), articles_path)
+      = link_to( t('activerecord.models.option.other'), options_path)
+      = link_to( t('activerecord.models.coupon.other'), coupons_path)
+      = link_to( t('activerecord.models.discount.other'), discounts_path)
+      = link_to( t('activerecord.models.reservation.other'), reservations_path)
 
-      - if perms.include? 'manage_articles_categories_options'
-        = link_to( t('activerecord.models.category.other'), categories_path)
-        = link_to( t('activerecord.models.coupon.other'), coupons_path)
-        = link_to( t('activerecord.models.discount.other'), discounts_path)
-        = link_to( t('activerecord.models.reservation.other'), reservations_path)
-        = link_to( t('activerecord.models.article.other'), articles_path)
-        = link_to( t('activerecord.models.option.other'), options_path)
+    - if perms.include?('finish_own_settlement') or perms.include?('finish_all_settlements')
+      = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
 
-      - if perms.include?('finish_own_settlement') or perms.include?('finish_all_settlements')
-        = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
+    - if perms.include? 'view_all_settlements'
+      = link_to( t('activerecord.models.settlement.other'), settlements_path)
 
-      - if perms.include? 'view_all_settlements'
-        = link_to( t('activerecord.models.settlement.other'), settlements_path)
+    - if perms.include? 'view_statistics'
+      = link_to( t('statistic'), statistics_path)
 
-      - if perms.include? 'view_statistics'
-        = link_to( t('statistic'), statistics_path)
+    - if perms.include? 'manage_settings'
+      = link_to( t('activerecord.models.tax.other'), taxes_path)
+      = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
+      = link_to( t('activerecord.models.user.other'), users_path)
+      = link_to( t('activerecord.models.role.other'), roles_path)
+      = link_to( t('activerecord.models.company.one'), companies_path)
+      = link_to( t('activerecord.models.page.other'), pages_path)
+      = link_to( t('activerecord.models.customer.other'), customers_path)
+      = link_to( t('activerecord.models.presentation.other'), presentations_path)
 
-      - if perms.include? 'manage_settings'
-        = link_to( t('activerecord.models.tax.other'), taxes_path)
-        = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
-        = link_to( t('activerecord.models.user.other'), users_path)
-        = link_to( t('activerecord.models.role.other'), roles_path)
-        = link_to( t('activerecord.models.company.one'), companies_path)
-
-      = button_to t(:logout, :who => @current_user.login), session_path, :method => :delete
+    = button_to t(:logout, :who => @current_user.login), session_path, :method => :delete

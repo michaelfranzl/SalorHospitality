@@ -1,8 +1,12 @@
+!billgastroblue1 = #5b7682
+!warning = #74101b
+
 body
   :margin 0px 0px 40px 0
   :padding 0px
   :font-family Trebuchet MS
   :color #CCC
+  :font-family Ubuntu-R
   :background-color #0e1d25
   :background-image url('/images/bg.png')
   :background-repeat repeat-x
@@ -167,6 +171,12 @@ td.item_label
   :border-bottom 2px solid #222
   :background-color = #3a474d
 
+td.item_label.warning
+  :background-color !warning
+
+td.item_count.updated
+  :background-color !billgastroblue1
+
 div.category_label
   :width 65px
   :height 65px
@@ -325,3 +335,43 @@ div.unsettled_orders
 
 a.storno_button
   :margin-top 0px
+  
+div#items_notifications
+  //:display none
+  :vertical-align top
+  #preparation_list,
+  #delivery_list
+    :display inline-block
+    :vertical-align top
+ 
+div.item_list
+  :width 310px
+  :vertical-align top
+  :display inline-block
+  .unconfirmed
+    :cursor pointer
+  .confirmed,
+  .unconfirmed
+    :vertical-align top
+    :border 1px solid #777
+    :margin 5px
+    :min-height 30px
+    :background-color #333
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+    :padding 3px
+    .increment, .reference_count, .update
+      :cursor pointer
+      :text-align center
+      :font-size 150%
+      :border-top 2px solid #555
+      :border-left 2px solid #555
+      :border-right 2px solid #222
+      :border-bottom 2px solid #222
+    .increment, .reference_count
+      :width 30px
+    .increment, .update
+      :background-color #3A474D
+    .update
+      :font-size 95%
+      :text-align left

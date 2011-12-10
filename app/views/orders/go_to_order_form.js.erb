@@ -6,11 +6,18 @@ tablerows = ''
 
 <%= generate_js_variables %>
 
+<% if @order and @order.customers.any?  %>
+  var order_customers = <%= raw @order.customers.to_json %>;
+<% else  %>
+  var order_customers = [];
+<% end %>
+
 $('#order_sum').val('0' + i18n_decimal_separator + '00');
-$('#order_id').val('');
+//$('#order_id').val('');
 $('#order_user_id').val(<%= @current_user.id %>);
 $('#order_action').val('');
 $('#target_table').val('');
+$('#note_for_order').hide();
 
 
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
@@ -37,13 +44,17 @@ $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape
 
   end %>
 
+$('#order_id').val('<%= @order.id %>');
+$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
+for (o in order_customers) {
+  var customer = order_customers[o]["customer"]
+  $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
+}
+$('#order_note').val('<%= escape_javascript @order.note %>');
+$('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
+
 $('#inputfields').append('<%= escape_javascript raw inputfields %>');
 $('#itemstable').append('<%= escape_javascript raw tablerows %>');
-
-$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
-$('#order_id').val('<%= @order.id %>');
-$('#order_user_id').val('<%= @order.user.id if @order.user %>');
-$('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
 
 <% end %>
 
@@ -55,7 +66,11 @@ $('#invoices').hide();
 $('#functions_header_index').hide();
 $('#functions_header_invoice_form').hide();
 $('#functions_header_order_form').show();
-$('#functions_footer').show();
+
+<% if mobile? %>
+  $('#functions_footer').html('<%= escape_javascript render :partial => 'orders/functions_footer' %>');
+  $('#functions_footer').show();
+<% end %>
 
 tableupdates = -1;
 screenlock_counter = -1;

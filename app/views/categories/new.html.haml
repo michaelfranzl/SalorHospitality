@@ -9,22 +9,37 @@
       - @category.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @category do |category_form|
+= form_for nest_image(@category), :html => { :multipart => true } do |category_form|
   %table
     %tr
       %td= category_form.label('name', Category.human_attribute_name(:name))
-      %td= category_form.text_field :name, :size => '20'
+      %td
+        = category_form.text_field :name, :size => '20'
+        %span#category_name_display_keyboard.display_keyboard
     %tr
       %td= category_form.label('tax_id', Category.human_attribute_name(:tax_id))
-      %td= category_form.collection_select :tax_id, Tax.all, :id, :custom_name, { :include_blank => true }
+      %td= category_form.collection_select :tax_id, Tax.existing, :id, :custom_name, { :include_blank => true }
+    %tr
+      %td= category_form.label('user_id', Category.human_attribute_name(:user_id))
+      %td= category_form.collection_select :tax_id, User.existing, :id, :login, { :include_blank => true }
     %tr
       %td= category_form.label('usage', Category.human_attribute_name(:vendor_printer_id))
-      %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.available, :id, :name
+      %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.existing, :id, :name
     %tr
       %td= category_form.label('icon', Category.human_attribute_name(:icon))
       %td
         %select#category_icon{ :name => 'category[icon]', :size => 2 }
           = options_for_select(get_icon_array, category_form.object.icon)
+    %tr
+      = category_form.fields_for :images do |image_form|
+        %td
+          %span.label_width= image_form.label('image', Category.human_attribute_name(:custom_icon))
+        %td
+          - if @category.icon == 'custom'
+            %div{:style => "float:left; height:90px; width:90px; margin-bottom:4px; background-color: #{@category.color}; background-image: url('#{@category.icon_path}')"}
+            %br
+          %span.input_fields
+            = image_form.file_field :file_data, :size => 15
     %tr
       %td= category_form.label('color', Category.human_attribute_name(:color))
       %td
@@ -32,3 +47,9 @@
           = options_for_select(get_color_array, category_form.object.color)
           
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+
+:javascript
+  $('#category_name').keyboard( {openOn: '' } );
+  $('#category_name_display_keyboard').click(function(){
+    $('#category_name').getkeyboard().reveal();
+  });

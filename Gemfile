@@ -7,6 +7,7 @@ gem 'rails', '3.0.6'
 
 gem 'mysql2', '0.2.6'
 gem 'serialport', '1.0.4'
+gem 'kramdown', '0.13.3'
 
 gem 'exception_notification', :require => 'exception_notifier'
 
@@ -35,3 +36,4 @@ gem 'ruby-debug19', '0.11.6'
 
 gem 'haml', '3.0.25'
 gem 'acts_as_list', '0.1.3'
+gem 'rmagick', '2.13.1'

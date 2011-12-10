@@ -4,6 +4,6 @@ class ChangeActiveInQuantity < ActiveRecord::Migration
   end
 
   def self.down
-    change_column :quantities, :active, :boolean
+    change_column :quantities, :active
   end
 end

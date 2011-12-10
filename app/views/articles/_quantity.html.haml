@@ -3,7 +3,6 @@
 %li{ :id => "quantity_#{ id }" }
   %span.handle
   - unless f.object.new_record?
-    %span.label= f.label('active', Quantity.human_attribute_name(:active))
     %span.input_fields= f.check_box :active
   %span.label= f.label :prefix, Quantity.human_attribute_name(:prefix)
   %span.input_fields
@@ -19,7 +18,7 @@
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_price_display_keyboard" }
 
   - unless f.object.new_record?
-    %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= Quantity.human_attribute_name(:hidden)
+    %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => Quantity.human_attribute_name(:hidden), :alt => Quantity.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;")
 
 :javascript
   $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );

@@ -1,6 +1,9 @@
 de:
   activerecord:
     models:
+      customer:
+        one: Kunde
+        other: Kunden
       table:
         one: Tisch
         other: Tische
@@ -31,6 +34,9 @@ de:
       item:
         one: Posten
         other: Posten
+      image:
+        one: Bild
+        other: Bilder
       settlement:
         one: Abrechnung
         other: Übersicht
@@ -50,11 +56,23 @@ de:
         one: Drucker
         other: Drucker
       coupon:
-        one: Coupon
-        other: Coupons
+        one: Gutschein
+        other: Gutscheine
       discount:
-        one: Discount
-        other: Discountsl
+        one: Preisnachlass
+        other: Preisnachlässe
+      page:
+        one: Karte
+        other: Karten
+      partial:
+        one: Element
+        other: Elemente
+      reservation:
+        one: Reservierung
+        other: Reservierungen
+      presentation:
+        one: Vorlage
+        other: Vorlagen
 
     attributes:
       article:
@@ -98,14 +116,17 @@ de:
         name: Name
         tax_id: Steuerklasse
         sort_order: Sortierwert
-        icon: Symbol
+        icon: Icon
+        custom_icon: Mein Icon
         color: Farbe
         food: Speise?
         vendor_printer_id: Drucker
+        hidden: löschen
       cost_center:
         name: Name
         description: Beschreibung
         active: aktiv?
+        hidden: löschen
       group:
         name: Name
       user:
@@ -115,6 +136,7 @@ de:
         title: Anrede
         color: Farbe
         language: Sprache
+        tables: Tische
         active: aktiv?
         hidden: löschen?
       company:
@@ -137,6 +159,9 @@ de:
         address: Adresse
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
+        res_fetch_url: Reservierungen abfragen
+        res_confirm_url: Reservierungen bestätigen
+        use_order_numbers: Bestellnummern verwenden?
       role:
         name: Name
       vendor_printer:
@@ -146,6 +171,21 @@ de:
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
+      presentation:
+        name: Name
+        description: Beschreibung
+        markup: ERB Markup
+        code: Ruby Code
+        model: Typ
+        active: aktiv
+        hidden: löschen
+      page:
+        active: aktiv
+        hidden: löschen
+      partial:
+        blurb: Blurb
+        active: aktiv
+        hidden: löschen
 
   articles:
     index:
@@ -228,6 +268,9 @@ de:
       edit_stock: Lagerartikel bearbeiten
 
   orders:
+    index:
+      preparation_list: Zubereitungen
+      delivery_list: Lieferungen
     served_by: Sie wurden bedient von
     order:
       sum: SUMME
@@ -242,6 +285,7 @@ de:
       count: Anzahl
       sum: Summe
       list_of_taxes: Liste der Steuern
+      search_by_number: Suche nach Bestellnummer
     invoice_form:
       split_invoice: Rechnung teilen
     login_form:
@@ -345,6 +389,7 @@ de:
     dtypes:
       fixed: "Fixed"
       percent: "Percent"
+
   roles:
     new:
       take_orders: Bestellungen aufnehmen
@@ -366,6 +411,27 @@ de:
       view_statistics: Statistiken ansehen
       manage_users: Benutzer verwalten
       manage_settings: Grundeinstellungen vornehmen
+      
+  partials:
+    error_during_evaluation: 'Fehler: '
+    default_blurb: Text
+    no_presentation_found:
+      no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
+      
+  presentations:
+    new:
+      new_presentation: Neue Elementvorlage
+      edit_presentation: Elementvorlage bearbeiten
+      
+  pages:
+    edit:
+      edit_page: Karte bearbeiten
+      view: Anzeigen
+
+  images:
+    errempty: Ungültige Datei
+    errsize: Ungültige Dateigröße
+    errtype: Ungültige Dateityp
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'
@@ -379,6 +445,7 @@ de:
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
   menucard_generic_name: Speisekarte
+  unsettled_orders_generic_name: Shifts
 
   print_kitchenlist: Küchenliste drucken
   recent_orders: Kürzliche Rechnugen ansehen
@@ -409,6 +476,10 @@ de:
   green: Grün
   blue: Blau
   blank: Leer
+  white: Weiß
+  black: Schwarz
+  yellow: Gelb
+  winered: Weinrot
 
   food: Speisen
   drink: Getränke
@@ -455,3 +526,4 @@ de:
   no_printing: Kein Druck
   copy: Kopie
   exit: Beenden
+  printing_test: Testdruck

@@ -10,6 +10,16 @@ BillGastro::Application.routes.draw do
   resources :coupons
 
   resources :roles
+  resources :customers
+
+  get "templates/index"
+  get "templates/show"
+  get "templates/edit"
+  get "templates/update"
+  get "templates/delete"
+
+  get "partials/delete"
+  get "partials/update"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -56,6 +66,7 @@ BillGastro::Application.routes.draw do
       get :last_invoices
       post :receive_order_attributes_ajax
       get :logout
+      post :by_nr
     end
   end
 
@@ -68,9 +79,35 @@ BillGastro::Application.routes.draw do
   match 'sessions/exception_test' => 'sessions#exception_test'
   match 'companies/backup_database' => 'companies#backup_database'
   match 'companies/backup_logfile' => 'companies#backup_logfile'
+  
   match 'company/logo' => 'companies#logo'
+#  match 'articles/:id/image' => 'articles#image'
+#  match 'options/:id/image' => 'options#image'
+#  match 'quantities/:id/image' => 'quantities#image'
+#  match 'pages/:id/image' => 'pages#image'
 
-  resources :items, :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad
+  resources :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
+  
+  resources :items do
+    collection do
+      get :list
+      get :set_attribute
+    end
+  end
+  
+  resources :partials do
+    collection do
+      post :change_presentation
+      post :move
+    end
+  end
+  
+  resources :pages do
+    collection do
+      post :find
+      get :iframe
+    end
+  end
 
   resources :categories do
     collection do
@@ -143,7 +180,7 @@ BillGastro::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'sessions#new'
+  root :to => 'orders#index'
 
   # See how all your routes lay out with "rake routes"
 

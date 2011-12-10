@@ -1,6 +1,9 @@
 tr:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Masa
         other: Masalar
@@ -31,6 +34,9 @@ tr:
       item:
         one: Pozisyon
         other: Pozisyonlar
+      image:
+        one: Görüntü
+        other: Görüntüler
       settlement:
         one: Hesaplaşma
         other: Hesaplaşmalar
@@ -41,14 +47,32 @@ tr:
         one: Depo stoku
         other: Depo stoklar
       group:
-        one: Depo grubu
-        other: Depo grupları
+        one: XXXStock Group
+        other: XXXStock Groups
       role:
         one: XXXRole
         other: XXXRoles
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      coupon:
+        one: XXXCoupon
+        other: XXXCoupons
+      discount:
+        one: XXXDiscount
+        other: XXXDiscounts
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      reservation:
+        one: XXXReservation
+        other: XXXReservations
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
 
     attributes:
       article:
@@ -93,13 +117,16 @@ tr:
         tax_id: Vergi derecesi
         sort_order: Bölümler
         icon: Sembol
+        custom_icon: Benim Sembol
         color: Renk
         food: Yemek?
         vendor_printer_id: XXXPrinter
+        hidden: XXXdelete
       cost_center:
         name: Isim
         description: Tarif
         active: aktif?
+        hidden: XXXdelete
       group:
         name: Isim
       user:
@@ -109,6 +136,7 @@ tr:
         title: Hitap
         color: Renk
         language: Dil
+        tables: XXXTables
         active: XXXactive?
         hidden: XXXdelete?
       company:
@@ -131,6 +159,9 @@ tr:
         address: adres
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        res_fetch_url: XXXFetch Reservations
+        res_confirm_url: XXXConfirm Reservations
+        use_order_numbers: XXXUse order numbers?
       role:
         name: XXXName
       vendor_printer:
@@ -140,6 +171,21 @@ tr:
       settlement:
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount
+      presentation:
+        name: XXXName
+        description: XXXDescription
+        markup: XXXERB Markup
+        code: XXXRuby code
+        model: XXXType
+        active: XXXactive
+        hidden: XXXdelete
+      page:
+        active: XXXactive
+        hidden: XXXdelete
+      partial:
+        blurb: XXXBlurb
+        active: XXXaktiv
+        hidden: XXXdelete
 
   articles:
     index:
@@ -161,7 +207,8 @@ tr:
       variants:
         one: Varyant
         other: Varyant
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -221,6 +268,9 @@ tr:
       edit_stock: Depo ürünü islemek
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Size hizmet gösteren
     order:
       sum: Toplam
@@ -235,6 +285,7 @@ tr:
       count: Miktar
       sum: Toplam
       list_of_taxes: Vergi listesi
+      search_by_number: XXXSearch by number
     invoice_form:
       split_invoice: Faturayi paylasmak/bölmek
     login_form:
@@ -264,7 +315,7 @@ tr:
       set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
       split_this_item: Posizyonları  
       switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
-
+      
   settlements:
     index:
       start_date: Baslangic
@@ -329,6 +380,15 @@ tr:
       backup_database: XXXBackup database
     update:
       config_successfully_updated: Belirtiler yenilendi!
+  coupons:
+    ctypes:
+      fixed: "XXXFixed"
+      percent: "XXXPercent"
+      b1g1: "XXXBuy 1 Get 1"
+  discounts:
+    dtypes:
+      fixed: "XXXFixed"
+      percent: "XXXPercent"
 
   roles:
     new:
@@ -339,6 +399,7 @@ tr:
       move_tables: XXXMove tables
       make_storno: XXXMake storno
       make_immediate_storno: XXXCancel items immediately
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: XXXAssign cost center
       move_order: XXXMove order
       change_waiter: XXXChange waiter
@@ -350,6 +411,27 @@ tr:
       view_statistics: XXXView statistics
       manage_users: XXXManage users
       manage_settings: XXXManage settings
+
+  partials:
+    error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
+
+  images:
+    errempty: Geçersiz dosya
+    errsize: Geçersiz dosya boyutu
+    errtype: Geçersiz dosya türü
 
   delete: Silmek
   are_you_sure: 'Emin misiniz?'
@@ -394,6 +476,10 @@ tr:
   green: esil
   blue: Mavi
   blank: Bos
+  white: XXXWhite
+  black: XXXBlack
+  yellow: XXXYellow
+  winered: XXXWine Red
 
   food: Yemekler
   drink: Içecekler
@@ -403,6 +489,14 @@ tr:
   kitchen: Mutfak
   bar: Bar
   dummy: Deneme
+
+  restaurant: Restaurant
+  auxiliary_waiter: Auxiliary Waiter
+  waiter: Waiter
+  chief_waiter: Chief waiter
+  host: Host
+  admin: Admin
+  superuser: Superuser
 
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
@@ -432,3 +526,4 @@ tr:
   no_printing: XXXNo printing
   copy: XXXCopy
   exit: XXXExit
+  printing_test: XXXPrinting test

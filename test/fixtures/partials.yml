@@ -1,0 +1,341 @@
+--- 
+partials_001: 
+  id: 20
+  left: 95
+  top: 172
+  presentation_id: 5
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 311
+  created_at: 2011-11-06 16:30:51 Z
+  updated_at: 2011-11-23 19:15:43 Z
+  font: Rolina
+  size: 200
+  image_size: 200
+  color: "#f7bc81"
+  width: 
+  align: 
+partials_002: 
+  id: 23
+  left: 456
+  top: 211
+  presentation_id: 2
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 324
+  created_at: 2011-11-06 18:18:25 Z
+  updated_at: 2011-11-23 16:39:53 Z
+  font: Rolina
+  size: 200
+  image_size: 
+  color: "#f7bc81"
+  width: 
+  align: 
+partials_003: 
+  id: 24
+  left: 220
+  top: 106
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 18:52:10 Z
+  updated_at: 2011-11-06 18:52:10 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_004: 
+  id: 25
+  left: 284
+  top: 32
+  presentation_id: 3
+  blurb: about us
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 18:52:45 Z
+  updated_at: 2011-11-16 14:01:38 Z
+  font: aaaiight
+  size: 350
+  image_size: 
+  color: "#b5fcb1"
+  width: 
+  align: 
+partials_005: 
+  id: 27
+  left: 154
+  top: 143
+  presentation_id: 1
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 346
+  created_at: 2011-11-06 20:45:16 Z
+  updated_at: 2011-11-06 20:45:16 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_006: 
+  id: 28
+  left: 140
+  top: 160
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:45:28 Z
+  updated_at: 2011-11-06 20:45:28 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_007: 
+  id: 29
+  left: 129
+  top: 103
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:47:00 Z
+  updated_at: 2011-11-06 20:47:00 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_008: 
+  id: 30
+  left: 416
+  top: 143
+  presentation_id: 1
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 347
+  created_at: 2011-11-06 20:47:25 Z
+  updated_at: 2011-11-06 20:47:25 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_009: 
+  id: 31
+  left: 273
+  top: 30
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:48:58 Z
+  updated_at: 2011-11-06 20:48:58 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_010: 
+  id: 32
+  left: 290
+  top: 100
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:50:20 Z
+  updated_at: 2011-11-06 20:50:20 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_011: 
+  id: 33
+  left: 241
+  top: 85
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:52:51 Z
+  updated_at: 2011-11-06 20:52:51 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_012: 
+  id: 34
+  left: 460
+  top: 206
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:53:27 Z
+  updated_at: 2011-11-06 20:53:27 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_013: 
+  id: 35
+  left: 290
+  top: 236
+  presentation_id: 3
+  blurb: edit me
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 20:53:45 Z
+  updated_at: 2011-11-06 20:53:45 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_014: 
+  id: 37
+  left: 321
+  top: 93
+  presentation_id: 1
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 347
+  created_at: 2011-11-06 21:06:14 Z
+  updated_at: 2011-11-06 21:06:14 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_015: 
+  id: 38
+  left: 94
+  top: -67
+  presentation_id: 3
+  blurb: yet another page
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-06 21:07:37 Z
+  updated_at: 2011-11-07 23:03:37 Z
+  font: Rolina
+  size: 600
+  image_size: 
+  color: "#d11f43"
+  width: 
+  align: 
+partials_016: 
+  id: 41
+  left: 203
+  top: 30
+  presentation_id: 4
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 1
+  created_at: 2011-11-07 22:29:44 Z
+  updated_at: 2011-11-19 18:58:59 Z
+  font: Rolina
+  size: 700
+  image_size: 
+  color: "#f6ffc2"
+  width: 
+  align: 
+partials_017: 
+  id: 42
+  left: 197
+  top: 136
+  presentation_id: 6
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 9
+  created_at: 2011-11-07 22:51:08 Z
+  updated_at: 2011-11-07 22:56:52 Z
+  font: 
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 
+partials_018: 
+  id: 43
+  left: 53
+  top: 197
+  presentation_id: 3
+  blurb: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-07 23:02:11 Z
+  updated_at: 2011-11-19 19:48:15 Z
+  font: 
+  size: 150
+  image_size: 
+  color: "#ffffff"
+  width: 700
+  align: justify
+partials_019: 
+  id: 56
+  left: 3
+  top: 26
+  presentation_id: 3
+  blurb: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  active: 1
+  hidden: 
+  model_id: 3
+  created_at: 2011-11-19 19:48:46 Z
+  updated_at: 2011-11-19 19:52:01 Z
+  font: 
+  size: 
+  image_size: 
+  color: "#2db56a"
+  width: 250
+  align: justify
+partials_020: 
+  id: 57
+  left: 404
+  top: 118
+  presentation_id: 1
+  blurb: 
+  active: 1
+  hidden: 
+  model_id: 273
+  created_at: 2011-11-23 19:15:15 Z
+  updated_at: 2011-11-23 19:17:57 Z
+  font: Ubuntu-R
+  size: 
+  image_size: 
+  color: 
+  width: 
+  align: 

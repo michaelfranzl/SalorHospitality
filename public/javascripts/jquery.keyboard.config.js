@@ -83,7 +83,7 @@ $.keyboard.layouts['num'] = {
 
 		// *** Useability ***
 		// Auto-accept content when clicking outside the keyboard (popup will close)
-		autoAccept   : false,
+		autoAccept   : true,
 
 		// Prevents direct input in the preview window when true
 		lockInput    : false,

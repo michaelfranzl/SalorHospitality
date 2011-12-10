@@ -19,11 +19,12 @@ class UsersController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @users = @current_company.users.available
+    @users = @current_company.users.existing
   end
 
   def new
     @user = User.new
+    @tables = Table.all
   end
 
   def show
@@ -38,6 +39,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @tables = Table.existing
     render :new
   end
 

@@ -20,10 +20,11 @@ class SessionsController < ApplicationController
 
   def new
     @users = User.all
+    render :layout => 'login'
   end
 
   def create
-    @current_user = User.find_by_password params[:password]
+    @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     @users = User.all
     if @current_user
       session[:user_id] = @current_user
@@ -31,16 +32,16 @@ class SessionsController < ApplicationController
       session[:admin_interface] = !mobile? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = nil
-      redirect_to '/orders'
+      redirect_to '/'
     else
       flash[:error] = t :wrong_password
-      render :new
+      render :new, :layout => 'login'
     end
   end
 
   def destroy
     @current_user = session[:user_id] = nil
-    redirect_to '/'
+    redirect_to '/session/new'
   end
 
   def exception_test
@@ -48,6 +49,6 @@ class SessionsController < ApplicationController
   end
 
   def catcher
-    redirect_to '/'
+    redirect_to '/session/new'
   end
 end

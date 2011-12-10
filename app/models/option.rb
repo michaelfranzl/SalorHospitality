@@ -17,11 +17,16 @@
 class Option < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
+  has_many :partials
+  has_many :images, :as => :imageable
+  include ImageMethods
   validates_presence_of :name
   include Scope
   include Base
   before_create :set_model_owner
   scope :existing, where(:hidden => false).order('position ASC')
+
+  accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
   def price=(price)
     write_attribute(:price, price.gsub(',', '.'))
@@ -38,4 +43,5 @@ class Option < ActiveRecord::Base
     end
     self.save
   end
+
 end

@@ -13,4 +13,4 @@
       %td= link_to ta.name, edit_taxis_path(ta)
       %td= number_to_percentage ta.percent, :precision => 0
       %td= ta.letter
-      %td= link_to Tax.human_attribute_name(:hidden), taxis_path(ta), :method => :delete
+      %td= link_to image_tag('button_small_delete.png', :title => Tax.human_attribute_name(:hidden), :alt => Tax.human_attribute_name(:hidden)), taxis_path(ta), :method => :delete, :confirm => t(:are_you_sure)

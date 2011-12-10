@@ -1,33 +1,49 @@
 --- 
 options_001: 
   id: 1
+<<<<<<< HEAD
   company_id: 46
   category_id: 2
+=======
+>>>>>>> master
   option_id: 
-  name: extra ketchup
-  price: 
-  created_at: 2010-09-10 16:31:12 Z
-  updated_at: 2010-09-10 16:31:12 Z
+  name: Ketchup
+  price: 1.0
+  created_at: 2011-11-19 10:55:27 Z
+  updated_at: 2011-11-23 19:59:09 Z
+  hidden: 0
+  position: 
 options_002: 
   id: 2
+<<<<<<< HEAD
   company_id: 46
   category_id: 2
+=======
+>>>>>>> master
   option_id: 
-  name: extra mustard
-  price: 
-  created_at: 2010-09-10 16:31:22 Z
-  updated_at: 2010-09-10 16:31:22 Z
+  name: Mustard
+  price: 0.0
+  created_at: 2011-11-23 19:58:58 Z
+  updated_at: 2011-11-23 19:58:58 Z
+  hidden: 0
+  position: 
 options_003: 
   id: 3
+<<<<<<< HEAD
   company_id: 46
   category_id: 2
+=======
+>>>>>>> master
   option_id: 
   name: well done
-  price: 
-  created_at: 2010-09-10 16:31:28 Z
-  updated_at: 2010-09-10 16:31:28 Z
+  price: 0.0
+  created_at: 2011-11-23 19:59:21 Z
+  updated_at: 2011-11-23 19:59:21 Z
+  hidden: 0
+  position: 
 options_004: 
   id: 4
+<<<<<<< HEAD
   company_id: 46
   category_id: 2
   option_id: 
@@ -53,3 +69,12 @@ options_006:
   price: 
   created_at: 2010-09-10 16:32:11 Z
   updated_at: 2010-09-10 16:32:11 Z
+=======
+  option_id: 
+  name: not too cold
+  price: 0.0
+  created_at: 2011-11-23 20:00:12 Z
+  updated_at: 2011-11-23 20:00:12 Z
+  hidden: 0
+  position: 
+>>>>>>> master

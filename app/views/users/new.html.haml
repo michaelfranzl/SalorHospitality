@@ -10,6 +10,7 @@
         %li= msg
 
 = form_for @user do |user_form|
+  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   %table
     %tr
       %td= user_form.label('login', User.human_attribute_name(:login))
@@ -39,7 +40,7 @@
     %tr
       %td= user_form.label('language', User.human_attribute_name(:language))
       %td
-        %select#category_color{ :name => 'user[language]' }
+        %select#language{ :name => 'user[language]' }
           = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
     %tr
       %td= user_form.label('active', User.human_attribute_name(:active))
@@ -47,8 +48,10 @@
     %tr
       %td= user_form.label('hidden', User.human_attribute_name(:hidden))
       %td= user_form.check_box :hidden
-
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %tr
+      %td= user_form.label('tables', User.human_attribute_name(:tables))
+      %td
+        = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 10
 
 :javascript
   $('#user_login').keyboard( {openOn: '' } );

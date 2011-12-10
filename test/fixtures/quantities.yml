@@ -11,7 +11,11 @@ quantities_001:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_002: 
   id: 2
   prefix: 1/8
@@ -24,7 +28,11 @@ quantities_002:
   postfix: 
   sort: 1
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_003: 
   id: 3
   prefix: Flasche 0,35l
@@ -37,7 +45,11 @@ quantities_003:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_004: 
   id: 4
   prefix: gespritzt 1/2
@@ -50,7 +62,11 @@ quantities_004:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_005: 
   id: 5
   prefix: Gelb
@@ -63,7 +79,11 @@ quantities_005:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_006: 
   id: 6
   prefix: 1/4 gespritzt
@@ -76,7 +96,11 @@ quantities_006:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_007: 
   id: 7
   prefix: 1/4l pur
@@ -89,7 +113,11 @@ quantities_007:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_008: 
   id: 8
   prefix: 1/4l gespritzt
@@ -102,7 +130,11 @@ quantities_008:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_009: 
   id: 9
   prefix: 1/2l gespritzt
@@ -115,7 +147,11 @@ quantities_009:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_010: 
   id: 10
   prefix: 1/4 gespritzt
@@ -128,7 +164,11 @@ quantities_010:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_011: 
   id: 11
   prefix: 1/2 gespritzt
@@ -141,7 +181,11 @@ quantities_011:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_012: 
   id: 12
   prefix: 1/8 pur
@@ -154,7 +198,11 @@ quantities_012:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_013: 
   id: 13
   prefix: 1/4 pur
@@ -167,7 +215,11 @@ quantities_013:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_014: 
   id: 14
   prefix: 1/4 gespritzt
@@ -180,7 +232,11 @@ quantities_014:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_015: 
   id: 15
   prefix: 1/4 pur
@@ -193,7 +249,11 @@ quantities_015:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_016: 
   id: 16
   prefix: 1/2 gespritzt
@@ -206,7 +266,11 @@ quantities_016:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_017: 
   id: 17
   prefix: 1/8 pur
@@ -219,7 +283,11 @@ quantities_017:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_018: 
   id: 18
   prefix: 1/2 gespritzt
@@ -232,7 +300,11 @@ quantities_018:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_019: 
   id: 19
   prefix: 1/4 gespritzt
@@ -245,7 +317,11 @@ quantities_019:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_020: 
   id: 20
   prefix: 1/8 pur
@@ -258,7 +334,11 @@ quantities_020:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_021: 
   id: 21
   prefix: 1/4 pur
@@ -271,7 +351,11 @@ quantities_021:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_022: 
   id: 22
   prefix: 1/8 pur
@@ -284,7 +368,11 @@ quantities_022:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_023: 
   id: 23
   prefix: 1/2 gespritzt
@@ -297,7 +385,11 @@ quantities_023:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_024: 
   id: 24
   prefix: 1/4 gespritzt
@@ -310,7 +402,11 @@ quantities_024:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_025: 
   id: 25
   prefix: 1/4 pur
@@ -323,7 +419,11 @@ quantities_025:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_026: 
   id: 26
   prefix: 1/8 pur
@@ -336,7 +436,11 @@ quantities_026:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_027: 
   id: 27
   prefix: 1/4 pur
@@ -349,7 +453,11 @@ quantities_027:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_028: 
   id: 28
   prefix: 1/2 gespritzt
@@ -362,7 +470,11 @@ quantities_028:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_029: 
   id: 29
   prefix: 1/4 gespritzt
@@ -375,7 +487,11 @@ quantities_029:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_030: 
   id: 30
   prefix: 1/4 pur
@@ -388,7 +504,11 @@ quantities_030:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_031: 
   id: 31
   prefix: 1/4 gespritzt
@@ -401,7 +521,11 @@ quantities_031:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_032: 
   id: 32
   prefix: 1/8 pur
@@ -414,7 +538,11 @@ quantities_032:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_033: 
   id: 33
   prefix: 1/2l gespritzt
@@ -427,7 +555,11 @@ quantities_033:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_034: 
   id: 34
   prefix: Flasche
@@ -440,7 +572,11 @@ quantities_034:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_035: 
   id: 35
   prefix: 1/8
@@ -453,7 +589,11 @@ quantities_035:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_036: 
   id: 36
   prefix: Flasche
@@ -466,7 +606,11 @@ quantities_036:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_037: 
   id: 37
   prefix: 1/4 pur
@@ -479,7 +623,11 @@ quantities_037:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_038: 
   id: 38
   prefix: 1/8 pur
@@ -492,7 +640,11 @@ quantities_038:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_039: 
   id: 39
   prefix: "1/2 gespritzt "
@@ -505,7 +657,11 @@ quantities_039:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_040: 
   id: 40
   prefix: 1/4 gespritzt
@@ -518,7 +674,11 @@ quantities_040:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_041: 
   id: 41
   prefix: Soda
@@ -531,7 +691,11 @@ quantities_041:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_042: 
   id: 42
   prefix: Orange
@@ -544,7 +708,11 @@ quantities_042:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_043: 
   id: 43
   prefix: "gro\xC3\x9F"
@@ -557,7 +725,11 @@ quantities_043:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_044: 
   id: 44
   prefix: klein
@@ -570,7 +742,11 @@ quantities_044:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_045: 
   id: 45
   prefix: 1/4
@@ -583,7 +759,11 @@ quantities_045:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_046: 
   id: 46
   prefix: 1/2
@@ -596,7 +776,11 @@ quantities_046:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_047: 
   id: 47
   prefix: 1/4
@@ -609,7 +793,11 @@ quantities_047:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_048: 
   id: 48
   prefix: 1/2
@@ -622,7 +810,11 @@ quantities_048:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_049: 
   id: 49
   prefix: 1/2 gespritzt
@@ -635,7 +827,11 @@ quantities_049:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_050: 
   id: 50
   prefix: 1/4 gespritzt
@@ -648,7 +844,11 @@ quantities_050:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_051: 
   id: 51
   prefix: 1/4 pur
@@ -661,7 +861,11 @@ quantities_051:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_052: 
   id: 52
   prefix: 1/8 pur
@@ -674,7 +878,11 @@ quantities_052:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_053: 
   id: 53
   prefix: Flasche
@@ -687,7 +895,11 @@ quantities_053:
   postfix: 
   sort: 3
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_054: 
   id: 54
   prefix: "0,3"
@@ -700,7 +912,11 @@ quantities_054:
   postfix: 
   sort: 11
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_055: 
   id: 55
   prefix: "0,5"
@@ -713,7 +929,11 @@ quantities_055:
   postfix: 
   sort: 19
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_056: 
   id: 56
   prefix: 1/8
@@ -726,7 +946,11 @@ quantities_056:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_057: 
   id: 57
   prefix: Flasche
@@ -739,7 +963,11 @@ quantities_057:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_058: 
   id: 58
   prefix: 1/8
@@ -752,7 +980,11 @@ quantities_058:
   postfix: 
   sort: 1
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_059: 
   id: 59
   prefix: Flasche
@@ -765,7 +997,11 @@ quantities_059:
   postfix: 
   sort: 2
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_060: 
   id: 60
   prefix: normal
@@ -778,7 +1014,11 @@ quantities_060:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_061: 
   id: 61
   prefix: klein
@@ -791,7 +1031,11 @@ quantities_061:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_062: 
   id: 62
   prefix: 1/2
@@ -804,7 +1048,11 @@ quantities_062:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_063: 
   id: 63
   prefix: 1/4
@@ -817,7 +1065,11 @@ quantities_063:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_064: 
   id: 64
   prefix: 1/2 Zitron
@@ -830,7 +1082,11 @@ quantities_064:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_065: 
   id: 65
   prefix: 1/4 Zitron
@@ -843,7 +1099,11 @@ quantities_065:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_066: 
   id: 66
   prefix: 1/4 gespritzt
@@ -856,7 +1116,11 @@ quantities_066:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_067: 
   id: 67
   prefix: 1/2 gespritzt
@@ -869,7 +1133,11 @@ quantities_067:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_068: 
   id: 68
   prefix: 1/2l gespritzt
@@ -882,7 +1150,11 @@ quantities_068:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_069: 
   id: 69
   prefix: 1/4l gespritzt
@@ -895,7 +1167,11 @@ quantities_069:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_070: 
   id: 70
   prefix: 1/8l pur
@@ -908,7 +1184,11 @@ quantities_070:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_071: 
   id: 71
   prefix: Camel gelb
@@ -922,6 +1202,7 @@ quantities_071:
   postfix: 
   sort: 0
   usage: 0
+  position: 
 quantities_072: 
   id: 72
   prefix: Camel nat. flavour
@@ -934,7 +1215,11 @@ quantities_072:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_073: 
   id: 73
   prefix: "0,2"
@@ -947,7 +1232,11 @@ quantities_073:
   postfix: 
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_074: 
   id: 74
   prefix: "0,5"
@@ -960,7 +1249,11 @@ quantities_074:
   postfix: 
   sort: 6
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_075: 
   id: 75
   prefix: "0,3"
@@ -973,43 +1266,59 @@ quantities_075:
   postfix: 
   sort: 2
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 
+>>>>>>> master
 quantities_076: 
   id: 76
   prefix: klein
   price: 1.5
   article_id: 311
   created_at: 2011-04-21 16:52:48 Z
-  updated_at: 2011-05-15 11:04:35 Z
+  updated_at: 2011-11-23 15:33:32 Z
   active: 1
   hidden: 0
   postfix: ""
   sort: 2
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 1
+>>>>>>> master
 quantities_077: 
   id: 77
   prefix: mitel
   price: 2.0
   article_id: 311
   created_at: 2011-04-21 16:52:48 Z
-  updated_at: 2011-05-15 11:04:35 Z
+  updated_at: 2011-11-23 15:41:47 Z
   active: 1
-  hidden: 0
+  hidden: 1
   postfix: ""
   sort: 1
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 2
+>>>>>>> master
 quantities_078: 
   id: 78
   prefix: "gro\xC3\x9F"
   price: 2.5
   article_id: 311
   created_at: 2011-04-21 16:52:48 Z
-  updated_at: 2011-04-23 22:54:14 Z
+  updated_at: 2011-11-23 15:33:29 Z
   active: 1
   hidden: 0
   postfix: ""
   sort: 0
   usage: 0
+<<<<<<< HEAD
   company_id: 46
+=======
+  position: 3
+>>>>>>> master

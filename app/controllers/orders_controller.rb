@@ -17,8 +17,8 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.scopied
-    @categories = Category.scopied.find(:all, :order => :position)
+    @tables = @current_user.tables.existing
+    @categories = Category.scopied.existing
     @users = User.active
     session[:admin_interface] = false
   end
@@ -59,6 +59,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def by_nr
+    @order = Order.find_by_nr params[:nr]
+    if @order
+      redirect_to order_path(@order)
+    else
+      redirect_to order_path(Order.last)
+    end
+  end
+
 
 
   def toggle_admin_interface
@@ -67,7 +76,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = Table.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables.existing
   end
 
   def toggle_tax_colors
@@ -126,7 +135,7 @@ class OrdersController < ApplicationController
           render :nothing => true
         elsif @orders.empty?
           # is the case for invoice_form
-          @tables = Table.find(:all, :conditions => { :hidden => false })
+          @tables = @current_user.tables.existing
           render 'go_to_tables'
         else
           # is the case for invoice_form
@@ -150,22 +159,16 @@ class OrdersController < ApplicationController
   def receive_order_attributes_ajax
     @cost_centers = CostCenter.scopied.find_all_by_active true
 
-    if params[:order][:id] == 'add_offline_items_to_order'
+    if (params[:order][:id] == 'add_offline_items_to_order') or (params[:order][:id].empty?)
       @order = Order.scopied.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
-    elsif not params[:order][:id].empty?
+    else
       @order = Order.scopied.find_by_id params[:order][:id]
     end
 
     if @order
       # similar to orders#update
-      begin
-        params[:order][:user_id] = @current_user.id if mobile?
-        @order.update_attributes params[:order]
-      rescue
-        logger.info "Trying to prevent FROZEN HASH error"
-        sleep 1
-        @order.update_attributes params[:order]
-      end
+      params[:order][:user_id] = @current_user.id if mobile?
+      @order.update_attributes params[:order]
     else
       # similar to orders#create
       @order = Order.new params[:order]
@@ -177,6 +180,9 @@ class OrdersController < ApplicationController
     @order.table.update_attribute :user, @order.user
     @order.save
     @order.reload
+    @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
+      i.update_attributes :user_id => @current_user.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
+    end
     @order.set_priorities
 
     if @order.nr > $COMPANY.largest_order_number
@@ -187,8 +193,9 @@ class OrdersController < ApplicationController
       $COMPANY.unused_order_numbers << @order.nr
       $COMPANY.save
       @order.delete
-      @order.table.update_attribute :user_id, nil
-      @tables = Table.find(:all, :conditions => { :hidden => false })
+      @order.table.user = nil
+      @order.table.save
+      @tables = @current_user.tables.existing
       render 'go_to_tables' and return
     end
 
@@ -209,23 +216,23 @@ class OrdersController < ApplicationController
     end
 
     @taxes = Tax.scopied.all
-    @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
+    @tables = @current_user.tables.existing
 
     case params[:order_action]
       when 'save_and_go_to_tables'
         render 'go_to_tables'
       when 'save_and_go_to_invoice'
         @orders = Order.scopied.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
-        session[:display_tax_colors] = true if $COMPANY.country == 'gn'
+        session[:display_tax_colors] = $COMPANY.country == 'de' or $COMPANY.country == 'cc'
         render 'go_to_invoice_form'
       when 'clear_order_and_go_back'
         @order.table.update_attribute :user_id, nil
-        @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
+        @tables = @current_user.tables.existing
         @order.destroy
         render 'go_to_tables'
       when 'move_order_to_table'
         move_order_to_table @order, params[:target_table]
-        @tables = Table.scopied.find(:all, :conditions => { :hidden => false })
+        @tables = @current_user.tables.existing
         render 'go_to_tables'
     end
   end
@@ -324,9 +331,9 @@ class OrdersController < ApplicationController
     def neighbour_orders(order)
       orders = Order.scopied.find_all_by_finished(true)
       idx = orders.index(order)
-      previous_order = orders[idx-1]
+      previous_order = orders[idx-1] if idx
       previous_order = order if previous_order.nil?
-      next_order = orders[idx+1]
+      next_order = orders[idx+1] if idx
       next_order = order if next_order.nil?
       return previous_order, next_order
     end

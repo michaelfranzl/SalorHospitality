@@ -7,6 +7,7 @@ cost_centers_001:
   created_at: 2011-05-15 10:54:00 Z
   updated_at: 2011-05-15 10:54:00 Z
   active: 1
+  hidden: 
 cost_centers_002: 
   id: 2
   company_id: 46
@@ -15,6 +16,7 @@ cost_centers_002:
   created_at: 2011-05-15 11:00:40 Z
   updated_at: 2011-05-15 11:01:18 Z
   active: 1
+  hidden: 
 cost_centers_003: 
   id: 3
   company_id: 46
@@ -23,3 +25,4 @@ cost_centers_003:
   created_at: 2011-05-15 11:01:11 Z
   updated_at: 2011-05-15 11:01:11 Z
   active: 1
+  hidden: 

@@ -26,6 +26,7 @@ class Tax < ActiveRecord::Base
   include Scope
   include Base
   before_create :set_model_owner
+  scope :existing, where('hidden=false or hidden is NULL')
 
   def custom_name
     @custom_name = percent.to_s + '%, ' + name

@@ -1,6 +1,9 @@
 en:
   activerecord:
     models:
+      customer:
+        one: Customer
+        other: Customers
       table:
         one: Table
         other: Tables
@@ -31,6 +34,9 @@ en:
       item:
         one: Item
         other: Items
+      image:
+        one: Image
+        other: Images
       settlement:
         one: Settlement
         other: Settlements
@@ -55,9 +61,18 @@ en:
       discount:
         one: Discount
         other: Discounts
+      page:
+        one: Card
+        other: Cards
+      partial:
+        one: Partial
+        other: Partials
       reservation:
         one: Reservation
         other: Reservations
+      presentation:
+        one: Template
+        other: Templates
 
     attributes:
       article:
@@ -102,13 +117,16 @@ en:
         tax_id: Tax
         sort_order: Sort Order
         icon: Icon
+        custom_icon: My Icon
         color: Color
         food: Food?
         vendor_printer_id: Printer
+        hidden: delete
       cost_center:
         name: Name
         description: Description
         active: active?
+        hidden: delete
       group:
         name: Name
       user:
@@ -118,6 +136,7 @@ en:
         title: Title
         color: Color
         language: Language
+        tables: Tables
         active: active?
         hidden: delete?
       company:
@@ -142,7 +161,7 @@ en:
         timeout: Screenlock Timeout (seconds)
         res_fetch_url: Fetch Reservations
         res_confirm_url: Confirm Reservations
-        
+        use_order_numbers: Use order numbers?
       role:
         name: Name
       vendor_printer:
@@ -152,6 +171,21 @@ en:
       settlement:
         initial_cash: Initial amount
         revenue: End amount
+      presentation:
+        name: Name
+        description: Description
+        markup: ERB Markup
+        code: Ruby code
+        model: Type
+        active: active
+        hidden: delete
+      page:
+        active: active
+        hidden: delete
+      partial:
+        blurb: Blurb
+        active: aktiv
+        hidden: delete
 
   articles:
     index:
@@ -234,6 +268,9 @@ en:
       edit_stock: Edit Stock
 
   orders:
+    index:
+      preparation_list: Preparation list
+      delivery_list: Delivery list
     served_by: You were served by
     order:
       sum: SUM
@@ -248,6 +285,7 @@ en:
       count: Count
       sum: Sum
       list_of_taxes: List of taxes
+      search_by_number: Search by number
     invoice_form:
       split_invoice: Split invoice
     login_form:
@@ -361,6 +399,7 @@ en:
       move_tables: Move tables
       make_storno: Cancel items
       make_immediate_storno: Cancel items immediately
+      cancel_all_items_in_active_order: Cancel all items in active order
       assign_cost_center: Assign cost center
       move_order: Move order
       change_waiter: Change waiter
@@ -372,6 +411,27 @@ en:
       view_statistics: View statistics
       manage_users: Manage users
       manage_settings: Manage settings
+      
+  partials:
+    error_during_evaluation: 'Error: '
+    default_blurb: edit me
+    no_presentation_found:
+      no_presentations_found: No template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: New Template
+      edit_presentation: Edit Template
+      
+  pages:
+    edit:
+      edit_page: Edit Page
+      view: View
+
+  images:
+    errempty: Invalid file
+    errsize: Invalid file size
+    errtype: Invalid file type
 
   delete: Delete
   are_you_sure: 'Are you sure?'
@@ -416,6 +476,10 @@ en:
   green: Green
   blue: Blue
   blank: blank
+  white: White
+  black: Black
+  yellow: Yellow
+  winered: Wine Red
 
   food: Foods
   drink: Drinks
@@ -462,3 +526,4 @@ en:
   no_printing: No printing
   copy: Copy
   exit: Exit
+  printing_test: Printing test

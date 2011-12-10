@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>First name:</b>
+  <%= @customer.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @customer.last_name %>
+</p>
+
+<p>
+  <b>Company name:</b>
+  <%= @customer.company_name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @customer.address %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @customer.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @customer.state %>
+</p>
+
+<p>
+  <b>Postalcode:</b>
+  <%= @customer.postalcode %>
+</p>
+
+<p>
+  <b>M number:</b>
+  <%= @customer.m_number %>
+</p>
+
+<p>
+  <b>M points:</b>
+  <%= @customer.m_points %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @customer.email %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @customer.telephone %>
+</p>
+
+<p>
+  <b>Cellphone:</b>
+  <%= @customer.cellphone %>
+</p>
+
+<% @customer.orders.each do |order|  %>
+  <%= link_to "Order #" + order.id.to_s, "/orders/#{order.id}" %>
+<% end %>
+
+
+<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<%= link_to 'Back', customers_path %>

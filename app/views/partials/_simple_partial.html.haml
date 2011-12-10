@@ -1,0 +1,6 @@
+:css
+  div#partial_#{ partial.id } img { width: #{ partial.image_size }px; }
+  div#partial_#{ partial.id } { color: #{ partial.color } }
+
+.partial{ :id => "partial_#{ partial.id }", :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
+  %span{ :style => "font-size: #{ partial.size }%; font-family: #{ partial.font };" }= raw markup

@@ -1,14 +1,20 @@
 %h1= Company.model_name.human
 
-- if not demo_variant?
-  %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
-  %p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
+- if @current_company.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @current_company.errors.size, :model => Company.model_name.human
+    %ul
+      - @current_company.errors.full_messages.each do |msg|
+        %li= msg
 
-= form_for @current_company, :html => { :multipart => true } do |company_form|
+= form_for nest_image(@current_company), :html => { :multipart => true } do |company_form|
   %div#company_data
+    %p= submit_tag t :edit
+    %br
     %p
-      = company_form.label :logo, Company.human_attribute_name(:logo)
-      = company_form.file_field :logo, :size => 15
+      = company_form.fields_for :images do |image_form|
+        = image_form.label :logo, Company.human_attribute_name(:logo)
+        = image_form.file_field :file_data, :size => 15
     %p
       = company_form.label :name, Company.human_attribute_name(:name)
       = company_form.text_field :name, :size => 30
@@ -47,17 +53,18 @@
     %p
       = company_form.label :time_offset, Company.human_attribute_name(:time_offset)
       = company_form.text_field :time_offset, :size => 2
-
     %p
       = company_form.label :timeout, Company.human_attribute_name(:timeout)
       = company_form.text_field :timeout, :size => 2
-      
     %p
       = company_form.label :res_fetch_url, I18n.t("activerecord.attributes.company.res_fetch_url")
       = company_form.text_field :res_fetch_url, :size => 55
     %p
       = company_form.label :res_confirm_url, I18n.t("activerecord.attributes.company.res_confirm_url")
       = company_form.text_field :res_confirm_url, :size => 55
+    %p
+      = company_form.label :use_order_numbers, Company.human_attribute_name(:use_order_numbers)
+      = company_form.check_box :use_order_numbers
 
     - if saas_pro_variant?
       %p
@@ -69,11 +76,13 @@
       %h3= t('activerecord.models.vendor_printer.other')
       %p#add_printer
         %span.link= t '.add_printer'
-      = company_form.fields_for :vendor_printers, company_form.object.vendor_printers.available do |f|
+      = company_form.fields_for :vendor_printers, company_form.object.vendor_printers.existing do |f|
         = render :partial => 'vendor_printer', :locals => { :f => f }
       %script== var printer_template = '#{ generate_template(company_form, :vendor_printers) }'
 
-  %p= submit_tag t :edit
+- if not demo_variant?
+  %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
+  %p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
 
 
 :javascript

@@ -21,6 +21,8 @@ class Quantity < ActiveRecord::Base
   include Scope
   include Base
   before_create :set_model_owner
+  has_many :partials
+
   scope :existing, where(:hidden => false).order('position ASC')
   scope :active_and_sorted, where(:hidden => false, :active => true).order('position ASC')
 

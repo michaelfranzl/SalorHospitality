@@ -16,7 +16,7 @@
 
 class TaxesController < ApplicationController
   def index
-    @taxes = Tax.scopied.available
+    @taxes = Tax.scopied.existing
   end
 
   def new

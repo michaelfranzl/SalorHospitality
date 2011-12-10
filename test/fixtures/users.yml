@@ -9,7 +9,13 @@ users_001:
   role_id: 6
   color: "#cd0052"
   language: en
+<<<<<<< HEAD
   is_owner: true
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master
 users_002: 
   id: 7
   login: restaurant
@@ -20,7 +26,13 @@ users_002:
   role_id: 7
   color: "#80477d"
   language: en
+<<<<<<< HEAD
   owner_id: 1
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master
 users_003: 
   id: 10
   login: host
@@ -31,7 +43,13 @@ users_003:
   role_id: 5
   color: "#75b10d"
   language: de
+<<<<<<< HEAD
   owner_id: 1
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master
 users_004: 
   id: 11
   login: chiefwaiter
@@ -42,7 +60,13 @@ users_004:
   role_id: 4
   color: "#cd0052"
   language: de
+<<<<<<< HEAD
   owner_id: 1
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master
 users_005: 
   id: 12
   login: waiter
@@ -53,7 +77,13 @@ users_005:
   role_id: 3
   color: "#ed8b00"
   language: en
+<<<<<<< HEAD
   owner_id: 1
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master
 users_006: 
   id: 13
   login: aux
@@ -64,4 +94,10 @@ users_006:
   role_id: 1
   color: "#80477d"
   language: en
+<<<<<<< HEAD
   owner_id: 1
+=======
+  company_id: 46
+  active: 1
+  hidden: 0
+>>>>>>> master

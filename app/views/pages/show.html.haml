@@ -1,0 +1,14 @@
+- if @current_user
+  %h2= t('activerecord.models.page.other')
+  
+  = link_to (t '.slideshow'), pages_path, :class => 'links'
+  = link_to (t :new), new_page_path, :class => 'links'
+  = link_to (t :edit), edit_page_path(@page), :class => 'links'
+  = link_to (t :delete), page_path(@page), :method => :delete, :confirm => t(:are_you_sure), :class => 'links'
+
+
+.container_page
+  .previous_page_button= link_to '', page_path(@previous_page) unless @previous_page == @page
+  .page{ :id => "page_#{ @page.id }", :style => "width: #{ @page.width }px; height: #{ @page.height }px; background-image: url('#{ @page.image }'); background-color: #{ @page.color }; display: block; position: relative;" }
+    = render :partial => 'page', :locals => { :page => @page, :partial_htmls => @partial_htmls }
+  .next_page_button= link_to '', page_path(@next_page) unless @next_page == @page

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     def fetch_logged_in_user
       @current_user = User.find(session[:user_id]) if session[:user_id]
       $USER = @current_user
-      redirect_to '/' if @current_user.nil?
+      redirect_to '/session/new' unless @current_user
     end
 
     def select_current_company
@@ -47,12 +47,8 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def logged_in?
-      ! @current_user.nil?
-    end
-
     def workstation?
-       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
+      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end
 
     def mobile?
@@ -92,6 +88,7 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
+      return 0 if not $COMPANY.use_order_numbers
       if not $COMPANY.unused_order_numbers.empty?
         # reuse order numbers if present
         nr = $COMPANY.unused_order_numbers.first
@@ -109,16 +106,25 @@ class ApplicationController < ActionController::Base
       return nr
     end
 
-    def test_printers
-      printers = initialize_printers
+    def test_printers(mode)
+      if mode == :all
+        printercollection = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/usblp0', '/dev/usblp1', '/dev/usblp2', '/dev/billgastro-printer-front', '/dev/billgastro-printer-top', '/dev/billgastro-printer-back-top-right', '/dev/billgastro-printer-back-top-left', '/dev/billgastro-printer-back-bottom-left', '/dev/billgastro-printer-back-bottom-right'].collect do |path|
+          p = VendorPrinter.new :name => /\/dev\/(.*)/.match(path)[1], :path => path, :copies => 1
+          p.id = p.name.sum # fake id
+          p
+        end
+      end
+
+      printers = initialize_printers(printercollection)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]TESTING Printers..."
       printers.each do |key, value|
         text =
         "\e@"     +  # Initialize Printer
         "\e!\x38" +  # doube tall, double wide, bold
-        "Bill Gastro\r\n#{ value[:name] }\r\n" +
+        "#{ t :printing_test }\r\n" +
         "\e!\x00" +  # Font A
+        "#{ value[:name] }\r\n" +
         "#{ value[:device].inspect.force_encoding('UTF-8') }" +
         "\n\n\n\n\n\n" +
         "\x1D\x56\x00" # paper cut at the end of each order/table
@@ -129,14 +135,15 @@ class ApplicationController < ActionController::Base
         sanitize_character_encoding(text)
         do_print printers, key, text
       end
+      close_printers(printers)
     end
 
 
-    def initialize_printers
+    def initialize_printers(printerset=nil)
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = $COMPANY.vendor_printers.available
+      avaliable_printers = printerset ? printerset : $COMPANY.vendor_printers.existing
       open_printers = Hash.new
 
       avaliable_printers.each do |p|
@@ -144,7 +151,7 @@ class ApplicationController < ActionController::Base
         # try to open USB/SerialPort converter
         begin
           printer = SerialPort.new p.path, 9600
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Success for SerialPort: #{ printer.inspect }"
           next
         rescue Exception => e
@@ -154,7 +161,7 @@ class ApplicationController < ActionController::Base
         # try to open USB or regular file as File
         begin
           printer = File.open p.path, 'w:ISO-8859-15'
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
           next
         rescue Errno::EBUSY
@@ -164,14 +171,14 @@ class ApplicationController < ActionController::Base
             logger.info "[PRINTING]      Trying to reuse already opened File #{ key }: #{ val.inspect }"
             if val[:path] == p[:path] and val[:device].class == File
               logger.info "[PRINTING]      Reused."
-              open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => val[:device] }
+              open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => val[:device] }
               break
             end
           end
           next
         rescue Exception => e
-          printer = File.open(Rails.root.join('tmp',"#{p.id}-#{p.name}.bill"), 'a:ISO-8859-15')
-          open_printers.merge! p.id => { :name => p.name, :path => p.path, :device => printer }
+          printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
+          open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
           logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
         end
       end
@@ -179,13 +186,14 @@ class ApplicationController < ActionController::Base
     end
 
     def do_print(open_printers, printer_id, text)
+      return if open_printers == {}
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]PRINTING..."
       printer = open_printers[printer_id]
       raise 'Mismatch between open_printers and printer_id' if printer.nil?
       logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
       text.force_encoding 'ISO-8859-15'
-      VendorPrinter.find_by_id(printer_id).copies.times do |i|
+      printer[:copies].times do |i|
         open_printers[printer_id][:device].write text
       end
       open_printers[printer_id][:device].flush
@@ -230,19 +238,15 @@ class ApplicationController < ActionController::Base
         "\n\n"
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + $COMPANY.time_offset.hours, :format => :time_short), o.nr, @current_user.login, o.table.abbreviation] +
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + $COMPANY.time_offset.hours, :format => :time_short), ($COMPANY.use_order_numbers ? o.nr : 0), $COMPANY.login, o.table.abbreviation]
+
+        per_order_output += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
 
         per_order_output += "=====================\n"
 
         printed_items_in_this_order = 0
         o.items.prioritized.each do |i|
-          begin
-            i.update_attribute :printed_count, i.count if i.count < i.printed_count
-          rescue
-            logger.info "Trying to prevent FROZEN HASH error"
-            sleep 1
-            i.update_attribute :printed_count, i.count if i.count < i.printed_count
-          end
+          i.update_attribute :printed_count, i.count if i.count < i.printed_count
 
           next if i.count == i.printed_count or i.count == 0
 
@@ -263,7 +267,7 @@ class ApplicationController < ActionController::Base
             per_order_output += " * %-17.17s\n" % [po.name]
           end
 
-          per_order_output += "---------------------\n" if i.options.any? or i.quantity
+          per_order_output += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
 
           i.printed_count = i.count
           i.save
@@ -300,9 +304,12 @@ class ApplicationController < ActionController::Base
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
-      t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n" +
-      t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at  + $COMPANY.time_offset.hours, :format => :long)) +
-      "\n\n" +
+
+      t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
+
+      header += t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + $COMPANY.time_offset.hours, :format => :long)) if $COMPANY.use_order_numbers
+
+      header += "\n\n" +
 
       "\e!\x00" +  # Font A
       "                  Artikel  EP     Stk   GP\n"

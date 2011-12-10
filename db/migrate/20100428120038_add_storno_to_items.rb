@@ -4,6 +4,6 @@ class AddStornoToItems < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :items, :storno
+    remove_column :items, :storno_status
   end
 end

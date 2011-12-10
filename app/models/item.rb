@@ -22,6 +22,7 @@ class Item < ActiveRecord::Base
   belongs_to :tax
   belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   has_and_belongs_to_many :options
+  has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
 
   scope :prioritized, order('priority ASC')
@@ -93,5 +94,9 @@ class Item < ActiveRecord::Base
     return u if u
     return self.article.usage if self.article
   end
-
+  
+  def formatted_comment
+    self.comment ? '<br/>' + self.comment : ''
+  end
+  
 end

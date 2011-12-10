@@ -1,0 +1,125 @@
+:css
+  div#partial_#{ partial.id } img { width: #{ partial.image_size }px; }
+  div#partial_#{ partial.id } { color: #{ partial.color } }
+
+.partial{:id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
+  .options
+    %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
+  .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}
+    P
+    %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
+      = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
+    %br
+    C
+    %input{ :style => 'display:none', :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
+    %br
+    F
+    %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
+      = options_for_select BillGastro::Application::FONTS, partial.font
+    %br
+    S
+    %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]' }
+      = options_for_select [100,150,200,250,300,350,400,500,600,700], partial.size
+    F
+    %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]' }
+      = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.image_size
+    %br
+    W
+    %select{ :id => "width_for_partial_#{ partial.id }", :name => 'partial[width]' }
+      = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.width
+    A
+    %select{ :id => "align_for_partial_#{ partial.id }", :name => 'partial[width]' }
+      = options_for_select ['left','center','right','justify'], partial.align
+
+  %div{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font }; width: #{ partial.width }px; text-align:  #{ partial.align }" }= raw markup
+  - if partial.presentation.model == 'Presentation'
+    %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
+  
+:javascript
+  $("#color_for_partial_#{ partial.id }").modcoder_excolor({
+   hue_bar : 4,
+   shadow : false,
+   callback_on_ok : function() {
+     $.ajax({
+        type: 'PUT',
+        url: "/partials/#{ partial.id }",
+        data: "partial[color]=" + $("#color_for_partial_#{ partial.id }").val()
+      });
+   }
+  });
+
+  $('#partial_#{ partial.id }').draggable({
+    handle: 'handle_for_partial_#{ partial.id }',
+    revert: false
+  });
+
+  $("#presentation_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[presentation_id]=" + $("#presentation_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#font_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[font]=" + $("#font_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#size_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[size]=" + $("#size_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#image_size_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[image_size]=" + $("#image_size_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#width_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[width]=" + $("#width_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#align_for_partial_#{ partial.id }").change( function(){
+    $.ajax({
+      type: 'PUT',
+      url: "/partials/#{ partial.id }",
+      data: "partial[align]=" + $("#align_for_partial_#{ partial.id }").val()
+    });
+  });
+  
+  $("#partial_#{ partial.id }").mouseover( function(){
+    $("#presentation_for_partial_#{ partial.id }").show();
+  });
+
+  
+- if partial.presentation.model == 'Presentation'
+  :javascript
+    $("#html_for_partial_#{ partial.id }").click( function(){
+      $(this).hide();
+      $("#textbox_for_partial_#{ partial.id }").show();
+      $("#textbox_for_partial_#{ partial.id }").focus();    
+    });
+    
+    $("#textbox_for_partial_#{ partial.id }").blur( function(){
+      $("#textbox_for_partial_#{ partial.id }").hide();
+      $("#html_for_partial_#{ partial.id }").show();
+      $.ajax({
+        type: 'PUT',
+        url: "/partials/#{ partial.id }",
+        data: "partial[blurb]=" + $(this).val()
+      });
+    });
