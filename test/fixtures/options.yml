@@ -1,11 +1,6 @@
 --- 
 options_001: 
   id: 1
-<<<<<<< HEAD
-  company_id: 46
-  category_id: 2
-=======
->>>>>>> master
   option_id: 
   name: Ketchup
   price: 1.0
@@ -15,11 +10,6 @@ options_001:
   position: 
 options_002: 
   id: 2
-<<<<<<< HEAD
-  company_id: 46
-  category_id: 2
-=======
->>>>>>> master
   option_id: 
   name: Mustard
   price: 0.0
@@ -29,11 +19,6 @@ options_002:
   position: 
 options_003: 
   id: 3
-<<<<<<< HEAD
-  company_id: 46
-  category_id: 2
-=======
->>>>>>> master
   option_id: 
   name: well done
   price: 0.0
@@ -43,33 +28,6 @@ options_003:
   position: 
 options_004: 
   id: 4
-<<<<<<< HEAD
-  company_id: 46
-  category_id: 2
-  option_id: 
-  name: medium
-  price: 
-  created_at: 2010-09-10 16:31:36 Z
-  updated_at: 2010-09-10 16:31:36 Z
-options_005: 
-  id: 6
-  company_id: 46
-  category_id: 9
-  option_id: 
-  name: extra strong
-  price: 
-  created_at: 2010-09-10 16:32:00 Z
-  updated_at: 2010-09-10 16:32:00 Z
-options_006: 
-  id: 7
-  company_id: 46
-  category_id: 9
-  option_id: 
-  name: with cream
-  price: 
-  created_at: 2010-09-10 16:32:11 Z
-  updated_at: 2010-09-10 16:32:11 Z
-=======
   option_id: 
   name: not too cold
   price: 0.0
@@ -77,4 +35,3 @@ options_006:
   updated_at: 2011-11-23 20:00:12 Z
   hidden: 0
   position: 
->>>>>>> master

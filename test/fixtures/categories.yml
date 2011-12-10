@@ -1,7 +1,6 @@
 --- 
 categories_001: 
   id: 1
-  company_id: 46
   name: Starters
   tax_id: 1
   created_at: 2009-02-24 15:57:33 Z
@@ -14,7 +13,6 @@ categories_001:
   preparation_user_id: 1
 categories_002: 
   id: 2
-  company_id: 46
   name: Main Dish
   tax_id: 1
   created_at: 2009-02-24 15:57:43 Z
@@ -27,7 +25,6 @@ categories_002:
   preparation_user_id: 1
 categories_003: 
   id: 3
-  company_id: 46
   name: Desserts
   tax_id: 1
   created_at: 2009-02-24 15:57:53 Z
@@ -40,7 +37,6 @@ categories_003:
   preparation_user_id: 1
 categories_004: 
   id: 4
-  company_id: 46
   name: "Ros\xC3\xA9 Wine"
   tax_id: 2
   created_at: 2009-02-24 15:58:00 Z
@@ -53,7 +49,6 @@ categories_004:
   preparation_user_id: 1
 categories_005: 
   id: 5
-  company_id: 46
   name: Red Wine
   tax_id: 2
   created_at: 2009-02-24 15:58:14 Z
@@ -66,7 +61,6 @@ categories_005:
   preparation_user_id: 1
 categories_006: 
   id: 6
-  company_id: 46
   name: "Dig\xC3\xA9stif"
   tax_id: 2
   created_at: 2009-02-24 15:58:28 Z
@@ -79,7 +73,6 @@ categories_006:
   preparation_user_id: 1
 categories_007: 
   id: 7
-  company_id: 46
   name: Alcohol Free
   tax_id: 2
   created_at: 2009-02-24 15:58:37 Z
@@ -92,7 +85,6 @@ categories_007:
   preparation_user_id: 1
 categories_008: 
   id: 9
-  company_id: 46
   name: Coffee
   tax_id: 2
   created_at: 2009-02-24 15:59:59 Z
@@ -105,7 +97,6 @@ categories_008:
   preparation_user_id: 1
 categories_009: 
   id: 10
-  company_id: 46
   name: Tea
   tax_id: 2
   created_at: 2009-02-24 16:00:12 Z
@@ -118,7 +109,6 @@ categories_009:
   preparation_user_id: 1
 categories_010: 
   id: 11
-  company_id: 46
   name: Tobacco
   tax_id: 3
   created_at: 2009-02-24 16:00:23 Z
@@ -131,7 +121,6 @@ categories_010:
   preparation_user_id: 1
 categories_011: 
   id: 13
-  company_id: 46
   name: Beer
   tax_id: 2
   created_at: 2009-02-24 16:15:26 Z
@@ -144,7 +133,6 @@ categories_011:
   preparation_user_id: 1
 categories_012: 
   id: 14
-  company_id: 46
   name: Aperitiv
   tax_id: 2
   created_at: 2009-02-24 16:15:36 Z
@@ -157,7 +145,6 @@ categories_012:
   preparation_user_id: 1
 categories_013: 
   id: 15
-  company_id: 46
   name: White Wine
   tax_id: 2
   created_at: 2009-02-24 16:15:44 Z
@@ -170,7 +157,6 @@ categories_013:
   preparation_user_id: 1
 categories_014: 
   id: 16
-  company_id: 46
   name: Side Dish
   tax_id: 1
   created_at: 2010-02-02 21:04:34 Z
@@ -183,7 +169,6 @@ categories_014:
   preparation_user_id: 1
 categories_015: 
   id: 17
-  company_id: 46
   name: Divers
   tax_id: 1
   created_at: 2010-02-06 19:33:53 Z

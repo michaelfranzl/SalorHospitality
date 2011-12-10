@@ -4,4 +4,4 @@ en:
       datetime_iso: "%Y-%m-%d %H:%M:%S"
       datetime_iso2: "%Y%m%dT%H%M%S"
       date_iso: "%Y-%m-%d"
-      time_short: %H:%M
+      time_short: "%H:%M"

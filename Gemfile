@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2', '0.2.6'
+gem 'mysql2'
 gem 'serialport', '1.0.4'
 gem 'kramdown', '0.13.3'
 
@@ -19,7 +19,8 @@ gem 'exception_notification', :require => 'exception_notifier'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
-gem 'ruby-debug19', '0.11.6'
+gem 'ruby-debug19'
+gem 'jquery-rails'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -34,6 +35,7 @@ gem 'ruby-debug19', '0.11.6'
 #   gem 'webrat'
 # end
 
-gem 'haml', '3.0.25'
+gem 'haml'
+gem 'sass-rails'
 gem 'acts_as_list', '0.1.3'
 gem 'rmagick', '2.13.1'

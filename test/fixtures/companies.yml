@@ -13,14 +13,6 @@ companies_001:
   internet_address: www.billgastro.com
   email: office@billgastro.com
   automatic_printing: 0
-<<<<<<< HEAD
-  largest_order_number: 113
-  unused_order_numbers: |+
-    --- []
-    
-  country: gn
-  user_id: 1
-=======
   largest_order_number: 119
   unused_order_numbers: |
     --- 
@@ -40,4 +32,3 @@ companies_001:
     var optionsdetails = new Array();\n\n  optionsdetails[1] = \"1.0, Ketchup\";\n  optionsdetails[2] = \"0.0, Mustard\";\n  optionsdetails[3] = \"0.0, well done\";\n  optionsdetails[4] = \"0.0, not too cold\";\n"
   timeout: -1
   use_order_numbers: 1
->>>>>>> master

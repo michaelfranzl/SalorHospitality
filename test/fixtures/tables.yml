@@ -15,14 +15,10 @@ tables_001:
   height_mobile: 60
   abbreviation: T1
   user_id: 1
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 1
->>>>>>> master
 tables_002: 
   id: 2
   name: Table 2
@@ -39,14 +35,10 @@ tables_002:
   height_mobile: 60
   abbreviation: T2
   user_id: 
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 1
->>>>>>> master
 tables_003: 
   id: 3
   name: Bar
@@ -63,14 +55,10 @@ tables_003:
   height_mobile: 60
   abbreviation: Bar
   user_id: 
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 
->>>>>>> master
 tables_004: 
   id: 4
   name: Table 3
@@ -87,14 +75,10 @@ tables_004:
   height_mobile: 60
   abbreviation: T3
   user_id: 
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 
->>>>>>> master
 tables_005: 
   id: 5
   name: Table 4
@@ -111,14 +95,10 @@ tables_005:
   height_mobile: 60
   abbreviation: T4
   user_id: 
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 
->>>>>>> master
 tables_006: 
   id: 6
   name: Table 5
@@ -135,11 +115,7 @@ tables_006:
   height_mobile: 60
   abbreviation: T5
   user_id: 
-<<<<<<< HEAD
-  company_id: 46
-=======
   enabled: 1
   hidden: 0
   rotate: 
   active_user_id: 
->>>>>>> master

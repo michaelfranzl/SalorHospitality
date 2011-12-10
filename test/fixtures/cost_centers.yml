@@ -1,7 +1,6 @@
 --- 
 cost_centers_001: 
   id: 1
-  company_id: 46
   name: guest
   description: Gust pays
   created_at: 2011-05-15 10:54:00 Z
@@ -10,7 +9,6 @@ cost_centers_001:
   hidden: 
 cost_centers_002: 
   id: 2
-  company_id: 46
   name: invitation
   description: Restaurant invites guest
   created_at: 2011-05-15 11:00:40 Z
@@ -19,7 +17,6 @@ cost_centers_002:
   hidden: 
 cost_centers_003: 
   id: 3
-  company_id: 46
   name: broken
   description: Broken goods, bottles, etc.
   created_at: 2011-05-15 11:01:11 Z

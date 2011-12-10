@@ -509,7 +509,7 @@ es:
   user_not_found: usuario no encontrado
   wrong_password: datos de conexión incorrectos
 
-  served_by_X_on_table_Y: %{waiter} lo ha servido en %{table}
+  served_by_X_on_table_Y: "%{waiter} lo ha servido en %{table}"
   invoice_numer_X_at_time: Factura No. %{number} el %{datetime}
 
   please_enter_email_and_realname: Por favor ingrese su dirección de e-mail y su nombre verdadero.
