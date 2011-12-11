@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ingredient < ActiveRecord::Base
+  include Scope
   belongs_to :article
   belongs_to :stock
   belongs_to :company

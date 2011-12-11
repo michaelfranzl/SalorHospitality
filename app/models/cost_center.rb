@@ -15,10 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class CostCenter < ActiveRecord::Base
+  include Scope
   has_many :orders
   belongs_to :company
   belongs_to :vendor
   validates_presence_of :name
-
-  scope :existing, where('hidden=false or hidden is NULL')
 end

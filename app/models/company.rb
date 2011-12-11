@@ -1,4 +1,5 @@
 class Company < ActiveRecord::Base
+  include Scope
   has_many :vendors
   has_many :users
   has_many :articles

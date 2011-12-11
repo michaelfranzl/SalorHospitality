@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Tax < ActiveRecord::Base
+  include Scope
   has_many :categories
   has_many :items
   has_many :orders
@@ -23,8 +24,6 @@ class Tax < ActiveRecord::Base
 
   validates_presence_of :name, :percent
   validates_numericality_of :percent
-
-  scope :existing, where('hidden=false or hidden is NULL')
 
   def custom_name
     @custom_name = percent.to_s + '%, ' + name

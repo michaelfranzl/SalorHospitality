@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Stock < ActiveRecord::Base
+  include Scope
   belongs_to :group
   belongs_to :company
   belongs_to :vendor

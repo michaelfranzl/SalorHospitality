@@ -1,4 +1,5 @@
 class Reservation < ActiveRecord::Base
+  include Scope
   belongs_to :table
   belongs_to :company
   belongs_to :vendor

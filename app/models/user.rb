@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class User < ActiveRecord::Base
+  include Scope
   has_many :settlements
   has_many :orders
   has_many :companies
@@ -24,10 +25,6 @@ class User < ActiveRecord::Base
   belongs_to :vendor
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
-
-
-  scope :aaa, lambda{ |user| where("company_id = #{ user.company_id  }")}
-
 
   def tables_array=(ids)
     self.tables = []

@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Item < ActiveRecord::Base
+  include Scope
   belongs_to :order
   belongs_to :article
   belongs_to :quantity

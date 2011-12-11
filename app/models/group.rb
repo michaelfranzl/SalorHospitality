@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
+  include Scope
   has_many :stocks
   belongs_to :company
   belongs_to :vendor

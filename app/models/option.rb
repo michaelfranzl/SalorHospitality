@@ -16,6 +16,7 @@
 
 class Option < ActiveRecord::Base
   include ImageMethods
+  include Scope
   belongs_to :company
   belongs_to :vendor
   has_and_belongs_to_many :categories
@@ -24,7 +25,6 @@ class Option < ActiveRecord::Base
   has_many :images, :as => :imageable
 
   validates_presence_of :name
-  scope :existing, where(:hidden => false).order('position ASC')
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 

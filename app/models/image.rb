@@ -1,5 +1,6 @@
 require 'RMagick'
 class Image < ActiveRecord::Base
+  include Scope
   belongs_to :imageable, :polymorphic => true
   belongs_to :vendor
   belongs_to :company

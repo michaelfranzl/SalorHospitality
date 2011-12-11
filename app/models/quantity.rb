@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Quantity < ActiveRecord::Base
+  include Scope
   belongs_to :company
   belongs_to :vendor
   belongs_to :article
@@ -25,7 +26,6 @@ class Quantity < ActiveRecord::Base
   validates_presence_of :price
   validates_numericality_of :price
 
-  scope :existing, where(:hidden => false).order('position ASC')
   scope :active_and_sorted, where(:hidden => false, :active => true).order('position ASC')
 
   def price=(price)

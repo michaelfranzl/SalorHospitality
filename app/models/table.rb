@@ -15,16 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Table < ActiveRecord::Base
+  include Scope
   has_many :orders
   belongs_to :user
   belongs_to :company
   has_many :reservations
   validates_presence_of :name
-  include Scope
-  include Base
-  before_create :set_model_owner
   has_and_belongs_to_many :users
   belongs_to :user, :class_name => 'User', :foreign_key => 'active_user_id'
   validates_presence_of :name
-  scope :existing, where('hidden=false or hidden is NULL')
 end

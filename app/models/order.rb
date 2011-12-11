@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Order < ActiveRecord::Base
+  include Scope
   belongs_to :company
   belongs_to :vendor
   belongs_to :settlement

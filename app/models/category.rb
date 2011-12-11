@@ -16,6 +16,7 @@
 
 class Category < ActiveRecord::Base
   include ImageMethods
+  include Scope
   acts_as_list
   belongs_to :tax
   belongs_to :vendor_printer
@@ -30,8 +31,6 @@ class Category < ActiveRecord::Base
   validates_presence_of :tax_id
   validates_presence_of :name
   validates_presence_of :tax_id
-
-  scope :existing, where(:hidden => false).order('position ASC')
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 

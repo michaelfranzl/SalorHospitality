@@ -15,9 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class VendorPrinter < ActiveRecord::Base
+  include Scope
   belongs_to :company
   belongs_to :vendor
   has_many :categories
-
-  scope :existing, where('hidden=false or hidden is NULL')
 end

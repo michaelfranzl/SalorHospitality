@@ -1,24 +1,28 @@
 module Scope
   def self.included(klass)
-    inst = klass.new
-    klass.scope(:by_company, lambda { |*args|
-     if inst.respond_to? :company_id
-       #return {:conditions => ["company_id = ? ", $COMPANY.id]} if $COMPANY
-       return {:conditions => ["company_id = ? ", self.company_id]}
-     end
+    klass.scope(:accessible_by, lambda { |user|
+      puts user.inspect
+      if user.respond_to?(:company_id) and not user.company_id.nil?
+        return :conditions => "company_id = #{ user.company_id }"
+      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
+        return :conditions => "vendor_id = #{ user.vendor_id }"
+      end
     })
-    klass.scope(:active, lambda { |*args|
-     if inst.respond_to? :active
-        return {:conditions => {:active => true}}
-     end
+
+    klass.scope(:active_and_accessible_by, lambda { |user|
+      if user.respond_to?(:company_id) and not user.company_id.nil?
+        return :conditions => "company_id = #{ user.company_id } AND active = TRUE"
+      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
+        return :conditions => "vendor_id = #{ user.vendor_id } AND active = TRUE"
+      end
     })
-    klass.scope(:available, lambda { |*args|
-     if inst.respond_to? :hidden
-       return {:conditions => "hidden = false OR hidden IS NULL OR hidden = 0"}
-     end
-    })
-    klass.scope(:scopied, lambda { |*args|
-      klass.send(:by_company).active.available
+
+    klass.scope(:existing_and_accessible_by, lambda { |user|
+      if user.respond_to?(:company_id) and not user.company_id.nil?
+        return :conditions => "company_id = #{ user.company_id } AND (hidden = FALSE OR hidden IS NULL)"
+      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
+        return :conditions => "vendor_id = #{ user.vendor_id } AND (hidden = FALSE OR hidden IS NULL)"
+      end
     })
   end
 end

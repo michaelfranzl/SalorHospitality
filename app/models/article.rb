@@ -16,6 +16,7 @@
 
 class Article < ActiveRecord::Base
   include ImageMethods
+  include Scope
   belongs_to :category
   belongs_to :vendor
   belongs_to :company

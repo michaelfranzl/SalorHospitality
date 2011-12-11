@@ -1,4 +1,5 @@
 class Coupon < ActiveRecord::Base
+  include Scope
   belongs_to :company
   belongs_to :vendor
   has_and_belongs_to_many :orders
