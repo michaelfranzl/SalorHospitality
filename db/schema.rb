@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111211175304) do
+ActiveRecord::Schema.define(:version => 20111211183841) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -547,31 +547,32 @@ ActiveRecord::Schema.define(:version => 20111211175304) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                           :default => "Bill Gastro"
-    t.string   "subdomain",                                      :default => "demo"
+    t.string   "name",                                             :default => "Bill Gastro"
+    t.string   "subdomain",                                        :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invoice_subtitle",                               :default => ""
-    t.string   "address",                                        :default => ""
-    t.string   "revenue_service_tax_number",                     :default => ""
-    t.string   "invoice_slogan1",                                :default => ""
-    t.string   "invoice_slogan2",                                :default => ""
-    t.string   "internet_address",                               :default => "www.billgastro.com"
-    t.string   "email",                                          :default => "office@billgastro.com"
-    t.boolean  "automatic_printing",                             :default => false
-    t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",                           :default => "--- []\n\n"
+    t.string   "invoice_subtitle",                                 :default => ""
+    t.string   "address",                                          :default => ""
+    t.string   "revenue_service_tax_number",                       :default => ""
+    t.string   "invoice_slogan1",                                  :default => ""
+    t.string   "invoice_slogan2",                                  :default => ""
+    t.string   "internet_address",                                 :default => "www.billgastro.com"
+    t.string   "email",                                            :default => "office@billgastro.com"
+    t.boolean  "automatic_printing",                               :default => false
+    t.integer  "largest_order_number",                             :default => 0
+    t.string   "unused_order_numbers",                             :default => "--- []\n\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
-    t.integer  "time_offset",                                    :default => 0
+    t.integer  "time_offset",                                      :default => 0
     t.string   "mode"
-    t.text     "cache",                      :limit => 16777215
-    t.integer  "timeout",                                        :default => -1
-    t.boolean  "use_order_numbers",                              :default => true
+    t.text     "cache",                      :limit => 2147483647
+    t.integer  "timeout",                                          :default => -1
+    t.boolean  "use_order_numbers",                                :default => true
     t.integer  "user_id"
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
+    t.integer  "company_id"
   end
 
   add_index "vendors", ["user_id"], :name => "index_company_user_id"

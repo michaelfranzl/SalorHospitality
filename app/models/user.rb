@@ -15,14 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class User < ActiveRecord::Base
-  #include Scope
-  #include Base
   has_many :settlements
   has_many :orders
   has_many :companies
-  #has_many :employees, :class_name => "User", :foreign_key => :owner_id
-  #belongs_to :owner, :class_name => "User", :foreign_key => :owner_id
+  has_one :cash_drawer
   belongs_to :role
+  belongs_to :company
+  belongs_to :vendor
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
 
