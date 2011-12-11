@@ -15,18 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class User < ActiveRecord::Base
+  #include Scope
+  #include Base
   has_many :settlements
   has_many :orders
   has_many :companies
-  has_many :employees, :class_name => "User", :foreign_key => :owner_id
-  belongs_to :owner, :class_name => "User", :foreign_key => :owner_id
+  #has_many :employees, :class_name => "User", :foreign_key => :owner_id
+  #belongs_to :owner, :class_name => "User", :foreign_key => :owner_id
   belongs_to :role
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
-  include Scope
-  include Base
-  scope :active, where(:active => true, :hidden => false)
-  scope :existing, where('hidden=false or hidden is NULL')
+
+
+  scope :aaa, lambda{ |user| where("company_id = #{ user.company_id  }")}
+
 
   def tables_array=(ids)
     self.tables = []

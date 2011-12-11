@@ -14,6 +14,7 @@ owner1 = User.new ( {
     :is_owner => true
 } )
 owner1.save
+
 puts "# #{owner1.id} created, is_owner = #{owner1.is_owner}"
 owner2 = User.new ( {
     :login => 'owner2',
@@ -24,6 +25,8 @@ owner2 = User.new ( {
 } )
 owner2.save
 puts "# #{owner2.id} created, is_owner = #{owner2.is_owner}"
+
+
 puts "# Create some companies"
 Company.delete_all
 c1 = Company.new( {
@@ -31,6 +34,7 @@ c1 = Company.new( {
     :user_id => owner1.id
 } )
 c1.save
+
 c2 = Company.new( {
     :name => "Company Two",
     :user_id => owner1.id

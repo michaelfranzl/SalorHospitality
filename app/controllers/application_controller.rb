@@ -29,7 +29,8 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-      @current_user = User.find(session[:user_id]) if session[:user_id]
+      debugger
+      @current_user = session[:user_id] if session[:user_id]
       $USER = @current_user
       redirect_to '/session/new' unless @current_user
     end

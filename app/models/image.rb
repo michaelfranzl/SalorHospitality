@@ -1,6 +1,8 @@
 require 'RMagick'
 class Image < ActiveRecord::Base
   belongs_to :imageable, :polymorphic => true
+  belongs_to :vendor
+  belongs_to :company
   after_save :process
 	after_destroy :cleanup
   

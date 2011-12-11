@@ -16,11 +16,11 @@
 
 class Stock < ActiveRecord::Base
   belongs_to :group
+  belongs_to :company
+  belongs_to :vendor
 
   validates_presence_of :name, :balance, :unit
-  include Scope
-  include Base
-  before_create :set_model_owner
+
   def custom_name
     @custom_name = unit + ' ' + name
   end

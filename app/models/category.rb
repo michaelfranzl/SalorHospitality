@@ -15,26 +15,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Category < ActiveRecord::Base
+  include ImageMethods
+  acts_as_list
   belongs_to :tax
   belongs_to :vendor_printer
   belongs_to :company
+  belongs_to :vendor
   has_and_belongs_to_many :options
   has_many :articles
-
   has_many :discounts
-  validates_presence_of :name
-  validates_presence_of :tax_id
-  acts_as_list
-  include Scope
-  include Base
-  before_create :set_model_owner
-
   has_many :partials
   has_many :images, :as => :imageable
   validates_presence_of :name
   validates_presence_of :tax_id
-  acts_as_list
-  include ImageMethods
+  validates_presence_of :name
+  validates_presence_of :tax_id
 
   scope :existing, where(:hidden => false).order('position ASC')
 

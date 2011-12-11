@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Order < ActiveRecord::Base
+  belongs_to :company
+  belongs_to :vendor
   belongs_to :settlement
   belongs_to :table
   belongs_to :user
@@ -24,20 +26,18 @@ class Order < ActiveRecord::Base
   has_one :order
   has_and_belongs_to_many :coupons
   has_and_belongs_to_many :discounts
-
-  validates_presence_of :user_id
-  after_create :add_needed_discounts
   has_and_belongs_to_many :customers
 
-  validates_presence_of :user_id
+  after_create :add_needed_discounts
   after_save :set_customers_up
+
+  validates_presence_of :user_id
+  validates_presence_of :user_id
 
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
   #This will prevent children_attributes with all empty values to be ignored
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
-  include Scope
-  include Base
-  before_create :set_model_owner
+
   def add_needed_discounts
     n = Time.now.strftime("%H%I").to_i
     $DISCOUNTS.each do |d|

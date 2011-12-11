@@ -21,15 +21,14 @@ class Item < ActiveRecord::Base
   belongs_to :item
   belongs_to :tax
   belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
+  belongs_to :vendor
+  belongs_to :company
   has_and_belongs_to_many :options
   has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
 
   scope :prioritized, order('priority ASC')
   scope :sequence, order('sort ASC')
-  include Scope
-  include Base
-  before_create :set_model_owner
 
   def price
     p = read_attribute :price

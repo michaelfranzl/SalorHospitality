@@ -1,8 +1,7 @@
 class Reservation < ActiveRecord::Base
   belongs_to :table
-  include Scope
-  include Base
-  before_create :set_model_owner
+  belongs_to :company
+  belongs_to :vendor
   def from_json(json)
     self.fb_res_id = json["id"]
     self.fb_user_id = json["fb_user_id"]

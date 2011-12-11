@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209095636) do
+ActiveRecord::Schema.define(:version => 20111211175304) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -31,12 +31,26 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "usage",           :limit => 1, :default => 0
     t.integer  "position"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
   add_index "articles", ["company_id"], :name => "index_articles_company_id"
   add_index "articles", ["name", "description", "price"], :name => "index_articles_on_name_and_description_and_price"
   add_index "articles", ["position"], :name => "index_articles_on_position"
+
+  create_table "cash_drawers", :force => true do |t|
+    t.string  "name"
+    t.integer "user_id"
+    t.integer "vendor_id"
+    t.integer "company_id"
+  end
+
+  create_table "cash_registers", :force => true do |t|
+    t.string  "name"
+    t.integer "vendor_id"
+    t.integer "company_id"
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -50,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "hidden",              :default => false
     t.integer  "preparation_user_id"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
@@ -66,34 +81,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string   "name",                                           :default => "Bill Gastro"
-    t.string   "subdomain",                                      :default => "demo"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "invoice_subtitle",                               :default => ""
-    t.string   "address",                                        :default => ""
-    t.string   "revenue_service_tax_number",                     :default => ""
-    t.string   "invoice_slogan1",                                :default => ""
-    t.string   "invoice_slogan2",                                :default => ""
-    t.string   "internet_address",                               :default => "www.billgastro.com"
-    t.string   "email",                                          :default => "office@billgastro.com"
-    t.boolean  "automatic_printing",                             :default => false
-    t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",                           :default => "--- []\n\n"
-    t.string   "country"
-    t.string   "bank_account1"
-    t.string   "bank_account2"
-    t.integer  "time_offset",                                    :default => 0
-    t.string   "mode"
-    t.text     "cache",                      :limit => 16777215
-    t.integer  "timeout",                                        :default => -1
-    t.boolean  "use_order_numbers",                              :default => true
-    t.integer  "user_id"
-    t.string   "res_fetch_url"
-    t.string   "res_confirm_url"
+    t.string "name"
   end
-
-  add_index "companies", ["user_id"], :name => "index_company_user_id"
 
   create_table "cost_centers", :force => true do |t|
     t.string   "name"
@@ -103,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "active"
     t.boolean  "hidden"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "cost_centers", ["company_id"], :name => "index_cost_centers_company_id"
@@ -120,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vendor_id"
   end
 
   add_index "coupons", ["company_id"], :name => "coupons_company_id_index"
@@ -147,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.string   "cellphone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   create_table "customers_items", :id => false, :force => true do |t|
@@ -171,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vendor_id"
   end
 
   add_index "discounts", ["article_id"], :name => "index_discounts_article_id"
@@ -189,6 +183,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "groups", ["company_id"], :name => "index_groups_company_id"
@@ -200,6 +195,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "imageable_id"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
@@ -210,6 +207,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "stock_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "ingredients", ["article_id"], :name => "index_ingredients_on_article_id"
@@ -241,6 +240,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -276,6 +276,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.string   "referer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   create_table "options", :force => true do |t|
@@ -287,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "hidden",     :default => false
     t.integer  "position"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "options", ["company_id"], :name => "index_options_company_id"
@@ -312,6 +315,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "customer_id"
     t.integer  "m_points"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
@@ -332,6 +336,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "width"
     t.integer  "height"
     t.string   "color"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   create_table "pages_partials", :id => false, :force => true do |t|
@@ -355,6 +361,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.string   "color"
     t.integer  "width"
     t.string   "align"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "partials", ["model_id"], :name => "index_partials_on_model_id"
@@ -370,6 +378,8 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "presentations", ["model"], :name => "index_presentations_on_model"
@@ -388,6 +398,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"
@@ -412,6 +423,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "fb_res_id"
+    t.integer  "vendor_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -421,6 +433,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -433,6 +446,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "finished"
     t.float    "initial_cash"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -446,6 +460,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "stocks", ["company_id"], :name => "index_stocks_company_id"
@@ -471,6 +486,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.boolean  "rotate"
     t.integer  "active_user_id"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -493,6 +509,7 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.string   "color"
     t.boolean  "hidden"
     t.integer  "company_id"
+    t.integer  "vendor_id"
   end
 
   add_index "taxes", ["company_id"], :name => "index_taxes_company_id"
@@ -506,11 +523,12 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.integer  "role_id"
     t.string   "color"
     t.string   "language"
-    t.boolean  "active",             :default => true
-    t.boolean  "hidden",             :default => false
-    t.integer  "current_company_id"
-    t.boolean  "is_owner",           :default => false
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden",     :default => false
+    t.integer  "company_id"
+    t.boolean  "is_owner",   :default => false
     t.integer  "owner_id"
+    t.integer  "vendor_id"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
@@ -523,8 +541,39 @@ ActiveRecord::Schema.define(:version => 20111209095636) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "copies",     :default => 1
+    t.integer  "vendor_id"
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
+
+  create_table "vendors", :force => true do |t|
+    t.string   "name",                                           :default => "Bill Gastro"
+    t.string   "subdomain",                                      :default => "demo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "invoice_subtitle",                               :default => ""
+    t.string   "address",                                        :default => ""
+    t.string   "revenue_service_tax_number",                     :default => ""
+    t.string   "invoice_slogan1",                                :default => ""
+    t.string   "invoice_slogan2",                                :default => ""
+    t.string   "internet_address",                               :default => "www.billgastro.com"
+    t.string   "email",                                          :default => "office@billgastro.com"
+    t.boolean  "automatic_printing",                             :default => false
+    t.integer  "largest_order_number",                           :default => 0
+    t.string   "unused_order_numbers",                           :default => "--- []\n\n"
+    t.string   "country"
+    t.string   "bank_account1"
+    t.string   "bank_account2"
+    t.integer  "time_offset",                                    :default => 0
+    t.string   "mode"
+    t.text     "cache",                      :limit => 16777215
+    t.integer  "timeout",                                        :default => -1
+    t.boolean  "use_order_numbers",                              :default => true
+    t.integer  "user_id"
+    t.string   "res_fetch_url"
+    t.string   "res_confirm_url"
+  end
+
+  add_index "vendors", ["user_id"], :name => "index_company_user_id"
 
 end

@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Article < ActiveRecord::Base
-
+  include ImageMethods
   belongs_to :category
+  belongs_to :vendor
   belongs_to :company
   has_many :ingredients
   has_many :quantities
@@ -25,14 +26,10 @@ class Article < ActiveRecord::Base
   has_many :discounts
   has_many :partials
   has_many :images, :as => :imageable
-  include ImageMethods
 
   scope :existing, where(:hidden => false).order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
-  include Scope
-  include Base
-  before_create :set_model_owner
 
   def price=(price)
     price =  price.gsub(',', '.') if price.class == String

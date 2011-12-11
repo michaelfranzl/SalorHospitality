@@ -26,6 +26,7 @@ class SessionsController < ApplicationController
   def create
     @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     @users = User.all
+debugger
     if @current_user
       session[:user_id] = @current_user
       I18n.locale = @current_user.language

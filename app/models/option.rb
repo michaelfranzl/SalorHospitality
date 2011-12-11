@@ -15,15 +15,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Option < ActiveRecord::Base
+  include ImageMethods
+  belongs_to :company
+  belongs_to :vendor
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
   has_many :partials
   has_many :images, :as => :imageable
-  include ImageMethods
+
   validates_presence_of :name
-  include Scope
-  include Base
-  before_create :set_model_owner
   scope :existing, where(:hidden => false).order('position ASC')
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank

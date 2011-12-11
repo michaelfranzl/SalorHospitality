@@ -16,8 +16,7 @@
 
 class Group < ActiveRecord::Base
   has_many :stocks
+  belongs_to :company
+  belongs_to :vendor
   validates_presence_of :name
-  include Scope
-  include Base
-  before_create :set_model_owner
 end

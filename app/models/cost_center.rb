@@ -17,10 +17,8 @@
 class CostCenter < ActiveRecord::Base
   has_many :orders
   belongs_to :company
+  belongs_to :vendor
   validates_presence_of :name
-  include Scope
-  include Base
-  before_create :set_model_owner
 
   scope :existing, where('hidden=false or hidden is NULL')
 end

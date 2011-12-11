@@ -19,13 +19,11 @@ class Tax < ActiveRecord::Base
   has_many :items
   has_many :orders
   belongs_to :company
+  belongs_to :vendor
 
   validates_presence_of :name, :percent
   validates_numericality_of :percent
 
-  include Scope
-  include Base
-  before_create :set_model_owner
   scope :existing, where('hidden=false or hidden is NULL')
 
   def custom_name

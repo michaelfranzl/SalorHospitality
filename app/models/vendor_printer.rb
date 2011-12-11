@@ -16,9 +16,8 @@
 
 class VendorPrinter < ActiveRecord::Base
   belongs_to :company
+  belongs_to :vendor
   has_many :categories
-  include Scope
-  include Base
-  before_create :set_model_owner
+
   scope :existing, where('hidden=false or hidden is NULL')
 end

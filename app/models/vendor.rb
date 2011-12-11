@@ -1,5 +1,7 @@
-class Company < ActiveRecord::Base
-  has_many :vendors
+class Vendor < ActiveRecord::Base
+  include ImageMethods
+  belongs_to :user
+  belongs_to :company
   has_many :users
   has_many :articles
   has_many :categories
@@ -24,4 +26,16 @@ class Company < ActiveRecord::Base
   has_many :roles
   has_many :taxes
   has_many :vendor_printers
+
+  serialize :unused_order_numbers
+
+  accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
+
+  accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+
+  def image
+    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    "/images/client_logo.png"
+  end
+
 end
