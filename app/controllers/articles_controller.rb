@@ -16,8 +16,10 @@
 
 class ArticlesController < ApplicationController
 
+  before_filter :check_permission
+
   def index
-    @categories = @current_vendor.categories #.find(:all, :order => 'position')
+    @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['menucard','waiterpad']
     respond_to do |wants|
       wants.html
@@ -30,40 +32,45 @@ class ArticlesController < ApplicationController
   def update_cache
     @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['menucard','waiterpad']
-    #@articles = Article.scopied.all
-    #File.open('test.txt','w') { |f| f.write render_to_string 'articles/index.js' }
     @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
     redirect_to orders_path
   end
 
   def listall
-    @articles = Article.scopied.find(:all, :order => 'name, description, price', :conditions => { :hidden => false })
+    @articles = Article.accessible_by(@current_user).where(:hidden => false).order('name, description, price')
   end
 
   def new
     @article = Article.new
-    @groups = Group.scopied.find(:all, :order => 'name ASC')
+    @categories = @current_vendor.categories
   end
 
   def create
     @article = Article.new(params[:article])
-    @groups = Group.scopied.find(:all, :order => 'name ASC')
-    @article.save ? redirect_to(articles_path) : render(:new)
+    if @article.save
+      @article.company = @current_company
+      @article.vendor = @current_vendor
+      @article.save
+      redirect_to articles_path
+    else
+      @categories = @current_vendor.categories
+      render :new
+    end
   end
 
   def edit
-    @article = Article.scopied.find_by_id(params[:id])
-    @groups = Group.scopied.find(:all, :order => 'name ASC')
-    @quantities = Quantity.where(:article_id => params[:id], :hidden => false)
+    @article = @permitted_model
+    @categories = @current_vendor.categories
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     render :new
   end
 
   def update
-    @categories = Category.scopied.find(:all, :order => 'position')
-    @article = Article.scopied.find_by_id params[:id]
+    @categories = @current_vendor.categories
+    @article = @permitted_model
     @article.update_attributes params[:article]
 
+    # hide/delete all belonging quantities
     if @article.hidden
       @article.quantities.existing.each do |q|
         q.update_attribute :hidden, true
@@ -83,7 +90,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.scopied.find(params[:id])
+    @article = @permitted_model
     @article.update_attribute :hidden, true
     redirect_to articles_path
   end

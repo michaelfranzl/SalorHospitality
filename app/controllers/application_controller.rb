@@ -39,7 +39,11 @@ class ApplicationController < ActionController::Base
       if params[:id]
         model = controller_name.classify.constantize.find_by_id(params[:id])
         permitted = (model.respond_to?(:company_id) and model.company_id == @current_user.company_id) or (model.respond_to?(:vendor_id) and model.vendor_id != @current_user.vendor_id)
-      redirect_to '/session/permission_denied' unless permitted
+        if permitted
+          @permitted_model = model
+        else
+          redirect_to '/session/permission_denied'
+        end
       end
     end
 

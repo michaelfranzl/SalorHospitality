@@ -25,14 +25,15 @@ class SessionsController < ApplicationController
 
   def create
     @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
-    @users = User.all
     if @current_user
-      session[:user_id] = @current_user
+      session[:user_id] = @current_user.id
+      @current_company = @current_user.company
+      @current_vendor = @current_user.vendors.first
       I18n.locale = @current_user.language
-      session[:admin_interface] = !mobile? # admin panel per default on on workstation
+      session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = nil
-      redirect_to '/'
+      redirect_to '/vendors'
     else
       flash[:error] = t :wrong_password
       render :new, :layout => 'login'

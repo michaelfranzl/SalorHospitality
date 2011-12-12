@@ -39,7 +39,7 @@
     %div
       %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
       %span.input_fields
-        = article_form.collection_select :category_id, Category.existing, :id, :name, { :include_blank => true }
+        = article_form.collection_select :category_id, @categories, :id, :name, { :include_blank => true }
     
     %div
       = article_form.fields_for :images do |image_form|

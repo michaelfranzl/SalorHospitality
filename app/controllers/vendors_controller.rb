@@ -24,24 +24,20 @@ class VendorsController < ApplicationController
 
   # Switches the current vendor and redirects to somewhere else
   def show
-    @current_vendor = Vendor.accessible_by(@current_user).find_by_id(params[:id])
+    @current_vendor = @permitted_model
     session[:vendor_id] = params[:id]
     redirect_to vendors_path
   end
 
-  # Edits the vendor if permitted, otherwise redirects to somewhere else
+  # Edits the vendor
   def edit
-    @vendor = Vendor.accessible_by(@current_user).find_by_id(params[:id])
-    if @vendor
-      @current_vendor = @vendor
-      session[:vendor_id] = params[:id]
-    else
-      redirect_to vendors_path
-    end
+    @vendor = @permitted_model
+    @current_vendor = @vendor
+    session[:vendor_id] = params[:id]
   end
 
   def update
-    @vendor = Vendor.accessible_by(@current_user).find_by_id(params[:id])
+    @vendor = @permitted_model
     unless @vendor.update_attributes params[:vendor]
       @vendor.images.reload
       render(:edit) and return 

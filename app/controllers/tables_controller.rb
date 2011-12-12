@@ -26,8 +26,7 @@ class TablesController < ApplicationController
   end
 
   def show
-debugger
-    @table = Table.find_by_id params[:id]
+    @table = Table.accessible_by(@current_user).where( :id => 24 )
     @cost_centers = CostCenter.find_all_by_active(true)
     @taxes = Tax.accessible_by @current_user
     @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
