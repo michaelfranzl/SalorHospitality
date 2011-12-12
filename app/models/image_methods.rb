@@ -17,13 +17,13 @@
 module ImageMethods
   def image
     return "/images/empty.png" if self.id.nil?
-    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    return self.images.first.image if self.images.first
     "/images/empty.png"
   end
 
   def thumb
     return "/images/empty.png" if self.id.nil?
-    return self.images.first.thumb unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    return self.images.first.thumb if self.images.first
     "/images/empty.png"
   end
 end

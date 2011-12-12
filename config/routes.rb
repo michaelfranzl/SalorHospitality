@@ -76,7 +76,8 @@ BillGastro::Application.routes.draw do
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/detailed_list' => 'settlements#detailed_list'
   match 'settlements/print/:id' => 'settlements#print'
-  match 'sessions/exception_test' => 'sessions#exception_test'
+  match 'session/exception_test' => 'sessions#exception_test'
+  match 'session/permission_denied' => 'sessions#permission_denied'
   match 'companies/backup_database' => 'companies#backup_database'
   match 'companies/backup_logfile' => 'companies#backup_logfile'
   

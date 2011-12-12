@@ -26,7 +26,6 @@ class SessionsController < ApplicationController
   def create
     @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     @users = User.all
-debugger
     if @current_user
       session[:user_id] = @current_user
       I18n.locale = @current_user.language
@@ -47,6 +46,10 @@ debugger
 
   def exception_test
     nil.throw_whiny_nil_error_please
+  end
+
+  def permission_denied
+    render :layout => 'login'
   end
 
   def catcher
