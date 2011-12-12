@@ -1,9 +1,8 @@
 class Vendor < ActiveRecord::Base
   include ImageMethods
   include Scope
-  belongs_to :user
   belongs_to :company
-  has_many :users
+  has_and_belongs_to_many :users
   has_many :articles
   has_many :categories
   has_many :cost_centers

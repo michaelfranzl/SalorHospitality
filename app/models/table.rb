@@ -19,6 +19,7 @@ class Table < ActiveRecord::Base
   has_many :orders
   belongs_to :user
   belongs_to :company
+  belongs_to :vendor
   has_many :reservations
   validates_presence_of :name
   has_and_belongs_to_many :users

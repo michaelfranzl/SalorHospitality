@@ -13,6 +13,9 @@ tr:
       company:
         one: Şirket
         other: Şirketler
+      vendor:
+        one: XXXRestaurant
+        other: XXXRestaurants
       tax:
         one: Vergi derecesi
         other: vergi dereceleri

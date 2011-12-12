@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_one :cash_drawer
   belongs_to :role
   belongs_to :company
-  belongs_to :vendor
+  has_and_belongs_to_many :vendors
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
 

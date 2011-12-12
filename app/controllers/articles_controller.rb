@@ -17,23 +17,22 @@
 class ArticlesController < ApplicationController
 
   def index
-    @categories = Category.scopied.find(:all, :order => 'position')
+    @categories = @current_vendor.categories #.find(:all, :order => 'position')
     @scopes = ['menucard','waiterpad']
-    @articles = Article.scopied.all
     respond_to do |wants|
       wants.html
       wants.js {
-        send_data $COMPANY.cache, :content_type => 'text/javascript', :disposition => 'inline'
+        send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline'
       }
     end
   end
 
   def update_cache
-    @categories = Category.scopied.find(:all, :order => 'position')
+    @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['menucard','waiterpad']
-    @articles = Article.scopied.all
+    #@articles = Article.scopied.all
     #File.open('test.txt','w') { |f| f.write render_to_string 'articles/index.js' }
-    $COMPANY.update_attribute :cache, render_to_string('articles/index.js')
+    @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
     redirect_to orders_path
   end
 

@@ -13,6 +13,9 @@ en:
       company:
         one: Company
         other: Companies
+      vendor:
+        one: Restaurant
+        other: Restaurants
       tax:
         one: Tax Class
         other: Tax Classes

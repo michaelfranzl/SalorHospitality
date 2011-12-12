@@ -62,8 +62,8 @@ user_array = {
     end
 
     cash_register_objects = Array.new
-    6.times do |i|
-      cash_register = CashRegister.new :name => "User #{ c } #{ v } #{ i }"
+    2.times do |i|
+      cash_register = CashRegister.new :name => "CashRegister #{ c } #{ v } #{ i }"
       cash_register.company = company
       cash_register.vendor = vendor
       r = cash_register.save
@@ -81,11 +81,22 @@ user_array = {
       puts "Role #{ user_array.to_a[i][0] } #{ c } #{ v } #{ i } created" if r == true
     end
 
+    table_objects = Array.new
+    3.times do |i|
+      table = Table.new :name => "T#{ c }#{ v }#{ i }", :left => 50 * i, :top => 50 * i, :width => 70, :height => 70, :abbreviation => "T#{ c }#{ v }#{ i }"
+      table.company = company
+      table.vendor = vendor
+      r = table.save
+      table_objects << table
+      puts "Table #{ c } #{ v } #{ i } created" if r == true
+    end
+
     user_objects = Array.new
     user_array.to_a.size.times do |i|
       user = User.new :login => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :title => "#{ user_array.to_a[i][0] }", :password => "#{ c }#{ v }#{ i }", :language => 'en', :color => user_colors[i]
       user.company = company
-      user.vendor = vendor
+      user.vendors << vendor
+      user.tables = table_objects
       user.role = role_objects[i]
       r = user.save
       user_objects << user
@@ -105,6 +116,28 @@ user_array = {
       category.vendor = vendor
       category.preparation_user_id = user_objects.first.id
       category.vendor_printer = vendor_printer_objects.first
+      r = category.save
+      puts "Category #{ c } #{ v } #{ i } created" if r == true
+
+      2.times do |a|
+        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30), :menucard => true
+        article.category = category
+        article.company = company
+        article.vendor = vendor
+        r = article.save
+        puts "Article #{ c } #{ v } #{ i } #{ a } created" if r == true
+        
+        if a > 0
+          2.times do |q|
+            quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :price => rand(10)
+            quantity.article = article
+            quantity.company = company
+            quantity.vendor = vendor
+            r = quantity.save
+            puts "Quantity #{ c } #{ v } #{ i } #{ a } #{ q } created" if r == true
+          end
+        end
+      end
     end
   end
 end

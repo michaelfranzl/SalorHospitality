@@ -29,8 +29,9 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
+#debugger
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
-      @current_vendor = @current_user.vendor
+      @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
       @current_company = @current_user.company
       redirect_to '/session/new' unless @current_user
     end

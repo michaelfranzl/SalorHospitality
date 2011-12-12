@@ -86,7 +86,7 @@ BillGastro::Application.routes.draw do
 #  match 'quantities/:id/image' => 'quantities#image'
 #  match 'pages/:id/image' => 'pages#image'
 
-  resources :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations
+  resources :companies, :cost_centers, :taxes, :users, :menucard, :waiterpad, :roles, :presentations, :vendors
   
   resources :items do
     collection do

@@ -17,7 +17,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = Table.existing_and_accessible_by @current_user
+    @tables = @current_user.tables
     @categories = Category.existing_and_accessible_by @current_user
     @users = User.active_and_accessible_by @current_user
     session[:admin_interface] = false
@@ -76,7 +76,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = @current_user.tables.existing
+    @tables = @current_user.tables
   end
 
   def toggle_tax_colors

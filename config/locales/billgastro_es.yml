@@ -13,6 +13,9 @@ es:
       company:
         one: Empresa
         other: Empresas
+      vendor:
+        one: XXXRestaurant
+        other: XXXRestaurants
       tax:
         one: Tipo de impuesto
         other: Tipos de impuesto

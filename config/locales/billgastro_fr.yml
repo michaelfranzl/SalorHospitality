@@ -13,6 +13,9 @@ fr:
       company:
         one: Entreprise
         other: Entreprises
+      vendor:
+        one: Restaurant
+        other: Restaurants
       tax:
         one: Type de taxe
         other: Types de taxes

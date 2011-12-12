@@ -13,6 +13,9 @@ de:
       company:
         one: Firma
         other: Firmen
+      vendor:
+        one: Restaurant
+        other: Restaurants
       tax:
         one: Steuerklasse
         other: Steuerklassen

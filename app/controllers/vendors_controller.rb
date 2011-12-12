@@ -17,18 +17,32 @@
 class VendorsController < ApplicationController
 
   def index
-    render :edit
+    @vendors = Vendor.accessible_by @current_user
+  end
+
+  def show
+    @current_vendor = Vendor.find_by_id params[:id]
+    session[:vendor_id] = params[:id]
+    redirect_to vendors_path
+  end
+
+  def edit
+    @vendor = Vendor.find_by_id params[:id]
+    @current_vendor = @vendor
+    session[:vendor_id] = params[:id]
   end
 
   def update
-    unless @current_company.update_attributes params[:company]
-      @current_company.images.reload
+    @vendor = Vendor.find_by_id params[:id]
+    unless @vendor.update_attributes params[:vendor]
+      @vendor.images.reload
       render(:edit) and return 
     end
-    test_printers :all
-    test_printers :existing
-    flash[:notice] = t 'companies.update.config_successfully_updated'
-    redirect_to companies_path
+    #test_printers :all
+    #test_printers :existing
+    @current_vendor = @vendor
+    session[:vendor_id] = params[:id]
+    redirect_to vendors_path
   end
 
   def backup_database

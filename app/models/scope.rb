@@ -2,9 +2,9 @@ module Scope
   def self.included(klass)
     klass.scope(:accessible_by, lambda { |user|
       if user.respond_to?(:company_id) and not user.company_id.nil?
-        find_all_by_company_id(user.company_id) #where( :company_id => user.company_id ) #:conditions => "company_id = #{ user.company_id }"
+        klass.where( :company_id => user.company_id )
       elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
-        where( :vendor_id => user.vendor_id )   #:conditions => "vendor_id = #{ user.vendor_id }"
+        klass.where( :vendor_id => user.vendor_id )
       end
     })
 
@@ -23,5 +23,7 @@ module Scope
         return :conditions => "vendor_id = #{ user.vendor_id } AND (hidden = FALSE OR hidden IS NULL)"
       end
     })
+
+    klass.scope(:existing, lambda { klass.where('hidden = FALSE OR hidden IS NULL') })
   end
 end

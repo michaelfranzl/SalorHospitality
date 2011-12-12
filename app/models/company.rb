@@ -1,5 +1,6 @@
 class Company < ActiveRecord::Base
   include Scope
+  include ImageMethods
   has_many :vendors
   has_many :users
   has_many :articles
