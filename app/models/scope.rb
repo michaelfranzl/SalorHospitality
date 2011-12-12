@@ -1,11 +1,10 @@
 module Scope
   def self.included(klass)
     klass.scope(:accessible_by, lambda { |user|
-      puts user.inspect
       if user.respond_to?(:company_id) and not user.company_id.nil?
-        return :conditions => "company_id = #{ user.company_id }"
+        find_all_by_company_id(user.company_id) #where( :company_id => user.company_id ) #:conditions => "company_id = #{ user.company_id }"
       elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
-        return :conditions => "vendor_id = #{ user.vendor_id }"
+        where( :vendor_id => user.vendor_id )   #:conditions => "vendor_id = #{ user.vendor_id }"
       end
     })
 

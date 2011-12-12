@@ -19,7 +19,7 @@
 class ApplicationController < ActionController::Base
 
   helper :all
-  before_filter :fetch_logged_in_user, :select_current_company, :set_locale
+  before_filter :fetch_logged_in_user, :set_locale
   helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :saas_basic_varian?, :saas_plus_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :mobile_special?
 
   private
@@ -29,23 +29,10 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-      debugger
-      @current_user = session[:user_id] if session[:user_id]
-      $USER = @current_user
+      @current_user = User.find_by_id session[:user_id] if session[:user_id]
+      @current_vendor = @current_user.vendor
+      @current_company = @current_user.company
       redirect_to '/session/new' unless @current_user
-    end
-
-    def select_current_company
-      if @current_user
-        $COMPANY = @current_user.get_owner.companies.first
-        if not $COMPANY
-          $COMPANY = Company.create
-          $COMPANY.user = @current_user
-          $COMPANY.save
-        end
-        @current_company = $COMPANY
-        $DISCOUNTS = Discount.scopied
-      end
     end
 
     def workstation?

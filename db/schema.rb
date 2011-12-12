@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111211183841) do
+ActiveRecord::Schema.define(:version => 20111212134640) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -523,12 +523,14 @@ ActiveRecord::Schema.define(:version => 20111211183841) do
     t.integer  "role_id"
     t.string   "color"
     t.string   "language"
-    t.boolean  "active",     :default => true
-    t.boolean  "hidden",     :default => false
+    t.boolean  "active",             :default => true
+    t.boolean  "hidden",             :default => false
     t.integer  "company_id"
-    t.boolean  "is_owner",   :default => false
+    t.boolean  "is_owner",           :default => false
     t.integer  "owner_id"
     t.integer  "vendor_id"
+    t.integer  "screenlock_timeout", :default => -1
+    t.boolean  "automatic_printing"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
@@ -558,7 +560,6 @@ ActiveRecord::Schema.define(:version => 20111211183841) do
     t.string   "invoice_slogan2",                                  :default => ""
     t.string   "internet_address",                                 :default => "www.billgastro.com"
     t.string   "email",                                            :default => "office@billgastro.com"
-    t.boolean  "automatic_printing",                               :default => false
     t.integer  "largest_order_number",                             :default => 0
     t.string   "unused_order_numbers",                             :default => "--- []\n\n"
     t.string   "country"
@@ -567,7 +568,6 @@ ActiveRecord::Schema.define(:version => 20111211183841) do
     t.integer  "time_offset",                                      :default => 0
     t.string   "mode"
     t.text     "cache",                      :limit => 2147483647
-    t.integer  "timeout",                                          :default => -1
     t.boolean  "use_order_numbers",                                :default => true
     t.integer  "user_id"
     t.string   "res_fetch_url"

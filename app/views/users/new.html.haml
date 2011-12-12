@@ -43,6 +43,11 @@
         %select#language{ :name => 'user[language]' }
           = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
     %tr
+      %td= user_form.label('screenlock_timeout', User.human_attribute_name(:screenlock_timeout))
+      %td
+        = user_form.text_field :screenlock_timeout
+        %span#user_password_display_keyboard.display_keyboard
+    %tr
       %td= user_form.label('active', User.human_attribute_name(:active))
       %td= user_form.check_box :active
     %tr

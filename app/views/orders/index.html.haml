@@ -36,4 +36,4 @@
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';
   var mobile_special = #{ mobile_special? ? "true" : "false" };
-  var screenlock_timeout = #{ @current_company.timeout };
+  var screenlock_timeout = #{ @current_user.screenlock_timeout };

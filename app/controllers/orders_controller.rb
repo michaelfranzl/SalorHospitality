@@ -17,9 +17,9 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = @current_user.tables.existing
-    @categories = Category.scopied.existing
-    @users = User.active
+    @tables = Table.existing_and_accessible_by @current_user
+    @categories = Category.existing_and_accessible_by @current_user
+    @users = User.active_and_accessible_by @current_user
     session[:admin_interface] = false
   end
 
