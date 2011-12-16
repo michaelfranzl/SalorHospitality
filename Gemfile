@@ -43,6 +43,8 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'spork', '> 0.9.0.rc'
   gem 'guard-spork'

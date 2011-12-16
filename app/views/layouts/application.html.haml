@@ -39,8 +39,10 @@
     #container
       #header= render 'layouts/header'
       #flash
-        #flash_notice= flash[:notice]
-        #flash_error= flash[:error]
+        - if flash[:notice]
+          #flash_notice= flash[:notice]
+        - if flash[:error]
+          #flash_error= flash[:error]
       #main= yield
       #footer
       #copyright

@@ -59,4 +59,10 @@ $(document).ready(function() {
   $('input:checkbox:not([safari])').checkbox();
   $('input[safari]:checkbox').checkbox({cls:'jquery-safari-checkbox'});
   $('input:radio').checkbox();
+  if ($('#flash').children().size() > 0) {
+    $('#flash').fadeIn(1000);
+    setTimeout(function(){ $('#flash').fadeOut(1000); }, 5000);
+  }
+
 })
+

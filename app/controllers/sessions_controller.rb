@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
       I18n.locale = @current_user.language
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
-      flash[:notice] = nil
+      flash[:notice] = t('messages.hello_username', :name => @current_user.login)
       redirect_to '/vendors'
     else
       flash[:error] = t :wrong_password

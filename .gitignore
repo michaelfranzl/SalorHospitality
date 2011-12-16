@@ -29,3 +29,4 @@ vendor/bundle
 *.bill
 /nbproject/private/
 tmp/cache
+tmp/capybara
