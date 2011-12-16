@@ -31,11 +31,18 @@ gem 'jquery-rails'
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
-group :development, :test do
+#
+# group :development, :test do
+# 
+# end
+
+group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'spork', '> 0.9.0.rc'
+  gem 'guard-spork'
 end
 
 gem 'haml'
