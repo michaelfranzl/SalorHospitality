@@ -1,0 +1,89 @@
+%h1= Vendor.model_name.human
+
+- if @vendor.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @vendor.errors.size, :model => Vendor.model_name.human
+    %ul
+      - @vendor.errors.full_messages.each do |msg|
+        %li= msg
+
+= form_for nest_image(@vendor), :html => { :multipart => true } do |vendor_form|
+  %div#Vendor_data
+    %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
+    %br
+    %p
+      = vendor_form.fields_for :images do |image_form|
+        = image_form.label :logo, Vendor.human_attribute_name(:logo)
+        = image_form.file_field :file_data, :size => 15
+    %p
+      = vendor_form.label :name, Vendor.human_attribute_name(:name)
+      = vendor_form.text_field :name, :size => 30
+    %p
+      = vendor_form.label :invoice_subtitle, Vendor.human_attribute_name(:invoice_subtitle)
+      = vendor_form.text_field :invoice_subtitle, :size => 30
+    %p
+      = vendor_form.label :address, Vendor.human_attribute_name(:address)
+      = vendor_form.text_field :address, :size => 30
+    %p
+      = vendor_form.label :revenue_service_tax_number, Vendor.human_attribute_name(:revenue_service_tax_number)
+      = vendor_form.text_field :revenue_service_tax_number, :size => 30
+    %p
+      = vendor_form.label :invoice_slogan1, Vendor.human_attribute_name(:invoice_slogan1)
+      = vendor_form.text_field :invoice_slogan1, :size => 30
+    %p
+      = vendor_form.label :invoice_slogan2, Vendor.human_attribute_name(:invoice_slogan2)
+      = vendor_form.text_field :invoice_slogan2, :size => 30
+    %p
+      = vendor_form.label :bank_account1, Vendor.human_attribute_name(:bank_account1)
+      = vendor_form.text_field :bank_account1, :size => 30
+    %p
+      = vendor_form.label :bank_account2, Vendor.human_attribute_name(:bank_account2)
+      = vendor_form.text_field :bank_account2, :size => 30
+    %p
+      = vendor_form.label :internet_address, Vendor.human_attribute_name(:internet_address)
+      = vendor_form.text_field :internet_address, :size => 30
+    %p
+      = vendor_form.label :email, Vendor.human_attribute_name(:email)
+      = vendor_form.text_field :email, :size => 30
+    %p
+      = vendor_form.label :country, Vendor.human_attribute_name(:country)
+      %select#category_color{ :name => 'Vendor[country]' }
+        - BillGastro::Application::COUNTRIES.each do |key, val|
+          %option{ :value => key, :selected => vendor_form.object.country == key }= t val
+    %p
+      = vendor_form.label :time_offset, Vendor.human_attribute_name(:time_offset)
+      = vendor_form.text_field :time_offset, :size => 2
+    %p
+      = vendor_form.label :res_fetch_url, I18n.t("activerecord.attributes.Vendor.res_fetch_url")
+      = vendor_form.text_field :res_fetch_url, :size => 55
+    %p
+      = vendor_form.label :res_confirm_url, I18n.t("activerecord.attributes.Vendor.res_confirm_url")
+      = vendor_form.text_field :res_confirm_url, :size => 55
+    %p
+      = vendor_form.label :use_order_numbers, Vendor.human_attribute_name(:use_order_numbers)
+      = vendor_form.check_box :use_order_numbers
+
+    - if saas_pro_variant?
+      %p
+        = vendor_form.label :automatic_printing, Vendor.human_attribute_name(:automatic_printing)
+        = vendor_form.check_box :automatic_printing
+
+  - if local_variant?
+    %div#Vendor_printers
+      %h3= t('activerecord.models.vendor_printer.other')
+      %p#add_printer
+        %span.link= t '.add_printer'
+      = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
+        = render :partial => 'vendor_printer/vendor_printer', :locals => { :f => f }
+      %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
+
+- if not demo_variant?
+  %p#backup_database= link_to t('.backup_database'), 'companies/backup_database'
+  %p#backup_logfile= link_to t('.backup_logfile'), 'companies/backup_logfile'
+
+
+:javascript
+  $('#add_printer').click(function(){
+    var new_printer_id = new Date().getTime();
+    $('#Vendor_printers').append(printer_template.replace(/NEW_RECORD/g, 'new_' + new_printer_id));
+  });

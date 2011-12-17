@@ -4,7 +4,7 @@ FactoryGirl.define do
     login "user"
     password "secret"
     title "Mr. User" 
-    company 
+    company
     role 
   end
 
@@ -14,6 +14,14 @@ FactoryGirl.define do
   end
 
   factory :company do
-    name "Testcompany"
+    name "Test Company"
+  end
+
+  factory :vendor do
+    name "Test Vendor"
+  end
+
+  factory :user_with_vendor, :parent => :user do |user|
+    user.after_create { |u| Factory(:vendor, :users => [u]) }
   end
 end

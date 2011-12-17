@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   include Scope
   has_many :settlements
   has_many :orders
-  has_many :companies
   has_one :cash_drawer
   belongs_to :role
   belongs_to :company

@@ -29,6 +29,8 @@ class Vendor < ActiveRecord::Base
 
   serialize :unused_order_numbers
 
+  validates_presence_of :name
+
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank

@@ -63,4 +63,18 @@ class VendorsController < ApplicationController
     send_file 'log/production.log', :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
   end
 
+  def new
+    @vendor = Vendor.new
+  end
+
+  def create
+    @vendor = Vendor.new params[:vendor]
+    @vendor.company = @current_company
+    if @vendor.save
+      redirect_to vendors_path
+    else
+      render :new
+    end
+  end
+
 end

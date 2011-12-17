@@ -71,7 +71,7 @@ Spork.prefork do
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
-    config.infer_base_class_for_anonymous_controllers = true
+    config.infer_base_class_for_anonymous_controllers = false
 
     config.treat_symbols_as_metadata_keys_with_true_values = true
     config.filter_run :focus => true
@@ -83,8 +83,12 @@ Spork.prefork do
       DatabaseCleaner.clean_with(:truncation)
     end
 
+    config.before(:each) do
+      #DatabaseCleaner.start
+    end
+
     config.after(:each) do
-      DatabaseCleaner.start
+      #DatabaseCleaner.start
     end
 
   end
