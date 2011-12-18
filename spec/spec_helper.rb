@@ -32,7 +32,6 @@ require 'rspec/rails'
 # These instructions should self-destruct in 10 seconds.  If they don't, feel
 # free to delete them.
 
-
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -97,9 +96,3 @@ Spork.each_run do
   # This code will be run each time you run your specs.
   FactoryGirl.reload
 end
-
-
-
-
-
-

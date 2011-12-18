@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe User do
-
   before(:each) do
     #User.should have(:no).records
   end
