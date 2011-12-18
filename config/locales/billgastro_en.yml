@@ -346,6 +346,8 @@ en:
       no_printing: no printing
 
   sessions:
+    permission_denied:
+      permission_denied: Permission denied
     browser_warning:
       warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as web browser. Bill Gastro was optimized for those browsers exclusively.
       continue: Continue

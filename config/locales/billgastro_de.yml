@@ -7,10 +7,10 @@ de:
       table:
         one: Tisch
         other: Tische
-      user:
+      user: 
         one: Benutzer
         other: Benutzer
-      company:
+      company:  
         one: Firma
         other: Firmen
       vendor:
