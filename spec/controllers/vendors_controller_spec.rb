@@ -9,6 +9,7 @@ describe VendorsController do
       user = Factory :user_with_vendor
       session[:user_id] = user.id
       get 'new'
+      flash[:notice].should_not be
       response.should be_success  
     end
 
