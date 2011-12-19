@@ -212,6 +212,8 @@ en:
         other: Variants
     sort_index:
       sort: Sort articles
+    update:
+      success: Article successfully created
 
   options:
     new:

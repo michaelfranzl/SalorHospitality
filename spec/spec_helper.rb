@@ -38,6 +38,7 @@ Spork.prefork do
   # need to restart spork for it take effect.
 
   require 'capybara/rspec'
+  require 'ruby-debug'
 
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'

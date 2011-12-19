@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Sessions" do
+describe "Session Requests" do
 
   def log_in(user)
     visit new_session_path

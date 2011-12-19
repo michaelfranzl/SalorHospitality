@@ -15,7 +15,7 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
 end
 
 # these will just re-run the tests
-guard 'rspec', :version => 2, :cli => "--drb", :all_on_start => false, :all_after_pass => false do
+guard 'rspec', :version => 2, :cli => "--drb --debug --format documentation", :all_on_start => false, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -33,5 +33,6 @@ guard 'rspec', :version => 2, :cli => "--drb", :all_on_start => false, :all_afte
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
   watch(%r{^spec/factories/.*\.rb$})                  { "spec" }
-  watch(%r{^config/locales/.*\.yml$})                  { "spec" }
+  watch(%r{^spec/requests/(.+)\.rb$})                 { |m| "spec/requests/#{m[1]}.rb" }
+  watch(%r{^config/locales/.*\.yml$})                 { "spec" }
 end

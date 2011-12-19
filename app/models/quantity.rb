@@ -22,11 +22,16 @@ class Quantity < ActiveRecord::Base
   has_many :items
   has_many :partials
 
-  validates_presence_of :prefix
-  validates_presence_of :price
-  validates_numericality_of :price
+  validates_presence_of :prefix, :if => :not_hidden?
+  validates_presence_of :price, :if => :not_hidden?
+  validates_numericality_of :price, :if => :not_hidden?
 
-  scope :active_and_sorted, where(:hidden => false, :active => true).order('position ASC')
+  scope :existing_and_sorted, where(:hidden => false).order('position ASC')
+
+  # so that a deleted dynamic nested quantity in articles#new don't add validation errors
+  def not_hidden?
+    not hidden
+  end
 
   def price=(price)
     write_attribute(:price, price.to_s.gsub(',', '.'))

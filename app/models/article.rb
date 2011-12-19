@@ -58,7 +58,7 @@ class Article < ActiveRecord::Base
   
   accepts_nested_attributes_for :ingredients, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
-  accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '' }
+  accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| (attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '') || attrs['hidden'] == 1 }
   
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 

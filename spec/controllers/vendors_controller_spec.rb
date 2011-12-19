@@ -4,12 +4,12 @@ require 'spec_helper'
 
 describe VendorsController do
 
-  describe "GET 'new'" do
+  describe "#new" do
     it "returns http success" do 
       user = Factory :user
       session[:user_id] = user.id
       get 'new'
-      flash[:notice].should_not be
+      #flash[:notice].should_not be
       response.should be_success  
     end
 

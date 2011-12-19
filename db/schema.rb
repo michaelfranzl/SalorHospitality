@@ -11,24 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212152437) do
+ActiveRecord::Schema.define(:version => 20111219095629) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
-    t.string   "format_name"
-    t.string   "format_division"
     t.string   "description"
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",                     :default => true
-    t.boolean  "blackboard"
+    t.boolean  "menucard",                 :default => true
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                       :default => false
+    t.boolean  "hidden",                   :default => false
     t.integer  "sort"
-    t.integer  "usage",           :limit => 1, :default => 0
+    t.integer  "usage",       :limit => 1, :default => 0
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
@@ -526,9 +523,6 @@ ActiveRecord::Schema.define(:version => 20111212152437) do
     t.boolean  "active",             :default => true
     t.boolean  "hidden",             :default => false
     t.integer  "company_id"
-    t.boolean  "is_owner",           :default => false
-    t.integer  "owner_id"
-    t.integer  "vendor_id"
     t.integer  "screenlock_timeout", :default => -1
     t.boolean  "automatic_printing"
   end
@@ -574,12 +568,9 @@ ActiveRecord::Schema.define(:version => 20111212152437) do
     t.string   "mode"
     t.text     "cache",                      :limit => 2147483647
     t.boolean  "use_order_numbers",                                :default => true
-    t.integer  "user_id"
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
     t.integer  "company_id"
   end
-
-  add_index "vendors", ["user_id"], :name => "index_company_user_id"
 
 end

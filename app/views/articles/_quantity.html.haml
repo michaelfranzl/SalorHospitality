@@ -1,8 +1,8 @@
 - index = /article\[quantities_attributes\]\[(.*)\]/.match(f.object_name)[1]
-- id = f.object.id
+- id = f.object.new_record? ? 'NEW_RECORD' : f.object.id
 %li{ :id => "quantity_#{ id }" }
   %span.handle
-  - unless f.object.new_record?
+  - if not f.object.new_record?
     %span.input_fields= f.check_box :active
   %span.label= f.label :prefix, Quantity.human_attribute_name(:prefix)
   %span.input_fields
@@ -16,9 +16,8 @@
   %span.input_fields
     = f.text_field(:price, :class => 'price')
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_price_display_keyboard" }
-
-  - unless f.object.new_record?
-    %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => Quantity.human_attribute_name(:hidden), :alt => Quantity.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;")
+  %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= image_tag('/images/button_small_delete.png', :title => Quantity.human_attribute_name(:hidden), :alt => Quantity.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;")
+  = f.hidden_field :hidden
 
 :javascript
   $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );

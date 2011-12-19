@@ -1,20 +1,65 @@
 require 'spec_helper'
 
-describe "Articles" do
+describe "Article Requests" do
   def log_in(user)
     visit new_session_path
     fill_in "password", :with => user.password
     click_button "Login"
   end
 
-  describe "GET /articles/new" do
-    it "denies permission for user belonging to another company" do
-      article_company_0 = Factory :article000
-      user_company_1 = Factory :user100
-      log_in(user_company_1)
-      visit edit_article_path(article_company_0)
+  def set_up_models
+    @company = Factory :company
+    @vendor = Factory :vendor, :company => @company
+    @user = Factory :user, :company => @company, :vendors => [@vendor]
+    @category = Factory :category, :company => @company, :vendor => @vendor
+    @article = Factory :article, :company => @company, :category => @category
+  end
+
+  describe "#index" do
+    it "shows the index page" do
+      user = Factory :user
+      log_in user
+      visit articles_path
       #save_and_open_page
-      page.should have_content(I18n.t('sessions.permission_denied.permission_denied'))
+      page.should have_css 'h2'
+    end
+  end
+
+  describe "#edit and #update" do
+    context "when user belongs to another company than the article" do
+      it "displays permission denied" do
+        company0 = Factory :company
+        company1 = Factory :company
+        article = Factory :article, :company => company0
+        user = Factory :user, :company => company1
+        log_in user
+        visit edit_article_path(article)
+        page.should have_content I18n.t 'sessions.permission_denied.permission_denied'
+      end
+    end
+
+    context "when logged in" do
+      it "displays #edit form and updates the article successfully" do
+        set_up_models
+        log_in @user
+        visit edit_article_path(@article)
+        fill_in "article_name", :with => 'new name'
+        click_button I18n.t :edit
+        page.should have_content I18n.t 'articles.update.success'
+      end
+    end
+  end
+
+  describe "#new and #create" do
+    it "fails during submitting an empty form", :focus => true do
+      set_up_models
+      log_in @user
+      visit new_article_path
+      click_button I18n.t :create
+      page.should have_content "#{ Article.human_attribute_name(:name) } #{ I18n.t 'errors.messages.blank' }"
+      page.should have_content "#{ Article.human_attribute_name(:category) } #{ I18n.t 'errors.messages.blank' }"
+      page.should have_content "#{ Article.human_attribute_name(:price) } #{ I18n.t :must_be_entered_either_for_article_or_for_quantity }"
+      page.should have_content "#{ Article.human_attribute_name(:price) } #{ I18n.t 'errors.messages.not_a_number' }"
     end
   end
 end

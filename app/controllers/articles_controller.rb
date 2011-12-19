@@ -78,6 +78,7 @@ class ArticlesController < ApplicationController
     end
 
     if @article.save
+      flash[:notice] = t('articles.update.success')
       if session[:return_to]
         redirect_to session[:return_to]
         session[:return_to] = nil
