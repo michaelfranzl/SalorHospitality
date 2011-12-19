@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe "Article Requests" do
   def log_in(user)
-    visit new_session_path
-    fill_in "password", :with => user.password
-    click_button "Login"
+   #page.driver.post(session_path, { :params => { :password => user.password }})
+    #visit new_session_path
+    #fill_in "Password", :with => user.password
+    #save_and_open_page
+    #click_button "Login"
   end
 
   def set_up_models
@@ -51,7 +53,7 @@ describe "Article Requests" do
   end
 
   describe "#new and #create" do
-    it "fails during submitting an empty form", :focus => true do
+    it "fails submitting an empty form" do
       set_up_models
       log_in @user
       visit new_article_path
@@ -60,6 +62,33 @@ describe "Article Requests" do
       page.should have_content "#{ Article.human_attribute_name(:category) } #{ I18n.t 'errors.messages.blank' }"
       page.should have_content "#{ Article.human_attribute_name(:price) } #{ I18n.t :must_be_entered_either_for_article_or_for_quantity }"
       page.should have_content "#{ Article.human_attribute_name(:price) } #{ I18n.t 'errors.messages.not_a_number' }"
+      page.should have_content I18n.t 'articles.create.failure'
+    end
+
+    it "fails submitting an incomplete form consisting of variant with missing price", :js => true, :focus => true do
+      default_host = 'lkj'
+      set_up_models
+      log_in @user
+      post(session_path, { :password => @user.password })
+      save_and_open_page 
+      visit new_article_path
+      fill_in "article_name", :with => 'new name'
+      fill_in "article_price", :with => 10
+      click_link "add_quantity"
+      find('#quantities_new').fill_in(I18n.t(Quantity.human_attribute_name(:name))) 
+      click_button I18n.t :create
+      page.should have_content I18n.t 'articles.create.success'
+    end
+
+    it "succeeds submitting an article without quantities" do
+      set_up_models
+      log_in @user
+      visit new_article_path
+      fill_in "article_name", :with => 'new name'
+      fill_in "article_price", :with => 10
+      select @category.name, :from => 'article_category_id'
+      click_button I18n.t :create
+      page.should have_content I18n.t 'articles.create.success'
     end
   end
 end

@@ -52,8 +52,10 @@ class ArticlesController < ApplicationController
       @article.vendor = @current_vendor
       @article.save
       redirect_to articles_path
+      flash[:notice] = t('articles.create.success')
     else
       @categories = @current_vendor.categories
+      flash[:error] = t('articles.create.failure')
       render :new
     end
   end
@@ -86,6 +88,7 @@ class ArticlesController < ApplicationController
         redirect_to orders_path
       end
     else
+      flash[:error] = t('articles.update.failure')
       render :new
     end
   end
