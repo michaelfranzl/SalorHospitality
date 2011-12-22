@@ -42,6 +42,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def request_specs_login
+    create
+  end
+
   def destroy
     @current_user = session[:user_id] = nil
     redirect_to '/session/new'

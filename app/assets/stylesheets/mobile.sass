@@ -1,5 +1,5 @@
-!billgastroblue1 = #5b7682
-!warning = #74101b
+$billgastroblue1: #5b7682
+$warning: #74101b
 
 body
   :margin 0px 0px 40px 0
@@ -143,9 +143,9 @@ select.target_table
 
 
 
-!buttoncolor = #27343b
-!itembgcolor = #556
-!articlelistbgcolor = #3a474d
+$buttoncolor: #27343b
+$itembgcolor: #556
+$articlelistbgcolor: #3a474d
 
 div.category
   :width 75px
@@ -169,13 +169,13 @@ td.item_label
   :border-left 2px solid #555
   :border-right 2px solid #222
   :border-bottom 2px solid #222
-  :background-color = #3a474d
+  :background-color #3a474d
 
 td.item_label.warning
-  :background-color !warning
+  :background-color $warning
 
 td.item_count.updated
-  :background-color !billgastroblue1
+  :background-color $billgastroblue1
 
 div.category_label
   :width 65px
@@ -194,7 +194,7 @@ div#articles
 
 div.article,
 div.quantity
-  :background-color = !buttoncolor
+  :background-color $buttoncolor
   :padding 10px 10px
 
 div.quantity
@@ -231,7 +231,7 @@ td.item_count
 
 td.item_label
   :cursor pointer
-  :background-color = !articlelistbgcolor
+  :background-color $articlelistbgcolor
   :min-height 40%
 
 td.item_minus

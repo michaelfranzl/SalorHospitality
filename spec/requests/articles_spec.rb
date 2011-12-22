@@ -2,11 +2,8 @@ require 'spec_helper'
 
 describe "Article Requests" do
   def log_in(user)
-   #page.driver.post(session_path, { :params => { :password => user.password }})
     #visit new_session_path
-    #fill_in "Password", :with => user.password
-    #save_and_open_page
-    #click_button "Login"
+    visit "/session/request_specs_login?password=xxx"
   end
 
   def set_up_models
@@ -65,12 +62,10 @@ describe "Article Requests" do
       page.should have_content I18n.t 'articles.create.failure'
     end
 
-    it "fails submitting an incomplete form consisting of variant with missing price", :js => true, :focus => true do
-      default_host = 'lkj'
+    it "fails submitting an incomplete form consisting of variant with missing price", :js => true do
       set_up_models
       log_in @user
-      post(session_path, { :password => @user.password })
-      save_and_open_page 
+      #save_and_open_page
       visit new_article_path
       fill_in "article_name", :with => 'new name'
       fill_in "article_price", :with => 10

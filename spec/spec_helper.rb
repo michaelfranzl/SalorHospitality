@@ -39,6 +39,7 @@ Spork.prefork do
 
   require 'capybara/rspec'
   require 'ruby-debug'
+  require 'database_cleaner'
 
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
@@ -49,8 +50,6 @@ Spork.prefork do
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
   Capybara.javascript_driver = :webkit
-  Capybara.default_host = "http://localhost:3000"
-  Capybara.app_host = "http://localhost:3000"
 
   RSpec.configure do |config|
     # == Mock Framework
@@ -69,7 +68,7 @@ Spork.prefork do
     # examples within a transaction, remove the following line or assign false
     # instead of true.
     # false carries over database records between specs
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
@@ -82,16 +81,14 @@ Spork.prefork do
 
 
     config.before(:suite) do
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.clean_with(:truncation)
+      DatabaseCleaner.strategy = :deletion
     end
 
     config.before(:each) do
-      DatabaseCleaner.start
+      DatabaseCleaner.clean
     end
 
     config.after(:each) do
-      #DatabaseCleaner.start
     end
 
   end
