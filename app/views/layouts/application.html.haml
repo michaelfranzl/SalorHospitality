@@ -8,30 +8,32 @@
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
 
     %title BillGastro
-    = javascript_include_tag 'jquery'
-    = javascript_include_tag 'jquery-ui'
-    = stylesheet_link_tag('generic', :media => 'screen')
-    = javascript_include_tag 'application-generic.js'
-    - if workstation?
 
+    = javascript_include_tag 'application'
+    = javascript_include_tag 'application-generic.js'
+    = csrf_meta_tag
+    - if workstation? and @current_user and @current_user.onscreen_keyboard_enabled
+      = javascript_include_tag 'jquery.keyboard.js'
+      = javascript_include_tag 'jquery.keyboard.config.js'
+    - if workstation?
+      = javascript_include_tag 'application-workstation.js'
       = javascript_include_tag 'jquery.checkbox.js'
       = javascript_include_tag 'jquery.modcoder.excolor.js'
+    - if mobile?
+      = javascript_include_tag 'application-mobile.js'
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
       = javascript_include_tag "/articles.js"
-    %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
+
     %style= render :file => 'app/views/layouts/_fonts.css.erb', :content_type => 'text/css' 
-    = csrf_meta_tag
-
-
-
-
+    = stylesheet_link_tag 'generic', :media => 'screen'
     - if mobile?
       = stylesheet_link_tag('mobile', :media => 'screen')
-      = javascript_include_tag 'application-mobile.js'
-    - else
+    - if workstation?
       = stylesheet_link_tag 'print', :media => 'print'
       = stylesheet_link_tag('workstation', :media => 'screen')
-      = javascript_include_tag 'application-workstation.js'
+
+    %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
+
 
   %body
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'

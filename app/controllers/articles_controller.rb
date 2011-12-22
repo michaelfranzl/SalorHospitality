@@ -29,6 +29,18 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def menucard
+    @categories = Category.active_and_accessible_by @current_user
+  end
+
+  def to_menucard
+    Article.update_all :menucard => 0
+    params[:menucard].each do |article_id|
+      Article.scopied.find(article_id).update_attribute :menucard, true
+    end
+    redirect_to orders_path
+  end
+
   def update_cache
     @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['menucard','waiterpad']
@@ -40,11 +52,13 @@ class ArticlesController < ApplicationController
     @articles = Article.accessible_by(@current_user).where(:hidden => false).order('name, description, price')
   end
 
+  # tested
   def new
     @article = Article.new
     @categories = @current_vendor.categories
   end
 
+  # tested
   def create
     @article = Article.new(params[:article])
     if @article.save
@@ -60,6 +74,7 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # tested except session[return_to]
   def edit
     @article = @permitted_model
     @categories = @current_vendor.categories
@@ -67,17 +82,11 @@ class ArticlesController < ApplicationController
     render :new
   end
 
+  # tested
   def update
     @categories = @current_vendor.categories
     @article = @permitted_model
     @article.update_attributes params[:article]
-
-    # hide/delete all belonging quantities
-    if @article.hidden
-      @article.quantities.existing.each do |q|
-        q.update_attribute :hidden, true
-      end
-    end
 
     if @article.save
       flash[:notice] = t('articles.update.success')
@@ -93,9 +102,12 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # tested
   def destroy
     @article = @permitted_model
     @article.update_attribute :hidden, true
+    @article.quantities.update_all :hidden => true
+    flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
   end
 

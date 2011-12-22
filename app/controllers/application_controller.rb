@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     def check_permission
       if params[:id]
         model = controller_name.classify.constantize.find_by_id(params[:id])
-        permitted = (model.respond_to?(:company_id) and model.company_id == @current_user.company_id) or (model.respond_to?(:vendor_id) and model.vendor_id != @current_user.vendor_id)
+        permitted = (model.company_id == @current_user.company_id) or @current_user.vendors.map{ |v| v.id }.include?(model.vendor_id)
         if permitted
           @permitted_model = model
         else

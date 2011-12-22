@@ -213,7 +213,9 @@ en:
     sort_index:
       sort: Sort articles
     update:
-      success: Article successfully created
+      success: Article was successfully created
+    destroy:
+      success: Article was successfully deleted
 
   options:
     new:

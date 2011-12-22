@@ -28,7 +28,7 @@ class Article < ActiveRecord::Base
   has_many :partials
   has_many :images, :as => :imageable
 
-  scope :existing, where(:hidden => false).order('position ASC')
+  scope :sorted, order('position ASC')
   scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
