@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219095629) do
+ActiveRecord::Schema.define(:version => 20111222140445) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -520,11 +520,12 @@ ActiveRecord::Schema.define(:version => 20111219095629) do
     t.integer  "role_id"
     t.string   "color"
     t.string   "language"
-    t.boolean  "active",             :default => true
-    t.boolean  "hidden",             :default => false
+    t.boolean  "active",                    :default => true
+    t.boolean  "hidden",                    :default => false
     t.integer  "company_id"
-    t.integer  "screenlock_timeout", :default => -1
+    t.integer  "screenlock_timeout",        :default => -1
     t.boolean  "automatic_printing"
+    t.boolean  "onscreen_keyboard_enabled", :default => true
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"

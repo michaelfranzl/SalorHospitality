@@ -67,7 +67,8 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    # false carries over database records between specs
+    # transactional fixtures are not compatible with the webkit and selenium driver of capybara
+    # false carries over database records between specs, use database_cleaner instead
     config.use_transactional_fixtures = false
 
     # If true, the base class of anonymous controllers will be inferred

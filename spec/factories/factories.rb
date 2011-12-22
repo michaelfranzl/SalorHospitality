@@ -16,7 +16,8 @@ FactoryGirl.define do
   factory :user, :aliases => [:user_superuser] do
     login "user"
     password "xxx"
-    title "Mr. Superuser" 
+    title "Mr. Superuser"
+    onscreen_keyboard_enabled false
     role
     association :company
     vendors { |v| [v.association(:vendor)] }

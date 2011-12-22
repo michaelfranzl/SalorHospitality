@@ -19,10 +19,11 @@
   %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').hide();" }= image_tag('/images/button_small_delete.png', :title => Quantity.human_attribute_name(:hidden), :alt => Quantity.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;")
   = f.hidden_field :hidden
 
-:javascript
-  $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );
-  $('#article_quantities_attributes_#{ index }_prefix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_prefix').getkeyboard().reveal(); });
-  $('#article_quantities_attributes_#{ index }_postfix').keyboard( {openOn: '' } );
-  $('#article_quantities_attributes_#{ index }_postfix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_postfix').getkeyboard().reveal(); });
-  $('#article_quantities_attributes_#{ index }_price').keyboard( {openOn: '', layout: 'num' } );
-  $('#article_quantities_attributes_#{ index }_price_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_price').getkeyboard().reveal(); });
+- if @current_user.onscreen_keyboard_enabled
+  :javascript
+    $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );
+    $('#article_quantities_attributes_#{ index }_prefix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_prefix').getkeyboard().reveal(); });
+    $('#article_quantities_attributes_#{ index }_postfix').keyboard( {openOn: '' } );
+    $('#article_quantities_attributes_#{ index }_postfix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_postfix').getkeyboard().reveal(); });
+    $('#article_quantities_attributes_#{ index }_price').keyboard( {openOn: '', layout: 'num' } );
+    $('#article_quantities_attributes_#{ index }_price_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_price').getkeyboard().reveal(); });
