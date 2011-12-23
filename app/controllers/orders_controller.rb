@@ -18,8 +18,8 @@ class OrdersController < ApplicationController
 
   def index
     @tables = @current_user.tables
-    @categories = Category.existing_and_accessible_by @current_user
-    @users = User.active_and_accessible_by @current_user
+    @categories = Category.accessible_by(@current_user).existing
+    @users = User.accessible_by(@current_user).active
     session[:admin_interface] = false
   end
 

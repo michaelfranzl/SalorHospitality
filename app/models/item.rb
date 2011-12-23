@@ -29,7 +29,6 @@ class Item < ActiveRecord::Base
   validates_presence_of :count, :article_id
 
   scope :prioritized, order('priority ASC')
-  scope :sequence, order('sort ASC')
 
   def price
     p = read_attribute :price

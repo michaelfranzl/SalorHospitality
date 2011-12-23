@@ -26,8 +26,6 @@ class Quantity < ActiveRecord::Base
   validates_presence_of :price, :if => :not_hidden?
   validates_numericality_of :price, :if => :not_hidden?
 
-  scope :sorted, order('position ASC')
-
   # so that a deleted dynamic nested quantity in articles#new don't add validation errors
   def not_hidden?
     not hidden

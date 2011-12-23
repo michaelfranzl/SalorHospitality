@@ -18,9 +18,10 @@ class ArticlesController < ApplicationController
 
   before_filter :check_permission
 
+  # tested
   def index
     @categories = @current_vendor.categories.order('position ASC')
-    @scopes = ['menucard','waiterpad']
+    @scopes = ['active','waiterpad']
     respond_to do |wants|
       wants.html
       wants.js {
@@ -29,27 +30,28 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def menucard
-    @categories = Category.active_and_accessible_by @current_user
+  # tested
+  def active
+    @categories = Category.accessible_by(@current_user).active
   end
 
-  def to_menucard
-    Article.update_all :menucard => 0
-    params[:menucard].each do |article_id|
-      Article.scopied.find(article_id).update_attribute :menucard, true
-    end
-    redirect_to orders_path
+  # tested
+  def waiterpad
+    @categories = Category.accessible_by(@current_user).active
   end
 
+  # tested
   def update_cache
     @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['menucard','waiterpad']
     @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
+    flash[:notice] = t('articles.cache_successfully_updated')
     redirect_to orders_path
   end
 
+  # tested
   def listall
-    @articles = Article.accessible_by(@current_user).where(:hidden => false).order('name, description, price')
+    @articles = Article.accessible_by(@current_user).existing.order('name, description, price')
   end
 
   # tested
@@ -74,11 +76,11 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # tested except session[return_to]
+  # tested
   def edit
     @article = @permitted_model
     @categories = @current_vendor.categories
-    session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
+    session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer # manually tested
     render :new
   end
 
@@ -105,8 +107,7 @@ class ArticlesController < ApplicationController
   # tested
   def destroy
     @article = @permitted_model
-    @article.update_attribute :hidden, true
-    @article.quantities.update_all :hidden => true
+    @article.hide
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
   end

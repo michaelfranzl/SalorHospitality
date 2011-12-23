@@ -33,7 +33,6 @@ class Order < ActiveRecord::Base
   after_save :set_customers_up
 
   validates_presence_of :user_id
-  validates_presence_of :user_id
 
   #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
   #This will prevent children_attributes with all empty values to be ignored

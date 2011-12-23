@@ -84,7 +84,7 @@ en:
         hidden: delete
         description: Description
         category_id: Category
-        menucard: active
+        active: active
         usage: Usage
       option:
         price: Price
@@ -194,7 +194,7 @@ en:
     index:
       list_all: List all
       search_term: Search term
-      preview: Preview
+      view: View
       sort: Sort
       update: Update!
     new:
@@ -212,8 +212,10 @@ en:
         other: Variants
     sort_index:
       sort: Sort articles
-    update:
+    create:
       success: Article was successfully created
+    update:
+      success: Article was successfully updated
     destroy:
       success: Article was successfully deleted
 
@@ -454,10 +456,10 @@ en:
   display: Display
   logout: 'log out %{who}'
   
-  blackboard_generic_name: Blackboard
-  waiterpad_generic_name: Waiterpad
-  menucard_generic_name: Menucard
-  unsettled_orders_generic_name: Shifts
+  scope_names:
+    waiterpad: Waiterpad
+    active: Menucard
+    unsettled: Shifts
 
   print_kitchenlist: Print Kitchen Item List
   recent_orders: View recent orders

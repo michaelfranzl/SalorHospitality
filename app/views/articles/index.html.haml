@@ -17,8 +17,8 @@
     - @scopes.each do |scope|
       %td{ :id => "drop_add_to_#{scope}" }
         %script== $('#drop_add_to_#{scope}').droppable({ hoverclass: 'receiving', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'scope=#{scope}&id=' + ui.draggable.attr('id') })}});
-        %span.scope_title= t "#{scope}_generic_name".to_sym
-        = link_to t('.preview'), { :controller => scope }, :class => 'scopelink'
+        %span.scope_title= t "scopes.#{scope}".to_sym
+        = link_to t('.view'), "/articles/#{ scope }", :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
 
 :javascript

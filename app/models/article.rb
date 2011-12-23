@@ -28,8 +28,6 @@ class Article < ActiveRecord::Base
   has_many :partials
   has_many :images, :as => :imageable
 
-  scope :sorted, order('position ASC')
-  scope :menucard, where(:hidden => false, :menucard => true ).order('position ASC')
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   def price=(price)
@@ -61,6 +59,11 @@ class Article < ActiveRecord::Base
   accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| (attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '') || attrs['hidden'] == 1 }
   
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+
+  def hide
+    update_attributes :hidden => true, :active => false
+    quantities.update_all :hidden => true, :active => false
+  end
 
   def name_description
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)

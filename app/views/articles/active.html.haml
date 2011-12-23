@@ -1,4 +1,4 @@
-%h2= t :menucard_generic_name
+%h2= t 'scope_names.menucard'
 
 %table
   %tr
@@ -10,7 +10,7 @@
     %tr{ :class => 'category' }
       %td{ :colspan => '3' }
         %b= ca.name
-    - ca.articles.menucard.each do |ar|
+    - ca.articles.active.each do |ar|
       %tr{ :valign => 'top' }
         %td= ar.name
         %td= ar.description

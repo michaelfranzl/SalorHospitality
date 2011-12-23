@@ -8,22 +8,16 @@ module Scope
       end
     })
 
-    klass.scope(:active_and_accessible_by, lambda { |user|
-      if user.respond_to?(:company_id) and not user.company_id.nil?
-        return :conditions => "company_id = #{ user.company_id } AND active = TRUE"
-      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
-        return :conditions => "vendor_id = #{ user.vendor_id } AND active = TRUE"
-      end
-    })
+    if klass.column_names.include? 'hidden'
+      klass.scope(:existing, lambda { klass.where('hidden = FALSE OR hidden IS NULL') })
+    end
 
-    klass.scope(:existing_and_accessible_by, lambda { |user|
-      if user.respond_to?(:company_id) and not user.company_id.nil?
-        return :conditions => "company_id = #{ user.company_id } AND (hidden = FALSE OR hidden IS NULL)"
-      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
-        return :conditions => "vendor_id = #{ user.vendor_id } AND (hidden = FALSE OR hidden IS NULL)"
-      end
-    })
+    if klass.column_names.include? 'active'
+      klass.scope(:active, lambda { klass.where('active = TRUE') })
+    end
 
-    klass.scope(:existing, lambda { klass.where('hidden = FALSE OR hidden IS NULL') })
+    if klass.column_names.include? 'position'
+      klass.scope(:positioned, lambda { klass.order('position ASC') })
+    end
   end
 end

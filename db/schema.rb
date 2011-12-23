@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111222140445) do
+ActiveRecord::Schema.define(:version => 20111223154428) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(:version => 20111222140445) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "menucard",                 :default => true
+    t.boolean  "active",                   :default => true
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20111222140445) do
     t.integer  "preparation_user_id"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "active",              :default => true
   end
 
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
@@ -218,7 +219,7 @@ ActiveRecord::Schema.define(:version => 20111222140445) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "partial_order"
-    t.integer  "sort"
+    t.integer  "position"
     t.integer  "quantity_id"
     t.integer  "storno_status",       :limit => 1, :default => 0
     t.string   "comment"
@@ -244,9 +245,9 @@ ActiveRecord::Schema.define(:version => 20111222140445) do
   add_index "items", ["company_id"], :name => "index_items_company_id"
   add_index "items", ["item_id"], :name => "index_items_on_item_id"
   add_index "items", ["order_id"], :name => "index_items_on_order_id"
+  add_index "items", ["position"], :name => "index_items_on_sort"
   add_index "items", ["priority"], :name => "index_items_on_priority"
   add_index "items", ["quantity_id"], :name => "index_items_on_quantity_id"
-  add_index "items", ["sort"], :name => "index_items_on_sort"
   add_index "items", ["storno_item_id"], :name => "index_items_on_storno_item_id"
   add_index "items", ["tax_id"], :name => "index_items_on_tax_id"
 

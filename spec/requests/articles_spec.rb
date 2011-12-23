@@ -25,7 +25,7 @@ describe "Article Requests" do
   end
 
   describe "#edit and #update" do
-    context "when user belongs to another company than the article" do
+    context "foreign user tries to access" do
       it "displays permission denied" do
         company0 = Factory :company
         company1 = Factory :company
@@ -115,4 +115,58 @@ describe "Article Requests" do
       page.should have_content I18n.t 'articles.destroy.success'
     end
   end
+
+  describe "#active" do
+    it "shows the page" do
+      set_up_models
+      log_in @user
+      visit '/articles/active'
+      page.should have_content I18n.t 'scope_names.active'
+    end
+  end
+
+  describe "#waiterpad" do
+    it "shows the page" do
+      set_up_models
+      log_in @user
+      visit '/articles/waiterpad'
+      page.should have_css 'table.waiterpad'
+    end
+  end
+
+  describe "#update_cache" do
+    it "updates the cache successfully" do
+      set_up_models
+      log_in @user
+      visit '/articles/update_cache'
+      page.should have_content I18n.t 'articles.cache_successfully_updated'
+    end
+  end
+
+  describe "#index" do
+    it "shows the index page" do
+      set_up_models
+      log_in @user
+      visit articles_path
+      page.should have_css 'table.articles'
+    end
+    it "downloads articles.js" do
+      set_up_models
+      log_in @user
+      visit '/articles.js'
+      page.response_headers['Content-Type'].should == "text/javascript"
+    end
+  end
+
+  describe "#listall" do
+    it "displays the page" do
+      set_up_models
+      log_in @user
+      visit '/articles/listall'
+      page.should have_css 'div.articles_listall'
+    end
+  end
+
+
+
 end
