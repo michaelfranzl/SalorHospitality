@@ -38,7 +38,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index :tables, :user_id
     add_index :tables, :active_user_id
     add_index :users, :role_id
-    add_index :users, :company_id
+    #add_index :users, :company_id
     add_index :vendor_printers, :company_id
   end
 
@@ -81,7 +81,7 @@ class AddIndexes < ActiveRecord::Migration
     remove_index :tables, :user_id
     remove_index :tables, :active_user_id
     remove_index :users, :role_id
-    remove_index :users, :company_id
+    #remove_index :users, :company_id
     remove_index :vendor_printers, :company_id
 
   end

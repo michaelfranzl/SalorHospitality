@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
+
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
       @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
       @current_company = @current_user.company if @current_user
@@ -36,6 +37,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_permission
+debugger
       if params[:id]
         model = controller_name.classify.constantize.find_by_id(params[:id])
         permitted = (model.company_id == @current_user.company_id) or @current_user.vendors.map{ |v| v.id }.include?(model.vendor_id)

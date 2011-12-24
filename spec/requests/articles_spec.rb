@@ -167,6 +167,38 @@ describe "Article Requests" do
     end
   end
 
+  describe "#find" do
+    it "returns search results", :js => true do
+      set_up_models
+      log_in @user
+      visit articles_path
+      fill_in "article_name", :with => 'article'
+      page.should have_css 'li.search_result'
+    end
+  end
+
+  describe "#sort_index" do
+    it "displays the page" do
+      set_up_models
+      log_in @user
+      visit '/articles/sort_index'
+      page.should have_content I18n.t 'articles.sort_index.sort'
+    end
+  end
+
+  describe "#change_scope" do
+    it "sorts", :js => true, :driver => :selenium, :focus => true do
+      set_up_models
+      @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2'
+      @article3 = Factory :article, :company => @company, :category => @category, :name => 'Article 3'
+      log_in @user
+      visit articles_path
+      source = page.find "#active_#{ @article.id }"
+      target = page.find "#drop_add_to_waiterpad"
+      source.drag_to target
+      page.should have_content I18n.t 'articles.sort_index.sort'
+    end
+  end
 
 
 end

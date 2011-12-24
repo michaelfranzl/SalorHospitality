@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
     t.string   "color"
     t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
+    t.integer  "company_id"
     t.boolean  "hidden",              :default => false
     t.integer  "preparation_user_id"
-    t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "active",              :default => true
   end
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
-    t.boolean  "hidden"
     t.integer  "company_id"
+    t.boolean  "hidden"
     t.integer  "vendor_id"
   end
 
@@ -231,13 +231,13 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
     t.integer  "max_count",                        :default => 0
     t.integer  "usage"
     t.integer  "priority"
+    t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
     t.string   "preparation_comment"
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
-    t.integer  "company_id"
     t.integer  "vendor_id"
   end
 
@@ -309,10 +309,10 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
     t.integer  "tax_id"
     t.boolean  "print_pending"
     t.float    "storno_sum",     :default => 0.0
+    t.integer  "company_id"
     t.string   "note"
     t.integer  "customer_id"
     t.integer  "m_points"
-    t.integer  "company_id"
     t.integer  "vendor_id"
   end
 
@@ -427,7 +427,7 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "permissions", :limit => 1000, :default => "--- []\n\n"
+    t.string   "permissions", :limit => 1000, :default => "--- []\n"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
@@ -482,8 +482,8 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
     t.boolean  "enabled",        :default => true
     t.boolean  "hidden",         :default => false
     t.boolean  "rotate"
-    t.integer  "active_user_id"
     t.integer  "company_id"
+    t.integer  "active_user_id"
     t.integer  "vendor_id"
   end
 
@@ -550,28 +550,28 @@ ActiveRecord::Schema.define(:version => 20111223154428) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                             :default => "Bill Gastro"
-    t.string   "subdomain",                                        :default => "demo"
+    t.string   "name",                                           :default => "Bill Gastro"
+    t.string   "subdomain",                                      :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invoice_subtitle",                                 :default => ""
-    t.string   "address",                                          :default => ""
-    t.string   "revenue_service_tax_number",                       :default => ""
-    t.string   "invoice_slogan1",                                  :default => ""
-    t.string   "invoice_slogan2",                                  :default => ""
-    t.string   "internet_address",                                 :default => "www.billgastro.com"
-    t.string   "email",                                            :default => "office@billgastro.com"
-    t.integer  "largest_order_number",                             :default => 0
-    t.string   "unused_order_numbers",                             :default => "--- []\n\n"
+    t.string   "invoice_subtitle",                               :default => ""
+    t.string   "address",                                        :default => ""
+    t.string   "revenue_service_tax_number",                     :default => ""
+    t.string   "invoice_slogan1",                                :default => ""
+    t.string   "invoice_slogan2",                                :default => ""
+    t.string   "internet_address",                               :default => "www.billgastro.com"
+    t.string   "email",                                          :default => "office@billgastro.com"
+    t.integer  "largest_order_number",                           :default => 0
+    t.string   "unused_order_numbers",                           :default => "--- []\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
-    t.integer  "time_offset",                                      :default => 0
+    t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
-    t.text     "cache",                      :limit => 2147483647
-    t.boolean  "use_order_numbers",                                :default => true
+    t.text     "cache",                      :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
+    t.boolean  "use_order_numbers",                              :default => true
     t.integer  "company_id"
   end
 

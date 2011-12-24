@@ -4,7 +4,7 @@
     %p.category_title= ca.name
     %ul
       - articles.each do |ar|
-        %li{ :id => "#{scope}_#{ar.id}" }
+        %li{ :id => ar.id, :source => scope }
           %img{ :id => "handle_for_#{scope}_article_#{ar.id}", :src => 'images/drag_handle.png', :style => 'cursor:move' }
           = link_to ar.name, edit_article_path(ar)
           %script== $('##{scope}_#{ar.id}').draggable({handle: 'handle_for_#{scope}_article_#{ar.id}', revert: true});

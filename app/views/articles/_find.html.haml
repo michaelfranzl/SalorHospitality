@@ -1,5 +1,5 @@
 - @found_articles.each do |ar|
-  %li{ :id => "source_#{ar.id}" }
+  %li.search_result{ :id => ar.id, :source => 'search' }
     %img{ :id => "handle_for_article_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
     = link_to ar.name, edit_article_path(ar)
     %br

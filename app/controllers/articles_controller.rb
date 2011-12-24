@@ -112,13 +112,12 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
+  # tested
   def find
     if params['articles_search_text'].strip.length > 2
       search_terms = params['articles_search_text'].split.collect { |word| "%#{ word.downcase }%" }
-      conditions = 'hidden = false AND '
-      conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
-      @found_articles = Article.scopied.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 5 )
-      #render :partial => 'find', :layout => false
+      conditions = search_terms.collect{ |t| "LOWER(name) LIKE '#{ t }'" }.join(' AND ')
+      @found_articles = Article.accessible_by(@current_user).existing.where(conditions).limit(5).order('name ASC')
     else
       render :nothing => true
     end
@@ -140,17 +139,19 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # testing not automatable
   def sort
     params['article'].each do |id|
-      a = Article.scopied.find_by_id id
+      a = Article.find_by_id id
       a.position = params['article'].index(a.id.to_s) + 1
       a.save
     end
     render :nothing => true
   end
 
+  # tested
   def sort_index
-    @categories = Category.scopied.all
+    @categories = Category.accessible_by(@current_user).existing.active
   end
 
 end
