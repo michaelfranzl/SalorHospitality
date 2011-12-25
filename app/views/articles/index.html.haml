@@ -15,8 +15,8 @@
       %ul#search_results
   %tr
     - @scopes.each do |scope|
-      %td{ :id => "drop_add_to_#{scope}" }
-        %script== $('#drop_add_to_#{scope}').droppable({ hoverclass: 'receiving', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'scope=#{scope}&id=' + ui.draggable.attr('id')&source=' + ui.draggable.attr('source') })}});
+      %td{ :id => "add_to_#{ scope }" }
+        %script== $('#add_to_#{ scope }').droppable({ hoverclass: 'receiving', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'target=#{ scope }&id=' + ui.draggable.attr('model_id') + '&source=' + ui.draggable.attr('source') }) } });
         %span.scope_title= t "scopes.#{scope}".to_sym
         = link_to t('.view'), "/articles/#{ scope }", :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
@@ -27,11 +27,13 @@
   $('#drop_remove').droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
-      ui.draggable.remove();
+      if (ui.draggable.attr('source') != 'searchresults') {
+        ui.draggable.remove();
+      }
       $.ajax({
         type: 'POST',
         url: '/articles/change_scope',
-        data: 'scope=remove&id=' + ui.draggable.attr('id') + '&source=' + ui.draggable.attr('source)
+        data: 'target=searchresults&id=' + ui.draggable.attr('model_id') + '&source=' + ui.draggable.attr('source')
       });
     }
   });

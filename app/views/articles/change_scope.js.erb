@@ -1,4 +1,7 @@
-<% if @drag_from != 'source' %>
-  $('#<%= @drag_from %>_list').html('<%= escape_javascript render :partial => 'scope_list', :locals => { :scope => @drag_from } %>');
+<% if @source %>
+  $('#<%= @source %>_list').html('<%= escape_javascript render :partial => 'scope_list', :locals => { :scope => @source } %>');
 <% end %>
-$('#<%= @drag_to %>_list').html('<%= escape_javascript render :partial => 'scope_list', :locals => { :scope => @drag_to } %>');
+
+<% if @target %>
+$('#<%= @target %>_list').html('<%= escape_javascript render :partial => 'scope_list', :locals => { :scope => @target } %>');
+<% end %>

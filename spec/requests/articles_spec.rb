@@ -187,16 +187,26 @@ describe "Article Requests" do
   end
 
   describe "#change_scope" do
-    it "sorts", :js => true, :driver => :selenium, :focus => true do
+    it "adds waiterpad scope to an active article", :js => true do
       set_up_models
-      @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2'
-      @article3 = Factory :article, :company => @company, :category => @category, :name => 'Article 3'
+      @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2', :id => 20
       log_in @user
       visit articles_path
-      source = page.find "#active_#{ @article.id }"
-      target = page.find "#drop_add_to_waiterpad"
+      source = page.find "#active_#{ @article2.id }"
+      target = page.find "#add_to_waiterpad"
       source.drag_to target
-      page.should have_content I18n.t 'articles.sort_index.sort'
+      page.should have_css 'td#add_to_waiterpad li#waiterpad_20'
+    end
+
+    it "removes active scope", :js => true, :driver => :selenium, :focus => true do
+      set_up_models
+      @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2', :id => 20
+      log_in @user
+      visit articles_path
+      source = page.find "#active_#{ @article2.id }"
+      target = page.find "#drop_remove"
+      source.drag_to target
+      page.should_not have_css 'td#add_to_active li#waiterpad_20'
     end
   end
 
