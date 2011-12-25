@@ -9,7 +9,7 @@
 
 %table.articles
   %tr
-    %td#drop_remove{ :colspan => 2 }
+    %td#remove{ :colspan => 2 }
       = text_field_tag 'article_name', t('.search_term'), :onclick => 'this.value = "";', :onkeypress => 'enable_articles_search = true;'
       %span#article_name_display_keyboard.display_keyboard
       %ul#search_results
@@ -24,7 +24,7 @@
 :javascript
   var enable_articles_search = false;
 
-  $('#drop_remove').droppable({
+  $('#remove').droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
       if (ui.draggable.attr('source') != 'searchresults') {

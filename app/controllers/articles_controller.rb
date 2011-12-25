@@ -87,7 +87,7 @@ class ArticlesController < ApplicationController
   def update
     @article = @permitted_model
     @article.update_attributes params[:article]
-
+    @categories = @current_vendor.categories
     if @article.save
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
@@ -100,7 +100,6 @@ class ArticlesController < ApplicationController
       flash[:error] = t('articles.update.failure')
       render :new
     end
-    @categories = @current_vendor.categories
   end
 
   # tested
@@ -122,6 +121,7 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # tested
   def change_scope
     @article = @permitted_model
     @source = params[:source]
