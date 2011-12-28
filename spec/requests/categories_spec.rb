@@ -5,8 +5,9 @@ describe "Category Requests" do
     @company = Factory :company
     @vendor = Factory :vendor, :company => @company
     @user = Factory :user, :company => @company, :vendors => [@vendor]
-    @category = Factory :category,:name => "Category1234", :company => @company, :vendor => @vendor
     @tax = Factory :tax, :company => @company, :vendor => @vendor
+    @category = Factory :category,:name => "Category1234", :company => @company, :vendor => @vendor, :tax => @tax
+    
   end 
   def log_in(user)
     #visit new_session_path
@@ -19,6 +20,9 @@ describe "Category Requests" do
         visit categories_path
         page.should have_content("Category1234")
       end # shows the index page
+      it "allows you to sort categories on the index page" do
+        set_up_models
+      end # allows you to sort categories on the index page
       context "when editing a category" do
         it "allows you to edit a category" do
           set_up_models
@@ -43,7 +47,7 @@ describe "Category Requests" do
           page.should have_content I18n.t('sessions.permission_denied.permission_denied')
         end # does not allow you to edit a non-existent categor
       end
-      context "when creating a category", :focus => true do
+      context "when creating a category" do
         it "allows you to create a category" do
           set_up_models
           log_in @user

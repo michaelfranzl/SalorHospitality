@@ -17,7 +17,7 @@
 class CategoriesController < ApplicationController
   before_filter :check_permission
   def index
-    @categories = Category.accessible_by(@current_user).existing
+    @categories = Category.accessible_by(@current_user).existing.order("position ASC")
   end
 
   def new
@@ -26,6 +26,8 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(Category.process_custom_icon(params[:category]))
+    @category.vendor = @current_vendor
+    @category.company = @current_company
     if @category.save then
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to(categories_path)
@@ -50,18 +52,15 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.scopied.find(params[:id])
-    @category.update_attribute :hidden, true
+    @category = @permitted_model
+    @category.update_attribute(:hidden, true) if @category
     redirect_to categories_path
   end
 
   def sort
-    @categories = Category.scopied.all
-    @categories.each do |c|
-      c.position = params['category'].index(c.id.to_s) + 1
-      c.save
-    end
-  render :nothing => true
+    @categories = Category.accessible_by(@current_user).where("id IN (#{params[:category].join(',')})")
+    Category.sort(@categories,params[:category])
+    render :nothing => true
   end
 
 end

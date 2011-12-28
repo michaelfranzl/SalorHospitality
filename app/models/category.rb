@@ -43,5 +43,14 @@ class Category < ActiveRecord::Base
     params[:icon] = 'custom' unless params[:images_attributes]['0'][:file_data].blank?
     params
   end
+  
+  def self.sort(categories,type)
+    type.map! {|t| t.to_i}
+    categories.each do |cat|
+      cat.position ||= 0
+      cat.update_attribute :position,type.index(cat.id) + 1 if type.index(cat.id)
+    end
+    return categories
+  end
 
 end

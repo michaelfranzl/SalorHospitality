@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "Article Requests" do
   def log_in(user)
-    #visit new_session_path
     visit "/session/request_specs_login?password=xxx"
   end
 
@@ -11,7 +10,8 @@ describe "Article Requests" do
     @vendor = Factory :vendor, :company => @company
     @user = Factory :user, :company => @company, :vendors => [@vendor]
     @category = Factory :category, :company => @company, :vendor => @vendor
-    @article = Factory :article, :company => @company, :category => @category
+    @article = Factory :article, :company => @company, :vendor => @vendor, :category => @category, :name => 'Article 1'
+    @article2 = Factory :article, :company => @company, :vendor => @vendor, :category => @category, :name => 'Article 2'
   end
 
   describe "#index" do
@@ -187,16 +187,24 @@ describe "Article Requests" do
   end
 
   describe "#change_scope" do
-    it "sorts", :js => true, :driver => :selenium do
+    it "adds waiterpad scope to an active article", :js => true do
       set_up_models
-      @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2'
-      @article3 = Factory :article, :company => @company, :category => @category, :name => 'Article 3'
       log_in @user
       visit articles_path
-      source = page.find "#active_#{ @article.id }"
-      target = page.find "#drop_add_to_waiterpad"
+      source = page.find "#active_#{ @article2.id }"
+      target = page.find "#add_to_waiterpad"
       source.drag_to target
-      page.should have_content I18n.t 'articles.sort_index.sort'
+      page.should have_css "td#add_to_active li#active_#{ @article2.id }"
+    end
+
+    it "removes active scope", :js => true do
+      set_up_models
+      log_in @user
+      visit articles_path
+      source = page.find "#active_#{ @article2.id }"
+      target = page.find "#remove"
+      source.drag_to target
+      page.should_not have_css "td#add_to_active li#active_#{ @article2.id }"
     end
   end
 

@@ -20,29 +20,28 @@ class ArticlesController < ApplicationController
 
   # tested
   def index
-    @categories = @current_vendor.categories.order('position ASC')
     @scopes = ['active','waiterpad']
+    @articleshash = build_articleshash(@scopes)
+    @categories = @current_vendor.categories.positioned
     respond_to do |wants|
       wants.html
-      wants.js {
-        send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline'
-      }
+      wants.js { send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline' }
     end
   end
 
   # tested
   def active
-    @categories = Category.accessible_by(@current_user).active
+    @categories = @current_vendor.categories.positioned
   end
 
   # tested
   def waiterpad
-    @categories = Category.accessible_by(@current_user).active
+    @categories = @current_vendor.categories.positioned
   end
 
   # tested
   def update_cache
-    @categories = @current_vendor.categories.order('position ASC')
+    @categories = @current_vendor.categories.positioned
     @scopes = ['menucard','waiterpad']
     @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
     flash[:notice] = t('articles.cache_successfully_updated')
@@ -57,7 +56,7 @@ class ArticlesController < ApplicationController
   # tested
   def new
     @article = Article.new
-    @categories = @current_vendor.categories
+    @categories = @current_vendor.categories.positioned
   end
 
   # tested
@@ -70,7 +69,7 @@ class ArticlesController < ApplicationController
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
-      @categories = @current_vendor.categories
+      @categories = @current_vendor.categories.positioned
       flash[:error] = t('articles.create.failure')
       render :new
     end
@@ -79,17 +78,16 @@ class ArticlesController < ApplicationController
   # tested
   def edit
     @article = @permitted_model
-    @categories = @current_vendor.categories
+    @categories = @current_vendor.categories.positioned
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer # manually tested
     render :new
   end
 
   # tested
   def update
-    @categories = @current_vendor.categories
     @article = @permitted_model
     @article.update_attributes params[:article]
-
+    @categories = @current_vendor.categories
     if @article.save
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
@@ -123,20 +121,23 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # tested
   def change_scope
-    @categories = Category.scopied.find(:all, :order => 'position')
-    @article = Article.scopied.find(/([0-9]*)$/.match(params[:id])[1])
-
-    @drag_from = /[^_]*/.match(params[:id])[0]
-    if params[:scope] == 'remove'
-      @article.update_attribute @drag_from.to_sym, false
-      render :nothing => true
-    elsif @drag_from == params[:scope]
+    @article = @permitted_model
+    @source = params[:source]
+    @target = params[:target]
+    if @target == 'searchresults' and @source != 'searchresults'
+      @article.update_attribute @source.to_sym, false
+      @articleshash = build_articleshash([@source])
+      @target = nil
+    elsif @target == @source
       render :nothing => true
     else
-      @drag_to = params[:scope]
-      @article.update_attribute @drag_to.to_sym, true
+      @article.update_attribute @target.to_sym, true
+      @articleshash = build_articleshash([@target])
+      @source = nil
     end
+    @categories = @current_vendor.categories.positioned
   end
 
   # testing not automatable
@@ -151,7 +152,23 @@ class ArticlesController < ApplicationController
 
   # tested
   def sort_index
-    @categories = Category.accessible_by(@current_user).existing.active
+    @categories = @current_vendor.categories.positioned
+  end
+
+  private
+
+  def build_articleshash(scopes)
+    articleshash = {}
+    articles = @current_vendor.articles
+    scopes.each do |s|
+      articleshash.merge! s => {}
+      articles.each do |a|
+        next unless a.respond_to?(s.to_sym) and a.send(s.to_sym)
+        articleshash[s][a.category_id] = []
+        articleshash[s][a.category_id] << a
+      end
+    end
+    articleshash
   end
 
 end
