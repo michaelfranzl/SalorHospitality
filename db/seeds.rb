@@ -120,7 +120,7 @@ user_array = {
       puts "Category #{ c } #{ v } #{ i } created" if r == true
 
       2.times do |a|
-        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30), :menucard => true
+        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30), :active => true
         article.category = category
         article.company = company
         article.vendor = vendor

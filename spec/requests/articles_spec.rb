@@ -187,7 +187,7 @@ describe "Article Requests" do
   end
 
   describe "#change_scope" do
-    it "sorts", :js => true, :driver => :selenium, :focus => true do
+    it "sorts", :js => true, :driver => :selenium do
       set_up_models
       @article2 = Factory :article, :company => @company, :category => @category, :name => 'Article 2'
       @article3 = Factory :article, :company => @company, :category => @category, :name => 'Article 3'

@@ -29,8 +29,6 @@ class Category < ActiveRecord::Base
   has_many :images, :as => :imageable
   validates_presence_of :name
   validates_presence_of :tax_id
-  validates_presence_of :name
-  validates_presence_of :tax_id
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
@@ -41,6 +39,7 @@ class Category < ActiveRecord::Base
   end
 
   def self.process_custom_icon(params)
+    return params if not params[:images_attributes]
     params[:icon] = 'custom' unless params[:images_attributes]['0'][:file_data].blank?
     params
   end

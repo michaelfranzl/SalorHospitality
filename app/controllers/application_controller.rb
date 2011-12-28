@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
     end
 
     def check_permission
-debugger
       if params[:id]
         model = controller_name.classify.constantize.find_by_id(params[:id])
         permitted = (model.company_id == @current_user.company_id) or @current_user.vendors.map{ |v| v.id }.include?(model.vendor_id)

@@ -18,10 +18,10 @@
         %span#category_name_display_keyboard.display_keyboard
     %tr
       %td= category_form.label('tax_id', Category.human_attribute_name(:tax_id))
-      %td= category_form.collection_select :tax_id, Tax.existing, :id, :custom_name, { :include_blank => true }
+      %td= category_form.collection_select :tax_id, Tax.accessible_by(@current_user).existing, :id, :custom_name, { :include_blank => true }
     %tr
       %td= category_form.label('user_id', Category.human_attribute_name(:user_id))
-      %td= category_form.collection_select :tax_id, User.existing, :id, :login, { :include_blank => true }
+      %td= category_form.collection_select :user_id, User.existing, :id, :login, { :include_blank => true }
     %tr
       %td= category_form.label('usage', Category.human_attribute_name(:vendor_printer_id))
       %td= category_form.collection_select :vendor_printer_id, @current_company.vendor_printers.existing, :id, :name

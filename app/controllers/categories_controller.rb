@@ -15,8 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class CategoriesController < ApplicationController
+  before_filter :check_permission
   def index
-    @categories = Category.scopied.existing
+    @categories = Category.accessible_by(@current_user).existing
   end
 
   def new
@@ -25,17 +26,27 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(Category.process_custom_icon(params[:category]))
-    @category.save ? redirect_to(categories_path) : render(:new)
+    if @category.save then
+      flash[:notice] = I18n.t("categories.create.success")
+      redirect_to(categories_path)
+    else
+      render :new
+    end
   end
 
   def edit
-    @category = Category.scopied.find(params[:id])
+    @category = Category.accessible_by(@current_user).find(params[:id])
     render :new
   end
 
   def update
-    @category = Category.scopied.find(params[:id])
-    @category.update_attributes(Category.process_custom_icon(params[:category])) ? redirect_to(categories_path) : render(:new)
+    @category = @permitted_model
+    if @category.update_attributes(Category.process_custom_icon(params[:category])) then
+      flash[:notice] = I18n.t("categories.update.success")
+      redirect_to(categories_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy
