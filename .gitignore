@@ -27,7 +27,6 @@ tmp/pids
 vendor/bundle
 *.log
 *.bill
-/nbproject/private/
 tmp/cache
 tmp/capybara
 tmp

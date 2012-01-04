@@ -328,6 +328,7 @@ class ApplicationController < ActionController::Base
 
         sum_taxes[item.tax.id] += item.full_price
         subtotal += item.full_price
+debugger
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }#{ ' ' unless item.comment.empty? }#{ item.comment }" : "#{ item.article.name }#{ ' ' unless item.comment.empty? }#{ item.comment }"
 
         list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.total_price]

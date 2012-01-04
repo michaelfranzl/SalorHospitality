@@ -41,7 +41,7 @@ class Category < ActiveRecord::Base
   end
 
   def self.process_custom_icon(params)
-    params[:icon] = 'custom' unless params[:images_attributes]['0'][:file_data].blank?
+    params[:icon] = 'custom' if (params[:images_attributes] and params[:images_attributes]['0'][:file_data])
     params
   end
 
