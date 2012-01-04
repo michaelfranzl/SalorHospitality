@@ -14,11 +14,11 @@ tables_001:
   width_mobile: 100
   height_mobile: 60
   abbreviation: T1
-  user_id: 1
+  user_id:
   enabled: 1
   hidden: 0
   rotate: 
-  active_user_id: 1
+  active_user_id:
 tables_002: 
   id: 2
   name: Table 2
@@ -38,7 +38,7 @@ tables_002:
   enabled: 1
   hidden: 0
   rotate: 
-  active_user_id: 1
+  active_user_id:
 tables_003: 
   id: 3
   name: Bar
