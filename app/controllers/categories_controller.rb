@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class CategoriesController < ApplicationController
-  before_filter :check_permission
+  
   def index
     @categories = Category.accessible_by(@current_user).existing.order("position ASC")
   end

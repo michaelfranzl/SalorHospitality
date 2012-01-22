@@ -16,36 +16,32 @@
 
 class VendorsController < ApplicationController
 
-  before_filter :check_permission
-
   def index
     @vendors = Vendor.accessible_by @current_user
   end
 
   # Switches the current vendor and redirects to somewhere else
   def show
-    @current_vendor = @permitted_model
-    session[:vendor_id] = params[:id]
+    @current_vendor = get_model
+    session[:vendor_id] = params[:id] if @current_vendor
     redirect_to vendors_path
   end
 
   # Edits the vendor
   def edit
-    @vendor = @permitted_model
-    @current_vendor = @vendor
-    session[:vendor_id] = params[:id]
+    @vendor = get_model
+    @vendor ? render(:new) : redirect_to(vendors_path)
   end
 
   def update
-    @vendor = @permitted_model
+    @vendor = get_model
+    redirect_to vendors_path and return unless @vendor
     unless @vendor.update_attributes params[:vendor]
       @vendor.images.reload
       render(:edit) and return 
     end
     #test_printers :all
     #test_printers :existing
-    @current_vendor = @vendor
-    session[:vendor_id] = params[:id]
     redirect_to vendors_path
   end
 

@@ -15,9 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ArticlesController < ApplicationController
-
-  before_filter :check_permission
-
+ 
   # tested
   def index
     @scopes = ['active','waiterpad']
@@ -77,15 +75,16 @@ class ArticlesController < ApplicationController
 
   # tested
   def edit
-    @article = @permitted_model
     @categories = @current_vendor.categories.positioned
-    session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer # manually tested
-    render :new
+    session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
+    @article = get_model
+    @article ? render(:new) : redirect_to(articles_path)
   end
 
   # tested
   def update
-    @article = @permitted_model
+    @article = get_model
+    redirect_to articles_path and return unless @article
     @article.update_attributes params[:article]
     @categories = @current_vendor.categories
     if @article.save
@@ -104,7 +103,8 @@ class ArticlesController < ApplicationController
 
   # tested
   def destroy
-    @article = @permitted_model
+    @article = get_model
+    redirect_to articles_path and return if not @article
     @article.hide
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
@@ -123,7 +123,8 @@ class ArticlesController < ApplicationController
 
   # tested
   def change_scope
-    @article = @permitted_model
+    @article = get_model
+    return if not @article
     @source = params[:source]
     @target = params[:target]
     if @target == 'searchresults' and @source != 'searchresults'
@@ -143,7 +144,7 @@ class ArticlesController < ApplicationController
   # testing not automatable
   def sort
     params['article'].each do |id|
-      a = Article.find_by_id id
+      a = Article.accessible_by(@current_user).find_by_id id
       a.position = params['article'].index(a.id.to_s) + 1
       a.save
     end
@@ -170,5 +171,4 @@ class ArticlesController < ApplicationController
     end
     articleshash
   end
-
 end

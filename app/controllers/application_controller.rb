@@ -29,23 +29,19 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
-      @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
-      @current_company = @current_user.company if @current_user
       redirect_to new_session_path unless @current_user
+      @current_company = @current_user.company if @current_user
+      @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
+      redirect_to vendors_path unless @current_vendor
     end
 
-    def check_permission
+    def get_model
       if params[:id]
-        model = controller_name.classify.constantize.find_by_id(params[:id])
-        permitted = (model.company_id == @current_user.company_id) or @current_user.vendors.map{ |v| v.id }.include?(model.vendor_id)
-        if permitted
-          @permitted_model = model
-        else
-          redirect_to '/session/permission_denied'
-        end
+        model = controller_name.classify.constantize.accessible_by(@current_user).find_by_id(params[:id])
+        flash[:notice] = t 'not_found' if model.nil?
       end
+      model
     end
 
     def workstation?

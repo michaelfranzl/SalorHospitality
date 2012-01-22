@@ -521,6 +521,8 @@ de:
   germany: Deutschland
   austria: Österreich
 
+  not_found: Nicht gefunden
+
   # Translations for Javascript files
   please_enter_item_comment: Notiz
   please_enter_item_price: Preis

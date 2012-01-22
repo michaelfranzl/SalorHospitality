@@ -27,10 +27,13 @@ class SessionsController < ApplicationController
     @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     if @current_user
       session[:user_id] = @current_user.id
+
       @current_company = @current_user.company
       session[:company_id] = @current_company.id
+
       @current_vendor = @current_user.vendors.first
       session[:vendor_id] = @current_vendor.id
+
       I18n.locale = @current_user.language
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil

@@ -26,14 +26,14 @@ describe "Article Requests" do
 
   describe "#edit and #update" do
     context "foreign user tries to access" do
-      it "displays permission denied" do
+      it "displays not found" do
         company0 = Factory :company
         company1 = Factory :company
         article = Factory :article, :company => company0
         user = Factory :user, :company => company1
         log_in user
         visit edit_article_path(article)
-        page.should have_content I18n.t 'sessions.permission_denied.permission_denied'
+        page.should have_content I18n.t ':not_found'
       end
     end
 

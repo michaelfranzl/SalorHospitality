@@ -521,6 +521,8 @@ es:
   germany: Alemania
   austria: Austria
 
+  not_found: XXX Not found
+
   # Translations for Javascript files
   please_enter_item_comment: Deseo especial
   please_enter_item_price: Precio especial

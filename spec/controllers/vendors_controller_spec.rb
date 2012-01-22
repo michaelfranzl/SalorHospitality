@@ -4,19 +4,19 @@ require 'spec_helper'
 
 describe VendorsController do
 
-  describe "#new" do
-    it "returns http success" do 
-      user = Factory :user
-      session[:user_id] = user.id
-      get 'new'
-      #flash[:notice].should_not be
-      response.should be_success  
-    end
+  #describe "#new" do
+  #  it "returns http success" do 
+  #    user = Factory :user
+  #    session[:user_id] = user.id
+  #    get 'new'
+  #    #flash[:notice].should_not be
+  #    response.should be_success  
+  #  end
 
-    #it "should pass params[:menu_item] to menu item" do
-    #  post 'create', :menu_item => { :name => 'Plain' }
-    #  assigns[:menu_item].name.should == 'Plain'
-    #end
-  end
+  #  #it "should pass params[:menu_item] to menu item" do
+  #  #  post 'create', :menu_item => { :name => 'Plain' }
+  #  #  assigns[:menu_item].name.should == 'Plain'
+  #  #end
+  #end
 
 end

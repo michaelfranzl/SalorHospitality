@@ -521,6 +521,8 @@ tr:
   germany: XXXGermany
   austria: XXXAustria
 
+  not_found: XXX Not found
+
   # Translations for Javascript files
   please_enter_item_comment: Özel istek
   please_enter_item_price: Fiyet

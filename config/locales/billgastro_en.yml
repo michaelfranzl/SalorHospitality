@@ -536,6 +536,8 @@ en:
   germany: Germany
   austria: Austria
 
+  not_found: Not found
+
   # Translations for Javascript files
   please_enter_item_comment: Special Wish
   please_enter_item_price: Special Price
