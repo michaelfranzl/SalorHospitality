@@ -29,8 +29,6 @@ class Category < ActiveRecord::Base
   has_many :images, :as => :imageable
   validates_presence_of :name
   validates_presence_of :tax_id
-  validates_presence_of :name
-  validates_presence_of :tax_id
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
@@ -43,6 +41,15 @@ class Category < ActiveRecord::Base
   def self.process_custom_icon(params)
     params[:icon] = 'custom' if (params[:images_attributes] and params[:images_attributes]['0'][:file_data])
     params
+  end
+  
+  def self.sort(categories,type)
+    type.map! {|t| t.to_i}
+    categories.each do |cat|
+      cat.position ||= 0
+      cat.update_attribute :position,type.index(cat.id) + 1 if type.index(cat.id)
+    end
+    return categories
   end
 
 end

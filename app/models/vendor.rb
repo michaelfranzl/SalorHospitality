@@ -36,7 +36,7 @@ class Vendor < ActiveRecord::Base
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
   def image
-    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0
+    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
     "/images/client_logo.png"
   end
 
