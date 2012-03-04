@@ -39,7 +39,7 @@ module OrdersHelper
   def generate_js_variables
     id = ''
     designator = 'DESIGNATOR'
-    sort = 'SORT'
+    position = 'POSITION'
     articleid = 'ARTICLEID'
     quantityid = 'QUANTITYID'
     price = 'PRICE'
@@ -51,10 +51,10 @@ module OrdersHelper
     optionsnames = ''
     count = 1
 
-    new_item_tablerow = render :partial => 'items/item_tablerow', :locals => { :item => nil, :sort => sort, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil }
+    new_item_tablerow = render :partial => 'items/item_tablerow', :locals => { :item => nil, :position => position, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil }
     new_item_tablerow_var = raw("new_item_tablerow = \"#{ escape_javascript new_item_tablerow }\";")
 
-    new_item_inputfields = render :partial => 'items/item_inputfields', :locals => { :item => nil, :sort => sort, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :printed_count => printed_count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil, :id => nil, :usage => usage }
+    new_item_inputfields = render :partial => 'items/item_inputfields', :locals => { :item => nil, :position => position, :articleid => articleid, :quantityid => quantityid, :label => label, :designator => designator, :count => count, :printed_count => printed_count, :price => price, :optionslist => optionslist, :optionsnames => optionsnames, :optionsselect => optionsselect, :comment => nil, :id => nil, :usage => usage }
     new_item_inputfields_var = raw("\nnew_item_inputfields = \"#{ escape_javascript new_item_inputfields }\";")
 
     return new_item_tablerow_var + new_item_inputfields_var

@@ -24,7 +24,6 @@ class Article < ActiveRecord::Base
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
   has_many :items
-  has_many :discounts
   has_many :partials
   has_many :images, :as => :imageable
 

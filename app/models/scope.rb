@@ -8,6 +8,7 @@ module Scope
       end
     })
 
+    begin
     if klass.column_names.include? 'hidden'
       klass.scope(:existing, lambda { klass.where('hidden = FALSE OR hidden IS NULL') })
     end
@@ -18,6 +19,9 @@ module Scope
 
     if klass.column_names.include? 'position'
       klass.scope(:positioned, lambda { klass.order('position ASC') })
+    end
+    rescue
+      # don't let migrations on an empty database fail
     end
   end
 end

@@ -68,9 +68,9 @@ function add_new_item_q(qu_id, add_new, position, sort) {
   }
   else
   {
-    new_item_tablerow_modified = new_item_tablerow.replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
+    new_item_tablerow_modified = new_item_tablerow.replace(/POSITION/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
 
-    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
+    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/POSITION/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
 
     if (position) {
       $(new_item_tablerow_modified).insertBefore(position);

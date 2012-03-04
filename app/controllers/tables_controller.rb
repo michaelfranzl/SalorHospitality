@@ -26,9 +26,10 @@ class TablesController < ApplicationController
   end
 
   def show
-    @table = Table.accessible_by(@current_user).where( :id => 24 )
+    @table = Table.accessible_by(@current_user).find_by_id params[:id]
     @cost_centers = CostCenter.find_all_by_active(true)
     @taxes = Tax.accessible_by @current_user
+
     @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
     if @orders.size > 1
       render 'orders/go_to_invoice_form'

@@ -30,10 +30,9 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
-      redirect_to new_session_path unless @current_user
       @current_company = @current_user.company if @current_user
       @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
-      redirect_to vendors_path unless @current_vendor
+      redirect_to new_session_path unless @current_user
     end
 
     def get_model
@@ -85,16 +84,16 @@ class ApplicationController < ActionController::Base
     end
 
     def get_next_unique_and_reused_order_number
-      return 0 if not $COMPANY.use_order_numbers
-      if not $COMPANY.unused_order_numbers.empty?
+      return 0 if not @current_vendor.use_order_numbers
+      if not @current_vendor.unused_order_numbers.empty?
         # reuse order numbers if present
-        nr = $COMPANY.unused_order_numbers.first
-        $COMPANY.unused_order_numbers.delete(nr)
-        $COMPANY.save
-      elsif not $COMPANY.largest_order_number.zero?
+        nr = @current_vendor.unused_order_numbers.first
+        @current_vendor.unused_order_numbers.delete(nr)
+        @current_vendor.save
+      elsif not @current_vendor.largest_order_number.zero?
         # increment largest order number
-        nr = $COMPANY.largest_order_number + 1
-        $COMPANY.update_attribute :largest_order_number, nr
+        nr = @current_vendor.largest_order_number + 1
+        @current_vendor.update_attribute :largest_order_number, nr
       else
         # find Order with largest nr attribute from database. this should happen only once per application instance.
         last_order = Order.first(:order => 'nr DESC')
@@ -140,7 +139,7 @@ class ApplicationController < ActionController::Base
       logger.info "[PRINTING]============"
       logger.info "[PRINTING]INITIALIZE Printers..."
 
-      avaliable_printers = printerset ? printerset : $COMPANY.vendor_printers.existing
+      avaliable_printers = printerset ? printerset : @current_vendor.vendor_printers.existing
       open_printers = Hash.new
 
       avaliable_printers.each do |p|
@@ -235,7 +234,7 @@ class ApplicationController < ActionController::Base
         "\n\n"
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + $COMPANY.time_offset.hours, :format => :time_short), ($COMPANY.use_order_numbers ? o.nr : 0), $COMPANY.login, o.table.abbreviation]
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_vendor.login, o.table.abbreviation]
 
         per_order_output += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
 
@@ -292,19 +291,19 @@ class ApplicationController < ActionController::Base
       "\ea\x01" +  # align center
 
       "\e!\x38" +  # doube tall, double wide, bold
-      $COMPANY.name + "\n" +
+      @current_vendor.name + "\n" +
 
       "\e!\x01" +  # Font B
-      "\n" + $COMPANY.invoice_subtitle + "\n" +
-      "\n" + $COMPANY.address + "\n\n" +
-      $COMPANY.revenue_service_tax_number + "\n\n" +
+      "\n" + @current_vendor.invoice_subtitle + "\n" +
+      "\n" + @current_vendor.address + "\n\n" +
+      @current_vendor.revenue_service_tax_number + "\n\n" +
 
       "\ea\x00" +  # align left
       "\e!\x01" +  # Font B
 
       t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
 
-      header += t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + $COMPANY.time_offset.hours, :format => :long)) if $COMPANY.use_order_numbers
+      header += t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + @current_vendor.time_offset.hours, :format => :long)) if @current_vendor.use_order_numbers
 
       header += "\n\n" +
 
@@ -355,10 +354,10 @@ class ApplicationController < ActionController::Base
       footer = 
       "\ea\x01" +  # align center
       "\e!\x00" + # font A
-      "\n" + $COMPANY.invoice_slogan1 + "\n" +
+      "\n" + @current_vendor.invoice_slogan1 + "\n" +
       "\e!\x08" + # emphasized
-      "\n" + $COMPANY.invoice_slogan2 + "\n" +
-      $COMPANY.internet_address + "\n\n\n\n\n\n\n" + 
+      "\n" + @current_vendor.invoice_slogan2 + "\n" +
+      @current_vendor.internet_address + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00\x0C" # paper cut
 
       output = header + list_of_items + sum + tax_header + list_of_taxes + footer

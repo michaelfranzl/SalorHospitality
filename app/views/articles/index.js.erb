@@ -15,7 +15,7 @@ var quantitylist = new Array();
 <%- @categories.each do |cat| %>
   <%- cat.articles.active.each do |art| %>
     <%- next if art.quantities.empty? %>
-    quantitylist[<%= art.id %>] = "<%- art.quantities.active_and_sorted.each do |qu| %><div id='quantity_<%= qu.id %>' class='quantity' onmousedown='quantities_onmousedown(this);' onmouseup='quantities_onmouseup(this);' onclick='add_new_item_q(<%= qu.id %>);'><%= qu.prefix %> <%= qu.postfix %></div><%- end %>"
+    quantitylist[<%= art.id %>] = "<%- art.quantities.active.positioned.each do |qu| %><div id='quantity_<%= qu.id %>' class='quantity' onmousedown='quantities_onmousedown(this);' onmouseup='quantities_onmouseup(this);' onclick='add_new_item_q(<%= qu.id %>);'><%= qu.prefix %> <%= qu.postfix %></div><%- end %>"
   <%- end %>
 <%- end %>
 

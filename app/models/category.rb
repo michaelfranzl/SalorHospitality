@@ -24,7 +24,6 @@ class Category < ActiveRecord::Base
   belongs_to :vendor
   has_and_belongs_to_many :options
   has_many :articles
-  has_many :discounts
   has_many :partials
   has_many :images, :as => :imageable
   validates_presence_of :name

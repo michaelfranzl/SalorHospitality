@@ -16,7 +16,7 @@
       = javascript_include_tag 'jquery.keyboard.config.js'
     = javascript_include_tag 'application-generic.js'
     
-    %style= render :file => 'app/views/layouts/_fonts.css.erb', :content_type => 'text/css' 
+    %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
 
     = csrf_meta_tag
 

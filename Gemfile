@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -17,9 +17,6 @@ gem 'exception_notification', :require => 'exception_notifier'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-gem 'ruby-debug19'
 gem 'jquery-rails'
 
 # Bundle the extra gems:
@@ -38,19 +35,18 @@ gem 'jquery-rails'
 
 group :test, :development do
   gem 'rspec-rails'
-end
-
-group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'guard-rspec'
-  gem 'spork', '> 0.9.0.rc'
+  gem 'spork' #, '> 0.9.0.rc'
   gem 'guard-spork'
+  gem 'ruby-debug19'# , :require => 'ruby-debug'
 end
 
+gem 'execjs'
 gem 'haml'
 gem 'sass-rails'
 gem 'acts_as_list', '0.1.3'

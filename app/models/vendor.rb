@@ -6,9 +6,7 @@ class Vendor < ActiveRecord::Base
   has_many :articles
   has_many :categories
   has_many :cost_centers
-  has_many :coupons
   has_many :customers
-  has_many :discounts
   has_many :groups
   has_many :images, :as => :imageable
   has_many :ingredients
@@ -19,7 +17,6 @@ class Vendor < ActiveRecord::Base
   has_many :partials
   has_many :presentations
   has_many :quantities
-  has_many :reservations
   has_many :roles
   has_many :settlements
   has_many :tables

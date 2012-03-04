@@ -29,7 +29,7 @@ class Image < ActiveRecord::Base
 		xt = filename.split('.').last.downcase.gsub(/(jpeg|bmp)/,'jpg')
 		fn = filename.gsub('.'+xt,'').gsub(/[^[:alnum:]]/,'_').gsub(/\s+/,'_').gsub(/_{2,}/,'_').to(59)
 		write_attribute 'name', "#{fn}.#{xt}"
-		write_attribute 'model', model
+		#write_attribute 'model', model
 		return "#{fn}.#{xt}"
 	end
 
