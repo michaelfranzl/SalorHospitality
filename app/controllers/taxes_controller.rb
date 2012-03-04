@@ -16,7 +16,7 @@
 
 class TaxesController < ApplicationController
   def index
-    @taxes = Tax.scopied.existing
+    @taxes = Tax.accessible_by(@current_user).existing
   end
 
   def new
@@ -29,17 +29,17 @@ class TaxesController < ApplicationController
   end
 
   def edit
-    @tax = Tax.scopied.find(params[:id])
+    @tax = Tax.accessible_by(@current_user).find(params[:id])
     render :new
   end
 
   def update
-    @tax = Tax.scopied.find(params[:id])
+    @tax = Tax.accessible_by(@current_user).find(params[:id])
     @tax.update_attributes(params[:tax]) ? redirect_to(taxes_path) : render(:new)
   end
 
   def destroy
-    @tax = Tax.scopied.find(params[:id])
+    @tax = Tax.accessible_by(@current_user).find(params[:id])
     @tax.update_attribute :hidden, true
     redirect_to taxes_path
   end

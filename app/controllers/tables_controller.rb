@@ -27,7 +27,7 @@ class TablesController < ApplicationController
 
   def show
     @table = Table.accessible_by(@current_user).find_by_id params[:id]
-    @cost_centers = CostCenter.find_all_by_active(true)
+    @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active(true)
     @taxes = Tax.accessible_by @current_user
 
     @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
@@ -49,12 +49,12 @@ class TablesController < ApplicationController
   end
 
   def edit
-    @table = Table.scopied.find(params[:id])
+    @table = Table.accessible_by(@current_user).find(params[:id])
     render :new
   end
 
   def update
-    @table = Table.scopied.find(params[:id])
+    @table = Table.accessible_by(@current_user).find(params[:id])
     success = @table.update_attributes(params[:table])
     respond_to do |wants|
       wants.html{ success ? redirect_to(tables_path) : render(:new)}
@@ -63,7 +63,7 @@ class TablesController < ApplicationController
   end
 
   def destroy
-    @table = Table.scopied.find(params[:id])
+    @table = Table.accessible_by(@current_user).find(params[:id])
     @table.update_attribute :hidden, true
     redirect_to tables_path
   end
@@ -75,7 +75,7 @@ class TablesController < ApplicationController
     @to =   Date.civil( params[:to  ][:year ].to_i,
                         params[:to  ][:month].to_i,
                         params[:to  ][:day  ].to_i) if params[:to]
-    @tables = Table.scopied.find(:all)
+    @tables = Table.accessible_by(@current_user).find(:all)
     render :index
   end
 

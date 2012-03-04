@@ -23,10 +23,10 @@ $('#note_for_order').hide();
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
 <% if @order
-  @order.items.sequence.each do |item|
+  @order.items.positioned.each do |item|
     designator += 1
     id = item.id
-    sort = item.sort
+    position = item.position
     articleid = item.article_id
     price = item.price
     quantityid = item.quantity_id
@@ -40,7 +40,7 @@ $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape
 
     tablerows += render :partial => 'items/item_tablerow', :locals => { :item => item, :label => label, :designator => designator, :count => count, :comment => comment, :price => price, :optionsnames => optionsnames }
 
-    inputfields += render :partial => 'items/item_inputfields', :locals => { :item => item, :id => id, :sort => sort, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :usage => usage }
+    inputfields += render :partial => 'items/item_inputfields', :locals => { :item => item, :id => id, :position => position, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :usage => usage }
 
   end %>
 

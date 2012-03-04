@@ -16,7 +16,7 @@
 
 class CostCentersController < ApplicationController
   def index
-    @cost_centers = CostCenter.scopied.existing
+    @cost_centers = CostCenter.accessible_by(@current_user).existing
   end
 
   def new
@@ -29,17 +29,17 @@ class CostCentersController < ApplicationController
   end
 
   def edit
-    @cost_center = CostCenter.scopied.find(params[:id])
+    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
     render :new
   end
 
   def update
-    @cost_center = CostCenter.scopied.find(params[:id])
+    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
     @cost_center.update_attributes(params[:cost_center]) ? redirect_to(cost_centers_path) : render(:new)
   end
 
   def destroy
-    @cost_center = CostCenter.scopied.find(params[:id])
+    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
     @cost_center.destroy
     redirect_to cost_centers_path
   end

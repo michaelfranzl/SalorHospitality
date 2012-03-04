@@ -173,7 +173,9 @@ class OrdersController < ApplicationController
       # similar to orders#create
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
-      @order.cost_center = @cost_centers.first
+      @order.cost_center = @current_vendor.cost_centers.first
+      @order.vendor = @current_vendor
+      @order.company = @current_company
     end
 
     @order.sum = @order.calculate_sum

@@ -56,27 +56,27 @@ class ApplicationController < ActionController::Base
     end
 
     def saas_variant?
-      $COMPANY.mode == 'saas' or $COMPANY.mode == 'saas_basic' or $COMPANY.mode == 'saas_plus' or $COMPANY.mode == 'saas_pro' if $COMPANY
+      @current_vendor.mode == 'saas' or @current_vendor.mode == 'saas_basic' or @current_vendor.mode == 'saas_plus' or @current_vendor.mode == 'saas_pro' if @current_vendor
     end
 
     def saas_basic_variant?
-      $COMPANY.mode == 'saas_basic' if $COMPANY
+      @current_vendor.mode == 'saas_basic' if @current_vendor
     end
 
     def saas_plus_variant?
-      $COMPANY.mode == 'saas_plus' if $COMPANY
+      @current_vendor.mode == 'saas_plus' if @current_vendor
     end
 
     def saas_pro_variant?
-      $COMPANY.mode == 'saas_pro' if $COMPANY
+      @current_vendor.mode == 'saas_pro' if @current_vendor
     end
 
     def demo_variant?
-      $COMPANY.mode == 'demo' if $COMPANY
+      @current_vendor.mode == 'demo' if @current_vendor
     end
 
     def local_variant?
-      $COMPANY.mode.nil? if $COMPANY
+      @current_vendor.mode.nil? if @current_vendor
     end
 
     def set_locale
