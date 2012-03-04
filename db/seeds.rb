@@ -2,6 +2,7 @@ category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Dig
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif','nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 countries = ['en','de','at','cc']
 taxes = [0, 10, 20]
+cost_center_names = ['guest','restaurant','broken']
 tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
 category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
 user_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b','#BBBBBB','#000000','#d9d43d','#801212']
@@ -16,7 +17,21 @@ user_array = {
   'Restaurant' => ['take_orders']
   }
 
-
+Order.delete_all
+Item.delete_all
+User.delete_all
+Company.delete_all
+Vendor.delete_all
+VendorPrinter.delete_all
+Tax.delete_all
+CashRegister.delete_all
+Role.delete_all
+Table.delete_all
+CostCenter.delete_all
+CashDrawer.delete_all
+Category.delete_all
+Article.delete_all
+Quantity.delete_all
 
 
 2.times do |c|
@@ -61,16 +76,6 @@ user_array = {
       puts "VendorPrinter #{ c } #{ v } #{ i } created" if r == true
     end
 
-    cash_register_objects = Array.new
-    2.times do |i|
-      cash_register = CashRegister.new :name => "CashRegister #{ c } #{ v } #{ i }"
-      cash_register.company = company
-      cash_register.vendor = vendor
-      r = cash_register.save
-      cash_register_objects << cash_register
-      puts "CashRegister #{ c } #{ v } #{ i } created" if r == true
-    end
-
     role_objects = Array.new
     user_array.to_a.size.times do |i|
       role = Role.new :name => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :permissions => user_array.to_a[i][1]
@@ -89,6 +94,16 @@ user_array = {
       r = table.save
       table_objects << table
       puts "Table #{ c } #{ v } #{ i } created" if r == true
+    end
+
+    cost_center_objects = Array.new
+    cost_center_names.size do |i|
+      cost_center = CostCenter.new :name => "CC #{ c }#{ v }#{ i }", :active => true
+      cost_center.company = company
+      cost_center.vendor = vendor
+      r = cost_center.save
+      cost_center_objects << cost_center
+      puts "Cost Center #{ c } #{ v } #{ i } created" if r == true
     end
 
     user_objects = Array.new

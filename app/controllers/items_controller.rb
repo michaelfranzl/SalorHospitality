@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
     item = Item.accessible_by(@current_user).find(params[:id])
     separated_item = item.item
     if separated_item.nil?
-      separated_item = item.clone
+      separated_item = Item.crreate(item.attributes)
       separated_item.options = item.options
       separated_item.count = 0
       separated_item.item = item
@@ -73,7 +73,7 @@ class ItemsController < ApplicationController
   def destroy
     i = Item.accessible_by(@current_user).find_by_id params[:id]
     if i.storno_status == 0
-      k = i.clone
+      k = Item.create(i.attributes)
       k.options = i.options
       k.storno_status = 2
       k.storno_item = i
@@ -126,7 +126,7 @@ class ItemsController < ApplicationController
       if split_order.nil?
         logger.info "[Split] If: I am going to create a brand new split_order, and make it belong to the parent order"
         Order.transaction do
-          split_order = parent_order.clone
+          split_order = Order.create(parent_order.attributes)
           split_order.nr = get_next_unique_and_reused_order_number
           if split_order.nr > @current_vendor.largest_order_number
             @current_vendor.update_attribute :largest_order_number, split_order.nr
@@ -144,7 +144,7 @@ class ItemsController < ApplicationController
       Item.transaction do
         if split_item.nil?
           logger.info "[Split] Because split_item is nil, we're going to create one."
-          split_item = parent_item.clone
+          split_item = Item.create(parent_item.attributes)
           split_item.options = parent_item.options
           split_item.count = 0
           split_item.printed_count = 0

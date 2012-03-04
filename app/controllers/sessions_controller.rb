@@ -26,20 +26,21 @@ class SessionsController < ApplicationController
   def create
     @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
     if @current_user
-
       # set these variables for the first time. they will be re-set on each new request by ApplicationController::fetch_logged_in_user
       session[:user_id] = @current_user.id
       @current_company = @current_user.company
       session[:company_id] = @current_company.id
-
-      @current_vendor = session[:vendor_id] ? Vendor.accessible_by(@current_user).find_by_id(session[:vendor_id]) : @current_user.vendors.first
-      session[:vendor_id] = @current_vendor.id
-
+      
       I18n.locale = @current_user.language
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = t('messages.hello_username', :name => @current_user.login)
-      redirect_to '/vendors'
+      if session[:vendor_id]
+        redirect_to orders_path
+      else
+        session[:vendor_id] = @current_company.vendors.first.id
+        redirect_to vendors_path
+      end
     else
       flash[:error] = t :wrong_password
       render :new, :layout => 'login'

@@ -183,7 +183,7 @@ class OrdersController < ApplicationController
     @order.save
     @order.reload
     @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
-      i.update_attributes :user_id => @current_user.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
+      i.update_attributes :user_id => @current_user.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
     end
     @order.set_priorities
 
