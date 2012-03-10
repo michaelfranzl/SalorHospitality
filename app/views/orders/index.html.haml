@@ -39,3 +39,4 @@
   var mobile_special = #{ mobile_special? ? "true" : "false" };
   var screenlock_timeout = #{ @current_user.screenlock_timeout };
   var new_item_tablerow = "#{ escape_javascript render :partial => 'items/item_tablerow' }";
+  var resources = #{ @current_vendor.resources };
