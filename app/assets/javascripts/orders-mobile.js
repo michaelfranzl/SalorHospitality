@@ -37,14 +37,6 @@ function display_quantities(art_id, article_div) {
   }
 }
 
-function hide_optionsselect(what) {
-  // this should never be hidden on mobile
-}
-
-function hide_tableselect(what) {
-  // this should never be hidden on mobile
-}
-
 function add_comment_to_item(item_designator) {
   var fallback = $('#order_items_attributes_' + item_designator + '_comment').val();
   var comment = prompt(i18n_enter_comment, fallback);

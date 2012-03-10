@@ -1,74 +1,68 @@
-%tr{ :id => "item_#{ designator }", :class => "item" }
+%tr{ :id => "item_DESIGNATOR", :class => "item" }
+  %td#inputfields
+		%div{ :id => "fields_for_item_DESIGNATOR" }
+			%input{ :id => "item_DESIGNATOR_start_count", :class => 'id', :name => "order[items_attributes][DESIGNATOR][count]", :type => 'hidden', :value => "COUNT", :keep => 0 }
 
-  %td{ :id => "tablerow_#{ designator }_count", :class => 'item_count', :onclick => "increment_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= count
+			%input{ :id => "order_items_attributes_DESIGNATOR_article_id", :class => 'article_id', :name => "order[items_attributes][DESIGNATOR][article_id]", :type => 'hidden', :value => "ARTICLEID", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][DESIGNATOR][quantity_id]", :type => 'hidden', :value => "QUANTITYID", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_id", :name => "order[items_attributes][DESIGNATOR][id]", :type => 'hidden', :value => "ITEMID", :keep => 0 }
 
-  %td{ :id => "tablerow_#{ designator }_label", :class => "item_label #{ 'warning' if price != 'PRICE' and price.zero? }", :onclick => "add_comment_to_item('#{ designator }'); add_price_to_item('#{ designator }');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
-    %span= label
+			%input{ :id => "order_items_attributes_DESIGNATOR_count", :class => 'count', :name => "order[items_attributes][DESIGNATOR][count]", :type => 'hidden', :value => "COUNT", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_comment", :name => "order[items_attributes][DESIGNATOR][comment]", :type => 'hidden', :value => "COMMENT", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_usage", :name => "order[items_attributes][DESIGNATOR][usage]", :type => 'hidden', :value => "USAGE", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_optionslist", :name => "order[items_attributes][DESIGNATOR][optionslist]", :type => 'hidden', :value => "OPTIONSLIST", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_position", :name => "order[items_attributes][DESIGNATOR][position]", :type => 'hidden', :value => "POSITION", :keep => 0 }
+			%input{ :id => "order_items_attributes_DESIGNATOR_price", :class => 'price', :name => "order[items_attributes][DESIGNATOR][price]", :type => 'hidden', :value => "PRICE", :keep => 0 }
+
+			%input{ :id => "order_items_attributes_DESIGNATOR__destroy", :class => '_destroy', :name => "order[items_attributes][DESIGNATOR][_destroy]", :type => 'hidden', :keep => 0 }
+			%input{ :id => "item_DESIGNATOR_printed_count", :class => 'id', :name => "order[items_attributes][DESIGNATOR][printed_count]", :type => 'hidden', :value => "0", :keep => 0 }
+
+			%div{ :id => "options_for_item_DESIGNATOR" }
+
+
+
+  %td{ :id => "tablerow_DESIGNATOR_count", :class => 'item_count', :onclick => "increment_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }= count
+
+  %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "add_comment_to_item('DESIGNATOR'); add_price_to_item('DESIGNATOR');", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+    %span LABEL
     %small
       %br
       = t 'number.currency.format.unit'
-      %span{ :id => "price_#{ designator }" }= number_with_precision price, :precision => 2
-      %span{ :id => "comment_#{ designator }" }= comment
-      %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
+      %span{ :id => "price_DESIGNATOR" } PRICE
+      %span{ :id => "comment_DESIGNATOR" } COMMENT
+      %div{ :id => "optionsnames_DESIGNATOR" } OPTIONSNAMES
 
 
-  %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+  %td{ :id => "tablerow_DESIGNATOR_minus", :class => 'item_minus', :onclick => "decrement_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
-  %td{ :id => "tablerow_#{ designator }_options", :class => 'item_options' }
+  %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
 
     - if workstation?
-      %a{ :onmouseup => "$('#optionsselect_div_#{ designator }').slideDown();" }
-      %div.optionsselect{ :id => "optionsselect_div_#{ designator }" }
+      %a{ :onmouseup => "$('#options_select_div_DESIGNATOR').slideDown();" }
+      %div.options_select{ :id => "options_select_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'
-        %span.done{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -2, null, '#{t('.done')}')" }
-        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', 0, null, '#{t('.clear')}')" }= t('.clear')
-        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
-        %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
-        - if item
-          - item.category.options.each do |o|
-            %span.option{ :onclick => "add_option_to_item_from_div(this, '#{ designator }', #{ o.id }, #{ o.price }, '#{ escape_javascript o.name }')" }== #{ o.name }
-        - else
-          OPTIONSDIV
+        %span.done{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -2, null, '#{t('.done')}')" }
+        %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', 0, null, '#{t('.clear')}')" }= t('.clear')
+        %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
+        %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
+        OPTIONSDIV
 
     - else
-      %select{ :id => "optionsselect_select_#{ designator }", :onchange => "add_option_to_item_from_select('#{ designator }', this)" }
+      %select{ :id => "options_select_select_DESIGNATOR", :onchange => "add_option_to_item_from_select('DESIGNATOR', this)" }
         %option{ :value => -2 }= t('.done')
         %option{ :value => 0 }= t('.clear')
         %option{ :value => -1 }= t('.no_printing')
         %option{ :value => -3 }= t('articles.new.takeaway')
-        - if item
-          - item.category.options.each do |o|
-            %option{ :value => o.id }== #{ o.name } #{ number_to_currency o.price }
-        - else
-          OPTIONSSELECT
+        OPTIONSSELECT
 
     - if workstation?
-      %div.comment_for_item{ :id => "comment_for_item_#{ designator }" }
+      %div.comment_for_item{ :id => "comment_for_item_DESIGNATOR" }
         %p= t :please_enter_item_comment
-        %span.display_keyboard{ :id => "comment_for_item_#{ designator }_display_keyboard" }
-        %input{ :id => "comment_for_item_#{ designator }" }
-        %div.enter_comment_or_price{ :id => "enter_comment_for_item_#{ designator }" }
-      %div.price_for_item{ :id => "price_for_item_#{ designator }" }
+        %span.display_keyboard{ :id => "comment_for_item_DESIGNATOR_display_keyboard" }
+        %input{ :id => "comment_for_item_DESIGNATOR" }
+        %div.enter_comment_or_price{ :id => "enter_comment_for_item_DESIGNATOR", :onlick => "enter_price_for_item('DESIGNATOR');" }
+      %div.price_for_item{ :id => "price_for_item_DESIGNATOR" }
         %p= t :please_enter_item_price
-        %span.display_keyboard{ :id => "price_for_item_#{ designator }_display_keyboard" }
-        %input{ :id => "price_for_item_#{ designator }" }
-        %div.enter_comment_or_price{ :id => "enter_price_for_item_#{ designator }" }
-
-  :javascript
-    enable_keyboard_for_items('#{ designator}');
-    $('#enter_comment_for_item_#{ designator}').click(function(){
-      comment = $('input#comment_for_item_#{ designator}').val();
-      $('#order_items_attributes_#{ designator}_comment').val(comment);
-      keep_fields_of_item('#{ designator }','_comment');
-      $('#comment_#{ designator}').html(comment);
-      $('#comment_for_item_#{ designator}').slideUp();
-    });
-    $('#enter_price_for_item_#{ designator}').click(function(){
-      price = $('input#price_for_item_#{ designator}').val();
-      $('#price_#{ designator}').html(price);
-      price = price.replace(',', '.');
-      $('#order_items_attributes_#{ designator}_price').val(price);
-      keep_fields_of_item('#{ designator }','_comment');
-      calculate_sum();
-      $('#price_for_item_#{ designator}').slideUp();
-    });
+        %span.display_keyboard{ :id => "price_for_item_DESIGNATOR_display_keyboard" }
+        %input{ :id => "price_for_item_DESIGNATOR" }
+        %div.enter_comment_or_price{ :id => "enter_price_for_item_DESIGNATOR", :onlick => "enter_comment_for_item('DESIGNATOR');" }

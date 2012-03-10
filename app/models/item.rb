@@ -97,5 +97,18 @@ class Item < ActiveRecord::Base
   def formatted_comment
     self.comment ? '<br/>' + self.comment : ''
   end
-  
+
+  def label
+    if self.quantity
+      "#{ self.quantity.prefix } #{ self.article.name } #{ self.quantity.postfix }"
+    else
+      self.article.name
+    end
+  end
+
+  def optionsnames
+    usage = self.usage == 1 ? "<br>#{ I18n.t 'articles.new.takeaway' }" : ''
+    options = self.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
+    usage + options
+  end
 end

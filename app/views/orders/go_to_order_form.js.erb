@@ -4,7 +4,21 @@ inputfields = ''
 tablerows = ''
 %>
 
-<%= generate_js_variables %>
+$('#order_sum').val('0' + i18n_decimal_separator + '00');
+$('#order_user_id').val(<%= @current_user.id %>);
+$('#order_action').val('');
+$('#target_table').val('');
+$('#note_for_order').hide();
+
+$('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
+
+var json_items = <%= raw @order.items_to_json %>;
+add_items_from_json(json_items);
+
+$('#order_id').val('<%= @order.id %>');
+$('.target_table').val('');
+$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
+
 
 <% if @order and @order.customers.any?  %>
   var order_customers = <%= raw @order.customers.to_json %>;
@@ -12,55 +26,20 @@ tablerows = ''
   var order_customers = [];
 <% end %>
 
-$('#order_sum').val('0' + i18n_decimal_separator + '00');
-//$('#order_id').val('');
-$('#order_user_id').val(<%= @current_user.id %>);
-$('#order_action').val('');
-$('#target_table').val('');
-$('#note_for_order').hide();
-
-
-$('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
-
-<% if @order
-  @order.items.positioned.each do |item|
-    designator += 1
-    id = item.id
-    position = item.position
-    articleid = item.article_id
-    price = item.price
-    quantityid = item.quantity_id
-    count = item.count
-    usage = item.usage
-    printed_count = item.printed_count
-    comment = item.comment
-    label = compose_item_label(item)
-    optionslist = item.optionslist
-    optionsnames = compose_option_names(item)
-
-    tablerows += render :partial => 'items/item_tablerow', :locals => { :item => item, :label => label, :designator => designator, :count => count, :comment => comment, :price => price, :optionsnames => optionsnames }
-
-    inputfields += render :partial => 'items/item_inputfields', :locals => { :item => item, :id => id, :position => position, :articleid => articleid, :quantityid => quantityid, :designator => designator, :count => count, :printed_count => printed_count, :comment => comment, :price => price, :optionslist => optionslist, :usage => usage }
-
-  end %>
-
-$('#order_id').val('<%= @order.id %>');
-$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
 for (o in order_customers) {
   var customer = order_customers[o]["customer"]
   $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
 }
+
 $('#order_note').val('<%= escape_javascript @order.note %>');
 $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
 
 $('#inputfields').append('<%= escape_javascript raw inputfields %>');
 $('#itemstable').append('<%= escape_javascript raw tablerows %>');
 
-<% end %>
-
 $('#order_table_id').val(<%= @table.id %>);
 
-$('.target_table').val('');
+
 $('#orderform').show();
 $('#invoices').hide();
 $('#functions_header_index').hide();
@@ -74,5 +53,5 @@ $('#functions_header_order_form').show();
 
 tableupdates = -1;
 screenlock_counter = -1;
-screenlock_active = true
+screenlock_active = true;
 new_order = <%= @order ? 'false' : 'true' %>;

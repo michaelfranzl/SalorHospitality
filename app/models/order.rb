@@ -50,14 +50,24 @@ class Order < ActiveRecord::Base
       i.update_attribute :priority, i.category.position
     end
   end
+
   def customer_set=(h)
     @customers_hash = h
   end
+
   def set_customers_up
     return if @customers_hash.nil?
     @customers_hash.each do |cus|
       Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus["id"]} and order_id = #{self.id}")
       Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus["id"]}, #{self.id})")
     end
+  end
+
+  def items_to_json
+    a = []
+    self.items.each do |i|
+      a << {:a => i.article_id, :q => i.quantity_id, :c => i.comment, :i => i.count, :s => i.position, :p => i.price, :u => i.usage, :l => i.label, :ol => i.optionslist, :on => i.optionsnames, :id => i.id }
+    end
+    return a.to_json
   end
 end
