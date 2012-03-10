@@ -26,9 +26,9 @@
         %input#permissions_decrement_items{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'decrement_items', :checked => role_form.object.permissions.include?('decrement_items') }
     %tr
       %td
-        %label{ :for => 'permissions_make_immediate_storno' }= t '.make_immediate_storno'
+        %label{ :for => 'permissions_delete_items' }= t '.delete_items'
       %td
-        %input#permissions_make_immediate_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_immediate_storno', :checked => role_form.object.permissions.include?('make_immediate_storno') }
+        %input#permissions_decrement_items_to_0{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'permissions_delete_items', :checked => role_form.object.permissions.include?('permissions_delete_items') }
     %tr
       %td
         %label{ :for => 'permissions_cancel_all_items_in_active_order' }= t '.cancel_all_items_in_active_order'

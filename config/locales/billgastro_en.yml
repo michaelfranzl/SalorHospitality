@@ -413,7 +413,7 @@ en:
       split_items: Split items
       move_tables: Move tables
       make_storno: Cancel items
-      make_immediate_storno: Cancel items immediately
+      delete_items: Delete items by decrementing
       cancel_all_items_in_active_order: Cancel all items in active order
       assign_cost_center: Assign cost center
       move_order: Move order

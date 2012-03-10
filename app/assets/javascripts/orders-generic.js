@@ -167,16 +167,19 @@ function increment_item(desig) {
 function decrement_item(desig) {
   var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
   var start_count = parseInt($('#item_' + desig + '_start_count').val());
-  if ( i > 1 && ( permission_immediate_storno || i > start_count ) ) {
+  if ( i > 1 && ( permission_decrement_items || i > start_count ) ) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
     $('#tablerow_' + desig + '_count').html(i);
     $('#tablerow_' + desig + '_count').addClass('updated');
-  } else if ( i == 1 && ( permission_immediate_storno || (desig.search(/new_.+/) != -1 ))) {
+  } else if ( i == 1 && ( permission_decrement_items || (desig.search(/new_.+/) != -1 ))) {
     i--;
     $('#order_items_attributes_' + desig + '_count').val(i);
-    $('#order_items_attributes_' + desig + '__destroy').val(1);
-    $('#item_' + desig).fadeOut("slow");
+    $('#tablerow_' + desig + '_count').html(i);
+    $('#tablerow_' + desig + '_count').addClass('updated');
+    if (permission_delete_items) {
+      $('#order_items_attributes_' + desig + '__destroy').val(1);
+    }
   };
   calculate_sum();
 }

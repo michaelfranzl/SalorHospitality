@@ -401,7 +401,7 @@ de:
       split_items: Rechnung splitten
       move_tables: Tische verschieben
       make_storno: Artikel stornieren
-      make_immediate_storno: Artikelanzahl nach Bestellung reduzieren
+      delete_items: Artikel durch reduktion löschen
       cancel_all_items_in_active_order: Alle Artikel einer aktiven Bestellung löschen
       assign_cost_center: Kostenstelle zuweisen
       move_order: Bestellung verschieben

@@ -401,7 +401,7 @@ tr:
       split_items: XXXSplit items
       move_tables: XXXMove tables
       make_storno: XXXMake storno
-      make_immediate_storno: XXXCancel items immediately
+      delete_items: XXXDelete items by decrementing
       cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: XXXAssign cost center
       move_order: XXXMove order

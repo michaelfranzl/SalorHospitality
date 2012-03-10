@@ -14,3 +14,4 @@
     - if item
       - item.options.each do |o|
         %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price || 0 }
+  %input{ :id => "item_#{ designator }_start_count", :class => 'id', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }

@@ -401,7 +401,7 @@ es:
       split_items: Separar artículos
       move_tables: Mover mesas
       make_storno: Anular item
-      make_immediate_storno: XXXCancel items immediately
+      delete_items: XXXDelete items by decrementing
       cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: Designar centro de coste
       move_order: Mover pedido

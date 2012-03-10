@@ -402,7 +402,7 @@ fr:
       move_tables: Changer tables
       make_storno: Annuler item
       make_immediate_storno: XXXCancel items immediately
-      cancel_all_items_in_active_order: XXXCancel all items in active order
+      delete_items: XXXDelete items by decrementing
       assign_cost_center: Assigner centre de coûts
       move_order: Déplacer commande
       change_waiter: Changer de serveur
