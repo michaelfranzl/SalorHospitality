@@ -38,21 +38,21 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
-    categories = []
+    categories = {}
     self.categories.each do |c|
-      articles = []
+      articles = {}
       c.articles.each do |a|
-        quantities = []
+        quantities = {}
         a.quantities.each do |q|
-          quantities << { q.id => { :pre => q.prefix, :post => q.postfix, :p => q.price, :s => q.position } }
+          quantities.merge! q.id => { :id => q.id, :pre => q.prefix, :post => q.postfix, :p => q.price, :s => q.position }
         end
-        articles << { a.id => { :n => a.name, :p => a.price, :s => a.position, :q => quantities } }
+        articles.merge! a.id => { :id => a.id, :n => a.name, :p => a.price, :s => a.position, :q => quantities }
       end
-      options = []
+      options = {}
       c.options.each do |o|
-        options << { o.id => { :n => o.name, :p => o.price } }
+        options.merge! o.id => { :id => o.id, :n => o.name, :p => o.price }
       end
-      categories << { c.id => { :a => articles, :o => options } }
+      categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
     end
     resources = { :c => categories }
     return resources.to_json
