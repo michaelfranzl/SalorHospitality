@@ -12,8 +12,7 @@
       %div{ :id => "optionsnames_#{ designator }" }= raw optionsnames
 
 
-  - if @current_user.role.permissions.include? 'decrement_items'
-    %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
+  %td{ :id => "tablerow_#{ designator }_minus", :class => 'item_minus', :onclick => "decrement_item('#{ designator }')", :onmousedown => 'highlight_button(this)', :onmouseup => 'restore_button(this)' }
 
   %td{ :id => "tablerow_#{ designator }_options", :class => 'item_options' }
 
@@ -60,7 +59,7 @@
     $('#enter_comment_for_item_#{ designator}').click(function(){
       comment = $('input#comment_for_item_#{ designator}').val();
       $('#order_items_attributes_#{ designator}_comment').val(comment);
-      $('#order_items_attributes_#{ designator}_comment').attr('updated',1);
+      keep_fields_of_item('#{ designator }','_comment');
       $('#comment_#{ designator}').html(comment);
       $('#comment_for_item_#{ designator}').slideUp();
     });
@@ -69,7 +68,7 @@
       $('#price_#{ designator}').html(price);
       price = price.replace(',', '.');
       $('#order_items_attributes_#{ designator}_price').val(price);
-      $('#order_items_attributes_#{ designator}_price').attr('updated',1);
+      keep_fields_of_item('#{ designator }','_comment');
       calculate_sum();
       $('#price_for_item_#{ designator}').slideUp();
     });

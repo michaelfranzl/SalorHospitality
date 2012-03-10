@@ -3,9 +3,9 @@
 - else
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
 
-%a#save_and_go_to_tables.iconbutton.tables_button{ :onclick => '$("#order_action").val("save_and_go_to_tables"); $("#order_form_ajax").submit();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:send_and_go_back) }
+%a#save_and_go_to_tables.iconbutton.tables_button{ :onclick => 'save_and_go_to_tables();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:send_and_go_back) }
 - if @current_user.role.permissions.include? 'finish_orders'
-  %a.iconbutton.cash_button{ :onclick => '$("#order_action").val("save_and_go_to_invoice"); $("#order_form_ajax").submit();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:finish_order) }
+  %a.iconbutton.cash_button{ :onclick => 'save_and_go_to_invoice();', :onmouseup => 'this.style.backgroundImage = "url(/images/send.gif)";', :title => t(:finish_order) }
 %a.iconbutton.cancel_button{ :onclick => 'go_to_tables_offline();', :title => t(:cancel_and_go_back) }
 
 - if @current_user.role.permissions.include?('move_order') and workstation?
@@ -14,4 +14,4 @@
 %a.iconbutton.customer_button{ :onclick => "$('#customer_list').slideDown();", :title => t(:customer_list) }
 
 - if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
-  %a.iconbutton.storno_button{ :onclick => '$("#order_action").val("clear_order_and_go_back"); $("#order_form_ajax").submit();', :title => t(:clear_order_and_go_back) }
+  %a.iconbutton.storno_button{ :onclick => 'cancel_all_items_in_active_order();', :title => t(:clear_order_and_go_back) }

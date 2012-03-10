@@ -160,17 +160,19 @@ class OrdersController < ApplicationController
     @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active true
 
     if (params[:order][:id] == 'add_offline_items_to_order') or (params[:order][:id].empty?)
+      # The AJAX load on the client side has not succeeded before user submitted the order form.
+      # In this case, simply select the first order on the table the user had selected.
       @order = Order.accessible_by(@current_user).find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     else
+      # The AJAX load on the client side has succeeded and we know the order ID.
       @order = Order.accessible_by(@current_user).find_by_id params[:order][:id]
     end
 
-    if @order
-      # similar to orders#update
+    if @order # update it
+      # When submitting from a mobile client, it always changes the owner of the order.
       params[:order][:user_id] = @current_user.id if mobile?
       @order.update_attributes params[:order]
-    else
-      # similar to orders#create
+    else # create it
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @current_vendor.cost_centers.first
