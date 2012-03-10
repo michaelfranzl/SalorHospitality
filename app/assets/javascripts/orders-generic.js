@@ -2,7 +2,7 @@ $(function(){
 	var tableupdates = -1;
 	var automatic_printing = 0;
 	var new_order = true;
-}
+})
 
 function customer_list_entry(customer) {
   var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
@@ -65,14 +65,14 @@ function add_new_item_q(qu_id, add_new, position, sort) {
      ) {
     increment_item(matched_designator);
   } else {
-    new_item_tablerow_modified = new_item_tablerow.replace(/POSITION/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
-    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/POSITION/g,sort).replace(/LABEL/g,itemdetails_q[qu_id][5]).replace(/PRICE/g,itemdetails_q[qu_id][3]).replace(/ARTICLEID/g,itemdetails_q[qu_id][0]).replace(/QUANTITYID/g,qu_id).replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'');
+    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g, desig).replace(/COUNT/g, 1).replace(/ARTICLEID/g, '').replace(/QUANTITYID/g, itemdetails_q[qu_id][0]).replace(/ITEMID/g, '').replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, itemdetails_q[art_id][3]).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, itemdetails_q[art_id][5]).replace(/OPTIONSDIV/g, options_div).replace(/OPTIONSSELECT/g, options_select).replace(/OPTIONSNAMES/g, '');
+
+
     if (position) {
       $(new_item_tablerow_modified).insertBefore(position);
     } else {
       $('#itemstable').prepend(new_item_tablerow_modified);
     }
-    $('#inputfields').prepend(new_item_inputfields_modified);
     if (itemdetails_q[qu_id][7] == 1 || itemdetails_q[qu_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
     $('#tablerow_' + desig + '_count').addClass('updated');
     keep_fields_of_item(desig, '_quantity_id');
@@ -119,14 +119,16 @@ function add_new_item_a(art_id, add_new, position, sort) {
      ) {
     increment_item(matched_designator);
   } else {
-    new_item_tablerow_modified = new_item_tablerow.replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSSELECT/g,options_select).replace(/OPTIONSDIV/g,options_div).replace(/DESIGNATOR/g,desig);
-    new_item_inputfields_modified = new_item_inputfields.replace(/DESIGNATOR/g,desig).replace(/SORT/g,sort).replace(/LABEL/g,itemdetails_a[art_id][5]).replace(/PRICE/g,itemdetails_a[art_id][3]).replace(/ARTICLEID/g,itemdetails_a[art_id][0]).replace(/QUANTITYID/g,'').replace(/OPTIONSLIST/g,'').replace(/OPTIONSNAMES/g,'').replace(/PRICE/g,itemdetails_a[art_id][3]);
+    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g, desig).replace(/COUNT/g, 1).replace(/ARTICLEID/g, itemdetails_q[art_id][0]).replace(/QUANTITYID/g, '').replace(/ITEMID/g, '').replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, itemdetails_q[art_id][3]).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, itemdetails_q[art_id][5]).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, '');
+
+
+
+
     if (position) {
       $(new_item_tablerow_modified).insertBefore(position);
     } else {
       $('#itemstable').prepend(new_item_tablerow_modified);
     }
-    $('#inputfields').prepend(new_item_inputfields_modified);
     if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
     $('#tablerow_' + desig + '_count').addClass('updated');
     keep_fields_of_item(desig, '_article_id');
@@ -140,7 +142,7 @@ function add_items_from_json(json_items) {
   var i;
   for (i in json_items) {
     var item = json_items[i];
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, i).replace(/COUNT/g, item.i).replace(/ARTICLEID/g, item.a).replace(/QUANTITYID/g, item.q).replace(/ITEMID/g, item.id).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/QUANTITYID/g, item.ol).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l).replace(/OPTIONSDIV/g, options_div).replace(/OPTIONSSELECT/g, options_select).replace(/OPTIONSNAMES/g, item.on)
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, i).replace(/COUNT/g, item.i).replace(/ARTICLEID/g, item.a).replace(/QUANTITYID/g, item.q).replace(/ITEMID/g, item.id).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
     $('#itemstable').append(tablerow);
     enable_keyboard_for_items(i);
   }
@@ -248,7 +250,7 @@ function add_option_to_item_from_select(item_designator, select_tag)
   if (select_tag.value == 0) {
     // delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
-    keep_fields_of_item(desig,'_optionslist');
+    keep_fields_of_item(item_designator,'_optionslist');
     $('#optionsnames_' + item_designator).html('');
     itemoptions.html('');
 
@@ -258,20 +260,20 @@ function add_option_to_item_from_select(item_designator, select_tag)
   } else if (select_tag.value == -1 ) {
     // special option: do not print
     $('#item_' + item_designator + '_printed_count').val($('#item_' + item_designator + '_count').val());
-    keep_fields_of_item(desig,'_printed_count');
+    keep_fields_of_item(item_designator,'_printed_count');
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else if (select_tag.value == -3 ) {
     // special option: takeaway
     $('#order_items_attributes_' + item_designator + '_usage').val(1);
-    keep_fields_of_item(desig,'_usage');
+    keep_fields_of_item(item_designator,'_usage');
     $('#optionsnames_' + item_designator).append('<br>' + i18n_takeaway);
 
   } else {
     // options from database
     optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
     $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + select_tag.value + ' ');
-    keep_fields_of_item(desig,'_optionslist');
+    keep_fields_of_item(item_designator,'_optionslist');
     var index = $('#optionsselect_select_' + original_designator).attr('selectedIndex');
     var text = $('#optionsselect_select_' + original_designator).attr('options')[index].text;
     $('#optionsnames_' + item_designator).append('<br>' + text);
@@ -307,28 +309,27 @@ function add_option_to_item_from_div(button, item_designator, value, price, text
   if (value == 0) {
     // normal, delete all options
     $('#order_items_attributes_' + item_designator + '_optionslist').val('');
-    keep_fields_of_item(desig,'_optionslist');
+    keep_fields_of_item(item_designator,'_optionslist');
     $('#optionsnames_' + item_designator).html('');
     itemoptions.html('');
 
   } else if (value == -2 ) {
-    $('#optionsselect_div_' + item_designator).slideUp(); // just exit
-
+    $('#options_select_div_' + item_designator).slideUp(); // just exit
   } else if (value == -1 ) {
     // special option: do not print
     $('#item_' + item_designator + '_printed_count').val($('#item_' + item_designator + '_printed_count').val());
-    keep_fields_of_item(desig,'_printed_count');
+    keep_fields_of_item(item_designator,'_printed_count');
     $('#optionsnames_' + item_designator).append('<br>' + i18n_no_printing);
 
   } else if (value == -3 ) {
     // special option: takeaway
     $('#order_items_attributes_' + item_designator + '_usage').val(1);
-    keep_fields_of_item(desig,'_usage');
+    keep_fields_of_item(item_designator,'_usage');
     $('#optionsnames_' + item_designator).append('<br>' + i18n_takeaway);
   } else {
     optionslist = $('#order_items_attributes_' + item_designator + '_optionslist').val();
     $('#order_items_attributes_' + item_designator + '_optionslist').val(optionslist + value + ' ');
-    keep_fields_of_item(desig,'_optionslist');
+    keep_fields_of_item(item_designator,'_optionslist');
     $('#optionsnames_' + item_designator).append('<br>' + text);
     itemoptions.append('<input id="item_' + item_designator + '_option_' + value + '" class="optionprice" type="hidden" value="' + price + '">');
   }

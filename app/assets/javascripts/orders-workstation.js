@@ -60,7 +60,7 @@ function display_price_popup_of_item(item_designator) {
 }
 
 function add_price_to_item(item_designator) {
-	price = $('input#price_for_' + item_designator).val();
+	price = $('input#price_for_item_' + item_designator).val();
 	$('#price_' + item_designator).html(price);
 	price = price.replace(',', '.');
 	$('#order_items_attributes_' + item_designator + '_price').val(price);

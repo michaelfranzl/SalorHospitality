@@ -9,19 +9,21 @@
 
     %title BillGastro
 
-    = javascript_include_tag 'application'
-    = javascript_include_tag 'application-generic.js'
     = csrf_meta_tag
+    = javascript_include_tag 'application'
     - if workstation? and @current_user and @current_user.onscreen_keyboard_enabled
-      = javascript_include_tag 'jquery.keyboard.js'
-      = javascript_include_tag 'jquery.keyboard.config.js'
+      = javascript_include_tag 'jquery.keyboard'
+      = javascript_include_tag 'jquery.keyboard.config'
     - if workstation?
-      = javascript_include_tag 'application-workstation.js'
-      = javascript_include_tag 'jquery.checkbox.js'
-      = javascript_include_tag 'jquery.modcoder.excolor.js'
+      = javascript_include_tag 'application-workstation'
+      = javascript_include_tag 'orders-workstation' if params[:controller] == 'orders'
+      = javascript_include_tag 'jquery.checkbox'
+      = javascript_include_tag 'jquery.modcoder.excolor'
     - if mobile?
-      = javascript_include_tag 'application-mobile.js'
+      = javascript_include_tag 'application-mobile'
+      = javascript_include_tag 'orders-mobile' if params[:controller] == 'orders'
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
+      = javascript_include_tag 'orders-generic'
       = javascript_include_tag "/articles.js"
 
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
