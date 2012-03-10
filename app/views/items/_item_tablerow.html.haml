@@ -60,6 +60,7 @@
     $('#enter_comment_for_item_#{ designator}').click(function(){
       comment = $('input#comment_for_item_#{ designator}').val();
       $('#order_items_attributes_#{ designator}_comment').val(comment);
+      $('#order_items_attributes_#{ designator}_comment').attr('updated',1);
       $('#comment_#{ designator}').html(comment);
       $('#comment_for_item_#{ designator}').slideUp();
     });
@@ -68,6 +69,7 @@
       $('#price_#{ designator}').html(price);
       price = price.replace(',', '.');
       $('#order_items_attributes_#{ designator}_price').val(price);
+      $('#order_items_attributes_#{ designator}_price').attr('updated',1);
       calculate_sum();
       $('#price_for_item_#{ designator}').slideUp();
     });

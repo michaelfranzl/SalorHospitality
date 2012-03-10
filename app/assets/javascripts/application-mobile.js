@@ -50,6 +50,7 @@ function add_comment_to_item(item_designator) {
   var comment = prompt(i18n_enter_comment, fallback);
   if ( comment == null ) { comment = fallback };
   $('#order_items_attributes_' + item_designator + '_comment').val(comment);
+  $('#order_items_attributes_' + item_designator + '_comment').attr('updated',1);
   $('#comment_' + item_designator).html(comment);
 }
 
@@ -62,6 +63,7 @@ function add_price_to_item(item_designator) {
   }
   price = price.replace(',', '.');
   $('#order_items_attributes_' + item_designator + '_price').val(price);
+  $('#order_items_attributes_' + item_designator + '_price').attr('updated',1);
   $('#price_' + item_designator).html(price);
   calculate_sum();
 }

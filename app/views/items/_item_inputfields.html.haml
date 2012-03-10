@@ -1,17 +1,20 @@
+- updated ||= 0
 %div{ :id => "fields_for_item_#{ designator }" }
-  %input{ :id => "order_items_attributes_#{ designator }_id", :class => 'id', :name => "order[items_attributes][#{ designator }][id]", :type => 'hidden', :value => "#{ id }" }
-  %input{ :id => "order_items_attributes_#{ designator }_count", :class => 'count', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }
-  %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }" }
-  %input{ :id => "order_items_attributes_#{ designator }_usage", :name => "order[items_attributes][#{ designator }][usage]", :type => 'hidden', :value => "#{ usage }" }
-  %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }" }
-  %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }" }
-  %input{ :id => "order_items_attributes_#{ designator }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ designator }][quantity_id]", :type => 'hidden', :value => "#{ quantityid }" }
-  %input{ :id => "order_items_attributes_#{ designator }_position", :name => "order[items_attributes][#{ designator }][position]", :type => 'hidden', :value => "#{ position }" }
-  %input{ :id => "order_items_attributes_#{ designator }_price", :class => 'price', :name => "order[items_attributes][#{ designator }][price]", :type => 'hidden', :value => "#{ price }" }
-  %input{ :id => "order_items_attributes_#{ designator }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ designator }][printed_count]", :type => 'hidden', :value => "#{ printed_count }" }
-  %input{ :id => "order_items_attributes_#{ designator }__destroy", :class => '_destroy', :name => "order[items_attributes][#{ designator }][_destroy]", :type => 'hidden' }
+  %input{ :id => "item_#{ designator }_start_count", :class => 'id', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }", :updated => 0 }
+  %input{ :id => "item_#{ designator }_prepared", :class => 'id', :name => "order[items_attributes][#{ designator }][prepared]", :type => 'hidden', :value => "0", :updated => 0 }
+
+  %input{ :id => "order_items_attributes_#{ designator }_article_id", :class => 'article_id', :name => "order[items_attributes][#{ designator }][article_id]", :type => 'hidden', :value => "#{ articleid }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][#{ designator }][quantity_id]", :type => 'hidden', :value => "#{ quantityid }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_count", :class => 'count', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_comment", :name => "order[items_attributes][#{ designator }][comment]", :type => 'hidden', :value => "#{ comment }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_usage", :name => "order[items_attributes][#{ designator }][usage]", :type => 'hidden', :value => "#{ usage }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_optionslist", :name => "order[items_attributes][#{ designator }][optionslist]", :type => 'hidden', :value => "#{ optionslist }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_position", :name => "order[items_attributes][#{ designator }][position]", :type => 'hidden', :value => "#{ position }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }_price", :class => 'price', :name => "order[items_attributes][#{ designator }][price]", :type => 'hidden', :value => "#{ price }", :updated => 0 }
+  %input{ :id => "order_items_attributes_#{ designator }__destroy", :class => '_destroy', :name => "order[items_attributes][#{ designator }][_destroy]", :type => 'hidden', :updated => 0 }
+  //%input{ :id => "order_items_attributes_#{ designator }_printed_count", :class => 'printed_count', :name => "order[items_attributes][#{ designator }][printed_count]", :type => 'hidden', :value => "#{ printed_count }", :updated => 0 }
+
   %div{ :id => "options_for_item_#{ designator }" }
     - if item
       - item.options.each do |o|
         %input{ :id => "item_#{ designator }_option_#{ o.id }", :class => 'optionprice', :type => 'hidden', :value => o.price || 0 }
-  %input{ :id => "item_#{ designator }_start_count", :class => 'id', :name => "order[items_attributes][#{ designator }][count]", :type => 'hidden', :value => "#{ count }" }
