@@ -1,33 +1,7 @@
-$(function(){
-	var tableupdates = -1;
-	var automatic_printing = 0;
-	var new_order = true;
-})
-
-function customer_list_entry(customer) {
-  var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
-  entry.mousedown(function () {
-    var id = '#customer_name_' + $(this).attr('customer_id');
-    var field = $('<input type="hidden" name="order[customer_set][][id]" value="' + $(this).attr('customer_id') + '"/>');
-    $("#order_form_ajax").append(field);
-    $('#order_info').append("<span class='order-customer'>"+$(id).html()+"</span>");
-  });
-  entry.append("<span class='option' id='customer_name_" + customer['id'] + "'>" + customer['first_name'] + " " + customer['last_name'] + "</span>");
-  return entry;
-}
-
-function customer_list_update() {
-  $.getJSON('/customers?format=json&keywords=' + $('#customer_search').val() , function (data) {
-    $('#customer_list_target').html('');
-    for (i in data) {
-      $('#customer_list_target').append(customer_list_entry(data[i]['customer']));
-    }
-  });
-}
-
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
+    a_object = this;
     abutton = $(document.createElement('div'));
     abutton.addClass('article');
     abutton.html(art_attr.n);
@@ -36,16 +10,16 @@ function display_articles(cat_id) {
     (function() {
       var element = abutton;
       abutton.on('mouseup', function(){
-        element.effect("highlight", {}, 300);
+        highlight_button(element);
       });
     })();
     $('#articles').append(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
+        var element = abutton;
         abutton.on('click', function() {
-          var element = abutton;
-          element.css('borderColor', 'white');
-          add_new_item(this);
+          highlight_border(element)
+          add_new_item(a_object);
         });
       })();
     } else {
@@ -58,6 +32,7 @@ function display_articles(cat_id) {
           var quantities = resources.c[cat_id].a[art_id].q;
           var target = qcontainer;
           display_quantities(quantities, target);
+          abutton.off();
         });
       })();
     }
@@ -65,52 +40,66 @@ function display_articles(cat_id) {
   });
 }
 
+function deselect_all_categories() {
+  var container = $('#categories');
+  var cats = container.children();
+  for(c in cats) {
+    if (cats[c].style) {
+      cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
+      //restore_border(cats[c]); // this hangs the browser for no obvious reason
+    }
+  }
+}
+
+function highlight_button(element) {
+  $(element).effect("highlight", {}, 300);
+}
+
+function highlight_border(element) {
+  $(element).css('borderColor', 'white');
+}
+
 function restore_border(element) {
   $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
 }
 
-function restore_button(element) {
-  $(element).css({ backgroundColor: '#3A474D' });
-}
-
 function display_quantities(quantities, target){
   jQuery.each(quantities, function(qu_id,qu_attr) {
+    q_object = this;
     qbutton = $(document.createElement('div'));
     qbutton.addClass('quantity');
     qbutton.html(qu_attr.pre + qu_attr.post);
-    (function() { 
-      qbutton.on('click', function() { add_new_item(this); });
-      qbutton.on('mouseup', function(){ quantities_onmouseup(element) } );
+    (function() {
+      var element = qbutton;
+      qbutton.on('click', function() {
+        add_new_item(q_object);
+        highlight_button(element);
+        highlight_border(element);
+      });
     })();
+    target.append(qbutton);
   })
 }
 
 
-function add_new_item(object, add_new, position, sort) {
-return;
+function add_new_item(object, add_new, insert_after_element, sort) {
   var timestamp = new Date().getTime();
   if ( sort == null ) { sort = timestamp.toString().substr(-9,9); }
   var desig = 'new_' + sort;
   //var category_id = itemdetails_a[art_id][6];
-  var all_article_ids = $('#inputfields .article_id');
 
 
-    if ( quantity == null ) {
-      // add an Article
-      source = article;
-      articleid = article.id;
-      quantityid = '';
-      label = article.n;
-    } else {
-      // add a Quantity
-      source = quantity;
-      articleid = '';
-      quantityid = quantity.id;
-      label = quantity.pre + ' ' + article.n + ' ' + quantity.post;
-    }
+  if ( object.qid != '' ) {
+    object_type = 'quantity';
+    label = object.pre + ' ' + object.n + ' ' + object.post;
+  } else {
+    object_type = 'article';
+    label = object.n;
+  }
+
+
   optionsdiv= '';
   optionsselect= '';
-
   //if (optionsselect[category_id]) {
   //  var options_select = optionsselect[category_id];
   //} else {
@@ -121,40 +110,44 @@ return;
   //} else {
   //  var options_div = ' ';
   //}
-  for(i=0; i<all_article_ids.length; i++) {
-    if (art_id == all_article_ids[i].value) {
-      var matched_article = all_article_ids[i];
-      matched_article.id.match(/^order_items_attributes_(.*)_article_id$/);
-      var matched_designator = RegExp.$1;
-      break;
-    }
-  };
-  if (matched_designator &&
-      !add_new && // explicitely disallow incrementing other items, but create a new item instead
-      $('#order_items_attributes_' + matched_designator + '_price').val() == source.p &&
-      $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
-      $('#order_items_attributes_' + matched_designator + '_usage').val() == 0 &&
-      $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
-      $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
-     ) {
-    increment_item(matched_designator);
-  } else {
 
-    new_item_tablerow_modified = new_item_tablerow.replace(/DESIGNATOR/g, desig).replace(/COUNT/g, 1).replace(/ARTICLEID/g, articleid).replace(/QUANTITYID/g, quantityid).replace(/ITEMID/g, source.id).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, source.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, '');
-
-
+  //var id_fields = $('#inputfields .' + object_type + '_id');
+  //for (i = 0; i < id_fields.length; i++) {
+  //  if (object.id == id_fields[i].value) {
+  //    var matched = id_fields[i];
+  //    matched.id.match(/^order_items_attributes_(.*?)_.*$/);
+  //    var matched_designator = RegExp.$1;
+  //    break;
+  //  }
+  //};
+  //if (matched_designator &&
+  //    !add_new && // explicitely disallow incrementing other items, but create a new item instead
+  //    $('#order_items_attributes_' + matched_designator + '_price').val() == source.p &&
+  //    $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
+  //    $('#order_items_attributes_' + matched_designator + '_usage').val() == 0 &&
+   //   $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
+  //    $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
+  //   ) {
+  //  increment_item(matched_designator);
+  //} else {
 
 
-    if (position) {
-      $(new_item_tablerow_modified).insertBefore(position);
+
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
+
+//.replace(/ITEMID/g, object.id)
+
+
+    if (insert_after_element) {
+      $(new_item).insertBefore(insert_after_element);
     } else {
-      $('#itemstable').prepend(new_item_tablerow_modified);
+      $('#itemstable').prepend(new_item);
     }
-    if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
-    $('#tablerow_' + desig + '_count').addClass('updated');
+    //if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
+    new_item.addClass('updated');
     keep_fields_of_item(desig, '_article_id');
-  }
-  $('#quantities').html('&nbsp;');
+  //}
+
   calculate_sum();
   return desig;
 }
@@ -163,7 +156,8 @@ function add_items_from_json(json_items) {
   var i;
   for (i in json_items) {
     var item = json_items[i];
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, i).replace(/COUNT/g, item.i).replace(/ARTICLEID/g, item.a).replace(/QUANTITYID/g, item.q).replace(/ITEMID/g, item.id).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, item.d).replace(/COUNT/g, item.i).replace(/ARTICLEID/g, item.aid).replace(/QUANTITYID/g, item.qid).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
+//.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
     enable_keyboard_for_items(i);
   }
@@ -204,15 +198,7 @@ function decrement_item(desig) {
   calculate_sum();
 }
 
-function deselect_all_categories() {
-  var container = $('#categories');
-  var cats = container.children();
-  for(c in cats) {
-    if (cats[c].style) {
-      cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
-    }
-  }
-}
+
 
 
 function calculate_sum() {
@@ -448,6 +434,10 @@ function keep_fields_of_item(desig,field) {
 }
 
 $(function(){
+	var tableupdates = -1;
+	var automatic_printing = 0;
+	var new_order = true;
+
   window.setInterval(
     function(){
       $.ajax({
@@ -471,3 +461,24 @@ $(function(){
     url: '/items/list?scope=delivery'
   });
 })
+
+function customer_list_entry(customer) {
+  var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
+  entry.mousedown(function () {
+    var id = '#customer_name_' + $(this).attr('customer_id');
+    var field = $('<input type="hidden" name="order[customer_set][][id]" value="' + $(this).attr('customer_id') + '"/>');
+    $("#order_form_ajax").append(field);
+    $('#order_info').append("<span class='order-customer'>"+$(id).html()+"</span>");
+  });
+  entry.append("<span class='option' id='customer_name_" + customer['id'] + "'>" + customer['first_name'] + " " + customer['last_name'] + "</span>");
+  return entry;
+}
+
+function customer_list_update() {
+  $.getJSON('/customers?format=json&keywords=' + $('#customer_search').val() , function (data) {
+    $('#customer_list_target').html('');
+    for (i in data) {
+      $('#customer_list_target').append(customer_list_entry(data[i]['customer']));
+    }
+  });
+}

@@ -66,6 +66,7 @@ class Order < ActiveRecord::Base
   def items_to_json
     a = []
     self.items.each do |i|
+debugger
       a << {:a => i.article_id, :q => i.quantity_id, :c => i.comment, :i => i.count, :s => i.position, :p => i.price, :u => i.usage, :l => i.label, :ol => i.optionslist, :on => i.optionsnames, :id => i.id }
     end
     return a.to_json

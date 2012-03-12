@@ -167,7 +167,6 @@ class OrdersController < ApplicationController
       # The AJAX load on the client side has succeeded and we know the order ID.
       @order = Order.accessible_by(@current_user).find_by_id params[:order][:id]
     end
-
     if @order # update it
       # When submitting from a mobile client, it always changes the owner of the order.
       params[:order][:user_id] = @current_user.id if mobile?
@@ -183,6 +182,7 @@ class OrdersController < ApplicationController
     @order.sum = @order.calculate_sum
     @order.table.update_attribute :user, @order.user
     @order.save
+# catch errors here
     @order.reload
     @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => @current_user.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id

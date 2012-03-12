@@ -30,7 +30,7 @@ $(function(){
 function category_onmousedown(category_id, element) {
   display_articles(category_id);
   deselect_all_categories();
-  $(element).css('border','2px solid white');
+  highlight_border(element);
 }
 
 function display_comment_popup_of_item(item_designator) {

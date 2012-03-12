@@ -9,36 +9,32 @@ $('#order_user_id').val(<%= @current_user.id %>);
 $('#order_action').val('');
 $('#target_table').val('');
 $('#note_for_order').hide();
+$('#order_id').val('');
 
 $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
 
-var json_items = <%= raw @order.items_to_json %>;
-add_items_from_json(json_items);
 
-$('#order_id').val('<%= @order.id %>');
-$('.target_table').val('');
-$('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
+<% if @order %>
+  var json_items = <%= raw @order.items_to_json %>;
+  add_items_from_json(json_items);
+  $('#order_id').val('<%= @order.id %>');
+  $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
 
 
-<% if @order and @order.customers.any?  %>
-  var order_customers = <%= raw @order.customers.to_json %>;
-<% else  %>
-  var order_customers = [];
+  <% if @order.customers.any?  %>
+    var order_customers = <%= raw @order.customers.to_json %>;
+  <% else  %>
+    var order_customers = [];
+  <% end %>
+  for (o in order_customers) {
+    var customer = order_customers[o]["customer"]
+    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
+  }
+
+  $('#order_note').val('<%= escape_javascript @order.note %>');
+  $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
+  $('#order_table_id').val(<%= @table.id %>);
 <% end %>
-
-for (o in order_customers) {
-  var customer = order_customers[o]["customer"]
-  $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
-}
-
-$('#order_note').val('<%= escape_javascript @order.note %>');
-$('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
-
-$('#inputfields').append('<%= escape_javascript raw inputfields %>');
-$('#itemstable').append('<%= escape_javascript raw tablerows %>');
-
-$('#order_table_id').val(<%= @table.id %>);
-
 
 $('#orderform').show();
 $('#invoices').hide();

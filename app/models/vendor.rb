@@ -37,6 +37,12 @@ class Vendor < ActiveRecord::Base
     "/images/client_logo.png"
   end
 
+  # aid and qid is the model id of Article or Quantity
+  # d is the designator, a mix of model and it's id, so that we can have unique values in the HTML, e.g. 'q203' or 'a33'
+  # n is the name of either Quantity or Article
+  # p is the price of either ...
+  # s is 'sort' and determins the position on the screen
+  # q is a json-sub-object
   def resources
     categories = {}
     self.categories.each do |c|
@@ -44,9 +50,9 @@ class Vendor < ActiveRecord::Base
       c.articles.each do |a|
         quantities = {}
         a.quantities.each do |q|
-          quantities.merge! q.id => { :id => q.id, :pre => q.prefix, :post => q.postfix, :p => q.price, :s => q.position }
+          quantities.merge! q.id => { :aid => '', :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price, :s => q.position }
         end
-        articles.merge! a.id => { :id => a.id, :n => a.name, :p => a.price, :s => a.position, :q => quantities }
+        articles.merge! a.id => { :aid => a.id, :qid => '', :d => "a#{a.id}", :n => a.name, :p => a.price, :s => a.position, :q => quantities }
       end
       options = {}
       c.options.each do |o|
