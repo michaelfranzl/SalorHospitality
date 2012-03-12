@@ -26,36 +26,68 @@ function customer_list_update() {
 }
 
 function display_articles(cat_id) {
+  $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
-    a = $(document.createElement('div'));
-    a.addClass('article');
-    a.attr('id','article_' + art_id);
-    a.attr('type','article');
-    a.attr('designator',art_id);
-    a.html(art_attr.n);
-    a.on('mouseup', function(){ articles_onmouseup(a) } );
-    $('#articles').append(a);
+    abutton = $(document.createElement('div'));
+    abutton.addClass('article');
+    abutton.html(art_attr.n);
+    qcontainer = $(document.createElement('div'));
+    qcontainer.attr('id','article_' + art_id + '_quantities');
+    (function() {
+      var element = abutton;
+      abutton.on('mouseup', function(){
+        element.effect("highlight", {}, 300);
+      });
+    })();
+    $('#articles').append(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
-      a.on('click', function() { add_new_item(this); });
+      (function() { 
+        abutton.on('click', function() {
+          var element = abutton;
+          element.css('borderColor', 'white');
+          add_new_item(this);
+        });
+      })();
     } else {
-      i = $(document.createElement('img'));
-      i.addClass = 'more';
-      i.attr('src','/images/more.png');
-      a.append(i);
-      a.click(display_quantities(art_id,a));
+      arrow = $(document.createElement('img'));
+      arrow.addClass('more');
+      arrow.attr('src','/images/more.png');
+      abutton.append(arrow);
+      (function() {
+        abutton.on('click', function() {
+          var quantities = resources.c[cat_id].a[art_id].q;
+          var target = qcontainer;
+          display_quantities(quantities, target);
+        });
+      })();
     }
-
-//<div id='article_<%= art.id %>_quantities'></div>
-
+    abutton.append(qcontainer);
   });
-  $('#quantities').html('&nbsp;');
+}
+
+function restore_border(element) {
+  $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
+}
+
+function restore_button(element) {
+  $(element).css({ backgroundColor: '#3A474D' });
+}
+
+function display_quantities(quantities, target){
+  jQuery.each(quantities, function(qu_id,qu_attr) {
+    qbutton = $(document.createElement('div'));
+    qbutton.addClass('quantity');
+    qbutton.html(qu_attr.pre + qu_attr.post);
+    (function() { 
+      qbutton.on('click', function() { add_new_item(this); });
+      qbutton.on('mouseup', function(){ quantities_onmouseup(element) } );
+    })();
+  })
 }
 
 
-
-
-function add_new_item(article, quantity, add_new, position, sort) {
-alert(article);
+function add_new_item(object, add_new, position, sort) {
+return;
   var timestamp = new Date().getTime();
   if ( sort == null ) { sort = timestamp.toString().substr(-9,9); }
   var desig = 'new_' + sort;
@@ -327,38 +359,6 @@ function add_option_to_item_from_div(button, item_designator, value, price, text
   $(button).effect("highlight", {}, 1000);
 }
 
-
-function articles_onmousedown(element) {
-  highlight_border(element);
-}
-
-function quantities_onmousedown(element) {
-  highlight_border(element);
-}
-
-function articles_onmouseup(element) {
-  $(element).effect("highlight", {}, 300);
-}
-
-function quantities_onmouseup(element) {
-  $(element).effect("highlight", {}, 300);
-}
-
-function highlight_border(element) {
-  $(element).css('borderColor', 'white');
-}
-
-function restore_border(element) {
-  $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
-}
-
-function highlight_button(element) {
-  $(element).effect("highlight", {}, 300);
-}
-
-function restore_button(element) {
-  $(element).css({ backgroundColor: '#3A474D' });
-}
 
 //this works also if offline. will be repeated in view of remote function.
 function go_to_order_form_preprocessing(table_id) {

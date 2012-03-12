@@ -28,15 +28,6 @@ function category_onmousedown(category_id, element) {
   }
 }
 
-function display_quantities(art_id, article_div) {
-  if ($('#article_' + art_id + '_quantities').html() == '') {
-    $('#article_' + art_id + '_quantities').html(quantitylist[art_id]);
-    //scroll_to('#article_' + art_id + '_quantities', 15);
-  } else {
-    $('#article_' + art_id + '_quantities').html('');
-  }
-}
-
 function add_comment_to_item(item_designator) {
   var fallback = $('#order_items_attributes_' + item_designator + '_comment').val();
   var comment = prompt(i18n_enter_comment, fallback);

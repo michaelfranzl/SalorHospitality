@@ -33,12 +33,6 @@ function category_onmousedown(category_id, element) {
   $(element).css('border','2px solid white');
 }
 
-function display_quantities(art_id, article_div) {
-  $('#quantities').html(quantitylist[art_id]);
-  $('#quantities').css('padding-top', $(article_div).position().top/2);
-}
-
-
 function display_comment_popup_of_item(item_designator) {
   var old_comment = $('#order_items_attributes_' + item_designator + '_comment').val();
   $('input#comment_for_item_' + item_designator).val(old_comment);
