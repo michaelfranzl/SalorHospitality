@@ -31,8 +31,6 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :user_id
 
-  #code inspiration from http://ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes
-  #This will prevent children_attributes with all empty values to be ignored
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
   def calculate_sum
@@ -66,7 +64,6 @@ class Order < ActiveRecord::Base
   def items_to_json
     a = []
     self.items.each do |i|
-debugger
       a << {:a => i.article_id, :q => i.quantity_id, :c => i.comment, :i => i.count, :s => i.position, :p => i.price, :u => i.usage, :l => i.label, :ol => i.optionslist, :on => i.optionsnames, :id => i.id }
     end
     return a.to_json
