@@ -1,4 +1,4 @@
-function display_articles(cat_id) {
+function display_items(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
     a_object = this;
@@ -86,8 +86,6 @@ function add_new_item(object, add_new, insert_after_element, sort) {
   var timestamp = new Date().getTime();
   if ( sort == null ) { sort = timestamp.toString().substr(-9,9); }
   var desig = 'new_' + sort;
-  //var category_id = itemdetails_a[art_id][6];
-
 
   if ( object.qid != '' ) {
     object_type = 'quantity';
@@ -133,20 +131,16 @@ function add_new_item(object, add_new, insert_after_element, sort) {
 
 
 
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
+  new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
+  if (insert_after_element) {
+    $(new_item).insertBefore(insert_after_element);
+  } else {
+    $('#itemstable').prepend(new_item);
+  }
+  new_item.addClass('updated');
+  keep_fields_of_item(desig, '_article_id');
 
-//.replace(/ITEMID/g, object.id)
-
-
-    if (insert_after_element) {
-      $(new_item).insertBefore(insert_after_element);
-    } else {
-      $('#itemstable').prepend(new_item);
-    }
-    //if (itemdetails_a[art_id][7] == 1 || itemdetails_a[art_id][7] == 2) { add_comment_to_item(desig); add_price_to_item(desig); }
-    new_item.addClass('updated');
-    keep_fields_of_item(desig, '_article_id');
-  //}
+  resources['pending']=
 
   calculate_sum();
   return desig;
