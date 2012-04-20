@@ -1,0 +1,19 @@
+---
+tables_users001:
+  table_id: 1
+  user_id: 1
+tables_users002:
+  table_id: 2
+  user_id: 1
+tables_users003:
+  table_id: 3
+  user_id: 1
+tables_users004:
+  table_id: 4
+  user_id: 1
+tables_users005:
+  table_id: 5
+  user_id: 1
+tables_users006:
+  table_id: 6
+  user_id: 1
