@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :orders
   belongs_to :company
   belongs_to :role
+  has_many :histories
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
   scope :active, where(:active => true, :hidden => false)

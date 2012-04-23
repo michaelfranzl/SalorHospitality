@@ -30,6 +30,12 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.find(session[:user_id]) if session[:user_id]
+      # we need these for the history observer because we don't have control at the time
+      # the activerecord callbacks run, and anyway controller instance variables wouldn't
+      # be in scope...
+      $User = @current_user
+      $Request = request
+      $Params = params
       redirect_to '/' if @current_user.nil?
     end
 
