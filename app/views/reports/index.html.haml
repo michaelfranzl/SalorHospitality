@@ -1,14 +1,14 @@
 %div.centered-contents
   = form_tag '/reports', :class => 'no-print', :method => :get do
-    = label('from', t('orders.report.start_date'))
+    = label('from', t('reports.start_date'))
     %br
     = select_date(@from, :prefix => 'from')
     %br
-    = label('to', t('orders.report.end_date'))
+    = label('to', t('reports.end_date'))
     %br
     = select_date(@to, :prefix => 'to')
     %br
-    = label('usb_device',t("menu.usb_device"))
+    = label('usb_device',t("reports.usb_device"))
     %br
     %select{:name => 'usb_device', :id => 'usb_device_select'}
       - Dir.entries("/media").each do |d|
@@ -17,6 +17,6 @@
       %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
     %br
     %br
-    = submit_tag t('helpers.submit.save'), :onclick => '$("#progress").show()'
+    = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
 
 %img{ :id => 'progress', :src => '/images/upload.gif', :style => 'display: none;' }

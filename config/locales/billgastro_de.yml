@@ -335,7 +335,12 @@ de:
       backup_database: Datenbank sichern
     update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
-
+  reports:
+    reports: Berichte
+    save: Speichern
+    usb_device: Usb Stick
+    start_date: Von
+    end_date: Bis
   roles:
     new:
       take_orders: Bestellungen aufnehmen
