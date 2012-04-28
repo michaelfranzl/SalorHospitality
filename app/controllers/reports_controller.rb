@@ -1,5 +1,8 @@
 # coding: UTF-8
-
+# BillGastro -- The innovative Point Of Sales Software for your Restaurant
+# Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
+# 
+# See license.txt for the license applying to all files within this software.
 class ReportsController < ApplicationController
   helper :all
   before_filter :fetch_logged_in_user, :select_current_company, :set_locale
