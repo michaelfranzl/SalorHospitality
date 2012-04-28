@@ -31,6 +31,7 @@ class SessionsController < ApplicationController
       session[:admin_interface] = !mobile? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = nil
+      check_product_key
       redirect_to '/orders'
     else
       flash[:error] = t :wrong_password

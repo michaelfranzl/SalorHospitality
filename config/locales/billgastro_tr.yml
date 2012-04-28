@@ -334,7 +334,12 @@ tr:
       backup_database: XXXBackup database
     update:
       config_successfully_updated: Belirtiler yenilendi!
-
+  reports:
+    reports: XXX Reports
+    save: XXX Save
+    usb_device: XXX USB Stick
+    start_date: XXX Start Date
+    end_date: XXX End Date
   roles:
     new:
       take_orders: XXXTake orders

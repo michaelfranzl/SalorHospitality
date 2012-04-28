@@ -333,7 +333,12 @@ es:
       backup_database: XXXBackup database
     update:
       config_successfully_updated: ¡Los datos de la companía han sido actualizados con éxito!
-
+  reports:
+    reports: XXX Reports
+    save: XXX Save
+    usb_device: XXX USB Stick
+    start_date: XXX Start Date
+    end_date: XXX End Date
   roles:
     new:
       take_orders: Tomar pedidos

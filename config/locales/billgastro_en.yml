@@ -335,7 +335,12 @@ en:
       backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
-
+  reports:
+    reports: Reports
+    save: Save
+    usb_device: USB Stick
+    start_date: Start Date
+    end_date: End Date
   roles:
     new:
       take_orders: Take orders
