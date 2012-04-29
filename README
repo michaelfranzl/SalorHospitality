@@ -8,56 +8,16 @@ BillGastro is real-world-tested in several gastronomy businesses -- high-stress 
 
 Have a look at http://billgastro.com to see a full set of features, screenshots and services.
 
-Developers are invited to check out BillGastro and contribute code.
-
 == Try it live!
 
 You can try BillGastro immediately. Go to [demo.billgastro.com](http://demo.billgastro.com) and log yourself in with username "admin" and password "admin".
-
-== Licence
-
-BillGastro -- The innovative Point Of Sales Software for your Restaurant  
-Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-
-== Getting Started
-
-1. Get source from github: `git clone git@github.com:michaelfranzl/BillGastro.git`
-2. BillGastro ist tested for Ruby 1.9.2 (using rvm for Ruby management is suggested).
-3. `cd billgastro`
-4. Copy `config/database-default.yml` to `config/database.yml` and adapt your database settings
-5. Create database: `rake db:create`
-6. Migrate database: `rake db:migrate`
-7. Load a basic dataset into the application: `rake db:fixtures:load`
-8. Start server: `rails s`
-9. Browse to `localhost:3000` and log in: login "admin", password "admin"
-
 
 == Usage Hints
 
 After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled. The rest of the application is pretty self-explanatory.
 
-
-== Notes
-
-BillGastro is work in progress. The most recent version on github should work as it is and should contain very few bugs, if at all.
-
-
 == Contact
 
 Dipl.-Ing. (FH) Michael Franzl
 
-michael at billgastro dot com
+office@billgastro.com

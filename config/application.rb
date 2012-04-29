@@ -14,6 +14,8 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module BillGastro
   class Application < Rails::Application
 
+    VERSION = '{{VERSION}}'
+
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español' }
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
