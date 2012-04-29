@@ -1,9 +1,9 @@
 # coding: UTF-8
+
 # BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2011  Michael Franzl <michael@billgastro.com>
+# Copyright (C) 2012-2013  Red (E) Tools LTD
 # 
 # See license.txt for the license applying to all files within this software.
-
 class Option < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :items
