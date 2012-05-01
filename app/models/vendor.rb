@@ -60,7 +60,7 @@ class Vendor < ActiveRecord::Base
       c.articles.each do |a|
         quantities = {}
         a.quantities.each do |q|
-          quantities.merge! q.id => { :aid => '', :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price, :s => q.position }
+          quantities.merge! q.id => { :aid => '', :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :p => q.price, :s => q.position }
         end
         articles.merge! a.id => { :aid => a.id, :qid => '', :d => "a#{a.id}", :n => a.name, :p => a.price, :s => a.position, :q => quantities }
       end

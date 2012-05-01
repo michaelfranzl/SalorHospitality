@@ -135,7 +135,7 @@ Quantity.delete_all
       puts "Category #{ c } #{ v } #{ i } created" if r == true
 
       2.times do |a|
-        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30), :active => true
+        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
         article.category = category
         article.company = company
         article.vendor = vendor
@@ -144,7 +144,7 @@ Quantity.delete_all
         
         if a > 0
           2.times do |q|
-            quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :price => rand(10)
+            quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :postfix => '', :price => rand(10) + 1
             quantity.article = article
             quantity.company = company
             quantity.vendor = vendor

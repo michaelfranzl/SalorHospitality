@@ -1,6 +1,6 @@
-	var tableupdates = -1;
-	var automatic_printing = 0;
-	var new_order = true;
+var tableupdates = -1;
+var automatic_printing = 0;
+var new_order = true;
 
 function display_articles(cat_id) {
   $('#articles').html('');
@@ -29,6 +29,7 @@ function display_articles(cat_id) {
         });
       })();
     } else {
+      // quantity
       arrow = $(document.createElement('img'));
       arrow.addClass('more');
       arrow.attr('src','/images/more.png');
@@ -77,8 +78,9 @@ function display_quantities(quantities, target){
     qbutton.html(qu_attr.pre + qu_attr.post);
     (function() {
       var element = qbutton;
+      var quantity = q_object;
       qbutton.on('click', function() {
-        add_new_item(q_object);
+        add_new_item(quantity);
         highlight_button(element);
         highlight_border(element);
       });
@@ -122,11 +124,15 @@ function add_new_item(object, add_new, insert_after_element, sort) {
     if (resources['p'][object.d].hasOwnProperty('c')) {
       resources['p'][object.d].c += 1; // increment count
     } else {
-      resources['p'][object.d].c = 2; // add the c attribute, increment count
+      resources['p'][object.d]['c'] = 2; // add the c attribute, increment count
     }
   } else {
     // create the item. this is the bare minimum that the server will understand.
-    resources['p'][object.d] = {aid:object.aid, qid:object.qid};
+    if (object.aid != '') {
+      resources['p'][object.d] = {aid:object.aid};
+    } else {
+      resources['p'][object.d] = {aid:object.qid};
+    }
   }
 
   // change the display/list json
@@ -155,6 +161,9 @@ function add_new_item(object, add_new, insert_after_element, sort) {
   return desig;
 }
 
+
+
+
 function add_items_from_json(json_items) {
   var i;
   for (i in json_items) {
@@ -167,10 +176,16 @@ function add_items_from_json(json_items) {
 }
 
 
-function increment_item(d) {
-  resources['l'][d].c += 1;
-  $('#tablerow_' + d + '_count').html(resources['l'][d].c);
-  $('#tablerow_' + d + '_count').addClass('updated');
+function increment_item(designator) {
+  count = resources['l'][designator].c + 1;
+  resources['l'][designator].c = count;
+  if (resources['p'][designator].hasOwnProperty('c')) {
+    resources['p'][designator].c += 1;
+  } else {
+    resources['p'][designator]['c'] = 2;
+  }
+  $('#tablerow_' + designator + '_count').html(count);
+  $('#tablerow_' + designator + '_count').addClass('updated');
   calculate_sum();
 }
 
