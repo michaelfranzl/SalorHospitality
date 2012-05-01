@@ -1,37 +1,34 @@
-= form_tag '/orders/receive_order_attributes_ajax', :remote => true, :id => 'order_form_ajax' do
-  = hidden_field_tag 'order_action'
-  = hidden_field_tag 'order[id]'
-  = hidden_field_tag 'order[table_id]'
-  = hidden_field_tag 'target_table'
+%h2
+  %span#order_info{ :onclick => '$("#note_for_order").slideDown()'}= t :just_order
 
-  .waiter
-    %select#order_user_id{ :name => 'order[user_id]', :style => "display: #{ @current_user.role.permissions.include?('change_waiter') ? 'visible' : 'none' }"}
-      = options_from_collection_for_select @users, :id, :login, { :include_blank => !mobile? }
+#note_for_order= render 'note'
 
-  #order_info{ :onclick => '$("#note_for_order").slideDown()'}= t :just_order
+#categories
+  - i = 0
+  - @categories.each do |category|
+    - i += 1
+    %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
+      %div{ :class => "category_label" }
+        %span= category.name
+    = raw '<br>' if i % 3 == 0
 
-  #note_for_order= render 'note'
-  - if workstation?
-    #customer_list
-      %h3= t 'activerecord.models.customer.other'
-      = text_field_tag 'customer_search'
-      %span#customer_search_display_keyboard.display_keyboard
-      #customer_list_target
-      %span.done{ :onclick => "$('#customer_list').slideUp();" }
-    #tablesselect
-      %h3= t :move_order_to_table
-      %span.done{ :onclick => "$('#tablesselect').slideUp();" }
-      - @current_user.tables.each do |t|
-        %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }
-  #categories
-    - @categories.each do |category|
-      %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
-        %div{ :class => "category_label" }
-          %span= category.name
-  
-  #articles
-  #items
-    .ordersum_container
-      %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
-      %span#order_sum 0
-    %table#itemstable
+#articles
+#items
+  .ordersum_container
+    %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
+    %span#order_sum
+  %table#itemstable
+
+
+- if workstation?
+  #customer_list
+    %h3= t 'activerecord.models.customer.other'
+    = text_field_tag 'customer_search'
+    %span#customer_search_display_keyboard.display_keyboard
+    #customer_list_target
+    %span.done{ :onclick => "$('#customer_list').slideUp();" }
+  #tablesselect
+    %h3= t :move_order_to_table
+    %span.done{ :onclick => "$('#tablesselect').slideUp();" }
+    - @current_user.tables.each do |t|
+      %span.option{ :onclick => "move_order_to_table(#{ t.id });" }== #{ t.abbreviation }

@@ -619,7 +619,6 @@ $articlelistbgcolor: #3a474d
 
 div#categories
   :display inline-block
-  :width 28%
   :vertical-align top
 
 div#articles
@@ -684,7 +683,7 @@ td.item_count.updated
 
 
 div.category
-  :float left
+  :display inline-block
   :width 80px
   :height 80px
   :overflow hidden
@@ -850,13 +849,6 @@ select#order_user_id
   :font-size 160%
 
 
-
-#order_info
-  :position absolute
-  :text-align right
-  :top -38px
-  :right 473px
-
 fieldset.new_foods
   :width 280px
 
@@ -886,20 +878,8 @@ div.ordersum_container
   :font-size 130%
   :padding-left 20px
   :overflow auto
-  span
-    :float left
-    :padding-top 5px
-
-input#order_sum
-  :background-color transparent
-  :color white
-  :border none
-  :font-size 122%
-  :float right
-  :width 120px
-  :height 25px
-  :padding-right 10px
-  :text-align right
+  span#order_sum
+    :float right
 
 div.unsettled_orders
   :margin 10px

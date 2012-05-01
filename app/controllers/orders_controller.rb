@@ -148,9 +148,10 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
+debugger
     @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active true
 
-    if (params[:order][:id] == 'add_offline_items_to_order') or (params[:order][:id].empty?)
+    if params[:order][:id].empty?
       # The AJAX load on the client side has not succeeded before user submitted the order form.
       # In this case, simply select the first order on the table the user had selected.
       @order = Order.accessible_by(@current_user).find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first

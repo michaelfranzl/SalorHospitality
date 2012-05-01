@@ -2,6 +2,11 @@ var tableupdates = -1;
 var automatic_printing = 0;
 var new_order = true;
 
+var items_json = {};
+var customers_json = {};
+var submit_json = {i:{}, o:{}};
+var order_state = {};
+
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -90,6 +95,7 @@ function display_quantities(quantities, target){
 }
 
 
+
 function add_new_item(object, add_new, insert_after_element, sort) {
   var timestamp = new Date().getTime();
   if ( sort == null ) { sort = timestamp.toString().substr(-9,9); }
@@ -119,35 +125,35 @@ function add_new_item(object, add_new, insert_after_element, sort) {
 
 
   // change the pending json that will be sent to the server
-  if (resources['p'].hasOwnProperty(object.d)) {
+  if (submit_json.i.hasOwnProperty(object.d)) {
     // selected item is already in the pending list
-    if (resources['p'][object.d].hasOwnProperty('c')) {
-      resources['p'][object.d].c += 1; // increment count
+    if (submit_json.i[object.d].hasOwnProperty('c')) {
+      submit_json.i[object.d].c += 1; // increment count
     } else {
-      resources['p'][object.d]['c'] = 2; // add the c attribute, increment count
+      submit_json.i[object.d]['c'] = 2; // add the c attribute, increment count
     }
   } else {
     // create the item. this is the bare minimum that the server will understand.
     if (object.aid != '') {
-      resources['p'][object.d] = {aid:object.aid};
+      submit_json.i[object.d] = {aid:object.aid};
     } else {
-      resources['p'][object.d] = {aid:object.qid};
+      submit_json.i[object.d] = {qid:object.qid};
     }
   }
 
   // change the display/list json
-  if (resources['l'].hasOwnProperty(object.d) &&
+  if (items_json.hasOwnProperty(object.d) &&
       !add_new &&
-      resources['l'][object.d].p == object.p &&
-      resources['l'][object.d].o == '' &&
-      resources['l'][object.d].x == false &&
-      resources['l'][object.d].i.length == 0
+      items_json[object.d].p == object.p &&
+      items_json[object.d].o == '' &&
+      items_json[object.d].x == false &&
+      items_json[object.d].i.length == 0
      ) {
     // selected item is already there
-    resources['l'][object.d].c += 1;
-    $('#tablerow_' + object.d + '_count').html(resources['l'][object.d].c);
+    items_json[object.d].c += 1;
+    $('#tablerow_' + object.d + '_count').html(items_json[object.d].c);
   } else {
-    resources['l'][object.d] = {aid:object.aid, qid:object.qid, c:1, o:'', i:[], x:false, p:object.p};
+    items_json[object.d] = {aid:object.aid, qid:object.qid, c:1, o:'', i:[], x:false, p:object.p};
     new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
     if (insert_after_element) {
       $(new_item).insertBefore(insert_after_element);
@@ -164,7 +170,7 @@ function add_new_item(object, add_new, insert_after_element, sort) {
 
 
 
-function add_items_from_json(json_items) {
+function render_items_from_json(json_items) {
   var i;
   for (i in json_items) {
     var item = json_items[i];
@@ -175,14 +181,20 @@ function add_items_from_json(json_items) {
   }
 }
 
+function render_customers_from_json(json_items) {
+  for (o in order_customers) {
+    var customer = order_customers[o]["customer"]
+    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
+  }
+}
 
 function increment_item(designator) {
-  count = resources['l'][designator].c + 1;
-  resources['l'][designator].c = count;
-  if (resources['p'][designator].hasOwnProperty('c')) {
-    resources['p'][designator].c += 1;
+  count = items_json[designator].c + 1;
+  items_json[designator].c = count;
+  if (submit_json.i[designator].hasOwnProperty('c')) {
+    submit_json.i[designator].c += 1;
   } else {
-    resources['p'][designator]['c'] = 2;
+    submit_json.i[designator]['c'] = 2;
   }
   $('#tablerow_' + designator + '_count').html(count);
   $('#tablerow_' + designator + '_count').addClass('updated');
@@ -218,10 +230,10 @@ function decrement_item(desig) {
 
 function calculate_sum() {
   var sum = 0;
-  for(key in resources.l) {
-    if (resources.l.hasOwnProperty(key)) {
-      count = resources.l[key].c;
-      price = resources.l[key].p;
+  for(key in items_json) {
+    if (items_json.hasOwnProperty(key)) {
+      count = items_json[key].c;
+      price = items_json[key].p;
       sum += count * price;
     }
   }
@@ -353,22 +365,22 @@ function add_option_to_item_from_div(button, item_designator, value, price, text
 }
 
 
-//this works also if offline. will be repeated in view of remote function.
+// this is for offline preprocessing, better user experience.
 function go_to_order_form_preprocessing(table_id) {
   scroll_to($('#container'),20);
-  $('#order_sum').value = '0';
 
-  $('#order_id').val('add_offline_items_to_order');
+  // reset order state
+  submit_json.i = {};
+  submit_json.o = {id:'', action:'', note:'', target_table:'', table_id:''};
+  $('#order_sum').val('0' + i18n_decimal_separator + '00');
   $('#order_info').html(i18n_just_order);
   $('#order_note').val('');
-  $('#order_action').val('');
-  $('#order_table_id').val(table_id);
 
+  // Dynamic switching of view
   $('#inputfields').html('');
   $('#itemstable').html('');
   $('#articles').html('');
   $('#quantities').html('');
-
   $('#orderform').show();
   $('#invoices').hide();
   $('#tables').hide();
@@ -376,9 +388,11 @@ function go_to_order_form_preprocessing(table_id) {
   $('#functions_header_index').hide();
   $('#functions_header_invoice_form').hide();
   $('#functions_header_order_form').show();
-  $('#functions_footer').show();
+  if (mobile == true) { $('#functions_footer').show(); }
   $.ajax({ type: 'GET', url: '/tables/' + table_id });
   screenlock_counter = -1;
+  tableupdates = -1;
+  screenlock_active = true;
 }
 
 function go_to_tables_offline() {
@@ -399,9 +413,13 @@ function go_to_tables_offline() {
 }
 
 function save_and_go_to_tables() {
-  $("#order_action").val("save_and_go_to_tables");
-  remove_nonkeep_fields();
-  $("#order_form_ajax").submit();
+  submit_json.o.action = 'save_and_go_to_tables';
+  submit_json.o.note = $('#order_note').val();
+  $.ajax({
+    type: 'post',
+    url: '/orders/receive_order_attributes_ajax',
+    data: submit_json
+  });
 }
 
 function save_and_go_to_invoice() {

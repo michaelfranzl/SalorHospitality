@@ -70,7 +70,7 @@ class Vendor < ActiveRecord::Base
       end
       categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
     end
-    resources = { :c => categories, :p => {}, :l => {} }
+    resources = { :c => categories }
     return resources.to_json
   end
 

@@ -2,8 +2,6 @@
 - if workstation?
   = javascript_include_tag 'orders-workstation'
 
-%h2= @current_user.login
-
 #rooms= render 'rooms'
 #tables= render @tables
 #functions
@@ -32,11 +30,13 @@
   var i18n_enter_price        = '#{ escape_javascript t :please_enter_item_price }';
   var i18n_enter_comment      = '#{ escape_javascript t :please_enter_item_comment }>';
   var i18n_no_printing        = '#{ escape_javascript t :no_printing }';
-  var permission_delete_items = #{ @current_user.role.permissions.include?("delete_items") ? "true" : "false" };
-  var permission_decrement_items = #{ @current_user.role.permissions.include?("decrement_items") ? "true" : "false" };
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';
-  var mobile_special = #{ mobile_special? ? "true" : "false" };
+  var permission_delete_items = #{ @current_user.role.permissions.include?("delete_items") ? "true" : "false" };
+  var permission_decrement_items = #{ @current_user.role.permissions.include?("decrement_items") ? "true" : "false" };
   var screenlock_timeout = #{ @current_user.screenlock_timeout };
   var new_item_tablerow = "#{ escape_javascript render :partial => 'items/item_tablerow' }";
   var resources = #{ @current_vendor.resources };
+  var mobile = #{ mobile? };
+  var workstation = #{ workstation? };
+  var mobile_special = #{ mobile_special? };

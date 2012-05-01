@@ -1,53 +1,15 @@
-<%
-designator = 0
-inputfields = ''
-tablerows = ''
-%>
-
-$('#order_sum').val('0' + i18n_decimal_separator + '00');
-$('#order_user_id').val(<%= @current_user.id %>);
-$('#order_action').val('');
-$('#target_table').val('');
-$('#note_for_order').hide();
-$('#order_id').val('');
-
-$('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
-
-
 <% if @order %>
-  var json_items = <%= raw @order.items_to_json %>;
-  add_items_from_json(json_items);
-  $('#order_id').val('<%= @order.id %>');
+  items_json = <%= raw @order.items_to_json %>;
+  customers_json = <%= raw @order.customers.to_json %>;
+  submit_json.o.id = <%= @order.id %>;
+  submit_json.o.table_id = <%= @table.id %>;
+  submit_json.o.new = false;
   $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
-
-
-  <% if @order.customers.any?  %>
-    var order_customers = <%= raw @order.customers.to_json %>;
-  <% else  %>
-    var order_customers = [];
-  <% end %>
-  for (o in order_customers) {
-    var customer = order_customers[o]["customer"]
-    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
-  }
-
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
-  $('#order_table_id').val(<%= @table.id %>);
+  //render_items_from_json(items_json);
+  //render_customers_from_json(customers_json);
+<% else %>
+  $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
+  submit_json.o.new = true;
 <% end %>
-
-$('#orderform').show();
-$('#invoices').hide();
-$('#functions_header_index').hide();
-$('#functions_header_invoice_form').hide();
-$('#functions_header_order_form').show();
-
-<% if mobile? %>
-  $('#functions_footer').html('<%= escape_javascript render :partial => 'orders/functions_footer' %>');
-  $('#functions_footer').show();
-<% end %>
-
-tableupdates = -1;
-screenlock_counter = -1;
-screenlock_active = true;
-new_order = <%= @order ? 'false' : 'true' %>;
