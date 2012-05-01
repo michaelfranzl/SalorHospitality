@@ -115,59 +115,43 @@ function add_new_item(object, add_new, insert_after_element, sort) {
   //  var options_div = ' ';
   //}
 
-  //var id_fields = $('#inputfields .' + object_type + '_id');
-  //for (i = 0; i < id_fields.length; i++) {
-  //  if (object.id == id_fields[i].value) {
-  //    var matched = id_fields[i];
-  //    matched.id.match(/^order_items_attributes_(.*?)_.*$/);
-  //    var matched_designator = RegExp.$1;
-  //    break;
-  //  }
-  //};
-  //if (matched_designator &&
-  //    !add_new && // explicitely disallow incrementing other items, but create a new item instead
-  //    $('#order_items_attributes_' + matched_designator + '_price').val() == source.p &&
-  //    $('#order_items_attributes_' + matched_designator + '_comment').val() == '' &&
-  //    $('#order_items_attributes_' + matched_designator + '_usage').val() == 0 &&
-   //   $('#order_items_attributes_' + matched_designator + '__destroy').val() != 1 &&
-  //    $('#order_items_attributes_' + matched_designator + '_optionslist').val() == ''
-  //   ) {
-  //  increment_item(matched_designator);
-  //} else {
-
-
-
-  new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
-  if (insert_after_element) {
-    $(new_item).insertBefore(insert_after_element);
-  } else {
-    $('#itemstable').prepend(new_item);
-  }
-  new_item.addClass('updated');
-  //keep_fields_of_item(object.id, '_article_id');
 
   // change the pending json that will be sent to the server
-  if (resources['p'].hasOwnProperty(object.d) {
+  if (resources['p'].hasOwnProperty(object.d)) {
     // selected item is already in the pending list
-    if resources['p'][object.d].hasOwnProperty('c') {
+    if (resources['p'][object.d].hasOwnProperty('c')) {
       resources['p'][object.d].c += 1; // increment count
     } else {
       resources['p'][object.d].c = 2; // add the c attribute, increment count
     }
   } else {
-    // create the item in the list. this is the bare minimum that the server will understand.
+    // create the item. this is the bare minimum that the server will understand.
     resources['p'][object.d] = {aid:object.aid, qid:object.qid};
   }
 
   // change the display/list json
-  if (resources['l'].hasOwnProperty(object.d) {
+  if (resources['l'].hasOwnProperty(object.d) &&
+      !add_new &&
+      resources['l'][object.d].p == object.p &&
+      resources['l'][object.d].o == '' &&
+      resources['l'][object.d].x == false &&
+      resources['l'][object.d].i.length == 0
+     ) {
     // selected item is already there
     resources['l'][object.d].c += 1;
+    $('#tablerow_' + object.d + '_count').html(resources['l'][object.d].c);
   } else {
-    resources['l'][object.d] = {
+    resources['l'][object.d] = {aid:object.aid, qid:object.qid, c:1, o:'', i:[], x:false, p:object.p};
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
+    if (insert_after_element) {
+      $(new_item).insertBefore(insert_after_element);
+    } else {
+      $('#itemstable').prepend(new_item);
+    }
+    new_item.addClass('updated');
   }
 
-  resources['l'].push({aid:object.aid, qid:object.qid});
+
 
   calculate_sum();
   return desig;

@@ -47,7 +47,8 @@ class Vendor < ActiveRecord::Base
   # JS returns additional attributes:
   # o is comment
   # c is count
-  # t is array of options
+  # i is array of options
+  # x is deleted
 
   # resources.p is pending
   # resources.l is listing
