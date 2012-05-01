@@ -1,4 +1,8 @@
-function display_items(cat_id) {
+	var tableupdates = -1;
+	var automatic_printing = 0;
+	var new_order = true;
+
+function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
     a_object = this;
@@ -6,6 +10,7 @@ function display_items(cat_id) {
     abutton.addClass('article');
     abutton.html(art_attr.n);
     qcontainer = $(document.createElement('div'));
+    qcontainer.addClass('quantities');
     qcontainer.attr('id','article_' + art_id + '_quantities');
     (function() {
       var element = abutton;
@@ -19,6 +24,7 @@ function display_items(cat_id) {
         var element = abutton;
         abutton.on('click', function() {
           highlight_border(element)
+          $('.quantity').remove();
           add_new_item(a_object);
         });
       })();
@@ -32,7 +38,6 @@ function display_items(cat_id) {
           var quantities = resources.c[cat_id].a[art_id].q;
           var target = qcontainer;
           display_quantities(quantities, target);
-          abutton.off();
         });
       })();
     }
@@ -64,6 +69,7 @@ function restore_border(element) {
 }
 
 function display_quantities(quantities, target){
+  target.html('');
   jQuery.each(quantities, function(qu_id,qu_attr) {
     q_object = this;
     qbutton = $(document.createElement('div'));
@@ -138,9 +144,10 @@ function add_new_item(object, add_new, insert_after_element, sort) {
     $('#itemstable').prepend(new_item);
   }
   new_item.addClass('updated');
-  keep_fields_of_item(desig, '_article_id');
+  //keep_fields_of_item(object.id, '_article_id');
 
-  resources['pending']=
+  // this is the bare minimum. count will be assumed to be 1, price the same, comment empty.
+  resources['p'].push({aid:object.aid, qid:object.qid});
 
   calculate_sum();
   return desig;
@@ -196,22 +203,12 @@ function decrement_item(desig) {
 
 
 function calculate_sum() {
-  var items = $('#inputfields > div');
   var sum = 0;
-  var itemcount;
-  var itemprice;
-  var options;
-  for(i=0; i<items.length; i++) {
-    itemcount = parseFloat($(items[i]).children('.count')[0].value);
-    itemprice = parseFloat($(items[i]).children('.price')[0].value);
-    sum += itemcount * itemprice;
-    options = $(items[i]).children('div').children('.optionprice');
-    for(j=0; j<options.length; j++) {
-      optionprice = parseFloat(options[j].value);
-      sum += optionprice * itemcount;
-    }
-  }
-  $('#order_sum').val(sum.toFixed(2).replace('.', i18n_decimal_separator));
+  //for(i=0; i<resources.p.length; i++) {
+  //  count = resources.p[i].c;
+  //  if (count == 'undefined') { count = 1 };
+  //  sum += count * resources.p[i].p
+  //$('#order_sum').val(sum.toFixed(2).replace('.', i18n_decimal_separator));
   return sum;
 }
 
@@ -422,16 +419,7 @@ function change_item_status(id,status) {
   });
 }
 
-function keep_fields_of_item(desig,field) {
-  $('#order_items_attributes_' + desig + '_id').attr('keep', 1);
-  $('#order_items_attributes_' + desig + field).attr('keep', 1);
-}
-
 $(function(){
-	var tableupdates = -1;
-	var automatic_printing = 0;
-	var new_order = true;
-
   window.setInterval(
     function(){
       $.ajax({

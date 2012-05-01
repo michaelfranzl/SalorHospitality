@@ -43,6 +43,15 @@ class Vendor < ActiveRecord::Base
   # p is the price of either ...
   # s is 'sort' and determins the position on the screen
   # q is a json-sub-object
+
+  # JS returns additional attributes:
+  # o is comment
+  # c is count
+  # t is array of options
+
+  # resources.p is pending
+  # resources.l is listing
+
   def resources
     categories = {}
     self.categories.each do |c|
@@ -60,7 +69,7 @@ class Vendor < ActiveRecord::Base
       end
       categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
     end
-    resources = { :c => categories }
+    resources = { :c => categories, :p => [], :l => [] }
     return resources.to_json
   end
 

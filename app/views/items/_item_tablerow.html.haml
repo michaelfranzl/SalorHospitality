@@ -1,24 +1,4 @@
 %tr{ :id => "item_DESIGNATOR", :designator => 'DESIGNATOR', :class => "item" }
-  %td#inputfields
-    %div{ :id => "fields_for_item_DESIGNATOR" }
-      %input{ :id => "item_DESIGNATOR_start_count", :class => 'id', :name => "order[items_attributes][DESIGNATOR][count]", :type => 'hidden', :value => "COUNT", :keep => 0 }
-
-      %input{ :id => "order_items_attributes_DESIGNATOR_article_id", :class => 'article_id', :name => "order[items_attributes][DESIGNATOR][article_id]", :type => 'hidden', :value => "ARTICLEID", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_quantity_id", :class => 'quantity_id', :name => "order[items_attributes][DESIGNATOR][quantity_id]", :type => 'hidden', :value => "QUANTITYID", :keep => 0 }
-      //%input{ :id => "order_items_attributes_DESIGNATOR_id", :name => "order[items_attributes][DESIGNATOR][id]", :type => 'hidden', :value => "ITEMID", :keep => 0 }
-
-      %input{ :id => "order_items_attributes_DESIGNATOR_count", :class => 'count', :name => "order[items_attributes][DESIGNATOR][count]", :type => 'hidden', :value => "COUNT", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_comment", :name => "order[items_attributes][DESIGNATOR][comment]", :type => 'hidden', :value => "COMMENT", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_usage", :name => "order[items_attributes][DESIGNATOR][usage]", :type => 'hidden', :value => "USAGE", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_optionslist", :name => "order[items_attributes][DESIGNATOR][optionslist]", :type => 'hidden', :value => "OPTIONSLIST", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_position", :name => "order[items_attributes][DESIGNATOR][position]", :type => 'hidden', :value => "POSITION", :keep => 0 }
-      %input{ :id => "order_items_attributes_DESIGNATOR_price", :class => 'price', :name => "order[items_attributes][DESIGNATOR][price]", :type => 'hidden', :value => "PRICE", :keep => 0 }
-
-      %input{ :id => "order_items_attributes_DESIGNATOR__destroy", :class => '_destroy', :name => "order[items_attributes][DESIGNATOR][_destroy]", :type => 'hidden', :keep => 0 }
-      %input{ :id => "item_DESIGNATOR_printed_count", :class => 'id', :name => "order[items_attributes][DESIGNATOR][printed_count]", :type => 'hidden', :value => "0", :keep => 0 }
-
-      %div{ :id => "options_for_item_DESIGNATOR" }
-
   %td{ :id => "tablerow_DESIGNATOR_count", :class => 'item_count', :onclick => "increment_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' } COUNT
 
   %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "display_price_popup_of_item('DESIGNATOR'); display_comment_popup_of_item('DESIGNATOR');", :onmousedown => 'highlight_button(this)' }
