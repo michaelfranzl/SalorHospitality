@@ -174,9 +174,10 @@ function render_items_from_json(json_items) {
   var i;
   for (i in json_items) {
     var item = json_items[i];
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, item.d).replace(/COUNT/g, item.i).replace(/ARTICLEID/g, item.aid).replace(/QUANTITYID/g, item.qid).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, item.d).replace(/COUNT/g, item.c).replace(/ARTICLEID/g, item.aid).replace(/QUANTITYID/g, item.qid).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l)
+ //.replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
 //.replace(/ITEMID/g, item.id)
-    $('#itemstable').append(tablerow);
+    $('#items').append(tablerow);
     enable_keyboard_for_items(i);
   }
 }
@@ -191,10 +192,10 @@ function render_customers_from_json(json_items) {
 function increment_item(designator) {
   count = items_json[designator].c + 1;
   items_json[designator].c = count;
-  if (submit_json.items[designator].hasOwnProperty('c')) {
-    submit_json.items[designator].c += 1;
+  if (submit_json.items[designator].hasOwnProperty('count')) {
+    submit_json.items[designator].count += 1;
   } else {
-    submit_json.items[designator]['c'] = 2;
+    submit_json.items[designator]['count'] = 2;
   }
   $('#tablerow_' + designator + '_count').html(count);
   $('#tablerow_' + designator + '_count').addClass('updated');

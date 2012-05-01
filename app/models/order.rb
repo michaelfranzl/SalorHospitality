@@ -52,9 +52,15 @@ class Order < ActiveRecord::Base
   end
 
   def items_to_json
-    a = []
+    a = {}
     self.items.each do |i|
-      a << {:a => i.article_id, :q => i.quantity_id, :c => i.comment, :i => i.count, :s => i.position, :p => i.price, :u => i.usage, :l => i.label, :ol => i.optionslist, :on => i.optionsnames, :id => i.id }
+      if i.quantity_id
+        d = "q#{i.quanitty_id}"
+        a.merge! d => { :qid => i.quantity_id, :d => d, :count => i.count, :pre => i.prefix, :post => i.postfix, :n => i.article.name, :p => i.price }
+      else
+        d = "a#{i.article_id}"
+        a.merge! d => { :aid => i.article_id, :d => d, :count => i.count, :n => i.article.name, :p => i.price }
+      end
     end
     return a.to_json
   end

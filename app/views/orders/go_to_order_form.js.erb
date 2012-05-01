@@ -7,7 +7,7 @@
   $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
-  //render_items_from_json(items_json);
+  render_items_from_json(items_json);
   //render_customers_from_json(customers_json);
 <% else %>
   $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
