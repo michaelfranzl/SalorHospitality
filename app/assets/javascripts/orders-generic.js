@@ -4,7 +4,7 @@ var new_order = true;
 
 var items_json = {};
 var customers_json = {};
-var submit_json = {i:{}, o:{}};
+var submit_json = {items:{}, order:{}, state:{}};
 var order_state = {};
 
 function display_articles(cat_id) {
@@ -125,19 +125,19 @@ function add_new_item(object, add_new, insert_after_element, sort) {
 
 
   // change the pending json that will be sent to the server
-  if (submit_json.i.hasOwnProperty(object.d)) {
+  if (submit_json.items.hasOwnProperty(object.d)) {
     // selected item is already in the pending list
-    if (submit_json.i[object.d].hasOwnProperty('c')) {
-      submit_json.i[object.d].c += 1; // increment count
+    if (submit_json.items[object.d].hasOwnProperty('count')) {
+      submit_json.items[object.d].count += 1; // increment count
     } else {
-      submit_json.i[object.d]['c'] = 2; // add the c attribute, increment count
+      submit_json.items[object.d]['count'] = 2; // add the count attribute, increment count
     }
   } else {
     // create the item. this is the bare minimum that the server will understand.
     if (object.aid != '') {
-      submit_json.i[object.d] = {aid:object.aid};
+      submit_json.items[object.d] = {article_id:object.aid};
     } else {
-      submit_json.i[object.d] = {qid:object.qid};
+      submit_json.items[object.d] = {quantity_id:object.qid};
     }
   }
 
@@ -191,10 +191,10 @@ function render_customers_from_json(json_items) {
 function increment_item(designator) {
   count = items_json[designator].c + 1;
   items_json[designator].c = count;
-  if (submit_json.i[designator].hasOwnProperty('c')) {
-    submit_json.i[designator].c += 1;
+  if (submit_json.items[designator].hasOwnProperty('c')) {
+    submit_json.items[designator].c += 1;
   } else {
-    submit_json.i[designator]['c'] = 2;
+    submit_json.items[designator]['c'] = 2;
   }
   $('#tablerow_' + designator + '_count').html(count);
   $('#tablerow_' + designator + '_count').addClass('updated');
@@ -370,8 +370,9 @@ function go_to_order_form_preprocessing(table_id) {
   scroll_to($('#container'),20);
 
   // reset order state
-  submit_json.i = {};
-  submit_json.o = {id:'', action:'', note:'', target_table:'', table_id:''};
+  submit_json.items = {};
+  submit_json.order = {id:'', note:'', table_id:table_id};
+  submit_json.state = {target_table:''}
   $('#order_sum').val('0' + i18n_decimal_separator + '00');
   $('#order_info').html(i18n_just_order);
   $('#order_note').val('');
@@ -413,8 +414,8 @@ function go_to_tables_offline() {
 }
 
 function save_and_go_to_tables() {
-  submit_json.o.action = 'save_and_go_to_tables';
-  submit_json.o.note = $('#order_note').val();
+  submit_json.state.action = 'save_and_go_to_tables';
+  submit_json.order.note = $('#order_note').val();
   $.ajax({
     type: 'post',
     url: '/orders/receive_order_attributes_ajax',

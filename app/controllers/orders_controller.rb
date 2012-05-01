@@ -148,7 +148,6 @@ class OrdersController < ApplicationController
   end
 
   def receive_order_attributes_ajax
-debugger
     @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active true
 
     if params[:order][:id].empty?
@@ -157,24 +156,27 @@ debugger
       @order = Order.accessible_by(@current_user).find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     else
       # The AJAX load on the client side has succeeded and we know the order ID.
-      @order = Order.accessible_by(@current_user).find_by_id params[:order][:id]
+      @order = Order.accessible_by(@current_user).find_by_id params[:o][:id]
     end
-    if @order # update it
-      # When submitting from a mobile client, it always changes the owner of the order.
-      params[:order][:user_id] = @current_user.id if mobile?
+
+    if @order
+      # Todo set user of order
       @order.update_attributes params[:order]
     else # create it
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @current_vendor.cost_centers.first
+      @order.user = @current_user
       @order.vendor = @current_vendor
       @order.company = @current_company
+      params[:items].to_a.each do |item_params|
+        @order.items << Item.new(item_params[1])
+      end
     end
 
     @order.sum = @order.calculate_sum
     @order.table.update_attribute :user, @order.user
     @order.save
-# catch errors here
     @order.reload
     @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => @current_user.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
@@ -214,7 +216,7 @@ debugger
     @taxes = Tax.accessible_by(@current_user).all
     @tables = @current_user.tables.existing
 
-    case params[:order_action]
+    case params[:state][:action]
       when 'save_and_go_to_tables'
         render 'go_to_tables'
       when 'save_and_go_to_invoice'
