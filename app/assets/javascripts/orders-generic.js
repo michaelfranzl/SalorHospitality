@@ -148,10 +148,8 @@ function add_new_item(object, add_new, insert_after_element, sort) {
     } else {
       $('#itemstable').prepend(new_item);
     }
-    new_item.addClass('updated');
+    $('#tablerow_' + object.d + '_count').addClass('updated');
   }
-
-
 
   calculate_sum();
   return desig;
@@ -169,13 +167,10 @@ function add_items_from_json(json_items) {
 }
 
 
-function increment_item(desig) {
-  var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
-  i++;
-  $('#order_items_attributes_' + desig + '_count').val(i);
-  $('#tablerow_' + desig + '_count').html(i);
-  $('#tablerow_' + desig + '_count').addClass('updated');
-  keep_fields_of_item(desig,'_count');
+function increment_item(d) {
+  resources['l'][d].c += 1;
+  $('#tablerow_' + d + '_count').html(resources['l'][d].c);
+  $('#tablerow_' + d + '_count').addClass('updated');
   calculate_sum();
 }
 
@@ -208,12 +203,14 @@ function decrement_item(desig) {
 
 function calculate_sum() {
   var sum = 0;
-  //for(i=0; i<resources.p.length; i++) {
-  //  count = resources.p[i].c;
-  //  if (count == 'undefined') { count = 1 };
-  //  sum += count * resources.p[i].p
-  //$('#order_sum').val(sum.toFixed(2).replace('.', i18n_decimal_separator));
-  return sum;
+  for(key in resources.l) {
+    if (resources.l.hasOwnProperty(key)) {
+      count = resources.l[key].c;
+      price = resources.l[key].p;
+      sum += count * price;
+    }
+  }
+  $('#order_sum').html(sum.toFixed(2).replace('.', i18n_decimal_separator));
 }
 
 function mark_item_for_storno(list_id, order_id, item_id) {
