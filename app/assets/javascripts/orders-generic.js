@@ -146,8 +146,28 @@ function add_new_item(object, add_new, insert_after_element, sort) {
   new_item.addClass('updated');
   //keep_fields_of_item(object.id, '_article_id');
 
-  // this is the bare minimum. count will be assumed to be 1, price the same, comment empty.
-  resources['p'].push({aid:object.aid, qid:object.qid});
+  // change the pending json that will be sent to the server
+  if (resources['p'].hasOwnProperty(object.d) {
+    // selected item is already in the pending list
+    if resources['p'][object.d].hasOwnProperty('c') {
+      resources['p'][object.d].c += 1; // increment count
+    } else {
+      resources['p'][object.d].c = 2; // add the c attribute, increment count
+    }
+  } else {
+    // create the item in the list. this is the bare minimum that the server will understand.
+    resources['p'][object.d] = {aid:object.aid, qid:object.qid};
+  }
+
+  // change the display/list json
+  if (resources['l'].hasOwnProperty(object.d) {
+    // selected item is already there
+    resources['l'][object.d].c += 1;
+  } else {
+    resources['l'][object.d] = {
+  }
+
+  resources['l'].push({aid:object.aid, qid:object.qid});
 
   calculate_sum();
   return desig;
