@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
     end
     def check_product_key
       # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
-      resp = Net::HTTP.get(URI("http://updates.salorpos.com/register_product?file_id=233&p=" + `hostid`))
+      resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))
       puts "Response is: #{resp}"
       begin
         json = JSON.parse(resp)
