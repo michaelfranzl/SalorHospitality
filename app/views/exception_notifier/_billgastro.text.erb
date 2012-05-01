@@ -1,4 +1,7 @@
-BillGastro Version <%= File.open('VERSION', 'r').read %>
+BillGastro Version <%= BillGastro::Application::VERSION %>
+
+eth0 Mac addr: <%= /(..):(..):(..):(..):(..):(..)/.match(`ifconfig eth0`.split("\n")[0])[1..6].join %>
+
 User: <%= @request.session[:user_id].login if @request.session[:user_id]  %>
 
 Company: <%= @request.session[:user_id].company.name if @request.session[:user_id]  %>

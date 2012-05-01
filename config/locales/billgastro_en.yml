@@ -395,6 +395,7 @@ en:
       backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
+<<<<<<< HEAD
   coupons:
     ctypes:
       fixed: "Fixed"
@@ -405,6 +406,14 @@ en:
       fixed: "Fixed"
       percent: "Percent"
 
+=======
+  reports:
+    reports: Reports
+    save: Save
+    usb_device: USB Stick
+    start_date: Start Date
+    end_date: End Date
+>>>>>>> master
   roles:
     new:
       take_orders: Take orders

@@ -383,15 +383,13 @@ fr:
       backup_database: XXXBackup database
     update:
       config_successfully_updated: Les données sur l'entreprise ont bien été mises à jour !
-  coupons:
-    ctypes:
-      fixed: "XXXFixed"
-      percent: "XXXPercent"
-      b1g1: "XXXBuy 1 Get 1"
-  discounts:
-    dtypes:
-      fixed: "XXXFixed"
-      percent: "XXXPercent"
+
+  reports:
+    reports: XXX Reports
+    save: XXX Save
+    usb_device: XXX USB Stick
+    start_date: XXX Start Date
+    end_date: XXX End Date
 
   roles:
     new:

@@ -82,6 +82,8 @@ BillGastro::Application.routes.draw do
   match 'session/permission_denied' => 'sessions#permission_denied'
   match 'companies/backup_database' => 'companies#backup_database'
   match 'companies/backup_logfile' => 'companies#backup_logfile'
+  match 'company/logo' => 'companies#logo'
+  match 'reports' => 'reports#index'
 
   if Rails.env.test?
     match 'session/request_specs_login' => 'sessions#request_specs_login'

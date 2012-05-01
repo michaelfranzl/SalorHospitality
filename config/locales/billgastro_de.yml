@@ -383,15 +383,13 @@ de:
       backup_database: Datenbank sichern
     update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
-  coupons:
-    ctypes:
-      fixed: "Fixed"
-      percent: "Percent"
-      b1g1: "Buy 1 Get 1"
-  discounts:
-    dtypes:
-      fixed: "Fixed"
-      percent: "Percent"
+
+  reports:
+    reports: Berichte
+    save: Speichern
+    usb_device: Usb Stick
+    start_date: Von
+    end_date: Bis
 
   roles:
     new:

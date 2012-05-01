@@ -14,6 +14,8 @@ end
 module BillGastro
   class Application < Rails::Application
 
+    VERSION = '{{VERSION}}'
+
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'de' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español' }
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España' }
@@ -52,5 +54,7 @@ module BillGastro
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.active_record.observers = [:history_observer]
   end
 end
