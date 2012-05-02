@@ -56,9 +56,9 @@ class Order < ActiveRecord::Base
     self.items.existing.each do |i|
       d = "i#{i.id}"
       if i.quantity_id
-        a.merge! d => { :id => i.id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :i => i.optionslist, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name }
+        a.merge! d => { :id => i.id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => i.optionslist, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name }
       else
-        a.merge! d => { :id => i.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :i => i.optionslist, :pre => '', :post => '', :n => i.article.name }
+        a.merge! d => { :id => i.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => i.optionslist, :pre => '', :post => '', :n => i.article.name }
       end
     end
     return a.to_json

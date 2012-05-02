@@ -40,7 +40,7 @@ class Vendor < ActiveRecord::Base
   # article_id and quantity_id is the model id of Article or Quantity
   # d is the designator, a mix of model and it's id, so that we can have unique values in the HTML, e.g. 'q203' or 'a33'
   # n is the name of either Quantity or Article
-  # p is the price of either ...
+  # price is the price of either ...
   # q is a json-sub-object which lists quantities of articles
 
   # JS returns additional attributes:
@@ -58,9 +58,9 @@ class Vendor < ActiveRecord::Base
       c.articles.each do |a|
         quantities = {}
         a.quantities.each do |q|
-          quantities.merge! q.id => { :aid => a.id, :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :p => q.price }
+          quantities.merge! q.id => { :aid => a.id, :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :price => q.price }
         end
-        articles.merge! a.id => { :aid => a.id, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities }
+        articles.merge! a.id => { :aid => a.id, :d => "a#{a.id}", :n => a.name, :price => a.price, :q => quantities }
       end
       options = {}
       c.options.each do |o|

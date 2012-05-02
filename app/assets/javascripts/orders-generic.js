@@ -101,7 +101,7 @@ function add_new_item(object, add_new, insert_after_element, sort) {
     create_items_json_record(object);
     create_submit_json_record(object.d);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
     if (insert_after_element) {
       $(new_item).insertBefore(insert_after_element);
     } else {
@@ -120,7 +120,7 @@ function render_items_from_json(json_items) {
   for (i in json_items) {
     var object = json_items[i];
     label = compose_label(object);
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, object.o).replace(/LABEL/g, label).replace(/OPTIONSDIV/g, '').replace(/OPTIONSSELECT/g, '').replace(/OPTIONSNAMES/g, '')
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.price).replace(/OPTIONSLIST/g, object.o).replace(/LABEL/g, label).replace(/OPTIONSDIV/g, '').replace(/OPTIONSSELECT/g, '').replace(/OPTIONSNAMES/g, '')
 //.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
     enable_keyboard_for_items(i);
@@ -170,7 +170,7 @@ function set_json(d,attribute,value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
-    alert('Unexpected error1: Object items_json doesnt have the property ' + d + ' yet');
+    alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
   }
   create_submit_json_record(d);
   submit_json.items[d][attribute] = value;
@@ -180,23 +180,25 @@ function set_json(d,attribute,value) {
 // this creates a new record, copied from a resources subobject
 function create_items_json_record(robject) {
   d = robject.d;
-  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:[], x:false, p:robject.p, prefix:'', postfix:''};
+  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:[], x:false, price:robject.p, prefix:'', postfix:''};
   if ( ! robject.hasOwnProperty('qid')) { delete items_json[d].quantity_id; }
 }
 
 // this creates a new record, copied from items_json, which must exist
 function create_submit_json_record(d) {
-  if (items_json.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:items_json[d].id, article_id:items_json[d].article_id, quantity_id:items_json[d].quantity_id};
-    if (items_json[d].hasOwnProperty('id')) {
-      delete submit_json.items[d].article_id;
-      delete submit_json.items[d].quantity_id;
+  if ( ! submit_json.items.hasOwnProperty(d)) {
+    if (items_json.hasOwnProperty(d)) {
+      submit_json.items[d] = {id:items_json[d].id, article_id:items_json[d].article_id, quantity_id:items_json[d].quantity_id};
+      if (items_json[d].hasOwnProperty('id')) {
+        delete submit_json.items[d].article_id;
+        delete submit_json.items[d].quantity_id;
+      }
+      if ( ! items_json[d].hasOwnProperty('quantity_id')) {
+        delete submit_json.items[d].quantity_id;
+      }
+    } else {
+      alert('Unexpected error 2: Object items_json doesnt have the property ' + d + ' yet. Call create_item_json_record first.');
     }
-    if ( ! items_json[d].hasOwnProperty('quantity_id')) {
-      delete submit_json.items[d].quantity_id;
-    }
-  } else {
-    alert('Unexpected error2: Object items_json doesnt have the property ' + d + ' yet');
   }
 }
 
@@ -218,7 +220,7 @@ function calculate_sum() {
   for(key in items_json) {
     if (items_json.hasOwnProperty(key)) {
       count = items_json[key].count;
-      price = items_json[key].p;
+      price = items_json[key].price;
       sum += count * price;
     }
   }
