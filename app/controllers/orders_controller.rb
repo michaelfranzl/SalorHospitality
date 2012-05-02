@@ -201,7 +201,7 @@ class OrdersController < ApplicationController
       @current_vendor.update_attribute :largest_order_number, @order.nr 
     end
 
-    if @order.items.size.zero?
+    if @order.items.existing.size.zero?
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
       @order.delete

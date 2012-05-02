@@ -58,7 +58,7 @@ function display_articles(cat_id) {
       arrow.attr('src','/images/more.png');
       abutton.append(arrow);
       (function() {
-        abutton.on('click', function() {
+        abutton.on('click', function(event) {
           var quantities = resources.c[cat_id].a[art_id].q;
           var target = qcontainer;
           var catid = cat_id;
@@ -66,7 +66,8 @@ function display_articles(cat_id) {
         });
       })();
     }
-    abutton.append(qcontainer);
+    //abutton.append(qcontainer);
+    qcontainer.insertAfter(abutton);
   });
 }
 
@@ -81,7 +82,7 @@ function display_quantities(quantities, target, cat_id){
       var element = qbutton;
       var quantity = q_object;
       var catid = cat_id;
-      qbutton.on('click', function() {
+      qbutton.on('click', function(event) {
         add_new_item(quantity, catid);
         highlight_button(element);
         highlight_border(element);
@@ -299,17 +300,21 @@ function go_to_tables_offline() {
 function save_and_go_to_tables() {
   submit_json.state.action = 'save_and_go_to_tables';
   submit_json.order.note = $('#order_note').val();
+  send_json();
+}
+
+function save_and_go_to_invoice() {
+  submit_json.state.action = 'save_and_go_to_invoice';
+  submit_json.order.note = $('#order_note').val();
+  send_json();
+}
+
+function send_json() {
   $.ajax({
     type: 'post',
     url: '/orders/receive_order_attributes_ajax',
     data: submit_json
   });
-}
-
-function save_and_go_to_invoice() {
-  $("#order_action").val("save_and_go_to_invoice");
-  remove_nonkeep_fields();
-  $("#order_form_ajax").submit();
 }
 
 function cancel_all_items_in_active_order() {
