@@ -80,6 +80,8 @@ de:
     attributes:
       article:
         price: Preis
+        active: aktiv?
+        image: Bild
         name: Name
         hidden: löschen
         description: Beschreibung
@@ -197,6 +199,12 @@ de:
       sort: Sortieren
       preview: Voransicht
       update: Aktualisieren!
+    create:
+      success: Artikel erfolgreich gespeichert
+      failure: Fehler beim Speichern
+    update:
+      success: Artikel erfolgreich aktualisiert
+      failure: Fehler beim Aktualisieren
     new:
       new_article: Neuer Artikel
       edit_article: Artikel bearbeiten

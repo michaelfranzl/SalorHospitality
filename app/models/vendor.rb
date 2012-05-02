@@ -55,17 +55,17 @@ class Vendor < ActiveRecord::Base
 
   def resources
     categories = {}
-    self.categories.each do |c|
+    self.categories.existing.positioned.each do |c|
       articles = {}
-      c.articles.each do |a|
+      c.articles.existing.active.positioned.reverse.each do |a|
         quantities = {}
-        a.quantities.each do |q|
+        a.quantities.existing.active.positioned.each do |q|
           quantities.merge! q.id => { :aid => a.id, :qid => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :price => q.price }
         end
-        articles.merge! a.id => { :aid => a.id, :d => "a#{a.id}", :n => a.name, :price => a.price, :q => quantities }
+        articles.merge! "#{a.position}#{a.id}" => { :aid => a.id, :d => "a#{a.id}", :n => a.name, :price => a.price, :q => quantities }
       end
       options = {}
-      c.options.each do |o|
+      c.options.existing.each do |o|
         options.merge! o.id => { :id => o.id, :n => o.name, :p => o.price }
       end
       categories.merge! c.id => { :id => c.id, :a => articles, :o => options }

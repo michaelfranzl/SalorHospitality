@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   def index
     @scopes = ['active','waiterpad']
     @articleshash = build_articleshash(@scopes)
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
     respond_to do |wants|
       wants.html
       wants.js { send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline' }
@@ -20,17 +20,17 @@ class ArticlesController < ApplicationController
 
   # tested
   def active
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
   end
 
   # tested
   def waiterpad
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
   end
 
   # tested
   def update_cache
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
     @scopes = ['menucard','waiterpad']
     @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
     flash[:notice] = t('articles.cache_successfully_updated')
@@ -39,13 +39,13 @@ class ArticlesController < ApplicationController
 
   # tested
   def listall
-    @articles = Article.accessible_by(@current_user).existing.order('name, description, price')
+    @articles = Article.accessible_by(@current_user).existing.active.order('name, description, price')
   end
 
   # tested
   def new
     @article = Article.new
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
   end
 
   # tested
@@ -58,15 +58,15 @@ class ArticlesController < ApplicationController
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
-      @categories = @current_vendor.categories.positioned
-      flash[:error] = t('articles.create.failure')
+      @categories = @current_vendor.categories.existing.positioned
+      flash[:notice] = t('articles.create.failure')
       render :new
     end
   end
 
   # tested
   def edit
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
     @article ? render(:new) : redirect_to(articles_path)
@@ -77,7 +77,7 @@ class ArticlesController < ApplicationController
     @article = get_model
     redirect_to articles_path and return unless @article
     @article.update_attributes params[:article]
-    @categories = @current_vendor.categories
+    @categories = @current_vendor.categories.existing
     if @article.save
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
@@ -144,14 +144,14 @@ class ArticlesController < ApplicationController
 
   # tested
   def sort_index
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.existing.positioned
   end
 
   private
 
   def build_articleshash(scopes)
     articleshash = {}
-    articles = @current_vendor.articles
+    articles = @current_vendor.articles.existing.active
     scopes.each do |s|
       articleshash.merge! s => {}
       articles.each do |a|
