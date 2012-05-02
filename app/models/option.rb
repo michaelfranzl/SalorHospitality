@@ -19,7 +19,7 @@ class Option < ActiveRecord::Base
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
   def price=(price)
-    write_attribute(:price, price.gsub(',', '.'))
+    write_attribute(:price, price.to_s.gsub(',', '.'))
   end
 
   def price

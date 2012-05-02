@@ -16,22 +16,19 @@
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
 
     - if workstation?
-      %a{ :onmouseup => "$('#options_select_div_DESIGNATOR').slideDown();" }
-      %div.optionsselect{ :id => "options_select_div_DESIGNATOR" }
+      %a{ :onmouseup => "$('#options_div_DESIGNATOR').slideDown();" }
+      %div.optionsselect{ :id => "options_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'
         %span.done{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -2, null, '#{t('.done')}')" }
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', 0, null, '#{t('.clear')}')" }= t('.clear')
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
-        OPTIONSDIV
-
     - else
       %select{ :id => "options_select_select_DESIGNATOR", :onchange => "add_option_to_item_from_select('DESIGNATOR', this)" }
         %option{ :value => -2 }= t('.done')
         %option{ :value => 0 }= t('.clear')
         %option{ :value => -1 }= t('.no_printing')
         %option{ :value => -3 }= t('articles.new.takeaway')
-        OPTIONSSELECT
 
     - if workstation?
       %div.comment_for_item{ :id => "comment_for_item_DESIGNATOR" }

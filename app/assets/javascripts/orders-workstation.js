@@ -71,3 +71,39 @@ function enable_keyboard_for_items(item_designator) {
     $('input#price_for_item_' + item_designator).getkeyboard().reveal();
   });
 }
+
+function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
+  if (items_json[d].i == '' && items_json[d].count != 1 && value > 0) {
+    var quantity_id = items_json[d].quantity_id;
+    position = items_json[d].s;  
+    clone_d = add_new_item(d, cat_id, true, d, position-1);
+    decrement_item(d);
+    $('#options_div_' + d).slideUp();
+    d = clone_d;
+  }
+
+  if (value == 0) {
+    // normal, delete all options
+    set_json(d,'i','');
+    $('#optionsnames_' + d).html('');
+
+  } else if (value == -2 ) {
+    $('#options_div_' + d).slideUp(); // just exit
+
+  } else if (value == -1 ) {
+    // special option: do not print
+    set_json(d,'pc',items_json[d].count);
+    $('#optionsnames_' + d).append('<br>' + i18n_no_printing);
+
+  } else if (value == -3 ) {
+    // special option: takeaway
+    set_json(d,'u',1);
+    $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
+
+  } else {
+    items_json[d].i[object.id] = object;
+    $('#optionsnames_' + d).append('<br>' + text);
+  }
+
+  calculate_sum();
+}

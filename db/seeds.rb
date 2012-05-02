@@ -134,6 +134,17 @@ Quantity.delete_all
       r = category.save
       puts "Category #{ c } #{ v } #{ i } created" if r == true
 
+      2.times do |o|
+        option = Option.new :name => "Option#{ c }#{ v }#{ i }#{ o }", :price => (rand(3) + 1).to_f
+        category.options << option
+        option.company = company
+        option.vendor = vendor
+        r = option.save
+        puts "Option #{ c } #{ v } #{ i } #{ o } created" if r == true
+      end
+        
+ 
+
       2.times do |a|
         article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
         article.category = category
@@ -144,7 +155,7 @@ Quantity.delete_all
         
         if a > 0
           2.times do |q|
-            quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :postfix => '', :price => rand(10) + 1
+            quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :postfix => 'post', :price => rand(10) + 1
             quantity.article = article
             quantity.company = company
             quantity.vendor = vendor

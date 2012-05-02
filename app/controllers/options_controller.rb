@@ -7,28 +7,28 @@
 
 class OptionsController < ApplicationController
   def index
-    @categories = Category.accessible_by(@current_user).existing
+    @categories = @current_vendor.categories.existing
   end
 
   def new
     @option = Option.new
-    @categories = Category.accessible_by(@current_user).existing
+    @categories = @current_vendor.categories.existing
   end
 
   def create
-    @categories = Category.accessible_by(@current_user).existing
+    @categories = @current_vendor.categories.existing
     @option = Option.new(params[:option])
     @option.save ? redirect_to(options_path) : render(:new)
   end
 
   def edit
-    @categories = Category.accessible_by(@current_user).existing
+    @categories = @current_vendor.categories.existing
     @option = Option.find(params[:id])
     render :new
   end
 
   def update
-    @categories = Category.accessible_by(@current_user).all
+    @categories = @current_vendor.categories.existing
     @option = Option.find(params[:id])
     success = @option.update_attributes(params[:option])
     success ? redirect_to(options_path) : render(:new)

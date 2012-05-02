@@ -42,6 +42,7 @@ class Vendor < ActiveRecord::Base
   # n is the name of either Quantity or Article
   # price is the price of either ...
   # q is a json-sub-object which lists quantities of articles
+  # s is position
 
   # JS returns additional attributes:
   # o is comment
@@ -50,6 +51,7 @@ class Vendor < ActiveRecord::Base
   # x is deleted
   # u is usage
   # sc is start count
+  # pc is printed count
 
   def resources
     categories = {}
