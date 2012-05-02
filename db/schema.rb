@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502081832) do
+ActiveRecord::Schema.define(:version => 20120502120358) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -254,6 +254,7 @@ ActiveRecord::Schema.define(:version => 20120502081832) do
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
     t.string   "delivery_comment",                 :default => ""
+    t.boolean  "hidden"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"

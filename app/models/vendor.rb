@@ -49,6 +49,7 @@ class Vendor < ActiveRecord::Base
   # i is array of options
   # x is deleted
   # u is usage
+  # sc is start count
 
   def resources
     categories = {}

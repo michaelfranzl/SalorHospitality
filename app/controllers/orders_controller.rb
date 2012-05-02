@@ -165,8 +165,13 @@ class OrdersController < ApplicationController
       params[:items].to_a.each do |item_params|
         item_id = item_params[1][:id]
         if item_id
-          item_params[1].delete(:id)
-          Item.find_by_id(item_id).update_attributes(item_params[1])
+          item = Item.find_by_id(item_id)
+          if item_params[1][:x]
+            item.update_attribute :hidden, true
+          else
+            item_params[1].delete(:id)
+            Item.find_by_id(item_id).update_attributes(item_params[1])
+          end
         else
           @order.items << Item.new(item_params[1])
         end

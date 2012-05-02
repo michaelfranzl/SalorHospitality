@@ -144,32 +144,28 @@ function increment_item(d) {
   calculate_sum();
 }
 
-function decrement_item(desig) {
-  var i = parseInt($('#order_items_attributes_' + desig + '_count').val());
-  var start_count = parseInt($('#item_' + desig + '_start_count').val());
+function decrement_item(d) {
+  var i = items_json[d].count;
+  var start_count = items_json[d].sc;
   if ( i > 1 && ( permission_decrement_items || i > start_count ) ) {
     i--;
-    $('#order_items_attributes_' + desig + '_count').val(i);
-    keep_fields_of_item(desig,'_count');
-    $('#tablerow_' + desig + '_count').html(i);
-    $('#tablerow_' + desig + '_count').addClass('updated');
-  } else if ( i == 1 && ( permission_decrement_items || (desig.search(/new_.+/) != -1 ))) {
+    set_json(d,'count',i)
+    $('#tablerow_' + d + '_count').html(i);
+    $('#tablerow_' + d + '_count').addClass('updated');
+  } else if ( i == 1 && ( permission_decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
-    $('#order_items_attributes_' + desig + '_count').val(i);
-    keep_fields_of_item(desig,'_count');
-    $('#tablerow_' + desig + '_count').html(i);
-    $('#tablerow_' + desig + '_count').addClass('updated');
+    set_json(d,'count',i)
+    $('#tablerow_' + d + '_count').html(i);
+    $('#tablerow_' + d + '_count').addClass('updated');
     if (permission_delete_items) {
-      $('#order_items_attributes_' + desig + '__destroy').val(1);
-      $('#item_' + desig).fadeOut('slow');
-      keep_fields_of_item(desig,'__destroy');
+      set_json(d,'x',true)
+      $('#item_' + d).fadeOut('slow');
     }
   };
   calculate_sum();
 }
 
-// this function sets attributes for items_json and submit_json objects,
-// conveniently creating them if necessary
+// this function sets attributes for items_json and submit_json objects
 function set_json(d,attribute,value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
@@ -181,16 +177,14 @@ function set_json(d,attribute,value) {
 }
 
 
+// this creates a new record, copied from a resources subobject
 function create_items_json_record(robject) {
   d = robject.d;
-  if (robject.hasOwnProperty('qid')) {
-    items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:[], x:false, p:robject.p, prefix:'', postfix:''};
-  } else {
-    items_json[d] = {article_id:robject.aid, d:d, count:1, o:'', i:[], x:false, p:robject.p};
-  }
+  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:[], x:false, p:robject.p, prefix:'', postfix:''};
+  if ( ! robject.hasOwnProperty('qid')) { delete items_json[d].quantity_id; }
 }
 
-// this function creates a new record, copied from items_json, which must exist
+// this creates a new record, copied from items_json, which must exist
 function create_submit_json_record(d) {
   if (items_json.hasOwnProperty(d)) {
     submit_json.items[d] = {id:items_json[d].id, article_id:items_json[d].article_id, quantity_id:items_json[d].quantity_id};
