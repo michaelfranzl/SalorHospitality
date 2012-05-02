@@ -2,7 +2,6 @@
 
 - if @table.errors.any?
   .errors
-    %h3= t 'activerecord.errors.template.header', :count => @table.errors.size, :model => Table.model_name.human
     %ul
       - @table.errors.full_messages.each do |msg|
         %li= msg
@@ -14,16 +13,6 @@
       %td
         = table_form.text_field :name, :size => '20'
         %span#table_name_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :description, Table.human_attribute_name(:description)
-      %td
-        = table_form.text_field :description, :size => '20'
-        %span#table_description_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :abbreviation, Table.human_attribute_name(:abbreviation)
-      %td
-        = table_form.text_field :abbreviation, :size => '20'
-        %span#table_abbreviation_display_keyboard.display_keyboard
     %tr
       %td= table_form.label :width, Table.human_attribute_name(:width)
       %td

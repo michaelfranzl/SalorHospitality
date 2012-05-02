@@ -18,8 +18,8 @@ class TablesController < ApplicationController
 
   def show
     @table = Table.accessible_by(@current_user).find_by_id params[:id]
-    @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active(true)
-    @taxes = Tax.accessible_by @current_user
+    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
+    @taxes = Tax.accessible_by(@current_user).existing.active
 
     @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
     if @orders.size > 1
@@ -36,16 +36,25 @@ class TablesController < ApplicationController
 
   def create
     @table = Table.new(params[:table])
-    @table.save ? redirect_to(tables_path) : render(:new)
+    @table.vendor = @current_vendor
+    @table.company = @current_company
+    if @table.save
+      @current_vendor.users.each do |u|
+        u.tables << @table
+      end
+      redirect_to(tables_path)
+    else
+      render(:new)
+    end
   end
 
   def edit
-    @table = Table.accessible_by(@current_user).find(params[:id])
+    @table = Table.accessible_by(@current_user).existing.find(params[:id])
     render :new
   end
 
   def update
-    @table = Table.accessible_by(@current_user).find(params[:id])
+    @table = Table.accessible_by(@current_user).existing.find(params[:id])
     success = @table.update_attributes(params[:table])
     respond_to do |wants|
       wants.html{ success ? redirect_to(tables_path) : render(:new)}
@@ -66,12 +75,12 @@ class TablesController < ApplicationController
     @to =   Date.civil( params[:to  ][:year ].to_i,
                         params[:to  ][:month].to_i,
                         params[:to  ][:day  ].to_i) if params[:to]
-    @tables = Table.accessible_by(@current_user).find(:all)
+    @tables = Table.accessible_by(@current_user).existing.find(:all)
     render :index
   end
 
   def mobile
-    @tables = @current_user.tables
+    @tables = @current_user.tables.existing
   end
 
 end
