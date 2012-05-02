@@ -8,7 +8,7 @@
 class CategoriesController < ApplicationController
   
   def index
-    @categories = Category.accessible_by(@current_user).existing.order("position ASC")
+    @categories = @current_vendor.categories.existing.positioned
   end
 
   def new
@@ -28,12 +28,12 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.accessible_by(@current_user).find(params[:id])
+    @category = Category.accessible_by(@current_user).existing.find(params[:id])
     render :new
   end
 
   def update
-    @category = @permitted_model
+    @category = Category.accessible_by(@current_user).existing.find(params[:id])
     if @category.update_attributes(Category.process_custom_icon(params[:category])) then
       flash[:notice] = I18n.t("categories.update.success")
       redirect_to(categories_path)
@@ -43,13 +43,13 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = @permitted_model
+    @category = Category.accessible_by(@current_user).existing.find(params[:id])
     @category.update_attribute(:hidden, true) if @category
     redirect_to categories_path
   end
 
   def sort
-    @categories = Category.accessible_by(@current_user).where("id IN (#{params[:category].join(',')})")
+    @categories = Category.accessible_by(@current_user).existing.where("id IN (#{params[:category].join(',')})")
     Category.sort(@categories,params[:category])
     render :nothing => true
   end

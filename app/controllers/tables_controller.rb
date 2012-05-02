@@ -18,8 +18,8 @@ class TablesController < ApplicationController
 
   def show
     @table = Table.accessible_by(@current_user).find_by_id params[:id]
-    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
-    @taxes = Tax.accessible_by(@current_user).existing.active
+    @cost_centers = CostCenter.accessible_by(@current_user).existing
+    @taxes = Tax.accessible_by(@current_user).existing
 
     @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
     if @orders.size > 1

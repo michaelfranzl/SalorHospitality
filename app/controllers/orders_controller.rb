@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   def index
     @tables = @current_user.tables
-    @categories = @current_vendor.categories
+    @categories = @current_vendor.categories.positioned
     @users = User.accessible_by(@current_user).active
     session[:admin_interface] = false
   end
