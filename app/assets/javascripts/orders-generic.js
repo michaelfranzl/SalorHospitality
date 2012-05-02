@@ -7,6 +7,8 @@ var customers_json = {};
 var submit_json = {items:{}, order:{}, state:{}};
 var order_state = {};
 
+
+
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -27,10 +29,11 @@ function display_articles(cat_id) {
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
         var element = abutton;
+        var object = a_object;
         abutton.on('click', function() {
           highlight_border(element)
           $('.quantity').remove();
-          add_new_item(a_object);
+          add_new_item(object);
         });
       })();
     } else {
@@ -49,29 +52,6 @@ function display_articles(cat_id) {
     }
     abutton.append(qcontainer);
   });
-}
-
-function deselect_all_categories() {
-  var container = $('#categories');
-  var cats = container.children();
-  for(c in cats) {
-    if (cats[c].style) {
-      cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
-      //restore_border(cats[c]); // this hangs the browser for no obvious reason
-    }
-  }
-}
-
-function highlight_button(element) {
-  $(element).effect("highlight", {}, 300);
-}
-
-function highlight_border(element) {
-  $(element).css('borderColor', 'white');
-}
-
-function restore_border(element) {
-  $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
 }
 
 function display_quantities(quantities, target){
@@ -94,22 +74,7 @@ function display_quantities(quantities, target){
   })
 }
 
-
-
 function add_new_item(object, add_new, insert_after_element, sort) {
-  var timestamp = new Date().getTime();
-  if ( sort == null ) { sort = timestamp.toString().substr(-9,9); }
-  var desig = 'new_' + sort;
-
-  if ( object.qid != '' ) {
-    object_type = 'quantity';
-    label = object.pre + ' ' + object.n + ' ' + object.post;
-  } else {
-    object_type = 'article';
-    label = object.n;
-  }
-
-
   optionsdiv= '';
   optionsselect= '';
   //if (optionsselect[category_id]) {
@@ -123,25 +88,6 @@ function add_new_item(object, add_new, insert_after_element, sort) {
   //  var options_div = ' ';
   //}
 
-
-  // change the pending json that will be sent to the server
-  if (submit_json.items.hasOwnProperty(object.d)) {
-    // selected item is already in the pending list
-    if (submit_json.items[object.d].hasOwnProperty('count')) {
-      submit_json.items[object.d].count += 1; // increment count
-    } else {
-      submit_json.items[object.d]['count'] = 2; // add the count attribute, increment count
-    }
-  } else {
-    // create the item. this is the bare minimum that the server will understand.
-    if (object.aid != '') {
-      submit_json.items[object.d] = {article_id:object.aid};
-    } else {
-      submit_json.items[object.d] = {quantity_id:object.qid};
-    }
-  }
-
-  // change the display/list json
   if (items_json.hasOwnProperty(object.d) &&
       !add_new &&
       items_json[object.d].p == object.p &&
@@ -150,10 +96,11 @@ function add_new_item(object, add_new, insert_after_element, sort) {
       items_json[object.d].i.length == 0
      ) {
     // selected item is already there
-    items_json[object.d].c += 1;
-    $('#tablerow_' + object.d + '_count').html(items_json[object.d].c);
+    increment_item(object.d);
   } else {
-    items_json[object.d] = {aid:object.aid, qid:object.qid, c:1, o:'', i:[], x:false, p:object.p};
+    create_items_json_record(object);
+    create_submit_json_record(object.d);
+    label = compose_label(object);
     new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, ''));
     if (insert_after_element) {
       $(new_item).insertBefore(insert_after_element);
@@ -162,9 +109,7 @@ function add_new_item(object, add_new, insert_after_element, sort) {
     }
     $('#tablerow_' + object.d + '_count').addClass('updated');
   }
-
   calculate_sum();
-  return desig;
 }
 
 
@@ -173,13 +118,14 @@ function add_new_item(object, add_new, insert_after_element, sort) {
 function render_items_from_json(json_items) {
   var i;
   for (i in json_items) {
-    var item = json_items[i];
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, item.d).replace(/COUNT/g, item.c).replace(/ARTICLEID/g, item.aid).replace(/QUANTITYID/g, item.qid).replace(/COMMENT/g, item.c).replace(/USAGE/g, item.u).replace(/POSITION/g, item.s).replace(/PRICE/g, item.p).replace(/OPTIONSLIST/g, item.o).replace(/LABEL/g, item.l)
- //.replace(/OPTIONSDIV/g, optionsdiv).replace(/OPTIONSSELECT/g, optionsselect).replace(/OPTIONSNAMES/g, item.on)
+    var object = json_items[i];
+    label = compose_label(object);
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/OPTIONSLIST/g, object.o).replace(/LABEL/g, label).replace(/OPTIONSDIV/g, '').replace(/OPTIONSSELECT/g, '').replace(/OPTIONSNAMES/g, '')
 //.replace(/ITEMID/g, item.id)
-    $('#items').append(tablerow);
+    $('#itemstable').append(tablerow);
     enable_keyboard_for_items(i);
   }
+  calculate_sum();
 }
 
 function render_customers_from_json(json_items) {
@@ -189,16 +135,12 @@ function render_customers_from_json(json_items) {
   }
 }
 
-function increment_item(designator) {
-  count = items_json[designator].c + 1;
-  items_json[designator].c = count;
-  if (submit_json.items[designator].hasOwnProperty('count')) {
-    submit_json.items[designator].count += 1;
-  } else {
-    submit_json.items[designator]['count'] = 2;
-  }
-  $('#tablerow_' + designator + '_count').html(count);
-  $('#tablerow_' + designator + '_count').addClass('updated');
+function increment_item(d) {
+  count = items_json[d].count + 1;
+  object = items_json[d];
+  set_json(object.d,'count',count)
+  $('#tablerow_' + d + '_count').html(count);
+  $('#tablerow_' + d + '_count').addClass('updated');
   calculate_sum();
 }
 
@@ -226,19 +168,68 @@ function decrement_item(desig) {
   calculate_sum();
 }
 
+// this function sets attributes for items_json and submit_json objects,
+// conveniently creating them if necessary
+function set_json(d,attribute,value) {
+  if (items_json.hasOwnProperty(d)) {
+    items_json[d][attribute] = value;
+  } else {
+    alert('Unexpected error1: Object items_json doesnt have the property ' + d + ' yet');
+  }
+  create_submit_json_record(d);
+  submit_json.items[d][attribute] = value;
+}
 
 
+function create_items_json_record(robject) {
+  d = robject.d;
+  if (robject.hasOwnProperty('qid')) {
+    items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:[], x:false, p:robject.p, prefix:'', postfix:''};
+  } else {
+    items_json[d] = {article_id:robject.aid, d:d, count:1, o:'', i:[], x:false, p:robject.p};
+  }
+}
+
+// this function creates a new record, copied from items_json, which must exist
+function create_submit_json_record(d) {
+  if (items_json.hasOwnProperty(d)) {
+    submit_json.items[d] = {id:items_json[d].id, article_id:items_json[d].article_id, quantity_id:items_json[d].quantity_id};
+    if (items_json[d].hasOwnProperty('id')) {
+      delete submit_json.items[d].article_id;
+      delete submit_json.items[d].quantity_id;
+    }
+    if ( ! items_json[d].hasOwnProperty('quantity_id')) {
+      delete submit_json.items[d].quantity_id;
+    }
+  } else {
+    alert('Unexpected error2: Object items_json doesnt have the property ' + d + ' yet');
+  }
+}
+
+
+
+function compose_label(object){
+  if ( object.hasOwnProperty('qid')) {
+    object_type = 'quantity';
+    label = object.pre + ' ' + object.n + ' ' + object.post;
+  } else {
+    object_type = 'article';
+    label = object.n;
+  }
+  return label;
+}
 
 function calculate_sum() {
   var sum = 0;
   for(key in items_json) {
     if (items_json.hasOwnProperty(key)) {
-      count = items_json[key].c;
+      count = items_json[key].count;
       price = items_json[key].p;
       sum += count * price;
     }
   }
   $('#order_sum').html(sum.toFixed(2).replace('.', i18n_decimal_separator));
+  return sum;
 }
 
 function mark_item_for_storno(list_id, order_id, item_id) {
@@ -431,12 +422,7 @@ function save_and_go_to_invoice() {
 }
 
 function cancel_all_items_in_active_order() {
-  $("#order_action").val("clear_order_and_go_back");
-  $("#order_form_ajax").submit();
-}
 
-function remove_nonkeep_fields() {
-  $('input[keep=0]').remove();
 }
 
 function move_order_to_table(id) {
@@ -453,6 +439,29 @@ function change_item_status(id,status) {
     type: 'POST',
     url: '/items/change_status?id=' + id + '&status=' + status
   });
+}
+
+function highlight_button(element) {
+  $(element).effect("highlight", {}, 300);
+}
+
+function highlight_border(element) {
+  $(element).css('borderColor', 'white');
+}
+
+function restore_border(element) {
+  $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
+}
+
+function deselect_all_categories() {
+  var container = $('#categories');
+  var cats = container.children();
+  for(c in cats) {
+    if (cats[c].style) {
+      cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
+      //restore_border(cats[c]); // this hangs the browser for no obvious reason
+    }
+  }
 }
 
 $(function(){

@@ -156,12 +156,21 @@ class OrdersController < ApplicationController
       @order = Order.accessible_by(@current_user).find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     else
       # The AJAX load on the client side has succeeded and we know the order ID.
-      @order = Order.accessible_by(@current_user).find_by_id params[:o][:id]
+      @order = Order.accessible_by(@current_user).find_by_id params[:order][:id]
     end
 
     if @order
       # Todo set user of order
       @order.update_attributes params[:order]
+      params[:items].to_a.each do |item_params|
+        item_id = item_params[1][:id]
+        if item_id
+          item_params[1].delete(:id)
+          Item.find_by_id(item_id).update_attributes(item_params[1])
+        else
+          @order.items << Item.new(item_params[1])
+        end
+      end
     else # create it
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number

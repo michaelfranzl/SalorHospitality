@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424150501) do
+ActiveRecord::Schema.define(:version => 20120502081832) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -230,29 +230,30 @@ ActiveRecord::Schema.define(:version => 20120424150501) do
     t.integer  "count",                            :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
     t.boolean  "partial_order"
     t.integer  "position"
     t.integer  "quantity_id"
     t.integer  "storno_status",       :limit => 1, :default => 0
-    t.string   "comment"
+    t.string   "comment",                          :default => ""
     t.float    "price"
     t.integer  "printed_count",       :limit => 1, :default => 0
     t.integer  "item_id"
     t.integer  "storno_item_id"
     t.integer  "tax_id"
     t.integer  "max_count",                        :default => 0
-    t.integer  "usage"
+    t.integer  "usage",                            :default => 0
     t.integer  "priority"
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
-    t.string   "preparation_comment"
+    t.string   "preparation_comment",              :default => ""
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
+    t.string   "delivery_comment",                 :default => ""
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -398,14 +399,14 @@ ActiveRecord::Schema.define(:version => 20120424150501) do
   add_index "presentations", ["name"], :name => "index_presentations_on_name"
 
   create_table "quantities", :force => true do |t|
-    t.string   "prefix"
+    t.string   "prefix",                  :default => ""
     t.float    "price"
     t.integer  "article_id"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
     t.boolean  "active",                  :default => true
     t.boolean  "hidden",                  :default => false
-    t.string   "postfix"
+    t.string   "postfix",                 :default => ""
     t.integer  "sort"
     t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
@@ -571,28 +572,28 @@ ActiveRecord::Schema.define(:version => 20120424150501) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                           :default => "Bill Gastro"
-    t.string   "subdomain",                                      :default => "demo"
-    t.datetime "created_at",                                                                          :null => false
-    t.datetime "updated_at",                                                                          :null => false
-    t.string   "invoice_subtitle",                               :default => ""
-    t.string   "address",                                        :default => ""
-    t.string   "revenue_service_tax_number",                     :default => ""
-    t.string   "invoice_slogan1",                                :default => ""
-    t.string   "invoice_slogan2",                                :default => ""
-    t.string   "internet_address",                               :default => "www.billgastro.com"
-    t.string   "email",                                          :default => "office@billgastro.com"
-    t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",                           :default => "--- []\n"
+    t.string   "name",                                             :default => "Bill Gastro"
+    t.string   "subdomain",                                        :default => "demo"
+    t.datetime "created_at",                                                                            :null => false
+    t.datetime "updated_at",                                                                            :null => false
+    t.string   "invoice_subtitle",                                 :default => ""
+    t.string   "address",                                          :default => ""
+    t.string   "revenue_service_tax_number",                       :default => ""
+    t.string   "invoice_slogan1",                                  :default => ""
+    t.string   "invoice_slogan2",                                  :default => ""
+    t.string   "internet_address",                                 :default => "www.billgastro.com"
+    t.string   "email",                                            :default => "office@billgastro.com"
+    t.integer  "largest_order_number",                             :default => 0
+    t.string   "unused_order_numbers",                             :default => "--- []\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
-    t.integer  "time_offset",                                    :default => 0
+    t.integer  "time_offset",                                      :default => 0
     t.string   "mode"
-    t.text     "cache",                      :limit => 16777215
+    t.text     "cache",                      :limit => 2147483647
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                              :default => true
+    t.boolean  "use_order_numbers",                                :default => true
     t.integer  "company_id"
   end
 
