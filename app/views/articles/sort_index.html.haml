@@ -3,7 +3,7 @@
 - @categories.each do |c|
   %h3= c.name
   %ul.sort_articles{ :id => "category_#{ c.id }" }
-    - c.articles.active.positioned.each do |a|
+    - c.articles.existing.active.positioned.each do |a|
       %li{ :id => "article_#{ a.id }" }
         %span.handle
         = link_to a.name, edit_article_path(a)

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
     def get_model
       if params[:id]
-        model = controller_name.classify.constantize.accessible_by(@current_user).find_by_id(params[:id])
+        model = controller_name.classify.constantize.accessible_by(@current_user).existing.find_by_id(params[:id])
         flash[:notice] = t 'not_found' if model.nil?
       end
       model

@@ -22,6 +22,8 @@ jQuery.ajaxSetup({
     }
 })
 
+var tableupdates = -1;
+
 window.setInterval(
   function() {
     if ( automatic_printing == true ) {

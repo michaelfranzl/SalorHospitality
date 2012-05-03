@@ -3,7 +3,6 @@
 = link_to (t :new), new_article_path, :class => 'links'
 = link_to (t '.list_all'), listall_articles_path, :class => 'links'
 = link_to (t '.sort'), sort_index_articles_path, :class => 'links'
-= link_to (t '.update'), update_cache_articles_path, :class => 'links', :onclick => '$("#update_cache_progress").show();'
 
 %img#update_cache_progress{ :src => '/images/ajax-loader2.gif', :style => 'display: none;' }
 
@@ -16,7 +15,7 @@
   %tr
     - @scopes.each do |scope|
       %td{ :id => "add_to_#{ scope }" }
-        %script== $('#add_to_#{ scope }').droppable({ hoverclass: 'receiving', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'target=#{ scope }&id=' + ui.draggable.attr('model_id') + '&source=' + ui.draggable.attr('source') }) } });
+        %script== $('#add_to_#{ scope }').droppable({ hoverClass: 'receiving', tolerance: 'pointer', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'target=#{ scope }&id=' + ui.draggable.attr('model_id') + '&source=' + ui.draggable.attr('source') }) } });
         %span.scope_title= t "scopes.#{scope}".to_sym
         = link_to t('.view'), "/articles/#{ scope }", :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
@@ -25,7 +24,7 @@
   var enable_articles_search = false;
 
   $('#remove').droppable({
-    hoverClass: 'hover',
+    hoverClass: 'receiving',
     drop: function(event,ui){
       if (ui.draggable.attr('source') != 'searchresults') {
         ui.draggable.remove();

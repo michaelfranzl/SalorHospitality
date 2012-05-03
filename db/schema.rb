@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502120358) do
+ActiveRecord::Schema.define(:version => 20120502192905) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.integer  "tax_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "icon"
@@ -68,7 +67,6 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
   add_index "categories", ["name"], :name => "index_categories_on_name"
   add_index "categories", ["position"], :name => "index_categories_on_position"
-  add_index "categories", ["tax_id"], :name => "index_categories_on_tax_id"
   add_index "categories", ["vendor_printer_id"], :name => "index_categories_on_vendor_printer_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -85,9 +83,9 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
   create_table "cost_centers", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.boolean  "active"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "active",      :default => true
     t.integer  "company_id"
     t.boolean  "hidden"
     t.integer  "vendor_id"
@@ -138,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.datetime "updated_at",   :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "hidden"
   end
 
   create_table "customers_items", :id => false, :force => true do |t|
@@ -160,9 +159,11 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.boolean  "time_based"
     t.integer  "start_time"
     t.integer  "end_time"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "vendor_id"
+    t.boolean  "hidden"
+    t.boolean  "active",      :default => true
   end
 
   add_index "discounts", ["article_id"], :name => "index_discounts_article_id"
@@ -178,10 +179,12 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden"
   end
 
   add_index "groups", ["company_id"], :name => "index_groups_company_id"
@@ -221,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.datetime "updated_at", :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "hidden"
   end
 
   add_index "ingredients", ["article_id"], :name => "index_ingredients_on_article_id"
@@ -281,19 +285,6 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "logins", :force => true do |t|
-    t.string   "ip"
-    t.string   "email"
-    t.string   "reverselookup"
-    t.string   "loginname"
-    t.string   "realname"
-    t.string   "referer"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "company_id"
-    t.integer  "vendor_id"
-  end
-
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
@@ -304,6 +295,7 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "active",     :default => true
   end
 
   add_index "options", ["company_id"], :name => "index_options_company_id"
@@ -455,6 +447,8 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.datetime "updated_at",                                          :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "active",                      :default => true
+    t.boolean  "hidden"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -489,7 +483,6 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
 
   create_table "tables", :force => true do |t|
     t.string   "name"
-    t.string   "description"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.integer  "left"
@@ -500,7 +493,6 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.integer  "top_mobile"
     t.integer  "width_mobile",   :default => 70
     t.integer  "height_mobile",  :default => 45
-    t.string   "abbreviation"
     t.integer  "user_id"
     t.boolean  "enabled",        :default => true
     t.boolean  "hidden",         :default => false
@@ -508,6 +500,7 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.integer  "company_id"
     t.integer  "active_user_id"
     t.integer  "vendor_id"
+    t.boolean  "active",         :default => true
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -596,6 +589,8 @@ ActiveRecord::Schema.define(:version => 20120502120358) do
     t.string   "res_confirm_url"
     t.boolean  "use_order_numbers",                                :default => true
     t.integer  "company_id"
+    t.boolean  "active",                                           :default => true
+    t.boolean  "hidden"
   end
 
 end

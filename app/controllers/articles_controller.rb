@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
   def index
     @scopes = ['active','waiterpad']
     @articleshash = build_articleshash(@scopes)
-    @categories = @current_vendor.categories.existing.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
     respond_to do |wants|
       wants.html
       wants.js { send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline' }
@@ -20,21 +20,12 @@ class ArticlesController < ApplicationController
 
   # tested
   def active
-    @categories = @current_vendor.categories.existing.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   # tested
   def waiterpad
-    @categories = @current_vendor.categories.existing.positioned
-  end
-
-  # tested
-  def update_cache
-    @categories = @current_vendor.categories.existing.positioned
-    @scopes = ['menucard','waiterpad']
-    @current_vendor.update_attribute :cache, render_to_string('articles/index.js')
-    flash[:notice] = t('articles.cache_successfully_updated')
-    redirect_to orders_path
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   # tested
@@ -45,7 +36,7 @@ class ArticlesController < ApplicationController
   # tested
   def new
     @article = Article.new
-    @categories = @current_vendor.categories.existing.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   # tested
@@ -58,7 +49,7 @@ class ArticlesController < ApplicationController
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
-      @categories = @current_vendor.categories.existing.positioned
+      @categories = @current_vendor.categories.existing.active.positioned
       flash[:notice] = t('articles.create.failure')
       render :new
     end
@@ -66,7 +57,7 @@ class ArticlesController < ApplicationController
 
   # tested
   def edit
-    @categories = @current_vendor.categories.existing.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
     @article ? render(:new) : redirect_to(articles_path)
@@ -77,7 +68,7 @@ class ArticlesController < ApplicationController
     @article = get_model
     redirect_to articles_path and return unless @article
     @article.update_attributes params[:article]
-    @categories = @current_vendor.categories.existing
+    @categories = @current_vendor.categories.active.existing
     if @article.save
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
@@ -129,13 +120,13 @@ class ArticlesController < ApplicationController
       @articleshash = build_articleshash([@target])
       @source = nil
     end
-    @categories = @current_vendor.categories.positioned
+    @categories = @current_vendor.categories.active.positioned
   end
 
   # testing not automatable
   def sort
     params['article'].each do |id|
-      a = Article.accessible_by(@current_user).find_by_id id
+      a = Article.accessible_by(@current_user).find_by_id(id)
       a.position = params['article'].index(a.id.to_s) + 1
       a.save
     end
@@ -144,20 +135,21 @@ class ArticlesController < ApplicationController
 
   # tested
   def sort_index
-    @categories = @current_vendor.categories.existing.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   private
 
   def build_articleshash(scopes)
     articleshash = {}
-    articles = @current_vendor.articles.existing.active
     scopes.each do |s|
       articleshash.merge! s => {}
-      articles.each do |a|
-        next unless a.respond_to?(s.to_sym) and a.send(s.to_sym)
-        articleshash[s][a.category_id] = []
-        articleshash[s][a.category_id] << a
+      @current_vendor.categories.existing.active.each do |c|
+        articleshash[s][c.id] = [] if c.articles.any?
+        c.articles.existing.active.positioned.each do |a|
+          next unless a.respond_to?(s.to_sym) and a.send(s.to_sym)
+          articleshash[s][c.id] << a
+        end
       end
     end
     articleshash
