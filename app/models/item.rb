@@ -63,13 +63,10 @@ class Item < ActiveRecord::Base
 
   def optionslist=(optionslist)
     self.options = []
-    optionslist.split.each do |o|
-      self.options << Option.find(o.to_i)
+    optionslist.each do |o|
+puts 'adding option'
+      self.options << Option.find_by_id(o.to_i)
     end
-  end
-
-  def optionslist
-    self.options.collect{ |o| "#{ o.id } " }.join
   end
 
   def category

@@ -72,6 +72,22 @@ function enable_keyboard_for_items(item_designator) {
   });
 }
 
+function render_options(options, d, cat_id) {
+  jQuery.each(options, function(key,value) {
+    button = $(document.createElement('span'));
+    button.html(value.n);
+    button.addClass('option');
+    (function() {
+      var catid = cat_id;
+      var object = value;
+      button.on('click',function(){
+        add_option_to_item_from_div(value, d, value.id, value.p, value.n, cat_id);
+      });
+    })();
+    $('#options_div_' + d).append(button);
+  });
+}
+
 function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
   if (items_json[d].i == '' && items_json[d].count != 1 && value > 0) {
     var quantity_id = items_json[d].quantity_id;
@@ -82,9 +98,10 @@ function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
     d = clone_d;
   }
 
+  option_uid += 1;
   if (value == 0) {
     // normal, delete all options
-    set_json(d,'i','');
+    set_json(d,'i',[]);
     $('#optionsnames_' + d).html('');
 
   } else if (value == -2 ) {
@@ -101,8 +118,13 @@ function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
     $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
 
   } else {
-    items_json[d].i[object.id] = object;
-    $('#optionsnames_' + d).append('<br>' + text);
+    items_json[d].i[option_uid] = object;
+    create_submit_json_record(d);
+    if ( ! submit_json.items[d].hasOwnProperty('optionslist')) {
+      submit_json.items[d]['optionslist'] = [];
+    }
+    submit_json.items[d].optionslist.push(object.id);
+    $('#optionsnames_' + d).append(text + '<br>');
   }
 
   calculate_sum();

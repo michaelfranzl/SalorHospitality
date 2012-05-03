@@ -58,13 +58,15 @@ class Order < ActiveRecord::Base
       position += 100
       d = "i#{i.id}"
       options = {}
+      optioncount = 0
       i.options.each do |opt|
-        options.merge! opt.id => { :id => opt.id, :n => opt.name, :p => opt.price }
+        optioncount += 1
+        options.merge! optioncount => { :id => opt.id, :n => opt.name, :p => opt.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => options, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => position }
+        a.merge! d => { :id => i.id, :catid => i.category.id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => options, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => position }
       else
-        a.merge! d => { :id => i.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => options, :pre => '', :post => '', :n => i.article.name, :s => position }
+        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :i => options, :pre => '', :post => '', :n => i.article.name, :s => position }
       end
     end
     return a.to_json

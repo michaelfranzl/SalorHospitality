@@ -1,26 +1,11 @@
 var automatic_printing = 0;
 var new_order = true;
+var option_uid = 0;
 
 var items_json = {};
 var customers_json = {};
 var submit_json = {items:{}, order:{}, state:{}};
 var order_state = {};
-
-function render_options(options,d,cat_id) {
-  jQuery.each(options, function(key,value) {
-    button = $(document.createElement('span'));
-    button.html(value.n);
-    button.addClass('option');
-    (function() {
-      var catid = cat_id;
-      var object = value;
-      button.on('click',function(){
-        add_option_to_item_from_div(value, d, value.id, value.p, value.n, cat_id);
-      });
-    })();
-    $('#options_div_'+d).append(button);
-  });
-}
 
 function display_articles(cat_id) {
   $('#articles').html('');
@@ -105,19 +90,30 @@ function add_new_item(object, catid, add_new, anchor_d, sort) {
     create_items_json_record(object);
     create_submit_json_record(object.d);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/USAGE/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/OPTIONSLIST/g, '').replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
       $('#itemstable').prepend(new_item);
     }
     $('#tablerow_' + object.d + '_count').addClass('updated');
-    render_options(resources.c[catid].o,object.d,catid);
+    render_options(resources.c[catid].o, object.d, catid);
   }
   calculate_sum();
   return object.d
 }
 
+// todo: keep separate optionslist in items_json and submit_json
+// split item when option added
+// clear options
+// disable vendors when vendor count is 1
+// escper integration
+// category separation on receipts
+// make font on receipts smaller
+// order moving
+// remove all items
+// --
+// mobile options
 
 
 
@@ -125,11 +121,12 @@ function render_items_from_json(json_items) {
   var i;
   for (i in json_items) {
     var object = json_items[i];
-    label = compose_label(object);
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.price).replace(/OPTIONSLIST/g, object.o).replace(/LABEL/g, label).replace(/OPTIONSDIV/g, '').replace(/OPTIONSSELECT/g, '').replace(/OPTIONSNAMES/g, '')
+    catid = object.catid;
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.price).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
 //.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
     enable_keyboard_for_items(i);
+    render_options(resources.c[catid].o, object.d, catid);
   }
   calculate_sum();
 }
@@ -219,6 +216,14 @@ function compose_label(object){
     label = object.n;
   }
   return label;
+}
+
+function compose_optionnames(object){
+  names = '';
+  jQuery.each(object.i, function(k,v) {
+    names += (v.n + '<br>')
+  });
+  return names;
 }
 
 function calculate_sum() {

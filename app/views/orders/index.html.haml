@@ -11,7 +11,7 @@
 #orderform{ :style => 'display: none;' }= render 'order_form'
 #invoices
 #functions_footer{ :style => 'display: none;' }
-  %img{ :src => '/images/send.gif', :style => 'display:none;' }
+  %img{ :src => 'send.gif', :style => 'display:none;' }
   - if workstation?
     %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20);', :title => t(:scroll_down) }
   - else
