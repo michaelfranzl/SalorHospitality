@@ -242,7 +242,7 @@ class ApplicationController < ActionController::Base
         "\n\n"
 
         per_order_output +=
-        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_user.login, o.table.abbreviation]
+        "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_user.login, o.table.name]
 
         per_order_output += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
 

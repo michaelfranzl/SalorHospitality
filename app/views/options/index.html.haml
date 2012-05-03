@@ -6,7 +6,7 @@
   - if c.options.existing.any?
     %h3= c.name
   %ul.sort_options{ :id => "category_#{ c.id }" }
-    - c.options.existing.each do |o|
+    - c.options.existing.active.positioned.each do |o|
       %li{ :id => "option_#{ o.id }" }
         %span.handle
         = link_to o.name, edit_option_path(o)
