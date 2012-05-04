@@ -22,7 +22,7 @@ jQuery.ajaxSetup({
     }
 })
 
-var tableupdates = -1;
+var tableupdates = -1; // no requests by default
 
 window.setInterval(
   function() {
@@ -30,12 +30,16 @@ window.setInterval(
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {
-      $.ajax({ url: '/tables' });
+      $.ajax({
+        url: '/tables',
+        timeout: 5000
+      });
     }
     else if (tableupdates == 0) {
       alert(i18n_server_no_response);
     }
-    tableupdates -= 1;
+    tableupdates -= 1;  // no requests by default
+    display_queue();
   }
 , 12000);
 

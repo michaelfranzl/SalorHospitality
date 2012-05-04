@@ -242,7 +242,7 @@ class OrdersController < ApplicationController
 
     case params[:state][:action]
       when 'save_and_go_to_tables'
-        render 'go_to_tables'
+        render :json => {success: true}
       when 'save_and_go_to_invoice'
         @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
         session[:display_tax_colors] = @current_vendor.country == 'de' or @current_vendor.country == 'cc'
