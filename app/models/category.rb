@@ -23,8 +23,8 @@ class Category < ActiveRecord::Base
 
   def icon_path
     return self.images.first.thumb if self.icon == 'custom'
-    return "/images/category_blank.png" if self.icon.nil?
-    "/images/category_#{self.icon}.png"
+    return "category_blank.png" if self.icon.nil?
+    "/assets/category_#{self.icon}.png"
   end
 
   def self.process_custom_icon(params)
