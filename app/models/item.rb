@@ -61,10 +61,14 @@ class Item < ActiveRecord::Base
     self.total_price + self.total_options_price
   end
 
-  def optionslist=(optionslist)
+  def i
+    self.options.collect{ |o| o.id }
+  end
+
+  def i=(i)
+    i.delete '0'
     self.options = []
-    optionslist.each do |o|
-puts 'adding option'
+    i.each do |o|
       self.options << Option.find_by_id(o.to_i)
     end
   end

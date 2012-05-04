@@ -89,23 +89,24 @@ function render_options(options, d, cat_id) {
 }
 
 function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
-  if (items_json[d].i == '' && items_json[d].count != 1 && value > 0) {
+  if (items_json[d].i.length == 0 && items_json[d].count != 1 && value > 0) {
     var quantity_id = items_json[d].quantity_id;
-    position = items_json[d].s;  
-    clone_d = add_new_item(d, cat_id, true, d, position-1);
+    var position = items_json[d].s;  
+    var clone_d = add_new_item(d, cat_id, true, d, position-1);
     decrement_item(d);
     $('#options_div_' + d).slideUp();
     d = clone_d;
   }
 
-  option_uid += 1;
+  option_uid = items_json[d].i.length + 1;
   if (value == 0) {
     // normal, delete all options
-    set_json(d,'i',[]);
+    set_json(d,'i',[0]);
+    set_json(d,'t',{});
     $('#optionsnames_' + d).html('');
 
   } else if (value == -2 ) {
-    $('#options_div_' + d).slideUp(); // just exit
+    $('#options_div_' + d).slideUp(); // just exit, do nothing
 
   } else if (value == -1 ) {
     // special option: do not print
@@ -118,12 +119,10 @@ function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
     $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
 
   } else {
-    items_json[d].i[option_uid] = object;
-    create_submit_json_record(d);
-    if ( ! submit_json.items[d].hasOwnProperty('optionslist')) {
-      submit_json.items[d]['optionslist'] = [];
-    }
-    submit_json.items[d].optionslist.push(object.id);
+    items_json[d].t[option_uid] = object;
+    var list = items_json[d].i;
+    list.push(object.id);
+    set_json(d,'i',list);
     $('#optionsnames_' + d).append(text + '<br>');
   }
 

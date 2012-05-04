@@ -44,14 +44,16 @@ class Vendor < ActiveRecord::Base
   # q is a json-sub-object which lists quantities of articles
   # s is position
 
-  # JS returns additional attributes:
+  # items_json and submit_json returns additional attributes:
   # o is comment
   # count is count
-  # i is array of options
   # x is deleted
   # u is usage
   # sc is start count
   # pc is printed count
+  # catid is category_id
+  # i is array of selected option ids
+  # t is an object of selected options
 
   def resources
     categories = {}

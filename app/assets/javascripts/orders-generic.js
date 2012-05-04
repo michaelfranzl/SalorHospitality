@@ -180,10 +180,10 @@ function set_json(d,attribute,value) {
 }
 
 
-// this creates a new record, copied from a resources subobject
+// this creates a new json record, copied from a resources subobject
 function create_items_json_record(robject) {
   d = robject.d;
-  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', i:{}, x:false, price:robject.price, prefix:'', postfix:''};
+  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', t:{}, i:[], x:false, price:robject.price, prefix:'', postfix:''};
   if ( ! robject.hasOwnProperty('qid')) { delete items_json[d].quantity_id; }
 }
 
@@ -220,7 +220,7 @@ function compose_label(object){
 
 function compose_optionnames(object){
   names = '';
-  jQuery.each(object.i, function(k,v) {
+  jQuery.each(object.t, function(k,v) {
     names += (v.n + '<br>')
   });
   return names;
@@ -230,7 +230,8 @@ function calculate_sum() {
   var sum = 0;
   jQuery.each(items_json, function() { 
     sum += this.count * this.price;
-    jQuery.each(this.i, function() {
+    // now add option prices:
+    jQuery.each(this.t, function() {
       sum += this.p;
     });
   });
