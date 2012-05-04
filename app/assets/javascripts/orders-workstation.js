@@ -88,11 +88,10 @@ function render_options(options, d, cat_id) {
   });
 }
 
-function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
-  if (items_json[d].i.length == 0 && items_json[d].count != 1 && value > 0) {
-    var quantity_id = items_json[d].quantity_id;
-    var position = items_json[d].s;  
-    var clone_d = add_new_item(d, cat_id, true, d, position-1);
+function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id) {
+  if (items_json[d].count > 1 && value > 0) {
+    var position = items_json[d].s - 1;
+    var clone_d = add_new_item(items_json[d], cat_id, true, d, position);
     decrement_item(d);
     $('#options_div_' + d).slideUp();
     d = clone_d;
@@ -105,9 +104,6 @@ function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
     set_json(d,'t',{});
     $('#optionsnames_' + d).html('');
 
-  } else if (value == -2 ) {
-    $('#options_div_' + d).slideUp(); // just exit, do nothing
-
   } else if (value == -1 ) {
     // special option: do not print
     set_json(d,'pc',items_json[d].count);
@@ -119,9 +115,9 @@ function add_option_to_item_from_div(object, d, value, price, text, cat_id) {
     $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
 
   } else {
-    items_json[d].t[option_uid] = object;
+    items_json[d].t[option_uid] = optionobject;
     var list = items_json[d].i;
-    list.push(object.id);
+    list.push(optionobject.id);
     set_json(d,'i',list);
     $('#optionsnames_' + d).append(text + '<br>');
   }

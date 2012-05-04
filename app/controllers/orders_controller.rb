@@ -160,7 +160,6 @@ class OrdersController < ApplicationController
     end
 
     if @order
-      # Todo set user of order
       @order.update_attributes params[:order]
       params[:items].to_a.each do |item_params|
         item_id = item_params[1][:id]
@@ -204,7 +203,18 @@ class OrdersController < ApplicationController
     if @order.items.existing.size.zero?
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
-      @order.delete
+      @order.update_attribute :hidden, true
+      @order.table.user = nil
+      @order.table.save
+      @tables = @current_user.tables.existing
+      render 'go_to_tables' and return
+    end
+
+    if params[:state][:x] == 'true'
+      @current_vendor.unused_order_numbers << @order.nr
+      @current_vendor.save
+      @order.update_attribute :hidden, true
+      @order.items.update_all :hidden => true
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing

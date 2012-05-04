@@ -87,20 +87,19 @@ function add_new_item(object, catid, add_new, anchor_d, sort) {
     // selected item is already there
     increment_item(object.d);
   } else {
-    create_items_json_record(object);
-    create_submit_json_record(object.d);
+    d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
       $('#itemstable').prepend(new_item);
     }
-    $('#tablerow_' + object.d + '_count').addClass('updated');
-    render_options(resources.c[catid].o, object.d, catid);
+    $('#tablerow_' + d + '_count').addClass('updated');
+    render_options(resources.c[catid].o, d, catid);
   }
   calculate_sum();
-  return object.d
+  return d
 }
 
 // todo: keep separate optionslist in items_json and submit_json
@@ -161,7 +160,13 @@ function decrement_item(d) {
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if (permission_delete_items) {
-      set_json(d,'x',true)
+      if (d.indexOf('i') == -1) {
+        // the server has never seen this item, so we just delete frmo submit_json
+        delete submit_json.items[d];
+      } else {
+        // the server will delete this item
+        set_json(d,'x',true);
+      }
       $('#item_' + d).fadeOut('slow');
     }
   };
@@ -175,32 +180,33 @@ function set_json(d,attribute,value) {
   } else {
     alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
   }
-  create_submit_json_record(d);
+  create_submit_json_record(d,items_json[d]);
   submit_json.items[d][attribute] = value;
 }
 
 
-// this creates a new json record, copied from a resources subobject
-function create_items_json_record(robject) {
-  d = robject.d;
-  items_json[d] = {article_id:robject.aid, quantity_id:robject.qid, d:d, count:1, o:'', t:{}, i:[], x:false, price:robject.price, prefix:'', postfix:''};
-  if ( ! robject.hasOwnProperty('qid')) { delete items_json[d].quantity_id; }
+// this creates a new json record
+function create_json_record(object) {
+  d = object.d;
+  if (items_json.hasOwnProperty(d)) {
+    d += 'c'; // c for cloned. this happens when an item is split during option add.
+  }
+  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:''};
+  if ( ! object.hasOwnProperty('quantity_id')) { delete items_json[d].quantity_id; }
+  create_submit_json_record(d,items_json[d]);
+  return d;
 }
 
 // this creates a new record, copied from items_json, which must exist
-function create_submit_json_record(d) {
+function create_submit_json_record(d, object) {
   if ( ! submit_json.items.hasOwnProperty(d)) {
-    if (items_json.hasOwnProperty(d)) {
-      submit_json.items[d] = {id:items_json[d].id, article_id:items_json[d].article_id, quantity_id:items_json[d].quantity_id};
-      if (items_json[d].hasOwnProperty('id')) {
-        delete submit_json.items[d].article_id;
-        delete submit_json.items[d].quantity_id;
-      }
-      if ( ! items_json[d].hasOwnProperty('quantity_id')) {
-        delete submit_json.items[d].quantity_id;
-      }
-    } else {
-      alert('Unexpected error 2: Object items_json doesnt have the property ' + d + ' yet. Call create_item_json_record first.');
+    submit_json.items[d] = {id:object.id, article_id:object.article_id, quantity_id:object.quantity_id};
+    if (items_json[d].hasOwnProperty('id')) {
+      delete submit_json.items[d].article_id;
+      delete submit_json.items[d].quantity_id;
+    }
+    if ( ! items_json[d].hasOwnProperty('quantity_id')) {
+      delete submit_json.items[d].quantity_id;
     }
   }
 }
@@ -323,7 +329,8 @@ function send_json() {
 }
 
 function cancel_all_items_in_active_order() {
-
+  submit_json.state['x'] = true;
+  send_json();
 }
 
 function move_order_to_table(id) {

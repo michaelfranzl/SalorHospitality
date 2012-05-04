@@ -19,7 +19,7 @@
       %a{ :onmouseup => "$('#options_div_DESIGNATOR').slideDown();" }
       %div.optionsselect{ :id => "options_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'
-        %span.done{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -2, null, '#{t('.done')}')" }
+        %span.done{ :onclick => "$('#options_div_DESIGNATOR').slideUp();", :title => "#{t('.done')}" }
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', 0, null, '#{t('.clear')}')" }= t('.clear')
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
         %span.option{ :onclick => "add_option_to_item_from_div(this, 'DESIGNATOR', -3, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
