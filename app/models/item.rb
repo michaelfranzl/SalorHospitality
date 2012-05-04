@@ -18,6 +18,8 @@ class Item < ActiveRecord::Base
   has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
 
+  alias_attribute :s, :position
+
   scope :prioritized, order('priority ASC')
 
   def price
@@ -33,6 +35,8 @@ class Item < ActiveRecord::Base
     t = Tax.find_by_id (read_attribute :tax_id)
     return t if t
     t = self.order.tax if self.order
+    return t if t
+    t = self.article.tax if self.article
     return t if t
     return self.article.category.tax if self.article
   end

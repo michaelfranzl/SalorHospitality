@@ -4,6 +4,7 @@
   submit_json.order.id = <%= @order.id %>;
   submit_json.order.table_id = <%= @table.id %>;
   submit_json.state.new = false;
+  item_position = 0;
   $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');

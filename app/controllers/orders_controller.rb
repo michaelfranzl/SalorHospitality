@@ -16,13 +16,13 @@ class OrdersController < ApplicationController
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
-    @order = Order.accessible_by(@current_user).find_by_id params[:id]
+    @order = Order.accessible_by(@current_user).existing.find_by_id params[:id]
     if params[:order][:tax_id]
       @order.update_attribute :tax_id, params[:order][:tax_id] 
       @order.items.each { |i| i.update_attribute :tax_id, nil }
       @orders = Order.accessible_by(@current_user).find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
       @cost_centers = CostCenter.accessible_by(@current_user).all
-      @taxes = Tax.accessible_by(@current_user).all
+      @taxes = Tax.accessible_by(@current_user).existing
       render 'items/update'
     else
       @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]  
@@ -31,16 +31,16 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.accessible_by(@current_user).find_by_id params[:id]
+    @order = Order.accessible_by(@current_user).existing.find_by_id params[:id]
     @table = @order.table
     render 'orders/go_to_order_form'
   end
 
   def show
     if params[:id] != 'last'
-      @order = Order.accessible_by(@current_user).find(params[:id])
+      @order = Order.accessible_by(@current_user).existing.find(params[:id])
     else
-      @order = Order.accessible_by(@current_user).find_all_by_finished(true).last
+      @order = Order.accessible_by(@current_user).existing.find_all_by_finished(true).last
     end
     redirect_to '/' and return if not @order
     @previous_order, @next_order = neighbour_orders(@order)
@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
   end
 
   def by_nr
-    @order = Order.find_by_nr params[:nr]
+    @order = Order.existing.find_by_nr params[:nr]
     if @order
       redirect_to order_path(@order)
     else
@@ -76,14 +76,14 @@ class OrdersController < ApplicationController
     else
       session[:display_tax_colors] = true
     end
-    @orders = Order.accessible_by(@current_user).find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
-    @cost_centers = CostCenter.accessible_by(@current_user).all
-    @taxes = Tax.accessible_by(@current_user).all
+    @orders = Order.accessible_by(@current_user).existing.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
+    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
+    @taxes = Tax.accessible_by(@current_user).existing
     render 'items/update'
   end
 
   def print_and_finish
-    @order = Order.accessible_by(@current_user).find params[:id]
+    @order = Order.accessible_by(@current_user).existing.find params[:id]
 
     is_finished = @order.finished
 
@@ -114,10 +114,10 @@ class OrdersController < ApplicationController
       end
     end
 
-    @orders = Order.accessible_by(@current_user).find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table, :finished => false })
     @order.table.update_attribute :user, nil if @orders.empty?
-    @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active(true)
-    @taxes = Tax.accessible_by(@current_user).all
+    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
+    @taxes = Tax.accessible_by(@current_user).existing
 
     respond_to do |wants|
       wants.js {
@@ -141,22 +141,22 @@ class OrdersController < ApplicationController
   end
 
   def go_to_order_form # to be called only with /id
-    @order = Order.accessible_by(@current_user).find(params[:id])
+    @order = get_model
     @table = @order.table
-    @cost_centers = CostCenter.find_all_by_active(true)
+    @cost_centers = CostCenter.existing.active
     render 'go_to_order_form'
   end
 
   def receive_order_attributes_ajax
-    @cost_centers = CostCenter.accessible_by(@current_user).find_all_by_active true
+    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
 
     if params[:order][:id].empty?
       # The AJAX load on the client side has not succeeded before user submitted the order form.
       # In this case, simply select the first order on the table the user had selected.
-      @order = Order.accessible_by(@current_user).find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
+      @order = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
     else
       # The AJAX load on the client side has succeeded and we know the order ID.
-      @order = Order.accessible_by(@current_user).find_by_id params[:order][:id]
+      @order = Order.accessible_by(@current_user).existing.find_by_id params[:order][:id]
     end
 
     if @order
@@ -178,7 +178,7 @@ class OrdersController < ApplicationController
     else # create it
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
-      @order.cost_center = @current_vendor.cost_centers.first
+      @order.cost_center = @current_vendor.cost_centers.existing.active.first
       @order.user = @current_user
       @order.vendor = @current_vendor
       @order.company = @current_company
@@ -237,14 +237,14 @@ class OrdersController < ApplicationController
       close_printers printers
     end
 
-    @taxes = Tax.accessible_by(@current_user).all
+    @taxes = Tax.accessible_by(@current_user).existing
     @tables = @current_user.tables.existing
 
     case params[:state][:action]
       when 'save_and_go_to_tables'
         render 'go_to_tables'
       when 'save_and_go_to_invoice'
-        @orders = Order.accessible_by(@current_user).find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
+        @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
         session[:display_tax_colors] = @current_vendor.country == 'de' or @current_vendor.country == 'cc'
         render 'go_to_invoice_form'
       when 'clear_order_and_go_back'
@@ -260,7 +260,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @unsettled_orders = Order.accessible_by(@current_user).find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
+    @unsettled_orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
     if @current_user.role.permissions.include? 'finish_all_settlements'
       @users = @current_vendor.users
     elsif @current_user.role.permissions.include? 'finish_own_settlement'
@@ -307,7 +307,7 @@ class OrdersController < ApplicationController
     end
 
     def group_identical_items(o)
-      items = o.items
+      items = o.items.existing
       n = items.size - 1
       0.upto(n-1) do |i|
         (i+1).upto(n) do |j|
@@ -333,7 +333,7 @@ class OrdersController < ApplicationController
     end
 
     def neighbour_orders(order)
-      orders = Order.accessible_by(@current_user).find_all_by_finished(true)
+      orders = Order.accessible_by(@current_user).existing.where(:finished => true)
       idx = orders.index(order)
       previous_order = orders[idx-1] if idx
       previous_order = order if previous_order.nil?

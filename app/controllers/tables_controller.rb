@@ -9,7 +9,7 @@ class TablesController < ApplicationController
 
   def index
     @tables = @current_user.tables.existing
-    @last_finished_order = Order.find_all_by_finished(true).last
+    @last_finished_order = Order.existing.where(:finished => true).last
     respond_to do |wants|
       wants.html
       wants.js
@@ -18,10 +18,10 @@ class TablesController < ApplicationController
 
   def show
     @table = get_model
-    @cost_centers = CostCenter.accessible_by(@current_user).existing
+    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
     @taxes = Tax.accessible_by(@current_user).existing
 
-    @orders = Order.accessible_by(@current_user).where(:table_id => @table.id, :finished => false )
+    @orders = Order.accessible_by(@current_user).existing.where(:table_id => @table.id, :finished => false )
     if @orders.size > 1
       render 'orders/go_to_invoice_form'
     else

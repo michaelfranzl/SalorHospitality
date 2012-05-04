@@ -90,14 +90,13 @@ function render_options(options, d, cat_id) {
 
 function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id) {
   if (items_json[d].count > 1 && value > 0) {
-    var position = items_json[d].s - 1;
-    var clone_d = add_new_item(items_json[d], cat_id, true, d, position);
+    var clone_d = add_new_item(items_json[d], cat_id, true, d);
     decrement_item(d);
     $('#options_div_' + d).slideUp();
     d = clone_d;
   }
 
-  option_uid = items_json[d].i.length + 1;
+  option_position = items_json[d].i.length + 1;
   if (value == 0) {
     // normal, delete all options
     set_json(d,'i',[0]);
@@ -115,7 +114,7 @@ function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id
     $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
 
   } else {
-    items_json[d].t[option_uid] = optionobject;
+    items_json[d].t[option_position] = optionobject;
     var list = items_json[d].i;
     list.push(optionobject.id);
     set_json(d,'i',list);

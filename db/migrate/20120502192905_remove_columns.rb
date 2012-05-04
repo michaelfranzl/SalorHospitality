@@ -2,7 +2,6 @@ class RemoveColumns < ActiveRecord::Migration
   def change
     remove_column :tables, :abbreviation
     remove_column :tables, :description
-    remove_column :categories, :tax_id
     change_column :cost_centers, :active, :boolean, :default => true
     add_column :customers, :hidden, :boolean
     add_column :discounts, :hidden, :boolean

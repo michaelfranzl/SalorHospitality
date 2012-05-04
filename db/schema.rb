@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504175703) do
+ActiveRecord::Schema.define(:version => 20120504184734) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20120504175703) do
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.integer  "tax_id"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20120504175703) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
+    t.integer  "tax_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "icon"
@@ -67,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20120504175703) do
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
   add_index "categories", ["name"], :name => "index_categories_on_name"
   add_index "categories", ["position"], :name => "index_categories_on_position"
+  add_index "categories", ["tax_id"], :name => "index_categories_on_tax_id"
   add_index "categories", ["vendor_printer_id"], :name => "index_categories_on_vendor_printer_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -567,30 +570,30 @@ ActiveRecord::Schema.define(:version => 20120504175703) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                             :default => "Bill Gastro"
-    t.string   "subdomain",                                        :default => "demo"
-    t.datetime "created_at",                                                                            :null => false
-    t.datetime "updated_at",                                                                            :null => false
-    t.string   "invoice_subtitle",                                 :default => ""
-    t.string   "address",                                          :default => ""
-    t.string   "revenue_service_tax_number",                       :default => ""
-    t.string   "invoice_slogan1",                                  :default => ""
-    t.string   "invoice_slogan2",                                  :default => ""
-    t.string   "internet_address",                                 :default => "www.billgastro.com"
-    t.string   "email",                                            :default => "office@billgastro.com"
-    t.integer  "largest_order_number",                             :default => 0
-    t.string   "unused_order_numbers",                             :default => "--- []\n"
+    t.string   "name",                                           :default => "Bill Gastro"
+    t.string   "subdomain",                                      :default => "demo"
+    t.datetime "created_at",                                                                          :null => false
+    t.datetime "updated_at",                                                                          :null => false
+    t.string   "invoice_subtitle",                               :default => ""
+    t.string   "address",                                        :default => ""
+    t.string   "revenue_service_tax_number",                     :default => ""
+    t.string   "invoice_slogan1",                                :default => ""
+    t.string   "invoice_slogan2",                                :default => ""
+    t.string   "internet_address",                               :default => "www.billgastro.com"
+    t.string   "email",                                          :default => "office@billgastro.com"
+    t.integer  "largest_order_number",                           :default => 0
+    t.string   "unused_order_numbers",                           :default => "--- []\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"
-    t.integer  "time_offset",                                      :default => 0
+    t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
-    t.text     "cache",                      :limit => 2147483647
+    t.text     "cache",                      :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                                :default => true
+    t.boolean  "use_order_numbers",                              :default => true
     t.integer  "company_id"
-    t.boolean  "active",                                           :default => true
+    t.boolean  "active",                                         :default => true
     t.boolean  "hidden"
   end
 

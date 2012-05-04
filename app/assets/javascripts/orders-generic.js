@@ -1,6 +1,7 @@
 var automatic_printing = 0;
 var new_order = true;
-var option_uid = 0;
+var option_position = 0;
+var item_position = 0;
 
 var items_json = {};
 var customers_json = {};
@@ -76,7 +77,7 @@ function display_quantities(quantities, target, cat_id){
   })
 }
 
-function add_new_item(object, catid, add_new, anchor_d, sort) {
+function add_new_item(object, catid, add_new, anchor_d) {
   if (items_json.hasOwnProperty(object.d) &&
       !add_new &&
       items_json[object.d].price == object.price &&
@@ -89,7 +90,7 @@ function add_new_item(object, catid, add_new, anchor_d, sort) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/POSITION/g, sort).replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -103,8 +104,6 @@ function add_new_item(object, catid, add_new, anchor_d, sort) {
 }
 
 // todo: keep separate optionslist in items_json and submit_json
-// split item when option added
-// clear options
 // disable vendors when vendor count is 1
 // escper integration
 // category separation on receipts
@@ -188,10 +187,17 @@ function set_json(d,attribute,value) {
 // this creates a new json record
 function create_json_record(object) {
   d = object.d;
+  item_position += 10;
+  if (typeof(object.s) == 'undefined') {
+    s = item_position;
+  } else {
+    s = object.s;
+  }
   if (items_json.hasOwnProperty(d)) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
+    s += 1;
   }
-  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:''};
+  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:'', s:s};
   if ( ! object.hasOwnProperty('quantity_id')) { delete items_json[d].quantity_id; }
   create_submit_json_record(d,items_json[d]);
   return d;
@@ -200,7 +206,7 @@ function create_json_record(object) {
 // this creates a new record, copied from items_json, which must exist
 function create_submit_json_record(d, object) {
   if ( ! submit_json.items.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:object.id, article_id:object.article_id, quantity_id:object.quantity_id};
+    submit_json.items[d] = {id:object.id, article_id:object.article_id, quantity_id:object.quantity_id, s:object.s};
     if (items_json[d].hasOwnProperty('id')) {
       delete submit_json.items[d].article_id;
       delete submit_json.items[d].quantity_id;
@@ -268,7 +274,7 @@ function go_to_order_form_preprocessing(table_id) {
   submit_json.items = {};
   submit_json.order = {id:'', note:'', table_id:table_id};
   submit_json.state = {target_table:''}
-  $('#order_sum').val('0' + i18n_decimal_separator + '00');
+  $('#order_sum').html('0' + i18n_decimal_separator + '00');
   $('#order_info').html(i18n_just_order);
   $('#order_note').val('');
 

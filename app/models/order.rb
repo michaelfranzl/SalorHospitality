@@ -53,9 +53,7 @@ class Order < ActiveRecord::Base
 
   def items_to_json
     a = {}
-    position = 0
     self.items.existing.positioned.reverse.each do |i|
-      position += 100
       d = "i#{i.id}"
       options = {}
       optioncount = 0
@@ -64,9 +62,9 @@ class Order < ActiveRecord::Base
         options.merge! optioncount => { :id => opt.id, :n => opt.name, :p => opt.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => position }
+        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position }
       else
-        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => position }
+        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position }
       end
     end
     return a.to_json

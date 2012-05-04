@@ -13,6 +13,9 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
+    @taxes = Tax.accessible_by(@current_user).existing
+    @users = @current_vendor.users.existing.active
+    @printers = @current_company.vendor_printers.existing
   end
 
   def create
@@ -29,6 +32,9 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = get_model
+    @taxes = Tax.accessible_by(@current_user).existing
+    @users = @current_vendor.users.existing.active
+    @printers = @current_company.vendor_printers.existing
     render :new
   end
 
