@@ -70,7 +70,7 @@ class OrdersController < ApplicationController
       session[:display_tax_colors] = true
     end
     @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-    @cost_centers = @current_vendor.cost_centers.existing.active.
+    @cost_centers = @current_vendor.cost_centers.existing.active
     @taxes = @current_vendor.taxes.existing
     render 'items/update'
   end
@@ -94,7 +94,7 @@ class OrdersController < ApplicationController
     if params[:port].to_i != 0
       if local_variant?
         # print immediately
-        selected_printer = @current_vendor.vendor_printer.existing.find_by_id(params[:port].to_i)
+        selected_printer = @current_vendor.vendor_printers.existing.find_by_id(params[:port].to_i)
         printer_id = selected_printer.id if selected_printer
         all_printers = initialize_printers
         text = generate_escpos_invoice(@order)
@@ -119,7 +119,7 @@ class OrdersController < ApplicationController
         elsif @orders.empty?
           # is the case for invoice_form
           @tables = @current_user.tables.existing
-          render 'go_to_tables'
+          render :js => "go_to(#{@order.table_id},'tables');"
         else
           # is the case for invoice_form
           render 'go_to_invoice_form'
@@ -133,7 +133,7 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
-    @cost_centers = @current_vendor.existing.active
+    @cost_centers = @current_vendor.cost_centers.existing.active
 
     if params[:order][:id].empty?
       # The AJAX load on the client side has not succeeded before user submitted the order form.
@@ -231,10 +231,10 @@ class OrdersController < ApplicationController
       when 'tables'
         case params[:state][:action]
           when 'send'
-            render :json => {success: true}
+            render :nothing => true
           when 'move'
             @order.move params[:state][:target_table_id]
-            render :json => {success: true}
+            render :nothing => true
         end
       when 'invoice'
         @orders = @current_vendor.orders.existing.where(:table_id => @order.table.id, :finished => false)

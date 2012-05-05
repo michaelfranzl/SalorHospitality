@@ -311,7 +311,7 @@ function go_to(table_id, view, action, target_table_id) {
     $('#tablesselect').hide();
     //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
     //$('#save_and_go_to_tables').css('border','none');
-    if (action == 'destroy'){
+    if (action == 'destroy') {
       submit_json.state['action'] = action;
       submit_json.state['target'] = view;
       send_json(table_id);
@@ -332,10 +332,12 @@ function go_to(table_id, view, action, target_table_id) {
     item_position = 0;
     tableupdates = 2;
   } else if ( view == 'invoice') {
-    submit_json.state['action'] = action;
-    submit_json.state['target'] = view;
-    submit_json.order['note'] = $('#order_note').val();
-    send_json(table_id);
+    if (action == 'send') {
+      submit_json.state['action'] = action;
+      submit_json.state['target'] = view;
+      submit_json.order['note'] = $('#order_note').val();
+      send_json(table_id);
+    }
     $('#invoices').html('');
     $('#invoices').show();
     $('#orderform').hide();
@@ -364,11 +366,10 @@ function send_queue(table_id) {
     type: 'post',
     url: '/orders/update_ajax',
     data: submit_json_queue[table_id],
-    success: function(data) {
-      if (data['success'] == true) {
+    timeout: 5000,
+    success: function(data,rep) {
         update_tables();
         clear_queue(table_id);
-      }
     }
   });
 }

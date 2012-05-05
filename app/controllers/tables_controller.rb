@@ -20,7 +20,7 @@ class TablesController < ApplicationController
     @table = get_model
     redirect_to roles_path and return unless @table
     @cost_centers = @current_vendor.cost_centers.existing.active
-    @taxes = @current_vendor.taxes.existing.active
+    @taxes = @current_vendor.taxes.existing
     @orders = @current_vendor.orders.existing.where(:table_id => @table.id, :finished => false )
     if @orders.size > 1
       render 'orders/go_to_invoice_form'

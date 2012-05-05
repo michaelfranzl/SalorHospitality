@@ -63,9 +63,10 @@ class Order < ActiveRecord::Base
   end
 
   def move(target_table_id)
+    return if self.table_id == target_table_id
+    target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
     self.unlink
     self.reload
-    target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
     origin_table = self.table
     target_table = Table.find_by_id target_table_id
     if target_order
