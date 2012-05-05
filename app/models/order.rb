@@ -51,6 +51,67 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def unlink
+    self.items.update_all :item_id => nil
+    self.update_attribute :order_id, nil
+    self.reload
+    parent_order = self.order
+    if parent_order
+      parent_order.items.update_all :item_id => nil
+      parent_order.update_attribute :order_id, nil
+    end
+  end
+
+  def move_to_table(target_table_id)
+    self.unlink
+    self.reload
+    target_order = Order.find.where(:table_id => target_table_id, :finished => false).first
+    if target_order
+      self.items.update_all :order_id => target_order.id
+      self.reload
+      self.destroy
+      target_order.sum = target_order.calculate_sum
+      target_order.save
+      target_order.group_items
+    else
+      self.write_attribute :table_id, target_table_id
+    end
+
+    # update table users and colors, this should go into table.rb
+    this_table = self.table
+    unfinished_orders_on_this_table = Order.where(:table_id => this_table.id, :finished => false)
+    this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
+    Table.find_by_id(target_table_id).update_attribute :user, self.user
+  end
+
+  def group_items
+    items = self.items.existing
+    n = items.size - 1
+    0.upto(n-1) do |i|
+      (i+1).upto(n) do |j|
+        Item.transaction do
+          if (items[i].article_id  == items[j].article_id and
+              items[i].quantity_id == items[j].quantity_id and
+              items[i].options     == items[j].options and
+              items[i].usage       == items[j].usage and
+              items[i].price       == items[j].price and
+              items[i].comment     == items[j].comment and
+              not items[i].destroyed?
+             )
+            items[i].count += items[j].count
+            items[i].printed_count += items[j].printed_count
+            result = items[i].save
+            raise "Couldn't save item during grouping. Oops!" if not result
+            items[j].destroy
+          end
+        end
+      end
+    end
+    self.reload
+  end
+
+
+
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|

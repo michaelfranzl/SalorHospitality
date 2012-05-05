@@ -30,10 +30,7 @@ window.setInterval(
       window.location.href = '/items.bill';
     }
     if (tableupdates > 0) {
-      $.ajax({
-        url: '/tables',
-        timeout: 5000
-      });
+      update_tables();
     }
     else if (tableupdates == 0) {
       alert(i18n_server_no_response);

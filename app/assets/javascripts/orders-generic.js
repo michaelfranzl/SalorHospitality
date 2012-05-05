@@ -4,10 +4,9 @@ var option_position = 0;
 var item_position = 0;
 
 var items_json = {};
-var submit_json = {items:{}, order:{}, state:{}};
+var submit_json = {};
 var items_json_queue = {};
 var submit_json_queue = {};
-var qindex = 0;
 var customers_json = {};
 
 function display_articles(cat_id) {
@@ -267,78 +266,90 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 
 
 
-
-// this is for offline preprocessing, better user experience.
-function go_to_order_form_preprocessing(table_id) {
+function go_to(table_id, view, action, target_table_id) {
   scroll_to($('#container'),20);
-
-  // reset order state
-  submit_json.items = {};
-  submit_json.order = {id:'', note:'', table_id:table_id};
-  submit_json.state = {target_table:''}
-  $('#order_sum').html('0' + i18n_decimal_separator + '00');
-  $('#order_info').html(i18n_just_order);
-  $('#order_note').val('');
-
-  // Dynamic switching of view
-  $('#inputfields').html('');
-  $('#itemstable').html('');
-  $('#articles').html('');
-  $('#quantities').html('');
-  $('#orderform').show();
-  $('#invoices').hide();
-  $('#tables').hide();
-  $('#rooms').hide();
-  $('#functions_header_index').hide();
-  $('#functions_header_invoice_form').hide();
-  $('#functions_header_order_form').show();
-  if (mobile == true) { $('#functions_footer').show(); }
-  $.ajax({ type: 'GET', url: '/tables/' + table_id });
-  screenlock_counter = -1;
-  tableupdates = -1;
-  screenlock_active = true;
+  if ( view == 'table' ) {
+    submit_json = {items:{}, order:{id:'', table_id:table_id}, state:{}};
+    items_json = {};
+    $.ajax({ type: 'GET', url: '/tables/' + table_id, timeout: 5000 });
+    $('#order_sum').html('0' + i18n_decimal_separator + '00');
+    $('#order_info').html(i18n_just_order);
+    $('#order_note').val('');
+    $('#inputfields').html('');
+    $('#itemstable').html('');
+    $('#articles').html('');
+    $('#quantities').html('');
+    $('#orderform').show();
+    $('#invoices').hide();
+    $('#tables').hide();
+    $('#rooms').hide();
+    $('#functions_header_index').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_header_order_form').show();
+    if (mobile == true) { $('#functions_footer').show(); }
+    screenlock_counter = -1;
+    tableupdates = -1;
+    screenlock_active = true;
+  } else if ( view == 'tables') {
+    $('#orderform').hide();
+    $('#invoices').hide();
+    $('#tables').show();
+    $('#rooms').show();
+    $('#functions_header_index').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_footer').hide();
+    $('#customer_list').hide();
+    $('#tablesselect').hide();
+    //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
+    //$('#save_and_go_to_tables').css('border','none');
+    if (action == 'destroy'){
+      submit_json.state['action'] = action;
+      submit_json.state['target'] = view;
+      send_json(table_id);
+    } else if (action == 'send') {
+      submit_json.state['action'] = action;
+      submit_json.state['target'] = view;
+      submit_json.order['note'] = $('#order_note').val();
+      send_json(table_id);
+    } else if (action == 'move') {
+      $(".tablesselect").slideUp();
+      submit_json.state['action'] = action;
+      submit_json.state['target'] = view;
+      submit_json.state['target_table_id'] = target_table_id;
+      send_json(table_id);
+    }
+    screenlock_counter = screenlock_timeout;
+    submit_json = {};
+    items_json = {};
+    option_position = 0;
+    item_position = 0;
+    tableupdates = 2;
+  } else if ( view == 'invoice') {
+    submit_json.state['action'] = action;
+    submit_json.state['target'] = view;
+    submit_json.order['note'] = $('#order_note').val();
+    send_json(table_id);
+    $('#invoices').html('');
+    $('#invoices').show();
+    $('#orderform').hide();
+    $('#tables').hide();
+    $('#rooms').hide();
+    $('#inputfields').html('');
+    $('#itemstable').html('');
+    $('#functions_header_invoice_form').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_index').hide();
+    $('#functions_footer').hide();
+    tableupdates = -1;
+    screenlock_counter = -1;
+  }
 }
 
-function go_to_tables_offline() {
-  scroll_to($('#container'),20);
-  $('#orderform').hide();
-  $('#invoices').hide();
-  $('#tables').show();
-  $('#rooms').show();
-  $('#functions_header_index').show();
-  $('#functions_header_order_form').hide();
-  $('#functions_header_invoice_form').hide();
-  $('#functions_footer').hide();
-  $('#customer_list').hide();
-  $('#tablesselect').hide();
-  //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
-  //$('#save_and_go_to_tables').css('border','none');
-  screenlock_counter = screenlock_timeout;
-  scroll_to('#container',10);
-  submit_json = {};
-  items_json = {};
-  option_position = 0;
-  item_position = 0;
-  tableupdates = 2;
-}
 
-function save_and_go_to_tables() {
-  submit_json.state.action = 'save_and_go_to_tables';
-  submit_json.order.note = $('#order_note').val();
-  send_json();
-}
-
-function save_and_go_to_invoice() {
-  submit_json.state.action = 'save_and_go_to_invoice';
-  submit_json.order.note = $('#order_note').val();
-  send_json();
-}
-
-function send_json() {
-  submit_json_queue[qindex] = submit_json;
-  go_to_tables_offline();
-  send_queue(qindex);
-  qindex += 1;
+function send_json(table_id) {
+  submit_json_queue[table_id] = submit_json;
+  send_queue(table_id);
 }
 
 function send_queue(i) {
@@ -348,6 +359,7 @@ function send_queue(i) {
     data: submit_json_queue[i],
     success: function(data) {
       if (data['success'] == true) {
+        update_tables();
         clear_queue(i);
       }
     }
@@ -359,6 +371,7 @@ function clear_queue(i) {
   $('#queue_'+i).remove();
 }
 
+// periodically displays the contents of submit_json_queue
 function display_queue() {
   $('#queue').html('');
   jQuery.each(submit_json_queue, function(k,v) {
@@ -377,18 +390,11 @@ function display_queue() {
   });
 }
 
-function cancel_all_items_in_active_order() {
-  submit_json.state['x'] = true;
-  send_json();
-}
-
-function move_order_to_table(id) {
-  if ( id != "" ) {
-    $(".tablesselect").slideUp();
-    $("#order_action").val("move_order_to_table");
-    $("#target_table").val(id);
-    $("#order_form_ajax").submit();
-  }
+function update_tables(){
+  $.ajax({
+    url: '/tables',
+    timeout: 5000
+  });
 }
 
 function change_item_status(id,status) {

@@ -96,7 +96,8 @@ class OrdersController < ApplicationController
       @order.finished = true
       @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
       @order.save
-      unlink_orders(@order)
+      @order.unlink
+      @order.reload
     end
 
     if params[:port].to_i != 0
@@ -207,10 +208,10 @@ class OrdersController < ApplicationController
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing
-      render 'go_to_tables' and return
+      render :nothing => true and return
     end
 
-    if params[:state][:x] == 'true'
+    if params[:state][:action] == 'destroy'
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
       @order.update_attribute :hidden, true
@@ -218,11 +219,10 @@ class OrdersController < ApplicationController
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing
-      render 'go_to_tables' and return
+      render :nothing => true and return
     end
 
-    group_identical_items @order
-
+    @order.group_items
     @order.reload
 
     if local_variant?
@@ -239,23 +239,22 @@ class OrdersController < ApplicationController
 
     @taxes = Tax.accessible_by(@current_user).existing
     @tables = @current_user.tables.existing
-
-    case params[:state][:action]
-      when 'save_and_go_to_tables'
-        render :json => {success: true}
-      when 'save_and_go_to_invoice'
+    case params[:state][:target]
+      when 'tables'
+        case params[:state][:action]
+          when 'send'
+            render :json => {success: true}
+          when 'move'
+            move_order_to_table @order, params[:state][:target_table_id]
+            @tables = @current_user.tables.existing
+            render :json => {success: true}
+        end
+      when 'invoice'
         @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
         session[:display_tax_colors] = @current_vendor.country == 'de' or @current_vendor.country == 'cc'
         render 'go_to_invoice_form'
-      when 'clear_order_and_go_back'
-        @order.table.update_attribute :user_id, nil
-        @tables = @current_user.tables.existing
-        @order.destroy
-        render 'go_to_tables'
-      when 'move_order_to_table'
-        move_order_to_table @order, params[:target_table]
-        @tables = @current_user.tables.existing
-        render 'go_to_tables'
+      else
+        render :nothing => true
     end
   end
 
@@ -272,65 +271,6 @@ class OrdersController < ApplicationController
 
   private
 
-    def unlink_orders(order)
-      parent_order = order.order
-      order.items.each { |i| i.update_attribute :item_id, nil }
-      order.update_attribute :order_id, nil
-      order.reload # unlink also in memory
-      if parent_order
-        parent_order.items.each { |i| i.update_attribute :item_id, nil }
-        parent_order.update_attribute :order_id, nil
-      end
-    end
-
-    def move_order_to_table(order, target_table_id)
-      unlink_orders(order)
-      this_table = order.table
-      target_order = Order.find(:all, :conditions => { :table_id => target_table_id, :finished => false }).first
-
-      if target_order
-        order.items.each { |i| i.update_attribute :order, target_order }
-        order.reload # unlink items also in memory
-        order.destroy
-        target_order.sum = target_order.calculate_sum
-        target_order.save
-        group_identical_items(target_order)
-      else
-        order.update_attribute :table_id, target_table_id
-      end
-
-      # update table users and colors
-      unfinished_orders_on_this_table = Order.find(:all, :conditions => { :table_id => this_table.id, :finished => false })
-      this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
-
-      Table.accessible_by(@current_user).find_by_id(target_table_id).update_attribute :user, order.user
-    end
-
-    def group_identical_items(o)
-      items = o.items.existing
-      n = items.size - 1
-      0.upto(n-1) do |i|
-        (i+1).upto(n) do |j|
-          Item.transaction do
-            if (items[i].article_id  == items[j].article_id and
-                items[i].quantity_id == items[j].quantity_id and
-                items[i].options     == items[j].options and
-                items[i].usage       == items[j].usage and
-                items[i].price       == items[j].price and
-                items[i].comment     == items[j].comment and
-                not items[i].destroyed?
-               )
-              items[i].count += items[j].count
-              items[i].printed_count += items[j].printed_count
-              result = items[i].save
-              raise "Couldn't save item during grouping. Oops!" if not result
-              items[j].destroy
-            end
-          end
-        end
-      end
-      o.reload
-    end
 
     def neighbour_orders(order)
       orders = Order.accessible_by(@current_user).existing.where(:finished => true)
