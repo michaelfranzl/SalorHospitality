@@ -204,7 +204,9 @@ class OrdersController < ApplicationController
     if @order.items.existing.size.zero?
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
-      @order.update_attribute :hidden, true
+      @order.hidden = true
+      @order.nr = nil
+      @order.save
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing
@@ -214,7 +216,9 @@ class OrdersController < ApplicationController
     if params[:state][:action] == 'destroy'
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
-      @order.update_attribute :hidden, true
+      @order.hidden = true
+      @order.nr = nil
+      @order.save
       @order.items.update_all :hidden => true
       @order.table.user = nil
       @order.table.save
@@ -222,7 +226,7 @@ class OrdersController < ApplicationController
       render :nothing => true and return
     end
 
-    @order.group_items
+    @order.regroup
     @order.reload
 
     if local_variant?
@@ -245,7 +249,7 @@ class OrdersController < ApplicationController
           when 'send'
             render :json => {success: true}
           when 'move'
-            move_order_to_table @order, params[:state][:target_table_id]
+            @order.move params[:state][:target_table_id]
             @tables = @current_user.tables.existing
             render :json => {success: true}
         end

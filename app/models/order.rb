@@ -62,29 +62,33 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def move_to_table(target_table_id)
+  def move(target_table_id)
     self.unlink
     self.reload
-    target_order = Order.find.where(:table_id => target_table_id, :finished => false).first
+    target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
+    origin_table = self.table
+    target_table = Table.find_by_id target_table_id
     if target_order
       self.items.update_all :order_id => target_order.id
       self.reload
       self.destroy
       target_order.sum = target_order.calculate_sum
       target_order.save
-      target_order.group_items
+      target_order.regroup
     else
-      self.write_attribute :table_id, target_table_id
+      write_attribute :table_id, target_table_id
     end
+    self.save
 
     # update table users and colors, this should go into table.rb
-    this_table = self.table
-    unfinished_orders_on_this_table = Order.where(:table_id => this_table.id, :finished => false)
-    this_table.update_attribute :user, nil if unfinished_orders_on_this_table.empty?
-    Table.find_by_id(target_table_id).update_attribute :user, self.user
+    origin_table.user = nil if origin_table.orders.existing.where( :finished => false ).empty?
+    origin_table.save
+    
+    target_table.user = self.user
+    target_table.save
   end
 
-  def group_items
+  def regroup
     items = self.items.existing
     n = items.size - 1
     0.upto(n-1) do |i|
