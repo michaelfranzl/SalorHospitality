@@ -38,7 +38,7 @@ window.setInterval(
     tableupdates -= 1;  // no requests by default
     display_queue();
   }
-, 12000);
+, 6000);
 
 function scroll_to(element, speed) {
   target_y = $(window).scrollTop();

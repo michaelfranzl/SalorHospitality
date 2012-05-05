@@ -116,21 +116,19 @@ function add_new_item(object, catid, add_new, anchor_d) {
 
 
 
-function render_items_from_json(json_items) {
-  var i;
-  for (i in json_items) {
-    var object = json_items[i];
+function render_items() {
+  jQuery.each(items_json, function(k,object) {
     catid = object.catid;
     tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.price).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
 //.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
-    enable_keyboard_for_items(i);
+    enable_keyboard_for_items(object.d);
     render_options(resources.c[catid].o, object.d, catid);
-  }
+  });
   calculate_sum();
 }
 
-function render_customers_from_json(json_items) {
+function render_customers_from_json() {
   for (o in order_customers) {
     var customer = order_customers[o]["customer"]
     $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
@@ -198,7 +196,7 @@ function create_json_record(object) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
     s += 1;
   }
-  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:'', s:s};
+  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:'', n:object.n, s:s, catid:object.catid};
   if ( ! object.hasOwnProperty('quantity_id')) { delete items_json[d].quantity_id; }
   create_submit_json_record(d,items_json[d]);
   return d;
@@ -269,9 +267,6 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 function go_to(table_id, view, action, target_table_id) {
   scroll_to($('#container'),20);
   if ( view == 'table' ) {
-    submit_json = {items:{}, order:{id:'', table_id:table_id}, state:{}};
-    items_json = {};
-    $.ajax({ type: 'GET', url: '/tables/' + table_id, timeout: 5000 });
     $('#order_sum').html('0' + i18n_decimal_separator + '00');
     $('#order_info').html(i18n_just_order);
     $('#order_note').val('');
@@ -279,6 +274,18 @@ function go_to(table_id, view, action, target_table_id) {
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
+    if ( submit_json_queue.hasOwnProperty(table_id) ) {
+      $('#order_cancel_button').hide();
+      submit_json = submit_json_queue[table_id];
+      items_json = items_json_queue[table_id];
+      delete submit_json_queue[table_id];
+      delete items_json_queue[table_id];
+      render_items();
+    } else {
+      submit_json = {items:{}, order:{id:'', table_id:table_id}, state:{}};
+      items_json = {};
+    }
+    $.ajax({ type: 'GET', url: '/tables/' + table_id, timeout: 5000 });
     $('#orderform').show();
     $('#invoices').hide();
     $('#tables').hide();
@@ -295,6 +302,7 @@ function go_to(table_id, view, action, target_table_id) {
     $('#invoices').hide();
     $('#tables').show();
     $('#rooms').show();
+    $('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();
@@ -320,8 +328,6 @@ function go_to(table_id, view, action, target_table_id) {
       send_json(table_id);
     }
     screenlock_counter = screenlock_timeout;
-    submit_json = {};
-    items_json = {};
     option_position = 0;
     item_position = 0;
     tableupdates = 2;
@@ -349,6 +355,7 @@ function go_to(table_id, view, action, target_table_id) {
 
 function send_json(table_id) {
   submit_json_queue[table_id] = submit_json;
+  items_json_queue[table_id] = items_json;
   send_queue(table_id);
 }
 

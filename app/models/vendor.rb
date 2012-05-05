@@ -62,9 +62,9 @@ class Vendor < ActiveRecord::Base
       c.articles.existing.active.positioned.reverse.each do |a|
         quantities = {}
         a.quantities.existing.active.positioned.each do |q|
-          quantities.merge! q.id => { :article_id => a.id, :quantity_id => q.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :price => q.price }
+          quantities.merge! q.id => { :article_id => a.id, :quantity_id => q.id, :catid => q.article.category.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :price => q.price }
         end
-        articles.merge! "#{a.position}#{a.id}" => { :article_id => a.id, :d => "a#{a.id}", :n => a.name, :price => a.price, :q => quantities }
+        articles.merge! "#{a.position}#{a.id}" => { :article_id => a.id, :catid => a.category.id, :d => "a#{a.id}", :n => a.name, :price => a.price, :q => quantities }
       end
       options = {}
       c.options.existing.each do |o|
