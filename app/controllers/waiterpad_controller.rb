@@ -8,29 +8,30 @@
 class WaiterpadController < ApplicationController
 
   def index
-    @categories = Category.all
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   def edit
     @waiterpad = {}
-    Category.all.each do |category|
+    @categories = @current_vendor.categories.existing.active.positioned
+    @categories.each do |category|
       articles = {}
-      category.articles.menucard.each do |article|
+      category.articles.existing.active.positioned.each do |article|
         articles = articles.merge({ "#{article.name} | #{article.description}" => article.id })
       end
       @waiterpad = @waiterpad.merge({ category.name => articles })
     end
 
     @selected = []
-    Article.find_all_by_waiterpad(true).each do |article|
+    @current_vendor.articles.exisiting.find_all_by_waiterpad(true).each do |article|
       @selected << article.id
     end
   end
 
   def update
-    Article.update_all :waiterpad => 0
+    @current_vendor.articles.exisiting.update_all :waiterpad => 0
     params[:waiterpad].each do |article_id|
-      Article.find(article_id).update_attribute :waiterpad, true
+      @current_vendor.articles.find(article_id).update_attribute :waiterpad, true
     end
     redirect_to orders_path
   end

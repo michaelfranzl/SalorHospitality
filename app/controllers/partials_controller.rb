@@ -1,13 +1,13 @@
 class PartialsController < ApplicationController
   
   def destroy
-    partial = Partial.find_by_id params[:id]
+    partial = get_model
     partial.delete
     render :nothing => true
   end
 
   def create
-    @presentations = Presentation.existing.find_all_by_model params[:model]
+    @presentations = @current_vendor.presentations.existing.find_all_by_model params[:model]
     render :no_presentation_found and return if @presentations.empty?
     @partial = Partial.new params[:partial]
     @partial.model_id = params[:model_id]
@@ -15,7 +15,7 @@ class PartialsController < ApplicationController
     @partial.blurb = t('partials.default_blurb') if params[:model] == 'Presentation'
     @partial.save
     
-    @page = Page.find_by_id params[:page_id]
+    @page = @current_vendor.pages.existing.find_by_id params[:page_id]
     @page.partials << @partial
     @page.save
     
@@ -23,12 +23,10 @@ class PartialsController < ApplicationController
   end
   
   def update
-    @partial = Partial.find_by_id params[:id]
+    @partial = get_model
     @partial.update_attributes params[:partial]
-    
     @partial_html = evaluate_partial_html @partial
-    
-    @presentations = Presentation.existing.find_all_by_model @partial.presentation.model
+    @presentations = @current_vendor.presentations.existing.find_all_by_model @partial.presentation.model
   end
   
   private

@@ -1,10 +1,10 @@
 class PresentationsController < ApplicationController
   def index
-    @presentations = Presentation.existing
+    @presentations = @current_vendor.presentations.existing.active
   end
   
   def show
-    @presentation = Presentation.find_by_id params[:id]
+    @presentation = get_model
   end
   
   def new
@@ -12,7 +12,7 @@ class PresentationsController < ApplicationController
   end
 
   def edit
-    @presentation = Presentation.find_by_id params[:id]
+    @presentation = get_model
     render :new
   end
   
@@ -22,13 +22,13 @@ class PresentationsController < ApplicationController
   end
 
   def update
-    @presentation = Presentation.find_by_id params[:id]
+    @presentation = get_model
     @presentation.update_attributes params[:presentation]
     redirect_to presentations_path
   end
 
   def destroy
-    @presentation = Presentation.find_by_id params[:id]
+    @presentation = get_model
     @presentation.destroy
     redirect_to presentations_path
   end

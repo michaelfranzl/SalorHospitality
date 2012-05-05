@@ -12,9 +12,9 @@ class ItemsController < ApplicationController
     respond_to do |wants|
       wants.bill {
         items_code = generate_escpos_items
-        pending_invoices = Order.find_all_by_print_pending true
+        pending_invoices = @current_vendor.orders.existing.where(:print_pending => true)
         invoices_code = pending_invoices.collect{ |i| generate_escpos_invoice i }.join
-        pending_invoices.each { |i| i.update_attribute :print_pending, false }
+        pending_invoices.update_all :print_pending => false
         render :text => invoices_code + items_code
       }
       wants.html
@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
   #We'll use update for splitting of items into separate orders
   def update
     logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"
-    @item = Item.accessible_by(@current_user).find_by_id(params[:id])
+    @item = get_model
     logger.info "[Split] @item = #{ @item.inspect }"
     raise "Dieses Item wurde nicht mehr gefunden. Oops! Möglicherweise wurde es mehrfach angewählt und es ist bereits in einer anderen Rechnung?" if not @item
     @order = @item.order
@@ -32,17 +32,17 @@ class ItemsController < ApplicationController
 
     split @item, @order
 
-    @cost_centers = CostCenter.accessible_by(@current_user)
-    @taxes = Tax.accessible_by(@current_user).all
-    @orders = Order.find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
+    @cost_centers = @current_vendor.cost_centers.existing
+    @taxes = @current_vendor.taxes.existing
+    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
   end
 
   # We'll use edit for separation of items
   def edit
-    item = Item.accessible_by(@current_user).find(params[:id])
+    item = get_model
     separated_item = item.item
     if separated_item.nil?
-      separated_item = Item.crreate(item.attributes)
+      separated_item = Item.create(item.attributes)
       separated_item.options = item.options
       separated_item.count = 0
       separated_item.item = item
@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
   # storno_status: 2 = storno clone, 3 = storno original
   #
   def destroy
-    i = Item.accessible_by(@current_user).find_by_id params[:id]
+    i = get_model
     if i.storno_status == 0
       k = Item.create(i.attributes)
       k.options = i.options
@@ -82,8 +82,8 @@ class ItemsController < ApplicationController
   end
 
   def rotate_tax
-    @item = Item.accessible_by(@current_user).find_by_id params[:id]
-    tax_ids = Tax.all.collect { |t| t.id }
+    @item = get_model
+    tax_ids = @current_vendor.taxes.exisiting.collect { |t| t.id }
     current_tax_id_index = tax_ids.index @item.tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id
@@ -99,7 +99,7 @@ class ItemsController < ApplicationController
   end
   
   def set_attribute
-    @item = Item.find_by_id params[:id]
+    @item = get_model
     @item.update_attribute params[:attribute], params[:value]
     render :nothing => true
   end
@@ -169,7 +169,7 @@ class ItemsController < ApplicationController
       end
 
       logger.info "[Split] parent_order before re-read is #{ parent_order.inspect }."
-      parent_order = Order.find(parent_order.id) # re-read
+      parent_order = @current_vendor.orders.find(parent_order.id) # re-read
       logger.info "[Split] parent_order after re-read is #{ parent_order.inspect }."
       raise "Konnte parent_order nicht neu laden. Oops!" if not parent_order
       logger.info "[Split] parent_order has #{ parent_order.items.size } items left."

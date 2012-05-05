@@ -15,6 +15,7 @@ class TaxesController < ApplicationController
 
   def create
     @tax = get_model
+    redirect_to taxes_path and return unless @tax
     @tax.save ? redirect_to(taxes_path) : render(:new)
   end
 
@@ -25,11 +26,13 @@ class TaxesController < ApplicationController
 
   def update
     @tax = get_model
+    redirect_to taxes_path and return unless @tax
     @tax.update_attributes(params[:tax]) ? redirect_to(taxes_path) : render(:new)
   end
 
   def destroy
     @tax = get_model
+    redirect_to taxes_path and return unless @tax
     @tax.update_attribute :hidden, true
     redirect_to taxes_path
   end

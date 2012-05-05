@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
       if session[:vendor_id]
         redirect_to orders_path
       else
-        session[:vendor_id] = @current_company.vendors.first.id
+        session[:vendor_id] = @current_company.vendors.existing.first.id
         redirect_to vendors_path
       end
       #check_product_key

@@ -10,7 +10,7 @@ class QuantitiesController < ApplicationController
   def sort
     if params['quantity']
       params['quantity'].each do |id|
-        q = Quantity.find_by_id id
+        q = @current_vendor.quantities.find_by_id id
         q.position = params['quantity'].index(q.id.to_s) + 1
         q.save
       end

@@ -31,12 +31,14 @@ class OptionsController < ApplicationController
   def edit
     @categories = @current_vendor.categories.active.existing
     @option = get_model
+    redirect_to roles_path and return unless @option
     render :new
   end
 
   def update
     @categories = @current_vendor.categories.active.existing
     @option = get_model
+    redirect_to roles_path and return unless @option
     if @option.update_attributes(params[:option])
       flash[:notice] = I18n.t("options.update.success")
       redirect_to options_path
@@ -47,6 +49,7 @@ class OptionsController < ApplicationController
 
   def destroy
     @option = get_model
+    redirect_to roles_path and return unless @option
     @option.update_attribute :hidden, true
     flash[:notice] = I18n.t("options.destroy.success")
     redirect_to options_path

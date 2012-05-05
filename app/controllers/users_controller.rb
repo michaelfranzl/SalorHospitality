@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
   def show
     @user = get_model
+    redirect_to user_path and return unless @user
   end
 
   def create
@@ -39,6 +40,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = get_model
+    redirect_to user_path and return unless @user
     @roles = @current_vendor.roles.existing.active
     @tables = @current_vendor.tables.existing.where(:enabled => true)
     render :new
@@ -46,6 +48,7 @@ class UsersController < ApplicationController
 
   def update
     @user = get_model
+    redirect_to user_path and return unless @user
     if @user.update_attributes(params[:user])
       flash[:notice] = I18n.t("users.create.success")
       redirect_to(users_path)
@@ -58,6 +61,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = get_model
+    redirect_to user_path and return unless @user
     flash[:notice] = I18n.t("users.destroy.success")
     @user.update_attribute :hidden, true
     redirect_to users_path

@@ -16,13 +16,13 @@ class OrdersController < ApplicationController
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
-    @order = Order.accessible_by(@current_user).existing.find_by_id params[:id]
+    @order = get_model
     if params[:order][:tax_id]
       @order.update_attribute :tax_id, params[:order][:tax_id] 
-      @order.items.each { |i| i.update_attribute :tax_id, nil }
-      @orders = Order.accessible_by(@current_user).find_all_by_finished(false, :conditions => { :table_id => @order.table_id })
-      @cost_centers = CostCenter.accessible_by(@current_user).all
-      @taxes = Tax.accessible_by(@current_user).existing
+      @order.items.existing.update_all :tax_id => nil
+      @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
+      @cost_centers = @current_vendor.cost_center.existing.active
+      @taxes = @current_vendor.taxes.existing
       render 'items/update'
     else
       @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]  
@@ -30,17 +30,11 @@ class OrdersController < ApplicationController
     end
   end
 
-  def edit
-    @order = Order.accessible_by(@current_user).existing.find_by_id params[:id]
-    @table = @order.table
-    render 'orders/go_to_order_form'
-  end
-
   def show
     if params[:id] != 'last'
-      @order = Order.accessible_by(@current_user).existing.find(params[:id])
+      @order = @current_vendor.orders.existing.find(params[:id])
     else
-      @order = Order.accessible_by(@current_user).existing.find_all_by_finished(true).last
+      @order = @current_vendor.orders.existing.find_all_by_finished(true).last
     end
     redirect_to '/' and return if not @order
     @previous_order, @next_order = neighbour_orders(@order)
@@ -51,15 +45,13 @@ class OrdersController < ApplicationController
   end
 
   def by_nr
-    @order = Order.existing.find_by_nr params[:nr]
+    @order = @current_vendor.orders.existing.find_by_nr(params[:nr])
     if @order
       redirect_to order_path(@order)
     else
-      redirect_to order_path(Order.last)
+      redirect_to order_path(@current_vendor.orders.existing.last)
     end
   end
-
-
 
   def toggle_admin_interface
     if session[:admin_interface]
@@ -67,26 +59,25 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = @current_user.tables
+    @tables = @current_user.tables.existing
   end
 
   def toggle_tax_colors
+    @order = get_model
     if session[:display_tax_colors]
       session[:display_tax_colors] = !session[:display_tax_colors]
     else
       session[:display_tax_colors] = true
     end
-    @orders = Order.accessible_by(@current_user).existing.find_all_by_finished(false, :conditions => { :table_id => Order.find_by_id(params[:id]).table_id })
-    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
-    @taxes = Tax.accessible_by(@current_user).existing
+    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+    @cost_centers = @current_vendor.cost_centers.existing.active.
+    @taxes = @current_vendor.taxes.existing
     render 'items/update'
   end
 
   def print_and_finish
-    @order = Order.accessible_by(@current_user).existing.find params[:id]
-
+    @order = get_model
     is_finished = @order.finished
-
     if not is_finished
       if @order.nr > @current_vendor.largest_order_number
         @current_vendor.update_attribute :largest_order_number, @order.nr 
@@ -103,7 +94,7 @@ class OrdersController < ApplicationController
     if params[:port].to_i != 0
       if local_variant?
         # print immediately
-        selected_printer = VendorPrinter.find_by_id(params[:port].to_i)
+        selected_printer = @current_vendor.vendor_printer.existing.find_by_id(params[:port].to_i)
         printer_id = selected_printer.id if selected_printer
         all_printers = initialize_printers
         text = generate_escpos_invoice(@order)
@@ -115,10 +106,10 @@ class OrdersController < ApplicationController
       end
     end
 
-    @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table, :finished => false })
+    @orders = @current_vendor.orders.existing.where(:table_id => @order.table, :finished => false)
     @order.table.update_attribute :user, nil if @orders.empty?
-    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
-    @taxes = Tax.accessible_by(@current_user).existing
+    @cost_centers = @current_vendor.cost_centers.existing.active
+    @taxes = @current_vendor.taxes.existing
 
     respond_to do |wants|
       wants.js {
@@ -138,19 +129,19 @@ class OrdersController < ApplicationController
   end
 
   def storno
-    @order = Order.accessible_by(@current_user).find_by_id params[:id]
+    @order = get_model
   end
 
   def update_ajax
-    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
+    @cost_centers = @current_vendor.existing.active
 
     if params[:order][:id].empty?
       # The AJAX load on the client side has not succeeded before user submitted the order form.
       # In this case, simply select the first order on the table the user had selected.
-      @order = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :finished => false, :table_id => params[:order][:table_id] }).first
+      @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
     else
       # The AJAX load on the client side has succeeded and we know the order ID.
-      @order = Order.accessible_by(@current_user).existing.find_by_id params[:order][:id]
+      @order = @current_vendor.orders.existing.find_by_id params[:order][:id]
     end
 
     if @order
@@ -234,8 +225,8 @@ class OrdersController < ApplicationController
       close_printers printers
     end
 
-    @taxes = Tax.accessible_by(@current_user).existing
-    @tables = @current_user.tables.existing
+    @taxes = @current_vendor.taxes.existing
+    @tables = @current_user.tables.existing.where(:enabled => true)
     case params[:state][:target]
       when 'tables'
         case params[:state][:action]
@@ -243,11 +234,10 @@ class OrdersController < ApplicationController
             render :json => {success: true}
           when 'move'
             @order.move params[:state][:target_table_id]
-            @tables = @current_user.tables.existing
             render :json => {success: true}
         end
       when 'invoice'
-        @orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :table_id => @order.table.id, :finished => false })
+        @orders = @current_vendor.orders.existing.where(:table_id => @order.table.id, :finished => false)
         session[:display_tax_colors] = @current_vendor.country == 'de' or @current_vendor.country == 'cc'
         render 'go_to_invoice_form'
       else
@@ -256,7 +246,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @unsettled_orders = Order.accessible_by(@current_user).existing.find(:all, :conditions => { :settlement_id => nil, :finished => true, :user_id => @current_user.id })
+    @unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id)
     if @current_user.role.permissions.include? 'finish_all_settlements'
       @users = @current_vendor.users
     elsif @current_user.role.permissions.include? 'finish_own_settlement'
@@ -268,9 +258,8 @@ class OrdersController < ApplicationController
 
   private
 
-
     def neighbour_orders(order)
-      orders = Order.accessible_by(@current_user).existing.where(:finished => true)
+      orders = @current_order.orders.existing.where(:finished => true)
       idx = orders.index(order)
       previous_order = orders[idx-1] if idx
       previous_order = order if previous_order.nil?
@@ -280,7 +269,7 @@ class OrdersController < ApplicationController
     end
 
     def reduce_stocks(order)
-      order.items.each do |item|
+      order.items.exisiting.each do |item|
         item.article.ingredients.each do |ingredient|
           ingredient.stock.balance -= item.count * ingredient.amount
           ingredient.stock.save

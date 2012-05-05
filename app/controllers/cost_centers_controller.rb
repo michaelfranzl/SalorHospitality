@@ -27,11 +27,13 @@ class CostCentersController < ApplicationController
 
   def edit
     @cost_center = get_model
+    redirect_to roles_path and return unless @cost_center
     render :new
   end
 
   def update
     @cost_center = get_model
+    redirect_to roles_path and return unless @cost_center
     if @cost_center.update_attributes(params[:cost_center])
       flash[:notice] = t('cost_centers.create.success')
       redirect_to(cost_centers_path)
@@ -42,6 +44,7 @@ class CostCentersController < ApplicationController
 
   def destroy
     @cost_center = get_model
+    redirect_to roles_path and return unless @cost_center
     @cost_center.update_attribute :hidden, true
     flash[:notice] = t('cost_centers.destroy.success')
     redirect_to cost_centers_path

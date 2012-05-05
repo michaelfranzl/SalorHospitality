@@ -18,6 +18,7 @@ class TablesController < ApplicationController
 
   def show
     @table = get_model
+    redirect_to roles_path and return unless @table
     @cost_centers = @current_vendor.cost_centers.existing.active
     @taxes = @current_vendor.taxes.existing.active
     @orders = @current_vendor.orders.existing.where(:table_id => @table.id, :finished => false )
@@ -50,11 +51,13 @@ class TablesController < ApplicationController
 
   def edit
     @table = get_model
+    redirect_to tables_path and return unless @table
     render :new
   end
 
   def update
     @table = get_model
+    redirect_to tables_path and return unless @table
     success = @table.update_attributes(params[:table])
     respond_to do |wants|
       wants.html do
@@ -71,6 +74,7 @@ class TablesController < ApplicationController
 
   def destroy
     @table = get_model
+    redirect_to tables_path and return unless @table
     @table.update_attribute :hidden, true
     flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path

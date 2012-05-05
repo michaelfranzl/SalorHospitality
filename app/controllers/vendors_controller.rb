@@ -14,6 +14,7 @@ class VendorsController < ApplicationController
   # Switches the current vendor and redirects to somewhere else
   def show
     @current_vendor = get_model
+    redirect_to vendor_path and return unless @vendor
     session[:vendor_id] = params[:id] if @current_vendor
     redirect_to vendors_path
   end
@@ -21,6 +22,7 @@ class VendorsController < ApplicationController
   # Edits the vendor
   def edit
     @vendor = get_model
+    redirect_to vendor_path and return unless @vendor
     @vendor ? render(:new) : redirect_to(vendors_path)
   end
 

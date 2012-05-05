@@ -439,6 +439,10 @@ de:
       view_statistics: Statistiken ansehen
       manage_users: Benutzer verwalten
       manage_settings: Grundeinstellungen vornehmen
+    create:
+      success: Rolle erfolgreich gespeichert
+    destroy:
+      success: Rolle erfolgreich gelöscht
       
   partials:
     error_during_evaluation: 'Fehler: '

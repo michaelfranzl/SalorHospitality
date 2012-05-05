@@ -47,6 +47,7 @@ class SettlementsController < ApplicationController
 
   def update
     @settlement = get_model
+    render :nothing => true and return if not @settlement
     @settlement.update_attributes params[:settlement]
     @settlement.vendor = @current_vendor
     @settlement.company = @current_company
@@ -104,7 +105,8 @@ class SettlementsController < ApplicationController
       string += "\nNr.     Tisch   Zeit  Kostenstelle   Summe\n"
 
       total_costcenter = Hash.new
-      CostCenter.all.each { |cc| total_costcenter[cc.id] = 0 }
+      costcenters = @current_vendor.cost_centers.existing.active
+      costcenters.each { |cc| total_costcenter[cc.id] = 0 }
 
       list_of_orders = ''
       storno_sum = 0
@@ -122,7 +124,7 @@ class SettlementsController < ApplicationController
       "\ea\x02"    # align right
 
       list_of_costcenters = ''
-      CostCenter.all.each do |cc|
+      costcenters.each do |cc|
         list_of_costcenters += "%s:  EUR %9.2f\n" % [cc.name, total_costcenter[cc.id]]
       end
 

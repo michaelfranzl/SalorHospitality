@@ -61,12 +61,14 @@ class ArticlesController < ApplicationController
     @taxes = @current_vendor.taxes.existing
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
+    redirect_to roles_path and return unless @article
     @article ? render(:new) : redirect_to(articles_path)
   end
 
   # tested
   def update
     @article = get_model
+    redirect_to roles_path and return unless @article
     if @article.update_attributes params[:article]
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
@@ -83,6 +85,7 @@ class ArticlesController < ApplicationController
   # tested
   def destroy
     @article = get_model
+    redirect_to roles_path and return unless @article
     @article.hide
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
@@ -102,6 +105,7 @@ class ArticlesController < ApplicationController
   # tested
   def change_scope
     @article = get_model
+    redirect_to roles_path and return unless @article
     @source = params[:source]
     @target = params[:target]
     if @target == 'searchresults' and @source != 'searchresults'

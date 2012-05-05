@@ -10,7 +10,7 @@ class RolesController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @roles = @current_vendor.roles
+    @roles = @current_vendor.roles.existing
   end
 
   def new
@@ -18,13 +18,15 @@ class RolesController < ApplicationController
   end
 
   def edit
-    @role = Role.find(params[:id])
+    @role = get_model
+    redirect_to roles_path and return unless @role
     render :new
   end
 
   def create
     @role = Role.new(params[:role])
     if @role.save
+      flash[:notice] = t('role.create.success')
       redirect_to roles_path
     else
       render :action => 'new'
@@ -32,12 +34,22 @@ class RolesController < ApplicationController
   end
 
   def update
-    @role = Role.find(params[:id])
+    @role = get_model
+    redirect_to roles_path and return unless @role
     if @role.update_attributes params[:role]
+      flash[:notice] = t('role.create.success')
       redirect_to roles_path
     else
       render :action => 'new'
     end
+  end
+
+  def destroy
+    @role = get_model
+    redirect_to roles_path and return unless @role
+    @role.update_attribute :hidden, true
+    flash[:notice] = t('roles.destroy.success')
+    redirect_to roles_path
   end
 
   private

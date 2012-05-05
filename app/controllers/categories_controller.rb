@@ -35,6 +35,7 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = get_model
+    redirect_to roles_path and return unless @category
     @taxes = @current_vendor.taxes.existing
     @users = @current_vendor.users.existing.active
     @printers = @current_vendor.vendor_printers.existing
@@ -43,6 +44,7 @@ class CategoriesController < ApplicationController
 
   def update
     @category = get_model
+    redirect_to roles_path and return unless @category
     if @category.update_attributes(Category.process_custom_icon(params[:category])) then
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to categories_path
@@ -56,6 +58,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category = get_model
+    redirect_to roles_path and return unless @category
     @category.update_attribute :hidden, true
     flash[:notice] = t('categories.destroy.success')
     redirect_to categories_path
