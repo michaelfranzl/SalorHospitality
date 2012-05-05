@@ -7,33 +7,35 @@
 class SettlementsController < ApplicationController
   def index
     @from, @to = assign_from_to(params)
-    @settlements = Settlement.find(:all, :conditions => { :created_at => @from..@to})
+    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
+    @to = @to ? @to.end_of_day : DateTime.now
+    @settlements = @current_vendor.settlements.find(:all, :conditions => { :created_at => @from..@to})
     @to -= 1.day
-    @taxes = Tax.existing
-    @cost_centers = CostCenter.all
-    @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
+    @taxes = @current_vendor.taxes.existing
+    @cost_centers = @current_vendor.cost_centers.existing.active
+    @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
 
   def new
     @settlement = Settlement.new
     @settlement.user_id = params[:user_id]
-    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true }, :order => 'created_at DESC')
+    @orders = @current_vendor.orders.where( :settlement_id => nil, :user_id => @settlement.user_id, :finished => true ).order('created_at DESC')
   end
 
   def detailed_list
-    @selected_cost_center = CostCenter.find(params[:cost_center_id]) if params[:cost_center_id]
+    @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id]
     if params[:settlement_id]
-      @settlement = Settlement.find_by_id params[:settlement_id]
+      @settlement = @current_vendor.settlements.find_by_id(params[:settlement_id])
       @orders = @settlement.orders
     elsif params[:user_id]
       @settlement = Settlement.new :user_id => params[:user_id]
-      @orders = Order.find_all_by_user_id(params[:user_id], :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' )
+      @orders = @current_vendor.orders.where(:user_id => params[:user_id], :settlement_id => nil, :finished => true).order('id DESC')
     end
     redirect_to 'settlements/open' unless @orders
   end
 
   def print
-    @settlement = Settlement.find_by_id params[:id]
+    @settlement = get_model
     render :nothing => true and return if not @settlement
     @orders = @settlement.orders
     printers = initialize_printers
@@ -44,9 +46,11 @@ class SettlementsController < ApplicationController
   end
 
   def update
-    @settlement = Settlement.find params[:id]
+    @settlement = get_model
     @settlement.update_attributes params[:settlement]
-    @orders = Order.find_all_by_settlement_id(nil, :conditions => { :user_id => @settlement.user_id, :finished => true })
+    @settlement.vendor = @current_vendor
+    @settlement.company = @current_company
+    @orders = @current_vendor.orders.where(:settlement_id => nil, :user_id => @settlement.user_id, :finished => true)
     if params[:print] != '' and local_variant?
       printers = initialize_printers
       text = generate_escpos_settlement(@settlement, @orders)
@@ -54,8 +58,8 @@ class SettlementsController < ApplicationController
       close_printers printers
     end
     if @settlement.finished
-      @orders.each { |o| o.update_attribute :settlement_id, @settlement.id }
-      @settlement = Settlement.new :user_id => @settlement.user_id
+      @orders.update_all :settlement_id => @settlement.id
+      @settlement = Settlement.new :user_id => @settlement.user_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
     end
     respond_to do |wants|
       wants.js
@@ -64,31 +68,20 @@ class SettlementsController < ApplicationController
 
   def create
     @settlement = Settlement.create params[:settlement]
+    @settlement.vendor = @current_vendor
+    @settlement.company = @current_company
+    @settlement.save
     respond_to do |wants|
       wants.js
     end
   end
 
   def open
-    @users = @current_company.users.active
+    @users = @current_vendor.users.existing.active
   end
 
   
   private
-
-    def assign_from_to(p)
-      f = Date.civil( p[:from][:year ].to_i,
-                      p[:from][:month].to_i,
-                      p[:from][:day  ].to_i) if p[:from]
-      t = Date.civil( p[:to  ][:year ].to_i,
-                      p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
-
-      f ||= DateTime.now.beginning_of_day
-      t ||= f + 1.day
-
-      return f, t
-    end
 
     def generate_escpos_settlement(settlement, orders)
       string =

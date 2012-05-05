@@ -9,7 +9,7 @@ class TablesController < ApplicationController
 
   def index
     @tables = @current_user.tables.existing
-    @last_finished_order = Order.existing.where(:finished => true).last
+    @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_to do |wants|
       wants.html
       wants.js
@@ -18,10 +18,9 @@ class TablesController < ApplicationController
 
   def show
     @table = get_model
-    @cost_centers = CostCenter.accessible_by(@current_user).existing.active
-    @taxes = Tax.accessible_by(@current_user).existing
-
-    @orders = Order.accessible_by(@current_user).existing.where(:table_id => @table.id, :finished => false )
+    @cost_centers = @current_vendor.cost_centers.existing.active
+    @taxes = @current_vendor.taxes.existing.active
+    @orders = @current_vendor.orders.existing.where(:table_id => @table.id, :finished => false )
     if @orders.size > 1
       render 'orders/go_to_invoice_form'
     else
@@ -42,9 +41,10 @@ class TablesController < ApplicationController
       @current_vendor.users.each do |u|
         u.tables << @table
       end
-      redirect_to(tables_path)
+      flash[:notice] = t('articles.create.success')
+      redirect_to tables_path
     else
-      render(:new)
+      render :new
     end
   end
 
@@ -57,7 +57,14 @@ class TablesController < ApplicationController
     @table = get_model
     success = @table.update_attributes(params[:table])
     respond_to do |wants|
-      wants.html{ success ? redirect_to(tables_path) : render(:new)}
+      wants.html do
+        if success
+          flash[:notice] = t('tables.create.success')
+          redirect_to tables_path
+        else
+          render :new
+        end
+      end
       wants.js { render :nothing => true }
     end
   end
@@ -65,18 +72,8 @@ class TablesController < ApplicationController
   def destroy
     @table = get_model
     @table.update_attribute :hidden, true
+    flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path
-  end
-
-  def time_range
-    @from = Date.civil( params[:from][:year ].to_i,
-                        params[:from][:month].to_i,
-                        params[:from][:day  ].to_i) if params[:from]
-    @to =   Date.civil( params[:to  ][:year ].to_i,
-                        params[:to  ][:month].to_i,
-                        params[:to  ][:day  ].to_i) if params[:to]
-    @tables = Table.accessible_by(@current_user).existing
-    render :index
   end
 
   def mobile

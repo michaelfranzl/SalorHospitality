@@ -21,7 +21,7 @@ class Vendor < ActiveRecord::Base
   has_many :settlements
   has_many :tables
   has_many :roles
-  has_many :taxes
+  has_many :taxes, :class_name => 'Tax'
   has_many :vendor_printers
 
   serialize :unused_order_numbers

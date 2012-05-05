@@ -22,7 +22,6 @@
       = link_to( t('activerecord.models.settlement.other'), settlements_path)
 
     - if perms.include? 'view_statistics'
-      = link_to( t('statistic'), statistics_path)
       = link_to( t('reports.reports'), '/reports')
 
     - if perms.include? 'manage_settings'

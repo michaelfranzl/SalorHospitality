@@ -10,38 +10,56 @@ class UsersController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @users = @current_company.users.existing
+    @users = @current_vendor.users.existing
   end
 
   def new
     @user = User.new
-    @tables = Table.all
+    @roles = @current_vendor.roles.existing.active
+    @tables = @current_vendor.tables.existing.where(:enabled => true)
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = get_model
   end
 
   def create
     @user = User.new(params[:user])
+    @user.vendors = [@current_vendor]
     @user.company = @current_company
-    @user.save ? redirect_to(users_path) : render(:new)
+    if @user.save
+      flash[:notice] = I18n.t("users.create.success")
+      redirect_to users_path
+    else
+      @roles = @current_vendor.roles.existing.active
+      @tables = @current_vendor.tables.existing.where(:enabled => true)
+      render(:new)
+    end
   end
 
   def edit
-    @user = User.find(params[:id])
-    @tables = Table.existing
+    @user = get_model
+    @roles = @current_vendor.roles.existing.active
+    @tables = @current_vendor.tables.existing.where(:enabled => true)
     render :new
   end
 
   def update
-    @user = User.find(params[:id])
-    @user.update_attributes(params[:user]) ? redirect_to(users_path) : render(:new)
+    @user = get_model
+    if @user.update_attributes(params[:user])
+      flash[:notice] = I18n.t("users.create.success")
+      redirect_to(users_path)
+    else
+      @tables = @current_vendor.tables.existing.where(:enabled => true)
+      @roles = @current_vendor.roles.existing.enabled
+      render(:new)
+    end
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @user = get_model
+    flash[:notice] = I18n.t("users.destroy.success")
+    @user.update_attribute :hidden, true
     redirect_to users_path
   end
 

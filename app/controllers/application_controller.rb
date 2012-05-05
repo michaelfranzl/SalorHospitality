@@ -80,6 +80,19 @@ class ApplicationController < ActionController::Base
       I18n.locale = @current_user ? @current_user.language : 'en'
     end
 
+    def assign_from_to(p)
+      f = Date.civil( p[:from][:year ].to_i,
+                      p[:from][:month].to_i,
+                      p[:from][:day  ].to_i) if p[:from]
+      t = Date.civil( p[:to  ][:year ].to_i,
+                      p[:to  ][:month].to_i,
+                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
+
+      #f ||= DateTime.now.beginning_of_day
+      #t ||= f + 1.day
+      return f, t
+    end
+
     def get_next_unique_and_reused_order_number
       return 0 if not @current_vendor.use_order_numbers
       if not @current_vendor.unused_order_numbers.empty?

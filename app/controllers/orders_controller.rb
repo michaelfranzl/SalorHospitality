@@ -141,14 +141,7 @@ class OrdersController < ApplicationController
     @order = Order.accessible_by(@current_user).find_by_id params[:id]
   end
 
-  def go_to_order_form # to be called only with /id
-    @order = get_model
-    @table = @order.table
-    @cost_centers = CostCenter.existing.active
-    render 'go_to_order_form'
-  end
-
-  def receive_order_attributes_ajax
+  def update_ajax
     @cost_centers = CostCenter.accessible_by(@current_user).existing.active
 
     if params[:order][:id].empty?

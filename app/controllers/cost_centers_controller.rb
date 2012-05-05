@@ -6,7 +6,7 @@
 # See license.txt for the license applying to all files within this software.
 class CostCentersController < ApplicationController
   def index
-    @cost_centers = CostCenter.accessible_by(@current_user).existing
+    @cost_centers = @current_vendor.cost_centers.existing.active
   end
 
   def new
@@ -15,22 +15,35 @@ class CostCentersController < ApplicationController
 
   def create
     @cost_center = CostCenter.new(params[:cost_center])
-    @cost_center.save ? redirect_to(cost_centers_path) : render(:new)
+    @cost_center.vendor = @current_vendor
+    @cost_center.company = @current_company
+    if @cost_center.save
+      flash[:notice] = t('cost_centers.create.success')
+      redirect_to cost_centers_path
+    else
+      render :new
+    end
   end
 
   def edit
-    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
+    @cost_center = get_model
     render :new
   end
 
   def update
-    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
-    @cost_center.update_attributes(params[:cost_center]) ? redirect_to(cost_centers_path) : render(:new)
+    @cost_center = get_model
+    if @cost_center.update_attributes(params[:cost_center])
+      flash[:notice] = t('cost_centers.create.success')
+      redirect_to(cost_centers_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy
-    @cost_center = CostCenter.accessible_by(@current_user).find(params[:id])
-    @cost_center.destroy
+    @cost_center = get_model
+    @cost_center.update_attribute :hidden, true
+    flash[:notice] = t('cost_centers.destroy.success')
     redirect_to cost_centers_path
   end
 

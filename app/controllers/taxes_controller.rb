@@ -6,7 +6,7 @@
 # See license.txt for the license applying to all files within this software.
 class TaxesController < ApplicationController
   def index
-    @taxes = Tax.accessible_by(@current_user).existing
+    @taxes = @current_vendor.taxes.existing
   end
 
   def new
@@ -14,22 +14,22 @@ class TaxesController < ApplicationController
   end
 
   def create
-    @tax = Tax.new(params[:tax])
+    @tax = get_model
     @tax.save ? redirect_to(taxes_path) : render(:new)
   end
 
   def edit
-    @tax = Tax.accessible_by(@current_user).find(params[:id])
+    @tax = get_model
     render :new
   end
 
   def update
-    @tax = Tax.accessible_by(@current_user).find(params[:id])
+    @tax = get_model
     @tax.update_attributes(params[:tax]) ? redirect_to(taxes_path) : render(:new)
   end
 
   def destroy
-    @tax = Tax.accessible_by(@current_user).find(params[:id])
+    @tax = get_model
     @tax.update_attribute :hidden, true
     redirect_to taxes_path
   end

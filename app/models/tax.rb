@@ -21,8 +21,8 @@ class Tax < ActiveRecord::Base
   end
   
   def percent=(percent)
-      percent = percent.gsub(',', '.') if percent.class == String
-      write_attribute(:percent, percent)
+    percent = percent.gsub(',', '.') if percent.class == String
+    write_attribute(:percent, percent)
   end
 
 end

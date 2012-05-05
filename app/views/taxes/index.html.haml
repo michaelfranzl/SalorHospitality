@@ -1,6 +1,6 @@
 %h2= t('activerecord.models.tax.other')
 
-%p= link_to((t :new), new_taxis_path, :class => 'links')
+%p= link_to((t :new), new_tax_path, :class => 'links')
 
 %table
   %tr
@@ -10,7 +10,7 @@
     %th{ :style => 'width:50px' }
   - @taxes.each do |ta|
     %tr
-      %td= link_to ta.name, edit_taxis_path(ta)
+      %td= link_to ta.name, edit_tax_path(ta)
       %td= number_to_percentage ta.percent, :precision => 0
       %td= ta.letter
-      %td= link_to image_tag('button_small_delete.png', :title => Tax.human_attribute_name(:hidden), :alt => Tax.human_attribute_name(:hidden)), taxis_path(ta), :method => :delete, :confirm => t(:are_you_sure)
+      %td= link_to image_tag('button_small_delete.png', :title => Tax.human_attribute_name(:hidden), :alt => Tax.human_attribute_name(:hidden)), tax_path(ta), :method => :delete, :confirm => t(:are_you_sure)

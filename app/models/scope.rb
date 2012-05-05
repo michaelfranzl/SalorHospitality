@@ -1,10 +1,18 @@
 module Scope
   def self.included(klass)
-    klass.scope(:accessible_by, lambda { |user|
-      if user.respond_to?(:company_id) and not user.company_id.nil?
-        klass.where( :company_id => user.company_id )
-      elsif user.respond_to?(:vendor_id) and not user.vendor_id.nil?
-        klass.where( :vendor_id => user.vendor_id )
+    klass.scope(:accessible_by, lambda { |model|
+      if model.respond_to?(:company_id) and not model.company_id.nil?
+        klass.where( :company_id => model.company_id )
+      elsif model.respond_to?(:vendor_id) and not model.vendor_id.nil?
+        klass.where( :vendor_id => model.vendor_id )
+      end
+    })
+
+    klass.scope(:of, lambda { |model|
+      if model.class == Vendor
+        klass.where(:vendor_id => model.id)
+      elsif model.class == Company
+        klass.where(:company_id => model.id)
       end
     })
 

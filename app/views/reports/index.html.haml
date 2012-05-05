@@ -19,4 +19,4 @@
     %br
     = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
 
-%img{ :id => 'progress', :src => '/images/upload.gif', :style => 'display: none;' }
+= image_tag 'ajax-loader2.gif', :id => 'progress', :style => 'display: none'

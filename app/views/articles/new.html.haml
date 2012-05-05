@@ -23,6 +23,9 @@
           %span.spinner
             %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
       %div
+        %span.label_width= article_form.label('user_id', Article.human_attribute_name(:tax_id))
+        %span.input_fields= article_form.collection_select :tax_id, @taxes, :id, :custom_name, { :include_blank => true }
+      %div
         %span.label_width= article_form.label('description', Article.human_attribute_name(:description))
         %span.input_fields
           = article_form.text_field :description
@@ -48,7 +51,7 @@
 
       %div
         %span.label_width
-        %span= link_to image_tag('/images/button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
+        %span= link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
 
     .search_results
       %ul#search_results

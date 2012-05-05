@@ -98,7 +98,7 @@ class Report
       lines << line.join("\t")
       line = []
       [:id,:class,:name,:description].each do |c|
-        line << order.cost_center.send(c)
+        line << order.cost_center.send(c) if order.cost_center
       end
       lines << line.join("\t")
     end # orders.each

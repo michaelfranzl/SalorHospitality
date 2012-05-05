@@ -88,6 +88,7 @@ de:
         category: Kategorie
         menucard: aktiv
         usage: Verwendung
+        tax_id: Steuer
       option:
         price: Preis
         category_id: Kategorie
@@ -201,10 +202,8 @@ de:
       update: Aktualisieren!
     create:
       success: Artikel erfolgreich gespeichert
-      failure: Fehler beim Speichern
-    update:
-      success: Artikel erfolgreich aktualisiert
-      failure: Fehler beim Aktualisieren
+    destroy:
+      success: Artikel erfolgreich gelöscht
     new:
       new_article: Neuer Artikel
       edit_article: Artikel bearbeiten
@@ -226,6 +225,10 @@ de:
       new_option: Neue Option
       edit_option: Option bearbeiten
       hidden: löschen
+    create:
+      success: Option erfolgreich gespeichert
+    destroy:
+      success: Option erfolgreich gelöscht
 
   blackboard:
     index:
@@ -259,6 +262,10 @@ de:
       teapot: Teekanne
       tea: Teetasse
       blank: Leer
+    create:
+      success: Kategorie erfolgreich gespeichert
+    destroy:
+      success: Kategorie erfolgreich gelöscht
 
   cost_centers:
     index:
@@ -267,6 +274,10 @@ de:
     new:
       new_cost_center: Neue Kostenstelle
       edit_cost_center: Kostenstelle bearbeiten
+    create:
+      success: Kostenstelle erfolgreich gespeichert
+    destroy:
+      success: Kostenstelle erfolgreich gelöscht
 
   groups:
     new:
@@ -374,6 +385,10 @@ de:
     new:
       new_table: Neuer Tisch
       edit_table: Tisch bearbeiten
+    create:
+      success: Tisch erfolgreich gespeichert
+    destroy:
+      success: Tisch erfolgreich gelöscht
 
   taxes:
     new:
@@ -384,6 +399,10 @@ de:
     new:
       new_user: Neuer Benutzer
       edit_user: Benutzer bearbeiten
+    create:
+      success: Benutzer erfolgreich gespeichert
+    destroy:
+      success: Benutzer erfolgreich gelöscht
 
   companies:
     edit:

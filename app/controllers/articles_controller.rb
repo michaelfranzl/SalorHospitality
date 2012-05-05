@@ -30,27 +30,27 @@ class ArticlesController < ApplicationController
 
   # tested
   def listall
-    @articles = Article.accessible_by(@current_user).existing.active.order('name, description, price')
+    @articles = @current_vendor.articles.existing.active.order('name, description, price')
   end
 
   # tested
   def new
     @article = Article.new
     @categories = @current_vendor.categories.existing.active.positioned
+    @taxes = @current_vendor.taxes.existing
   end
 
   # tested
   def create
     @article = Article.new(params[:article])
+    @article.company = @current_company
+    @article.vendor = @current_vendor
     if @article.save
-      @article.company = @current_company
-      @article.vendor = @current_vendor
-      @article.save
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
       @categories = @current_vendor.categories.existing.active.positioned
-      flash[:notice] = t('articles.create.failure')
+      @taxes = @current_vendor.taxes.existing
       render :new
     end
   end
@@ -58,6 +58,7 @@ class ArticlesController < ApplicationController
   # tested
   def edit
     @categories = @current_vendor.categories.existing.active.positioned
+    @taxes = @current_vendor.taxes.existing
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
     @article ? render(:new) : redirect_to(articles_path)
@@ -66,19 +67,15 @@ class ArticlesController < ApplicationController
   # tested
   def update
     @article = get_model
-    redirect_to articles_path and return unless @article
-    @article.update_attributes params[:article]
-    @categories = @current_vendor.categories.active.existing
-    if @article.save
+    if @article.update_attributes params[:article]
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
         redirect_to session[:return_to]
         session[:return_to] = nil
-      else
-        redirect_to orders_path
       end
     else
-      flash[:error] = t('articles.update.failure')
+      @categories = @current_vendor.categories.active.existing
+      @taxes = @current_vendor.taxes.existing
       render :new
     end
   end
@@ -86,7 +83,6 @@ class ArticlesController < ApplicationController
   # tested
   def destroy
     @article = get_model
-    redirect_to articles_path and return if not @article
     @article.hide
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
@@ -97,7 +93,7 @@ class ArticlesController < ApplicationController
     if params['articles_search_text'].strip.length > 2
       search_terms = params['articles_search_text'].split.collect { |word| "%#{ word.downcase }%" }
       conditions = search_terms.collect{ |t| "LOWER(name) LIKE '#{ t }'" }.join(' AND ')
-      @found_articles = Article.accessible_by(@current_user).existing.where(conditions).limit(5).order('name ASC')
+      @found_articles = @current_vendor.articles.existing.where(conditions).limit(5).order('name ASC')
     else
       render :nothing => true
     end
@@ -106,7 +102,6 @@ class ArticlesController < ApplicationController
   # tested
   def change_scope
     @article = get_model
-    return if not @article
     @source = params[:source]
     @target = params[:target]
     if @target == 'searchresults' and @source != 'searchresults'
@@ -120,13 +115,13 @@ class ArticlesController < ApplicationController
       @articleshash = build_articleshash([@target])
       @source = nil
     end
-    @categories = @current_vendor.categories.active.positioned
+    @categories = @current_vendor.categories.existing.active.positioned
   end
 
   # testing not automatable
   def sort
     params['article'].each do |id|
-      a = Article.accessible_by(@current_user).find_by_id(id)
+      a = @current_vendor.articles.existing.find_by_id(id)
       a.position = params['article'].index(a.id.to_s) + 1
       a.save
     end

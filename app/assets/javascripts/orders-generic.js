@@ -359,15 +359,15 @@ function send_json(table_id) {
   send_queue(table_id);
 }
 
-function send_queue(i) {
+function send_queue(table_id) {
   $.ajax({
     type: 'post',
-    url: '/orders/receive_order_attributes_ajax',
-    data: submit_json_queue[i],
+    url: '/orders/update_ajax',
+    data: submit_json_queue[table_id],
     success: function(data) {
       if (data['success'] == true) {
         update_tables();
-        clear_queue(i);
+        clear_queue(table_id);
       }
     }
   });
