@@ -33,12 +33,6 @@ class Order < ActiveRecord::Base
     return ttl
   end
 
-  def set_priorities
-    self.items.each do |i|
-      i.update_attribute :priority, i.category.position
-    end
-  end
-
   def customer_set=(h)
     @customers_hash = h
   end

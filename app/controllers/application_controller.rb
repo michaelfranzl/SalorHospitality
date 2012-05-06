@@ -229,7 +229,7 @@ class ApplicationController < ActionController::Base
     end
 
     def sanitize_character_encoding(text)
-      text.encode! 'ISO-8859-15'
+      text.force_encoding 'ISO-8859-15'
       char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ', 'ß']
       replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4", "\xE1"]
       i = 0
@@ -244,67 +244,59 @@ class ApplicationController < ActionController::Base
 
     def generate_escpos_items(order=nil, printer_id=nil, usage=nil)
       orders = order ? [order] : @current_user.orders.existing.where(:finished => false)
-      overall_output = ''
-      overall_output.encode 'ISO-8859-15'
+      output = ''
+      #output.encode 'ISO-8859-15'
+      #init.encode 'ISO-8859-15'
+      #footer.encode 'ISO-8859-15'
+      init =
+      "\e@"     +  # Initialize Printer
+      "\e!\x38" +  # doube tall, double wide, bold
+      "\n\n"
+
+      cut =
+      "\n\n\n\n" +
+      "\x1D\x56\x00" +        # paper cut
+      "\x1B\x70\x00\x99\x99\x0C"  # beep
+
       orders.each do |o|
-        per_order_output = ''
-        header =
-        "\e@"     +  # Initialize Printer
-        #"\e!\x28" +  # doube wide, bold
-        "\e!\x38" +  # doube tall, double wide, bold
-        #"\e!\x18" +  # doube tall, bold
-        "\n\n"
-
-        per_order_output +=
+        header = ''
+        header +=
         "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_user.login, o.table.name]
+        header += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
+        header += "=====================\n"
 
-        per_order_output += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
-
-        per_order_output += "=====================\n"
-
-        printed_items_in_this_order = 0
-        o.items.prioritized.each do |i|
-          i.update_attribute :printed_count, i.count if i.count < i.printed_count
-
-          next if i.count == i.printed_count or i.count == 0
-
-          next if printer_id and
-                  usage and
-                  ((i.count <= i.printed_count)          or
-                  (printer_id != i.category.vendor_printer_id) or
-                  (usage != i.usage))
-
-          printed_items_in_this_order += 1
-
-          per_order_output += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
-          per_order_output += " > %-17.17s\n" % ["#{i.quantity.prefix} #{ i.quantity.postfix}"] if i.quantity
-          per_order_output += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
-          per_order_output += " ! %-17.17s\n" % [i.comment] if i.comment and not i.comment.empty?
-
-          i.options.each do |po|
-            per_order_output += " * %-17.17s\n" % [po.name]
+        separate_receipt_contents = []
+        normal_receipt_content = ''
+        @current_vendor.categories.existing.active.where(:vendor_printer_id => printer_id).each do |c|
+          items = o.items.existing.where("count > printed_count AND category_id = #{ c.id }")
+          catitemstring = ''
+          items.each do |i|
+            catitemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
+            catitemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
+            catitemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
+            catitemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
+            i.options.each do |po|
+              catitemstring += " * %-17.17s\n" % [po.name]
+            end
+            catitemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
+            i.update_attribute :printed_count, i.count
           end
 
-          per_order_output += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
-
-          i.printed_count = i.count
-          i.save
-          j = i
+          unless items.size.zero?
+            if c.separate_print == true
+              separate_receipt_contents << catitemstring
+            else
+              normal_receipt_content += catitemstring
+            end
+          end
         end
-
-        footer =
-        "\n\n\n\n" +
-        "\x1D\x56\x00" +        # paper cut at the end of each order
-        "\x1B\x70\x00\x99\x99\x0C"  # beep
-
-        header.force_encoding 'ISO-8859-15'
-        footer.force_encoding 'ISO-8859-15'
-        per_order_output.encode! 'ISO-8859-15'
-
-        overall_output += header + per_order_output + footer if printed_items_in_this_order != 0
+        output = init
+        separate_receipt_contents.each do |content|
+          output += header + content + cut
+        end
+        output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
       end
-
-      sanitize_character_encoding(overall_output)
+      sanitize_character_encoding(output)
     end
 
     def generate_escpos_invoice(order)

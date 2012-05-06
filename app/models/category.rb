@@ -16,6 +16,7 @@ class Category < ActiveRecord::Base
   has_many :articles
   has_many :partials
   has_many :images, :as => :imageable
+  has_many :items
   validates_presence_of :name
   validates_presence_of :tax_id
 

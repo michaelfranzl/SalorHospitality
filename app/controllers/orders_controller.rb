@@ -157,7 +157,9 @@ class OrdersController < ApplicationController
             Item.find_by_id(item_id).update_attributes(item_params[1])
           end
         else
-          @order.items << Item.new(item_params[1])
+          new_item = Item.new(item_params[1])
+          new_item.category = new_item.article.category
+          @order.items << new_item
         end
       end
     else # create it
@@ -168,7 +170,9 @@ class OrdersController < ApplicationController
       @order.vendor = @current_vendor
       @order.company = @current_company
       params[:items].to_a.each do |item_params|
-        @order.items << Item.new(item_params[1])
+        new_item = Item.new(item_params[1])
+        new_item.category = new_item.article.category
+        @order.items << new_item
       end
     end
 
@@ -179,7 +183,6 @@ class OrdersController < ApplicationController
     @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => @current_user.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
     end
-    @order.set_priorities
 
     if @order.nr > @current_vendor.largest_order_number
       @current_vendor.update_attribute :largest_order_number, @order.nr 
@@ -217,10 +220,10 @@ class OrdersController < ApplicationController
       # print coupons for kitchen, bar, etc.
       printers = initialize_printers
       printers.each do |id, params|
-        normal   = generate_escpos_items @order, id, 0
-        takeaway = generate_escpos_items @order, id, 1
+        normal   = generate_escpos_items @order, id
+        #takeaway = generate_escpos_items @order, id, 1
         do_print printers, id, normal
-        do_print printers, id, takeaway
+        #do_print printers, id, takeaway
       end
       close_printers printers
     end

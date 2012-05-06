@@ -14,13 +14,21 @@ class Item < ActiveRecord::Base
   belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   belongs_to :vendor
   belongs_to :company
+  belongs_to :category
   has_and_belongs_to_many :options
   has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
 
+  #after_save :set_category
+
   alias_attribute :s, :position
 
   scope :prioritized, order('priority ASC')
+
+  #def set_category
+  #debugger
+  #  write_attribute :category_id, 55
+  #end
 
   def price
     p = read_attribute :price
@@ -75,10 +83,6 @@ class Item < ActiveRecord::Base
     i.each do |o|
       self.options << Option.find_by_id(o.to_i)
     end
-  end
-
-  def category
-    self.article.category
   end
 
   def usage
