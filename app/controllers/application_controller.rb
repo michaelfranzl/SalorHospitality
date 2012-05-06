@@ -269,24 +269,30 @@ class ApplicationController < ActionController::Base
         normal_receipt_content = ''
         @current_vendor.categories.existing.active.where(:vendor_printer_id => printer_id).each do |c|
           items = o.items.existing.where("count > printed_count AND category_id = #{ c.id }")
-          catitemstring = ''
+          catstring = ''
           items.each do |i|
-            catitemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
-            catitemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-            catitemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
-            catitemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
+            itemstring = ''
+            itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
+            itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
+            itemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
+            itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
             i.options.each do |po|
-              catitemstring += " * %-17.17s\n" % [po.name]
+              itemstring += " * %-17.17s\n" % [po.name]
             end
-            catitemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
+            itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
+            if i.usage == 0
+              catstring += itemstring
+            elsif i.usage == 1
+              separate_receipt_contents << itemstring
+            end
             i.update_attribute :printed_count, i.count
           end
 
           unless items.size.zero?
             if c.separate_print == true
-              separate_receipt_contents << catitemstring
+              separate_receipt_contents << catstring
             else
-              normal_receipt_content += catitemstring
+              normal_receipt_content += catstring
             end
           end
         end

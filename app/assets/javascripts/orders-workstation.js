@@ -110,7 +110,7 @@ function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id
 
   } else if (value == -3 ) {
     // special option: takeaway
-    set_json(d,'u',1);
+    set_json(d,'usage',1);
     $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
 
   } else {
