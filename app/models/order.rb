@@ -109,12 +109,17 @@ class Order < ActiveRecord::Base
     self.reload
   end
 
-
-
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|
-      d = "i#{i.id}"
+      if i.quantity_id
+        d = "q#{i.quantity_id}"
+      else
+        d = "a#{i.article_id}"
+      end
+      if i.options.any?
+        d = "i#{i.id}"
+      end
       options = {}
       optioncount = 0
       i.options.each do |opt|

@@ -298,10 +298,11 @@ class ApplicationController < ActionController::Base
         end
         output = init
         separate_receipt_contents.each do |content|
-          output += header + content + cut
+          output += (header + content + cut) unless content.empty?
         end
         output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
       end
+      output = '' if output == init
       sanitize_character_encoding(output)
     end
 

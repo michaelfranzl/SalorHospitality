@@ -82,8 +82,8 @@ function add_new_item(object, catid, add_new, anchor_d) {
       !add_new &&
       items_json[object.d].price == object.price &&
       items_json[object.d].o == '' &&
-      items_json[object.d].x == false &&
-      $.isEmptyObject(items_json[object.d].i)
+      typeof(items_json[object.d].x) == 'undefined' &&
+      $.isEmptyObject(items_json[object.d].t)
      ) {
     // selected item is already there
     increment_item(object.d);
@@ -157,13 +157,7 @@ function decrement_item(d) {
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if (permission_delete_items) {
-      if (d.indexOf('i') == -1) {
-        // the server has never seen this item, so we just delete frmo submit_json
-        delete submit_json.items[d];
-      } else {
-        // the server will delete this item
-        set_json(d,'x',true);
-      }
+      set_json(d,'x',true);
       $('#item_' + d).fadeOut('slow');
     }
   };
@@ -195,7 +189,7 @@ function create_json_record(object) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
     s += 1;
   }
-  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], x:false, price:object.price, prefix:'', postfix:'', n:object.n, s:s, catid:object.catid};
+  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], price:object.price, pre:'', post:'', n:object.n, s:s, catid:object.catid};
   if ( ! object.hasOwnProperty('quantity_id')) { delete items_json[d].quantity_id; }
   create_submit_json_record(d,items_json[d]);
   return d;

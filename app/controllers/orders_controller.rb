@@ -170,6 +170,7 @@ class OrdersController < ApplicationController
       @order.vendor = @current_vendor
       @order.company = @current_company
       params[:items].to_a.each do |item_params|
+        next if item_params[1][:x]
         new_item = Item.new(item_params[1])
         new_item.category = new_item.article.category
         @order.items << new_item
