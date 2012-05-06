@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506070310) do
+ActiveRecord::Schema.define(:version => 20120506112113) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20120506070310) do
     t.integer  "preparation_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",              :default => true
+    t.boolean  "separate_print"
   end
 
   add_index "categories", ["company_id"], :name => "index_categories_company_id"

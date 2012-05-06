@@ -89,9 +89,6 @@ class ApplicationController < ActionController::Base
       t = Date.civil( p[:to  ][:year ].to_i,
                       p[:to  ][:month].to_i,
                       p[:to  ][:day  ].to_i) + 1.day if p[:to]
-
-      #f ||= DateTime.now.beginning_of_day
-      #t ||= f + 1.day
       return f, t
     end
 
@@ -117,7 +114,6 @@ class ApplicationController < ActionController::Base
     def check_product_key
       # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
       resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))
-      puts "Response is: #{resp}"
       begin
         json = JSON.parse(resp)
         if not json["success"] == true then
@@ -254,7 +250,9 @@ class ApplicationController < ActionController::Base
         per_order_output = ''
         header =
         "\e@"     +  # Initialize Printer
+        #"\e!\x28" +  # doube wide, bold
         "\e!\x38" +  # doube tall, double wide, bold
+        #"\e!\x18" +  # doube tall, bold
         "\n\n"
 
         per_order_output +=
@@ -310,13 +308,13 @@ class ApplicationController < ActionController::Base
     end
 
     def generate_escpos_invoice(order)
-      header =
+      logo =
       "\e@"     +  # Initialize Printer
       "\ea\x01" +  # align center
-
       "\e!\x38" +  # doube tall, double wide, bold
-      @current_vendor.name + "\n" +
+      @current_vendor.name + "\n"
 
+      header =
       "\e!\x01" +  # Font B
       "\n" + @current_vendor.invoice_subtitle + "\n" +
       "\n" + @current_vendor.address + "\n\n" +
@@ -384,8 +382,7 @@ class ApplicationController < ActionController::Base
       @current_vendor.internet_address + "\n\n\n\n\n\n\n" + 
       "\x1DV\x00\x0C" # paper cut
 
-      output = header + list_of_items + sum + tax_header + list_of_taxes + footer
-
-      sanitize_character_encoding(output)
+      logo = @current_vendor.rlogo_header ? @current_vendor.rlogo_header.encode!('ISO-8859-15') : sanitize_character_encoding(logo)
+      output = logo + sanitize_character_encoding(header + list_of_items + sum + tax_header + list_of_taxes + footer)
     end
 end

@@ -46,7 +46,7 @@ class SettlementsController < ApplicationController
   end
 
   def update
-    @settlement = get_model
+    @settlement = @current_vendor.settlements.find_by_id(params[:id])
     render :nothing => true and return if not @settlement
     @settlement.update_attributes params[:settlement]
     @settlement.vendor = @current_vendor
@@ -60,7 +60,7 @@ class SettlementsController < ApplicationController
     end
     if @settlement.finished
       @orders.update_all :settlement_id => @settlement.id
-      @settlement = Settlement.new :user_id => @settlement.user_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+      #@settlement = Settlement.new :user_id => @settlement.user_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
     end
     respond_to do |wants|
       wants.js
@@ -102,7 +102,7 @@ class SettlementsController < ApplicationController
       string += "Gestartet:     #{ l(settlement.created_at, :format => :datetime_iso) }\n"
       string += "Abgeschlossen: #{ l(settlement.updated_at, :format => :datetime_iso) }\n"
 
-      string += "\nNr.     Tisch   Zeit  Kostenstelle   Summe\n"
+      string += "\nBestnr. Tisch   Zeit  Kostenstelle   Summe\n"
 
       total_costcenter = Hash.new
       costcenters = @current_vendor.cost_centers.existing.active
@@ -113,7 +113,7 @@ class SettlementsController < ApplicationController
       orders.each do |o|
         cc = o.cost_center.name
         t = l(o.created_at, :format => :time_short)
-        list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [o.nr, o.table.abbreviation, t, cc, o.sum]
+        list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [o.nr, o.table.name, t, cc, o.sum]
         total_costcenter[o.cost_center.id] += o.sum
         storno_sum += o.storno_sum
       end

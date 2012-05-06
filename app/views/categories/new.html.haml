@@ -36,6 +36,9 @@
         %p
           = category_form.label 'vendor_printer_id'
           = category_form.collection_select :vendor_printer_id, @printers, :id, :name, { :include_blank => true }
+        %p
+          = category_form.label 'separate_print'
+          = category_form.check_box :separate_print
       %td
         = category_form.label 'icon'
         %br

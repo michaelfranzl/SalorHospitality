@@ -34,8 +34,8 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
-    #test_printers :all
-    #test_printers :existing
+    test_printers :all
+    test_printers :existing
     redirect_to vendors_path
   end
 
