@@ -28,7 +28,7 @@
   %body
     #container
       #header
-        %img#logo{ :src => "logo-small.png" }
+        = image_tag 'logo-small.png', :id => 'logo'
       #flash
         #flash_notice= flash[:notice]
         #flash_error= flash[:error]

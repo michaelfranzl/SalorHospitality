@@ -5,7 +5,7 @@
 %div#buttons
   - if local_variant?
     - i = 0
-    - @current_company.vendor_printers.existing.each do |p|
+    - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
       = link_to('', "/orders/print_and_finish/#{ @order.id }/#{ p.id }", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }", :remote => true)
   - else
@@ -16,16 +16,16 @@
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
-%p= @current_company.name
-%p= @current_company.invoice_subtitle
+%p= @current_vendor.name
+%p= @current_vendor.invoice_subtitle
 %p
-  = @current_company.address
+  = @current_vendor.address
   %br
-  = @current_company.revenue_service_tax_number
+  = @current_vendor.revenue_service_tax_number
   %br
-  = @current_company.bank_account1
+  = @current_vendor.bank_account1
   %br
-  = @current_company.bank_account2
+  = @current_vendor.bank_account2
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 

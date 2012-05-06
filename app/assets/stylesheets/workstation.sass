@@ -47,7 +47,8 @@ legend
     :weight bold
 
 label
-  :margin-right 0px
+  :display inline-block
+  :width 100px
 
 th
   :text-align left
@@ -103,7 +104,14 @@ div#container
   :margin 0px 15px
 
 div#copyright
+  :vertical-align middle
   :margin auto
+  .left
+    :vertical-align middle
+    :float left
+  .right
+    :vertical-align middle
+    :float right
   p
     :margin 5px 0px
 
@@ -438,6 +446,26 @@ div.scope
   :width 30%
   :border-right 1px solid gray
   :vertical-align top
+
+form.vendor_form
+  label
+    :display inline-block
+    :width 150px
+  div.fields_left
+    :vertical-align top
+    :display inline-block
+    :width 50%
+  div#vendor_printers
+    :vertical-align top
+    :display inline-block
+    :width 30%px
+    label
+      :width 60px
+
+form.category_form
+  label
+    :display inline-block
+    :width 150px
     
 table.articles
   :width 102%

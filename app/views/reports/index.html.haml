@@ -1,4 +1,7 @@
 %div.centered-contents
+  - if not demo_variant? or saas_variant?
+    %p#backup_database= link_to t('.backup_database'), "companies/backup_database"
+    %p#backup_logfile= link_to t('.backup_logfile'), "companies/backup_logfile"
   = form_tag '/reports', :class => 'no-print', :method => :get do
     = label('from', t('reports.start_date'))
     %br

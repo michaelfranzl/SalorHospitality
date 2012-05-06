@@ -1,11 +1,11 @@
 module PresentationsHelper
 
   def get_model_names
-    { 'Category' => Category.human_name,
-      'Article' => Article.human_name,
-      'Quantity' => Quantity.human_name,
-      'Option' => Option.human_name,
-      'Presentation' => Presentation.human_name
+    { 'Category' => Category.model_name.human,
+      'Article' => Article.model_name.human,
+      'Quantity' => Quantity.model_name.human,
+      'Option' => Option.model_name.human,
+      'Presentation' => Presentation.model_name.human
     }
   end
   

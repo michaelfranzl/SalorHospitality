@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504184734) do
+ActiveRecord::Schema.define(:version => 20120506070310) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -595,6 +595,8 @@ ActiveRecord::Schema.define(:version => 20120504184734) do
     t.integer  "company_id"
     t.boolean  "active",                                         :default => true
     t.boolean  "hidden"
+    t.text     "rlogo_header"
+    t.text     "rlogo_footer"
   end
 
 end

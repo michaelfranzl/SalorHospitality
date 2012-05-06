@@ -259,7 +259,7 @@ class OrdersController < ApplicationController
   private
 
     def neighbour_orders(order)
-      orders = @current_order.orders.existing.where(:finished => true)
+      orders = @current_vendor.orders.existing.where(:finished => true)
       idx = orders.index(order)
       previous_order = orders[idx-1] if idx
       previous_order = order if previous_order.nil?

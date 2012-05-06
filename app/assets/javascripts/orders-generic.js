@@ -1,4 +1,3 @@
-var automatic_printing = 0;
 var new_order = true;
 var option_position = 0;
 var item_position = 0;

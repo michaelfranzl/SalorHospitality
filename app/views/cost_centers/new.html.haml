@@ -11,17 +11,17 @@
   %table
     %tr
       %td
-        = cost_center_form.label('name',CostCenter.human_attribute_name(:name))
+        = cost_center_form.label 'name'
       %td
         = cost_center_form.text_field :name, :size => '10'
     %tr
       %td
-        = cost_center_form.label('description', CostCenter.human_attribute_name(:description))
+        = cost_center_form.label 'description'
       %td
         = cost_center_form.text_field :description, :size => '20'
     %tr
       %td
-        = cost_center_form.label('active', CostCenter.human_attribute_name(:active))
+        = cost_center_form.label 'active'
       %td
         = cost_center_form.check_box :active
 

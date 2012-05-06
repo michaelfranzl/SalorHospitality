@@ -121,6 +121,7 @@ de:
       category:
         name: Name
         tax_id: Steuerklasse
+        user_id : Zubereitung
         sort_order: Sortierwert
         icon: Icon
         custom_icon: Mein Icon
@@ -145,7 +146,7 @@ de:
         tables: Tische
         active: aktiv?
         hidden: löschen?
-      company:
+      vendor:
         name: Firmenname
         subdomain: Subdomain
         saas: Online-Variante
@@ -155,8 +156,8 @@ de:
         printer_kitchen: Drucker Küche
         email: E-Mail
         internet_address: Internetadresse
-        invoice_slogan1: Rechnungsmitteilung 1
-        invoice_slogan2: Rechnungsmitteilung 2
+        invoice_slogan1: Rechnungstext 1
+        invoice_slogan2: Rechnungstext 2
         bank_account1: Bankverbindung 1
         bank_account2: Bankverbindung 2
         country: Regeln für Land
@@ -167,10 +168,12 @@ de:
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         res_fetch_url: Reservierungen abfragen
         res_confirm_url: Reservierungen bestätigen
-        use_order_numbers: Bestellnummern verwenden?
+        use_order_numbers: Bestellnummern
+        rlogo_header: Rechnungslogo Kopf
       role:
         name: Name
       vendor_printer:
+        copies: Kopien
         name: Name
         path: Pfad
         hidden: Löschen
@@ -464,6 +467,9 @@ de:
     errempty: Ungültige Datei
     errsize: Ungültige Dateigröße
     errtype: Ungültige Dateityp
+
+  messages:
+    hello_username: "Hallo %{name}"
 
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'

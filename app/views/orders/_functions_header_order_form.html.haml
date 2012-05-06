@@ -12,7 +12,7 @@
 - if @current_user.role.permissions.include?('move_order') and workstation?
   %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
   
-%a.iconbutton.customer_button{ :onclick => "$('#customer_list').slideDown();", :title => t(:customer_list) }
+<!-- %a.iconbutton.customer_button{ :onclick => "$('#customer_list').slideDown();", :title => t(:customer_list) } -->
 
 - if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
   %a.iconbutton.storno_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'destroy');", :title => t(:clear_order_and_go_back) }

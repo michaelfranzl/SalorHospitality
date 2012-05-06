@@ -34,7 +34,15 @@ class Vendor < ActiveRecord::Base
 
   def image
     return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
-    "/images/client_logo.png"
+    "/assets/client_logo.png"
+  end
+
+  def rlogo_header=(data)
+    write_attribute :rlogo_header, Escper::Image.new(data.read, :blob).to_s 
+  end
+
+  def rlogo_footer=(data)
+    write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s 
   end
 
   # article_id and quantity_id is the model id of Article or Quantity

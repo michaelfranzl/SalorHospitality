@@ -1,6 +1,6 @@
 BillGastro Version <%= BillGastro::Application::VERSION %>
 
-eth0 Mac addr: <%= /(..):(..):(..):(..):(..):(..)/.match(`ifconfig eth0`.split("\n")[0])[1..6].join %>
+eth0 Mac addr: <%= /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join %>
 
 User: <%= @request.session[:user_id].login if @request.session[:user_id]  %>
 

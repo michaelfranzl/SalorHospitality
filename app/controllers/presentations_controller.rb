@@ -17,7 +17,10 @@ class PresentationsController < ApplicationController
   end
   
   def create
-    @presentation = Presentation.create params[:presentation]
+    @presentation = Presentation.new params[:presentation]
+    @presentation.vendor = @current_vendor
+    @presentation.company = @current_company
+    @presentation.save
     redirect_to presentations_path
   end
 

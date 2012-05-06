@@ -13,19 +13,19 @@
     %img.asset{ :src => @option.image }
   %table
     %tr
-      %td= option_form.label('name', Option.human_attribute_name(:name))
+      %td= option_form.label 'name'
       %td
         = option_form.text_field :name, :size => '20'
         %span#option_name_display_keyboard.display_keyboard
     %tr
-      %td= option_form.label('price', Option.human_attribute_name(:price))
+      %td= option_form.label 'price'
       %td
         = option_form.text_field :price, :size => '5'
         %span#option_price_display_keyboard.display_keyboard
     %tr
       = option_form.fields_for :images do |image_form|
         %td
-          %span.label_width= image_form.label('image', Option.human_attribute_name(:image))
+          %span.label_width= image_form.label 'image'
         %td
           %span.input_fields
             = image_form.file_field :file_data, :size => 15

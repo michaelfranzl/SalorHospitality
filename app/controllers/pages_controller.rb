@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   
-  skip_before_filter :fetch_logged_in_user, :except => [:iframe]
+  skip_before_filter :fetch_logged_in_user, :only => [:iframe]
   
   def index
     @pages = @current_vendor.pages.existing.active
@@ -37,7 +37,7 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.create
-    redirect_to edit_page_path @page
+    render 'edit'
   end
   
   def show

@@ -17,17 +17,17 @@
 = form_for nest_image(@page), :html => { :multipart => true } do |page_form|
   %div
     = page_form.fields_for :images do |image_form|
-      %span.label_width= image_form.label('image', Page.human_attribute_name(:image))
+      %span.label_width= image_form.label 'image'
       %span.input_fields
         = image_form.file_field :file_data, :size => 15
   %div
-    %span.label_width= page_form.label( 'width', Page.human_attribute_name(:width))
+    %span.label_width= page_form.label 'width'
     %span.input_fields= page_form.text_field :width, :size => 4
   %div
-    %span.label_width= page_form.label( 'height', Page.human_attribute_name(:height))
+    %span.label_width= page_form.label 'height'
     %span.input_fields= page_form.text_field :height, :size => 4
   %div
-    %span.label_width= page_form.label( 'color', Page.human_attribute_name(:color))
+    %span.label_width= page_form.label 'color'
     %span.input_fields= page_form.text_field :color, :size => 4
   = submit_tag t :edit
   

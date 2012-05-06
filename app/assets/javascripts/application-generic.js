@@ -23,6 +23,7 @@ jQuery.ajaxSetup({
 })
 
 var tableupdates = -1; // no requests by default
+var automatic_printing = false;
 
 window.setInterval(
   function() {
@@ -32,13 +33,11 @@ window.setInterval(
     if (tableupdates > 0) {
       update_tables();
     }
-    else if (tableupdates == 0) {
-      alert(i18n_server_no_response);
+    if(typeof(display_queue) != 'undefined') {
+      display_queue();
     }
-    tableupdates -= 1;  // no requests by default
-    display_queue();
   }
-, 6000);
+, 7000);
 
 function scroll_to(element, speed) {
   target_y = $(window).scrollTop();

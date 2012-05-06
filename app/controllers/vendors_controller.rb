@@ -8,13 +8,14 @@
 class VendorsController < ApplicationController
 
   def index
-    @vendors = Vendor.accessible_by @current_user
+    @vendors = Vendor.accessible_by(@current_user)
   end
 
   # Switches the current vendor and redirects to somewhere else
   def show
-    @current_vendor = get_model
-    redirect_to vendor_path and return unless @vendor
+    vendor = get_model
+    redirect_to vendor_path and return unless vendor
+    @current_vendor = vendor
     session[:vendor_id] = params[:id] if @current_vendor
     redirect_to vendors_path
   end
@@ -36,20 +37,6 @@ class VendorsController < ApplicationController
     #test_printers :all
     #test_printers :existing
     redirect_to vendors_path
-  end
-
-  def backup_database
-    dbconfig = YAML::load(File.open('config/database.yml'))
-    mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
-    username = dbconfig[mode]['username']
-    password = dbconfig[mode]['password']
-    database = dbconfig[mode]['database']
-    `mysqldump -u #{username} -p#{password} #{database} > public/backup.sql`
-    send_file 'public/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
-  end
-
-  def backup_logfile
-    send_file 'log/production.log', :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
   end
 
   def new

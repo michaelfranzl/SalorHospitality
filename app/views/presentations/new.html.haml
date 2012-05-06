@@ -11,36 +11,33 @@
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   %table
     %tr
-      %td= presentation_form.label('login', Presentation.human_attribute_name(:name))
+      %td= presentation_form.label 'name'
       %td
         = presentation_form.text_field :name
         %span#presentation_name_display_keyboard.display_keyboard
     %tr
-      %td= presentation_form.label('model', Presentation.human_attribute_name(:model))
+      %td= presentation_form.label 'model'
       %td
         %select#presentation_model{ :name => 'presentation[model]' }
           = options_for_select(get_model_names.invert.to_a, presentation_form.object.model)
     %tr
-      %td= presentation_form.label('description', Presentation.human_attribute_name(:description))
+      %td= presentation_form.label 'description'
       %td
         = presentation_form.text_field :description
         %span#presentation_description_display_keyboard.display_keyboard
     %tr
-      %td= presentation_form.label('code', Presentation.human_attribute_name(:code))
+      %td= presentation_form.label 'code'
       %td
         = presentation_form.text_area :code
         %span#presentation_code_display_keyboard.display_keyboard
     %tr
-      %td= presentation_form.label('markup', Presentation.human_attribute_name(:markup))
+      %td= presentation_form.label 'markup'
       %td
         = presentation_form.text_area :markup
         %span#presentation_markup_display_keyboard.display_keyboard
     %tr
-      %td= presentation_form.label('active', Presentation.human_attribute_name(:active))
+      %td= presentation_form.label 'active'
       %td= presentation_form.check_box :active
-    %tr
-      %td= presentation_form.label('hidden', Presentation.human_attribute_name(:hidden))
-      %td= presentation_form.check_box :hidden
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
 :javascript

@@ -13,44 +13,44 @@
       %img.asset{ :src => @article.image }
     .main_form
       %div
-        %span.label_width= article_form.label( 'active', Article.human_attribute_name(:active))
+        %span= article_form.label 'active'
         %span.input_fields= article_form.check_box :active
       %div
-        %span.label_width= article_form.label( 'name', Article.human_attribute_name(:name))
+        %span= article_form.label 'name'
         %span.input_fields
           = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
           %span#article_name_display_keyboard.display_keyboard
           %span.spinner
             %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
       %div
-        %span.label_width= article_form.label('user_id', Article.human_attribute_name(:tax_id))
+        %span= article_form.label 'tax_id'
         %span.input_fields= article_form.collection_select :tax_id, @taxes, :id, :custom_name, { :include_blank => true }
       %div
-        %span.label_width= article_form.label('description', Article.human_attribute_name(:description))
+        %span= article_form.label 'description'
         %span.input_fields
           = article_form.text_field :description
           %span#article_description_display_keyboard.display_keyboard
 
       - if not @article.quantities.collect{ |q| q.hidden }.include? false
         %div
-          %span.label_width= article_form.label('price', Article.human_attribute_name(:price))
+          %span= article_form.label 'price'
           %span.input_fields
             = article_form.text_field( :price, :size => 6 )
             %span#article_price_display_keyboard.display_keyboard
 
       %div
-        %span.label_width= article_form.label('category_id', Article.human_attribute_name(:category))
+        %span= article_form.label 'category_id'
         %span.input_fields
           = article_form.collection_select :category_id, @categories, :id, :name, { :include_blank => true }
     
       %div
         = article_form.fields_for :images do |image_form|
-          %span.label_width= image_form.label('image', Article.human_attribute_name(:image))
+          %span= image_form.label 'image'
           %span.input_fields
             = image_form.file_field :file_data, :size => 15
 
       %div
-        %span.label_width
+        %span
         %span= link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Article.human_attribute_name(:hidden)), article_path(article_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless article_form.object.new_record?
 
     .search_results
@@ -88,6 +88,7 @@
     $('#add_quantity').click(function(){
       var new_quantity_id = new Date().getTime();
       $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, 'new_' + new_quantity_id));
+      $('#quantity_new_' + new_quantity_id).slideDown();
     });
 
     $('#quantities_new').sortable({
