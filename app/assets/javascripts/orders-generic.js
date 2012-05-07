@@ -108,18 +108,6 @@ function add_new_item(object, catid, add_new, anchor_d) {
   return d
 }
 
-// todo: keep separate optionslist in items_json and submit_json
-// disable vendors when vendor count is 1
-// escper integration
-// category separation on receipts
-// make font on receipts smaller
-// order moving
-// remove all items
-// --
-// mobile options
-
-
-
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.catid;

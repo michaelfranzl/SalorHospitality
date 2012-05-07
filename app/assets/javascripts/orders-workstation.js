@@ -41,7 +41,7 @@ function display_comment_popup_of_item(d) {
 
 function add_comment_to_item(d) {
 	var comment = $('input#comment_for_item_' + d).val();
-  set_json(d,'comment',comment);
+  set_json(d,'o',comment);
 	$('#comment_' + d).html(comment);
 	$('#comment_for_item_' + d).slideUp();
 }

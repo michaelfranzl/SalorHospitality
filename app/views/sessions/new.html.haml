@@ -1,6 +1,6 @@
 #login
   - if mobile?
-    %img#logo{ :src => "/images/logo-small.png", :width => 200, :height => 77 }
+    = image_tag 'logo-small.png', :id => 'logo'
   = form_tag '/session' do
     %p
       = label_tag 'password', (t '.password')
@@ -12,9 +12,6 @@
   :javascript
     $('#password').keyboard( {openOn: '', position: { at: 'center bottom' }, accepted: function(){ $('#login form').submit(); } } );
     $('#password_display_keyboard').click(function(){ $('#password').getkeyboard().reveal();  } );
-
-- if workstation? and not demo_variant?
-  :javascript
     $(function(){
       $('#password').getkeyboard().reveal();
     })

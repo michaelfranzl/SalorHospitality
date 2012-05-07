@@ -28,27 +28,43 @@ function category_onmousedown(category_id, element) {
   }
 }
 
-function add_comment_to_item(item_designator) {
-  var fallback = $('#order_items_attributes_' + item_designator + '_comment').val();
-  var comment = prompt(i18n_enter_comment, fallback);
-  if ( comment == null ) { comment = fallback };
-  $('#order_items_attributes_' + item_designator + '_comment').val(comment);
-  keep_fields_of_item(item_designator,'_comment');
-  $('#comment_' + item_designator).html(comment);
+function display_comment_popup_of_item(d) {
+  var old_comment = items_json[d].o;
+  var comment = prompt(i18n_enter_comment, old_comment);
+  if ( comment == null ) { comment = old_comment };
+  set_json(d,'o',comment);
+	$('#comment_' + d).html(comment);
 }
 
-function add_price_to_item(item_designator) {
-  var old_price = $('#order_items_attributes_' + item_designator + '_price').val();
+function display_price_popup_of_item(d) {
+  var old_price = items_json[d].price;
   if (old_price == 0) { old_price = '' }
   var price = prompt(i18n_enter_price, old_price);
   if ( price == null || price == '' ) {
     price = old_price;
   }
   price = price.replace(',', '.');
-  $('#order_items_attributes_' + item_designator + '_price').val(price);
-  keep_fields_of_item(item_designator,'_price');
-  $('#price_' + item_designator).html(price);
-  calculate_sum();
+  set_json(d,'price',price);
+	calculate_sum();
+	$('#price_for_item_' + d).slideUp();
+}
+
+function render_options(options, d, cat_id) {
+/*
+  jQuery.each(options, function(key,value) {
+    button = $(document.createElement('span'));
+    button.html(value.n);
+    button.addClass('option');
+    (function() {
+      var catid = cat_id;
+      var object = value;
+      button.on('click',function(){
+        add_option_to_item_from_div(value, d, value.id, value.p, value.n, cat_id);
+      });
+    })();
+    $('#options_div_' + d).append(button);
+  });
+*/
 }
 
 function add_option_to_item_from_select(item_designator, select_tag)

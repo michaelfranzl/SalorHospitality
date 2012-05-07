@@ -4,6 +4,6 @@
     %ul
       - @articleshash[scope][ca.id].each do |ar|
         %li{ :id => "#{ scope }_#{ ar.id }", :source => scope, :model_id => ar.id }
-          %img{ :id => "handle_for_#{ scope }_article_#{ ar.id }", :src => 'images/drag_handle.png', :style => 'cursor:move' }
+          = image_tag 'drag_handle.png', :id => "handle_for_#{ scope }_article_#{ ar.id }", :style => 'cursor:move'
           = link_to ar.name, edit_article_path(ar)
           %script== $('##{ scope }_#{ ar.id }').draggable({handle: 'handle_for_#{ scope }_article_#{ ar.id }', revert: true});

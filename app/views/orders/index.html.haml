@@ -10,12 +10,7 @@
   #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
 #orderform{ :style => 'display: none;' }= render 'order_form'
 #invoices
-#functions_footer{ :style => 'display: none;' }
-  %img{ :src => 'send.gif', :style => 'display:none;' }
-  - if workstation?
-    %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20);', :title => t(:scroll_down) }
-  - else
-    = render('functions_footer')
+#functions_footer{ :style => 'display: none;' }= render('functions_header_order_form') if mobile?
     
 #items_notifications
   %h3= t '.preparation_list'
@@ -25,13 +20,12 @@
   %span.done{ :onclick => "$('#items_notifications').slideUp();" }
 
 #queue
-  queue
 
 :javascript
   var i18n_server_no_response = '#{ escape_javascript t :server_no_response }';
   var i18n_just_order         = '#{ escape_javascript t :just_order }';
   var i18n_enter_price        = '#{ escape_javascript t :please_enter_item_price }';
-  var i18n_enter_comment      = '#{ escape_javascript t :please_enter_item_comment }>';
+  var i18n_enter_comment      = '#{ escape_javascript t :please_enter_item_comment }';
   var i18n_no_printing        = '#{ escape_javascript t :no_printing }';
   var i18n_decimal_separator  = '#{ escape_javascript t "number.currency.format.separator" }';
   var i18n_takeaway  = '#{ escape_javascript t "articles.new.takeaway" }';

@@ -22,6 +22,7 @@ class Item < ActiveRecord::Base
   #after_save :set_category
 
   alias_attribute :s, :position
+  alias_attribute :o, :comment
 
   scope :prioritized, order('priority ASC')
 

@@ -26,12 +26,8 @@ class SessionsController < ApplicationController
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = t('messages.hello_username', :name => @current_user.login)
-      if session[:vendor_id]
-        redirect_to orders_path
-      else
-        session[:vendor_id] = @current_company.vendors.existing.first.id
-        redirect_to vendors_path
-      end
+      session[:vendor_id] = @current_user.vendors.first.id unless session[:vendor_id]
+      redirect_to orders_path
       #check_product_key
     else
       flash[:error] = t :wrong_password

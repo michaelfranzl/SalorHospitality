@@ -1,7 +1,5 @@
 - if workstation?
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
-- else
-  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
 
 %a#save_and_go_to_tables.iconbutton.tables_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'send');", :title => t(:send_and_go_back) }
 
@@ -10,9 +8,19 @@
 %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "go_to(submit_json.order.table_id, 'tables');", :title => t(:cancel_and_go_back) }
 
 - if @current_user.role.permissions.include?('move_order') and workstation?
-  %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
+  - if workstation?
+    %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
+  - elsif mobile?
+    %select.target_table{ :onchange => 'move_order_to_table(this.value);' }
+      %option{ :value => '', :selected => true }
+      = options_from_collection_for_select(@current_user.tables.existing.reverse, 'id', 'name')
   
 <!-- %a.iconbutton.customer_button{ :onclick => "$('#customer_list').slideDown();", :title => t(:customer_list) } -->
 
 - if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
   %a.iconbutton.storno_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'destroy');", :title => t(:clear_order_and_go_back) }
+
+- if workstation?
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+- elsif mobile?
+  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }

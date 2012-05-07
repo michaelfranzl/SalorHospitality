@@ -2,5 +2,3 @@ go_to(<%= @orders.first.table.id %>,'invoice');
 <% @orders.each do |o| %>
   $('#invoices').append('<%= escape_javascript render :partial => '/orders/invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers } %>');
 <% end %>
-$('#functions_header_order_form').html('<%= escape_javascript render :partial => 'orders/functions_header_order_form' %>');
-$('#functions_footer').html('<%= escape_javascript render :partial => 'orders/functions_footer' %>');
