@@ -12,11 +12,12 @@ function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
     a_object = this;
-    abutton = $(document.createElement('div'));
+    var abutton = $(document.createElement('div'));
     abutton.addClass('article');
     abutton.html(art_attr.n);
-    qcontainer = $(document.createElement('div'));
+    var qcontainer = $(document.createElement('div'));
     qcontainer.addClass('quantities');
+    qcontainer.css('display','none');
     qcontainer.attr('id','article_' + art_id + '_quantities');
     (function() {
       var element = abutton;
@@ -25,6 +26,8 @@ function display_articles(cat_id) {
       });
     })();
     $('#articles').append(abutton);
+    //abutton.append(qcontainer);
+    //qcontainer.insertBefore(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
         var element = abutton;
@@ -32,7 +35,7 @@ function display_articles(cat_id) {
         var catid = cat_id;
         abutton.on('click', function() {
           highlight_border(element)
-          $('.quantity').remove();
+          $('.quantities').slideUp();
           add_new_item(object, catid);
         });
       })();
@@ -40,7 +43,7 @@ function display_articles(cat_id) {
       // quantity
       arrow = $(document.createElement('img'));
       arrow.addClass('more');
-      arrow.attr('src','/images/more.png');
+      arrow.attr('src','/assets/more.png');
       abutton.append(arrow);
       (function() {
         abutton.on('click', function(event) {
@@ -50,18 +53,19 @@ function display_articles(cat_id) {
           display_quantities(quantities, target, catid);
         });
       })();
+      qcontainer.insertBefore(abutton);
     }
-    //abutton.append(qcontainer);
-    qcontainer.insertAfter(abutton);
   });
 }
 
-function display_quantities(quantities, target, cat_id){
+function display_quantities(quantities, target, cat_id) {
   target.html('');
+  target.css('display','none');
   jQuery.each(quantities, function(qu_id,qu_attr) {
     q_object = this;
     qbutton = $(document.createElement('div'));
     qbutton.addClass('quantity');
+    //qbutton.css('display','none');
     qbutton.html(qu_attr.pre + qu_attr.post);
     (function() {
       var element = qbutton;
@@ -75,6 +79,7 @@ function display_quantities(quantities, target, cat_id){
     })();
     target.append(qbutton);
   })
+  target.slideDown();
 }
 
 function add_new_item(object, catid, add_new, anchor_d) {

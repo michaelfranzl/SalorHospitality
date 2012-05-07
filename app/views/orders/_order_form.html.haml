@@ -4,15 +4,13 @@
 #note_for_order= render 'note'
 
 #categories
-  - i = 0
   - @categories.each do |category|
-    - i += 1
-    %div{ :class => "category #{ category.name.delete ' ' }", :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
+    .category{ :class => category.name.delete(' '), :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
       %div{ :class => "category_label" }
         %span= category.name
-    = raw '<br>' if i % 3 == 0
 
 #articles
+
 #items
   .ordersum_container
     %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }

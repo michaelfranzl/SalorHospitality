@@ -652,16 +652,25 @@ $articlelistbgcolor: #3a474d
 
 div#categories
   :display inline-block
+  :width 30%
   :vertical-align top
 
 div#articles
   :display inline-block
-  :width 18%
+  :width 30%
   :vertical-align top
+
+div.quantities
+  :float right
+  :width 45%
+  :-moz-box-shadow 0px 0px 8px white
+  :-webkit-box-shadow 0px 0px 8px white
   
 div#items
   :display inline-block
-  :width 32%
+  :float right
+  :width 30%
+  :margin-right 60px
   :border 1px solid $buttoncolor
   :vertical-align top
 
@@ -704,16 +713,14 @@ td.ordersum_container
   :border-bottom 2px solid #222
   :background-color #3A474D
 
-div.quantities
-  :position absolute
-  :margin-left 300px
-
 td.item_label.warning
   :background-color $warning
 
 td.item_count.updated
   :background-color $billgastroblue1
 
+div.article
+  :width 80%
 
 div.category
   :display inline-block
