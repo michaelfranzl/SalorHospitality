@@ -85,7 +85,7 @@ function display_quantities(quantities, target, cat_id) {
 function add_new_item(object, catid, add_new, anchor_d) {
   if (items_json.hasOwnProperty(object.d) &&
       !add_new &&
-      items_json[object.d].price == object.price &&
+      items_json[object.d].p == object.p &&
       items_json[object.d].o == '' &&
       typeof(items_json[object.d].x) == 'undefined' &&
       $.isEmptyObject(items_json[object.d].t)
@@ -95,7 +95,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.price).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -110,11 +110,11 @@ function add_new_item(object, catid, add_new, anchor_d) {
 
 function render_items() {
   jQuery.each(items_json, function(k,object) {
-    catid = object.catid;
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.count).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.price).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
+    catid = object.ci;
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
 //.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
-    enable_keyboard_for_items(object.d);
+    if (workstation == true) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
   });
   calculate_sum();
@@ -128,25 +128,25 @@ function render_customers_from_json() {
 }
 
 function increment_item(d) {
-  count = items_json[d].count + 1;
+  count = items_json[d].c + 1;
   object = items_json[d];
-  set_json(object.d,'count',count)
+  set_json(object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
   calculate_sum();
 }
 
 function decrement_item(d) {
-  var i = items_json[d].count;
+  var i = items_json[d].c;
   var start_count = items_json[d].sc;
   if ( i > 1 && ( permission_decrement_items || i > start_count ) ) {
     i--;
-    set_json(d,'count',i)
+    set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
   } else if ( i == 1 && ( permission_decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
-    set_json(d,'count',i)
+    set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if (permission_delete_items) {
@@ -182,8 +182,8 @@ function create_json_record(object) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
     s += 1;
   }
-  items_json[d] = {article_id:object.article_id, quantity_id:object.quantity_id, d:d, count:1, o:'', t:{}, i:[], price:object.price, pre:'', post:'', n:object.n, s:s, catid:object.catid};
-  if ( ! object.hasOwnProperty('quantity_id')) { delete items_json[d].quantity_id; }
+  items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(d,items_json[d]);
   return d;
 }
@@ -191,13 +191,13 @@ function create_json_record(object) {
 // this creates a new record, copied from items_json, which must exist
 function create_submit_json_record(d, object) {
   if ( ! submit_json.items.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:object.id, article_id:object.article_id, quantity_id:object.quantity_id, s:object.s};
+    submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
     if (items_json[d].hasOwnProperty('id')) {
-      delete submit_json.items[d].article_id;
-      delete submit_json.items[d].quantity_id;
+      delete submit_json.items[d].ai;
+      delete submit_json.items[d].qi;
     }
-    if ( ! items_json[d].hasOwnProperty('quantity_id')) {
-      delete submit_json.items[d].quantity_id;
+    if ( ! items_json[d].hasOwnProperty('qi')) {
+      delete submit_json.items[d].qi;
     }
   }
 }
@@ -205,11 +205,11 @@ function create_submit_json_record(d, object) {
 
 
 function compose_label(object){
-  if ( object.hasOwnProperty('qid') || object.hasOwnProperty('quantity_id')) {
-    object_type = 'quantity';
+  if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
+    //object_type = 'quantity';
     label = object.pre + ' ' + object.n + ' ' + object.post;
   } else {
-    object_type = 'article';
+    //object_type = 'article';
     label = object.n;
   }
   return label;
@@ -226,7 +226,7 @@ function compose_optionnames(object){
 function calculate_sum() {
   var sum = 0;
   jQuery.each(items_json, function() { 
-    sum += this.count * this.price;
+    sum += this.c * this.p;
     // now add option prices:
     jQuery.each(this.t, function() {
       sum += this.p;

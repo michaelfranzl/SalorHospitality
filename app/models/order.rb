@@ -17,15 +17,16 @@ class Order < ActiveRecord::Base
   has_one :order
   has_and_belongs_to_many :customers
 
-  after_save :set_customers_up
+  #after_save :set_customers_up
 
   validates_presence_of :user_id
 
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
-  def calculate_sum
-    ttl = self.items.collect{ |i| i.full_price }.sum
-    return ttl
+  def calculate_totals
+    self.sum = items.existing.sum(:sum)
+    self.tax_amount = items.existing.sum(:tax_amount)
+    save
   end
 
   def calculate_storno_sum
@@ -109,6 +110,17 @@ class Order < ActiveRecord::Base
     self.reload
   end
 
+  def finish
+    if nr and nr > vendor.largest_order_number
+      vendor.update_attribute :largest_order_number, nr 
+    end
+    self.created_at = Time.now
+    self.finished = true
+    self.tax_amount = items.existing.sum(:tax_amount)
+    save
+    unlink
+  end
+
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|
@@ -127,9 +139,9 @@ class Order < ActiveRecord::Base
         options.merge! optioncount => { :id => opt.id, :n => opt.name, :p => opt.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :quantity_id => i.quantity_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position }
+        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position }
       else
-        a.merge! d => { :id => i.id, :catid => i.category.id, :article_id => i.article_id, :d => d, :count => i.count, :sc => i.count, :price => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position }
+        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position }
       end
     end
     return a.to_json

@@ -44,32 +44,22 @@ function display_price_popup_of_item(d) {
     price = old_price;
   }
   price = price.replace(',', '.');
-  set_json(d,'price',price);
+  set_json(d,'p',price);
+	$('#price_' + d).html(price);
 	calculate_sum();
-	$('#price_for_item_' + d).slideUp();
 }
 
 function render_options(options, d, cat_id) {
-/*
   jQuery.each(options, function(key,value) {
-    button = $(document.createElement('span'));
-    button.html(value.n);
-    button.addClass('option');
-    (function() {
-      var catid = cat_id;
-      var object = value;
-      button.on('click',function(){
-        add_option_to_item_from_div(value, d, value.id, value.p, value.n, cat_id);
-      });
-    })();
-    $('#options_div_' + d).append(button);
+    option = $(document.createElement('option'));
+    option.html(value.n);
+    $('#options_select_' + d).append(option);
   });
-*/
 }
 
-function add_option_to_item_from_select(item_designator, select_tag)
+function add_option_to_item_from_select(d, select_tag)
 {
-  original_designator = item_designator;
+  original_designator = d;
 
   if ($('#order_items_attributes_' + item_designator + '_optionslist').val() == '' && $('#order_items_attributes_' + item_designator + '_count').val() != 1 && select_tag.value > 0) {
 

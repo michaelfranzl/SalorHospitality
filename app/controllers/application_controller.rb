@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-false
+true
      # request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end
 
@@ -275,7 +275,7 @@ false
             itemstring = ''
             itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
             itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-            itemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == 1
+            itemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == -1
             itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
             i.options.each do |po|
               itemstring += " * %-17.17s\n" % [po.name]
@@ -283,7 +283,7 @@ false
             itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
             if i.usage == 0
               catstring += itemstring
-            elsif i.usage == 1
+            elsif i.usage == -1
               separate_receipt_contents << itemstring
             end
             i.update_attribute :printed_count, i.count

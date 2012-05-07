@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506195013) do
+ActiveRecord::Schema.define(:version => 20120507203204) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -264,6 +264,9 @@ ActiveRecord::Schema.define(:version => 20120506195013) do
     t.string   "delivery_comment",                 :default => ""
     t.boolean  "hidden"
     t.integer  "category_id"
+    t.float    "tax_percent"
+    t.float    "tax_amount"
+    t.float    "sum"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -328,6 +331,7 @@ ActiveRecord::Schema.define(:version => 20120506195013) do
     t.integer  "m_points"
     t.integer  "vendor_id"
     t.boolean  "hidden"
+    t.float    "tax_amount"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"

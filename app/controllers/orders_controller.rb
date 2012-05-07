@@ -77,19 +77,11 @@ class OrdersController < ApplicationController
 
   def print_and_finish
     @order = get_model
-    is_finished = @order.finished
-    if not is_finished
-      if @order.nr > @current_vendor.largest_order_number
-        @current_vendor.update_attribute :largest_order_number, @order.nr 
-      end
-      @order.created_at = Time.now
-      @order.user = @current_user if mobile?
-      @order.finished = true
-      @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
-      @order.save
-      @order.unlink
-      @order.reload
-    end
+    @order.finish unless @order.finished
+    @order.user = @current_user
+    @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
+    @order.save
+    @order.reload
 
     if params[:port].to_i != 0
       if local_variant?
@@ -110,10 +102,9 @@ class OrdersController < ApplicationController
     @order.table.update_attribute :user, nil if @orders.empty?
     @cost_centers = @current_vendor.cost_centers.existing.active
     @taxes = @current_vendor.taxes.existing
-
     respond_to do |wants|
       wants.js {
-        if is_finished
+        if @order.finished
           # is the case for storno_form
           render :nothing => true
         elsif @orders.empty?
@@ -149,38 +140,35 @@ class OrdersController < ApplicationController
       params[:items].to_a.each do |item_params|
         item_id = item_params[1][:id]
         if item_id
+          item_params[1].delete(:id)
           item = Item.find_by_id(item_id)
-          if item_params[1][:x]
-            item.update_attribute :hidden, true
-          else
-            item_params[1].delete(:id)
-            Item.find_by_id(item_id).update_attributes(item_params[1])
-          end
+          item.update_attributes(item_params[1])
+          item.calculate_totals
         else
-          new_item = Item.new(item_params[1])
-          new_item.category = new_item.article.category
-          @order.items << new_item
+          item = Item.new(item_params[1])
+          item.calculate_totals
+          @order.items << item
         end
       end
     else # create it
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @current_vendor.cost_centers.existing.active.first
-      @order.user = @current_user
       @order.vendor = @current_vendor
       @order.company = @current_company
       params[:items].to_a.each do |item_params|
         next if item_params[1][:x]
         new_item = Item.new(item_params[1])
         new_item.category = new_item.article.category
+        new_item.calculate_totals
         @order.items << new_item
       end
     end
 
-    @order.sum = @order.calculate_sum
-    @order.table.update_attribute :user, @order.user
-    @order.save
-    @order.reload
+    @order.table.user = @current_user
+    @order.table.save
+    @order.user = @current_user
+
     @order.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => @current_user.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => @current_user.id
     end
@@ -189,15 +177,17 @@ class OrdersController < ApplicationController
       @current_vendor.update_attribute :largest_order_number, @order.nr 
     end
 
+    @order.calculate_totals
+
     if @order.items.existing.size.zero?
       @current_vendor.unused_order_numbers << @order.nr
       @current_vendor.save
       @order.hidden = true
       @order.nr = nil
-      @order.save
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing
+      @order.save
       render :nothing => true and return
     end
 
@@ -206,16 +196,15 @@ class OrdersController < ApplicationController
       @current_vendor.save
       @order.hidden = true
       @order.nr = nil
-      @order.save
       @order.items.update_all :hidden => true
       @order.table.user = nil
       @order.table.save
       @tables = @current_user.tables.existing
+      @order.save
       render :nothing => true and return
     end
 
     @order.regroup
-    @order.reload
 
     if local_variant?
       # print coupons for kitchen, bar, etc.

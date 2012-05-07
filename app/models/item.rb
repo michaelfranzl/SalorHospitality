@@ -19,17 +19,27 @@ class Item < ActiveRecord::Base
   has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
 
-  #after_save :set_category
-
   alias_attribute :s, :position
   alias_attribute :o, :comment
+  alias_attribute :p, :price
+  alias_attribute :ai, :article_id
+  alias_attribute :qi, :quantity_id
+  alias_attribute :ci, :category_id
+  alias_attribute :c, :count
+  alias_attribute :u, :usage
+  alias_attribute :x, :hidden
+  alias_attribute :i, :optionslist
 
   scope :prioritized, order('priority ASC')
 
-  #def set_category
-  #debugger
-  #  write_attribute :category_id, 55
-  #end
+  def calculate_totals
+    self.price = price
+    self.tax_percent = tax.percent
+    self.tax_amount = full_price / tax.percent
+    self.sum = full_price
+    self.category_id = article.category.id
+    save
+  end
 
   def price
     p = read_attribute :price
@@ -74,14 +84,14 @@ class Item < ActiveRecord::Base
     self.total_price + self.total_options_price
   end
 
-  def i
+  def optionslist
     self.options.collect{ |o| o.id }
   end
 
-  def i=(i)
-    i.delete '0'
+  def optionslist=(optionslist)
+    optionslist.delete '0'
     self.options = []
-    i.each do |o|
+    optionslist.each do |o|
       self.options << Option.find_by_id(o.to_i)
     end
   end
