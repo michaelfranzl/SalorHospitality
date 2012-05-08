@@ -23,9 +23,9 @@ class ItemsController < ApplicationController
 
   #We'll use update for splitting of items into separate orders
   def update
-    logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"
+    #logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"
     @item = get_model
-    logger.info "[Split] @item = #{ @item.inspect }"
+    #logger.info "[Split] @item = #{ @item.inspect }"
     raise "Dieses Item wurde nicht mehr gefunden. Oops! Möglicherweise wurde es mehrfach angewählt und es ist bereits in einer anderen Rechnung?" if not @item
     @order = @item.order
     raise "Dieses Item ist nicht mehr mit einer Bestellung verbunden. Oops!" if not @order
@@ -40,44 +40,17 @@ class ItemsController < ApplicationController
   # We'll use edit for separation of items
   def edit
     item = get_model
-    separated_item = item.item
-    if separated_item.nil?
-      separated_item = Item.create(item.attributes)
-      separated_item.options = item.options
-      separated_item.count = 0
-      separated_item.item = item
-      item.item = separated_item
-    end
-    item.count -= 1
-    item.count == 0 ? item.delete : item.save
-    separated_item.count += 1
-    separated_item.save
-    separated_item.storno_item.update_attribute :count, separated_item.count if separated_item.storno_status != 0
+    item.split
     @order = item.order
   end
 
-  # We'll use this method for storno of items only, we're not going to destroy them really
+  # We'll use this method for refunding of items only, we're not going to destroy them really
   # storno_status: 2 = storno clone, 3 = storno original
   #
   def destroy
-    i = get_model
-    if i.storno_status == 0
-      k = Item.create(i.attributes)
-      k.options = i.options
-      k.storno_status = 2
-      k.storno_item = i
-      i.storno_item = k
-      i.storno_status = 3
-      k.save
-    else
-      i.storno_item.delete
-      i.storno_item = nil
-      i.storno_status = 0
-    end   
-    i.save
-    @order = i.order
-    @order.update_attribute :sum, @order.calculate_sum
-    @order.update_attribute :storno_sum, @order.calculate_storno_sum
+    item = get_model
+    item.refund(@current_user)
+    @order = item.order
     render 'edit'
   end
 
@@ -127,6 +100,8 @@ class ItemsController < ApplicationController
           parent_order.update_attribute :order, split_order  # make an association between parent and child
           split_order.update_attribute :order, parent_order  # ... and vice versa
         end
+        parent_order.calculate_totals
+        split_order.calculate_totals
       end
 
       split_item = parent_item.item

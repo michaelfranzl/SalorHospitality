@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507203204) do
+ActiveRecord::Schema.define(:version => 20120508090232) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -252,7 +252,6 @@ ActiveRecord::Schema.define(:version => 20120507203204) do
     t.integer  "tax_id"
     t.integer  "max_count",                        :default => 0
     t.integer  "usage",                            :default => 0
-    t.integer  "priority"
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
@@ -265,8 +264,12 @@ ActiveRecord::Schema.define(:version => 20120507203204) do
     t.boolean  "hidden"
     t.integer  "category_id"
     t.float    "tax_percent"
-    t.float    "tax_amount"
+    t.float    "tax_sum"
     t.float    "sum"
+    t.integer  "hidden_by"
+    t.boolean  "refunded"
+    t.float    "refund_sum"
+    t.integer  "refunded_by"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -274,19 +277,11 @@ ActiveRecord::Schema.define(:version => 20120507203204) do
   add_index "items", ["item_id"], :name => "index_items_on_item_id"
   add_index "items", ["order_id"], :name => "index_items_on_order_id"
   add_index "items", ["position"], :name => "index_items_on_sort"
-  add_index "items", ["priority"], :name => "index_items_on_priority"
   add_index "items", ["quantity_id"], :name => "index_items_on_quantity_id"
   add_index "items", ["storno_item_id"], :name => "index_items_on_storno_item_id"
   add_index "items", ["tax_id"], :name => "index_items_on_tax_id"
 
   create_table "items_options", :id => false, :force => true do |t|
-    t.integer  "item_id"
-    t.integer  "option_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "items_printoptions", :id => false, :force => true do |t|
     t.integer  "item_id"
     t.integer  "option_id"
     t.datetime "created_at", :null => false
@@ -324,14 +319,14 @@ ActiveRecord::Schema.define(:version => 20120507203204) do
     t.integer  "nr"
     t.integer  "tax_id"
     t.boolean  "print_pending"
-    t.float    "storno_sum",     :default => 0.0
+    t.float    "refund_sum",     :default => 0.0
     t.integer  "company_id"
     t.string   "note"
     t.integer  "customer_id"
     t.integer  "m_points"
     t.integer  "vendor_id"
     t.boolean  "hidden"
-    t.float    "tax_amount"
+    t.float    "tax_sum"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"

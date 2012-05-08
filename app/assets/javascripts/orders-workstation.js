@@ -98,7 +98,7 @@ function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id
 
   option_position = items_json[d].i.length + 1;
   if (value == 0) {
-    // normal, delete all options
+    // delete all options
     set_json(d,'i',[0]);
     set_json(d,'t',{});
     $('#optionsnames_' + d).html('');

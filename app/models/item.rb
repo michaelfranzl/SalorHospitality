@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   belongs_to :quantity
   belongs_to :item
   belongs_to :tax
-  belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
+  #belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   belongs_to :vendor
   belongs_to :company
   belongs_to :category
@@ -30,14 +30,62 @@ class Item < ActiveRecord::Base
   alias_attribute :x, :hidden
   alias_attribute :i, :optionslist
 
-  scope :prioritized, order('priority ASC')
+  def hide(by)
+    self.unlink
+    self.hidden = true
+    self.hidden_by = by
+    save
+  end
+
+  def unlink
+    self.item.update_attribute :item_id, nil
+    write_attribute :item_id, nil
+  end
+
+  def split
+    return if self.count == 1
+    separated_item = self.item
+    if separated_item.nil?
+      separated_item = Item.create(self.attributes)
+      separated_item.options = self.options
+      separated_item.count = 0
+      separated_item.item = self
+      self.item = separated_item
+    end
+    self.count -= 1
+    self.hide(0) if self.count == 0
+
+    separated_item.count += 1
+    separated_item.save
+
+    if separated_item.storno_status != 0
+      stornoitem = separated_item.storno_item
+      stornoitem.count = separated_item.count 
+      stornoitem.save
+    end
+    separated_item.calculate_totals
+    self.calculate_totals
+  end
+
+  def refund(by_user)
+    self.refunded = true
+    self.refunded_by = by_user.id
+    self.refund_sum = self.sum
+    self.calculate_totals
+    self.order.calculate_totals
+  end
 
   def calculate_totals
     self.price = price
     self.tax_percent = tax.percent
-    self.tax_amount = full_price / tax.percent
-    self.sum = full_price
     self.category_id = article.category.id
+    if self.refunded
+      self.tax_sum = 0
+      self.sum = 0
+    else
+      self.tax_sum = full_price / tax.percent
+      self.sum = full_price
+    end
     save
   end
 
@@ -67,13 +115,13 @@ class Item < ActiveRecord::Base
   end
 
   def total_price
-    p = self.price * self.count
-    return self.storno_status == 2 ? -p : p
+    self.price * self.count
+    #return self.storno_status == 2 ? -p : p
   end
 
   def options_price
-    p = self.options.collect{ |o| o.price }.sum
-    return self.storno_status == 2 ? -p : p
+    self.options.sum(:price)
+    #return self.storno_status == 2 ? -p : p
   end
 
   def total_options_price

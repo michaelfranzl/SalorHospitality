@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :customers
 
   #after_save :set_customers_up
+  after_save :hide_items
 
   validates_presence_of :user_id
 
@@ -25,13 +26,15 @@ class Order < ActiveRecord::Base
 
   def calculate_totals
     self.sum = items.existing.sum(:sum)
-    self.tax_amount = items.existing.sum(:tax_amount)
+    self.refund_sum = items.existing.sum(:refund_sum)
+    self.tax_sum = items.existing.sum(:tax_sum)
     save
   end
 
-  def calculate_storno_sum
-    ttl = self.items.collect{ |i| i.storno_status == 2 ? - i.full_price : 0 }.sum
-    return ttl
+  def hide_items
+    if self.hidden
+      self.items.update_all :hidden => true
+    end
   end
 
   def customer_set=(h)
@@ -116,8 +119,7 @@ class Order < ActiveRecord::Base
     end
     self.created_at = Time.now
     self.finished = true
-    self.tax_amount = items.existing.sum(:tax_amount)
-    save
+    self.calculate_totals
     unlink
   end
 

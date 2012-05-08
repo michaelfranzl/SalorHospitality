@@ -164,8 +164,11 @@ function set_json(d,attribute,value) {
   } else {
     alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
   }
-  create_submit_json_record(d,items_json[d]);
-  submit_json.items[d][attribute] = value;
+  if ( attribute != 't' ) {
+    // never copy the options object to submit_json
+    create_submit_json_record(d,items_json[d]);
+    submit_json.items[d][attribute] = value;
+  }
 }
 
 
@@ -225,11 +228,12 @@ function compose_optionnames(object){
 
 function calculate_sum() {
   var sum = 0;
-  jQuery.each(items_json, function() { 
-    sum += this.c * this.p;
+  jQuery.each(items_json, function() {
+    var count = this.c;
+    sum += count * this.p;
     // now add option prices:
     jQuery.each(this.t, function() {
-      sum += this.p;
+      sum += this.p * count;
     });
   });
   $('#order_sum').html(sum.toFixed(2).replace('.', i18n_decimal_separator));
@@ -298,17 +302,18 @@ function go_to(table_id, view, action, target_table_id) {
     //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
     //$('#save_and_go_to_tables').css('border','none');
     if (action == 'destroy') {
-      submit_json.state['action'] = action;
+      submit_json.order['hidden'] = true;
+      submit_json.state['action'] = 'send';
       submit_json.state['target'] = view;
       send_json(table_id);
     } else if (action == 'send') {
-      submit_json.state['action'] = action;
+      submit_json.state['action'] = 'send';
       submit_json.state['target'] = view;
       submit_json.order['note'] = $('#order_note').val();
       send_json(table_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
-      submit_json.state['action'] = action;
+      submit_json.state['action'] = 'move';
       submit_json.state['target'] = view;
       submit_json.state['target_table_id'] = target_table_id;
       send_json(table_id);

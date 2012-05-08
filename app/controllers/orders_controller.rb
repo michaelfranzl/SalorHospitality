@@ -75,8 +75,12 @@ class OrdersController < ApplicationController
     render 'items/update'
   end
 
+  def print
+  end
+
   def print_and_finish
     @order = get_model
+    was_finished = @order.finished
     @order.finish unless @order.finished
     @order.user = @current_user
     @order.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
@@ -104,7 +108,7 @@ class OrdersController < ApplicationController
     @taxes = @current_vendor.taxes.existing
     respond_to do |wants|
       wants.js {
-        if @order.finished
+        if was_finished
           # is the case for storno_form
           render :nothing => true
         elsif @orders.empty?
@@ -150,16 +154,14 @@ class OrdersController < ApplicationController
           @order.items << item
         end
       end
-    else # create it
+    else
       @order = Order.new params[:order]
       @order.nr = get_next_unique_and_reused_order_number
       @order.cost_center = @current_vendor.cost_centers.existing.active.first
       @order.vendor = @current_vendor
       @order.company = @current_company
       params[:items].to_a.each do |item_params|
-        next if item_params[1][:x]
         new_item = Item.new(item_params[1])
-        new_item.category = new_item.article.category
         new_item.calculate_totals
         @order.items << new_item
       end
@@ -191,29 +193,14 @@ class OrdersController < ApplicationController
       render :nothing => true and return
     end
 
-    if params[:state][:action] == 'destroy'
-      @current_vendor.unused_order_numbers << @order.nr
-      @current_vendor.save
-      @order.hidden = true
-      @order.nr = nil
-      @order.items.update_all :hidden => true
-      @order.table.user = nil
-      @order.table.save
-      @tables = @current_user.tables.existing
-      @order.save
-      render :nothing => true and return
-    end
-
     @order.regroup
 
     if local_variant?
       # print coupons for kitchen, bar, etc.
       printers = initialize_printers
       printers.each do |id, params|
-        normal   = generate_escpos_items @order, id
-        #takeaway = generate_escpos_items @order, id, 1
+        normal = generate_escpos_items @order, id
         do_print printers, id, normal
-        #do_print printers, id, takeaway
       end
       close_printers printers
     end
