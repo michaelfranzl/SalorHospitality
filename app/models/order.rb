@@ -31,6 +31,12 @@ class Order < ActiveRecord::Base
     save
   end
 
+  def hide(by_user)
+    self.hidden = true
+    self.hidden_by = by_user.id
+    save
+  end
+
   def hide_items
     if self.hidden
       self.items.update_all :hidden => true

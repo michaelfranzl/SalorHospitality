@@ -93,25 +93,6 @@ true
       return f, t
     end
 
-    def get_next_unique_and_reused_order_number
-      return 0 if not @current_vendor.use_order_numbers
-      if not @current_vendor.unused_order_numbers.empty?
-        # reuse order numbers if present
-        nr = @current_vendor.unused_order_numbers.first
-        @current_vendor.unused_order_numbers.delete(nr)
-        @current_vendor.save
-      elsif not @current_vendor.largest_order_number.zero?
-        # increment largest order number
-        nr = @current_vendor.largest_order_number + 1
-        @current_vendor.update_attribute :largest_order_number, nr
-      else
-        # find Order with largest nr attribute from database. this should happen only once per application instance.
-        last_order = Order.first(:order => 'nr DESC')
-        nr = last_order ? (last_order.nr || 0) + 1 : 1
-      end
-      return nr
-    end
-
     def check_product_key
       # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
       resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))
@@ -343,8 +324,7 @@ true
           list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, o.price * item.count] unless o.price == 0
         end
 
-        sum_taxes[item.tax.id] += item.full_price
-        subtotal += item.full_price
+        sum_taxes[item.tax.id] += item.sum
 
         label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }#{ ' ' unless item.comment.empty? }#{ item.comment }" : "#{ item.article.name }#{ ' ' unless item.comment.empty? }#{ item.comment }"
 
@@ -352,11 +332,16 @@ true
         list_of_items += list_of_options
       end
 
-      sum =
+      sum_format =
       "                               -----------\r\n" +
       "\e!\x18" + # double tall, bold
-      "\ea\x02" +  # align right
-      "SUMME:   EUR %.2f\n\n" % subtotal.to_s +
+      "\ea\x02"   # align right
+
+      sum = "SUMME:   EUR %.2f" % order.sum
+
+      refund = ("\nSTORNO:  EUR %.2f" % order.refund_sum) if order.refund_sum
+
+      tax_format = "\n\n" +
       "\ea\x01" +  # align center
       "\e!\x01" # Font A
 
@@ -383,6 +368,6 @@ true
       "\x1DV\x00\x0C" # paper cut
 
       logo = @current_vendor.rlogo_header ? @current_vendor.rlogo_header.encode!('ISO-8859-15') : sanitize_character_encoding(logo)
-      output = logo + sanitize_character_encoding(header + list_of_items + sum + tax_header + list_of_taxes + footer)
+      output = logo + sanitize_character_encoding(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
     end
 end

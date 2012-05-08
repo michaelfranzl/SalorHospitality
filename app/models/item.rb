@@ -42,7 +42,7 @@ class Item < ActiveRecord::Base
     write_attribute :item_id, nil
   end
 
-  def split
+  def separate
     return if self.count == 1
     separated_item = self.item
     if separated_item.nil?
@@ -168,5 +168,94 @@ class Item < ActiveRecord::Base
     usage = self.usage == 1 ? "<br>#{ I18n.t 'articles.new.takeaway' }" : ''
     options = self.options.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
     usage + options
+  end
+
+  def unlink
+    self.order.update_attribute :order_id, nil
+    write_attribute :order_id, nil
+  end
+
+  def split(by_user)
+    parent_order = self.order
+    vendor = self.vendor
+    logger.info "[Split] Now I am in the function split with the parameters self #{ self.inspect }"
+    logger.info "[Split] parent_order = self.order = #{ parent_order.inspect }"
+    logger.info "[Split] parent_order.order.nil? is #{ parent_order.order.nil? }"
+
+    split_order = parent_order.order
+    logger.info "[Split] this parent_order's split_order is #{ split_order.inspect }."
+    if split_order.nil?
+      logger.info "[Split] If: I am going to create a brand new split_order, and make it belong to the parent order"
+      Order.transaction do
+        split_order = Order.create(parent_order.attributes)
+        split_order.nr = vendor.get_unique_order_number
+        if split_order.nr > vendor.largest_order_number
+          vendor.update_attribute :largest_order_number, split_order.nr
+        end
+        sisr1 = split_order.save
+        logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
+        raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
+        parent_order.update_attribute :order, split_order  # make an association between parent and child
+        split_order.update_attribute :order, parent_order  # ... and vice versa
+      end
+    end
+
+    split_item = self.item
+    logger.info "[Split] this self's split_item is #{ split_item.inspect }."
+    Item.transaction do
+      if split_item.nil?
+        logger.info "[Split] Because split_item is nil, we're going to create one."
+        split_item = Item.create(self.attributes)
+        split_item.options = self.options
+        split_item.count = 0
+        split_item.printed_count = 0
+        sisr2 = split_item.save
+        logger.info "[Split] The result of saving split_item is #{ sisr2.inspect } and it is #{ split_item.inspect }."
+        raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
+        self.item = split_item # make an association between parent and child
+        split_item.item = self # ... and vice versa
+      end
+
+      split_item.order = split_order # this is the actual moving to the new order
+      if self.count > 0 # proper handling of zero count items
+        split_item.count += 1
+        split_item.printed_count += 1
+      end
+      split_item.max_count = self.max_count if split_item.max_count = 0
+      sisr3 = split_item.save
+      logger.info "[Split] The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
+      raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
+      if self.count > 0 # proper handling of zero count items
+        self.count -= 1
+        self.printed_count -= 1
+      end
+      logger.info "[Split] self.count = #{ self.count.inspect }"
+      if self.count == 0
+        self.hide(0)
+      else
+        pisr = self.save
+        logger.info "[Split] The result of saving self is #{ pisr.inspect } and it is #{ self.inspect }."
+        raise "Konnte das bereits bestehende self nicht überspeichern. Oops!" if not pisr
+      end
+    end
+
+    logger.info "[Split] parent_order before re-read is #{ parent_order.inspect }."
+    parent_order = vendor.orders.find(parent_order.id) # re-read
+    logger.info "[Split] parent_order after re-read is #{ parent_order.inspect }."
+    raise "Konnte parent_order nicht neu laden. Oops!" if not parent_order
+    logger.info "[Split] parent_order has #{ parent_order.items.size } items left."
+
+    split_item.calculate_totals
+    self.calculate_totals
+    if parent_order.items.existing.empty?
+      parent_order.hide(by_user)
+      parent_order.unlink
+      logger.info "[Split] deleted parent_order since there were no items left."
+      vendor.unused_order_numbers << parent_order.nr
+      vendor.save
+    else
+      parent_order.calculate_totals
+    end
+    split_order.calculate_totals
   end
 end

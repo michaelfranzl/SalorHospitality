@@ -45,6 +45,25 @@ class Vendor < ActiveRecord::Base
     write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s 
   end
 
+  def get_unique_order_number
+    return 0 if not self.use_order_numbers
+    if not self.unused_order_numbers.empty?
+      # reuse order numbers if present
+      nr = self.unused_order_numbers.first
+      self.unused_order_numbers.delete(nr)
+      self.save
+    elsif not self.largest_order_number.zero?
+      # increment largest order number
+      nr = self.largest_order_number + 1
+      self.update_attribute :largest_order_number, nr
+    else
+      # find Order with largest nr attribute from database. this should happen only once when a new db
+      last_order = self.orders.last
+      nr = last_order ? (last_order.nr || 0) + 1 : 1
+    end
+    return nr
+  end
+
   # article_id and quantity_id is the model id of Article or Quantity
   # d is the designator, a mix of model and it's id, so that we can have unique values in the HTML, e.g. 'q203' or 'a33'
   # n is the name of either Quantity or Article

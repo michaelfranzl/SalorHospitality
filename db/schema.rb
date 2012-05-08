@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508090232) do
+ActiveRecord::Schema.define(:version => 20120508103825) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -240,15 +240,12 @@ ActiveRecord::Schema.define(:version => 20120508090232) do
     t.integer  "order_id"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
-    t.boolean  "partial_order"
     t.integer  "position"
     t.integer  "quantity_id"
-    t.integer  "storno_status",       :limit => 1, :default => 0
     t.string   "comment",                          :default => ""
     t.float    "price"
     t.integer  "printed_count",       :limit => 1, :default => 0
     t.integer  "item_id"
-    t.integer  "storno_item_id"
     t.integer  "tax_id"
     t.integer  "max_count",                        :default => 0
     t.integer  "usage",                            :default => 0
@@ -278,7 +275,6 @@ ActiveRecord::Schema.define(:version => 20120508090232) do
   add_index "items", ["order_id"], :name => "index_items_on_order_id"
   add_index "items", ["position"], :name => "index_items_on_sort"
   add_index "items", ["quantity_id"], :name => "index_items_on_quantity_id"
-  add_index "items", ["storno_item_id"], :name => "index_items_on_storno_item_id"
   add_index "items", ["tax_id"], :name => "index_items_on_tax_id"
 
   create_table "items_options", :id => false, :force => true do |t|
@@ -327,6 +323,7 @@ ActiveRecord::Schema.define(:version => 20120508090232) do
     t.integer  "vendor_id"
     t.boolean  "hidden"
     t.float    "tax_sum"
+    t.integer  "hidden_by"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
