@@ -7,7 +7,7 @@
 module SettlementsHelper
   
   def calculate_sums(s, s_net, s_gro, total_net, total_gro)
-    s.orders.each do |o|
+    s.orders.existing.each do |o|
       next if @selected_cost_center and o.cost_center != @selected_cost_center
       o.items.each do |i|
         s_gro[i.tax.id] += i.total_price

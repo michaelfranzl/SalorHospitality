@@ -7,7 +7,6 @@
     %th{ :style => 'width:80px' }= t '.revenue'
   - total = 0
   - @orders.each do |so|
-    - next if @selected_cost_center and o.cost_center != @selected_cost_center
     - total += so.sum
     %tr
     %tr
@@ -22,18 +21,19 @@
         %br
         = link_to t(:invoice), order_path(so)
 
-      - so.items.each do |item|
+      - so.items.existing.positioned.each do |item|
         %tr
-          %td= item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-          %td.number== #{ item.count } #{ '(max. ' + item.max_count.to_s + ')' if item.max_count != item.count }
+          %td= item.quantity ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
+          %td.number= item.count
           %td.number= number_to_currency item.price
-          %td.colsum= number_to_currency item.total_price
+          %td.colsum= number_to_currency item.sum
         - item.options.each do |o|
+          - next if o.price == 0
           %tr
-            %td= o.name
+            %td== #{ t(:storno) + ' ' if item.refunded }#{ o.name }
             %td.number= item.count
             %td.number= number_to_currency o.price
-            %td.colsum= number_to_currency item.storno_status == 2 ? -(o.price * item.count) : o.price * item.count
+            %td.colsum= number_to_currency item.refunded ? 0 : item.count * o.price
     %tr
       %td.subtotal{ :colspan => 6 }= number_to_currency so.sum
         

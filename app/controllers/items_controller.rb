@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
     @order = @item.order
     raise "Dieses Item ist nicht mehr mit einer Bestellung verbunden. Oops!" if not @order
 
-    @item.split(@current_user)
+    @item.split
 
     @cost_centers = @current_vendor.cost_centers.existing
     @taxes = @current_vendor.taxes.existing

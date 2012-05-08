@@ -1,6 +1,6 @@
-- settlement = Settlement.find(:all, :conditions => { :finished => nil, :user_id => u.id }).last
+- settlement = @current_vendor.settlements.where(:finished => nil, :user_id => u.id).last
 - settlement = Settlement.new( :user_id => u.id ) if settlement.nil?
-- orders = Order.find_all_by_user_id(settlement.user.id, :conditions => { :settlement_id => nil, :finished => true }, :order => 'id DESC' )
+- orders = @current_vendor.orders.where(:user_id => u.id, :settlement_id => nil, :finished => true).reverse
 - sum = orders.sum(&:sum)
 
 %div.unsettled_orders{ :id => "user_#{ u.id }" }

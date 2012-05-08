@@ -54,11 +54,6 @@ class Item < ActiveRecord::Base
     separated_item.count += 1
     separated_item.save
 
-    if separated_item.storno_status != 0
-      stornoitem = separated_item.storno_item
-      stornoitem.count = separated_item.count 
-      stornoitem.save
-    end
     separated_item.calculate_totals
     self.calculate_totals
   end
@@ -75,6 +70,7 @@ class Item < ActiveRecord::Base
     self.price = price
     self.tax_percent = tax.percent
     self.category_id = article.category.id
+    save
     if self.refunded
       self.tax_sum = 0
       self.sum = 0
@@ -112,12 +108,10 @@ class Item < ActiveRecord::Base
 
   def total_price
     self.price * self.count
-    #return self.storno_status == 2 ? -p : p
   end
 
   def options_price
     self.options.sum(:price)
-    #return self.storno_status == 2 ? -p : p
   end
 
   def total_options_price
@@ -171,7 +165,7 @@ class Item < ActiveRecord::Base
     write_attribute :order_id, nil
   end
 
-  def split(by_user)
+  def split
     parent_order = self.order
     vendor = self.vendor
     logger.info "[Split] Now I am in the function split with the parameters self #{ self.inspect }"
@@ -246,7 +240,7 @@ class Item < ActiveRecord::Base
     split_item.calculate_totals
     self.calculate_totals
     if parent_order.items.existing.empty?
-      parent_order.hide(by_user)
+      parent_order.hide(0)
       parent_order.unlink
       logger.info "[Split] deleted parent_order since there were no items left."
       vendor.unused_order_numbers << parent_order.nr

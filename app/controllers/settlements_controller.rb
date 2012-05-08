@@ -29,7 +29,7 @@ class SettlementsController < ApplicationController
       @orders = @settlement.orders
     elsif params[:user_id]
       @settlement = Settlement.new :user_id => params[:user_id]
-      @orders = @current_vendor.orders.where(:user_id => params[:user_id], :settlement_id => nil, :finished => true).order('id DESC')
+      @orders = @current_vendor.orders.where(:user_id => params[:user_id], :settlement_id => nil, :finished => true, :cost_center_id => @selected_cost_center).reverse
     end
     redirect_to 'settlements/open' unless @orders
   end

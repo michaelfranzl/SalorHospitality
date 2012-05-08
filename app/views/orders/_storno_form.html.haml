@@ -1,7 +1,7 @@
 %div.invoice{ :id => "invoice_#{storno_form.id}" }
   - if local_variant?
     - i = 0
-    - @current_company.vendor_printers.existing.each do |p|
+    - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
       = link_to('', "/orders/print_and_finish/#{ storno_form.id }/#{ p.id }", :remote => true, :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" )
   - else
@@ -11,7 +11,7 @@
     %h3== #{ t(:invoice) } ##{storno_form.nr}, #{ storno_form.table.name }
     %p= l storno_form.created_at, :format => :long
     %table
-      = order_form.fields_for :items, order_form.object.items.existing do |item_form|
+      = order_form.fields_for :items, order_form.object.items.existing.positioned do |item_form|
         - item = item_form.object
         - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
         - color = item.refunded ? '#FAA' : 'transparent'
