@@ -18,7 +18,7 @@
       - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
         = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
 
-      = link_to '', "/orders/#{ invoice_form.id }/edit", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";'
+      = link_to '', "", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onclick => "go_to(#{invoice_form.table.id}, 'table', '', #{invoice_form.id})", :onmouseup => 'this.style.border = "2px solid black";'
 
       - if session[:display_tax_colors]
         %select#cost_center_and_tax_for_invoice{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[tax_id]='+$(this).val() });", :title => t('.set_tax_for_all') }
@@ -32,7 +32,7 @@
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
   %table.invoice
-    - invoice_form.items.each do |item|
+    - invoice_form.items.existing.each do |item|
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix

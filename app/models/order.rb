@@ -77,8 +77,7 @@ class Order < ActiveRecord::Base
       self.items.update_all :order_id => target_order.id
       self.reload
       self.destroy
-      target_order.sum = target_order.calculate_sum
-      target_order.save
+      target_order.calculate_totals
       target_order.regroup
     else
       write_attribute :table_id, target_table_id

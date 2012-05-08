@@ -254,7 +254,7 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 
 
 
-function go_to(table_id, view, action, target_table_id) {
+function go_to(table_id, view, action, order_id, target_table_id) {
   scroll_to($('#container'),20);
   if ( view == 'table' ) {
     $('#order_sum').html('0' + i18n_decimal_separator + '00');
@@ -275,7 +275,8 @@ function go_to(table_id, view, action, target_table_id) {
       submit_json = {items:{}, order:{id:'', table_id:table_id}, state:{}};
       items_json = {};
     }
-    $.ajax({ type: 'GET', url: '/tables/' + table_id, timeout: 5000 });
+    var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
+    $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 });
     $('#orderform').show();
     $('#invoices').hide();
     $('#tables').hide();

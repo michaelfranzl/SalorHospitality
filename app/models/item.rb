@@ -200,6 +200,9 @@ class Item < ActiveRecord::Base
       end
     end
 
+    split_order.calculate_totals
+    parent_order.calculate_totals
+
     split_item = self.item
     logger.info "[Split] this self's split_item is #{ split_item.inspect }."
     Item.transaction do
@@ -215,7 +218,7 @@ class Item < ActiveRecord::Base
         self.item = split_item # make an association between parent and child
         split_item.item = self # ... and vice versa
       end
-
+debugger
       split_item.order = split_order # this is the actual moving to the new order
       if self.count > 0 # proper handling of zero count items
         split_item.count += 1
