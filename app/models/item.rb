@@ -30,16 +30,12 @@ class Item < ActiveRecord::Base
   alias_attribute :x, :hidden
   alias_attribute :i, :optionslist
 
-  def hide(by)
-    self.unlink
-    self.hidden = true
-    self.hidden_by = by
-    save
-  end
-
-  def unlink
+  def hide(by_user_id)
     self.item.update_attribute :item_id, nil
-    write_attribute :item_id, nil
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.item_id = nil
+    save
   end
 
   def separate
@@ -83,7 +79,7 @@ class Item < ActiveRecord::Base
       self.tax_sum = 0
       self.sum = 0
     else
-      self.tax_sum = full_price / tax.percent
+      self.tax_sum = full_price * tax.percent / 100
       self.sum = full_price
     end
     save
@@ -218,7 +214,6 @@ class Item < ActiveRecord::Base
         self.item = split_item # make an association between parent and child
         split_item.item = self # ... and vice versa
       end
-debugger
       split_item.order = split_order # this is the actual moving to the new order
       if self.count > 0 # proper handling of zero count items
         split_item.count += 1
