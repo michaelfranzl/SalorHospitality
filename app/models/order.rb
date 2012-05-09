@@ -18,16 +18,21 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :customers
 
   #after_save :set_customers_up
-  after_save :hide_items
+  after_save :hide_items, :set_nr
 
   validates_presence_of :user_id
 
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
+  def set_nr
+    if self.nr.nil?
+      self.update_attribute :nr, self.vendor.get_unique_order_number
+    end
+  end
+
   def self.create_from_params(params, vendor, user)
     order = Order.new params[:order]
     order.user = user
-    order.nr = vendor.get_unique_order_number
     order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
     order.company = vendor.company
@@ -57,6 +62,7 @@ class Order < ActiveRecord::Base
         self.items << new_item
       end
     end
+    #self.update_attribute :nr, 0 if self.nr.nil? # Bug: sometimes order loses it's nr
   end
 
   def update_associations(user)
@@ -114,6 +120,7 @@ class Order < ActiveRecord::Base
       parent_order.items.update_all :item_id => nil
       parent_order.update_attribute :order_id, nil
     end
+    logger.info "UNLINK ORDER: #{parent_order}.inspect"
   end
 
   def move(target_table_id)

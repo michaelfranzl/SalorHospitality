@@ -31,14 +31,6 @@ class Item < ActiveRecord::Base
   alias_attribute :x, :hidden
   alias_attribute :i, :optionslist
 
-  def hide(by_user_id)
-    self.item.update_attribute :item_id, nil
-    self.hidden = true
-    self.hidden_by = by_user_id
-    self.item_id = nil
-    save
-  end
-
   def separate
     return if self.count == 1
     separated_item = self.item
@@ -161,9 +153,12 @@ class Item < ActiveRecord::Base
     usage + options
   end
 
-  def unlink
-    self.order.update_attribute :order_id, nil
-    write_attribute :order_id, nil
+  def hide(by_user_id)
+    self.item.update_attribute :item_id, nil
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.item_id = nil
+    save
   end
 
   def split
@@ -176,57 +171,59 @@ class Item < ActiveRecord::Base
     split_order = parent_order.order
     logger.info "[Split] this parent_order's split_order is #{ split_order.inspect }."
     if split_order.nil?
-      logger.info "[Split] If: I am going to create a brand new split_order, and make it belong to the parent order"
-      Order.transaction do
-        split_order = Order.create(parent_order.attributes)
-        split_order.nr = vendor.get_unique_order_number
-        sisr1 = split_order.save
-        logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
-        raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
-        parent_order.update_attribute :order, split_order  # make an association between parent and child
-        split_order.update_attribute :order, parent_order  # ... and vice versa
-      end
+      logger.info "[Split] I am going to create a brand new split_order, and make it belong to the parent order"
+      split_order = Order.create(parent_order.attributes)
+      split_order.nr = vendor.get_unique_order_number
+      sisr1 = split_order.save
+      logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
+      raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
+      parent_order.update_attribute :order, split_order  # make an association between parent and child
+      split_order.update_attribute :order, parent_order  # ... and vice versa
     end
 
-    split_order.calculate_totals
-    parent_order.calculate_totals
-
-    split_item = self.item
-    logger.info "[Split] this self's split_item is #{ split_item.inspect }."
-    Item.transaction do
-      if split_item.nil?
-        logger.info "[Split] Because split_item is nil, we're going to create one."
-        split_item = Item.create(self.attributes)
-        split_item.options = self.options
-        split_item.count = 0
-        split_item.printed_count = 0
-        sisr2 = split_item.save
-        logger.info "[Split] The result of saving split_item is #{ sisr2.inspect } and it is #{ split_item.inspect }."
-        raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
-        self.item = split_item # make an association between parent and child
-        split_item.item = self # ... and vice versa
-      end
-      split_item.order = split_order # this is the actual moving to the new order
-      if self.count > 0 # proper handling of zero count items
-        split_item.count += 1
-        split_item.printed_count += 1
-      end
-      split_item.max_count = self.max_count if split_item.max_count = 0
-      sisr3 = split_item.save
-      logger.info "[Split] The result of saving split_item is #{ sisr3.inspect } and it is #{ split_item.inspect }."
-      raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
-      if self.count > 0 # proper handling of zero count items
-        self.count -= 1
-        self.printed_count -= 1
-      end
-      logger.info "[Split] self.count = #{ self.count.inspect }"
-      if self.count == 0
-        self.hide(0)
-      else
-        pisr = self.save
-        logger.info "[Split] The result of saving self is #{ pisr.inspect } and it is #{ self.inspect }."
-        raise "Konnte das bereits bestehende self nicht überspeichern. Oops!" if not pisr
-      end
+    logger.info "[Split] self.item is #{ self.item.inspect }."
+    if self.item.nil?
+      logger.info "[Split] Because self.item is nil, we're going to create one."
+      self.item = Item.create(self.attributes)
+      self.item.options = self.options
+      self.item.count = 0
+      self.item.printed_count = 0
+      sisr2 = self.item.save
+      logger.info "[Split] The result of saving self.item is #{ sisr2.inspect } and it is #{ self.item.inspect }."
+      raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
+      self.item = self.item # make an association between parent and child
+      self.item.item = self # ... and vice versa
+    end
+    self.item.order = split_order # this is the actual moving to the new order
+    if self.count > 0 # proper handling of zero count items
+      self.item.count += 1
+      self.item.printed_count += 1
+    end
+    #self.item.max_count = self.max_count if self.item.max_count = 0
+logger.info self.inspect
+logger.info self.item.inspect if self.item
+#debugger
+    sisr3 = self.item.save
+    logger.info "[Split] The result of saving self.item is #{ sisr3.inspect } and it is #{ self.item.inspect }."
+    raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
+    if self.count > 0 # proper handling of zero count items
+      self.count -= 1
+      self.printed_count -= 1
+    end
+    logger.info "[Split] self.count = #{ self.count.inspect }"
+    if self.count == 0
+      #self.hide(0)
+  self.item.update_attribute :item_id, nil
+  self.hidden = true
+  self.hidden_by = 0
+  self.item_id = nil
+#debugger
+#self.reload
+raise "partner item is hidden" if self.item and self.item.hidden
+    else
+      pisr = self.save
+      logger.info "[Split] The result of saving self is #{ pisr.inspect } and it is #{ self.inspect }."
+      raise "Konnte das bereits bestehende self nicht überspeichern. Oops!" if not pisr
     end
 
     logger.info "[Split] parent_order before re-read is #{ parent_order.inspect }."
@@ -235,7 +232,7 @@ class Item < ActiveRecord::Base
     raise "Konnte parent_order nicht neu laden. Oops!" if not parent_order
     logger.info "[Split] parent_order has #{ parent_order.items.size } items left."
 
-    split_item.calculate_totals
+    self.item.calculate_totals if self.item
     self.calculate_totals
     if parent_order.items.existing.empty?
       parent_order.hide(0)

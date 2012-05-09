@@ -293,6 +293,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
         items_json = items_json_queue[table_id];
         delete submit_json_queue[table_id];
         delete items_json_queue[table_id];
+if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
         render_items();
       } else {
         submit_json.items = {};

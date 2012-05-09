@@ -106,7 +106,10 @@ class OrdersController < ApplicationController
             @order.calculate_totals
             @order.regroup
             @order.update_associations(@current_user)
-            @order.hide(@current_user.id) if @order.items.existing.size.zero?
+            if @order.items.existing.size.zero?
+              @order.hide(@current_user.id)
+              @order.unlink
+            end
             @order.print_tickets if local_variant? and not @order.hidden
             case params[:target]
               when 'tables' then render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
@@ -121,13 +124,9 @@ class OrdersController < ApplicationController
                 end
               when 'invoice' then
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
-                if @orders.empty?
-                  render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
-                else
-                  @taxes = @current_vendor.taxes.existing
-                  @cost_centers = @current_vendor.cost_centers.existing.active
-                  render 'go_to_invoice_form' and return
-                end
+                @taxes = @current_vendor.taxes.existing
+                @cost_centers = @current_vendor.cost_centers.existing.active
+                render 'go_to_invoice_form' and return
             end
           when 'send_and_print'
             get_order
