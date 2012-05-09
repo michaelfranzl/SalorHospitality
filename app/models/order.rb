@@ -18,7 +18,7 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :customers
 
   #after_save :set_customers_up
-  after_save :hide_items, :set_nr
+  after_save :hide_items
 
   validates_presence_of :user_id
 
@@ -114,13 +114,11 @@ class Order < ActiveRecord::Base
   def unlink
     self.items.update_all :item_id => nil
     self.update_attribute :order_id, nil
-    self.reload
     parent_order = self.order
     if parent_order
       parent_order.items.update_all :item_id => nil
       parent_order.update_attribute :order_id, nil
     end
-    logger.info "UNLINK ORDER: #{parent_order}.inspect"
   end
 
   def move(target_table_id)
@@ -130,10 +128,12 @@ class Order < ActiveRecord::Base
     self.reload
     origin_table = self.table
     target_table = Table.find_by_id target_table_id
+
     if target_order
       self.items.update_all :order_id => target_order.id
       self.reload
       self.destroy
+
       target_order.calculate_totals
       target_order.regroup
     else

@@ -156,45 +156,32 @@ class Item < ActiveRecord::Base
   def hide(by_user_id)
     self.hidden = true
     self.hidden_by = by_user_id
-    #self.save
+    self.save
   end
 
   def unlink
-    self.item = nil # self.item_id = nil does NOT work. Jeesuz!
-    #self.save
+    self.item = nil # self.item_id = nil does NOT work.
+    self.save
   end
 
   def split
     parent_order = self.order
     vendor = self.vendor
-    #logger.info "\n\n[SPLIT] Now I am in the function split with the parameters self #{ self.inspect }"
-    #logger.info "\n\n[SPLIT] parent_order = self.order = #{ parent_order.inspect }"
-    #logger.info "\n\n[SPLIT] parent_order.order.nil? is #{ parent_order.order.nil? }"
-
     split_order = parent_order.order
-    #logger.info "\n\n[SPLIT] this parent_order's split_order is #{ split_order.inspect }."
     if split_order.nil?
-      #logger.info "\n\n[SPLIT] I am going to create a brand new split_order, and make it belong to the parent order"
       split_order = Order.create(parent_order.attributes)
       split_order.nr = vendor.get_unique_order_number
-      sisr1 = split_order.save
-      #logger.info "\n\n[SPLIT] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
-      raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
+      #sisr1 = split_order.save
+      #raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
       parent_order.update_attribute :order, split_order  # make an association between parent and child
       split_order.update_attribute :order, parent_order  # ... and vice versa
     end
-
     partner_item = self.item
-    #logger.info "\n\n[SPLIT] partner_item is #{ partner_item.inspect }."
     if partner_item.nil?
-      logger.info "\n\n[SPLIT] Because partner_item is nil, we're going to create one."
       partner_item = Item.create(self.attributes)
       partner_item.options = self.options
       partner_item.count = 0
       partner_item.printed_count = 0
-      #sisr2 = partner_item.save
-      #logger.info "\n\n[SPLIT] The result of saving partner_item is #{ sisr2.inspect } and it is #{ partner_item.inspect }."
-      #raise "Konnte das neu erstellte abgespaltene Item nicht speichern. Oops!" if not sisr2
       self.item = partner_item # make an association between parent and child
       partner_item.item = self # ... and vice versa
     end
@@ -205,41 +192,16 @@ class Item < ActiveRecord::Base
       self.count -= 1
       self.printed_count -= 1
     end
-
-    #sisr3 = partner_item.save
-    #logger.info "\n\n[SPLIT] The result of saving partner_item is #{ sisr3.inspect } and it is #{ partner_item.inspect }."
-    #raise "Konnte das bereits bestehende abgespaltene Item nicht überspeichern. Oops!" if not sisr3
-    if self.count > 0
-
-    end
-    #logger.info "\n\n[SPLIT] self.count = #{ self.count.inspect }."
-    #logger.info "\n\n[SPLIT] self is #{ self.inspect }."
-    #logger.info "\n\n[SPLIT] partner_item is #{ partner_item.inspect }."
     if self.count == 0
       self.hide(0)
       self.unlink
       partner_item.unlink
-    else
-      #pisr = self.save
-      #logger.info "\n\n[SPLIT] The result of saving self is #{ pisr.inspect } and it is #{ self.inspect }."
-      #raise "Konnte das bereits bestehende self nicht überspeichern. Oops!" if not pisr
     end
-
-    #logger.info "\n\n[SPLIT] parent_order before re-read is #{ parent_order.inspect }."
-    #parent_order = vendor.orders.find(parent_order.id) # re-read
-    #logger.info "\n\n[SPLIT] parent_order after re-read is #{ parent_order.inspect }."
-    #raise "Konnte parent_order nicht neu laden. Oops!" if not parent_order
-    #logger.info "\n\n[SPLIT] parent_order has #{ parent_order.items.size } items left."
-
     partner_item.calculate_totals
     self.calculate_totals
-
     if parent_order.items.existing.empty?
       parent_order.hide(0)
       parent_order.unlink
-      #logger.info "\n\n[SPLIT] deleted parent_order since there were no items left."
-      vendor.unused_order_numbers << parent_order.nr
-      vendor.save
     else
       parent_order.calculate_totals
     end

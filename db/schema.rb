@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509143242) do
+ActiveRecord::Schema.define(:version => 20120509215235) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -583,7 +583,7 @@ ActiveRecord::Schema.define(:version => 20120509143242) do
     t.string   "internet_address",                               :default => "www.billgastro.com"
     t.string   "email",                                          :default => "office@billgastro.com"
     t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",                           :default => "--- []\n"
+    t.string   "unused_order_numbers",       :limit => 10000,    :default => "--- []\n"
     t.string   "country"
     t.string   "bank_account1"
     t.string   "bank_account2"

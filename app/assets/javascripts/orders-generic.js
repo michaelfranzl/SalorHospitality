@@ -264,12 +264,12 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
-    submit_json['target'] = 'table';
+    submit_json = {order:{}};
+    submit_json.target = 'table';
     if (action == 'send') {
-      submit_json['jsaction'] = 'send';
-      submit_json.order['note'] = $('#order_note').val();
+      submit_json.jsaction = 'send';
+      submit_json.order = {note:$('#order_note').val()};
       send_json(table_id, false);
-      submit_json = {};
       submit_json.items = {};
       submit_json.order = {table_id:table_id};
       items_json = {};
@@ -296,6 +296,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
 if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
         render_items();
       } else {
+        submit_json = {};
         submit_json.items = {};
         submit_json.order = {table_id:table_id};
         items_json = {};
@@ -330,15 +331,18 @@ if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
     $('#tablesselect').hide();
     submit_json['target'] = 'tables';
     if (action == 'destroy') {
+      submit_json = {};
       submit_json.order['hidden'] = true;
       submit_json['jsaction'] = 'send';
       send_json(table_id);
     } else if (action == 'send') {
+      submit_json = {};
       submit_json['jsaction'] = 'send';
       submit_json.order['note'] = $('#order_note').val();
       send_json(table_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
+      submit_json = {};
       submit_json['jsaction'] = 'move';
       submit_json['target_table_id'] = target_table_id;
       send_json(table_id);

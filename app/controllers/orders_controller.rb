@@ -144,6 +144,10 @@ class OrdersController < ApplicationController
             else
               render :js => "go_to(#{@order.table.id},'tables');" and return
             end
+          when 'move'
+            get_order
+            @order.move(params[:target_table_id])
+            render :js => "go_to(#{@order.table.id},'tables');" and return
         end
     end
   end
@@ -190,6 +194,7 @@ class OrdersController < ApplicationController
         @order.update_from_params(params)
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user)
+        @order.set_nr
       end
     end
 
