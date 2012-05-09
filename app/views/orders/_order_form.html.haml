@@ -3,21 +3,6 @@
 
 #note_for_order= render 'note'
 
-#categories
-  - @categories.each do |category|
-    .category{ :class => category.name.delete(' '), :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
-      %div{ :class => "category_label" }
-        %span= category.name
-
-#articles
-
-#items
-  .ordersum_container
-    %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
-    %span#order_sum
-  %table#itemstable
-
-
 - if workstation?
   #customer_list
     %h3= t 'activerecord.models.customer.other'
@@ -30,3 +15,17 @@
     %span.done{ :onclick => "$('#tablesselect').slideUp();" }
     - @current_user.tables.each do |t|
       %span.option{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'move', '', #{t.id});" }== #{ t.name }
+
+#categories
+  - @categories.existing.active.positioned.each do |category|
+    .category{ :class => category.name.delete(' '), :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
+      %div{ :class => "category_label" }
+        %span= category.name
+
+#articles
+
+#items
+  .ordersum_container
+    %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
+    %span#order_sum
+  %table#itemstable

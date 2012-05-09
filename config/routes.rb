@@ -72,25 +72,24 @@ BillGastro::Application.routes.draw do
     end
   end
 
-  match 'orders/print_and_finish/:id/:port' => 'orders#print_and_finish'
   match 'orders/storno/:id' => 'orders#storno'
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
-  match 'settlements/detailed_list' => 'settlements#detailed_list'
   match 'settlements/print/:id' => 'settlements#print'
-  match 'session/exception_test' => 'sessions#exception_test'
-  match 'session/permission_denied' => 'sessions#permission_denied'
-  match 'company/logo' => 'companies#logo'
-  match 'reports' => 'reports#index'
-  match 'companies/backup_database' => 'companies#backup_database'
-  match 'companies/backup_logfile' => 'companies#backup_logfile'
+
 
   if Rails.env.test?
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :companies, :cost_centers, :taxes, :users, :roles, :presentations, :vendors
-  
+  resources :cost_centers, :taxes, :users, :roles, :presentations, :vendors, :reports
+
+  resources :companies do
+    get :logo
+    get :backup_database
+    get :backup_logfile
+  end
+
   resources :items do
     collection do
       get :list
@@ -133,6 +132,7 @@ BillGastro::Application.routes.draw do
   resources :settlements do
     collection do
       get :open
+      get :detailed_list
     end
   end
 
@@ -158,7 +158,10 @@ BillGastro::Application.routes.draw do
     end
   end
 
-  resource :session
+  resource :session do
+    get :exception_test
+    get :permission_denied
+  end
 
   # Sample resource route with sub-resources:
   #   resources :products do

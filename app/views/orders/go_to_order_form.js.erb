@@ -1,9 +1,8 @@
 <% if @order %>
   items_json = <%= raw @order.items_to_json %>;
   customers_json = <%= raw @order.customers.to_json %>;
-  submit_json.order.id = <%= @order.id %>;
+  submit_json.id = <%= @order.id %>;
   submit_json.order.table_id = <%= @table.id %>;
-  submit_json.state.new = false;
   render_items();
   $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
   $('#order_note').val('<%= escape_javascript @order.note %>');
@@ -11,5 +10,4 @@
   //render_customers_from_json(customers_json);
 <% else %>
   $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
-  submit_json.state.new = true;
 <% end %>

@@ -180,9 +180,6 @@ class Item < ActiveRecord::Base
       Order.transaction do
         split_order = Order.create(parent_order.attributes)
         split_order.nr = vendor.get_unique_order_number
-        if split_order.nr > vendor.largest_order_number
-          vendor.update_attribute :largest_order_number, split_order.nr
-        end
         sisr1 = split_order.save
         logger.info "[Split] the result of saving split_order is #{ sisr1.inspect } and split_order itself is #{ split_order.inspect }."
         raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1

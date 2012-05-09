@@ -3,7 +3,7 @@ var option_position = 0;
 var item_position = 0;
 
 var items_json = {};
-var submit_json = {};
+var submit_json = {current_view:'tables'};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
@@ -254,9 +254,9 @@ function mark_item_for_storno(list_id, order_id, item_id) {
 
 
 
-function go_to(table_id, view, action, order_id, target_table_id) {
+function go_to(table_id, target, action, order_id, target_table_id) {
   scroll_to($('#container'),20);
-  if ( view == 'table' ) {
+  if ( target == 'table' ) {
     $('#order_sum').html('0' + i18n_decimal_separator + '00');
     $('#order_info').html(i18n_just_order);
     $('#order_note').val('');
@@ -264,16 +264,33 @@ function go_to(table_id, view, action, order_id, target_table_id) {
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
-    if ( submit_json_queue.hasOwnProperty(table_id) ) {
-      $('#order_cancel_button').hide();
-      submit_json = submit_json_queue[table_id];
-      items_json = items_json_queue[table_id];
-      delete submit_json_queue[table_id];
-      delete items_json_queue[table_id];
-      render_items();
-    } else {
-      submit_json = {items:{}, order:{id:'', table_id:table_id}, state:{}};
+    submit_json['target'] = 'table';
+    if (action == 'send') {
+      submit_json['jsaction'] = 'send';
+      submit_json.order['note'] = $('#order_note').val();
+      send_json(table_id);
+      submit_json.items = {};
+      submit_json.order = {table_id:table_id};
       items_json = {};
+    } else if (action == 'send_and_print' ) {
+      submit_json['jsaction'] = 'send_and_print';
+      submit_json.order['note'] = $('#order_note').val();
+      send_json(table_id);
+      submit_json.items = {};
+      submit_json.order = {table_id:table_id};
+      items_json = {};
+    } else {
+      if ( submit_json_queue.hasOwnProperty(table_id) ) {
+        $('#order_cancel_button').hide();
+        submit_json = submit_json_queue[table_id];
+        items_json = items_json_queue[table_id];
+        delete submit_json_queue[table_id];
+        delete items_json_queue[table_id];
+        render_items();
+      } else {
+        submit_json.items = {};
+        submit_json.order = {table_id:table_id};
+      }
     }
     var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
     $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 });
@@ -288,7 +305,9 @@ function go_to(table_id, view, action, order_id, target_table_id) {
     screenlock_counter = -1;
     tableupdates = -1;
     screenlock_active = true;
-  } else if ( view == 'tables') {
+    submit_json['current_view'] = 'table';
+
+  } else if ( target == 'tables') {
     $('#orderform').hide();
     $('#invoices').hide();
     $('#tables').show();
@@ -300,33 +319,33 @@ function go_to(table_id, view, action, order_id, target_table_id) {
     $('#functions_footer').hide();
     $('#customer_list').hide();
     $('#tablesselect').hide();
+    submit_json['target'] = 'tables';
     //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
     //$('#save_and_go_to_tables').css('border','none');
     if (action == 'destroy') {
       submit_json.order['hidden'] = true;
-      submit_json.state['action'] = 'send';
-      submit_json.state['target'] = view;
+      submit_json['jsaction'] = 'send';
       send_json(table_id);
     } else if (action == 'send') {
-      submit_json.state['action'] = 'send';
-      submit_json.state['target'] = view;
+      submit_json['jsaction'] = 'send';
       submit_json.order['note'] = $('#order_note').val();
       send_json(table_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
-      submit_json.state['action'] = 'move';
-      submit_json.state['target'] = view;
-      submit_json.state['target_table_id'] = target_table_id;
+      submit_json['jsaction'] = 'move';
+      submit_json['target_table_id'] = target_table_id;
       send_json(table_id);
     }
     screenlock_counter = screenlock_timeout;
     option_position = 0;
     item_position = 0;
     tableupdates = 2;
-  } else if ( view == 'invoice') {
+    submit_json['current_view'] = 'tables';
+
+  } else if ( current_view == 'invoice') {
     if (action == 'send') {
-      submit_json.state['action'] = action;
-      submit_json.state['target'] = view;
+      submit_json['jsaction'] = 'send';
+      submit_json['target'] = 'invoice';
       submit_json.order['note'] = $('#order_note').val();
       send_json(table_id);
     }
@@ -343,6 +362,7 @@ function go_to(table_id, view, action, order_id, target_table_id) {
     $('#functions_footer').hide();
     tableupdates = -1;
     screenlock_counter = -1;
+    submit_json['current_view'] = 'invoice';
   }
 }
 
@@ -398,10 +418,10 @@ function update_tables(){
 }
 
 function change_item_status(id,status) {
-  $.ajax({
-    type: 'POST',
-    url: '/items/change_status?id=' + id + '&status=' + status
-  });
+  //$.ajax({
+  //  type: 'POST',
+  //  url: '/items/change_status?id=' + id + '&status=' + status
+  //});
 }
 
 function highlight_button(element) {

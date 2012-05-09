@@ -64,6 +64,7 @@
     - collection = article_form.object.new_record? ? article_form.object.quantities : article_form.object.quantities.existing.positioned
     = article_form.fields_for :quantities, collection do |quantity_form|
       = render :partial => 'quantity', :locals => { :f => quantity_form } unless quantity_form.object.hidden
+
   %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
 
   %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )

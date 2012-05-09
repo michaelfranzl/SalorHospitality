@@ -24,6 +24,51 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
 
+  def self.create_from_params(params, vendor, user)
+    order = Order.new params[:order]
+    order.user = user
+    order.nr = vendor.get_unique_order_number
+    order.cost_center = vendor.cost_centers.existing.active.first
+    order.vendor = vendor
+    order.company = vendor.company
+    params[:items].to_a.each do |item_params|
+      new_item = Item.new(item_params[1])
+      new_item.cost_center = order.cost_center
+      new_item.calculate_totals
+      order.items << new_item
+    end
+    order.save
+    return order
+  end
+
+  def update_from_params(params)
+    self.update_attributes params[:order]
+    params[:items].to_a.each do |item_params|
+      item_id = item_params[1][:id]
+      if item_id
+        item_params[1].delete(:id)
+        item = Item.find_by_id(item_id)
+        item.update_attributes(item_params[1])
+        item.calculate_totals
+      else
+        new_item = Item.new(item_params[1])
+        new_item.cost_center = self.cost_center
+        new_item.calculate_totals
+        self.items << new_item
+      end
+    end
+  end
+
+  def update_associations(user)
+    self.table.user = user
+    self.table.save
+    self.user = user
+    self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
+      i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.article.category.preparation_user_id, :delivery_user_id => user.id
+    end
+    save
+  end
+
   def calculate_totals
     self.sum = items.existing.sum(:sum)
     self.refund_sum = items.existing.sum(:refund_sum)
@@ -32,8 +77,13 @@ class Order < ActiveRecord::Base
   end
 
   def hide(by_user_id)
+    self.vendor.unused_order_numbers << self.nr
+    self.vendor.save
+    self.table.user = nil
+    self.table.save
     self.hidden = true
     self.hidden_by = by_user_id
+    self.nr = nil
     save
   end
 
@@ -119,12 +169,10 @@ class Order < ActiveRecord::Base
   end
 
   def finish
-    if nr and nr > vendor.largest_order_number
-      vendor.update_attribute :largest_order_number, nr 
-    end
-    self.created_at = Time.now
+    self.updated_at = Time.now
     self.finished = true
-    self.calculate_totals
+    #self.calculate_totals
+    save
     unlink
   end
 
@@ -138,11 +186,17 @@ class Order < ActiveRecord::Base
     printr.close
   end
 
-  def print_invoice(vendor_printer)
-    printr = Printr.new(vendor_printer)
-    printr.open
-    printr.print vendor_printer.id, self.escpos_invoice
-    printr.close
+  def print_invoice(vendor_printer=nil)
+    if vendor_printer
+      printr = Printr.new(vendor_printer)
+      printr.open
+      printr.print vendor_printer.id, self.escpos_invoice
+      printr.close
+      self.update_attribute :printed, true
+      #self.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
+    else
+      self.update_attribute :print_pending, true
+    end
   end
 
   def escpos_tickets(printer_id)
@@ -218,25 +272,22 @@ class Order < ActiveRecord::Base
     "\n" + vendor.invoice_subtitle + "\n" +
     "\n" + vendor.address + "\n\n" +
     vendor.revenue_service_tax_number + "\n\n" +
-
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
+    I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    I18n.t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
-
-    header += I18n.t('invoice_numer_X_at_time', :number => order.nr, :datetime => I18n.l(order.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
     header += "\n\n" +
-
     "\e!\x00" +  # Font A
     "                  Artikel  EP     Stk   GP\n" +
-    "------------------------------------------\n" +
+    "------------------------------------------\n"
 
     sum_taxes = Hash.new
-    @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
+    vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
     subtotal = 0
     list_of_items = ''
-    order.items.existing.positioned.each do |item|
+    self.items.existing.positioned.each do |item|
       next if item.count == 0
       list_of_options = ''
       item.options.each do |o|
@@ -257,9 +308,9 @@ class Order < ActiveRecord::Base
     "\e!\x18" + # double tall, bold
     "\ea\x02"   # align right
 
-    sum = "SUMME:   EUR %.2f" % order.sum
+    sum = "SUMME:   EUR %.2f" % self.sum
 
-    refund = ("\nSTORNO:  EUR %.2f" % order.refund_sum) if order.refund_sum
+    refund = ("\nSTORNO:  EUR %.2f" % self.refund_sum) if self.refund_sum
 
     tax_format = "\n\n" +
     "\ea\x01" +  # align center
@@ -268,7 +319,7 @@ class Order < ActiveRecord::Base
     tax_header = "          netto     USt.  brutto\n"
 
     list_of_taxes = ''
-    @current_vendor.taxes.existing.each do |tax|
+    vendor.taxes.existing.each do |tax|
       #next if sum_taxes[tax.id] == 0
       fact = tax.percent/100.00
       net = sum_taxes[tax.id] / (1.00+fact)
@@ -287,8 +338,8 @@ class Order < ActiveRecord::Base
     vendor.internet_address + "\n\n\n\n\n\n\n" + 
     "\x1DV\x00\x0C" # paper cut
 
-    logo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Base.sanitize_escpos(logo)
-    output = logo + Base.sanitize_escpos(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
+    logo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
+    output = logo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
   end
 
   def items_to_json
