@@ -24,36 +24,23 @@
       %th{ :class => 'bb', :style => 'width:90px' }== #{ tax.name }<br>#{t :gross} #{ number_to_percentage tax.percent, :precision => 0 }
     %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }<br>#{ t :gross }
 
-  - total_net = {}
-  - total_gro = {}
-  - @current_vendor.taxes.existing.each do |t|
-    - total_net[t.id] = 0
-    - total_gro[t.id] = 0
-
   - @settlements.each do |s|
-    - s_net = {}
-    - s_gro = {}
-    - @current_vendor.taxes.existing.each do |t|
-      - s_gro[t.id] = Item.find(:all, :conditions => { :hidden => nil, :refunded => nil, :vendor_id => @current_vendor, :refunded => nil, :tax_percent => t.percent, :settlement_id => s, :cost_center_id => @selected_cost_center, :created_at => @from..@to).sum(:sum)
-      - s_net[t.id] = s_gro[t.id] - s.orders.existing.where(:cost_center_id => @selected_cost_center, :tax_id => t).sum(:tax_sum)
-    - next if s_gro.to_a.sum { |g| g[1] } == 0
-      
     %tr
       %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
       %td= l s.created_at, :format => :date_iso
       %td{ :class => 'br' }= s.user.login
-      - @taxes.each do |tax|
-        %td= number_to_currency s_net[tax.id]
-      %td{ :class => 'br colsum' }= number_to_currency s_net.to_a.sum { |n| n[1] }
-      - @taxes.each do |tax|
-        %td= number_to_currency s_gro[tax.id]
-      %td{ :class => 'br colsum' }= number_to_currency s_gro.to_a.sum { |g| g[1] }
+      - @taxes.each do |t|
+        %td= number_to_currency @report[s.id][t.id][:net]
+      %td{ :class => 'br colsum' }= number_to_currency @report[s.id][:total_net]
+      - @taxes.each do |t|
+        %td= number_to_currency @report[s.id][t.id][:gro]
+      %td{ :class => 'br colsum' }= number_to_currency @report[s.id][:total_gro]
 
   %tr
     %th{ :colspan => 3, :class => 'br sum' }= t('.sum_total')
-    - @taxes.each do |tax|
-      %th{ :class => 'sum' }= number_to_currency total_net[tax.id]
-    %th{ :class => 'sum colsum br' }= number_to_currency total_net.to_a.sum { |n| n[1] }
-    - @taxes.each do |tax|
-      %th{ :class => 'sum' }= number_to_currency total_gro[tax.id]
-    %th{ :class => 'sum colsum br' }= number_to_currency total_gro.to_a.sum { |g| g[1] }
+    - @taxes.each do |t|
+      %th{ :class => 'sum' }= number_to_currency @report[:tax_subtotal_net][t.id]
+    %th{ :class => 'sum colsum br' }= number_to_currency @report[:subtotal_net]
+    - @taxes.each do |t|
+      %th{ :class => 'sum' }= number_to_currency @report[:tax_subtotal_gro][t.id]
+    %th{ :class => 'sum colsum br' }= number_to_currency @report[:subtotal_net]

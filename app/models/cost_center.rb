@@ -8,6 +8,7 @@
 class CostCenter < ActiveRecord::Base
   include Scope
   has_many :orders
+  has_many :items
   belongs_to :company
   belongs_to :vendor
   validates_presence_of :name

@@ -9,7 +9,7 @@ class Printr
 
   def initialize(vendor_printers=nil)
     @open_printers = Hash.new
-    if vendor_printers.kind_of? Array
+    if vendor_printers.kind_of?(ActiveRecord::Relation) or vendor_printers.kind_of?(Array)
       @vendor_printers = vendor_printers
     elsif vendor_printers.kind_of? VendorPrinter
       @vendor_printers = [vendor_printers]

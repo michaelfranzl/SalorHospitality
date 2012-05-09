@@ -14,6 +14,8 @@ class Item < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :company
   belongs_to :category
+  belongs_to :settlement
+  belongs_to :cost_center
   has_and_belongs_to_many :options
   has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id

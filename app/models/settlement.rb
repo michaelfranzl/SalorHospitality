@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
+# BillGastro -The innovative Point Of Sales Software for your Restaurant
 # Copyright (C) 2012-2013  Red (E) Tools LTD
 # 
 # See license.txt for the license applying to all files within this software.
@@ -11,6 +11,7 @@ class Settlement < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :user
   has_many :orders
+  has_many :items
 
   def revenue=(revenue)
     write_attribute(:revenue, revenue.gsub(',', '.'))
@@ -52,7 +53,7 @@ class Settlement < ActiveRecord::Base
     refund_total = 0
     self.orders.existing.each do |o|
       cc = o.cost_center.name if o.cost_center
-      t = l(o.created_at, :format => :time_short)
+      t = I18n.l(o.created_at, :format => :time_short)
       list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [o.nr, o.table.name, t, cc, o.sum]
       total_costcenter[o.cost_center.id] += o.sum if o.cost_center
       refund_total += o.refund_sum
@@ -80,6 +81,50 @@ class Settlement < ActiveRecord::Base
     "\x1DV\x00" # paper cut
 
     Printr.sanitize(string)
+  end
+
+  def self.report(settlements,cost_center=nil)
+    report = {}
+    report[:tax_subtotal_gro] = {}
+    report[:tax_subtotal_tax] = {}
+    report[:tax_subtotal_net] = {}
+    report[:subtotal_gro] = 0
+    report[:subtotal_tax] = 0
+    report[:subtotal_net] = 0
+    vendor = settlements.first.vendor if settlements.first
+
+    vendor.taxes.existing.each do |t|
+      report[:tax_subtotal_gro][t.id] = 0
+      report[:tax_subtotal_tax][t.id] = 0
+      report[:tax_subtotal_net][t.id] = 0
+    end
+
+    settlements.each do |s|
+      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
+      vendor.taxes.existing.each do |t|
+        report[s.id][t.id] = {}
+
+        if cost_center
+          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :tax_percent => t.percent, :settlement_id => s, :cost_center_id => cost_center)
+        else
+          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :tax_percent => t.percent, :settlement_id => s)
+        end
+        report[s.id][t.id][:gro] = items.sum(:sum)
+        report[s.id][t.id][:tax] = items.sum(:tax_sum)
+        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
+        report[s.id][:total_gro] += report[s.id][t.id][:gro]
+        report[s.id][:total_tax] += report[s.id][t.id][:tax]
+        report[s.id][:total_net] += report[s.id][t.id][:net]
+
+        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
+        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
+        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
+        report[:subtotal_gro] += report[s.id][t.id][:gro]
+        report[:subtotal_tax] += report[s.id][t.id][:tax]
+        report[:subtotal_net] += report[s.id][t.id][:net]
+      end
+    end
+    report
   end
 
 end

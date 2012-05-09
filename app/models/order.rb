@@ -132,8 +132,8 @@ class Order < ActiveRecord::Base
     vendor_printers = self.vendor.vendor_printers.existing
     printr = Printr.new(vendor_printers)
     printr.open
-    vendor_printers.each do |p_id, p_params|
-      printr.print p_id, self.escpos_tickets(p_id)
+    vendor_printers.each do |p|
+      printr.print p.id, self.escpos_tickets(p.id)
     end
     printr.close
   end
@@ -146,6 +146,7 @@ class Order < ActiveRecord::Base
   end
 
   def escpos_tickets(printer_id)
+    vendor = self.vendor
     init =
     "\e@"     +  # Initialize Printer
     "\e!\x38" +  # doube tall, double wide, bold
@@ -158,20 +159,20 @@ class Order < ActiveRecord::Base
 
     header = ''
     header +=
-    "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_user.login, o.table.name]
-    header += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
+    "%-14.14s #%5i\n%-12.12s %8s\n" % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0), self.user.login, self.table.name]
+    header += "%20.20s\n" % [self.note] if self.note and not self.note.empty?
     header += "=====================\n"
 
     separate_receipt_contents = []
     normal_receipt_content = ''
     self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id).each do |c|
-      items = o.items.existing.where("count > printed_count AND category_id = #{ c.id }")
+      items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
         itemstring = ''
         itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
         itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-        itemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == -1
+        itemstring += " > %-17.17s\n" % I18n.t('articles.new.takeaway') if i.usage == -1
         itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
         i.options.each do |po|
           itemstring += " * %-17.17s\n" % [po.name]
@@ -205,24 +206,25 @@ class Order < ActiveRecord::Base
 
 
   def escpos_invoice
+    vendor = self.vendor
     logo =
     "\e@"     +  # Initialize Printer
     "\ea\x01" +  # align center
     "\e!\x38" +  # doube tall, double wide, bold
-    @current_vendor.name + "\n"
+    vendor.name + "\n"
 
     header =
     "\e!\x01" +  # Font B
-    "\n" + @current_vendor.invoice_subtitle + "\n" +
-    "\n" + @current_vendor.address + "\n\n" +
-    @current_vendor.revenue_service_tax_number + "\n\n" +
+    "\n" + vendor.invoice_subtitle + "\n" +
+    "\n" + vendor.address + "\n\n" +
+    vendor.revenue_service_tax_number + "\n\n" +
 
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
 
-    t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
+    I18n.t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
 
-    header += t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + @current_vendor.time_offset.hours, :format => :long)) if @current_vendor.use_order_numbers
+    header += I18n.t('invoice_numer_X_at_time', :number => order.nr, :datetime => I18n.l(order.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
     header += "\n\n" +
 
@@ -239,12 +241,12 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.options.each do |o|
         next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
       end
 
       sum_taxes[item.tax.id] += item.sum
 
-      label = item.quantity ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name }"
+      label = item.quantity ? "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.article.name }"
 
       list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.sum]
       list_of_items += list_of_options
@@ -279,13 +281,13 @@ class Order < ActiveRecord::Base
     footer = 
     "\ea\x01" +  # align center
     "\e!\x00" + # font A
-    "\n" + @current_vendor.invoice_slogan1 + "\n" +
+    "\n" + vendor.invoice_slogan1 + "\n" +
     "\e!\x08" + # emphasized
-    "\n" + @current_vendor.invoice_slogan2 + "\n" +
-    @current_vendor.internet_address + "\n\n\n\n\n\n\n" + 
+    "\n" + vendor.invoice_slogan2 + "\n" +
+    vendor.internet_address + "\n\n\n\n\n\n\n" + 
     "\x1DV\x00\x0C" # paper cut
 
-    logo = @current_vendor.rlogo_header ? @current_vendor.rlogo_header.encode!('ISO-8859-15') : Base.sanitize_escpos(logo)
+    logo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Base.sanitize_escpos(logo)
     output = logo + Base.sanitize_escpos(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
   end
 

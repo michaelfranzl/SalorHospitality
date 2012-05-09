@@ -1,11 +1,13 @@
 $link_color: white
 $error_text: #C00
 $lightgray: #EEE
-$darkgray: #999
+$darkgray: #666
 $middlegray: #444
 $background: #333
 $adminbackground: #222
 $billgastroblue1: #5b7682
+$billgastrogrey1: #243239
+$billgastrogrey2: #7E868A
 $warning: #74101b
 
 //global settings==============================
@@ -223,24 +225,29 @@ a.logout
 table.settlements
   :font-size 80%
   :border-collapse collapse
+  :border 1px solid $darkgray
   td
     :padding 7px 5px
     :text-align right
+    :border-top 1px solid $billgastrogrey2
+  td.link
+    :background-color $billgastrogrey1
   td.link a
     :padding 5px 10px
-    :background-color $adminbackground
   .subtotal
     :font
       :weight bold
     :text-align right
   .colsum
     :font-style italic
-    :background-color $adminbackground
+    :background-color $billgastrogrey1
   .total td
-    :border-top 1px solid darkgrey
+    :background-color $billgastrogrey1
+    :border-top 1px solid $billgastrogrey2
     :font-weight bold
   th
-    :border 1px solid $darkgray
+    :background-color $billgastrogrey1
+    :border 1px solid $billgastrogrey2
     :text-align right
     :padding 10px 5px
 

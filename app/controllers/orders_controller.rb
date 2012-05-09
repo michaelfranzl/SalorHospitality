@@ -145,9 +145,10 @@ class OrdersController < ApplicationController
           item.update_attributes(item_params[1])
           item.calculate_totals
         else
-          item = Item.new(item_params[1])
-          item.calculate_totals
-          @order.items << item
+          new_item = Item.new(item_params[1])
+          new_item.cost_center = @order.cost_center
+          new_item.calculate_totals
+          @order.items << new_item
         end
       end
     else
@@ -158,6 +159,7 @@ class OrdersController < ApplicationController
       @order.company = @current_company
       params[:items].to_a.each do |item_params|
         new_item = Item.new(item_params[1])
+        new_item.cost_center = @order.cost_center
         new_item.calculate_totals
         @order.items << new_item
       end
@@ -190,7 +192,6 @@ class OrdersController < ApplicationController
     end
 
     @order.regroup
-
     @order.print_tickets if local_variant?
 
     @taxes = @current_vendor.taxes.existing

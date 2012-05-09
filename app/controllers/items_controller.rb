@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
       wants.bill {
         orders = @current_vendor.orders.existing.where(:print_pending => true)
         tickets = orders.collect{ |o| o.escpos_tickets }.join
-        invoices = orders.collect{ |o| o.escpos_invoice[params[:printer_id] }.join
+        invoices = orders.collect{ |o| o.escpos_invoice[params[:printer_id]] }.join
         orders.update_all :print_pending => false
         render :text => tickets + invoices
       }
