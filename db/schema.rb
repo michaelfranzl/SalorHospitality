@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508103825) do
+ActiveRecord::Schema.define(:version => 20120509080811) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -267,6 +267,8 @@ ActiveRecord::Schema.define(:version => 20120508103825) do
     t.boolean  "refunded"
     t.float    "refund_sum"
     t.integer  "refunded_by"
+    t.integer  "settlement_id"
+    t.integer  "cost_center_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"

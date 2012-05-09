@@ -128,6 +128,167 @@ class Order < ActiveRecord::Base
     unlink
   end
 
+  def print_tickets
+    vendor_printers = self.vendor.vendor_printers.existing
+    printr = Printr.new(vendor_printers)
+    printr.open
+    vendor_printers.each do |p_id, p_params|
+      printr.print p_id, self.escpos_tickets(p_id)
+    end
+    printr.close
+  end
+
+  def print_invoice(vendor_printer)
+    printr = Printr.new(vendor_printer)
+    printr.open
+    printr.print vendor_printer.id, self.escpos_invoice
+    printr.close
+  end
+
+  def escpos_tickets(printer_id)
+    init =
+    "\e@"     +  # Initialize Printer
+    "\e!\x38" +  # doube tall, double wide, bold
+    "\n\n"
+
+    cut =
+    "\n\n\n\n" +
+    "\x1D\x56\x00" +        # paper cut
+    "\x1B\x70\x00\x99\x99\x0C"  # beep
+
+    header = ''
+    header +=
+    "%-14.14s #%5i\n%-12.12s %8s\n" % [l(Time.now + @current_vendor.time_offset.hours, :format => :time_short), (@current_vendor.use_order_numbers ? o.nr : 0), @current_user.login, o.table.name]
+    header += "%20.20s\n" % [o.note] if o.note and not o.note.empty?
+    header += "=====================\n"
+
+    separate_receipt_contents = []
+    normal_receipt_content = ''
+    self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id).each do |c|
+      items = o.items.existing.where("count > printed_count AND category_id = #{ c.id }")
+      catstring = ''
+      items.each do |i|
+        itemstring = ''
+        itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
+        itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
+        itemstring += " > %-17.17s\n" % t('articles.new.takeaway') if i.usage == -1
+        itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
+        i.options.each do |po|
+          itemstring += " * %-17.17s\n" % [po.name]
+        end
+        itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
+        if i.usage == 0
+          catstring += itemstring
+        elsif i.usage == -1
+          separate_receipt_contents << itemstring
+        end
+        i.update_attribute :printed_count, i.count
+      end
+
+      unless items.size.zero?
+        if c.separate_print == true
+          separate_receipt_contents << catstring
+        else
+          normal_receipt_content += catstring
+        end
+      end
+    end
+
+    output = init
+    separate_receipt_contents.each do |content|
+      output += (header + content + cut) unless content.empty?
+    end
+    output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
+    output = '' if output == init
+    return output
+  end
+
+
+  def escpos_invoice
+    logo =
+    "\e@"     +  # Initialize Printer
+    "\ea\x01" +  # align center
+    "\e!\x38" +  # doube tall, double wide, bold
+    @current_vendor.name + "\n"
+
+    header =
+    "\e!\x01" +  # Font B
+    "\n" + @current_vendor.invoice_subtitle + "\n" +
+    "\n" + @current_vendor.address + "\n\n" +
+    @current_vendor.revenue_service_tax_number + "\n\n" +
+
+    "\ea\x00" +  # align left
+    "\e!\x01" +  # Font B
+
+    t('served_by_X_on_table_Y', :waiter => order.user.title, :table => order.table.name) + "\n"
+
+    header += t('invoice_numer_X_at_time', :number => order.nr, :datetime => l(order.created_at + @current_vendor.time_offset.hours, :format => :long)) if @current_vendor.use_order_numbers
+
+    header += "\n\n" +
+
+    "\e!\x00" +  # Font A
+    "                  Artikel  EP     Stk   GP\n" +
+    "------------------------------------------\n" +
+
+    sum_taxes = Hash.new
+    @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
+    subtotal = 0
+    list_of_items = ''
+    order.items.existing.positioned.each do |item|
+      next if item.count == 0
+      list_of_options = ''
+      item.options.each do |o|
+        next if o.price == 0
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+      end
+
+      sum_taxes[item.tax.id] += item.sum
+
+      label = item.quantity ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name }"
+
+      list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.sum]
+      list_of_items += list_of_options
+    end
+
+    sum_format =
+    "                               -----------\r\n" +
+    "\e!\x18" + # double tall, bold
+    "\ea\x02"   # align right
+
+    sum = "SUMME:   EUR %.2f" % order.sum
+
+    refund = ("\nSTORNO:  EUR %.2f" % order.refund_sum) if order.refund_sum
+
+    tax_format = "\n\n" +
+    "\ea\x01" +  # align center
+    "\e!\x01" # Font A
+
+    tax_header = "          netto     USt.  brutto\n"
+
+    list_of_taxes = ''
+    @current_vendor.taxes.existing.each do |tax|
+      #next if sum_taxes[tax.id] == 0
+      fact = tax.percent/100.00
+      net = sum_taxes[tax.id] / (1.00+fact)
+      gro = sum_taxes[tax.id]
+      vat = gro-net
+
+      list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
+    end
+
+    footer = 
+    "\ea\x01" +  # align center
+    "\e!\x00" + # font A
+    "\n" + @current_vendor.invoice_slogan1 + "\n" +
+    "\e!\x08" + # emphasized
+    "\n" + @current_vendor.invoice_slogan2 + "\n" +
+    @current_vendor.internet_address + "\n\n\n\n\n\n\n" + 
+    "\x1DV\x00\x0C" # paper cut
+
+    logo = @current_vendor.rlogo_header ? @current_vendor.rlogo_header.encode!('ISO-8859-15') : Base.sanitize_escpos(logo)
+    output = logo + Base.sanitize_escpos(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
+  end
+
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|

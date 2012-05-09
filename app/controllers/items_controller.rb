@@ -11,11 +11,11 @@ class ItemsController < ApplicationController
   def index
     respond_to do |wants|
       wants.bill {
-        items_code = generate_escpos_items
-        pending_invoices = @current_vendor.orders.existing.where(:print_pending => true)
-        invoices_code = pending_invoices.collect{ |i| generate_escpos_invoice i }.join
-        pending_invoices.update_all :print_pending => false
-        render :text => invoices_code + items_code
+        orders = @current_vendor.orders.existing.where(:print_pending => true)
+        tickets = orders.collect{ |o| o.escpos_tickets }.join
+        invoices = orders.collect{ |o| o.escpos_invoice[params[:printer_id] }.join
+        orders.update_all :print_pending => false
+        render :text => tickets + invoices
       }
       wants.html
     end

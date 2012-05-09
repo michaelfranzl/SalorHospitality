@@ -1,9 +1,0 @@
-%h2= t('activerecord.models.settlement.other')
-
-= render :partial => 'detailed_list', :locals => { :orders => @orders, :selected_cost_center => nil }
-
-- path = user_settlements_path @settlement.user
-- form_for :settlement, @settlement, :url => path, :html => { :method => 'post' } do |sm_form|
-  %p= sm_form.label('created_at', t('.set_date'))
-  %p= sm_form.date_select('created_at')
-  %p= submit_tag t(:create)

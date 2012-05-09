@@ -7,15 +7,8 @@
 module SettlementsHelper
   
   def calculate_sums(s, s_net, s_gro, total_net, total_gro)
-    s.orders.existing.each do |o|
-      next if @selected_cost_center and o.cost_center != @selected_cost_center
-      o.items.each do |i|
-        s_gro[i.tax.id] += i.total_price
-        i.options.each do |opt|
-          s_gro[i.tax.id] += (i.storno_status == 2 ? -(i.count * opt.price) : (i.count * opt.price))
-        end
-      end
-    end
+    s_gro = s.orders.existing.where(:cost_center => @selected_cost_center).sum(:sum)
+    s_net = s_gro - s.orders.existing.where(:cost_center => @selected_cost_center).sum(:tax_sum)
     
     @taxes.each do |tax|
       s_net[tax.id] = s_gro[tax.id] / (1 + tax.percent/100.0)

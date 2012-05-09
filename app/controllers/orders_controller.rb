@@ -91,11 +91,7 @@ class OrdersController < ApplicationController
       if local_variant?
         # print immediately
         selected_printer = @current_vendor.vendor_printers.existing.find_by_id(params[:port].to_i)
-        printer_id = selected_printer.id if selected_printer
-        all_printers = initialize_printers
-        text = generate_escpos_invoice(@order)
-        do_print(all_printers, printer_id, text)
-        close_printers(all_printers)
+        @order.print_invoice(selected_printer)
       else
         # print later
         @order.update_attribute :print_pending, true
@@ -195,15 +191,7 @@ class OrdersController < ApplicationController
 
     @order.regroup
 
-    if local_variant?
-      # print coupons for kitchen, bar, etc.
-      printers = initialize_printers
-      printers.each do |id, params|
-        normal = generate_escpos_items @order, id
-        do_print printers, id, normal
-      end
-      close_printers printers
-    end
+    @order.print_tickets if local_variant?
 
     @taxes = @current_vendor.taxes.existing
     @tables = @current_user.tables.existing.where(:enabled => true)

@@ -11,7 +11,6 @@ class Item < ActiveRecord::Base
   belongs_to :quantity
   belongs_to :item
   belongs_to :tax
-  #belongs_to :storno_item, :class_name => 'Item', :foreign_key => 'storno_item_id'
   belongs_to :vendor
   belongs_to :company
   belongs_to :category
@@ -250,4 +249,5 @@ class Item < ActiveRecord::Base
     end
     split_order.calculate_totals
   end
+
 end
