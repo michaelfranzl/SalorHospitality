@@ -30,6 +30,7 @@ window.setInterval(
     if ( automatic_printing == true ) {
       window.location.href = '/items.bill';
     }
+    tableupdates -= 1;
     if (tableupdates > 0) {
       update_tables();
     }

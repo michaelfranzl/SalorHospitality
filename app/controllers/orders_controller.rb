@@ -80,7 +80,7 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
-    case params[:current_view]
+    case params[:currentview]
       when 'refund'
         @order = get_model
         @order.print_invoice(@current_vendor.vendor_printers.where(:id => params[:printer]))
@@ -88,55 +88,62 @@ class OrdersController < ApplicationController
       when 'invoice'
         @order = get_model
         @order.finish
-        @order.print_invoice(@current_vendor.vendor_printers.where(:id => params[:printer])) if params[:printer]
-        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
+        @order.print_invoice(@current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
         if @orders.empty?
+          @order.table.update_attribute :user, nil if @orders.empty?
           render :js => "go_to(#{@order.table_id},'tables');" and return
         else
+          @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+          @taxes = @current_vendor.taxes.existing
+          @cost_centers = @current_vendor.cost_centers.existing.active
           render 'go_to_invoice_form' and return
         end
       when 'table'
         case params['jsaction']
           when 'send'
-            if params[:id]
-              @order = get_model
-            else
-              # Reuse the order on table if possible
-              @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
-            end
-            if @order
-              @order.update_from_params(params)
-            else
-#debugger
-              @order = Order.create_from_params(params, @current_vendor, @current_user)
-            end
+            get_order
             @order.calculate_totals
             @order.regroup
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            @order.print_tickets if local_variant?
+            @order.print_tickets if local_variant? and not @order.hidden
             case params[:target]
               when 'tables' then render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
-              when 'table' then render :js => "go_to(#{params[:order][:table_id]},'table');" and return
+              when 'table' then
+                @order.finish
+                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
+                if @orders.empty?
+                  @order.table.update_attribute :user, nil
+                  render :js => "go_to(#{params[:order][:table_id]},'table','no_queue');" and return
+                else
+                  render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+                end
               when 'invoice' then
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
-    @taxes = @current_vendor.taxes.existing
-    @cost_centers = @current_vendor.cost_centers.existing.active
-#    @tables = @current_user.tables.existing.where(:enabled => true)
-                render 'go_to_invoice_form' and return
+                if @orders.empty?
+                  render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+                else
+                  @taxes = @current_vendor.taxes.existing
+                  @cost_centers = @current_vendor.cost_centers.existing.active
+                  render 'go_to_invoice_form' and return
+                end
             end
           when 'send_and_print'
-            #@order = get_model
-            @order.update_from_params(params)
+            get_order
             @order.calculate_totals
             @order.regroup
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             @order.print_tickets if local_variant?
             @order.print_invoice if local_variant?
-            case params[:target]
-              when 'tables' then render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
-              when 'table' then render :js => "go_to(#{params[:order][:table_id]},'table');" and return
+            @order.finish
+            @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
+            if @orders.empty?
+              @order.table.update_attribute :user, nil
+              render :js => "go_to(#{@order.table.id},'table','no_queue');" and return
+            else
+              render :js => "go_to(#{@order.table.id},'tables');" and return
             end
         end
     end
@@ -170,6 +177,20 @@ class OrdersController < ApplicationController
           ingredient.stock.balance -= item.count * ingredient.amount
           ingredient.stock.save
         end
+      end
+    end
+
+    def get_order
+      if params[:id]
+        @order = get_model
+      else
+        # Reuse the order on table if possible
+        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
+      end
+      if @order
+        @order.update_from_params(params)
+      else
+        @order = Order.create_from_params(params, @current_vendor, @current_user)
       end
     end
 

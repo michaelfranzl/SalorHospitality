@@ -3,7 +3,7 @@ var option_position = 0;
 var item_position = 0;
 
 var items_json = {};
-var submit_json = {current_view:'tables'};
+var submit_json = {currentview:'tables'};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
@@ -268,7 +268,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     if (action == 'send') {
       submit_json['jsaction'] = 'send';
       submit_json.order['note'] = $('#order_note').val();
-      send_json(table_id);
+      send_json(table_id, false);
+      submit_json = {};
       submit_json.items = {};
       submit_json.order = {table_id:table_id};
       items_json = {};
@@ -276,6 +277,12 @@ function go_to(table_id, target, action, order_id, target_table_id) {
       submit_json['jsaction'] = 'send_and_print';
       submit_json.order['note'] = $('#order_note').val();
       send_json(table_id);
+      submit_json = {};
+      submit_json.items = {};
+      submit_json.order = {table_id:table_id};
+      items_json = {};
+    } else if (action == 'no_queue' ) {
+      submit_json = {};
       submit_json.items = {};
       submit_json.order = {table_id:table_id};
       items_json = {};
@@ -290,10 +297,11 @@ function go_to(table_id, target, action, order_id, target_table_id) {
       } else {
         submit_json.items = {};
         submit_json.order = {table_id:table_id};
+        items_json = {};
       }
     }
     var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
-    $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 });
+    $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 }); //this repopulates items_json and renders items
     $('#orderform').show();
     $('#invoices').hide();
     $('#tables').hide();
@@ -305,7 +313,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     screenlock_counter = -1;
     tableupdates = -1;
     screenlock_active = true;
-    submit_json['current_view'] = 'table';
+    submit_json['currentview'] = 'table';
 
   } else if ( target == 'tables') {
     $('#orderform').hide();
@@ -320,8 +328,6 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#customer_list').hide();
     $('#tablesselect').hide();
     submit_json['target'] = 'tables';
-    //$('#save_and_go_to_tables').css('backgroundImage', 'url("/images/button_mobile_tables.png")');
-    //$('#save_and_go_to_tables').css('border','none');
     if (action == 'destroy') {
       submit_json.order['hidden'] = true;
       submit_json['jsaction'] = 'send';
@@ -340,9 +346,10 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     option_position = 0;
     item_position = 0;
     tableupdates = 2;
-    submit_json['current_view'] = 'tables';
+    update_tables();
+    submit_json['currentview'] = 'tables';
 
-  } else if ( current_view == 'invoice') {
+  } else if ( target == 'invoice') {
     if (action == 'send') {
       submit_json['jsaction'] = 'send';
       submit_json['target'] = 'invoice';
@@ -362,12 +369,12 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_footer').hide();
     tableupdates = -1;
     screenlock_counter = -1;
-    submit_json['current_view'] = 'invoice';
+    submit_json['currentview'] = 'invoice';
   }
 }
 
 
-function send_json(table_id) {
+function send_json(table_id, use_queue) {
   submit_json_queue[table_id] = submit_json;
   items_json_queue[table_id] = items_json;
   send_queue(table_id);
@@ -375,13 +382,12 @@ function send_json(table_id) {
 
 function send_queue(table_id) {
   $.ajax({
-    type: 'post',
+    type: 'get',
     url: '/orders/update_ajax',
     data: submit_json_queue[table_id],
-    timeout: 5000,
+    timeout: 10000,
     success: function(data,rep) {
-        update_tables();
-        clear_queue(table_id);
+      clear_queue(table_id);
     }
   });
 }
@@ -413,7 +419,7 @@ function display_queue() {
 function update_tables(){
   $.ajax({
     url: '/tables',
-    timeout: 5000
+    timeout: 3000
   });
 }
 
@@ -447,6 +453,7 @@ function deselect_all_categories() {
   }
 }
 
+/*
 $(function(){
   window.setInterval(
     function(){
@@ -471,6 +478,7 @@ $(function(){
     url: '/items/list?scope=delivery'
   });
 })
+*/
 
 function customer_list_entry(customer) {
   var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
