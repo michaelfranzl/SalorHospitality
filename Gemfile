@@ -46,6 +46,7 @@ group :test, :development do
   gem 'ruby-debug19'# , :require => 'ruby-debug'
 end
 
+gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
 gem 'escper'
