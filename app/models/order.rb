@@ -282,9 +282,10 @@ class Order < ActiveRecord::Base
 
     header =
     "\e!\x01" +  # Font B
-    "\n" + vendor.invoice_subtitle + "\n" +
-    "\n" + vendor.address + "\n\n" +
-    vendor.revenue_service_tax_number + "\n\n" +
+    "\ea\x01" +  # center
+    "\n" + vendor.invoice_subtitle +
+    "\n" + vendor.address +
+    "\n" + vendor.revenue_service_tax_number + "\n" +
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
@@ -333,7 +334,7 @@ class Order < ActiveRecord::Base
 
     list_of_taxes = ''
     vendor.taxes.existing.each do |tax|
-      #next if sum_taxes[tax.id] == 0
+      next if sum_taxes[tax.id] == 0
       fact = tax.percent/100.00
       net = sum_taxes[tax.id] / (1.00+fact)
       gro = sum_taxes[tax.id]
@@ -342,17 +343,18 @@ class Order < ActiveRecord::Base
       list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
     end
 
+    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
+
     footer = 
     "\ea\x01" +  # align center
     "\e!\x00" + # font A
     "\n" + vendor.invoice_slogan1 + "\n" +
     "\e!\x08" + # emphasized
     "\n" + vendor.invoice_slogan2 + "\n" +
-    vendor.internet_address + "\n\n\n\n\n\n\n" + 
-    "\x1DV\x00\x0C" # paper cut
+    vendor.internet_address
 
-    logo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
-    output = logo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer)
+    headerlogo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
+    output = headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
   end
 
   def items_to_json
