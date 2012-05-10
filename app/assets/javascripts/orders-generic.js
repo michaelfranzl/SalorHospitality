@@ -62,8 +62,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_header_order_form').show();
     if (mobile == true) { $('#functions_footer').show(); }
     screenlock_counter = -1;
+debug('counter is ' + screenlock_counter);
     tableupdates = -1;
-    //screenlock_active = true;
     submit_json.currentview = 'table';
 
   // ========== GO TO TABLES ===============

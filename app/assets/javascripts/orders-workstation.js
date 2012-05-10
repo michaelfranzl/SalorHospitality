@@ -1,3 +1,5 @@
+var screenlock_counter = -1;
+
 $(function(){
   $('#admin').hide();
   
@@ -17,8 +19,8 @@ $(function(){
   $('#order_note_display_keyboard').click(function(){
     $('input#order_note').getkeyboard().reveal();
   });
-  
-  var screenlock_counter = screenlock_timeout;
+
+  screenlock_counter = screenlock_timeout;
   window.setInterval(function() {
     if (screenlock_counter == 0) { $('#screenlock form').submit(); }
     screenlock_counter -= 1;
