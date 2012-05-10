@@ -1,7 +1,7 @@
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv','Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif','nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 countries = ['en','de','at','cc']
-taxes = [0, 10, 20]
+taxes = [20, 10, 0]
 cost_center_names = ['guest','restaurant','broken']
 tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
 category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']

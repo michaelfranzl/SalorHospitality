@@ -111,11 +111,13 @@ class OrdersController < ApplicationController
               @order.hide(@current_user.id)
               @order.unlink
             end
-            @order.print_tickets if local_variant? and not @order.hidden
             case params[:target]
-              when 'tables' then render :nothing => true and return
+              when 'tables' then
+                @order.print(['tickets'])
+                render :nothing => true and return
               when 'table' then
                 @order.finish
+                @order.print(['tickets'])
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
                 if @orders.empty?
                   @order.table.update_attribute :user, nil
@@ -124,6 +126,7 @@ class OrdersController < ApplicationController
                   render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
                 end
               when 'invoice' then
+                @order.print(['tickets'])
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
                 @taxes = @current_vendor.taxes.existing
                 @cost_centers = @current_vendor.cost_centers.existing.active
@@ -135,8 +138,11 @@ class OrdersController < ApplicationController
             @order.regroup
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            @order.print_tickets if local_variant?
-            @order.print_invoice if local_variant?
+            if local_variant? and not @order.hidden
+              @order.print(['tickets','invoice'], @current_vendor.vendor_printers.existing.first)
+            elsif saas_variant? and not @order.hidden
+              @order.print(['invoice'])
+            end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
             if @orders.empty?
@@ -148,6 +154,7 @@ class OrdersController < ApplicationController
           when 'move'
             get_order
             @order.move(params[:target_table_id])
+            @order.print(['tickets'])
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "go_to(#{@order.table.id},'tables');" and return
         end

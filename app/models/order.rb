@@ -183,27 +183,28 @@ class Order < ActiveRecord::Base
     unlink
   end
 
-  def print_tickets
-    vendor_printers = self.vendor.vendor_printers.existing
-    printr = Printr.new(vendor_printers)
+  def print(what, vendor_printer=nil)
+    if what.include? 'tickets'
+      vendor_printers = self.vendor.vendor_printers.existing
+      printr = Printr.new(vendor_printers)
+    else
+      printr = Printr.new(vendor_printer)
+    end
     printr.open
-    vendor_printers.each do |p|
-      printr.print p.id, self.escpos_tickets(p.id)
+    if what.include? 'tickets'
+      vendor_printers.each do |p|
+        printr.print p.id, self.escpos_tickets(p.id)
+      end
+    end
+    if what.include? 'invoice'
+      if vendor_printer
+        printr.print vendor_printer.id, self.escpos_invoice
+        self.update_attribute :printed, true
+      else
+        self.update_attribute :print_pending, true
+      end
     end
     printr.close
-  end
-
-  def print_invoice(vendor_printer=nil)
-    if vendor_printer
-      printr = Printr.new(vendor_printer)
-      printr.open
-      printr.print vendor_printer.id, self.escpos_invoice
-      printr.close
-      self.update_attribute :printed, true
-      #self.printed_from = "#{ request.remote_ip } -> #{ params[:port] }" if params[:port] != '0'
-    else
-      self.update_attribute :print_pending, true
-    end
   end
 
   def escpos_tickets(printer_id)
