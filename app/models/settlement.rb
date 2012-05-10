@@ -13,6 +13,11 @@ class Settlement < ActiveRecord::Base
   has_many :orders
   has_many :items
 
+  def finish
+    Order.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
+    Item.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id).update_all(:settlement_id => self.id)
+  end
+
   def revenue=(revenue)
     write_attribute(:revenue, revenue.gsub(',', '.'))
   end
@@ -103,11 +108,10 @@ class Settlement < ActiveRecord::Base
       report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
       vendor.taxes.existing.each do |t|
         report[s.id][t.id] = {}
-
         if cost_center
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :tax_percent => t.percent, :settlement_id => s, :cost_center_id => cost_center)
+          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
         else
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :tax_percent => t.percent, :settlement_id => s)
+          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
         end
         report[s.id][t.id][:gro] = items.sum(:sum)
         report[s.id][t.id][:tax] = items.sum(:tax_sum)
