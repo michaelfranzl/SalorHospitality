@@ -16,7 +16,7 @@
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
 
     - if workstation?
-      %a{ :onmouseup => "$('#options_div_DESIGNATOR').slideDown();" }
+      %a{ :onmouseup => "open_options_div('DESIGNATOR');" }
       %div.optionsselect{ :id => "options_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'
         %span.done{ :onclick => "$('#options_div_DESIGNATOR').slideUp();", :title => "#{t('.done')}" }

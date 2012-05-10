@@ -89,6 +89,12 @@ function render_options(options, d, cat_id) {
   });
 }
 
+function open_options_div(d) {
+  if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
+    $('#options_div_'+d).slideDown();
+  }
+}
+
 function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id) {
   if (items_json[d].c > 1 && value != -1) {
     var clone_d = add_new_item(items_json[d], cat_id, true, d);
