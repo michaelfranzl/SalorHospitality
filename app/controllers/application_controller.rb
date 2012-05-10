@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
     def fetch_logged_in_user
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
       @current_company = @current_user.company if @current_user
-      @current_vendor = Vendor.find_by_id session[:vendor_id] if session[:vendor_id]
+      @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
+      session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
 
       # we need these for the history observer because we don't have control at the time
       # the activerecord callbacks run, and anyway controller instance variables wouldn't
@@ -29,7 +30,7 @@ class ApplicationController < ActionController::Base
       $Request = request
       $Params = params
 
-      redirect_to new_session_path unless @current_user
+      redirect_to new_session_path unless @current_user and @current_vendor
     end
 
     def get_model

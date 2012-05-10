@@ -8,7 +8,7 @@
 class VendorsController < ApplicationController
 
   def index
-    @vendors = Vendor.accessible_by(@current_user)
+    @vendors = @current_company.vendors.existing
   end
 
   # Switches the current vendor and redirects to somewhere else
@@ -34,8 +34,8 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
-    test_printers :all
-    test_printers :existing
+    printr = Printr.new(@vendor.vendor_printers.existing)
+    printr.identify
     redirect_to vendors_path
   end
 
@@ -51,6 +51,13 @@ class VendorsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @vendor = get_model
+    @vendor.hide
+    session[:vendor_id] = @current_company.vendors.existing.first
+    redirect_to vendors_path
   end
 
 end

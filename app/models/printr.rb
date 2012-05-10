@@ -58,7 +58,7 @@ class Printr
       text =
       "\e@"     +  # Initialize Printer
       "\e!\x38" +  # doube tall, double wide, bold
-      "#{ t :printing_test }\r\n" +
+      "#{ I18n.t :printing_test }\r\n" +
       "\e!\x00" +  # Font A
       "#{ value[:name] }\r\n" +
       "#{ value[:device].inspect.force_encoding('UTF-8') }" +
@@ -67,7 +67,7 @@ class Printr
       ActiveRecord::Base.logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
       out = "\e@" # Initialize Printer
       #0.upto(255) { |i| out += i.to_s(16) + i.chr }
-      print id, self.sanitize(text)
+      print id, Printr.sanitize(text)
     end
     close
   end

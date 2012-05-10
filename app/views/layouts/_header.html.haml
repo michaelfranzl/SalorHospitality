@@ -30,7 +30,7 @@
       = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
       = link_to( t('activerecord.models.user.other'), users_path)
       = link_to( t('activerecord.models.role.other'), roles_path)
-      - if @current_company.vendors.count > 1
+      - if @current_company.vendors.existing.count > 1
         = link_to( t('activerecord.models.vendor.one'), vendors_path)
       = link_to( t('activerecord.models.page.other'), pages_path)
       = link_to( t('activerecord.models.customer.other'), customers_path)
