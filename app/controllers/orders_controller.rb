@@ -103,6 +103,7 @@ class OrdersController < ApplicationController
       when 'table'
         case params['jsaction']
           when 'send'
+#debugger
             get_order
             @order.calculate_totals
             @order.regroup

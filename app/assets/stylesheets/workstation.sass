@@ -117,16 +117,28 @@ div#copyright
   p
     :margin 5px 0px
 
-div#messages
-  :font-size 80%
+div#messages, div#queue
   :color $billgastrogrey2
   :position absolute
-  :left 200px
-  :top 0px
-  :height 200px
+  :display inline-block
+
+div#messages
+  :font-size 80%
   :z-index -10
   :width 700px
-  :display inline-block
+  :left 170px
+  :height 200px
+  :top 0px
+
+div#queue
+  :left 0px
+  :bottom 0px
+  a
+    :cursor pointer
+  div
+    :padding 5px
+    :margin 5px
+    :background-color $billgastrogrey2
 
 div.metaelements
   :float right

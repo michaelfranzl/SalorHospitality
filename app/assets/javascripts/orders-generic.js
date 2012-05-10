@@ -22,6 +22,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
   // ========== GO TO TABLE ===============
   if ( target == 'table' ) {
     submit_json.target = 'table';
+    submit_json.order = {table_id:table_id};
     $('#order_sum').html('0' + i18n_decimal_separator + '00');
     $('#order_info').html(i18n_just_order);
     $('#order_note').val('');
@@ -31,13 +32,14 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order = {note:$('#order_note').val()};
-      send_json(table_id, false);
+      submit_json.order.note = $('#order_note').val();
+      send_json(table_id);
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
       submit_json.order.note = $('#order_note').val();
       send_json(table_id);
     } else if (action != 'no_queue' && submit_json_queue.hasOwnProperty(table_id)) {
+      debug('Items from Queue');
       $('#order_cancel_button').hide();
       submit_json = submit_json_queue[table_id];
       items_json = items_json_queue[table_id];
@@ -107,10 +109,9 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     submit_json.target = 'invoice';
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order['note'] = $('#order_note').val();
+      submit_json.order.note = $('#order_note').val();
+      submit_json.order = {table_id:table_id};
       send_json(table_id);
-      submit_json = {order:{table_id:table_id}};
-      items_json = {};
     }
     $('#invoices').html('');
     $('#invoices').show();
@@ -126,6 +127,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     tableupdates = -1;
     screenlock_counter = -1;
     submit_json.currentview = 'invoice';
+  } else {
+    debug('go_to called with unknown target');
   }
 }
 
@@ -144,20 +147,32 @@ function send_json(table_id) {
 }
 
 function send_queue(table_id) {
-  if (submit_json_queue[table_id].hasOwnProperty('items') || submit_json_queue[table_id].order.hasOwnProperty('target_table_id')) {
+  //if (submit_json_queue[table_id].hasOwnProperty('items') || submit_json_queue[table_id].order.hasOwnProperty('target_table_id')) {
     debug('SEND QUEUE table ' + table_id);
     $.ajax({
       type: 'get',
       url: '/orders/update_ajax',
       data: submit_json_queue[table_id],
-      timeout: 10000,
-      success: function(data,rep) {
-        clear_queue(table_id);
+      timeout: 5000,
+      complete: function(data,status) {
+        if (status == 'timeout') {
+          debug("TIMEOUT from server");
+        } else if (status == 'success') {
+          clear_queue(table_id);
+        } else if (status == 'error') {
+          debug('ERROR from server: ' + JSON.stringify(data));
+          clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        } else if (status == 'parsererror') {
+          debug('Parser error from server: ' + data);
+          clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        }
       }
     });
-  } else {
-    clear_queue(table_id);
-  }
+ // } else {
+    // items_json_queue does not contain anything relevant, so no need to send
+  //  debug('Nothing relevant to send');
+  //  clear_queue(table_id);
+  //}
 }
 
 function clear_queue(i) {
@@ -170,18 +185,18 @@ function clear_queue(i) {
 function display_queue() {
   $('#queue').html('');
   jQuery.each(submit_json_queue, function(k,v) {
-    el = $(document.createElement('div'));
-    el.attr('id','queue_'+k);
-    link = $(document.createElement('a'));
-    link.html('send ' + k);
+    var link = $(document.createElement('a'));
+    link.attr('id','queue_'+k);
+    var div = $(document.createElement('div'));
+    div.html('Re-send table ' + k);
     (function(){
       var id = k;
       link.on('click', function() {
         send_queue(id);
       })
     })();
-    el.append(link);
-    $('#queue').append(el);
+    link.append(div);
+    $('#queue').append(link);
   });
 }
 
@@ -191,6 +206,7 @@ function display_queue() {
 /* ========================================================*/
 
 function create_json_record(object) {
+  debug('Creating json record');
   d = object.d;
   item_position += 10;
   if (typeof(object.s) == 'undefined') {

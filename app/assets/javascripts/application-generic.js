@@ -56,9 +56,8 @@ function do_scroll(diff, speed) {
   if(Math.abs(diff) < 1) { clearTimeout(scrollAnimation); }
 }
 
-function debug(message, clear) {
-  if ( clear == true ) { debugmessages = []; };
-  if ( debugmessages.length > 5 ) { debugmessages.shift(); }
+function debug(message) {
+  if ( debugmessages.length > 7 ) { debugmessages.shift(); }
   debugmessages.push(message);
   $('#messages').html(debugmessages.join('<br />'));
 }
