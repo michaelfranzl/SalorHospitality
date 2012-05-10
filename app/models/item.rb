@@ -27,6 +27,7 @@ class Item < ActiveRecord::Base
   alias_attribute :qi, :quantity_id
   alias_attribute :ci, :category_id
   alias_attribute :c, :count
+  alias_attribute :pc, :printed_count
   alias_attribute :u, :usage
   alias_attribute :x, :hidden
   alias_attribute :i, :optionslist

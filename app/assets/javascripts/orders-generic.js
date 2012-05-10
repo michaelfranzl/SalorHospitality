@@ -378,7 +378,10 @@ function add_new_item(object, catid, add_new, anchor_d) {
       $('#itemstable').prepend(new_item);
     }
     $('#tablerow_' + d + '_count').addClass('updated');
-    render_options(resources.c[catid].o, d, catid);
+    if (typeof(catid) != 'undefined' ) {
+      // options do send catids, but course numbers not
+      render_options(resources.c[catid].o, d, catid);
+    }
   }
   calculate_sum();
   return d
@@ -462,6 +465,10 @@ function compose_optionnames(object){
   jQuery.each(object.t, function(k,v) {
     names += (v.n + '<br>')
   });
+  if (object.u < -10) {
+  // add course number
+    names += (object.u + 10) * -1 + '. Gang'
+  }
   return names;
 }
 

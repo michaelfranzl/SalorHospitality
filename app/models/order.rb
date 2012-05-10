@@ -184,13 +184,17 @@ class Order < ActiveRecord::Base
   end
 
   def print(what, vendor_printer=nil)
+    # prepare vendor printers
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
       printr = Printr.new(vendor_printers)
     else
       printr = Printr.new(vendor_printer)
     end
+
     printr.open
+
+    # print
     if what.include? 'tickets'
       vendor_printers.each do |p|
         printr.print p.id, self.escpos_tickets(p.id)
@@ -234,7 +238,8 @@ class Order < ActiveRecord::Base
         itemstring = ''
         itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
         itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-        itemstring += " > %-17.17s\n" % I18n.t('articles.new.takeaway') if i.usage == -1
+        itemstring += " > %-17.17s\n" % I18n.t('articles.new.takeaway') if i.usage == -2
+        itemstring += " > %-17.17s\n" % "#{ -(i.usage + 10 ) }. #{ I18n.t('printr.course') }" if i.usage < -10
         itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
         i.options.each do |po|
           itemstring += " * %-17.17s\n" % [po.name]
@@ -242,7 +247,7 @@ class Order < ActiveRecord::Base
         itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
         if i.usage == 0
           catstring += itemstring
-        elsif i.usage == -1
+        elsif i.usage == -2 or i.usage == -11 or i.usage == -12 or i.usage == -13
           separate_receipt_contents << itemstring
         end
         i.update_attribute :printed_count, i.count
@@ -358,7 +363,7 @@ class Order < ActiveRecord::Base
       else
         d = "a#{i.article_id}"
       end
-      if i.options.any?
+      if i.options.any? or i.usage < -1
         d = "i#{i.id}"
       end
       options = {}

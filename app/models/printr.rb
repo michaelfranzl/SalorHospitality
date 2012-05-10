@@ -94,6 +94,7 @@ class Printr
         next
       rescue Errno::EBUSY
         ActiveRecord::Base.logger.info "[PRINTING]    The File #{ p.path } is already open."
+        ActiveRecord::Base.logger.info "[PRINTING]      Trying to reuse already opened printers."
         previously_opened_printers = @open_printers.clone
         previously_opened_printers.each do |key, val|
           ActiveRecord::Base.logger.info "[PRINTING]      Trying to reuse already opened File #{ key }: #{ val.inspect }"
@@ -103,11 +104,16 @@ class Printr
             break
           end
         end
+        unless @open_printers.has_key? p.id
+          printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
+          @open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
+          ActiveRecord::Base.logger.info "[PRINTING]      Failed to open as either SerialPort or USB File and resource IS busy. This should not have happened. Created #{ printer.inspect } instead."
+        end
         next
       rescue Exception => e
         printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
         @open_printers.merge! p.id => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
-        ActiveRecord::Base.logger.info "[PRINTING]    Failed to open as either SerialPort or USB File. Created #{ printer.inspect } instead."
+        ActiveRecord::Base.logger.info "[PRINTING]    Failed to open as either SerialPort or USB File and resource is NOT busy. Created #{ printer.inspect } instead."
       end
     end
   end

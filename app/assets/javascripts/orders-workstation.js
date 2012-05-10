@@ -90,8 +90,11 @@ function render_options(options, d, cat_id) {
 }
 
 function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id) {
-  if (items_json[d].c > 1 && value > 0) {
+  if (items_json[d].c > 1 && value != -1) {
     var clone_d = add_new_item(items_json[d], cat_id, true, d);
+    if (value < -10 ) {
+      set_json(clone_d,'u',value);
+    }
     decrement_item(d);
     $('#options_div_' + d).slideUp();
     d = clone_d;
@@ -114,22 +117,22 @@ function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id
 
   } else if (value == -11 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('1');
+    $('#optionsnames_' + d).append('<br>1. ' + i18n_course);
 
   } else if (value == -12 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('2');
+    $('#optionsnames_' + d).append('<br>2. ' + i18n_course);
 
   } else if (value == -13 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('3');
+    $('#optionsnames_' + d).append('<br>3. ' + i18n_course);
 
   } else {
     items_json[d].t[option_position] = optionobject;
     var list = items_json[d].i;
     list.push(optionobject.id);
     set_json(d,'i',list);
-    $('#optionsnames_' + d).append(text + '<br>');
+    $('#optionsnames_' + d).append('<br>' + text);
   }
 
   calculate_sum();

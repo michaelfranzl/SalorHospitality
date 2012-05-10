@@ -471,6 +471,9 @@ de:
   messages:
     hello_username: "Hallo %{name}"
 
+  printr:
+    course: Gang
+
   delete: Löschen
   are_you_sure: 'Sind Sie sicher?'
   edit: Bearbeiten

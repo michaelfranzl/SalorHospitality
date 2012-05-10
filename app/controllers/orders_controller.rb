@@ -84,12 +84,12 @@ class OrdersController < ApplicationController
     case params[:currentview]
       when 'refund'
         @order = get_model
-        @order.print_invoice(@current_vendor.vendor_printers.where(:id => params[:printer]))
+        @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
         render :nothing => true and return
       when 'invoice'
         @order = get_model
         @order.finish
-        @order.print_invoice(@current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+        @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
         if @orders.empty?
           @order.table.update_attribute :user, nil if @orders.empty?
@@ -111,6 +111,7 @@ class OrdersController < ApplicationController
               @order.hide(@current_user.id)
               @order.unlink
             end
+            render :nothing => true and return if @order.hidden
             case params[:target]
               when 'tables' then
                 @order.print(['tickets'])
