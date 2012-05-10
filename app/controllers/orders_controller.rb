@@ -103,7 +103,6 @@ class OrdersController < ApplicationController
       when 'table'
         case params['jsaction']
           when 'send'
-#debugger
             get_order
             @order.calculate_totals
             @order.regroup
@@ -114,7 +113,7 @@ class OrdersController < ApplicationController
             end
             @order.print_tickets if local_variant? and not @order.hidden
             case params[:target]
-              when 'tables' then render :nothing => true and return #render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+              when 'tables' then render :nothing => true and return
               when 'table' then
                 @order.finish
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])

@@ -122,7 +122,7 @@ class Order < ActiveRecord::Base
   end
 
   def move(target_table_id)
-    return if self.table_id == target_table_id
+    return if self.table_id == target_table_id.to_i
     target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
     self.unlink
     self.reload
