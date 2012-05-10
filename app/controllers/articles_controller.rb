@@ -46,6 +46,7 @@ class ArticlesController < ApplicationController
     @article.company = @current_company
     @article.vendor = @current_vendor
     if @article.save
+      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
@@ -70,6 +71,7 @@ class ArticlesController < ApplicationController
     @article = get_model
     redirect_to roles_path and return unless @article
     if @article.update_attributes params[:article]
+      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company
       flash[:notice] = t('articles.update.success')
       if session[:return_to]
         redirect_to session[:return_to]

@@ -1,7 +1,7 @@
 var screenlock_counter = -1;
 
 $(function(){
-  $('#admin').hide();
+  $('#admin').slideUp();
   
   $("#customer_search").keyup(function () {
     if ($(this).val().length > 2) {
