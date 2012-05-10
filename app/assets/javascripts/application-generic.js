@@ -24,6 +24,7 @@ jQuery.ajaxSetup({
 
 var tableupdates = -1; // no requests by default
 var automatic_printing = false;
+var debugmessages = [];
 
 window.setInterval(
   function() {
@@ -33,9 +34,6 @@ window.setInterval(
     tableupdates -= 1;
     if (tableupdates > 0) {
       update_tables();
-    }
-    if(typeof(display_queue) != 'undefined') {
-      display_queue();
     }
   }
 , 7000);
@@ -56,6 +54,13 @@ function do_scroll(diff, speed) {
   newdiff = (speed-1)*diff/speed;
   scrollAnimation = setTimeout(function(){ do_scroll(newdiff, speed) }, 20);
   if(Math.abs(diff) < 1) { clearTimeout(scrollAnimation); }
+}
+
+function debug(message, clear) {
+  if ( clear == true ) { debugmessages = []; };
+  if ( debugmessages.length > 5 ) { debugmessages.shift(); }
+  debugmessages.push(message);
+  $('#messages').html(debugmessages.join('<br />'));
 }
 
 

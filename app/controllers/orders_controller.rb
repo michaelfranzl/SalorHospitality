@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
+    #render :nothing => true and return unless params[:currentview]
     case params[:currentview]
       when 'refund'
         @order = get_model
@@ -112,7 +113,7 @@ class OrdersController < ApplicationController
             end
             @order.print_tickets if local_variant? and not @order.hidden
             case params[:target]
-              when 'tables' then render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+              when 'tables' then render :nothing => true and return #render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
               when 'table' then
                 @order.finish
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])

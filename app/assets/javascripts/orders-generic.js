@@ -1,3 +1,7 @@
+/* ======================================================*/
+/* ================= GLOBAL POS VARIABLES ===============*/
+/* ======================================================*/
+
 var new_order = true;
 var option_position = 0;
 var item_position = 0;
@@ -7,6 +11,261 @@ var submit_json = {currentview:'tables'};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
+
+/* ======================================================*/
+/* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
+/* ======================================================*/
+
+function go_to(table_id, target, action, order_id, target_table_id) {
+  scroll_to($('#container'),20);
+  debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
+  // ========== GO TO TABLE ===============
+  if ( target == 'table' ) {
+    submit_json.target = 'table';
+    $('#order_sum').html('0' + i18n_decimal_separator + '00');
+    $('#order_info').html(i18n_just_order);
+    $('#order_note').val('');
+    $('#inputfields').html('');
+    $('#itemstable').html('');
+    $('#articles').html('');
+    $('#quantities').html('');
+    if (action == 'send') {
+      submit_json.jsaction = 'send';
+      submit_json.order = {note:$('#order_note').val()};
+      send_json(table_id, false);
+    } else if (action == 'send_and_print' ) {
+      submit_json.jsaction = 'send_and_print';
+      submit_json.order.note = $('#order_note').val();
+      send_json(table_id);
+    } else if (action != 'no_queue' && submit_json_queue.hasOwnProperty(table_id)) {
+      $('#order_cancel_button').hide();
+      submit_json = submit_json_queue[table_id];
+      items_json = items_json_queue[table_id];
+      delete submit_json_queue[table_id];
+      delete items_json_queue[table_id];
+      //if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
+      render_items();
+    } else {
+      submit_json = {order:{table_id:table_id}};
+      items_json = {};
+      var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
+      $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 }); //this repopulates items_json and renders items
+    }
+    $('#orderform').show();
+    $('#invoices').hide();
+    $('#tables').hide();
+    $('#rooms').hide();
+    $('#functions_header_index').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_header_order_form').show();
+    if (mobile == true) { $('#functions_footer').show(); }
+    screenlock_counter = -1;
+    tableupdates = -1;
+    //screenlock_active = true;
+    submit_json.currentview = 'table';
+
+  // ========== GO TO TABLES ===============
+  } else if ( target == 'tables') {
+    submit_json.target = 'tables';
+    $('#orderform').hide();
+    $('#invoices').hide();
+    $('#tables').show();
+    $('#rooms').show();
+    $('#order_cancel_button').show();
+    $('#functions_header_index').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_footer').hide();
+    $('#customer_list').hide();
+    $('#tablesselect').hide();
+    if (action == 'destroy') {
+      submit_json.order.hidden = true;
+      submit_json.jsaction = 'send';
+      send_json(table_id);
+    } else if (action == 'send') {
+      submit_json.jsaction = 'send';
+      submit_json.order.note = $('#order_note').val();
+      send_json(table_id);
+    } else if (action == 'move') {
+      $(".tablesselect").slideUp();
+      submit_json.jsaction = 'move';
+      submit_json.target_table_id = target_table_id;
+      send_json(table_id);
+    } else {
+      submit_json = {};
+      items_json = {};
+    }
+    screenlock_counter = screenlock_timeout;
+    option_position = 0;
+    item_position = 0;
+    tableupdates = 2;
+    update_tables();
+    submit_json.currentview = 'tables';
+
+  // ========== GO TO INVOICE ===============
+  } else if ( target == 'invoice') {
+    submit_json.target = 'invoice';
+    if (action == 'send') {
+      submit_json.jsaction = 'send';
+      submit_json.order['note'] = $('#order_note').val();
+      send_json(table_id);
+      submit_json = {order:{table_id:table_id}};
+      items_json = {};
+    }
+    $('#invoices').html('');
+    $('#invoices').show();
+    $('#orderform').hide();
+    $('#tables').hide();
+    $('#rooms').hide();
+    $('#inputfields').html('');
+    $('#itemstable').html('');
+    $('#functions_header_invoice_form').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_index').hide();
+    $('#functions_footer').hide();
+    tableupdates = -1;
+    screenlock_counter = -1;
+    submit_json.currentview = 'invoice';
+  }
+}
+
+/* ======================================================*/
+/* ============ JSON SENDING AND QUEUEING ===============*/
+/* ======================================================*/
+function send_json(table_id) {
+  // copy main jsons to queue
+  submit_json_queue[table_id] = submit_json;
+  items_json_queue[table_id] = items_json;
+  // reset main jsons
+  submit_json = {order:{}};
+  items_json = {};
+  // send the queue
+  send_queue(table_id);
+}
+
+function send_queue(table_id) {
+  if (submit_json_queue[table_id].hasOwnProperty('items') || submit_json_queue[table_id].order.hasOwnProperty('target_table_id')) {
+    debug('SEND QUEUE table ' + table_id);
+    $.ajax({
+      type: 'get',
+      url: '/orders/update_ajax',
+      data: submit_json_queue[table_id],
+      timeout: 10000,
+      success: function(data,rep) {
+        clear_queue(table_id);
+      }
+    });
+  } else {
+    clear_queue(table_id);
+  }
+}
+
+function clear_queue(i) {
+  debug('CLEAR QUEUE table ' + i);
+  delete submit_json_queue[i];
+  delete items_json_queue[i];
+  $('#queue_'+i).remove();
+}
+
+function display_queue() {
+  $('#queue').html('');
+  jQuery.each(submit_json_queue, function(k,v) {
+    el = $(document.createElement('div'));
+    el.attr('id','queue_'+k);
+    link = $(document.createElement('a'));
+    link.html('send ' + k);
+    (function(){
+      var id = k;
+      link.on('click', function() {
+        send_queue(id);
+      })
+    })();
+    el.append(link);
+    $('#queue').append(el);
+  });
+}
+
+
+/* ========================================================*/
+/* ============ JSON POPLATING AND MANAGING ===============*/
+/* ========================================================*/
+
+function create_json_record(object) {
+  d = object.d;
+  item_position += 10;
+  if (typeof(object.s) == 'undefined') {
+    s = item_position;
+  } else {
+    s = object.s;
+  }
+  if (items_json.hasOwnProperty(d)) {
+    d += 'c'; // c for cloned. this happens when an item is split during option add.
+    s += 1;
+  }
+  items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
+  create_submit_json_record(d,items_json[d]);
+  return d;
+}
+
+// this creates a new record, copied from items_json, which must exist
+function create_submit_json_record(d, object) {
+  if ( ! submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
+  if ( ! submit_json.items.hasOwnProperty(d)) {
+    submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+    if (items_json[d].hasOwnProperty('id')) {
+      delete submit_json.items[d].ai;
+      delete submit_json.items[d].qi;
+    }
+    if ( ! items_json[d].hasOwnProperty('qi')) {
+      delete submit_json.items[d].qi;
+    }
+  }
+}
+
+function set_json(d,attribute,value) {
+  if (items_json.hasOwnProperty(d)) {
+    items_json[d][attribute] = value;
+  } else {
+    alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
+  }
+  if ( attribute != 't' ) {
+    // never copy the options object to submit_json
+    create_submit_json_record(d,items_json[d]);
+    submit_json.items[d][attribute] = value;
+  }
+}
+
+
+/* ========================================================*/
+/* ============ DYNAMIC RENDERING FROM JSON ===============*/
+/* ========================================================*/
+
+function render_items() {
+  jQuery.each(items_json, function(k,object) {
+    catid = object.ci;
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
+//.replace(/ITEMID/g, item.id)
+    $('#itemstable').append(tablerow);
+    if (workstation == true) { enable_keyboard_for_items(object.d); }
+    render_options(resources.c[catid].o, object.d, catid);
+  });
+  calculate_sum();
+}
+
+function render_customers_from_json() {
+  for (o in order_customers) {
+    var customer = order_customers[o]["customer"]
+    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
+  }
+}
+
+
+
+
+/* ========================================================*/
+/* ======= RENDERING ARTICLES, QUANTITIES AND ITEMS =======*/
+/* ========================================================*/
 
 function display_articles(cat_id) {
   $('#articles').html('');
@@ -83,15 +342,16 @@ function display_quantities(quantities, target, cat_id) {
 }
 
 function add_new_item(object, catid, add_new, anchor_d) {
-  if (items_json.hasOwnProperty(object.d) &&
+  d = object.d;
+  if (items_json.hasOwnProperty(d) &&
       !add_new &&
-      items_json[object.d].p == object.p &&
-      items_json[object.d].o == '' &&
-      typeof(items_json[object.d].x) == 'undefined' &&
-      $.isEmptyObject(items_json[object.d].t)
+      items_json[d].p == object.p &&
+      items_json[d].o == '' &&
+      typeof(items_json[d].x) == 'undefined' &&
+      $.isEmptyObject(items_json[d].t)
      ) {
     // selected item is already there
-    increment_item(object.d);
+    increment_item(d);
   } else {
     d = create_json_record(object);
     label = compose_label(object);
@@ -108,24 +368,32 @@ function add_new_item(object, catid, add_new, anchor_d) {
   return d
 }
 
-function render_items() {
-  jQuery.each(items_json, function(k,object) {
-    catid = object.ci;
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
-//.replace(/ITEMID/g, item.id)
-    $('#itemstable').append(tablerow);
-    if (workstation == true) { enable_keyboard_for_items(object.d); }
-    render_options(resources.c[catid].o, object.d, catid);
+function customer_list_entry(customer) {
+  var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
+  entry.mousedown(function () {
+    var id = '#customer_name_' + $(this).attr('customer_id');
+    var field = $('<input type="hidden" name="order[customer_set][][id]" value="' + $(this).attr('customer_id') + '"/>');
+    $("#order_form_ajax").append(field);
+    $('#order_info').append("<span class='order-customer'>"+$(id).html()+"</span>");
   });
-  calculate_sum();
+  entry.append("<span class='option' id='customer_name_" + customer['id'] + "'>" + customer['first_name'] + " " + customer['last_name'] + "</span>");
+  return entry;
 }
 
-function render_customers_from_json() {
-  for (o in order_customers) {
-    var customer = order_customers[o]["customer"]
-    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
-  }
+function customer_list_update() {
+  $.getJSON('/customers?format=json&keywords=' + $('#customer_search').val() , function (data) {
+    $('#customer_list_target').html('');
+    for (i in data) {
+      $('#customer_list_target').append(customer_list_entry(data[i]['customer']));
+    }
+  });
 }
+
+
+
+/* ========================================================*/
+/* ================== POS FUNCTIONALITY ===================*/
+/* ========================================================*/
 
 function increment_item(d) {
   count = items_json[d].c + 1;
@@ -157,55 +425,10 @@ function decrement_item(d) {
   calculate_sum();
 }
 
-// this function sets attributes for items_json and submit_json objects
-function set_json(d,attribute,value) {
-  if (items_json.hasOwnProperty(d)) {
-    items_json[d][attribute] = value;
-  } else {
-    alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
-  }
-  if ( attribute != 't' ) {
-    // never copy the options object to submit_json
-    create_submit_json_record(d,items_json[d]);
-    submit_json.items[d][attribute] = value;
-  }
-}
 
-
-// this creates a new json record
-function create_json_record(object) {
-  d = object.d;
-  item_position += 10;
-  if (typeof(object.s) == 'undefined') {
-    s = item_position;
-  } else {
-    s = object.s;
-  }
-  if (items_json.hasOwnProperty(d)) {
-    d += 'c'; // c for cloned. this happens when an item is split during option add.
-    s += 1;
-  }
-  items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
-  if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
-  create_submit_json_record(d,items_json[d]);
-  return d;
-}
-
-// this creates a new record, copied from items_json, which must exist
-function create_submit_json_record(d, object) {
-  if ( ! submit_json.items.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
-    if (items_json[d].hasOwnProperty('id')) {
-      delete submit_json.items[d].ai;
-      delete submit_json.items[d].qi;
-    }
-    if ( ! items_json[d].hasOwnProperty('qi')) {
-      delete submit_json.items[d].qi;
-    }
-  }
-}
-
-
+/* ========================================================*/
+/* ===================== POS HELPERS ======================*/
+/* ========================================================*/
 
 function compose_label(object){
   if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
@@ -231,7 +454,7 @@ function calculate_sum() {
   jQuery.each(items_json, function() {
     var count = this.c;
     sum += count * this.p;
-    // now add option prices:
+    // now add option prices from object t
     jQuery.each(this.t, function() {
       sum += this.p * count;
     });
@@ -240,6 +463,7 @@ function calculate_sum() {
   return sum;
 }
 
+/*
 function mark_item_for_storno(list_id, order_id, item_id) {
   if ( $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value == 1 ) {
     list_id.style.backgroundColor = 'transparent';
@@ -249,177 +473,12 @@ function mark_item_for_storno(list_id, order_id, item_id) {
     $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value = 1;
   }
 }
+*/
 
 
-
-
-
-function go_to(table_id, target, action, order_id, target_table_id) {
-  scroll_to($('#container'),20);
-  if ( target == 'table' ) {
-    $('#order_sum').html('0' + i18n_decimal_separator + '00');
-    $('#order_info').html(i18n_just_order);
-    $('#order_note').val('');
-    $('#inputfields').html('');
-    $('#itemstable').html('');
-    $('#articles').html('');
-    $('#quantities').html('');
-    submit_json = {order:{}};
-    submit_json.target = 'table';
-    if (action == 'send') {
-      submit_json.jsaction = 'send';
-      submit_json.order = {note:$('#order_note').val()};
-      send_json(table_id, false);
-      submit_json.items = {};
-      submit_json.order = {table_id:table_id};
-      items_json = {};
-    } else if (action == 'send_and_print' ) {
-      submit_json['jsaction'] = 'send_and_print';
-      submit_json.order['note'] = $('#order_note').val();
-      send_json(table_id);
-      submit_json = {};
-      submit_json.items = {};
-      submit_json.order = {table_id:table_id};
-      items_json = {};
-    } else if (action == 'no_queue' ) {
-      submit_json = {};
-      submit_json.items = {};
-      submit_json.order = {table_id:table_id};
-      items_json = {};
-    } else {
-      if ( submit_json_queue.hasOwnProperty(table_id) ) {
-        $('#order_cancel_button').hide();
-        submit_json = submit_json_queue[table_id];
-        items_json = items_json_queue[table_id];
-        delete submit_json_queue[table_id];
-        delete items_json_queue[table_id];
-if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
-        render_items();
-      } else {
-        submit_json = {};
-        submit_json.items = {};
-        submit_json.order = {table_id:table_id};
-        items_json = {};
-      }
-    }
-    var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
-    $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 }); //this repopulates items_json and renders items
-    $('#orderform').show();
-    $('#invoices').hide();
-    $('#tables').hide();
-    $('#rooms').hide();
-    $('#functions_header_index').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_header_order_form').show();
-    if (mobile == true) { $('#functions_footer').show(); }
-    screenlock_counter = -1;
-    tableupdates = -1;
-    screenlock_active = true;
-    submit_json['currentview'] = 'table';
-
-  } else if ( target == 'tables') {
-    $('#orderform').hide();
-    $('#invoices').hide();
-    $('#tables').show();
-    $('#rooms').show();
-    $('#order_cancel_button').show();
-    $('#functions_header_index').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_footer').hide();
-    $('#customer_list').hide();
-    $('#tablesselect').hide();
-    submit_json['target'] = 'tables';
-    if (action == 'destroy') {
-      submit_json = {};
-      submit_json.order['hidden'] = true;
-      submit_json['jsaction'] = 'send';
-      send_json(table_id);
-    } else if (action == 'send') {
-      submit_json = {};
-      submit_json['jsaction'] = 'send';
-      submit_json.order['note'] = $('#order_note').val();
-      send_json(table_id);
-    } else if (action == 'move') {
-      $(".tablesselect").slideUp();
-      submit_json = {};
-      submit_json['jsaction'] = 'move';
-      submit_json['target_table_id'] = target_table_id;
-      send_json(table_id);
-    }
-    screenlock_counter = screenlock_timeout;
-    option_position = 0;
-    item_position = 0;
-    tableupdates = 2;
-    update_tables();
-    submit_json['currentview'] = 'tables';
-
-  } else if ( target == 'invoice') {
-    if (action == 'send') {
-      submit_json['jsaction'] = 'send';
-      submit_json['target'] = 'invoice';
-      submit_json.order['note'] = $('#order_note').val();
-      send_json(table_id);
-    }
-    $('#invoices').html('');
-    $('#invoices').show();
-    $('#orderform').hide();
-    $('#tables').hide();
-    $('#rooms').hide();
-    $('#inputfields').html('');
-    $('#itemstable').html('');
-    $('#functions_header_invoice_form').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_index').hide();
-    $('#functions_footer').hide();
-    tableupdates = -1;
-    screenlock_counter = -1;
-    submit_json['currentview'] = 'invoice';
-  }
-}
-
-
-function send_json(table_id, use_queue) {
-  submit_json_queue[table_id] = submit_json;
-  items_json_queue[table_id] = items_json;
-  send_queue(table_id);
-}
-
-function send_queue(table_id) {
-  $.ajax({
-    type: 'get',
-    url: '/orders/update_ajax',
-    data: submit_json_queue[table_id],
-    timeout: 10000,
-    success: function(data,rep) {
-      clear_queue(table_id);
-    }
-  });
-}
-
-function clear_queue(i) {
-  delete submit_json_queue[i];
-  $('#queue_'+i).remove();
-}
-
-// periodically displays the contents of submit_json_queue
-function display_queue() {
-  $('#queue').html('');
-  jQuery.each(submit_json_queue, function(k,v) {
-    el = $(document.createElement('div'));
-    el.attr('id','queue_'+k);
-    link = $(document.createElement('a'));
-    link.html('send ' + k);
-    (function(){
-      var id = k;
-      link.on('click', function() {
-        send_queue(id);
-      })
-    })();
-    el.append(link);
-    $('#queue').append(el);
-  });
-}
+/* ========================================================*/
+/* ================== PERIODIC FUNCTIONS ==================*/
+/* ========================================================*/
 
 function update_tables(){
   $.ajax({
@@ -434,6 +493,11 @@ function change_item_status(id,status) {
   //  url: '/items/change_status?id=' + id + '&status=' + status
   //});
 }
+
+
+/* ========================================================*/
+/* =================== USER INTERFACE =====================*/
+/* ========================================================*/
 
 function highlight_button(element) {
   $(element).effect("highlight", {}, 300);
@@ -484,24 +548,3 @@ $(function(){
   });
 })
 */
-
-function customer_list_entry(customer) {
-  var entry = $('<div class="entry" customer_id="' + customer['id'] + '" id="customer_entry_' + customer['id'] + '"></div>');
-  entry.mousedown(function () {
-    var id = '#customer_name_' + $(this).attr('customer_id');
-    var field = $('<input type="hidden" name="order[customer_set][][id]" value="' + $(this).attr('customer_id') + '"/>');
-    $("#order_form_ajax").append(field);
-    $('#order_info').append("<span class='order-customer'>"+$(id).html()+"</span>");
-  });
-  entry.append("<span class='option' id='customer_name_" + customer['id'] + "'>" + customer['first_name'] + " " + customer['last_name'] + "</span>");
-  return entry;
-}
-
-function customer_list_update() {
-  $.getJSON('/customers?format=json&keywords=' + $('#customer_search').val() , function (data) {
-    $('#customer_list_target').html('');
-    for (i in data) {
-      $('#customer_list_target').append(customer_list_entry(data[i]['customer']));
-    }
-  });
-}

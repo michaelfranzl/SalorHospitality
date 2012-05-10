@@ -19,12 +19,11 @@ $(function(){
   });
   
   var screenlock_counter = screenlock_timeout;
-  window.setInterval(
-    function() {
-      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
-      screenlock_counter -= 1;
-    }
-  , 1001);
+  window.setInterval(function() {
+    if (screenlock_counter == 0) { $('#screenlock form').submit(); }
+    screenlock_counter -= 1;
+    if(typeof(display_queue) != 'undefined') { display_queue(); }
+  }, 1001);
 })
 
 function category_onmousedown(category_id, element) {
