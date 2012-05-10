@@ -47,6 +47,7 @@ group :test, :development do
 end
 
 gem 'execjs'
+gem 'therubyracer'
 gem 'escper'
 gem 'haml'
 gem 'sass-rails'
