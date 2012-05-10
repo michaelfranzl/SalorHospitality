@@ -148,6 +148,7 @@ class OrdersController < ApplicationController
           when 'move'
             get_order
             @order.move(params[:target_table_id])
+            @order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "go_to(#{@order.table.id},'tables');" and return
         end
     end
