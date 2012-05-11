@@ -62,8 +62,8 @@ class Vendor < ActiveRecord::Base
       self.update_attribute :largest_order_number, nr
     else
       # find Order with largest nr attribute from database. this should happen only once when a new db
-      last_order = self.orders.last
-      nr = last_order ? (last_order.nr || 0) + 1 : 1
+      last_order = self.orders.existing.where('nr is not NULL').last
+      nr = last_order ? last_order.nr + 1 : 1
     end
     return nr
   end

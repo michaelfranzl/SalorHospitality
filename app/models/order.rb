@@ -343,17 +343,17 @@ class Order < ActiveRecord::Base
       list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
     end
 
-    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
-
     footer = 
     "\ea\x01" +  # align center
     "\e!\x00" + # font A
     "\n" + vendor.invoice_slogan1 + "\n" +
     "\e!\x08" + # emphasized
     "\n" + vendor.invoice_slogan2 + "\n" +
-    vendor.internet_address
+    vendor.internet_address + "\n"
 
+    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
     headerlogo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
+
     output = headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
   end
 

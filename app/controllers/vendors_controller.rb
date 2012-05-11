@@ -56,7 +56,7 @@ class VendorsController < ApplicationController
   def destroy
     @vendor = get_model
     @vendor.hide
-    session[:vendor_id] = @current_company.vendors.existing.first
+    session[:vendor_id] = @current_company.vendors.existing.first.id
     redirect_to vendors_path
   end
 
