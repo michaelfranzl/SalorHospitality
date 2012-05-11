@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.string   "color"
     t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
-    t.integer  "company_id"
     t.boolean  "hidden",              :default => false
+    t.integer  "company_id"
     t.integer  "preparation_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",              :default => true
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
   create_table "categories_options", :id => false, :force => true do |t|
     t.integer  "category_id"
     t.integer  "option_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "companies", :force => true do |t|
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",      :default => true
-    t.integer  "company_id"
     t.boolean  "hidden"
+    t.integer  "company_id"
     t.integer  "vendor_id"
   end
 
@@ -204,8 +204,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.integer  "sensitivity"
     t.text     "changes_made"
     t.text     "params"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "images", :force => true do |t|
@@ -318,8 +318,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.integer  "tax_id"
     t.boolean  "print_pending"
     t.float    "refund_sum",     :default => 0.0
-    t.integer  "company_id"
     t.string   "note"
+    t.integer  "company_id"
     t.integer  "customer_id"
     t.integer  "m_points"
     t.integer  "vendor_id"
@@ -419,8 +419,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "reservations", :force => true do |t|
@@ -502,8 +502,8 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.boolean  "enabled",        :default => true
     t.boolean  "hidden",         :default => false
     t.boolean  "rotate"
-    t.integer  "company_id"
     t.integer  "active_user_id"
+    t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "active",         :default => true
   end
@@ -575,11 +575,11 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.string   "subdomain",                                      :default => "demo"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "invoice_subtitle"
-    t.string   "address"
-    t.string   "revenue_service_tax_number"
-    t.string   "invoice_slogan1"
-    t.string   "invoice_slogan2"
+    t.string   "invoice_subtitle",                               :default => ""
+    t.string   "address",                                        :default => ""
+    t.string   "revenue_service_tax_number",                     :default => ""
+    t.string   "invoice_slogan1",                                :default => ""
+    t.string   "invoice_slogan2",                                :default => ""
     t.string   "internet_address",                               :default => "www.billgastro.com"
     t.string   "email",                                          :default => "office@billgastro.com"
     t.integer  "largest_order_number",                           :default => 0
@@ -590,9 +590,9 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
     t.text     "cache",                      :limit => 16777215
+    t.boolean  "use_order_numbers",                              :default => true
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                              :default => true
     t.integer  "company_id"
     t.boolean  "active",                                         :default => true
     t.boolean  "hidden"
