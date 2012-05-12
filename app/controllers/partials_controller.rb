@@ -1,3 +1,10 @@
+# coding: UTF-8
+
+# BillGastro -- The innovative Point Of Sales Software for your Restaurant
+# Copyright (C) 2012-2013  Red (E) Tools LTD
+# 
+# See license.txt for the license applying to all files within this software.
+
 class PartialsController < ApplicationController
   
   def destroy
@@ -38,8 +45,8 @@ class PartialsController < ApplicationController
     record = partial.presentation.model.constantize.find_by_id partial.model_id
     
     begin
-      eval partial.presentation.code
-      partial_html = ERB.new( partial.presentation.markup).result binding
+      eval partial.presentation.secure_expand_code
+      partial_html = ERB.new( partial.presentation.secure_expand_markup).result binding
     rescue Exception => e
       partial_html = t('presentations.error_during_evaluation') + e.message
     end

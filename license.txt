@@ -1,4 +1,4 @@
-# BillGastro Software License
+# SALOR Software License
 
 Licensor (“Red (E)”):
 

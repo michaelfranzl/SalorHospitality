@@ -4,6 +4,7 @@
 # 
 # See license.txt for the license applying to all files within this software.
 */
+
 /* ======================================================*/
 /* ================= GLOBAL POS VARIABLES ===============*/
 /* ======================================================*/

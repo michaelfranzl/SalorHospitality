@@ -1,3 +1,10 @@
+# coding: UTF-8
+
+# BillGastro -- The innovative Point Of Sales Software for your Restaurant
+# Copyright (C) 2012-2013  Red (E) Tools LTD
+# 
+# See license.txt for the license applying to all files within this software.
+
 class PagesController < ApplicationController
   
   skip_before_filter :fetch_logged_in_user, :only => [:iframe]
@@ -81,8 +88,8 @@ class PagesController < ApplicationController
       # the following 3 class varibles are needed for rendering the _partial partial
       record = partial.presentation.model.constantize.find_by_id partial.model_id
       begin
-        eval partial.presentation.code
-        partial_htmls[partial.id] = ERB.new(partial.presentation.markup).result binding
+        eval partial.presentation.secure_expand_code
+        partial_htmls[partial.id] = ERB.new(partial.presentation.secure_expand_markup).result binding
       rescue Exception => e
         partial_htmls[partial.id] = t('partials.error_during_evaluation') + e.message
       end
