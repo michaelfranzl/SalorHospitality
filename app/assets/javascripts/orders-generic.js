@@ -335,6 +335,7 @@ function display_articles(cat_id) {
 
 function display_quantities(quantities, target, cat_id) {
   target.html('');
+  $('.quantities').hide();
   target.css('display','none');
   jQuery.each(quantities, function(qu_id,qu_attr) {
     q_object = this;
