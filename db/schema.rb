@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510174708) do
+ActiveRecord::Schema.define(:version => 20120512204553) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -490,12 +490,12 @@ ActiveRecord::Schema.define(:version => 20120510174708) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "left"
-    t.integer  "top"
+    t.integer  "left",           :default => 50
+    t.integer  "top",            :default => 50
     t.integer  "width",          :default => 70
     t.integer  "height",         :default => 45
-    t.integer  "left_mobile"
-    t.integer  "top_mobile"
+    t.integer  "left_mobile",    :default => 50
+    t.integer  "top_mobile",     :default => 50
     t.integer  "width_mobile",   :default => 70
     t.integer  "height_mobile",  :default => 45
     t.integer  "user_id"

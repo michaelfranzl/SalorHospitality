@@ -309,8 +309,12 @@ function display_articles(cat_id) {
         var object = a_object;
         var catid = cat_id;
         abutton.on('click', function() {
-          highlight_border(element)
-          $('.quantities').slideUp();
+          highlight_border(element);
+          if (workstation == true) {
+            $('.quantities').slideUp();
+          } else {
+            $('.quantities').html('');
+          }
           add_new_item(object, catid);
         });
       })();
@@ -328,15 +332,22 @@ function display_articles(cat_id) {
           display_quantities(quantities, target, catid);
         });
       })();
-      qcontainer.insertBefore(abutton);
+      qcontainer.insertAfter(abutton);
     }
   });
 }
 
 function display_quantities(quantities, target, cat_id) {
+  if (workstation == true) {
+    target.html('');
+    $('.quantities').hide();
+  } else if (target.html() != '') {
+    target.html('');
+    return;
+  }
+
+  //target.css('display','none');
   target.html('');
-  $('.quantities').hide();
-  target.css('display','none');
   jQuery.each(quantities, function(qu_id,qu_attr) {
     q_object = this;
     qbutton = $(document.createElement('div'));
@@ -355,7 +366,12 @@ function display_quantities(quantities, target, cat_id) {
     })();
     target.append(qbutton);
   })
-  target.slideDown();
+  if (workstation == true) {
+    target.slideDown();
+  } else {
+    target.show();
+  }
+  
 }
 
 function add_new_item(object, catid, add_new, anchor_d) {

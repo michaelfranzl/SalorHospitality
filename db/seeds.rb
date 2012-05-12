@@ -130,7 +130,7 @@ Quantity.delete_all
 
     table_objects = Array.new
     3.times do |i|
-      table = Table.new :name => "T#{ c }#{ v }#{ i }", :left => 50 * i, :top => 50 * i, :width => 70, :height => 70
+      table = Table.new :name => "T#{ c }#{ v }#{ i }", :left => 50 * i + 50, :top => 50 * i + 50, :left_mobile => 50 * i + 50, :top_mobile => 100 * i + 50, :width => 70, :height => 70
       table.company = company
       table.vendor = vendor
       r = table.save
