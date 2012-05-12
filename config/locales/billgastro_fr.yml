@@ -76,6 +76,9 @@ fr:
       presentation:
         one: XXXTemplate
         other: XXXTemplates
+      report:
+        one: XXXReport
+        other: XXXReports
 
     attributes:
       article:
@@ -165,6 +168,8 @@ fr:
         res_fetch_url: XXXFetch Reservations
         res_confirm_url: XXXConfirm Reservations
         use_order_numbers: XXXUse order numbers?
+        rlogo_header: XXXReceipt logo header
+        rlogo_footer: XXXReceipt logo footer
       role:
         name: Nom
       vendor_printer:

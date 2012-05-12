@@ -76,6 +76,9 @@ de:
       presentation:
         one: Vorlage
         other: Vorlagen
+      report:
+        one: Bericht
+        other: Berichte
 
     attributes:
       article:
@@ -170,6 +173,7 @@ de:
         res_confirm_url: Reservierungen bestätigen
         use_order_numbers: Bestellnummern
         rlogo_header: Rechnungslogo Kopf
+        rlogo_footer: Rechnungslogo Fuß
       role:
         name: Name
       vendor_printer:

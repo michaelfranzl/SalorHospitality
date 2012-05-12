@@ -23,7 +23,7 @@
       = link_to( t('activerecord.models.settlement.other'), settlements_path)
 
     - if perms.include? 'view_statistics'
-      = link_to( t('reports.reports'), '/reports')
+      = link_to( t('activerecord.models.report.other'), '/reports')
 
     - if perms.include? 'manage_settings'
       = link_to( t('activerecord.models.tax.other'), taxes_path)

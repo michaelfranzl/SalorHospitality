@@ -45,6 +45,48 @@ Quantity.delete_all
     r = vendor.save
     puts "Vendor #{ c } #{ v } created" if r == true
 
+    presentation_objects = Array.new
+    presentation1 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Article name #{ c } #{ v }", :description => "just displays name of an article", :markup => "%{{NAME}}", :model => "Article"
+    presentation2 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Variant list #{ c } #{ v }", :description => "displays names of variants belonging to an article", :markup => "%{{LOOP BEGIN QUANTITIES}}\r\n%{{LOOP.PREFIX}}<br/>\r\n%{{END}}", :model => "Article"
+    presentation3 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Generic Text Blurb #{ c } #{ v }", :description => "displays any entered text", :markup => "%{{BLURB}}", :model => "Presentation"
+    presentation4 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Category Title #{ c } #{ v }", :description => "just displays name of category", :markup => "%{{NAME}}", :model => "Category"
+    presentation5 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Article full #{ c } #{ v }", :description => "displays Article with name, price and image", :markup => "<b>%{{NAME}}</b><br />\r\nEUR %{{PRICE}}\r\n%{{IF IMAGE}}\r\n<br/>\r\n<img src=\"%{{IMAGE}}\">\r\n%{{END}}", :model => "Article"
+    presentation6 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "All articles of a category #{ c } #{ v }", :description => "displays All articles of a category, including descriptions", :markup => "<table width=300 border=0>\r\n%{{LOOP BEGIN ARTICLES}}\r\n<tr>\r\n<td><br/><b><big>%{{LOOP.NAME}}</big></b></td>\r\n<td width=100 rowspan=2 align=right><br/><i>EUR %{{LOOP.PRICE}}</i></td>\r\n</tr>\r\n<tr>\r\n<td><br/><small>%{{LOOP.DESCRIPTION}}</small></td>\r\n</tr>\r\n%{{END}}\r\n</table>", :model => "Category"
+    presentation_objects << presentation1
+    presentation_objects << presentation2
+    presentation_objects << presentation3
+    presentation_objects << presentation4
+    presentation_objects << presentation5
+    presentation_objects << presentation6
+    puts "Presentations #{ c } #{ v } created"
+
+    partial_objects = Array.new
+    partial1 = Partial.create "left"=>230, "top"=>-19, "presentation_id"=>presentation3.id, "blurb"=>"Holiday Offer", "active"=>true, "hidden"=>nil, "model_id"=>4, "font"=>"Rolina", "size"=>400, "image_size"=>nil, "color"=>"#e67373", "width"=>nil, "align"=>nil, "company_id"=>company.id, "vendor_id"=>vendor.id
+    partial2 = Partial.create "left"=>117, "top"=>187, "presentation_id"=>presentation6.id, "blurb"=>nil, "active"=>true, "hidden"=>nil, "model_id"=>1, "font"=>nil, "size"=>150, "image_size"=>250, "color"=>"#c3d3e6", "width"=>800, "align"=>nil, "company_id"=>company.id, "vendor_id"=>vendor.id
+    partial3 = Partial.create "left"=>583, "top"=>242, "presentation_id"=>presentation2.id, "blurb"=>nil, "active"=>true, "hidden"=>nil, "model_id"=>2, "font"=>nil, "size"=>200, "image_size"=>nil, "color"=>"#95e6e1", "width"=>nil, "align"=>nil, "company_id"=>company.id, "vendor_id"=>vendor.id
+    partial4 = Partial.create "left"=>246, "top"=>165, "presentation_id"=>presentation5.id, "blurb"=>nil, "active"=>true, "hidden"=>nil, "model_id"=>1, "font"=>"Rolina", "size"=>400, "image_size"=>nil, "color"=>"#7579c9", "width"=>nil, "align"=>"center", "company_id"=>company.id, "vendor_id"=>vendor.id
+    partial5 = Partial.create "left"=>203, "top"=>21, "presentation_id"=>presentation4.id, "blurb"=>nil, "active"=>true, "hidden"=>nil, "model_id"=>1, "font"=>"aaaiight", "size"=>500, "image_size"=>nil, "color"=>"#5b3bdb", "width"=>nil, "align"=>nil, "company_id"=>company.id, "vendor_id"=>vendor.id
+    partial_objects << partial1
+    partial_objects << partial2
+    partial_objects << partial3
+    partial_objects << partial4
+    partial_objects << partial5
+    puts "Partials #{ c } #{ v } created"
+
+    pages_objects = Array.new
+    page1 = Page.create "color"=>"#1f1818", "company_id"=>company.id, "vendor_id"=>vendor.id
+    page2 = Page.create "color"=>"#8adea7", "company_id"=>company.id, "vendor_id"=>vendor.id
+
+    page1.partials << partial1
+    page1.partials << partial2
+    page1.partials << partial3
+    page1.save
+
+    page2.partials << partial4
+    page2.partials << partial5
+    page2.save
+    puts "Pages #{ c } #{ v } created"
+
 
     tax_objects = Array.new
     taxes.size.times do |i|

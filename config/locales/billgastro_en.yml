@@ -76,6 +76,9 @@ en:
       presentation:
         one: Template
         other: Templates
+      report:
+        one: Report
+        other: Reports
 
     attributes:
       article:
@@ -165,6 +168,8 @@ en:
         res_fetch_url: Fetch Reservations
         res_confirm_url: Confirm Reservations
         use_order_numbers: Use order numbers?
+        rlogo_header: Receipt logo header
+        rlogo_footer: Receipt logo footer
       role:
         name: Name
       vendor_printer:

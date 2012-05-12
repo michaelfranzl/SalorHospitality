@@ -49,6 +49,27 @@ en:
       vendor_printer:
         one: Printer
         other: Printers
+      coupon:
+        one: Coupon
+        other: Coupons
+      discount:
+        one: Discount
+        other: Discounts
+      page:
+        one: Card
+        other: Cards
+      partial:
+        one: Partial
+        other: Partials
+      reservation:
+        one: Reservation
+        other: Reservations
+      presentation:
+        one: Template
+        other: Templates
+      report:
+        one: Report
+        other: Reports
 
     attributes:
       article:
@@ -135,6 +156,8 @@ en:
         time_offset: Time Offset (hours)
         timeout: Screenlock Timeout (seconds)
         use_order_numbers: Use order numbers?
+        rlogo_header: Receipt logo header
+        rlogo_footer: Receipt logo footer
       role:
         name: Name
       vendor_printer:
