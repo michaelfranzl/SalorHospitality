@@ -154,32 +154,26 @@ function send_json(table_id) {
 }
 
 function send_queue(table_id) {
-  //if (submit_json_queue[table_id].hasOwnProperty('items') || submit_json_queue[table_id].order.hasOwnProperty('target_table_id')) {
-    debug('SEND QUEUE table ' + table_id);
-    $.ajax({
-      type: 'get',
-      url: '/orders/update_ajax',
-      data: submit_json_queue[table_id],
-      timeout: 5000,
-      complete: function(data,status) {
-        if (status == 'timeout') {
-          debug("TIMEOUT from server");
-        } else if (status == 'success') {
-          clear_queue(table_id);
-        } else if (status == 'error') {
-          debug('ERROR from server: ' + JSON.stringify(data));
-          clear_queue(table_id); // server is not really offline, so no offline behaviour.
-        } else if (status == 'parsererror') {
-          debug('Parser error from server: ' + data);
-          clear_queue(table_id); // server is not really offline, so no offline behaviour.
-        }
+  debug('SEND QUEUE table ' + table_id);
+  $.ajax({
+    type: 'get',
+    url: '/orders/update_ajax',
+    data: submit_json_queue[table_id],
+    timeout: 5000,
+    complete: function(data,status) {
+      if (status == 'timeout') {
+        debug("TIMEOUT from server");
+      } else if (status == 'success') {
+        clear_queue(table_id);
+      } else if (status == 'error') {
+        debug('ERROR from server: ' + JSON.stringify(data));
+        clear_queue(table_id); // server is not really offline, so no offline behaviour.
+      } else if (status == 'parsererror') {
+        debug('Parser error from server: ' + data);
+        clear_queue(table_id); // server is not really offline, so no offline behaviour.
       }
-    });
- // } else {
-    // items_json_queue does not contain anything relevant, so no need to send
-  //  debug('Nothing relevant to send');
-  //  clear_queue(table_id);
-  //}
+    }
+  });
 }
 
 function clear_queue(i) {
@@ -208,9 +202,9 @@ function display_queue() {
 }
 
 
-/* ========================================================*/
-/* ============ JSON POPLATING AND MANAGING ===============*/
-/* ========================================================*/
+/* =========================================================*/
+/* ============ JSON POPULATING AND MANAGING ===============*/
+/* =========================================================*/
 
 function create_json_record(object) {
   debug('Creating json record');
@@ -268,7 +262,6 @@ function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
     tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
-//.replace(/ITEMID/g, item.id)
     $('#itemstable').append(tablerow);
     if (workstation == true) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
@@ -389,6 +382,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
       // options do send catids, but course numbers not
       render_options(resources.c[catid].o, d, catid);
     }
+    if (workstation == true) { enable_keyboard_for_items(object.d); }
   }
   calculate_sum();
   return d

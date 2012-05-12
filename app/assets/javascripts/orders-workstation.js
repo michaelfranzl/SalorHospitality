@@ -44,6 +44,7 @@ function display_comment_popup_of_item(d) {
   var old_comment = items_json[d].comment;
   $('input#comment_for_item_' + d).val(old_comment);
   $('#comment_for_item_' + d).slideDown();
+  $('input#comment_for_item_' + d).focus();
 }
 
 function add_comment_to_item(d) {
@@ -69,11 +70,22 @@ function add_price_to_item(d) {
 }
 
 function enable_keyboard_for_items(item_designator) {
-  $('input#comment_for_item_' + item_designator).keyboard({openOn: '' });
+  $('input#comment_for_item_' + item_designator).keyboard({
+    openOn: '',
+    visible: function(){
+      $('.ui-keyboard-input').select();
+    }
+  });
   $('#comment_for_item_' + item_designator + '_display_keyboard').click(function(){
     $('input#comment_for_item_' + item_designator).getkeyboard().reveal();
   });
-  $('input#price_for_item_' + item_designator).keyboard({openOn: '', layout: 'num' });
+  $('input#price_for_item_' + item_designator).keyboard({
+    openOn: '',
+    layout: 'num',
+    visible: function(){
+      $('.ui-keyboard-input').select();
+    }
+  });
   $('#price_for_item_' + item_designator + '_display_keyboard').click(function(){
     $('input#price_for_item_' + item_designator).getkeyboard().reveal();
   });
@@ -146,6 +158,17 @@ function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id
     set_json(d,'i',list);
     $('#optionsnames_' + d).append('<br>' + text);
   }
-
   calculate_sum();
 }
+
+
+function catch_keypress(d) {
+  if (event.keyCode == 27) {
+    // Escape
+  } else if (event.keyCode == 13) {
+    // Enter
+    add_comment_to_item(d);
+    add_price_to_item(d);
+  }
+}
+
