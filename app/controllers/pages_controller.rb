@@ -9,13 +9,12 @@ class PagesController < ApplicationController
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
     end      
     @pages_ids = @pages.collect{ |p| p.id }
-    @current_user = User.find(session[:user_id]) if session[:user_id]
-    #select_current_company
+    @current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
     render :index, :layout => 'iframe' unless @current_user
   end
 
   def iframe
-    @pages = params[:id] ? Page.find_all_by_id(params[:id]) : Page.existing.active
+    @pages = params[:id] ? @current_vendor.pages.existing.find_all_by_id(params[:id]) : Page.existing.active
     @partial_htmls_pages = []
     @pages.each do |p|
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
@@ -25,7 +24,7 @@ class PagesController < ApplicationController
   end
   
   def update
-    @page = Page.find_by_id(params[:id])
+    @page = @current_vendor.pages.existing.find_by_id(params[:id])
     unless @page.update_attributes params[:page]
       @page.images.reload
       @partial_htmls = evaluate_partial_htmls @page
@@ -36,7 +35,7 @@ class PagesController < ApplicationController
   end
   
   def new
-    @page = Page.create
+    @page = Page.create :vendor_id => @current_vendor.id, :company_id => @current_company.id
     render 'edit'
   end
   
@@ -44,8 +43,7 @@ class PagesController < ApplicationController
     @page = get_model
     @partial_htmls = evaluate_partial_htmls @page
     @previous_page, @next_page = neighbour_pages @page
-    @current_user = User.exising.active.find(session[:user_id]) if session[:user_id]
-    #select_current_company
+    @current_user = @current_vendor.users.exising.active.find(session[:user_id]) if session[:user_id]
     render :show, :layout => 'iframe' unless @current_user
   end
 
@@ -57,8 +55,7 @@ class PagesController < ApplicationController
   def find
     if params['search_text'].strip.length > 2
       search_terms = params['search_text'].split.collect { |word| "%#{ word.downcase }%" }
-      conditions = 'hidden = false AND '
-      conditions += (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
+      conditions = (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
       @found_articles = @current_vendor.articles.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
       @found_options = @current_vendor.options.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
       @found_categories = @current_vendor.categories.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )

@@ -2,6 +2,7 @@ BillGastro Version <%= BillGastro::Application::VERSION %>
 
 eth0 Mac addr: <%= /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join %>
 
-User: <%= @request.session[:user_id].login if @request.session[:user_id]  %>
+<% user = User.find_by_id(@request.session[:user_id]) %>
+User: <%= user.login if user %>
 
-Company: <%= @request.session[:user_id].company.name if @request.session[:user_id]  %>
+Company: <%= user.company.name if user %>

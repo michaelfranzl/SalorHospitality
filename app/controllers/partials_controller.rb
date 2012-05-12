@@ -10,6 +10,8 @@ class PartialsController < ApplicationController
     @presentations = @current_vendor.presentations.existing.find_all_by_model params[:model]
     render :no_presentation_found and return if @presentations.empty?
     @partial = Partial.new params[:partial]
+    @partial.company = @current_company
+    @partial.vendor = @current_vendor
     @partial.model_id = params[:model_id]
     @partial.presentation = @presentations.first
     @partial.blurb = t('partials.default_blurb') if params[:model] == 'Presentation'

@@ -62,7 +62,6 @@ class Order < ActiveRecord::Base
         self.items << new_item
       end
     end
-    #self.update_attribute :nr, 0 if self.nr.nil? # Bug: sometimes order loses it's nr
   end
 
   def update_associations(user)
