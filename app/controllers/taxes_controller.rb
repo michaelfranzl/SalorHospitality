@@ -5,6 +5,9 @@
 # 
 # See license.txt for the license applying to all files within this software.
 class TaxesController < ApplicationController
+
+  before_filter :check_permissions
+
   def index
     @taxes = @current_vendor.taxes.existing
   end

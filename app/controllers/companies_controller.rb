@@ -7,6 +7,8 @@
 
 class CompaniesController < ApplicationController
 
+  before_filter :check_permissions
+
   def backup_database
     dbconfig = YAML::load(File.open('config/database.yml'))
     mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'

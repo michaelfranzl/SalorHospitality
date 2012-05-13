@@ -81,7 +81,6 @@ class Vendor < ActiveRecord::Base
   # o is comment
   # count is count
   # x is deleted
-  # u is usage
   # sc is start count
   # pc is printed count
   # catid is category_id

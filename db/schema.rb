@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513090307) do
+ActiveRecord::Schema.define(:version => 20120513132729) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,13 +19,12 @@ ActiveRecord::Schema.define(:version => 20120513090307) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "active",                   :default => true
+    t.boolean  "active",      :default => true
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",                   :default => false
+    t.boolean  "hidden",      :default => false
     t.integer  "sort"
-    t.integer  "usage",       :limit => 1, :default => 0
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
@@ -248,7 +247,6 @@ ActiveRecord::Schema.define(:version => 20120513090307) do
     t.integer  "item_id"
     t.integer  "tax_id"
     t.integer  "max_count",                        :default => 0
-    t.integer  "usage",                            :default => 0
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
@@ -289,14 +287,16 @@ ActiveRecord::Schema.define(:version => 20120513090307) do
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
-    t.float    "price",      :default => 0.0
+    t.float    "price",           :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",     :default => false
+    t.boolean  "hidden",          :default => false
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
-    t.boolean  "active",     :default => true
+    t.boolean  "active",          :default => true
+    t.boolean  "separate_ticket"
+    t.boolean  "no_ticket"
   end
 
   add_index "options", ["company_id"], :name => "index_options_company_id"
@@ -397,16 +397,15 @@ ActiveRecord::Schema.define(:version => 20120513090307) do
   add_index "presentations", ["name"], :name => "index_presentations_on_name"
 
   create_table "quantities", :force => true do |t|
-    t.string   "prefix",                  :default => ""
+    t.string   "prefix",     :default => ""
     t.float    "price"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",                  :default => true
-    t.boolean  "hidden",                  :default => false
-    t.string   "postfix",                 :default => ""
+    t.boolean  "active",     :default => true
+    t.boolean  "hidden",     :default => false
+    t.string   "postfix",    :default => ""
     t.integer  "sort"
-    t.integer  "usage",      :limit => 1, :default => 0
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"

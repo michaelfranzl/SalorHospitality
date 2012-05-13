@@ -9,37 +9,42 @@
 
 = form_for nest_image(@option), :html => { :multipart => true } do |option_form|
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
-  - if option_form.object.image
-    %img.asset{ :src => @option.image }
   %table
     %tr
-      %td= option_form.label 'name'
       %td
+        - if option_form.object.image
+          %img.asset{ :src => @option.image }
+        = option_form.fields_for :images do |image_form|
+          = image_form.file_field :file_data, :size => 15
+
+        %br
+        = link_to image_tag('button_small_delete.png', :title => Option.human_attribute_name(:hidden), :alt => Option.human_attribute_name(:hidden)), option_path(option_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless option_form.object.new_record?
+
+        %br
+        = option_form.label 'name'
         = option_form.text_field :name, :size => '20'
         %span#option_name_display_keyboard.display_keyboard
-    %tr
-      %td= option_form.label 'price'
-      %td
+
+        %br
+        = option_form.label 'price'
         = option_form.text_field :price, :size => '5'
         %span#option_price_display_keyboard.display_keyboard
-    %tr
-      = option_form.fields_for :images do |image_form|
-        %td
-          %span.label_width= image_form.label 'image'
-        %td
-          %span.input_fields
-            = image_form.file_field :file_data, :size => 15
 
-    - @categories.each do |c|
-      %tr
-        %td
+      %td
+        %label{ :for => "select_all_options" } All
+        %input{ :id => "select_all_options", :type => 'checkbox', :onchange => "toggle_all_option_checkboxes(this)"  }
+
+        - @categories.each do |c|
           %label{ :for => "category_#{ c.id }" }= c.name
-        %td
           %input{ :id => "category_#{ c.id }", :type => 'checkbox', :name => 'option[set_categories][]', :value => c.id, :checked => option_form.object.categories.include?(c) }
-    %tr
-      %td= link_to image_tag('button_small_delete.png', :title => Option.human_attribute_name(:hidden), :alt => Option.human_attribute_name(:hidden)), option_path(option_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless option_form.object.new_record?
-          
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+          %br
+
+      %td
+        = option_form.label :separate_ticket
+        = option_form.check_box :separate_ticket
+        %br
+        = option_form.label :no_ticket
+        = option_form.check_box :no_ticket
 
 :javascript
   $('#option_name').keyboard( {openOn: '' } );
@@ -51,3 +56,4 @@
   $('#option_price_display_keyboard').click(function(){
     $('#option_price').getkeyboard().reveal();
   });
+

@@ -7,6 +7,8 @@
 
 class VendorsController < ApplicationController
 
+  before_filter :check_permissions
+
   def index
     @vendors = @current_company.vendors.existing
   end

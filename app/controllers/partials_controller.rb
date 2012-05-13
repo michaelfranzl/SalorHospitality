@@ -6,6 +6,8 @@
 # See license.txt for the license applying to all files within this software.
 
 class PartialsController < ApplicationController
+
+  before_filter :check_permissions
   
   def destroy
     partial = get_model

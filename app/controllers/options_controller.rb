@@ -60,7 +60,7 @@ class OptionsController < ApplicationController
 
   def sort
     params['option'].each do |id|
-      o = @current_vendor.options.where( :id => id )
+      o = @current_vendor.options.find_by_id(id)
       o.position = params['option'].index(o.id.to_s) + 1
       o.save
     end

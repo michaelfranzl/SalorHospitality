@@ -1,4 +1,8 @@
 class CustomersController < ApplicationController
+
+  before_filter :check_permissions
+
+
   # GET /customers
   # GET /customers.xml
   def index

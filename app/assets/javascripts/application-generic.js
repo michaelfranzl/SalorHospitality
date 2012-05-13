@@ -57,3 +57,10 @@ function debug(message) {
 }
 
 
+function toggle_all_option_checkboxes(source) {
+  if ($(source).attr('checked') == 'checked') {
+    $('input:checkbox').attr('checked',true);
+  } else {
+    $('input:checkbox').attr('checked',false);
+  }
+}

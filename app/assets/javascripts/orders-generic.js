@@ -281,8 +281,9 @@ function set_json(d,attribute,value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
     $('#itemstable').append(tablerow);
+    $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
   });
@@ -446,20 +447,18 @@ function customer_list_update() {
   });
 }
 
-
-
-
-
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
 
 function increment_item(d) {
-  count = items_json[d].c + 1;
-  object = items_json[d];
+  var count = items_json[d].c + 1;
+  var start_count = items_json[d].sc;
+  var object = items_json[d];
   set_json(object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
+  if (settings.mobile) { permit_select_open(d, count, start_count); }
   calculate_sum();
 }
 
@@ -480,21 +479,26 @@ function decrement_item(d) {
       set_json(d,'x',true);
       $('#item_' + d).fadeOut('slow');
     }
-  };
+  }
+  if (settings.mobile) { permit_select_open(d, i, start_count); }
   calculate_sum();
+}
+
+function permit_select_open(d, count, start_count) {
+  if ( count > start_count) {
+    $('#options_select_' + d).attr('disabled',false);
+  } else {
+    $('#options_select_' + d).attr('disabled',true);
+  }
 }
 
 function add_option_to_item(d, value, cat_id) {
   if (items_json[d].c > 1 && value != -1) {
     var clone_d = add_new_item(items_json[d], cat_id, true, d);
-    if (value < -10 ) {
-      set_json(clone_d,'u',value);
-    }
     decrement_item(d);
     $('#options_div_' + d).slideUp();
     d = clone_d;
   }
-
   var option_uid = items_json[d].i.length + 1;
   var optionobject = resources.c[cat_id].o[value];
   if (value == 0) {
@@ -502,27 +506,6 @@ function add_option_to_item(d, value, cat_id) {
     set_json(d,'i',[0]);
     set_json(d,'t',{});
     $('#optionsnames_' + d).html('');
-
-  } else if (value == -1 ) {
-    set_json(d,'pc',items_json[d].c);
-    $('#optionsnames_' + d).append('<br>' + i18n.no_ticket_printing);
-
-  } else if (value == -2 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>' + i18n.takeaway);
-
-  } else if (value == -11 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>1. ' + i18n.course);
-
-  } else if (value == -12 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>2. ' + i18n.course);
-
-  } else if (value == -13 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>3. ' + i18n.course);
-
   } else {
     items_json[d].t[option_uid] = optionobject;
     var list = items_json[d].i;
@@ -539,55 +522,6 @@ function add_option_to_item(d, value, cat_id) {
 /* ========================================================*/
 
 function render_options(options, d, cat_id) {
-  // render pseudo special options
-  if (settings.use_takeaway) {
-    var special_options = {1:i18n.no_ticket_printing,2:i18n.takeaway};
-    jQuery.each(special_options, function(key,val) {
-      if (settings.workstation) {
-        button = $(document.createElement('span'));
-        button.html(val);
-        button.addClass('option');
-        (function() {
-          var cid = cat_id;
-          button.on('click',function(){
-            add_option_to_item(d, -key, cid);
-          });
-        })();
-        $('#options_div_' + d).append(button);
-      } else if (settings.mobile) {
-        option_tag = $(document.createElement('option'));
-        option_tag.html(val);
-        option_tag.val(-key);
-        $('#options_select_' + d).append(option_tag);
-      }
-    });
-  }
-
-  // render pseudo options for courses
-  if (settings.use_courses) {
-    for(i=-11;i>=-13;i-=1) {
-      if (settings.workstation) {
-        button = $(document.createElement('span'));
-        button.html(-i-10);
-        button.addClass('option');
-        (function() {
-          var cid = cat_id;
-          var id = i;
-          button.on('click',function(){
-            add_option_to_item(d, id, cid);
-          });
-        })();
-        $('#options_div_' + d).append(button);
-      } else if (settings.mobile) {
-        option_tag = $(document.createElement('option'));
-        option_tag.html(-i-10 + '. ' + i18n.course);
-        option_tag.val(i);
-        $('#options_select_' + d).append(option_tag);
-      }
-    }
-  }
-
-  //render regular options from DB
   jQuery.each(options, function(key,object) {
     if (settings.workstation) {
       button = $(document.createElement('span'));

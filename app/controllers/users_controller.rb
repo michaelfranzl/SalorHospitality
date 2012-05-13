@@ -66,11 +66,4 @@ class UsersController < ApplicationController
     @user.update_attribute :hidden, true
     redirect_to users_path
   end
-
-  private
-
-    def check_permissions
-      redirect_to '/' if not @current_user.role.permissions.include? 'manage_settings'
-    end
-
 end

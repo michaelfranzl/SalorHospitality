@@ -53,6 +53,10 @@ class ApplicationController < ActionController::Base
       @current_vendor.update_cache
     end
 
+    def check_permissions
+      redirect_to '/' unless @current_user.role.permissions.include? "manage_settings" #{ controller_name }"
+    end
+
     def workstation?
       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end

@@ -5,6 +5,9 @@
 # 
 # See license.txt for the license applying to all files within this software.
 class CostCentersController < ApplicationController
+
+  before_filter :check_permissions
+
   def index
     @cost_centers = @current_vendor.cost_centers.existing.active
   end

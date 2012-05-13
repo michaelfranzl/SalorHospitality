@@ -157,7 +157,6 @@ class Order < ActiveRecord::Base
           if (items[i].article_id  == items[j].article_id and
               items[i].quantity_id == items[j].quantity_id and
               items[i].options     == items[j].options and
-              items[i].usage       == items[j].usage and
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment and
               not items[i].destroyed?
@@ -234,20 +233,19 @@ class Order < ActiveRecord::Base
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
+        next if i.options.find_all_by_no_ticket(true).any?
         itemstring = ''
         itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
         itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-        itemstring += " > %-17.17s\n" % I18n.t('articles.new.takeaway') if i.usage == -2
-        itemstring += " > %-17.17s\n" % "#{ -(i.usage + 10 ) }. #{ I18n.t('printr.course') }" if i.usage < -10
         itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
         i.options.each do |po|
           itemstring += " * %-17.17s\n" % [po.name]
         end
         itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
-        if i.usage == 0
-          catstring += itemstring
-        elsif i.usage == -2 or i.usage == -11 or i.usage == -12 or i.usage == -13
+        if i.options.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
+        else
+          catstring += itemstring
         end
         i.update_attribute :printed_count, i.count
       end
@@ -366,7 +364,7 @@ class Order < ActiveRecord::Base
       else
         d = "a#{i.article_id}"
       end
-      if i.options.any? or i.usage < -1
+      if i.options.any?
         d = "i#{i.id}"
       end
       options = {}
@@ -376,9 +374,9 @@ class Order < ActiveRecord::Base
         options.merge! optioncount => { :id => opt.id, :n => opt.name, :p => opt.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position }
+        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position }
       else
-        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :u => i.usage, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position }
+        a.merge! d => { :id => i.id, :ci => i.category.id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position }
       end
     end
     return a.to_json

@@ -1,4 +1,7 @@
 class PresentationsController < ApplicationController
+
+  before_filter :check_permissions
+
   def index
     @presentations = @current_vendor.presentations.existing.active
   end

@@ -6,6 +6,8 @@
 # See license.txt for the license applying to all files within this software.
 class SettlementsController < ApplicationController
 
+  before_filter :check_permissions, :except => [:open]
+
   def index
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day

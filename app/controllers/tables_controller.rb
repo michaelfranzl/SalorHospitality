@@ -7,6 +7,8 @@
 
 class TablesController < ApplicationController
 
+  before_filter :check_permissions
+
   def index
     @tables = @current_user.tables.existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
