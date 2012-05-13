@@ -261,7 +261,7 @@ function set_json(d,attribute,value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object))
+    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
     $('#itemstable').append(tablerow);
     if (workstation == true) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
@@ -388,7 +388,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/CATID/g, catid));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -428,6 +428,8 @@ function customer_list_update() {
 
 
 
+
+
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
@@ -462,10 +464,82 @@ function decrement_item(d) {
   calculate_sum();
 }
 
+function add_option_to_item(d, value, cat_id) {
+  if (items_json[d].c > 1 && value != -1) {
+    var clone_d = add_new_item(items_json[d], cat_id, true, d);
+    if (value < -10 ) {
+      set_json(clone_d,'u',value);
+    }
+    decrement_item(d);
+    $('#options_div_' + d).slideUp();
+    d = clone_d;
+  }
+
+  var option_uid = items_json[d].i.length + 1;
+  var optionobject = resources.c[cat_id].o[value];
+  if (value == 0) {
+    // delete all options
+    set_json(d,'i',[0]);
+    set_json(d,'t',{});
+    $('#optionsnames_' + d).html('');
+
+  } else if (value == -1 ) {
+    set_json(d,'pc',items_json[d].c);
+    $('#optionsnames_' + d).append('<br>' + i18n_no_printing);
+
+  } else if (value == -2 ) {
+    set_json(d,'u',value);
+    $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
+
+  } else if (value == -11 ) {
+    set_json(d,'u',value);
+    $('#optionsnames_' + d).append('<br>1. ' + i18n_course);
+
+  } else if (value == -12 ) {
+    set_json(d,'u',value);
+    $('#optionsnames_' + d).append('<br>2. ' + i18n_course);
+
+  } else if (value == -13 ) {
+    set_json(d,'u',value);
+    $('#optionsnames_' + d).append('<br>3. ' + i18n_course);
+
+  } else {
+    items_json[d].t[option_uid] = optionobject;
+    var list = items_json[d].i;
+    list.push(optionobject.id);
+    set_json(d,'i',list);
+    $('#optionsnames_' + d).append('<br>' + optionobject.n);
+  }
+  calculate_sum();
+}
+
 
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
+
+function render_options(options, d, cat_id) {
+  jQuery.each(options, function(key,object) {
+    if (workstation == true) {
+      button = $(document.createElement('span'));
+      button.html(object.n);
+      button.addClass('option');
+      (function() {
+        var cid = cat_id;
+        var o = object;
+        button.on('click',function(){
+          add_option_to_item(d, o.id, cid);
+        });
+      })();
+      $('#options_div_' + d).append(button);
+    } else if (mobile == true) {
+      option_tag = $(document.createElement('option'));
+      option_tag.html(object.n);
+      option_tag.val(object.id);
+      $('#options_select_' + d).append(option_tag);
+    }
+  });
+}
 
 function compose_label(object){
   if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
@@ -503,19 +577,6 @@ function calculate_sum() {
   $('#order_sum').html(sum.toFixed(2).replace('.', i18n_decimal_separator));
   return sum;
 }
-
-/*
-function mark_item_for_storno(list_id, order_id, item_id) {
-  if ( $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value == 1 ) {
-    list_id.style.backgroundColor = 'transparent';
-    $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value = 0;
-  } else {
-    list_id.style.backgroundColor = '#FCC';
-    $('order_items_attributes_'+order_id+'_'+item_id+'_storno_status').value = 1;
-  }
-}
-*/
-
 
 /* ========================================================*/
 /* ================== PERIODIC FUNCTIONS ==================*/
@@ -558,7 +619,20 @@ function deselect_all_categories() {
   for(c in cats) {
     if (cats[c].style) {
       cats[c].style.borderColor = '#555555 #222222 #222222 #555555';
-      //restore_border(cats[c]); // this hangs the browser for no obvious reason
+    }
+  }
+}
+
+function category_onmousedown(category_id, element) {
+  display_articles(category_id);
+  deselect_all_categories();
+  highlight_border(element);
+  if (mobile) {
+    if (mobile_special) {
+      y = $('#articles').position().top;
+      window.scrollTo(0,y);
+    } else {
+      scroll_to('#articles', 7);
     }
   }
 }

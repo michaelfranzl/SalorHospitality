@@ -34,12 +34,6 @@ $(function(){
   }, 1001);
 })
 
-function category_onmousedown(category_id, element) {
-  display_articles(category_id);
-  deselect_all_categories();
-  highlight_border(element);
-}
-
 function display_comment_popup_of_item(d) {
   var old_comment = items_json[d].comment;
   $('input#comment_for_item_' + d).val(old_comment);
@@ -91,76 +85,11 @@ function enable_keyboard_for_items(item_designator) {
   });
 }
 
-function render_options(options, d, cat_id) {
-  jQuery.each(options, function(key,value) {
-    button = $(document.createElement('span'));
-    button.html(value.n);
-    button.addClass('option');
-    (function() {
-      var catid = cat_id;
-      var object = value;
-      button.on('click',function(){
-        add_option_to_item_from_div(value, d, value.id, value.p, value.n, cat_id);
-      });
-    })();
-    $('#options_div_' + d).append(button);
-  });
-}
-
 function open_options_div(d) {
   if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
     $('#options_div_'+d).slideDown();
   }
 }
-
-function add_option_to_item_from_div(optionobject, d, value, price, text, cat_id) {
-  if (items_json[d].c > 1 && value != -1) {
-    var clone_d = add_new_item(items_json[d], cat_id, true, d);
-    if (value < -10 ) {
-      set_json(clone_d,'u',value);
-    }
-    decrement_item(d);
-    $('#options_div_' + d).slideUp();
-    d = clone_d;
-  }
-
-  option_position = items_json[d].i.length + 1;
-  if (value == 0) {
-    // delete all options
-    set_json(d,'i',[0]);
-    set_json(d,'t',{});
-    $('#optionsnames_' + d).html('');
-
-  } else if (value == -1 ) {
-    set_json(d,'pc',items_json[d].c);
-    $('#optionsnames_' + d).append('<br>' + i18n_no_printing);
-
-  } else if (value == -2 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
-
-  } else if (value == -11 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>1. ' + i18n_course);
-
-  } else if (value == -12 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>2. ' + i18n_course);
-
-  } else if (value == -13 ) {
-    set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>3. ' + i18n_course);
-
-  } else {
-    items_json[d].t[option_position] = optionobject;
-    var list = items_json[d].i;
-    list.push(optionobject.id);
-    set_json(d,'i',list);
-    $('#optionsnames_' + d).append('<br>' + text);
-  }
-  calculate_sum();
-}
-
 
 function catch_keypress(d) {
   if (event.keyCode == 27) {

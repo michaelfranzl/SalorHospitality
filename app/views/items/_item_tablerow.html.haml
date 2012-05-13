@@ -10,30 +10,20 @@
       %span{ :id => "comment_DESIGNATOR" } COMMENT
       %div{ :id => "optionsnames_DESIGNATOR" } OPTIONSNAMES
 
-
   %td{ :id => "tablerow_DESIGNATOR_minus", :class => 'item_minus', :onclick => "decrement_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' }
 
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
-
     - if workstation?
       %a{ :onmouseup => "open_options_div('DESIGNATOR');" }
       %div.optionsselect{ :id => "options_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'
         %span.done{ :onclick => "$('#options_div_DESIGNATOR').slideUp();", :title => "#{t('.done')}" }
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', 0, null, '#{t('.clear')}')" }= t('.clear')
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', -1, null, '#{t('.no_printing')}')" }= t('.no_printing')
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', -2, null, '#{t('articles.new.take_away')}')" }= t('articles.new.takeaway')
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', -11, null, '1')" } 1
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', -12, null, '2')" } 2
-        %span.option{ :onclick => "add_option_to_item_from_div(null, 'DESIGNATOR', -13, null, '3')" } 3
-    - else
-      %select{ :id => "options_select_DESIGNATOR", :onchange => "add_option_to_item_from_select('DESIGNATOR', this)" }
-        %option{ :value => -2 }= t('.done')
-        %option{ :value => 0 }= t('.clear')
-        %option{ :value => -1 }= t('.no_printing')
-        %option{ :value => -3 }= t('articles.new.takeaway')
-
-    - if workstation?
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', 0)"   }= t('.clear')
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', -1"   }= t('.no_printing')
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', -2"   }= t('articles.new.takeaway')
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', -11)" } 1
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', -12)" } 2
+        %span.option{ :onclick => "add_option_to_item(null, 'DESIGNATOR', -13)" } 3
       %div.comment_for_item{ :id => "comment_for_item_DESIGNATOR" }
         %p= t :please_enter_item_comment
         %span.display_keyboard{ :id => "comment_for_item_DESIGNATOR_display_keyboard" }
@@ -43,4 +33,12 @@
         %p= t :please_enter_item_price
         %span.display_keyboard{ :id => "price_for_item_DESIGNATOR_display_keyboard" }
         %input{ :id => "price_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR');" }
-        %div.enter_comment_or_price{ :id => "enter_price_for_item_DESIGNATOR", :onclick => "add_price_to_item('DESIGNATOR');" }
+    - else
+      %select{ :id => "options_select_DESIGNATOR", :onchange => "add_option_to_item('DESIGNATOR', $(this).val(), 'CATID')" }
+        %option{ :value => -2 }= t('.done')
+        %option{ :value => 0 }= t('.clear')
+        %option{ :value => -1 }= t('.no_printing')
+        %option{ :value => -3 }= t('articles.new.takeaway')
+        %option{ :value => -11 }== 1. #{t('printr.course')}
+        %option{ :value => -12 }== 2. #{t('printr.course')}
+        %option{ :value => -13 }== 3. #{t('printr.course')}
