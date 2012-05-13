@@ -2,13 +2,6 @@
 - if workstation?
   = javascript_include_tag 'orders-workstation'
 
-#items_notifications
-  %h3= t '.preparation_list'
-  #preparation_list
-  %h3= t '.delivery_list'
-  #delivery_list
-  %span.done{ :onclick => "$('#items_notifications').slideUp();" }
-
 #rooms= render 'rooms'
 #tables= render @tables
 #functions
@@ -16,6 +9,12 @@
   #functions_header_order_form{ :style => 'display: none;' }= render 'functions_header_order_form'
   #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
 #orderform{ :style => 'display: none;' }= render 'order_form'
+#items_notifications
+  %h3= t '.preparation_list'
+  #preparation_list
+  %h3= t '.delivery_list'
+  #delivery_list
+  %span.done{ :onclick => "$('#items_notifications').slideUp();" }
 #invoices
 #functions_footer{ :style => 'display: none;' }= render('functions_header_order_form') if mobile?
 

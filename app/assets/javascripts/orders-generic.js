@@ -86,6 +86,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#orderform').show();
     $('#invoices').hide();
     $('#tables').hide();
+    $('#items_notifications').hide();
     $('#rooms').hide();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
@@ -100,6 +101,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     submit_json.target = 'tables';
     $('#orderform').hide();
     $('#invoices').hide();
+    $('#items_notifications').hide();
     $('#tables').show();
     $('#rooms').show();
     $('#order_cancel_button').show();
@@ -144,6 +146,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     }
     $('#invoices').html('');
     $('#invoices').show();
+    $('#items_notifications').hide();
     $('#orderform').hide();
     $('#tables').hide();
     $('#rooms').hide();

@@ -295,7 +295,7 @@ class Order < ActiveRecord::Base
       output += (header + content + cut) unless content.empty?
     end
     output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
-    return if output == init
+    return '' if output == init
 
     logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
     logo = "\ea\x01" + logo + "\ea\x00"

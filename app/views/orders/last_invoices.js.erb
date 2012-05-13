@@ -1,4 +1,4 @@
-tableupdates = -1;
+counter_update_tables = -1;
 
 $('#invoices').html('');
 
@@ -9,6 +9,7 @@ $('#invoices').html('');
 $('#invoices').append('<%= escape_javascript render(:partial => 'storno_form', :collection => @unsettled_orders) %>');
 
 $('#invoices').show();
+$('#items_notifications').show();
 $('#orderform').hide();
 $('#tables').hide();
 $('#rooms').hide();
