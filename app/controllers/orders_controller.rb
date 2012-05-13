@@ -80,16 +80,15 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
-    #render :nothing => true and return unless params[:currentview]
     case params[:currentview]
-      when 'refund'
+      when 'refund', 'show'
         @order = get_model
         @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
         render :nothing => true and return
       when 'invoice'
         @order = get_model
         @order.finish
-        @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+        @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
         if @orders.empty?
           @order.table.update_attribute :user, nil if @orders.empty?

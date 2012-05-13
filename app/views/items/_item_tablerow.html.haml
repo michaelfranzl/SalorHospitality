@@ -27,6 +27,7 @@
       %p= t :please_enter_item_price
       %span.display_keyboard{ :id => "price_for_item_DESIGNATOR_display_keyboard" }
       %input{ :id => "price_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR');" }
+      %div.enter_comment_or_price{ :id => "enter_price_for_item_DESIGNATOR", :onclick => "add_price_to_item('DESIGNATOR');" }
 
     %select.optionsselect{ :id => "options_select_DESIGNATOR", :onchange => "add_option_to_item('DESIGNATOR', $(this).val(), 'CATID')" }
       %option{ :value => '' }= t('.done')

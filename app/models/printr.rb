@@ -28,7 +28,7 @@ class Printr
     replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4", "\xE1"]
     i = 0
     begin
-      rx = Regexp.new(char[i].encode('ISO-8859-15'))
+      rx = Regexp.new(char[i].force_encoding('ISO-8859-15'))
       rep = replacement[i].force_encoding('ISO-8859-15')
       text.gsub!(rx, rep)
       i += 1

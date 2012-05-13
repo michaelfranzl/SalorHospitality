@@ -89,8 +89,9 @@ Quantity.delete_all
 
 
     tax_objects = Array.new
+    letters = ['A','B','C']
     taxes.size.times do |i|
-      tax = Tax.new :name => "#{ taxes[i] } #{ c } #{ v }", :letter => taxes[i], :percent => taxes[i], :color => tax_colors[i]
+      tax = Tax.new :name => "#{ taxes[i] } #{ c } #{ v }", :letter => letters[i], :percent => taxes[i], :color => tax_colors[i]
       tax.company = company
       tax.vendor = vendor
       r = tax.save

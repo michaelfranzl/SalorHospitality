@@ -267,7 +267,7 @@ class Order < ActiveRecord::Base
     end
     output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
     output = '' if output == init
-    return output
+    return Printr.sanitize output
   end
 
 
@@ -350,10 +350,12 @@ class Order < ActiveRecord::Base
     "\n" + vendor.invoice_slogan2 + "\n" +
     vendor.internet_address + "\n"
 
+    duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
+
     footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
     headerlogo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
 
-    output = headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
+    output = headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + footer + duplicate) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
   end
 
   def items_to_json
