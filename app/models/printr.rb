@@ -24,8 +24,8 @@ class Printr
 
   def self.sanitize(text)
     text.force_encoding 'ISO-8859-15'
-    char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ', 'ß']
-    replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4", "\xE1"]
+    char = ['ä', 'ü', 'ö', 'Ä', 'Ü', 'Ö', 'é', 'è', 'ú', 'ù', 'á', 'à', 'í', 'ì', 'ó', 'ò', 'â', 'ê', 'î', 'ô', 'û', 'ñ', 'ß', '@']
+    replacement = ["\x84", "\x81", "\x94", "\x8E", "\x9A", "\x99", "\x82", "\x8A", "\xA3", "\x97", "\xA0", "\x85", "\xA1", "\x8D", "\xA2", "\x95", "\x83", "\x88", "\x8C", "\x93", "\x96", "\xA4", "\xE1", "\xDB"]
     i = 0
     begin
       rx = Regexp.new(char[i].force_encoding('ISO-8859-15'))
@@ -63,13 +63,20 @@ class Printr
       "#{ value[:name] }\r\n" +
       "#{ value[:device].inspect.force_encoding('UTF-8') }" +
       "\n\n\n\n\n\n" +
-      "\x1D\x56\x00" # paper cut at the end of each order/table
+      "\x1D\x56\x00" # paper cut
       ActiveRecord::Base.logger.info "[PRINTING]  Testing #{ value[:device].inspect }"
-      out = "\e@" # Initialize Printer
-      #0.upto(255) { |i| out += i.to_s(16) + i.chr }
       print id, Printr.sanitize(text)
+      #print id, char_test
     end
     close
+  end
+
+  def char_test
+    out = "\e@" # Initialize Printer
+    0.upto(255) { |i| out += i.to_s(16) + i.chr }
+    out += "\n\n\n\n\n\n" +
+    "\x1D\x56\x00" # paper cut
+    return out
   end
 
   def open

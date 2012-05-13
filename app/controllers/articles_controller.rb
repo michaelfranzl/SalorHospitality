@@ -78,6 +78,8 @@ class ArticlesController < ApplicationController
       if session[:return_to]
         redirect_to session[:return_to]
         session[:return_to] = nil
+      else
+       redirect_to articles_path
       end
     else
       @categories = @current_vendor.categories.active.existing

@@ -62,11 +62,14 @@
     = vendor_form.label :use_order_numbers
     = vendor_form.check_box :use_order_numbers
     %br
-    = vendor_form.label :use_takeaway
-    = vendor_form.check_box :use_takeaway
+    = vendor_form.label :ticket_wide_font
+    = vendor_form.check_box :ticket_wide_font
     %br
-    = vendor_form.label :use_courses
-    = vendor_form.check_box :use_courses
+    = vendor_form.label :ticket_tall_font
+    = vendor_form.check_box :ticket_tall_font
+    %br
+    = vendor_form.label :ticket_item_separator
+    = vendor_form.check_box :ticket_item_separator
 
     - if saas_pro_variant?
       %br

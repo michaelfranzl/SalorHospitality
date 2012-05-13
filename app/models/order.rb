@@ -211,9 +211,41 @@ class Order < ActiveRecord::Base
 
   def escpos_tickets(printer_id)
     vendor = self.vendor
+
+    if vendor.ticket_wide_font
+      header_format = "%-14.14s #%5i\n%-12.12s %8s\n"
+      header_note_format = "%20.20s\n"
+      article_format = "%i %-18.18s\n"
+      quantity_format  = " > %-18.18s\n"
+      comment_format   = " ! %-18.18s\n"
+      option_format    = " * %-18.18s\n"
+      width = 21
+      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+    else
+      header_format = "%-35.35s #%5i\n%-33.33s %8s\n"
+      header_note_format = "%42.42s\n"
+      article_format     = "%2i %-39.39s\n"
+      quantity_format    = "   > %-37.37s\n"
+      comment_format     = "   ! %-37.37s\n"
+      option_format      = "   * %-37.37s\n"
+      width = 42
+      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+    end
+
+    if vendor.ticket_wide_font and not vendor.ticket_tall_font
+      fontsize = 0x20
+    elsif not vendor.ticket_wide_font and vendor.ticket_tall_font
+      fontsize = 0x10
+    elsif vendor.ticket_wide_font and vendor.ticket_tall_font
+      fontsize = 0x30
+    else
+      fontsize = 0x00
+    end
+    fontstyle = fontsize | 0x08
+
     init =
     "\e@"     +  # Initialize Printer
-    "\e!\x38" +  # doube tall, double wide, bold
+    "\e!" + fontstyle.chr +
     "\n\n"
 
     cut =
@@ -222,10 +254,9 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 
     header = ''
-    header +=
-    "%-14.14s #%5i\n%-12.12s %8s\n" % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0), self.user.login, self.table.name]
-    header += "%20.20s\n" % [self.note] if self.note and not self.note.empty?
-    header += "=====================\n"
+    header += header_format % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0), self.user.login, self.table.name]
+    header += header_note_format % [self.note] if self.note and not self.note.empty?
+    header += "\xDF" * width + "\n"
 
     separate_receipt_contents = []
     normal_receipt_content = ''
@@ -235,13 +266,13 @@ class Order < ActiveRecord::Base
       items.each do |i|
         next if i.options.find_all_by_no_ticket(true).any?
         itemstring = ''
-        itemstring += "%i %-18.18s\n" % [ i.count - i.printed_count, i.article.name]
-        itemstring += " > %-17.17s\n" % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-        itemstring += " ! %-17.17s\n" % [i.comment] unless i.comment.empty?
+        itemstring += article_format % [ i.count - i.printed_count, i.article.name]
+        itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
+        itemstring += comment_format % [i.comment] unless i.comment.empty?
         i.options.each do |po|
-          itemstring += " * %-17.17s\n" % [po.name]
+          itemstring += option_format % [po.name]
         end
-        itemstring += "--------------- %5.2f\n" % [(i.price + i.options_price) * (i.count - i.printed_count)]
+        itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)] if vendor.ticket_item_separator
         if i.options.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
         else
@@ -264,8 +295,11 @@ class Order < ActiveRecord::Base
       output += (header + content + cut) unless content.empty?
     end
     output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
-    output = '' if output == init
-    return Printr.sanitize output
+    return if output == init
+
+    logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
+    logo = "\ea\x01" + logo + "\ea\x00"
+    return logo + Printr.sanitize(output)
   end
 
 
