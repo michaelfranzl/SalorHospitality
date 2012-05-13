@@ -196,7 +196,7 @@ class OrdersController < ApplicationController
     def get_order
       if params[:id]
         @order = get_model
-      else
+      elsif params[:order][:table_id]
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
       end
