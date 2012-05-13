@@ -5,7 +5,7 @@
 # See license.txt for the license applying to all files within this software.
 */
 
-var tableupdates = -1; // no requests by default
+var tableupdates = -1;
 var automatic_printing = false;
 var debugmessages = [];
 
@@ -16,17 +16,9 @@ $(function(){
       }
   })
 
-  window.setInterval(
-    function() {
-      if ( automatic_printing == true ) {
-        window.location.href = '/items.bill';
-      }
-      tableupdates -= 1;
-      if (tableupdates > 0) {
-        update_tables();
-      }
-    }
-  , 7000);
+  //window.setInterval(function() {
+  //  if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
+  //}, 10000);
 })
 
 function scroll_to(element, speed) {

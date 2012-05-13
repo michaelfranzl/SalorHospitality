@@ -21,24 +21,43 @@ var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
 
+var timeout_update_tables = 10;
+var timeout_update_item_lists = 10;
+var timeout_update_resources = 600;
+
+var counter_update_resources = timeout_update_resources;
+var counter_update_tables = timeout_update_tables;
+var counter_update_item_lists = timeout_update_item_lists;
+
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
 
 $(function(){
-  get_resources();
-  window.setInterval(function() {
-    get_resources();
-  }, 10000);
-})
+  update_resources();
+  update_item_lists();
 
-function get_resources() {
-  $.ajax({
-    url: '/vendors/render_resources',
-    dataType: 'script',
-    timeout: 5000
-  });
-}
+  window.setInterval(function() {
+    counter_update_resources -= 1;
+    counter_update_tables -= 1;
+    counter_update_item_lists -= 1;
+
+    if (counter_update_resources == 0) {
+      update_resources();
+      counter_update_resources = timeout_update_resources;
+    }
+
+    if (counter_update_item_lists == 0) {
+      update_item_lists();
+      counter_update_item_lists = timeout_update_item_lists;
+    }
+
+    if (counter_update_tables == 0) {
+      update_tables();
+      counter_update_tables = timeout_update_tables;
+    }
+  }, 1000);
+})
 
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
@@ -90,7 +109,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_header_order_form').show();
     if (settings.mobile) { $('#functions_footer').show(); }
     screenlock_counter = -1;
-    tableupdates = -1;
+    counter_update_tables = -1;
     submit_json.currentview = 'table';
 
   // ========== GO TO TABLES ===============
@@ -127,7 +146,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     screenlock_counter = settings.screenlock_timeout;
     option_position = 0;
     item_position = 0;
-    tableupdates = 2;
+    counter_update_tables = timeout_update_tables;
     update_tables();
     submit_json.currentview = 'tables';
 
@@ -151,7 +170,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_header_order_form').hide();
     $('#functions_header_index').hide();
     $('#functions_footer').hide();
-    tableupdates = -1;
+    counter_update_tables = -1;
     screenlock_counter = -1;
     submit_json.currentview = 'invoice';
   } else {
@@ -588,15 +607,36 @@ function calculate_sum() {
 function update_tables(){
   $.ajax({
     url: '/tables',
+    timeout: 2000
+  });
+}
+
+function update_resources() {
+  $.ajax({
+    url: '/vendors/render_resources',
+    dataType: 'script',
     timeout: 3000
   });
 }
 
+function update_item_lists() {
+  $.ajax({
+    type: 'GET',
+    url: '/items/list?scope=preparation',
+    timeout: 2000
+  });
+  $.ajax({
+    type: 'GET',
+    url: '/items/list?scope=delivery',
+    timeout: 2000
+  });
+}
+
 function change_item_status(id,status) {
-  //$.ajax({
-  //  type: 'POST',
-  //  url: '/items/change_status?id=' + id + '&status=' + status
-  //});
+  $.ajax({
+    type: 'POST',
+    url: '/items/change_status?id=' + id + '&status=' + status
+  });
 }
 
 
@@ -639,30 +679,3 @@ function category_onmousedown(category_id, element) {
     }
   }
 }
-
-/*
-$(function(){
-  window.setInterval(
-    function(){
-      $.ajax({
-        type: 'GET',
-        url: '/items/list?scope=preparation'
-      });
-      $.ajax({
-        type: 'GET',
-        url: '/items/list?scope=delivery'
-      });
-    }
-  , 20000);
-  
-  // display initial items notifications
-  $.ajax({
-    type: 'GET',
-    url: '/items/list?scope=preparation'
-  });
-  $.ajax({
-    type: 'GET',
-    url: '/items/list?scope=delivery'
-  });
-})
-*/

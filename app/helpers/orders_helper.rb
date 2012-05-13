@@ -26,10 +26,13 @@ module OrdersHelper
       :mobile => mobile?,
       :workstation => workstation?,
       :mobile_special => mobile_special?,
-      :screenlock_timeout => @current_user.screenlock_timeout,
-      :use_courses => @current_vendor.use_courses,
-      :use_takeaway => @current_vendor.use_takeaway
+      :screenlock_timeout => @current_user.screenlock_timeout
     }
     return settings.to_json
   end
+
+  def compose_option_names_without_price(item)
+    item.options.collect{ |o| "<br>#{ o.name }" }.join
+  end
+
 end
