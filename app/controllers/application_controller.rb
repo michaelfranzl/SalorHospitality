@@ -49,6 +49,10 @@ class ApplicationController < ActionController::Base
       I18n.locale = @current_user ? @current_user.language : 'en'
     end
 
+    def update_vendor_cache
+      @current_vendor.update_cache
+    end
+
     def workstation?
       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end

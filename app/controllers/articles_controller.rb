@@ -6,6 +6,8 @@
 # See license.txt for the license applying to all files within this software.
 
 class ArticlesController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy', 'change_scope', 'sort']
  
   # tested
   def index

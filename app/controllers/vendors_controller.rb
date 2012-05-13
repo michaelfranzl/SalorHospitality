@@ -60,8 +60,12 @@ class VendorsController < ApplicationController
     redirect_to vendors_path
   end
 
-  def resources
-    render :js => "resources = #{ @current_vendor.resources(@current_user,workstation?,mobile_special?) }"
+  def render_resources
+    resources = @current_vendor.resources_cache
+    permissions = {
+      :delete_items => @current_user.role.permissions.include?("delete_items"),
+      :decrement_items => @current_user.role.permissions.include?("decrement_items")
+    }
+    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end
-
 end

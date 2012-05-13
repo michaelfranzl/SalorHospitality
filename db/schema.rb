@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513072937) do
+ActiveRecord::Schema.define(:version => 20120513090307) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -589,7 +589,7 @@ ActiveRecord::Schema.define(:version => 20120513072937) do
     t.string   "bank_account2"
     t.integer  "time_offset",                                    :default => 0
     t.string   "mode"
-    t.text     "cache",                      :limit => 16777215
+    t.text     "resources_cache",            :limit => 16777215
     t.boolean  "use_order_numbers",                              :default => true
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"

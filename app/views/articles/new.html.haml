@@ -8,6 +8,7 @@
         %li= msg
 
 = form_for nest_image(@article), :html => { :multipart => true } do |article_form|
+  %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   %div.article_new
     .image
       %img.asset{ :src => @article.image }
@@ -66,8 +67,6 @@
       = render :partial => 'quantity', :locals => { :f => quantity_form } unless quantity_form.object.hidden
 
   %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
-
-  %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
 
 :javascript
   $(function(){

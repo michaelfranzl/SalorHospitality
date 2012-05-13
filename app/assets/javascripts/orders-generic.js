@@ -14,6 +14,7 @@ var option_position = 0;
 var item_position = 0;
 
 var resources = {};
+var permissions = {};
 var items_json = {};
 var submit_json = {currentview:'tables'};
 var items_json_queue = {};
@@ -33,11 +34,9 @@ $(function(){
 
 function get_resources() {
   $.ajax({
-    url: '/vendors/resources',
-    timeout: 5000,
-    complete: function(data,msg){
-     // alert(msg);
-    }
+    url: '/vendors/render_resources',
+    dataType: 'script',
+    timeout: 5000
   });
 }
 
@@ -52,8 +51,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
   if ( target == 'table' ) {
     submit_json.target = 'table';
     submit_json.order = {table_id:table_id};
-    $('#order_sum').html('0' + resources.i18n.decimal_separator + '00');
-    $('#order_info').html(resources.i18n.just_order);
+    $('#order_sum').html('0' + i18n.decimal_separator + '00');
+    $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
     $('#inputfields').html('');
     $('#itemstable').html('');
@@ -89,7 +88,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_header_order_form').show();
-    if (resources.settings.mobile) { $('#functions_footer').show(); }
+    if (settings.mobile) { $('#functions_footer').show(); }
     screenlock_counter = -1;
     tableupdates = -1;
     submit_json.currentview = 'table';
@@ -125,7 +124,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
       submit_json = {};
       items_json = {};
     }
-    screenlock_counter = resources.settings.screenlock_timeout;
+    screenlock_counter = settings.screenlock_timeout;
     option_position = 0;
     item_position = 0;
     tableupdates = 2;
@@ -284,7 +283,7 @@ function render_items() {
     catid = object.ci;
     tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
     $('#itemstable').append(tablerow);
-    if (resources.settings.workstation) { enable_keyboard_for_items(object.d); }
+    if (settings.workstation) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
   });
   calculate_sum();
@@ -331,7 +330,7 @@ function display_articles(cat_id) {
         var catid = cat_id;
         abutton.on('click', function() {
           highlight_border(element);
-          if (resources.settings.workstation) {
+          if (settings.workstation) {
             $('.quantities').slideUp();
           } else {
             $('.quantities').html('');
@@ -359,7 +358,7 @@ function display_articles(cat_id) {
 }
 
 function display_quantities(quantities, target, cat_id) {
-  if (resources.settings.workstation) {
+  if (settings.workstation) {
     target.html('');
     $('.quantities').hide();
   } else if (target.html() != '') {
@@ -387,7 +386,7 @@ function display_quantities(quantities, target, cat_id) {
     })();
     target.append(qbutton);
   })
-  if (resources.settings.workstation) {
+  if (settings.workstation) {
     target.slideDown();
   } else {
     target.show();
@@ -420,7 +419,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
       // options do send catids, but course numbers not
       render_options(resources.c[catid].o, d, catid);
     }
-    if (resources.settings.workstation) { enable_keyboard_for_items(object.d); }
+    if (settings.workstation) { enable_keyboard_for_items(object.d); }
   }
   calculate_sum();
   return d
@@ -467,17 +466,17 @@ function increment_item(d) {
 function decrement_item(d) {
   var i = items_json[d].c;
   var start_count = items_json[d].sc;
-  if ( i > 1 && ( resources.permissions.decrement_items || i > start_count ) ) {
+  if ( i > 1 && ( permissions.decrement_items || i > start_count ) ) {
     i--;
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
-  } else if ( i == 1 && ( resources.permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
+  } else if ( i == 1 && ( permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
-    if (resources.permissions.delete_items) {
+    if (permissions.delete_items) {
       set_json(d,'x',true);
       $('#item_' + d).fadeOut('slow');
     }
@@ -506,23 +505,23 @@ function add_option_to_item(d, value, cat_id) {
 
   } else if (value == -1 ) {
     set_json(d,'pc',items_json[d].c);
-    $('#optionsnames_' + d).append('<br>' + resources.i18n.no_printing);
+    $('#optionsnames_' + d).append('<br>' + i18n.no_ticket_printing);
 
   } else if (value == -2 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>' + resources.i18n.takeaway);
+    $('#optionsnames_' + d).append('<br>' + i18n.takeaway);
 
   } else if (value == -11 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>1. ' + resources.i18n.course);
+    $('#optionsnames_' + d).append('<br>1. ' + i18n.course);
 
   } else if (value == -12 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>2. ' + resources.i18n.course);
+    $('#optionsnames_' + d).append('<br>2. ' + i18n.course);
 
   } else if (value == -13 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>3. ' + resources.i18n.course);
+    $('#optionsnames_' + d).append('<br>3. ' + i18n.course);
 
   } else {
     items_json[d].t[option_uid] = optionobject;
@@ -540,8 +539,57 @@ function add_option_to_item(d, value, cat_id) {
 /* ========================================================*/
 
 function render_options(options, d, cat_id) {
+  // render pseudo special options
+  if (settings.use_takeaway) {
+    var special_options = {1:i18n.no_ticket_printing,2:i18n.takeaway};
+    jQuery.each(special_options, function(key,val) {
+      if (settings.workstation) {
+        button = $(document.createElement('span'));
+        button.html(val);
+        button.addClass('option');
+        (function() {
+          var cid = cat_id;
+          button.on('click',function(){
+            add_option_to_item(d, -key, cid);
+          });
+        })();
+        $('#options_div_' + d).append(button);
+      } else if (settings.mobile) {
+        option_tag = $(document.createElement('option'));
+        option_tag.html(val);
+        option_tag.val(-key);
+        $('#options_select_' + d).append(option_tag);
+      }
+    });
+  }
+
+  // render pseudo options for courses
+  if (settings.use_courses) {
+    for(i=-11;i>=-13;i-=1) {
+      if (settings.workstation) {
+        button = $(document.createElement('span'));
+        button.html(-i-10);
+        button.addClass('option');
+        (function() {
+          var cid = cat_id;
+          var id = i;
+          button.on('click',function(){
+            add_option_to_item(d, id, cid);
+          });
+        })();
+        $('#options_div_' + d).append(button);
+      } else if (settings.mobile) {
+        option_tag = $(document.createElement('option'));
+        option_tag.html(-i-10 + '. ' + i18n.course);
+        option_tag.val(i);
+        $('#options_select_' + d).append(option_tag);
+      }
+    }
+  }
+
+  //render regular options from DB
   jQuery.each(options, function(key,object) {
-    if (resources.settings.workstation) {
+    if (settings.workstation) {
       button = $(document.createElement('span'));
       button.html(object.n);
       button.addClass('option');
@@ -553,7 +601,7 @@ function render_options(options, d, cat_id) {
         });
       })();
       $('#options_div_' + d).append(button);
-    } else if (resources.settings.mobile) {
+    } else if (settings.mobile) {
       option_tag = $(document.createElement('option'));
       option_tag.html(object.n);
       option_tag.val(object.id);
@@ -595,7 +643,7 @@ function calculate_sum() {
       sum += this.p * count;
     });
   });
-  $('#order_sum').html(sum.toFixed(2).replace('.', resources.i18n.decimal_separator));
+  $('#order_sum').html(sum.toFixed(2).replace('.', i18n.decimal_separator));
   return sum;
 }
 
@@ -648,8 +696,8 @@ function category_onmousedown(category_id, element) {
   display_articles(category_id);
   deselect_all_categories();
   highlight_border(element);
-  if (resources.settings.mobile) {
-    if (resources.settings.mobile_special) {
+  if (settings.mobile) {
+    if (settings.mobile_special) {
       y = $('#articles').position().top;
       window.scrollTo(0,y);
     } else {

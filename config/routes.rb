@@ -160,7 +160,7 @@ BillGastro::Application.routes.draw do
 
   resources :vendors do
     collection do
-      get :resources
+      get :render_resources
     end
   end
 

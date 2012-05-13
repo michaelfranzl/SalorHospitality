@@ -4,10 +4,11 @@
 
 %table
   %tr
-    %th{ :style => 'width:150px' }= Role.human_attribute_name(:name)
   - @roles.each do |r|
     %tr
       %td
+        %br
         %a{ :href => edit_role_path(r) }= r.name
+        %br
       %td
-        = link_to image_tag('button_small_delete.png', :title => Role.human_attribute_name(:hidden), :alt => Role.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;"), role_path(r), :method => :delete, :confirm => t(:are_you_sure)
+        = link_to(image_tag('button_small_delete.png', :title => Role.human_attribute_name(:hidden), :alt => Role.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;"), role_path(r), :method => :delete, :confirm => t(:are_you_sure)) unless @current_vendor.users.existing.where(:role_id => r.id).any?

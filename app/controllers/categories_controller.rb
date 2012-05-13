@@ -6,6 +6,8 @@
 # See license.txt for the license applying to all files within this software.
 
 class CategoriesController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy', 'sort']
   
   def index
     @categories = @current_vendor.categories.existing.positioned

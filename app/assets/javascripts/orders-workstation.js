@@ -26,7 +26,7 @@ $(function(){
     $('input#order_note').getkeyboard().reveal();
   });
 
-  screenlock_counter = resources.settings.screenlock_timeout;
+  screenlock_counter = settings.screenlock_timeout;
   window.setInterval(function() {
     if (screenlock_counter == 0) { $('#screenlock form').submit(); }
     screenlock_counter -= 1;
