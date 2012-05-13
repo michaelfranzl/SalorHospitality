@@ -16,9 +16,11 @@ $(function(){
       }
   })
 
-  //window.setInterval(function() {
-  //  if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
-  //}, 10000);
+  if (typeof(automatic_printing_timeout) == 'undefined') {
+    automatic_printing_timeout = window.setInterval(function() {
+      if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
+    }, 10000);
+  }
 })
 
 function scroll_to(element, speed) {

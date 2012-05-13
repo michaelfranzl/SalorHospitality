@@ -36,28 +36,11 @@ var counter_update_item_lists = timeout_update_item_lists;
 $(function(){
   update_resources();
   update_item_lists();
-
-  window.setInterval(function() {
-    counter_update_resources -= 1;
-    counter_update_tables -= 1;
-    counter_update_item_lists -= 1;
-
-    if (counter_update_resources == 0) {
-      update_resources();
-      counter_update_resources = timeout_update_resources;
-    }
-
-    if (counter_update_item_lists == 0) {
-      update_item_lists();
-      counter_update_item_lists = timeout_update_item_lists;
-    }
-
-    if (counter_update_tables == 0) {
-      update_tables();
-      counter_update_tables = timeout_update_tables;
-    }
-  }, 1000);
+  if (typeof(manage_counters_interval) == 'undefined') {
+    manage_counters_interval = window.setInterval("manage_counters();", 1000);
+  }
 })
+
 
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
@@ -604,6 +587,28 @@ function calculate_sum() {
 /* ================== PERIODIC FUNCTIONS ==================*/
 /* ========================================================*/
 
+function manage_counters() {
+  counter_update_resources -= 1;
+  counter_update_tables -= 1;
+  counter_update_item_lists -= 1;
+
+  if (counter_update_resources == 0) {
+    update_resources();
+    counter_update_resources = timeout_update_resources;
+  }
+
+  if (counter_update_item_lists == 0) {
+    update_item_lists();
+    counter_update_item_lists = timeout_update_item_lists;
+  }
+
+  if (counter_update_tables == 0) {
+    update_tables();
+    counter_update_tables = timeout_update_tables;
+  }
+  return 0;
+}
+
 function update_tables(){
   $.ajax({
     url: '/tables',
@@ -621,12 +626,10 @@ function update_resources() {
 
 function update_item_lists() {
   $.ajax({
-    type: 'GET',
     url: '/items/list?scope=preparation',
     timeout: 2000
   });
   $.ajax({
-    type: 'GET',
     url: '/items/list?scope=delivery',
     timeout: 2000
   });
