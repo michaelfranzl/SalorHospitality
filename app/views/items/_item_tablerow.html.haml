@@ -13,7 +13,7 @@
   %td{ :id => "tablerow_DESIGNATOR_minus", :class => 'item_minus', :onclick => "decrement_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' }
 
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
-    - if workstation?
+    - if workstation
       %a{ :onmouseup => "open_options_div('DESIGNATOR');" }
       %div.optionsselect{ :id => "options_div_DESIGNATOR" }
         %h3= t 'activerecord.models.option.other'

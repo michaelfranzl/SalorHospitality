@@ -1,6 +1,8 @@
 class Vendor < ActiveRecord::Base
+  include ActionView::Helpers #::JavaScriptHelper
   include ImageMethods
   include Scope
+
   belongs_to :company
   has_and_belongs_to_many :users
   has_many :articles
@@ -86,7 +88,7 @@ class Vendor < ActiveRecord::Base
   # i is array of selected option ids
   # t is an object of selected options
 
-  def resources
+  def resources(user,workstation,mobile_special)
     categories = {}
     self.categories.existing.positioned.each do |c|
       articles = {}
@@ -103,7 +105,34 @@ class Vendor < ActiveRecord::Base
       end
       categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
     end
-    resources = { :c => categories }
+
+    i18n = {
+      :server_no_response => escape_javascript(I18n.t(:server_no_response)),
+      :just_order => escape_javascript(I18n.t(:just_order)),
+      :enter_price => escape_javascript(I18n.t(:please_enter_price)),
+      :enter_comment => escape_javascript(I18n.t(:please_enter_comment)),
+      :no_ticket_printing => escape_javascript(I18n.t(:no_printing)),
+      :decimal_separator => escape_javascript(I18n.t('number.currency.format.separator')),
+      :takeaway => escape_javascript(I18n.t('articles.new.takeaway')),
+      :course => escape_javascript(I18n.t('printr.course'))
+    }
+
+    permissions = {
+      :delete_items => user.role.permissions.include?("delete_items"),
+      :decrement_items => user.role.permissions.include?("decrement_items")
+    }
+
+    templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow', :locals => {:workstation => workstation})) }
+
+    settings = {
+      :mobile => (not workstation),
+      :workstation => workstation,
+      :mobile_special => mobile_special,
+      :screenlock_timeout => user.screenlock_timeout
+    }
+
+    resources = { :c => categories, :permissions => permissions, :i18n => i18n, :templates => templates, :settings => settings }
+
     return resources.to_json
   end
 

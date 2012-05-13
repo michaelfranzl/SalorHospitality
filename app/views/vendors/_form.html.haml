@@ -10,60 +10,66 @@
 = form_for nest_image(@vendor), :html => { :multipart => true, :class => 'vendor_form' } do |vendor_form|
   %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
   .fields_left
-    %p
-      = vendor_form.fields_for :images do |image_form|
-        = image_form.label :logo
-        = image_form.file_field :file_data
-    %p
-      = vendor_form.label :rlogo_header
-      = vendor_form.file_field :rlogo_header
-    %p
-      = vendor_form.label :rlogo_footer
-      = vendor_form.file_field :rlogo_footer
-    %p
-      = vendor_form.label :name
-      = vendor_form.text_field :name, :size => 20
-    %p
-      = vendor_form.label :invoice_subtitle
-      = vendor_form.text_field :invoice_subtitle, :size => 20
-    %p
-      = vendor_form.label :address
-      = vendor_form.text_field :address, :size => 20
-    %p
-      = vendor_form.label :revenue_service_tax_number
-      = vendor_form.text_field :revenue_service_tax_number, :size => 20
-    %p
-      = vendor_form.label :invoice_slogan1
-      = vendor_form.text_field :invoice_slogan1, :size => 20
-    %p
-      = vendor_form.label :invoice_slogan2
-      = vendor_form.text_field :invoice_slogan2, :size => 20
-    %p
-      = vendor_form.label :bank_account1
-      = vendor_form.text_field :bank_account1, :size => 20
-    %p
-      = vendor_form.label :bank_account2
-      = vendor_form.text_field :bank_account2, :size => 20
-    %p
-      = vendor_form.label :internet_address
-      = vendor_form.text_field :internet_address, :size => 20
-    %p
-      = vendor_form.label :email
-      = vendor_form.text_field :email, :size => 20
-    %p
-      = vendor_form.label :country
-      %select#category_color{ :name => 'Vendor[country]' }
-        - BillGastro::Application::COUNTRIES.each do |key, val|
-          %option{ :value => key, :selected => vendor_form.object.country == key }= t val
-    %p
-      = vendor_form.label :time_offset
-      = vendor_form.text_field :time_offset, :size => 2
-    %p
-      = vendor_form.label :use_order_numbers
-      = vendor_form.check_box :use_order_numbers
+    %br
+    = vendor_form.fields_for :images do |image_form|
+      = image_form.label :logo
+      = image_form.file_field :file_data
+    %br
+    = vendor_form.label :rlogo_header
+    = vendor_form.file_field :rlogo_header
+    %br
+    = vendor_form.label :rlogo_footer
+    = vendor_form.file_field :rlogo_footer
+    %br
+    = vendor_form.label :name
+    = vendor_form.text_field :name, :size => 20
+    %br
+    = vendor_form.label :invoice_subtitle
+    = vendor_form.text_field :invoice_subtitle, :size => 20
+    %br
+    = vendor_form.label :address
+    = vendor_form.text_field :address, :size => 20
+    %br
+    = vendor_form.label :revenue_service_tax_number
+    = vendor_form.text_field :revenue_service_tax_number, :size => 20
+    %br
+    = vendor_form.label :invoice_slogan1
+    = vendor_form.text_field :invoice_slogan1, :size => 20
+    %br
+    = vendor_form.label :invoice_slogan2
+    = vendor_form.text_field :invoice_slogan2, :size => 20
+    %br
+    = vendor_form.label :bank_account1
+    = vendor_form.text_field :bank_account1, :size => 20
+    %br
+    = vendor_form.label :bank_account2
+    = vendor_form.text_field :bank_account2, :size => 20
+    %br
+    = vendor_form.label :internet_address
+    = vendor_form.text_field :internet_address, :size => 20
+    %br
+    = vendor_form.label :email
+    = vendor_form.text_field :email, :size => 20
+    %br
+    = vendor_form.label :country
+    %select#category_color{ :name => 'Vendor[country]' }
+      - BillGastro::Application::COUNTRIES.each do |key, val|
+        %option{ :value => key, :selected => vendor_form.object.country == key }= t val
+    %br
+    = vendor_form.label :time_offset
+    = vendor_form.text_field :time_offset, :size => 2
+    %br
+    = vendor_form.label :use_order_numbers
+    = vendor_form.check_box :use_order_numbers
+    %br
+    = vendor_form.label :use_takeaway
+    = vendor_form.check_box :use_takeaway
+    %br
+    = vendor_form.label :use_courses
+    = vendor_form.check_box :use_courses
 
     - if saas_pro_variant?
-      %p
+      %br
         = vendor_form.label :automatic_printing
         = vendor_form.check_box :automatic_printing
 

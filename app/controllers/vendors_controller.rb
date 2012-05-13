@@ -60,4 +60,8 @@ class VendorsController < ApplicationController
     redirect_to vendors_path
   end
 
+  def resources
+    render :js => "resources = #{ @current_vendor.resources(@current_user,workstation?,mobile_special?) }"
+  end
+
 end

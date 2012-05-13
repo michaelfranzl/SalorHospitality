@@ -82,7 +82,7 @@ BillGastro::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :users, :roles, :presentations, :vendors, :reports
+  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports
 
   resources :companies do
     get :logo
@@ -155,6 +155,12 @@ BillGastro::Application.routes.draw do
     resources :orders
     collection do
       get :mobile
+    end
+  end
+
+  resources :vendors do
+    collection do
+      get :resources
     end
   end
 

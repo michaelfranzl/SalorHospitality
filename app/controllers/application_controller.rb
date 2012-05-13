@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
 
   helper :all
   before_filter :fetch_logged_in_user, :set_locale
-  helper_method :logged_in?, :mobile?, :workstation?, :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :mobile_special?
+
+  helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
+  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?
 
   private
 
@@ -43,8 +45,12 @@ class ApplicationController < ActionController::Base
       model
     end
 
+    def set_locale
+      I18n.locale = @current_user ? @current_user.language : 'en'
+    end
+
     def workstation?
-      false #request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
+      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
     end
 
     def mobile?
@@ -77,20 +83,6 @@ class ApplicationController < ActionController::Base
 
     def local_variant?
       @current_vendor.mode.nil? if @current_vendor
-    end
-
-    def set_locale
-      I18n.locale = @current_user ? @current_user.language : 'en'
-    end
-
-    def assign_from_to(p)
-      f = Date.civil( p[:from][:year ].to_i,
-                      p[:from][:month].to_i,
-                      p[:from][:day  ].to_i) if p[:from]
-      t = Date.civil( p[:to  ][:year ].to_i,
-                      p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
-      return f, t
     end
 
     def check_product_key

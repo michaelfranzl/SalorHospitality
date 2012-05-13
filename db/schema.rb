@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120512204553) do
+ActiveRecord::Schema.define(:version => 20120513072937) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -598,6 +598,8 @@ ActiveRecord::Schema.define(:version => 20120512204553) do
     t.boolean  "hidden"
     t.text     "rlogo_header"
     t.text     "rlogo_footer"
+    t.boolean  "use_courses",                                    :default => true
+    t.boolean  "use_takeaway",                                   :default => true
   end
 
 end

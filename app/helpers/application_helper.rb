@@ -7,6 +7,7 @@
 
 module ApplicationHelper
   #%script== $.datepicker.setDefaults({#{ raw generate_default_calendar_options.join(", ") }});
+
   def generate_html(form_builder, method, options = {})
     options[:object] ||= form_builder.object.class.reflect_on_association(method).klass.new
     options[:partial] ||= method.to_s.singularize
@@ -25,6 +26,16 @@ module ApplicationHelper
     object.tap do |o|
       o.images.build if o.images.empty?
     end
+  end
+
+  def assign_from_to(p)
+    f = Date.civil( p[:from][:year ].to_i,
+                    p[:from][:month].to_i,
+                    p[:from][:day  ].to_i) if p[:from]
+    t = Date.civil( p[:to  ][:year ].to_i,
+                    p[:to  ][:month].to_i,
+                    p[:to  ][:day  ].to_i) + 1.day if p[:to]
+    return f, t
   end
 
 end

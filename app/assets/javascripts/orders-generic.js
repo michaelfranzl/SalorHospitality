@@ -13,11 +13,33 @@ var new_order = true;
 var option_position = 0;
 var item_position = 0;
 
+var resources = {};
 var items_json = {};
 var submit_json = {currentview:'tables'};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
+
+/* ======================================================*/
+/* ==================== DOCUMENT READY ==================*/
+/* ======================================================*/
+
+$(function(){
+  get_resources();
+  window.setInterval(function() {
+    get_resources();
+  }, 10000);
+})
+
+function get_resources() {
+  $.ajax({
+    url: '/vendors/resources',
+    timeout: 5000,
+    complete: function(data,msg){
+     // alert(msg);
+    }
+  });
+}
 
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
@@ -30,8 +52,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
   if ( target == 'table' ) {
     submit_json.target = 'table';
     submit_json.order = {table_id:table_id};
-    $('#order_sum').html('0' + i18n_decimal_separator + '00');
-    $('#order_info').html(i18n_just_order);
+    $('#order_sum').html('0' + resources.i18n.decimal_separator + '00');
+    $('#order_info').html(resources.i18n.just_order);
     $('#order_note').val('');
     $('#inputfields').html('');
     $('#itemstable').html('');
@@ -67,9 +89,8 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_header_order_form').show();
-    if (mobile == true) { $('#functions_footer').show(); }
+    if (resources.settings.mobile) { $('#functions_footer').show(); }
     screenlock_counter = -1;
-debug('counter is ' + screenlock_counter);
     tableupdates = -1;
     submit_json.currentview = 'table';
 
@@ -104,7 +125,7 @@ debug('counter is ' + screenlock_counter);
       submit_json = {};
       items_json = {};
     }
-    screenlock_counter = screenlock_timeout;
+    screenlock_counter = resources.settings.screenlock_timeout;
     option_position = 0;
     item_position = 0;
     tableupdates = 2;
@@ -261,9 +282,9 @@ function set_json(d,attribute,value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = new_item_tablerow.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/USAGE/g, object.u).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
     $('#itemstable').append(tablerow);
-    if (workstation == true) { enable_keyboard_for_items(object.d); }
+    if (resources.settings.workstation) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
   });
   calculate_sum();
@@ -310,7 +331,7 @@ function display_articles(cat_id) {
         var catid = cat_id;
         abutton.on('click', function() {
           highlight_border(element);
-          if (workstation == true) {
+          if (resources.settings.workstation) {
             $('.quantities').slideUp();
           } else {
             $('.quantities').html('');
@@ -338,7 +359,7 @@ function display_articles(cat_id) {
 }
 
 function display_quantities(quantities, target, cat_id) {
-  if (workstation == true) {
+  if (resources.settings.workstation) {
     target.html('');
     $('.quantities').hide();
   } else if (target.html() != '') {
@@ -366,7 +387,7 @@ function display_quantities(quantities, target, cat_id) {
     })();
     target.append(qbutton);
   })
-  if (workstation == true) {
+  if (resources.settings.workstation) {
     target.slideDown();
   } else {
     target.show();
@@ -388,7 +409,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(new_item_tablerow.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/CATID/g, catid));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/CATID/g, catid));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -399,7 +420,7 @@ function add_new_item(object, catid, add_new, anchor_d) {
       // options do send catids, but course numbers not
       render_options(resources.c[catid].o, d, catid);
     }
-    if (workstation == true) { enable_keyboard_for_items(object.d); }
+    if (resources.settings.workstation) { enable_keyboard_for_items(object.d); }
   }
   calculate_sum();
   return d
@@ -446,17 +467,17 @@ function increment_item(d) {
 function decrement_item(d) {
   var i = items_json[d].c;
   var start_count = items_json[d].sc;
-  if ( i > 1 && ( permission_decrement_items || i > start_count ) ) {
+  if ( i > 1 && ( resources.permissions.decrement_items || i > start_count ) ) {
     i--;
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
-  } else if ( i == 1 && ( permission_decrement_items || ( ! d.hasOwnProperty('id') ))) {
+  } else if ( i == 1 && ( resources.permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
-    if (permission_delete_items) {
+    if (resources.permissions.delete_items) {
       set_json(d,'x',true);
       $('#item_' + d).fadeOut('slow');
     }
@@ -485,23 +506,23 @@ function add_option_to_item(d, value, cat_id) {
 
   } else if (value == -1 ) {
     set_json(d,'pc',items_json[d].c);
-    $('#optionsnames_' + d).append('<br>' + i18n_no_printing);
+    $('#optionsnames_' + d).append('<br>' + resources.i18n.no_printing);
 
   } else if (value == -2 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>' + i18n_takeaway);
+    $('#optionsnames_' + d).append('<br>' + resources.i18n.takeaway);
 
   } else if (value == -11 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>1. ' + i18n_course);
+    $('#optionsnames_' + d).append('<br>1. ' + resources.i18n.course);
 
   } else if (value == -12 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>2. ' + i18n_course);
+    $('#optionsnames_' + d).append('<br>2. ' + resources.i18n.course);
 
   } else if (value == -13 ) {
     set_json(d,'u',value);
-    $('#optionsnames_' + d).append('<br>3. ' + i18n_course);
+    $('#optionsnames_' + d).append('<br>3. ' + resources.i18n.course);
 
   } else {
     items_json[d].t[option_uid] = optionobject;
@@ -520,7 +541,7 @@ function add_option_to_item(d, value, cat_id) {
 
 function render_options(options, d, cat_id) {
   jQuery.each(options, function(key,object) {
-    if (workstation == true) {
+    if (resources.settings.workstation) {
       button = $(document.createElement('span'));
       button.html(object.n);
       button.addClass('option');
@@ -532,7 +553,7 @@ function render_options(options, d, cat_id) {
         });
       })();
       $('#options_div_' + d).append(button);
-    } else if (mobile == true) {
+    } else if (resources.settings.mobile) {
       option_tag = $(document.createElement('option'));
       option_tag.html(object.n);
       option_tag.val(object.id);
@@ -574,7 +595,7 @@ function calculate_sum() {
       sum += this.p * count;
     });
   });
-  $('#order_sum').html(sum.toFixed(2).replace('.', i18n_decimal_separator));
+  $('#order_sum').html(sum.toFixed(2).replace('.', resources.i18n.decimal_separator));
   return sum;
 }
 
@@ -627,8 +648,8 @@ function category_onmousedown(category_id, element) {
   display_articles(category_id);
   deselect_all_categories();
   highlight_border(element);
-  if (mobile) {
-    if (mobile_special) {
+  if (resources.settings.mobile) {
+    if (resources.settings.mobile_special) {
       y = $('#articles').position().top;
       window.scrollTo(0,y);
     } else {
