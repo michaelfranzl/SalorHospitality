@@ -176,7 +176,7 @@ class Order < ActiveRecord::Base
   def finish
     self.updated_at = Time.now
     self.finished = true
-    #self.calculate_totals
+    Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
     save
     unlink
   end
