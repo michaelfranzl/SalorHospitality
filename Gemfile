@@ -43,7 +43,7 @@ group :test, :development do
   gem 'guard-rspec'
   gem 'spork' #, '> 0.9.0.rc'
   gem 'guard-spork'
-  gem 'linecache19', '0.5.12'
+  gem 'linecache19' #, '0.5.12'
   gem 'ruby-debug19'
 end
 

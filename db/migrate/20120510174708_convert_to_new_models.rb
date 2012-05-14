@@ -2,9 +2,13 @@ class ConvertToNewModels < ActiveRecord::Migration
   def up
     if not Company.all.any?
       puts "Converting company"
-      company = Company.create :name => 'Restaurant'
-      Vendor.update_all :company_id => company.id
-      vendor = Vendor.first
+      company = Company.create :name => 'Company'
+      if Vendor.all.any?
+        Vendor.update_all :company_id => company.id
+        vendor = Vendor.first
+      else
+        vendor = Vendor.create :company_id => company.id, :name => 'Restaurant'
+      end
       Article.update_all :company_id => company.id, :vendor_id => vendor.id
       Category.update_all :company_id => company.id, :vendor_id => vendor.id
       Article.update_all :company_id => company.id, :vendor_id => vendor.id
