@@ -43,7 +43,8 @@ group :test, :development do
   gem 'guard-rspec'
   gem 'spork' #, '> 0.9.0.rc'
   gem 'guard-spork'
-  gem 'ruby-debug19'# , :require => 'ruby-debug'
+  gem 'linecache19', '0.5.12'
+  gem 'ruby-debug19'
 end
 
 gem 'uglifier'
@@ -52,5 +53,5 @@ gem 'therubyracer'
 gem 'escper'
 gem 'haml'
 gem 'sass-rails'
-gem 'acts_as_list' , '0.1.3'
+gem 'acts_as_list', '0.1.3'
 gem 'rmagick', '2.13.1'
