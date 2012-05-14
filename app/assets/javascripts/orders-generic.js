@@ -35,7 +35,7 @@ var counter_update_item_lists = timeout_update_item_lists;
 
 $(function(){
   update_resources();
-  update_item_lists();
+  //update_item_lists();
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
