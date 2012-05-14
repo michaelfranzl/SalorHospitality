@@ -92,7 +92,7 @@ class OrdersController < ApplicationController
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
         if @orders.empty?
           @order.table.update_attribute :user, nil if @orders.empty?
-          render :js => "go_to(#{@order.table_id},'tables');" and return
+          render :js => "go_to(#{@order.table_id},'tables'); update_tables();" and return
         else
           @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
           @taxes = @current_vendor.taxes.existing
