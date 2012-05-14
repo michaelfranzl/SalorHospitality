@@ -601,7 +601,7 @@ function manage_counters() {
   }
 
   if (counter_update_item_lists == 0) {
-    update_item_lists();
+    //update_item_lists();
     counter_update_item_lists = timeout_update_item_lists;
   }
 
