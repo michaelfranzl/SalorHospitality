@@ -1,4 +1,4 @@
-en:
+hu:
   activerecord:
     models:
       table:
@@ -49,27 +49,6 @@ en:
       vendor_printer:
         one: Printer
         other: Printers
-      coupon:
-        one: Coupon
-        other: Coupons
-      discount:
-        one: Discount
-        other: Discounts
-      page:
-        one: Card
-        other: Cards
-      partial:
-        one: Partial
-        other: Partials
-      reservation:
-        one: Reservation
-        other: Reservations
-      presentation:
-        one: Template
-        other: Templates
-      report:
-        one: Report
-        other: Reports
 
     attributes:
       article:
@@ -156,8 +135,6 @@ en:
         time_offset: Time Offset (hours)
         timeout: Screenlock Timeout (seconds)
         use_order_numbers: Use order numbers?
-        rlogo_header: XXXReceipt logo header
-        rlogo_footer: XXXReceipt logo footer
       role:
         name: Name
       vendor_printer:
@@ -358,12 +335,7 @@ en:
       backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
-  reports:
-    reports: XXX Reports
-    save: XXX Save
-    usb_device: XXX USB Stick
-    start_date: XXX Start Date
-    end_date: XXX End Date
+
   roles:
     new:
       take_orders: Take orders
@@ -479,4 +451,3 @@ en:
   copy: Copy
   exit: Exit
   printing_test: Printing test
-
