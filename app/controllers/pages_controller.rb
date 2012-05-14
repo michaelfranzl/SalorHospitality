@@ -50,7 +50,7 @@ class PagesController < ApplicationController
     @page = get_model
     @partial_htmls = evaluate_partial_htmls @page
     @previous_page, @next_page = neighbour_pages @page
-    @current_user = @current_vendor.users.exising.active.find(session[:user_id]) if session[:user_id]
+    #@current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
     render :show, :layout => 'iframe' unless @current_user
   end
 
