@@ -15,6 +15,16 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def assign_from_to(p)
+      f = Date.civil( p[:from][:year ].to_i,
+                      p[:from][:month].to_i,
+                      p[:from][:day  ].to_i) if p[:from]
+      t = Date.civil( p[:to  ][:year ].to_i,
+                      p[:to  ][:month].to_i,
+                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
+      return f, t
+    end
+
     def local_request?
       false
     end
