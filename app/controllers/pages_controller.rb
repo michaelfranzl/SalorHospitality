@@ -16,7 +16,7 @@ class PagesController < ApplicationController
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
     end      
     @pages_ids = @pages.collect{ |p| p.id }
-    @current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
+    #@current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
     render :index, :layout => 'iframe' unless @current_user
   end
 
