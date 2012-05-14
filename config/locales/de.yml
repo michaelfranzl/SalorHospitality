@@ -206,7 +206,7 @@
       date_normal: "%d. %B %Y"
       date_short: "%d. %b %y"
       date_iso: "%Y-%m-%d"
-      time_short: %H:%M
+      time_short: "%H:%M"
     am: ""
     pm: ""
 
@@ -226,8 +226,8 @@
     errors:
       template:
         header:
-          one:  %{count} Fehler hat verhindert, dass das Formular "%{model}" gespeichert wird.
-          other:  %{count} Fehler haben verhindert, dass das Formular "%{model}" gespeichert wird.
+          one:  "%{count} Fehler hat verhindert, dass das Formular '%{model}' gespeichert wird."
+          other:  "%{count} Fehler haben verhindert, dass das Formular '%{model}' gespeichert wird."
         body: "In folgenden Formularfeldern stimmt etwas nicht:"
 
       messages:
@@ -241,7 +241,7 @@
         too_long: "ist zu lang (maximal %{count} Zeichen)"
         too_short: "ist zu kurz (minimum ist %{count} Zeichen)"
         wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "has already been taken"
+        taken: "wird bereits verwendet"
         not_a_number: "ist keine Zahl"
         greater_than: "must be greater than %{count}"
         greater_than_or_equal_to: "must be greater than or equal to %{count}"

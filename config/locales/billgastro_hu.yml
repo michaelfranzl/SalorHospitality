@@ -1,4 +1,4 @@
-en:
+hu:
   activerecord:
     models:
       table:
@@ -451,3 +451,4 @@ en:
   copy: Copy
   exit: Exit
   printing_test: Printing test
+

@@ -1,6 +1,9 @@
 es:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Mesa
         other: Mesas
@@ -10,6 +13,9 @@ es:
       company:
         one: Empresa
         other: Empresas
+      vendor:
+        one: XXXRestaurant
+        other: XXXRestaurants
       tax:
         one: Tipo de impuesto
         other: Tipos de impuesto
@@ -31,24 +37,48 @@ es:
       item:
         one: Item
         other: Items
+      image:
+        one: Imagen
+        other: Imágenes
       settlement:
         one: Balance
         other: Balances
-      pedido:
+      order:
         one: Pedido
         other: Pedidos
       stock:
-        one: Stock
-        other: Stocks
+        one: XXXStock
+        other: XXXStocks
       group:
-        one: Grupo de stock
-        other: Grupos de stock
+        one: XXXStock Group
+        other: XXXStock Groups
       role:
-        one: Rol
-        other: Rol
+        one: XXXRole
+        other: XXXRoles
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      coupon:
+        one: XXXCoupon
+        other: XXXCoupons
+      discount:
+        one: XXXDiscount
+        other: XXXDiscounts
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      reservation:
+        one: XXXReservation
+        other: XXXReservations
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
+      report:
+        one: XXXReport
+        other: XXXReports
 
     attributes:
       article:
@@ -93,6 +123,7 @@ es:
         tax_id: IVA
         sort_pedido: Ordenar según
         icon: Ícono
+        custom_icon: Mi Ícono
         color: Color
         food: comida?
         vendor_printer_id: XXXPrinter
@@ -131,9 +162,14 @@ es:
         country: XXXRules for country
         invoice_subtitle: Subtítulo factura
         revenue_service_tax_number: Nro. impuesto al ingreso
+        address: XXXAddress
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        res_fetch_url: Fetch Reservations
+        res_confirm_url: Confirm Reservations
         use_order_numbers: XXXUse order numbers?
+        rlogo_header: XXXReceipt logo header
+        rlogo_footer: XXXReceipt logo footer
       role:
         name: Nombre
       vendor_printer:
@@ -143,6 +179,21 @@ es:
       settlement:
         initial_cash: XXXInitial amount
         revenue: End XXXamount
+      presentation:
+        name: XXXName
+        description: XXXDescription
+        markup: XXXERB Markup
+        code: XXXRuby code
+        model: XXXType
+        active: XXXactive
+        hidden: XXXdelete
+      page:
+        active: XXXactive
+        hidden: XXXdelete
+      partial:
+        blurb: XXXBlurb
+        active: XXXaktiv
+        hidden: XXXdelete
 
   articles:
     index:
@@ -164,7 +215,8 @@ es:
       variants:
         one: Variante
         other: Variantes
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -224,6 +276,9 @@ es:
       edit_stock: Editar stock
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Ud. fue atendido por
     order:
       sum: TOTAL
@@ -334,6 +389,13 @@ es:
     update:
       config_successfully_updated: ¡Los datos de la companía han sido actualizados con éxito!
 
+  reports:
+    reports: XXX Reports
+    save: XXX Save
+    usb_device: XXX USB Stick
+    start_date: XXX Start Date
+    end_date: XXX End Date
+
   roles:
     new:
       take_orders: Tomar pedidos
@@ -342,7 +404,8 @@ es:
       split_items: Separar artículos
       move_tables: Mover mesas
       make_storno: Anular item
-      make_immediate_storno: XXXCancel items immediately
+      delete_items: XXXDelete items by decrementing
+      cancel_all_items_in_active_order: XXXCancel all items in active order
       assign_cost_center: Designar centro de coste
       move_order: Mover pedido
       change_waiter: Cambiar mozo
@@ -354,6 +417,27 @@ es:
       view_statistics: Ver estadísticas
       manage_users: Gestión usuarios
       manage_settings: Configuración
+      
+  partials:
+    error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
+
+  images:
+    errempty: Archivo no válido
+    errsize: Tamaño de archivo no válido
+    errtype: Tipo de archivo no válido
 
   delete: Borrar
   are_you_sure: '¿Está seguro?'
@@ -431,7 +515,7 @@ es:
   user_not_found: usuario no encontrado
   wrong_password: datos de conexión incorrectos
 
-  served_by_X_on_table_Y: %{waiter} lo ha servido en %{table}
+  served_by_X_on_table_Y: "%{waiter} lo ha servido en %{table}"
   invoice_numer_X_at_time: Factura No. %{number} el %{datetime}
 
   please_enter_email_and_realname: Por favor ingrese su dirección de e-mail y su nombre verdadero.
@@ -439,6 +523,8 @@ es:
   default: Predeterminado
   germany: Alemania
   austria: Austria
+
+  not_found: XXX Not found
 
   # Translations for Javascript files
   please_enter_item_comment: Deseo especial

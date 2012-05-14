@@ -1,6 +1,9 @@
 fr:
   activerecord:
     models:
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
       table:
         one: Table
         other: Tables
@@ -10,6 +13,9 @@ fr:
       company:
         one: Entreprise
         other: Entreprises
+      vendor:
+        one: Restaurant
+        other: Restaurants
       tax:
         one: Type de taxe
         other: Types de taxes
@@ -31,6 +37,9 @@ fr:
       item:
         one: Item
         other: Items
+      image:
+        one: Image
+        other: Images
       settlement:
         one: Bilan
         other: Bilans
@@ -41,14 +50,35 @@ fr:
         one: Stock
         other: Stocks
       group:
-        one: Groupe de stock
-        other: Groupes de stock
+        one: XXXStock Group
+        other: XXXStock Groups
       role:
-        one: Rôle
-        other: Rôles
+        one: XXXRole
+        other: XXXRoles
       vendor_printer:
         one: XXXPrinter
         other: XXXPrinters
+      coupon:
+        one: XXXCoupon
+        other: XXXCoupons
+      discount:
+        one: XXXDiscount
+        other: XXXDiscounts
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      reservation:
+        one: XXXReservation
+        other: XXXReservations
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
+      report:
+        one: XXXReport
+        other: XXXReports
 
     attributes:
       article:
@@ -93,6 +123,7 @@ fr:
         tax_id: Taxe
         sort_order: Ranger par
         icon: Icône
+        custom_icon: Mon Icône
         color: Couleur
         food: Repas
         vendor_printer_id: XXXPrinter
@@ -134,7 +165,11 @@ fr:
         address: Adresse
         time_offset: XXXTime Offset (hours)
         timeout: XXXScreenlock Timeout (seconds)
+        res_fetch_url: XXXFetch Reservations
+        res_confirm_url: XXXConfirm Reservations
         use_order_numbers: XXXUse order numbers?
+        rlogo_header: XXXReceipt logo header
+        rlogo_footer: XXXReceipt logo footer
       role:
         name: Nom
       vendor_printer:
@@ -144,6 +179,21 @@ fr:
       settlement:
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount
+      presentation:
+        name: XXXName
+        description: XXXDescription
+        markup: XXXERB Markup
+        code: XXXRuby code
+        model: XXXType
+        active: XXXactive
+        hidden: XXXdelete
+      page:
+        active: XXXactive
+        hidden: XXXdelete
+      partial:
+        blurb: XXXBlurb
+        active: XXXaktiv
+        hidden: XXXdelete
 
   articles:
     index:
@@ -165,7 +215,8 @@ fr:
       variants:
         one: Variante
         other: Variantes
-      sort: XXXSort articles
+    sort_index:
+      sort: Sort articles
 
   options:
     new:
@@ -225,6 +276,9 @@ fr:
       edit_stock: Editer stock
 
   orders:
+    index:
+      preparation_list: XXXPreparation list
+      delivery_list: XXXDelivery list
     served_by: Vous avez été servi par
     order:
       sum: TOTAL
@@ -335,6 +389,13 @@ fr:
     update:
       config_successfully_updated: Les données sur l'entreprise ont bien été mises à jour !
 
+  reports:
+    reports: XXX Reports
+    save: XXX Save
+    usb_device: XXX USB Stick
+    start_date: XXX Start Date
+    end_date: XXX End Date
+
   roles:
     new:
       take_orders: Prendre des commandes
@@ -344,6 +405,7 @@ fr:
       move_tables: Changer tables
       make_storno: Annuler item
       make_immediate_storno: XXXCancel items immediately
+      delete_items: XXXDelete items by decrementing
       assign_cost_center: Assigner centre de coûts
       move_order: Déplacer commande
       change_waiter: Changer de serveur
@@ -355,6 +417,27 @@ fr:
       view_statistics: Afficher statistiques
       manage_users: Gestion utilisateurs
       manage_settings: Configuration
+      
+  partials:
+    error_during_evaluation: 'XXXError: '
+    default_blurb: XXXDefault Text
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+      
+  presentations:
+    new:
+      new_presentation: XXXNew Template
+      edit_presentation: XXXEdit Template
+      
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      view: XXXView
+
+  images:
+    errempty: Fichier non valide
+    errsize: Taille du fichier non valide
+    errtype: Type de fichier non valide
 
   delete: Effacer
   are_you_sure: 'Êtes-vous sûr ?'
@@ -440,6 +523,8 @@ fr:
   default: Par défaut
   germany: Allemagne
   austria: Autriche
+
+  not_found: XXX Not found
 
   # Translations for Javascript files
   please_enter_item_comment: Voeux spécial
