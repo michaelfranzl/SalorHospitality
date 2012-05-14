@@ -132,7 +132,6 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     option_position = 0;
     item_position = 0;
     counter_update_tables = timeout_update_tables;
-    update_tables();
     submit_json.currentview = 'tables';
 
   // ========== GO TO INVOICE ===============
@@ -186,6 +185,7 @@ function send_queue(table_id) {
     data: submit_json_queue[table_id],
     timeout: 5000,
     complete: function(data,status) {
+      update_tables();
       if (status == 'timeout') {
         debug("TIMEOUT from server");
       } else if (status == 'success') {
