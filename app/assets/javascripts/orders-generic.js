@@ -21,8 +21,8 @@ var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
 
-var timeout_update_tables = 10;
-var timeout_update_item_lists = 10;
+var timeout_update_tables = 20;
+var timeout_update_item_lists = 60;
 var timeout_update_resources = 600;
 
 var counter_update_resources = timeout_update_resources;
