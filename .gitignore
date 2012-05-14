@@ -24,4 +24,3 @@ vendor/bundle
 *.bill
 tmp/cache
 tmp/capybara
-tmp/*
