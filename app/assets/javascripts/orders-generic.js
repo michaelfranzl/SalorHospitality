@@ -456,6 +456,24 @@ function customer_list_update() {
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
 
+function add_payment_method(name,amount) {
+  if (!submit_json.payment_methods)
+    submit_json.payment_methods = [];
+  submit_json.payment_methods.push({name: name, amount:amount});
+}
+
+function remove_payment_method_by_name(name) {
+  if (!submit_json.payment_methods)
+    return;
+  npms = [];
+  for (var i in submit_json.payment_methods) {
+    if (!submit_json.payment_methods[i].name == name) {
+      npms.push(submit_json.payment_methods[i]);
+    }
+  }
+  submit_json.payment_methods = npms;
+}
+
 function increment_item(d) {
   var count = items_json[d].c + 1;
   var start_count = items_json[d].sc;
@@ -684,4 +702,18 @@ function category_onmousedown(category_id, element) {
       scroll_to('#articles', 7);
     }
   }
+}
+
+function setup_payment_method_keyboad(pmid,id) {
+  $("#" + id).keyboard( 
+          { 
+            openOn: 'focus',
+            layout: 'num',
+            accepted: function(){ 
+              $.ajax({
+                  url: "/orders/update?currentview=update_pm&pid=" +pmid+ "&amount=" + $("#" + id).val(), 
+                  type: 'PUT'
+                 }); 
+            } } 
+          );
 }
