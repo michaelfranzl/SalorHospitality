@@ -3,9 +3,9 @@
 
 = form_tag settlements_path, :method => :get do
   = label('from', t('.start_date'))
-  = select_date(@from, :prefix => 'from')
+  = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
   = label('to', t('.end_date'))
-  = select_date(@to, :prefix => 'to')
+  = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
   = label('cc', CostCenter.model_name.human)
   %select{ :name => 'cost_center_id' }
     %option{ :value => '' }= t '.all_cost_centers'
