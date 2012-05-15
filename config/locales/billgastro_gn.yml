@@ -89,7 +89,6 @@ gn:
         hidden: löschen
         description: Beschreibung
         category: Kategorie
-        menucard: aktiv
         usage: Verwendung
         tax_id: Steuer
       option:

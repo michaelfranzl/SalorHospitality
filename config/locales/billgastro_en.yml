@@ -85,9 +85,11 @@ en:
         price: Price
         name: Name
         hidden: delete
+        image: Image
+        category: Category
         description: Description
-        category_id: Category
         active: active
+        tax_id: Tax
         usage: Usage
       option:
         price: Price
@@ -122,6 +124,7 @@ en:
         name: Name
         tax_id: Tax
         sort_order: Sort Order
+        user_id: Preparing User
         icon: Icon
         custom_icon: My Icon
         color: Color
@@ -175,6 +178,7 @@ en:
       vendor_printer:
         name: Name
         path: Path
+        copies: Copies
         hidden: Delete
       settlement:
         initial_cash: Initial amount
@@ -199,8 +203,8 @@ en:
     index:
       list_all: List all
       search_term: Search term
-      view: View
       sort: Sort
+      preview: Preview
       update: Update!
     new:
       new_article: New article
@@ -484,7 +488,7 @@ en:
   invoice: Invoice
   invoices: Invoices
   storno: Storno
-  datetime: Date
+  dateandtime: Date
   sum: Sum
   count: Count
 
@@ -525,12 +529,15 @@ en:
   is_no_number: is not a number.
 
 # TRANSLATIONS FOR CONTROLLERS
-  successfully_deleted: '%{what} was successfully deleted.'
+  was_successfully_deleted: '%{what} was successfully deleted.'
   there_are_no_open_settlements: There are no open settlements.
   logout_successful: You have logged off successfully.
   user_not_found: User not found
   wrong_password: Wrong login data
-
+  blackboard_generic_name: Blackboard
+  waiterpad_generic_name: Waiterpad
+  menucard_generic_name: Menucard
+  unsettled_orders_generic_name: Unsettled orders
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
 
