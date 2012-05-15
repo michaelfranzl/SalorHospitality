@@ -92,7 +92,6 @@ class Item < ActiveRecord::Base
     return t if t
     t = self.article.tax if self.article
     return t if t
-logger.info "XXXXXXXXXXXXXX #{ self.article.category.tax.inspect }"
     return self.article.category.tax if self.article
   end
 

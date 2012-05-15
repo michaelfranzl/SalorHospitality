@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
       @order.update_attribute :tax_id, params[:order][:tax_id] 
       @order.items.existing.update_all :tax_id => nil
       @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
-      @cost_centers = @current_vendor.cost_center.existing.active
+      @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
       render 'items/update'
     else
