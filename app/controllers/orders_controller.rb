@@ -8,7 +8,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = @current_user.tables
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @categories = @current_vendor.categories.positioned
     @users = User.accessible_by(@current_user).active
     session[:admin_interface] = false
@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = @current_user.tables.existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
   def toggle_tax_colors

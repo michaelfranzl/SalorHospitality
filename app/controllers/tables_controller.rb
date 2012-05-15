@@ -10,7 +10,7 @@ class TablesController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @tables = @current_user.tables.existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_to do |wants|
       wants.html

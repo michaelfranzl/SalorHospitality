@@ -63,6 +63,7 @@ class Item < ActiveRecord::Base
   def calculate_totals
     self.price = price
     self.tax_percent = tax.percent
+    self.tax_id = self.tax.id if self.tax_id.nil?
     self.category_id = article.category.id
     save
     if self.refunded
@@ -91,6 +92,7 @@ class Item < ActiveRecord::Base
     return t if t
     t = self.article.tax if self.article
     return t if t
+logger.info "XXXXXXXXXXXXXX #{ self.article.category.tax.inspect }"
     return self.article.category.tax if self.article
   end
 
