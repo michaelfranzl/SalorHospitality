@@ -7,7 +7,7 @@
 
 class VendorsController < ApplicationController
 
-  before_filter :check_permissions
+  before_filter :check_permissions, :except => [:render_resources]
 
   def index
     @vendors = @current_company.vendors.existing

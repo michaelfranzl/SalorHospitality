@@ -7,7 +7,7 @@
 
 class TablesController < ApplicationController
 
-  before_filter :check_permissions
+  before_filter :check_permissions, :except => [:index, :show]
 
   def index
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing

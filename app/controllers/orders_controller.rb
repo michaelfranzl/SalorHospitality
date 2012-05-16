@@ -195,9 +195,11 @@ class OrdersController < ApplicationController
     def get_order
       if params[:id]
         @order = get_model
-      elsif params[:order][:table_id]
+      elsif params[:order] and params[:order][:table_id]
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
+      else
+        raise "params[:order][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
         @order.update_from_params(params)
