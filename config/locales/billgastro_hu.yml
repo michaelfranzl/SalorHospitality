@@ -3,7 +3,7 @@ hu:
     models:
       table:
         one: Table XXX
-        other: Tables
+        other: Tables XXX
       user:
         one: User
         other: Users
