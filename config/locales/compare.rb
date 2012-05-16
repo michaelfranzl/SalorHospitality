@@ -44,11 +44,11 @@ end
 
 
 # =========================================================
-source = YAML.load_file("billgastro_gn.yml")
+source = YAML.load_file("billgastro_en.yml")
 sourcelang = source.keys.first
 source = source[sourcelang]
 
-translation = YAML.load_file("billgastro_en.yml")
+translation = YAML.load_file("billgastro_pl.yml")
 translationlang = translation.keys.first
 translation = translation[translationlang]
 
