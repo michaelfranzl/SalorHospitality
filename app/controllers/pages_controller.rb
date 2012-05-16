@@ -43,7 +43,6 @@ class PagesController < ApplicationController
   
   def new
     @page = Page.create :vendor_id => @current_vendor.id, :company_id => @current_company.id
-    render 'edit'
   end
   
   def show

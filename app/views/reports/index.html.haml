@@ -1,25 +1,27 @@
-%div.centered-contents
-  - if not demo_variant? or saas_variant?
-    %p#backup_database= link_to t('.backup_database'), "companies/backup_database"
-    %p#backup_logfile= link_to t('.backup_logfile'), "companies/backup_logfile"
-  = form_tag '/reports', :class => 'no-print', :method => :get do
-    = label('from', t('reports.start_date'))
-    %br
-    = select_date(@from, :prefix => 'from')
-    %br
-    = label('to', t('reports.end_date'))
-    %br
-    = select_date(@to, :prefix => 'to')
-    %br
-    = label('usb_device',t("reports.usb_device"))
-    %br
-    %select{:name => 'usb_device', :id => 'usb_device_select'}
-      - Dir.entries("/media").each do |d|
-        - if not d == '.' and not d == '..'
-          %option{ :value => "/media/" + d }= d
-      %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
-    %br
-    %br
-    = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
+%h2= t('.header')
+
+- if not demo_variant? or saas_variant?
+  %p#backup_database= link_to t('.backup_database'), "companies/backup_database"
+  %p#backup_logfile= link_to t('.backup_logfile'), "companies/backup_logfile"
+
+= form_tag '/reports', :class => 'no-print', :method => :get do
+  = label('from', t('reports.start_date'))
+  %br
+  = select_date(@from, :prefix => 'from')
+  %br
+  = label('to', t('reports.end_date'))
+  %br
+  = select_date(@to, :prefix => 'to')
+  %br
+  = label('usb_device',t("reports.usb_device"))
+  %br
+  %select{:name => 'usb_device', :id => 'usb_device_select'}
+    - Dir.entries("/media").each do |d|
+      - if not d == '.' and not d == '..'
+        %option{ :value => "/media/" + d }= d
+    %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
+  %br
+  %br
+  = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
 
 = image_tag 'ajax-loader2.gif', :id => 'progress', :style => 'display: none'

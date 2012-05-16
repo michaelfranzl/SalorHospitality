@@ -46,7 +46,7 @@
     
       %div
         = article_form.fields_for :images do |image_form|
-          %span= image_form.label 'image'
+          %span= article_form.label 'image'
           %span.input_fields
             = image_form.file_field :file_data, :size => 15
 

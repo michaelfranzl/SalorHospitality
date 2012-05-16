@@ -33,6 +33,7 @@
       %td
         %label{ :for => "select_all_options" } All
         %input{ :id => "select_all_options", :type => 'checkbox', :onchange => "toggle_all_option_checkboxes(this)"  }
+        %br
 
         - @categories.each do |c|
           %label{ :for => "category_#{ c.id }" }= c.name

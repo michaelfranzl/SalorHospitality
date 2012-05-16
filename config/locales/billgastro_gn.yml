@@ -88,13 +88,15 @@ gn:
         name: Name
         hidden: löschen
         description: Beschreibung
-        category: Kategorie
+        category_id: Kategorie
         usage: Verwendung
         tax_id: Steuer
       option:
         price: Preis
         category_id: Kategorie
         name: Name
+        separate_ticket: Bon schneiden
+        no_ticket: Keinen Bon drucken
         hidden: Löschen
       quantity:
         prefix: Präfix
@@ -119,17 +121,19 @@ gn:
         width_mobile: Breite mobile
         height_mobile: Höhe mobile
         enabled: aktiv?
+        rotate: drehen?
         hidden: löschen
       category:
         name: Name
         tax_id: Steuerklasse
-        user_id : Zubereitung
+        user_id : Zubereitung durch
         sort_order: Sortierwert
         icon: Icon
         custom_icon: Mein Icon
         color: Farbe
         food: Speise?
         vendor_printer_id: Drucker
+        separate_print: Bon schneiden
         hidden: löschen
       cost_center:
         name: Name
@@ -148,8 +152,10 @@ gn:
         tables: Tische
         active: aktiv?
         hidden: löschen?
+        screenlock_timeout: Zeit Bildschirmsperre (sek.)
       vendor:
         name: Firmenname
+        hidden: löschen
         subdomain: Subdomain
         saas: Online-Variante
         automatic_printing: Automatisches Drucken
@@ -193,11 +199,19 @@ gn:
         hidden: löschen
       page:
         active: aktiv
+        width: Breite
+        height: Höhe
+        color: Hintergrund
+        image: Bild
         hidden: löschen
       partial:
         blurb: Blurb
         active: aktiv
         hidden: löschen
+
+  vendors:
+    index:
+      edit: bearbeiten
 
   articles:
     index:
@@ -267,6 +281,8 @@ gn:
       coffee: Caffee
       teapot: Teekanne
       tea: Teetasse
+      soup: Suppe
+      noodles: Nudeln
       blank: Leer
     create:
       success: Kategorie erfolgreich gespeichert
@@ -329,6 +345,7 @@ gn:
     functions_header_index:
       show_last_order: Letzte Bestellung anzeigen
       print_now: Sofort drucken
+      items_notifications: Benachrichtigungen
     functions_header_order_form:
       move_order: Bestellung verschieben
     storno_form:
@@ -413,12 +430,14 @@ gn:
   companies:
     edit:
       add_printer: Drucker hinzufügen
-      backup_database: Datenbank sichern
     update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
 
   reports:
-    reports: Berichte
+    index:
+      backup_database: Datenbank herunterladen
+      backup_logfile: Logdatei herunterladen
+      header: Berichte
     save: Speichern
     usb_device: Usb Stick
     start_date: Von
@@ -445,6 +464,7 @@ gn:
       view_statistics: Statistiken ansehen
       manage_users: Benutzer verwalten
       manage_settings: Grundeinstellungen vornehmen
+      see_debug: Fehlerbehebungs-Ausgabe anzeigen
     create:
       success: Rolle erfolgreich gespeichert
     destroy:
@@ -462,9 +482,12 @@ gn:
       edit_presentation: Elementvorlage bearbeiten
       
   pages:
+    new:
+      new_page: Neue Karte
     edit:
       edit_page: Karte bearbeiten
       view: Anzeigen
+      slideshow: Präsentation starten
 
   images:
     errempty: Ungültige Datei
