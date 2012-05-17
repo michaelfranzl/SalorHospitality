@@ -74,6 +74,6 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   output_translation[translationlang] = translationordered
 
   File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
-  File.open(sourcefile,'w'){ |f| f.write output_translation.to_yaml }
+  File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
 
 end
