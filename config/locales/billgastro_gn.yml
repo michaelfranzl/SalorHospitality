@@ -1,4 +1,4 @@
-de:
+gn:
   activerecord:
     models:
       customer:
@@ -88,14 +88,15 @@ de:
         name: Name
         hidden: löschen
         description: Beschreibung
-        category: Kategorie
-        menucard: aktiv
+        category_id: Kategorie
         usage: Verwendung
         tax_id: Steuer
       option:
         price: Preis
         category_id: Kategorie
         name: Name
+        separate_ticket: Bon schneiden
+        no_ticket: Keinen Bon drucken
         hidden: Löschen
       quantity:
         prefix: Präfix
@@ -120,17 +121,19 @@ de:
         width_mobile: Breite mobile
         height_mobile: Höhe mobile
         enabled: aktiv?
+        rotate: drehen?
         hidden: löschen
       category:
         name: Name
         tax_id: Steuerklasse
-        user_id : Zubereitung
+        user_id : Zubereitung durch
         sort_order: Sortierwert
         icon: Icon
         custom_icon: Mein Icon
         color: Farbe
         food: Speise?
         vendor_printer_id: Drucker
+        separate_print: Bon schneiden
         hidden: löschen
       cost_center:
         name: Name
@@ -149,8 +152,10 @@ de:
         tables: Tische
         active: aktiv?
         hidden: löschen?
+        screenlock_timeout: Zeit Bildschirmsperre (sek.)
       vendor:
         name: Firmenname
+        hidden: löschen
         subdomain: Subdomain
         saas: Online-Variante
         automatic_printing: Automatisches Drucken
@@ -194,12 +199,27 @@ de:
         hidden: löschen
       page:
         active: aktiv
+        width: Breite
+        height: Höhe
+        color: Hintergrund
+        image: Bild
         hidden: löschen
       partial:
         blurb: Blurb
         active: aktiv
         hidden: löschen
 
+  vendors:
+    index:
+      switch_to: Wechseln zu
+      edit: bearbeiten
+    new:
+      edit_vendor: Restaurant bearbeiten
+      new_vendor: Neues Restaurant
+
+  scopes:
+    active: Aktiv
+    waiterpad: Kellnerblock
   articles:
     index:
       list_all: Alle
@@ -207,6 +227,7 @@ de:
       sort: Sortieren
       preview: Voransicht
       update: Aktualisieren!
+      view: Anzeigen
     create:
       success: Artikel erfolgreich gespeichert
     destroy:
@@ -232,6 +253,7 @@ de:
       new_option: Neue Option
       edit_option: Option bearbeiten
       hidden: löschen
+      select_all: Alle auswählen
     create:
       success: Option erfolgreich gespeichert
     destroy:
@@ -268,6 +290,8 @@ de:
       coffee: Caffee
       teapot: Teekanne
       tea: Teetasse
+      soup: Suppe
+      noodles: Nudeln
       blank: Leer
     create:
       success: Kategorie erfolgreich gespeichert
@@ -330,6 +354,7 @@ de:
     functions_header_index:
       show_last_order: Letzte Bestellung anzeigen
       print_now: Sofort drucken
+      items_notifications: Benachrichtigungen
     functions_header_order_form:
       move_order: Bestellung verschieben
     storno_form:
@@ -414,12 +439,14 @@ de:
   companies:
     edit:
       add_printer: Drucker hinzufügen
-      backup_database: Datenbank sichern
     update:
       config_successfully_updated: Firmendaten erfolgreich aktualisiert!
 
   reports:
-    reports: Berichte
+    index:
+      backup_database: Datenbank herunterladen
+      backup_logfile: Logdatei herunterladen
+      header: Berichte
     save: Speichern
     usb_device: Usb Stick
     start_date: Von
@@ -427,6 +454,9 @@ de:
 
   roles:
     new:
+      new_role: Neue Rolle
+      permissions: Berechtigungen
+      edit_role: Rolle bearbeiten
       take_orders: Bestellungen aufnehmen
       decrement_items: Artikelanzahl reduzieren
       finish_orders: Bestellungen abschließen
@@ -446,6 +476,7 @@ de:
       view_statistics: Statistiken ansehen
       manage_users: Benutzer verwalten
       manage_settings: Grundeinstellungen vornehmen
+      see_debug: Fehlerbehebungs-Ausgabe anzeigen
     create:
       success: Rolle erfolgreich gespeichert
     destroy:
@@ -463,9 +494,12 @@ de:
       edit_presentation: Elementvorlage bearbeiten
       
   pages:
+    new:
+      new_page: Neue Karte
     edit:
       edit_page: Karte bearbeiten
       view: Anzeigen
+      slideshow: Präsentation starten
 
   images:
     errempty: Ungültige Datei
@@ -484,8 +518,9 @@ de:
   create: Anlegen
   new: Neu
   print: Drucken
+  print_and_finish: Abschließen und drucken
   display: Anzeigen
-  logout: '%{who} abmelden'
+  logout: abmelden
   
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
@@ -502,7 +537,7 @@ de:
   cancel_and_go_back: Abbrechen und zurück
   clear_order_and_go_back: Bestellung löschen und zurück
   move_order_to_table: Bestellung auf anderen Tisch verschieben
-  finish_order: Bestellung abschließen
+  split_order: Bestellung splitten
   finish: Abschließen
 
   invoice: Rechnung

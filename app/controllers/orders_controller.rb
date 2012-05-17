@@ -8,7 +8,7 @@
 class OrdersController < ApplicationController
 
   def index
-    @tables = @current_user.tables
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @categories = @current_vendor.categories.positioned
     @users = User.accessible_by(@current_user).active
     session[:admin_interface] = false
@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
       @order.update_attribute :tax_id, params[:order][:tax_id] 
       @order.items.existing.update_all :tax_id => nil
       @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
-      @cost_centers = @current_vendor.cost_center.existing.active
+      @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
       render 'items/update'
     else
@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = @current_user.tables.existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
   def toggle_tax_colors
@@ -195,9 +195,11 @@ class OrdersController < ApplicationController
     def get_order
       if params[:id]
         @order = get_model
-      elsif params[:order][:table_id]
+      elsif params[:order] and params[:order][:table_id]
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
+      else
+        raise "params[:order][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
         @order.update_from_params(params)

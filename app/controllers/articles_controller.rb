@@ -74,7 +74,7 @@ class ArticlesController < ApplicationController
     redirect_to roles_path and return unless @article
     if @article.update_attributes params[:article]
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company
-      flash[:notice] = t('articles.update.success')
+      flash[:notice] = t('articles.create.success')
       if session[:return_to]
         redirect_to session[:return_to]
         session[:return_to] = nil

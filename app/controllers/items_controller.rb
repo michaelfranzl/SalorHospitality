@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
 
   def rotate_tax
     @item = get_model
-    tax_ids = @current_vendor.taxes.exisiting.collect { |t| t.id }
+    tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
     current_tax_id_index = tax_ids.index @item.tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     @item.update_attribute :tax_id, next_tax_id

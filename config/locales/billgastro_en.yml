@@ -85,13 +85,17 @@ en:
         price: Price
         name: Name
         hidden: delete
-        description: Description
+        image: Image
         category_id: Category
+        description: Description
         active: active
+        tax_id: Tax
         usage: Usage
       option:
         price: Price
         category_id: Category
+        separate_ticket: Cut ticket
+        no_ticket: Dont' print ticket
         name: Name
         hidden: Delete
       quantity:
@@ -117,11 +121,14 @@ en:
         width_mobile: Width mobile
         height_mobile: Height mobile
         enabled: active?
+        rotate: rotate?
         hidden: delete
       category:
         name: Name
         tax_id: Tax
         sort_order: Sort Order
+        user_id: Preparing User
+        separate_print: Cut ticket
         icon: Icon
         custom_icon: My Icon
         color: Color
@@ -145,6 +152,7 @@ en:
         tables: Tables
         active: active?
         hidden: delete?
+        screenlock_timeout: Screenlock timeout (sec.)
       company:
         name: Name
         subdomain: Subdomain
@@ -175,6 +183,7 @@ en:
       vendor_printer:
         name: Name
         path: Path
+        copies: Copies
         hidden: Delete
       settlement:
         initial_cash: Initial amount
@@ -190,6 +199,11 @@ en:
       page:
         active: active
         hidden: delete
+        width: Width
+        height: Height
+        color: Color
+        image: Image
+        
       partial:
         blurb: Blurb
         active: aktiv
@@ -199,9 +213,10 @@ en:
     index:
       list_all: List all
       search_term: Search term
-      view: View
       sort: Sort
+      preview: Preview
       update: Update!
+      view: View
     new:
       new_article: New article
       edit_article: Edit article
@@ -229,6 +244,7 @@ en:
       new_option: New Option
       edit_option: Edit Option
       hidden: delete
+      select_all: select all
 
   blackboard:
     index:
@@ -245,6 +261,8 @@ en:
     new:
       new_category: New Category
       edit_category: Edit Category
+      soup: Soup
+      noodles: Noodles
       aperitif: Aperitif
       sidedish: Side Dish
       starter: Starter
@@ -319,6 +337,7 @@ en:
     functions_header_index:
       show_last_order: Show last order
       print_now: Print now
+      items_notifications: Notifications
     functions_header_order_form:
       move_order: Move order to other table
     storno_form:
@@ -397,12 +416,10 @@ en:
   companies:
     edit:
       add_printer: Add printer
-      backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
 
   reports:
-    reports: Reports
     save: Save
     usb_device: USB Stick
     start_date: Start Date
@@ -410,6 +427,10 @@ en:
 
   roles:
     new:
+      new_role: New Role
+      permissions: Permissions
+      edit_role: Edit Role
+      see_debug: See debug messages
       take_orders: Take orders
       decrement_items: Decrement items
       finish_orders: Finish orders
@@ -443,6 +464,7 @@ en:
       
   pages:
     edit:
+      slideshow: Start Slideshow
       edit_page: Edit Page
       view: View
 
@@ -468,6 +490,8 @@ en:
     active: Menucard
     unsettled: Shifts
 
+  print_and_finish: Finish and print
+  split_order: Split order
   print_kitchenlist: Print Kitchen Item List
   recent_orders: View recent orders
   scroll_down: Scroll down
@@ -478,13 +502,12 @@ en:
   cancel_and_go_back: Cancel and go back
   clear_order_and_go_back: Clear order and go back
   move_order_to_table: Move order to different table
-  finish_order: Finish order
   finish: Just Finish
 
   invoice: Invoice
   invoices: Invoices
   storno: Storno
-  datetime: Date
+  dateandtime: Date
   sum: Sum
   count: Count
 
@@ -525,12 +548,15 @@ en:
   is_no_number: is not a number.
 
 # TRANSLATIONS FOR CONTROLLERS
-  successfully_deleted: '%{what} was successfully deleted.'
+  was_successfully_deleted: '%{what} was successfully deleted.'
   there_are_no_open_settlements: There are no open settlements.
   logout_successful: You have logged off successfully.
   user_not_found: User not found
   wrong_password: Wrong login data
-
+  blackboard_generic_name: Blackboard
+  waiterpad_generic_name: Waiterpad
+  menucard_generic_name: Menucard
+  unsettled_orders_generic_name: Unsettled orders
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
 

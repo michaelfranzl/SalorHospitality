@@ -9,54 +9,55 @@
       - @user.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @user do |user_form|
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
-  %table
-    %tr
-      %td
-        %table
-          %tr
-            %td= user_form.label('active', User.human_attribute_name(:active))
-            %td= user_form.check_box :active
-          %tr
-            %td= user_form.label('login', User.human_attribute_name(:login))
-            %td
-              = user_form.text_field :login
-              %span#user_login_display_keyboard.display_keyboard
-          %tr
-            %td= user_form.label('title', User.human_attribute_name(:title))
-            %td
-              = user_form.text_field :title
-              %span#user_title_display_keyboard.display_keyboard
-          %tr
-            %td= user_form.label('password', User.human_attribute_name(:password))
-            %td
-              = user_form.text_field :password
-              %span#user_password_display_keyboard.display_keyboard
-          %tr
-            %td= user_form.label('role', User.human_attribute_name(:role))
-            %td
-              %select#user_role_id{ :name => 'user[role_id]' }
-                = options_from_collection_for_select @roles, 'id', 'name', user_form.object.role_id
-          %tr
-            %td= user_form.label('color', User.human_attribute_name(:color))
-            %td
-              %select#user_color{ :name => 'user[color]' }
-                = options_for_select(get_colors.invert.to_a, user_form.object.color)
-          %tr
-            %td= user_form.label('language', User.human_attribute_name(:language))
-            %td
-              %select#language{ :name => 'user[language]' }
-                = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
-          %tr
-            %td= user_form.label('screenlock_timeout', User.human_attribute_name(:screenlock_timeout))
-            %td
-              = user_form.text_field :screenlock_timeout, :size => 5
-              %span#user_screenlock_timeout_display_keyboard.display_keyboard
-      %td
-        = user_form.label('tables', User.human_attribute_name(:tables))
-        %br
-        = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
+.form_fields
+  = form_for @user do |user_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %table
+      %tr
+        %td
+          %table
+            %tr
+              %td= user_form.label :active
+              %td= user_form.check_box :active
+            %tr
+              %td= user_form.label :login
+              %td
+                = user_form.text_field :login
+                %span#user_login_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :title
+              %td
+                = user_form.text_field :title
+                %span#user_title_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :password
+              %td
+                = user_form.text_field :password
+                %span#user_password_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :role
+              %td
+                %select#user_role_id{ :name => 'user[role_id]' }
+                  = options_from_collection_for_select @roles, 'id', 'name', user_form.object.role_id
+            %tr
+              %td= user_form.label :color
+              %td
+                %select#user_color{ :name => 'user[color]' }
+                  = options_for_select(get_colors.invert.to_a, user_form.object.color)
+            %tr
+              %td= user_form.label :language
+              %td
+                %select#language{ :name => 'user[language]' }
+                  = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
+            %tr
+              %td= user_form.label :screenlock_timeout
+              %td
+                = user_form.text_field :screenlock_timeout, :size => 5
+                %span#user_screenlock_timeout_display_keyboard.display_keyboard
+        %td
+          = user_form.label :tables
+          %br
+          = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
 
 :javascript
   $('#user_login').keyboard( {openOn: '' } );

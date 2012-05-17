@@ -7,10 +7,10 @@
 
 class TablesController < ApplicationController
 
-  before_filter :check_permissions
+  before_filter :check_permissions, :except => [:index, :show]
 
   def index
-    @tables = @current_user.tables.existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_to do |wants|
       wants.html
@@ -49,7 +49,7 @@ class TablesController < ApplicationController
       @current_vendor.users.each do |u|
         u.tables << @table
       end
-      flash[:notice] = t('articles.create.success')
+      flash[:notice] = t('tables.create.success')
       redirect_to tables_path
     else
       render :new

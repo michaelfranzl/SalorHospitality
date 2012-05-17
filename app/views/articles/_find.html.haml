@@ -1,6 +1,6 @@
 - @found_articles.each do |ar|
   %li.search_result{ :id => "searchresults_#{ ar.id }", :source => 'searchresults', :model_id => ar.id }
-    %img{ :id => "handle_for_article_#{ar.id}", :src => '/images/drag_handle.png', :style => 'cursor:move;' }
+    = image_tag 'drag_handle.png', :id => "handle_for_article_#{ar.id}", :style => 'cursor:move;'
     = link_to ar.name, edit_article_path(ar)
     %br
     == (#{ar.quantities.existing.empty? ? number_to_currency(ar.price) : "#{ar.quantities.existing.size} #{t '.variants', :count => ar.quantities.existing.size }"})

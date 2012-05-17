@@ -2,6 +2,7 @@
 - if workstation?
   = javascript_include_tag 'orders-workstation'
 
+%h2= @current_user.login
 #rooms= render 'rooms'
 #tables= render @tables
 #functions

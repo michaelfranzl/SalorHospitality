@@ -17,9 +17,14 @@ class TaxesController < ApplicationController
   end
 
   def create
-    @tax = get_model
-    redirect_to taxes_path and return unless @tax
-    @tax.save ? redirect_to(taxes_path) : render(:new)
+    @tax = Tax.new(params[:table])
+    @tax.vendor = @current_vendor
+    @tax.company = @current_company
+    if @tax.save
+      redirect_to taxes_path
+    else
+      render(:new)
+    end
   end
 
   def edit

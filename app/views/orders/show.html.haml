@@ -50,7 +50,7 @@
     %th.five= t '.sum'
 
   - sum_taxes = Hash.new
-  - Tax.all.each { |t| sum_taxes[t.id] = 0 }
+  - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
 
   - @order.items.existing.positioned.each do |item|
     - sum_taxes[item.tax.id] += item.sum

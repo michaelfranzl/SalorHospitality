@@ -15,6 +15,7 @@
 
       - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
       - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
+
       - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
         = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
 

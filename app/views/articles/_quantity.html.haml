@@ -2,8 +2,7 @@
 - id = f.object.new_record? ? 'NEW_RECORD' : f.object.id
 %li{ :id => "quantity_#{ id }" }
   %span.handle
-  - if not f.object.new_record?
-    %span.input_fields= f.check_box :active
+  %span.input_fields.checkbox= f.check_box :active if not f.object.new_record?
   %span.label= f.label :prefix
   %span.input_fields
     = f.text_field :prefix, :class => 'prefix'

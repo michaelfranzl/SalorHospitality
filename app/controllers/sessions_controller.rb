@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   skip_before_filter :fetch_logged_in_user, :set_locale
 
   def new
-    @users = User.all
+    #@users = User.all
     render :layout => 'login'
   end
 
@@ -21,12 +21,13 @@ class SessionsController < ApplicationController
       session[:user_id] = @current_user.id
       @current_company = @current_user.company
       session[:company_id] = @current_company.id
+      session[:vendor_id] = @current_user.vendors.existing.first.id unless session[:vendor_id]
       
       I18n.locale = @current_user.language
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
       flash[:notice] = t('messages.hello_username', :name => @current_user.login)
-      session[:vendor_id] = @current_user.vendors.existing.first.id unless session[:vendor_id]
+
       redirect_to orders_path
       #check_product_key
     else

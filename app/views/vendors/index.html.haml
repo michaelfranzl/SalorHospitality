@@ -1,4 +1,4 @@
-%h2= t('activerecord.models.vendors.other')
+%h2= t('activerecord.models.vendor.other')
 
 %p
   = link_to(t(:new), new_vendor_path, :class => 'links')
@@ -10,6 +10,6 @@
     %th{ :width => '50px' }
   - @vendors.each do |v|
     %tr
-      %td= link_to v.name, vendor_path(v)
+      %td= link_to v.name, vendor_path(v), :title => t('.switch_to')
       %td= link_to t('.edit'), edit_vendor_path(v)
       %td= link_to image_tag('button_small_delete.png', :title => Vendor.human_attribute_name(:hidden), :alt => Vendor.human_attribute_name(:hidden)), vendor_path(v), :method => :delete, :confirm => t(:are_you_sure) if @current_company.vendors.existing.count > 1

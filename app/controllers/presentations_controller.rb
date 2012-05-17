@@ -23,8 +23,11 @@ class PresentationsController < ApplicationController
     @presentation = Presentation.new params[:presentation]
     @presentation.vendor = @current_vendor
     @presentation.company = @current_company
-    @presentation.save
-    redirect_to presentations_path
+    if @presentation.save
+      redirect_to presentations_path
+    else 
+      render 'new'
+    end
   end
 
   def update

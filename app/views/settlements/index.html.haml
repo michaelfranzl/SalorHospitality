@@ -2,11 +2,11 @@
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 = form_tag settlements_path, :method => :get do
-  = label('from', t('.start_date'))
-  = select_date(@from, :prefix => 'from')
-  = label('to', t('.end_date'))
-  = select_date(@to, :prefix => 'to')
-  = label('cc', CostCenter.model_name.human)
+  = label 'from', t('.start_date'), :class => 'right'
+  = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
+  = label 'to', t('.end_date'), :class => 'right'
+  = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
+  = label 'cc', CostCenter.model_name.human, :class => 'right'
   %select{ :name => 'cost_center_id' }
     %option{ :value => '' }= t '.all_cost_centers'
     = options_from_collection_for_select(@cost_centers, :id, :name)
@@ -44,4 +44,4 @@
       %th{ :class => 'sum colsum br' }= number_to_currency @report[:subtotal_net]
       - @taxes.each do |t|
         %th{ :class => 'sum' }= number_to_currency @report[:tax_subtotal_gro][t.id]
-      %th{ :class => 'sum colsum br' }= number_to_currency @report[:subtotal_net]
+      %th{ :class => 'sum colsum br' }= number_to_currency @report[:subtotal_gro]

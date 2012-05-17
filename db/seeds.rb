@@ -1,6 +1,9 @@
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv','Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif','nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
-countries = ['en','de','at','cc']
+
+countries = ['en','at','fr','es','pl','hu']
+languages = ['en','gn','fr','es','pl','hu']
+
 taxes = [20, 10, 0]
 cost_center_names = ['guest','restaurant','broken']
 tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
@@ -151,7 +154,7 @@ Quantity.delete_all
 
     user_objects = Array.new
     user_array.to_a.size.times do |i|
-      user = User.new :login => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :title => "#{ user_array.to_a[i][0] }", :password => "#{ c }#{ v }#{ i }", :language => 'en', :color => user_colors[i]
+      user = User.new :login => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :title => "#{ user_array.to_a[i][0] }", :password => "#{ c }#{ v }#{ i }", :language => languages[v], :color => user_colors[i]
       user.company = company
       user.vendors << vendor
       user.tables = table_objects
@@ -169,7 +172,7 @@ Quantity.delete_all
     end
 
     category_labels.size.times do |i|
-      category = Category.new :name => category_labels[i], :tax_id => tax_objects[rand(tax_objects.size)], :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
+      category = Category.new :name => category_labels[i], :tax_id => tax_objects[rand(tax_objects.size)].id, :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
       category.company = company
       category.vendor = vendor
       category.preparation_user_id = user_objects.first.id

@@ -183,7 +183,7 @@ function send_queue(table_id) {
     type: 'get',
     url: '/orders/update_ajax',
     data: submit_json_queue[table_id],
-    timeout: 5000,
+    timeout: 20000,
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {

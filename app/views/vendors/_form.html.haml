@@ -1,5 +1,3 @@
-%h1= Vendor.model_name.human
-
 - if @vendor.errors.any?
   .errors
     %h3= t 'activerecord.errors.template.header', :count => @vendor.errors.size, :model => Vendor.model_name.human
@@ -52,7 +50,7 @@
     = vendor_form.text_field :email, :size => 20
     %br
     = vendor_form.label :country
-    %select#category_color{ :name => 'Vendor[country]' }
+    %select#category_color{ :name => 'vendor[country]' }
       - BillGastro::Application::COUNTRIES.each do |key, val|
         %option{ :value => key, :selected => vendor_form.object.country == key }= t val
     %br
