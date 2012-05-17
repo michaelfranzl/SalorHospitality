@@ -86,7 +86,7 @@ en:
         name: Name
         hidden: delete
         image: Image
-        category: Category
+        category_id: Category
         description: Description
         active: active
         tax_id: Tax
@@ -94,6 +94,8 @@ en:
       option:
         price: Price
         category_id: Category
+        separate_ticket: Cut ticket
+        no_ticket: Dont' print ticket
         name: Name
         hidden: Delete
       quantity:
@@ -119,12 +121,14 @@ en:
         width_mobile: Width mobile
         height_mobile: Height mobile
         enabled: active?
+        rotate: rotate?
         hidden: delete
       category:
         name: Name
         tax_id: Tax
         sort_order: Sort Order
         user_id: Preparing User
+        separate_print: Cut ticket
         icon: Icon
         custom_icon: My Icon
         color: Color
@@ -148,6 +152,7 @@ en:
         tables: Tables
         active: active?
         hidden: delete?
+        screenlock_timeout: Screenlock timeout (sec.)
       company:
         name: Name
         subdomain: Subdomain
@@ -194,6 +199,11 @@ en:
       page:
         active: active
         hidden: delete
+        width: Width
+        height: Height
+        color: Color
+        image: Image
+        
       partial:
         blurb: Blurb
         active: aktiv
@@ -206,6 +216,7 @@ en:
       sort: Sort
       preview: Preview
       update: Update!
+      view: View
     new:
       new_article: New article
       edit_article: Edit article
@@ -233,6 +244,7 @@ en:
       new_option: New Option
       edit_option: Edit Option
       hidden: delete
+      select_all: select all
 
   blackboard:
     index:
@@ -249,6 +261,8 @@ en:
     new:
       new_category: New Category
       edit_category: Edit Category
+      soup: Soup
+      noodles: Noodles
       aperitif: Aperitif
       sidedish: Side Dish
       starter: Starter
@@ -323,6 +337,7 @@ en:
     functions_header_index:
       show_last_order: Show last order
       print_now: Print now
+      items_notifications: Notifications
     functions_header_order_form:
       move_order: Move order to other table
     storno_form:
@@ -401,12 +416,10 @@ en:
   companies:
     edit:
       add_printer: Add printer
-      backup_database: Backup database
     update:
       config_successfully_updated: Company data successfully updated!
 
   reports:
-    reports: Reports
     save: Save
     usb_device: USB Stick
     start_date: Start Date
@@ -414,6 +427,10 @@ en:
 
   roles:
     new:
+      new_role: New Role
+      permissions: Permissions
+      edit_role: Edit Role
+      see_debug: See debug messages
       take_orders: Take orders
       decrement_items: Decrement items
       finish_orders: Finish orders
@@ -447,6 +464,7 @@ en:
       
   pages:
     edit:
+      slideshow: Start Slideshow
       edit_page: Edit Page
       view: View
 
@@ -472,6 +490,8 @@ en:
     active: Menucard
     unsettled: Shifts
 
+  print_and_finish: Finish and print
+  split_order: Split order
   print_kitchenlist: Print Kitchen Item List
   recent_orders: View recent orders
   scroll_down: Scroll down
@@ -482,7 +502,6 @@ en:
   cancel_and_go_back: Cancel and go back
   clear_order_and_go_back: Clear order and go back
   move_order_to_table: Move order to different table
-  finish_order: Finish order
   finish: Just Finish
 
   invoice: Invoice
