@@ -44,11 +44,13 @@ end
 # usage: rake compare_locales['billgastro_gn.yml','billgastro_pl.yml']
 desc "Compare locales" 
 task :compare_locales, :sourcefile, :transfile do |t, args|
-  source = YAML.load_file File.join(Rails.root,'config','locales',args[:sourcefile])
+  sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
+  source = YAML.load_file sourcefile
   sourcelang = source.keys.first
   source = source[sourcelang]
 
-  translation = YAML.load_file File.join(Rails.root,'config','locales',args[:transfile])
+  transfile = YAML.load_file File.join(Rails.root,'config','locales',args[:transfile])
+  translation = transfile
   translationlang = translation.keys.first
   translation = translation[translationlang]
 
@@ -71,7 +73,7 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   output_translation = Hash.new
   output_translation[translationlang] = translationordered
 
-  #File.open('source.yml','w'){ |f| f.write output_source.to_yaml }
-  #File.open('source.yml','w'){ |f| f.write output_translation.to_yaml }
+  File.open('source.yml','w'){ |f| f.write sourcefile }
+  File.open('source.yml','w'){ |f| f.write transfile }
 
 end
