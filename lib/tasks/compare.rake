@@ -5,7 +5,7 @@ def compare_yaml_hash(cf1, cf2, context = [])
   cf1.each do |key, value|
     unless cf2.key?(key)
       unless value.is_a?(Hash)
-        puts context.join(' -> ') + ' -> ' + key + ': ' + value
+        puts context.join(': ') + ': ' + key + ': ' + value
       end
       next
     end
@@ -49,20 +49,20 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   sourcelang = source.keys.first
   source = source[sourcelang]
 
-  transfile = YAML.load_file File.join(Rails.root,'config','locales',args[:transfile])
-  translation = transfile
+  transfile = File.join(Rails.root,'config','locales',args[:transfile])
+  translation = YAML.load_file transfile
   translationlang = translation.keys.first
   translation = translation[translationlang]
 
   puts ''
-  puts '=========== ADD TO TRANSLATED FILE =========='
+  puts "============== ADD TO FILE #{ args[:transfile] } ============"
   puts ''
-  compare_yaml_hash(source, translation )
+  compare_yaml_hash(source, translation, [translationlang])
 
   puts ''
-  puts '=========== REMOVE FOM TRANSLATED FILE =========='
+  puts "=========== REMOVE FROM FILE #{ args[:transfile] } =========="
   puts ''
-  compare_yaml_hash(translation, source)
+  compare_yaml_hash(translation, source, [translationlang])
 
 
   sourceordered = convert_hash_to_ordered_hash_and_sort(source, true)
@@ -74,6 +74,6 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   output_translation[translationlang] = translationordered
 
   File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
-  File.open(sourcefile,'w'){ |f| f.write output_translation.to_yaml }
+  File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
 
 end
