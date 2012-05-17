@@ -49,8 +49,8 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   sourcelang = source.keys.first
   source = source[sourcelang]
 
-  transfile = YAML.load_file File.join(Rails.root,'config','locales',args[:transfile])
-  translation = transfile
+  transfile = File.join(Rails.root,'config','locales',args[:transfile])
+  translation = YAML.load_file transfile
   translationlang = translation.keys.first
   translation = translation[translationlang]
 
