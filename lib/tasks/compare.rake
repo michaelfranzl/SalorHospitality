@@ -73,7 +73,7 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   output_translation = Hash.new
   output_translation[translationlang] = translationordered
 
-  File.open('source.yml','w'){ |f| f.write sourcefile }
-  File.open('source.yml','w'){ |f| f.write transfile }
+  File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
+  File.open(sourcefile,'w'){ |f| f.write output_translation.to_yaml }
 
 end
