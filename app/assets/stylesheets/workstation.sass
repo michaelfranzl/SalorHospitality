@@ -21,8 +21,6 @@ body
   :background-color #0e1d25
   :background-image url(body_bg.png)
   :background-repeat repeat-x
-  :-moz-user-select none
-  :-khtml-user-select none
 
 img
   :border none
@@ -340,7 +338,8 @@ span.small
 
 div.search_results
   :float right
-  :width 400px
+  :padding 0px 20px
+  :width 200px
 
 ul#search_results
   :list-style-type none
@@ -554,25 +553,24 @@ div.articles_listall
   span.price
     :width 60px
     :display inline-block
+
+div.form_fields
+  :padding 15px
+  :background-color #243239
+  :border 1px solid #7e868a
       
 div.article_new
-  :padding 5px
+  :padding 15px
   :background-color #243239
   :border 1px solid #7e868a
   :border-spacing 10px
   :overflow auto
-  div.image
-    :float right
-    :width 200px
   div.search_results
     :float left
   div.main_form
     :float left
   div
     :margin 5px 0px
-  div.field_with_errors
-    :border 1px solid red
-    :display inline-block
   span.label
     :display inline-block
     div.field_with_errors
@@ -581,6 +579,40 @@ div.article_new
         :color red
   input
     :width 150px
+
+ul#quantities_new
+  label
+    :width 50px
+    :text-align right
+  span.input_fields
+    :margin-right 20px
+  span.checkbox
+    :width 50px
+
+form.new_option,
+form.edit_option
+  label.wide
+    :width 200px
+  label.medium
+    :width 100px
+  label
+    :width 50px
+
+label.right
+  :text-align right
+
+div.image
+  :float right
+  :width 200px
+
+div.field_with_errors
+  :border 1px solid red
+  :display inline-block
+  label
+    :color red
+
+span.label
+  :display inline-block
 
 span.input_fields
   :display inline-block
@@ -614,6 +646,10 @@ img#logo
   :right 25px
   :top 51px
   :z-index -1
+
+form
+  td
+    :padding 0px 20px 0px 0px
 
 form.edit_company,
 form.new_company
@@ -1269,8 +1305,6 @@ select.presentation_for_partial
 
 img.asset
   :width 200px
-  :float left
-  :margin-right 20px
   :-moz-box-shadow 0px 0px 8px black
   :-moz-border-radius 10px
   :-webkit-box-shadow 0px 0px 8px black

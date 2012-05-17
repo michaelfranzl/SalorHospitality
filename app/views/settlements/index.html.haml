@@ -2,11 +2,11 @@
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 = form_tag settlements_path, :method => :get do
-  = label('from', t('.start_date'))
+  = label 'from', t('.start_date'), :class => 'right'
   = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
-  = label('to', t('.end_date'))
+  = label 'to', t('.end_date'), :class => 'right'
   = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
-  = label('cc', CostCenter.model_name.human)
+  = label 'cc', CostCenter.model_name.human, :class => 'right'
   %select{ :name => 'cost_center_id' }
     %option{ :value => '' }= t '.all_cost_centers'
     = options_from_collection_for_select(@cost_centers, :id, :name)

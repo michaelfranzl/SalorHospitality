@@ -10,6 +10,7 @@ class Presentation < ActiveRecord::Base
   has_many :partials
   belongs_to :company
   belongs_to :vendor
+  validates_presence_of :name
 
   def secure_expand_markup
     allowed_attributes = ['NAME','PRICE','DESCRIPTION','PREFIX','POSTFIX']

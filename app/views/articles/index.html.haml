@@ -4,7 +4,7 @@
 = link_to (t '.list_all'), listall_articles_path, :class => 'links'
 = link_to (t '.sort'), sort_index_articles_path, :class => 'links'
 
-%img#update_cache_progress{ :src => '/images/ajax-loader2.gif', :style => 'display: none;' }
+= image_tag 'ajax-loader2.gif', :id => 'ajax_progress', :style => 'display: none;'
 
 %table.articles
   %tr

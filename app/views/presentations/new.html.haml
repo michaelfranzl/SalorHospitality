@@ -2,38 +2,38 @@
 
 - if @presentation.errors.any?
   .errors
-    %h3= t 'activerecord.errors.presentation.header', :count => @presentation.errors.size, :model => Presentation.model_name.human
+    %h3= t 'activerecord.errors.template.header', :count => @presentation.errors.size, :model => Presentation.model_name.human
     %ul
       - @presentation.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @presentation do |presentation_form|
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
-  %table
-    %tr
-      %td= presentation_form.label 'name'
-      %td
-        = presentation_form.text_field :name
-        %span#presentation_name_display_keyboard.display_keyboard
-    %tr
-      %td= presentation_form.label 'model'
-      %td
-        %select#presentation_model{ :name => 'presentation[model]' }
-          = options_for_select(get_model_names.invert.to_a, presentation_form.object.model)
-    %tr
-      %td= presentation_form.label 'description'
-      %td
-        = presentation_form.text_field :description
-        %span#presentation_description_display_keyboard.display_keyboard
-    %tr
-      %td= presentation_form.label 'markup'
-      %td
-        = presentation_form.text_area :markup
-        %span#presentation_markup_display_keyboard.display_keyboard
-    %tr
-      %td= presentation_form.label 'active'
-      %td= presentation_form.check_box :active
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+.form_fields
+  = form_for @presentation do |presentation_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %table
+      %tr
+        %td= presentation_form.label 'name'
+        %td
+          = presentation_form.text_field :name
+          %span#presentation_name_display_keyboard.display_keyboard
+      %tr
+        %td= presentation_form.label 'model'
+        %td
+          %select#presentation_model{ :name => 'presentation[model]' }
+            = options_for_select(get_model_names.invert.to_a, presentation_form.object.model)
+      %tr
+        %td= presentation_form.label 'description'
+        %td
+          = presentation_form.text_field :description
+          %span#presentation_description_display_keyboard.display_keyboard
+      %tr
+        %td= presentation_form.label 'markup'
+        %td
+          = presentation_form.text_area :markup
+          %span#presentation_markup_display_keyboard.display_keyboard
+      %tr
+        %td= presentation_form.label 'active'
+        %td= presentation_form.check_box :active
 
 :javascript
   $('#presentation_name').keyboard( {openOn: '' } );

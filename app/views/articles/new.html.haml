@@ -19,10 +19,10 @@
       %div
         %span= article_form.label 'name'
         %span.input_fields
-          = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;', :onchange => 'enable_articles_search = true;'
+          = article_form.text_field :name, :onkeypress => 'enable_articles_search = true;'
           %span#article_name_display_keyboard.display_keyboard
           %span.spinner
-            %img{ :id => 'spinner', :src => '/images/ajax-loader.gif', :style => 'display:none;' }
+            = image_tag 'ajax-loader.gif', :id => 'spinner', :style => 'display:none;'
       %div
         %span= article_form.label 'tax_id'
         %span.input_fields= article_form.collection_select :tax_id, @taxes, :id, :custom_name, { :include_blank => true }
@@ -69,46 +69,44 @@
   %script== var quantity_template = '#{ generate_template(article_form, :quantities) }'
 
 :javascript
-  $(function(){
-    var enable_articles_search = false;
+  var enable_articles_search = false;
 
-    window.setInterval(
-      function() {
-        if (enable_articles_search == true) {
-          enable_articles_search = false;
-          $.ajax({
-            type: 'POST',
-            url: '/articles/find',
-            data: 'articles_search_text=' + $('#article_name').val()
-          });
-        }
-      }
-    , 2000);
-
-    $('#add_quantity').click(function(){
-      var new_quantity_id = new Date().getTime();
-      $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, 'new_' + new_quantity_id));
-      $('#quantity_new_' + new_quantity_id).slideDown();
-    });
-
-    $('#quantities_new').sortable({
-      axis: 'y',
-      dropOnEmpty: false,
-      handle: '.handle',
-      cursor: 'crosshair',
-      items: 'li',
-      opacity: 0.4,
-      scroll: true,
-      update: function(){
+  window.setInterval(
+    function() {
+      if (enable_articles_search == true) {
+        enable_articles_search = false;
         $.ajax({
-          type: 'post',
-          data: $('#quantities_new').sortable('serialize'),
-          dataType: 'script',
-          url: '/quantities/sort'
-        })
+          type: 'POST',
+          url: '/articles/find',
+          data: 'articles_search_text=' + $('#article_name').val()
+        });
       }
-    });
-  })
+    }
+  , 2000);
+
+  $('#add_quantity').click(function(){
+    var new_quantity_id = new Date().getTime();
+    $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, 'new_' + new_quantity_id));
+    $('#quantity_new_' + new_quantity_id).slideDown();
+  });
+
+  $('#quantities_new').sortable({
+    axis: 'y',
+    dropOnEmpty: false,
+    handle: '.handle',
+    cursor: 'crosshair',
+    items: 'li',
+    opacity: 0.4,
+    scroll: true,
+    update: function(){
+      $.ajax({
+        type: 'post',
+        data: $('#quantities_new').sortable('serialize'),
+        dataType: 'script',
+        url: '/quantities/sort'
+      })
+    }
+  });
 
 - if @current_user.onscreen_keyboard_enabled
   :javascript

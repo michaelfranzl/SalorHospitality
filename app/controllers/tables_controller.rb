@@ -49,7 +49,7 @@ class TablesController < ApplicationController
       @current_vendor.users.each do |u|
         u.tables << @table
       end
-      flash[:notice] = t('articles.create.success')
+      flash[:notice] = t('tables.create.success')
       redirect_to tables_path
     else
       render :new

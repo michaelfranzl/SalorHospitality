@@ -12,6 +12,9 @@
   = role_form.text_field :name, :size => '20'
   %span#role_name_display_keyboard.display_keyboard
   %br
+  %br
+  %h3= t '.permissions'
+  %br
   %input#permissions_take_orders{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'take_orders', :checked => role_form.object.permissions.include?('take_orders') }
   %label{ :for => 'permissions_take_orders' }= t '.take_orders'
   %br

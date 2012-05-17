@@ -43,7 +43,7 @@ class OptionsController < ApplicationController
     @option = get_model
     redirect_to roles_path and return unless @option
     if @option.update_attributes(params[:option])
-      flash[:notice] = I18n.t("options.update.success")
+      flash[:notice] = I18n.t("options.create.success")
       redirect_to options_path
     else
       render :new

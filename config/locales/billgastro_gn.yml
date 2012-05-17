@@ -211,8 +211,15 @@ gn:
 
   vendors:
     index:
+      switch_to: Wechseln zu
       edit: bearbeiten
+    new:
+      edit_vendor: Restaurant bearbeiten
+      new_vendor: Neues Restaurant
 
+  scopes:
+    active: Aktiv
+    waiterpad: Kellnerblock
   articles:
     index:
       list_all: Alle
@@ -220,6 +227,7 @@ gn:
       sort: Sortieren
       preview: Voransicht
       update: Aktualisieren!
+      view: Anzeigen
     create:
       success: Artikel erfolgreich gespeichert
     destroy:
@@ -245,6 +253,7 @@ gn:
       new_option: Neue Option
       edit_option: Option bearbeiten
       hidden: löschen
+      select_all: Alle auswählen
     create:
       success: Option erfolgreich gespeichert
     destroy:
@@ -445,6 +454,9 @@ gn:
 
   roles:
     new:
+      new_role: Neue Rolle
+      permissions: Berechtigungen
+      edit_role: Rolle bearbeiten
       take_orders: Bestellungen aufnehmen
       decrement_items: Artikelanzahl reduzieren
       finish_orders: Bestellungen abschließen
@@ -506,8 +518,9 @@ gn:
   create: Anlegen
   new: Neu
   print: Drucken
+  print_and_finish: Abschließen und drucken
   display: Anzeigen
-  logout: '%{who} abmelden'
+  logout: abmelden
   
   blackboard_generic_name: Speisetafel
   waiterpad_generic_name: Bestellblock
@@ -524,7 +537,7 @@ gn:
   cancel_and_go_back: Abbrechen und zurück
   clear_order_and_go_back: Bestellung löschen und zurück
   move_order_to_table: Bestellung auf anderen Tisch verschieben
-  finish_order: Bestellung abschließen
+  split_order: Bestellung splitten
   finish: Abschließen
 
   invoice: Rechnung

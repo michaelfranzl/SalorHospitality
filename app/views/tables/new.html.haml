@@ -2,52 +2,52 @@
 
 - if @table.errors.any?
   .errors
+    %h3= t 'activerecord.errors.template.header', :count => @table.errors.size, :model => Table.model_name.human
     %ul
       - @table.errors.full_messages.each do |msg|
         %li= msg
 
-= form_for @table do |table_form|
-  %table
-    %tr
-      %td= table_form.label :name, Table.human_attribute_name(:name)
-      %td
-        = table_form.text_field :name, :size => '20'
-        %span#table_name_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :width, Table.human_attribute_name(:width)
-      %td
-        = table_form.text_field :width, :size => '10'
-        %span#table_width_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :height, Table.human_attribute_name(:height)
-      %td
-        = table_form.text_field :height, :size => '10'
-        %span#table_height_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :width_mobile, Table.human_attribute_name(:width_mobile)
-      %td
-        = table_form.text_field :width_mobile, :size => '10'
-        %span#table_width_mobile_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :height_mobile, Table.human_attribute_name(:height_mobile)
-      %td
-        = table_form.text_field :height_mobile, :size => '10'
-        %span#table_height_mobile_display_keyboard.display_keyboard
-    %tr
-      %td= table_form.label :rotate, Table.human_attribute_name(:rotate)
-      %td= table_form.check_box :rotate
-    %tr
-      %td= table_form.label :enabled, Table.human_attribute_name(:enabled)
-      %td= table_form.check_box :enabled
-    %tr
-      %td
-      %td= table_form.hidden_field :top, :size => '10'
-    %tr
-      %td
-      %td= table_form.hidden_field :left, :size => '10'
-
-
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+.form_fields
+  = form_for @table do |table_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %table
+      %tr
+        %td= table_form.label :name, Table.human_attribute_name(:name)
+        %td
+          = table_form.text_field :name, :size => '20'
+          %span#table_name_display_keyboard.display_keyboard
+      %tr
+        %td= table_form.label :width, Table.human_attribute_name(:width)
+        %td
+          = table_form.text_field :width, :size => '10'
+          %span#table_width_display_keyboard.display_keyboard
+      %tr
+        %td= table_form.label :height, Table.human_attribute_name(:height)
+        %td
+          = table_form.text_field :height, :size => '10'
+          %span#table_height_display_keyboard.display_keyboard
+      %tr
+        %td= table_form.label :width_mobile, Table.human_attribute_name(:width_mobile)
+        %td
+          = table_form.text_field :width_mobile, :size => '10'
+          %span#table_width_mobile_display_keyboard.display_keyboard
+      %tr
+        %td= table_form.label :height_mobile, Table.human_attribute_name(:height_mobile)
+        %td
+          = table_form.text_field :height_mobile, :size => '10'
+          %span#table_height_mobile_display_keyboard.display_keyboard
+      %tr
+        %td= table_form.label :rotate, Table.human_attribute_name(:rotate)
+        %td= table_form.check_box :rotate
+      %tr
+        %td= table_form.label :enabled, Table.human_attribute_name(:enabled)
+        %td= table_form.check_box :enabled
+      %tr
+        %td
+        %td= table_form.hidden_field :top, :size => '10'
+      %tr
+        %td
+        %td= table_form.hidden_field :left, :size => '10'
 
 :javascript
   $('#table_name').keyboard( {openOn: '' } );
