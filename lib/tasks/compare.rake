@@ -55,12 +55,12 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
   translation = translation[translationlang]
 
   puts ''
-  puts '=========== ADD TO TRANSLATED FILE =========='
+  puts "============== ADD TO FILE #{ args[:transfile] } ============"
   puts ''
   compare_yaml_hash(source, translation )
 
   puts ''
-  puts '=========== REMOVE FOM TRANSLATED FILE =========='
+  puts "=========== REMOVE FROM FILE #{ args[:transfile] } =========="
   puts ''
   compare_yaml_hash(translation, source)
 
