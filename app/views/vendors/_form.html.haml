@@ -57,17 +57,20 @@
     = vendor_form.label :time_offset
     = vendor_form.text_field :time_offset, :size => 2
     %br
-    = vendor_form.label :use_order_numbers
     = vendor_form.check_box :use_order_numbers
+    = vendor_form.label :use_order_numbers
     %br
-    = vendor_form.label :ticket_wide_font
     = vendor_form.check_box :ticket_wide_font
+    = vendor_form.label :ticket_wide_font
     %br
-    = vendor_form.label :ticket_tall_font
     = vendor_form.check_box :ticket_tall_font
+    = vendor_form.label :ticket_tall_font
     %br
-    = vendor_form.label :ticket_item_separator
     = vendor_form.check_box :ticket_item_separator
+    = vendor_form.label :ticket_item_separator
+    %br
+    = vendor_form.check_box :ticket_display_time_order
+    = vendor_form.label :ticket_display_time_order, :class => 'wide'
 
     - if saas_pro_variant?
       %br

@@ -127,6 +127,10 @@ gn:
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
+        ticket_wide_font: Ticket breite Schrift
+        ticket_tall_font: Ticket hohe Schrift
+        ticket_item_separator: Ticket Trennlinie
+        ticket_display_time_order: Uhrzeit und Verkaufsnummer auf Ticket
       vendor_printer:
         copies: Kopien
         hidden: Löschen

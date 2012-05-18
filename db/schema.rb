@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513141847) do
+ActiveRecord::Schema.define(:version => 20120518085614) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -600,6 +600,7 @@ ActiveRecord::Schema.define(:version => 20120513141847) do
     t.boolean  "ticket_item_separator",                          :default => true
     t.boolean  "ticket_wide_font",                               :default => true
     t.boolean  "ticket_tall_font",                               :default => true
+    t.boolean  "ticket_display_time_order",                      :default => true
   end
 
 end
