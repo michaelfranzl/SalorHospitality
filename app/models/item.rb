@@ -31,6 +31,7 @@ class Item < ActiveRecord::Base
   alias_attribute :u, :usage
   alias_attribute :x, :hidden
   alias_attribute :i, :optionslist
+  alias_attribute :cids, :customers_ids
 
   def separate
     return if self.count == 1

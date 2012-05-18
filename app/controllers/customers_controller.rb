@@ -58,6 +58,7 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
+        @current_vendor.update_cache
         format.html { redirect_to(@customer, :notice => 'Customer was successfully created.') }
         format.xml  { render :xml => @customer, :status => :created, :location => @customer }
       else
@@ -74,6 +75,7 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
+        @current_vendor.update_cache
         format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
         format.xml  { head :ok }
       else

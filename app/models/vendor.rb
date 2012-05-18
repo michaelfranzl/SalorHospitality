@@ -93,12 +93,16 @@ class Vendor < ActiveRecord::Base
 
   def resources
     categories = {}
+    cstmers = {}
+    self.customers.each do |c|
+      cstmers.merge! "#{c.id}" => {:id => c.id, :name => "#{c.last_name}, #{c.first_name}"}
+    end
     self.categories.existing.positioned.each do |c|
       articles = {}
       c.articles.existing.active.positioned.reverse.each do |a|
         quantities = {}
         a.quantities.existing.active.positioned.each do |q|
-          quantities.merge! q.id => { :ai => a.id, :qi => q.id, :ci => q.article.category.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :p => q.price }
+          quantities.merge! "#{q.position}#{q.id}" => { :ai => a.id, :qi => q.id, :ci => q.article.category.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :p => q.price }
         end
         articles.merge! "#{a.position}#{a.id}" => { :ai => a.id, :ci => a.category.id, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities }
       end
@@ -111,7 +115,7 @@ class Vendor < ActiveRecord::Base
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates }
+    resources = { :c => categories, :templates => templates, :customers => cstmers }
 
     return resources.to_json
   end
