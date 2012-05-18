@@ -214,7 +214,8 @@ class Order < ActiveRecord::Base
     vendor = self.vendor
 
     if vendor.ticket_wide_font
-      header_format = "%-14.14s #%5i\n%-12.12s %8s\n"
+      header_format_time_order = "%-14.14s #%5i\n"
+      header_format_user_table = "%-12.12s %8s\n"
       header_note_format = "%20.20s\n"
       article_format = "%i %-18.18s\n"
       quantity_format  = " > %-18.18s\n"
@@ -223,7 +224,8 @@ class Order < ActiveRecord::Base
       width = 21
       item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
     else
-      header_format = "%-35.35s #%5i\n%-33.33s %8s\n"
+      header_format_time_order = "%-35.35s #%5i\n"
+      header_format_user_table = "%-33.33s %8s\n"
       header_note_format = "%42.42s\n"
       article_format     = "%2i %-39.39s\n"
       quantity_format    = "   > %-37.37s\n"
@@ -247,7 +249,7 @@ class Order < ActiveRecord::Base
     init =
     "\e@"     +  # Initialize Printer
     "\e!" + fontstyle.chr +
-    "\n\n"
+    "\n\n\n"
 
     cut =
     "\n\n\n\n" +
@@ -255,7 +257,13 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 
     header = ''
-    header += header_format % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0), self.user.login, self.table.name]
+
+    if vendor.ticket_display_time_order
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0)]
+    end
+
+    header += header_format_user_table % [self.user.login, self.table.name]
+
     header += header_note_format % [self.note] if self.note and not self.note.empty?
     header += "\xDF" * width + "\n"
 

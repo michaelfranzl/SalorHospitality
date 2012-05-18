@@ -121,6 +121,10 @@ gn:
         rlogo_header: Rechnungslogo Kopf
         saas: Online-Variante
         subdomain: Subdomain
+        ticket_display_time_order: Uhrzeit und Verkaufsnummer auf Ticket
+        ticket_item_separator: Ticket Trennlinie
+        ticket_tall_font: Ticket hohe Schrift
+        ticket_wide_font: Ticket breite Schrift
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
@@ -129,6 +133,9 @@ gn:
         hidden: Löschen
         name: Name
         path: Pfad
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
       article:
         one: Artikel
@@ -457,6 +464,7 @@ gn:
       assign_cost_center: Kostenstelle zuweisen
       cancel_all_items_in_active_order: Alle Artikel einer aktiven Bestellung löschen
       change_waiter: Zugehörigkeit der Bestellung verändern
+      counter_mode: Verkaufstisch-Modus
       decrement_items: Artikelanzahl reduzieren
       delete_items: Artikel durch reduktion löschen
       edit_role: Rolle bearbeiten
@@ -466,6 +474,8 @@ gn:
       make_storno: Artikel stornieren
       manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
+      manage_customers: Kundendatenbank verwalten
+      manage_pages: Slideshow verwalten
       manage_settings: Grundeinstellungen vornehmen
       manage_users: Benutzer verwalten
       move_order: Bestellung verschieben
@@ -473,6 +483,7 @@ gn:
       new_role: Neue Rolle
       permissions: Berechtigungen
       see_debug: Fehlerbehebungs-Ausgabe anzeigen
+      see_item_notifications: Verkaufs-Benachrichtigungen
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen

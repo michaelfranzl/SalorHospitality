@@ -4,8 +4,9 @@
 %a.iconbutton.tables_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'send');", :title => t(:send_and_go_back) }
 
 - if workstation?
-  %a.iconbutton.finish_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send');", :title => t(:finish) }
-  %a.iconbutton.print3_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send_and_print');", :title => t(:print_and_finish) }
+  - if permit('counter_mode')
+    %a.iconbutton.finish_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send');", :title => t(:finish) }
+    %a.iconbutton.print3_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send_and_print');", :title => t(:print_and_finish) }
 
 - if @current_user.role.permissions.include? 'finish_orders'
   %a.iconbutton.cash_button{ :onclick => "go_to(submit_json.order.table_id, 'invoice', 'send');", :title => t(:split_order) }

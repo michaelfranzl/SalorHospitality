@@ -34,7 +34,8 @@
         = link_to( t('activerecord.models.vendor.other'), vendors_path)
       - else
         = link_to( t('activerecord.models.vendor.one'), "/vendors/#{@current_vendor.id}/edit")
-       
-      = link_to( t('activerecord.models.page.other'), pages_path)
-      = link_to( t('activerecord.models.customer.other'), customers_path)
-      = link_to( t('activerecord.models.presentation.other'), presentations_path)
+      - if perms.include? 'manage_customers'
+        = link_to( t('activerecord.models.customer.other'), customers_path)
+      - if perms.include? 'manage_pages'
+        = link_to( t('activerecord.models.page.other'), pages_path)
+        = link_to( t('activerecord.models.presentation.other'), presentations_path)
