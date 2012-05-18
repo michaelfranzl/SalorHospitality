@@ -1,0 +1,3 @@
+http://www.ruby-on-rails-outsourcing.com/articles/2011/05/13/how-to-create-a-rails-engine/
+
+rails plugin new salorhotel

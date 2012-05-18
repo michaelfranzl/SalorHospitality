@@ -1,3 +1,9 @@
+PATH
+  remote: ../salorhotel
+  specs:
+    salorhotel (0.0.1)
+      rails (~> 3.2.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -200,6 +206,7 @@ DEPENDENCIES
   ruby-debug-base19 (= 0.11.26)
   ruby-debug19 (= 0.11.6)
   ruby_core_source (= 0.1.5)
+  salorhotel!
   sass-rails
   serialport (= 1.0.4)
   spork
