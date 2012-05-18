@@ -16,6 +16,7 @@ class OptionsController < ApplicationController
   def new
     @option = Option.new
     @categories = @current_vendor.categories.active.existing
+    render 'new'
   end
 
   def create
