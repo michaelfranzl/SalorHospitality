@@ -61,9 +61,11 @@ class ItemsController < ApplicationController
   end
   
   def list
-    @list = case params[:scope]
-      when 'preparation' then Item.where("preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
-      when 'delivery' then Item.where("delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
+    if @current_user.role.permissions.include?('see_item_notifications')
+      @list = case params[:scope]
+        when 'preparation' then Item.where("preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
+        when 'delivery' then Item.where("delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
+      end
     end
   end
   

@@ -471,6 +471,8 @@ gn:
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_settings: Grundeinstellungen vornehmen
       manage_users: Benutzer verwalten
+      manage_pages: Slideshow verwalten
+      manage_customers: Kundendatenbank verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -480,6 +482,9 @@ gn:
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
       view_statistics: Statistiken ansehen
+      counter_mode: Verkaufstisch-Modus
+      see_item_notifications: Verkaufs-Benachrichtigungen
+
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock

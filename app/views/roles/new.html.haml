@@ -72,6 +72,18 @@
   %input#permissions_manage_settings{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_settings', :checked => role_form.object.permissions.include?('manage_settings') }
   %label{ :for => 'permissions_manage_settings' }= t '.manage_settings'
   %br
+  %input#permissions_counter_mode{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'counter_mode', :checked => role_form.object.permissions.include?('counter_mode') }
+  %label{ :for => 'permissions_counter_mode' }= t '.counter_mode'
+  %br
+  %input#permissions_see_item_notifications{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications', :checked => role_form.object.permissions.include?('see_item_notifications') }
+  %label{ :for => 'permissions_see_item_notifications' }= t '.see_item_notifications'
+  %br
+  %input#permissions_manage_pages{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_pages', :checked => role_form.object.permissions.include?('manage_pages') }
+  %label{ :for => 'permissions_manage_pages' }= t '.manage_pages'
+  %br
+  %input#permissions_manage_customers{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_customers', :checked => role_form.object.permissions.include?('manage_customers') }
+  %label{ :for => 'permissions_manage_customers' }= t '.manage_customers'
+  %br
   %input#permissions_see_debug{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_debug', :checked => role_form.object.permissions.include?('see_debug') }
   %label{ :for => 'permissions_see_debug' }= t '.see_debug'
 
