@@ -29,4 +29,12 @@ class Company < ActiveRecord::Base
   has_many :roles
   has_many :taxes
   has_many :vendor_printers
+  if SalorGastro::Application::HOTEL_MODE
+    has_many :rooms
+    has_many :room_types
+    has_many :guest_types
+    has_many :seasons
+    has_many :surcharges
+    has_many :room_prices
+  end
 end

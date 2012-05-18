@@ -2,6 +2,7 @@ class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
   include Scope
+  include SalorGastro
 
   belongs_to :company
   has_and_belongs_to_many :users
@@ -25,6 +26,14 @@ class Vendor < ActiveRecord::Base
   has_many :roles
   has_many :taxes, :class_name => 'Tax'
   has_many :vendor_printers
+  if SalorGastro::Application::HOTEL_MODE
+    has_many :rooms
+    has_many :room_types
+    has_many :guest_types
+    has_many :seasons
+    has_many :surcharges
+    has_many :room_prices
+  end
 
   serialize :unused_order_numbers
 

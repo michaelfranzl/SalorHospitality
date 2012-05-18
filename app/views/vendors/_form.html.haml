@@ -51,7 +51,7 @@
     %br
     = vendor_form.label :country
     %select#category_color{ :name => 'vendor[country]' }
-      - BillGastro::Application::COUNTRIES.each do |key, val|
+      - SalorGastro::Application::COUNTRIES.each do |key, val|
         %option{ :value => key, :selected => vendor_form.object.country == key }= t val
     %br
     = vendor_form.label :time_offset

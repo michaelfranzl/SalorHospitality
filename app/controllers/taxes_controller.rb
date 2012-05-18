@@ -17,7 +17,7 @@ class TaxesController < ApplicationController
   end
 
   def create
-    @tax = Tax.new(params[:table])
+    @tax = Tax.new(params[:tax])
     @tax.vendor = @current_vendor
     @tax.company = @current_company
     if @tax.save

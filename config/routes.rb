@@ -1,4 +1,4 @@
-BillGastro::Application.routes.draw do
+SalorGastro::Application.routes.draw do
   get "reservations/fetch"
   get "orders/attach_coupon"
   get "orders/attach_discount"

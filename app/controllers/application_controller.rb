@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
-  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?
+  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :hotel_mode?
 
   private
 
@@ -73,6 +73,10 @@ class ApplicationController < ActionController::Base
 
     def mobile?
       not workstation?
+    end
+
+    def hotel_mode?
+      SalorGastro::Application::HOTEL_MODE
     end
 
     def mobile_special?

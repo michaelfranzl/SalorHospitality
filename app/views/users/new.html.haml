@@ -48,7 +48,7 @@
               %td= user_form.label :language
               %td
                 %select#language{ :name => 'user[language]' }
-                  = options_for_select(BillGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
+                  = options_for_select(SalorGastro::Application::LANGUAGES.invert.to_a, user_form.object.language)
             %tr
               %td= user_form.label :screenlock_timeout
               %td

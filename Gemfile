@@ -60,4 +60,4 @@ gem 'sass-rails'
 gem 'acts_as_list', '0.1.3'
 gem 'rmagick', '2.13.1'
 
-gem 'salorhotel', :path => '../salorhotel'
+gem 'salor_hotel', :path => '../salor_hotel'
