@@ -1,5 +1,39 @@
 "gn":
 # ==================================================================================
+# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
+# ==================================================================================
+  activerecord:
+    errors:
+      template:
+        header:
+          one:  "%{count} Fehler hat verhindert, dass das Formular '%{model}' gespeichert wird."
+          other:  "%{count} Fehler haben verhindert, dass das Formular '%{model}' gespeichert wird."
+        body: "Bitte überprüfen Sie die folgenden Eingaben:"
+
+      messages:
+        inclusion: "ist nicht in der Liste"
+        exclusion: "ist reserviert"
+        invalid: "ist ungültig"
+        confirmation: "stimmt nicht überein"
+        accepted: "must be accepted"
+        empty: "darf nicht leer sein"
+        blank: "muss eingegeben werden"
+        too_long: "ist zu lang (maximal %{count} Zeichen)"
+        too_short: "ist zu kurz (minimum ist %{count} Zeichen)"
+        wrong_length: "is the wrong length (should be %{count} characters)"
+        taken: "wird bereits verwendet"
+        not_a_number: "ist keine Zahl"
+        greater_than: "must be greater than %{count}"
+        greater_than_or_equal_to: "must be greater than or equal to %{count}"
+        equal_to: "must be equal to %{count}"
+        less_than: "must be less than %{count}"
+        less_than_or_equal_to: "must be less than or equal to %{count}"
+        odd: "must be odd"
+        even: "must be even"
+
+
+
+# ==================================================================================
 # Adaptiert von:
 # /usr/lib/ruby/gems/1.8/gems/actionpack-2.2.1/lib/action_view/locale
 # /home/michael3/.rvm/gems/ruby-1.9.2-p136/gems/actionpack-3.0.3/lib/action_view/locale/en.yml
@@ -217,36 +251,4 @@
       two_words_connector: " und "
       last_word_connector: ", und "
 
-# ==================================================================================
-# Adaptiert von:
-# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
-# ==================================================================================
 
-  activerecord:
-    errors:
-      template:
-        header:
-          one:  "%{count} Fehler hat verhindert, dass das Formular '%{model}' gespeichert wird."
-          other:  "%{count} Fehler haben verhindert, dass das Formular '%{model}' gespeichert wird."
-        body: "In folgenden Formularfeldern stimmt etwas nicht:"
-
-      messages:
-        inclusion: "ist nicht in der Liste"
-        exclusion: "ist reserviert"
-        invalid: "ist ungültig"
-        confirmation: "stimmt nicht überein"
-        accepted: "must be accepted"
-        empty: "darf nicht leer sein"
-        blank: "muss eingegeben werden"
-        too_long: "ist zu lang (maximal %{count} Zeichen)"
-        too_short: "ist zu kurz (minimum ist %{count} Zeichen)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "wird bereits verwendet"
-        not_a_number: "ist keine Zahl"
-        greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"

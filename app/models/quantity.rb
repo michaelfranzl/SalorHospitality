@@ -13,9 +13,12 @@ class Quantity < ActiveRecord::Base
   has_many :items
   has_many :partials
 
-  validates_presence_of :prefix, :if => :not_hidden?
   validates_presence_of :price, :if => :not_hidden?
   validates_numericality_of :price, :if => :not_hidden?
+
+  validates_each :prefix, :postfix do |record, attr_name, value|
+    record.errors.add(attr_name, I18n.t('activerecord.errors.messages.empty')) if value.empty? and record.not_hidden?
+  end
 
   # so that a deleted dynamic nested quantity in articles#new don't add validation errors
   def not_hidden?
