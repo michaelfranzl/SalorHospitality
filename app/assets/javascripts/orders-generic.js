@@ -463,6 +463,7 @@ function increment_item(d) {
   set_json(object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
+  if ( count == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   if (settings.mobile) { permit_select_open(d, count, start_count); }
   calculate_sum();
 }
@@ -475,6 +476,7 @@ function decrement_item(d) {
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
+    if ( i == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   } else if ( i == 1 && ( permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
     set_json(d,'c',i)
