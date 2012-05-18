@@ -1,6 +1,9 @@
 ---
 gn:
   activerecord:
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     attributes:
       article:
         active: aktiv?
