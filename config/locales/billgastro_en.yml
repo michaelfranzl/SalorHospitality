@@ -456,6 +456,11 @@ en:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_statistics: View statistics
+      manage_pages: Manage Slideshow
+      manage_customers: Manage Customers
+      counter_mode: Counter mode
+      see_item_notifications: See item notifications
+
   scope_names:
     active: Menucard
     unsettled: Shifts
