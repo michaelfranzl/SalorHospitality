@@ -1,6 +1,7 @@
 var ctx; // Our canvas context
 var drawing = '';
 var stop_scrolling = false;
+var canvas;
 
 function init_draw(d) {
   if('ontouchstart' in window == false){
@@ -9,12 +10,14 @@ function init_draw(d) {
   }
 
   document.addEventListener('touchmove', preventScrollingHandler, false); //Prevent scrolling
-  //canvas = $('#draw1');
-  var canvas = document.createElement('canvas');
 
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight - 150;
-  $('#main').prepend(canvas);
+  canvas = document.createElement('canvas');
+  canvas.setAttribute('d', d);
+
+  canvas.width  = 470; //window.innerWidth;
+  canvas.height = 240; //window.innerHeight - 150;
+
+  show_canvas(canvas);
   
   ctx = canvas.getContext('2d');
   ctx.strokeStyle = "rgba(255,0,0,1)";
@@ -52,9 +55,34 @@ function preventScrollingHandler(event) {
   }
 }
 
+function show_canvas(canvas) {
+  $('#orderform').hide();
+  $('#functions').hide();
+  //$('#tables').hide();
+  //$('#rooms').hide();
+  $('#functions_footer').hide();
+  //$('#invoices').hide();
+  $('#draw_controls').show();
+  $('#main').prepend(canvas);
+}
+
+function hide_canvas() {
+  $('#orderform').show();
+  $('#functions').show();
+  //$('#tables').show();
+  //$('#rooms').show();
+  $('#functions_footer').show();
+  //$('#invoices').show();
+  $('#draw_controls').hide();
+  $(canvas).remove();
+}
+
 function submit_drawing() {
-  $.ajax({
-    url: '/items',
-    data: {drawing:drawing}
-  });
+  hide_canvas();
+  d = canvas.getAttribute('d');
+  set_json(d,'drawing',drawing);
+  //$.ajax({
+  //  url: '/items',
+  //  data: {drawing:drawing, item_id:canvas.getAttribute('d')}
+  //});
 }

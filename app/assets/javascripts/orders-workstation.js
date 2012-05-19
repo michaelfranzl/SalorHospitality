@@ -40,6 +40,7 @@ function display_comment_popup_of_item(d) {
   $('input#comment_for_item_' + d).val(old_comment);
   $('#comment_for_item_' + d).slideDown();
   $('input#comment_for_item_' + d).focus();
+  $('#item_configuration_' + d).hide();
 }
 
 function add_comment_to_item(d) {
@@ -53,6 +54,7 @@ function display_price_popup_of_item(d) {
   var old_price = items_json[d].p;
   $('input#price_for_item_' + d).val(old_price);
   $('#price_for_item_' + d).slideDown();
+  $('#item_configuration_' + d).hide();
 }
 
 function add_price_to_item(d) {

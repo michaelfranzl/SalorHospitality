@@ -271,7 +271,7 @@ function set_json(d,attribute,value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
-    alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
+    alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
@@ -590,6 +590,37 @@ function calculate_sum() {
   });
   $('#order_sum').html(sum.toFixed(2).replace('.', i18n.decimal_separator));
   return sum;
+}
+
+function display_configuration_of_item(d) {
+  row = $(document.createElement('tr'));
+  row.attr('id','item_configuration_'+d);
+  cell = $(document.createElement('td'));
+  cell.attr('colspan',4);
+  cell.addClass('item_configuration',4);
+
+  comment_button =  $(document.createElement('span'));
+  comment_button.addClass('item_comment');
+  comment_button.on('click', function(){ display_comment_popup_of_item(d) });
+  cell.append(comment_button);
+
+  price_button =  $(document.createElement('span'));
+  price_button.addClass('item_price');
+  price_button.on('click', function(){ display_price_popup_of_item(d) });
+  cell.append(price_button);
+
+  if (settings.mobile) {
+    scribe_button =  $(document.createElement('span'));
+    scribe_button.addClass('item_scribe');
+    scribe_button.on('click', function(){ init_scribe(d) });
+    cell.append(scribe_button);
+  }
+
+  row.html(cell);
+  row.addClass('item');
+  row.insertAfter('#item_' + d);
+  //display_price_popup_of_item(d);
+  //display_comment_popup_of_item(d);
 }
 
 /* ========================================================*/
