@@ -494,7 +494,7 @@ function decrement_item(d) {
 }
 
 function permit_select_open(d, count, start_count) {
-  if ( count > start_count) {
+  if ( typeof(start_count) == 'undefined' || count > start_count ) {
     $('#options_select_' + d).attr('disabled',false);
   } else {
     $('#options_select_' + d).attr('disabled',true);
