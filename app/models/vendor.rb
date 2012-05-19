@@ -93,15 +93,15 @@ class Vendor < ActiveRecord::Base
 
   def resources
     # the following is speedy, no more nested Ruby/SQL loops
-    category_models = self.categories.existing.positioned
-    article_models = self.articles.existing.positioned
-    quantity_models = self.quantities.existing.positioned
+    category_models = self.categories.existing.active.positioned
+    article_models = self.articles.existing.active.positioned
+    quantity_models = self.quantities.existing.active.positioned
     option_models = self.options.existing.positioned
 
     quantities = {}
     quantity_models.each do |q|
       ai = q.article_id
-      qhash = {"#{q.position}_#{q.id}" => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => 'dummy article name', :p => q.price }}
+      qhash = {"#{q.position}_#{q.id}" => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
       if quantities.has_key?(ai)
         quantities[ai].merge! qhash
       else
@@ -112,6 +112,12 @@ class Vendor < ActiveRecord::Base
     articles = {}
     article_models.each do |a|
       ci = a.category_id
+      quantities_modified = {}
+      if quantities.has_key?(a.id)
+        quantities[a.id].each_key do |key|
+          quantities[a.id][key][:n] = a.name
+        end
+      end
       ahash = {"#{a.position}_#{a.id}" => { :ai => a.id, :ci => ci, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities[a.id] }}
       if articles.has_key?(ci)
         articles[ci].merge! ahash
