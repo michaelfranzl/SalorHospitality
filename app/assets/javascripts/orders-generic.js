@@ -23,7 +23,7 @@ var customers_json = {};
 
 var timeout_update_tables = 20;
 var timeout_update_item_lists = 60;
-var timeout_update_resources = 600;
+var timeout_update_resources = 300;
 var timeout_refresh_queue = 5;
 
 var counter_update_resources = timeout_update_resources;
@@ -508,17 +508,18 @@ function add_option_to_item(d, value, cat_id) {
     $('#options_div_' + d).slideUp();
     d = clone_d;
   }
-  var option_uid = items_json[d].i.length + 1;
-  var optionobject = resources.c[cat_id].o[value];
   if (value == 0) {
     // delete all options
     set_json(d,'i',[0]);
     set_json(d,'t',{});
     $('#optionsnames_' + d).html('');
   } else {
+    var optionobject = resources.c[cat_id].o[value];
+    var option_uid = items_json[d].i.length + 1;
     items_json[d].t[option_uid] = optionobject;
+    var stripped_id = value.split('_')[1];
     var list = items_json[d].i;
-    list.push(optionobject.id);
+    list.push(stripped_id);
     set_json(d,'i',list);
     $('#optionsnames_' + d).append('<br>' + optionobject.n);
   }
@@ -540,14 +541,15 @@ function render_options(options, d, cat_id) {
         var cid = cat_id;
         var o = object;
         button.on('click',function(){
-          add_option_to_item(d, o.id, cid);
+          add_option_to_item(d, o.s + '_' + o.id, cid);
         });
       })();
       $('#options_div_' + d).append(button);
     } else if (settings.mobile) {
       option_tag = $(document.createElement('option'));
       option_tag.html(object.n);
-      option_tag.val(object.id);
+      var s = object.s == null ? 0 : object.s;
+      option_tag.val(s + '_' + object.id);
       $('#options_select_' + d).append(option_tag);
     }
   });
