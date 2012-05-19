@@ -16,7 +16,6 @@ class Order < ActiveRecord::Base
   has_many :items, :dependent => :destroy
   has_one :order
   has_and_belongs_to_many :customers
-  alias_attribute :cids, :customers_ids
 
   #after_save :set_customers_up
   after_save :hide_items

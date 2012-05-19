@@ -305,9 +305,114 @@ function render_customers_from_json() {
 
 
 
-/* ========================================================*/
-/* ======= RENDERING ARTICLES, QUANTITIES AND ITEMS =======*/
-/* ========================================================*/
+/* ===================================================================*/
+/* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
+/* ===================================================================*/
+/*
+ * find_customer(needle); Searches the customer lookup table
+ * for an instance where name.indexOf(needle) != -1
+ * returns -1 is there is nothing like it, and -2 if there is no secondary index
+ * in theory, lookups should be much faster when the list of customers is very large,
+ * this way, it is unecessary to loop through every entry, entries are thus grouped
+ * into a 26 long array, where each entry is 26 deep, followed by an array of object
+ * entries.
+ * {
+ *   d: {
+ *      do: [
+ *        {
+ *          id: 1,
+ *          name: "Doe, John"
+ *        }
+ *      ]
+ *   },
+ *   m: {
+ *    ma: [
+ *      {
+ *        id: 2,
+ *        name: "Martin, Jason"
+ *      }
+ *    ]
+ *   }
+ * }
+ * */
+function find_customer(text) {
+   var i = 0;
+   var c = text[i];
+   var results = [];
+   if (resources.customers[c]) {
+        c2 = c + text[i+1];
+        if (resources.customers[c][c2]) {
+            for (var j in resources.customers[c][c2]) {
+                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+                  results.push(resources.customers[c][c2][j]);
+                }
+            }
+            return results;
+        } else {
+            return -2;
+        }
+    } else {
+        return -1;
+    }
+}
+/*
+ * add_category(label,options); Addes a new category button.
+ * options is a hash like so:
+ * {
+ *    id: "the_html_id_youd_like",
+ *    handlers: {
+ *      mouseup: function (event) { alert('mouseup fired'); }
+ *      ...
+ *    },
+ *    bgcolor: '205,0,82',
+ *    bgimage: '/images/myimage.png',
+ *    border: {
+ *      top: '205,0,85',
+ *      ... bottom, left, right etc.
+ *    }
+ * }
+ * */
+function add_category(label,options) {
+    var cat = $('<div id="'+options.id+'" class="category"></div>');
+    var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
+    var styles = [];
+    var bgcolor = "background-color: rgb(XXX);";
+    var bgimage = "background-image: url('XXX');";
+    var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
+    var brdrcolors = {
+      top: '85,85,85',
+      right: '34,34,34',
+      bottom: '34,34,34',
+      left: '85,85,85'
+    };
+    cat.append(cat_label);
+    
+    for (var type in options.handlers) {
+      cat.bind(type,options.handlers[type]);
+    }
+    for (var attr in options.attrs) {
+      cat.attr(attr,options.attrs[attr]);
+    }
+    
+    if (options.bgcolor) {
+      styles.push(bgcolor.replace("XXX",options.bgcolor));
+    }
+    if (options.bgimage) {
+      styles.push(bgimage.replace("XXX",options.bgimage));
+    }
+    if (options.border) {
+      for (var pos in options.border) {
+        brdrcolor = brdrcolor.replace(pos,options.border[pos]);
+      }
+    }
+    // Default border colors added later
+    for (var pos in brdrcolors) {
+      brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
+    }
+    styles.push(brdrcolor);
+    cat.attr('style',styles.join(' '));
+    $('#categories').append(cat);
+}
 
 function display_articles(cat_id) {
   $('#articles').html('');

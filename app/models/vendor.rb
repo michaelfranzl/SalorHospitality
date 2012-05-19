@@ -94,8 +94,14 @@ class Vendor < ActiveRecord::Base
   def resources
     categories = {}
     cstmers = {}
+    cstmers[:regulars] = []
+    self.customers.order("m_points DESC").limit(12).each do |c|
+      cstmers[:regulars] << {:id => c.id, :name => "#{c.last_name}, #{c.first_name}"}
+    end
     self.customers.each do |c|
-      cstmers.merge! "#{c.id}" => {:id => c.id, :name => "#{c.last_name}, #{c.first_name}"}
+       cstmers[c.last_name[0].downcase] ||= {}
+       cstmers[c.last_name[0].downcase][c.last_name[0,2].downcase] ||= []
+       cstmers[c.last_name[0].downcase][c.last_name[0,2].downcase] << {:id => c.id, :name => "#{c.last_name}, #{c.first_name}"}
     end
     self.categories.existing.positioned.each do |c|
       articles = {}
