@@ -24,10 +24,12 @@ var customers_json = {};
 var timeout_update_tables = 20;
 var timeout_update_item_lists = 60;
 var timeout_update_resources = 600;
+var timeout_refresh_queue = 5;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
+var counter_refresh_queue = timeout_refresh_queue;
 
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
@@ -596,6 +598,7 @@ function manage_counters() {
   counter_update_resources -= 1;
   counter_update_tables -= 1;
   counter_update_item_lists -= 1;
+  counter_refresh_queue -= 1;
 
   if (counter_update_resources == 0) {
     update_resources();
@@ -610,6 +613,11 @@ function manage_counters() {
   if (counter_update_tables == 0) {
     update_tables();
     counter_update_tables = timeout_update_tables;
+  }
+
+  if (counter_refresh_queue == 0) {
+    display_queue();
+    counter_refresh_queue = timeout_refresh_queue;
   }
   return 0;
 }

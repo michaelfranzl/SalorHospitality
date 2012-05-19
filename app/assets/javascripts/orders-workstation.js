@@ -31,7 +31,6 @@ $(function(){
     screenlock_interval = window.setInterval(function() {
       if (screenlock_counter == 0) { $('#screenlock form').submit(); }
       screenlock_counter -= 1;
-      if(typeof(display_queue) != 'undefined') { display_queue(); }
     }, 1001);
   }
 })
