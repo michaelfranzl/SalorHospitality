@@ -601,18 +601,18 @@ function display_configuration_of_item(d) {
 
   comment_button =  $(document.createElement('span'));
   comment_button.addClass('item_comment');
-  comment_button.on('click', function(){ display_comment_popup_of_item(d) });
+  comment_button.on('click', function(){ display_comment_popup_of_item(d); });
   cell.append(comment_button);
 
   price_button =  $(document.createElement('span'));
   price_button.addClass('item_price');
-  price_button.on('click', function(){ display_price_popup_of_item(d) });
+  price_button.on('click', function(){ display_price_popup_of_item(d); });
   cell.append(price_button);
 
   if (settings.mobile) {
     scribe_button =  $(document.createElement('span'));
     scribe_button.addClass('item_scribe');
-    scribe_button.on('click', function(){ init_scribe(d) });
+    scribe_button.on('click', function(){ init_scribe(d); });
     cell.append(scribe_button);
   }
 

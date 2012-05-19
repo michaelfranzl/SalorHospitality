@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519123553) do
+ActiveRecord::Schema.define(:version => 20120519170832) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -278,6 +278,7 @@ ActiveRecord::Schema.define(:version => 20120519123553) do
     t.integer  "refunded_by"
     t.integer  "settlement_id"
     t.integer  "cost_center_id"
+    t.text     "scribe"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"

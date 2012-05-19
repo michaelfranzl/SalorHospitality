@@ -1,9 +1,9 @@
 var ctx; // Our canvas context
-var drawing = '';
+var scribe_contents = '';
 var stop_scrolling = false;
 var canvas;
 
-function init_draw(d) {
+function init_scribe(d) {
   if('ontouchstart' in window == false){
     alert('Sorry, you need a touch enabled device to use this demo');
     return;
@@ -33,7 +33,7 @@ function draw_start(event) {
   var x = event.touches[0].pageX;
   var y = event.touches[0].pageY;
   ctx.moveTo(x, y);
-  drawing += 'M ' + x + ',' + y + ' ';
+  scribe_contents += 'M ' + x + ',' + y + ' ';
 }
 
 function draw_move(event) {
@@ -41,7 +41,7 @@ function draw_move(event) {
   var y = event.touches[0].pageY;
   ctx.lineTo(x,y);
   ctx.stroke();
-  drawing += 'L ' + x + ',' + y + ' ';
+  scribe_contents += 'L ' + x + ',' + y + ' ';
 }
 
 function draw_stop(event) {
@@ -80,7 +80,7 @@ function hide_canvas() {
 function submit_drawing() {
   hide_canvas();
   d = canvas.getAttribute('d');
-  set_json(d,'drawing',drawing);
+  set_json(d,'scribe',scribe_contents);
   //$.ajax({
   //  url: '/items',
   //  data: {drawing:drawing, item_id:canvas.getAttribute('d')}
