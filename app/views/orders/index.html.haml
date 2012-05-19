@@ -3,6 +3,13 @@
   = javascript_include_tag 'orders-workstation'
 
 %h2= @current_user.login
+
+#drawarea
+  %span#start_draw{ :onclick => "init_draw();" } Start
+  %br
+  %br
+  %span#submit_draw{ :onclick => "submit_drawing();" } Submit
+
 #rooms= render 'rooms'
 #tables= render @tables
 #functions

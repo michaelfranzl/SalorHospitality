@@ -11,6 +11,7 @@
 
     = csrf_meta_tag
     = javascript_include_tag 'application'
+    = javascript_include_tag 'draw'
     - if workstation? and @current_user and @current_user.onscreen_keyboard_enabled
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'

@@ -6,14 +6,18 @@
 */
 
 function display_comment_popup_of_item(d) {
+/*
   var old_comment = items_json[d].o;
   var comment = prompt(i18n.enter_comment, old_comment);
   if ( comment == null ) { comment = old_comment };
-  set_json(d,'o',comment);
 	$('#comment_' + d).html(comment);
+  set_json(d,'o',comment);
+*/
+  init_draw(d);
 }
 
 function display_price_popup_of_item(d) {
+/*
   var old_price = items_json[d].p;
   if (old_price == 0) { old_price = '' }
   var price = prompt(i18n.enter_price, old_price);
@@ -25,4 +29,5 @@ function display_price_popup_of_item(d) {
   set_json(d,'p',price);
 	$('#price_' + d).html(price);
 	calculate_sum();
+*/
 }
