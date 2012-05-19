@@ -104,7 +104,7 @@ class Vendor < ActiveRecord::Base
       end
       options = {}
       c.options.existing.each do |o|
-        options.merge! o.id => { :id => o.id, :n => o.name, :p => o.price }
+        options.merge! "#{o.position}#{o.id}" => { :id => o.id, :n => o.name, :p => o.price }
       end
       categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
     end
