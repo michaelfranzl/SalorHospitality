@@ -546,7 +546,7 @@ function render_options(options, d, cat_id) {
       $('#options_div_' + d).append(button);
     } else if (settings.mobile) {
       option_tag = $(document.createElement('option'));
-      option_tag.html(object.s + ' ' + object.n);
+      option_tag.html(object.n);
       option_tag.val(object.id);
       $('#options_select_' + d).append(option_tag);
     }
