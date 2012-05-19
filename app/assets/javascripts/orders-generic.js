@@ -182,7 +182,7 @@ function send_json(table_id) {
 function send_queue(table_id) {
   debug('SEND QUEUE table ' + table_id);
   $.ajax({
-    type: 'get',
+    type: 'post',
     url: '/orders/update_ajax',
     data: submit_json_queue[table_id],
     timeout: 20000,

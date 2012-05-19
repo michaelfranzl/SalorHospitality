@@ -5,7 +5,7 @@
 %h2= @current_user.login
 
 #draw_controls
-  %span#submit_drawing{ :onclick => "submit_drawing();" } SUBMIT
+  %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
 
 #rooms= render 'rooms'
 #tables= render @tables

@@ -35,6 +35,8 @@
     - if workstation?
       = stylesheet_link_tag 'print', :media => 'print'
       = stylesheet_link_tag('workstation', :media => 'screen')
+    - if mobile_special?
+      = stylesheet_link_tag('mobile_special', :media => 'screen')
 
     %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
 

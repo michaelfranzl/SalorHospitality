@@ -1,6 +1,7 @@
 var ctx; // Our canvas context
 var scribe_contents = '';
 var stop_scrolling = false;
+var last_scribe_action = 'M';
 var canvas;
 
 function init_scribe(d) {
@@ -21,7 +22,7 @@ function init_scribe(d) {
   
   ctx = canvas.getContext('2d');
   ctx.strokeStyle = "rgba(255,0,0,1)";
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 10;
   ctx.lineCap = 'round';
   
   canvas.addEventListener("touchstart", draw_start, false); // A finger is down
@@ -34,6 +35,7 @@ function draw_start(event) {
   var y = event.touches[0].pageY;
   ctx.moveTo(x, y);
   scribe_contents += 'M ' + x + ',' + y + ' ';
+  last_scribe_action = 'M';
 }
 
 function draw_move(event) {
@@ -41,7 +43,12 @@ function draw_move(event) {
   var y = event.touches[0].pageY;
   ctx.lineTo(x,y);
   ctx.stroke();
-  scribe_contents += 'L ' + x + ',' + y + ' ';
+  if (last_scribe_action == 'L') {
+    scribe_contents += x + ',' + y + ' ';
+  } else {
+    scribe_contents += 'L ' + x + ',' + y + ' ';
+  }
+  last_scribe_action = 'L';
 }
 
 function draw_stop(event) {
@@ -56,6 +63,8 @@ function preventScrollingHandler(event) {
 }
 
 function show_canvas(canvas) {
+  stop_scrolling = true;
+  scribe_contents = '';
   $('#orderform').hide();
   $('#functions').hide();
   //$('#tables').hide();
@@ -67,6 +76,7 @@ function show_canvas(canvas) {
 }
 
 function hide_canvas() {
+  stop_scrolling = false;
   $('#orderform').show();
   $('#functions').show();
   //$('#tables').show();
