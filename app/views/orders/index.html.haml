@@ -5,11 +5,12 @@
 %h2= @current_user.login
 
 #drawarea
-  %span#start_draw{ :onclick => "init_draw();" } Start
+  %span#cancel_draw{ :onclick => "init_draw($('#draw1'));" } Start
   %br
   %br
-  %span#submit_draw{ :onclick => "submit_drawing();" } Submit
+  %span#cancel_draw{ :onclick => "draw_done();" } Cancel
 
+= link_to 'DRAW', '#', :onclick => 'display_draw_canvas();'
 #rooms= render 'rooms'
 #tables= render @tables
 #functions

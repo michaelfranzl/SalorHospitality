@@ -2,7 +2,7 @@ var ctx; // Our canvas context
 var drawing = '';
 var stop_scrolling = false;
 
-function init_draw() {
+function init_draw(d) {
   if('ontouchstart' in window == false){
     alert('Sorry, you need a touch enabled device to use this demo');
     return;
@@ -13,9 +13,8 @@ function init_draw() {
   var canvas = document.createElement('canvas');
 
   canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-  //document.getElementById('items').insertBefore(canvas);
-  document.body.insertBefore(canvas);
+  canvas.height = window.innerHeight - 150;
+  $('#main').prepend(canvas);
   
   ctx = canvas.getContext('2d');
   ctx.strokeStyle = "rgba(255,0,0,1)";
@@ -25,7 +24,6 @@ function init_draw() {
   canvas.addEventListener("touchstart", draw_start, false); // A finger is down
   canvas.addEventListener("touchmove", draw_move, false); // The finger is moving
   canvas.addEventListener("touchcancel", draw_stop, false); // External interruption
-alert('init');
 }
 
 function draw_start(event) {
@@ -56,7 +54,6 @@ function preventScrollingHandler(event) {
 
 function submit_drawing() {
   $.ajax({
-    type: 'post',
     url: '/items',
     data: {drawing:drawing}
   });
