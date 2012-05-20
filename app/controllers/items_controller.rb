@@ -21,6 +21,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    @item = get_model
+    respond_to do |wants|
+      wants.svg
+    end
+  end
+
   #We'll use update for splitting of items into separate orders
   def update
     logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"

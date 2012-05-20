@@ -8,9 +8,12 @@
   .unconfirmed{ :id => "item_list_#{ scope }_#{ id }_unconfirmed", :style => "#{ i.send(scope_count_method) == nil ? '' : 'display: none;' }" }
     == #{ Table.model_name.human } #{ i.order.table.name }, #{ Order.model_name.human } ##{ id } 
   .confirmed{ :style => "#{ i.send(scope_count_method) == nil ? 'display: none;' : '' }" }
+    /= render :partial => 'inline_svg', :locals => { :svg => i.scribe }
+    = image_tag "/items/#{i.id}.svg" if i.scribe
+    %br
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ scope_count_method }", i.send(scope_count_method)
     = hidden_field_tag  "item_list_#{ scope }_#{ id }_#{ reference_count_method }", i.send(reference_count_method)
-    == #{ Table.model_name.human } #{ i.order.table.name }, #{ Order.model_name.human } ##{ id } 
+    == #{ i.order.table.name }, #{ Order.model_name.human } ##{ id } 
     %table
       %tr
         - if scope == 'delivery'

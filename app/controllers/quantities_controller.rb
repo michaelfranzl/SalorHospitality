@@ -7,6 +7,8 @@
 
 class QuantitiesController < ApplicationController
 
+  after_filter :update_vendor_cache, :only => ['sort']
+
   def sort
     if params['quantity']
       params['quantity'].each do |id|

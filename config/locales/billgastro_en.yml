@@ -368,6 +368,7 @@ en:
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
+      submit_scribe: Submit
     invoice_form:
       just_finish: Just finish order
       print_and_finish: Print and finish this order
@@ -542,3 +543,4 @@ en:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
+  update_database: Update Database

@@ -162,7 +162,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id)
+    @unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)
     if @current_user.role.permissions.include? 'finish_all_settlements'
       @users = @current_vendor.users
     elsif @current_user.role.permissions.include? 'finish_own_settlement'
