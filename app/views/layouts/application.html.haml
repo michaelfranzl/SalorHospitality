@@ -44,6 +44,8 @@
   %body
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #container
+      #draw_controls
+        %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
       - unless mobile_special?
         #header= render 'layouts/header'
       #flash

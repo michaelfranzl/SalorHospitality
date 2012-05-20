@@ -19,7 +19,7 @@
           %td.reference_count= i.send count_method
         %td.reference_count= i.send reference_count_method
         %td.increment{ :id => "item_list_#{ scope }_#{ id }_increment_button" }= i.send(scope_count_method)
-        %td.update{ :id => "item_list_#{ scope }_#{ id }_update_button" }= raw i.quantity ? "#{ i.quantity.prefix } #{ i.article.name[0..15] } #{ i.quantity.postfix }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }" : "#{ i.article.name[0..15] }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }"
+        %td.update{ :id => "item_list_#{ scope }_#{ id }_update_button" }= raw i.quantity_id ? "#{ i.quantity.prefix } #{ i.article.name[0..15] } #{ i.quantity.postfix }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }" : "#{ i.article.name[0..15] }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }"
 
 :javascript
   $("#item_list_#{ scope }_#{ id }_unconfirmed").click(function(){

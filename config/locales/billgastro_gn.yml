@@ -1,5 +1,8 @@
 ---
 gn:
+  layouts:
+    application:
+      submit_scribe: OK
   activerecord:
     attributes:
       article:
@@ -383,7 +386,6 @@ gn:
     index:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
-      submit_scribe: Speichern
     invoice_form:
       just_finish: Rechnung nur abschließen
       print_and_finish: Drucken und Rechnung abschließen
