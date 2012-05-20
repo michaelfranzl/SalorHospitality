@@ -280,6 +280,7 @@ class Order < ActiveRecord::Base
         i.options.each do |po|
           itemstring += option_format % [po.name]
         end
+        itemstring += i.scribe_escpos if i.scribe_escpos
         itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)] if vendor.ticket_item_separator
         if i.options.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring

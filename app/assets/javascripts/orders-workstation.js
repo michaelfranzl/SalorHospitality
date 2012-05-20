@@ -36,7 +36,7 @@ $(function(){
 })
 
 function display_comment_popup_of_item(d) {
-  var old_comment = items_json[d].comment;
+  var old_comment = items_json[d].o;
   $('input#comment_for_item_' + d).val(old_comment);
   $('#comment_for_item_' + d).slideDown();
   $('input#comment_for_item_' + d).focus();
@@ -48,6 +48,7 @@ function add_comment_to_item(d) {
   set_json(d,'o',comment);
 	$('#comment_' + d).html(comment);
 	$('#comment_for_item_' + d).slideUp();
+  $('#tablerow_' + d + '_label').addClass('updated');
 }
 
 function display_price_popup_of_item(d) {
@@ -64,6 +65,7 @@ function add_price_to_item(d) {
   set_json(d,'p',price);
 	calculate_sum();
 	$('#price_for_item_' + d).slideUp();
+  $('#tablerow_' + d + '_label').addClass('updated');
 }
 
 function enable_keyboard_for_items(item_designator) {

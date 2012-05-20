@@ -23,7 +23,7 @@ var customers_json = {};
 
 var timeout_update_tables = 20;
 var timeout_update_item_lists = 60;
-var timeout_update_resources = 300;
+var timeout_update_resources = 10;
 var timeout_refresh_queue = 5;
 
 var counter_update_resources = timeout_update_resources;
@@ -609,7 +609,7 @@ function display_configuration_of_item(d) {
   price_button.on('click', function(){ display_price_popup_of_item(d); });
   cell.append(price_button);
 
-  if (settings.mobile) {
+  if (settings.mobile || settings.mobile_special) {
     scribe_button =  $(document.createElement('span'));
     scribe_button.addClass('item_scribe');
     scribe_button.on('click', function(){ init_scribe(d); });

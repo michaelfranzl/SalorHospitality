@@ -1,8 +1,10 @@
 var ctx; // Our canvas context
 var scribe_contents = '';
 var stop_scrolling = false;
-var last_scribe_action = 'M';
+var last_action_line = false;
 var canvas;
+var x = 0;
+var y = 0;
 
 function init_scribe(d) {
   if('ontouchstart' in window == false){
@@ -16,14 +18,21 @@ function init_scribe(d) {
   canvas.setAttribute('d', d);
 
   canvas.width  = 470; //window.innerWidth;
-  canvas.height = 240; //window.innerHeight - 150;
+  canvas.height = 250; //window.innerHeight - 150;
 
   show_canvas(canvas);
   
   ctx = canvas.getContext('2d');
-  ctx.strokeStyle = "rgba(255,0,0,1)";
-  ctx.lineWidth = 10;
-  ctx.lineCap = 'round';
+
+  ctx.beginPath();
+  ctx.rect(0, 0, 470, 50);
+  ctx.fillStyle = '#000000';
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = 'darkblue';
+  ctx.stroke();
   
   canvas.addEventListener("touchstart", draw_start, false); // A finger is down
   canvas.addEventListener("touchmove", draw_move, false); // The finger is moving
@@ -31,24 +40,34 @@ function init_scribe(d) {
 }
 
 function draw_start(event) {
-  var x = event.touches[0].pageX;
-  var y = event.touches[0].pageY;
+  stop_scrolling = true;
+  x = event.touches[0].pageX;
+  y = event.touches[0].pageY;
   ctx.moveTo(x, y);
-  scribe_contents += 'M ' + x + ',' + y + ' ';
-  last_scribe_action = 'M';
+  ctx.lineTo(x + 2, y - 2);
+  ctx.stroke();
+  ctx.moveTo(x, y);
+  scribe_contents += 'M ' + x + ',' + y + ' ' + 'L ' + (x+2) + ',' + (y-2) + ' ';
+  last_action_line = false;
+  last_x = x;
+  last_y = y;
 }
 
 function draw_move(event) {
-  var x = event.touches[0].pageX;
-  var y = event.touches[0].pageY;
-  ctx.lineTo(x,y);
-  ctx.stroke();
-  if (last_scribe_action == 'L') {
-    scribe_contents += x + ',' + y + ' ';
-  } else {
-    scribe_contents += 'L ' + x + ',' + y + ' ';
+  x = event.touches[0].pageX;
+  y = event.touches[0].pageY;
+  if (Math.abs(last_x - x) > 5 || Math.abs(last_y - y) > 5) {
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    if (last_action_line == true) {
+      scribe_contents += x + ',' + y + ' ';
+    } else {
+      scribe_contents += 'L ' + x + ',' + y + ' ';
+    }
+    last_action_line = true;
+    last_x = x;
+    last_y = y;
   }
-  last_scribe_action = 'L';
 }
 
 function draw_stop(event) {
@@ -56,43 +75,40 @@ function draw_stop(event) {
 }
 
 function preventScrollingHandler(event) {
-  // Flags this event as handled. Prevents the UA from handling it at window level
   if ( stop_scrolling ) {
-   event.preventDefault();
+   event.preventDefault(); // Flags this event as handled. Prevents the UA from handling it at window level
   }
 }
 
 function show_canvas(canvas) {
-  stop_scrolling = true;
+  d = canvas.getAttribute('d');
+  $('#item_configuration_' + d).hide();
   scribe_contents = '';
   $('#orderform').hide();
   $('#functions').hide();
-  //$('#tables').hide();
-  //$('#rooms').hide();
   $('#functions_footer').hide();
-  //$('#invoices').hide();
+  $('h').hide();
   $('#draw_controls').show();
-  $('#main').prepend(canvas);
+  $('#draw_controls').prepend(canvas);
+
+  scroll_to('canvas', 25);
 }
 
 function hide_canvas() {
   stop_scrolling = false;
+  d = canvas.getAttribute('d');
   $('#orderform').show();
   $('#functions').show();
-  //$('#tables').show();
-  //$('#rooms').show();
   $('#functions_footer').show();
-  //$('#invoices').show();
-  $('#draw_controls').hide();
+  $('h').show();
   $(canvas).remove();
+  $('#draw_controls').hide();
+
+  scroll_to('#item_' + d, 25);
 }
 
 function submit_drawing() {
   hide_canvas();
   d = canvas.getAttribute('d');
   set_json(d,'scribe',scribe_contents);
-  //$.ajax({
-  //  url: '/items',
-  //  data: {drawing:drawing, item_id:canvas.getAttribute('d')}
-  //});
 }

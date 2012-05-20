@@ -54,7 +54,7 @@ end
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
-gem 'escper'
+gem 'escper', '1.0.4'
 gem 'haml'
 gem 'sass-rails'
 gem 'acts_as_list', '0.1.3'

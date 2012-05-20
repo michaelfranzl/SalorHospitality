@@ -52,6 +52,27 @@ class Item < ActiveRecord::Base
     self.calculate_totals
   end
 
+  def scribe_bitmap
+    canvas = Magick::Image.new(512, 128)
+    gc = Magick::Draw.new
+    gc.stroke('black')
+    gc.stroke_width(5)
+    gc.fill('white')
+    gc.fill_opacity(0)
+    gc.stroke_antialias(false)
+    gc.stroke_linejoin('round')
+    gc.translate(-10,-39)
+    gc.scale(1.11,0.68)
+    gc.path(self.scribe)
+    gc.draw(canvas)
+    return canvas
+  end
+
+  def scribe=(scribe)
+    write_attribute :scribe, scribe
+    write_attribute :scribe_escpos, Escper::Image.new(self.scribe_bitmap,:object).to_s
+  end
+
   def refund(by_user)
     self.refunded = true
     self.refunded_by = by_user.id

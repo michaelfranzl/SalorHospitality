@@ -11,6 +11,7 @@ function display_comment_popup_of_item(d) {
   if ( comment == null ) { comment = old_comment };
 	$('#comment_' + d).html(comment);
   set_json(d,'o',comment);
+  $('#tablerow_' + d + '_label').addClass('updated');
   $('#item_configuration_' + d).hide();
 }
 
@@ -26,5 +27,6 @@ function display_price_popup_of_item(d) {
   set_json(d,'p',price);
 	$('#price_' + d).html(price);
 	calculate_sum();
+  $('#tablerow_' + d + '_label').addClass('updated');
   $('#item_configuration_' + d).hide();
 }

@@ -1,3 +1,15 @@
+$link_color: white
+$error_text: #C00
+$lightgray: #EEE
+$darkgray: #666
+$middlegray: #444
+$background: #333
+$adminbackground: #222
+$billgastroblue1: #5b7682
+$billgastrogrey1: #243239
+$billgastrogrey2: #7E868A
+$warning: #74101b
+
 .errorExplanation
   :font-size small
   :color red
@@ -12,10 +24,6 @@ div#flash_notice
   :color #44FF44
 div#flash_error
   :color #EE0000
-
-div#draw_controls
-  :display none
-  :text-align center
 
 span.item_comment
   :display inline-block
@@ -302,11 +310,21 @@ div#note_for_order
 form table td
   :vertical-align top
 
+tr.item td.warning
+  :background-color $warning
+
+tr.item td.updated
+  :background-color $billgastroblue1
+
+div#draw_controls
+  :display none
+  :text-align center
+  span#submit_drawing
+    :display inline-block
+    :background-color $billgastroblue1
+    :padding 10px
+
 canvas
   :background-color white
-  :margin 20px 5px
-  :-moz-border-radius 10px
-  :-webkit-border-radius 10px
-  :-moz-box-shadow 0px 0px 10px white
 
 
