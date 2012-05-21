@@ -442,34 +442,50 @@ function add_category(label,options) {
     cat.attr('style',styles.join(' '));
     $('#categories').append(cat);
 }
+function add_customer_button(qcontainer,customer,active) {
+  var abutton = $(document.createElement('div'));
+  abutton.addClass('article');
+  abutton.html(customer.name);
+  if (active)
+    abutton.removeClass("article").addClass("active article");
+  (function() {
+    var element = abutton;
+    var cust = customer;
+    abutton.on('mouseup', function(){
+      highlight_button(element);
+      submit_json.order['customer_set'] = [cust.id]
+    });
+  })();
+  (function() { 
+    var element = abutton;
+    abutton.on('click', function() {
+      highlight_border(element);
+      if (settings.workstation) {
+        $('.quantities').slideUp();
+      } else {
+        $('.quantities').html('');
+      }
+      //add_new_item(object, catid);
+    });
+  })();
+  qcontainer.append(abutton);
+  return qcontainer;
+}
 function show_customers(event) {
+  $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
-  for (i in resources.customers.regulars) {
-    var abutton = $(document.createElement('div'));
-    abutton.addClass('article');
-    abutton.html(resources.customers.regulars[i].name);
-    (function() {
-      var element = abutton;
-      abutton.on('mouseup', function(){
-        highlight_button(element);
-      });
-    })();
-    (function() { 
-      var element = abutton;
-      var object = a_object;
-      var catid = cat_id;
-      abutton.on('click', function() {
-        highlight_border(element);
-        if (settings.workstation) {
-          $('.quantities').slideUp();
-        } else {
-          $('.quantities').html('');
-        }
-        //add_new_item(object, catid);
-      });
-    })();
+  for (i in customers_json) {
+    qcontainer = add_customer_button(qcontainer,customers_json[i],true);
   }
+  for (i in resources.customers.regulars) {
+    if (in_array_of_hashes(customers_json,"id",resources.customers.regulars[i].id)) {
+      continue;
+    }
+    qcontainer = add_customer_button(qcontainer,resources.customers.regulars[i],false);
+  }
+  $('#articles').append(qcontainer);
+  qcontainer.show();
 }
 function display_articles(cat_id) {
   $('#articles').html('');
@@ -857,7 +873,7 @@ function add_customers_category(event) {
   if(_get('customers.button_added'))
     return
   opts = {'id': 'customers_category_button', 'handlers': { 'mouseup': show_customers },bgcolor: "205,0,82",bgimage: '/assets/category_starter.png', border: {top: '205,0,82'}};
-  add_category('Chus',opts);
+  add_category(i18n.customers,opts);
   _set('customers.button_added',true);
 }
 

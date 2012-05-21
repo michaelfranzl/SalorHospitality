@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
   has_one :order
   has_and_belongs_to_many :customers
 
-  #after_save :set_customers_up
+  after_save :set_customers_up
   after_save :hide_items
 
   validates_presence_of :user_id
@@ -99,14 +99,14 @@ class Order < ActiveRecord::Base
   end
 
   def customer_set=(h)
-    @customers_hash = h
+    @customers_array = h
   end
 
   def set_customers_up
-    return if @customers_hash.nil?
-    @customers_hash.each do |cus|
-      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus["id"]} and order_id = #{self.id}")
-      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus["id"]}, #{self.id})")
+    return if @customers_array.nil?
+    @customers_array.each do |cus|
+      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus} and order_id = #{self.id}")
+      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus}, #{self.id})")
     end
   end
 

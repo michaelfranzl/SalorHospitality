@@ -94,8 +94,17 @@ class Vendor < ActiveRecord::Base
   def resources
     cstmers = {}
     cstmers[:regulars] = []
-    self.customers.order("m_points DESC").limit(12).each do |c|
-      cstmers[:regulars] << {:id => c.id, :name => "#{c.last_name}, #{c.first_name}"}
+    x = 0
+    self.customers.order("m_points DESC").each do |c|
+      if x < 15 then
+        cstmers[:regulars] << c.to_hash
+      end
+      c1 = c.last_name[0].downcase
+      c2 = c.last_name[0,2].downcase
+      cstmers[c1] ||= {}
+      cstmers[c1][c2] ||= []
+      cstmers[c1][c2] << c.to_hash
+      x += 1
     end
     # the following is speedy, no more nested Ruby/SQL loops
     category_models = self.categories.existing.active.positioned
