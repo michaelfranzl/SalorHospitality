@@ -442,9 +442,30 @@ function add_category(label,options) {
     cat.attr('style',styles.join(' '));
     $('#categories').append(cat);
 }
+function customer_search(term) {
+  var c = term.substr(0,1).toLowerCase();
+  var c2 = term.substr(0,2).toLowerCase();
+//   console.log(c,c2);
+  var results = [];
+  if (resources.customers[c]) {
+    if (resources.customers[c][c2]) {
+      for (var i in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][i].name.toLowerCase().indexOf(term.toLowerCase()) != -1) {
+          results.push(resources.customers[c][c2][i]);
+        }
+      }
+//       console.log(resources.customers[c][c2]);
+      return results;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+}
 function add_customer_button(qcontainer,customer,active) {
   var abutton = $(document.createElement('div'));
-  abutton.addClass('article');
+  abutton.addClass('article customer-entry');
   abutton.html(customer.name);
   if (active)
     abutton.removeClass("article").addClass("active article");
@@ -471,10 +492,31 @@ function add_customer_button(qcontainer,customer,active) {
   qcontainer.append(abutton);
   return qcontainer;
 }
+function onCustomerSearchAccept(){
+//   console.log($('#customer_search_input').val());
+  if ($('#customer_search_input').val().length >= 3) {
+    var results = customer_search($('#customer_search_input').val());
+//     console.log(results);
+    if (results.length > 0) {
+      var qcont = $("#customers_list");
+      $('.customer-entry').remove();
+      for (var i in results) {
+        qcont = add_customer_button(qcont,results[i],false);
+      }
+    }
+  }
+}
 function show_customers(event) {
   $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
+  var search_box = $('<input id="customer_search_input" value="" />');
+  search_box.change(onCustomerSearchAccept);
+  search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+  search_box.click(function(){
+    search_box.getkeyboard().reveal();
+  });
+  qcontainer.append(search_box);
   for (i in customers_json) {
     qcontainer = add_customer_button(qcontainer,customers_json[i],true);
   }
