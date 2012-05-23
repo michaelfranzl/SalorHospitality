@@ -6,10 +6,12 @@
 */
 
 function display_comment_popup_of_item(d) {
-  var old_comment = items_json[d].o;
-  var comment = prompt(i18n.enter_comment, old_comment);
-  if ( comment == null ) { comment = old_comment };
-  add_comment_to_item(d,comment);
+  if ( item_changeable(items_json[d].c, items_json[d].sc) ) {
+    var old_comment = items_json[d].o;
+    var comment = prompt(i18n.enter_comment, old_comment);
+    if ( comment == null ) { comment = old_comment };
+    add_comment_to_item(d,comment);
+  }
 }
 
 function display_price_popup_of_item(d) {

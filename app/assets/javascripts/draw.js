@@ -8,6 +8,13 @@ var y = 0;
 var touchdevice = 'ontouchstart' in window;
 
 function init_scribe(d) {
+  if ( ! item_changeable(items_json[d].c, items_json[d].sc) ) {
+    return;
+  }
+
+  d = clone_item(d);
+  $('#item_configuration_' + d).hide();
+
   canvas = document.createElement('canvas');
   canvas.setAttribute('d', d);
 

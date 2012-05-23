@@ -288,7 +288,7 @@ function set_json(d,attribute,value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object));
     $('#itemstable').append(tablerow);
     $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
@@ -335,7 +335,6 @@ function display_articles(cat_id) {
       (function() { 
         var element = abutton;
         var object = a_object;
-        var catid = cat_id;
         abutton.on('click', function() {
           highlight_border(element);
           if (settings.workstation) {
@@ -343,7 +342,7 @@ function display_articles(cat_id) {
           } else {
             $('.quantities').html('');
           }
-          add_new_item(object, catid);
+          add_new_item(object, false);
         });
       })();
     } else {
@@ -385,9 +384,8 @@ function display_quantities(quantities, target, cat_id) {
     (function() {
       var element = qbutton;
       var quantity = q_object;
-      var catid = cat_id;
       qbutton.on('click', function(event) {
-        add_new_item(quantity, catid);
+        add_new_item(quantity,false);
         highlight_button(element);
         highlight_border(element);
       });
@@ -402,8 +400,9 @@ function display_quantities(quantities, target, cat_id) {
   
 }
 
-function add_new_item(object, catid, add_new, anchor_d) {
+function add_new_item(object, add_new, anchor_d) {
   d = object.d;
+  catid = object.ci;
   if (items_json.hasOwnProperty(d) &&
       !add_new &&
       items_json[d].p == object.p &&
@@ -416,17 +415,14 @@ function add_new_item(object, catid, add_new, anchor_d) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/CATID/g, catid));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
       $('#itemstable').prepend(new_item);
     }
     $('#tablerow_' + d + '_count').addClass('updated');
-    if (typeof(catid) != 'undefined' ) {
-      // options do send catids, but course numbers not
-      render_options(resources.c[catid].o, d, catid);
-    }
+    render_options(resources.c[catid].o, d, catid);
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
   }
   calculate_sum();
@@ -493,8 +489,12 @@ function decrement_item(d) {
   calculate_sum();
 }
 
+function item_changeable(count, start_count) {
+  return ( (typeof(start_count) == 'undefined') || count > start_count )
+}
+
 function permit_select_open(d, count, start_count) {
-  if ( typeof(start_count) == 'undefined' || count > start_count ) {
+  if ( item_changeable(count, start_count) ) {
     $('#options_select_' + d).attr('disabled',false);
   } else {
     $('#options_select_' + d).attr('disabled',true);
@@ -503,11 +503,11 @@ function permit_select_open(d, count, start_count) {
 
 function clone_item(d) {
   if (items_json[d].c > 1) {
-    var clone_d = add_new_item(items_json[d], cat_id, true, d);
+    var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
   }
-  return d;
+  return d
 }
 
 function add_option_to_item(d, value, cat_id) {

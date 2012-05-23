@@ -159,6 +159,7 @@ class Order < ActiveRecord::Base
               items[i].options     == items[j].options and
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment and
+              items[i].scribe      == items[j].scribe and
               not items[i].destroyed?
              )
             items[i].count += items[j].count
@@ -408,7 +409,7 @@ class Order < ActiveRecord::Base
       else
         d = "a#{i.article_id}"
       end
-      if i.options.any?
+      if i.options.any? or not i.comment.empty? or i.scribe
         d = "i#{i.id}"
       end
       options = {}

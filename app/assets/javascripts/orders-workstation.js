@@ -36,21 +36,13 @@ $(function(){
 })
 
 function display_comment_popup_of_item(d) {
-  var old_comment = items_json[d].o;
-  $('input#comment_for_item_' + d).val(old_comment);
-  $('#comment_for_item_' + d).slideDown();
-  $('input#comment_for_item_' + d).focus();
-  $('#item_configuration_' + d).hide();
-}
-
-function add_comment_to_item(d) {
-  d = clone_item(d);
-	$('#comment_' + d).html(comment);
-	var comment = $('input#comment_for_item_' + d).val();
-  set_json(d,'o',comment);
-	$('#comment_' + d).html(comment);
-	$('#comment_for_item_' + d).slideUp();
-  $('#tablerow_' + d + '_label').addClass('updated');
+  if ( item_changeable(items_json[d].c, items_json[d].sc) ) {
+    var old_comment = items_json[d].o;
+    $('input#comment_for_item_' + d).val(old_comment);
+    $('#comment_for_item_' + d).slideDown();
+    $('#item_configuration_' + d).hide();
+    $('input#comment_for_item_' + d).select();
+  }
 }
 
 function display_price_popup_of_item(d) {
@@ -58,11 +50,19 @@ function display_price_popup_of_item(d) {
   $('input#price_for_item_' + d).val(old_price);
   $('#price_for_item_' + d).slideDown();
   $('#item_configuration_' + d).hide();
+  $('input#price_for_item_' + d).select();
+}
+
+function add_comment_to_item(d) {
+	var comment = $('input#comment_for_item_' + d).val();
+	$('#comment_for_item_' + d).slideUp();
+  d = clone_item(d);
+  set_json(d,'o',comment);
+	$('#comment_' + d).html(comment);
+  $('#tablerow_' + d + '_label').addClass('updated');
 }
 
 function add_price_to_item(d) {
-  d = clone_item(d);
-	$('#comment_' + d).html(comment);
 	price = $('input#price_for_item_' + d).val();
 	$('#price_' + d).html(price);
 	price = price.replace(',', '.');
@@ -100,13 +100,16 @@ function open_options_div(d) {
   }
 }
 
-function catch_keypress(d) {
+function catch_keypress(d,type) {
   if (event.keyCode == 27) {
     // Escape
   } else if (event.keyCode == 13) {
     // Enter
-    add_comment_to_item(d);
-    add_price_to_item(d);
+    if (type == 'comment') {
+      add_comment_to_item(d);
+    } else if (type == 'price') {
+      add_price_to_item(d);
+    }
   }
 }
 
