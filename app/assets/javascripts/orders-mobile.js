@@ -26,7 +26,7 @@ function display_price_popup_of_item(d) {
   add_price_to_item(d,price);
 }
 
-function add_comment_to_item(d,price) {
+function add_comment_to_item(d,comment) {
   d = clone_item(d);
 	$('#comment_' + d).html(comment);
   set_json(d,'o',comment);
@@ -36,7 +36,6 @@ function add_comment_to_item(d,price) {
 
 function add_price_to_item(d,price) {
   d = clone_item(d);
-	$('#comment_' + d).html(comment);
   set_json(d,'p',price);
 	$('#price_' + d).html(price);
 	calculate_sum();

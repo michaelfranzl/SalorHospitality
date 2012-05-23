@@ -14,6 +14,7 @@ var option_position = 0;
 var item_position = 0;
 
 var resources = {};
+var plugin_callbacks_done = [];
 var permissions = {};
 var items_json = {};
 var submit_json = {currentview:'tables'};
@@ -41,14 +42,39 @@ $(function(){
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
+  if (!_get('customers.button_added'))
+    connect('customers_entry_hook','after.go_to.table',add_customers_category);
 })
 
 
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
 /* ======================================================*/
+/*
+   Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
+ */
+function emit(msg,packet) {
+  $('body').triggerHandler({type: msg, packet:packet});
+}
+function connect(unique_name,msg,fun) {
+  var pcd = _get('plugin_callbacks_done');
+  if (!pcd)
+    pcd = [];
+  if (pcd.indexOf(unique_name) == -1) {
+    $('body').on(msg,fun);
+    pcd.push(unique_name);
+  }
+  _set('plugin_callbacks_done',pcd)
+}
+function _get(name) {
+  return $.data(document.body,name);
+}
+function _set(name,value) {
+  return $.data(document.body,name,value);
+}
 
 function go_to(table_id, target, action, order_id, target_table_id) {
+  emit('before.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
   scroll_to($('#container'),20);
   debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLE ===============
@@ -163,6 +189,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
   } else {
     debug('go_to called with unknown target');
   }
+  emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
 }
 
 /* ======================================================*/
@@ -307,10 +334,201 @@ function render_customers_from_json() {
 
 
 
-/* ========================================================*/
-/* ======= RENDERING ARTICLES, QUANTITIES AND ITEMS =======*/
-/* ========================================================*/
-
+/* ===================================================================*/
+/* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
+/* ===================================================================*/
+/*
+ * find_customer(needle); Searches the customer lookup table
+ * for an instance where name.indexOf(needle) != -1
+ * returns -1 is there is nothing like it, and -2 if there is no secondary index
+ * in theory, lookups should be much faster when the list of customers is very large,
+ * this way, it is unecessary to loop through every entry, entries are thus grouped
+ * into a 26 long array, where each entry is 26 deep, followed by an array of object
+ * entries.
+ * {
+ *   d: {
+ *      do: [
+ *        {
+ *          id: 1,
+ *          name: "Doe, John"
+ *        }
+ *      ]
+ *   },
+ *   m: {
+ *    ma: [
+ *      {
+ *        id: 2,
+ *        name: "Martin, Jason"
+ *      }
+ *    ]
+ *   }
+ * }
+ * */
+function find_customer(text) {
+   var i = 0;
+   var c = text[i];
+   var results = [];
+   if (resources.customers[c]) {
+        c2 = c + text[i+1];
+        if (resources.customers[c][c2]) {
+            for (var j in resources.customers[c][c2]) {
+                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+                  results.push(resources.customers[c][c2][j]);
+                }
+            }
+            return results;
+        } else {
+            return -2;
+        }
+    } else {
+        return -1;
+    }
+}
+/*
+ * add_category(label,options); Addes a new category button.
+ * options is a hash like so:
+ * {
+ *    id: "the_html_id_youd_like",
+ *    handlers: {
+ *      mouseup: function (event) { alert('mouseup fired'); }
+ *      ...
+ *    },
+ *    bgcolor: '205,0,82',
+ *    bgimage: '/images/myimage.png',
+ *    border: {
+ *      top: '205,0,85',
+ *      ... bottom, left, right etc.
+ *    }
+ * }
+ * */
+function add_category(label,options) {
+    var cat = $('<div id="'+options.id+'" class="category"></div>');
+    var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
+    var styles = [];
+    var bgcolor = "background-color: rgb(XXX);";
+    var bgimage = "background-image: url('XXX');";
+    var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
+    var brdrcolors = {
+      top: '85,85,85',
+      right: '34,34,34',
+      bottom: '34,34,34',
+      left: '85,85,85'
+    };
+    cat.append(cat_label);
+    
+    for (var type in options.handlers) {
+      cat.bind(type,options.handlers[type]);
+    }
+    for (var attr in options.attrs) {
+      cat.attr(attr,options.attrs[attr]);
+    }
+    
+    if (options.bgcolor) {
+      styles.push(bgcolor.replace("XXX",options.bgcolor));
+    }
+    if (options.bgimage) {
+      styles.push(bgimage.replace("XXX",options.bgimage));
+    }
+    if (options.border) {
+      for (var pos in options.border) {
+        brdrcolor = brdrcolor.replace(pos,options.border[pos]);
+      }
+    }
+    // Default border colors added later
+    for (var pos in brdrcolors) {
+      brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
+    }
+    styles.push(brdrcolor);
+    cat.attr('style',styles.join(' '));
+    $('#categories').append(cat);
+}
+function customer_search(term) {
+  var c = term.substr(0,1).toLowerCase();
+  var c2 = term.substr(0,2).toLowerCase();
+//   console.log(c,c2);
+  var results = [];
+  if (resources.customers[c]) {
+    if (resources.customers[c][c2]) {
+      for (var i in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][i].name.toLowerCase().indexOf(term.toLowerCase()) != -1) {
+          results.push(resources.customers[c][c2][i]);
+        }
+      }
+//       console.log(resources.customers[c][c2]);
+      return results;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+}
+function add_customer_button(qcontainer,customer,active) {
+  var abutton = $(document.createElement('div'));
+  abutton.addClass('article customer-entry');
+  abutton.html(customer.name);
+  if (active)
+    abutton.removeClass("article").addClass("active article");
+  (function() {
+    var element = abutton;
+    var cust = customer;
+    abutton.on('mouseup', function(){
+      highlight_button(element);
+      submit_json.order['customer_set'] = [cust.id]
+    });
+  })();
+  (function() { 
+    var element = abutton;
+    abutton.on('click', function() {
+      highlight_border(element);
+      if (settings.workstation) {
+        $('.quantities').slideUp();
+      } else {
+        $('.quantities').html('');
+      }
+      //add_new_item(object, catid);
+    });
+  })();
+  qcontainer.append(abutton);
+  return qcontainer;
+}
+function onCustomerSearchAccept(){
+//   console.log($('#customer_search_input').val());
+  if ($('#customer_search_input').val().length >= 3) {
+    var results = customer_search($('#customer_search_input').val());
+//     console.log(results);
+    if (results.length > 0) {
+      var qcont = $("#customers_list");
+      $('.customer-entry').remove();
+      for (var i in results) {
+        qcont = add_customer_button(qcont,results[i],false);
+      }
+    }
+  }
+}
+function show_customers(event) {
+  $('#articles').html('');
+  var qcontainer = $('<div id="customers_list"></div>');
+  qcontainer.addClass('quantities');
+  var search_box = $('<input id="customer_search_input" value="" />');
+  search_box.change(onCustomerSearchAccept);
+  search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+  search_box.click(function(){
+    search_box.getkeyboard().reveal();
+  });
+  qcontainer.append(search_box);
+  for (i in customers_json) {
+    qcontainer = add_customer_button(qcontainer,customers_json[i],true);
+  }
+  for (i in resources.customers.regulars) {
+    if (in_array_of_hashes(customers_json,"id",resources.customers.regulars[i].id)) {
+      continue;
+    }
+    qcontainer = add_customer_button(qcontainer,resources.customers.regulars[i],false);
+  }
+  $('#articles').append(qcontainer);
+  qcontainer.show();
+}
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -695,6 +913,14 @@ function change_item_status(id,status) {
 /* ========================================================*/
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
+
+function add_customers_category(event) {
+  if(_get('customers.button_added'))
+    return
+  opts = {'id': 'customers_category_button', 'handlers': { 'mouseup': show_customers },bgcolor: "205,0,82",bgimage: '/assets/category_starter.png', border: {top: '205,0,82'}};
+  add_category(i18n.customers,opts);
+  _set('customers.button_added',true);
+}
 
 function highlight_button(element) {
   $(element).effect("highlight", {}, 300);

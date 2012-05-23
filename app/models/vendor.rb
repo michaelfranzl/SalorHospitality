@@ -92,6 +92,20 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
+    cstmers = {}
+    cstmers[:regulars] = []
+    x = 0
+    self.customers.order("m_points DESC").each do |c|
+      if x < 15 then
+        cstmers[:regulars] << c.to_hash
+      end
+      c1 = c.last_name[0].downcase
+      c2 = c.last_name[0,2].downcase
+      cstmers[c1] ||= {}
+      cstmers[c1][c2] ||= []
+      cstmers[c1][c2] << c.to_hash
+      x += 1
+    end
     # the following is speedy, no more nested Ruby/SQL loops
     category_models = self.categories.existing.active.positioned
     article_models = self.articles.existing.active.positioned
@@ -148,7 +162,7 @@ class Vendor < ActiveRecord::Base
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates }
+    resources = { :c => categories, :templates => templates, :customers => cstmers }
 
     return resources.to_json
   end
