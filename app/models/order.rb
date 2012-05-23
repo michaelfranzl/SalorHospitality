@@ -280,8 +280,9 @@ class Order < ActiveRecord::Base
         i.options.each do |po|
           itemstring += option_format % [po.name]
         end
-        itemstring += i.scribe_escpos if i.scribe_escpos
-        itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)] if vendor.ticket_item_separator
+        itemstring = Printr.sanitize(itemstring)
+        itemstring += i.scribe_escpos.encode('ISO-8859-15') if i.scribe_escpos
+        itemstring += Printr.sanitize(item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]) if vendor.ticket_item_separator
         if i.options.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
         else
@@ -301,14 +302,14 @@ class Order < ActiveRecord::Base
 
     output = init
     separate_receipt_contents.each do |content|
-      output += (header + content + cut) unless content.empty?
+      output += (Printr.sanitize(header) + content + Printr.sanitize(cut)) unless content.empty?
     end
-    output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
+    output += (Printr.sanitize(header) + normal_receipt_content + Printr.sanitize(cut)) unless normal_receipt_content.empty?
     return '' if output == init
 
     logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
     logo = "\ea\x01" + logo + "\ea\x00"
-    return logo + Printr.sanitize(output)
+    return logo + output
   end
 
 

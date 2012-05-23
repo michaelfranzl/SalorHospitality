@@ -44,6 +44,8 @@ function display_comment_popup_of_item(d) {
 }
 
 function add_comment_to_item(d) {
+  d = clone_item(d);
+	$('#comment_' + d).html(comment);
 	var comment = $('input#comment_for_item_' + d).val();
   set_json(d,'o',comment);
 	$('#comment_' + d).html(comment);
@@ -59,6 +61,8 @@ function display_price_popup_of_item(d) {
 }
 
 function add_price_to_item(d) {
+  d = clone_item(d);
+	$('#comment_' + d).html(comment);
 	price = $('input#price_for_item_' + d).val();
 	$('#price_' + d).html(price);
 	price = price.replace(',', '.');

@@ -10,6 +10,7 @@ class Quantity < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   belongs_to :article
+  belongs_to :category
   has_many :items
   has_many :partials
 

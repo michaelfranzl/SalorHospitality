@@ -501,12 +501,19 @@ function permit_select_open(d, count, start_count) {
   }
 }
 
-function add_option_to_item(d, value, cat_id) {
-  if (items_json[d].c > 1 && value != -1) {
+function clone_item(d) {
+  if (items_json[d].c > 1) {
     var clone_d = add_new_item(items_json[d], cat_id, true, d);
     decrement_item(d);
-    $('#options_div_' + d).slideUp();
     d = clone_d;
+  }
+  return d;
+}
+
+function add_option_to_item(d, value, cat_id) {
+  if (value != -1) {
+    $('#options_div_' + d).slideUp();
+    d = clone_item(d);
   }
   if (value == 0) {
     // delete all options
