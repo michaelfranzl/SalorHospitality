@@ -15,11 +15,11 @@ en:
         exclusion: "powinno znajdować się na liście"
         invalid: "jest nieprawidłowy"
         confirmation: "nie pasuje"
-        accepted: "musi być zaakceptowane"
-        empty: "nie może być puste"
+        accepted: "musi zostać zaakceptowane"
+        empty: "nie może pozostać puste"
         blank: "musi być puste"
-        too_long: "jest za długie (maksymalnie %{count} characters)"
-        too_short: "jest za krótkie (minimalnie %{count} characters)"
+        too_long: "jest za długie (maksymalnie %{count} znaków)"
+        too_short: "jest za krótkie (minimalnie %{count} znaków)"
         wrong_length: "ma nieprawidłową długość (powinno mieć %{count} znaków)"
         taken: "taki wpis już istnieje"
         not_a_number: "nie jest liczbą"
@@ -28,8 +28,8 @@ en:
         equal_to: "musi być równe %{count}"
         less_than: "musi być mniejsze niż %{count}"
         less_than_or_equal_to: "musi być mniejsze lub równe %{count}"
-        odd: "must be odd"
-        even: "must be even"
+        odd: "musi być nieparzysty"
+        even: "musi być parzysty"
 
 # ==================================================================================
 # Adaptiert von:
@@ -111,8 +111,8 @@ en:
         format: "%n %u"
         units:
           byte:
-            one:   "Byte"
-            other: "Bytes"
+            one:   "Bajt"
+            other: "Bajtów"
           kb: "KB"
           mb: "MB"
           gb: "GB"
@@ -195,9 +195,9 @@ en:
 
     # Default translation keys for submit FormHelper
     submit:
-      create: 'Create %{model}'
-      update: 'Update %{model}'
-      submit: 'Save %{model}'
+      create: 'Stwórz %{model}'
+      update: 'Aktualizuj %{model}'
+      submit: 'Zapisz %{model}'
 
 
 
