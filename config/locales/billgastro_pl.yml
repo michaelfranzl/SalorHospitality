@@ -1,7 +1,7 @@
 pl:
   activerecord:
     models:
-      customer:(+)
+      customer:
         one: Lista klientów
         other: Lista klientów
       table:
@@ -13,7 +13,7 @@ pl:
       company:
         one: Firma
         other: Firmy
-      vendor:(+)
+      vendor:
         one: Restauracja
         other: Restauracje
       tax:
@@ -37,7 +37,7 @@ pl:
       item:
         one: Pozycja
         other: Pozycje
-      image:(+)
+      image:
         one: Zdjęcie
         other: Zdjęcia
       settlement:
@@ -58,33 +58,33 @@ pl:
       vendor_printer:
         one: Bonownik
         other: Bonowniki
-      coupon:(+)
+      coupon:
         one: Kupon
         other: Kupony
-      discount:(+)
+      discount:
         one: Rabat
         other: Rabaty
-      page:(+)
+      page:
         one: Oferta specjalna
         other: Oferty specjalne
-      partial:(+)
+      partial:
         one: Ulubione
         other: Ulubione
-      reservation:(+)
+      reservation:
         one: Rezerwacja
         other: Rezerwacje
-      presentation:(+)
+      presentation:
         one: Szblon
         other: Szblony
-      report:(+)
+      report:
         one: Raport
         other: Raporty
 
     attributes:
       article:
-        image: Image(+)
+        image: Image
         price: Cena
-        tax_id: Podatek(+)
+        tax_id: Podatek
         name: Nazwa
         hidden: Usuń
         description: Opis
@@ -96,8 +96,8 @@ pl:
         category_id: Kategorie
         name: Nazwa
         hidden: Usuń
-        no_ticket: Nie drukuj paragonu(+)
-        separate_ticket: Oddzielny paragon(+)
+        no_ticket: Nie drukuj paragonu
+        separate_ticket: Oddzielny paragon
       quantity:
         prefix: Nazwa
         postfix: Postfix
@@ -120,7 +120,7 @@ pl:
         height: Wysokość
         width_mobile: Szerokość
         height_mobile: Wysokość
-        rotate: Obrócić?(+)
+        rotate: Obrócić?
         enabled: Aktywować?
         hidden: Usuń
       category:
@@ -128,9 +128,9 @@ pl:
         tax_id: Podatek
         sort_order: Sortuj wg
         icon: Ikona
-        custom_icon: Ikona własna(+)
-        user_id: Użytkownik(+)
-        separate_print: Oddzielny paragon?(+)
+        custom_icon: Ikona własna
+        user_id: Użytkownik
+        separate_print: Oddzielny paragon?
         color: Kolor
         food: Potrawa?
         vendor_printer_id: Bonownik
@@ -152,7 +152,7 @@ pl:
         tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej)
         active: Aktywować?
         hidden: Usunąć?
-        screenlock_timeout: Blokowanie ekranu (sek.)(+)
+        screenlock_timeout: Blokowanie ekranu (sek.)
       company:
         name: Nazwa
         subdomain: Sub domena
@@ -173,11 +173,11 @@ pl:
         address: Adres
         time_offset: Cofnięcie czasu (liczone w godzinach)
         timeout: Zablokowanie ekranu (W sekundach)
-        res_confirm_url: Potwierdź rezerwację(+)
-        res_fetch_url: Przenieś rezerwację(+)
+        res_confirm_url: Potwierdź rezerwację
+        res_fetch_url: Przenieś rezerwację
         use_order_numbers: Użyć numeru zamówienia?
-        rlogo_header: Logo nagłówek(+)
-        rlogo_footer: Logo stopka(+)
+        rlogo_header: Logo nagłówek
+        rlogo_footer: Logo stopka
       role:
         name: Nazwa
       vendor_printer:
@@ -188,7 +188,7 @@ pl:
       settlement:
         initial_cash: Cena początkowa
         revenue: Cena końcowa
-      presentation:(+)
+      presentation:
         name: Nazwa
         description: Opis
         markup: Znacznik ERB
@@ -196,10 +196,10 @@ pl:
         model: Typ
         active: Aktywować?
         hidden: Usuń
-      page:(+)
+      page:
         active: Aktywować?
         hidden: Usuń
-      partial:(+)
+      partial:
         blurb: Blurb
         active: Aktywować?
         hidden: Usuń
@@ -226,11 +226,11 @@ pl:
         other: Pozycje
     sort_index:
       sort: Sortuj artykuły
-    create:(+)
+    create:
       success: Artykuł został pomyślnie dodany
-    update:(+)
+    update:
       success: Artykuł został pomyślnie zaktualizowany
-    destroy:(+)
+    destroy:
       success: Artykuł został pomyślnie usunięty
 
   options:
@@ -245,9 +245,9 @@ pl:
       update: Aktualizuj
 
   categories:
-    create:(+)
+    create:
       success: Pomyślnie dodano!
-    update:(+)
+    update:
       success: Pomyślnie zaktualizowano!
     index:
       foods: Potrawy
@@ -299,8 +299,8 @@ pl:
 
   orders:
     index:
-      preparation_list: Lista przygotowywanych zamówień(+)
-      delivery_list: Lista dostaw(+)
+      preparation_list: Lista przygotowywanych zamówień
+      delivery_list: Lista dostaw
     served_by: Zostałeś obsłużony przez
     order:
       sum: Suma
@@ -331,7 +331,7 @@ pl:
     functions_header_index:
       show_last_order: Pokaż ostatnie zamówienie
       print_now: Drukuj teraz
-      items_notifications: Powiadomienia(+)
+      items_notifications: Powiadomienia
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     storno_form:
@@ -374,7 +374,7 @@ pl:
       no_printing: nie drukuj
 
   sessions:
-    permission_denied:(+)
+    permission_denied:
       permission_denied: Brak dostępu
     browser_warning:
       warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
@@ -428,8 +428,8 @@ pl:
       split_items: Łączenie pozycji
       move_tables: Przenoszenie stolików
       make_storno: Możliwość natychmiastowego anulowania pozycji
-      delete_items: Usuwanie artykułu poprzez obniżenie ceny do 0zł(+)
-      cancel_all_items_in_active_order: Kasowanie pozycji z bierzących zamówień(+)
+      delete_items: Usuwanie artykułu poprzez obniżenie ceny do 0zł
+      cancel_all_items_in_active_order: Kasowanie pozycji z bierzących zamówień
       assign_cost_center: Ustawienia dla centrum kosztów
       move_order: Przenoszenie zamówień
       change_waiter: Zmiana kelenera
@@ -441,33 +441,33 @@ pl:
       view_statistics: Dostęp do statystyk
       manage_users: Zarządzanie użytkownikami
       manage_settings: Zarządzanie ustawieniami
-      edit_role: Edytowanie kryteriów(+)
-      new_role: Dodawanie kryteriów(+)
-      permissions: Dostęp do zezwoleń(+)
-      see_debug: Dostęp do logów systemu(+)
+      edit_role: Edytowanie kryteriów
+      new_role: Dodawanie kryteriów
+      permissions: Dostęp do zezwoleń
+      see_debug: Dostęp do logów systemu
       
-  partials:(+)
+  partials:
     error_during_evaluation: 'Error: '
     default_blurb: edit me
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
       
-  presentations:(+)
+  presentations:
     new:
       new_presentation: Dodaj szablon
       edit_presentation: Edytuj szablon
       
-  pages:(+)
+  pages:
     edit:
       edit_page: Edytuj stronę
       view: Podgląd
 
-  images:(+)
+  images:
     errempty: Nieprawidłowy plik
     errsize: Nieprawidłowy rozmiar pliku
     errtype: Nieprawidłowy typ pliku
 
-  messages:(+)
+  messages:
     hello_username: Witaj %{name}!
 
   delete: Usuń
@@ -479,7 +479,7 @@ pl:
   display: Wyświetl
   logout: 'wyloguj %{who}'
   
-  scope_names:(+)
+  scope_names:
     waiterpad: Waiterpad
     active: Karta menu
     unsettled: Zmiany
@@ -500,8 +500,8 @@ pl:
   clear_order_and_go_back: Wyczyść zamówienie i wróć
   move_order_to_table: Przenieś zamówienie na inny stolik
   finish: Zakończ
-  print_and_finish: Zakończ i drukuj(+)
-  split_order: Podziel zamówienie(+)
+  print_and_finish: Zakończ i drukuj
+  split_order: Podziel zamówienie
   
   invoice: Rachunek
   invoices: Rachunki
@@ -540,7 +540,7 @@ pl:
   host: Host
   admin: Administrator
   superuser: Super użytkownik
-  dateandtime: Data(+)
+  dateandtime: Data
 
 # TRANSLATIONS FOR MODELS
   must_be_entered_either_for_article_or_for_quantity: muszą zostać przypisane dla artykułu oraz ilości.
@@ -562,7 +562,7 @@ pl:
   germany: Niemiecki
   austria: Austriacki
   
-  not_found: Nie znaleziono(+)
+  not_found: Nie znaleziono
 
   # Translations for Javascript files
   please_enter_item_comment: Specjalne życzenia
