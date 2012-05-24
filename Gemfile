@@ -33,28 +33,28 @@ gem 'jquery-rails'
 # 
 # end
 
-group :test, :development do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'capybara-webkit'
-  gem 'launchy'
-  gem 'database_cleaner'
-  gem 'guard-rspec'
-  gem 'spork' #, '> 0.9.0.rc'
-  gem 'guard-spork'
-  gem 'ruby_core_source', '0.1.5'
-  gem 'ruby-debug19', '0.11.6'
-  gem 'ruby-debug-base19', '0.11.26' #manual install, native extensions
-  # gem install ~/Downloads/debug10/ruby-debug-base19-0.11.26.gem -- --with-ruby-include=/$RVM_SRC
-  # export RVM_SRC=~/.rvm/src/ruby-1.9.3-p194/
-  gem 'linecache19', '0.5.13' # manual install
-end
+#group :test, :development do
+#  gem 'rspec-rails'
+#  gem 'factory_girl_rails'
+#  gem 'capybara'
+#  gem 'capybara-webkit'
+#  gem 'launchy'
+#  gem 'database_cleaner'
+#  gem 'guard-rspec'
+#  gem 'spork' #, '> 0.9.0.rc'
+#  gem 'guard-spork'
+#  gem 'ruby_core_source', '0.1.5'
+#  gem 'ruby-debug19', '0.11.6'
+#  gem 'ruby-debug-base19', '0.11.26' #manual install, native extensions
+#  # gem install ~/Downloads/debug10/ruby-debug-base19-0.11.26.gem -- --with-ruby-include=/$RVM_SRC
+#  # export RVM_SRC=~/.rvm/src/ruby-1.9.3-p194/
+#  gem 'linecache19', '0.5.13' # manual install
+#end
 
 gem 'uglifier'
 gem 'execjs'
 gem 'therubyracer'
-gem 'escper'
+gem 'escper', '1.0.4'
 gem 'haml'
 gem 'sass-rails'
 gem 'acts_as_list', '0.1.3'

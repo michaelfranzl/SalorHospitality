@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120513141847) do
+ActiveRecord::Schema.define(:version => 20120520110824) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -267,6 +267,8 @@ ActiveRecord::Schema.define(:version => 20120513141847) do
     t.integer  "refunded_by"
     t.integer  "settlement_id"
     t.integer  "cost_center_id"
+    t.text     "scribe"
+    t.text     "scribe_escpos"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -397,18 +399,19 @@ ActiveRecord::Schema.define(:version => 20120513141847) do
   add_index "presentations", ["name"], :name => "index_presentations_on_name"
 
   create_table "quantities", :force => true do |t|
-    t.string   "prefix",     :default => ""
+    t.string   "prefix",      :default => ""
     t.float    "price"
     t.integer  "article_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "active",     :default => true
-    t.boolean  "hidden",     :default => false
-    t.string   "postfix",    :default => ""
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "active",      :default => true
+    t.boolean  "hidden",      :default => false
+    t.string   "postfix",     :default => ""
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.integer  "category_id"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"
@@ -600,6 +603,7 @@ ActiveRecord::Schema.define(:version => 20120513141847) do
     t.boolean  "ticket_item_separator",                          :default => true
     t.boolean  "ticket_wide_font",                               :default => true
     t.boolean  "ticket_tall_font",                               :default => true
+    t.boolean  "ticket_display_time_order",                      :default => true
   end
 
 end

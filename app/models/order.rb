@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
   has_one :order
   has_and_belongs_to_many :customers
 
-  #after_save :set_customers_up
+  after_save :set_customers_up
   after_save :hide_items
 
   validates_presence_of :user_id
@@ -99,14 +99,14 @@ class Order < ActiveRecord::Base
   end
 
   def customer_set=(h)
-    @customers_hash = h
+    @customers_array = h
   end
 
   def set_customers_up
-    return if @customers_hash.nil?
-    @customers_hash.each do |cus|
-      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus["id"]} and order_id = #{self.id}")
-      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus["id"]}, #{self.id})")
+    return if @customers_array.nil?
+    @customers_array.each do |cus|
+      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus} and order_id = #{self.id}")
+      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus}, #{self.id})")
     end
   end
 
@@ -159,6 +159,7 @@ class Order < ActiveRecord::Base
               items[i].options     == items[j].options and
               items[i].price       == items[j].price and
               items[i].comment     == items[j].comment and
+              items[i].scribe      == items[j].scribe and
               not items[i].destroyed?
              )
             items[i].count += items[j].count
@@ -213,7 +214,8 @@ class Order < ActiveRecord::Base
     vendor = self.vendor
 
     if vendor.ticket_wide_font
-      header_format = "%-14.14s #%5i\n%-12.12s %8s\n"
+      header_format_time_order = "%-14.14s #%5i\n"
+      header_format_user_table = "%-12.12s %8s\n"
       header_note_format = "%20.20s\n"
       article_format = "%i %-18.18s\n"
       quantity_format  = " > %-18.18s\n"
@@ -222,7 +224,8 @@ class Order < ActiveRecord::Base
       width = 21
       item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
     else
-      header_format = "%-35.35s #%5i\n%-33.33s %8s\n"
+      header_format_time_order = "%-35.35s #%5i\n"
+      header_format_user_table = "%-33.33s %8s\n"
       header_note_format = "%42.42s\n"
       article_format     = "%2i %-39.39s\n"
       quantity_format    = "   > %-37.37s\n"
@@ -246,7 +249,7 @@ class Order < ActiveRecord::Base
     init =
     "\e@"     +  # Initialize Printer
     "\e!" + fontstyle.chr +
-    "\n\n"
+    "\n\n\n"
 
     cut =
     "\n\n\n\n" +
@@ -254,7 +257,13 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 
     header = ''
-    header += header_format % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0), self.user.login, self.table.name]
+
+    if vendor.ticket_display_time_order
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0)]
+    end
+
+    header += header_format_user_table % [self.user.login, self.table.name]
+
     header += header_note_format % [self.note] if self.note and not self.note.empty?
     header += "\xDF" * width + "\n"
 
@@ -272,7 +281,9 @@ class Order < ActiveRecord::Base
         i.options.each do |po|
           itemstring += option_format % [po.name]
         end
-        itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)] if vendor.ticket_item_separator
+        itemstring = Printr.sanitize(itemstring)
+        itemstring += i.scribe_escpos.encode('ISO-8859-15') if i.scribe_escpos
+        itemstring += Printr.sanitize(item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]) if vendor.ticket_item_separator
         if i.options.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
         else
@@ -292,14 +303,14 @@ class Order < ActiveRecord::Base
 
     output = init
     separate_receipt_contents.each do |content|
-      output += (header + content + cut) unless content.empty?
+      output += (Printr.sanitize(header) + content + Printr.sanitize(cut)) unless content.empty?
     end
-    output += (header + normal_receipt_content + cut) unless normal_receipt_content.empty?
+    output += (Printr.sanitize(header) + normal_receipt_content + Printr.sanitize(cut)) unless normal_receipt_content.empty?
     return '' if output == init
 
     logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
     logo = "\ea\x01" + logo + "\ea\x00"
-    return logo + Printr.sanitize(output)
+    return logo + output
   end
 
 
@@ -398,7 +409,7 @@ class Order < ActiveRecord::Base
       else
         d = "a#{i.article_id}"
       end
-      if i.options.any?
+      if i.options.any? or not i.comment.empty? or i.scribe
         d = "i#{i.id}"
       end
       options = {}

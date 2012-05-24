@@ -37,6 +37,23 @@ function scroll_for(distance, speed) {
   do_scroll(distance, speed);
 }
 
+function  in_array_of_hashes(array,key,value) {
+  for (var i in array) {
+    if (array[i][key]) {
+      try {
+        if (array[i][key] == value) {
+          return true;
+        } else if (array[i][key].indexOf(value) != -1){
+          return true;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+  }
+  return false;
+}
+
 function do_scroll(diff, speed) {
   window.scrollBy(0,diff/speed);
   newdiff = (speed-1)*diff/speed;

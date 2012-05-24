@@ -14,6 +14,7 @@ var option_position = 0;
 var item_position = 0;
 
 var resources = {};
+var plugin_callbacks_done = [];
 var permissions = {};
 var items_json = {};
 var submit_json = {currentview:'tables'};
@@ -23,11 +24,13 @@ var customers_json = {};
 
 var timeout_update_tables = 20;
 var timeout_update_item_lists = 60;
-var timeout_update_resources = 600;
+var timeout_update_resources = 10;
+var timeout_refresh_queue = 5;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
+var counter_refresh_queue = timeout_refresh_queue;
 
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
@@ -39,14 +42,39 @@ $(function(){
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
+  if (!_get('customers.button_added'))
+    connect('customers_entry_hook','after.go_to.table',add_customers_category);
 })
 
 
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
 /* ======================================================*/
+/*
+   Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
+ */
+function emit(msg,packet) {
+  $('body').triggerHandler({type: msg, packet:packet});
+}
+function connect(unique_name,msg,fun) {
+  var pcd = _get('plugin_callbacks_done');
+  if (!pcd)
+    pcd = [];
+  if (pcd.indexOf(unique_name) == -1) {
+    $('body').on(msg,fun);
+    pcd.push(unique_name);
+  }
+  _set('plugin_callbacks_done',pcd)
+}
+function _get(name) {
+  return $.data(document.body,name);
+}
+function _set(name,value) {
+  return $.data(document.body,name,value);
+}
 
 function go_to(table_id, target, action, order_id, target_table_id) {
+  emit('before.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
   scroll_to($('#container'),20);
   debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLE ===============
@@ -161,6 +189,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
   } else {
     debug('go_to called with unknown target');
   }
+  emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
 }
 
 /* ======================================================*/
@@ -180,7 +209,7 @@ function send_json(table_id) {
 function send_queue(table_id) {
   debug('SEND QUEUE table ' + table_id);
   $.ajax({
-    type: 'get',
+    type: 'post',
     url: '/orders/update_ajax',
     data: submit_json_queue[table_id],
     timeout: 20000,
@@ -269,7 +298,7 @@ function set_json(d,attribute,value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
-    alert('Unexpected error: Object items_json doesnt have the property ' + d + ' yet');
+    alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
@@ -286,7 +315,7 @@ function set_json(d,attribute,value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/CATID/g, catid);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object));
     $('#itemstable').append(tablerow);
     $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
@@ -305,10 +334,201 @@ function render_customers_from_json() {
 
 
 
-/* ========================================================*/
-/* ======= RENDERING ARTICLES, QUANTITIES AND ITEMS =======*/
-/* ========================================================*/
-
+/* ===================================================================*/
+/* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
+/* ===================================================================*/
+/*
+ * find_customer(needle); Searches the customer lookup table
+ * for an instance where name.indexOf(needle) != -1
+ * returns -1 is there is nothing like it, and -2 if there is no secondary index
+ * in theory, lookups should be much faster when the list of customers is very large,
+ * this way, it is unecessary to loop through every entry, entries are thus grouped
+ * into a 26 long array, where each entry is 26 deep, followed by an array of object
+ * entries.
+ * {
+ *   d: {
+ *      do: [
+ *        {
+ *          id: 1,
+ *          name: "Doe, John"
+ *        }
+ *      ]
+ *   },
+ *   m: {
+ *    ma: [
+ *      {
+ *        id: 2,
+ *        name: "Martin, Jason"
+ *      }
+ *    ]
+ *   }
+ * }
+ * */
+function find_customer(text) {
+   var i = 0;
+   var c = text[i];
+   var results = [];
+   if (resources.customers[c]) {
+        c2 = c + text[i+1];
+        if (resources.customers[c][c2]) {
+            for (var j in resources.customers[c][c2]) {
+                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+                  results.push(resources.customers[c][c2][j]);
+                }
+            }
+            return results;
+        } else {
+            return -2;
+        }
+    } else {
+        return -1;
+    }
+}
+/*
+ * add_category(label,options); Addes a new category button.
+ * options is a hash like so:
+ * {
+ *    id: "the_html_id_youd_like",
+ *    handlers: {
+ *      mouseup: function (event) { alert('mouseup fired'); }
+ *      ...
+ *    },
+ *    bgcolor: '205,0,82',
+ *    bgimage: '/images/myimage.png',
+ *    border: {
+ *      top: '205,0,85',
+ *      ... bottom, left, right etc.
+ *    }
+ * }
+ * */
+function add_category(label,options) {
+    var cat = $('<div id="'+options.id+'" class="category"></div>');
+    var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
+    var styles = [];
+    var bgcolor = "background-color: rgb(XXX);";
+    var bgimage = "background-image: url('XXX');";
+    var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
+    var brdrcolors = {
+      top: '85,85,85',
+      right: '34,34,34',
+      bottom: '34,34,34',
+      left: '85,85,85'
+    };
+    cat.append(cat_label);
+    
+    for (var type in options.handlers) {
+      cat.bind(type,options.handlers[type]);
+    }
+    for (var attr in options.attrs) {
+      cat.attr(attr,options.attrs[attr]);
+    }
+    
+    if (options.bgcolor) {
+      styles.push(bgcolor.replace("XXX",options.bgcolor));
+    }
+    if (options.bgimage) {
+      styles.push(bgimage.replace("XXX",options.bgimage));
+    }
+    if (options.border) {
+      for (var pos in options.border) {
+        brdrcolor = brdrcolor.replace(pos,options.border[pos]);
+      }
+    }
+    // Default border colors added later
+    for (var pos in brdrcolors) {
+      brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
+    }
+    styles.push(brdrcolor);
+    cat.attr('style',styles.join(' '));
+    $('#categories').append(cat);
+}
+function customer_search(term) {
+  var c = term.substr(0,1).toLowerCase();
+  var c2 = term.substr(0,2).toLowerCase();
+//   console.log(c,c2);
+  var results = [];
+  if (resources.customers[c]) {
+    if (resources.customers[c][c2]) {
+      for (var i in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][i].name.toLowerCase().indexOf(term.toLowerCase()) != -1) {
+          results.push(resources.customers[c][c2][i]);
+        }
+      }
+//       console.log(resources.customers[c][c2]);
+      return results;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+}
+function add_customer_button(qcontainer,customer,active) {
+  var abutton = $(document.createElement('div'));
+  abutton.addClass('article customer-entry');
+  abutton.html(customer.name);
+  if (active)
+    abutton.removeClass("article").addClass("active article");
+  (function() {
+    var element = abutton;
+    var cust = customer;
+    abutton.on('mouseup', function(){
+      highlight_button(element);
+      submit_json.order['customer_set'] = [cust.id]
+    });
+  })();
+  (function() { 
+    var element = abutton;
+    abutton.on('click', function() {
+      highlight_border(element);
+      if (settings.workstation) {
+        $('.quantities').slideUp();
+      } else {
+        $('.quantities').html('');
+      }
+      //add_new_item(object, catid);
+    });
+  })();
+  qcontainer.append(abutton);
+  return qcontainer;
+}
+function onCustomerSearchAccept(){
+//   console.log($('#customer_search_input').val());
+  if ($('#customer_search_input').val().length >= 3) {
+    var results = customer_search($('#customer_search_input').val());
+//     console.log(results);
+    if (results.length > 0) {
+      var qcont = $("#customers_list");
+      $('.customer-entry').remove();
+      for (var i in results) {
+        qcont = add_customer_button(qcont,results[i],false);
+      }
+    }
+  }
+}
+function show_customers(event) {
+  $('#articles').html('');
+  var qcontainer = $('<div id="customers_list"></div>');
+  qcontainer.addClass('quantities');
+  var search_box = $('<input id="customer_search_input" value="" />');
+  search_box.change(onCustomerSearchAccept);
+  search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+  search_box.click(function(){
+    search_box.getkeyboard().reveal();
+  });
+  qcontainer.append(search_box);
+  for (i in customers_json) {
+    qcontainer = add_customer_button(qcontainer,customers_json[i],true);
+  }
+  for (i in resources.customers.regulars) {
+    if (in_array_of_hashes(customers_json,"id",resources.customers.regulars[i].id)) {
+      continue;
+    }
+    qcontainer = add_customer_button(qcontainer,resources.customers.regulars[i],false);
+  }
+  $('#articles').append(qcontainer);
+  qcontainer.show();
+}
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -333,7 +553,6 @@ function display_articles(cat_id) {
       (function() { 
         var element = abutton;
         var object = a_object;
-        var catid = cat_id;
         abutton.on('click', function() {
           highlight_border(element);
           if (settings.workstation) {
@@ -341,7 +560,7 @@ function display_articles(cat_id) {
           } else {
             $('.quantities').html('');
           }
-          add_new_item(object, catid);
+          add_new_item(object, false);
         });
       })();
     } else {
@@ -383,9 +602,8 @@ function display_quantities(quantities, target, cat_id) {
     (function() {
       var element = qbutton;
       var quantity = q_object;
-      var catid = cat_id;
       qbutton.on('click', function(event) {
-        add_new_item(quantity, catid);
+        add_new_item(quantity,false);
         highlight_button(element);
         highlight_border(element);
       });
@@ -400,8 +618,9 @@ function display_quantities(quantities, target, cat_id) {
   
 }
 
-function add_new_item(object, catid, add_new, anchor_d) {
+function add_new_item(object, add_new, anchor_d) {
   d = object.d;
+  catid = object.ci;
   if (items_json.hasOwnProperty(d) &&
       !add_new &&
       items_json[d].p == object.p &&
@@ -414,17 +633,14 @@ function add_new_item(object, catid, add_new, anchor_d) {
   } else {
     d = create_json_record(object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/CATID/g, catid));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
       $('#itemstable').prepend(new_item);
     }
     $('#tablerow_' + d + '_count').addClass('updated');
-    if (typeof(catid) != 'undefined' ) {
-      // options do send catids, but course numbers not
-      render_options(resources.c[catid].o, d, catid);
-    }
+    render_options(resources.c[catid].o, d, catid);
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
   }
   calculate_sum();
@@ -463,6 +679,7 @@ function increment_item(d) {
   set_json(object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
+  if ( count == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   if (settings.mobile) { permit_select_open(d, count, start_count); }
   calculate_sum();
 }
@@ -475,6 +692,7 @@ function decrement_item(d) {
     set_json(d,'c',i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
+    if ( i == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   } else if ( i == 1 && ( permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
     set_json(d,'c',i)
@@ -489,32 +707,44 @@ function decrement_item(d) {
   calculate_sum();
 }
 
+function item_changeable(count, start_count) {
+  return ( (typeof(start_count) == 'undefined') || count > start_count )
+}
+
 function permit_select_open(d, count, start_count) {
-  if ( count > start_count) {
+  if ( item_changeable(count, start_count) ) {
     $('#options_select_' + d).attr('disabled',false);
   } else {
     $('#options_select_' + d).attr('disabled',true);
   }
 }
 
-function add_option_to_item(d, value, cat_id) {
-  if (items_json[d].c > 1 && value != -1) {
-    var clone_d = add_new_item(items_json[d], cat_id, true, d);
+function clone_item(d) {
+  if (items_json[d].c > 1) {
+    var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
-    $('#options_div_' + d).slideUp();
     d = clone_d;
   }
-  var option_uid = items_json[d].i.length + 1;
-  var optionobject = resources.c[cat_id].o[value];
+  return d
+}
+
+function add_option_to_item(d, value, cat_id) {
+  if (value != -1) {
+    $('#options_div_' + d).slideUp();
+    d = clone_item(d);
+  }
   if (value == 0) {
     // delete all options
     set_json(d,'i',[0]);
     set_json(d,'t',{});
     $('#optionsnames_' + d).html('');
   } else {
+    var optionobject = resources.c[cat_id].o[value];
+    var option_uid = items_json[d].i.length + 1;
     items_json[d].t[option_uid] = optionobject;
+    var stripped_id = value.split('_')[1];
     var list = items_json[d].i;
-    list.push(optionobject.id);
+    list.push(stripped_id);
     set_json(d,'i',list);
     $('#optionsnames_' + d).append('<br>' + optionobject.n);
   }
@@ -536,14 +766,15 @@ function render_options(options, d, cat_id) {
         var cid = cat_id;
         var o = object;
         button.on('click',function(){
-          add_option_to_item(d, o.id, cid);
+          add_option_to_item(d, o.s + '_' + o.id, cid);
         });
       })();
       $('#options_div_' + d).append(button);
     } else if (settings.mobile) {
       option_tag = $(document.createElement('option'));
       option_tag.html(object.n);
-      option_tag.val(object.id);
+      var s = object.s == null ? 0 : object.s;
+      option_tag.val(s + '_' + object.id);
       $('#options_select_' + d).append(option_tag);
     }
   });
@@ -586,6 +817,33 @@ function calculate_sum() {
   return sum;
 }
 
+function display_configuration_of_item(d) {
+  row = $(document.createElement('tr'));
+  row.attr('id','item_configuration_'+d);
+  cell = $(document.createElement('td'));
+  cell.attr('colspan',4);
+  cell.addClass('item_configuration',4);
+
+  comment_button =  $(document.createElement('span'));
+  comment_button.addClass('item_comment');
+  comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+  cell.append(comment_button);
+
+  price_button =  $(document.createElement('span'));
+  price_button.addClass('item_price');
+  price_button.on('click', function(){ display_price_popup_of_item(d); });
+  cell.append(price_button);
+
+  scribe_button =  $(document.createElement('span'));
+  scribe_button.addClass('item_scribe');
+  scribe_button.on('click', function(){ init_scribe(d); });
+  cell.append(scribe_button);
+
+  row.html(cell);
+  row.addClass('item');
+  row.insertAfter('#item_' + d);
+}
+
 /* ========================================================*/
 /* ================== PERIODIC FUNCTIONS ==================*/
 /* ========================================================*/
@@ -594,6 +852,7 @@ function manage_counters() {
   counter_update_resources -= 1;
   counter_update_tables -= 1;
   counter_update_item_lists -= 1;
+  counter_refresh_queue -= 1;
 
   if (counter_update_resources == 0) {
     update_resources();
@@ -608,6 +867,11 @@ function manage_counters() {
   if (counter_update_tables == 0) {
     update_tables();
     counter_update_tables = timeout_update_tables;
+  }
+
+  if (counter_refresh_queue == 0) {
+    display_queue();
+    counter_refresh_queue = timeout_refresh_queue;
   }
   return 0;
 }
@@ -649,6 +913,14 @@ function change_item_status(id,status) {
 /* ========================================================*/
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
+
+function add_customers_category(event) {
+  if(_get('customers.button_added'))
+    return
+  opts = {'id': 'customers_category_button', 'handlers': { 'mouseup': show_customers },bgcolor: "205,0,82",bgimage: '/assets/category_starter.png', border: {top: '205,0,82'}};
+  add_category(i18n.customers,opts);
+  _set('customers.button_added',true);
+}
 
 function highlight_button(element) {
   $(element).effect("highlight", {}, 300);

@@ -5,7 +5,7 @@ def compare_yaml_hash(cf1, cf2, context = [])
   cf1.each do |key, value|
     unless cf2.key?(key)
       unless value.is_a?(Hash)
-        puts context.join(': ') + ': ' + key + ': ' + value
+        puts '{{ ' + context.join(' -> ') + ' }} ' + key + ': ' + value
       end
       next
     end

@@ -479,11 +479,15 @@ div.scope
 form.vendor_form
   label
     :display inline-block
-    :width 150px
+    :width 180px
+  label.wide
+    :width 350px
+  label.medium
+    :width 100px
   div.fields_left
     :vertical-align top
     :display inline-block
-    :width 50%
+    :width 60%
   div#vendor_printers
     :vertical-align top
     :display inline-block
@@ -776,6 +780,7 @@ div.quantity,
 td.item_count,
 td.item_minus,
 td.item_label,
+td.item_configuration,
 td.item_options,
 td.ordersum_container
   :border-top 2px solid #555
@@ -784,11 +789,7 @@ td.ordersum_container
   :border-bottom 2px solid #222
   :background-color #3A474D
 
-td.item_label.warning
-  :background-color $warning
 
-td.item_count.updated
-  :background-color $billgastroblue1
 
 div.article
   :width 80%
@@ -863,6 +864,10 @@ td.item_options
     option
       :color white
       :font-size 200%
+
+
+
+
 
 select.optionsselect
   :display none
@@ -1350,6 +1355,8 @@ div.item_list
       :background-color #3A474D
     .update
       :font-size 80%
+      :width 100px
+      :overflow hidden
       :text-align left
   
 div.partial_toolbox
@@ -1367,3 +1374,13 @@ div.partial_toolbox
     :height 22px
     :background-repeat no-repeat
     :background-position center center
+
+div#draw_controls
+  :text-align left
+  :position absolute
+  :top 0px
+  :left 0px
+  :z-index 100
+
+div.active
+  :background-color $billgastroblue1

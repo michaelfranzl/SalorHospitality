@@ -1,9 +1,15 @@
-- if @current_user.role.permissions.include? 'manage_business_invoice'
+- if permit('manage_business_invoice') and not mobile_special?
   %a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order') }
+
+- if mobile_special?
+  = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
 
 - if saas_variant?
   %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';", :title => t('.print_now') }
-  
-%a.iconbutton.items_notifications_button{ :onclick => '$("#items_notifications").slideDown();', :title => t('.items_notifications') }
+
+- if permit('see_item_notifications')
+  %a.iconbutton.items_notifications_button{ :onclick => '$("#items_notifications").slideDown();', :title => t('.items_notifications') }
 
 = button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
+
+

@@ -1,3 +1,15 @@
+$link_color: white
+$error_text: #C00
+$lightgray: #EEE
+$darkgray: #666
+$middlegray: #444
+$background: #333
+$adminbackground: #222
+$billgastroblue1: #5b7682
+$billgastrogrey1: #243239
+$billgastrogrey2: #7E868A
+$warning: #74101b
+
 .errorExplanation
   :font-size small
   :color red
@@ -13,12 +25,48 @@ div#flash_notice
 div#flash_error
   :color #EE0000
 
+span.item_comment
+  :display inline-block
+  :width 38px
+  :height 41px
+  :padding 0px 15px
+  :cursor pointer
+  :text-align center
+  :background-image url(button_mobile_comment.png)
+  :background-position center
+  :background-repeat no-repeat
+
+span.item_scribe
+  :display inline-block
+  :width 38px
+  :height 41px
+  :padding 0px 15px
+  :cursor pointer
+  :text-align center
+  :background-image url(button_mobile_scribe.png)
+  :background-position center
+  :background-repeat no-repeat
+
+span.item_price
+  :display inline-block
+  :width 38px
+  :height 41px
+  :padding 0px 15px
+  :cursor pointer
+  :text-align center
+  :background-image url(button_mobile_price.png)
+  :background-position center
+  :background-repeat no-repeat
+
+td.item_configuration
+  :text-align center
+
 
 
 a.iconbutton
   :width 50px
   :height 54px
-  :margin 0
+  :margin 0px 0px 0px -1px
   :cursor pointer
   :display inline-block
   :-moz-border-radius 5px
@@ -82,6 +130,9 @@ a.storno_button
 
 a.print2_button
   :background-image url(button_mobile_print2.png)
+
+a.reload_button
+  :background-image url(button_mobile_reload.png)
 
 a.print1_button
   :background-image url(button_mobile_print1.png)
@@ -258,3 +309,22 @@ div#note_for_order
 
 form table td
   :vertical-align top
+
+tr.item td.warning
+  :background-color $warning
+
+tr.item td.updated
+  :background-color $billgastroblue1
+
+div#draw_controls
+  :display none
+  :text-align center
+  span#submit_drawing
+    :display inline-block
+    :background-color $billgastroblue1
+    :padding 10px
+
+canvas
+  :background-color white
+
+
