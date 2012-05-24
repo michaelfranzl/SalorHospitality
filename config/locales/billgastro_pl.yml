@@ -446,6 +446,10 @@ pl:
       new_role: Dodawanie kryteriów
       permissions: Dostęp do zezwoleń
       see_debug: Dostęp do logów systemu
+      manage_pages: Zarządzaj slajdami
+      manage_customers: Zarządzaj użytkownikami
+      counter_mode: Counter mode
+      see_item_notifications: Sprawdź powiadomienia
       
   partials:
     error_during_evaluation: 'Error: '
