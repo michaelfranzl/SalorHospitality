@@ -109,9 +109,6 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list (= 0.1.3)
-  capybara
-  capybara-webkit
-  database_cleaner
   escper (= 1.0.4)
   exception_notification
   execjs

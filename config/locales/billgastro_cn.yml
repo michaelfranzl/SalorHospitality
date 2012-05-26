@@ -1,8 +1,5 @@
 ---
 en:
-  layouts:
-    application:
-      submit_scribe: OK
   activerecord:
     attributes:
       article:
@@ -338,6 +335,9 @@ en:
       no_printing: no printing
   just_order: Just order
   kitchen: Kitchen
+  layouts:
+    application:
+      submit_scribe: OK
   logout: log out %{who}
   logout_successful: You have logged off successfully.
   menucard_generic_name: Menucard
@@ -439,6 +439,7 @@ en:
       assign_cost_center: Assign cost center
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: Change waiter
+      counter_mode: Counter mode
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
       edit_role: Edit Role
@@ -448,6 +449,8 @@ en:
       make_storno: Cancel items
       manage_articles_categories_options: Manage articles, categories and options
       manage_business_invoice: Manage business invoice
+      manage_customers: Manage Customers
+      manage_pages: Manage Slideshow
       manage_settings: Manage settings
       manage_users: Manage users
       move_order: Move order
@@ -455,15 +458,11 @@ en:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
+      see_item_notifications: See item notifications
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_statistics: View statistics
-      manage_pages: Manage Slideshow
-      manage_customers: Manage Customers
-      counter_mode: Counter mode
-      see_item_notifications: See item notifications
-
   scope_names:
     active: Menucard
     unsettled: Shifts
@@ -531,6 +530,7 @@ en:
   there_are_no_open_settlements: There are no open settlements.
   tobacco: Tobacco
   unsettled_orders_generic_name: Unsettled orders
+  update_database: Update Database
   user_not_found: User not found
   users:
     new:
@@ -545,4 +545,3 @@ en:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
-  update_database: Update Database
