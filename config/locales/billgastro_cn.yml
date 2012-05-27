@@ -3,39 +3,39 @@ en:
   activerecord:
     attributes:
       article:
-        active: active
-        category_id: Category
+        active: 活躍
+        category_id: 類別
         description: Description
-        hidden: delete
+        hidden: 刪除嗎?
         image: Image
-        name: Name
-        price: Price
-        tax_id: Tax
+        name: 名稱
+        price: 價格
+        tax_id: 稅
         usage: Usage
       category:
-        color: Color
+        color: 色彩
         custom_icon: My Icon
         food: Food?
-        hidden: delete
+        hidden: 刪除嗎?
         icon: Icon
-        name: Name
+        name: 名稱
         separate_print: Cut ticket
         sort_order: Sort Order
-        tax_id: Tax
+        tax_id: 稅
         user_id: Preparing User
         vendor_printer_id: Printer
       company:
-        address: Address
+        address: 地址
         automatic_printing: Automatic printing
         bank_account1: Bank account detail 1
         bank_account2: Bank account detail 2
         country: Rules for country
         email: e-mail
-        internet_address: Internet address
+        internet_address: Internet 地址
         invoice_slogan1: Invoice Slogan 1
         invoice_slogan2: Invoice Slogan 2
         invoice_subtitle: Invoice Subtitle
-        name: Name
+        name: 名稱
         printer_bar: Printer Bar
         printer_guestroom: Printer Guestroom
         printer_kitchen: Printer Kitchen
@@ -52,104 +52,104 @@ en:
       cost_center:
         active: active?
         description: Description
-        hidden: delete
-        name: Name
+        hidden: 刪除嗎?
+        name: 名稱
       group:
-        name: Name
+        name: 名稱
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
+        category_id: 類別
+        hidden: 刪除嗎?
+        name: 名稱
         no_ticket: Dont' print ticket
-        price: Price
+        price: 價格
         separate_ticket: Cut ticket
       page:
         active: active
-        color: Color
+        color: 色彩
         height: Height
-        hidden: delete
+        hidden: 刪除嗎?
         image: Image
         width: Width
       partial:
         active: aktiv
         blurb: Blurb
-        hidden: delete
+        hidden: 刪除嗎?
       presentation:
         active: active
         code: Ruby code
         description: Description
-        hidden: delete
+        hidden: 刪除嗎?
         markup: ERB Markup
         model: Type
-        name: Name
+        name: 名稱
       quantity:
         active: aktiv
         description: Description
-        hidden: delete
+        hidden: 刪除嗎?
         postfix: Postfix
-        prefix: Name
-        price: Variant Price
+        prefix: 名稱
+        price: 備選案文 價格
         usage: usage
       role:
-        name: Name
+        name: 名稱
       settlement:
-        initial_cash: Initial amount
-        revenue: End amount
+        initial_cash: 開始數目
+        revenue: 下場數目
       table:
-        abbreviation: Abbreviation
+        abbreviation: 簡稱
         description: Description
         enabled: active?
         height: Height
         height_mobile: Height mobile
-        hidden: delete
-        name: Name
+        hidden: 刪除嗎?
+        name: 名稱
         rotate: rotate?
         width: Width
         width_mobile: Width mobile
       tax:
-        color: Color
-        hidden: delete
-        letter: Abbreviation
-        name: Name
-        percent: Tax in %
+        color: 色彩
+        hidden: 刪除嗎?
+        letter: 簡稱
+        name: 名稱
+        percent: （％）稅
       user:
-        active: active?
-        color: Color
-        hidden: delete?
+        active: 活躍
+        color: 色彩
+        hidden: 刪除嗎?
         language: Language
         login: Login
-        password: Password
+        password: 密碼
         role: Role
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
         title: Title
       vendor_printer:
         copies: Copies
-        hidden: Delete
-        name: Name
+        hidden: 刪除嗎?
+        name: 名稱
         path: Path
     models:
       article:
-        one: Article
-        other: Articles
+        one: 產品
+        other: 產品
       category:
-        one: Category
-        other: Categories
+        one: 類別
+        other: 類別
       company:
-        one: Company
-        other: Companies
+        one: 企業
+        other: 企業
       cost_center:
-        one: Cost Center
-        other: Cost Centers
+        one: 付款人
+        other: 付款人
       coupon:
-        one: Coupon
-        other: Coupons
+        one: 優惠券
+        other: 優惠券
       customer:
-        one: Customer
-        other: Customers
+        one: 顧客
+        other: 顧客
       discount:
-        one: Discount
-        other: Discounts
+        one: 折扣
+        other: 折扣
       group:
         one: Stock Group
         other: Stock Groups
@@ -157,14 +157,14 @@ en:
         one: Image
         other: Images
       item:
-        one: Item
-        other: Items
+        one: 訂購產品
+        other: 訂購產品
       option:
         one: Option
         other: Options
       order:
-        one: Order
-        other: Orders
+        one: 訂購
+        other: 訂購
       page:
         one: Card
         other: Cards
@@ -175,17 +175,17 @@ en:
         one: Template
         other: Templates
       quantity:
-        one: Variant
-        other: Variants
+        one: 備選案文
+        other: 備選案文
       report:
-        one: Report
-        other: Reports
+        one: 報告
+        other: 報告
       reservation:
         one: Reservation
         other: Reservations
       role:
-        one: Role
-        other: Roles
+        one: 角色
+        other: 角色
       settlement:
         one: Settlement
         other: Settlements
@@ -193,17 +193,17 @@ en:
         one: Stock
         other: Stocks
       table:
-        one: Table
-        other: Tables
+        one: 桌子
+        other: 桌子
       tax:
-        one: Tax Class
-        other: Tax Classes
+        one: 稅務個人資料
+        other: 稅務個人資料
       user:
-        one: User
-        other: Users
+        one: 用戶
+        other: 用戶
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: 餐廳
+        other: 餐廳
       vendor_printer:
         one: Printer
         other: Printers
@@ -216,8 +216,8 @@ en:
       success: Article was successfully deleted
     find:
       variants:
-        one: Variant
-        other: Variants
+        one: 備選案文
+        other: 備選案文
     index:
       list_all: List all
       preview: Preview
@@ -228,9 +228,9 @@ en:
     listall:
       all_articles: List of all articles
     new:
-      add_quantity: Add Variant
-      edit_article: Edit article
-      new_article: New article
+      add_quantity: 添加選項
+      edit_article: 編輯產品
+      new_article: 新產品
       normal: normal
       takeaway: take away
       weighing: weighing
@@ -248,7 +248,7 @@ en:
   blackboard_generic_name: Blackboard
   blank: blank
   blue: Blue
-  cancel_and_go_back: Cancel and go back
+  cancel_and_go_back: 取消和回去
   categories:
     create:
       success: Success!
@@ -293,27 +293,27 @@ en:
   copy: Copy
   cost_centers:
     index:
-      active: Active
-      inactive: Inactive
+      active: 活躍
+      inactive: 待用
     new:
-      edit_cost_center: Edit Cost Center
-      new_cost_center: New Cost Center
-  count: Count
-  create: Create
-  dateandtime: Date
-  default: Default
-  delete: Delete
+      edit_cost_center: 編輯付款人
+      new_cost_center: N新付款人
+  count: 計算
+  create: 創建
+  dateandtime: 日期
+  default: 默認
+  delete: 刪除嗎
   display: Display
   drink: Drinks
-  dummy: Dummy
-  edit: Edit
-  exit: Exit
-  finish: Just Finish
+  dummy: 虛擬產品
+  edit: 編輯
+  exit: 太平門
+  finish: 完畢
   food: Foods
   germany: Germany
-  go_back: Go back
-  green: Green
-  gross: Gross
+  go_back: 回去
+  green: 綠色
+  gross: 合計
   groups:
     new:
       edit_group: Edit Group
@@ -331,30 +331,30 @@ en:
   items:
     item_tablerow:
       clear: Clear
-      done: Done
+      done: D完成
       no_printing: no printing
   just_order: Just order
   kitchen: Kitchen
   layouts:
     application:
       submit_scribe: OK
-  logout: log out %{who}
+  logout: 註銷 %{who}
   logout_successful: You have logged off successfully.
   menucard_generic_name: Menucard
   messages:
-    hello_username: Hello %{name}!
+    hello_username: 餵 %{name}!
   move_order_to_table: Move order to different table
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
   net: Net
-  new: New
+  new: 新
   no_printing: No printing
   not_found: Not found
   options:
     new:
       edit_option: Edit Option
-      hidden: delete
-      new_option: New Option
+      hidden: 刪除嗎?
+      new_option: 新 Option
       select_all: select all
   orange: Orange
   orders:
@@ -372,7 +372,7 @@ en:
       delivery_list: Delivery list
       preparation_list: Preparation list
     invoice_form:
-      just_finish: Just finish order
+      just_finish: 完畢
       print_and_finish: Print and finish this order
       set_cost_center: Set cost center for this order
       set_tax_for_all: Set cost center for all items
@@ -382,18 +382,18 @@ en:
       switch_tax_for_this_item: Click to change the tax for this item
     login_form:
       email: Your E-Mail
-      login: Login
-      password: Password
-      realname: Your Name
-      username: Username
-      your_ip_address: Your IP Data
+      login: 登錄
+      password: 密碼
+      realname: 名字以及姓
+      username: 用戶
+      your_ip_address: IP 地址
     order:
       new: New order
       sum: SUM
     served_by: You were served by
     show:
-      back: Back
-      count: Count
+      back: 回去
+      count: 計算
       list_of_taxes: List of taxes
       next_invoice: Next invoice
       previous_invoice: Previous invoice
@@ -431,8 +431,8 @@ en:
   reports:
     end_date: End Date
     save: Save
-    start_date: Start Date
-    usb_device: USB Stick
+    start_date: 開始日期
+    usb_device: USB記憶棒
   restaurant: Restaurant
   roles:
     new:
@@ -449,12 +449,12 @@ en:
       make_storno: Cancel items
       manage_articles_categories_options: Manage articles, categories and options
       manage_business_invoice: Manage business invoice
-      manage_customers: Manage Customers
+      manage_customers: 管理顧客
       manage_pages: Manage Slideshow
       manage_settings: Manage settings
       manage_users: Manage users
-      move_order: Move order
-      move_tables: Move tables
+      move_order: 移動訂單
+      move_tables: 移動表
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
@@ -470,40 +470,40 @@ en:
   scroll_down: Scroll down
   scroll_to_room: Go to room
   scroll_up: Scroll up
-  send_and_go_back: Save and go back
+  send_and_go_back: 保存並返回
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
   server_no_response: The Bill Gastro Server is not responding any more. It is either
     busy or the radio link is interrupted.
   sessions:
     browser_warning:
-      continue: Continue
+      continue: 繼續
       warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as
         web browser. Bill Gastro was optimized for those browsers exclusively.
     new:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      realname: Your Name
-      username: User
-      your_ip_address: Your IP Data
+      email: 電子郵件
+      login: 用戶名
+      password: 密碼
+      realname: 名字以及姓
+      username: 用戶
+      your_ip_address: IP 地址
     permission_denied:
-      permission_denied: Permission denied
+      permission_denied: 權限被拒絕
   settlements:
     detailed_list:
-      count: Count
+      count: 計算
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       revenue: Revenue
-      total: Total
+      total: 總計
       unit_price: Unit Price
     index:
-      all_cost_centers: All
-      end_date: End date
-      start_date: Start date
-      sum_total: Sum total
+      all_cost_centers: 所有
+      end_date: 結束日期
+      start_date: 開始日期
+      sum_total: 總計
     new:
       set_date: Set a date for this settlement
     settlement:
-      finish: Finish
+      finish: 完畢
       print: Print
       start: Start
       started_at: Started at
