@@ -3,14 +3,15 @@
 %html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    - if mobile?
-      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" }
+    - if mobile? or mobile_special?
+      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
 
     %title Salor Gastro
 
     = csrf_meta_tag
     = javascript_include_tag 'application'
+    = javascript_include_tag 'draw'
     - if workstation? and @current_user and @current_user.onscreen_keyboard_enabled
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
@@ -34,6 +35,8 @@
     - if workstation?
       = stylesheet_link_tag 'print', :media => 'print'
       = stylesheet_link_tag('workstation', :media => 'screen')
+    - if mobile_special?
+      = stylesheet_link_tag('mobile_special', :media => 'screen')
 
     %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
 
@@ -41,7 +44,10 @@
   %body
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #container
-      #header= render 'layouts/header'
+      #draw_controls
+        %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
+      - unless mobile_special?
+        #header= render 'layouts/header'
       #flash
         - if flash[:notice]
           #flash_notice= flash[:notice]

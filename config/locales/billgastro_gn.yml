@@ -345,6 +345,9 @@ gn:
       no_printing: Kein Druck
   just_order: Nur bestellen
   kitchen: Kueche
+  layouts:
+    application:
+      submit_scribe: OK
   logout: abmelden
   logout_successful: Sie haben sich erfolgreich abgemeldet.
   menucard_generic_name: Speisekarte
@@ -556,6 +559,7 @@ gn:
   there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
   tobacco: Tabak
   unsettled_orders_generic_name: Shifts
+  update_database: Datenbank neu laden
   user_not_found: Benutzer nicht gefunden.
   users:
     create:

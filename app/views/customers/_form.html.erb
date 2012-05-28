@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+  <%= f.hidden_field :vendor_id, :value => @current_vendor.id %>
   <div class="field">
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name %>

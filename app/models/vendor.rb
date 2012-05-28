@@ -101,26 +101,77 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
-    categories = {}
-    self.categories.existing.positioned.each do |c|
-      articles = {}
-      c.articles.existing.active.positioned.reverse.each do |a|
-        quantities = {}
-        a.quantities.existing.active.positioned.each do |q|
-          quantities.merge! q.id => { :ai => a.id, :qi => q.id, :ci => q.article.category.id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :n => a.name, :p => q.price }
+    cstmers = {}
+    cstmers[:regulars] = []
+    x = 0
+    self.customers.order("m_points DESC").each do |c|
+      if x < 15 then
+        cstmers[:regulars] << c.to_hash
+      end
+      c1 = c.last_name[0].downcase
+      c2 = c.last_name[0,2].downcase
+      cstmers[c1] ||= {}
+      cstmers[c1][c2] ||= []
+      cstmers[c1][c2] << c.to_hash
+      x += 1
+    end
+    # the following is speedy, no more nested Ruby/SQL loops
+    category_models = self.categories.existing.active.positioned
+    article_models = self.articles.existing.active.positioned
+    quantity_models = self.quantities.existing.active.positioned
+    option_models = self.options.existing.positioned
+
+    quantities = {}
+    quantity_models.each do |q|
+      ai = q.article_id
+      qhash = {"#{q.position}_#{q.id}" => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
+      if quantities.has_key?(ai)
+        quantities[ai].merge! qhash
+      else
+        quantities[ai] = qhash
+      end
+    end
+
+    articles = {}
+    article_models.each do |a|
+      ci = a.category_id
+      quantities_modified = {}
+      if quantities.has_key?(a.id)
+        quantities[a.id].each_key do |key|
+          quantities[a.id][key][:n] = a.name
         end
-        articles.merge! "#{a.position}#{a.id}" => { :ai => a.id, :ci => a.category.id, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities }
       end
-      options = {}
-      c.options.existing.each do |o|
-        options.merge! o.id => { :id => o.id, :n => o.name, :p => o.price }
+      ahash = {"#{a.position}_#{a.id}" => { :ai => a.id, :ci => ci, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities[a.id] }}
+      if articles.has_key?(ci)
+        articles[ci].merge! ahash
+      else
+        articles[ci] = ahash
       end
-      categories.merge! c.id => { :id => c.id, :a => articles, :o => options }
+    end
+
+    options = {}
+    option_models.each do |o|
+      o.categories.each do |oc|
+        ci = oc.id
+        s = o.position.nil? ? 0 : o.position
+        ohash = {"#{s}_#{o.id}" => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
+        if options.has_key?(ci)
+          options[ci].merge! ohash
+        else
+          options[ci] = ohash
+        end
+      end
+    end
+
+    categories = {}
+    category_models.each do |c|
+      cid = c.id
+      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
     end
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates }
+    resources = { :c => categories, :templates => templates, :customers => cstmers }
 
     return resources.to_json
   end

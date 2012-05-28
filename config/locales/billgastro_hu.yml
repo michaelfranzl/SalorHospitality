@@ -2,8 +2,8 @@ hu:
   activerecord:
     models:
       table:
-        one: Table
-        other: Tables
+        one: Table XXX
+        other: Tables XXX
       user:
         one: User
         other: Users

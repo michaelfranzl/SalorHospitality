@@ -1,7 +1,7 @@
 %tr{ :id => "item_DESIGNATOR", :designator => 'DESIGNATOR', :class => "item" }
   %td{ :id => "tablerow_DESIGNATOR_count", :class => 'item_count', :onclick => "increment_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' } COUNT
 
-  %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "display_price_popup_of_item('DESIGNATOR'); display_comment_popup_of_item('DESIGNATOR');", :onmousedown => 'highlight_button(this)' }
+  %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "display_configuration_of_item('DESIGNATOR');", :onmousedown => 'highlight_button(this)' }
     %span LABEL
     %small
       %br
@@ -21,12 +21,12 @@
     %div.comment_for_item{ :id => "comment_for_item_DESIGNATOR" }
       %p= t :please_enter_item_comment
       %span.display_keyboard{ :id => "comment_for_item_DESIGNATOR_display_keyboard" }
-      %input{ :id => "comment_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR');" }
+      %input{ :id => "comment_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR','comment');" }
       %div.enter_comment_or_price{ :id => "enter_comment_for_item_DESIGNATOR", :onclick => "add_comment_to_item('DESIGNATOR');" }
     %div.price_for_item{ :id => "price_for_item_DESIGNATOR" }
       %p= t :please_enter_item_price
       %span.display_keyboard{ :id => "price_for_item_DESIGNATOR_display_keyboard" }
-      %input{ :id => "price_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR');" }
+      %input{ :id => "price_for_item_DESIGNATOR", :onkeyup => "catch_keypress('DESIGNATOR','price');" }
       %div.enter_comment_or_price{ :id => "enter_price_for_item_DESIGNATOR", :onclick => "add_price_to_item('DESIGNATOR');" }
 
     %select.optionsselect{ :id => "options_select_DESIGNATOR", :onchange => "add_option_to_item('DESIGNATOR', $(this).val(), 'CATID')" }

@@ -6,3 +6,4 @@
       - 1.upto(rooms) do |icon|
         - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
         %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "scroll_to('#room#{ icon }',10)", :title => "#{t(:scroll_to_room)} #{ icon }" }
+      %a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }

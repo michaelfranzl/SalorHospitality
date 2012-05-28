@@ -66,7 +66,7 @@ SalorGastro::Application.routes.draw do
       post :login
       get :storno
       get :last_invoices
-      get :update_ajax
+      post :update_ajax
       get :logout
       post :by_nr
     end

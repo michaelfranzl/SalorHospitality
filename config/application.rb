@@ -19,7 +19,7 @@ module SalorGastro
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar' }
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország' }
-    FONTS = Dir.glob("public/fonts/*.ttf").collect{ |f| "#{ /public\/fonts\/(.*).ttf/.match(f)[1]}" } # + ['Arial','Times'] # this causes 404's
+    FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" } # + ['Arial','Times'] # this causes 404's
 
     HOTEL_MODE = true
 

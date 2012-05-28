@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_special?
-       mobile? and not ( request.user_agent.include?('iPod') or request.user_agent.include?('iPhone') )
+       request.user_agent.include?('iPad')
     end
 
     def saas_variant?

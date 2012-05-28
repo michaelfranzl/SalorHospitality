@@ -6,3 +6,4 @@
 Mime::Type.register "application/vnd.print", :bill
 Mime::Type.register "text/plain", :sql
 Mime::Type.register "application/x-font-ttf", :ttf
+Mime::Type.register "image/svg+xml", :svg

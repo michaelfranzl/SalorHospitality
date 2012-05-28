@@ -6,30 +6,30 @@ en:
     errors:
       template:
         header:
-          one:  "%{count} error prevented the form '%{model}' from being saved."
-          other:  "%{count} errors prevented the form '%{model}' from being saved."
-        body: "Please check the following inputs:"
+          one:  "%{count} błąd zablokował formularz '%{model}' przed zapisem."
+          other:  "%{count} błędów zablokowało formularz '%{model}' przed zapisem."
+        body: "Proszę sprawdzić następujące dane:"
 
       messages:
-        inclusion: "is not in the list"
-        exclusion: "should not be in the list"
-        invalid: "is invalid"
-        confirmation: "does not match"
-        accepted: "must be accepted"
-        empty: "must not be empty"
-        blank: "must not be blank"
-        too_long: "is too long (maximum %{count} characters)"
-        too_short: "is too short (minimum %{count} characters)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "is already taken"
-        not_a_number: "is not a number"
+        inclusion: "nie znajduje się na liście"
+        exclusion: "powinno znajdować się na liście"
+        invalid: "jest nieprawidłowy"
+        confirmation: "nie pasuje"
+        accepted: "musi zostać zaakceptowane"
+        empty: "nie może pozostać puste"
+        blank: "musi być puste"
+        too_long: "jest za długie (maksymalnie %{count} znaków)"
+        too_short: "jest za krótkie (minimalnie %{count} znaków)"
+        wrong_length: "ma nieprawidłową długość (powinno mieć %{count} znaków)"
+        taken: "taki wpis już istnieje"
+        not_a_number: "nie jest liczbą"
         greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"
+        greater_than_or_equal_to: "musi być wyższe lub równe %{count}"
+        equal_to: "musi być równe %{count}"
+        less_than: "musi być mniejsze niż %{count}"
+        less_than_or_equal_to: "musi być mniejsze lub równe %{count}"
+        odd: "musi być nieparzysty"
+        even: "musi być parzysty"
 
 # ==================================================================================
 # Adaptiert von:
@@ -111,8 +111,8 @@ en:
         format: "%n %u"
         units:
           byte:
-            one:   "Byte"
-            other: "Bytes"
+            one:   "Bajt"
+            other: "Bajtów"
           kb: "KB"
           mb: "MB"
           gb: "GB"
@@ -195,9 +195,9 @@ en:
 
     # Default translation keys for submit FormHelper
     submit:
-      create: 'Create %{model}'
-      update: 'Update %{model}'
-      submit: 'Save %{model}'
+      create: 'Stwórz %{model}'
+      update: 'Aktualizuj %{model}'
+      submit: 'Zapisz %{model}'
 
 
 

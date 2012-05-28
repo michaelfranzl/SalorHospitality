@@ -16,7 +16,8 @@ module OrdersHelper
       :decimal_separator => escape_javascript(I18n.t('number.currency.format.separator')),
       :takeaway => escape_javascript(I18n.t('articles.new.takeaway')),
       :course => escape_javascript(I18n.t('printr.course')),
-      :clear => escape_javascript(I18n.t(':clear'))
+      :clear => escape_javascript(I18n.t(':clear')),
+      :customers => escape_javascript(I18n.t('activerecord.models.customer.other'))
     }
     return i18n.to_json
   end

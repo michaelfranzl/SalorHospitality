@@ -203,6 +203,7 @@ Quantity.delete_all
           2.times do |q|
             quantity = Quantity.new :prefix => "#{c}#{v}#{i}#{a}#{q}", :postfix => 'post', :price => rand(10) + 1
             quantity.article = article
+            quantity.category = category
             quantity.company = company
             quantity.vendor = vendor
             r = quantity.save
