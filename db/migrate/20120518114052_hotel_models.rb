@@ -51,7 +51,7 @@ class HotelModels < ActiveRecord::Migration
       t.string :name
       t.integer :season_id
       t.integer :guest_type_id
-      t.float :surcharge
+      t.float :amount
       t.boolean :hidden
       t.integer :vendor_id
       t.integer :company_id
