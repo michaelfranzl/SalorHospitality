@@ -16,6 +16,7 @@ function init_scribe(d) {
   $('#item_configuration_' + d).hide();
 
   canvas = document.createElement('canvas');
+  //canvas.setAttribute('id', 'scribearea');
   canvas.setAttribute('d', d);
 
   canvas.width  = 470; //window.innerWidth;
@@ -111,7 +112,7 @@ function show_canvas(canvas) {
     $('#functions').hide();
     $('#functions_footer').hide();
     $('h2').hide();
-    scroll_to('canvas', 25);
+    window.scrollTo(0,0);
   }
   $('#draw_controls').show();
   $('#draw_controls').prepend(canvas);
