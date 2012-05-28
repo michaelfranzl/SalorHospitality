@@ -46,8 +46,9 @@ group :test, :development do
   gem 'ruby_core_source', '0.1.5'
   gem 'ruby-debug19', '0.11.6'
   gem 'ruby-debug-base19', '0.11.26' #manual install, native extensions
-  # gem install ~/Downloads/debug19/ruby-debug-base19-0.11.26.gem -- --with-ruby-include=/$RVM_SRC
+  # gem install  ~/Downloads/debug19/linecache19-0.5.13.gem
   # export RVM_SRC=~/.rvm/src/ruby-1.9.3-p194/
+  # gem install ~/Downloads/debug19/ruby-debug-base19-0.11.26.gem -- --with-ruby-include=/$RVM_SRC
   gem 'linecache19', '0.5.13' # manual install
 end
 
