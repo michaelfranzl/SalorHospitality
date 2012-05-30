@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520110824) do
+ActiveRecord::Schema.define(:version => 20120530093214) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -195,13 +195,17 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   create_table "guest_types", :force => true do |t|
     t.string   "name"
-    t.float    "local_tax_amount"
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"
-    t.boolean  "active",           :default => true
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "guest_types_taxes", :id => false, :force => true do |t|
+    t.integer "guest_type_id"
+    t.integer "tax_id"
   end
 
   create_table "histories", :force => true do |t|
