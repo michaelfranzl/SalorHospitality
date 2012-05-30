@@ -2,12 +2,15 @@ class HotelModels < ActiveRecord::Migration
   def self.up
     create_table :guest_types do |t|
       t.string :name
-      t.float  :local_tax_amount
       t.boolean :hidden
       t.integer :vendor_id
       t.integer :company_id
       t.boolean :active, :default => true
       t.timestamps
+    end
+    create_table :guest_types_taxes, :id => false do |t|
+      t.integer :guest_type_id
+      t.integer :tax_id
     end
     create_table :seasons do |t|
       t.string :name
