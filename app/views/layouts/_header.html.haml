@@ -39,5 +39,4 @@
       - if perms.include? 'manage_pages'
         = link_to( t('activerecord.models.page.other'), pages_path)
         = link_to( t('activerecord.models.presentation.other'), presentations_path)
-
-    = render 'partials/headerbuttons' if hotel_mode?
+      = SalorApi.run('views.layouts.header')

@@ -26,14 +26,6 @@ class Vendor < ActiveRecord::Base
   has_many :roles
   has_many :taxes, :class_name => 'Tax'
   has_many :vendor_printers
-  if SalorGastro::Application::HOTEL_MODE
-    has_many :rooms
-    has_many :room_types
-    has_many :guest_types
-    has_many :seasons
-    has_many :surcharges
-    has_many :room_prices
-  end
 
   serialize :unused_order_numbers
 
@@ -173,6 +165,7 @@ class Vendor < ActiveRecord::Base
 
     resources = { :c => categories, :templates => templates, :customers => cstmers }
 
+    resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 

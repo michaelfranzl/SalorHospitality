@@ -70,6 +70,7 @@ class Item < ActiveRecord::Base
   end
 
   def scribe=(scribe)
+    return if scribe.nil?
     write_attribute :scribe, scribe
     write_attribute :scribe_escpos, Escper::Image.new(self.scribe_bitmap,:object).to_s
   end
