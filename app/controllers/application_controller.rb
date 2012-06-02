@@ -6,7 +6,6 @@
 # See license.txt for the license applying to all files within this software.
 require 'net/http'
 class ApplicationController < ActionController::Base
-
   helper :all
   before_filter :fetch_logged_in_user, :set_locale
 

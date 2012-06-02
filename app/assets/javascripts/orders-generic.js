@@ -298,7 +298,7 @@ function set_json(d,attribute,value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
-    alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
+    //alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
@@ -385,7 +385,7 @@ function find_customer(text) {
     }
 }
 /*
- * add_category(label,options); Addes a new category button.
+ * add_category(label,options); Adds a new category button.
  * options is a hash like so:
  * {
  *    id: "the_html_id_youd_like",
