@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601165017) do
+ActiveRecord::Schema.define(:version => 20120602122141) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -192,21 +192,6 @@ ActiveRecord::Schema.define(:version => 20120601165017) do
 
   add_index "groups", ["company_id"], :name => "index_groups_company_id"
   add_index "groups", ["name"], :name => "index_groups_on_name"
-
-  create_table "guest_types", :force => true do |t|
-    t.string   "name"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",     :default => true
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
-
-  create_table "guest_types_taxes", :id => false, :force => true do |t|
-    t.integer "guest_type_id"
-    t.integer "tax_id"
-  end
 
   create_table "histories", :force => true do |t|
     t.string   "url"
@@ -475,40 +460,6 @@ ActiveRecord::Schema.define(:version => 20120601165017) do
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
 
-  create_table "room_prices", :force => true do |t|
-    t.integer  "room_type_id"
-    t.integer  "guest_type_id"
-    t.float    "base_price"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",        :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  create_table "room_types", :force => true do |t|
-    t.string   "name"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",     :default => true
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
-
-  create_table "rooms", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "room_type_id"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",       :default => true
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-  end
-
   create_table "salor_hotel_guest_types", :force => true do |t|
     t.string   "name"
     t.boolean  "hidden"
@@ -582,18 +533,7 @@ ActiveRecord::Schema.define(:version => 20120601165017) do
     t.boolean  "active",        :default => true
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
-  end
-
-  create_table "seasons", :force => true do |t|
-    t.string   "name"
-    t.datetime "from"
-    t.datetime "to"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",     :default => true
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.boolean  "radio_select"
   end
 
   create_table "settlements", :force => true do |t|
@@ -623,19 +563,6 @@ ActiveRecord::Schema.define(:version => 20120601165017) do
 
   add_index "stocks", ["company_id"], :name => "index_stocks_company_id"
   add_index "stocks", ["group_id"], :name => "index_stocks_on_group_id"
-
-  create_table "surcharges", :force => true do |t|
-    t.string   "name"
-    t.integer  "season_id"
-    t.integer  "guest_type_id"
-    t.float    "amount"
-    t.boolean  "hidden"
-    t.integer  "vendor_id"
-    t.integer  "company_id"
-    t.boolean  "active",        :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
 
   create_table "tables", :force => true do |t|
     t.string   "name"
