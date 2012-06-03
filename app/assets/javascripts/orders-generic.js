@@ -56,6 +56,7 @@ $(function(){
 function emit(msg,packet) {
   $('body').triggerHandler({type: msg, packet:packet});
 }
+
 function connect(unique_name,msg,fun) {
   var pcd = _get('plugin_callbacks_done');
   if (!pcd)
@@ -887,9 +888,15 @@ function update_resources() {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
+    complete: function(data,state) { update_resouces_success(data) },
     timeout: 3000
   });
 }
+
+function update_resouces_success(data) {
+  emit('ajax.update_resources.success', data);
+}
+
 
 function update_item_lists() {
   $.ajax({

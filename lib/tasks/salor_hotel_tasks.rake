@@ -5,7 +5,9 @@
 
 namespace :salor_hotel do
   task :seed => :environment do
-    surcharge_names = ['Breakfast','Dinner','Pension','Additional bed']
+    radio_surcharge_names = ['Breakfast','Dinner','Full']
+    checkbox_surcharge_names = ['Additional Bed']
+    common_surcharge_names = ['1 Night', '2 Night']
     surcharge_amounts = [6, 12, 22, -5]
 
     Company.all.size.times do |c|
@@ -38,9 +40,19 @@ namespace :salor_hotel do
         s3 = SalorHotel::Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => v.id, :company_id => company.id
         s4 = SalorHotel::Season.create :name => 'Spring', :from => Date.parse('2012-03-21'), :to => Date.parse('2012-06-21'), :vendor_id => v.id, :company_id => company.id
         season_objects = [s1,s2,s3,s4]
-        surcharge_names.size.times do |i|
-          season_objects.size.times do |j|
-            SalorHotel::Surcharge.create :name => surcharge_names[i], :amount => surcharge_amounts[i], :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[j].id, :guest_type_id => "#{ rand(2) == 0 ? guest_type_objects[rand(guest_type_objects.size)].id : nil }"
+
+        season_objects.size.times do |x|
+          guest_type_objects.size.times do |y|
+            radio_surcharge_names.size.times do |z|
+              hh = SalorHotel::Surcharge.create :name => radio_surcharge_names[z], :amount => 1 + x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => 1
+              puts hh.inspect
+            end
+            checkbox_surcharge_names.size.times do |z|
+              SalorHotel::Surcharge.create :name => checkbox_surcharge_names[z], :amount => x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+            end
+            common_surcharge_names.size.times do |z|
+              SalorHotel::Surcharge.create :name => common_surcharge_names[z], :amount => 3 + x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
+            end
           end
         end
       end
