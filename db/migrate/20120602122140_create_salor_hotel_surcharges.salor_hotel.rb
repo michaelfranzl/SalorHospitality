@@ -1,7 +1,6 @@
-# This migration comes from salor_hotel (originally 20120601154938)
 class CreateSalorHotelSurcharges < ActiveRecord::Migration
   def change
-    create_table :salor_hotel_surcharges do |t|
+    create_table :surcharges do |t|
       t.string :name
       t.integer :season_id
       t.integer :guest_type_id

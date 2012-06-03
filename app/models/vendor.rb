@@ -26,6 +26,12 @@ class Vendor < ActiveRecord::Base
   has_many :roles
   has_many :taxes, :class_name => 'Tax'
   has_many :vendor_printers
+  has_many :rooms
+  has_many :room_types
+  has_many :guest_types
+  has_many :seasons
+  has_many :surcharges
+  has_many :room_prices
 
   serialize :unused_order_numbers
 
@@ -161,11 +167,33 @@ class Vendor < ActiveRecord::Base
       categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
     end
 
+    rooms = Hash.new
+    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id } }
+
+    room_types = Hash.new
+    self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
+
+    room_prices = Hash.new
+    self.room_prices.existing.active.each { |rp| room_prices[rp.id] = { :rt => rp.room_type_id, :gt => rp.guest_type_id, :p => rp.base_price } }
+
+    guest_types = Hash.new
+    self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
+
+    surcharges = Hash.new
+    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
+
+    seasons = Hash.new
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from, :t => sn.to, :c => sn.current? } }
+
+    taxes = Hash.new
+    self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
+  
+
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes }
 
-    resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
+    #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 

@@ -1,7 +1,6 @@
-# This migration comes from salor_hotel (originally 20120601154506)
 class CreateSalorHotelGuestTypes < ActiveRecord::Migration
   def change
-    create_table :salor_hotel_guest_types do |t|
+    create_table :guest_types do |t|
       t.string :name
       t.boolean :hidden
       t.integer :vendor_id

@@ -12,6 +12,7 @@ class Tax < ActiveRecord::Base
   has_many :orders
   belongs_to :company
   belongs_to :vendor
+  has_and_belongs_to_many :guest_types
 
   validates_presence_of :name, :percent
   validates_numericality_of :percent

@@ -1,5 +1,5 @@
 SalorGastro::Application.routes.draw do
-  mount SalorHotel::Engine, :at => "salor_hotel"
+  #mount SalorHotel::Engine, :at => "salor_hotel"
   get "reservations/fetch"
   get "orders/attach_coupon"
   get "orders/attach_discount"
@@ -84,6 +84,12 @@ SalorGastro::Application.routes.draw do
   end
 
   resources :cost_centers, :taxes, :users, :roles, :presentations, :reports
+  resources :surcharges
+  resources :room_prices
+  resources :rooms
+  resources :room_types
+  resources :seasons
+  resources :guest_types
 
   resources :companies do
     get :logo

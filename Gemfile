@@ -62,4 +62,4 @@ gem 'acts_as_list', '0.1.3'
 gem 'rmagick', '2.13.1'
 gem 'coffee-rails'
 
-gem 'salor_hotel', :path => '../salor_hotel'
+#gem 'salor_hotel', :path => '../salor_hotel'

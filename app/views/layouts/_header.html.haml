@@ -39,4 +39,10 @@
       - if perms.include? 'manage_pages'
         = link_to( t('activerecord.models.page.other'), main_app.pages_path)
         = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path)
-      = SalorApi.run('views.layouts.header')
+    = link_to( t('activerecord.models.room.other'), rooms_path)
+    = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
+    = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
+    = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
+    = link_to( t('activerecord.models.surcharge.other'), main_app.surcharges_path)
+    = link_to( t('activerecord.models.season.other'), main_app.seasons_path)
+    - #SalorApi.run('views.layouts.header')

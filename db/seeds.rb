@@ -19,6 +19,10 @@ user_array = {
   'Auxiliary Waiter' => ['take_orders','decrement_items','finish_orders'],
   'Restaurant' => ['take_orders']
   }
+radio_surcharge_names = ['Breakfast','Dinner','Full']
+checkbox_surcharge_names = ['Additional Bed']
+common_surcharge_names = ['1 Night', '2 Night']
+surcharge_amounts = [6, 12, 22, -5]
 
 Order.delete_all
 Item.delete_all
@@ -189,8 +193,6 @@ Quantity.delete_all
         puts "Option #{ c } #{ v } #{ i } #{ o } created" if r == true
       end
         
- 
-
       2.times do |a|
         article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
         article.category = category
@@ -209,6 +211,51 @@ Quantity.delete_all
             r = quantity.save
             puts "Quantity #{ c } #{ v } #{ i } #{ a } #{ q } created" if r == true
           end
+        end
+      end
+    end
+
+    puts "Creating Tax #{c} #{v}"
+    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id
+    room_type_objects = Array.new
+    guest_type_objects = Array.new
+    4.times do |i|
+      puts "Creating RoomType, Room, GuestType #{c} #{v}"
+      rt = RoomType.create :name => "RoomType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      room_type_objects << rt
+      Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
+      gt = GuestType.create :name => "GuestType #{company.id} #{vendor.id} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      gt.taxes << local_tax if i == 1
+      gt.save
+      guest_type_objects << gt
+    end
+    4.times do |i|
+      4.times do |j|
+        puts "Creating RoomPrice #{c} #{v} #{i} #{j}"
+        RoomPrice.create :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (i + j) * 10, :vendor_id => vendor.id, :company_id => company.id
+      end
+    end
+    puts "Creating Seasons for #{c} #{v}"
+    s1 = Season.create :name => 'Summer', :from => Date.parse('2012-06-21'), :to => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2 = Season.create :name => 'Autumn', :from => Date.parse('2012-09-21'), :to => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3 = Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4 = Season.create :name => 'Spring', :from => Date.parse('2012-03-21'), :to => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    season_objects = [s1,s2,s3,s4]
+
+    season_objects.size.times do |x|
+      guest_type_objects.size.times do |y|
+        radio_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{radio_surcharge_names[z]}"
+          surcharge = Surcharge.create :name => radio_surcharge_names[z], :amount => 1 + x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => true
+#surarge.update_attribute :radio_select, true
+        end
+        checkbox_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{checkbox_surcharge_names[z]}"
+          Surcharge.create :name => checkbox_surcharge_names[z], :amount => x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+        end
+        common_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{common_surcharge_names[z]}"
+          Surcharge.create :name => common_surcharge_names[z], :amount => 3 + x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
         end
       end
     end

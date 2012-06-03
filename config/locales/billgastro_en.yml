@@ -132,6 +132,24 @@ en:
         name: Name
         path: Path
     models:
+      room:
+        one: Room
+        other: Rooms
+      room_type:
+        one: Room Type
+        other: Room Types
+      room_price:
+        one: Room Price
+        other: Room Prices
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      season:
+        one: Saison
+        other: Saisons
+      surcharge:
+        one: Surcharge
+        other: Surcharges
       article:
         one: Article
         other: Articles

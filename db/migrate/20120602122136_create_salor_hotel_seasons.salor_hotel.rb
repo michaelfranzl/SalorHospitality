@@ -1,7 +1,6 @@
-# This migration comes from salor_hotel (originally 20120601154632)
 class CreateSalorHotelSeasons < ActiveRecord::Migration
   def change
-    create_table :salor_hotel_seasons do |t|
+    create_table :seasons do |t|
       t.string :name
       t.datetime :from
       t.datetime :to

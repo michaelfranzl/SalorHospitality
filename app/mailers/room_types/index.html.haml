@@ -1,0 +1,12 @@
+%h2= t('activerecord.models.room_type.other')
+
+%p= link_to((t :new), new_room_type_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:120px' }= SalorHotel::RoomType.human_attribute_name(:name)
+    %th{ :style => 'width:50px' }
+  - @room_types.each do |t|
+    %tr
+      %td= link_to t.name, edit_room_type_path(t)
+      %td= link_to image_tag('button_small_delete.png', :title => SalorHotel::RoomType.human_attribute_name(:hidden), :alt => SalorHotel::RoomType.human_attribute_name(:hidden)), room_type_path(t), :method => :delete, :confirm => t(:are_you_sure)

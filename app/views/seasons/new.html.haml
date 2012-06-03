@@ -1,0 +1,22 @@
+%h2= @season.new_record? ? (t '.new_season') : (t '.edit_guest_type')
+
+- if @season.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @season.errors.size, :model => Season.model_name.human
+    %ul
+      - @season.errors.full_messages.each do |msg|
+        %li= msg
+
+.form_fields
+  = form_for @season do |season_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %table
+      %tr
+        %td= season_form.label :name
+        %td= season_form.text_field :name, :size => '20'
+      %tr
+        %td= season_form.label :from
+        %td= season_form.date_select :from, :size => '20'
+      %tr
+        %td= season_form.label :to
+        %td= season_form.date_select :to, :size => '20'

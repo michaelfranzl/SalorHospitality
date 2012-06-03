@@ -22,6 +22,7 @@
     - if mobile?
       = javascript_include_tag 'application-mobile'
     - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
+      = javascript_include_tag 'room-reservation'
       = javascript_include_tag 'orders-generic'
       - if workstation?
         = javascript_include_tag 'orders-workstation'
