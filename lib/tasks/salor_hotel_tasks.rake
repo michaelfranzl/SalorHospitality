@@ -44,8 +44,8 @@ namespace :salor_hotel do
         season_objects.size.times do |x|
           guest_type_objects.size.times do |y|
             radio_surcharge_names.size.times do |z|
-              hh = SalorHotel::Surcharge.create :name => radio_surcharge_names[z], :amount => 1 + x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => 1
-              puts hh.inspect
+              surcharge = SalorHotel::Surcharge.create :name => radio_surcharge_names[z], :amount => 1 + x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+              surcharge.update_attribute :radio_select, true
             end
             checkbox_surcharge_names.size.times do |z|
               SalorHotel::Surcharge.create :name => checkbox_surcharge_names[z], :amount => x + y + z, :vendor_id => v.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
