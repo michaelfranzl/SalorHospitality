@@ -18,13 +18,13 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
     tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
-    tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, base_price FLOAT);'
+    tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
-      tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, base_price) VALUES (?,?,?,?);', [k, v.gt, v.rt, v.p]
+      tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, season_id, base_price) VALUES (?,?,?,?,?);', [k, v.gt, v.rt, v.sn, v.p]
 
 
 # Updates the visual room buttons. Hooked into update_resources of the main app.
@@ -81,16 +81,18 @@ render_season_buttons = ->
   $.each resources.sn, (id,v) ->
     sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
     sbutton.on 'click', ->
-      select_season(id)
+      change_season(id)
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.booking.season_id = id
 
-select_season = (id) ->
-  submit_json.booking.season_id = id 
+change_season = (id) ->
+  submit_json.booking.season_id = id
   sbutton = $('#season_' + id)
   $('.season').removeClass 'selected'
   sbutton.addClass 'selected'
+  $.each items_json.booking, (k,v) ->
+    items_json.bookingxxx
   $.each items_json.booking, (k,v) ->
     surcharge_recalculate k
 
@@ -111,15 +113,6 @@ render_surcharge_header= ->
 
 
 # We can't use the DB results directly to render the input elements, since the headers dictate actually the exact appearance. Not all UserTypes have an identical set of Surcharges. Therefore we build an object called surcharge_guest_object that will be matched later to the surcharge_header object via it's key. We can avoid running several SQL queries with this pre-rendered object.
-build_surcharge_guest_object = (guest_type_id, guest_type_name) ->
-  db = _get 'db'
-  db.transaction (tx) ->
-    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
-      surcharge_guest_object = {}
-      for i in [0..res.rows.length-1]
-        record = res.rows.item(i)
-        surcharge_guest_object[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select}
-      return surcharge_guest_object
 
 
 # Called by display_hotel_price_form. Just displays buttons for guest_types, adds an onclick function.
@@ -133,7 +126,7 @@ render_guest_type_buttons = ->
       id = add_booking_item_to_json parseInt(k), v.n
       setTimeout ->
         render_booking_item(id)
-      , 10
+      , 30
 
 
 # This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. The data source is items_json.booking. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
@@ -147,11 +140,16 @@ add_booking_item_to_json = (guest_type_id, guest_type_name) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         items_json.booking[booking_item_id].surcharges[record.name] = {id:record.id,amount:record.amount, radio_select:record.radio_select, selected:false}
+  update_base_price booking_item_id
+  return booking_item_id
+
+
+update_base_price = (booking_item_id) ->
+  db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.booking.room_type_id + ' AND guest_type_id = ' + guest_type_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.booking.room_type_id + ' AND guest_type_id = ' + items_json.booking[booking_item_id].guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
       base_price = res.rows.item(0).base_price
       items_json.booking[booking_item_id].base_price = base_price
-  return booking_item_id
 
 
 render_booking_item = (booking_item_id) ->

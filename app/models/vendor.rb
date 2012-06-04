@@ -174,7 +174,7 @@ class Vendor < ActiveRecord::Base
     self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
 
     room_prices = Hash.new
-    self.room_prices.existing.active.each { |rp| room_prices[rp.id] = { :rt => rp.room_type_id, :gt => rp.guest_type_id, :p => rp.base_price } }
+    self.room_prices.existing.active.each { |rp| room_prices[rp.id] = { :rt => rp.room_type_id, :gt => rp.guest_type_id, :p => rp.base_price, :sn => rp.season_id } }
 
     guest_types = Hash.new
     self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}

@@ -6,9 +6,11 @@
   %tr
     %th{ :style => 'width:120px' }
     %th{ :style => 'width:120px' }= RoomPrice.human_attribute_name(:base_price)
+    %th{ :style => 'width:120px' }= RoomPrice.human_attribute_name(:season_id)
     %th{ :style => 'width:50px' }
   - @room_prices.each do |t|
     %tr
       %td= link_to "#{ t.room_type.name } / #{ t.guest_type.name }", edit_room_price_path(t)
       %td= number_to_currency t.base_price
+      %td= number_to_currency t.season.name
       %td= link_to image_tag('button_small_delete.png', :title => RoomPrice.human_attribute_name(:hidden), :alt => RoomPrice.human_attribute_name(:hidden)), room_price_path(t), :method => :delete, :confirm => t(:are_you_sure)

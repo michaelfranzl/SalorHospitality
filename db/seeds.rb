@@ -1,5 +1,5 @@
-category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv','Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
-category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif','nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
+category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
+category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
 countries = ['en','at','fr','es','pl','hu']
 languages = ['en','gn','fr','es','pl','hu']
@@ -229,18 +229,21 @@ Quantity.delete_all
       gt.save
       guest_type_objects << gt
     end
-    4.times do |i|
-      4.times do |j|
-        puts "Creating RoomPrice #{c} #{v} #{i} #{j}"
-        RoomPrice.create :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (i + j) * 10, :vendor_id => vendor.id, :company_id => company.id
-      end
-    end
     puts "Creating Seasons for #{c} #{v}"
     s1 = Season.create :name => 'Summer', :from => Date.parse('2012-06-21'), :to => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
     s2 = Season.create :name => 'Autumn', :from => Date.parse('2012-09-21'), :to => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
     s3 = Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
     s4 = Season.create :name => 'Spring', :from => Date.parse('2012-03-21'), :to => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
     season_objects = [s1,s2,s3,s4]
+
+    4.times do |i|
+      4.times do |j|
+        4.times do |k|
+          puts "Creating RoomPrice #{c} #{v} #{i} #{j} #{k}"
+          RoomPrice.create :season_id => season_objects[k].id, :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (2 * i + 3 * j + 5 * k) * 10 + 3, :vendor_id => vendor.id, :company_id => company.id
+        end
+      end
+    end
 
     season_objects.size.times do |x|
       guest_type_objects.size.times do |y|

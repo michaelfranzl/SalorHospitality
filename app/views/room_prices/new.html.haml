@@ -17,5 +17,8 @@
     = room_price_form.label :guest_type_id
     = room_price_form.select :guest_type_id, @guest_types.collect{|r| [r.name,r.id]}
     %br
+    = room_price_form.label :season_id
+    = room_price_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}
+    %br
     = room_price_form.label :base_price
     = room_price_form.text_field :base_price, :size => 5

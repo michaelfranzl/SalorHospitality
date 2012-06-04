@@ -7,6 +7,7 @@ class RoomPricesController < ApplicationController
     @room_price = RoomPrice.new
     @room_types = @current_vendor.room_types.existing
     @guest_types = @current_vendor.guest_types.existing
+    @seasons = @current_vendor.seasons.existing
   end
 
   def create
@@ -24,6 +25,7 @@ class RoomPricesController < ApplicationController
     @room_price = RoomPrice.accessible_by(@current_user).existing.find_by_id(params[:id])
     @room_types = @current_vendor.room_types.existing
     @guest_types = @current_vendor.guest_types.existing
+    @seasons = @current_vendor.seasons.existing
     render :new
   end
 

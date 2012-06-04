@@ -5,4 +5,5 @@ class RoomPrice < ActiveRecord::Base
   has_many   :rooms
   belongs_to :room_type
   belongs_to :guest_type
+  belongs_to :season
 end
