@@ -32,15 +32,16 @@ window.render_rooms = ->
     room.html v.n
     room.on 'click', ->
       display_hotel_price_form k
-      submit_json.hotel.room_id = k
+      submit_json.booking.room_id = k
     $('#rooms').append room
 
 # Initializes the main attributes of the submit_json object.
 initialize_json = ->
-  submit_json['hotel'] = {}
-  submit_json.hotel['season_id'] = null
-  submit_json.hotel['room_id'] = null
-  guest_items_json = {}
+  submit_json['booking'] = {}
+  submit_json.booking['season_id'] = null
+  submit_json.booking['room_id'] = null
+  items_json['booking'] = {}
+  #_set 'reservation_items_json', {}
 
 # Called by document.ready. Serves as a replacement for HTML templates.
 hotel_add_room_container = ->
@@ -76,13 +77,13 @@ render_season_buttons = ->
     sbutton = $ document.createElement 'div'
     sbutton.addClass 'season'
     sbutton.on 'click', ->
-      submit_json.hotel.season_id = k
+      submit_json.booking.season_id = k
       $('.season').removeClass 'selected'
       $(this).addClass 'selected'
     if v.c == true
       # select current season
       sbutton.addClass 'selected'
-      submit_json.hotel.season_id = k
+      submit_json.booking.season_id = k
     sbutton.html v.n
     season_container.append sbutton
 
@@ -114,21 +115,28 @@ render_surcharge_header= ->
         $('#surcharges_headers').append header
       _set 'surcharge_headers', surcharge_headers
 
-render_surcharge_row = (k) ->
+
+# This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
+render_surcharge_row = (guest_type_id) ->
   db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + k + ' AND season_id = ' + submit_json.hotel.season_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
       surcharge_guest_object = {}
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        surcharge_guest_object[record.name] = {amount:record.amount, radio_select:record.radio_select}
+        surcharge_guest_object[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select}
       surcharge_headers = _get 'surcharge_headers'
       number = get_unique_surcharge_row_number()
-      append_dom_element 'div', 'surcharge_row', 'surcharge_row_' + number, '#surcharge_rows'
+      create_dom_element 'div', {class:'surcharge_row',id:'surcharge_row_'+number}, '', '#surcharge_rows'
       for header in surcharge_headers
         if surcharge_guest_object.hasOwnProperty(header)
-          column = append_dom_element 'div', 'surcharge_col', 'surcharge_col_' + number, '#surcharge_row_' + number, header
-          #guest_items_json[ = integer:{reservation_id:integer, count:integer, :guest_type_id:integer, :surcharges:array}
+          id = surcharge_guest_object[header].id
+          column = create_dom_element 'div', {class:'surcharge_col', id:'surcharge_col_'+number}, '', '#surcharge_row_' + number
+          if surcharge_guest_object[header].radio_select
+            radio = create_dom_element 'input', {type:'radio', name:'radio_surcharge_'+number, id:'surcharge_'+id}, '', column
+          else
+            checkbox = create_dom_element 'input', {type:'checkbox', name:'checkbox_surcharge_'+id, id:'surcharge_'+id}, '', column
+            items_json.booking['dynamic_'+number] = {count:1, guest_type_id:guest_type_id, surcharges:[]}
           
 
 
@@ -136,14 +144,13 @@ render_surcharge_row = (k) ->
 sqlErrorHandler = (e) ->
   alert 'An SQL error occurred.'
 
-append_dom_element = (tag,cls,id,append_to,content) ->
+create_dom_element = (tag,attrs,content,append_to) ->
   element = $ document.createElement tag
-  if cls != ''
-    element.addClass cls
-  if id != ''
-    element.attr 'id', id
+  $.each attrs, (k,v) ->
+    element.attr k, v
   element.html content
-  $(append_to).append element
+  if append_to != ''
+    $(append_to).append element
   return element
 
 get_unique_surcharge_row_number = ->
