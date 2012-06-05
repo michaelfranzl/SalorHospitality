@@ -63,6 +63,8 @@ display_hotel_price_form = ->
   surcharges_headers = create_dom_element 'div', {id:'surcharges_headers'}, '', surcharges_container
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
+  submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n submit', hotel_price_form
+  cancel_link = create_dom_element 'div', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', hotel_price_form
   render_season_buttons()
   render_guest_type_buttons()
   render_surcharge_header()
@@ -182,6 +184,7 @@ render_booking_item = (booking_item_id) ->
         )()
       if items_json.booking[booking_item_id].surcharges[header].selected
         input_tag.attr 'checked', true
+  create_dom_element 'div', {class:'surcharge_col',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
   update_booking_totals()
 
 
@@ -202,11 +205,10 @@ render_booking_items_from_json = ->
 render_booking_item_count = (booking_item_id) ->
   count_input_col = create_dom_element 'div', {class:'surcharge_col'}, count_input, '#booking_item' + booking_item_id
   count_input = create_dom_element 'input', {type:'text', id:'booking_item_'+booking_item_id+'_count', class:'booking_item_count', value:items_json.booking[booking_item_id].count}, '', count_input_col
-  make_keyboardable count_input, '', update_booking_totals, 'num'
+  make_keyboardable count_input, '', `function(){ change_booking_item_count(booking_item_id)}`, 'num'
+  count_input.select()
   count_input.on 'keyup', ->
-    count = $('#booking_item_' + booking_item_id + '_count').val()
-    items_json.booking[booking_item_id].count = count
-    update_booking_totals()
+    change_booking_item_count booking_item_id
 
 booking_item_total = (booking_item_id) ->
   total = items_json.booking[booking_item_id].base_price
@@ -218,6 +220,11 @@ booking_item_total = (booking_item_id) ->
   total *= count
   $('#booking_item_' + booking_item_id + '_total').html total
   total
+
+change_booking_item_count = (booking_item_id) ->
+  count = $('#booking_item_' + booking_item_id + '_count').val()
+  items_json.booking[booking_item_id].count = count
+  update_booking_totals()
 
 
 update_booking_totals = ->
@@ -232,12 +239,12 @@ update_booking_totals = ->
 make_keyboardable = (element,open_on,accepted,layout) ->
   element.keyboard {
     openOn:open_on
-    accepted:accepted
+    accepted: accepted
     layout:layout
   }
-  element.select()
   element.on 'click', ->
     element.getkeyboard().reveal()
+    $('.ui-keyboard-input').select()
 
 
 sqlErrorHandler = (e) ->

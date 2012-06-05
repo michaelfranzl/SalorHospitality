@@ -196,7 +196,7 @@ function go_to(table_id, target, action, order_id, target_table_id) {
 /* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
-function send_json(table_id) {
+function send_json(table_id, type) {
   // copy main jsons to queue
   submit_json_queue[table_id] = submit_json;
   items_json_queue[table_id] = items_json;
