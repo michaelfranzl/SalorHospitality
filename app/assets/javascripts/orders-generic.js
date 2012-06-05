@@ -74,14 +74,52 @@ function _set(name,value) {
   return $.data(document.body,name,value);
 }
 
-function go_to(table_id, target, action, order_id, target_table_id) {
-  emit('before.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+function route(target, model_id, action, options) {
+  //emit('before.go_to.' + target, {action:action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
   scroll_to($('#container'),20);
-  debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
+  //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
+  // ========== GO TO TABLES ===============
+  if ( target == 'tables' ) {
+    submit_json.target = 'tables';
+    $('#orderform').hide();
+    $('#invoices').hide();
+    $('#items_notifications').hide();
+    $('#tables').show();
+    $('#rooms').hide();
+    //$('#order_cancel_button').show();
+    $('#functions_header_index').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_footer').hide();
+    $('#customer_list').hide();
+    $('#tablesselect').hide();
+    if (action == 'destroy') {
+      submit_json.order.hidden = true;
+      submit_json.jsaction = 'send';
+      send_json('table_' + model_id);
+    } else if (action == 'send') {
+      submit_json.jsaction = 'send';
+      submit_json.order.note = $('#order_note').val();
+      send_json('table_' + model_id);
+    } else if (action == 'move') {
+      $(".tablesselect").slideUp();
+      submit_json.jsaction = 'move';
+      submit_json.target_table_id = options.target_table_id;
+      send_json('table_' + model_id);
+    } else {
+      submit_json = {};
+      items_json = {};
+    }
+    screenlock_counter = settings.screenlock_timeout;
+    option_position = 0;
+    item_position = 0;
+    counter_update_tables = timeout_update_tables;
+    submit_json.currentview = 'tables';
+
   // ========== GO TO TABLE ===============
-  if ( target == 'table' ) {
+  } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.order = {table_id:table_id};
+    submit_json.order = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -92,25 +130,27 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
+      send_json('table_' + model_id);
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
       submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
-    } else if (action != 'no_queue' && submit_json_queue.hasOwnProperty(table_id)) {
-      debug('Items from Queue');
+      send_json('table_' + model_id);
+    } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
-      submit_json = submit_json_queue[table_id];
-      items_json = items_json_queue[table_id];
-      delete submit_json_queue[table_id];
-      delete items_json_queue[table_id];
-      //if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
+      submit_json = submit_json_queue['table_' + model_id];
+      items_json = items_json_queue['table_' + model_id];
+      delete submit_json_queue['table_' + model_id];
+      delete items_json_queue['table_' + model_id];
       render_items();
-    } else {
-      submit_json = {order:{table_id:table_id}};
+    } else if (action == 'specific_order') {
+      submit_json = {order:{table_id:model_id}};
       items_json = {};
-      var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
-      $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 }); //this repopulates items_json and renders items
+      $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+    } else {
+      submit_json = {order:{table_id:model_id}};
+      items_json = {};
+      $.ajax({ type: 'GET', url: '/tables/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     }
     $('#orderform').show();
     $('#invoices').hide();
@@ -125,52 +165,14 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     counter_update_tables = -1;
     submit_json.currentview = 'table';
 
-  // ========== GO TO TABLES ===============
-  } else if ( target == 'tables') {
-    submit_json.target = 'tables';
-    $('#orderform').hide();
-    $('#invoices').hide();
-    $('#items_notifications').hide();
-    $('#tables').show();
-    $('#rooms').show();
-    $('#order_cancel_button').show();
-    $('#functions_header_index').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_footer').hide();
-    $('#customer_list').hide();
-    $('#tablesselect').hide();
-    if (action == 'destroy') {
-      submit_json.order.hidden = true;
-      submit_json.jsaction = 'send';
-      send_json(table_id);
-    } else if (action == 'send') {
-      submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
-    } else if (action == 'move') {
-      $(".tablesselect").slideUp();
-      submit_json.jsaction = 'move';
-      submit_json.target_table_id = target_table_id;
-      send_json(table_id);
-    } else {
-      submit_json = {};
-      items_json = {};
-    }
-    screenlock_counter = settings.screenlock_timeout;
-    option_position = 0;
-    item_position = 0;
-    counter_update_tables = timeout_update_tables;
-    submit_json.currentview = 'tables';
-
   // ========== GO TO INVOICE ===============
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.order.note = $('#order_note').val();
-      submit_json.order = {table_id:table_id};
-      send_json(table_id);
+      submit_json.order = {table_id:model_id};
+      send_json('table_' + model_id);
     }
     $('#invoices').html('');
     $('#invoices').show();
@@ -187,45 +189,75 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     counter_update_tables = -1;
     screenlock_counter = -1;
     submit_json.currentview = 'invoice';
-  } else {
-    debug('go_to called with unknown target');
+
+  // ========== GO TO ROOMS ===============
+  } else if ( target == 'rooms' ) {
+    submit_json.target = 'rooms';
+    $('#orderform').hide();
+    $('#invoices').hide();
+    $('#items_notifications').hide();
+    $('#tables').hide();
+    $('#rooms').show();
+    //$('#order_cancel_button').show();
+    $('#functions_header_index').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_footer').hide();
+    $('#customer_list').hide();
+    $('#tablesselect').hide();
+    if (action == 'destroy') {
+      submit_json.booking.hidden = true;
+      submit_json.jsaction = 'send';
+      send_json('booking_' + model_id);
+    } else if (action == 'send') {
+      submit_json.jsaction = 'send';
+      send_json('booking_' + model_id);
+    } else {
+      submit_json = {};
+      items_json = {};
+    }
+    screenlock_counter = settings.screenlock_timeout;
+    option_position = 0;
+    item_position = 0;
+    counter_update_tables = timeout_update_tables;
+    submit_json.currentview = 'rooms';
   }
-  emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+  //emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
 }
 
 /* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
-function send_json(table_id, type) {
+function send_json(object_id) {
   // copy main jsons to queue
-  submit_json_queue[table_id] = submit_json;
-  items_json_queue[table_id] = items_json;
+  submit_json_queue[object_id] = submit_json;
+  items_json_queue[object_id] = items_json;
   // reset main jsons
-  submit_json = {order:{}};
+  submit_json = {order:{},booking:{}};
   items_json = {};
   // send the queue
-  send_queue(table_id);
+  send_queue(object_id);
 }
 
-function send_queue(table_id) {
-  debug('SEND QUEUE table ' + table_id);
+function send_queue(object_id) {
+  debug('SEND QUEUE table ' + object_id);
   $.ajax({
     type: 'post',
     url: '/orders/update_ajax',
-    data: submit_json_queue[table_id],
+    data: submit_json_queue[object_id],
     timeout: 20000,
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
         debug("TIMEOUT from server");
       } else if (status == 'success') {
-        clear_queue(table_id);
+        clear_queue(object_id);
       } else if (status == 'error') {
         debug('ERROR from server: ' + JSON.stringify(data));
-        clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        clear_queue(object_id); // server is not really offline, so no offline behaviour.
       } else if (status == 'parsererror') {
         debug('Parser error from server: ' + data);
-        clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        clear_queue(object_id); // server is not really offline, so no offline behaviour.
       }
     }
   });
@@ -756,6 +788,14 @@ function add_option_to_item(d, value, cat_id) {
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
+
+function toggle_order_booking() {
+  if (submit_json.currentview == 'tables') {
+    route('rooms');
+  } else {
+    route('tables');
+  }
+}
 
 function render_options(options, d, cat_id) {
   jQuery.each(options, function(key,object) {

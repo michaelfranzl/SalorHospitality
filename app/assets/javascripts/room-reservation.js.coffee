@@ -35,7 +35,8 @@ window.render_rooms = ->
     room.addClass 'room'
     room.html v.n
     room.on 'click', ->
-      display_hotel_price_form k
+      route 'room', k
+      #display_hotel_price_form k
       submit_json.booking.room_id = k
       submit_json.booking.room_type_id = v.rt
     $('#rooms').append room
@@ -57,13 +58,15 @@ hotel_add_room_container = ->
   $('#main').append room_container
 
 # Called when clicking on a room. Serves as a replacement for HTML templates.
-display_hotel_price_form = ->
+display_hotel_price_form = (room_id) ->
   hotel_price_form = create_dom_element 'div', {id:'hotel_price_form'}, '', '#main'
   surcharges_container = create_dom_element 'div', {id:'surcharges'}, '', hotel_price_form
   surcharges_headers = create_dom_element 'div', {id:'surcharges_headers'}, '', surcharges_container
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
   submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n submit', hotel_price_form
+  submit_link.on 'click', ->
+    send_json 'room_' + room_id
   cancel_link = create_dom_element 'div', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', hotel_price_form
   render_season_buttons()
   render_guest_type_buttons()

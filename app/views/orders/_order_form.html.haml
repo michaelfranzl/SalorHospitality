@@ -14,7 +14,7 @@
     %h3= t :move_order_to_table
     %span.done{ :onclick => "$('#tablesselect').slideUp();" }
     - @current_user.tables.each do |t|
-      %span.option{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'move', '', #{t.id});" }== #{ t.name }
+      %span.option{ :onclick => "route('tables', submit_json.order.table_id, 'move', {target_table_id:#{t.id}});" }== #{ t.name }
 
 #categories
   - @categories.existing.active.positioned.each do |category|

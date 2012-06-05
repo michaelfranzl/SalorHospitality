@@ -1,0 +1,8 @@
+<% if @booking %>
+  $('#booking_info').html('Existing booking');
+  items_json.booking = <%= raw @booking.items_to_json %>;
+  submit_json.booking.id = <%= @booking.id %>;
+  render_booking_items_from_json();
+<% else %>
+  $('#booking_info').html('New booking');
+<% end %>

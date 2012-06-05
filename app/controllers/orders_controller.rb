@@ -92,7 +92,7 @@ class OrdersController < ApplicationController
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
         if @orders.empty?
           @order.table.update_attribute :user, nil if @orders.empty?
-          render :js => "go_to(#{@order.table_id},'tables'); update_tables();" and return
+          render :js => "route('tables', #{@order.table_id}); update_tables();" and return
         else
           @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
           @taxes = @current_vendor.taxes.existing
@@ -121,9 +121,9 @@ class OrdersController < ApplicationController
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
                 if @orders.empty?
                   @order.table.update_attribute :user, nil
-                  render :js => "go_to(#{params[:order][:table_id]},'table','no_queue');" and return
+                  render :js => "route('table',#{params[:order][:table_id]});" and return
                 else
-                  render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+                  render :js => "route('tables',#{params[:order][:table_id]});" and return
                 end
               when 'invoice' then
                 @order.print(['tickets'])
@@ -147,16 +147,16 @@ class OrdersController < ApplicationController
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
             if @orders.empty?
               @order.table.update_attribute :user, nil
-              render :js => "go_to(#{@order.table.id},'table','no_queue');" and return
+              render :js => "route('table', #{@order.table.id});" and return
             else
-              render :js => "go_to(#{@order.table.id},'tables');" and return
+              render :js => "route('tables', #{@order.table.id});" and return
             end
           when 'move'
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            render :js => "go_to(#{@order.table.id},'tables');" and return
+            render :js => "route('tables', #{@order.table.id});" and return
         end
     end
   end
