@@ -92,9 +92,10 @@ change_season = (id) ->
   $('.season').removeClass 'selected'
   sbutton.addClass 'selected'
   $.each items_json.booking, (k,v) ->
-    items_json.bookingxxx
-  $.each items_json.booking, (k,v) ->
-    surcharge_recalculate k
+    update_json_booking_item k
+  setTimeout ->
+    render_booking_items_from_json()
+  , 50
 
 
 # This gets unique names of surcharges from the DB. Those names will be rendered as headers for the price calcualtion popup, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later on in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
@@ -123,14 +124,14 @@ render_guest_type_buttons = ->
   $.each resources.gt, (k,v) ->
     gtbutton = create_dom_element 'div', {class:'guest_type'}, v.n, guest_types_container
     gtbutton.on 'click', ->
-      id = add_booking_item_to_json parseInt(k), v.n
+      id = add_json_booking_item parseInt(k), v.n
       setTimeout ->
         render_booking_item(id)
       , 30
 
 
 # This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. The data source is items_json.booking. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
-add_booking_item_to_json = (guest_type_id, guest_type_name) ->
+add_json_booking_item = (guest_type_id, guest_type_name) ->
   booking_item_id = get_unique_booking_number()
   submit_json.booking_items[booking_item_id] = {count:1, guest_type_id:guest_type_id}
   items_json.booking[booking_item_id] = {guest_type_id:guest_type_id, count:1, base_price:null, surcharges:{}}
@@ -140,6 +141,20 @@ add_booking_item_to_json = (guest_type_id, guest_type_name) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         items_json.booking[booking_item_id].surcharges[record.name] = {id:record.id,amount:record.amount, radio_select:record.radio_select, selected:false}
+  update_base_price booking_item_id
+  return booking_item_id
+
+  
+update_json_booking_item = (booking_item_id) ->
+  guest_type_id = items_json.booking[booking_item_id].guest_type_id
+  db = _get 'db'
+  db.transaction (tx) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
+      for i in [0..res.rows.length-1]
+        record = res.rows.item(i)
+        items_json.booking[booking_item_id].surcharges[record.name].id = record.id
+        items_json.booking[booking_item_id].surcharges[record.name].amount = record.amount
+        items_json.booking[booking_item_id].surcharges[record.name].radio_select = record.radio_select
   update_base_price booking_item_id
   return booking_item_id
 
@@ -166,15 +181,37 @@ render_booking_item = (booking_item_id) ->
         input_tag = create_dom_element 'input', {type:'radio', name:'radio_surcharge_'+booking_item_id, booking_item_id:booking_item_id, surcharge_name:header}, '', surcharge_col
       else
         input_tag = create_dom_element 'input', {type:'checkbox', name:'checkbox_surcharge_'+booking_item_id, booking_item_id:booking_item_id, surcharge_name:header}, '', surcharge_col
-      input_tag.on 'change', ->
-        total = booking_item_total booking_item_id
-        $('#booking_item_' + booking_item_id + '_total').html total
+      (=>
+        h = header
+        input_tag.on 'change', ->
+          total = booking_item_total booking_item_id
+          $('#booking_item_' + booking_item_id + '_total').html total
+          save_selected_input_state this, booking_item_id, h
+        )()
+      if items_json.booking[booking_item_id].surcharges[header].selected
+        input_tag.attr 'checked', true
 
   base_price = items_json.booking[booking_item_id].base_price
   create_dom_element 'div', {class:'surcharge_col', id:'booking_item_'+booking_item_id+'_total'}, base_price, booking_item_row
 
 
+save_selected_input_state = (element, booking_item_id, surcharge_name) ->
+  
+  $.each items_json.booking[booking_item_id].surcharges, (k,v) ->
+    items_json.booking[booking_item_id].surcharges[k].selected = false
+    true
+  #alert surcharge_name
+  items_json.booking[booking_item_id].surcharges[surcharge_name].selected = $(element).is(':checked')
+  #$(element).attr 'checked', false
+  #$('input:checked[booking_item_id="' + booking_item_id + '"][type="radio"]').attr 'checked', false
+    
+    
 
+
+render_booking_items_from_json = ->
+  $('#booking_items').html ''
+  $.each items_json.booking, (k,v) ->
+    render_booking_item k
 
 
 booking_item_total = (booking_item_id) ->
