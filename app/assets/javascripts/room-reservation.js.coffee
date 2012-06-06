@@ -36,8 +36,8 @@ window.render_rooms = ->
     room.on 'click', ->
       route 'room', k
       #display_booking_form k
-      submit_json.booking.room_id = k
-      submit_json.booking.room_type_id = v.rt
+      submit_json.model.room_id = k
+      submit_json.model.room_type_id = v.rt
     $('#rooms').append room
 
 # Called when clicking on a room. Serves as a replacement for HTML templates.
@@ -65,10 +65,10 @@ render_season_buttons = ->
       change_season(id)
     if v.c == true
       sbutton.addClass 'selected'
-      submit_json.booking.season_id = id
+      submit_json.model.season_id = id
 
 change_season = (id) ->
-  submit_json.booking.season_id = id
+  submit_json.model.season_id = id
   sbutton = $('#season_' + id)
   $('.season').removeClass 'selected'
   sbutton.addClass 'selected'
@@ -119,7 +119,7 @@ add_json_booking_item = (guest_type_id, guest_type_name) ->
   #submit_json.items[booking_item_id] = {guest_type_id:guest_type_id}
   db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         items_json[booking_item_id].surcharges[record.name] = {id:record.id,amount:record.amount, radio_select:record.radio_select, selected:false}
@@ -131,7 +131,7 @@ add_json_booking_item = (guest_type_id, guest_type_name) ->
 update_base_price = (k) ->
     db = _get 'db'
     db.transaction (tx) ->
-      tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.booking.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
+      tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         base_price = res.rows.item(0).base_price
         set_json 'booking', k, 'base_price', base_price
         #items_json[k].base_price = base_price
@@ -144,7 +144,7 @@ update_json_booking_items = ->
     update_base_price k
     db = _get 'db'
     db.transaction (tx) ->
-      tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
+      tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         for i in [0..res.rows.length-1]
           record = res.rows.item(i)
           items_json[k].surcharges[record.name].id = record.id

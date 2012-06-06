@@ -94,12 +94,12 @@ function route(target, model_id, action, options) {
     $('#customer_list').hide();
     $('#tablesselect').hide();
     if (action == 'destroy') {
-      submit_json.order.hidden = true;
+      submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
       send_json('table_' + model_id);
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
+      submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
@@ -119,7 +119,7 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.order = {table_id:model_id};
+    submit_json.model = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -129,11 +129,11 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
+      submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
-      submit_json.order.note = $('#order_note').val();
+      submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
@@ -144,11 +144,11 @@ function route(target, model_id, action, options) {
       delete items_json_queue['table_' + model_id];
       render_items();
     } else if (action == 'specific_order') {
-      submit_json = {order:{table_id:model_id}};
+      submit_json = {model:{table_id:model_id}};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
     } else {
-      submit_json = {order:{table_id:model_id}};
+      submit_json = {model:{table_id:model_id}};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     }
@@ -170,8 +170,8 @@ function route(target, model_id, action, options) {
     submit_json.target = 'invoice';
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
-      submit_json.order = {table_id:model_id};
+      submit_json.model.note = $('#order_note').val();
+      submit_json.model = {table_id:model_id};
       send_json('table_' + model_id);
     }
     $('#invoices').html('');
@@ -199,7 +199,7 @@ function route(target, model_id, action, options) {
     $('#rooms').show();
     $('#functions_header_index').show();
     if (action == 'destroy') {
-      submit_json.booking.hidden = true;
+      submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
       send_json('booking_' + model_id);
     } else if (action == 'send') {
@@ -217,7 +217,7 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOM ===============
   } else if ( target == 'room' ) {
-    submit_json = {currentview:'room', booking:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
     items_json = {};
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
@@ -233,7 +233,7 @@ function send_json(object_id) {
   submit_json_queue[object_id] = submit_json;
   items_json_queue[object_id] = items_json;
   // reset main jsons
-  submit_json = {order:{},booking:{}};
+  submit_json = {model:{}};
   items_json = {};
   // send the queue
   send_queue(object_id);
@@ -515,7 +515,7 @@ function add_customer_button(qcontainer,customer,active) {
     var cust = customer;
     abutton.on('mouseup', function(){
       highlight_button(element);
-      submit_json.order['customer_set'] = [cust.id]
+      submit_json.model['customer_set'] = [cust.id]
     });
   })();
   (function() { 
