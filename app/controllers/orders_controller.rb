@@ -16,25 +16,6 @@ class OrdersController < ApplicationController
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
-    if params[:currentview] == 'update_pm' then
-      pm = PaymentMethod.find_by_id(params[:pid])
-      pm.update_attribute :amount, params[:amount]
-      render :nothing => true and return
-    end
-    if params[:currentview] == 'remove_pm' then
-      PaymentMethod.find_by_id(params[:pm_id]).destroy
-      render :text => "$('#payment_method_#{params[:pm_id]}').remove();" and return
-    end
-    if params[:currentview] == 'add_pm' then
-      @order = Order.find_by_id(params[:oid])
-      if @order then
-        pm = PaymentMethod.new(params[:payment_method])
-        @order.payment_methods << pm
-        @order.save
-        render :js => "$('#payment_method_target').append('#{view_context.escape_javascript(render_to_string(:partial => 'orders/payment_method', :locals => {:pm => pm}))}');" and return
-      end
-      render :nothing => true and return
-    end
     @order = get_model
     if params[:order] and params[:order][:tax_id]
       @order.update_attribute :tax_id, params[:order][:tax_id] 

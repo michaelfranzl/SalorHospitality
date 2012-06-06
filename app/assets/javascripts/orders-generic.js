@@ -741,24 +741,30 @@ function add_payment_method(order_id) {
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
+  pm_input.keyboard({accepted:function(){payment_method_input_change(pm_input, payment_method_uid, order_id)},layout:'num' });
   (function() {
     var uid = payment_method_uid;
     var oid = order_id;
     pm_input.on('keyup', function(){
-      submit_json.payment_methods[order_id][uid].amount = $(this).val();
-      payment_method_total = 0;
-      $.each(submit_json.payment_methods[order_id], function(k,v) {
-        payment_method_total += parseFloat(v.amount);
-      });
-      submit_json.totals[order_id].payment_methods = payment_method_total
-      change = - ( submit_json.totals[order_id].order - payment_method_total);
-      if (change < 0 ) { change = 0 };
-      $('#change_' + order_id).html(change);
+      payment_method_input_change(this, uid, oid);
     });
-    
   })();
   pm_row.append(pm_input);
   $('#payment_methods_container_' + order_id).append(pm_row);
+}
+
+function payment_method_input_change(element, uid, oid) {
+  amount = $(element).val();
+  if (amount == '') { amount = 0; }
+  submit_json.payment_methods[oid][uid].amount = parseFloat(amount);
+  payment_method_total = 0;
+  $.each(submit_json.payment_methods[oid], function(k,v) {
+    payment_method_total += v.amount;
+  });
+  submit_json.totals[oid].payment_methods = payment_method_total;
+  change = - ( submit_json.totals[oid].order - payment_method_total);
+  if (change < 0 ) { change = 0 };
+  $('#change_' + oid).html(change);
 }
 
 
