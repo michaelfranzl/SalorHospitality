@@ -1,5 +1,5 @@
 class BookingItem < ActiveRecord::Base
-  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :surchargeslist, :base_price
+  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :surchargeslist, :base_price, :count
   include Scope
   belongs_to :booking
   belongs_to :vendor

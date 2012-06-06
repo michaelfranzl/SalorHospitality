@@ -31,7 +31,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user)
-    order = Order.new params[:order]
+    order = Order.new params[:model]
     order.user = user
     order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
@@ -47,7 +47,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params)
-    self.update_attributes params[:order]
+    self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id

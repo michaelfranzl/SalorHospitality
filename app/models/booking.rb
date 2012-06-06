@@ -10,11 +10,11 @@ class Booking < ActiveRecord::Base
 
 
   def self.create_from_params(params, vendor, user)
-    booking = Booking.new params[:booking]
+    booking = Booking.new params[:model]
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
-    params[:booking_items].to_a.each do |item_params|
+    params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
       booking.booking_items << new_item
     end
@@ -23,8 +23,8 @@ class Booking < ActiveRecord::Base
   end
 
   def update_from_params(params)
-    self.update_attributes params[:booking]
-    params[:booking_items].to_a.each do |item_params|
+    self.update_attributes params[:model]
+    params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
         item_params[1].delete(:id)

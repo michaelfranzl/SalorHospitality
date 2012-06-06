@@ -220,7 +220,7 @@ class OrdersController < ApplicationController
     end
 
     def get_booking
-      @booking = get_model if params[:id]
+      @booking = Booking.accessible_by(@current_user).existing.find_by_id(params[:id]) if params[:id]
       if @booking
         @booking.update_from_params(params)
       else
