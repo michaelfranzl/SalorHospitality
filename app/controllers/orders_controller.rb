@@ -16,16 +16,35 @@ class OrdersController < ApplicationController
 
   # happens only in invoice_form if user changes CostCenter or Tax of Order
   def update
+    if params[:currentview] == 'update_pm' then
+      pm = PaymentMethod.find_by_id(params[:pid])
+      pm.update_attribute :amount, params[:amount]
+      render :nothing => true and return
+    end
+    if params[:currentview] == 'remove_pm' then
+      PaymentMethod.find_by_id(params[:pm_id]).destroy
+      render :text => "$('#payment_method_#{params[:pm_id]}').remove();" and return
+    end
+    if params[:currentview] == 'add_pm' then
+      @order = Order.find_by_id(params[:oid])
+      if @order then
+        pm = PaymentMethod.new(params[:payment_method])
+        @order.payment_methods << pm
+        @order.save
+        render :js => "$('#payment_method_target').append('#{view_context.escape_javascript(render_to_string(:partial => 'orders/payment_method', :locals => {:pm => pm}))}');" and return
+      end
+      render :nothing => true and return
+    end
     @order = get_model
-    if params[:order][:tax_id]
+    if params[:order] and params[:order][:tax_id]
       @order.update_attribute :tax_id, params[:order][:tax_id] 
       @order.items.existing.update_all :tax_id => nil
       @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
       @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
       render 'items/update'
-    else
-      @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]  
+    elsif params[:order] and params[:order][:cost_center_id]
+      @order.update_attribute(:cost_center_id, params[:order][:cost_center_id])
       render :nothing => true
     end
   end
@@ -81,6 +100,9 @@ class OrdersController < ApplicationController
 
   def update_ajax
     case params[:currentview]
+      when 'remove_pm'
+        PaymentMethod.find_by_id(params[:pm_id]).destroy
+        render :text => "$('#payment_method_#{params[:pm_id]}').remove();" and return
       when 'refund', 'show'
         @order = get_model
         @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))

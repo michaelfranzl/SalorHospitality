@@ -14,6 +14,7 @@ class Order < ActiveRecord::Base
   belongs_to :cost_center
   belongs_to :tax
   has_many :items, :dependent => :destroy
+  has_many :payment_methods
   has_one :order
   has_and_belongs_to_many :customers
 
@@ -48,6 +49,12 @@ class Order < ActiveRecord::Base
 
   def update_from_params(params)
     self.update_attributes params[:model]
+    if params[:payment_methods] then
+      self.payment_methods.clear
+      params[:payment_methods].each do |pm|
+        self.payment_methods << PaymentMethod.new(pm)
+      end
+    end
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
