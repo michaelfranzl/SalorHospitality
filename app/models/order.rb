@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :cost_center
   belongs_to :tax
+  belongs_to :room
   has_many :items, :dependent => :destroy
   has_many :payment_methods
   has_one :order

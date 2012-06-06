@@ -41,11 +41,15 @@ class OrdersController < ApplicationController
       @order.items.existing.update_all :tax_id => nil
       @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
       @cost_centers = @current_vendor.cost_centers.existing.active
+      @rooms = @current_vendor.rooms.existing.active
       @taxes = @current_vendor.taxes.existing
       render 'items/update'
     elsif params[:order] and params[:order][:cost_center_id]
       @order.update_attribute(:cost_center_id, params[:order][:cost_center_id])
       render :nothing => true
+    elsif params[:order] and params[:order][:room_id]
+      @order.update_attribute(:room_id, params[:order][:room_id], :finished => true)
+      render :js => "route('tables');"
     end
   end
 
@@ -109,6 +113,7 @@ class OrdersController < ApplicationController
         render :nothing => true and return
       when 'invoice'
         @order = get_model
+        #finish_order('invoice')
         @order.finish
         @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
@@ -140,17 +145,18 @@ class OrdersController < ApplicationController
               when 'table' then
                 @order.finish
                 @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
+                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
                 if @orders.empty?
                   @order.table.update_attribute :user, nil
-                  render :js => "route('table',#{params[:order][:table_id]});" and return
+                  render :js => "route('table',#{params[:model][:table_id]});" and return
                 else
-                  render :js => "route('tables',#{params[:order][:table_id]});" and return
+                  render :js => "route('tables',#{params[:model][:table_id]});" and return
                 end
               when 'invoice' then
                 @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
+                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
                 @taxes = @current_vendor.taxes.existing
+                @rooms = @current_vendor.rooms.existing.active
                 @cost_centers = @current_vendor.cost_centers.existing.active
                 render 'go_to_invoice_form' and return
             end
@@ -227,11 +233,11 @@ class OrdersController < ApplicationController
     def get_order
       if params[:id]
         @order = get_model
-      elsif params[:order] and params[:order][:table_id]
+      elsif params[:model] and params[:model][:table_id]
         # Reuse the order on table if possible
-        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
+        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
       else
-        raise "params[:order][:table_id] was not set. This is probably a JS issue and should never happen."
+        raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
         @order.update_from_params(params)

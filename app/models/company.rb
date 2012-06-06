@@ -37,4 +37,5 @@ class Company < ActiveRecord::Base
   has_many :room_prices
   has_many :bookings
   has_many :booking_items
+  has_many :payment_methods
 end

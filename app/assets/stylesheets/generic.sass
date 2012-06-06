@@ -212,7 +212,8 @@ div.invoice
   :-moz-border-radius 2px
   :-webkit-border-radius 2px
   :-moz-box-shadow 0px 0px 10px black
-  select#cost_center_and_tax_for_invoice
+  select#cost_center_and_tax_for_invoice,
+  select#order_id
     :position relative
     :width 118px
     :height 51px
@@ -327,4 +328,19 @@ div#draw_controls
 canvas
   :background-color white
 
+span.payment_method
+  :padding 5px 10px
+  :margin 0px 5px
+  :display inline-block
+
+div.payment_method_row
+  input
+    :width 60px
+    :font-size 130%
+
+span.payment_method.selected
+  :border 2px solid black
+  :-moz-border-radius 4px
+  :-webkit-border-radius 2px
+  :background-color #DDDDEE
 

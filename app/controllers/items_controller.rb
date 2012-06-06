@@ -42,6 +42,7 @@ class ItemsController < ApplicationController
 
     @cost_centers = @current_vendor.cost_centers.existing
     @taxes = @current_vendor.taxes.existing
+    @rooms = @current_vendor.rooms.existing
     @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
   end
 

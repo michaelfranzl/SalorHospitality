@@ -29,6 +29,9 @@
       - elsif @current_user.role.permissions.include? 'assign_cost_center'
         %select#cost_center_and_tax_for_invoice{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[cost_center_id]='+$(this).val() });", :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
+      - if @current_user.role.permissions.include? 'assign_order_to_room'
+        %select#order_id{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[room_id]='+$(this).val() });", :title => t('.set_room') }
+          = options_from_collection_for_select(@rooms, :id, :name, (invoice_form.room.id if invoice_form.room))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
@@ -62,15 +65,12 @@
       %td{ :colspan => '4', :style => 'text-align:right'}
         %span.subtotal= number_to_currency invoice_form.sum
     %tr
-      %td.label{ :colspan => '4', :style => 'text-align:right'}
-        %span.button
-          =link_to('Cash',"/orders/update?oid=#{invoice_form.id}&currentview=add_pm&payment_method[name]=Cash&payment_method[amount]=#{invoice_form.sum}", :method => :put, :remote => true)
-          %span.button
-          =link_to('Card',"/orders/update?oid=#{invoice_form.id}&currentview=add_pm&payment_method[name]=Card&payment_method[amount]=#{invoice_form.sum}", :method => :put, :remote => true)
-          %span.button
-          =link_to('Check',"/orders/update?oid=#{invoice_form.id}&currentview=add_pm&payment_method[name]=Check&payment_method[amount]=#{invoice_form.sum}", :method => :put, :remote => true)
-    %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
-        %table{ :id => 'payment_method_target' }
-          - invoice_form.payment_methods.each do |pm|
-            =render(:partial => 'orders/payment_method', :locals => {:pm => pm})
+        %span.subtotal{:id => "change_#{ invoice_form.id }" }= number_to_currency 0
+
+  %div{ :id => "payment_methods_container_#{invoice_form.id}" }
+    %p{:onclick => "add_payment_method(#{invoice_form.id});"}= t('activerecord.models.payment_method.other')
+
+:javascript
+  submit_json.payment_methods[#{ invoice_form.id }] = {};
+  submit_json.totals[#{ invoice_form.id }] = {order:#{ invoice_form.sum }, payment_methods:0 };

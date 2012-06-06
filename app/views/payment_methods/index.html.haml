@@ -1,0 +1,13 @@
+%h2= t('activerecord.models.payment_method.other')
+
+= link_to (t :new), new_payment_method_path, :class => 'links'
+
+%table
+  %tr
+    %th{ :style => 'width:150px' }
+    %th{ :style => 'width:100px' }
+    %th{ :style => 'width:200px' }
+  - @payment_methods.each do |pm|
+    %tr
+      %td= link_to pm.name, edit_payment_method_path(pm)
+      %td= link_to image_tag('button_small_delete.png', :title => PaymentMethod.human_attribute_name(:hidden), :alt => PaymentMethod.human_attribute_name(:hidden)), payment_method_path(pm), :method => :delete, :confirm => t(:are_you_sure)

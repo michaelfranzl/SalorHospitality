@@ -83,7 +83,7 @@ SalorGastro::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports
+  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports, :payment_methods
   resources :surcharges
   resources :room_prices
   resources :rooms

@@ -28,6 +28,7 @@
     - if perms.include? 'manage_settings'
       = link_to( t('activerecord.models.tax.other'), main_app.taxes_path)
       = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path)
+      = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path)
       = link_to( t('activerecord.models.user.other'), main_app.users_path)
       = link_to( t('activerecord.models.role.other'), main_app.roles_path)
       - if @current_company.vendors.existing.count > 1

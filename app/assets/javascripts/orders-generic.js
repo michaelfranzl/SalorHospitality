@@ -12,6 +12,7 @@
 var new_order = true;
 var option_position = 0;
 var item_position = 0;
+var payment_method_uid = 0;
 
 var resources = {};
 var plugin_callbacks_done = [];
@@ -188,6 +189,8 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
+    submit_json['payment_methods'] = {};
+    submit_json['totals'] = {};
     submit_json.currentview = 'invoice';
 
   // ========== GO TO ROOMS ===============
@@ -713,11 +716,51 @@ function customer_list_update() {
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
 
-function add_payment_method(name,amount) {
-  if (!submit_json.payment_methods)
-    submit_json.payment_methods = [];
-  submit_json.payment_methods.push({name: name, amount:amount});
+function add_payment_method(order_id) {
+  payment_method_uid += 1;
+  pm_row = $(document.createElement('div'));
+  pm_row.addClass('payment_method_row');
+  pm_row.attr('id', 'payment_method_row' + payment_method_uid);
+  debug(payment_method_uid);
+  submit_json.payment_methods[order_id][payment_method_uid] = {id:null, amount:0};
+  $.each(resources.pm, function(k,v) {
+    pm_button = $(document.createElement('span'));
+    pm_button.addClass('payment_method');
+    pm_button.html(v.n);
+    (function() {
+      var uid = payment_method_uid;
+      pm_button.on('click', function() {
+        submit_json.payment_methods[order_id][uid].id = v.id;
+        $('#payment_method_row' + uid + ' span').removeClass('selected');
+        $(this).addClass('selected');
+        $('#payment_method_' + uid + '_amount').select();
+      });
+    })();
+    pm_row.append(pm_button);
+  });
+  pm_input = $(document.createElement('input'));
+  pm_input.attr('type', 'text');
+  pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
+  (function() {
+    var uid = payment_method_uid;
+    var oid = order_id;
+    pm_input.on('keyup', function(){
+      submit_json.payment_methods[order_id][uid].amount = $(this).val();
+      payment_method_total = 0;
+      $.each(submit_json.payment_methods[order_id], function(k,v) {
+        payment_method_total += parseFloat(v.amount);
+      });
+      submit_json.totals[order_id].payment_methods = payment_method_total
+      change = - ( submit_json.totals[order_id].order - payment_method_total);
+      if (change < 0 ) { change = 0 };
+      $('#change_' + order_id).html(change);
+    });
+    
+  })();
+  pm_row.append(pm_input);
+  $('#payment_methods_container_' + order_id).append(pm_row);
 }
+
 
 function remove_payment_method_by_name(name) {
   if (!submit_json.payment_methods)

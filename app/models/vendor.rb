@@ -34,6 +34,7 @@ class Vendor < ActiveRecord::Base
   has_many :room_prices
   has_many :bookings
   has_many :booking_items
+  has_many :payment_methods
 
   serialize :unused_order_numbers
 
@@ -120,6 +121,7 @@ class Vendor < ActiveRecord::Base
     article_models = self.articles.existing.active.positioned
     quantity_models = self.quantities.existing.active.positioned
     option_models = self.options.existing.positioned
+    payment_method_models = self.payment_methods.existing
 
     quantities = {}
     quantity_models.each do |q|
@@ -169,6 +171,12 @@ class Vendor < ActiveRecord::Base
       categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
     end
 
+    payment_methods = {}
+    payment_method_models.each do |pm|
+      pmid = pm.id
+      payment_methods[pm.id] = { :id => pmid, :n => pm.name }
+    end
+
     rooms = Hash.new
     self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id } }
 
@@ -189,11 +197,10 @@ class Vendor < ActiveRecord::Base
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
-  
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
     #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
