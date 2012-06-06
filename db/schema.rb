@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604125003) do
+ActiveRecord::Schema.define(:version => 20120606105535) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -35,6 +35,44 @@ ActiveRecord::Schema.define(:version => 20120604125003) do
   add_index "articles", ["company_id"], :name => "index_articles_company_id"
   add_index "articles", ["name", "description", "price"], :name => "index_articles_on_name_and_description_and_price"
   add_index "articles", ["position"], :name => "index_articles_on_position"
+
+  create_table "booking_items", :force => true do |t|
+    t.integer  "booking_id"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.integer  "guest_type_id"
+    t.float    "sum"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "count",         :default => 1
+    t.integer  "hidden_by"
+    t.float    "base_price"
+  end
+
+  create_table "booking_items_surcharges", :id => false, :force => true do |t|
+    t.integer "booking_item_id"
+    t.integer "surcharge_id"
+  end
+
+  create_table "bookings", :force => true do |t|
+    t.datetime "from"
+    t.datetime "to"
+    t.integer  "customer_id"
+    t.float    "sum"
+    t.boolean  "hidden"
+    t.boolean  "paid",        :default => false
+    t.text     "note"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "room_id"
+    t.boolean  "finished",    :default => false
+    t.integer  "user_id"
+    t.integer  "season_id"
+    t.integer  "hidden_by"
+  end
 
   create_table "cash_drawers", :force => true do |t|
     t.string  "name"

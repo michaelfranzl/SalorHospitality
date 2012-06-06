@@ -193,18 +193,11 @@ function route(target, model_id, action, options) {
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
     submit_json.target = 'rooms';
-    $('#orderform').hide();
-    $('#invoices').hide();
-    $('#items_notifications').hide();
+    $('#booking_form').hide();
     $('#tables').hide();
+    $('#areas').hide();
     $('#rooms').show();
-    //$('#order_cancel_button').show();
     $('#functions_header_index').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_footer').hide();
-    $('#customer_list').hide();
-    $('#tablesselect').hide();
     if (action == 'destroy') {
       submit_json.booking.hidden = true;
       submit_json.jsaction = 'send';
@@ -221,6 +214,13 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     submit_json.currentview = 'rooms';
+
+  // ========== GO TO ROOM ===============
+  } else if ( target == 'room' ) {
+    submit_json = {currentview:'room', booking:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
+    items_json = {};
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
+    window.display_booking_form(model_id);
   }
   //emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
 }
@@ -276,7 +276,7 @@ function display_queue() {
     var link = $(document.createElement('a'));
     link.attr('id','queue_'+k);
     var div = $(document.createElement('div'));
-    div.html('Re-send table ' + k);
+    div.html('Re-send ' + k);
     (function(){
       var id = k;
       link.on('click', function() {
@@ -293,8 +293,7 @@ function display_queue() {
 /* ============ JSON POPULATING AND MANAGING ===============*/
 /* =========================================================*/
 
-function create_json_record(object) {
-  debug('Creating json record');
+function create_json_record(model, object) {
   d = object.d;
   item_position += 10;
   if (typeof(object.s) == 'undefined') {
@@ -306,17 +305,26 @@ function create_json_record(object) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
     s += 1;
   }
-  items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  if (model == 'order') {
+    items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  } else if (model == 'booking') {
+    items_json[d] = {guest_type_id:object.guest_type_id, count:1, surcharges:{}}
+  }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
-  create_submit_json_record(d,items_json[d]);
+  create_submit_json_record(model,d,items_json[d]);
   return d;
 }
 
 // this creates a new record, copied from items_json, which must exist
-function create_submit_json_record(d, object) {
-  if ( ! submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
-  if ( ! submit_json.items.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+function create_submit_json_record(model, d, object) {
+  if( !submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
+  if( !submit_json.items.hasOwnProperty(d)) {
+    if (model == 'order') {
+      submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+    } else if (model == 'booking') {
+      submit_json.items[d] = {id:object.id};
+    }
+    // remove redundant fields
     if (items_json[d].hasOwnProperty('id')) {
       delete submit_json.items[d].ai;
       delete submit_json.items[d].qi;
@@ -335,7 +343,7 @@ function set_json(d,attribute,value) {
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
-    create_submit_json_record(d,items_json[d]);
+    create_submit_json_record('order', d, items_json[d]);
     submit_json.items[d][attribute] = value;
   }
 }
@@ -664,7 +672,7 @@ function add_new_item(object, add_new, anchor_d) {
     // selected item is already there
     increment_item(d);
   } else {
-    d = create_json_record(object);
+    d = create_json_record('order', object);
     label = compose_label(object);
     new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {

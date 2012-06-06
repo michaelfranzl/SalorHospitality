@@ -35,4 +35,6 @@ class Company < ActiveRecord::Base
   has_many :seasons
   has_many :surcharges
   has_many :room_prices
+  has_many :bookings
+  has_many :booking_items
 end

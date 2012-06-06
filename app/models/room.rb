@@ -3,4 +3,5 @@ class Room < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :company
   belongs_to :room_type
+  has_many :bookings
 end

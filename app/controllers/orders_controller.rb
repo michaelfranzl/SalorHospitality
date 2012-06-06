@@ -158,6 +158,16 @@ class OrdersController < ApplicationController
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "route('tables', #{@order.table.id});" and return
         end
+      when 'room'
+        case params['jsaction']
+          when 'send'
+            get_booking
+            @booking.update_associations(@current_user)
+            if @booking.booking_items.size.zero?
+              @booking.hide(@current_user.id)
+            end
+            render :js => "route('rooms');" and return
+        end
     end
   end
 
@@ -209,4 +219,12 @@ class OrdersController < ApplicationController
       end
     end
 
+    def get_booking
+      @booking = get_model if params[:id]
+      if @booking
+        @booking.update_from_params(params)
+      else
+        @booking = Booking.create_from_params(params, @current_vendor, @current_user)
+      end
+    end
 end

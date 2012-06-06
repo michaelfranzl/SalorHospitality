@@ -6,7 +6,7 @@ class CreateBookings < ActiveRecord::Migration
       t.integer :customer_id
       t.float :sum
       t.boolean :hidden
-      t.boolean :paid
+      t.boolean :paid, :default => false
       t.text :note
       t.integer :vendor_id
       t.integer :company_id
