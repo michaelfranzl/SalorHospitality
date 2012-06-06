@@ -116,7 +116,7 @@ add_json_booking_item = (guest_type_id, guest_type_name) ->
   booking_item_id = get_unique_booking_number()
   create_json_record 'booking', {guest_type_id:guest_type_id, d:booking_item_id}
   #items_json[booking_item_id] = {guest_type_id:guest_type_id, count:1, base_price:null, surcharges:{}}
-  submit_json.items[booking_item_id] = {guest_type_id:guest_type_id}
+  #submit_json.items[booking_item_id] = {guest_type_id:guest_type_id}
   db = _get 'db'
   db.transaction (tx) ->
     tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
@@ -128,6 +128,16 @@ add_json_booking_item = (guest_type_id, guest_type_name) ->
 
 
   
+update_base_price = (k) ->
+    db = _get 'db'
+    db.transaction (tx) ->
+      tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.booking.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
+        base_price = res.rows.item(0).base_price
+        set_json 'booking', k, 'base_price', base_price
+        #items_json[k].base_price = base_price
+        #submit_json.items[k].base_price = base_price
+
+
 update_json_booking_items = ->
   $.each items_json, (k,v) ->
     guest_type_id = items_json[k].guest_type_id
@@ -141,13 +151,6 @@ update_json_booking_items = ->
           items_json[k].surcharges[record.name].amount = record.amount
           items_json[k].surcharges[record.name].radio_select = record.radio_select
 
-update_base_price = (k) ->
-    db = _get 'db'
-    db.transaction (tx) ->
-      tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.booking.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.booking.season_id + ';', [], (tx,res) ->
-        base_price = res.rows.item(0).base_price
-        items_json[k].base_price = base_price
-        submit_json.items[k].base_price = base_price
 
 
 render_booking_item = (booking_item_id) ->
@@ -177,7 +180,8 @@ render_booking_item = (booking_item_id) ->
 
 
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
-  submit_json.items[booking_item_id]['surchargeslist'] = [] # initialize submit_json for surcharges
+  #submit_json.items[booking_item_id]['surchargeslist'] = [] # initialize submit_json for surcharges
+  set_json 'booking', booking_item_id, 'surchargeslist', []
   if $(element).attr('type') == 'radio'
     $.each items_json[booking_item_id].surcharges, (k,v) ->
       if v.radio_select
@@ -205,6 +209,16 @@ render_booking_item_count = (booking_item_id) ->
   count_input.on 'keyup', ->
     change_booking_item_count booking_item_id
 
+
+
+change_booking_item_count = (booking_item_id) ->
+  count = $('#booking_item_' + booking_item_id + '_count').val()
+  set_json 'booking', booking_item_id, 'count', count
+  #items_json[booking_item_id].count = count
+  update_booking_totals()
+
+
+
 booking_item_total = (booking_item_id) ->
   total = items_json[booking_item_id].base_price
   $.each items_json[booking_item_id].surcharges, (k,v) ->
@@ -216,10 +230,6 @@ booking_item_total = (booking_item_id) ->
   $('#booking_item_' + booking_item_id + '_total').html total
   total
 
-change_booking_item_count = (booking_item_id) ->
-  count = $('#booking_item_' + booking_item_id + '_count').val()
-  items_json[booking_item_id].count = count
-  update_booking_totals()
 
 
 update_booking_totals = ->

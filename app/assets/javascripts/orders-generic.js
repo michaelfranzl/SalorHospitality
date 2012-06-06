@@ -322,7 +322,7 @@ function create_submit_json_record(model, d, object) {
     if (model == 'order') {
       submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
     } else if (model == 'booking') {
-      submit_json.items[d] = {id:object.id};
+      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id};
     }
     // remove redundant fields
     if (items_json[d].hasOwnProperty('id')) {
@@ -335,7 +335,7 @@ function create_submit_json_record(model, d, object) {
   }
 }
 
-function set_json(d,attribute,value) {
+function set_json(model, d, attribute, value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
@@ -343,7 +343,7 @@ function set_json(d,attribute,value) {
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
-    create_submit_json_record('order', d, items_json[d]);
+    create_submit_json_record(model, d, items_json[d]);
     submit_json.items[d][attribute] = value;
   }
 }
@@ -717,7 +717,7 @@ function increment_item(d) {
   var count = items_json[d].c + 1;
   var start_count = items_json[d].sc;
   var object = items_json[d];
-  set_json(object.d,'c',count)
+  set_json('order', object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
   if ( count == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
@@ -730,17 +730,17 @@ function decrement_item(d) {
   var start_count = items_json[d].sc;
   if ( i > 1 && ( permissions.decrement_items || i > start_count ) ) {
     i--;
-    set_json(d,'c',i)
+    set_json('order', d, 'c', i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if ( i == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   } else if ( i == 1 && ( permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
-    set_json(d,'c',i)
+    set_json('order', d, 'c', i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if (permissions.delete_items) {
-      set_json(d,'x',true);
+      set_json('order', d, 'x', true);
       $('#item_' + d).fadeOut('slow');
     }
   }
@@ -776,8 +776,8 @@ function add_option_to_item(d, value, cat_id) {
   }
   if (value == 0) {
     // delete all options
-    set_json(d,'i',[0]);
-    set_json(d,'t',{});
+    set_json('order', d, 'i', [0]);
+    set_json('order', d, 't', {});
     $('#optionsnames_' + d).html('');
   } else {
     var optionobject = resources.c[cat_id].o[value];
@@ -786,7 +786,7 @@ function add_option_to_item(d, value, cat_id) {
     var stripped_id = value.split('_')[1];
     var list = items_json[d].i;
     list.push(stripped_id);
-    set_json(d,'i',list);
+    set_json('order', d, 'i', list);
     $('#optionsnames_' + d).append('<br>' + optionobject.n);
   }
   calculate_sum();
