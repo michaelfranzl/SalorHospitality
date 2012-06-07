@@ -876,7 +876,6 @@ div.optionsselect,
 div#tablesselect,
 div.comment_for_item,
 div.price_for_item,
-div#customer_list,
 div#items_notifications,
 div#note_for_order
   :display none
@@ -1395,42 +1394,38 @@ div.active
 //============= SALOR HOTEL =============
 
 div#booking_form
-  :position absolute
-  :width 97%
-  :height 50%
-  :background-color rgba(20,20,20,0.8)
-  :border 2px solid white
+  //:position absolute
+  //:width 97%
+  //:height 50%
+  //:background-color rgba(20,20,20,0.8)
+  //:border 2px solid white
   div.selected
-    :background-color rgba(255,255,255,0.2)
+    :background-color rgba(255,255,255,0.3)
+  div#customers_category_button
+    :position absolute
+    :bottom 0px
+  div.surcharge_col
+    :padding 5px
+    :height 22px
+    :text-align center
+    input
+      :display none
+      :vertical-align middle
+    input.booking_item_count
+      :display inline
+      :padding 0px 20px
 
-div.season
+
+div.season,
+div.guest_type
   :display inline-block
   :padding 5px 15px
   :width 10%
   :text-align center
   :margin 5px
   :cursor pointer
-  :border 2px solid white
 
-div#seasons:first-child
-  :margin-left 150px
-
-div#guest_types
-  :position absolute
-  :width 15%
-
-div.guest_type
-  :display inline-block
-  :padding 5px 15px
-  :width 100%
-  :margin 5px
-  :cursor pointer
-  :border 2px solid white
-
-div#surcharges
-  :position absolute
-  :left 190px
-  :top 100px
+div#booking_items_container
   :width 80%
   div.surcharge_col:first-child,
   div.header:first-child
@@ -1443,4 +1438,12 @@ div#surcharges
 input.booking_item_count
   :width 20px
   :font-size 150%
+  :border none
+  :color white
+  :background-color transparent
 
+div#customers_list
+  :width 200px
+  :position absolute
+  :top 50px
+  :left 50px

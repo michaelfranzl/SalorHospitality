@@ -44,7 +44,7 @@ $(function(){
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
   if (!_get('customers.button_added'))
-    connect('customers_entry_hook','after.go_to.table',add_customers_category);
+    connect('customers_entry_hook','after.go_to.table',add_customers_button);
 })
 
 
@@ -428,7 +428,7 @@ function find_customer(text) {
     }
 }
 /*
- * add_category(label,options); Adds a new category button.
+ * add_category_button(label,options); Adds a new category button.
  * options is a hash like so:
  * {
  *    id: "the_html_id_youd_like",
@@ -444,19 +444,19 @@ function find_customer(text) {
  *    }
  * }
  * */
-function add_category(label,options) {
+function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
     var styles = [];
     var bgcolor = "background-color: rgb(XXX);";
     var bgimage = "background-image: url('XXX');";
-    var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
-    var brdrcolors = {
-      top: '85,85,85',
-      right: '34,34,34',
-      bottom: '34,34,34',
-      left: '85,85,85'
-    };
+    //var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
+    //var brdrcolors = {
+    //  top: '85,85,85',
+    //  right: '34,34,34',
+    //  bottom: '34,34,34',
+    //  left: '85,85,85'
+    //};
     cat.append(cat_label);
     
     for (var type in options.handlers) {
@@ -472,18 +472,18 @@ function add_category(label,options) {
     if (options.bgimage) {
       styles.push(bgimage.replace("XXX",options.bgimage));
     }
-    if (options.border) {
-      for (var pos in options.border) {
-        brdrcolor = brdrcolor.replace(pos,options.border[pos]);
-      }
-    }
-    // Default border colors added later
-    for (var pos in brdrcolors) {
-      brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
-    }
-    styles.push(brdrcolor);
+    //if (options.border) {
+    //  for (var pos in options.border) {
+    //    brdrcolor = brdrcolor.replace(pos,options.border[pos]);
+    //  }
+    //}
+    //// Default border colors added later
+    //for (var pos in brdrcolors) {
+    //  brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
+    //}
+    //styles.push(brdrcolor);
     cat.attr('style',styles.join(' '));
-    $('#categories').append(cat);
+    $(options.append_to).append(cat);
 }
 
 function customer_search(term) {
@@ -508,9 +508,9 @@ function customer_search(term) {
 
 function add_customer_button(qcontainer,customer,active) {
   var abutton = $(document.createElement('div'));
-  abutton.addClass('article customer-entry');
+  abutton.addClass('quantity customer-entry');
   abutton.html(customer.name);
-  if (active) abutton.removeClass("article").addClass("active article");
+  if (active) abutton.removeClass("quantity").addClass("active quantity");
   (function() {
     var element = abutton;
     var cust = customer;
@@ -547,7 +547,7 @@ function onCustomerSearchAccept(){
   }
 }
 
-function show_customers(event) {
+function show_customers(append_to) {
   $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
@@ -568,7 +568,7 @@ function show_customers(event) {
     qcontainer = add_customer_button(qcontainer,resources.customers.regulars[i],false);
   }
   $('#articles').append(qcontainer);
-  qcontainer.show();
+  $(append_to).append(qcontainer);
 }
 
 function display_articles(cat_id) {
@@ -1052,12 +1052,12 @@ function change_item_status(id,status) {
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
 
-function add_customers_category(event) {
-  if(_get('customers.button_added'))
-    return
-  opts = {'id': 'customers_category_button', 'handlers': { 'mouseup': show_customers },bgcolor: "205,0,82",bgimage: '/assets/category_starter.png', border: {top: '205,0,82'}};
-  add_category(i18n.customers,opts);
-  _set('customers.button_added',true);
+function add_customers_button() {
+  //if(_get('customers.button_added'))
+  //  return
+  opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
+  add_category_button(i18n.customers, opts);
+  //_set('customers.button_added',true);
 }
 
 function highlight_button(element) {
