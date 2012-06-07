@@ -115,6 +115,7 @@ function route(target, model_id, action, options) {
     option_position = 0;
     item_position = 0;
     counter_update_tables = timeout_update_tables;
+    update_tables();
     submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
@@ -741,7 +742,14 @@ function add_payment_method(order_id) {
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
-  pm_input.keyboard({accepted:function(){payment_method_input_change(pm_input, payment_method_uid, order_id)},layout:'num' });
+  if (!settings.mobile) {
+    pm_input.keyboard({
+      accepted: function(){ 
+        payment_method_input_change(pm_input, payment_method_uid, order_id)
+      },
+      layout:'num'
+    });
+  }
   (function() {
     var uid = payment_method_uid;
     var oid = order_id;

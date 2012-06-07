@@ -1,36 +1,39 @@
-%div.invoice{ :id => "invoice_#{invoice_form.id}" }
+- oid = invoice_form.id
+
+%div.invoice{ :id => "invoice_#{oid}" }
   - if local_variant?
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      = link_to('', "/orders/update_ajax?id=#{ invoice_form.id }&printer=#{ p.id }&currentview=invoice", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }", :remote => true, :method => :post)
+      %a{:onclick => "update_order({jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
   - else
-    = link_to '', "/orders/update_ajax?id=#{ invoice_form.id }&printer=0&currentview=invoice", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish'), :method => :post
+    %a{ :onclick => "update_order({jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
+
   - if not invoice_form.finished
-    = link_to '', "/orders/update_ajax?id=#{ invoice_form.id }&currentview=invoice", :remote => true, :class => 'iconbutton finish_button', :title => t('.just_finish'), :method => :post
+    %a{ :onclick => "update_order({jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
 
-  = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => invoice_form.id }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ invoice_form.id }" } do |order_form|
 
+
+  = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => oid }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ oid }" } do |order_form|
     - if !invoice_form.finished
-
       - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
       - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
-
       - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
-        = link_to '', "/orders/toggle_tax_colors/#{ invoice_form.id }", :class => "iconbutton #{ buttonclass }", :title => '', :remote => true, :method => :post, :title => buttontitle
+        %a{ :onclick => "update_order({jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
 
-      = link_to '', "", :remote => true, :class => 'iconbutton order_button', :title => t(:edit), :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{invoice_form.id}})", :onmouseup => 'this.style.border = "2px solid black";'
+      %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
       - if session[:display_tax_colors]
-        %select#cost_center_and_tax_for_invoice{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[tax_id]='+$(this).val() });", :title => t('.set_tax_for_all') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
           - if invoice_form.tax.nil?
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
       - elsif @current_user.role.permissions.include? 'assign_cost_center'
-        %select#cost_center_and_tax_for_invoice{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[cost_center_id]='+$(this).val() });", :title => t('.set_cost_center') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
       - if @current_user.role.permissions.include? 'assign_order_to_room'
-        %select#order_id{ :onchange => "$.ajax({ type: 'PUT', url: '/orders/#{ invoice_form.id }', data: 'order[room_id]='+$(this).val() });", :title => t('.set_room') }
+        %select#order_id{ :onchange => "update_order({jsaction:'assign_to_room', room_id:$(this).val()});", :title => t('.set_room') }
+          %option
           = options_from_collection_for_select(@rooms, :id, :name, (invoice_form.room.id if invoice_form.room))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
@@ -40,7 +43,7 @@
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-      %tr.item{ :id => "order_#{invoice_form.id}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.tax.color : '' }" }
+      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.tax.color : '' }" }
         %td.count= session[:display_tax_colors] ? item.tax.letter : item.count
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
@@ -66,11 +69,23 @@
         %span.subtotal= number_to_currency invoice_form.sum
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
-        %span.subtotal{:id => "change_#{ invoice_form.id }" }= number_to_currency 0
+        %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  %div{ :id => "payment_methods_container_#{invoice_form.id}" }
-    %p{:onclick => "add_payment_method(#{invoice_form.id});"}= t('activerecord.models.payment_method.other')
+  %div{ :id => "payment_methods_container_#{oid}" }
+    %p{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
 
 :javascript
-  submit_json.payment_methods[#{ invoice_form.id }] = {};
-  submit_json.totals[#{ invoice_form.id }] = {order:#{ invoice_form.sum }, payment_methods:0 };
+  submit_json.payment_methods[#{ oid }] = {};
+  submit_json.totals[#{ oid }] = {order:#{ invoice_form.sum }, payment_methods:0 };
+
+  function update_order(data) {
+    data['currentview'] = 'invoice';
+    data['payment_methods'] = submit_json.payment_methods[#{oid}];
+    data['id'] = #{oid};
+    $.ajax({
+      type: 'post',
+      url: '/orders/update_ajax',
+      data: data,
+      timeout: 5000
+    });
+  }

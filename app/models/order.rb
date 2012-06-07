@@ -15,7 +15,7 @@ class Order < ActiveRecord::Base
   belongs_to :tax
   belongs_to :room
   has_many :items, :dependent => :destroy
-  has_many :payment_methods
+  has_many :payment_method_items
   has_one :order
   has_and_belongs_to_many :customers
 
@@ -185,9 +185,15 @@ class Order < ActiveRecord::Base
   def finish
     self.updated_at = Time.now
     self.finished = true
+    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
     save
     unlink
+  end
+
+  def pay
+    self.finish
+    self.update_attribute :paid, true
   end
 
   def print(what, vendor_printer=nil)

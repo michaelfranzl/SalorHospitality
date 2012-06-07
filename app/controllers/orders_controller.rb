@@ -14,25 +14,6 @@ class OrdersController < ApplicationController
     session[:admin_interface] = false
   end
 
-  # happens only in invoice_form if user changes CostCenter or Tax of Order
-  def update
-    @order = get_model
-    if params[:order] and params[:order][:tax_id]
-      @order.update_attribute :tax_id, params[:order][:tax_id] 
-      @order.items.existing.update_all :tax_id => nil
-      @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
-      @cost_centers = @current_vendor.cost_centers.existing.active
-      @rooms = @current_vendor.rooms.existing.active
-      @taxes = @current_vendor.taxes.existing
-      render 'items/update'
-    elsif params[:order] and params[:order][:cost_center_id]
-      @order.update_attribute(:cost_center_id, params[:order][:cost_center_id])
-      render :nothing => true
-    elsif params[:order] and params[:order][:room_id]
-      @order.update_attribute(:room_id, params[:order][:room_id], :finished => true)
-      render :js => "route('tables');"
-    end
-  end
 
   def show
     if params[:id] != 'last'
@@ -66,46 +47,54 @@ class OrdersController < ApplicationController
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
-  def toggle_tax_colors
-    @order = get_model
-    if session[:display_tax_colors]
-      session[:display_tax_colors] = !session[:display_tax_colors]
-    else
-      session[:display_tax_colors] = true
-    end
-    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-    @cost_centers = @current_vendor.cost_centers.existing.active
-    @taxes = @current_vendor.taxes.existing
-    render 'items/update'
-  end
-
   def storno
     @order = get_model
   end
 
   def update_ajax
     case params[:currentview]
-      when 'remove_pm'
-        PaymentMethod.find_by_id(params[:pm_id]).destroy
-        render :text => "$('#payment_method_#{params[:pm_id]}').remove();" and return
       when 'refund', 'show'
         @order = get_model
         @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
         render :nothing => true and return
       when 'invoice'
         @order = get_model
-        #finish_order('invoice')
-        @order.finish
-        @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-        if @orders.empty?
-          @order.table.update_attribute :user, nil if @orders.empty?
-          render :js => "route('tables', #{@order.table_id}); update_tables();" and return
-        else
-          @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-          @taxes = @current_vendor.taxes.existing
-          @cost_centers = @current_vendor.cost_centers.existing.active
-          render 'go_to_invoice_form' and return
+        case params['jsaction']
+          when 'display_tax_colors'
+            if session[:display_tax_colors]
+              session[:display_tax_colors] = !session[:display_tax_colors]
+            else
+              session[:display_tax_colors] = true
+            end
+            prepare_objects_for_invoice
+            render 'items/update' and return
+          when 'mass_assign_tax'
+            @order.update_attribute :tax_id, params[:tax_id] 
+            @order.items.existing.update_all :tax_id => nil
+            prepare_objects_for_invoice
+            render 'items/update' and return
+          when 'change_cost_center'
+            @order.update_attribute(:cost_center_id, params[:cost_center_id])
+            render :nothing => true and return
+          when 'assign_to_room'
+            @order.update_attributes(:room_id => params[:room_id])
+            @order.finish
+            @order.print(['interim_bill'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            redirect_from_invoice and return
+          when 'pay_and_print'
+            create_payment_method_items
+            @order.pay
+            @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            redirect_from_invoice and return
+          when 'pay_and_print_pending'
+            create_payment_method_items
+            @order.pay
+            @order.update_attribute :print_pending, true
+            redirect_from_invoice and return
+          when 'pay_and_no_print'
+            create_payment_method_items
+            @order.pay
+            redirect_from_invoice and return
         end
       when 'table'
         case params['jsaction']
@@ -135,10 +124,7 @@ class OrdersController < ApplicationController
                 end
               when 'invoice' then
                 @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
-                @taxes = @current_vendor.taxes.existing
-                @rooms = @current_vendor.rooms.existing.active
-                @cost_centers = @current_vendor.cost_centers.existing.active
+                prepare_objects_for_invoice
                 render 'go_to_invoice_form' and return
             end
           when 'send_and_print'
@@ -192,6 +178,34 @@ class OrdersController < ApplicationController
   end
 
   private
+
+    def redirect_from_invoice
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+      if @orders.empty?
+        @order.table.update_attribute :user, nil if @orders.empty?
+        render :js => "route('tables');" and return
+      else
+        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+        @rooms = @current_vendor.rooms.existing.active
+        @taxes = @current_vendor.taxes.existing
+        @cost_centers = @current_vendor.cost_centers.existing.active
+        render 'go_to_invoice_form' and return
+      end
+    end
+
+    def create_payment_method_items
+      params['payment_methods'].to_a.each do |pm|
+        PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => @order.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+      end
+    end
+
+    def prepare_objects_for_invoice
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+      @cost_centers = @current_vendor.cost_centers.existing.active
+      @taxes = @current_vendor.taxes.existing
+      @rooms = @current_vendor.rooms.existing.active
+    end
+
     def neighbour_orders(order)
       orders = @current_vendor.orders.existing.where(:finished => true)
       idx = orders.index(order)

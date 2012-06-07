@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606145153) do
+ActiveRecord::Schema.define(:version => 20120607084944) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -436,6 +436,16 @@ ActiveRecord::Schema.define(:version => 20120606145153) do
 
   add_index "partials", ["model_id"], :name => "index_partials_on_model_id"
   add_index "partials", ["presentation_id"], :name => "index_partials_on_presentation_id"
+
+  create_table "payment_method_items", :force => true do |t|
+    t.integer  "payment_method_id"
+    t.integer  "order_id"
+    t.float    "amount"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "payment_methods", :force => true do |t|
     t.string   "name"
