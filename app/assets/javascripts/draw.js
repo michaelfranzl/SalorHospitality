@@ -135,5 +135,5 @@ function hide_canvas() {
 function submit_drawing() {
   hide_canvas();
   d = canvas.getAttribute('d');
-  set_json(d,'scribe',scribe_contents);
+  set_json('order', d, 'scribe', scribe_contents);
 }

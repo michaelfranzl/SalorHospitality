@@ -76,7 +76,7 @@ function _set(name,value) {
 }
 
 function route(target, model_id, action, options) {
-  //emit('before.go_to.' + target, {action:action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+  emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   scroll_to($('#container'),20);
   //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLES ===============
@@ -158,6 +158,7 @@ function route(target, model_id, action, options) {
     $('#invoices').hide();
     $('#tables').hide();
     $('#items_notifications').hide();
+    $('#areas').hide();
     $('#rooms').hide();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
@@ -213,6 +214,7 @@ function route(target, model_id, action, options) {
       submit_json = {};
       items_json = {};
     }
+    $('#booking_form').remove();
     screenlock_counter = settings.screenlock_timeout;
     option_position = 0;
     item_position = 0;
@@ -221,12 +223,16 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOM ===============
   } else if ( target == 'room' ) {
+    $('#rooms').hide();
+    $('#areas').hide();
+    $('#tables').hide();
+    $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
     items_json = {};
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
   }
-  //emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+  emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
 
 /* ======================================================*/
@@ -369,14 +375,6 @@ function render_items() {
   calculate_sum();
 }
 
-function render_customers_from_json() {
-  for (o in order_customers) {
-    var customer = order_customers[o]["customer"]
-    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
-  }
-}
-
-
 
 
 /* ===================================================================*/
@@ -487,10 +485,10 @@ function add_category(label,options) {
     cat.attr('style',styles.join(' '));
     $('#categories').append(cat);
 }
+
 function customer_search(term) {
   var c = term.substr(0,1).toLowerCase();
   var c2 = term.substr(0,2).toLowerCase();
-//   console.log(c,c2);
   var results = [];
   if (resources.customers[c]) {
     if (resources.customers[c][c2]) {
@@ -499,7 +497,6 @@ function customer_search(term) {
           results.push(resources.customers[c][c2][i]);
         }
       }
-//       console.log(resources.customers[c][c2]);
       return results;
     } else {
       return [];
@@ -508,18 +505,18 @@ function customer_search(term) {
     return [];
   }
 }
+
 function add_customer_button(qcontainer,customer,active) {
   var abutton = $(document.createElement('div'));
   abutton.addClass('article customer-entry');
   abutton.html(customer.name);
-  if (active)
-    abutton.removeClass("article").addClass("active article");
+  if (active) abutton.removeClass("article").addClass("active article");
   (function() {
     var element = abutton;
     var cust = customer;
     abutton.on('mouseup', function(){
       highlight_button(element);
-      submit_json.model['customer_set'] = [cust.id]
+      submit_json.model['customer_id'] = cust.id
     });
   })();
   (function() { 
@@ -531,17 +528,15 @@ function add_customer_button(qcontainer,customer,active) {
       } else {
         $('.quantities').html('');
       }
-      //add_new_item(object, catid);
     });
   })();
   qcontainer.append(abutton);
   return qcontainer;
 }
+
 function onCustomerSearchAccept(){
-//   console.log($('#customer_search_input').val());
   if ($('#customer_search_input').val().length >= 3) {
     var results = customer_search($('#customer_search_input').val());
-//     console.log(results);
     if (results.length > 0) {
       var qcont = $("#customers_list");
       $('.customer-entry').remove();
@@ -551,6 +546,7 @@ function onCustomerSearchAccept(){
     }
   }
 }
+
 function show_customers(event) {
   $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
@@ -574,6 +570,7 @@ function show_customers(event) {
   $('#articles').append(qcontainer);
   qcontainer.show();
 }
+
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -592,8 +589,6 @@ function display_articles(cat_id) {
       });
     })();
     $('#articles').append(abutton);
-    //abutton.append(qcontainer);
-    //qcontainer.insertBefore(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
         var element = abutton;

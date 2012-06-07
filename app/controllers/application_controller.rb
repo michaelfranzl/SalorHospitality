@@ -106,6 +106,16 @@ class ApplicationController < ActionController::Base
       @current_vendor.mode.nil? if @current_vendor
     end
 
+    def neighbour_models(model_name, model_object)
+      models = @current_vendor.send(model_name).existing.where(:finished => true)
+      idx = models.index(model_object)
+      previous_model = models[idx-1] if idx
+      previous_model = model_object if previous_model.nil?
+      next_model = models[idx+1] if idx
+      next_model = model_object if next_model.nil?
+      return previous_model, next_model
+    end
+
     def check_product_key
       # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
       resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))

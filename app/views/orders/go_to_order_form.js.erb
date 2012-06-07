@@ -1,13 +1,10 @@
 <% if @order %>
   items_json = <%= raw @order.items_to_json %>;
-  customers_json = <%= raw @order.customers.each.inject([]) {|c,cust| c << cust.to_hash }.to_json %>;
   submit_json.id = <%= @order.id %>;
   render_items();
-  $('#order_info').html(' <%= escape_javascript Order.model_name.human %> #<%= @order.nr %>  <%= escape_javascript @table.name %>');
+  $('#order_info').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @table.name %> (<%= escape_javascript @order.customer.full_name %>)');
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
-  //render_customers_from_json(customers_json);
 <% else %>
   $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
-  customers_json = [];
 <% end %>

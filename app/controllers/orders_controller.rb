@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
     session[:admin_interface] = false
   end
 
-
   def show
     if params[:id] != 'last'
       @order = @current_vendor.orders.existing.find(params[:id])
@@ -22,7 +21,7 @@ class OrdersController < ApplicationController
       @order = @current_vendor.orders.existing.find_all_by_finished(true).last
     end
     redirect_to '/' and return if not @order
-    @previous_order, @next_order = neighbour_orders(@order)
+    @previous_order, @next_order = neighbour_models('orders',@order)
     respond_to do |wants|
       wants.html
       wants.bill { render :text => generate_escpos_invoice(@order) }
@@ -206,15 +205,6 @@ class OrdersController < ApplicationController
       @rooms = @current_vendor.rooms.existing.active
     end
 
-    def neighbour_orders(order)
-      orders = @current_vendor.orders.existing.where(:finished => true)
-      idx = orders.index(order)
-      previous_order = orders[idx-1] if idx
-      previous_order = order if previous_order.nil?
-      next_order = orders[idx+1] if idx
-      next_order = order if next_order.nil?
-      return previous_order, next_order
-    end
 
     def reduce_stocks(order)
       order.items.exisiting.each do |item|

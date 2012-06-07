@@ -10,6 +10,7 @@ tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
 category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
 user_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b','#BBBBBB','#000000','#d9d43d','#801212']
 vendor_printer_labels = ['Bar','Kitchen','Guestroom']
+payment_method_names = ['Cash', 'Card', 'Other']
 user_array = {
   'Superuser' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
   'Owner' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
@@ -147,13 +148,33 @@ Quantity.delete_all
     end
 
     cost_center_objects = Array.new
-    cost_center_names.size do |i|
+    cost_center_names.size.times do |i|
       cost_center = CostCenter.new :name => "CC #{ c }#{ v }#{ i }", :active => true
       cost_center.company = company
       cost_center.vendor = vendor
       r = cost_center.save
       cost_center_objects << cost_center
       puts "Cost Center #{ c } #{ v } #{ i } created" if r == true
+    end
+
+    customer_objects = Array.new
+    10.times do |i|
+      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i
+      customer.company = company
+      customer.vendor = vendor
+      r = customer.save
+      customer_objects << customer
+      puts "Customer #{ c } #{ v } #{ i } created" if r == true
+    end
+
+    payment_method_objects = Array.new
+    payment_method_names.size.times do |i|
+      pm = PaymentMethod.new :name => "#{ payment_method_names[i] }#{c}#{v}#{i}"
+      pm.company = company
+      pm.vendor = vendor
+      r = pm.save
+      payment_method_objects << pm
+      puts "PaymentMethod #{ c } #{ v } #{ i } created" if r == true
     end
 
     user_objects = Array.new

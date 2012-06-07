@@ -14,7 +14,7 @@ class CustomersController < ApplicationController
        @customers =  Customer.where("first_name LIKE '#{params[:keywords]}%' or last_name LIKE '%#{params[:keywords]}'")
       end
     else
-      @customers = Customer.all
+      @customers = @current_vendor.customers.existing
     end
 
     respond_to do |format|

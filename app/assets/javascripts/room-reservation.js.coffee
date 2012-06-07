@@ -47,10 +47,15 @@ window.display_booking_form = (room_id) ->
   surcharges_headers = create_dom_element 'div', {id:'surcharges_headers'}, '', surcharges_container
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
-  submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n submit', booking_form
+  submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_form
   submit_link.on 'click', ->
     route 'rooms', room_id, 'send'
   cancel_link = create_dom_element 'div', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_form
+  cancel_link.on 'click', ->
+    route 'rooms'
+  pay_link = create_dom_element 'div', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_form
+  pay_link.on 'click', ->
+    route 'rooms', room_id, 'pay'
   render_season_buttons()
   render_guest_type_buttons()
   render_surcharge_header()

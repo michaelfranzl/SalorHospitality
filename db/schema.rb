@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607084944) do
+ActiveRecord::Schema.define(:version => 20120607111017) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -178,16 +178,6 @@ ActiveRecord::Schema.define(:version => 20120607084944) do
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
-  end
-
-  create_table "customers_items", :id => false, :force => true do |t|
-    t.integer "customer_id"
-    t.integer "item_id"
-  end
-
-  create_table "customers_orders", :id => false, :force => true do |t|
-    t.integer "customer_id"
-    t.integer "order_id"
   end
 
   create_table "discounts", :force => true do |t|
