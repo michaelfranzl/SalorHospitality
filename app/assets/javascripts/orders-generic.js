@@ -722,7 +722,6 @@ function add_payment_method(order_id) {
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
   pm_row.attr('id', 'payment_method_row' + payment_method_uid);
-  debug(payment_method_uid);
   submit_json.payment_methods[order_id][payment_method_uid] = {id:null, amount:0};
   $.each(resources.pm, function(k,v) {
     pm_button = $(document.createElement('span'));
@@ -735,6 +734,7 @@ function add_payment_method(order_id) {
         $('#payment_method_row' + uid + ' span').removeClass('selected');
         $(this).addClass('selected');
         $('#payment_method_' + uid + '_amount').select();
+        if(settings.workstation) {$('.ui-keyboard-input').select();}
       });
     })();
     pm_row.append(pm_button);
@@ -763,6 +763,7 @@ function add_payment_method(order_id) {
 
 function payment_method_input_change(element, uid, oid) {
   amount = $(element).val();
+  amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
   submit_json.payment_methods[oid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
@@ -772,8 +773,9 @@ function payment_method_input_change(element, uid, oid) {
   submit_json.totals[oid].payment_methods = payment_method_total;
   change = - ( submit_json.totals[oid].order - payment_method_total);
   if (change < 0 ) { change = 0 };
-  $('#change_' + oid).html(change);
+  $('#change_' + oid).html(number_to_currency(change));
 }
+
 
 
 function remove_payment_method_by_name(name) {
@@ -878,6 +880,16 @@ function toggle_order_booking() {
   } else {
     route('tables');
   }
+}
+
+function number_with_precision(number, precision) {
+  number = number.toFixed(precision);
+  number = number.replace('.',i18n.decimal_separator);
+  return number;
+}
+
+function number_to_currency(number) {
+  return i18n.currency_unit + ' ' + number_with_precision(number, 2);
 }
 
 function render_options(options, d, cat_id) {

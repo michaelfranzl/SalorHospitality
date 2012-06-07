@@ -69,10 +69,11 @@
         %span.subtotal= number_to_currency invoice_form.sum
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
+        %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
   %div{ :id => "payment_methods_container_#{oid}" }
-    %p{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
+    %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
 
 :javascript
   submit_json.payment_methods[#{ oid }] = {};

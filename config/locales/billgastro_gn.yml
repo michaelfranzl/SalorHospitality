@@ -140,6 +140,9 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
+      payment_method:
+        one: Zahlungsmethode
+        other: Zahlungsmethoden
       room:
         one: Zimmer
         other: Zimmer
@@ -416,6 +419,7 @@ gn:
       split_invoice: Rechnung splitten
       split_this_item: Klicken um ein Stück dieses Postens splitten
       switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechseln
+      change_money: Retour
     login_form:
       email: Ihre E-Mail
       login: Login

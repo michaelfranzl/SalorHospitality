@@ -132,6 +132,9 @@ en:
         name: Name
         path: Path
     models:
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
       room:
         one: Room
         other: Rooms
@@ -401,6 +404,7 @@ en:
       split_invoice: Split invoice
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
+      change_money: Change
     login_form:
       email: Your E-Mail
       login: Login
