@@ -17,6 +17,8 @@ class Booking < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
       booking.booking_items << new_item
+      booking.save
+      new_item.calculate_totals
     end
     booking.save
     return booking
@@ -30,11 +32,23 @@ class Booking < ActiveRecord::Base
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
+        item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
         self.booking_items << new_item
+        self.save
+        new_item.calculate_totals
       end
     end
+  end
+
+  def pay
+    self.finish
+    self.update_attribute :paid, true
+  end
+
+  def finish
+    self.update_attribute :finished, true
   end
 
   def update_associations(user)
@@ -58,6 +72,13 @@ class Booking < ActiveRecord::Base
       booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
+  end
+
+  def calculate_totals
+    self.sum = booking_items.existing.sum(:sum)
+    self.refund_sum = booking_items.existing.sum(:refund_sum)
+    self.tax_sum = booking_items.existing.sum(:tax_sum)
+    save
   end
 
   def hide(by_user_id)

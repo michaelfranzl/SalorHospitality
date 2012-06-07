@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607111017) do
+ActiveRecord::Schema.define(:version => 20120607185033) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -42,12 +42,14 @@ ActiveRecord::Schema.define(:version => 20120607111017) do
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.integer  "guest_type_id"
-    t.float    "sum"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.float    "sum",           :default => 0.0
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "count",         :default => 1
     t.integer  "hidden_by"
     t.float    "base_price"
+    t.float    "refund_sum",    :default => 0.0
+    t.float    "tax_sum",       :default => 0.0
   end
 
   create_table "booking_items_surcharges", :id => false, :force => true do |t|
@@ -59,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20120607111017) do
     t.datetime "from"
     t.datetime "to"
     t.integer  "customer_id"
-    t.float    "sum"
+    t.float    "sum",         :default => 0.0
     t.boolean  "hidden"
     t.boolean  "paid",        :default => false
     t.text     "note"
@@ -72,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20120607111017) do
     t.integer  "user_id"
     t.integer  "season_id"
     t.integer  "hidden_by"
+    t.float    "refund_sum",  :default => 0.0
+    t.float    "tax_sum",     :default => 0.0
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -435,6 +439,7 @@ ActiveRecord::Schema.define(:version => 20120607111017) do
     t.integer  "vendor_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "booking_id"
   end
 
   create_table "payment_methods", :force => true do |t|

@@ -67,6 +67,7 @@ class Order < ActiveRecord::Base
         new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item
+        self.save
       end
     end
   end

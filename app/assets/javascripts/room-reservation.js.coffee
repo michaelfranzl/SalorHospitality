@@ -42,14 +42,15 @@ window.render_rooms = ->
 
 # Called when clicking on a room. Serves as a replacement for HTML templates.
 window.display_booking_form = (room_id) ->
-  booking_form = create_dom_element 'div', {id:'booking_form'}, '', '#main'
+  booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
+  render_surcharge_header()
   render_season_buttons()
   render_guest_type_buttons()
-  render_surcharge_header()
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
-  surcharges_headers = create_dom_element 'div', {id:'surcharges_headers'}, '', surcharges_container
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
+  payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
+  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button'}, 'i18n add payment', booking_form
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_form}
   submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_form
   submit_link.on 'click', ->
@@ -64,9 +65,9 @@ window.display_booking_form = (room_id) ->
 
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
 render_season_buttons = ->
-  season_container = create_dom_element 'div', {id:'seasons'}, '', '#booking_form'
+  season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
   $.each resources.sn, (id,v) ->
-    sbutton = create_dom_element 'div', {class:'article season',id:'season_'+id}, v.n, season_container
+    sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
     sbutton.on 'click', ->
       change_season(id)
     if v.c == true
@@ -89,13 +90,13 @@ render_surcharge_header= ->
   db = _get 'db'
   db.transaction (tx) ->
     tx.executeSql "SELECT DISTINCT name FROM surcharges WHERE guest_type_id IS NOT NULL;", [], (tx,res) ->
-      header = create_dom_element 'div', {class:'header'}, 'i18n GuestType', '#surcharges_headers'
-      header = create_dom_element 'div', {class:'header'}, 'i18n count', '#surcharges_headers'
+      #header = create_dom_element 'div', {class:'header'}, 'i18n GuestType', '#surcharges_headers'
+      #header = create_dom_element 'div', {class:'header'}, 'i18n count', '#surcharges_headers'
       surcharge_headers = []
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         surcharge_headers.push record.name
-        header = create_dom_element 'div', {class:'header'}, record.name, '#surcharges_headers'
+        #header = create_dom_element 'div', {class:'header'}, record.name, '#surcharges_headers'
       _set 'surcharge_headers', surcharge_headers
 
 
@@ -105,9 +106,9 @@ render_surcharge_header= ->
 
 # Called by display_booking_form. Just displays buttons for guest_types, adds an onclick function.
 render_guest_type_buttons = ->
-  guest_types_container = create_dom_element 'div', {id:'guest_types'}, '', '#booking_form'
+  guest_types_container = create_dom_element 'div', {id:'guest_types'}, '', '.booking_form'
   $.each resources.gt, (k,v) ->
-    gtbutton = create_dom_element 'div', {class:'article guest_type'}, v.n, guest_types_container
+    gtbutton = create_dom_element 'div', {class:'guest_type'}, v.n, guest_types_container
     gtbutton.on 'click', ->
       id = add_json_booking_item parseInt(k), v.n
       setTimeout ->
@@ -162,11 +163,11 @@ render_booking_item = (booking_item_id) ->
   guest_type_name = resources.gt[guest_type_id].n
   booking_item_row = create_dom_element 'div', {class:'booking_item', id:'booking_item'+booking_item_id}, '', '#booking_items'
   surcharge_headers = _get 'surcharge_headers'
-  create_dom_element 'div', {class:'article surcharge_col'}, guest_type_name, booking_item_row
+  create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
   render_booking_item_count booking_item_id
   for header in surcharge_headers
     if items_json[booking_item_id].surcharges.hasOwnProperty(header)
-      surcharge_col = create_dom_element 'div', {class:'article surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, '', booking_item_row
+      surcharge_col = create_dom_element 'div', {class:'surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, header, booking_item_row
       (=>
         h = header
         surcharge_col.on 'click', ->
@@ -192,7 +193,8 @@ render_booking_item = (booking_item_id) ->
         )()
       if items_json[booking_item_id].surcharges[header].selected
         input_tag.attr 'checked', true
-  create_dom_element 'div', {class:'article surcharge_col',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
+        input_tag.parent().addClass 'selected'
+  create_dom_element 'div', {class:'surcharge_col',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
   update_booking_totals()
 
 
@@ -230,7 +232,7 @@ window.render_booking_items_from_json = ->
 
 
 render_booking_item_count = (booking_item_id) ->
-  count_input_col = create_dom_element 'div', {class:'article surcharge_col'}, count_input, '#booking_item' + booking_item_id
+  count_input_col = create_dom_element 'div', {class:'surcharge_col'}, count_input, '#booking_item' + booking_item_id
   count_input = create_dom_element 'input', {type:'text', id:'booking_item_'+booking_item_id+'_count', class:'booking_item_count', value:items_json[booking_item_id].count}, '', count_input_col
   make_keyboardable count_input, '', `function(){ change_booking_item_count(booking_item_id)}`, 'num'
   count_input.select()
@@ -266,6 +268,8 @@ update_booking_totals = ->
     subtotal += booking_item_total k
     true
   $('#booking_subtotal').html number_to_currency subtotal
+  booking_id = submit_json.id
+  submit_json.totals[booking_id] = {booking}
   subtotal
 
 

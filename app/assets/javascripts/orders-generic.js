@@ -210,11 +210,14 @@ function route(target, model_id, action, options) {
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
       send_json('booking_' + model_id);
+    } else if (action == 'pay') {
+      submit_json.jsaction = 'pay';
+      send_json('booking_' + model_id);
     } else {
       submit_json = {};
       items_json = {};
     }
-    $('#booking_form').remove();
+    $('.booking_form').remove();
     screenlock_counter = settings.screenlock_timeout;
     option_position = 0;
     item_position = 0;
@@ -229,8 +232,8 @@ function route(target, model_id, action, options) {
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
@@ -753,7 +756,7 @@ function add_payment_method(order_id) {
     });
   })();
   pm_row.append(pm_input);
-  $('#payment_methods_container_' + order_id).append(pm_row);
+  $('#model_' + order_id + ' #payment_methods_container').append(pm_row);
 }
 
 function payment_method_input_change(element, uid, oid) {

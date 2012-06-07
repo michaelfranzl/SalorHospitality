@@ -14,5 +14,11 @@ class BookingItem < ActiveRecord::Base
     self
   end
 
+  def calculate_totals
+    self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+    self.sum = self.count * (self.base_price + self.surcharges.sum(:amount))
+    save
+  end
+
   
 end

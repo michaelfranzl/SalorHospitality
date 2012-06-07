@@ -157,6 +157,19 @@ class OrdersController < ApplicationController
           when 'send'
             get_booking
             @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            if @booking.booking_items.size.zero?
+              @booking.hide(@current_user.id)
+            end
+            render :js => "route('rooms');" and return
+          when 'pay'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            @booking.pay
+            params['payment_methods'][params['id']].to_a.first.each do |pm|
+              PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => @booking.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+            end
             if @booking.booking_items.size.zero?
               @booking.hide(@current_user.id)
             end
