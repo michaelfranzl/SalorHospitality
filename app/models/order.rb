@@ -182,6 +182,7 @@ class Order < ActiveRecord::Base
     self.updated_at = Time.now
     self.finished = true
     self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
+    self.change_given = 0 if self.change_given < 0
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
     save
     unlink

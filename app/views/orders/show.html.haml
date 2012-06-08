@@ -32,44 +32,8 @@
 
   %h1== #{ t 'invoice' } ##{ @order.nr }
   
-  %p#cost_center== #{ CostCenter.model_name.human }: #{ (@order.cost_center.name if @order.cost_center) }
-  %p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
-  %p= l @order.created_at, :format => :long
-  
-  
-  %table
-    %tr
-      %th.one= Tax.model_name.human
-      %th.two= Item.model_name.human
-      %th.three= t '.unit_price'
-      %th.four= t '.count'
-      %th.five= t '.sum'
-  
-    - sum_taxes = Hash.new
-    - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
-  
-    - @order.items.existing.positioned.each do |item|
-      - sum_taxes[item.tax.id] += item.sum
-      %tr
-        %td.one= item.tax.letter
-        %td.two= item.quantity_id ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
-        %td.three= number_to_currency item.price
-        %td.four= item.count
-        %td.five= number_to_currency item.sum
-  
-      - item.options.each do |o|
-        - next if o.price == 0
-        %tr
-          %td.one= item.tax.letter
-          %td.two== #{ t(:storno) + ' ' if item.refunded }#{ o.name }
-          %td.three= number_to_currency o.price
-          %td.four= item.count
-          %td.five= number_to_currency item.refunded ? 0 : item.count * o.price
-  
-    %tr
-      %td{ :colspan => 4 }= t :sum
-      %td.five= number_to_currency @order.sum
-  
+  = render :partial => 'invoice_item_list', :locals => { :order => @order }
+
   %p= t '.list_of_taxes'
   
   %table.taxes
@@ -81,8 +45,8 @@
       %th.right_wide= t(:gross)
     - @current_vendor.taxes.existing.each do |tax|
       - fact = tax.percent/100.00
-      - net = sum_taxes[tax.id]/(1.00+fact)
-      - gro = sum_taxes[tax.id]
+      - net = 0 #sum_taxes[tax.id]/(1.00+fact)
+      - gro = 0 #sum_taxes[tax.id]
       - vat = gro-net
       %tr
         %td.left= tax.letter

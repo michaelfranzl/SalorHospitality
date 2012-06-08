@@ -452,7 +452,7 @@ table.detailed_list
   td.number
     :text-align right
   td.subtotal
-    :font-size 120%
+    :font-size 200%
     :padding-bottom 20px
     :text-align right
     :color white
@@ -1390,21 +1390,29 @@ div.booking_form
   //:height 50%
   //:background-color rgba(20,20,20,0.8)
   //:border 2px solid white
+  div#booking_totals
+    :width 180px
+    :font-size 110%
+    :float right
+    table.booking-totals
+      tr.subtotal
+        td
+          :border-top 1px solid white
   div#booking_tools
-    :width 210px
+    :width 155px
     :float right
     span.textbutton
-      :margin 5px 0px 5px 0px
+      :margin 0px 0px 5px 0px
       :padding 10px
-      :width 187px 
+      :width 131px 
       :text-align right
     input
-      :width 200px
+      :width 145px
       :font-size 150%
       :border none
       :background-color $billgastrogrey1
       :padding 5px
-      :margin 5px 0px 5px 0px
+      :margin 0px 0px 5px 0px
       :color #DDD
       :text-align right
   div#payment_methods_container

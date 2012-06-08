@@ -1,5 +1,5 @@
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json
+  attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration
   include Scope
   has_many :booking_items
   has_many :payment_method_items
@@ -11,6 +11,7 @@ class Booking < ActiveRecord::Base
   belongs_to :season
   belongs_to :customer
 
+  serialize :taxes
 
   def self.create_from_params(params, vendor, user)
     booking = Booking.new params[:model]
@@ -43,6 +44,14 @@ class Booking < ActiveRecord::Base
         new_item.calculate_totals
       end
     end
+  end
+
+  def from=(from)
+    write_attribute :from, DateTime.parse(from)
+  end
+
+  def to=(to)
+    write_attribute :to, DateTime.parse(to)
   end
 
   def pay
@@ -79,8 +88,20 @@ class Booking < ActiveRecord::Base
 
   def calculate_totals
     self.sum = booking_items.existing.sum(:sum)
+    self.sum *= self.duration
     self.refund_sum = booking_items.existing.sum(:refund_sum)
-    self.tax_sum = booking_items.existing.sum(:tax_sum)
+    self.taxes = {}
+    self.booking_items.each do |item|
+      item.taxes.each do |k,v|
+        if self.taxes.has_key? k
+          puts "self.taxes has key #{ k}"
+          self.taxes[k][:sum] += v[:sum]
+        else
+          puts "self.taxes does not have key #{ k}. assigning #{ v.inspect }"
+          self.taxes[k] = v
+        end
+      end
+    end
     save
   end
 
@@ -88,5 +109,9 @@ class Booking < ActiveRecord::Base
     self.hidden = true
     self.hidden_by = by_user_id
     save
+  end
+
+  def info_for_order_assignment
+    "#{ self.room.name } #{ self.customer.full_name if self.customer }"
   end
 end

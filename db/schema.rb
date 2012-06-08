@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608104237) do
+ActiveRecord::Schema.define(:version => 20120608174044) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -43,13 +43,14 @@ ActiveRecord::Schema.define(:version => 20120608104237) do
     t.integer  "company_id"
     t.integer  "guest_type_id"
     t.float    "sum",           :default => 0.0
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "count",         :default => 1
     t.integer  "hidden_by"
     t.float    "base_price"
     t.float    "refund_sum",    :default => 0.0
     t.float    "tax_sum",       :default => 0.0
+    t.string   "taxes",         :default => "--- {}\n"
   end
 
   create_table "booking_items_surcharges", :id => false, :force => true do |t|
@@ -67,8 +68,8 @@ ActiveRecord::Schema.define(:version => 20120608104237) do
     t.text     "note"
     t.integer  "vendor_id"
     t.integer  "company_id"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "room_id"
     t.boolean  "finished",     :default => false
     t.integer  "user_id"
@@ -78,6 +79,8 @@ ActiveRecord::Schema.define(:version => 20120608104237) do
     t.float    "tax_sum",      :default => 0.0
     t.integer  "nr"
     t.float    "change_given"
+    t.float    "duration"
+    t.string   "taxes",        :default => "--- {}\n"
   end
 
   create_table "cash_drawers", :force => true do |t|

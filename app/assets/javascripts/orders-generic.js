@@ -765,7 +765,7 @@ function add_payment_method(order_id) {
     });
   })();
   pm_row.append(pm_input);
-  $('#model_' + order_id + ' #payment_methods_container').append(pm_row);
+  $('#model_' + order_id + ' #payment_methods_container').prepend(pm_row);
 }
 
 function payment_method_input_change(element, uid, oid) {
@@ -778,7 +778,12 @@ function payment_method_input_change(element, uid, oid) {
     payment_method_total += v.amount;
   });
   submit_json.totals[oid].payment_methods = payment_method_total;
-  change = - ( submit_json.totals[oid].model - payment_method_total);
+  if (submit_json.totals[oid].hasOwnProperty('booking_orders')) {
+    booking_order_total  = submit_json.totals[oid].booking_orders;
+  } else {
+    booking_order_total = 0;
+  }
+  change = - ( submit_json.totals[oid].model + booking_order_total - payment_method_total);
   if (change < 0 ) { change = 0 };
   $('#change_' + oid).html(number_to_currency(change));
 }

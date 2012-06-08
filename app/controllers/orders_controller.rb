@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
     if params[:id] != 'last'
       @order = @current_vendor.orders.existing.find(params[:id])
     else
-      @order = @current_vendor.orders.existing.find_all_by_finished(true).last
+      @order = @current_vendor.orders.existing.find_all_by_paid(true).last
     end
     redirect_to '/' and return if not @order
     @previous_order, @next_order = neighbour_models('orders',@order)
@@ -75,8 +75,8 @@ class OrdersController < ApplicationController
           when 'change_cost_center'
             @order.update_attribute(:cost_center_id, params[:cost_center_id])
             render :nothing => true and return
-          when 'assign_to_room'
-            @order.update_attributes(:room_id => params[:room_id])
+          when 'assign_to_booking'
+            @order.update_attributes(:booking_id => params[:booking_id])
             @order.finish
             @order.print(['interim_bill'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
@@ -112,7 +112,7 @@ class OrdersController < ApplicationController
                 @order.print(['tickets'])
                 render :nothing => true and return
               when 'table' then
-                @order.finish
+                @order.pay
                 @order.print(['tickets'])
                 @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
                 if @orders.empty?
@@ -196,9 +196,7 @@ class OrdersController < ApplicationController
         render :js => "route('tables');" and return
       else
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-        @rooms = @current_vendor.rooms.existing.active.collect do |room|
-          return room if room.bookings.where("'finished' = FALSE AND 'from' > ? AND 'to' < ?", Time.now, Time.now).any?
-        end
+        @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
         @taxes = @current_vendor.taxes.existing
         @cost_centers = @current_vendor.cost_centers.existing.active
         render 'go_to_invoice_form' and return
@@ -214,7 +212,7 @@ class OrdersController < ApplicationController
           order_id = nil
           booking_id = associated_object.id
         end
-        params['payment_methods'].to_a.each do |pm|
+        params['payment_methods'][params['id']].to_a.each do |pm|
           PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
         end
       end
@@ -224,9 +222,8 @@ class OrdersController < ApplicationController
       @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
       @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
-      @rooms = @current_vendor.rooms.existing.active
+      @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
     end
-
 
     def reduce_stocks(order)
       order.items.exisiting.each do |item|

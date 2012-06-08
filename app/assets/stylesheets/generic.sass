@@ -403,9 +403,8 @@ div.booking_form
   div.surcharge_col.booking_item_total
     :font-weight bold !important
   
-  div#booking_subtotal
+  div#booking_total
     :font-size 150%
-    :margin 20px 0px
   
   div.booking_change
     :font-size 150%
@@ -446,7 +445,8 @@ div#ui-datepicker-div
         :width 20px
         :height 20px
         :padding 10px
-      a.ui-state-hover
+      a.ui-state-hover,
+      a.ui-state-highlight
         :background-color $billgastrogrey1
     td
       :background-color $billgastrogrey2

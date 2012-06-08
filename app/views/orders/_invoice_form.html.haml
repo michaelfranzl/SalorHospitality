@@ -31,10 +31,10 @@
       - elsif @current_user.role.permissions.include? 'assign_cost_center'
         %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-      - if @current_user.role.permissions.include? 'assign_order_to_room'
-        %select#order_id{ :onchange => "update_order({jsaction:'assign_to_room', room_id:$(this).val()});", :title => t('.set_room') }
+      - if @current_user.role.permissions.include? 'assign_order_to_booking'
+        %select#order_id{ :onchange => "update_order({jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
           %option
-          = options_from_collection_for_select(@rooms, :id, :name, (invoice_form.room.id if invoice_form.room))
+          = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
@@ -81,7 +81,7 @@
 
   function update_order(data) {
     data['currentview'] = 'invoice';
-    data['payment_methods'] = submit_json.payment_methods[#{oid}];
+    data['payment_methods'] = submit_json.payment_methods;
     data['id'] = #{oid};
     $.ajax({
       type: 'post',

@@ -42,8 +42,8 @@
   %input#permissions_assign_cost_center{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_cost_center', :checked => role_form.object.permissions.include?('assign_cost_center') }
   %label{ :for => 'permissions_assign_cost_center' }= t '.assign_cost_center'
   %br
-  %input#permissions_assign_order_to_room{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_order_to_room', :checked => role_form.object.permissions.include?('assign_order_to_room') }
-  %label{ :for => 'permissions_assign_order_to_room' }= t '.assign_order_to_room'
+  %input#permissions_assign_order_to_booking{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_order_to_booking', :checked => role_form.object.permissions.include?('assign_order_to_booking') }
+  %label{ :for => 'permissions_assign_order_to_booking' }= t '.assign_order_to_booking'
   %br
   %input#permissions_move_order{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'move_order', :checked => role_form.object.permissions.include?('move_order') }
   %label{ :for => 'permissions_move_order' }= t '.move_order'

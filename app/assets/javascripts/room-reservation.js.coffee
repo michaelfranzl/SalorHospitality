@@ -45,6 +45,7 @@ window.display_booking_form = (room_id) ->
   render_surcharge_header()
   booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
   booking_tools = create_dom_element 'div', {id:'booking_tools'}, '', booking_form
+  booking_totals = create_dom_element 'div', {id:'booking_totals'}, '', booking_form
   from_input = create_dom_element 'input', {type:'text',id:'booking_from'}, '', booking_tools
   from_input.datepicker {
     onSelect:(date, inst) ->
@@ -68,14 +69,13 @@ window.display_booking_form = (room_id) ->
   pay_link.on 'click', -> route 'rooms', room_id, 'pay'
   cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_tools
   cancel_link.on 'click', -> route 'rooms'
-  booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', booking_tools
-  create_dom_element 'div', {class:'booking_change'}, '', booking_tools
   render_season_buttons()
   render_guest_type_buttons()
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
+  create_dom_element 'div', {class:'booking_change'}, '', booking_totals
 
 
 calculate_booking_duration = ->
@@ -295,15 +295,16 @@ booking_item_total = (booking_item_id) ->
 
 
 update_booking_totals = ->
-  subtotal = 0
+  total = 0
   $.each items_json, (k,v) ->
-    subtotal += booking_item_total k
+    total += booking_item_total k
     true
-  subtotal *= submit_json.model.duration
-  $('#booking_subtotal').html number_to_currency subtotal
+  total *= submit_json.model.duration
+  $('#booking_total').html number_to_currency total
   booking_id = submit_json.id
-  submit_json.totals[booking_id].booking = subtotal
-  subtotal
+  $('#booking_subtotal').html number_to_currency total + submit_json.totals[booking_id].booking_orders
+  submit_json.totals[booking_id].model = total
+  total
 
 
 make_keyboardable = (element,open_on,accepted,layout) ->

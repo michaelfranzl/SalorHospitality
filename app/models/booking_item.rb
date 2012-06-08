@@ -6,6 +6,8 @@ class BookingItem < ActiveRecord::Base
   belongs_to :company
   belongs_to :guest_type
   has_and_belongs_to_many :surcharges
+  
+  serialize :taxes
 
   def surchargeslist=(ids)
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
@@ -18,6 +20,9 @@ class BookingItem < ActiveRecord::Base
 
   def calculate_totals
     self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+    self.guest_type.taxes.each do |tax|
+      self.taxes[tax.id] = {:percent => tax.percent, :sum => self.sum * ( tax.percent / 100.0 ) }
+    end
     self.sum = self.count * (self.base_price + self.surcharges.sum(:amount))
     save
   end
