@@ -7,6 +7,7 @@ class BookingItem < ActiveRecord::Base
   has_and_belongs_to_many :surcharges
 
   def surchargeslist=(ids)
+    ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     self.surcharges = []
     ids.each do |i|
       self.surcharges << Surcharge.find_by_id(i.to_i)

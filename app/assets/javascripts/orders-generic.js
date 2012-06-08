@@ -732,7 +732,10 @@ function add_payment_method(order_id) {
         $('#payment_method_row' + uid + ' span').removeClass('selected');
         $(this).addClass('selected');
         $('#payment_method_' + uid + '_amount').select();
-        if(settings.workstation) {$('.ui-keyboard-input').select();}
+        if(settings.workstation) {
+          $('#payment_method_'+ uid + '_amount').select();
+          //$('#payment_method_row'+ uid + ' .ui-keyboard-input').select();
+        }
       });
     })();
     pm_row.append(pm_button);
@@ -740,8 +743,9 @@ function add_payment_method(order_id) {
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
-  if (!settings.mobile) {
+  if (settings.workstation) {
     pm_input.keyboard({
+      openOn: 'click',
       accepted: function(){ 
         payment_method_input_change(pm_input, payment_method_uid, order_id)
       },
@@ -769,7 +773,7 @@ function payment_method_input_change(element, uid, oid) {
     payment_method_total += v.amount;
   });
   submit_json.totals[oid].payment_methods = payment_method_total;
-  change = - ( submit_json.totals[oid].order - payment_method_total);
+  change = - ( submit_json.totals[oid].model - payment_method_total);
   if (change < 0 ) { change = 0 };
   $('#change_' + oid).html(number_to_currency(change));
 }

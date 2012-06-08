@@ -2,14 +2,16 @@
   items_json = <%= raw @booking.booking_items_to_json %>;
   submit_json.id = <%= @booking.id %>;
   submit_json['payment_methods'] = {<%= @booking.id %>:{}};
-  submit_json['totals'] = {<%= @booking.id %>:{booking:<%= @booking.sum %>, payment_methods:0}};
+  submit_json['totals'] = {<%= @booking.id %>:{model:<%= @booking.sum %>, payment_methods:0}};
   $('.booking_form').attr('id', 'model_<%= @booking.id %>');
+  $('.booking_change').attr('id', 'change_<%= @booking.id %>');
   $('#add_payment_method_button').on('click', function() { add_payment_method(<%= @booking.id %>); });
   window.render_booking_items_from_json();
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};
-  submit_json['totals'] = {0:{booking:0, payment_methods:0}};
+  submit_json['totals'] = {0:{model:0, payment_methods:0}};
   $('#add_payment_method_button').on('click', function() { add_payment_method(0); });
   $('.booking_form').attr('id', 'model_0');
+  $('.booking_change').attr('id', 'change_0');
 <% end %>

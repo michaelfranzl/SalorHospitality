@@ -81,17 +81,17 @@ class OrdersController < ApplicationController
             @order.print(['interim_bill'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print'
-            create_payment_method_items
+            create_payment_method_items @order
             @order.pay
             @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print_pending'
-            create_payment_method_items
+            create_payment_method_items @order
             @order.pay
             @order.update_attribute :print_pending, true
             redirect_from_invoice and return
           when 'pay_and_no_print'
-            create_payment_method_items
+            create_payment_method_items @order
             @order.pay
             redirect_from_invoice and return
         end
@@ -167,9 +167,7 @@ class OrdersController < ApplicationController
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             @booking.pay
-            params['payment_methods'][params['id']].to_a.first.each do |pm|
-              PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => @booking.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
-            end
+            create_payment_method_items @booking
             if @booking.booking_items.size.zero?
               @booking.hide(@current_user.id)
             end
@@ -205,9 +203,18 @@ class OrdersController < ApplicationController
       end
     end
 
-    def create_payment_method_items
-      params['payment_methods'].to_a.each do |pm|
-        PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => @order.id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+    def create_payment_method_items(associated_object)
+      if params['payment_methods']
+        if associated_object.class == Order
+          order_id = associated_object.id
+          booking_id = nil
+        elsif associated_object.class == Booking
+          order_id = nil
+          booking_id = associated_object.id
+        end
+        params['payment_methods'].to_a.each do |pm|
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+        end
       end
     end
 

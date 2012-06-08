@@ -77,7 +77,7 @@
 
 :javascript
   submit_json.payment_methods[#{ oid }] = {};
-  submit_json.totals[#{ oid }] = {order:#{ invoice_form.sum }, payment_methods:0 };
+  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, payment_methods:0 };
 
   function update_order(data) {
     data['currentview'] = 'invoice';

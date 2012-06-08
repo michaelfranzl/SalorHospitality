@@ -144,7 +144,7 @@ class Item < ActiveRecord::Base
   end
 
   def optionslist=(optionslist)
-    optionslist.delete '0'
+    optionslist.delete '0' # 0 is sent by JS always, otherwise optionslist is not defined
     self.options = []
     optionslist.each do |o|
       self.options << Option.find_by_id(o.to_i)

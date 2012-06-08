@@ -49,18 +49,19 @@ window.display_booking_form = (room_id) ->
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
-  payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
-  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button'}, 'i18n add payment', booking_form
+  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, 'i18n add payment', booking_form
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_form}
-  submit_link = create_dom_element 'div', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_form
+  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_form
   submit_link.on 'click', ->
     route 'rooms', room_id, 'send'
-  cancel_link = create_dom_element 'div', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_form
+  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_form
   cancel_link.on 'click', ->
     route 'rooms'
-  pay_link = create_dom_element 'div', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_form
+  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_form
   pay_link.on 'click', ->
     route 'rooms', room_id, 'pay'
+  payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
+  create_dom_element 'span', {class:'booking_change'}, '', booking_form
 
 
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
@@ -202,7 +203,7 @@ render_booking_item = (booking_item_id) ->
 
 
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
-  set_json 'booking', booking_item_id, 'surchargeslist', []
+  set_json 'booking', booking_item_id, 'surchargeslist', [0]
   if $(element).attr('type') == 'radio'
     $.each items_json[booking_item_id].surcharges, (k,v) ->
       if v.radio_select
@@ -269,7 +270,7 @@ update_booking_totals = ->
     true
   $('#booking_subtotal').html number_to_currency subtotal
   booking_id = submit_json.id
-  submit_json.totals[booking_id] = {booking}
+  submit_json.totals[booking_id].booking = subtotal
   subtotal
 
 
