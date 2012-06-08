@@ -9,6 +9,12 @@ $billgastroblue1: #5b7682
 $billgastrogrey1: #243239
 $billgastrogrey2: #7E868A
 $warning: #74101b
+$violet: #80477d
+$orange: #ed8b00
+$pink: #cd0052
+$green: #75b10d
+$blue: #136880
+$blank: #27343b
 
 .errorExplanation
   :font-size small
@@ -364,11 +370,43 @@ input#customer_search_input
 
 span.textbutton
   :display inline-block
-  :margin 40px 10px 10px 10px
-  :padding 10px
   :border-top 2px solid #555
   :border-left 2px solid #555
   :border-right 2px solid #222
   :border-bottom 2px solid #222
   :background-color #3A474D
   :cursor pointer
+
+div.booking_form
+  span.textbutton#booking_pay
+    :background-color $pink
+  span.textbutton#booking_cancel
+    :background-color $blank
+  span.textbutton#booking_submit
+    :background-color $green
+    :color white
+  span.textbutton#add_payment_method_button
+    :background-color $blue
+  
+  div.guest_type,
+  div.season
+    :border-top 2px solid #555
+    :border-left 2px solid #555
+    :border-right 2px solid #222
+    :border-bottom 2px solid #222
+  
+  div.guest_type
+    :background-color $billgastroblue1
+  
+  div.season
+    :background-color $billgastrogrey1
+  
+  div.surcharge_col.booking_item_total
+    :font-weight bold !important
+  
+  div#booking_subtotal
+    :font-size 150%
+    :margin 20px 0px
+  
+  div.booking_change
+    :font-size 150%
