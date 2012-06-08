@@ -4,12 +4,6 @@
 #note_for_order= render 'note'
 
 - if workstation?
-  #customer_list
-    %h3= t 'activerecord.models.customer.other'
-    = text_field_tag 'customer_search'
-    %span#customer_search_display_keyboard.display_keyboard
-    #customer_list_target
-    %span.done{ :onclick => "$('#customer_list').slideUp();" }
   #tablesselect
     %h3= t :move_order_to_table
     %span.done{ :onclick => "$('#tablesselect').slideUp();" }

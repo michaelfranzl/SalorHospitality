@@ -744,13 +744,17 @@ function add_payment_method(order_id) {
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
   if (settings.workstation) {
-    pm_input.keyboard({
-      openOn: 'click',
-      accepted: function(){ 
-        payment_method_input_change(pm_input, payment_method_uid, order_id)
-      },
-      layout:'num'
-    });
+    (function(){
+      var uid = payment_method_uid;
+      var element = pm_input;
+      element.keyboard({
+        openOn: 'click',
+        accepted: function(){ 
+          payment_method_input_change(element, uid, order_id)
+        },
+        layout:'num'
+      });
+    })()
   }
   (function() {
     var uid = payment_method_uid;
@@ -1060,11 +1064,11 @@ function change_item_status(id,status) {
 /* ========================================================*/
 
 function add_customers_button() {
-  //if(_get('customers.button_added'))
-  //  return
+  if(_get('customers.button_added'))
+    return
   opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
   add_category_button(i18n.customers, opts);
-  //_set('customers.button_added',true);
+  _set('customers.button_added',true);
 }
 
 function highlight_button(element) {

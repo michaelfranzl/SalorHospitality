@@ -17,17 +17,14 @@
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
 .paper_invoice
-  %p= @current_vendor.name
-  %p= @current_vendor.invoice_subtitle
-  %p
-    = @current_vendor.address
-    %br
-    = @current_vendor.revenue_service_tax_number
-    %br
-    = @current_vendor.bank_account1
-    %br
-    = @current_vendor.bank_account2
-  
+  .vendor_details
+    = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html
+  .customer_details
+    - if @order.customer
+      %p= @order.customer.full_name
+ 
+  .clear
+
   %h1== #{ t 'invoice' } ##{ @order.nr }
   
   %p#cost_center== #{ CostCenter.model_name.human }: #{ (@order.cost_center.name if @order.cost_center) }
@@ -72,22 +69,38 @@
   
   %table.taxes
     %tr
-      %th.one= Tax.model_name.human
-      %th.two= Tax.human_attribute_name(:percent)
-      %th.three= t(:net)
-      %th.four= t(:value_added_tax)
-      %th.five= t(:gross)
+      %th.left= Tax.model_name.human
+      %th.left= Tax.human_attribute_name(:percent)
+      %th.right_wide= t(:net)
+      %th.right_wide= t(:value_added_tax)
+      %th.right_wide= t(:gross)
     - @current_vendor.taxes.existing.each do |tax|
       - fact = tax.percent/100.00
       - net = sum_taxes[tax.id]/(1.00+fact)
       - gro = sum_taxes[tax.id]
       - vat = gro-net
       %tr
-        %td.one= tax.letter
-        %td.two= number_to_percentage tax.percent, :precision => 0
-        %td.three= number_to_currency net
-        %td.four= number_to_currency vat
-        %td.five= number_to_currency gro
+        %td.left= tax.letter
+        %td.left= number_to_percentage tax.percent, :precision => 0
+        %td.right_wide= number_to_currency net
+        %td.right_wide= number_to_currency vat
+        %td.right_wide= number_to_currency gro
+
+  %p= PaymentMethodItem.model_name.human
+
+  %table.payment_methods
+    %tr
+      %th.left_wide= PaymentMethodItem.model_name.human
+      %th.right_wide= PaymentMethodItem.human_attribute_name :amount
+    - @order.payment_method_items.each do |pm|
+      %tr
+        %td.left_wide= pm.payment_method.name
+        %td.right_wide= number_to_currency pm.amount
+    %tr
+      %td.left_wide= Order.human_attribute_name :change_given
+      %td.right_wide= number_to_currency @order.change_given
+
+  .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html
 
 :javascript
   $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );

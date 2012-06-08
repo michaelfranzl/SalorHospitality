@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607185033) do
+ActiveRecord::Schema.define(:version => 20120608085759) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -707,37 +707,32 @@ ActiveRecord::Schema.define(:version => 20120607185033) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                           :default => "Bill Gastro"
-    t.string   "subdomain",                                      :default => "demo"
-    t.datetime "created_at",                                                                          :null => false
-    t.datetime "updated_at",                                                                          :null => false
-    t.string   "invoice_subtitle",                               :default => ""
-    t.string   "address",                                        :default => ""
-    t.string   "revenue_service_tax_number",                     :default => ""
-    t.string   "invoice_slogan1",                                :default => ""
-    t.string   "invoice_slogan2",                                :default => ""
-    t.string   "internet_address",                               :default => "www.billgastro.com"
-    t.string   "email",                                          :default => "office@billgastro.com"
-    t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",       :limit => 10000,    :default => "--- []\n"
+    t.string   "name",                                          :default => "Bill Gastro"
+    t.string   "subdomain",                                     :default => "demo"
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
+    t.integer  "largest_order_number",                          :default => 0
+    t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
     t.string   "country"
-    t.string   "bank_account1"
-    t.string   "bank_account2"
-    t.integer  "time_offset",                                    :default => 0
+    t.integer  "time_offset",                                   :default => 0
     t.string   "mode"
-    t.text     "resources_cache",            :limit => 16777215
+    t.text     "resources_cache",           :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                              :default => true
+    t.boolean  "use_order_numbers",                             :default => true
     t.integer  "company_id"
-    t.boolean  "active",                                         :default => true
+    t.boolean  "active",                                        :default => true
     t.boolean  "hidden"
     t.text     "rlogo_header"
     t.text     "rlogo_footer"
-    t.boolean  "ticket_item_separator",                          :default => true
-    t.boolean  "ticket_wide_font",                               :default => true
-    t.boolean  "ticket_tall_font",                               :default => true
-    t.boolean  "ticket_display_time_order",                      :default => true
+    t.boolean  "ticket_item_separator",                         :default => true
+    t.boolean  "ticket_wide_font",                              :default => true
+    t.boolean  "ticket_tall_font",                              :default => true
+    t.boolean  "ticket_display_time_order",                     :default => true
+    t.text     "receipt_header_blurb"
+    t.text     "receipt_footer_blurb"
+    t.text     "invoice_header_blurb"
+    t.text     "invoice_footer_blurb"
   end
 
 end

@@ -409,7 +409,7 @@ select
 
 
 input#print_invoice,
-input#split_invoice,
+input#split_e,
 input#storno_item,
 a#edit_invoice img,
 a#go_back img
@@ -477,6 +477,9 @@ div.scope
   :vertical-align top
 
 form.vendor_form
+  textarea
+    :width 200px
+    :height 100px
   label
     :display inline-block
     :width 180px
@@ -484,16 +487,9 @@ form.vendor_form
     :width 350px
   label.medium
     :width 100px
-  div.fields_left
-    :vertical-align top
-    :display inline-block
-    :width 60%
-  div#vendor_printers
-    :vertical-align top
-    :display inline-block
-    :width 30%px
-    label
-      :width 60px
+  table
+    td
+      :vertical-align top
 
 form.edit_role, form.new_role
   label
@@ -1042,7 +1038,13 @@ div.paper_invoice
   :margin 20px auto
   :-moz-box-shadow 0px 0px 15px black
   :-webkit-box-shadow 0px 0px 15px black
-  
+
+  div.vendor_details
+    :float left
+
+  div.customer_details
+    :float right
+
   table
     :width 100%
     :border 2px solid #7e868a
@@ -1066,27 +1068,28 @@ div.paper_invoice
       :width 80px
       :text-align right
       
-  table.taxes
-    :width 33%
+  table.taxes,
+  table.payment_methods
+    :width 40%
     :border 2px solid #7e868a
     :border-collapse collapse
     td, th
       :border 1px solid #7e868a
       :padding 3px
-    .one
+    .center
       :width 30px
       :text-align center
-    .two
+    .left
       :width 30px
       :text-align left
-    .three
-      :width 60px
+    .right_wide
+      :width 90px
       :text-align right
-    .four
-      :width 60px
+    .center_wide
+      :width 90px
       :text-align center
-    .five
-      :width 60px
+    .right_wide
+      :width 90px
       :text-align right
 
 
