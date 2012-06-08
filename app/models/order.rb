@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
   belongs_to :cost_center
   belongs_to :customer
   belongs_to :tax
-  belongs_to :room
+  belongs_to :booking
   has_many :items, :dependent => :destroy
   has_many :payment_method_items
   has_one :order
@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
 
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_order_number
+      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
     end
   end
 

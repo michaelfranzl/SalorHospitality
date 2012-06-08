@@ -38,6 +38,7 @@ class Vendor < ActiveRecord::Base
   has_many :payment_method_items
 
   serialize :unused_order_numbers
+  serialize :unused_booking_numbers
 
   validates_presence_of :name
 
@@ -62,21 +63,22 @@ class Vendor < ActiveRecord::Base
     write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s 
   end
 
-  def get_unique_order_number
-    return 0 if not self.use_order_numbers
-    if not self.unused_order_numbers.empty?
+  def get_unique_model_number(model_name_singular)
+    model_name_plural = model_name_singular + 's'
+    return 0 if not self.send("use_#{model_name_singular}_numbers")
+    if not self.send("unused_#{model_name_singular}_numbers").empty?
       # reuse order numbers if present
-      nr = self.unused_order_numbers.first
-      self.unused_order_numbers.delete(nr)
+      nr = self.send("unused_#{model_name_singular}_numbers").first
+      self.send("unused_#{model_name_singular}_numbers").delete(nr)
       self.save
-    elsif not self.largest_order_number.zero?
+    elsif not self.send("largest_#{model_name_singular}_number").zero?
       # increment largest order number
-      nr = self.largest_order_number + 1
-      self.update_attribute :largest_order_number, nr
+      nr = self.send("largest_#{model_name_singular}_number") + 1
+      self.update_attribute "largest_#{model_name_singular}_number", nr
     else
       # find Order with largest nr attribute from database. this should happen only once when a new db
-      last_order = self.orders.existing.where('nr is not NULL').last
-      nr = last_order ? last_order.nr + 1 : 1
+      last_model = self.send(model_name_plural).existing.where('nr is not NULL').last
+      nr = last_model ? last_model.nr + 1 : 1
     end
     return nr
   end

@@ -4,5 +4,4 @@ class Room < ActiveRecord::Base
   belongs_to :company
   belongs_to :room_type
   has_many :bookings
-  has_many :orders
 end

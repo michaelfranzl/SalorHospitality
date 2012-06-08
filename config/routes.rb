@@ -73,6 +73,12 @@ SalorGastro::Application.routes.draw do
     end
   end
 
+  resources :bookings do
+    collection do
+      post :by_nr
+    end
+  end
+
   match 'orders/storno/:id' => 'orders#storno'
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'

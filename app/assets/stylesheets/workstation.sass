@@ -1043,6 +1043,7 @@ div.paper_invoice
     :float left
 
   div.customer_details
+    :padding-top 100px
     :float right
 
   table
@@ -1052,21 +1053,23 @@ div.paper_invoice
     td, th
       :border 1px solid #7e868a
       :padding 3px
-    .one
-      :width 30px
-      :text-align center
-    .two
-      :width 200px
+    th
+      :background-color #DDD
+    .left
       :text-align left
-    .three
-      :width 80px
-      :text-align right
-    .four
-      :width 30px
+    .center
       :text-align center
-    .five
-      :width 80px
+    .right
       :text-align right
+    .right_wide
+      :width 90px
+      :text-align right
+    .center_wide
+      :width 90px
+      :text-align center
+    .left_wide
+      :width 90px
+      :text-align left
       
   table.taxes,
   table.payment_methods
@@ -1076,21 +1079,6 @@ div.paper_invoice
     td, th
       :border 1px solid #7e868a
       :padding 3px
-    .center
-      :width 30px
-      :text-align center
-    .left
-      :width 30px
-      :text-align left
-    .right_wide
-      :width 90px
-      :text-align right
-    .center_wide
-      :width 90px
-      :text-align center
-    .right_wide
-      :width 90px
-      :text-align right
 
 
 div#room1_button

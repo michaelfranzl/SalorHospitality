@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608085759) do
+ActiveRecord::Schema.define(:version => 20120608104237) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -61,21 +61,23 @@ ActiveRecord::Schema.define(:version => 20120608085759) do
     t.datetime "from"
     t.datetime "to"
     t.integer  "customer_id"
-    t.float    "sum",         :default => 0.0
+    t.float    "sum",          :default => 0.0
     t.boolean  "hidden"
-    t.boolean  "paid",        :default => false
+    t.boolean  "paid",         :default => false
     t.text     "note"
     t.integer  "vendor_id"
     t.integer  "company_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "room_id"
-    t.boolean  "finished",    :default => false
+    t.boolean  "finished",     :default => false
     t.integer  "user_id"
     t.integer  "season_id"
     t.integer  "hidden_by"
-    t.float    "refund_sum",  :default => 0.0
-    t.float    "tax_sum",     :default => 0.0
+    t.float    "refund_sum",   :default => 0.0
+    t.float    "tax_sum",      :default => 0.0
+    t.integer  "nr"
+    t.float    "change_given"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -376,9 +378,9 @@ ActiveRecord::Schema.define(:version => 20120608085759) do
     t.float    "tax_sum"
     t.integer  "hidden_by"
     t.boolean  "printed"
-    t.integer  "room_id"
     t.boolean  "paid"
     t.float    "change_given"
+    t.integer  "booking_id"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
@@ -733,6 +735,9 @@ ActiveRecord::Schema.define(:version => 20120608085759) do
     t.text     "receipt_footer_blurb"
     t.text     "invoice_header_blurb"
     t.text     "invoice_footer_blurb"
+    t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
+    t.integer  "largest_booking_number",                        :default => 0
+    t.boolean  "use_booking_numbers",                           :default => true
   end
 
 end

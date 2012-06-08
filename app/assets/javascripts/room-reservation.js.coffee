@@ -50,6 +50,22 @@ window.display_booking_form = (room_id) ->
   cancel_link.on 'click', -> route 'rooms'
   pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_form
   pay_link.on 'click', -> route 'rooms', room_id, 'pay'
+  from_input = create_dom_element 'input', {type:'text',id:'booking_from'}, '', booking_form
+  from_input.datepicker {
+    onSelect:(date, inst) ->
+               id = submit_json.id
+               submit_json.model['from'] = date
+  }
+  to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_form
+  to_input.datepicker {
+    onSelect:(date, inst) ->
+               id = submit_json.id
+               submit_json.model['to'] = date
+               calculate_booking_duration()
+  }
+  duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_form
+  duration_input.on 'click', -> $(this).select()
+  duration_input.on 'keyup', -> set_booking_duration()
   render_season_buttons()
   render_guest_type_buttons()
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
@@ -60,6 +76,20 @@ window.display_booking_form = (room_id) ->
   payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', booking_form
 
+
+calculate_booking_duration = ->
+  from = Date.parse(submit_json.model.from)
+  to = Date.parse(submit_json.model.to)
+  duration = Math.floor((to - from) / 86400000)
+  $('#booking_duration').val duration
+  submit_json.model.duration = duration
+  update_booking_totals()
+
+set_booking_duration = ->
+  duration = $('#booking_duration').val()
+  submit_json.model.duration = duration
+  update_booking_totals()
+  
 
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
 render_season_buttons = ->
@@ -268,6 +298,7 @@ update_booking_totals = ->
   $.each items_json, (k,v) ->
     subtotal += booking_item_total k
     true
+  subtotal *= submit_json.model.duration
   $('#booking_subtotal').html number_to_currency subtotal
   booking_id = submit_json.id
   submit_json.totals[booking_id].booking = subtotal

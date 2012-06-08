@@ -196,7 +196,9 @@ class OrdersController < ApplicationController
         render :js => "route('tables');" and return
       else
         @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-        @rooms = @current_vendor.rooms.existing.active
+        @rooms = @current_vendor.rooms.existing.active.collect do |room|
+          return room if room.bookings.where("'finished' = FALSE AND 'from' > ? AND 'to' < ?", Time.now, Time.now).any?
+        end
         @taxes = @current_vendor.taxes.existing
         @cost_centers = @current_vendor.cost_centers.existing.active
         render 'go_to_invoice_form' and return

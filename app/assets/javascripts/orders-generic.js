@@ -230,7 +230,7 @@ function route(target, model_id, action, options) {
     $('#areas').hide();
     $('#tables').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
     items_json = {};
     window.display_booking_form(model_id);
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items

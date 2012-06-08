@@ -2,11 +2,14 @@ class Booking < ActiveRecord::Base
   attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json
   include Scope
   has_many :booking_items
+  has_many :payment_method_items
+  has_many :orders
   belongs_to :room
   belongs_to :user
   belongs_to :vendor
   belongs_to :company
   belongs_to :season
+  belongs_to :customer
 
 
   def self.create_from_params(params, vendor, user)

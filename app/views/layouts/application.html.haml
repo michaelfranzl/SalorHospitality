@@ -18,6 +18,7 @@
     - if workstation?
       = javascript_include_tag 'application-workstation'
       = javascript_include_tag 'jquery.checkbox'
+      = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
       = javascript_include_tag 'jquery.modcoder.excolor'
     - if mobile?
       = javascript_include_tag 'application-mobile'

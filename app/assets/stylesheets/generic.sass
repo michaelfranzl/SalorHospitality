@@ -409,3 +409,46 @@ div.booking_form
   
   div.booking_change
     :font-size 150%
+
+
+// Datepicker
+div#ui-datepicker-div
+  :-moz-box-shadow 0px 0px 8px white
+  :-moz-border-radius 5px
+  :-webkit-box-shadow 0px 0px 8px white
+  :-webkit-border-radius 5px
+  :background-color $billgastroblue1
+  div.ui-datepicker-header
+    :-moz-border-radius 10px
+    :-webkit-border-radius 10px
+    :padding 10px
+    :background-color $billgastrogrey1
+    :font-size 150%
+    a.ui-datepicker-prev
+      :cursor pointer
+      :padding 10px
+      :float left
+    a.ui-datepicker-next
+      :cursor pointer
+      :padding 10px
+      :float right
+  div.ui-datepicker-title
+    :text-align center
+  table.ui-datepicker-calendar
+    :background-color $billgastroblue1
+    :padding 10px
+    td
+      a
+        :text-decoration none
+        :margin 4px
+        :display inline-block
+        :text-align center
+        :width 20px
+        :height 20px
+        :padding 10px
+      a.ui-state-hover
+        :background-color $billgastrogrey1
+    td
+      :background-color $billgastrogrey2
+    td.ui-datepicker-unselectable
+      :background-color transparent

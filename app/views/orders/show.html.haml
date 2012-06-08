@@ -21,8 +21,13 @@
     = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html
   .customer_details
     - if @order.customer
-      %p= @order.customer.full_name
- 
+      = @order.customer.company_name
+      %br
+      == #{ @order.customer.first_name } #{ @order.customer.last_name}
+      %br
+      = @order.customer.address
+      %br
+      == #{ @order.customer.postalcode } #{ @order.customer.city }
   .clear
 
   %h1== #{ t 'invoice' } ##{ @order.nr }

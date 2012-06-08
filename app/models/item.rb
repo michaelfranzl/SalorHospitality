@@ -194,7 +194,7 @@ class Item < ActiveRecord::Base
     split_order = parent_order.order
     if split_order.nil?
       split_order = Order.create(parent_order.attributes)
-      split_order.nr = vendor.get_unique_order_number
+      split_order.nr = vendor.get_unique_model_number('order')
       #sisr1 = split_order.save
       #raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
       parent_order.update_attribute :order, split_order  # make an association between parent and child

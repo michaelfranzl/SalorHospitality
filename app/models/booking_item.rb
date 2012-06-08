@@ -4,6 +4,7 @@ class BookingItem < ActiveRecord::Base
   belongs_to :booking
   belongs_to :vendor
   belongs_to :company
+  belongs_to :guest_type
   has_and_belongs_to_many :surcharges
 
   def surchargeslist=(ids)
