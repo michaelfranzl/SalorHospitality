@@ -42,39 +42,40 @@ window.render_rooms = ->
 
 # Called when clicking on a room. Serves as a replacement for HTML templates.
 window.display_booking_form = (room_id) ->
-  booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
   render_surcharge_header()
-  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_form
-  submit_link.on 'click', -> route 'rooms', room_id, 'send'
-  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_form
-  cancel_link.on 'click', -> route 'rooms'
-  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_form
-  pay_link.on 'click', -> route 'rooms', room_id, 'pay'
-  from_input = create_dom_element 'input', {type:'text',id:'booking_from'}, '', booking_form
+  booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
+  booking_tools = create_dom_element 'div', {id:'booking_tools'}, '', booking_form
+  from_input = create_dom_element 'input', {type:'text',id:'booking_from'}, '', booking_tools
   from_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['from'] = date
   }
-  to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_form
+  to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['to'] = date
                calculate_booking_duration()
   }
-  duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_form
+  duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
   duration_input.on 'click', -> $(this).select()
   duration_input.on 'keyup', -> set_booking_duration()
+  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_tools
+  submit_link.on 'click', -> route 'rooms', room_id, 'send'
+  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, 'i18n add payment', booking_tools
+  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_tools
+  pay_link.on 'click', -> route 'rooms', room_id, 'pay'
+  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_tools
+  cancel_link.on 'click', -> route 'rooms'
+  booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', booking_tools
+  create_dom_element 'div', {class:'booking_change'}, '', booking_tools
   render_season_buttons()
   render_guest_type_buttons()
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
-  booking_subtotal = create_dom_element 'div', {id:'booking_subtotal'}, '', surcharges_container
-  add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_form}
-  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, 'i18n add payment', booking_form
+  add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
-  create_dom_element 'div', {class:'booking_change'}, '', booking_form
 
 
 calculate_booking_duration = ->

@@ -716,6 +716,7 @@ function customer_list_update() {
 /* ========================================================*/
 
 function add_payment_method(order_id) {
+  $('#payment_methods_container').slideDown();
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
