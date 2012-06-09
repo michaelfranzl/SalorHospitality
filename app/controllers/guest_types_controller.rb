@@ -22,7 +22,7 @@ class GuestTypesController < ApplicationController
   def edit
     @guest_type = GuestType.accessible_by(@current_user).existing.find_by_id(params[:id])
     @taxes = @current_vendor.taxes.existing
-    @selected_taxes = @guest_type.taxes
+    @selected_taxes = @guest_type.taxes.collect{ |tax| tax.id }
     render :new
   end
 

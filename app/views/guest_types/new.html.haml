@@ -14,4 +14,4 @@
     = guest_type_form.text_field :name, :size => '20'
     %br
     = guest_type_form.label :taxes
-    = select_tag 'taxes', options_for_select(@taxes.collect{|t| ["#{t.name} (#{number_to_percentage t.percent})",t.id]}, @selected_taxes), :multiple => true
+    = select_tag 'guest_type[taxes_array][]', options_for_select(@taxes.collect{|t| ["#{t.name} (#{number_to_percentage t.percent})",t.id]}, @selected_taxes), :multiple => true

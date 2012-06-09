@@ -20,12 +20,11 @@ class BookingItem < ActiveRecord::Base
 
   def calculate_totals
     self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+    self.sum = self.count * (self.base_price + self.surcharges.sum(:amount))
     self.guest_type.taxes.each do |tax|
       self.taxes[tax.id] = {:percent => tax.percent, :sum => self.sum * ( tax.percent / 100.0 ) }
     end
-    self.sum = self.count * (self.base_price + self.surcharges.sum(:amount))
     save
   end
-
   
 end
