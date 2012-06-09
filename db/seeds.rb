@@ -197,7 +197,7 @@ Quantity.delete_all
     end
 
     category_labels.size.times do |i|
-      category = Category.new :name => category_labels[i], :tax_id => tax_objects[rand(tax_objects.size)].id, :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
+      category = Category.new :name => category_labels[i], :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
       category.company = company
       category.vendor = vendor
       category.preparation_user_id = user_objects.first.id
@@ -216,6 +216,7 @@ Quantity.delete_all
         
       2.times do |a|
         article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
+        article.taxes = [tax_objects[rand(3)]]
         article.category = category
         article.company = company
         article.vendor = vendor
