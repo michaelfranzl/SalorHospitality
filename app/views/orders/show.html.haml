@@ -35,6 +35,8 @@
   = render :partial => 'invoice_item_list', :locals => { :order => @order }
 
   %p= t '.list_of_taxes'
+  - @order.taxes.each do |k,v|
+    
   
   %table.taxes
     %tr
