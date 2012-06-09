@@ -5,12 +5,12 @@
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      %a{:onclick => "update_order({jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
+      %a{:onclick => "update_order({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
   - else
-    %a{ :onclick => "update_order({jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
+    %a{ :onclick => "update_order({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
 
   - if not invoice_form.finished
-    %a{ :onclick => "update_order({jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
+    %a{ :onclick => "update_order({id:#{oid},jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
 
 
 
@@ -19,20 +19,20 @@
       - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
       - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
       - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
-        %a{ :onclick => "update_order({jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
+        %a{ :onclick => "update_order({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
 
       %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
       - if session[:display_tax_colors]
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
           - if invoice_form.tax.nil?
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
       - elsif @current_user.role.permissions.include? 'assign_cost_center'
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
       - if @current_user.role.permissions.include? 'assign_order_to_booking'
-        %select#order_id{ :onchange => "update_order({jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
+        %select#order_id{ :onchange => "update_order({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
           %option
           = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
@@ -43,8 +43,11 @@
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? item.tax.color : '' }" }
-        %td.count= session[:display_tax_colors] ? item.tax.letter : item.count
+      - tax = @current_vendor.taxes.find_by_id(item.taxes.keys.first)
+      - color = tax.color
+      - letter = tax.letter
+      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? color : '' }" }
+        %td.count= session[:display_tax_colors] ? letter : item.count
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
@@ -82,7 +85,6 @@
   function update_order(data) {
     data['currentview'] = 'invoice';
     data['payment_methods'] = submit_json.payment_methods;
-    data['id'] = #{oid};
     $.ajax({
       type: 'post',
       url: '/orders/update_ajax',

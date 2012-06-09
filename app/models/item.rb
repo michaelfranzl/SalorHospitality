@@ -113,15 +113,15 @@ class Item < ActiveRecord::Base
     p
   end
 
-  def tax
-    t = Tax.find_by_id (read_attribute :tax_id)
-    return t if t
-    t = self.order.tax if self.order
-    return t if t
-    t = self.article.tax if self.article
-    return t if t
-    return self.article.category.tax if self.article
-  end
+#  def tax
+#    t = Tax.find_by_id (read_attribute :tax_id)
+#    return t if t
+#    t = self.order.tax if self.order
+#    return t if t
+#    t = self.article.tax if self.article
+#    return t if t
+#    return self.article.category.tax if self.article
+#  end
 
   def count=(count)
     c = count.to_i

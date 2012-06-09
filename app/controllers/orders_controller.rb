@@ -68,8 +68,13 @@ class OrdersController < ApplicationController
             prepare_objects_for_invoice
             render 'items/update' and return
           when 'mass_assign_tax'
-            @order.update_attribute :tax_id, params[:tax_id] 
-            @order.items.existing.update_all :tax_id => nil
+            #@order.update_attribute :tax_id, params[:tax_id] 
+            tax = @current_vendor.taxes.find_by_id(params[:tax_id])
+            @order.items.existing.each do |item|
+              item.taxes = { tax.id => { :percent => tax.percent, :sum => (item.sum * (tax.percent / 100.0)).round(2) }}
+              item.save
+            end
+            @order.calculate_totals
             prepare_objects_for_invoice
             render 'items/update' and return
           when 'change_cost_center'

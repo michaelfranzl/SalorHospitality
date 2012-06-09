@@ -24,6 +24,7 @@ class TablesController < ApplicationController
     @cost_centers = @current_vendor.cost_centers.existing.active
     @rooms = @current_vendor.rooms.existing.active
     @taxes = @current_vendor.taxes.existing
+    @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
     if params[:order_id] and not params[:order_id].empty?
       @order = @current_vendor.orders.find_by_id(params[:order_id])
       render 'orders/go_to_order_form'
