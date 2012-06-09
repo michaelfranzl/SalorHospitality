@@ -19,7 +19,10 @@ class Order < ActiveRecord::Base
   has_many :payment_method_items
   has_one :order
 
+  serialize :taxes
+
   after_save :hide_items
+
 
   validates_presence_of :user_id
 
@@ -85,7 +88,18 @@ class Order < ActiveRecord::Base
   def calculate_totals
     self.sum = items.existing.sum(:sum)
     self.refund_sum = items.existing.sum(:refund_sum)
-    self.tax_sum = items.existing.sum(:tax_sum)
+    #self.tax_sum = items.existing.sum(:tax_sum)
+    self.taxes = {}
+    self.items.each do |item|
+      item.taxes.each do |k,v|
+        if self.taxes.has_key? k
+          self.taxes[k][:sum] += v[:sum]
+          self.taxes[k][:sum] = self.taxes[k][:sum].round(2)
+        else
+          self.taxes[k] = v
+        end
+      end
+    end
     save
   end
 

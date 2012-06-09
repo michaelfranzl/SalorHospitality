@@ -7,12 +7,12 @@
 
 class Tax < ActiveRecord::Base
   include Scope
-  has_many :categories
   has_many :items
   has_many :orders
   belongs_to :company
   belongs_to :vendor
   has_and_belongs_to_many :guest_types
+  has_and_belongs_to_many :articles
 
   validates_presence_of :name, :percent
   validates_numericality_of :percent

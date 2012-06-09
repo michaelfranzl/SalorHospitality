@@ -65,6 +65,7 @@ class ArticlesController < ApplicationController
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
     redirect_to roles_path and return unless @article
+    @selected_taxes = @article.taxes.collect{ |tax| tax.id }
     @article ? render(:new) : redirect_to(articles_path)
   end
 

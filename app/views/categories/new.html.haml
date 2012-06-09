@@ -29,9 +29,6 @@
             = category_form.text_field :name, :size => '10'
             %span#category_name_display_keyboard.display_keyboard
           %p
-            = category_form.label :tax_id
-            = category_form.collection_select :tax_id, @taxes, :id, :custom_name, { :include_blank => true }
-          %p
             = category_form.label :user_id
             = category_form.collection_select :preparation_user_id, @users, :id, :login, { :include_blank => true }
           %p

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608174044) do
+ActiveRecord::Schema.define(:version => 20120609074415) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -36,6 +36,11 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
   add_index "articles", ["name", "description", "price"], :name => "index_articles_on_name_and_description_and_price"
   add_index "articles", ["position"], :name => "index_articles_on_position"
 
+  create_table "articles_taxes", :id => false, :force => true do |t|
+    t.integer "tax_id"
+    t.integer "article_id"
+  end
+
   create_table "booking_items", :force => true do |t|
     t.integer  "booking_id"
     t.boolean  "hidden"
@@ -49,7 +54,6 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.integer  "hidden_by"
     t.float    "base_price"
     t.float    "refund_sum",    :default => 0.0
-    t.float    "tax_sum",       :default => 0.0
     t.string   "taxes",         :default => "--- {}\n"
   end
 
@@ -76,7 +80,6 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.integer  "season_id"
     t.integer  "hidden_by"
     t.float    "refund_sum",   :default => 0.0
-    t.float    "tax_sum",      :default => 0.0
     t.integer  "nr"
     t.float    "change_given"
     t.float    "duration"
@@ -98,7 +101,6 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.integer  "tax_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "icon"
@@ -116,7 +118,6 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
   add_index "categories", ["name"], :name => "index_categories_on_name"
   add_index "categories", ["position"], :name => "index_categories_on_position"
-  add_index "categories", ["tax_id"], :name => "index_categories_on_tax_id"
   add_index "categories", ["vendor_printer_id"], :name => "index_categories_on_vendor_printer_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -289,8 +290,8 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.integer  "count",                            :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.integer  "position"
     t.integer  "quantity_id"
     t.string   "comment",                          :default => ""
@@ -321,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.integer  "cost_center_id"
     t.text     "scribe"
     t.text     "scribe_escpos"
+    t.string   "taxes",                            :default => "--- {}\n"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -362,8 +364,8 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.float    "sum",            :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
@@ -384,6 +386,7 @@ ActiveRecord::Schema.define(:version => 20120608174044) do
     t.boolean  "paid"
     t.float    "change_given"
     t.integer  "booking_id"
+    t.string   "taxes",          :default => "--- {}\n"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"

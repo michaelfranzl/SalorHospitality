@@ -19,6 +19,8 @@ class Item < ActiveRecord::Base
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
+  serialize :taxes
+
   alias_attribute :s, :position
   alias_attribute :o, :comment
   alias_attribute :p, :price
@@ -84,16 +86,20 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price
-    self.tax_percent = tax.percent
-    self.tax_id = self.tax.id if self.tax_id.nil?
+    #self.tax_percent = tax.percent
+    #self.tax_id = self.tax.id if self.tax_id.nil?
     self.category_id = article.category.id
     save
     if self.refunded
-      self.tax_sum = 0
+      #self.tax_sum = 0
       self.sum = 0
+      self.taxes = {}
     else
-      self.tax_sum = full_price * tax.percent / 100
       self.sum = full_price
+      self.taxes = {}
+      self.article.taxes.each do |tax|
+        self.taxes[tax.id] = {:percent => tax.percent, :sum => (self.sum * ( tax.percent / 100.0 )).round(2) }
+      end
     end
     save
   end
