@@ -1,4 +1,4 @@
-class SurchargeItems < ActiveRecord::Base
+class SurchargeItem < ActiveRecord::Base
   include Scope
   belongs_to :vendor
   belongs_to :company

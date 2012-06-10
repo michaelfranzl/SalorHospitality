@@ -613,13 +613,14 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "surcharge_items", :force => true do |t|
     t.integer "surcharge_id"
+    t.integer "booking_item_id"
     t.float   "amount"
     t.integer "vendor_id"
     t.integer "company_id"
     t.integer "season_id"
     t.integer "guest_type_id"
     t.boolean "hidden"
-    t.string  "taxes",         :limit => 1000, :default => "--- {}\n"
+    t.string  "taxes",           :limit => 1000, :default => "--- {}\n"
   end
 
   create_table "surcharges", :force => true do |t|

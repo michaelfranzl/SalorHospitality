@@ -89,7 +89,8 @@ class Booking < ActiveRecord::Base
       surcharges_hash = {}
       surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
       surcharges.each do |s|
-        selected = i.surcharges.include? s
+        booking_item_surcharges = i.surcharge_items.collect { |si| si.surcharge }
+        selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
       booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :surcharges => surcharges_hash }

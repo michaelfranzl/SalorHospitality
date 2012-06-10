@@ -2,6 +2,7 @@ class AddTaxesToSurcharges < ActiveRecord::Migration
   def up
     create_table :surcharge_items do |t|
       t.integer :surcharge_id
+      t.integer :booking_item_id
       t.float :amount
       t.integer :vendor_id
       t.integer :company_id

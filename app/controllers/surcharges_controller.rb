@@ -15,6 +15,7 @@ class SurchargesController < ApplicationController
     @surcharge.vendor = @current_vendor
     @surcharge.company = @current_company
     if @surcharge.save
+      @surcharge.calculate_totals
       redirect_to surcharges_path
     else
       @seasons = @current_vendor.seasons.existing
@@ -36,6 +37,7 @@ class SurchargesController < ApplicationController
     @surcharge = Surcharge.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to surcharges_path and return unless @surcharge
     if @surcharge.update_attributes(params[:surcharge])
+      @surcharge.calculate_totals
       if params[:surcharge][:radio_select] == '1'
         @surcharge.update_attribute(:radio_select, true)
       else

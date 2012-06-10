@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
       @current_user = User.find_by_id session[:user_id] if session[:user_id]
       @current_company = @current_user.company if @current_user
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
+      puts "666666666XXXXXXXXXXXXXXXX #{ @current_vendor.inspect }"
       session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
 
       # we need these for the history observer because we don't have control at the time
