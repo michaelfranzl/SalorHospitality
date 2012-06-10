@@ -81,8 +81,10 @@ class OrdersController < ApplicationController
             @order.update_attribute(:cost_center_id, params[:cost_center_id])
             render :nothing => true and return
           when 'assign_to_booking'
-            @order.update_attributes(:booking_id => params[:booking_id])
+            @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
+            @order.update_attributes(:booking_id => @booking.id)
             @order.finish
+            @booking.calculate_totals
             @order.print(['interim_bill'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print'
@@ -262,6 +264,7 @@ class OrdersController < ApplicationController
         @booking.update_from_params(params)
       else
         @booking = Booking.create_from_params(params, @current_vendor, @current_user)
+        @booking.set_nr
       end
     end
 end

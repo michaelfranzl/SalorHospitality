@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120609074415) do
+ActiveRecord::Schema.define(:version => 20120610085911) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -47,14 +47,14 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.integer  "guest_type_id"
-    t.float    "sum",           :default => 0.0
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.integer  "count",         :default => 1
+    t.float    "sum",                            :default => 0.0
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+    t.integer  "count",                          :default => 1
     t.integer  "hidden_by"
     t.float    "base_price"
-    t.float    "refund_sum",    :default => 0.0
-    t.string   "taxes",         :default => "--- {}\n"
+    t.float    "refund_sum",                     :default => 0.0
+    t.string   "taxes",         :limit => 10000, :default => "--- {}\n"
   end
 
   create_table "booking_items_surcharges", :id => false, :force => true do |t|
@@ -66,24 +66,24 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
     t.datetime "from"
     t.datetime "to"
     t.integer  "customer_id"
-    t.float    "sum",          :default => 0.0
+    t.float    "sum",                           :default => 0.0
     t.boolean  "hidden"
-    t.boolean  "paid",         :default => false
+    t.boolean  "paid",                          :default => false
     t.text     "note"
     t.integer  "vendor_id"
     t.integer  "company_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.integer  "room_id"
-    t.boolean  "finished",     :default => false
+    t.boolean  "finished",                      :default => false
     t.integer  "user_id"
     t.integer  "season_id"
     t.integer  "hidden_by"
-    t.float    "refund_sum",   :default => 0.0
+    t.float    "refund_sum",                    :default => 0.0
     t.integer  "nr"
     t.float    "change_given"
     t.float    "duration"
-    t.string   "taxes",        :default => "--- {}\n"
+    t.string   "taxes",        :limit => 10000, :default => "--- {}\n"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -287,28 +287,28 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "count",                            :default => 1
+    t.integer  "count",                                :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                               :null => false
-    t.datetime "updated_at",                                               :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.integer  "position"
     t.integer  "quantity_id"
-    t.string   "comment",                          :default => ""
+    t.string   "comment",                              :default => ""
     t.float    "price"
-    t.integer  "printed_count",       :limit => 1, :default => 0
+    t.integer  "printed_count",       :limit => 1,     :default => 0
     t.integer  "item_id"
     t.integer  "tax_id"
-    t.integer  "max_count",                        :default => 0
+    t.integer  "max_count",                            :default => 0
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
-    t.string   "preparation_comment",              :default => ""
+    t.string   "preparation_comment",                  :default => ""
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
-    t.string   "delivery_comment",                 :default => ""
+    t.string   "delivery_comment",                     :default => ""
     t.boolean  "hidden"
     t.integer  "category_id"
     t.float    "tax_percent"
@@ -322,7 +322,7 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
     t.integer  "cost_center_id"
     t.text     "scribe"
     t.text     "scribe_escpos"
-    t.string   "taxes",                            :default => "--- {}\n"
+    t.string   "taxes",               :limit => 10000, :default => "--- {}\n"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -360,20 +360,20 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
   add_index "options", ["option_id"], :name => "index_options_on_option_id"
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",       :default => false
+    t.boolean  "finished",                        :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.float    "sum",            :default => 0.0
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.float    "sum",                             :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
     t.string   "printed_from"
     t.integer  "nr"
     t.integer  "tax_id"
     t.boolean  "print_pending"
-    t.float    "refund_sum",     :default => 0.0
+    t.float    "refund_sum",                      :default => 0.0
     t.integer  "company_id"
     t.string   "note"
     t.integer  "customer_id"
@@ -386,7 +386,7 @@ ActiveRecord::Schema.define(:version => 20120609074415) do
     t.boolean  "paid"
     t.float    "change_given"
     t.integer  "booking_id"
-    t.string   "taxes",          :default => "--- {}\n"
+    t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"

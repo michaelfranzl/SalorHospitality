@@ -1,5 +1,5 @@
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration
+  attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration, :taxes, :change_given
   include Scope
   has_many :booking_items
   has_many :payment_method_items
@@ -26,6 +26,12 @@ class Booking < ActiveRecord::Base
     end
     booking.save
     return booking
+  end
+
+  def set_nr
+    if self.nr.nil?
+      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
+    end
   end
 
   def update_from_params(params)
@@ -56,7 +62,10 @@ class Booking < ActiveRecord::Base
 
   def pay
     self.finish
-    self.update_attribute :paid, true
+    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
+    self.change_given = 0 if self.change_given < 0
+    self.paid = true
+    self.save
   end
 
   def finish
@@ -94,10 +103,21 @@ class Booking < ActiveRecord::Base
     self.booking_items.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          puts "self.taxes has key #{ k}"
-          self.taxes[k][:sum] += v[:sum]
+          self.taxes[k][:tax] += v[:tax]
+          self.taxes[k][:gro] += v[:gro]
+          self.taxes[k][:net] += v[:net]
         else
-          puts "self.taxes does not have key #{ k}. assigning #{ v.inspect }"
+          self.taxes[k] = v
+        end
+      end
+    end
+    self.orders.each do |order|
+      order.taxes.each do |k,v|
+        if self.taxes.has_key? k
+          self.taxes[k][:gro] += v[:gro]
+          self.taxes[k][:net] += v[:net]
+          self.taxes[k][:tax] += v[:tax]
+        else
           self.taxes[k] = v
         end
       end

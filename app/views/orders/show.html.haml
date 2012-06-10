@@ -18,7 +18,7 @@
 
 .paper_invoice
   .vendor_details
-    = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html
+    = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
   .customer_details
     - if @order.customer
       = @order.customer.company_name
@@ -34,28 +34,7 @@
   
   = render :partial => 'invoice_item_list', :locals => { :order => @order }
 
-  %p= t '.list_of_taxes'
-  - @order.taxes.each do |k,v|
-    
-  
-  %table.taxes
-    %tr
-      %th.left= Tax.model_name.human
-      %th.left= Tax.human_attribute_name(:percent)
-      %th.right_wide= t(:net)
-      %th.right_wide= t(:value_added_tax)
-      %th.right_wide= t(:gross)
-    - @current_vendor.taxes.existing.each do |tax|
-      - fact = tax.percent/100.00
-      - net = 0 #sum_taxes[tax.id]/(1.00+fact)
-      - gro = 0 #sum_taxes[tax.id]
-      - vat = gro-net
-      %tr
-        %td.left= tax.letter
-        %td.left= number_to_percentage tax.percent, :precision => 0
-        %td.right_wide= number_to_currency net
-        %td.right_wide= number_to_currency vat
-        %td.right_wide= number_to_currency gro
+  = render :partial => '/shared/invoice_tax_list', :locals => { :model => @order }
 
   %p= PaymentMethodItem.model_name.human
 
@@ -71,7 +50,7 @@
       %td.left_wide= Order.human_attribute_name :change_given
       %td.right_wide= number_to_currency @order.change_given
 
-  .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html
+  .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html if @order.vendor.invoice_footer_blurb
 
 :javascript
   $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );

@@ -1,0 +1,15 @@
+%h4= t '.list_of_taxes'
+%table.taxes
+  %tr
+    %th.left= Tax.model_name.human
+    %th.left= Tax.human_attribute_name(:percent)
+    %th.right_wide= t(:net)
+    %th.right_wide= t(:value_added_tax)
+    %th.right_wide= t(:gross)
+  - model.taxes.each do |k,v|
+    %tr
+      %td.left= v[:letter]
+      %td.left= number_to_percentage v[:percent]
+      %td.right_wide= number_to_currency v[:net]
+      %td.right_wide= number_to_currency v[:tax]
+      %td.right_wide= number_to_currency v[:gro]

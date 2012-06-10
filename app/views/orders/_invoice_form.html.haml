@@ -75,8 +75,8 @@
         %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  %div{ :id => "payment_methods_container" }
-    %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
+  %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
+  %div{ :id => "payment_methods_container_#{oid}" }
 
 :javascript
   submit_json.payment_methods[#{ oid }] = {};

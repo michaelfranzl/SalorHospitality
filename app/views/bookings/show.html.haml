@@ -18,7 +18,7 @@
 
 .paper_invoice
   .vendor_details
-    = raw Kramdown::Document.new(@booking.vendor.invoice_header_blurb).to_html
+    = raw Kramdown::Document.new(@booking.vendor.invoice_header_blurb).to_html if @booking.vendor.invoice_header_blurb
   .customer_details
     - if @booking.customer
       = @booking.customer.company_name
@@ -32,47 +32,15 @@
 
   %h1== #{ t 'invoice' } #B#{ @booking.nr }
   
-  %p= t 'served_by_X', :user => @booking.user.title
-  %p= l @booking.created_at, :format => :long
   
+  = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
   
-  %table
-    %tr
-      %th.left= GuestType.model_name.human
-      %th.left= RoomType.model_name.human
-      %th.left= Season.model_name.human
-      %th.right= BookingItem.human_attribute_name :base_price
-      %th.right= BookingItem.human_attribute_name :count
-      %th.right= BookingItem.human_attribute_name :sum
-  
-    - sum_taxes = Hash.new
-    - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
-  
-    - @booking.booking_items.existing.each do |item|
-      %tr
-        %td.left= item.guest_type.name
-        %td.left= item.booking.room.room_type.name
-        %td.left= item.booking.season.name
-        %td.right= number_to_currency item.base_price
-        %td.center= item.count
-        %td.right= number_to_currency item.base_price * item.count
-        - item.surcharges.each do |s|
-          %tr
-            %td.left= item.guest_type.name
-            %td.left{ :colspan => 2 }= s.name
-            %td.right= number_to_currency s.amount
-            %td.center= item.count
-            %td.right= number_to_currency s.amount * item.count
-    %tr
-      %td{ :colspan => 5 }= t :sum
-      %td.right= number_to_currency @booking.sum
 
   - @booking.orders.each do |order|
     %h3== #{ Order.model_name.human } #{ order.nr }
     = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
   
-  %p= t '.list_of_taxes'
-  
+  = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
 
   %p= PaymentMethodItem.model_name.human
 
@@ -88,7 +56,7 @@
       %td.left= Booking.human_attribute_name :change_given
       %td.right= number_to_currency @booking.change_given
 
-  .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html
+  .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
 
 :javascript
   $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );

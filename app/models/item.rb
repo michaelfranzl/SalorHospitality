@@ -98,7 +98,10 @@ class Item < ActiveRecord::Base
       self.sum = full_price
       self.taxes = {}
       self.article.taxes.each do |tax|
-        self.taxes[tax.id] = {:percent => tax.percent, :sum => (self.sum * ( tax.percent / 100.0 )).round(2), :letter => tax.letter, :name => tax.name }
+        tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
+        gro = (self.sum).round(2)
+        net = (gro - tax_sum).round(2)
+        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
       end
     end
     save

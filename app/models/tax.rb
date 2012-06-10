@@ -14,7 +14,7 @@ class Tax < ActiveRecord::Base
   has_and_belongs_to_many :guest_types
   has_and_belongs_to_many :articles
 
-  validates_presence_of :name, :percent
+  validates_presence_of :name, :percent, :letter
   validates_numericality_of :percent
 
   def custom_name

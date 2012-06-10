@@ -93,8 +93,10 @@ class Order < ActiveRecord::Base
     self.items.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:sum] += v[:sum]
-          self.taxes[k][:sum] = self.taxes[k][:sum].round(2)
+          self.taxes[k][:tax] += v[:tax]
+          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
+          self.taxes[k][:gro] += (v[:gro]).round(2)
+          self.taxes[k][:net] += (v[:net]).round(2)
         else
           self.taxes[k] = v
         end
@@ -195,8 +197,6 @@ class Order < ActiveRecord::Base
   def finish
     self.updated_at = Time.now
     self.finished = true
-    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
-    self.change_given = 0 if self.change_given < 0
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
     save
     unlink
@@ -204,7 +204,10 @@ class Order < ActiveRecord::Base
 
   def pay
     self.finish
-    self.update_attribute :paid, true
+    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
+    self.change_given = 0 if self.change_given < 0
+    self.paid = true
+    self.save
   end
 
   def print(what, vendor_printer=nil)

@@ -237,21 +237,23 @@ Quantity.delete_all
       end
     end
 
-    puts "Creating Tax #{c} #{v}"
-    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id
+    puts " Creating Hotel Tax #{c} #{v}"
+    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
     room_type_objects = Array.new
     guest_type_objects = Array.new
     4.times do |i|
-      puts "Creating RoomType, Room, GuestType #{c} #{v}"
+      puts " Creating RoomType #{c} #{v} #{i}"
       rt = RoomType.create :name => "RoomType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
       room_type_objects << rt
+      puts " Creating Room #{c} #{v} #{i}"
       Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
+      puts " Creating GustType #{c} #{v} #{i}"
       gt = GuestType.create :name => "GuestType #{company.id} #{vendor.id} #{i}", :vendor_id => vendor.id, :company_id => company.id
       gt.taxes << local_tax if i == 1
       gt.save
       guest_type_objects << gt
     end
-    puts "Creating Seasons for #{c} #{v}"
+    puts " Creating Seasons for #{c} #{v}"
     s1 = Season.create :name => 'Summer', :from => Date.parse('2012-06-21'), :to => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
     s2 = Season.create :name => 'Autumn', :from => Date.parse('2012-09-21'), :to => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
     s3 = Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
@@ -261,7 +263,7 @@ Quantity.delete_all
     4.times do |i|
       4.times do |j|
         4.times do |k|
-          puts "Creating RoomPrice #{c} #{v} #{i} #{j} #{k}"
+          puts " Creating RoomPrice #{c} #{v} #{i} #{j} #{k}"
           RoomPrice.create :season_id => season_objects[k].id, :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (2 * i + 3 * j + 5 * k) * 10 + 3, :vendor_id => vendor.id, :company_id => company.id
         end
       end

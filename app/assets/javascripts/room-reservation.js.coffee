@@ -57,7 +57,7 @@ window.display_booking_form = (room_id) ->
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['to'] = date
-               calculate_booking_duration()
+               window.calculate_booking_duration()
   }
   duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
   duration_input.on 'click', -> $(this).select()
@@ -74,11 +74,11 @@ window.display_booking_form = (room_id) ->
   surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
-  payment_methods_container = create_dom_element 'div', {id:'payment_methods_container'}, '', booking_form
+  payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', booking_totals
 
 
-calculate_booking_duration = ->
+window.calculate_booking_duration = ->
   from = Date.parse(submit_json.model.from)
   to = Date.parse(submit_json.model.to)
   duration = Math.floor((to - from) / 86400000)

@@ -9,6 +9,7 @@
   $('#booking_to').val('<%= @booking.to.strftime("%Y-%m-%d") if @booking.to %>');
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
   $('#add_payment_method_button').on('click', function() { add_payment_method(<%= @booking.id %>); });
+  $('.payment_methods_container').attr('id', 'payment_methods_container_' + <%= @booking.id %>);
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
   window.render_booking_items_from_json();
 <% else %>
@@ -16,6 +17,12 @@
   submit_json['payment_methods'] = {0:{}};
   submit_json['totals'] = {0:{model:0, payment_methods:0}};
   $('#add_payment_method_button').on('click', function() { add_payment_method(0); });
+  $('.payment_methods_container').attr('id', 'payment_methods_container_0');
+  $('#booking_from').val('<%= Time.now.strftime("%Y-%m-%d") %>');
+  submit_json.model.from = '<%= Time.now.strftime("%Y-%m-%d") %>';
+  $('#booking_to').val('<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>');
+  submit_json.model.to = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
+  window.calculate_booking_duration();
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
 <% end %>
