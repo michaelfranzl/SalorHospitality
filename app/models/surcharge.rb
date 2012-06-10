@@ -4,5 +4,13 @@ class Surcharge < ActiveRecord::Base
   belongs_to :company
   belongs_to :season
   belongs_to :guest_type
-  has_and_belongs_to_many :booking_items
+  has_many :surcharge_items
+  has_many :taxes, :through => :tax_amounts
+  has_many :tax_amounts
+
+  serialize :taxes
+
+  accepts_nested_attributes_for :tax_amounts, :allow_destroy => true, :reject_if => proc { |attrs| attrs['amount'] == '' }
+
+  validates_presence_of :name, :season_id, :guest_type_id, :tax_amounts
 end

@@ -5,7 +5,7 @@ class BookingItem < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :company
   belongs_to :guest_type
-  has_and_belongs_to_many :surcharges
+  has_many :surcharge_items
 
   serialize :taxes
 

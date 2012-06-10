@@ -13,6 +13,8 @@ class Tax < ActiveRecord::Base
   belongs_to :vendor
   has_and_belongs_to_many :guest_types
   has_and_belongs_to_many :articles
+  has_many :surcharges, :through => :tax_amounts
+  has_many :tax_amounts
 
   validates_presence_of :name, :percent, :letter
   validates_numericality_of :percent

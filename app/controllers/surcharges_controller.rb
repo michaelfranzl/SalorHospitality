@@ -7,6 +7,7 @@ class SurchargesController < ApplicationController
     @surcharge = Surcharge.new
     @guest_types = @current_vendor.guest_types.existing
     @seasons = @current_vendor.seasons.existing
+    @taxes = @current_vendor.taxes.existing
   end
 
   def create
@@ -16,6 +17,9 @@ class SurchargesController < ApplicationController
     if @surcharge.save
       redirect_to surcharges_path
     else
+      @seasons = @current_vendor.seasons.existing
+      @taxes = @current_vendor.taxes.existing
+      @guest_types = @current_vendor.guest_types.existing
       render(:new)
     end
   end
@@ -24,6 +28,7 @@ class SurchargesController < ApplicationController
     @surcharge = Surcharge.accessible_by(@current_user).existing.find_by_id(params[:id])
     @guest_types = @current_vendor.guest_types.existing
     @seasons = @current_vendor.seasons.existing
+    @taxes = @current_vendor.taxes.existing
     render :new
   end
 
@@ -38,6 +43,7 @@ class SurchargesController < ApplicationController
       end
       redirect_to(surcharges_path)
     else
+      @taxes = @current_vendor.taxes.existing
       render(:new)
     end
   end

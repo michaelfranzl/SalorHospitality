@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610085911) do
+ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -55,11 +55,6 @@ ActiveRecord::Schema.define(:version => 20120610085911) do
     t.float    "base_price"
     t.float    "refund_sum",                     :default => 0.0
     t.string   "taxes",         :limit => 10000, :default => "--- {}\n"
-  end
-
-  create_table "booking_items_surcharges", :id => false, :force => true do |t|
-    t.integer "booking_item_id"
-    t.integer "surcharge_id"
   end
 
   create_table "bookings", :force => true do |t|
@@ -616,6 +611,17 @@ ActiveRecord::Schema.define(:version => 20120610085911) do
   add_index "stocks", ["company_id"], :name => "index_stocks_company_id"
   add_index "stocks", ["group_id"], :name => "index_stocks_on_group_id"
 
+  create_table "surcharge_items", :force => true do |t|
+    t.integer "surcharge_id"
+    t.float   "amount"
+    t.integer "vendor_id"
+    t.integer "company_id"
+    t.integer "season_id"
+    t.integer "guest_type_id"
+    t.boolean "hidden"
+    t.string  "taxes",         :limit => 1000, :default => "--- {}\n"
+  end
+
   create_table "surcharges", :force => true do |t|
     t.string   "name"
     t.integer  "season_id"
@@ -661,6 +667,15 @@ ActiveRecord::Schema.define(:version => 20120610085911) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tax_amounts", :force => true do |t|
+    t.integer "surcharge_id"
+    t.integer "tax_id"
+    t.float   "amount"
+    t.integer "vendor_id"
+    t.boolean "hidden"
+    t.integer "company_id"
   end
 
   create_table "taxes", :force => true do |t|
