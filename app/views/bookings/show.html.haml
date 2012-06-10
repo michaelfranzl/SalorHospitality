@@ -34,11 +34,12 @@
   
   
   = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
-  
 
   - @booking.orders.each do |order|
     %h3== #{ Order.model_name.human } #{ order.nr }
     = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
+
+  %p.subtotal= number_to_currency @booking.sum
   
   = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
 

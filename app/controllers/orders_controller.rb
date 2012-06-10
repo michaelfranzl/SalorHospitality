@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
     case params[:currentview]
       when 'refund', 'show'
         @order = get_model
-        @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
+        @order.print(['receipt'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
         render :nothing => true and return
       when 'invoice'
         @order = get_model
@@ -85,12 +85,12 @@ class OrdersController < ApplicationController
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
             @booking.calculate_totals
-            @order.print(['interim_bill'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            #@order.print(['interim_receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print'
             create_payment_method_items @order
             @order.pay
-            @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print_pending'
             create_payment_method_items @order
@@ -101,6 +101,16 @@ class OrdersController < ApplicationController
             create_payment_method_items @order
             @order.pay
             redirect_from_invoice and return
+        end
+      when 'invoice_paper'
+        @order = get_model
+        case params['jsaction']
+          when 'just_print'
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render :nothing => true and return
+          when 'mark_print_pending'
+            @order.update_attribute :print_pending, true
+            render :nothing => true and return
         end
       when 'table'
         case params['jsaction']
@@ -140,9 +150,9 @@ class OrdersController < ApplicationController
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             if local_variant? and not @order.hidden
-              @order.print(['tickets','invoice'], @current_vendor.vendor_printers.existing.first)
+              @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
             elsif saas_variant? and not @order.hidden
-              @order.print(['invoice'])
+              @order.print(['receipt'])
             end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
@@ -165,7 +175,7 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            if @booking.booking_items.size.zero?
+            unless @booking.booking_items.existing.any?
               @booking.hide(@current_user.id)
             end
             render :js => "route('rooms');" and return
@@ -173,11 +183,8 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            @booking.pay
             create_payment_method_items @booking
-            if @booking.booking_items.size.zero?
-              @booking.hide(@current_user.id)
-            end
+            @booking.pay
             render :js => "route('rooms');" and return
         end
     end
@@ -202,10 +209,7 @@ class OrdersController < ApplicationController
         @order.table.update_attribute :user, nil if @orders.empty?
         render :js => "route('tables');" and return
       else
-        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-        @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
-        @taxes = @current_vendor.taxes.existing
-        @cost_centers = @current_vendor.cost_centers.existing.active
+        prepare_objects_for_invoice
         render 'go_to_invoice_form' and return
       end
     end
@@ -225,12 +229,6 @@ class OrdersController < ApplicationController
       end
     end
 
-    def prepare_objects_for_invoice
-      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-      @cost_centers = @current_vendor.cost_centers.existing.active
-      @taxes = @current_vendor.taxes.existing
-      @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
-    end
 
     def reduce_stocks(order)
       order.items.exisiting.each do |item|

@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   def show
     if params[:id] != 'last'
-      @booking = @current_vendor.bookings.existing.find(params[:id])
+      @booking = @current_vendor.bookings.existing.find_by_id(params[:id])
     else
       @booking = @current_vendor.bookings.existing.find_all_by_finished(true).last
     end

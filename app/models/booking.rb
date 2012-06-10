@@ -62,6 +62,8 @@ class Booking < ActiveRecord::Base
 
   def pay
     self.finish
+    puts self.sum
+    puts self.payment_method_items.sum(:amount)
     self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
     self.change_given = 0 if self.change_given < 0
     self.paid = true
@@ -96,27 +98,27 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = booking_items.existing.sum(:sum)
-    self.sum *= self.duration
+    self.sum = self.duration * self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:tax] += v[:tax]
-          self.taxes[k][:gro] += v[:gro]
-          self.taxes[k][:net] += v[:net]
+          self.taxes[k][:tax] += v[:tax].round(2)
+          self.taxes[k][:gro] += v[:gro].round(2)
+          self.taxes[k][:net] += v[:net].round(2)
         else
           self.taxes[k] = v
         end
       end
     end
+    self.sum += Order.where(:booking_id => self.id).sum(:sum)
     self.orders.each do |order|
       order.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:gro] += v[:gro]
-          self.taxes[k][:net] += v[:net]
-          self.taxes[k][:tax] += v[:tax]
+          self.taxes[k][:gro] += v[:gro].round(2)
+          self.taxes[k][:net] += v[:net].round(2)
+          self.taxes[k][:tax] += v[:tax].round(2)
         else
           self.taxes[k] = v
         end

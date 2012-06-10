@@ -21,15 +21,11 @@ class TablesController < ApplicationController
   def show
     @table = get_model
     redirect_to roles_path and return unless @table
-    @cost_centers = @current_vendor.cost_centers.existing.active
-    @rooms = @current_vendor.rooms.existing.active
-    @taxes = @current_vendor.taxes.existing
-    @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
+    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])
     if params[:order_id] and not params[:order_id].empty?
       @order = @current_vendor.orders.find_by_id(params[:order_id])
       render 'orders/go_to_order_form'
     else
-      @orders = @current_vendor.orders.existing.where(:table_id => @table.id, :finished => false )
       if @orders.size > 1
         render 'orders/go_to_invoice_form'
       else

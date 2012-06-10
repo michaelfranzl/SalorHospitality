@@ -40,11 +40,7 @@ class ItemsController < ApplicationController
 
     @item.split
 
-    @cost_centers = @current_vendor.cost_centers.existing
-    @taxes = @current_vendor.taxes.existing
-    @rooms = @current_vendor.rooms.existing
-    @bookings = @current_vendor.bookings.where("'finished' = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
-    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+    prepare_objects_for_invoice
   end
 
   # We'll use edit for separation of items in the refund form

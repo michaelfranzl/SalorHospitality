@@ -75,7 +75,7 @@ window.display_booking_form = (room_id) ->
   surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
-  create_dom_element 'div', {class:'booking_change'}, '', booking_totals
+  create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
 
 window.calculate_booking_duration = ->
@@ -98,12 +98,12 @@ render_season_buttons = ->
   $.each resources.sn, (id,v) ->
     sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
     sbutton.on 'click', ->
-      change_season(id)
+      window.change_season(id)
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
 
-change_season = (id) ->
+window.change_season = (id) ->
   submit_json.model.season_id = id
   sbutton = $('#season_' + id)
   $('.season').removeClass 'selected'
@@ -226,7 +226,7 @@ render_booking_item = (booking_item_id) ->
       if items_json[booking_item_id].surcharges[header].selected
         input_tag.attr 'checked', true
         input_tag.parent().addClass 'selected'
-  create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
+  booking_item_row = create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
   update_booking_totals()
 
 

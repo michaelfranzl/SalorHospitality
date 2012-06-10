@@ -6,7 +6,7 @@ class BookingItem < ActiveRecord::Base
   belongs_to :company
   belongs_to :guest_type
   has_and_belongs_to_many :surcharges
-  
+
   serialize :taxes
 
   def surchargeslist=(ids)
@@ -18,6 +18,10 @@ class BookingItem < ActiveRecord::Base
     self
   end
 
+  def hide
+    self.update_attribute :hidden, true
+  end
+
   def calculate_totals
     self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
     self.sum = self.count * (self.base_price + self.surcharges.sum(:amount))
@@ -27,6 +31,7 @@ class BookingItem < ActiveRecord::Base
       net = (gro - tax_sum).round(2)
       self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
     end
+    self.hide if self.count.zero?
     save
   end
   
