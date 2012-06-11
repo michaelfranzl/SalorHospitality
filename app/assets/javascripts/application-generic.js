@@ -76,3 +76,10 @@ function toggle_all_option_checkboxes(source) {
     $('input.category_checkbox:checkbox').attr('checked',false);
   }
 }
+
+function date_as_ymd(date) {
+  return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+}
+function get_date(str) {
+  return new Date(Date.parse(str));
+}

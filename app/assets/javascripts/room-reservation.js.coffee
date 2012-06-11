@@ -2,6 +2,7 @@
 $ ->
   connect 'salor_hotel.refresh_db', 'ajax.update_resources.success', window.update_salor_hotel_db
   connect 'salor_hotel.refresh_rooms', 'ajax.update_resources.success', window.render_rooms
+  connect 'salor_hotel.booking_send','send.booking', window.update_room_bookings
   if window.openDatabase
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
   # hotel_add_price_form_button()
@@ -25,13 +26,77 @@ window.update_salor_hotel_db = ->
     $.each resources.rp, (k,v) ->
       tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, season_id, base_price) VALUES (?,?,?,?,?);', [k, v.gt, v.rt, v.sn, v.p]
 
-
+window.update_room_bookings = (event) ->
+  # packet == submit_json
+  b = event.packet.model
+  booking = {f: b['from'], t:b['to'], cid: b['customer_id'], sid: b['season_id'], d:b['duration'] }
+  resources.r[b.room_id].bks.push(booking)
+window.update_bookings_for_room = (id,bookings) ->
+  resources.r[id].bks = []
+  for b in bookings
+    booking = {f: b['from'], t:b['to'], cid: b['customer_id'], sid: b['season_id'], d:b['duration'] }
+    resources.r[id].bks.push(booking)
+window.is_booked = (booking,date) ->
+  if not booking
+    return false
+  fday = get_date(booking["f"]).getDate()
+  fmonth = get_date(booking["f"]).getMonth()
+  tday = get_date(booking["t"]).getDate()
+  tmonth = get_date(booking["t"]).getMonth()
+  month = date.getMonth()
+  day = date.getDate()
+  if fmonth == date.getMonth() or tmonth == date.getMonth()
+    if day >= fday and day <= tday
+      return true
+  return false
+window.render_booking_lines = ->
+  $('.booking-line').remove();
+  num_rooms = Object.keys(resources.r).length
+  width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
+  css = {width: width}
+  now = new Date(Date.parse($('#show_booking_from').val()))
+  i = 1
+  while i < 32
+    x = 1
+    d = new Date(now.getFullYear(),now.getMonth(), now.getDate() + i - 1)
+    r = create_dom_element 'div', {class: 'room-header left booking-line', id: 'booking_date_' + i }, d.getDate(), $('#rooms')
+    r.css(css)
+    while x < num_rooms + 1
+      bookings = resources.r[x].bks
+      booked = false
+      for booking in bookings
+        if is_booked(booking,d)
+          booked = true
+      if booked
+        r = create_dom_element 'div', {class: 'room-header booking-line room-header-occupied', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms')
+      else
+        r = create_dom_element 'div', {class: 'room-header booking-line', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms')
+      r.css(css)
+      x++
+    i++
 # Updates the visual room buttons. Hooked into update_resources of the main app.
 window.render_rooms = ->
+  if _get('rooms.rendered')
+    console.log 'Rooms already rendered'
+    return
   $('#rooms').html ''
+  num_rooms = Object.keys(resources.r).length
+  width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
+  css = {width: width}
+  room = $ document.createElement 'div'
+  room.addClass 'room-header'
+  room.css(css)
+  $('#rooms').append room
+  from_input = create_dom_element 'input', {type:'text',id:'show_booking_from', value: date_as_ymd(new Date())}, '', room
+  from_input.datepicker {
+    onSelect: (date, inst) ->
+      console.log 'date selected'
+      render_booking_lines()
+  }
   $.each resources.r, (k,v) ->
     room = $ document.createElement 'div'
-    room.addClass 'room'
+    room.addClass 'room-header'
+    room.css(css)
     room.html v.n
     room.on 'click', ->
       route 'room', k
@@ -39,6 +104,8 @@ window.render_rooms = ->
       submit_json.model.room_id = k
       submit_json.model.room_type_id = v.rt
     $('#rooms').append room
+  _set('rooms.rendered',true)
+  render_booking_lines()
 
 # Called when clicking on a room. Serves as a replacement for HTML templates.
 window.display_booking_form = (room_id) ->

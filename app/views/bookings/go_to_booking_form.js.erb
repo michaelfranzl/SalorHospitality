@@ -1,3 +1,6 @@
+<% if @bookings %>
+  update_bookings_for_room(<%= @room.id %>, <%= raw @bookings.to_json %>);
+<% end %>
 <% if @booking %>
   items_json = <%= raw @booking.booking_items_to_json %>;
   submit_json.id = <%= @booking.id %>;

@@ -11,7 +11,8 @@ class RoomsController < ApplicationController
   def show
     @room = get_model
     redirect_to rooms_path and return unless @room
-    @booking = @room.bookings.existing.where(:finished => false).last
+    @bookings = @room.bookings.existing.where(:finished => false)
+    @booking = @bookings.last
     render 'bookings/go_to_booking_form'
   end
 

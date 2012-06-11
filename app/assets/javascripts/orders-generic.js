@@ -209,6 +209,7 @@ function route(target, model_id, action, options) {
       send_json('booking_' + model_id);
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
+      emit("send.booking",submit_json);
       send_json('booking_' + model_id);
     } else if (action == 'pay') {
       submit_json.jsaction = 'pay';
