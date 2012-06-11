@@ -10,28 +10,40 @@ class BookingItem < ActiveRecord::Base
   serialize :taxes
 
   def surchargeslist=(ids)
-    puts "111111111111111 #{ @current_vendor.inspect }"
+    # Rails loses session and params for this function if surcharges are selected in the UI
+    #puts "XXXXXXXXXXXXXXXX #{@current_vendor.inspect}"
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
-    surcharge_items = []
+    self.surcharge_items.update_all :hidden => true
+
+    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id}.uniq
+    puts "XXXXXX existing_surcharge_ids #{existing_surcharge_ids.inspect}"
+
     ids.each do |i|
-      s = Surcharge.find_by_id(i.to_i)
-      puts "XXXXXXXXXXXXXXXX #{ @current_vendor.inspect }"
-      surcharge_item = SurchargeItem.new :amount => s.amount, :vendor_id => @current_vendor.id, :company_id => @current_company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id
-      surcharge_item_taxes = {}
-      s.tax_amounts.each do |ta|
-        tax_object = ta.tax
-        tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2)
-        gro = (ta.amount).round(2)
-        net = (gro - tax_sum).round(2)
-        surcharge_item.taxes[tax_object.id] = {:percent => tax_object.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax_object.letter, :name => tax_object.name }
+      puts "XXXXX sid = #{i}"
+      if existing_surcharge_ids.include? i.to_i
+        self.surcharge_items.where(:surcharge_id => i).update_all :hidden => false # this should always update just one SurchargeItem
+        puts "XXXXXX Don't create SurchargeItem for surcharge##{i}. Just set hidden to false."
+        existing_surcharge_ids.delete i.to_i
+      else
+        puts "XXXXXX Create SurchargeItem for surcharge##{i}"
+        s = Surcharge.find_by_id(i.to_i)
+        surcharge_item = SurchargeItem.new :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
+
+        surcharge_item_taxes = {}
+        s.tax_amounts.each do |ta|
+          tax_object = ta.tax
+          tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2)
+          gro = (ta.amount).round(2)
+          net = (gro - tax_sum).round(2)
+          surcharge_item.taxes[tax_object.id] = {:percent => tax_object.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax_object.letter, :name => tax_object.name }
+        end
+      end
+      existing_surcharge_ids.each do |id|
+        puts "XXXXXX hiding surcharge_items for surcharge##{id}"
+        self.surcharge_items.where(:surcharge_id => id).update_all :hidden => true
       end
       surcharge_item.save
     end
-    self
-  end
-
-  def surchargeslist
-    return "nothing"
   end
 
   def hide

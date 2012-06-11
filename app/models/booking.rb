@@ -19,7 +19,7 @@ class Booking < ActiveRecord::Base
     booking.vendor = vendor
     booking.company = vendor.company
     params[:items].to_a.each do |item_params|
-      new_item = BookingItem.new(item_params[1])
+      new_item = BookingItem.create(item_params[1])
       booking.booking_items << new_item
       booking.save
       new_item.calculate_totals
@@ -89,7 +89,7 @@ class Booking < ActiveRecord::Base
       surcharges_hash = {}
       surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
       surcharges.each do |s|
-        booking_item_surcharges = i.surcharge_items.collect { |si| si.surcharge }
+        booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
