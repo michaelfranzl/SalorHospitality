@@ -1,5 +1,5 @@
-category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv','Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
-category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif','nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
+category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
+category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
 countries = ['en','at','fr','es','pl','hu']
 languages = ['en','gn','fr','es','pl','hu']
@@ -10,6 +10,7 @@ tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
 category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
 user_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b','#BBBBBB','#000000','#d9d43d','#801212']
 vendor_printer_labels = ['Bar','Kitchen','Guestroom']
+payment_method_names = ['Cash', 'Card', 'Other']
 user_array = {
   'Superuser' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
   'Owner' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
@@ -19,6 +20,10 @@ user_array = {
   'Auxiliary Waiter' => ['take_orders','decrement_items','finish_orders'],
   'Restaurant' => ['take_orders']
   }
+radio_surcharge_names = ['Breakfast','Dinner','Full']
+checkbox_surcharge_names = ['Additional Bed']
+common_surcharge_names = ['1 Night', '2 Night']
+surcharge_amounts = [6, 12, 22, -5]
 
 Order.delete_all
 Item.delete_all
@@ -143,13 +148,33 @@ Quantity.delete_all
     end
 
     cost_center_objects = Array.new
-    cost_center_names.size do |i|
+    cost_center_names.size.times do |i|
       cost_center = CostCenter.new :name => "CC #{ c }#{ v }#{ i }", :active => true
       cost_center.company = company
       cost_center.vendor = vendor
       r = cost_center.save
       cost_center_objects << cost_center
       puts "Cost Center #{ c } #{ v } #{ i } created" if r == true
+    end
+
+    customer_objects = Array.new
+    10.times do |i|
+      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i
+      customer.company = company
+      customer.vendor = vendor
+      r = customer.save
+      customer_objects << customer
+      puts "Customer #{ c } #{ v } #{ i } created" if r == true
+    end
+
+    payment_method_objects = Array.new
+    payment_method_names.size.times do |i|
+      pm = PaymentMethod.new :name => "#{ payment_method_names[i] }#{c}#{v}#{i}"
+      pm.company = company
+      pm.vendor = vendor
+      r = pm.save
+      payment_method_objects << pm
+      puts "PaymentMethod #{ c } #{ v } #{ i } created" if r == true
     end
 
     user_objects = Array.new
@@ -172,7 +197,7 @@ Quantity.delete_all
     end
 
     category_labels.size.times do |i|
-      category = Category.new :name => category_labels[i], :tax_id => tax_objects[rand(tax_objects.size)].id, :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
+      category = Category.new :name => category_labels[i], :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
       category.company = company
       category.vendor = vendor
       category.preparation_user_id = user_objects.first.id
@@ -189,10 +214,9 @@ Quantity.delete_all
         puts "Option #{ c } #{ v } #{ i } #{ o } created" if r == true
       end
         
- 
-
       2.times do |a|
         article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
+        article.taxes = [tax_objects[rand(3)]]
         article.category = category
         article.company = company
         article.vendor = vendor
@@ -209,6 +233,58 @@ Quantity.delete_all
             r = quantity.save
             puts "Quantity #{ c } #{ v } #{ i } #{ a } #{ q } created" if r == true
           end
+        end
+      end
+    end
+
+    puts " Creating Hotel Tax #{c} #{v}"
+    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
+    room_type_objects = Array.new
+    guest_type_objects = Array.new
+    4.times do |i|
+      puts " Creating RoomType #{c} #{v} #{i}"
+      rt = RoomType.create :name => "RoomType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      room_type_objects << rt
+      puts " Creating Room #{c} #{v} #{i}"
+      Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
+      puts " Creating GustType #{c} #{v} #{i}"
+      gt = GuestType.create :name => "GuestType #{company.id} #{vendor.id} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      gt.taxes << local_tax if i == 1
+      gt.save
+      guest_type_objects << gt
+    end
+    puts " Creating Seasons for #{c} #{v}"
+    s1 = Season.create :name => 'Summer', :from => Date.parse('2012-06-21'), :to => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2 = Season.create :name => 'Autumn', :from => Date.parse('2012-09-21'), :to => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3 = Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4 = Season.create :name => 'Spring', :from => Date.parse('2012-03-21'), :to => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    season_objects = [s1,s2,s3,s4]
+
+    4.times do |i|
+      4.times do |j|
+        4.times do |k|
+          puts " Creating RoomPrice #{c} #{v} #{i} #{j} #{k}"
+          RoomPrice.create :season_id => season_objects[k].id, :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (2 * i + 3 * j + 5 * k) * 10 + 3, :vendor_id => vendor.id, :company_id => company.id
+        end
+      end
+    end
+
+    season_objects.size.times do |x|
+      guest_type_objects.size.times do |y|
+        radio_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{radio_surcharge_names[z]}"
+          surcharge = Surcharge.new :name => radio_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => true
+          tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 1 + x + y + z, :tax_id => tax_objects[rand(3)].id
+          surcharge.tax_amounts = [tax_amount]
+          surcharge.save
+        end
+        checkbox_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{checkbox_surcharge_names[z]}"
+          Surcharge.create :name => checkbox_surcharge_names[z], :amount => x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+        end
+        common_surcharge_names.size.times do |z|
+          puts "Creating Surcharge #{common_surcharge_names[z]}"
+          Surcharge.create :name => common_surcharge_names[z], :amount => 3 + x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
         end
       end
     end

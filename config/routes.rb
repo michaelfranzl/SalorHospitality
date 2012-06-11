@@ -1,4 +1,5 @@
-BillGastro::Application.routes.draw do
+SalorGastro::Application.routes.draw do
+  #mount SalorHotel::Engine, :at => "salor_hotel"
   get "reservations/fetch"
   get "orders/attach_coupon"
   get "orders/attach_discount"
@@ -72,6 +73,12 @@ BillGastro::Application.routes.draw do
     end
   end
 
+  resources :bookings do
+    collection do
+      post :by_nr
+    end
+  end
+
   match 'orders/storno/:id' => 'orders#storno'
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
@@ -82,7 +89,13 @@ BillGastro::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports
+  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports, :payment_methods
+  resources :surcharges
+  resources :room_prices
+  resources :rooms
+  resources :room_types
+  resources :seasons
+  resources :guest_types
 
   resources :companies do
     get :logo
@@ -193,6 +206,7 @@ BillGastro::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'orders#index'
+
 
   # See how all your routes lay out with "rake routes"
 

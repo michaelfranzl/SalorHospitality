@@ -1,0 +1,16 @@
+%h2= t('activerecord.models.season.other')
+
+%p= link_to((t :new), new_season_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:120px' }= Season.human_attribute_name(:name)
+    %th{ :style => 'width:120px' }= Season.human_attribute_name(:from)
+    %th{ :style => 'width:120px' }= Season.human_attribute_name(:to)
+    %th{ :style => 'width:50px' }
+  - @seasons.each do |g|
+    %tr
+      %td= link_to g.name, edit_season_path(g)
+      %td= g.from
+      %td= g.to
+      %td= link_to image_tag('button_small_delete.png', :title => Season.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), season_path(g), :method => :delete, :confirm => t(:are_you_sure)

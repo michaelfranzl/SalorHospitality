@@ -12,6 +12,7 @@
 var new_order = true;
 var option_position = 0;
 var item_position = 0;
+var payment_method_uid = 0;
 
 var resources = {};
 var plugin_callbacks_done = [];
@@ -43,7 +44,7 @@ $(function(){
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
   if (!_get('customers.button_added'))
-    connect('customers_entry_hook','after.go_to.table',add_customers_category);
+    connect('customers_entry_hook','after.go_to.table',add_customers_button);
 })
 
 
@@ -56,6 +57,7 @@ $(function(){
 function emit(msg,packet) {
   $('body').triggerHandler({type: msg, packet:packet});
 }
+
 function connect(unique_name,msg,fun) {
   var pcd = _get('plugin_callbacks_done');
   if (!pcd)
@@ -73,14 +75,53 @@ function _set(name,value) {
   return $.data(document.body,name,value);
 }
 
-function go_to(table_id, target, action, order_id, target_table_id) {
-  emit('before.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+function route(target, model_id, action, options) {
+  emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   scroll_to($('#container'),20);
-  debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
+  //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
+  // ========== GO TO TABLES ===============
+  if ( target == 'tables' ) {
+    submit_json.target = 'tables';
+    $('#orderform').hide();
+    $('#invoices').hide();
+    $('#items_notifications').hide();
+    $('#tables').show();
+    $('#rooms').hide();
+    //$('#order_cancel_button').show();
+    $('#functions_header_index').show();
+    $('#functions_header_order_form').hide();
+    $('#functions_header_invoice_form').hide();
+    $('#functions_footer').hide();
+    $('#customer_list').hide();
+    $('#tablesselect').hide();
+    if (action == 'destroy') {
+      submit_json.model.hidden = true;
+      submit_json.jsaction = 'send';
+      send_json('table_' + model_id);
+    } else if (action == 'send') {
+      submit_json.jsaction = 'send';
+      submit_json.model.note = $('#order_note').val();
+      send_json('table_' + model_id);
+    } else if (action == 'move') {
+      $(".tablesselect").slideUp();
+      submit_json.jsaction = 'move';
+      submit_json.target_table_id = options.target_table_id;
+      send_json('table_' + model_id);
+    } else {
+      submit_json = {};
+      items_json = {};
+    }
+    screenlock_counter = settings.screenlock_timeout;
+    option_position = 0;
+    item_position = 0;
+    counter_update_tables = timeout_update_tables;
+    update_tables();
+    submit_json.currentview = 'tables';
+
   // ========== GO TO TABLE ===============
-  if ( target == 'table' ) {
+  } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.order = {table_id:table_id};
+    submit_json.model = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -90,31 +131,34 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
+      submit_json.model.note = $('#order_note').val();
+      send_json('table_' + model_id);
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
-      submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
-    } else if (action != 'no_queue' && submit_json_queue.hasOwnProperty(table_id)) {
-      debug('Items from Queue');
+      submit_json.model.note = $('#order_note').val();
+      send_json('table_' + model_id);
+    } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
-      submit_json = submit_json_queue[table_id];
-      items_json = items_json_queue[table_id];
-      delete submit_json_queue[table_id];
-      delete items_json_queue[table_id];
-      //if (items_json_queue.hasOwnProperty(table_id)) { alert('error'); }
+      submit_json = submit_json_queue['table_' + model_id];
+      items_json = items_json_queue['table_' + model_id];
+      delete submit_json_queue['table_' + model_id];
+      delete items_json_queue['table_' + model_id];
       render_items();
-    } else {
-      submit_json = {order:{table_id:table_id}};
+    } else if (action == 'specific_order') {
+      submit_json = {model:{table_id:model_id}};
       items_json = {};
-      var oid = (typeof(order_id) == 'undefined') ? '' : order_id;
-      $.ajax({ type: 'GET', url: '/tables/' + table_id + '?order_id=' + oid, timeout: 5000 }); //this repopulates items_json and renders items
+      $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+    } else {
+      submit_json = {model:{table_id:model_id}};
+      items_json = {};
+      $.ajax({ type: 'GET', url: '/tables/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     }
     $('#orderform').show();
     $('#invoices').hide();
     $('#tables').hide();
     $('#items_notifications').hide();
+    $('#areas').hide();
     $('#rooms').hide();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
@@ -124,52 +168,14 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     counter_update_tables = -1;
     submit_json.currentview = 'table';
 
-  // ========== GO TO TABLES ===============
-  } else if ( target == 'tables') {
-    submit_json.target = 'tables';
-    $('#orderform').hide();
-    $('#invoices').hide();
-    $('#items_notifications').hide();
-    $('#tables').show();
-    $('#rooms').show();
-    $('#order_cancel_button').show();
-    $('#functions_header_index').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_footer').hide();
-    $('#customer_list').hide();
-    $('#tablesselect').hide();
-    if (action == 'destroy') {
-      submit_json.order.hidden = true;
-      submit_json.jsaction = 'send';
-      send_json(table_id);
-    } else if (action == 'send') {
-      submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
-      send_json(table_id);
-    } else if (action == 'move') {
-      $(".tablesselect").slideUp();
-      submit_json.jsaction = 'move';
-      submit_json.target_table_id = target_table_id;
-      send_json(table_id);
-    } else {
-      submit_json = {};
-      items_json = {};
-    }
-    screenlock_counter = settings.screenlock_timeout;
-    option_position = 0;
-    item_position = 0;
-    counter_update_tables = timeout_update_tables;
-    submit_json.currentview = 'tables';
-
   // ========== GO TO INVOICE ===============
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.order.note = $('#order_note').val();
-      submit_json.order = {table_id:table_id};
-      send_json(table_id);
+      submit_json.model.note = $('#order_note').val();
+      submit_json.model = {table_id:model_id};
+      send_json('table_' + model_id);
     }
     $('#invoices').html('');
     $('#invoices').show();
@@ -185,46 +191,86 @@ function go_to(table_id, target, action, order_id, target_table_id) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
+    submit_json['payment_methods'] = {};
+    submit_json['totals'] = {};
     submit_json.currentview = 'invoice';
-  } else {
-    debug('go_to called with unknown target');
+
+  // ========== GO TO ROOMS ===============
+  } else if ( target == 'rooms' ) {
+    submit_json.target = 'rooms';
+    $('#booking_form').hide();
+    $('#tables').hide();
+    $('#areas').hide();
+    $('#rooms').show();
+    $('#functions_header_index').show();
+    if (action == 'destroy') {
+      submit_json.model.hidden = true;
+      submit_json.jsaction = 'send';
+      send_json('booking_' + model_id);
+    } else if (action == 'send') {
+      submit_json.jsaction = 'send';
+      send_json('booking_' + model_id);
+    } else if (action == 'pay') {
+      submit_json.jsaction = 'pay';
+      send_json('booking_' + model_id);
+    } else {
+      submit_json = {};
+      items_json = {};
+    }
+    $('.booking_form').remove();
+    screenlock_counter = settings.screenlock_timeout;
+    option_position = 0;
+    item_position = 0;
+    counter_update_tables = timeout_update_tables;
+    submit_json.currentview = 'rooms';
+
+  // ========== GO TO ROOM ===============
+  } else if ( target == 'room' ) {
+    $('#rooms').hide();
+    $('#areas').hide();
+    $('#tables').hide();
+    $('#functions_header_index').hide();
+    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    items_json = {};
+    window.display_booking_form(model_id);
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
   }
-  emit('after.go_to.' + target, {action: action,table_id:table_id,order_id:order_id,target_table_id:target_table_id});
+  emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
 
 /* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
-function send_json(table_id) {
+function send_json(object_id) {
   // copy main jsons to queue
-  submit_json_queue[table_id] = submit_json;
-  items_json_queue[table_id] = items_json;
+  submit_json_queue[object_id] = submit_json;
+  items_json_queue[object_id] = items_json;
   // reset main jsons
-  submit_json = {order:{}};
+  submit_json = {model:{}};
   items_json = {};
   // send the queue
-  send_queue(table_id);
+  send_queue(object_id);
 }
 
-function send_queue(table_id) {
-  debug('SEND QUEUE table ' + table_id);
+function send_queue(object_id) {
+  debug('SEND QUEUE table ' + object_id);
   $.ajax({
     type: 'post',
     url: '/orders/update_ajax',
-    data: submit_json_queue[table_id],
+    data: submit_json_queue[object_id],
     timeout: 20000,
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
         debug("TIMEOUT from server");
       } else if (status == 'success') {
-        clear_queue(table_id);
+        clear_queue(object_id);
       } else if (status == 'error') {
         debug('ERROR from server: ' + JSON.stringify(data));
-        clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        clear_queue(object_id); // server is not really offline, so no offline behaviour.
       } else if (status == 'parsererror') {
         debug('Parser error from server: ' + data);
-        clear_queue(table_id); // server is not really offline, so no offline behaviour.
+        clear_queue(object_id); // server is not really offline, so no offline behaviour.
       }
     }
   });
@@ -243,7 +289,7 @@ function display_queue() {
     var link = $(document.createElement('a'));
     link.attr('id','queue_'+k);
     var div = $(document.createElement('div'));
-    div.html('Re-send table ' + k);
+    div.html('Re-send ' + k);
     (function(){
       var id = k;
       link.on('click', function() {
@@ -260,8 +306,7 @@ function display_queue() {
 /* ============ JSON POPULATING AND MANAGING ===============*/
 /* =========================================================*/
 
-function create_json_record(object) {
-  debug('Creating json record');
+function create_json_record(model, object) {
   d = object.d;
   item_position += 10;
   if (typeof(object.s) == 'undefined') {
@@ -273,17 +318,26 @@ function create_json_record(object) {
     d += 'c'; // c for cloned. this happens when an item is split during option add.
     s += 1;
   }
-  items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  if (model == 'order') {
+    items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+  } else if (model == 'booking') {
+    items_json[d] = {guest_type_id:object.guest_type_id, count:1, surcharges:{}}
+  }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
-  create_submit_json_record(d,items_json[d]);
+  create_submit_json_record(model,d,items_json[d]);
   return d;
 }
 
 // this creates a new record, copied from items_json, which must exist
-function create_submit_json_record(d, object) {
-  if ( ! submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
-  if ( ! submit_json.items.hasOwnProperty(d)) {
-    submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+function create_submit_json_record(model, d, object) {
+  if( !submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
+  if( !submit_json.items.hasOwnProperty(d)) {
+    if (model == 'order') {
+      submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+    } else if (model == 'booking') {
+      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id};
+    }
+    // remove redundant fields
     if (items_json[d].hasOwnProperty('id')) {
       delete submit_json.items[d].ai;
       delete submit_json.items[d].qi;
@@ -294,15 +348,15 @@ function create_submit_json_record(d, object) {
   }
 }
 
-function set_json(d,attribute,value) {
+function set_json(model, d, attribute, value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
   } else {
-    alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
+    //alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
   }
   if ( attribute != 't' ) {
     // never copy the options object to submit_json
-    create_submit_json_record(d,items_json[d]);
+    create_submit_json_record(model, d, items_json[d]);
     submit_json.items[d][attribute] = value;
   }
 }
@@ -323,14 +377,6 @@ function render_items() {
   });
   calculate_sum();
 }
-
-function render_customers_from_json() {
-  for (o in order_customers) {
-    var customer = order_customers[o]["customer"]
-    $('#order_info').append("<span class='order-customer'>"+customer["first_name"]+" "+customer["last_name"]+"</span>");
-  }
-}
-
 
 
 
@@ -385,7 +431,7 @@ function find_customer(text) {
     }
 }
 /*
- * add_category(label,options); Addes a new category button.
+ * add_category_button(label,options); Adds a new category button.
  * options is a hash like so:
  * {
  *    id: "the_html_id_youd_like",
@@ -401,19 +447,19 @@ function find_customer(text) {
  *    }
  * }
  * */
-function add_category(label,options) {
+function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
     var styles = [];
     var bgcolor = "background-color: rgb(XXX);";
     var bgimage = "background-image: url('XXX');";
-    var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
-    var brdrcolors = {
-      top: '85,85,85',
-      right: '34,34,34',
-      bottom: '34,34,34',
-      left: '85,85,85'
-    };
+    //var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
+    //var brdrcolors = {
+    //  top: '85,85,85',
+    //  right: '34,34,34',
+    //  bottom: '34,34,34',
+    //  left: '85,85,85'
+    //};
     cat.append(cat_label);
     
     for (var type in options.handlers) {
@@ -429,23 +475,23 @@ function add_category(label,options) {
     if (options.bgimage) {
       styles.push(bgimage.replace("XXX",options.bgimage));
     }
-    if (options.border) {
-      for (var pos in options.border) {
-        brdrcolor = brdrcolor.replace(pos,options.border[pos]);
-      }
-    }
-    // Default border colors added later
-    for (var pos in brdrcolors) {
-      brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
-    }
-    styles.push(brdrcolor);
+    //if (options.border) {
+    //  for (var pos in options.border) {
+    //    brdrcolor = brdrcolor.replace(pos,options.border[pos]);
+    //  }
+    //}
+    //// Default border colors added later
+    //for (var pos in brdrcolors) {
+    //  brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
+    //}
+    //styles.push(brdrcolor);
     cat.attr('style',styles.join(' '));
-    $('#categories').append(cat);
+    $(options.append_to).append(cat);
 }
+
 function customer_search(term) {
   var c = term.substr(0,1).toLowerCase();
   var c2 = term.substr(0,2).toLowerCase();
-//   console.log(c,c2);
   var results = [];
   if (resources.customers[c]) {
     if (resources.customers[c][c2]) {
@@ -454,7 +500,6 @@ function customer_search(term) {
           results.push(resources.customers[c][c2][i]);
         }
       }
-//       console.log(resources.customers[c][c2]);
       return results;
     } else {
       return [];
@@ -463,18 +508,18 @@ function customer_search(term) {
     return [];
   }
 }
+
 function add_customer_button(qcontainer,customer,active) {
   var abutton = $(document.createElement('div'));
-  abutton.addClass('article customer-entry');
+  abutton.addClass('quantity customer-entry');
   abutton.html(customer.name);
-  if (active)
-    abutton.removeClass("article").addClass("active article");
+  if (active) abutton.removeClass("quantity").addClass("active quantity");
   (function() {
     var element = abutton;
     var cust = customer;
     abutton.on('mouseup', function(){
       highlight_button(element);
-      submit_json.order['customer_set'] = [cust.id]
+      submit_json.model['customer_id'] = cust.id
     });
   })();
   (function() { 
@@ -486,17 +531,15 @@ function add_customer_button(qcontainer,customer,active) {
       } else {
         $('.quantities').html('');
       }
-      //add_new_item(object, catid);
     });
   })();
   qcontainer.append(abutton);
   return qcontainer;
 }
+
 function onCustomerSearchAccept(){
-//   console.log($('#customer_search_input').val());
   if ($('#customer_search_input').val().length >= 3) {
     var results = customer_search($('#customer_search_input').val());
-//     console.log(results);
     if (results.length > 0) {
       var qcont = $("#customers_list");
       $('.customer-entry').remove();
@@ -506,7 +549,8 @@ function onCustomerSearchAccept(){
     }
   }
 }
-function show_customers(event) {
+
+function show_customers(append_to) {
   $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
@@ -527,8 +571,9 @@ function show_customers(event) {
     qcontainer = add_customer_button(qcontainer,resources.customers.regulars[i],false);
   }
   $('#articles').append(qcontainer);
-  qcontainer.show();
+  $(append_to).append(qcontainer);
 }
+
 function display_articles(cat_id) {
   $('#articles').html('');
   jQuery.each(resources.c[cat_id].a, function(art_id,art_attr) {
@@ -547,8 +592,6 @@ function display_articles(cat_id) {
       });
     })();
     $('#articles').append(abutton);
-    //abutton.append(qcontainer);
-    //qcontainer.insertBefore(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
         var element = abutton;
@@ -631,7 +674,7 @@ function add_new_item(object, add_new, anchor_d) {
     // selected item is already there
     increment_item(d);
   } else {
-    d = create_json_record(object);
+    d = create_json_record('order', object);
     label = compose_label(object);
     new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
     if (anchor_d) {
@@ -672,11 +715,104 @@ function customer_list_update() {
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
 
+function add_payment_method(model_id) {
+  $('#payment_methods_container_' + model_id).slideDown();
+  payment_method_uid += 1;
+  pm_row = $(document.createElement('div'));
+  pm_row.addClass('payment_method_row');
+  pm_row.attr('id', 'payment_method_row' + payment_method_uid);
+  submit_json.payment_methods[model_id][payment_method_uid] = {id:null, amount:0};
+  var j = 0;
+  $.each(resources.pm, function(k,v) {
+    j += 1;
+    pm_button = $(document.createElement('span'));
+    pm_button.addClass('payment_method');
+    pm_button.html(v.n);
+    if ( j == 1 ) {
+      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      pm_button.addClass('selected');
+    }
+    (function() {
+      var uid = payment_method_uid;
+      pm_button.on('click', function() {
+        submit_json.payment_methods[model_id][uid].id = v.id;
+        $('#payment_method_row' + uid + ' span').removeClass('selected');
+        $(this).addClass('selected');
+        $('#payment_method_' + uid + '_amount').select();
+        if(settings.workstation) {
+          $('#payment_method_'+ uid + '_amount').select();
+          //$('#payment_method_row'+ uid + ' .ui-keyboard-input').select();
+        }
+      });
+    })();
+    pm_row.append(pm_button);
+  });
+  pm_input = $(document.createElement('input'));
+  pm_input.attr('type', 'text');
+  pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
+  if (settings.workstation) {
+    (function(){
+      var uid = payment_method_uid;
+      var element = pm_input;
+      element.keyboard({
+        openOn: 'click',
+        accepted: function(){ 
+          payment_method_input_change(element, uid, model_id)
+        },
+        layout:'num'
+      });
+    })()
+  }
+  (function() {
+    var uid = payment_method_uid;
+    var mid = model_id;
+    pm_input.on('keyup', function(){
+      payment_method_input_change(this, mid, oid);
+    });
+  })();
+  pm_row.append(pm_input);
+  $('#payment_methods_container_' + model_id).prepend(pm_row);
+}
+
+function payment_method_input_change(element, uid, mid) {
+  amount = $(element).val();
+  amount = amount.replace(',','.');
+  if (amount == '') { amount = 0; }
+  submit_json.payment_methods[mid][uid].amount = parseFloat(amount);
+  payment_method_total = 0;
+  $.each(submit_json.payment_methods[mid], function(k,v) {
+    payment_method_total += v.amount;
+  });
+  submit_json.totals[mid].payment_methods = payment_method_total;
+  if (submit_json.totals[mid].hasOwnProperty('booking_orders')) {
+    booking_order_total  = submit_json.totals[mid].booking_orders;
+  } else {
+    booking_order_total = 0;
+  }
+  change = - ( submit_json.totals[mid].model + booking_order_total - payment_method_total);
+  if (change < 0 ) { change = 0 };
+  $('#change_' + mid).html(number_to_currency(change));
+}
+
+
+
+function remove_payment_method_by_name(name) {
+  if (!submit_json.payment_methods)
+    return;
+  npms = [];
+  for (var i in submit_json.payment_methods) {
+    if (!submit_json.payment_methods[i].name == name) {
+      npms.push(submit_json.payment_methods[i]);
+    }
+  }
+  submit_json.payment_methods = npms;
+}
+
 function increment_item(d) {
   var count = items_json[d].c + 1;
   var start_count = items_json[d].sc;
   var object = items_json[d];
-  set_json(object.d,'c',count)
+  set_json('order', object.d,'c',count)
   $('#tablerow_' + d + '_count').html(count);
   $('#tablerow_' + d + '_count').addClass('updated');
   if ( count == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
@@ -689,17 +825,17 @@ function decrement_item(d) {
   var start_count = items_json[d].sc;
   if ( i > 1 && ( permissions.decrement_items || i > start_count ) ) {
     i--;
-    set_json(d,'c',i)
+    set_json('order', d, 'c', i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if ( i == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
   } else if ( i == 1 && ( permissions.decrement_items || ( ! d.hasOwnProperty('id') ))) {
     i--;
-    set_json(d,'c',i)
+    set_json('order', d, 'c', i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if (permissions.delete_items) {
-      set_json(d,'x',true);
+      set_json('order', d, 'x', true);
       $('#item_' + d).fadeOut('slow');
     }
   }
@@ -735,8 +871,8 @@ function add_option_to_item(d, value, cat_id) {
   }
   if (value == 0) {
     // delete all options
-    set_json(d,'i',[0]);
-    set_json(d,'t',{});
+    set_json('order', d, 'i', [0]);
+    set_json('order', d, 't', {});
     $('#optionsnames_' + d).html('');
   } else {
     var optionobject = resources.c[cat_id].o[value];
@@ -745,7 +881,7 @@ function add_option_to_item(d, value, cat_id) {
     var stripped_id = value.split('_')[1];
     var list = items_json[d].i;
     list.push(stripped_id);
-    set_json(d,'i',list);
+    set_json('order', d, 'i', list);
     $('#optionsnames_' + d).append('<br>' + optionobject.n);
   }
   calculate_sum();
@@ -755,6 +891,24 @@ function add_option_to_item(d, value, cat_id) {
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
+
+function toggle_order_booking() {
+  if (submit_json.currentview == 'tables') {
+    route('rooms');
+  } else {
+    route('tables');
+  }
+}
+
+function number_with_precision(number, precision) {
+  number = number.toFixed(precision);
+  number = number.replace('.',i18n.decimal_separator);
+  return number;
+}
+
+function number_to_currency(number) {
+  return i18n.currency_unit + ' ' + number_with_precision(number, 2);
+}
 
 function render_options(options, d, cat_id) {
   jQuery.each(options, function(key,object) {
@@ -844,6 +998,7 @@ function display_configuration_of_item(d) {
   row.insertAfter('#item_' + d);
 }
 
+
 /* ========================================================*/
 /* ================== PERIODIC FUNCTIONS ==================*/
 /* ========================================================*/
@@ -887,9 +1042,15 @@ function update_resources() {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
+    complete: function(data,state) { update_resouces_success(data) },
     timeout: 3000
   });
 }
+
+function update_resouces_success(data) {
+  emit('ajax.update_resources.success', data);
+}
+
 
 function update_item_lists() {
   $.ajax({
@@ -914,11 +1075,11 @@ function change_item_status(id,status) {
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
 
-function add_customers_category(event) {
+function add_customers_button() {
   if(_get('customers.button_added'))
     return
-  opts = {'id': 'customers_category_button', 'handlers': { 'mouseup': show_customers },bgcolor: "205,0,82",bgimage: '/assets/category_starter.png', border: {top: '205,0,82'}};
-  add_category(i18n.customers,opts);
+  opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
+  add_category_button(i18n.customers, opts);
   _set('customers.button_added',true);
 }
 
@@ -956,4 +1117,18 @@ function category_onmousedown(category_id, element) {
       scroll_to('#articles', 7);
     }
   }
+}
+
+function setup_payment_method_keyboad(pmid,id) {
+  $("#" + id).keyboard( 
+          { 
+            openOn: 'focus',
+            layout: 'num',
+            accepted: function(){ 
+              $.ajax({
+                  url: "/orders/update?currentview=update_pm&pid=" +pmid+ "&amount=" + $("#" + id).val(), 
+                  type: 'PUT'
+                 }); 
+            } } 
+          );
 }

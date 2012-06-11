@@ -1,0 +1,31 @@
+%p== #{ order.user.title }, #{ order.table.name }
+%p= l order.created_at, :format => :long
+
+%table
+  %tr
+    %th.one= Tax.model_name.human
+    %th.two= Item.model_name.human
+    %th.three= t '.unit_price'
+    %th.four= t '.count'
+    %th.five= t '.sum'
+
+  - order.items.existing.positioned.each do |item|
+    %tr
+      %td.one= item.taxes.collect{ |k,v| v[:letter] }.join(',')
+      %td.two= item.quantity_id ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
+      %td.three= number_to_currency item.price
+      %td.four= item.count
+      %td.five= number_to_currency item.sum
+
+    - item.options.each do |o|
+      - next if o.price == 0
+      %tr
+        %td.one= item.tax.letter
+        %td.two== #{ t(:storno) + ' ' if item.refunded }#{ o.name }
+        %td.three= number_to_currency o.price
+        %td.four= item.count
+        %td.five= number_to_currency item.refunded ? 0 : item.count * o.price
+
+  %tr
+    %td{ :colspan => 4 }= t :sum
+    %td.five= number_to_currency order.sum

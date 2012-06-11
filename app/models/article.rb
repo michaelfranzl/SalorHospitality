@@ -11,23 +11,18 @@ class Article < ActiveRecord::Base
   belongs_to :category
   belongs_to :vendor
   belongs_to :company
-  belongs_to :tax
   has_many :ingredients
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
   has_many :items
   has_many :partials
   has_many :images, :as => :imageable
+  has_and_belongs_to_many :taxes
 
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
-  def price=(price)
-    price =  price.gsub(',', '.') if price.class == String
-      write_attribute :price, price
-  end
-  
+  # Validations 
   validates_presence_of :name, :category_id
-  
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden
     existing_quantities = false
@@ -44,12 +39,19 @@ class Article < ActiveRecord::Base
       end
     end
   end
-  
+ 
+  # Nested attributes
   accepts_nested_attributes_for :ingredients, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-
   accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| (attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '') || attrs['hidden'] == 1 }
-  
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+
+
+  # Methods
+
+  def price=(price)
+    price =  price.gsub(',', '.') if price.class == String
+      write_attribute :price, price
+  end
 
   def hide
     update_attributes :hidden => true, :active => false
@@ -59,6 +61,14 @@ class Article < ActiveRecord::Base
   def name_description
     descr = (description.nil? or description.empty?) ? '' : ("  |  " + description)
     name + descr
+  end
+
+  def taxes_array=(taxes_array)
+    self.taxes = []
+    taxes_array.each do |id|
+      self.taxes << Tax.find_by_id(id)
+    end
+    self.save
   end
   
 end

@@ -1,0 +1,14 @@
+%h2= @payment_method.new_record? ? (t '.new_payment_method') : (t '.edit_payment_method')
+
+- if @payment_method.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @payment_method.errors.size, :model => PaymentMethod.model_name.human
+    %ul
+      - @payment_method.errors.full_messages.each do |msg|
+        %li= msg
+
+.form_fields
+  = form_for @payment_method do |payment_method_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = payment_method_form.label :name
+    = payment_method_form.text_field :name, :size => '10'

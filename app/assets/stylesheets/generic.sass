@@ -9,6 +9,12 @@ $billgastroblue1: #5b7682
 $billgastrogrey1: #243239
 $billgastrogrey2: #7E868A
 $warning: #74101b
+$violet: #80477d
+$orange: #ed8b00
+$pink: #cd0052
+$green: #75b10d
+$blue: #136880
+$blank: #27343b
 
 .errorExplanation
   :font-size small
@@ -128,6 +134,9 @@ a.storno_button
   :background-image url(button_mobile_storno.png)
   :margin-top 50px
 
+a.refund_button
+  :background-image url(button_mobile_storno.png)
+
 a.print2_button
   :background-image url(button_mobile_print2.png)
 
@@ -164,16 +173,16 @@ a.previous_button
 a.next_button
   :background-image url(button_mobile_next.png)
 
-a.room1_button
+a.area1_button
   :background-image url(button_mobile_room1.png)
 
-a.room2_button
+a.area2_button
   :background-image url(button_mobile_room2.png)
 
-a.room3_button
+a.area3_button
   :background-image url(button_mobile_room3.png)
 
-a.room4_button
+a.area4_button
   :background-image url(button_mobile_room4.png)
 
 a.cash_button
@@ -212,7 +221,15 @@ div.invoice
   :-moz-border-radius 2px
   :-webkit-border-radius 2px
   :-moz-box-shadow 0px 0px 10px black
-  select#cost_center_and_tax_for_invoice
+  div.add_payment_method,
+  span.payment_method
+    :cursor pointer
+  input
+    :border none
+    :background-color #DDDDEE
+    :text-align right
+  select#cost_center_and_tax_for_invoice,
+  select#order_id
     :position relative
     :width 118px
     :height 51px
@@ -224,7 +241,6 @@ div.invoice
     :border-collapse collapse
     :margin-bottom 20px
     td
-      :height 50px
       :vertical-align middle
     td.label
       :width 131px
@@ -258,6 +274,7 @@ div.invoice
       :width 180px
       a
         :display block
+        :padding 10px 0px
         :color #333
         :text-decoration none
 
@@ -327,4 +344,112 @@ div#draw_controls
 canvas
   :background-color white
 
+span.payment_method
+  :padding 5px 10px
+  :display inline-block
 
+div.payment_method_row
+  input
+    :width 60px
+    :font-size 130%
+
+span.payment_method.selected
+  :-moz-border-radius 4px
+  :-webkit-border-radius 2px
+
+div#invoices span.payment_method.selected
+  :border 2px solid black
+  :background-color #DDDDEE
+
+div.booking_form span.payment_method.selected
+  :background-color #3A474D
+
+input#customer_search_input
+  :width 100%
+
+span.textbutton
+  :display inline-block
+  :border-top 2px solid #555
+  :border-left 2px solid #555
+  :border-right 2px solid #222
+  :border-bottom 2px solid #222
+  :background-color #3A474D
+  :cursor pointer
+
+div.booking_form
+  span.textbutton#booking_pay
+    :background-color $pink
+  span.textbutton#booking_cancel
+    :background-color $blank
+  span.textbutton#booking_submit
+    :background-color $green
+    :color white
+  span.textbutton#add_payment_method_button
+    :background-color $blue
+  
+  div.guest_type,
+  div.season
+    :border-top 2px solid #555
+    :border-left 2px solid #555
+    :border-right 2px solid #222
+    :border-bottom 2px solid #222
+  
+  div.guest_type
+    :background-color $billgastroblue1
+  
+  div.season
+    :background-color $billgastrogrey1
+  
+  div.surcharge_col.booking_item_total
+    :font-weight bold !important
+  
+  div#booking_total
+    :font-size 150%
+
+  div.booking_change
+    :font-size 150%
+    :float right
+
+
+// Datepicker
+div#ui-datepicker-div
+  :-moz-box-shadow 0px 0px 8px white
+  :-moz-border-radius 5px
+  :-webkit-box-shadow 0px 0px 8px white
+  :-webkit-border-radius 5px
+  :background-color $billgastroblue1
+  div.ui-datepicker-header
+    :-moz-border-radius 10px
+    :-webkit-border-radius 10px
+    :padding 10px
+    :background-color $billgastrogrey1
+    :font-size 150%
+    a.ui-datepicker-prev
+      :cursor pointer
+      :padding 10px
+      :float left
+    a.ui-datepicker-next
+      :cursor pointer
+      :padding 10px
+      :float right
+  div.ui-datepicker-title
+    :text-align center
+  table.ui-datepicker-calendar
+    :background-color $billgastroblue1
+    :padding 10px
+    td
+      a
+        :text-decoration none
+        :margin 4px
+        :display inline-block
+        :text-align center
+        :width 20px
+        :height 20px
+        :padding 10px
+      a.ui-state-hover,
+      a.ui-state-highlight
+        :background-color $billgastrogrey1
+    td
+      :background-color $billgastrogrey2
+    td.ui-datepicker-unselectable
+      :background-color transparent

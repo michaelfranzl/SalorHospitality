@@ -1,4 +1,4 @@
-- form_tag 'by_nr', :id => 'search_by_nr' do
+= form_tag 'by_nr', :id => 'search_by_nr' do
   = text_field_tag 'nr', t('.search_by_number')
   %span#nr_display_keyboard.display_keyboard
 
@@ -7,96 +7,53 @@
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      = link_to('', "/orders/update_ajax?id=#{ @order.id }&printer=#{ p.id }&currentview=show", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }", :remote => true)
+      %a{ :onclick => "update_order({id:#{@order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" }
   - else
-    = link_to '', "update_ajax?id=#{ @order.id }&currentview=show", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
+    %a{ :onclick => "update_order({id:#{@order.id},jsaction:'mark_print_pending',printer:#{p.id}});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
-  = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton storno_button', :title => t(:storno)
+  = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:storno)
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
-%p= @current_vendor.name
-%p= @current_vendor.invoice_subtitle
-%p
-  = @current_vendor.address
-  %br
-  = @current_vendor.revenue_service_tax_number
-  %br
-  = @current_vendor.bank_account1
-  %br
-  = @current_vendor.bank_account2
+.paper_invoice
+  .vendor_details
+    = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
+  .customer_details
+    - if @order.customer
+      = @order.customer.company_name
+      %br
+      == #{ @order.customer.first_name } #{ @order.customer.last_name}
+      %br
+      = @order.customer.address
+      %br
+      == #{ @order.customer.postalcode } #{ @order.customer.city }
+  .clear
 
-%h1== #{ t 'invoice' } ##{ @order.nr }
+  %h1== #{ t 'invoice' } ##{ @order.nr }
+  
+  = render :partial => 'invoice_item_list', :locals => { :order => @order }
 
-= text_field_tag 'customer_data_1'
-%br
-= text_field_tag 'customer_data_2'
-%br
-= text_field_tag 'customer_data_3'
-%br
+  = render :partial => '/shared/invoice_tax_list', :locals => { :model => @order }
 
-%p#cost_center== #{ CostCenter.model_name.human }: #{ (@order.cost_center.name if @order.cost_center) }
-%p= t 'served_by_X_on_table_Y', :waiter => @order.user.title, :table => @order.table.name
-%p= l @order.created_at, :format => :long
+  %p= PaymentMethodItem.model_name.human
 
-
-%table.printed_invoice
-  %tr
-    %th.one= Tax.model_name.human
-    %th.two= Item.model_name.human
-    %th.three= t '.unit_price'
-    %th.four= t '.count'
-    %th.five= t '.sum'
-
-  - sum_taxes = Hash.new
-  - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
-
-  - @order.items.existing.positioned.each do |item|
-    - sum_taxes[item.tax.id] += item.sum
+  %table.payment_methods
     %tr
-      %td.one= item.tax.letter
-      %td.two= item.quantity_id ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
-      %td.three= number_to_currency item.price
-      %td.four= item.count
-      %td.five= number_to_currency item.sum
-
-    - item.options.each do |o|
-      - next if o.price == 0
+      %th.left_wide= PaymentMethodItem.model_name.human
+      %th.right_wide= PaymentMethodItem.human_attribute_name :amount
+    - @order.payment_method_items.each do |pm|
       %tr
-        %td.one= item.tax.letter
-        %td.two== #{ t(:storno) + ' ' if item.refunded }#{ o.name }
-        %td.three= number_to_currency o.price
-        %td.four= item.count
-        %td.five= number_to_currency item.refunded ? 0 : item.count * o.price
-
-  %tr
-    %td{ :colspan => 4 }= t :sum
-    %td.five= number_to_currency @order.sum
-
-%p= t '.list_of_taxes'
-
-%table.printed_taxes
-  %tr
-    %th.one= Tax.model_name.human
-    %th.two= Tax.human_attribute_name(:percent)
-    %th.three= t(:net)
-    %th.four= t(:value_added_tax)
-    %th.five= t(:gross)
-  - @current_vendor.taxes.existing.each do |tax|
-    - fact = tax.percent/100.00
-    - net = sum_taxes[tax.id]/(1.00+fact)
-    - gro = sum_taxes[tax.id]
-    - vat = gro-net
+        %td.left_wide= pm.payment_method.name
+        %td.right_wide= number_to_currency pm.amount
     %tr
-      %td.one= tax.letter
-      %td.two= number_to_percentage tax.percent, :precision => 0
-      %td.three= number_to_currency net
-      %td.four= number_to_currency vat
-      %td.five= number_to_currency gro
+      %td.left_wide= Order.human_attribute_name :change_given
+      %td.right_wide= number_to_currency @order.change_given
+
+  .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html if @order.vendor.invoice_footer_blurb
 
 :javascript
-  $('#nr').keyboard( {openOn: '', accepted: function(){ $('form#search_by_nr').submit(); } } );
+  $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );
   $('#nr_display_keyboard').click(function(){
     $('#nr').val('');
     $('#nr').getkeyboard().reveal();
@@ -104,3 +61,13 @@
   $('#nr').click(function(){
     $('#nr').val('');
   });
+
+  function update_order(data) {
+    data['currentview'] = 'invoice_paper';
+    $.ajax({
+      type: 'post',
+      url: '/orders/update_ajax',
+      data: data,
+      timeout: 5000
+    });
+  }

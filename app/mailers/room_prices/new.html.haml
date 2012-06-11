@@ -1,0 +1,21 @@
+%h2= @room_price.new_record? ? (t '.new_room_price') : (t '.edit_room_price')
+
+- if @room_price.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @room_price.errors.size, :model => SalorHotel::RoomPrice.model_name.human
+    %ul
+      - @room_price.errors.full_messages.each do |msg|
+        %li= msg
+
+.form_fields
+  = form_for @room_price do |room_price_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %br
+    = room_price_form.label :room_type_id
+    = room_price_form.select :room_type_id, @room_types.collect{|r| [r.name,r.id]}
+    %br
+    = room_price_form.label :guest_type_id
+    = room_price_form.select :guest_type_id, @guest_types.collect{|r| [r.name,r.id]}
+    %br
+    = room_price_form.label :base_price
+    = room_price_form.text_field :base_price, :size => 5

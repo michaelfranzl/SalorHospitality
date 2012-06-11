@@ -1,5 +1,8 @@
 ---
 gn:
+  vendors:
+    index:
+      switch_to: Auswählen
   activerecord:
     attributes:
       article:
@@ -137,6 +140,27 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
+      payment_method:
+        one: Zahlungsmethode
+        other: Zahlungsmethoden
+      room:
+        one: Zimmer
+        other: Zimmer
+      room_type:
+        one: Zimmerklasse
+        other: Zimmerklassen
+      room_price:
+        one: Zimmerpreis
+        other: Zimmerpreise
+      guest_type:
+        one: Gast-Typ
+        other: Gästetypen
+      season:
+        one: Saison
+        other: Saisonen
+      surcharge:
+        one: Aufschlag
+        other: Aufschläge
       article:
         one: Artikel
         other: Artikel
@@ -395,6 +419,7 @@ gn:
       split_invoice: Rechnung splitten
       split_this_item: Klicken um ein Stück dieses Postens splitten
       switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechseln
+      change_money: Retour
     login_form:
       email: Ihre E-Mail
       login: Login

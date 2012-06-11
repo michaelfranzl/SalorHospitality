@@ -1,0 +1,14 @@
+%h2= t('activerecord.models.guest_type.other')
+
+%p= link_to((t :new), new_guest_type_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:120px' }= GuestType.human_attribute_name(:name)
+    %th{ :style => 'width:220px' }= GuestType.human_attribute_name(:taxes)
+    %th{ :style => 'width:50px' }
+  - @guest_types.each do |g|
+    %tr
+      %td= link_to g.name, edit_guest_type_path(g)
+      %td= g.taxes.collect{ |tax| "#{tax.name} (#{ number_to_percentage tax.percent })" }.join(', ')
+      %td= link_to image_tag('button_small_delete.png', :title => GuestType.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), guest_type_path(g), :method => :delete, :confirm => t(:are_you_sure)

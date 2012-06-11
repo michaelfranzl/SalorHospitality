@@ -7,86 +7,69 @@
 
 = form_for nest_image(@vendor), :html => { :multipart => true, :class => 'vendor_form' } do |vendor_form|
   %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
-  .fields_left
-    %br
-    = vendor_form.fields_for :images do |image_form|
-      = image_form.label :logo
-      = image_form.file_field :file_data
-    %br
-    = vendor_form.label :rlogo_header
-    = vendor_form.file_field :rlogo_header
-    %br
-    = vendor_form.label :rlogo_footer
-    = vendor_form.file_field :rlogo_footer
-    %br
-    = vendor_form.label :name
-    = vendor_form.text_field :name, :size => 20
-    %br
-    = vendor_form.label :invoice_subtitle
-    = vendor_form.text_field :invoice_subtitle, :size => 20
-    %br
-    = vendor_form.label :address
-    = vendor_form.text_field :address, :size => 20
-    %br
-    = vendor_form.label :revenue_service_tax_number
-    = vendor_form.text_field :revenue_service_tax_number, :size => 20
-    %br
-    = vendor_form.label :invoice_slogan1
-    = vendor_form.text_field :invoice_slogan1, :size => 20
-    %br
-    = vendor_form.label :invoice_slogan2
-    = vendor_form.text_field :invoice_slogan2, :size => 20
-    %br
-    = vendor_form.label :bank_account1
-    = vendor_form.text_field :bank_account1, :size => 20
-    %br
-    = vendor_form.label :bank_account2
-    = vendor_form.text_field :bank_account2, :size => 20
-    %br
-    = vendor_form.label :internet_address
-    = vendor_form.text_field :internet_address, :size => 20
-    %br
-    = vendor_form.label :email
-    = vendor_form.text_field :email, :size => 20
-    %br
-    = vendor_form.label :country
-    %select#category_color{ :name => 'vendor[country]' }
-      - BillGastro::Application::COUNTRIES.each do |key, val|
-        %option{ :value => key, :selected => vendor_form.object.country == key }= t val
-    %br
-    = vendor_form.label :time_offset
-    = vendor_form.text_field :time_offset, :size => 2
-    %br
-    = vendor_form.check_box :use_order_numbers
-    = vendor_form.label :use_order_numbers
-    %br
-    = vendor_form.check_box :ticket_wide_font
-    = vendor_form.label :ticket_wide_font
-    %br
-    = vendor_form.check_box :ticket_tall_font
-    = vendor_form.label :ticket_tall_font
-    %br
-    = vendor_form.check_box :ticket_item_separator
-    = vendor_form.label :ticket_item_separator
-    %br
-    = vendor_form.check_box :ticket_display_time_order
-    = vendor_form.label :ticket_display_time_order, :class => 'wide'
+  %table
+    %tr
+      %td
+        = vendor_form.fields_for :images do |image_form|
+          = image_form.label :logo
+          = image_form.file_field :file_data
+        %br
+        = vendor_form.label :rlogo_header
+        = vendor_form.file_field :rlogo_header
+        %br
+        = vendor_form.label :rlogo_footer
+        = vendor_form.file_field :rlogo_footer
 
-    - if saas_pro_variant?
-      %br
-        = vendor_form.label :automatic_printing
-        = vendor_form.check_box :automatic_printing
+        %br
+        = vendor_form.label :country
+        %select#category_color{ :name => 'vendor[country]' }
+          - SalorGastro::Application::COUNTRIES.each do |key, val|
+            %option{ :value => key, :selected => vendor_form.object.country == key }= t val
+        %br
+        = vendor_form.label :time_offset
+        = vendor_form.text_field :time_offset, :size => 2
 
-  - if local_variant?
-    %div#vendor_printers
-      %h3= t('activerecord.models.vendor_printer.other')
-      %p#add_printer
-        %span.link= t '.add_printer'
-      = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
-        = render :partial => 'vendor_printer', :locals => { :f => f }
-      %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
+        %br
+        = vendor_form.label :receipt_header_blurb
+        = vendor_form.text_area :receipt_header_blurb
+        %br
+        = vendor_form.label :receipt_footer_blurb
+        = vendor_form.text_area :receipt_footer_blurb
+        %br
+        = vendor_form.label :invoice_header_blurb
+        = vendor_form.text_area :invoice_header_blurb
+        %br
+        = vendor_form.label :invoice_footer_blurb
+        = vendor_form.text_area :invoice_footer_blurb
 
+      %td
+        = vendor_form.check_box :use_order_numbers
+        = vendor_form.label :use_order_numbers
+        %br
+        = vendor_form.check_box :ticket_wide_font
+        = vendor_form.label :ticket_wide_font
+        %br
+        = vendor_form.check_box :ticket_tall_font
+        = vendor_form.label :ticket_tall_font
+        %br
+        = vendor_form.check_box :ticket_item_separator
+        = vendor_form.label :ticket_item_separator
+        %br
+        = vendor_form.check_box :ticket_display_time_order
+        = vendor_form.label :ticket_display_time_order, :class => 'wide'
+        - if saas_pro_variant?
+          %br
+            = vendor_form.label :automatic_printing
+            = vendor_form.check_box :automatic_printing
 
+        - if local_variant?
+          %div#vendor_printers
+            %h3= t('activerecord.models.vendor_printer.other')
+            %p#add_printer
+              %span.link= t '.add_printer'
+            = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
+              = render :partial => 'vendor_printer', :locals => { :f => f }
+            %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
 
 
 :javascript

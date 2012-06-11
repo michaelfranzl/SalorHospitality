@@ -12,13 +12,17 @@ class Order < ActiveRecord::Base
   belongs_to :table
   belongs_to :user
   belongs_to :cost_center
+  belongs_to :customer
   belongs_to :tax
+  belongs_to :booking
   has_many :items, :dependent => :destroy
+  has_many :payment_method_items
   has_one :order
-  has_and_belongs_to_many :customers
 
-  after_save :set_customers_up
+  serialize :taxes
+
   after_save :hide_items
+
 
   validates_presence_of :user_id
 
@@ -26,12 +30,12 @@ class Order < ActiveRecord::Base
 
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_order_number
+      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
     end
   end
 
   def self.create_from_params(params, vendor, user)
-    order = Order.new params[:order]
+    order = Order.new params[:model]
     order.user = user
     order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
@@ -47,7 +51,13 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params)
-    self.update_attributes params[:order]
+    self.update_attributes params[:model]
+    if params[:payment_methods] then
+      self.payment_methods.clear
+      params[:payment_methods].each do |pm|
+        self.payment_methods << PaymentMethod.new(pm)
+      end
+    end
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
@@ -60,6 +70,7 @@ class Order < ActiveRecord::Base
         new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item
+        self.save
       end
     end
   end
@@ -77,7 +88,20 @@ class Order < ActiveRecord::Base
   def calculate_totals
     self.sum = items.existing.sum(:sum)
     self.refund_sum = items.existing.sum(:refund_sum)
-    self.tax_sum = items.existing.sum(:tax_sum)
+    #self.tax_sum = items.existing.sum(:tax_sum)
+    self.taxes = {}
+    self.items.each do |item|
+      item.taxes.each do |k,v|
+        if self.taxes.has_key? k
+          self.taxes[k][:tax] += v[:tax]
+          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
+          self.taxes[k][:gro] += (v[:gro]).round(2)
+          self.taxes[k][:net] += (v[:net]).round(2)
+        else
+          self.taxes[k] = v
+        end
+      end
+    end
     save
   end
 
@@ -95,18 +119,6 @@ class Order < ActiveRecord::Base
   def hide_items
     if self.hidden
       self.items.update_all :hidden => true
-    end
-  end
-
-  def customer_set=(h)
-    @customers_array = h
-  end
-
-  def set_customers_up
-    return if @customers_array.nil?
-    @customers_array.each do |cus|
-      Order.connection.execute("DELETE FROM customers_orders where customer_id = #{cus} and order_id = #{self.id}")
-      Order.connection.execute("INSERT INTO customers_orders (customer_id,order_id) VALUES (#{cus}, #{self.id})")
     end
   end
 
@@ -132,7 +144,6 @@ class Order < ActiveRecord::Base
       self.items.update_all :order_id => target_order.id
       self.reload
       self.destroy
-
       target_order.calculate_totals
       target_order.regroup
     else
@@ -182,6 +193,14 @@ class Order < ActiveRecord::Base
     unlink
   end
 
+  def pay
+    self.finish
+    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
+    self.change_given = 0 if self.change_given < 0
+    self.paid = true
+    self.save
+  end
+
   def print(what, vendor_printer=nil)
     # prepare vendor printers
     if what.include? 'tickets'
@@ -199,12 +218,16 @@ class Order < ActiveRecord::Base
         printr.print p.id, self.escpos_tickets(p.id)
       end
     end
-    if what.include? 'invoice'
+    if what.include? 'receipt'
       if vendor_printer
-        printr.print vendor_printer.id, self.escpos_invoice
+        printr.print vendor_printer.id, self.escpos_receipt
         self.update_attribute :printed, true
       else
         self.update_attribute :print_pending, true
+      end
+    elsif what.include? 'interim_receipt'
+      if vendor_printer
+        printr.print vendor_printer.id, self.escpos_interim_receipt
       end
     end
     printr.close
@@ -314,7 +337,48 @@ class Order < ActiveRecord::Base
   end
 
 
-  def escpos_invoice
+  def escpos_interim_receipt
+    header = ''
+    header +=
+    "\ea\x00" +  # align left
+    "\e!\x01" +  # Font B
+    I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
+
+    header += "\n\n" +
+    "\e!\x00" +  # Font A
+    "                  Artikel  EP     Stk   GP\n" +
+    "------------------------------------------\n"
+
+    list_of_items = ''
+    self.items.existing.positioned.each do |item|
+      next if item.count == 0
+      list_of_options = ''
+      item.options.each do |o|
+        next if o.price == 0
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+      end
+
+      label = item.quantity ? "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.article.name }"
+
+      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:letter]}[0..1].join(''), label, item.price, item.count, item.sum]
+      list_of_items += list_of_options
+    end
+
+    sum_format =
+    "                               -----------\r\n" +
+    "\e!\x18" + # double tall, bold
+    "\ea\x02"   # align right
+
+    sum = "SUMME:   EUR %.2f" % self.sum
+
+    duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
+
+    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
+
+    output = Printr.sanitize(header + list_of_items + sum_format + sum + refund + footer) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
+  end
+
+  def escpos_receipt
     vendor = self.vendor
     logo =
     "\e@"     +  # Initialize Printer
@@ -322,12 +386,13 @@ class Order < ActiveRecord::Base
     "\e!\x38" +  # doube tall, double wide, bold
     vendor.name + "\n"
 
-    header =
+    header = ''
+    header +=
     "\e!\x01" +  # Font B
     "\ea\x01" +  # center
-    "\n" + vendor.invoice_subtitle +
-    "\n" + vendor.address +
-    "\n" + vendor.revenue_service_tax_number + "\n" +
+    "\n" + vendor.receipt_header_blurb + "\n" if vendor.receipt_header_blurb
+    
+    header +=
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
@@ -339,9 +404,6 @@ class Order < ActiveRecord::Base
     "                  Artikel  EP     Stk   GP\n" +
     "------------------------------------------\n"
 
-    sum_taxes = Hash.new
-    vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
-    subtotal = 0
     list_of_items = ''
     self.items.existing.positioned.each do |item|
       next if item.count == 0
@@ -351,11 +413,9 @@ class Order < ActiveRecord::Base
         list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
       end
 
-      sum_taxes[item.tax_id] += item.sum
-
       label = item.quantity ? "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.article.name }"
 
-      list_of_items += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, label, item.price, item.count, item.sum]
+      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:letter]}[0..1].join(''), label, item.price, item.count, item.sum]
       list_of_items += list_of_options
     end
 
@@ -375,23 +435,14 @@ class Order < ActiveRecord::Base
     tax_header = "          netto     USt.  brutto\n"
 
     list_of_taxes = ''
-    vendor.taxes.existing.each do |tax|
-      next if sum_taxes[tax.id] == 0
-      fact = tax.percent/100.00
-      net = sum_taxes[tax.id] / (1.00+fact)
-      gro = sum_taxes[tax.id]
-      vat = gro-net
-
-      list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [tax.letter,tax.percent,net,vat,gro]
+    self.taxes.each do |k,v|
+      list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [v[:letter],v[:percent],v[:net], v[:tax], v[:gro]]
     end
 
     footer = 
     "\ea\x01" +  # align center
     "\e!\x00" + # font A
-    "\n" + vendor.invoice_slogan1 + "\n" +
-    "\e!\x08" + # emphasized
-    "\n" + vendor.invoice_slogan2 + "\n" +
-    vendor.internet_address + "\n"
+    "\n" + vendor.receipt_footer_blurb + "\n" if vendor.receipt_footer_blurb
 
     duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
 

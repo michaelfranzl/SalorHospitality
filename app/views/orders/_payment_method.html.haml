@@ -1,0 +1,10 @@
+%tr{:id=>"payment_method_#{pm.id}"}
+  %td.label{ :colspan => '3', :style => 'text-align:right'}
+    :javascript
+      $(function () {setup_payment_method_keyboad(#{pm.id},"pament_method_#{pm.id}_amount");});
+    %table
+      %tr
+        %td.label=pm.name
+        %td.label
+          %input{:size => 5, :id=>"pament_method_#{pm.id}_amount", :value => pm.amount}
+        %td.label= link_to 'X',"/orders/update_ajax?pm_id=#{pm.id}&currentview=remove_pm", :remote => true, :class => 'link', :method => :put

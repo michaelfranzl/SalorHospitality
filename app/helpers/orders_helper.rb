@@ -14,8 +14,7 @@ module OrdersHelper
       :enter_comment => escape_javascript(I18n.t(:please_enter_item_comment)),
       :no_ticket_printing => escape_javascript(I18n.t(:no_printing)),
       :decimal_separator => escape_javascript(I18n.t('number.currency.format.separator')),
-      :takeaway => escape_javascript(I18n.t('articles.new.takeaway')),
-      :course => escape_javascript(I18n.t('printr.course')),
+      :currency_unit => escape_javascript(I18n.t('number.currency.format.unit')),
       :clear => escape_javascript(I18n.t(':clear')),
       :customers => escape_javascript(I18n.t('activerecord.models.customer.other'))
     }

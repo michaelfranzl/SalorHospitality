@@ -9,33 +9,41 @@
     = link_to( t('activerecord.models.order.other'), '/orders')
 
     - if perms.include? 'manage_settings'
-      = link_to( t('activerecord.models.table.other'), tables_path)
+      = link_to( t('activerecord.models.table.other'), main_app.tables_path)
 
     - if perms.include? 'manage_articles_categories_options'
-      = link_to( t('activerecord.models.category.other'), categories_path)
-      = link_to( t('activerecord.models.article.other'), articles_path)
-      = link_to( t('activerecord.models.option.other'), options_path)
+      = link_to( t('activerecord.models.category.other'), main_app.categories_path)
+      = link_to( t('activerecord.models.article.other'), main_app.articles_path)
+      = link_to( t('activerecord.models.option.other'), main_app.options_path)
 
     - if perms.include?('finish_own_settlement') or perms.include?('finish_all_settlements')
       = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
 
     - if perms.include? 'view_all_settlements'
-      = link_to( t('activerecord.models.settlement.other'), settlements_path)
+      = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path)
 
     - if perms.include? 'view_statistics'
       = link_to( t('activerecord.models.report.other'), '/reports')
 
     - if perms.include? 'manage_settings'
-      = link_to( t('activerecord.models.tax.other'), taxes_path)
-      = link_to( t('activerecord.models.cost_center.other'), cost_centers_path)
-      = link_to( t('activerecord.models.user.other'), users_path)
-      = link_to( t('activerecord.models.role.other'), roles_path)
+      = link_to( t('activerecord.models.tax.other'), main_app.taxes_path)
+      = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path)
+      = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path)
+      = link_to( t('activerecord.models.user.other'), main_app.users_path)
+      = link_to( t('activerecord.models.role.other'), main_app.roles_path)
       - if @current_company.vendors.existing.count > 1
-        = link_to( t('activerecord.models.vendor.other'), vendors_path)
+        = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
       - else
         = link_to( t('activerecord.models.vendor.one'), "/vendors/#{@current_vendor.id}/edit")
       - if perms.include? 'manage_customers'
-        = link_to( t('activerecord.models.customer.other'), customers_path)
+        = link_to( t('activerecord.models.customer.other'), main_app.customers_path)
       - if perms.include? 'manage_pages'
-        = link_to( t('activerecord.models.page.other'), pages_path)
-        = link_to( t('activerecord.models.presentation.other'), presentations_path)
+        = link_to( t('activerecord.models.page.other'), main_app.pages_path)
+        = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path)
+    = link_to( t('activerecord.models.room.other'), rooms_path)
+    = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
+    = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
+    = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
+    = link_to( t('activerecord.models.surcharge.other'), main_app.surcharges_path)
+    = link_to( t('activerecord.models.season.other'), main_app.seasons_path)
+    - #SalorApi.run('views.layouts.header')

@@ -29,4 +29,16 @@ class Company < ActiveRecord::Base
   has_many :roles
   has_many :taxes
   has_many :vendor_printers
+  has_many :rooms
+  has_many :room_types
+  has_many :guest_types
+  has_many :seasons
+  has_many :surcharges
+  has_many :room_prices
+  has_many :bookings
+  has_many :booking_items
+  has_many :payment_methods
+  has_many :payment_method_items
+  has_many :surcharge_items
+  has_many :tax_amounts
 end

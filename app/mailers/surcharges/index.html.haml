@@ -1,0 +1,20 @@
+%h2= t('activerecord.models.surcharge.other')
+
+%p= link_to((t :new), new_surcharge_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:120px' }= SalorHotel::Surcharge.human_attribute_name(:name)
+    %th{ :style => 'width:120px' }= SalorHotel::Surcharge.human_attribute_name(:season_id)
+    %th{ :style => 'width:120px' }= SalorHotel::Surcharge.human_attribute_name(:guest_type_id)
+    %th{ :style => 'width:120px' }= SalorHotel::Surcharge.human_attribute_name(:amount)
+    %th{ :style => 'width:120px' }= SalorHotel::Surcharge.human_attribute_name(:radio_select)
+    %th{ :style => 'width:50px' }
+  - @surcharges.each do |t|
+    %tr
+      %td= link_to t.name, edit_surcharge_path(t)
+      %td= t.season.name
+      %td= t.guest_type.name if t.guest_type
+      %td= number_to_currency t.amount
+      %td= t.radio_select
+      %td= link_to image_tag('button_small_delete.png', :title => SalorHotel::Surcharge.human_attribute_name(:hidden), :alt => SalorHotel::RoomPrice.human_attribute_name(:hidden)), surcharge_path(t), :method => :delete, :confirm => t(:are_you_sure)

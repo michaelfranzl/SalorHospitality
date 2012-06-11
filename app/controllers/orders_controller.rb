@@ -14,30 +14,14 @@ class OrdersController < ApplicationController
     session[:admin_interface] = false
   end
 
-  # happens only in invoice_form if user changes CostCenter or Tax of Order
-  def update
-    @order = get_model
-    if params[:order][:tax_id]
-      @order.update_attribute :tax_id, params[:order][:tax_id] 
-      @order.items.existing.update_all :tax_id => nil
-      @orders = @current_vendor.orders.where(:finished => false, :table_id => @order.table_id)
-      @cost_centers = @current_vendor.cost_centers.existing.active
-      @taxes = @current_vendor.taxes.existing
-      render 'items/update'
-    else
-      @order.update_attribute(:cost_center_id, params[:order][:cost_center_id]) if params[:order][:cost_center_id]  
-      render :nothing => true
-    end
-  end
-
   def show
     if params[:id] != 'last'
       @order = @current_vendor.orders.existing.find(params[:id])
     else
-      @order = @current_vendor.orders.existing.find_all_by_finished(true).last
+      @order = @current_vendor.orders.existing.find_all_by_paid(true).last
     end
     redirect_to '/' and return if not @order
-    @previous_order, @next_order = neighbour_orders(@order)
+    @previous_order, @next_order = neighbour_models('orders',@order)
     respond_to do |wants|
       wants.html
       wants.bill { render :text => generate_escpos_invoice(@order) }
@@ -62,19 +46,6 @@ class OrdersController < ApplicationController
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
-  def toggle_tax_colors
-    @order = get_model
-    if session[:display_tax_colors]
-      session[:display_tax_colors] = !session[:display_tax_colors]
-    else
-      session[:display_tax_colors] = true
-    end
-    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-    @cost_centers = @current_vendor.cost_centers.existing.active
-    @taxes = @current_vendor.taxes.existing
-    render 'items/update'
-  end
-
   def storno
     @order = get_model
   end
@@ -83,21 +54,63 @@ class OrdersController < ApplicationController
     case params[:currentview]
       when 'refund', 'show'
         @order = get_model
-        @order.print(['invoice'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
+        @order.print(['receipt'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
         render :nothing => true and return
       when 'invoice'
         @order = get_model
-        @order.finish
-        @order.print(['invoice'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-        @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-        if @orders.empty?
-          @order.table.update_attribute :user, nil if @orders.empty?
-          render :js => "go_to(#{@order.table_id},'tables'); update_tables();" and return
-        else
-          @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-          @taxes = @current_vendor.taxes.existing
-          @cost_centers = @current_vendor.cost_centers.existing.active
-          render 'go_to_invoice_form' and return
+        case params['jsaction']
+          when 'display_tax_colors'
+            if session[:display_tax_colors]
+              session[:display_tax_colors] = !session[:display_tax_colors]
+            else
+              session[:display_tax_colors] = true
+            end
+            prepare_objects_for_invoice
+            render 'items/update' and return
+          when 'mass_assign_tax'
+            #@order.update_attribute :tax_id, params[:tax_id] 
+            tax = @current_vendor.taxes.find_by_id(params[:tax_id])
+            @order.items.existing.each do |item|
+              item.taxes = { tax.id => { :percent => tax.percent, :sum => (item.sum * (tax.percent / 100.0)).round(2) }}
+              item.save
+            end
+            @order.calculate_totals
+            prepare_objects_for_invoice
+            render 'items/update' and return
+          when 'change_cost_center'
+            @order.update_attribute(:cost_center_id, params[:cost_center_id])
+            render :nothing => true and return
+          when 'assign_to_booking'
+            @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
+            @order.update_attributes(:booking_id => @booking.id)
+            @order.finish
+            @booking.calculate_totals
+            #@order.print(['interim_receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            redirect_from_invoice and return
+          when 'pay_and_print'
+            create_payment_method_items @order
+            @order.pay
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            redirect_from_invoice and return
+          when 'pay_and_print_pending'
+            create_payment_method_items @order
+            @order.pay
+            @order.update_attribute :print_pending, true
+            redirect_from_invoice and return
+          when 'pay_and_no_print'
+            create_payment_method_items @order
+            @order.pay
+            redirect_from_invoice and return
+        end
+      when 'invoice_paper'
+        @order = get_model
+        case params['jsaction']
+          when 'just_print'
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render :nothing => true and return
+          when 'mark_print_pending'
+            @order.update_attribute :print_pending, true
+            render :nothing => true and return
         end
       when 'table'
         case params['jsaction']
@@ -116,20 +129,18 @@ class OrdersController < ApplicationController
                 @order.print(['tickets'])
                 render :nothing => true and return
               when 'table' then
-                @order.finish
+                @order.pay
                 @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
+                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
                 if @orders.empty?
                   @order.table.update_attribute :user, nil
-                  render :js => "go_to(#{params[:order][:table_id]},'table','no_queue');" and return
+                  render :js => "route('table',#{params[:model][:table_id]});" and return
                 else
-                  render :js => "go_to(#{params[:order][:table_id]},'tables');" and return
+                  render :js => "route('tables',#{params[:model][:table_id]});" and return
                 end
               when 'invoice' then
                 @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id])
-                @taxes = @current_vendor.taxes.existing
-                @cost_centers = @current_vendor.cost_centers.existing.active
+                prepare_objects_for_invoice
                 render 'go_to_invoice_form' and return
             end
           when 'send_and_print'
@@ -139,24 +150,42 @@ class OrdersController < ApplicationController
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             if local_variant? and not @order.hidden
-              @order.print(['tickets','invoice'], @current_vendor.vendor_printers.existing.first)
+              @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
             elsif saas_variant? and not @order.hidden
-              @order.print(['invoice'])
+              @order.print(['receipt'])
             end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
             if @orders.empty?
               @order.table.update_attribute :user, nil
-              render :js => "go_to(#{@order.table.id},'table','no_queue');" and return
+              render :js => "route('table', #{@order.table.id});" and return
             else
-              render :js => "go_to(#{@order.table.id},'tables');" and return
+              render :js => "route('tables', #{@order.table.id});" and return
             end
           when 'move'
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            render :js => "go_to(#{@order.table.id},'tables');" and return
+            render :js => "route('tables', #{@order.table.id});" and return
+        end
+      when 'room'
+        case params['jsaction']
+          when 'send'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            unless @booking.booking_items.existing.any?
+              @booking.hide(@current_user.id)
+            end
+            render :js => "route('rooms');" and return
+          when 'pay'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            @booking.pay
+            render :js => "route('rooms');" and return
         end
     end
   end
@@ -173,15 +202,33 @@ class OrdersController < ApplicationController
   end
 
   private
-    def neighbour_orders(order)
-      orders = @current_vendor.orders.existing.where(:finished => true)
-      idx = orders.index(order)
-      previous_order = orders[idx-1] if idx
-      previous_order = order if previous_order.nil?
-      next_order = orders[idx+1] if idx
-      next_order = order if next_order.nil?
-      return previous_order, next_order
+
+    def redirect_from_invoice
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+      if @orders.empty?
+        @order.table.update_attribute :user, nil if @orders.empty?
+        render :js => "route('tables');" and return
+      else
+        prepare_objects_for_invoice
+        render 'go_to_invoice_form' and return
+      end
     end
+
+    def create_payment_method_items(associated_object)
+      if params['payment_methods']
+        if associated_object.class == Order
+          order_id = associated_object.id
+          booking_id = nil
+        elsif associated_object.class == Booking
+          order_id = nil
+          booking_id = associated_object.id
+        end
+        params['payment_methods'][params['id']].to_a.each do |pm|
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+        end
+      end
+    end
+
 
     def reduce_stocks(order)
       order.items.exisiting.each do |item|
@@ -195,11 +242,11 @@ class OrdersController < ApplicationController
     def get_order
       if params[:id]
         @order = get_model
-      elsif params[:order] and params[:order][:table_id]
+      elsif params[:model] and params[:model][:table_id]
         # Reuse the order on table if possible
-        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:order][:table_id]).first
+        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
       else
-        raise "params[:order][:table_id] was not set. This is probably a JS issue and should never happen."
+        raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
         @order.update_from_params(params)
@@ -209,4 +256,13 @@ class OrdersController < ApplicationController
       end
     end
 
+    def get_booking
+      @booking = Booking.accessible_by(@current_user).existing.find_by_id(params[:id]) if params[:id]
+      if @booking
+        @booking.update_from_params(params)
+      else
+        @booking = Booking.create_from_params(params, @current_vendor, @current_user)
+        @booking.set_nr
+      end
+    end
 end

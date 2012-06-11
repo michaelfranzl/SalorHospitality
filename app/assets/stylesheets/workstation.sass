@@ -409,7 +409,7 @@ select
 
 
 input#print_invoice,
-input#split_invoice,
+input#split_e,
 input#storno_item,
 a#edit_invoice img,
 a#go_back img
@@ -452,7 +452,7 @@ table.detailed_list
   td.number
     :text-align right
   td.subtotal
-    :font-size 120%
+    :font-size 200%
     :padding-bottom 20px
     :text-align right
     :color white
@@ -477,6 +477,9 @@ div.scope
   :vertical-align top
 
 form.vendor_form
+  textarea
+    :width 200px
+    :height 100px
   label
     :display inline-block
     :width 180px
@@ -484,16 +487,9 @@ form.vendor_form
     :width 350px
   label.medium
     :width 100px
-  div.fields_left
-    :vertical-align top
-    :display inline-block
-    :width 60%
-  div#vendor_printers
-    :vertical-align top
-    :display inline-block
-    :width 30%px
-    label
-      :width 60px
+  table
+    td
+      :vertical-align top
 
 form.edit_role, form.new_role
   label
@@ -876,7 +872,6 @@ div.optionsselect,
 div#tablesselect,
 div.comment_for_item,
 div.price_for_item,
-div#customer_list,
 div#items_notifications,
 div#note_for_order
   :display none
@@ -1035,54 +1030,60 @@ img.more
   :float right
   :margin-top 2px
 
-input#customer_data_1,
-input#customer_data_2,
-input#customer_data_3
-  :width 400px
-  
-table.printed_invoice
-  :border 2px solid #7e868a
-  :border-collapse collapse
-  td, th
-    :border 1px solid #7e868a
-    :padding 3px
-  .one
-    :width 30px
-    :text-align center
-  .two
-    :width 200px
-    :text-align left
-  .three
-    :width 80px
-    :text-align right
-  .four
-    :width 30px
-    :text-align center
-  .five
-    :width 80px
-    :text-align right
-    
-table.printed_taxes
-  :border 2px solid #7e868a
-  :border-collapse collapse
-  td, th
-    :border 1px solid #7e868a
-    :padding 3px
-  .one
-    :width 30px
-    :text-align center
-  .two
-    :width 30px
-    :text-align left
-  .three
-    :width 60px
-    :text-align right
-  .four
-    :width 60px
-    :text-align center
-  .five
-    :width 60px
-    :text-align right
+div.paper_invoice
+  :background-color white
+  :width 700px
+  :color black
+  :padding 70px
+  :margin 20px auto
+  :-moz-box-shadow 0px 0px 15px black
+  :-webkit-box-shadow 0px 0px 15px black
+
+  p.subtotal
+    :float right
+    :font-size 200%
+    :font-weight bold
+
+  div.vendor_details
+    :float left
+
+  div.customer_details
+    :padding-top 100px
+    :float right
+
+  table
+    :width 100%
+    :border 2px solid #7e868a
+    :border-collapse collapse
+    td, th
+      :border 1px solid #7e868a
+      :padding 3px
+    th
+      :background-color #DDD
+    .left
+      :text-align left
+    .center
+      :text-align center
+    .right
+      :text-align right
+    .right_wide
+      :width 90px
+      :text-align right
+    .center_wide
+      :width 90px
+      :text-align center
+    .left_wide
+      :width 90px
+      :text-align left
+      
+  table.taxes,
+  table.payment_methods
+    :width 40%
+    :border 2px solid #7e868a
+    :border-collapse collapse
+    td, th
+      :border 1px solid #7e868a
+      :padding 3px
 
 
 div#room1_button
@@ -1384,3 +1385,108 @@ div#draw_controls
 
 div.active
   :background-color $billgastroblue1
+
+
+//============= SALOR HOTEL =============
+
+div.booking_form
+  //:position absolute
+  //:width 97%
+  //:height 50%
+  //:background-color rgba(20,20,20,0.8)
+  //:border 2px solid white
+  div#booking_totals
+    :width 180px
+    :font-size 110%
+    :float right
+    table.booking-totals
+      tr.subtotal
+        td
+          :border-top 1px solid white
+  div#booking_tools
+    :width 155px
+    :float right
+    span.textbutton
+      :margin 0px 0px 5px 0px
+      :padding 10px
+      :width 131px 
+      :text-align right
+    input
+      :width 145px
+      :font-size 150%
+      :border none
+      :background-color $billgastrogrey1
+      :padding 5px
+      :margin 0px 0px 5px 0px
+      :color #DDD
+      :text-align right
+  div.payment_methods_container
+    :display none
+    :position absolute
+    :left 300px
+    :width 500px
+    :height 100px
+    :background-color $billgastrogrey1
+    :padding 20px
+    :-moz-box-shadow 0px 0px 8px white
+    :-moz-border-radius 5px
+    :-webkit-box-shadow 0px 0px 8px white
+    :-webkit-border-radius 5px
+    input
+      :border none
+      :background-color #3A474D
+      :margin-left 20px
+      :color white
+  div#customers_category_button
+    :float right
+  div.surcharge_col
+    :padding 5px
+    :height 22px
+    :text-align center
+    input
+      :display none
+      :vertical-align middle
+    input.booking_item_count
+      :display inline
+      :padding 0px 20px
+
+  div.season,
+  div.guest_type
+    :display inline-block
+    :padding 5px 15px
+    :width 10%
+    :text-align center
+    :margin 5px 5px 15px 0px
+    :cursor pointer
+  
+  div#booking_items_container
+    :width 80%
+    div.surcharge_col:first-child,
+    div.header:first-child
+      :width 20%
+    div.header,
+
+  div.surcharge_col
+    :border-top 2px solid #555
+    :border-left 2px solid #555
+    :border-right 2px solid #222
+    :border-bottom 2px solid #222
+    :background-color #3A474D
+    :display inline-block
+
+  div.selected
+    :background-color rgba(255,255,255,0.4)
+  
+  input.booking_item_count
+    :width 20px
+    :font-size 130%
+    :border none
+    :color white
+    :background-color transparent
+  
+  div#customers_list
+    :width 200px
+    :position absolute
+    :top 50px
+    :left 50px
+

@@ -1,0 +1,70 @@
+= form_tag 'by_nr', :id => 'search_by_nr' do
+  = text_field_tag 'nr', t('.search_by_number')
+  %span#nr_display_keyboard.display_keyboard
+
+%div#buttons
+  - if local_variant?
+    - i = 0
+    - @current_vendor.vendor_printers.existing.each do |p|
+      - i += 1
+      = link_to('', "/orders/update_ajax?id=#{ @booking.id }&printer=#{ p.id }&currentview=show", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }", :remote => true)
+  - else
+    = link_to '', "update_ajax?id=#{ @booking.id }&currentview=show", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
+  %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
+  %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
+  = link_to '', "/orders/storno/#{@booking.id}", :class => 'iconbutton refund_button', :title => t(:storno)
+  %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
+  %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
+
+.paper_invoice
+  .vendor_details
+    = raw Kramdown::Document.new(@booking.vendor.invoice_header_blurb).to_html if @booking.vendor.invoice_header_blurb
+  .customer_details
+    - if @booking.customer
+      = @booking.customer.company_name
+      %br
+      == #{ @booking.customer.first_name } #{ @booking.customer.last_name}
+      %br
+      = @booking.customer.address
+      %br
+      == #{ @booking.customer.postalcode } #{ @booking.customer.city }
+  .clear
+
+  %h1== #{ t 'invoice' } #B#{ @booking.nr }
+  
+  
+  = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
+
+  - @booking.orders.each do |order|
+    %h3== #{ Order.model_name.human } #{ order.nr }
+    = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
+
+  %p.subtotal= number_to_currency @booking.sum
+  
+  = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
+
+  %p= PaymentMethodItem.model_name.human
+
+  %table.payment_methods
+    %tr
+      %th.left= PaymentMethodItem.model_name.human
+      %th.right= PaymentMethodItem.human_attribute_name :amount
+    - @booking.payment_method_items.each do |pm|
+      %tr
+        %td.left= pm.payment_method.name
+        %td.right= number_to_currency pm.amount
+    %tr
+      %td.left= Booking.human_attribute_name :change_given
+      %td.right= number_to_currency @booking.change_given
+
+  .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
+
+:javascript
+  $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );
+  $('#nr_display_keyboard').click(function(){
+    $('#nr').val('');
+    $('#nr').getkeyboard().reveal();
+  });
+  $('#nr').click(function(){
+    $('#nr').val('');
+  });

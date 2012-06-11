@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520110824) do
+ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -36,6 +36,51 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
   add_index "articles", ["name", "description", "price"], :name => "index_articles_on_name_and_description_and_price"
   add_index "articles", ["position"], :name => "index_articles_on_position"
 
+  create_table "articles_taxes", :id => false, :force => true do |t|
+    t.integer "tax_id"
+    t.integer "article_id"
+  end
+
+  create_table "booking_items", :force => true do |t|
+    t.integer  "booking_id"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.integer  "guest_type_id"
+    t.float    "sum",                            :default => 0.0
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+    t.integer  "count",                          :default => 1
+    t.integer  "hidden_by"
+    t.float    "base_price"
+    t.float    "refund_sum",                     :default => 0.0
+    t.string   "taxes",         :limit => 10000, :default => "--- {}\n"
+  end
+
+  create_table "bookings", :force => true do |t|
+    t.datetime "from"
+    t.datetime "to"
+    t.integer  "customer_id"
+    t.float    "sum",                           :default => 0.0
+    t.boolean  "hidden"
+    t.boolean  "paid",                          :default => false
+    t.text     "note"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.integer  "room_id"
+    t.boolean  "finished",                      :default => false
+    t.integer  "user_id"
+    t.integer  "season_id"
+    t.integer  "hidden_by"
+    t.float    "refund_sum",                    :default => 0.0
+    t.integer  "nr"
+    t.float    "change_given"
+    t.float    "duration"
+    t.string   "taxes",        :limit => 10000, :default => "--- {}\n"
+  end
+
   create_table "cash_drawers", :force => true do |t|
     t.string  "name"
     t.integer "user_id"
@@ -51,7 +96,6 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.integer  "tax_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "icon"
@@ -69,7 +113,6 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
   add_index "categories", ["name"], :name => "index_categories_on_name"
   add_index "categories", ["position"], :name => "index_categories_on_position"
-  add_index "categories", ["tax_id"], :name => "index_categories_on_tax_id"
   add_index "categories", ["vendor_printer_id"], :name => "index_categories_on_vendor_printer_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -142,16 +185,6 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
     t.boolean  "hidden"
   end
 
-  create_table "customers_items", :id => false, :force => true do |t|
-    t.integer "customer_id"
-    t.integer "item_id"
-  end
-
-  create_table "customers_orders", :id => false, :force => true do |t|
-    t.integer "customer_id"
-    t.integer "order_id"
-  end
-
   create_table "discounts", :force => true do |t|
     t.string   "name"
     t.float    "amount"
@@ -192,6 +225,21 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   add_index "groups", ["company_id"], :name => "index_groups_company_id"
   add_index "groups", ["name"], :name => "index_groups_on_name"
+
+  create_table "guest_types", :force => true do |t|
+    t.string   "name"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "guest_types_taxes", :id => false, :force => true do |t|
+    t.integer "guest_type_id"
+    t.integer "tax_id"
+  end
 
   create_table "histories", :force => true do |t|
     t.string   "url"
@@ -234,28 +282,28 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "count",                            :default => 1
+    t.integer  "count",                                :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.integer  "position"
     t.integer  "quantity_id"
-    t.string   "comment",                          :default => ""
+    t.string   "comment",                              :default => ""
     t.float    "price"
-    t.integer  "printed_count",       :limit => 1, :default => 0
+    t.integer  "printed_count",       :limit => 1,     :default => 0
     t.integer  "item_id"
     t.integer  "tax_id"
-    t.integer  "max_count",                        :default => 0
+    t.integer  "max_count",                            :default => 0
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
-    t.string   "preparation_comment",              :default => ""
+    t.string   "preparation_comment",                  :default => ""
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
-    t.string   "delivery_comment",                 :default => ""
+    t.string   "delivery_comment",                     :default => ""
     t.boolean  "hidden"
     t.integer  "category_id"
     t.float    "tax_percent"
@@ -269,6 +317,7 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
     t.integer  "cost_center_id"
     t.text     "scribe"
     t.text     "scribe_escpos"
+    t.string   "taxes",               :limit => 10000, :default => "--- {}\n"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -306,20 +355,20 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
   add_index "options", ["option_id"], :name => "index_options_on_option_id"
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",       :default => false
+    t.boolean  "finished",                        :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.float    "sum",            :default => 0.0
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.float    "sum",                             :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
     t.string   "printed_from"
     t.integer  "nr"
     t.integer  "tax_id"
     t.boolean  "print_pending"
-    t.float    "refund_sum",     :default => 0.0
+    t.float    "refund_sum",                      :default => 0.0
     t.integer  "company_id"
     t.string   "note"
     t.integer  "customer_id"
@@ -329,6 +378,10 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
     t.float    "tax_sum"
     t.integer  "hidden_by"
     t.boolean  "printed"
+    t.boolean  "paid"
+    t.float    "change_given"
+    t.integer  "booking_id"
+    t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
@@ -380,6 +433,28 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   add_index "partials", ["model_id"], :name => "index_partials_on_model_id"
   add_index "partials", ["presentation_id"], :name => "index_partials_on_presentation_id"
+
+  create_table "payment_method_items", :force => true do |t|
+    t.integer  "payment_method_id"
+    t.integer  "order_id"
+    t.float    "amount"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "booking_id"
+  end
+
+  create_table "payment_methods", :force => true do |t|
+    t.string   "name"
+    t.float    "amount"
+    t.integer  "order_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "hidden"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+  end
 
   create_table "presentations", :force => true do |t|
     t.string   "name"
@@ -460,6 +535,54 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
 
+  create_table "room_prices", :force => true do |t|
+    t.integer  "room_type_id"
+    t.integer  "guest_type_id"
+    t.float    "base_price"
+    t.boolean  "hidden"
+    t.string   "vendor_id"
+    t.string   "integer"
+    t.integer  "company_id"
+    t.boolean  "active",        :default => true
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "season_id"
+  end
+
+  create_table "room_types", :force => true do |t|
+    t.string   "name"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "rooms", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "room_type_id"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "active",       :default => true
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "seasons", :force => true do |t|
+    t.string   "name"
+    t.datetime "from"
+    t.datetime "to"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
   create_table "settlements", :force => true do |t|
     t.float    "revenue"
     t.integer  "user_id"
@@ -487,6 +610,32 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
 
   add_index "stocks", ["company_id"], :name => "index_stocks_company_id"
   add_index "stocks", ["group_id"], :name => "index_stocks_on_group_id"
+
+  create_table "surcharge_items", :force => true do |t|
+    t.integer "surcharge_id"
+    t.integer "booking_item_id"
+    t.float   "amount"
+    t.integer "vendor_id"
+    t.integer "company_id"
+    t.integer "season_id"
+    t.integer "guest_type_id"
+    t.boolean "hidden"
+    t.string  "taxes",           :limit => 1000, :default => "--- {}\n"
+  end
+
+  create_table "surcharges", :force => true do |t|
+    t.string   "name"
+    t.integer  "season_id"
+    t.integer  "guest_type_id"
+    t.float    "amount"
+    t.boolean  "hidden"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "active",        :default => true
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "radio_select"
+  end
 
   create_table "tables", :force => true do |t|
     t.string   "name"
@@ -519,6 +668,15 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tax_amounts", :force => true do |t|
+    t.integer "surcharge_id"
+    t.integer "tax_id"
+    t.float   "amount"
+    t.integer "vendor_id"
+    t.boolean "hidden"
+    t.integer "company_id"
   end
 
   create_table "taxes", :force => true do |t|
@@ -573,37 +731,35 @@ ActiveRecord::Schema.define(:version => 20120520110824) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                           :default => "Bill Gastro"
-    t.string   "subdomain",                                      :default => "demo"
-    t.datetime "created_at",                                                                          :null => false
-    t.datetime "updated_at",                                                                          :null => false
-    t.string   "invoice_subtitle",                               :default => ""
-    t.string   "address",                                        :default => ""
-    t.string   "revenue_service_tax_number",                     :default => ""
-    t.string   "invoice_slogan1",                                :default => ""
-    t.string   "invoice_slogan2",                                :default => ""
-    t.string   "internet_address",                               :default => "www.billgastro.com"
-    t.string   "email",                                          :default => "office@billgastro.com"
-    t.integer  "largest_order_number",                           :default => 0
-    t.string   "unused_order_numbers",       :limit => 10000,    :default => "--- []\n"
+    t.string   "name",                                          :default => "Bill Gastro"
+    t.string   "subdomain",                                     :default => "demo"
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
+    t.integer  "largest_order_number",                          :default => 0
+    t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
     t.string   "country"
-    t.string   "bank_account1"
-    t.string   "bank_account2"
-    t.integer  "time_offset",                                    :default => 0
+    t.integer  "time_offset",                                   :default => 0
     t.string   "mode"
-    t.text     "resources_cache",            :limit => 16777215
+    t.text     "resources_cache",           :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                              :default => true
+    t.boolean  "use_order_numbers",                             :default => true
     t.integer  "company_id"
-    t.boolean  "active",                                         :default => true
+    t.boolean  "active",                                        :default => true
     t.boolean  "hidden"
     t.text     "rlogo_header"
     t.text     "rlogo_footer"
-    t.boolean  "ticket_item_separator",                          :default => true
-    t.boolean  "ticket_wide_font",                               :default => true
-    t.boolean  "ticket_tall_font",                               :default => true
-    t.boolean  "ticket_display_time_order",                      :default => true
+    t.boolean  "ticket_item_separator",                         :default => true
+    t.boolean  "ticket_wide_font",                              :default => true
+    t.boolean  "ticket_tall_font",                              :default => true
+    t.boolean  "ticket_display_time_order",                     :default => true
+    t.text     "receipt_header_blurb"
+    t.text     "receipt_footer_blurb"
+    t.text     "invoice_header_blurb"
+    t.text     "invoice_footer_blurb"
+    t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
+    t.integer  "largest_booking_number",                        :default => 0
+    t.boolean  "use_booking_numbers",                           :default => true
   end
 
 end

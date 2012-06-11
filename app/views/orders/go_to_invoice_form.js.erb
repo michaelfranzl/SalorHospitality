@@ -1,4 +1,4 @@
-go_to(<%= @orders.first.table.id %>,'invoice');
+route('invoice', <%= @orders.first.table.id %>);
 <% @orders.each do |o| %>
   $('#invoices').append('<%= escape_javascript render :partial => '/orders/invoice_form', :locals => { :invoice_form => o, :cost_centers => @cost_centers } %>');
 <% end %>

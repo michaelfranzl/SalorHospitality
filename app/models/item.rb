@@ -17,8 +17,9 @@ class Item < ActiveRecord::Base
   belongs_to :settlement
   belongs_to :cost_center
   has_and_belongs_to_many :options
-  has_and_belongs_to_many :customers
   validates_presence_of :count, :article_id
+
+  serialize :taxes
 
   alias_attribute :s, :position
   alias_attribute :o, :comment
@@ -70,6 +71,7 @@ class Item < ActiveRecord::Base
   end
 
   def scribe=(scribe)
+    return if scribe.nil?
     write_attribute :scribe, scribe
     write_attribute :scribe_escpos, Escper::Image.new(self.scribe_bitmap,:object).to_s
   end
@@ -84,16 +86,23 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price
-    self.tax_percent = tax.percent
-    self.tax_id = self.tax.id if self.tax_id.nil?
+    #self.tax_percent = tax.percent
+    #self.tax_id = self.tax.id if self.tax_id.nil?
     self.category_id = article.category.id
     save
     if self.refunded
-      self.tax_sum = 0
+      #self.tax_sum = 0
       self.sum = 0
+      self.taxes = {}
     else
-      self.tax_sum = full_price * tax.percent / 100
       self.sum = full_price
+      self.taxes = {}
+      self.article.taxes.each do |tax|
+        tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
+        gro = (self.sum).round(2)
+        net = (gro - tax_sum).round(2)
+        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+      end
     end
     save
   end
@@ -107,15 +116,15 @@ class Item < ActiveRecord::Base
     p
   end
 
-  def tax
-    t = Tax.find_by_id (read_attribute :tax_id)
-    return t if t
-    t = self.order.tax if self.order
-    return t if t
-    t = self.article.tax if self.article
-    return t if t
-    return self.article.category.tax if self.article
-  end
+#  def tax
+#    t = Tax.find_by_id (read_attribute :tax_id)
+#    return t if t
+#    t = self.order.tax if self.order
+#    return t if t
+#    t = self.article.tax if self.article
+#    return t if t
+#    return self.article.category.tax if self.article
+#  end
 
   def count=(count)
     c = count.to_i
@@ -144,7 +153,7 @@ class Item < ActiveRecord::Base
   end
 
   def optionslist=(optionslist)
-    optionslist.delete '0'
+    optionslist.delete '0' # 0 is sent by JS always, otherwise optionslist is not defined
     self.options = []
     optionslist.each do |o|
       self.options << Option.find_by_id(o.to_i)
@@ -194,7 +203,7 @@ class Item < ActiveRecord::Base
     split_order = parent_order.order
     if split_order.nil?
       split_order = Order.create(parent_order.attributes)
-      split_order.nr = vendor.get_unique_order_number
+      split_order.nr = vendor.get_unique_model_number('order')
       #sisr1 = split_order.save
       #raise "Konnte die abgespaltene Bestellung nicht speichern. Oops!" if not sisr1
       parent_order.update_attribute :order, split_order  # make an association between parent and child

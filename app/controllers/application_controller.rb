@@ -6,12 +6,11 @@
 # See license.txt for the license applying to all files within this software.
 require 'net/http'
 class ApplicationController < ActionController::Base
-
   helper :all
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
-  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?
+  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :hotel_mode?
 
   private
 
@@ -55,6 +54,13 @@ class ApplicationController < ActionController::Base
       model
     end
 
+    def prepare_objects_for_invoice
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+      @cost_centers = @current_vendor.cost_centers.existing.active
+      @taxes = @current_vendor.taxes.existing
+      @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
+    end
+
     def set_locale
       I18n.locale = @current_user ? @current_user.language : 'en'
     end
@@ -73,6 +79,10 @@ class ApplicationController < ActionController::Base
 
     def mobile?
       not workstation?
+    end
+
+    def hotel_mode?
+      SalorGastro::Application::HOTEL_MODE
     end
 
     def mobile_special?
@@ -101,6 +111,16 @@ class ApplicationController < ActionController::Base
 
     def local_variant?
       @current_vendor.mode.nil? if @current_vendor
+    end
+
+    def neighbour_models(model_name, model_object)
+      models = @current_vendor.send(model_name).existing.where(:finished => true)
+      idx = models.index(model_object)
+      previous_model = models[idx-1] if idx
+      previous_model = model_object if previous_model.nil?
+      next_model = models[idx+1] if idx
+      next_model = model_object if next_model.nil?
+      return previous_model, next_model
     end
 
     def check_product_key

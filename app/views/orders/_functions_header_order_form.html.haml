@@ -1,15 +1,15 @@
 - if workstation?
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
-%a.iconbutton.tables_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'send');", :title => t(:send_and_go_back) }
+%a.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
 
 - if workstation?
   - if permit('counter_mode')
-    %a.iconbutton.finish_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send');", :title => t(:finish) }
-    %a.iconbutton.print3_button{ :onclick => "go_to(submit_json.order.table_id, 'table', 'send_and_print');", :title => t(:print_and_finish) }
+    %a.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish) }
+    %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish) }
 
 - if @current_user.role.permissions.include? 'finish_orders'
-  %a.iconbutton.cash_button{ :onclick => "go_to(submit_json.order.table_id, 'invoice', 'send');", :title => t(:split_order) }
+  %a.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
 
 - if @current_user.role.permissions.include?('move_order') and workstation?
   - if workstation?
@@ -19,12 +19,10 @@
       %option{ :value => '', :selected => true }
       = options_from_collection_for_select(@current_user.tables.existing.reverse, 'id', 'name')
 
-%a#order_cancel_button.iconbutton.cancel_button{ :onclick => "go_to(submit_json.order.table_id, 'tables');", :title => t(:cancel_and_go_back) }
+%a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
   
-<!-- %a.iconbutton.customer_button{ :onclick => "$('#customer_list').slideDown();", :title => t(:customer_list) } -->
-
 - if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
-  %a.iconbutton.storno_button{ :onclick => "go_to(submit_json.order.table_id, 'tables', 'destroy');", :title => t(:clear_order_and_go_back) }
+  %a.iconbutton.storno_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
 
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

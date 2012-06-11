@@ -1,0 +1,9 @@
+- areas = 4
+- 1.upto(areas) do |area|
+  %div.area{ :id => "area#{ area }" }
+    - if mobile? or params[:mobile_drag_and_drop]
+      = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
+      - 1.upto(areas) do |icon|
+        - style = icon == area ? "border: 2px solid #{ @current_user.color };" : ''
+        %a{ :class => "iconbutton area#{icon}_button", :style => style, :onclick => "scroll_to('#area#{ icon }',10)", :title => "#{t(:scroll_to_area)} #{ icon }" }
+      %a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }

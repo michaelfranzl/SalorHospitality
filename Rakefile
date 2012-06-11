@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-BillGastro::Application.load_tasks
+SalorGastro::Application.load_tasks

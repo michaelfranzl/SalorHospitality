@@ -1,9 +1,0 @@
-- rooms = 4
-- 1.upto(rooms) do |room|
-  %div.room{ :id => "room#{ room }" }
-    - if mobile? or params[:mobile_drag_and_drop]
-      = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
-      - 1.upto(rooms) do |icon|
-        - style = icon == room ? "border: 2px solid #{ @current_user.color };" : ''
-        %a{ :class => "iconbutton room#{icon}_button", :style => style, :onclick => "scroll_to('#room#{ icon }',10)", :title => "#{t(:scroll_to_room)} #{ icon }" }
-      %a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }

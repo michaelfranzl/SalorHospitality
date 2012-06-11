@@ -40,9 +40,7 @@ class ItemsController < ApplicationController
 
     @item.split
 
-    @cost_centers = @current_vendor.cost_centers.existing
-    @taxes = @current_vendor.taxes.existing
-    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+    prepare_objects_for_invoice
   end
 
   # We'll use edit for separation of items in the refund form
@@ -62,9 +60,11 @@ class ItemsController < ApplicationController
   def rotate_tax
     @item = get_model
     tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
-    current_tax_id_index = tax_ids.index @item.tax.id
+    current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
+    current_tax_id_index = tax_ids.index current_item_tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
-    @item.update_attribute :tax_id, next_tax_id
+    next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
+    @item.update_attribute :taxes, {next_tax.id => {:percent => next_tax.percent, :sum => (@item.sum * (next_tax.percent/100.0).round(2))}}
     @item.reload # re-read is necessary
   end
   

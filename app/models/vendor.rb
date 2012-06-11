@@ -2,6 +2,7 @@ class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
   include Scope
+  include SalorGastro
 
   belongs_to :company
   has_and_belongs_to_many :users
@@ -25,8 +26,21 @@ class Vendor < ActiveRecord::Base
   has_many :roles
   has_many :taxes, :class_name => 'Tax'
   has_many :vendor_printers
+  has_many :rooms
+  has_many :room_types
+  has_many :guest_types
+  has_many :seasons
+  has_many :surcharges
+  has_many :room_prices
+  has_many :bookings
+  has_many :booking_items
+  has_many :payment_methods
+  has_many :payment_method_items
+  has_many :surcharge_items
+  has_many :tax_amounts
 
   serialize :unused_order_numbers
+  serialize :unused_booking_numbers
 
   validates_presence_of :name
 
@@ -51,21 +65,23 @@ class Vendor < ActiveRecord::Base
     write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s 
   end
 
-  def get_unique_order_number
-    return 0 if not self.use_order_numbers
-    if not self.unused_order_numbers.empty?
-      # reuse order numbers if present
-      nr = self.unused_order_numbers.first
-      self.unused_order_numbers.delete(nr)
+  def get_unique_model_number(model_name_singular)
+    model_name_plural = model_name_singular + 's'
+    return 0 if not self.send("use_#{model_name_singular}_numbers")
+    if not self.send("unused_#{model_name_singular}_numbers").empty?
+      # puts '# reuse order numbers if present'
+      nr = self.send("unused_#{model_name_singular}_numbers").first
+      self.send("unused_#{model_name_singular}_numbers").delete(nr)
       self.save
-    elsif not self.largest_order_number.zero?
-      # increment largest order number
-      nr = self.largest_order_number + 1
-      self.update_attribute :largest_order_number, nr
+    elsif not self.send("largest_#{model_name_singular}_number").zero?
+      # puts '# increment largest model number'
+      nr = self.send("largest_#{model_name_singular}_number") + 1
+      self.update_attribute "largest_#{model_name_singular}_number", nr
     else
-      # find Order with largest nr attribute from database. this should happen only once when a new db
-      last_order = self.orders.existing.where('nr is not NULL').last
-      nr = last_order ? last_order.nr + 1 : 1
+      #puts '# find Order with largest nr attribute from database. this should happen only once when a new db'
+      last_model = self.send(model_name_plural).existing.where('nr is not NULL').last
+      nr = last_model ? last_model.nr + 1 : 1
+      self.update_attribute "largest_#{model_name_singular}_number", nr
     end
     return nr
   end
@@ -111,6 +127,7 @@ class Vendor < ActiveRecord::Base
     article_models = self.articles.existing.active.positioned
     quantity_models = self.quantities.existing.active.positioned
     option_models = self.options.existing.positioned
+    payment_method_models = self.payment_methods.existing
 
     quantities = {}
     quantity_models.each do |q|
@@ -160,10 +177,38 @@ class Vendor < ActiveRecord::Base
       categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
     end
 
+    payment_methods = {}
+    payment_method_models.each do |pm|
+      pmid = pm.id
+      payment_methods[pm.id] = { :id => pmid, :n => pm.name }
+    end
+
+    rooms = Hash.new
+    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id } }
+
+    room_types = Hash.new
+    self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
+
+    room_prices = Hash.new
+    self.room_prices.existing.active.each { |rp| room_prices[rp.id] = { :rt => rp.room_type_id, :gt => rp.guest_type_id, :p => rp.base_price, :sn => rp.season_id } }
+
+    guest_types = Hash.new
+    self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
+
+    surcharges = Hash.new
+    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
+
+    seasons = Hash.new
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from, :t => sn.to, :c => sn.current? } }
+
+    taxes = Hash.new
+    self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
+
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
+    #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 

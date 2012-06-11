@@ -1,0 +1,35 @@
+%p= t 'served_by_X', :user => booking.user.title
+%p= l booking.created_at, :format => :long
+
+%table
+  %tr
+    %th.left= Tax.model_name.human
+    %th.left= GuestType.model_name.human
+    %th.left= RoomType.model_name.human
+    %th.left= Season.model_name.human
+    %th.right= BookingItem.human_attribute_name :base_price
+    %th.right= BookingItem.human_attribute_name :count
+    %th.right= BookingItem.human_attribute_name :sum
+
+  - sum_taxes = Hash.new
+  - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
+
+  - booking.booking_items.existing.each do |item|
+    %tr
+      %td.left= item.taxes.collect{ |k,v| v[:letter] }.join(',')
+      %td.left= item.guest_type.name
+      %td.left= item.booking.room.room_type.name
+      %td.left= item.booking.season.name
+      %td.right= number_to_currency item.base_price
+      %td.center= item.count
+      %td.right= number_to_currency item.base_price * item.count
+      - item.surcharges.each do |s|
+        %tr
+          %td.left= item.guest_type.name
+          %td.left{ :colspan => 2 }= s.name
+          %td.right= number_to_currency s.amount
+          %td.center= item.count
+          %td.right= number_to_currency s.amount * item.count
+  %tr
+    %td{ :colspan => 6 }= t :sum
+    %td.right= number_to_currency booking.sum
