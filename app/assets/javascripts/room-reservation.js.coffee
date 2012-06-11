@@ -13,9 +13,11 @@ window.update_salor_hotel_db = ->
   db = _get 'db'
   db.transaction (tx) ->
     tx.executeSql 'DROP TABLE IF EXISTS surcharges;'
+    tx.executeSql 'DROP TABLE IF EXISTS surcharges_bookings;'
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
     tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
+    tx.executeSql 'CREATE TABLE surcharges_bookings (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     $.each resources.sc, (k,v) ->
@@ -194,12 +196,16 @@ update_json_booking_items = ->
     update_base_price k
     db = _get 'db'
     db.transaction (tx) ->
+      debug submit_json.model.season_id
       tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         for i in [0..res.rows.length-1]
           record = res.rows.item(i)
           items_json[k].surcharges[record.name].id = record.id
           items_json[k].surcharges[record.name].amount = record.amount
           items_json[k].surcharges[record.name].radio_select = record.radio_select
+        update_submit_json_surchageslist k
+
+        
 
 
 
@@ -248,7 +254,6 @@ render_booking_item = (booking_item_id) ->
 
 
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
-  set_json 'booking', booking_item_id, 'surchargeslist', [0]
   if $(element).attr('type') == 'radio'
     $.each items_json[booking_item_id].surcharges, (k,v) ->
       if v.radio_select
@@ -261,8 +266,12 @@ save_selected_input_state = (element, booking_item_id, surcharge_name) ->
   else
     items_json[booking_item_id].surcharges[surcharge_name].selected = false
     element.parent().removeClass 'selected'
+  update_submit_json_surchageslist booking_item_id
 
+
+update_submit_json_surchageslist = (booking_item_id) ->
   # copy stuff over into submit_son from items_json, add ids to array
+  set_json 'booking', booking_item_id, 'surchargeslist', [0]
   $.each items_json[booking_item_id].surcharges, (k,v) ->
     if v.selected
       submit_json.items[booking_item_id].surchargeslist.push v.id
