@@ -20,6 +20,7 @@ class Booking < ActiveRecord::Base
     booking.company = vendor.company
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.create(item_params[1])
+      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
       booking.booking_items << new_item
       booking.save
       new_item.calculate_totals
@@ -42,6 +43,7 @@ class Booking < ActiveRecord::Base
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
+        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
