@@ -4,6 +4,7 @@ class Booking < ActiveRecord::Base
   has_many :booking_items
   has_many :payment_method_items
   has_many :orders
+  has_many :surcharge_items
   belongs_to :room
   belongs_to :user
   belongs_to :vendor

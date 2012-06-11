@@ -20,6 +20,8 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
+    $.each resources.scb, (k,v) ->
+      tx.executeSql 'INSERT INTO surcharges_bookings (id, name, season_id, amount, radio_select) VALUES (?,?,?,?,?);', [k, v.n, v.sn, v.a, v.r]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
@@ -71,8 +73,9 @@ window.display_booking_form = (room_id) ->
   cancel_link.on 'click', -> route 'rooms'
   render_season_buttons()
   render_guest_type_buttons()
-  surcharges_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
-  surcharges_rows_container = create_dom_element 'div', {id:'booking_items'}, '', surcharges_container
+  render_surcharges_bookings()
+  booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
+  create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
@@ -90,6 +93,7 @@ set_booking_duration = ->
   duration = $('#booking_duration').val()
   submit_json.model.duration = duration
   update_booking_totals()
+
   
 
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
@@ -145,6 +149,16 @@ render_guest_type_buttons = ->
       setTimeout ->
         render_booking_item(id)
       , 50
+
+render_surcharges_bookings = ->
+  surcharges_bookings_container = create_dom_element 'div', {id:'surcharges_bookings_container'}, '', '.booking_form'
+#  db = _get 'db'
+#  db.transaction (tx) ->
+#    tx.executeSql "SELECT id, name, amount, season_id, radio_select FROM surcharges_bookings WHERE guest_type_id IS NOT NULL;", [], (tx,res) ->
+#      for i in [0..res.rows.length-1]
+#        record = res.rows.item(i)
+#    scb_button = create_dom_element 'div', {class:'booking_surcharge'}, v.n, booking_surcharges_container
+  
 
 
 # This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. The data source is items_json. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.

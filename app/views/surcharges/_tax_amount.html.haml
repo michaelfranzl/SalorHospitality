@@ -4,7 +4,7 @@
   = f.text_field :amount, :size => 9
   %br
   = f.label :tax_id, :class => 'medium'
-  = f.select :tax_id, @taxes.collect{ |t| [ t.custom_name, t.id ] }
+  = f.select :tax_id, @taxes.collect{ |t| [ t.custom_name, t.id ] }, :include_blank => true
   %br
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#surcharge_tax_amounts_attributes_#{ id }_hidden').val(1); $('#tax_amount_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => TaxAmount.human_attribute_name(:hidden), :alt => TaxAmount.human_attribute_name(:hidden))

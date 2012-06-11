@@ -9,6 +9,7 @@ class AddTaxesToSurcharges < ActiveRecord::Migration
       t.integer :season_id
       t.integer :guest_type_id
       t.boolean :hidden
+      t.integer :booking_item_id
       t.string :taxes, :default => "--- {}\n", :limit => 1000
     end
     create_table :tax_amounts do |t|
