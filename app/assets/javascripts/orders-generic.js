@@ -231,9 +231,11 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    surcharge_headers = {guest_type_set:[], guest_type_null:[]};
+    _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    window.display_booking_form(model_id);
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
+    window.display_booking_form(model_id);
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }

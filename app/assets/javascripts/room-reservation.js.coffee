@@ -13,17 +13,13 @@ window.update_salor_hotel_db = ->
   db = _get 'db'
   db.transaction (tx) ->
     tx.executeSql 'DROP TABLE IF EXISTS surcharges;'
-    tx.executeSql 'DROP TABLE IF EXISTS surcharges_bookings;'
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
     tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
-    tx.executeSql 'CREATE TABLE surcharges_bookings (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
-    $.each resources.scb, (k,v) ->
-      tx.executeSql 'INSERT INTO surcharges_bookings (id, name, season_id, amount, radio_select) VALUES (?,?,?,?,?);', [k, v.n, v.sn, v.a, v.r]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
@@ -75,13 +71,18 @@ window.display_booking_form = (room_id) ->
   cancel_link.on 'click', -> route 'rooms'
   render_season_buttons()
   render_guest_type_buttons()
-  render_surcharges_bookings()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
+window.initialize_booking_form = ->
+  id = get_unique_booking_number('s')
+  add_json_booking_item id, null
+  setTimeout ->
+    window.render_booking_items_from_json()
+  , 150
 
 window.calculate_booking_duration = ->
   from = Date.parse(submit_json.model.from)
@@ -126,13 +127,17 @@ render_surcharge_header= ->
   db = _get 'db'
   db.transaction (tx) ->
     tx.executeSql "SELECT DISTINCT name FROM surcharges WHERE guest_type_id IS NOT NULL;", [], (tx,res) ->
-      #header = create_dom_element 'div', {class:'header'}, 'i18n GuestType', '#surcharges_headers'
-      #header = create_dom_element 'div', {class:'header'}, 'i18n count', '#surcharges_headers'
-      surcharge_headers = []
+      surcharge_headers = _get 'surcharge_headers'
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        surcharge_headers.push record.name
-        #header = create_dom_element 'div', {class:'header'}, record.name, '#surcharges_headers'
+        surcharge_headers.guest_type_set.push record.name
+      _set 'surcharge_headers', surcharge_headers
+   db.transaction (tx) ->
+    tx.executeSql "SELECT DISTINCT name FROM surcharges WHERE guest_type_id IS NULL;", [], (tx,res) ->
+      surcharge_headers = _get 'surcharge_headers'
+      for i in [0..res.rows.length-1]
+        record = res.rows.item(i)
+        surcharge_headers.guest_type_null.push record.name
       _set 'surcharge_headers', surcharge_headers
 
 
@@ -147,36 +152,36 @@ render_guest_type_buttons = ->
     gtbutton = create_dom_element 'div', {class:'guest_type'}, v.n, guest_types_container
     gtbutton.on 'click', ->
       gtbutton.effect 'highlight', {}, 500
-      id = add_json_booking_item parseInt(k), v.n
+      id = get_unique_booking_number('d')
+      add_json_booking_item id, parseInt(k)
       setTimeout ->
         render_booking_item(id)
       , 50
-
-render_surcharges_bookings = ->
-  surcharges_bookings_container = create_dom_element 'div', {id:'surcharges_bookings_container'}, '', '.booking_form'
-#  db = _get 'db'
-#  db.transaction (tx) ->
-#    tx.executeSql "SELECT id, name, amount, season_id, radio_select FROM surcharges_bookings WHERE guest_type_id IS NOT NULL;", [], (tx,res) ->
-#      for i in [0..res.rows.length-1]
-#        record = res.rows.item(i)
-#    scb_button = create_dom_element 'div', {class:'booking_surcharge'}, v.n, booking_surcharges_container
-  
+  gtbutton = create_dom_element 'div', {class:'guest_type'}, 'i18n global', guest_types_container
+  gtbutton.on 'click', ->
+    gtbutton.effect 'highlight', {}, 500
+    id = get_unique_booking_number('s')
+    add_json_booking_item id, null
+    setTimeout ->
+      render_booking_item(id)
+    , 50
 
 
 # This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. The data source is items_json. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
-add_json_booking_item = (guest_type_id, guest_type_name) ->
-  booking_item_id = get_unique_booking_number()
+add_json_booking_item = (booking_item_id, guest_type_id) ->
   create_json_record 'booking', {guest_type_id:guest_type_id, d:booking_item_id}
-  #items_json[booking_item_id] = {guest_type_id:guest_type_id, count:1, base_price:null, surcharges:{}}
-  #submit_json.items[booking_item_id] = {guest_type_id:guest_type_id}
+  if guest_type_id == null
+    guest_type_query_string = 'guest_type_id IS NULL'
+    update_base_price booking_item_id
+  else
+    guest_type_query_string = 'guest_type_id = ' + guest_type_id
+    update_base_price booking_item_id
   db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        items_json[booking_item_id].surcharges[record.name] = {id:record.id,amount:record.amount, radio_select:record.radio_select, selected:false}
-  update_base_price booking_item_id
-  return booking_item_id
+        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select, selected:false}
 
 
   
@@ -184,20 +189,25 @@ update_base_price = (k) ->
     db = _get 'db'
     db.transaction (tx) ->
       tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
-        base_price = res.rows.item(0).base_price
+        if res.rows.length == 0
+          base_price = 0
+        else
+          base_price = res.rows.item(0).base_price
         set_json 'booking', k, 'base_price', base_price
-        #items_json[k].base_price = base_price
-        #submit_json.items[k].base_price = base_price
 
 
 update_json_booking_items = ->
   $.each items_json, (k,v) ->
     guest_type_id = items_json[k].guest_type_id
+    debug 'udate_json_booking_items: guest_type_id = ' + guest_type_id
+    if guest_type_id == 0 || guest_type_id == null
+      guest_type_query_string = 'guest_type_id IS NULL'
+    else
+      guest_type_query_string = 'guest_type_id = ' + guest_type_id
     update_base_price k
     db = _get 'db'
     db.transaction (tx) ->
-      debug submit_json.model.season_id
-      tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE guest_type_id = ' + guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
+      tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         for i in [0..res.rows.length-1]
           record = res.rows.item(i)
           items_json[k].surcharges[record.name].id = record.id
@@ -210,10 +220,15 @@ update_json_booking_items = ->
 
 
 render_booking_item = (booking_item_id) ->
-  guest_type_id = items_json[booking_item_id].guest_type_id
-  guest_type_name = resources.gt[guest_type_id].n
-  booking_item_row = create_dom_element 'div', {class:'booking_item', id:'booking_item'+booking_item_id}, '', '#booking_items'
   surcharge_headers = _get 'surcharge_headers'
+  if booking_item_id.indexOf('s')== 0
+    guest_type_name = 'i18n global'
+    surcharge_headers = surcharge_headers.guest_type_null
+  else
+    guest_type_id = items_json[booking_item_id].guest_type_id
+    guest_type_name = resources.gt[guest_type_id].n
+    surcharge_headers = surcharge_headers.guest_type_set
+  booking_item_row = create_dom_element 'div', {class:'booking_item', id:'booking_item'+booking_item_id}, '', '#booking_items'
   create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
   render_booking_item_count booking_item_id
   for header in surcharge_headers
@@ -353,11 +368,11 @@ create_dom_element = (tag,attrs,content,append_to) ->
     $(append_to).append element
   return element
 
-get_unique_booking_number = ->
+get_unique_booking_number = (prefix) ->
   number = _get 'unique_surcharge_row_number'
   if typeof(number) == 'undefined'
     number = 1
   else
     number += 1
   _set 'unique_surcharge_row_number', number
-  return 'd' + number
+  return prefix + number

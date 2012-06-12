@@ -47,9 +47,10 @@ class Booking < ActiveRecord::Base
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
         item.calculate_totals
       else
-        new_item = BookingItem.new(item_params[1])
+        new_item = BookingItem.create(item_params[1])
         self.booking_items << new_item
         self.save
+        new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
         new_item.calculate_totals
       end
     end
@@ -88,9 +89,14 @@ class Booking < ActiveRecord::Base
   def booking_items_to_json
     booking_items_hash = {}
     self.booking_items.existing.reverse.each do |i|
-      d = "i#{i.id}"
+      if i.guest_type_id.zero?
+        d = "s#{i.id}"
+        surcharges = self.vendor.surcharges.where(:season_id => self.season_id)
+      else
+        d = "i#{i.id}"
+        surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
+      end
       surcharges_hash = {}
-      surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
         selected = booking_item_surcharges.include? s

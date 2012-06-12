@@ -43,14 +43,18 @@ class BookingItem < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
-    self.sum = self.count * (self.base_price + self.surcharge_items.sum(:amount))
-    self.guest_type.taxes.each do |tax|
-      tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
-      gro = (self.sum).round(2)
-      net = (gro - tax_sum).round(2)
-      self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+    if self.guest_type_id.zero?
+      self.base_price = 0
+    else
+      self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+      self.guest_type.taxes.each do |tax|
+        tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
+        gro = (self.sum).round(2)
+        net = (gro - tax_sum).round(2)
+        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+      end
     end
+    self.sum = self.count * (self.base_price + self.surcharge_items.sum(:amount))
     self.surcharge_items.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k

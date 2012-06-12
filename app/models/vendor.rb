@@ -195,11 +195,8 @@ class Vendor < ActiveRecord::Base
     guest_types = Hash.new
     self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
 
-    surcharges_booking_items = Hash.new
-    self.surcharges.existing.active.where('`guest_type_id` IS NOT NULL').each { |sc| surcharges_booking_items[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
-
-    surcharges_bookings = Hash.new
-    self.surcharges.existing.active.where('`guest_type_id` IS NULL').each { |sc| surcharges_bookings[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
+    surcharges = Hash.new
+    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
 
     seasons = Hash.new
     self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from, :t => sn.to, :c => sn.current? } }
@@ -209,7 +206,7 @@ class Vendor < ActiveRecord::Base
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges_booking_items, :scb => surcharges_bookings, :sn => seasons, :t => taxes, :pm => payment_methods }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
     #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
