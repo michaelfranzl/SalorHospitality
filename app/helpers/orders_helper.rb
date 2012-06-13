@@ -16,7 +16,12 @@ module OrdersHelper
       :decimal_separator => escape_javascript(I18n.t('number.currency.format.separator')),
       :currency_unit => escape_javascript(I18n.t('number.currency.format.unit')),
       :clear => escape_javascript(I18n.t(':clear')),
-      :customers => escape_javascript(I18n.t('activerecord.models.customer.other'))
+      :customers => escape_javascript(I18n.t('activerecord.models.customer.other')),
+      :save => escape_javascript(I18n.t('various.save')),
+      :payment_method => escape_javascript(PaymentMethodItem.model_name.human),
+      :pay => escape_javascript(I18n.t('various.pay')),
+      :common_surcharges => escape_javascript(I18n.t('various.common_surcharges')),
+      :cancel => escape_javascript(I18n.t('various.cancel'))
     }
     return i18n.to_json
   end

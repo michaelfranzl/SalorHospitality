@@ -1,4 +1,4 @@
-%h2= @surcharge.new_record? ? (t '.new_surcharge') : (t '.edit_room_price')
+%h2= @surcharge.new_record? ? (t '.new_surcharge') : (t '.edit_surcharge')
 
 - if @surcharge.errors.any?
   .errors
@@ -23,7 +23,7 @@
     = surcharge_form.check_box :radio_select
 
     %div#tax_amounts
-      %h3= t('activerecord.models.tax_amounts.other')
+      %h3= t('activerecord.models.tax_amount.other')
       %p#add_tax_amount
         %span.link= t '.add_tax_amount'
     = surcharge_form.fields_for :tax_amounts, surcharge_form.object.tax_amounts.existing do |f|

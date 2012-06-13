@@ -11,7 +11,7 @@
 - if permit('see_item_notifications')
   %a.iconbutton.items_notifications_button{ :onclick => '$("#items_notifications").slideDown();', :title => t('.items_notifications') }
 
-%a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.go_to_rooms') }
+%a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.toggle_between_tables_and_rooms') }
 
 = button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
 

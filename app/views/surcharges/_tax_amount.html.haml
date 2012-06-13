@@ -1,9 +1,9 @@
 - id = /surcharge\[tax_amounts_attributes\]\[(.*)\]/.match(f.object_name)[1]
 %div{ :id => "tax_amount_#{ id }" }
-  = f.label :amount, :class => 'medium'
+  = f.label :amount, t('activerecord.attributes.tax_amount.amount'), :class => 'medium'
   = f.text_field :amount, :size => 9
   %br
-  = f.label :tax_id, :class => 'medium'
+  = f.label :tax_id, t('activerecord.attributes.tax_amount.tax_id'), :class => 'medium'
   = f.select :tax_id, @taxes.collect{ |t| [ t.custom_name, t.id ] }, :include_blank => true
   %br
   - unless f.object.new_record?

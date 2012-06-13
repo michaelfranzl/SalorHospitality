@@ -1,4 +1,4 @@
-%h2= @room_price.new_record? ? (t '.new_room_price') : (t '.edit_room_price')
+%h2= @room_price.new_record? ? (t '.new_room_type') : (t '.edit_room_type')
 
 - if @room_price.errors.any?
   .errors
@@ -12,13 +12,13 @@
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
     %br
     = room_price_form.label :room_type_id
-    = room_price_form.select :room_type_id, @room_types.collect{|r| [r.name,r.id]}
+    = room_price_form.select :room_type_id, @room_types.collect{|r| [r.name,r.id]}, :include_blank => true
     %br
     = room_price_form.label :guest_type_id
-    = room_price_form.select :guest_type_id, @guest_types.collect{|r| [r.name,r.id]}
+    = room_price_form.select :guest_type_id, @guest_types.collect{|r| [r.name,r.id]}, :include_blank => true
     %br
     = room_price_form.label :season_id
-    = room_price_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}
+    = room_price_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}, :include_blank => true
     %br
     = room_price_form.label :base_price
     = room_price_form.text_field :base_price, :size => 5

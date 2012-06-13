@@ -439,6 +439,7 @@ class Order < ActiveRecord::Base
       list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [v[:letter],v[:percent],v[:net], v[:tax], v[:gro]]
     end
 
+    footer = ''
     footer = 
     "\ea\x01" +  # align center
     "\e!\x00" + # font A
