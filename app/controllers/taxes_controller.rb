@@ -8,6 +8,8 @@ class TaxesController < ApplicationController
 
   before_filter :check_permissions
 
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @taxes = @current_vendor.taxes.existing
   end

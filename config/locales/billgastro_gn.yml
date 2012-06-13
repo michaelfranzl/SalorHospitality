@@ -1,70 +1,7 @@
 ---
 gn:
-  room_types:
-    new:
-      edit_room_type: Zimmerklasse bearbeiten
-      new_room_type: Neue Zimmerklasse
-  room_prices:
-    new:
-      edit_room_price: Zimmerpreis bearbeiten
-      new_room_price: Neuer Zimmerpreis
-  surcharges:
-    new:
-      add_tax_amount: Steueranteil hinzufügen
-      edit_surcharge: Preisaufschlag bearbeiten
-      new_surcharge: Neuer Preisaufschlag
-  seasons:
-    new:
-      edit_season: Saison bearbeiten
-      new_season: Neue Saison
-  various:
-    home: Start
-    save: Speichern
-    pay: Abschließen
-    cancel: Abbrechen
-    common_surcharges: Aufschläge
-    subtotal: Gesamt
-  vendors:
-    index:
-      switch_to: Auswählen
-  bookings:
-    show:
-      search_by_number: Suche nach Nummer
-    invoice_item_list:
-      served_by_X: Sie wurden bedient von %{user}
-  shared:
-    invoice_tax_list:
-      list_of_taxes: Liste aller Steuern
   activerecord:
     attributes:
-      room_type:
-        name: Name
-        hidden: löschen
-      room_price:
-        base_price: Grundpreis
-        season_id: Saison
-        room_type_id: Room Type
-        guest_type_id: Guest Type
-        hidden: löschen
-      guest_type:
-        name: Name
-        taxes: Steuern
-        hidden: löschen
-      season:
-        name: Name
-        from: Von
-        to: Bis
-        hidden: löschen
-      tax_amount:
-        amount: Betrag
-        tax_id: Steuer
-      surcharge:
-        name: Name
-        season_id: Saison
-        guest_type_id: Gast-Typ
-        amount: Betrag
-        radio_select: Einfache Auswahl
-        hidden: löschen
       article:
         active: aktiv?
         category_id: Kategorie
@@ -94,6 +31,10 @@ gn:
         name: Name
       group:
         name: Name
+      guest_type:
+        hidden: löschen
+        name: Name
+        taxes: Steuern
       option:
         category_id: Kategorie
         hidden: Löschen
@@ -130,9 +71,30 @@ gn:
         usage: Verwendung
       role:
         name: Name
+      room_price:
+        base_price: Grundpreis
+        guest_type_id: Guest Type
+        hidden: löschen
+        room_type_id: Room Type
+        season_id: Saison
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from: Von
+        hidden: löschen
+        name: Name
+        to: Bis
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
+      surcharge:
+        amount: Betrag
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        name: Name
+        radio_select: Einfache Auswahl
+        season_id: Saison
       table:
         abbreviation: Abkürzung
         description: Beschreibung
@@ -150,6 +112,9 @@ gn:
         letter: Buchstabe
         name: Name
         percent: Steuer in %
+      tax_amount:
+        amount: Betrag
+        tax_id: Steuer
       user:
         active: aktiv?
         color: Farbe
@@ -200,39 +165,12 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
-      tax_amount:
-        one: Steueranteil
-        other: Steueranteile
-      booking:
-        one: Buchung
-        other: Buchungen
-      payment_method:
-        one: Zahlungsmethode
-        other: Zahlungsmethoden
-      payment_method_item:
-        one: Zahlungsmethode
-        other: Zahlungsmethode
-      room:
-        one: Zimmer
-        other: Zimmer
-      room_type:
-        one: Zimmerklasse
-        other: Zimmerklassen
-      room_price:
-        one: Zimmerpreis
-        other: Zimmerpreise
-      guest_type:
-        one: Gast-Typ
-        other: Gästetypen
-      season:
-        one: Saison
-        other: Saisonen
-      surcharge:
-        one: Aufschlag
-        other: Aufschläge
       article:
         one: Artikel
         other: Artikel
+      booking:
+        one: Buchung
+        other: Buchungen
       category:
         one: Kategorie
         other: Kategorien
@@ -254,6 +192,9 @@ gn:
       group:
         one: Lagergruppe
         other: Lagergruppen
+      guest_type:
+        one: Gast-Typ
+        other: Gästetypen
       image:
         one: Bild
         other: Bilder
@@ -272,6 +213,12 @@ gn:
       partial:
         one: Element
         other: Elemente
+      payment_method:
+        one: Zahlungsmethode
+        other: Zahlungsmethoden
+      payment_method_item:
+        one: Zahlungsmethode
+        other: Zahlungsmethode
       presentation:
         one: Vorlage
         other: Vorlagen
@@ -287,18 +234,36 @@ gn:
       role:
         one: Rolle
         other: Rollen
+      room:
+        one: Zimmer
+        other: Zimmer
+      room_price:
+        one: Zimmerpreis
+        other: Zimmerpreise
+      room_type:
+        one: Zimmerklasse
+        other: Zimmerklassen
+      season:
+        one: Saison
+        other: Saisonen
       settlement:
         one: Abrechnung
         other: Übersicht
       stock:
         one: Lagerbestand
         other: Lagerbestände
+      surcharge:
+        one: Aufschlag
+        other: Aufschläge
       table:
         one: Tisch
         other: Tische
       tax:
         one: Steuerklasse
         other: Steuerklassen
+      tax_amount:
+        one: Steueranteil
+        other: Steueranteile
       user:
         one: Benutzer
         other: Benutzer
@@ -347,6 +312,11 @@ gn:
   blackboard_generic_name: Speisetafel
   blank: Leer
   blue: Blau
+  bookings:
+    invoice_item_list:
+      served_by_X: Sie wurden bedient von %{user}
+    show:
+      search_by_number: Suche nach Nummer
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:
@@ -466,11 +436,11 @@ gn:
   orange: Orange
   orders:
     functions_header_index:
-      toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
-      show_last_order: Letzte Bestellung anzeigen
       show_last_booking: Letzte Buchung anzeigen
+      show_last_order: Letzte Bestellung anzeigen
+      toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
     functions_header_order_form:
       move_order: Bestellung verschieben
     go_to_tables:
@@ -482,16 +452,16 @@ gn:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
     invoice_form:
-      set_booking: Einer Buchung zuweisen
+      change_money: Retour
       just_finish: Rechnung nur abschließen
       print_and_finish: Drucken und Rechnung abschließen
+      set_booking: Einer Buchung zuweisen
       set_cost_center: Kostenkreis für diese Bestellung festlegen
       set_tax_for_all: Steuerklasse für alle Posten festlegen
       set_taxes: Steuerklassen festlegen
       split_invoice: Rechnung splitten
       split_this_item: Klicken um ein Stück dieses Postens splitten
       switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechseln
-      change_money: Retour
     login_form:
       email: Ihre E-Mail
       login: Login
@@ -588,12 +558,24 @@ gn:
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
       view_statistics: Statistiken ansehen
+  room_prices:
+    new:
+      edit_room_price: Zimmerpreis bearbeiten
+      new_room_price: Neuer Zimmerpreis
+  room_types:
+    new:
+      edit_room_type: Zimmerklasse bearbeiten
+      new_room_type: Neue Zimmerklasse
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock
   scroll_down: Hinunterscrollen
   scroll_to_room: Gehe in Raum
   scroll_up: Hinaufscrollen
+  seasons:
+    new:
+      edit_season: Saison bearbeiten
+      new_season: Neue Saison
   send_and_go_back: Senden und zurück
   served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
@@ -629,6 +611,9 @@ gn:
       print: Drucken
       start: Starten
       started_at: Gestartet am
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Liste aller Steuern
   split_order: Bestellung splitten
   statistic: Statistik
   statistics:
@@ -641,6 +626,11 @@ gn:
   storno: Storno
   sum: Summe
   superuser: Superuser
+  surcharges:
+    new:
+      add_tax_amount: Steueranteil hinzufügen
+      edit_surcharge: Preisaufschlag bearbeiten
+      new_surcharge: Neuer Preisaufschlag
   tables:
     create:
       success: Tisch erfolgreich gespeichert
@@ -649,6 +639,7 @@ gn:
     new:
       edit_table: Tisch bearbeiten
       new_table: Neuer Tisch
+  tax_amount: Steuer
   taxes:
     new:
       edit_tax: Steuerklasse bearbeiten
@@ -666,7 +657,13 @@ gn:
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
-  tax_amount: Steuer
+  various:
+    cancel: Abbrechen
+    common_surcharges: Aufschläge
+    home: Start
+    pay: Abschließen
+    save: Speichern
+    subtotal: Gesamt
   vendors:
     index:
       edit: bearbeiten

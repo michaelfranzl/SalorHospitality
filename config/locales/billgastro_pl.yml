@@ -427,7 +427,6 @@ pl:
   recent_orders: Wyświetl ostatnie zamówienia
   reports:
     end_date: Data końcowa
-    reports: Raport
     save: Zapisz
     start_date: Data początkowa
     usb_device: USB
@@ -471,11 +470,13 @@ pl:
   scroll_up: Przewiń w górę
   send_and_go_back: Zapisz i wróć
   served_by_X_on_table_Y: Obsługiwał Cię %{waiter} przy stoliku %{table}
-  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie serwera lub zerwane połączenie.
+  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie
+    serwera lub zerwane połączenie.
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
+      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome
+        oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
     new:
       email: Twój e-mail
       login: Login

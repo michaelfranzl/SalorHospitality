@@ -1,4 +1,7 @@
 class SeasonsController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @seasons = @current_vendor.seasons.existing
   end

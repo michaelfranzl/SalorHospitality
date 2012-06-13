@@ -1,5 +1,8 @@
 class RoomsController < ApplicationController
   respond_to :html,:json
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @rooms_json = {:keys => [], :rooms => {}}
     @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
