@@ -3,6 +3,7 @@ class Season < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :company
   has_many :surcharges
+  has_many :surcharge_items
   has_many :room_prices
   has_many :bookings
 

@@ -15,18 +15,19 @@ class Booking < ActiveRecord::Base
   serialize :taxes
 
   def self.create_from_params(params, vendor, user)
-    booking = Booking.new params[:model]
+    booking = Booking.create params[:model]
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
     params[:items].to_a.each do |item_params|
-      new_item = BookingItem.create(item_params[1])
-      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
-      booking.booking_items << new_item
-      booking.save
+      new_item = BookingItem.new(item_params[1])
+      new_item.booking = booking
       new_item.calculate_totals
+      #new_item.save
+      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
     end
     booking.save
+    booking.calculate_totals
     return booking
   end
 
@@ -44,16 +45,16 @@ class Booking < ActiveRecord::Base
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
-        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
-        item.calculate_totals
+        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        # item.calculate_totals # this was already called in update_surcharge_items_from_ids
       else
         new_item = BookingItem.create(item_params[1])
         self.booking_items << new_item
-        self.save
-        new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist])
-        new_item.calculate_totals
+        new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        # new_item.calculate_totals # this was already called in update_surcharge_items_from_ids
       end
     end
+    self.save
   end
 
   def from=(from)
@@ -112,12 +113,15 @@ class Booking < ActiveRecord::Base
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.each do |item|
+      puts "XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
+          puts "XXX has key"
           self.taxes[k][:tax] += v[:tax].round(2)
           self.taxes[k][:gro] += v[:gro].round(2)
           self.taxes[k][:net] += v[:net].round(2)
         else
+          puts "XXX has not key"
           self.taxes[k] = v
         end
       end

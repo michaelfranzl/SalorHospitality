@@ -29,6 +29,7 @@ class BookingItem < ActiveRecord::Base
         #puts "XXXXXX Create SurchargeItem for surcharge##{i}"
         s = Surcharge.find_by_id(i.to_i)
         surcharge_item = SurchargeItem.create :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
+        self.surcharge_items << surcharge_item
         surcharge_item.calculate_totals
       end
       existing_surcharge_ids.each do |id|
@@ -36,6 +37,9 @@ class BookingItem < ActiveRecord::Base
         self.surcharge_items.where(:surcharge_id => id).update_all :hidden => true
       end
     end
+    self.save
+    self.reload
+    self.calculate_totals
   end
 
   def hide
@@ -43,18 +47,26 @@ class BookingItem < ActiveRecord::Base
   end
 
   def calculate_totals
+    puts "XXX BookingItem -> calculate_totals"
+    self.taxes = {}
     if self.guest_type_id.zero?
       self.base_price = 0
     else
       self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+    end
+    self.sum = self.count * self.base_price
+    unless self.guest_type_id.zero?
+      puts "  XXX for base_price"
       self.guest_type.taxes.each do |tax|
+        puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
         self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+        puts "    XXX setting self.taxes to #{self.taxes.inspect}"
       end
     end
-    self.sum = self.count * (self.base_price + self.surcharge_items.sum(:amount))
+    self.sum += self.count * self.surcharge_items.sum(:amount)
     self.surcharge_items.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
