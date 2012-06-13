@@ -11,6 +11,6 @@
   - @seasons.each do |g|
     %tr
       %td= link_to g.name, edit_season_path(g)
-      %td= g.from
-      %td= g.to
+      %td= l g.from, :format => :date_iso
+      %td= l g.to, :format => :date_iso
       %td= link_to image_tag('button_small_delete.png', :title => Season.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), season_path(g), :method => :delete, :confirm => t(:are_you_sure)

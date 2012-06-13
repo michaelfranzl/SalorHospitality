@@ -1,10 +1,70 @@
 ---
 gn:
+  room_types:
+    new:
+      edit_room_type: Zimmerklasse bearbeiten
+      new_room_type: Neue Zimmerklasse
+  room_prices:
+    new:
+      edit_room_price: Zimmerpreis bearbeiten
+      new_room_price: Neuer Zimmerpreis
+  surcharges:
+    new:
+      add_tax_amount: Steueranteil hinzufügen
+      edit_surcharge: Preisaufschlag bearbeiten
+      new_surcharge: Neuer Preisaufschlag
+  seasons:
+    new:
+      edit_season: Saison bearbeiten
+      new_season: Neue Saison
+  various:
+    home: Start
+    save: Speichern
+    pay: Abschließen
+    cancel: Abbrechen
+    common_surcharges: Aufschläge
+    subtotal: Gesamt
   vendors:
     index:
       switch_to: Auswählen
+  bookings:
+    show:
+      search_by_number: Suche nach Nummer
+    invoice_item_list:
+      served_by_X: Sie wurden bedient von %{user}
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Liste aller Steuern
   activerecord:
     attributes:
+      room_type:
+        name: Name
+        hidden: löschen
+      room_price:
+        base_price: Grundpreis
+        season_id: Saison
+        room_type_id: Room Type
+        guest_type_id: Guest Type
+        hidden: löschen
+      guest_type:
+        name: Name
+        taxes: Steuern
+        hidden: löschen
+      season:
+        name: Name
+        from: Von
+        to: Bis
+        hidden: löschen
+      tax_amount:
+        amount: Betrag
+        tax_id: Steuer
+      surcharge:
+        name: Name
+        season_id: Saison
+        guest_type_id: Gast-Typ
+        amount: Betrag
+        radio_select: Einfache Auswahl
+        hidden: löschen
       article:
         active: aktiv?
         category_id: Kategorie
@@ -140,9 +200,18 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
+      tax_amount:
+        one: Steueranteil
+        other: Steueranteile
+      booking:
+        one: Buchung
+        other: Buchungen
       payment_method:
         one: Zahlungsmethode
         other: Zahlungsmethoden
+      payment_method_item:
+        one: Zahlungsmethode
+        other: Zahlungsmethode
       room:
         one: Zimmer
         other: Zimmer
@@ -397,9 +466,11 @@ gn:
   orange: Orange
   orders:
     functions_header_index:
+      toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
       show_last_order: Letzte Bestellung anzeigen
+      show_last_booking: Letzte Buchung anzeigen
     functions_header_order_form:
       move_order: Bestellung verschieben
     go_to_tables:
@@ -411,6 +482,7 @@ gn:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
     invoice_form:
+      set_booking: Einer Buchung zuweisen
       just_finish: Rechnung nur abschließen
       print_and_finish: Drucken und Rechnung abschließen
       set_cost_center: Kostenkreis für diese Bestellung festlegen
@@ -594,7 +666,7 @@ gn:
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
-  value_added_tax: USt.
+  tax_amount: Steuer
   vendors:
     index:
       edit: bearbeiten

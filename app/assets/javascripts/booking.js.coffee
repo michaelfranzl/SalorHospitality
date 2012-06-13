@@ -54,12 +54,12 @@ window.display_booking_form = (room_id) ->
   duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
   duration_input.on 'click', -> $(this).select()
   duration_input.on 'keyup', -> set_booking_duration()
-  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, 'i18n save', booking_tools
+  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
-  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, 'i18n add payment', booking_tools
-  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, 'i18n pay', booking_tools
+  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
+  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, i18n.pay, booking_tools
   pay_link.on 'click', -> route 'rooms', room_id, 'pay'
-  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, 'i18n cancel', booking_tools
+  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools
   cancel_link.on 'click', -> route 'rooms'
   render_season_buttons()
   render_guest_type_buttons()
@@ -149,7 +149,7 @@ render_guest_type_buttons = ->
       setTimeout ->
         render_booking_item(id)
       , 50
-  gtbutton = create_dom_element 'div', {class:'guest_type'}, 'i18n global', guest_types_container
+  gtbutton = create_dom_element 'div', {class:'guest_type'}, i18n.common_surcharges, guest_types_container
   gtbutton.on 'click', ->
     gtbutton.effect 'highlight', {}, 500
     id = get_unique_booking_number('s')
@@ -214,7 +214,7 @@ update_json_booking_items = ->
 render_booking_item = (booking_item_id) ->
   surcharge_headers = _get 'surcharge_headers'
   if booking_item_id.indexOf('s')== 0
-    guest_type_name = 'i18n global'
+    guest_type_name = i18n.common_surcharges
     surcharge_headers = surcharge_headers.guest_type_null
   else
     guest_type_id = items_json[booking_item_id].guest_type_id

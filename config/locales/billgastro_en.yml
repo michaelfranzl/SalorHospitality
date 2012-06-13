@@ -1,10 +1,70 @@
 ---
 en:
+  room_types:
+    new:
+      edit_room_type: Edit room type
+      new_room_type: New room type
+  room_prices:
+    new:
+      edit_room_price: Edit room price
+      new_room_price: New room price
+  surcharges:
+    new:
+      add_tax_amount: Add tax amount
+      edit_surcharge: Edit Surcharge
+      new_surcharge: New Surcharge
+  seasons:
+    new:
+      edit_season: Edit Season
+      new_season: New Season
+  various:
+    home: Home
+    save: Save
+    pay: Pay
+    cancel: Cancel
+    common_surcharges: Common Surcharges
+    subtotal: Subtotal
   vendors:
     index:
       switch_to: Select
+  bookings:
+    show:
+      search_by_number: Search by number
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+  shared:
+    invoice_tax_list:
+      list_of_taxes: List of Taxes
   activerecord:
     attributes:
+      room_type:
+        name: Name
+        hidden: löschen
+      room_price:
+        base_price: Base Price
+        season_id: Season
+        room_type_id: Zimmerklasse
+        guest_type_id: Gast-Typ
+        hidden: löschen
+      guest_type:
+        name: Name
+        taxes: Taxes
+        hidden: delete
+      season:
+        name: Name
+        from: From
+        to: To
+        hidden: delete
+      tax_amount:
+        amount: Amount
+        tax_id: Tax
+      surcharge:
+        name: Name
+        season_id: Season
+        guest_type_id: Guest Type
+        amount: Amount
+        radio_select: Radio Select
+        hidden: delete
       article:
         active: active
         category_id: Category
@@ -132,7 +192,16 @@ en:
         name: Name
         path: Path
     models:
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
+      booking:
+        one: Booking
+        other: Bookings
       payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
         one: Payment Method
         other: Payment Methods
       room:
@@ -384,8 +453,10 @@ en:
   orders:
     functions_header_index:
       items_notifications: Notifications
+      toggle_between_tables_and_rooms: Toggle between rooms and tables
       print_now: Print now
       show_last_order: Show last order
+      show_last_booking: Show last booking
     functions_header_order_form:
       move_order: Move order to other table
     go_to_tables:
@@ -396,6 +467,7 @@ en:
       delivery_list: Delivery list
       preparation_list: Preparation list
     invoice_form:
+      set_booking: Assign to Booking
       just_finish: Just finish order
       print_and_finish: Print and finish this order
       set_cost_center: Set cost center for this order
@@ -561,7 +633,7 @@ en:
     new:
       edit_user: Edit User
       new_user: New User
-  value_added_tax: VAT
+  tax_amount: Amount
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad
