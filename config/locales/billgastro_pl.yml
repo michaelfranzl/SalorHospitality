@@ -139,8 +139,8 @@ pl:
         one: Firma
         other: Firmy
       cost_center:
-        one: Centrum dodatkowych kosztów
-        other: Centrum dodatkowych kosztów
+        one: Rodzaj zamówienia
+        other: Rodzaje zamówień
       coupon:
         one: Kupon
         other: Kupony
@@ -466,18 +466,16 @@ pl:
     active: Karta menu
     unsettled: Zmiany
     waiterpad: Waiterpad
-  scroll_down: Przewiń w górę
+  scroll_down: Przewiń w dół
   scroll_to_room: Idź do
-  scroll_up: Przewiń w dół
-  send_and_go_back: Zapisz i wróc
+  scroll_up: Przewiń w górę
+  send_and_go_back: Zapisz i wróć
   served_by_X_on_table_Y: Obsługiwał Cię %{waiter} przy stoliku %{table}
-  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie
-    serwera lub zerwane połączenie.
+  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie serwera lub zerwane połączenie.
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome
-        oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
+      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
     new:
       email: Twój e-mail
       login: Login

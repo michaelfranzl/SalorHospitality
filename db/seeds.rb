@@ -272,20 +272,29 @@ Quantity.delete_all
     season_objects.size.times do |x|
       guest_type_objects.size.times do |y|
         radio_surcharge_names.size.times do |z|
-          puts "Creating Surcharge #{radio_surcharge_names[z]}"
+          puts " Creating Radio Surcharge #{radio_surcharge_names[z]}"
           surcharge = Surcharge.new :name => radio_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => true
           tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 1 + x + y + z, :tax_id => tax_objects[rand(3)].id
           surcharge.tax_amounts = [tax_amount]
           surcharge.save
+          surcharge.calculate_totals
         end
         checkbox_surcharge_names.size.times do |z|
-          puts "Creating Surcharge #{checkbox_surcharge_names[z]}"
-          Surcharge.create :name => checkbox_surcharge_names[z], :amount => x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+          puts " Creating Checkbox Surcharge #{checkbox_surcharge_names[z]}"
+          surcharge = Surcharge.create :name => checkbox_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
+          tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 1 + x + y + z, :tax_id => tax_objects[rand(3)].id
+          surcharge.tax_amounts = [tax_amount]
+          surcharge.save
+          surcharge.calculate_totals
         end
-        common_surcharge_names.size.times do |z|
-          puts "Creating Surcharge #{common_surcharge_names[z]}"
-          Surcharge.create :name => common_surcharge_names[z], :amount => 3 + x + y + z, :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
-        end
+      end
+      common_surcharge_names.size.times do |z|
+        puts " Creating Common Surcharge #{common_surcharge_names[z]}"
+        surcharge = Surcharge.create :name => common_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
+        tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 3 + x + z, :tax_id => tax_objects[rand(3)].id
+        surcharge.tax_amounts = [tax_amount]
+        surcharge.save
+        surcharge.calculate_totals
       end
     end
   end

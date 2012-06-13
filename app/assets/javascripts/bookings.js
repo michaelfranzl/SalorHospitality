@@ -48,7 +48,6 @@ window.is_booked = function (booking,date) {
   var month = date.getMonth();
   var day = date.getDate();
   if (fmonth == date.getMonth() || tmonth == date.getMonth()) {
-    console.log("Same month");
     if (day >= fday && day <= tday) 
       return true;
   }    
@@ -70,23 +69,41 @@ window.render_booking_lines = function () {
     r.css(css)
     while (x < num_rooms + 1) {
       booked = false
+      var room_id = x;
       if (_get("rooms.json").keys[x]) {
         if (!rooms_bookings[x]) {
           rooms_bookings[x] = _get("rooms.json").get_bookings(_get("rooms.json").keys[x]);
         }
         bookings = rooms_bookings[x];
+        var active_booking = {};
         if (bookings) {
           $.each(bookings, function (b) {
-            if (is_booked(bookings[b],d))
+            if (is_booked(bookings[b],d)) {
+              active_booking = bookings[b];
               booked = true
+            }
           });
         }
         if (booked) {
           r = create_dom_element('div', {class: 'room-header booking-line room-header-occupied', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms'));
+          r.on('click',function () {
+            var x = $(this).attr('room_id');
+            route('booking', x,'show',{'booking_id': active_booking.id});
+            submit_json.model.room_id = x;
+            submit_json.model.room_type_id = _get("rooms.json").rooms[x].room_type.id;
+          });
         } else {
           r = create_dom_element('div', {class: 'room-header booking-line', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms'));
+          r.on('click',function () {
+            var x = $(this).attr('room_id');
+            route('room',x);
+            submit_json.model.room_id = x;
+            submit_json.model.room_type_id = _get("rooms.json").rooms[x].room_type.id;
+          });
         }
+        r.attr('room_id',x);
         r.css(css);
+        
       }
       x++ ;
     }

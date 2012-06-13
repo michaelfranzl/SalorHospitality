@@ -27,7 +27,9 @@ class RoomsController < ApplicationController
     @room = get_model
     redirect_to rooms_path and return unless @room
     @bookings = @room.bookings.existing.where(:finished => false)
-    @booking = @bookings.last
+    if params[:booking_id] then
+      @booking = Booking.where(:vendor_id => @current_vendor.id).find_by_id(params[:booking_id])
+    end
     render 'bookings/go_to_booking_form'
   end
 

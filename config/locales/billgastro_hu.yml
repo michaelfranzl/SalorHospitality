@@ -1,5 +1,5 @@
 hu:
-  activerecord:
+  activerecord: 
     models:
       table:
         one: Table XXX

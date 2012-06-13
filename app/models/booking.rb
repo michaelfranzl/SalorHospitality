@@ -4,6 +4,7 @@ class Booking < ActiveRecord::Base
   has_many :booking_items
   has_many :payment_method_items
   has_many :orders
+  has_many :surcharge_items
   belongs_to :room
   belongs_to :user
   belongs_to :vendor
@@ -14,17 +15,19 @@ class Booking < ActiveRecord::Base
   serialize :taxes
 
   def self.create_from_params(params, vendor, user)
-    booking = Booking.new params[:model]
+    booking = Booking.create params[:model]
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
     params[:items].to_a.each do |item_params|
-      new_item = BookingItem.create(item_params[1])
-      booking.booking_items << new_item
-      booking.save
+      new_item = BookingItem.new(item_params[1])
+      new_item.booking = booking
       new_item.calculate_totals
+      #new_item.save
+      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
     end
     booking.save
+    booking.calculate_totals
     return booking
   end
 
@@ -42,14 +45,16 @@ class Booking < ActiveRecord::Base
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
-        item.calculate_totals
+        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        # item.calculate_totals # this was already called in update_surcharge_items_from_ids
       else
-        new_item = BookingItem.new(item_params[1])
+        new_item = BookingItem.create(item_params[1])
         self.booking_items << new_item
-        self.save
-        new_item.calculate_totals
+        new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        # new_item.calculate_totals # this was already called in update_surcharge_items_from_ids
       end
     end
+    self.save
   end
 
   def from=(from)
@@ -85,9 +90,14 @@ class Booking < ActiveRecord::Base
   def booking_items_to_json
     booking_items_hash = {}
     self.booking_items.existing.reverse.each do |i|
-      d = "i#{i.id}"
+      if i.guest_type_id.zero?
+        d = "s#{i.id}"
+        surcharges = self.vendor.surcharges.where(:season_id => self.season_id)
+      else
+        d = "i#{i.id}"
+        surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
+      end
       surcharges_hash = {}
-      surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
         selected = booking_item_surcharges.include? s
@@ -103,12 +113,15 @@ class Booking < ActiveRecord::Base
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.each do |item|
+      puts "XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
+          puts "XXX has key"
           self.taxes[k][:tax] += v[:tax].round(2)
           self.taxes[k][:gro] += v[:gro].round(2)
           self.taxes[k][:net] += v[:net].round(2)
         else
+          puts "XXX has not key"
           self.taxes[k] = v
         end
       end

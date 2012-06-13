@@ -14,10 +14,10 @@
     = surcharge_form.text_field :name
     %br
     = surcharge_form.label :season_id
-    = surcharge_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}
+    = surcharge_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}, :include_blank => true
     %br
     = surcharge_form.label :guest_type_id
-    = surcharge_form.select :guest_type_id, @guest_types.collect{|g| [g.name,g.id]}
+    = surcharge_form.select :guest_type_id, @guest_types.collect{|g| [g.name,g.id]}, :include_blank => true
     %br
     = surcharge_form.label :radio_select
     = surcharge_form.check_box :radio_select
