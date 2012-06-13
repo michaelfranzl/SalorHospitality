@@ -13,7 +13,15 @@ class Booking < ActiveRecord::Base
   belongs_to :customer
 
   serialize :taxes
-
+  attr_accessible :customer_name
+  def as_json(options={})
+    return {
+        :from => self.from,
+        :to => self.to,
+        :id => self.id,
+        :customer_name => self.customer_name
+      }
+  end
   def self.create_from_params(params, vendor, user)
     booking = Booking.create params[:model]
     booking.user = user
@@ -30,7 +38,20 @@ class Booking < ActiveRecord::Base
     booking.calculate_totals
     return booking
   end
-
+  def customer_name=(name)
+    last,first = name.split(',')
+    c = Customer.where(:first_name => first, :last_name => last).first
+    if not c then
+      c = Customer.create(:first_name => first,:last_name => last)
+    end
+    self.customer = c
+  end
+  def customer_name
+    if self.customer then
+      return self.customer.full_name(true)
+    end
+    return ""
+  end
   def set_nr
     if self.nr.nil?
       self.update_attribute :nr, self.vendor.get_unique_model_number('order')

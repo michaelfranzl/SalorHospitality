@@ -55,15 +55,19 @@ window.display_booking_form = (room_id) ->
   duration_input.on 'click', -> $(this).select()
   duration_input.on 'keyup', -> set_booking_duration()
   
-  customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:'i18n_customer'}, '', booking_tools
+  `var customer_name_default = (submit_json.model['customer_name'] == '') ? 'i18n_customer' : submit_json.model['customer_name'];`
+  console.log("Hello World", submit_json.model['customer_name'])
+  
+  customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:customer_name_default}, '', booking_tools
   customer_input.on 'focus', ->
     if $(this).val() == '' 
-      $(this).val('i18n_customer')
+      $(this).val(customer_name_default)
     if $(this).val() == 'i18n_customer'
       $(this).val("")
   auto_completable customer_input,resources.customers,{map:true,field: 'name'}, (result) ->
     console.log(result)
     $(this).val(result.name)
+    submit_json.model['customer_name'] = result.name
   #customer_input.on 'keyup'
   
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools

@@ -80,7 +80,7 @@ window.render_booking_lines = function () {
           });
         }
         if (booked) {
-          r = create_dom_element('div', {class: 'room-header booking-line room-header-occupied', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms'));
+          r = create_dom_element('div', {class: 'room-header booking-line room-header-occupied', id: 'booking_date_' + i + '_' + x}, active_booking.customer_name, $('#rooms'));
           r.attr('booking_id',active_booking.id);
           r.on('click',function () {
             var x = $(this).attr('room_id');
