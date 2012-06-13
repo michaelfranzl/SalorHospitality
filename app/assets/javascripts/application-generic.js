@@ -83,3 +83,20 @@ function date_as_ymd(date) {
 function get_date(str) {
   return new Date(Date.parse(str));
 }
+function _fetch(url,callback) {
+  $.ajax({
+    url: url,
+    context: window,
+    success: callback
+  });
+}
+window.create_dom_element = function (tag,attrs,content,append_to) {
+  element = $(document.createElement(tag));
+  $.each(attrs, function (k,v) {
+    element.attr(k, v);
+  });
+  element.html(content);
+  if (append_to != '')
+    $(append_to).append(element);
+  return element;
+}
