@@ -1,4 +1,7 @@
 class GuestTypesController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @guest_types = @current_vendor.guest_types.existing
   end

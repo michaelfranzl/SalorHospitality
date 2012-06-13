@@ -8,6 +8,8 @@ class PaymentMethodsController < ApplicationController
 
   before_filter :check_permissions
 
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @payment_methods = @current_vendor.payment_methods.existing
   end

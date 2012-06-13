@@ -1,4 +1,7 @@
 class RoomsController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @rooms = @current_vendor.rooms.existing
   end

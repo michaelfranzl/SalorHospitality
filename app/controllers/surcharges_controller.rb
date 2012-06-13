@@ -1,4 +1,7 @@
 class SurchargesController < ApplicationController
+
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
+
   def index
     @surcharges = @current_vendor.surcharges.existing
   end
