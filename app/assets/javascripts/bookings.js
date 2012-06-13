@@ -2,16 +2,9 @@
 window.receive_rooms_db = function (event) {
   var data = event.packet;
   var bookings = [];
-  data.get_bookings = function (room_id) {
-    var bookings = [];
-    for (var i = 0; i < this.rooms_bookings.keys.length; i++) {
-      var pair = this.rooms_bookings.keys[i];
-      if (pair[1] == room_id) {
-        var key = pair[0] + '';
-        bookings.push(this.rooms_bookings.bookings[key]);
-      }
-    }
-    return bookings;
+  data.get_bookings = function (room_index) {
+    room_id = this.keys[room_index - 1]
+    return this.rooms[room_id + ''].bookings;
   };
   _set("rooms.json",data);
   emit('salor_hotel.render_rooms',data);
@@ -37,8 +30,9 @@ window.update_bookings_for_room = function (id,bookings) {
   
 }
 window.is_booked = function (booking,date) {
+  console.log('called');
   if (!booking) {
-    
+    console.log('bookin is nil');
     return false;
   }
   var fday = get_date(booking.from).getDate();
@@ -48,9 +42,10 @@ window.is_booked = function (booking,date) {
   var month = date.getMonth();
   var day = date.getDate();
   if (fmonth == date.getMonth() || tmonth == date.getMonth()) {
-    if (day >= fday && day <= tday) 
+    if (day >= fday && day <= tday) { 
       return true;
-  }    
+    }
+  }
   return false;
 }
 
@@ -67,12 +62,12 @@ window.render_booking_lines = function () {
     var d = new Date(now.getFullYear(),now.getMonth(), now.getDate() + i - 1)
     var r = create_dom_element('div', {class: 'room-header left booking-line', id: 'booking_date_' + i }, d.getDate(), $('#rooms'));
     r.css(css)
-    while (x < num_rooms + 1) {
+    while (x <= num_rooms + 1) {
       booked = false
       var room_id = x;
-      if (_get("rooms.json").keys[x]) {
+      if (_get("rooms.json").keys[x-1]) {
         if (!rooms_bookings[x]) {
-          rooms_bookings[x] = _get("rooms.json").get_bookings(_get("rooms.json").keys[x]);
+          rooms_bookings[x] = _get("rooms.json").get_bookings(x);
         }
         bookings = rooms_bookings[x];
         var active_booking = {};
@@ -86,9 +81,10 @@ window.render_booking_lines = function () {
         }
         if (booked) {
           r = create_dom_element('div', {class: 'room-header booking-line room-header-occupied', id: 'booking_date_' + i + '_' + x}, '&nbsp;', $('#rooms'));
+          r.attr('booking_id',active_booking.id);
           r.on('click',function () {
             var x = $(this).attr('room_id');
-            route('booking', x,'show',{'booking_id': active_booking.id});
+            route('booking', x,'show',{'booking_id': $(this).attr('booking_id')});
             submit_json.model.room_id = x;
             submit_json.model.room_type_id = _get("rooms.json").rooms[x].room_type.id;
           });
@@ -101,6 +97,7 @@ window.render_booking_lines = function () {
             submit_json.model.room_type_id = _get("rooms.json").rooms[x].room_type.id;
           });
         }
+        r.attr('date',d);
         r.attr('room_id',x);
         r.css(css);
         
@@ -119,7 +116,7 @@ window.render_rooms = function (event) {
   }
   $('#rooms').html('');
   var num_rooms = _get("rooms.json").keys.length;
-  $('#rooms').css({'width': num_rooms * 200 + 10 + 'px'})
+  $('#rooms').css({'width': num_rooms * 200 + 250 + 'px'})
   width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
   css = {width: '190px'}
   room = $(document.createElement('div'));

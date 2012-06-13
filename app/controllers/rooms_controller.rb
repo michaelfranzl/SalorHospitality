@@ -1,15 +1,14 @@
 class RoomsController < ApplicationController
   respond_to :html,:json
   def index
-    @rooms_json = {:keys => [], :rooms => {}, :rooms_bookings => { :keys => [], :bookings => {} }}
+    @rooms_json = {:keys => [], :rooms => {}}
     @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
     @rooms.each do |room|
       @rooms_json[:keys] << room.id
-      @rooms_json[:rooms][room.id.to_s] = {:room => room, :room_type => room.room_type}
+      @rooms_json[:rooms][room.id.to_s] = {:room => room, :room_type => room.room_type, :bookings => []}
       bookings = room.bookings.existing
       bookings.each do |booking|
-        @rooms_json[:rooms_bookings][:keys] << [booking.id,room.id]
-        @rooms_json[:rooms_bookings][:bookings][booking.id.to_s] = booking
+        @rooms_json[:rooms][room.id.to_s][:bookings] << booking
       end
     end
     respond_with(@rooms) do |format|

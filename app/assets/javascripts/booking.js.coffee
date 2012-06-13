@@ -54,6 +54,18 @@ window.display_booking_form = (room_id) ->
   duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
   duration_input.on 'click', -> $(this).select()
   duration_input.on 'keyup', -> set_booking_duration()
+  
+  customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:'i18n_customer'}, '', booking_tools
+  customer_input.on 'focus', ->
+    if $(this).val() == '' 
+      $(this).val('i18n_customer')
+    if $(this).val() == 'i18n_customer'
+      $(this).val("")
+  auto_completable customer_input,resources.customers,{map:true,field: 'name'}, (result) ->
+    console.log(result)
+    $(this).val(result.name)
+  #customer_input.on 'keyup'
+  
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools

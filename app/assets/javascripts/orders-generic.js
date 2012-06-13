@@ -51,29 +51,7 @@ $(function(){
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
 /* ======================================================*/
-/*
-   Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
- */
-function emit(msg,packet) {
-  $('body').triggerHandler({type: msg, packet:packet});
-}
 
-function connect(unique_name,msg,fun) {
-  var pcd = _get('plugin_callbacks_done');
-  if (!pcd)
-    pcd = [];
-  if (pcd.indexOf(unique_name) == -1) {
-    $('body').on(msg,fun);
-    pcd.push(unique_name);
-  }
-  _set('plugin_callbacks_done',pcd)
-}
-function _get(name) {
-  return $.data(document.body,name);
-}
-function _set(name,value) {
-  return $.data(document.body,name,value);
-}
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
@@ -427,6 +405,7 @@ function render_items() {
  * }
  * */
 function find_customer(text) {
+  console.log(text);
    var i = 0;
    var c = text[i];
    var results = [];
@@ -506,6 +485,7 @@ function add_category_button(label,options) {
 }
 
 function customer_search(term) {
+  console.log("customer_search called with " + term);
   var c = term.substr(0,1).toLowerCase();
   var c2 = term.substr(0,2).toLowerCase();
   var results = [];
