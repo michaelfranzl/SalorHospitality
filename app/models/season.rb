@@ -8,7 +8,7 @@ class Season < ActiveRecord::Base
   has_many :bookings
 
   validates_uniqueness_of :name
-  validates_presence_of :from, :to, :name
+  validates_presence_of :from_date, :to_date, :name
 
   after_save :calculate_duration
 
@@ -26,7 +26,7 @@ class Season < ActiveRecord::Base
   end
 
   def calculate_duration
-    if (self.from_date.month > self.to_date.month) or (self.from_date.month == self.to_date.month and s.from_date.day > s.to_date.day)
+    if (self.from_date.month > self.to_date.month) or (self.from_date.month == self.to_date.month and self.from_date.day > self.to_date.day)
       duration = - (self.to_date - self.from_date)
     else
       duration = self.to_date - self.from_date
