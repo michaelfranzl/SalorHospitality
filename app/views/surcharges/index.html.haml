@@ -6,14 +6,19 @@
   %table.settlements.hotel
     %tr
       %th{ :style => 'width:100px' }
-        %b= s.name
+        %b= s.name.upcase
       - @guest_types.each do |gt|
-        %th{ :style => 'width:70px' }= gt.name
+        %th{ :style => 'width:70px' }
+          = gt ? gt.name : t('surcharges.new.common_surcharge')
     - @surcharge_names.each do |n|
+      - next unless n
       %tr
         %td= n
         - @guest_types.each do |gt|
-          - surcharge_object = @current_vendor.surcharges.existing.where(:season_id => s.id, :guest_type_id => gt.id, :name => n)
-          - next if surcharge_object.nil?
-          - amount = surcharge_object.amount
-          %td{:class => "#{'highlighted' if base_price.zero?}" }= link_to number_to_currency(base_price), edit_room_price_path(room_price_object)
+          - gt_id = gt ? gt.id : nil
+          - surcharge_object = @current_vendor.surcharges.existing.where(:season_id => s.id, :guest_type_id => gt_id, :name => n).first
+          - if surcharge_object
+            - amount = surcharge_object.amount
+            %td{:class => "#{'highlighted' if amount.zero?}" }= link_to number_to_currency(amount), edit_surcharge_path(surcharge_object)
+          - else
+            %td -
