@@ -16,8 +16,8 @@ class Booking < ActiveRecord::Base
   attr_accessible :customer_name
   def as_json(options={})
     return {
-        :from => self.from,
-        :to => self.to,
+        :from => self.from_date,
+        :to => self.to_date,
         :id => self.id,
         :customer_name => self.customer_name,
         :room_id => self.room_id,

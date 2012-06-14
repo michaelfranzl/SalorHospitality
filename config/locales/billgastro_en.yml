@@ -538,6 +538,8 @@ en:
     new:
       edit_room_price: Edit room price
       new_room_price: New room price
+    index:
+      generate_price_skeleton: Preisgerüst erstellen
   room_types:
     new:
       edit_room_type: Edit room type

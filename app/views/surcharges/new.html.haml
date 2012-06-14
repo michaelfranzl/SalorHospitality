@@ -10,9 +10,8 @@
 .form_fields
   = form_for @surcharge do |surcharge_form|
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
-    - unless @surcharge.season_id
-      = surcharge_form.label :name
-      = surcharge_form.text_field :name, :size => 9
+    = surcharge_form.label :name
+    = surcharge_form.text_field :name, :size => 9
     - if @surcharge.season_id.nil?
       %br
       = label_tag t('.common_surcharge')
