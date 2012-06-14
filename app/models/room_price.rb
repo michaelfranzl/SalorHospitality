@@ -14,7 +14,7 @@ class RoomPrice < ActiveRecord::Base
     seasons.each do |s|
       room_types.each do |rt|
         guest_types.each do |gt|
-          unless vendor.room_prices.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).any?
+          unless vendor.room_prices.existing.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).any?
             RoomPrice.create :vendor_id => vendor.id, :company_id => vendor.company.id, :season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id, :base_price => 0
           end
         end
