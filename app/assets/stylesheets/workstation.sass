@@ -1498,17 +1498,18 @@ div.booking_form
 div#rooms
   :overflow-x scroll
 div.room-header
+  :position absolute
+  :width 190px
+  :height 40px
   :display inline-block
-  :border 1px solid gray
   :padding 0px
   :margin 0px
   :cursor pointer
   :text-align center
   :font-size 150%
-  :-moz-box-shadow 0px 0px 8px black
-  :-moz-border-radius 6px
-  :-webkit-box-shadow 0px 0px 8px black
-  :-webkit-border-radius 6px
+  :background-color $billgastrogrey2
+  :-webkit-border-top-left-radius 6px
+  :-webkit-border-top-right-radius 6px
   input
     :background-color transparent
     :border none
@@ -1516,10 +1517,60 @@ div.room-header
     :font-size 95%
     :height 20px
     :cursor pointer
+
+div.room-date-column
+  :position absolute
+  :width 100%
+  :height 41px
+  :display inline-block
+  :border 1px solid gray
+  :padding 0px
+  :margin 0px
+  :cursor pointer
+  :text-align left
+  :font-size 150%
+  :background-color $billgastrogrey1
+  :z-index 1000
+  :-moz-border-radius 4px
+  :-webkit-border-radius 4px
+    
+div.room-booking
+  :position absolute
+  :width 180px
+  :height 32px
+  :display inline-block
+  :border 1px solid gray
+  :padding 0px
+  :margin 0px
+  :cursor pointer
+  :text-align center
+  :font-size 120%
+  :z-index 1005
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 6px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 6px
+div.room-booking-odd
+  :background-color $blue
+div.room-booking-even
+  :background-color $violet
+div.room-column
+  :position absolute
+  :width 190px
+  :height 1200px
+  :display inline-block
+  :border 1px solid gray
+  :padding 0px
+  :margin 0px
+  :cursor pointer
+  :text-align center
+  :font-size 150%
+  :z-index 1001
+#show_booking_from
+  :position relative
+  :z-index 1010
 div.room-header-left
   :text-align left
-div.room-header-occupied
-  :background-color $blue
 div#auto_completable
   :position absolute
   :background-color $billgastrogrey1
