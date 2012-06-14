@@ -178,7 +178,7 @@ class OrdersController < ApplicationController
             unless @booking.booking_items.existing.any?
               @booking.hide(@current_user.id)
             end
-            render :js => "route('rooms');" and return
+            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
           when 'pay'
             get_booking
             @booking.update_associations(@current_user)

@@ -112,7 +112,7 @@ function toggle_all_option_checkboxes(source) {
 }
 
 function date_as_ymd(date) {
-  return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+  return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
 }
 function get_date(str) {
   return new Date(Date.parse(str));

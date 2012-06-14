@@ -20,14 +20,16 @@ window.update_room_bookings = function (event) {
   var booking = {f: b['from'], t:b['to'], cid: b['customer_id'], sid: b['season_id'], d:b['duration'] };
   resources.r[b.room_id].bks.push(booking);
 }
-window.update_bookings_for_room = function (id,bookings) {
-  resources.r[id].bks = []
-  $.each(bookings, function (b) {
-    var booking = {f: b['from'], t:b['to'], cid: b['customer_id'], sid: b['season_id'], d:b['duration'] };
-    resources.r[id].bks.push(booking);
-  } );
-  
-  
+window.update_bookings_for_room = function (id,booking) {
+  var updated = false;
+  for (var i = 0; i < _get("rooms.json").rooms[id].bookings.length; i++) {
+    if (_get("rooms.json").rooms[id].bookings[i].id == booking.id) {
+      _get("rooms.json").rooms[id].bookings[i] = booking;
+      updated = true;
+    }
+  }
+  if (!updated)
+    _get("rooms.json").rooms[id].bookings.push(booking);
 }
 window.is_booked = function (booking,date) {
   if (!booking) {
@@ -60,16 +62,17 @@ function draw_booking(d,y,booking) {
   var lpad = _get("salor_hotel.lpad");
   var owidth = _get("salor_hotel.outerWidth") + lpad;
   var oheight = _get("salor_hotel.outerHeight") + tpad;
-  var widget_height = oheight * nights;
+  var widget_height = oheight * (nights + 1);
   var booking_class;
   var offset = $('#rooms').offset();
-  var new_offset = {top: offset.top + (y * oheight + oheight) - 25, left: offset.left + (owidth * x) + 5};
+  var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25, left: offset.left + (owidth * x) + 5};
+  
+  console.log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
   
   if (_get('salor_hotel.booking.odd'+ x) == false) {
     booking_class = 'odd';
     _set('salor_hotel.booking.odd'+ x,true);
   } else {
-    console.log("Setting to even for", booking);
     booking_class = 'even';
     _set('salor_hotel.booking.odd'+ x,false);
   }
@@ -148,11 +151,14 @@ window.render_booking_lines = function () {
 }
 // updates the visual room buttons. Hooked into update_resources of the main app.
 window.render_rooms = function (event) {
-  if (_get("rooms.rendered")) {
-    console.log("Rooms already rendered.");
-    return;
-  }
+
   $('#rooms').html('');
+  $('#rooms').show();
+  if (!_get("salor_hotel.from_input")) {
+     var d = new Date();
+     console.log(d);
+    _set("salor_hotel.from_input",date_as_ymd(d));
+  }
   var offset = $('#rooms').offset();
   var tpad = 0;
   var lpad = 0;
@@ -167,10 +173,10 @@ window.render_rooms = function (event) {
   _set("salor_hotel.outerWidth", room.outerWidth());
   _set("salor_hotel.outerHeight", room.outerHeight());
   $('#rooms').append(room);
-  from_input = create_dom_element('input', {type:'text',id:'show_booking_from', value: date_as_ymd(new Date())}, '', room);
+  from_input = create_dom_element('input', {type:'text',id:'show_booking_from', value: date_as_ymd(new Date(Date.parse(_get("salor_hotel.from_input"))))}, '', room);
   from_input.datepicker({
     onSelect: function (date, inst) {
-    console.log('date selected');
+    _set("salor_hotel.from_input",$('#show_booking_from').val());
     render_booking_lines();
     }
   });
