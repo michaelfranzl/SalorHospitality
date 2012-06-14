@@ -192,6 +192,9 @@ function route(target, model_id, action, options) {
     } else if (action == 'pay') {
       submit_json.jsaction = 'pay';
       send_json('booking_' + model_id);
+    } else if (action == 'update_bookings') {
+      update_bookings_for_room(model_id,options);
+      emit('salor_hotel.render_rooms','force');
     } else {
       submit_json = {};
       items_json = {};

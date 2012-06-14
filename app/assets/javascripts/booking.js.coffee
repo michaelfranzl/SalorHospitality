@@ -7,7 +7,7 @@ $ ->
   if window.openDatabase
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
   # hotel_add_price_form_button()
-  create_dom_element 'div', {id:'rooms'}, '', '#main'
+  create_dom_element 'div', {id:'rooms'}, '', '#rooms_container'
   fetch_rooms()
 
 
@@ -56,7 +56,6 @@ window.display_booking_form = (room_id) ->
   duration_input.on 'keyup', -> set_booking_duration()
   
   `var customer_name_default = (submit_json.model['customer_name'] == '') ? 'i18n_customer' : submit_json.model['customer_name'];`
-  console.log("Hello World", submit_json.model['customer_name'])
   
   customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:customer_name_default}, '', booking_tools
   customer_input.on 'focus', ->

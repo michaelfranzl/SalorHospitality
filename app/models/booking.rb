@@ -42,9 +42,9 @@ class Booking < ActiveRecord::Base
   end
   def customer_name=(name)
     last,first = name.split(',')
-    c = Customer.where(:first_name => first, :last_name => last).first
+    c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
-      c = Customer.create(:first_name => first,:last_name => last)
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip)
     end
     self.customer = c
   end
