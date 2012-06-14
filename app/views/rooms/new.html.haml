@@ -14,4 +14,4 @@
     = room_form.text_field :name, :size => '20'
     %br
     = room_form.label :room_type_id
-    = room_form.select :room_type_id, @room_types.collect{|r| [r.name,r.id]}
+    = room_form.select :room_type_id, @room_types.collect{|r| [r.name,r.id]}, :include_blank => true

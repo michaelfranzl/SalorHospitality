@@ -83,6 +83,7 @@ SalorGastro::Application.routes.draw do
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/print/:id' => 'settlements#print'
+  match 'room_prices/generate' => 'room_prices#generate'
 
 
   if Rails.env.test?
@@ -91,11 +92,11 @@ SalorGastro::Application.routes.draw do
 
   resources :cost_centers, :taxes, :users, :roles, :presentations, :reports, :payment_methods
   resources :surcharges
-  resources :room_prices
   resources :rooms
   resources :room_types
   resources :seasons
   resources :guest_types
+  resources :room_prices
 
   resources :companies do
     get :logo

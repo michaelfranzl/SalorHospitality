@@ -1,5 +1,9 @@
 ---
 en:
+  rooms:
+    new:
+      new_room: New Room
+      edit_room: Edit Room
   activerecord:
     attributes:
       article:

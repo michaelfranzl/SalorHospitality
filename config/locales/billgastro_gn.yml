@@ -1,5 +1,9 @@
 ---
 gn:
+  rooms:
+    new:
+      new_room: Neues Zimmer
+      edit_room: Zimmer bearbeiten
   activerecord:
     attributes:
       article:
