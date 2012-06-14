@@ -81,10 +81,10 @@ gn:
         hidden: löschen
         name: Name
       season:
-        from: Von
+        from_date: Von
         hidden: löschen
         name: Name
-        to: Bis
+        to_date: Bis
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag

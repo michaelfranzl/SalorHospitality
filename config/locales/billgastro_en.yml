@@ -106,10 +106,10 @@ en:
         hidden: löschen
         name: Name
       season:
-        from: From
+        from_date: From
         hidden: delete
         name: Name
-        to: To
+        to_date: To
       settlement:
         initial_cash: Initial amount
         revenue: End amount
