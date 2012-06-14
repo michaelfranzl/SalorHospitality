@@ -184,7 +184,7 @@ class Vendor < ActiveRecord::Base
     end
 
     rooms = Hash.new
-    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.each.inject([]) {|ar,b| ar.push({:f => b.from, :t => b.to, :cid => b.customer_id, :sid => b.season_id, :d => b.duration } ) } } }
+    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :sid => b.season_id, :d => b.duration } ) } } }
 
     room_types = Hash.new
     self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
