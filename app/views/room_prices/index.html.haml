@@ -13,7 +13,7 @@
       %tr
         %td= gt.name
         - @room_types.each do |rt|
-          - room_price_object = @current_vendor.room_prices.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).first
+          - room_price_object = @current_vendor.room_prices.existing.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).first
           - next if room_price_object.nil?
           - base_price = room_price_object.base_price
           %td{:class => "#{'highlighted' if base_price.zero?}" }= link_to number_to_currency(base_price), edit_room_price_path(room_price_object)

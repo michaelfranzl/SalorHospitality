@@ -19,8 +19,6 @@
     %br
     = surcharge_form.label :radio_select
     = surcharge_form.check_box :radio_select
-    %br
-    = link_to image_tag('button_small_delete.png', :title => Surcharge.human_attribute_name(:hidden), :alt => Surcharge.human_attribute_name(:hidden)), surcharge_path(surcharge_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless surcharge_form.object.new_record?
     - if @surcharge.season_id
       %div#tax_amounts
         %h3= t('activerecord.models.tax_amount.other')
