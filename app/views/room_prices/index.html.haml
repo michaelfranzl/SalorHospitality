@@ -11,7 +11,7 @@
         %th{ :style => 'width:70px' }= rt.name
     - @guest_types.each do |gt|
       %tr
-        %td= gt.name
+        %td= gt.name.upcase
         - @room_types.each do |rt|
           - room_price_object = @current_vendor.room_prices.existing.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).first
           - next if room_price_object.nil?
