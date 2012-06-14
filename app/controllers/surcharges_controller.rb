@@ -4,6 +4,11 @@ class SurchargesController < ApplicationController
 
   def index
     @surcharges = @current_vendor.surcharges.existing
+    @guest_types = @current_vendor.guest_types.existing
+    @guest_types << nil
+    @seasons = @current_vendor.seasons.existing
+    @surcharge_names = @surcharges.collect{ |s| s.name }.uniq
+    @surcharge_names << nil
   end
 
   def new
@@ -14,18 +19,18 @@ class SurchargesController < ApplicationController
   end
 
   def create
-    @surcharge = Surcharge.new(params[:surcharge])
-    @surcharge.vendor = @current_vendor
-    @surcharge.company = @current_company
-    if @surcharge.save
-      @surcharge.calculate_totals
-      redirect_to surcharges_path
-    else
-      @seasons = @current_vendor.seasons.existing
-      @taxes = @current_vendor.taxes.existing
-      @guest_types = @current_vendor.guest_types.existing
-      render(:new)
+    guest_types = @current_vendor.guest_types.existing
+    seasons = @current_vendor.seasons.existing
+    seasons.each do |s|
+      guest_types.each do |gt|
+        gt_id = params[:common_surcharge] ? nil : gt.id 
+        @surcharge = @current_vendor.surcharges.where(:season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name]).first
+        unless @surcharge
+          @surcharge = Surcharge.create :season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name], :vendor_id => @current_vendor.id, :company_id => @current_vendor.company.id, :radio_select => params[:surcharge][:radio_select]
+        end
+      end
     end
+    redirect_to surcharges_path
   end
 
   def edit

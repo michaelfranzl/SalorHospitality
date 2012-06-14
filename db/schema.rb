@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614102202) do
+ActiveRecord::Schema.define(:version => 20120614123645) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -628,7 +628,7 @@ ActiveRecord::Schema.define(:version => 20120614102202) do
     t.string   "name"
     t.integer  "season_id"
     t.integer  "guest_type_id"
-    t.float    "amount"
+    t.float    "amount",        :default => 0.0
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"

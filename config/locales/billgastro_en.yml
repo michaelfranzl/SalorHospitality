@@ -610,6 +610,7 @@ en:
       add_tax_amount: Add tax amount
       edit_surcharge: Edit Surcharge
       new_surcharge: New Surcharge
+      common_surcharge: Common Surcharge
   tables:
     new:
       edit_table: Edit Table

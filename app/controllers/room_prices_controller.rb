@@ -49,18 +49,7 @@ class RoomPricesController < ApplicationController
   end
 
   def generate
-    seasons = @current_vendor.seasons.existing
-    room_types = @current_vendor.room_types.existing
-    guest_types = @current_vendor.guest_types.existing
-    seasons.each do |s|
-      room_types.each do |rt|
-        guest_types.each do |gt|
-          unless @current_vendor.room_prices.where(:season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id).any?
-            RoomPrice.create :vendor_id => @current_vendor.id, :company_id => @current_company.id, :season_id => s.id, :room_type_id => rt.id, :guest_type_id => gt.id, :base_price => 0
-          end
-        end
-      end
-    end
+    RoomPrice.generate(@current_vendor)
     redirect_to room_prices_path
   end
 end

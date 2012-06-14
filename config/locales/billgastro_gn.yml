@@ -635,6 +635,7 @@ gn:
       add_tax_amount: Steueranteil hinzufügen
       edit_surcharge: Preisaufschlag bearbeiten
       new_surcharge: Neuer Preisaufschlag
+      common_surcharge: Allgemeiner Zuschlag
   tables:
     create:
       success: Tisch erfolgreich gespeichert
