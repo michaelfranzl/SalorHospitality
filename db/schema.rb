@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610141209) do
+ActiveRecord::Schema.define(:version => 20120614123645) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
   end
 
   create_table "bookings", :force => true do |t|
-    t.datetime "from"
-    t.datetime "to"
+    t.datetime "from_date"
+    t.datetime "to_date"
     t.integer  "customer_id"
     t.float    "sum",                           :default => 0.0
     t.boolean  "hidden"
@@ -573,14 +573,15 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "seasons", :force => true do |t|
     t.string   "name"
-    t.datetime "from"
-    t.datetime "to"
+    t.datetime "from_date"
+    t.datetime "to_date"
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.integer  "duration"
   end
 
   create_table "settlements", :force => true do |t|
@@ -627,7 +628,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.string   "name"
     t.integer  "season_id"
     t.integer  "guest_type_id"
-    t.float    "amount"
+    t.float    "amount",        :default => 0.0
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"

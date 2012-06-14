@@ -12,7 +12,7 @@ class Surcharge < ActiveRecord::Base
 
   accepts_nested_attributes_for :tax_amounts, :allow_destroy => true, :reject_if => proc { |attrs| attrs['amount'] == '' }
 
-  validates_presence_of :name, :season_id, :tax_amounts
+  validates_presence_of :name
 
   def calculate_totals
     amount = 0.0

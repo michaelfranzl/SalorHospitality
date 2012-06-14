@@ -10,25 +10,24 @@
 .form_fields
   = form_for @surcharge do |surcharge_form|
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
-    = surcharge_form.label :name
-    = surcharge_form.text_field :name
-    %br
-    = surcharge_form.label :season_id
-    = surcharge_form.select :season_id, @seasons.collect{|s| [s.name,s.id]}, :include_blank => true
-    %br
-    = surcharge_form.label :guest_type_id
-    = surcharge_form.select :guest_type_id, @guest_types.collect{|g| [g.name,g.id]}, :include_blank => true
+    - unless @surcharge.season_id
+      = surcharge_form.label :name
+      = surcharge_form.text_field :name, :size => 9
+    - if @surcharge.season_id.nil?
+      %br
+      = label_tag t('.common_surcharge')
+      = check_box_tag 'common_surcharge'
     %br
     = surcharge_form.label :radio_select
     = surcharge_form.check_box :radio_select
-
-    %div#tax_amounts
-      %h3= t('activerecord.models.tax_amount.other')
-      %p#add_tax_amount
-        %span.link= t '.add_tax_amount'
-    = surcharge_form.fields_for :tax_amounts, surcharge_form.object.tax_amounts.existing do |f|
-      = render :partial => 'tax_amount', :locals => { :f => f }
-    %script== var tax_amount_template = '#{ generate_template(surcharge_form, :tax_amounts) }'
+    - if @surcharge.season_id
+      %div#tax_amounts
+        %h3= t('activerecord.models.tax_amount.other')
+        %p#add_tax_amount
+          %span.link= t '.add_tax_amount'
+      = surcharge_form.fields_for :tax_amounts, surcharge_form.object.tax_amounts.existing do |f|
+        = render :partial => 'tax_amount', :locals => { :f => f }
+      %script== var tax_amount_template = '#{ generate_template(surcharge_form, :tax_amounts) }'
 
 :javascript
   $('#add_tax_amount').click(function(){

@@ -199,7 +199,8 @@ class Vendor < ActiveRecord::Base
     self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
 
     seasons = Hash.new
-    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from, :t => sn.to, :c => sn.current? } }
+    current_season = Season.current(self)
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from_date, :t => sn.to_date, :c => sn == current_season } }
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }

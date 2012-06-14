@@ -4,6 +4,9 @@ class RoomPricesController < ApplicationController
 
   def index
     @room_prices = @current_vendor.room_prices.existing
+    @seasons = @current_vendor.seasons.existing
+    @guest_types = @current_vendor.guest_types.existing
+    @room_types = @current_vendor.room_types.existing
   end
 
   def new
@@ -42,6 +45,11 @@ class RoomPricesController < ApplicationController
     @room_price = RoomPrice.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to room_prices_path and return unless @room_price
     @room_price.update_attribute :hidden, true
+    redirect_to room_prices_path
+  end
+
+  def generate
+    RoomPrice.generate(@current_vendor)
     redirect_to room_prices_path
   end
 end

@@ -7,8 +7,30 @@ class Season < ActiveRecord::Base
   has_many :room_prices
   has_many :bookings
 
-  def current?
+  validates_uniqueness_of :name
+  validates_presence_of :from, :to, :name
+
+  after_save :calculate_duration
+
+  def self.current(vendor)
     now = Time.now
-    return ((self.from.month < now.month or (self.from.month == now.month and self.from.day <= now.day)) and (self.to.month > now.month or (self.to.month == now.month and self.to.day > now.day)))
+    current_season = Season.where("(MONTH(from_date)<#{now.month} OR (MONTH(from_date) = #{now.month} AND DAY(from_date) <= #{now.day})) AND (MONTH(to_date) > #{now.month} OR (MONTH(to_date) = #{now.month} AND DAY(to_date) > #{now.day})) AND vendor_id = #{vendor.id}").order('duration ASC').first
+  end
+
+  def from_date=(from)
+    write_attribute :from_date, Time.parse("2012-" + from.strftime("%m-%d"))
+  end
+
+  def to_date=(to)
+    write_attribute :to_date, Time.parse("2012-" + to.strftime("%m-%d"))
+  end
+
+  def calculate_duration
+    if (self.from_date.month > self.to_date.month) or (self.from_date.month == self.to_date.month and s.from_date.day > s.to_date.day)
+      duration = - (self.to_date - self.from_date)
+    else
+      duration = self.to_date - self.from_date
+    end
+    write_attribute :duration, duration
   end
 end

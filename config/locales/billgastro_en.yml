@@ -1,5 +1,9 @@
 ---
 en:
+  rooms:
+    new:
+      new_room: New Room
+      edit_room: Edit Room
   activerecord:
     attributes:
       article:
@@ -106,10 +110,10 @@ en:
         hidden: löschen
         name: Name
       season:
-        from: From
+        from_date: From
         hidden: delete
         name: Name
-        to: To
+        to_date: To
       settlement:
         initial_cash: Initial amount
         revenue: End amount
@@ -606,6 +610,7 @@ en:
       add_tax_amount: Add tax amount
       edit_surcharge: Edit Surcharge
       new_surcharge: New Surcharge
+      common_surcharge: Common Surcharge
   tables:
     new:
       edit_table: Edit Table

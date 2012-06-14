@@ -1,5 +1,9 @@
 ---
 gn:
+  rooms:
+    new:
+      new_room: Neues Zimmer
+      edit_room: Zimmer bearbeiten
   activerecord:
     attributes:
       article:
@@ -81,10 +85,10 @@ gn:
         hidden: löschen
         name: Name
       season:
-        from: Von
+        from_date: Von
         hidden: löschen
         name: Name
-        to: Bis
+        to_date: Bis
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
@@ -631,6 +635,7 @@ gn:
       add_tax_amount: Steueranteil hinzufügen
       edit_surcharge: Preisaufschlag bearbeiten
       new_surcharge: Neuer Preisaufschlag
+      common_surcharge: Allgemeiner Zuschlag
   tables:
     create:
       success: Tisch erfolgreich gespeichert

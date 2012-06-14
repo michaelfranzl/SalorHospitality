@@ -253,6 +253,8 @@ table.settlements
   :font-size 80%
   :border-collapse collapse
   :border 1px solid $darkgray
+  td.highlighted
+    :background-color $billgastrogrey1
   td
     :padding 7px 5px
     :text-align right
@@ -1579,3 +1581,10 @@ div#auto_completable
   .result:hover
     :background-color $billgastroblue1
   
+select#season_from_date_1i,
+select#season_to_date_1i
+  :display none
+
+table.hotel
+  :display inline-block
+  :margin 10px
