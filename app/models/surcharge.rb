@@ -16,10 +16,54 @@ class Surcharge < ActiveRecord::Base
 
   def calculate_totals
     amount = 0.0
-    self.tax_amounts.each do |ta|
+    self.tax_amounts.existing.each do |ta|
       amount += ta.amount
     end
     self.amount = amount
     self.save
+  end
+
+  def self.create_including_all_relations(vendor, params)
+    guest_types = vendor.guest_types.existing
+    seasons = vendor.seasons.existing
+    surcharge = nil
+    seasons.each do |s|
+      guest_types.each do |gt|
+        gt_id = params[:common_surcharge] ? nil : gt.id 
+        surcharge = vendor.surcharges.where(:season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name]).first
+        unless @surcharge
+          surcharge = Surcharge.create :season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name], :vendor_id => vendor.id, :company_id => vendor.company.id
+        end
+      end
+    end
+    surcharge
+  end
+
+  def update_all_relations(params, old_name)
+    vendor = self.vendor
+    seasons = vendor.seasons.existing
+    guest_types = vendor.guest_types.existing
+    guest_types << nil
+    seasons.each do |s|
+      guest_types.each do |gt|
+        gt_id = gt ? gt.id : nil
+        # this should match only one surcharge at a time
+        surcharge = vendor.surcharges.where(:guest_type_id => gt_id, :season_id => s.id, :name => old_name).update_all :name => params[:surcharge][:name], :radio_select => self.radio_select
+      end
+    end
+  end
+
+  def delete_including_all_relations(vendor)
+    vendor = self.vendor
+    seasons = vendor.seasons.existing
+    guest_types = vendor.guest_types.existing
+    guest_types << nil
+    seasons.each do |s|
+      guest_types.each do |gt|
+        gt_id = gt ? gt.id : nil
+        # this should match only one surcharge at a time
+        surcharge = vendor.surcharges.where(:guest_type_id => gt_id, :season_id => s.id, :name => self.name).update_all :hidden => true
+      end
+    end
   end
 end
