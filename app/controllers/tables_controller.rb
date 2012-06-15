@@ -8,7 +8,7 @@
 class TablesController < ApplicationController
 
   before_filter :check_permissions, :except => [:index, :show]
-
+  
   def index
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
@@ -67,17 +67,18 @@ class TablesController < ApplicationController
     @table = get_model
     redirect_to tables_path and return unless @table
     success = @table.update_attributes(params[:table])
-    respond_to do |wants|
-      wants.html do
-        if success
-          flash[:notice] = t('tables.create.success')
-          redirect_to tables_path
-        else
-          render :new
-        end
-      end
-      wants.js { render :nothing => true }
+    if success
+      flash[:notice] = t('tables.create.success')
+      redirect_to tables_path
+    else
+      render :new
     end
+  end
+
+  def update_coordinates
+    @table = get_model
+    @table.update_attributes(params[:table])
+    render :nothing => true
   end
 
   def destroy
