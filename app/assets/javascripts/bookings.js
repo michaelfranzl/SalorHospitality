@@ -93,7 +93,7 @@ function draw_booking(d,y,booking) {
     _set('salor_hotel.booking.odd'+ x,false);
   }
   if (booking.customer_name == '') {
-    booking.customer_name = 'i18n_unamed';
+    booking.customer_name = i18n.unamed;
   }
   var booking_widget = create_dom_element(  'div', 
                                             { 

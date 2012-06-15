@@ -21,7 +21,9 @@ module OrdersHelper
       :payment_method => escape_javascript(PaymentMethodItem.model_name.human),
       :pay => escape_javascript(I18n.t('various.pay')),
       :common_surcharges => escape_javascript(I18n.t('various.common_surcharges')),
-      :cancel => escape_javascript(I18n.t('various.cancel'))
+      :cancel => escape_javascript(I18n.t('various.cancel')),
+      :unamed => escape_javascript(I18n.t('various.unamed')),
+      :customer => escape_javascript(I18n.t('activerecord.models.customer.one'))
     }
     return i18n.to_json
   end
