@@ -377,7 +377,7 @@ ul#articles_search_results
 
 
 
-a#toggle_admin_interface
+div#toggle_admin_interface
   :cursor pointer
   :position absolute
 
@@ -1498,10 +1498,14 @@ div.booking_form
     :top 50px
     :left 50px
 div#rooms_container
-  :width 90%
-div#rooms
-  :overflow-x scroll
+  :z-index 900
+  :position absolute
+  :top 0
 
+div#rooms
+  :position absolute
+  div#header
+    :padding-left 15px 
 div.room-header
   :position absolute
   :width 190px
@@ -1538,6 +1542,10 @@ div.room-date-column
   :z-index 1000
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
+  :-webkit-border-bottom-left-radius 0px
+  :-webkit-border-top-left-radius 0px
+div.room-date-column-last
+  :-webkit-border-bottom-left-radius 4px
     
 div.room-booking
   :position absolute
@@ -1559,6 +1567,10 @@ div.room-booking-odd
   :background-color $blue
 div.room-booking-even
   :background-color $violet
+div.room-booking-thirden
+  :background-color $billgastroblue1
+div.room-booking-active
+  :background-color $green
 div.room-column
   :position absolute
   :width 190px

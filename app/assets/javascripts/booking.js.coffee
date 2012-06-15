@@ -9,6 +9,9 @@ $ ->
   # hotel_add_price_form_button()
   create_dom_element 'div', {id:'rooms'}, '', '#rooms_container'
   fetch_rooms()
+  $(window).on 'resize', ->
+    if $('#rooms').is(":visible")
+      emit 'salor_hotel.render_rooms',{}
 
 
 # Updates the local DB from JSON objects delivered by rails. Hooked into update_resources of the main app.

@@ -176,11 +176,9 @@ function route(target, model_id, action, options) {
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
     submit_json.target = 'rooms';
-    $('#booking_form').hide();
-    $('#tables').hide();
-    $('#areas').hide();
-    $('#rooms').show();
-    $('#functions_header_index').show();
+    // See bookings.js show_rooms_interface() I did this because the showing/hiding, and doing of stuff needs
+    // to be in its own function so that it can be attached to click handlers
+    emit("salor_hotel.render_rooms",{model_id:model_id, action:action, options:options});
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
@@ -891,7 +889,7 @@ function add_option_to_item(d, value, cat_id) {
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
 
-function toggle_order_booking() {
+function toggle_order_booking () {
   if (submit_json.currentview == 'tables') {
     route('rooms');
   } else {
