@@ -10,6 +10,7 @@
 .form_fields
   = form_for @surcharge do |surcharge_form|
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %br
     = surcharge_form.label :name
     = surcharge_form.text_field :name, :size => 9
     - if @surcharge.season_id.nil?
@@ -19,6 +20,8 @@
     %br
     = surcharge_form.label :radio_select
     = surcharge_form.check_box :radio_select
+    %br
+    = link_to image_tag('button_small_delete.png', :title => Surcharge.human_attribute_name(:hidden), :alt => Surcharge.human_attribute_name(:hidden)), surcharge_path(surcharge_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless surcharge_form.object.new_record?
     - if @surcharge.season_id
       %div#tax_amounts
         %h3= t('activerecord.models.tax_amount.other')

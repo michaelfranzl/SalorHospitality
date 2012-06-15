@@ -254,10 +254,10 @@ Quantity.delete_all
       guest_type_objects << gt
     end
     puts " Creating Seasons for #{c} #{v}"
-    s1 = Season.create :name => 'Summer', :from => Date.parse('2012-06-21'), :to => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
-    s2 = Season.create :name => 'Autumn', :from => Date.parse('2012-09-21'), :to => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
-    s3 = Season.create :name => 'Winter', :from => Date.parse('2012-12-21'), :to => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
-    s4 = Season.create :name => 'Spring', :from => Date.parse('2012-03-21'), :to => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1 = Season.create :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2 = Season.create :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3 = Season.create :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4 = Season.create :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
     season_objects = [s1,s2,s3,s4]
 
     4.times do |i|

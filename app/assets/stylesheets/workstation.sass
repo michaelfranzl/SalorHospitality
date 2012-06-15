@@ -1506,19 +1506,18 @@ div#rooms
   :position absolute
   div#header
     :padding-left 15px 
-
-  
 div.room-header
   :position absolute
   :width 190px
   :height 40px
   :display inline-block
+  :border 1px solid gray
   :padding 0px
   :margin 0px
   :cursor pointer
   :text-align center
   :font-size 150%
-  :background-color $billgastrogrey2
+  :background-color $billgastrogrey1
   :-webkit-border-top-left-radius 6px
   :-webkit-border-top-right-radius 6px
   input
@@ -1531,7 +1530,7 @@ div.room-header
 
 div.room-date-column
   :position absolute
-  :width 100%
+  :width 90%
   :height 41px
   :display inline-block
   :border 1px solid gray
@@ -1540,10 +1539,13 @@ div.room-date-column
   :cursor pointer
   :text-align left
   :font-size 150%
-  :background-color $billgastrogrey1
   :z-index 1000
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
+  :-webkit-border-bottom-left-radius 0px
+  :-webkit-border-top-left-radius 0px
+div.room-date-column-last
+  :-webkit-border-bottom-left-radius 4px
     
 div.room-booking
   :position absolute
@@ -1566,7 +1568,9 @@ div.room-booking-odd
 div.room-booking-even
   :background-color $violet
 div.room-booking-thirden
-  :background-color $pink
+  :background-color $billgastroblue1
+div.room-booking-active
+  :background-color $green
 div.room-column
   :position absolute
   :width 190px

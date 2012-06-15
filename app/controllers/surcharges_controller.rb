@@ -4,11 +4,11 @@ class SurchargesController < ApplicationController
 
   def index
     @surcharges = @current_vendor.surcharges.existing
-    @guest_types = @current_vendor.guest_types.existing
-    @guest_types << nil
-    @seasons = @current_vendor.seasons.existing
     @surcharge_names = @surcharges.collect{ |s| s.name }.uniq
     @surcharge_names << nil
+    @seasons = @current_vendor.seasons.existing
+    @guest_types = @current_vendor.guest_types.existing
+    @guest_types << nil
   end
 
   def new
@@ -19,22 +19,12 @@ class SurchargesController < ApplicationController
   end
 
   def create
-    guest_types = @current_vendor.guest_types.existing
-    seasons = @current_vendor.seasons.existing
-    seasons.each do |s|
-      guest_types.each do |gt|
-        gt_id = params[:common_surcharge] ? nil : gt.id 
-        @surcharge = @current_vendor.surcharges.where(:season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name]).first
-        unless @surcharge
-          @surcharge = Surcharge.create :season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name], :vendor_id => @current_vendor.id, :company_id => @current_vendor.company.id, :radio_select => params[:surcharge][:radio_select]
-        end
-      end
-    end
+    Surcharge.create_including_all_relations @current_vendor, params
     redirect_to surcharges_path
   end
 
   def edit
-    @surcharge = Surcharge.accessible_by(@current_user).existing.find_by_id(params[:id])
+    @surcharge = get_model
     @guest_types = @current_vendor.guest_types.existing
     @seasons = @current_vendor.seasons.existing
     @taxes = @current_vendor.taxes.existing
@@ -42,15 +32,12 @@ class SurchargesController < ApplicationController
   end
 
   def update
-    @surcharge = Surcharge.accessible_by(@current_user).existing.find_by_id(params[:id])
+    @surcharge = get_model
     redirect_to surcharges_path and return unless @surcharge
+    old_name = @surcharge.name
     if @surcharge.update_attributes(params[:surcharge])
+      @surcharge.update_all_relations params, old_name
       @surcharge.calculate_totals
-      if params[:surcharge][:radio_select] == '1'
-        @surcharge.update_attribute(:radio_select, true)
-      else
-        @surcharge.update_attribute(:radio_select, false)
-      end
       redirect_to(surcharges_path)
     else
       @taxes = @current_vendor.taxes.existing
@@ -61,7 +48,7 @@ class SurchargesController < ApplicationController
   def destroy
     @surcharge = Surcharge.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to surcharges_path and return unless @surcharge
-    @surcharge.update_attribute :hidden, true
+    @surcharge.delete_including_all_relations @current_vendor
     redirect_to surcharges_path
   end
 end
