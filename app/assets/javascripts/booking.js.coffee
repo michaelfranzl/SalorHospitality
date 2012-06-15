@@ -268,11 +268,16 @@ render_booking_item = (booking_item_id) ->
       if items_json[booking_item_id].surcharges[header].selected
         input_tag.attr 'checked', true
         input_tag.parent().addClass 'selected'
-  booking_item_row = create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
+  create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
+  delete_col = create_dom_element 'div', {class:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;', booking_item_row
+  delete_col.on 'click', ->
+    delete_booking_item(booking_item_id)
   update_booking_totals()
 
 
-
+delete_booking_item = (booking_item_id) ->
+  $('#booking_item' + booking_item_id).remove()
+  set_json 'booking', booking_item_id, 'hidden', true
 
 
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
