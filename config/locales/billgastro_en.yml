@@ -638,6 +638,7 @@ en:
     pay: Pay
     save: Save
     subtotal: Subtotal
+    unamed: Unamed
   vendors:
     index:
       edit: Edit

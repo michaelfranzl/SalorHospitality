@@ -328,7 +328,14 @@ hu:
     new:
       new_user: New User
       edit_user: Edit User
-
+  various:
+    cancel: Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
   companies:
     edit:
       add_printer: Add printer

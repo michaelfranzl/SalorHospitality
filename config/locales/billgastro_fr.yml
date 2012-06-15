@@ -490,6 +490,14 @@ fr:
     new:
       edit_user: Editer utilisateur
       new_user: Nouvel utilisateur
+  various:
+    cancel: XXX Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
   value_added_tax: TVA
   violet: Violet
   waiter: Serveur
