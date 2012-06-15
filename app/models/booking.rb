@@ -1,5 +1,5 @@
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :from, :hidden, :note, :paid, :sum, :to, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration, :taxes, :change_given
+  attr_accessible :company_id, :customer_id, :from_date, :hidden, :note, :paid, :sum, :to_date, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration, :taxes, :change_given
   include Scope
   has_many :booking_items
   has_many :payment_method_items
