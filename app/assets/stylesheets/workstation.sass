@@ -377,7 +377,7 @@ ul#articles_search_results
 
 
 
-a#toggle_admin_interface
+div#toggle_admin_interface
   :cursor pointer
   :position absolute
 
@@ -1498,9 +1498,16 @@ div.booking_form
     :top 50px
     :left 50px
 div#rooms_container
-  :width 90%
+  :z-index 900
+  :position absolute
+  :top 0
+
 div#rooms
-  :overflow-x scroll
+  :position absolute
+  div#header
+    :padding-left 15px 
+
+  
 div.room-header
   :position absolute
   :width 190px
@@ -1558,6 +1565,8 @@ div.room-booking-odd
   :background-color $blue
 div.room-booking-even
   :background-color $violet
+div.room-booking-thirden
+  :background-color $pink
 div.room-column
   :position absolute
   :width 190px

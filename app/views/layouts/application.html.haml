@@ -47,6 +47,7 @@
 
   %body
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
+    #rooms_container
     #container
       #draw_controls
         %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')

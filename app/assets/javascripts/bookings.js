@@ -4,10 +4,13 @@ window.receive_rooms_db = function (event) {
   var bookings = [];
   data.get_bookings = function (room_index) {
     room_id = this.keys[room_index - 1]
+    if (!room_id)
+      return [];
     return this.rooms[room_id + ''].bookings;
   };
   _set("rooms.json",data);
-  emit('salor_hotel.render_rooms',data);
+  if ($('#rooms').is(":visible"))
+    emit('salor_hotel.render_rooms',data);
 }
 
 window.fetch_rooms = function () {
@@ -60,17 +63,20 @@ function draw_booking(d,y,booking) {
   var nights = days_between_dates(booking.from, booking.to);
   var tpad = _get("salor_hotel.tpad");
   var lpad = _get("salor_hotel.lpad");
-  var owidth = _get("salor_hotel.outerWidth") + lpad;
-  var oheight = _get("salor_hotel.outerHeight") + tpad;
+  var owidth = _get("salor_hotel.outerWidth");
+  var oheight = _get("salor_hotel.outerHeight");
   var widget_height = oheight * (nights + 1);
   var booking_class;
   var offset = $('#rooms').offset();
-  var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25, left: offset.left + (owidth * x) + 5};
+  var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 5};
   
-  console.log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
+  _log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
   
   if (_get('salor_hotel.booking.odd'+ x) == false) {
     booking_class = 'odd';
+    _set('salor_hotel.booking.odd'+ x,3);
+  } else if (_get('salor_hotel.booking.odd'+ x) == 3) {
+    booking_class = 'thirden';
     _set('salor_hotel.booking.odd'+ x,true);
   } else {
     booking_class = 'even';
@@ -93,6 +99,8 @@ function draw_booking(d,y,booking) {
   booking_widget.offset(new_offset);
   booking_widget.css({height: widget_height});
   booking_widget.on('click',function () {
+    $('#rooms').hide();
+    $('#container').show();
     var room_id = $(this).attr('room_id');
     route('booking', room_id,'show',{'booking_id': $(this).attr('booking_id')});
     submit_json.model.room_id = x;
@@ -120,11 +128,11 @@ window.render_booking_lines = function () {
   var lpad = _get("salor_hotel.lpad");
   var owidth = _get("salor_hotel.outerWidth") + lpad;
   var oheight = _get("salor_hotel.outerHeight") + tpad;
-  var css = {top: offset.top, left: offset.left};
+  var css = {top: offset.top + $('#header').outerHeight(), left: offset.left};
   
   while (i < 32) {
     x = 1
-    css = {top: offset.top + (i * oheight), left: offset.left + lpad};
+    css = {top: offset.top + (i * oheight) + $('#header').outerHeight() + 20, left: offset.left + lpad};
     var d = new Date(now.getFullYear(),now.getMonth(), now.getDate() + i - 1)
     var r = create_dom_element('div', {class: 'room-date-column left booking-line', id: 'booking_date_' + i }, d.getDate(), $('#rooms'));
     r.offset(css)
@@ -132,15 +140,22 @@ window.render_booking_lines = function () {
       var room_id = x;
       if (_get("rooms.json").keys[x-1]) {
         if (!rooms_bookings[x]) {
+          _log("rooms_bookings was not set, setting it");
           rooms_bookings[x] = _get("rooms.json").get_bookings(x);
         }
         bookings = rooms_bookings[x];
+        _log("Bookings: ",bookings);
         if (bookings) {
           $.each(bookings, function (b) {
             if (is_booked(bookings[b],d)) {
+              _log("Drawing Booking: ", bookings[b]);
               draw_booking(d,i,bookings[b]);
+            } else {
+              _log("is_booked false for booking: ", bookings[b]);
             }
           });
+        } else {
+          _log("Empty bookings");
         }
       }
       x++ ;
@@ -149,25 +164,51 @@ window.render_booking_lines = function () {
     i++;
   }
 }
+function show_rooms_interface() {
+  $('#booking_form').hide();
+  $('#functions_header_index').show();
+  $('#tables').hide();
+  $('#areas').hide();
+  $('#container').hide();
+  $('#rooms').html('');
+  var admin_toggle_offset = $('#header').offset();
+  $('#rooms').show();
+  $('#rooms').offset({top: 0, left: 0});
+  var new_header = $('#header').clone();
+  new_header.addClass('rooms-container-header');
+  new_header.find('').on('click',function () {
+    hide_rooms_interface();
+  });
+  $('#rooms').prepend(new_header);
+}
+function hide_rooms_interface() {
+  $('#rooms').hide();
+  $('#container').show();
+  route('tables');
+}
 // updates the visual room buttons. Hooked into update_resources of the main app.
 window.render_rooms = function (event) {
-
-  $('#rooms').html('');
-  $('#rooms').show();
+  show_rooms_interface();
   if (!_get("salor_hotel.from_input")) {
      var d = new Date();
-     console.log(d);
+     _log(d);
     _set("salor_hotel.from_input",date_as_ymd(d));
   }
   var offset = $('#rooms').offset();
   var tpad = 0;
-  var lpad = 0;
+  var lpad = 20;
   _set("salor_hotel.tpad",tpad);
   _set("salor_hotel.lpad",lpad);
+  
   var num_rooms = _get("rooms.json").keys.length;
-  $('#rooms').css({'width': num_rooms * 200 + 275 + 'px'})
+  var new_width = num_rooms * 200 + 300;
+  if (new_width < $(window).width() - 5) {
+    new_width = $(window).width() - 5;
+  }
+  $('#rooms').css({'width': new_width + 'px', height: 32 * 45.5})
   width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
-  css = {top: offset.top + tpad, left: offset.left + lpad}
+  css = {top: offset.top + tpad + $('#header').outerHeight() + 20, left: offset.left + lpad}
+  
   var room = create_dom_element('div',{'class':"room-header", id: 'room_date_select'},'',$('#rooms'));
   room.offset(css);
   _set("salor_hotel.outerWidth", room.outerWidth());
@@ -182,7 +223,7 @@ window.render_rooms = function (event) {
   });
   $.each(_get("rooms.json").rooms,function (k,v) {
     var room = create_dom_element('div',{'class':"room-header"},v.room.name,$('#rooms'));
-    css = {top: css.top, left: room.outerWidth() + css.left + lpad};
+    css = {top: css.top, left: room.outerWidth() + css.left};
     room.offset(css);
     var room_column = create_dom_element('div',{'class':"room-column"},'',$('#rooms'));
     var col_css = {top: css.top + room.outerHeight() + tpad, left: css.left};
@@ -190,6 +231,7 @@ window.render_rooms = function (event) {
     var height = (room.outerHeight() + tpad) * 31;
     room_column.css({height: height});
     room.on('click',function () {
+      hide_rooms_interface();
       route('room', k);
       submit_json.model.room_id = k;
       submit_json.model.room_type_id = v.room_type.id;

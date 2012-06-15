@@ -10,8 +10,8 @@
   $('.booking_form').attr('id', 'model_<%= @booking.id %>');
   $('.booking_change').attr('id', 'change_<%= @booking.id %>');
   $('#booking_customer').val(submit_json.model['customer_name']);
-  $('#booking_from').val('<%= @booking.from.strftime("%Y-%m-%d") if @booking.from %>');
-  $('#booking_to').val('<%= @booking.to.strftime("%Y-%m-%d") if @booking.to %>');
+  $('#booking_from').val('<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>');
+  $('#booking_to').val('<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>');
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
   $('#add_payment_method_button').on('click', function() { add_payment_method(<%= @booking.id %>); });
   $('.payment_methods_container').attr('id', 'payment_methods_container_' + <%= @booking.id %>);

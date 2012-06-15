@@ -225,3 +225,8 @@ function auto_completable_show_results(elem,results) {
 function days_between_dates(from, to) {
   return Math.floor((Date.parse(to) - Date.parse(from)) / 86400000)
 }
+function _log() {
+  if (_get('debugging')) {
+    console.log.apply(console.log,this.arguments);
+  }
+}
