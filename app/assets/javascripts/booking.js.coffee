@@ -45,13 +45,13 @@ window.display_booking_form = (room_id) ->
   from_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['from'] = date
+               submit_json.model['from_date'] = date
   }
   to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['to'] = date
+               submit_json.model['to_date'] = date
                window.calculate_booking_duration()
   }
   duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
@@ -62,7 +62,7 @@ window.display_booking_form = (room_id) ->
   
   customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:customer_name_default}, '', booking_tools
   customer_input.on 'focus', ->
-    if $(this).val() == '' 
+    if $(this).val() == ''
       $(this).val(customer_name_default)
     if $(this).val() == 'i18n_customer'
       $(this).val("")
@@ -95,8 +95,8 @@ window.initialize_booking_form = ->
   , 150
 
 window.calculate_booking_duration = ->
-  from = Date.parse(submit_json.model.from)
-  to = Date.parse(submit_json.model.to)
+  from = Date.parse(submit_json.model.from_date)
+  to = Date.parse(submit_json.model.to_date)
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
