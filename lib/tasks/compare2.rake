@@ -38,6 +38,7 @@ end
 
 # this just copies translations from source into target, if they are not existing there
 def merge(source,target)
+  puts "\n\nMerging..."
   source.stringify_keys!
   target.stringify_keys!
   source.each do |key,value|
@@ -53,6 +54,7 @@ end
 
 # this copies translations from source into target, if they are not existing there AND deletes all nodes from target not present in source
 def clean(source,target)
+  puts "\n\nCleaning..."
   source.stringify_keys!
   target.stringify_keys!
   output = Hash.new
@@ -69,6 +71,7 @@ def clean(source,target)
 end
 
 def equalize(source,target)
+  puts "\n\nEqualizing..."
   cleaned_target = clean(source,target)
   merged_target = merge(source,target)
   return merged_target
