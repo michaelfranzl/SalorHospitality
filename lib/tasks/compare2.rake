@@ -54,9 +54,10 @@ def equalize(source,target)
   target.stringify_keys!
   source.each do |key,value|
     if not value.is_a? Hash and not target[key] then
-      puts "#{key} not present in target. Copying."
+      puts "#{key} not present in target but in source. Copying."
       target[key] = "XXX " + source[key]
     elsif not value.is_a? Hash and target[key] then
+      puts "#{key} present in target but not in source. Deleting."
       target.delete key
     elsif value.is_a? Hash and target[key] then
       target[key] = merge(value,target[key])
