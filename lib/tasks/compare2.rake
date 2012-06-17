@@ -58,6 +58,8 @@ def clean(source,target)
       output[key] = value
     elsif value.is_a? Hash and source[key]
       output[key] = clean(source[key],value)
+    else
+      puts "  Not copying #{key} to output"
     end
   end
   return output
