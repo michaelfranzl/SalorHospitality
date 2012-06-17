@@ -193,13 +193,13 @@ namespace :translations do
   end
 
   task :equalize, :sourcefile, :transfile do |t,args|
-    puts "Equalizing\n"
+    puts "Equalizing ...\n"
     Rake::Task['translations:clean'].invoke(args[:sourcefile], args[:transfile])
     Rake::Task['translations:merge'].invoke(args[:sourcefile], args[:transfile])
-    #`rake translations:clean['#{}']['#{}']`
   end
   
   task :order, :sourcefile do |t,args|
+    puts "Sorting...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -211,6 +211,7 @@ namespace :translations do
   end
   
   task :find_deprecations, :sourcefile do |t,args|
+    puts "Finding deprecations...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -220,6 +221,7 @@ namespace :translations do
   end
   
   task :remove_deprecations, :sourcefile do |t,args|
+    puts "Removing deprecations...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -240,13 +242,15 @@ namespace :translations do
       current_file = File.join(base_path,base_name.gsub('XXX',lang))
       puts "Current File is: #{current_file}"
       if not File.exists? current_file then
+        puts "Translation file doesn't exist, copying it..."
         `cp #{default_file} #{current_file}`
       else
-        puts "Merging translations for #{base_name.gsub('XXX',lang)}"
-        `rake merge_translations['#{base_name.gsub('XXX',langs[0])}','#{base_name.gsub('XXX',lang)}']`
-        puts "File exists, ordering"
-        `rake order_translation['#{base_name.gsub('XXX',lang)}']`
-  #       `rake remove_deprecations['#{base_name.gsub('XXX',lang)}']`
+        source = base_name.gsub('XXX',lang)
+        target = base_name.gsub('XXX',langs[0])
+        puts "Equalizing translations for #{source} and #{target}"
+        Rake::Task['translations:equalize'].invoke(source, target)
+        puts "Ordering translation #{target}"
+        Rake::Task['translations:order'].invoke(target)
       end
     end
   end
