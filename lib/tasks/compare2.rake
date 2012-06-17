@@ -33,6 +33,7 @@ def remove_deprecations(orig_hash)
   return new_hash
 end
 
+# this just copies translations from source into target, if they are not existing there
 def merge(source,target)
   source.stringify_keys!
   target.stringify_keys!
@@ -40,6 +41,23 @@ def merge(source,target)
     if not value.is_a? Hash and not target[key] then
       puts "#{key} not present in target."
       target[key] = "XXX " + source[key]
+    elsif value.is_a? Hash and target[key] then
+      target[key] = merge(value,target[key])
+    end
+  end
+  return target
+end
+
+# this copies translations from source into target, if they are not existing there AND deletes all nodes from target not present in source
+def equalize(source,target)
+  source.stringify_keys!
+  target.stringify_keys!
+  source.each do |key,value|
+    if not value.is_a? Hash and not target[key] then
+      puts "#{key} not present in target. Copying."
+      target[key] = "XXX " + source[key]
+    elsif not value.is_a? Hash and target[key] then
+      target.delete key
     elsif value.is_a? Hash and target[key] then
       target[key] = merge(value,target[key])
     end
@@ -148,6 +166,24 @@ task :merge_translations, :sourcefile, :transfile do |t,args|
   translation = translation[translationlang]
   
   translation = merge(source,translation)
+  
+  output_translation = Hash.new
+  output_translation[translationlang] = translation
+  File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
+end
+
+task :equalize_translations, :sourcefile, :transfile do |t,args|
+  sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
+  source = YAML.load_file sourcefile
+  sourcelang = source.keys.first
+  source = source[sourcelang]
+  
+  transfile = File.join(Rails.root,'config','locales',args[:transfile])
+  translation = YAML.load_file transfile
+  translationlang = translation.keys.first
+  translation = translation[translationlang]
+  
+  translation = equalize(source,translation)
   
   output_translation = Hash.new
   output_translation[translationlang] = translation
