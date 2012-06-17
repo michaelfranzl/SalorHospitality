@@ -490,6 +490,7 @@ es:
     new:
       edit_user: Editar usuario
       new_user: Nuevo usuario
+  value_added_tax: IVA
   various:
     cancel: XXX Cancel
     common_surcharges: Common Surcharges
@@ -498,7 +499,6 @@ es:
     save: Save
     subtotal: Subtotal
     unamed: Unamed
-  value_added_tax: IVA
   violet: Violeta
   waiter: Mozo
   waiterpad_generic_name: Libreta de pedidos

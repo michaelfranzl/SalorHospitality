@@ -1,9 +1,5 @@
 ---
 gn:
-  rooms:
-    new:
-      new_room: Neues Zimmer
-      edit_room: Zimmer bearbeiten
   activerecord:
     attributes:
       article:
@@ -24,7 +20,6 @@ gn:
         icon: Icon
         name: Name
         separate_print: Bon schneiden
-        sort_order: Sortierwert
         tax_id: Steuerklasse
         user_id: Zubereitung durch
         vendor_printer_id: Drucker
@@ -131,28 +126,15 @@ gn:
         tables: Tische
         title: Anrede
       vendor:
-        address: Adresse
         automatic_printing: Automatisches Drucken
-        bank_account1: Bankverbindung 1
-        bank_account2: Bankverbindung 2
         country: Regeln für Land
-        email: E-Mail
         hidden: löschen
-        internet_address: Internetadresse
-        invoice_slogan1: Rechnungstext 1
-        invoice_slogan2: Rechnungstext 2
-        invoice_subtitle: Rechnungs-Untertitel
+        invoice_footer_blurb: Rechnung Fußzeile
+        invoice_header_blurb: Rechnung Kopfzeile
         name: Firmenname
-        printer_bar: Drucker Bar
-        printer_guestroom: Drucker Gastraum
-        printer_kitchen: Drucker Küche
-        res_confirm_url: Reservierungen bestätigen
-        res_fetch_url: Reservierungen abfragen
-        revenue_service_tax_number: UID Nummer
-        rlogo_footer: Rechnungslogo Fuß
-        rlogo_header: Rechnungslogo Kopf
+        receipt_footer_blurb: Beleg Fußzeile
+        receipt_header_blurb: Beleg Kopfzeile
         saas: Online-Variante
-        subdomain: Subdomain
         ticket_display_time_order: Uhrzeit und Verkaufsnummer auf Ticket
         ticket_item_separator: Ticket Trennlinie
         ticket_tall_font: Ticket hohe Schrift
@@ -303,17 +285,13 @@ gn:
       new_article: Neuer Artikel
       normal: normal
       takeaway: mitnehmen
-      weighing: abwiegen
     sort_index:
       sort: Artikel sortieren
-  austria: Österreich
-  auxiliary_waiter: Hilfskellner
   bar: Schank
   black: Schwarz
   blackboard:
     index:
       update: Aktualisieren
-  blackboard_generic_name: Speisetafel
   blank: Leer
   blue: Blau
   bookings:
@@ -327,9 +305,6 @@ gn:
       success: Kategorie erfolgreich gespeichert
     destroy:
       success: Kategorie erfolgreich gelöscht
-    index:
-      drinks: Getränke
-      foods: Speisen
     new:
       aperitif: Aperitif
       beer: Bier
@@ -356,13 +331,7 @@ gn:
       teapot: Teekanne
       whitewinebottle: Flasche Weiß
       whitewineglass: Weißwein
-  chief_waiter: Oberkellner
   clear_order_and_go_back: Bestellung löschen und zurück
-  companies:
-    edit:
-      add_printer: Drucker hinzufügen
-    update:
-      config_successfully_updated: Firmendaten erfolgreich aktualisiert!
   copy: Kopie
   cost_centers:
     create:
@@ -382,12 +351,10 @@ gn:
   delete: Löschen
   display: Anzeigen
   drink: Getränke
-  dummy: Dummy
   edit: Bearbeiten
   exit: Beenden
   finish: Abschließen
   food: Speisen
-  germany: Deutschland
   go_back: Zurück
   green: Grün
   gross: Brutto
@@ -416,8 +383,6 @@ gn:
     application:
       submit_scribe: OK
   logout: abmelden
-  logout_successful: Sie haben sich erfolgreich abgemeldet.
-  menucard_generic_name: Speisekarte
   messages:
     hello_username: Hallo %{name}
   move_order_to_table: Bestellung auf anderen Tisch verschieben
@@ -447,11 +412,6 @@ gn:
       toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
     functions_header_order_form:
       move_order: Bestellung verschieben
-    go_to_tables:
-      warning_only_x_orders_left: Achtung, nur noch %{credits} Bestellungen. Auf www.billgasto.com
-        aufladen.
-      warning_only_x_orders_left_upgrade_here: Achtung, nur noch %{credits} Bestellungen.
-        Hier <a href='http://www.billgasto.com'>aufladen</a>
     index:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
@@ -470,9 +430,7 @@ gn:
       email: Ihre E-Mail
       login: Login
       password: Passwort
-      realname: Ihr Name
       username: Benutzer
-      your_ip_address: Ihre IP Daten
     order:
       new: Neue Bestellung
       sum: SUMME
@@ -504,7 +462,6 @@ gn:
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
   pink: Pink
-  please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse
     ein.
   please_enter_item_comment: Notiz
   please_enter_item_price: Preis
@@ -514,11 +471,7 @@ gn:
       new_presentation: Neue Elementvorlage
   print: Drucken
   print_and_finish: Abschließen und drucken
-  print_kitchenlist: Küchenliste drucken
   printing_test: Testdruck
-  printr:
-    course: Gang
-  recent_orders: Kürzliche Rechnugen ansehen
   reports:
     end_date: Bis
     index:
@@ -563,15 +516,19 @@ gn:
       view_all_settlements: Alle Abrechnungen ansehen
       view_statistics: Statistiken ansehen
   room_prices:
+    index:
+      generate_price_skeleton: Preisgerüst erstellen
     new:
       edit_room_price: Zimmerpreis bearbeiten
       new_room_price: Neuer Zimmerpreis
-    index:
-      generate_price_skeleton: Preisgerüst erstellen
   room_types:
     new:
       edit_room_type: Zimmerklasse bearbeiten
       new_room_type: Neue Zimmerklasse
+  rooms:
+    new:
+      edit_room: Zimmer bearbeiten
+      new_room: Neues Zimmer
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock
@@ -595,9 +552,7 @@ gn:
       email: Ihre E-Mail
       login: Login
       password: Passwort
-      realname: Ihr Name
       username: Benutzer
-      your_ip_address: Ihre IP Daten
   settlements:
     detailed_list:
       count: Anzahl
@@ -610,8 +565,6 @@ gn:
       end_date: Bis
       start_date: Von
       sum_total: Gesamtsumme
-    new:
-      set_date: Datum für diese Abrechnung
     settlement:
       finish: Abschließen
       print: Drucken
@@ -631,13 +584,12 @@ gn:
       new_stock: Neuer Lagerartikel
   storno: Storno
   sum: Summe
-  superuser: Superuser
   surcharges:
     new:
       add_tax_amount: Steueranteil hinzufügen
+      common_surcharge: Allgemeiner Zuschlag
       edit_surcharge: Preisaufschlag bearbeiten
       new_surcharge: Neuer Preisaufschlag
-      common_surcharge: Allgemeiner Zuschlag
   tables:
     create:
       success: Tisch erfolgreich gespeichert
@@ -651,11 +603,6 @@ gn:
     new:
       edit_tax: Steuerklasse bearbeiten
       new_tax: Neue Steuerklasse
-  there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
-  tobacco: Tabak
-  unsettled_orders_generic_name: Shifts
-  update_database: Datenbank neu laden
-  user_not_found: Benutzer nicht gefunden.
   users:
     create:
       success: Benutzer erfolgreich gespeichert
@@ -682,7 +629,6 @@ gn:
   violet: Violett
   waiter: Kellner
   waiterpad_generic_name: Bestellblock
-  was_successfully_deleted: ! '%{what} wurde erfolgreich gelöscht.'
   white: Weiß
   winered: Weinrot
   wrong_password: Falsche Logindaten.
