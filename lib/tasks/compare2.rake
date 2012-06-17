@@ -2,6 +2,9 @@ require 'yaml'
 require 'active_support'
 
 $unused = 0
+$source = ''
+$target = ''
+
 
 def find_deprecations(h)
   h.each do |k,v|
@@ -65,6 +68,12 @@ def clean(source,target)
   return output
 end
 
+def equalize(source,target)
+  cleaned_target = clean(source,target)
+  merged_target = merge(source,target)
+  return merged_target
+end
+
 def compare_yaml_hash(cf1, cf2, context = [])
   cf1.each do |key, value|
     unless cf2.key?(key)
@@ -116,6 +125,25 @@ def convert_hash_to_ordered_hash_and_sort(object, deep = false)
   end
 end
 
+def open_translation(s, t)
+  sourcefile = File.join(Rails.root,'config','locales',s)
+  source = YAML.load_file sourcefile
+  sourcelang = source.keys.first
+  source = source[sourcelang]
+  
+  transfile = File.join(Rails.root,'config','locales',t)
+  translation = YAML.load_file transfile
+  translationlang = translation.keys.first
+  translation = translation[translationlang]
+  return source, sourcelang, sourcefile, translation, translationlang, transfile
+end
+
+def write_translation(translation, translationlang, transfile)
+  output_translation = Hash.new
+  output_translation[translationlang] = translation
+  File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
+end
+
 namespace :translations do
   # usage: rake compare_locales['billgastro_gn.yml','billgastro_pl.yml']
   desc "Compare locales" 
@@ -155,51 +183,28 @@ namespace :translations do
   end
   
   task :merge, :sourcefile, :transfile do |t,args|
-    puts "Merging...\n"
-    sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
-    source = YAML.load_file sourcefile
-    sourcelang = source.keys.first
-    source = source[sourcelang]
-    
-    transfile = File.join(Rails.root,'config','locales',args[:transfile])
-    translation = YAML.load_file transfile
-    translationlang = translation.keys.first
-    translation = translation[translationlang]
-    
+    puts "Merging #{args[:sourcefile]} -> #{args[:transfile]}...\n"
+    source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
     translation = merge(source,translation)
-    
-    output_translation = Hash.new
-    output_translation[translationlang] = translation
-    File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
+    write_translation(translation, translationlang, transfile)
   end
   
   task :clean, :sourcefile, :transfile do |t,args|
-    puts "Cleaning...\n"
-    sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
-    source = YAML.load_file sourcefile
-    sourcelang = source.keys.first
-    source = source[sourcelang]
-    
-    transfile = File.join(Rails.root,'config','locales',args[:transfile])
-    translation = YAML.load_file transfile
-    translationlang = translation.keys.first
-    translation = translation[translationlang]
-    
+    puts "Cleaning #{args[:sourcefile]} -> #{args[:transfile]}...\n"
+    source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
     translation = clean(source,translation)
-    
-    output_translation = Hash.new
-    output_translation[translationlang] = translation
-    File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
+    write_translation(translation, translationlang, transfile)
   end
 
   task :equalize, :sourcefile, :transfile do |t,args|
-    puts "Equalizing ...\n"
-    Rake::Task['translations:clean'].invoke(args[:sourcefile], args[:transfile])
-    Rake::Task['translations:merge'].invoke(args[:sourcefile], args[:transfile])
+    puts "Equalizing #{args[:sourcefile]} -> #{args[:transfile]}...\n"
+    source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
+    translation = equalize(source,translation)
+    write_translation(translation, translationlang, transfile)
   end
   
   task :order, :sourcefile do |t,args|
-    puts "Sorting...\n"
+    puts "Sorting #{ args.inspect }...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -233,26 +238,22 @@ namespace :translations do
     puts "#{$unused} keys found."
   end
   
-  task :fix do
+  task :update do
     base_path = File.join(Rails.root,'config','locales')
     base_name = "billgastro_XXX.yml" # i.e. the pattern name of the files
     langs = ["en","gn","ar","cn","el","en","es","fi","fr","hu","pl","it","ru","tr"]
     default_file = File.join(base_path,base_name.gsub('XXX',langs[0])) #i.e. the first file is the default file
     langs.each do |lang|
       current_file = File.join(base_path,base_name.gsub('XXX',lang))
-      puts "Current File is: #{current_file}"
       if not File.exists? current_file then
         puts "Translation file doesn't exist, copying it..."
         `cp #{default_file} #{current_file}`
       else
-        target = base_name.gsub('XXX',lang)
-        source = base_name.gsub('XXX',langs[0])
-        puts "Equalizing translations for #{source} and #{target}"
-        #Rake::Task['translations:equalize'].invoke(source, target)
-        `rake translations:equalize['#{source}','#{target}']`
-        puts "Ordering translation #{target}"
-        `rake translations:order['#{target}']`
-        #Rake::Task['translations:order'].invoke(target)
+        t = base_name.gsub('XXX',lang)
+        s = base_name.gsub('XXX',langs[0])
+        source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(s,t)
+        translation = equalize(source,translation)
+        write_translation(translation, translationlang, transfile)
       end
     end
   end
