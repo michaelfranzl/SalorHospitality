@@ -57,8 +57,11 @@ window.display_booking_form = (room_id) ->
   duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
   duration_input.on 'click', -> $(this).select()
   duration_input.on 'keyup', -> set_booking_duration()
-  
-  `var customer_name_default = (submit_json.model['customer_name'] == '') ? 'i18n_customer' : submit_json.model['customer_name'];`
+
+  if submit_json.model['customer_name'] == ''
+    customer_name_default = i18n.customer
+  else
+    customer_name_default = submit_json.model['customer_name']
   
   customer_input = create_dom_element 'input', {type:'text',id:'booking_customer',value:customer_name_default}, '', booking_tools
   customer_input.on 'focus', ->

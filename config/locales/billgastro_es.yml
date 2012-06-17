@@ -490,6 +490,14 @@ es:
     new:
       edit_user: Editar usuario
       new_user: Nuevo usuario
+  various:
+    cancel: XXX Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
   value_added_tax: IVA
   violet: Violeta
   waiter: Mozo

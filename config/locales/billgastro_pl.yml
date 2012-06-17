@@ -535,6 +535,14 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
+  various:
+    cancel: XXX Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
   value_added_tax: VAT
   violet: Fioletowy
   waiter: Kelner

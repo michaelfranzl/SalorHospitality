@@ -671,6 +671,7 @@ gn:
     pay: Abschließen
     save: Speichern
     subtotal: Gesamt
+    unamed: Unbenannte
   vendors:
     index:
       edit: bearbeiten
