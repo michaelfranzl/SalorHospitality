@@ -52,13 +52,15 @@ end
 def clean(source,target)
   source.stringify_keys!
   target.stringify_keys!
+  output = Hash.new
   target.each do |key,value|
-    unless source[key]
-      puts "  #{key} present in target but not in source. Deleting."
-      target.delete key
+    if not value.is_a? Hash and source[key]
+      output[key] = value
+    elsif value.is_a? Hash and source[key]
+      output[key] = clean(source[key],value)
     end
   end
-  return target
+  return output
 end
 
 def compare_yaml_hash(cf1, cf2, context = [])
