@@ -245,12 +245,14 @@ namespace :translations do
         puts "Translation file doesn't exist, copying it..."
         `cp #{default_file} #{current_file}`
       else
-        source = base_name.gsub('XXX',lang)
-        target = base_name.gsub('XXX',langs[0])
+        target = base_name.gsub('XXX',lang)
+        source = base_name.gsub('XXX',langs[0])
         puts "Equalizing translations for #{source} and #{target}"
-        Rake::Task['translations:equalize'].invoke(source, target)
+        #Rake::Task['translations:equalize'].invoke(source, target)
+        `rake translations:equalize['#{source}','#{target}']`
         puts "Ordering translation #{target}"
-        Rake::Task['translations:order'].invoke(target)
+        `rake translations:order['#{target}']`
+        #Rake::Task['translations:order'].invoke(target)
       end
     end
   end
