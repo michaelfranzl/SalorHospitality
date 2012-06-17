@@ -1,0 +1,546 @@
+---
+pl:
+  activerecord:
+    attributes:
+      article:
+        active: Aktywować?
+        category_id: Kategoria
+        description: Opis
+        hidden: Usuń
+        image: Image
+        name: Nazwa
+        price: Cena
+        tax_id: Podatek
+        usage: Zużycie
+      category:
+        color: Kolor
+        custom_icon: Ikona własna
+        food: Potrawa?
+        hidden: Usuń
+        icon: Ikona
+        name: Nazwa
+        separate_print: Oddzielny paragon?
+        sort_order: Sortuj wg
+        tax_id: Podatek
+        user_id: Użytkownik
+        vendor_printer_id: Bonownik
+      company:
+        address: Adres
+        automatic_printing: Automatyczne drukowanie
+        bank_account1: Dane konta 1
+        bank_account2: Dane konta 2
+        country: Kraj
+        email: e-mail
+        internet_address: Adres internetowy
+        invoice_slogan1: Tytuł rachunku 1
+        invoice_slogan2: Tytuł rachunku 2
+        invoice_subtitle: Podtytuł rachunku
+        name: Nazwa
+        printer_bar: Bonownik Bar
+        printer_guestroom: Bonownik sala
+        printer_kitchen: Bonownik kuchnia
+        res_confirm_url: Potwierdź rezerwację
+        res_fetch_url: Przenieś rezerwację
+        revenue_service_tax_number: Numer urzędu skarbowego
+        rlogo_footer: Logo stopka
+        rlogo_header: Logo nagłówek
+        saas: Online-Variant
+        subdomain: Sub domena
+        time_offset: Cofnięcie czasu (liczone w godzinach)
+        timeout: Zablokowanie ekranu (W sekundach)
+        use_order_numbers: Użyć numeru zamówienia?
+      cost_center:
+        active: Aktywować?
+        description: Opis
+        hidden: Usuń
+        name: Nazwa
+      group:
+        name: Nazwa
+      option:
+        category_id: Kategorie
+        hidden: Usuń
+        name: Nazwa
+        no_ticket: Nie drukuj paragonu
+        price: Cena
+        separate_ticket: Oddzielny paragon
+      page:
+        active: Aktywować?
+        color: Hintergrund
+        height: Höhe
+        hidden: Usuń
+        image: Bild
+        width: Breite
+      partial:
+        active: Aktywować?
+        blurb: Blurb
+        hidden: Usuń
+      presentation:
+        active: Aktywować?
+        code: Kod Ruby
+        description: Opis
+        hidden: Usuń
+        markup: Znacznik ERB
+        model: Typ
+        name: Nazwa
+      quantity:
+        active: Aktywuj
+        description: Opis
+        hidden: Usuń
+        postfix: Postfix
+        prefix: Nazwa
+        price: Cena
+        usage: Zużycie
+      role:
+        name: Nazwa
+      settlement:
+        initial_cash: Cena początkowa
+        revenue: Cena końcowa
+      table:
+        abbreviation: Skrót
+        description: Opis
+        enabled: Aktywować?
+        height: Wysokość
+        height_mobile: Wysokość
+        hidden: Usuń
+        name: Nazwa/Numer stolika
+        rotate: Obrócić?
+        width: Szerokość
+        width_mobile: Szerokość
+      tax:
+        color: Kolor
+        hidden: Usuń
+        letter: Skrót
+        name: Nazwa podatku
+        percent: Podatek w %
+      user:
+        active: Aktywować?
+        color: Kolor
+        hidden: Usunąć?
+        language: Język
+        login: Login
+        password: Hasło
+        role: Poziom dostępu
+        screenlock_timeout: Blokowanie ekranu (sek.)
+        tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej)
+        title: Tytuł
+      vendor_printer:
+        copies: Kopia
+        hidden: Usuń
+        name: Nazwa
+        path: Skrót
+    models:
+      article:
+        one: Artykuł
+        other: Artykuły
+      category:
+        one: Kategoria
+        other: Kategorie
+      company:
+        one: Firma
+        other: Firmy
+      cost_center:
+        one: Rodzaj zamówienia
+        other: Rodzaje zamówień
+      coupon:
+        one: Kupon
+        other: Kupony
+      customer:
+        one: Lista klientów
+        other: Lista klientów
+      discount:
+        one: Rabat
+        other: Rabaty
+      group:
+        one: Grupa towarowa
+        other: Grupy towarowe
+      image:
+        one: Zdjęcie
+        other: Zdjęcia
+      item:
+        one: Pozycja
+        other: Pozycje
+      option:
+        one: Zestaw
+        other: Zestawy
+      order:
+        one: Zamówienie
+        other: Zamówienia
+      page:
+        one: Oferta specjalna
+        other: Oferty specjalne
+      partial:
+        one: Ulubione
+        other: Ulubione
+      presentation:
+        one: Szblon
+        other: Szblony
+      quantity:
+        one: Wariant
+        other: Warianty
+      report:
+        one: Raport
+        other: Raporty
+      reservation:
+        one: Rezerwacja
+        other: Rezerwacje
+      role:
+        one: Zezwolenie
+        other: Zezwolenia
+      settlement:
+        one: Rozlicz
+        other: Rozliczenia
+      stock:
+        one: Towar
+        other: Towary
+      table:
+        one: Stolik
+        other: Stoliki
+      tax:
+        one: Rodzaj podatku
+        other: Rodzaje podatków
+      user:
+        one: Użytkownik
+        other: Użytkownicy
+      vendor:
+        one: Restauracja
+        other: Restauracje
+      vendor_printer:
+        one: Bonownik
+        other: Bonowniki
+  admin: Administrator
+  are_you_sure: Potwierdź aby usunąć
+  articles:
+    create:
+      success: Artykuł został pomyślnie dodany
+    destroy:
+      success: Artykuł został pomyślnie usunięty
+    find:
+      variants:
+        one: Pozycję
+        other: Pozycje
+    index:
+      list_all: Pokaż wszystkie
+      preview: Voransicht
+      search_term: Szukaj wg
+      sort: Sortuj wg typu
+      update: Aktualizuj!
+      view: Podgląd
+    listall:
+      all_articles: Lista wszystkich pozycji
+    new:
+      add_quantity: Dodaj pozycję
+      edit_article: Edytowanie artykułu
+      new_article: Dodawanie artykułu
+      normal: Na miejscu
+      takeaway: Wynos
+      weighing: Donos
+    sort_index:
+      sort: Sortuj artykuły
+    update:
+      success: Artykuł został pomyślnie zaktualizowany
+  austria: Austriacki
+  auxiliary_waiter: Pomocnik kelnera
+  bar: Bar
+  black: Czarny
+  blackboard:
+    index:
+      update: Aktualizuj
+  blackboard_generic_name: Czarna lista(-)
+  blank: Puste
+  blue: Niebieski
+  cancel_and_go_back: Anuluj i wróć
+  categories:
+    create:
+      success: Pomyślnie dodano!
+    index:
+      drinks: Napoje
+      foods: Potrawy
+    new:
+      aperitif: Aperitif
+      beer: Piwo
+      blank: Puste
+      childrendish: Danie dziecięce
+      cigarette: Papierosy
+      coffee: Kawa
+      dessert: Deser
+      digestif: Digestif
+      edit_category: Edytuj kategorię
+      maindish: Danie główne
+      new_category: Dodaj kategorię
+      nonalcoholics: Napoje bezalkoholowe
+      noodles: Makaron
+      redwinebottle: Butelka czerwonego wina
+      redwineglass: Czerwone wino
+      rosewinebottle: Butelka różowego wina
+      rosewineglass: Różowe wino
+      sidedish: Przystawka
+      soup: Zupa
+      sparkling: Wino musujące
+      starter: Starter
+      tea: Kubek herbaty
+      teapot: Filiżanka herbaty
+      whitewinebottle: Butelka białego wina
+      whitewineglass: Białe wino
+    update:
+      success: Pomyślnie zaktualizowano!
+  chief_waiter: Główny kelner
+  clear_order_and_go_back: Wyczyść zamówienie i wróć
+  companies:
+    edit:
+      add_printer: Dodaj bonownik
+    update:
+      config_successfully_updated: Dane na temat firmy zostały zaktualizowane!
+  copy: Kopiuj
+  cost_centers:
+    index:
+      active: Aktywny
+      inactive: Nieaktywny
+    new:
+      edit_cost_center: Edytowanie dodatkowych kosztów
+      new_cost_center: Dodawanie dodatkowych kosztów
+  count: Podlicz
+  create: Dodaj
+  dateandtime: Data
+  default: Podstawowy
+  delete: Usuń
+  display: Wyświetl
+  drink: Napoje
+  dummy: Atrapa
+  edit: Edytuj
+  exit: Wyjdź
+  finish: Zakończ
+  food: Posiłki
+  germany: Niemiecki
+  go_back: Wróc
+  green: Zielony
+  gross: Brutto
+  groups:
+    new:
+      edit_group: Edytuj grupę
+      new_group: Dodaj grupę
+  guestroom: Sala
+  host: Host
+  images:
+    errempty: Nieprawidłowy plik
+    errsize: Nieprawidłowy rozmiar pliku
+    errtype: Nieprawidłowy typ pliku
+  invoice: Rachunek
+  invoice_numer_X_at_time: Rachunek numer %{number} dnia %{datetime}
+  invoices: Rachunki
+  is_no_number: nie jest liczbą.
+  items:
+    item_tablerow:
+      clear: Wyczyść
+      done: Zrobione
+      no_printing: nie drukuj
+  just_order: Tylko zamówienie
+  kitchen: Kuchnia
+  logout: wyloguj %{who}
+  logout_successful: Zostałeś pomyślnie wylogowany.
+  menucard_generic_name: Lista dań(-)
+  messages:
+    hello_username: Witaj %{name}!
+  move_order_to_table: Przenieś zamówienie na inny stolik
+  must_be_entered_either_for_article_or_for_quantity: muszą zostać przypisane dla
+    artykułu oraz ilości.
+  net: Netto
+  new: Dodaj
+  no_printing: Nie drukuj
+  not_found: Nie znaleziono
+  options:
+    new:
+      edit_option: Edytowanie zestawów
+      hidden: Usuń
+      new_option: Dodawanie zestawów
+      select_all: Zaznacz wszystkie
+  orange: Pomarańczowy
+  orders:
+    functions_header_index:
+      items_notifications: Powiadomienia
+      print_now: Drukuj teraz
+      show_last_order: Pokaż ostatnie zamówienie
+    functions_header_order_form:
+      move_order: Przenieś zamówienie na inny stolik
+    go_to_tables:
+      warning_only_x_orders_left: Uwaga, pozostało tylko %{credits} zamówienia/zamówień.
+      warning_only_x_orders_left_upgrade_here: Uwaga. Pozostało %{credits}. Pobierz
+        więcej z <a href='http://www.billgasto.com'>billgasto.com</a>
+    index:
+      delivery_list: Lista dostaw
+      preparation_list: Lista przygotowywanych zamówień
+    invoice_form:
+      just_finish: Po prostu zakończ zamówienie
+      print_and_finish: Zakończ zamówienie i drukuj
+      set_cost_center: Ustaw dodatkowe koszty dla tego zamówienia
+      set_tax_for_all: Ustaw podatek dla wszystkich pozycji
+      set_taxes: Ustaw podatki
+      split_invoice: Podziel rachunek
+      split_this_item: Kliknij pozycję aby podzielić paragon
+      switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
+    login_form:
+      email: Twój e-mail
+      login: Login
+      password: Hasło
+      realname: Twoje imię
+      username: Użytkownik
+      your_ip_address: Twój adres IP
+    order:
+      new: Nowe zamówienie
+      sum: Suma
+    served_by: Zostałeś obsłużony przez
+    show:
+      back: Powrót
+      count: Podlicz
+      list_of_taxes: Lista podatków
+      next_invoice: Następny rachunek
+      previous_invoice: Poprzedni rachunek
+      print_business_invoice: Drukuj fakturę
+      print_invoice: Drukuj rachunek
+      search_by_number: Szukaj wg numeru
+      sum: Suma
+      unit_price: Jednostka płatności
+    storno_form:
+      do_separate_items: Podziel pozycję
+      do_storno: Zrób storno
+  pages:
+    edit:
+      edit_page: Edytuj stronę
+      slideshow: Präsentation starten
+      view: Podgląd
+  partials:
+    default_blurb: edit me
+    error_during_evaluation: ! 'Error: '
+    no_presentation_found:
+      no_presentations_found: No template defined for this partial.
+  pink: Różowy
+  please_enter_email_and_realname: Proszę wpisać swój adres e-mail oraz imię.
+  please_enter_item_comment: Specjalne życzenia
+  please_enter_item_price: Cena specjalna
+  presentations:
+    new:
+      edit_presentation: Edytuj szablon
+      new_presentation: Dodaj szablon
+  print: Drukuj
+  print_and_finish: Zakończ i drukuj
+  print_kitchenlist: Wydrukuj listę pozycji dla kuchni
+  printing_test: Test drukarki
+  recent_orders: Wyświetl ostatnie zamówienia
+  reports:
+    end_date: Data końcowa
+    save: Zapisz
+    start_date: Data początkowa
+    usb_device: USB
+  restaurant: Restauracja
+  roles:
+    new:
+      assign_cost_center: Ustawienia dla centrum kosztów
+      cancel_all_items_in_active_order: Kasowanie pozycji z bierzących zamówień
+      change_waiter: Zmiana kelenera
+      counter_mode: Counter mode
+      decrement_items: Obniżanie pozycji
+      delete_items: Usuwanie artykułu poprzez obniżenie ceny do 0zł
+      edit_role: Edytowanie kryteriów
+      finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
+      finish_orders: Finalizowanie zamówień
+      finish_own_settlement: Kończenie pojedyńczego rozliczenia
+      make_storno: Możliwość natychmiastowego anulowania pozycji
+      manage_articles_categories_options: Zarządzanie artykułami, kategoriami oraz
+        ustawieniami
+      manage_business_invoice: Zarządzanie fakturami
+      manage_customers: Zarządzaj użytkownikami
+      manage_pages: Zarządzaj slajdami
+      manage_settings: Zarządzanie ustawieniami
+      manage_users: Zarządzanie użytkownikami
+      move_order: Przenoszenie zamówień
+      move_tables: Przenoszenie stolików
+      new_role: Dodawanie kryteriów
+      permissions: Dostęp do zezwoleń
+      see_debug: Dostęp do logów systemu
+      see_item_notifications: Sprawdź powiadomienia
+      split_items: Łączenie pozycji
+      take_orders: Przyjmowanie zamówień
+      view_all_settlements: Wyświetlanie wszystkich rozliczeń
+      view_statistics: Dostęp do statystyk
+  scope_names:
+    active: Karta menu
+    unsettled: Zmiany
+    waiterpad: Waiterpad
+  scroll_down: Przewiń w dół
+  scroll_to_room: Idź do
+  scroll_up: Przewiń w górę
+  send_and_go_back: Zapisz i wróć
+  served_by_X_on_table_Y: Obsługiwał Cię %{waiter} przy stoliku %{table}
+  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie
+    serwera lub zerwane połączenie.
+  sessions:
+    browser_warning:
+      continue: Kontynuuj
+      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome
+        oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
+    new:
+      email: Twój e-mail
+      login: Login
+      password: Hasło
+      realname: Twoje imię
+      username: Użytkownik
+      your_ip_address: Twój adres IP
+    permission_denied:
+      permission_denied: Brak dostępu
+  settlements:
+    detailed_list:
+      count: Ilość
+      order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia
+        %{time}'
+      revenue: Suma całkowita
+      total: Suma
+      unit_price: Cena
+    index:
+      all_cost_centers: Wszystkie
+      end_date: Data końcowa
+      start_date: Data początkowa
+      sum_total: Suma całkowita
+    new:
+      set_date: Ustaw datę dla tego rozliczenia
+    settlement:
+      finish: Koniec
+      print: Drukuj
+      start: Początek
+      started_at: Rozpoczęte
+  split_order: Podziel zamówienie
+  statistic: Statystyki
+  statistics:
+    journal: Dziennik (lista chronologiczna)
+    weekdays: Dzień powszedni
+  stocks:
+    new:
+      edit_stock: Edytcja stanu magazynu
+      new_stock: Dodawanie stanu magazynu
+  storno: Storno
+  sum: Suma
+  superuser: Super użytkownik
+  tables:
+    new:
+      edit_table: Edytowanie stolika
+      new_table: Dodawanie stolika
+  taxes:
+    new:
+      edit_tax: Edytowanie podatku
+      new_tax: Dodawanie podatku
+  there_are_no_open_settlements: Nie ma otwartych rachunków.
+  tobacco: Papierosy
+  unsettled_orders_generic_name: Zmiany(-)
+  update_database: Datenbank neu laden
+  user_not_found: Nie znaleziono użytkownika
+  users:
+    new:
+      edit_user: Edytowanie użytkownika
+      new_user: Dodawanie użytkownika
+  value_added_tax: VAT
+  violet: Fioletowy
+  waiter: Kelner
+  waiterpad_generic_name: Lista kelnerów(-)
+  was_successfully_deleted: ! '%{what} został pomyślnie skasowany.'
+  white: Biały
+  winered: Winny
+  wrong_password: Błędne dane do logowania
+  yellow: Żółty

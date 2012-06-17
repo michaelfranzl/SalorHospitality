@@ -185,10 +185,11 @@ task :remove_deprecations, :sourcefile do |t,args|
   File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
   puts "#{$unused} keys found."
 end
+
 task :fix_translations do
   base_path = File.join(Rails.root,'config','locales')
-  base_name = "salor.XXX.yml" # i.e. the pattern name of the files
-  langs = ["en-US","en-GB","de","fr","es","fi","cn","tr","pl","ru"]
+  base_name = "billgastro_XXX.yml" # i.e. the pattern name of the files
+  langs = ["en","gn","ar","cn","el","en","es","fi","fr","hu","pl","it","ru","tr"]
   default_file = File.join(base_path,base_name.gsub('XXX',langs[0])) #i.e. the first file is the default file
   langs.each do |lang|
     current_file = File.join(base_path,base_name.gsub('XXX',lang))

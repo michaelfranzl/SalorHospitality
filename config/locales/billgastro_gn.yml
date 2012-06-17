@@ -350,7 +350,6 @@ gn:
   default: Allgemein
   delete: Löschen
   display: Anzeigen
-  drink: Getränke
   edit: Bearbeiten
   exit: Beenden
   finish: Abschließen
@@ -461,8 +460,7 @@ gn:
     error_during_evaluation: ! 'Fehler: '
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
-  pink: Pink
-    ein.
+  pink: Pink ein.
   please_enter_item_comment: Notiz
   please_enter_item_price: Preis
   presentations:
