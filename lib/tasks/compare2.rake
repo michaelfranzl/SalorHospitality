@@ -71,7 +71,7 @@ end
 def equalize(source,target)
   puts "\n\nEqualizing..."
   cleaned_target = clean(source,target)
-  merged_target = merge(source,target)
+  merged_target = merge(source,cleaned_target)
   return merged_target
 end
 
