@@ -20,7 +20,6 @@ en:
         icon: Icon
         name: Name
         separate_print: Cut ticket
-        sort_order: Sort Order
         tax_id: Tax
         user_id: Preparing User
         vendor_printer_id: Printer
@@ -135,10 +134,7 @@ en:
         name: Name
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
-        res_confirm_url: Reservierungen bestätigen
-        res_fetch_url: Reservierungen abfragen
         saas: Online variant
-        subdomain: Subdomain
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
         ticket_tall_font: Ticket tall font
@@ -289,17 +285,13 @@ en:
       new_article: New article
       normal: normal
       takeaway: take away
-      weighing: weighing
     sort_index:
       sort: Sort articles
-  austria: Austria
-  auxiliary_waiter: Auxiliary Waiter
   bar: Bar
   black: Black
   blackboard:
     index:
       update: Update
-  blackboard_generic_name: Blackboard
   blank: blank
   blue: Blue
   bookings:
@@ -313,9 +305,6 @@ en:
       success: Category successfully saved
     destroy:
       success: Category successfully deleted
-    index:
-      drinks: drinks
-      foods: foods
     new:
       aperitif: Aperitif
       beer: Beer
@@ -342,13 +331,7 @@ en:
       teapot: Teapot
       whitewinebottle: Bottle White
       whitewineglass: White Wine
-  chief_waiter: Chief waiter
   clear_order_and_go_back: Clear order and go back
-  companies:
-    edit:
-      add_printer: Add printer
-    update:
-      config_successfully_updated: Company data successfully updated!
   copy: Copy
   cost_centers:
     create:
@@ -367,13 +350,10 @@ en:
   default: Default
   delete: Delete
   display: Display
-  drink: Drinks
-  dummy: Dummy
   edit: Edit
   exit: Exit
   finish: Just Finish
   food: Foods
-  germany: Germany
   go_back: Go back
   green: Green
   gross: Gross
@@ -402,8 +382,6 @@ en:
     application:
       submit_scribe: OK
   logout: log out %{who}
-  logout_successful: You have logged off successfully.
-  menucard_generic_name: Menucard
   messages:
     hello_username: Hello %{name}!
   move_order_to_table: Move order to different table
@@ -433,10 +411,6 @@ en:
       toggle_between_tables_and_rooms: Toggle between rooms and tables
     functions_header_order_form:
       move_order: Move order to other table
-    go_to_tables:
-      warning_only_x_orders_left: Warning, only %{credits} orders left.
-      warning_only_x_orders_left_upgrade_here: Warning, only %{credits} orders left.
-        Get more from <a href='http://www.billgasto.com'>billgasto.com</a>
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
@@ -455,9 +429,7 @@ en:
       email: Your E-Mail
       login: Login
       password: Password
-      realname: Your Name
       username: Username
-      your_ip_address: Your IP Data
     order:
       new: New order
       sum: SUM
@@ -489,7 +461,6 @@ en:
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
   pink: Pink
-  please_enter_email_and_realname: Please enter your email address and real name.
   please_enter_item_comment: Special Wish
   please_enter_item_price: Special Price
   presentations:
@@ -498,9 +469,7 @@ en:
       new_presentation: New Template
   print: Print
   print_and_finish: Finish and print
-  print_kitchenlist: Print Kitchen Item List
   printing_test: Printing test
-  recent_orders: View recent orders
   reports:
     end_date: End Date
     index:
@@ -581,9 +550,7 @@ en:
       email: Your E-Mail
       login: Login
       password: Password
-      realname: Your Name
       username: User
-      your_ip_address: Your IP Data
   settlements:
     detailed_list:
       count: Count
@@ -596,8 +563,6 @@ en:
       end_date: End date
       start_date: Start date
       sum_total: Sum total
-    new:
-      set_date: Set a date for this settlement
     settlement:
       finish: Finish
       print: Print
@@ -617,7 +582,6 @@ en:
       new_stock: New Stock
   storno: Storno
   sum: Sum
-  superuser: Superuser
   surcharges:
     new:
       add_tax_amount: Add tax amount
@@ -637,11 +601,6 @@ en:
     new:
       edit_tax: Edit Tax
       new_tax: New Tax
-  there_are_no_open_settlements: There are no open settlements.
-  tobacco: Tobacco
-  unsettled_orders_generic_name: Unsettled orders
-  update_database: Update Database
-  user_not_found: User not found
   users:
     create:
       success: User successfully saved
@@ -668,7 +627,6 @@ en:
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad
-  was_successfully_deleted: ! '%{what} was successfully deleted.'
   white: White
   winered: Wine Red
   wrong_password: Wrong login data
