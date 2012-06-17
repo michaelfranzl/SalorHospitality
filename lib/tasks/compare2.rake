@@ -39,7 +39,7 @@ def merge(source,target)
   target.stringify_keys!
   source.each do |key,value|
     if not value.is_a? Hash and not target[key] then
-      puts "#{key} not present in target."
+      puts "  #{key} not present in target. Copying"
       target[key] = "XXX " + source[key]
     elsif value.is_a? Hash and target[key] then
       target[key] = merge(value,target[key])
@@ -54,7 +54,7 @@ def clean(source,target)
   target.stringify_keys!
   target.each do |key,value|
     unless source[key]
-      puts "#{key} present in target but not in source. Deleting."
+      puts "  #{key} present in target but not in source. Deleting."
       target.delete key
     end
   end
@@ -151,6 +151,7 @@ namespace :translations do
   end
   
   task :merge, :sourcefile, :transfile do |t,args|
+    puts "Merging...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -169,6 +170,7 @@ namespace :translations do
   end
   
   task :clean, :sourcefile, :transfile do |t,args|
+    puts "Cleaning...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -179,15 +181,18 @@ namespace :translations do
     translationlang = translation.keys.first
     translation = translation[translationlang]
     
-    translation = equalize(source,translation)
+    translation = clean(source,translation)
     
     output_translation = Hash.new
     output_translation[translationlang] = translation
     File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
   end
 
-  task :equalize => [:clean, :merge] do
-    puts 'equalizing'
+  task :equalize, :sourcefile, :transfile do |t,args|
+    puts "Equalizing\n"
+    Rake::Task['translations:clean'].invoke(args[:sourcefile], args[:transfile])
+    Rake::Task['translations:merge'].invoke(args[:sourcefile], args[:transfile])
+    #`rake translations:clean['#{}']['#{}']`
   end
   
   task :order, :sourcefile do |t,args|
