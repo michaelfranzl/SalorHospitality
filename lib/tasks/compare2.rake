@@ -45,6 +45,8 @@ def merge(source,target)
       puts "  #{key} not present in target. Copying"
       target[key] = "XXX " + source[key]
     elsif value.is_a? Hash and not target[key] then
+      target[key] = value
+    elsif value.is_a? Hash and target[key] then
       target[key] = merge(value,target[key])
     end
   end
