@@ -49,18 +49,13 @@ def merge(source,target)
 end
 
 # this copies translations from source into target, if they are not existing there AND deletes all nodes from target not present in source
-def equalize(source,target)
+def clean(source,target)
   source.stringify_keys!
   target.stringify_keys!
-  source.each do |key,value|
-    if not value.is_a? Hash and not target[key] then
-      puts "#{key} not present in target but in source. Copying."
-      target[key] = "XXX " + source[key]
-    elsif not value.is_a? Hash and target[key] then
+  target.each do |key,value|
+    unless source[key]
       puts "#{key} present in target but not in source. Deleting."
       target.delete key
-    elsif value.is_a? Hash and target[key] then
-      target[key] = merge(value,target[key])
     end
   end
   return target
@@ -173,7 +168,7 @@ namespace :translations do
     File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
   end
   
-  task :equalize, :sourcefile, :transfile do |t,args|
+  task :clean, :sourcefile, :transfile do |t,args|
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
     source = YAML.load_file sourcefile
     sourcelang = source.keys.first
@@ -189,6 +184,10 @@ namespace :translations do
     output_translation = Hash.new
     output_translation[translationlang] = translation
     File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
+  end
+
+  task :equalize => [:clean, :merge] do
+    puts 'equalizing'
   end
   
   task :order, :sourcefile do |t,args|
