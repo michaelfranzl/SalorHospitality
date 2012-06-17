@@ -4,25 +4,25 @@ en:
     attributes:
       article:
         active: active
-        category_id: Category
-        description: Description
-        hidden: delete
-        image: Image
+        category_id: Категория
+        description: Описание
+        hidden: удалить
+        image: Изображение
         name: Name
-        price: Price
-        tax_id: Tax
+        price: Цена
+        tax_id: Налог
         usage: Usage
       category:
-        color: Color
-        custom_icon: My Icon
-        food: Food?
-        hidden: delete
-        icon: Icon
-        name: Name
+        color: Цвет
+        custom_icon: Моя иконка
+        food: Еда?
+        hidden: удалить
+        icon: Иконка
+        name: Название
         separate_print: Cut ticket
         tax_id: Tax
         user_id: Preparing User
-        vendor_printer_id: Printer
+        vendor_printer_id: Принтер
       cost_center:
         active: active?
         description: Description
@@ -421,13 +421,13 @@ en:
       change_money: XXX Change
       set_booking: XXX Assign to Booking
     login_form:
-      email: Your E-Mail
+      email: Ваш E-Mail
       login: Login
-      password: Password
-      username: Username
+      password: Пароль
+      username: Пользователь
     order:
-      new: New order
-      sum: SUM
+      new: Новый заказ
+      sum: СУММА
     served_by: You were served by
     show:
       back: Back
@@ -460,11 +460,11 @@ en:
   please_enter_item_price: Special Price
   presentations:
     new:
-      edit_presentation: Edit Template
-      new_presentation: New Template
-  print: Print
-  print_and_finish: Finish and print
-  printing_test: Printing test
+      edit_presentation: Редактировать шаблон
+      new_presentation: Новый шаблон
+  print: Печатать
+  print_and_finish: Закончить и напечатать
+  printing_test: Проверка печати
   reports:
     end_date: End Date
     save: Save
@@ -518,8 +518,9 @@ en:
   sessions:
     browser_warning:
       continue: Continue
-      warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as
-        web browser. Bill Gastro was optimized for those browsers exclusively.
+      warning: Похоже, что вы не используете Mozilla Firefox, Safari, Google Chrome
+        или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы
+        только в этих браузерах.
     new:
       email: Your E-Mail
       login: Login
@@ -543,10 +544,10 @@ en:
       start: Start
       started_at: Started at
   split_order: Split order
-  statistic: Statistic
+  statistic: Статистика
   statistics:
-    journal: Journal (chronological list)
-    weekdays: Weekdays
+    journal: Журнал (хронологический список)
+    weekdays: Дни недели
   stocks:
     new:
       edit_stock: Edit Stock
