@@ -20,35 +20,9 @@ en:
         icon: 圖標
         name: 名稱
         separate_print: 剪票
-        sort_order: 排序順序
         tax_id: 稅
         user_id: 準備用戶
         vendor_printer_id: 打印機
-      company:
-        address: 地址
-        automatic_printing: 自動打印
-        bank_account1: 銀行賬戶的細節1
-        bank_account2: 銀行賬戶的細節2
-        country: 國家規則
-        email: 電子郵件
-        internet_address: Internet 地址
-        invoice_slogan1: 單據標語1
-        invoice_slogan2: 單據標語2
-        invoice_subtitle: 單據字幕
-        name: 名稱
-        printer_bar: 打印機吧
-        printer_guestroom: 打印機客房
-        printer_kitchen: 打印機廚房
-        res_confirm_url: 確認預訂
-        res_fetch_url: 取預訂
-        revenue_service_tax_number: 稅務服務稅號碼
-        rlogo_footer: 收據標誌頁腳
-        rlogo_header: 收據標誌頭
-        saas: 在線變種
-        subdomain: 子域
-        time_offset: 偏移時間 (小時)
-        timeout: 屏幕鎖超時 (秒)
-        use_order_numbers: 使用順序號碼?
       cost_center:
         active: 活躍?
         description: 描述
@@ -128,6 +102,51 @@ en:
         hidden: 刪除嗎?
         name: 名稱
         path: 路徑
+      guest_type:
+        hidden: delete
+        name: Name
+        taxes: Taxes
+      room_price:
+        base_price: Base Price
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        room_type_id: Zimmerklasse
+        season_id: Season
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from_date: From
+        hidden: delete
+        name: Name
+        to_date: To
+      surcharge:
+        amount: Amount
+        guest_type_id: Guest Type
+        hidden: delete
+        name: Name
+        radio_select: Radio Select
+        season_id: Season
+      tax_amount:
+        amount: Amount
+        tax_id: Tax
+      vendor:
+        automatic_printing: Automatic printing
+        country: Rules for country
+        hidden: delete
+        invoice_footer_blurb: Invoice footer blurb
+        invoice_header_blurb: Invoice header blurb
+        name: Name
+        receipt_footer_blurb: Receipt footer blurb
+        receipt_header_blurb: Receipt header blurb
+        saas: Online variant
+        ticket_display_time_order: Time and invoice number on ticket
+        ticket_item_separator: Ticket Separation Line
+        ticket_tall_font: Ticket tall font
+        ticket_wide_font: Ticket wide font
+        time_offset: Time correction (hours)
+        timeout: Screen lock timeout (seconds)
+        use_order_numbers: Use order numbers
     models:
       article:
         one: 物品
@@ -207,6 +226,39 @@ en:
       vendor_printer:
         one: 打印機
         other: 打印機
+      booking:
+        one: Booking
+        other: Bookings
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
+        one: Payment Method
+        other: Payment Methods
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Saison
+        other: Saisons
+      surcharge:
+        one: Surcharge
+        other: Surcharges
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
   admin: 管理
   are_you_sure: 你確定嗎?
   articles:
@@ -233,28 +285,19 @@ en:
       new_article: 新物品
       normal: 正常
       takeaway: 外賣
-      weighing: 稱重
     sort_index:
       sort: 排序物品
-    update:
-      success: 物品成功地創建了
-  austria: 奧地利
-  auxiliary_waiter: 輔助服務員
   bar: 吧
   black: 黑
   blackboard:
     index:
       update: 更新
-  blackboard_generic_name: 黑板
   blank: 空白
   blue: 藍
   cancel_and_go_back: 取消和回去
   categories:
     create:
       success: 成功了!
-    index:
-      drinks: 飲料
-      foods: 食品
     new:
       aperitif: 開胃酒
       beer: 啤酒
@@ -281,15 +324,9 @@ en:
       teapot: Teapot
       whitewinebottle: Bottle White
       whitewineglass: White Wine
-    update:
-      success: Success!
-  chief_waiter: Chief waiter
+    destroy:
+      success: Category successfully deleted
   clear_order_and_go_back: Clear order and go back
-  companies:
-    edit:
-      add_printer: Add printer
-    update:
-      config_successfully_updated: Company data successfully updated!
   copy: Copy
   cost_centers:
     index:
@@ -298,19 +335,20 @@ en:
     new:
       edit_cost_center: 編輯付款人
       new_cost_center: N新付款人
+    create:
+      success: Cost Center successfully saved
+    destroy:
+      success: Cost Center successfully deleted
   count: 計算
   create: 創建
   dateandtime: 日期
   default: 默認
   delete: 刪除嗎
   display: Display
-  drink: Drinks
-  dummy: 虛擬產品
   edit: 編輯
   exit: 太平門
   finish: 完畢
   food: Foods
-  germany: Germany
   go_back: 回去
   green: 綠色
   gross: 合計
@@ -339,8 +377,6 @@ en:
     application:
       submit_scribe: OK
   logout: 註銷 %{who}
-  logout_successful: You have logged off successfully.
-  menucard_generic_name: Menucard
   messages:
     hello_username: 餵 %{name}!
   move_order_to_table: Move order to different table
@@ -356,18 +392,20 @@ en:
       hidden: 刪除嗎?
       new_option: 新 Option
       select_all: select all
+    create:
+      success: Option successfully saved
+    destroy:
+      success: Option successfully deleted
   orange: Orange
   orders:
     functions_header_index:
       items_notifications: Notifications
       print_now: Print now
       show_last_order: Show last order
+      show_last_booking: XXX Show last booking
+      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
     functions_header_order_form:
       move_order: Move order to other table
-    go_to_tables:
-      warning_only_x_orders_left: Warning, only %{credits} orders left.
-      warning_only_x_orders_left_upgrade_here: Warning, only %{credits} orders left.
-        Get more from <a href='http://www.billgasto.com'>billgasto.com</a>
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
@@ -380,13 +418,13 @@ en:
       split_invoice: Split invoice
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
+      change_money: XXX Change
+      set_booking: XXX Assign to Booking
     login_form:
       email: Your E-Mail
       login: 登錄
       password: 密碼
-      realname: 名字以及姓
       username: 用戶
-      your_ip_address: IP 地址
     order:
       new: New order
       sum: SUM
@@ -410,13 +448,14 @@ en:
       edit_page: Edit Page
       slideshow: Start Slideshow
       view: View
+    new:
+      new_page: New Page
   partials:
     default_blurb: edit me
     error_during_evaluation: ! 'Error: '
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
   pink: Pink
-  please_enter_email_and_realname: Please enter your email address and real name.
   please_enter_item_comment: Special Wish
   please_enter_item_price: Special Price
   presentations:
@@ -425,14 +464,16 @@ en:
       new_presentation: New Template
   print: Print
   print_and_finish: Finish and print
-  print_kitchenlist: Print Kitchen Item List
   printing_test: Printing test
-  recent_orders: View recent orders
   reports:
     end_date: End Date
     save: Save
     start_date: 開始日期
     usb_device: USB記憶棒
+    index:
+      backup_database: Backup database
+      backup_logfile: Backup logfile
+      header: Reports
   restaurant: Restaurant
   roles:
     new:
@@ -463,10 +504,10 @@ en:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_statistics: View statistics
-  scope_names:
-    active: Menucard
-    unsettled: Shifts
-    waiterpad: Waiterpad
+    create:
+      success: Role successfully saved
+    destroy:
+      success: Role successfully deleted
   scroll_down: Scroll down
   scroll_to_room: Go to room
   scroll_up: Scroll up
@@ -483,11 +524,7 @@ en:
       email: 電子郵件
       login: 用戶名
       password: 密碼
-      realname: 名字以及姓
       username: 用戶
-      your_ip_address: IP 地址
-    permission_denied:
-      permission_denied: 權限被拒絕
   settlements:
     detailed_list:
       count: 計算
@@ -500,8 +537,6 @@ en:
       end_date: 結束日期
       start_date: 開始日期
       sum_total: 總計
-    new:
-      set_date: Set a date for this settlement
     settlement:
       finish: 完畢
       print: Print
@@ -518,31 +553,81 @@ en:
       new_stock: New Stock
   storno: Storno
   sum: Sum
-  superuser: Superuser
   tables:
     new:
       edit_table: Edit Table
       new_table: New Table
+    create:
+      success: Table successfully saved
+    destroy:
+      success: Table successfully deleted
   taxes:
     new:
       edit_tax: Edit Tax
       new_tax: New Tax
-  there_are_no_open_settlements: There are no open settlements.
-  tobacco: Tobacco
-  unsettled_orders_generic_name: Unsettled orders
-  update_database: Update Database
-  user_not_found: User not found
   users:
     new:
       edit_user: Edit User
       new_user: New User
-  value_added_tax: VAT
+    create:
+      success: User successfully saved
+    destroy:
+      success: User successfully deleted
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad
-  was_successfully_deleted: ! '%{what} was successfully deleted.'
   white: White
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
-
+  bookings:
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+    show:
+      search_by_number: Search by number
+  room_prices:
+    index:
+      generate_price_skeleton: Generate price skeleton
+    new:
+      edit_room_price: Edit room price
+      new_room_price: New room price
+  room_types:
+    new:
+      edit_room_type: Edit room type
+      new_room_type: New room type
+  rooms:
+    new:
+      edit_room: Edit Room
+      new_room: New Room
+  scopes:
+    active: Active
+    waiterpad: Waiterpad
+  seasons:
+    new:
+      edit_season: Edit Season
+      new_season: New Season
+  shared:
+    invoice_tax_list:
+      list_of_taxes: List of Taxes
+  surcharges:
+    new:
+      add_tax_amount: Add tax amount
+      common_surcharge: Common Surcharge
+      edit_surcharge: Edit Surcharge
+      new_surcharge: New Surcharge
+  tax_amount: XXX Amount
+  various:
+    cancel: Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
+  vendors:
+    index:
+      edit: Edit
+      switch_to: Select
+    new:
+      edit_vendor: Edit Vendor
+      new_vendor: New Vendor
