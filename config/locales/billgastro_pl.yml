@@ -20,35 +20,9 @@ pl:
         icon: Ikona
         name: Nazwa
         separate_print: Oddzielny paragon?
-        sort_order: Sortuj wg
         tax_id: Podatek
         user_id: Użytkownik
         vendor_printer_id: Bonownik
-      company:
-        address: Adres
-        automatic_printing: Automatyczne drukowanie
-        bank_account1: Dane konta 1
-        bank_account2: Dane konta 2
-        country: Kraj
-        email: e-mail
-        internet_address: Adres internetowy
-        invoice_slogan1: Tytuł rachunku 1
-        invoice_slogan2: Tytuł rachunku 2
-        invoice_subtitle: Podtytuł rachunku
-        name: Nazwa
-        printer_bar: Bonownik Bar
-        printer_guestroom: Bonownik sala
-        printer_kitchen: Bonownik kuchnia
-        res_confirm_url: Potwierdź rezerwację
-        res_fetch_url: Przenieś rezerwację
-        revenue_service_tax_number: Numer urzędu skarbowego
-        rlogo_footer: Logo stopka
-        rlogo_header: Logo nagłówek
-        saas: Online-Variant
-        subdomain: Sub domena
-        time_offset: Cofnięcie czasu (liczone w godzinach)
-        timeout: Zablokowanie ekranu (W sekundach)
-        use_order_numbers: Użyć numeru zamówienia?
       cost_center:
         active: Aktywować?
         description: Opis
@@ -128,6 +102,51 @@ pl:
         hidden: Usuń
         name: Nazwa
         path: Skrót
+      guest_type:
+        hidden: delete
+        name: Name
+        taxes: Taxes
+      room_price:
+        base_price: Base Price
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        room_type_id: Zimmerklasse
+        season_id: Season
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from_date: From
+        hidden: delete
+        name: Name
+        to_date: To
+      surcharge:
+        amount: Amount
+        guest_type_id: Guest Type
+        hidden: delete
+        name: Name
+        radio_select: Radio Select
+        season_id: Season
+      tax_amount:
+        amount: Amount
+        tax_id: Tax
+      vendor:
+        automatic_printing: Automatic printing
+        country: Rules for country
+        hidden: delete
+        invoice_footer_blurb: Invoice footer blurb
+        invoice_header_blurb: Invoice header blurb
+        name: Name
+        receipt_footer_blurb: Receipt footer blurb
+        receipt_header_blurb: Receipt header blurb
+        saas: Online variant
+        ticket_display_time_order: Time and invoice number on ticket
+        ticket_item_separator: Ticket Separation Line
+        ticket_tall_font: Ticket tall font
+        ticket_wide_font: Ticket wide font
+        time_offset: Time correction (hours)
+        timeout: Screen lock timeout (seconds)
+        use_order_numbers: Use order numbers
     models:
       article:
         one: Artykuł
@@ -207,6 +226,39 @@ pl:
       vendor_printer:
         one: Bonownik
         other: Bonowniki
+      booking:
+        one: Booking
+        other: Bookings
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
+        one: Payment Method
+        other: Payment Methods
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Saison
+        other: Saisons
+      surcharge:
+        one: Surcharge
+        other: Surcharges
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
@@ -233,28 +285,19 @@ pl:
       new_article: Dodawanie artykułu
       normal: Na miejscu
       takeaway: Wynos
-      weighing: Donos
     sort_index:
       sort: Sortuj artykuły
-    update:
-      success: Artykuł został pomyślnie zaktualizowany
-  austria: Austriacki
-  auxiliary_waiter: Pomocnik kelnera
   bar: Bar
   black: Czarny
   blackboard:
     index:
       update: Aktualizuj
-  blackboard_generic_name: Czarna lista(-)
   blank: Puste
   blue: Niebieski
   cancel_and_go_back: Anuluj i wróć
   categories:
     create:
       success: Pomyślnie dodano!
-    index:
-      drinks: Napoje
-      foods: Potrawy
     new:
       aperitif: Aperitif
       beer: Piwo
@@ -281,15 +324,9 @@ pl:
       teapot: Filiżanka herbaty
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
-    update:
-      success: Pomyślnie zaktualizowano!
-  chief_waiter: Główny kelner
+    destroy:
+      success: Category successfully deleted
   clear_order_and_go_back: Wyczyść zamówienie i wróć
-  companies:
-    edit:
-      add_printer: Dodaj bonownik
-    update:
-      config_successfully_updated: Dane na temat firmy zostały zaktualizowane!
   copy: Kopiuj
   cost_centers:
     index:
@@ -298,19 +335,20 @@ pl:
     new:
       edit_cost_center: Edytowanie dodatkowych kosztów
       new_cost_center: Dodawanie dodatkowych kosztów
+    create:
+      success: Cost Center successfully saved
+    destroy:
+      success: Cost Center successfully deleted
   count: Podlicz
   create: Dodaj
   dateandtime: Data
   default: Podstawowy
   delete: Usuń
   display: Wyświetl
-  drink: Napoje
-  dummy: Atrapa
   edit: Edytuj
   exit: Wyjdź
   finish: Zakończ
   food: Posiłki
-  germany: Niemiecki
   go_back: Wróc
   green: Zielony
   gross: Brutto
@@ -336,8 +374,6 @@ pl:
   just_order: Tylko zamówienie
   kitchen: Kuchnia
   logout: wyloguj %{who}
-  logout_successful: Zostałeś pomyślnie wylogowany.
-  menucard_generic_name: Lista dań(-)
   messages:
     hello_username: Witaj %{name}!
   move_order_to_table: Przenieś zamówienie na inny stolik
@@ -353,18 +389,20 @@ pl:
       hidden: Usuń
       new_option: Dodawanie zestawów
       select_all: Zaznacz wszystkie
+    create:
+      success: Option successfully saved
+    destroy:
+      success: Option successfully deleted
   orange: Pomarańczowy
   orders:
     functions_header_index:
       items_notifications: Powiadomienia
       print_now: Drukuj teraz
       show_last_order: Pokaż ostatnie zamówienie
+      show_last_booking: XXX Show last booking
+      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
-    go_to_tables:
-      warning_only_x_orders_left: Uwaga, pozostało tylko %{credits} zamówienia/zamówień.
-      warning_only_x_orders_left_upgrade_here: Uwaga. Pozostało %{credits}. Pobierz
-        więcej z <a href='http://www.billgasto.com'>billgasto.com</a>
     index:
       delivery_list: Lista dostaw
       preparation_list: Lista przygotowywanych zamówień
@@ -377,13 +415,13 @@ pl:
       split_invoice: Podziel rachunek
       split_this_item: Kliknij pozycję aby podzielić paragon
       switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
+      change_money: XXX Change
+      set_booking: XXX Assign to Booking
     login_form:
       email: Twój e-mail
       login: Login
       password: Hasło
-      realname: Twoje imię
       username: Użytkownik
-      your_ip_address: Twój adres IP
     order:
       new: Nowe zamówienie
       sum: Suma
@@ -407,13 +445,14 @@ pl:
       edit_page: Edytuj stronę
       slideshow: Präsentation starten
       view: Podgląd
+    new:
+      new_page: New Page
   partials:
     default_blurb: edit me
     error_during_evaluation: ! 'Error: '
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
   pink: Różowy
-  please_enter_email_and_realname: Proszę wpisać swój adres e-mail oraz imię.
   please_enter_item_comment: Specjalne życzenia
   please_enter_item_price: Cena specjalna
   presentations:
@@ -422,14 +461,16 @@ pl:
       new_presentation: Dodaj szablon
   print: Drukuj
   print_and_finish: Zakończ i drukuj
-  print_kitchenlist: Wydrukuj listę pozycji dla kuchni
   printing_test: Test drukarki
-  recent_orders: Wyświetl ostatnie zamówienia
   reports:
     end_date: Data końcowa
     save: Zapisz
     start_date: Data początkowa
     usb_device: USB
+    index:
+      backup_database: Backup database
+      backup_logfile: Backup logfile
+      header: Reports
   restaurant: Restauracja
   roles:
     new:
@@ -461,10 +502,10 @@ pl:
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
       view_statistics: Dostęp do statystyk
-  scope_names:
-    active: Karta menu
-    unsettled: Zmiany
-    waiterpad: Waiterpad
+    create:
+      success: Role successfully saved
+    destroy:
+      success: Role successfully deleted
   scroll_down: Przewiń w dół
   scroll_to_room: Idź do
   scroll_up: Przewiń w górę
@@ -481,11 +522,7 @@ pl:
       email: Twój e-mail
       login: Login
       password: Hasło
-      realname: Twoje imię
       username: Użytkownik
-      your_ip_address: Twój adres IP
-    permission_denied:
-      permission_denied: Brak dostępu
   settlements:
     detailed_list:
       count: Ilość
@@ -499,8 +536,6 @@ pl:
       end_date: Data końcowa
       start_date: Data początkowa
       sum_total: Suma całkowita
-    new:
-      set_date: Ustaw datę dla tego rozliczenia
     settlement:
       finish: Koniec
       print: Drukuj
@@ -517,38 +552,84 @@ pl:
       new_stock: Dodawanie stanu magazynu
   storno: Storno
   sum: Suma
-  superuser: Super użytkownik
   tables:
     new:
       edit_table: Edytowanie stolika
       new_table: Dodawanie stolika
+    create:
+      success: Table successfully saved
+    destroy:
+      success: Table successfully deleted
   taxes:
     new:
       edit_tax: Edytowanie podatku
       new_tax: Dodawanie podatku
-  there_are_no_open_settlements: Nie ma otwartych rachunków.
-  tobacco: Papierosy
-  unsettled_orders_generic_name: Zmiany(-)
-  update_database: Datenbank neu laden
-  user_not_found: Nie znaleziono użytkownika
   users:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
+    create:
+      success: User successfully saved
+    destroy:
+      success: User successfully deleted
+  violet: Fioletowy
+  waiter: Kelner
+  waiterpad_generic_name: Lista kelnerów(-)
+  white: Biały
+  winered: Winny
+  wrong_password: Błędne dane do logowania
+  yellow: Żółty
+  bookings:
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+    show:
+      search_by_number: Search by number
+  layouts:
+    application:
+      submit_scribe: OK
+  room_prices:
+    index:
+      generate_price_skeleton: Generate price skeleton
+    new:
+      edit_room_price: Edit room price
+      new_room_price: New room price
+  room_types:
+    new:
+      edit_room_type: Edit room type
+      new_room_type: New room type
+  rooms:
+    new:
+      edit_room: Edit Room
+      new_room: New Room
+  scopes:
+    active: Active
+    waiterpad: Waiterpad
+  seasons:
+    new:
+      edit_season: Edit Season
+      new_season: New Season
+  shared:
+    invoice_tax_list:
+      list_of_taxes: List of Taxes
+  surcharges:
+    new:
+      add_tax_amount: Add tax amount
+      common_surcharge: Common Surcharge
+      edit_surcharge: Edit Surcharge
+      new_surcharge: New Surcharge
+  tax_amount: XXX Amount
   various:
-    cancel: XXX Cancel
+    cancel: Cancel
     common_surcharges: Common Surcharges
     home: Home
     pay: Pay
     save: Save
     subtotal: Subtotal
     unamed: Unamed
-  value_added_tax: VAT
-  violet: Fioletowy
-  waiter: Kelner
-  waiterpad_generic_name: Lista kelnerów(-)
-  was_successfully_deleted: ! '%{what} został pomyślnie skasowany.'
-  white: Biały
-  winered: Winny
-  wrong_password: Błędne dane do logowania
-  yellow: Żółty
+  vendors:
+    index:
+      edit: Edit
+      switch_to: Select
+    new:
+      edit_vendor: Edit Vendor
+      new_vendor: New Vendor

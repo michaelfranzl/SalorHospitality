@@ -4,7 +4,9 @@ require 'active_support'
 def compare_yaml_hash(cf1, cf2, context = [])
   cf1.each do |key, value|
     unless cf2.key?(key)
-      unless value.is_a?(Hash)
+      if value.is_a?(Hash)
+        format_hash(context, [key], value)
+      else
         puts '{{ ' + context.join(' -> ') + ' }} ' + key + ': ' + value
       end
       next
@@ -16,6 +18,17 @@ def compare_yaml_hash(cf1, cf2, context = [])
     end
   end
   context.pop
+end
+
+def format_hash(absolute_context, relative_context = [], hash)
+  hash.each do |k,v|
+    if v.is_a?(Hash)
+      format_hash(absolute_context, (relative_context << k), v)
+      next
+    else
+      puts '{{ ' + absolute_context.join(' -> ') + ' -> ' + relative_context.join(' -> ') + ' }} ' + k.to_s + ': ' + v.to_s
+    end
+  end
 end
 
 def returning(value)
@@ -42,8 +55,8 @@ end
 
 
 # usage: rake compare_locales['billgastro_gn.yml','billgastro_pl.yml']
-desc "Compare locales" 
-task :compare_locales, :sourcefile, :transfile do |t, args|
+desc "Compare locales old" 
+task :compare_locales_old, :sourcefile, :transfile do |t, args|
   sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
   source = YAML.load_file sourcefile
   sourcelang = source.keys.first
@@ -75,5 +88,4 @@ task :compare_locales, :sourcefile, :transfile do |t, args|
 
   File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
   File.open(transfile,'w'){ |f| f.write output_translation.to_yaml }
-
 end
