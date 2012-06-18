@@ -8,10 +8,10 @@ en:
         description: Описание
         hidden: удалить
         image: Изображение
-        name: Name
+        name: Имя
         price: Цена
         tax_id: Налог
-        usage: Usage
+        usage: Использование
       category:
         color: Цвет
         custom_icon: Моя иконка
@@ -20,20 +20,20 @@ en:
         icon: Иконка
         name: Название
         separate_print: Cut ticket
-        tax_id: Tax
+        tax_id: Налог
         user_id: Preparing User
         vendor_printer_id: Принтер
       cost_center:
-        active: active?
-        description: Description
-        hidden: delete
-        name: Name
+        active: активный?
+        description: Описание
+        hidden: удалить
+        name: Имя
       group:
-        name: Name
+        name: Название
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
+        category_id: Категория
+        hidden: Удалить
+        name: Название
         no_ticket: Dont' print ticket
         price: Price
         separate_ticket: Cut ticket
@@ -618,17 +618,17 @@ en:
       new_surcharge: New Surcharge
   tax_amount: XXX Amount
   various:
-    cancel: Cancel
+    cancel: Отмена
     common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
+    home: Домой
+    pay: Оплатить
+    save: Сохранить
+    subtotal: Подытог
     unamed: Unamed
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: Редактировать
+      switch_to: Выбрать
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
