@@ -299,26 +299,26 @@ en:
     create:
       success: Success!
     new:
-      aperitif: Аппереими
-      beer: Beer
+      aperitif: Аперитив
+      beer: Пиво
       blank: Blank
       childrendish: Childrens Dish
-      cigarette: Tobacco
-      coffee: Coffee
-      dessert: Dessert
+      cigarette: Сигареты
+      coffee: Кофе
+      dessert: Десерт
       digestif: Digestif
-      edit_category: Edit Category
-      maindish: Main Dish
-      new_category: New Category
-      nonalcoholics: Alcohol Free
+      edit_category: Редактировать категорию
+      maindish: Главные блюда
+      new_category: Новая категория
+      nonalcoholics: Безалкогольные напитки
       noodles: Noodles
       redwinebottle: Bottle Red
       redwineglass: Red Wine
       rosewinebottle: Bottle Rosé
       rosewineglass: Rosé Wine
       sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
+      soup: Супы
+      sparkling: Шампанское
       starter: Starter
       tea: Teacup
       teapot: Teapot
