@@ -5,8 +5,8 @@ el:
       switch_to: Επιλέξτε
       edit: XXX Edit
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Επεξεργασία Προμηθευτή
+      new_vendor: Νέος Προμηθευτής
   activerecord:
     attributes:
       article:
@@ -81,12 +81,12 @@ el:
         description: Περιγραφή
         enabled: ενεργό;
         height: Ύψος
-        height_mobile: Height mobile
+        height_mobile: Ύψος Κινητού
         hidden: διαγραφή
         name: Όνομα
         rotate: περιστρέψτε;
         width: Πλάτος
-        width_mobile: Width mobile
+        width_mobile: Πλάτος Κινητού
       tax:
         color: Χρώμα
         hidden: διαγραφή
@@ -110,21 +110,21 @@ el:
         name: Όνομα
         path: Πορεία/Διαδρομή
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: διαγραφή
+        name: Όνομα
+        taxes: Φόροι
       room_price:
-        base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
+        base_price: Βασική Τιμή
+        guest_type_id: Τύπος Πελάτη
+        hidden: διαγραφή
         room_type_id: Zimmerklasse
         season_id: Season
       room_type:
-        hidden: löschen
-        name: Name
+        hidden: διαγραφή
+        name: Όνομα
       season:
-        from_date: From
-        hidden: delete
+        from_date: Από
+        hidden: διαγραφή
         name: Name
         to_date: To
       surcharge:
