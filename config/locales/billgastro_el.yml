@@ -146,12 +146,12 @@ el:
         name: Name
         receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
         receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
-        saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
+        saas: Διαδικτυακή εναλλαγή
+        ticket_display_time_order: Χρόνος και αριθμός τιμολογίου στην ετικέτα
+        ticket_item_separator: Διαχωριστική γραμμή ετικέτας
+        ticket_tall_font: Ψηλή γραμματοσειρά ετικέτας
+        ticket_wide_font: Φαρδιά γραμματοσειρά ετικέτας
+        time_offset: Διόρθωση χρόνου (ώρες)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
     models:
