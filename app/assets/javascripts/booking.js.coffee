@@ -8,6 +8,8 @@ $ ->
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
   # hotel_add_price_form_button()
   create_dom_element 'div', {id:'rooms'}, '', '#rooms_container'
+  if not _get("salor_hotel.from_input")
+    _set("salor_hotel.from_input",date_as_ymd(new Date()))
   fetch_rooms()
   $(window).on 'resize', ->
     if $('#rooms').is(":visible")
@@ -73,8 +75,8 @@ window.display_booking_form = (room_id) ->
     console.log(result)
     $(this).val(result.name)
     submit_json.model['customer_name'] = result.name
-  #customer_input.on 'keyup'
-  
+  customer_input.on 'keyup', ->
+    submit_json.model['customer_name'] = $(this).val()
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools

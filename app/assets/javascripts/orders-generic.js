@@ -179,6 +179,7 @@ function route(target, model_id, action, options) {
     // See bookings.js show_rooms_interface() I did this because the showing/hiding, and doing of stuff needs
     // to be in its own function so that it can be attached to click handlers
     emit("salor_hotel.render_rooms",{model_id:model_id, action:action, options:options});
+    _set("salor_hotel.bookings.dirty",true);
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
@@ -191,8 +192,9 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'pay';
       send_json('booking_' + model_id);
     } else if (action == 'update_bookings') {
-      update_bookings_for_room(model_id,options);
-      emit('salor_hotel.render_rooms','force');
+      update_booking_for_room(model_id,options);
+    } else if (action == 'move_booking') {
+      send_json('booking_' + model_id);
     } else {
       submit_json = {};
       items_json = {};
@@ -236,6 +238,7 @@ function route(target, model_id, action, options) {
 /* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
+
 function send_json(object_id) {
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;

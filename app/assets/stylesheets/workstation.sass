@@ -1508,7 +1508,7 @@ div#rooms
     :padding-left 15px 
 div.room-header
   :position absolute
-  :width 190px
+  :width 120px
   :height 40px
   :display inline-block
   :border 1px solid gray
@@ -1516,7 +1516,7 @@ div.room-header
   :margin 0px
   :cursor pointer
   :text-align center
-  :font-size 150%
+  :font-size 110%
   :background-color $billgastrogrey1
   :-webkit-border-top-left-radius 6px
   :-webkit-border-top-right-radius 6px
@@ -1530,7 +1530,7 @@ div.room-header
 
 div.room-date-column
   :position absolute
-  :width 90%
+  :width 99%
   :height 41px
   :display inline-block
   :border 1px solid gray
@@ -1539,17 +1539,20 @@ div.room-date-column
   :cursor pointer
   :text-align left
   :font-size 150%
+  :padding-left 50px
   :z-index 1000
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
   :-webkit-border-bottom-left-radius 0px
   :-webkit-border-top-left-radius 0px
+  span
+    :opacity 0.5
 div.room-date-column-last
   :-webkit-border-bottom-left-radius 4px
     
 div.room-booking
   :position absolute
-  :width 180px
+  :width 100px
   :height 32px
   :display inline-block
   :border 1px solid gray
@@ -1573,8 +1576,6 @@ div.room-booking-active
   :background-color $green
 div.room-column
   :position absolute
-  :width 190px
-  :height 1200px
   :display inline-block
   :border 1px solid gray
   :padding 0px
@@ -1586,6 +1587,8 @@ div.room-column
 #show_booking_from
   :position relative
   :z-index 1010
+  :font-size 120%
+  :font-weight bolder
 div.room-header-left
   :text-align left
 div#auto_completable

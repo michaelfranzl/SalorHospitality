@@ -8,7 +8,8 @@
 var tableupdates = -1;
 var automatic_printing = false;
 var debugmessages = [];
-
+var _CTRL_DOWN = false;
+var _key_codes = {ctrl: 17};
 $(function(){
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {
@@ -22,6 +23,16 @@ $(function(){
       if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
     }, 10000);
   }
+  $(window).keydown(function(e){
+    if (e.keyCode == _key_codes.ctrl) {
+      _CTRL_DOWN = true;
+    }
+  });
+  $(window).keyup(function(e){
+    if (e.keyCode == _key_codes.ctrl) {
+      _CTRL_DOWN = false;
+    }
+  });
 })
 /*
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
@@ -117,12 +128,71 @@ function date_as_ymd(date) {
 function get_date(str) {
   return new Date(Date.parse(str));
 }
+/*
+  _fetch is a quick way to fetch a result from the server.
+ */
 function _fetch(url,callback) {
   $.ajax({
     url: url,
     context: window,
     success: callback
   });
+}
+/*
+ *  _push is a quick way to deliver an object to the server
+ *  It takes a data object, a string url, and a success callback.
+ *  Additionally, you can pass, after those three an error callback,
+ *  and an object of options to override the options used with
+ *  the ajax request.
+ */
+function _push(object) {
+  var payload = null;
+  var callback = null;
+  var error_callback = function (jqXHR,status,err) {
+    console.log(jqXHR,status,err.get_message());
+  };
+  var user_options = {};
+  var url;
+  for (var i = 0; i < arguments.length; i++) {
+    switch(typeof arguments[i]) {
+      case 'object':
+        if (!payload) {
+          payload = {currentview: 'push', model: {}}
+          $.each(arguments[i], function (key,value) {
+            console.log(key,value);
+            payload[key] = value;
+          });
+        } else {
+          user_options = arguments[i];
+        }
+        break;
+      case 'function':
+        if (!callback) {
+          callback = arguments[i];
+        } else {
+          error_callback = arguments[i];
+        }
+        break;
+      case 'string':
+        url = arguments[i];
+        break;
+    }
+  }
+  options = { 
+    context: window,
+    url: url, 
+    type: 'post', 
+    data: payload, 
+    timeout: 20000, 
+    success: callback, 
+    error: error_callback
+  };
+  if (typeof user_options == 'object') {
+    $.each(user_options, function (key,value) {
+      options[key] = value;
+    });
+  }
+  $.ajax(options);
 }
 function create_dom_element (tag,attrs,content,append_to) {
   element = $(document.createElement(tag));
