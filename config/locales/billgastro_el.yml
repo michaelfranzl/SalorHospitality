@@ -400,17 +400,17 @@ el:
       new_option: Νέα Επιλογή
       select_all: Επιλέξτε όλα
     create:
-      success: Το κέντρο κόστους αποθηκεύτηκε επιτυχώς
+      success: Η επιλογή αποθηκεύτηκε επιτυχώς
     destroy:
-      success: Option successfully deleted
+      success: Η επιλογή διαγράφηκε επιτυχώς
   orange: Πορτοκαλί
   orders:
     functions_header_index:
       items_notifications: Ανακοινώσεις
       print_now: Εκτυπώστε τώρα
       show_last_order: Δείξτε την τελευταία παραγγελία
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      show_last_booking: XXX Δείξτε την τελευταία κράτηση
+      toggle_between_tables_and_rooms: XXX Εναλλαγή μεταξύ τραπεζιών και δωματίων
     functions_header_order_form:
       move_order: Μετακινήστε την παραγγελία σε άλλο τραπέζι
     index:
@@ -425,8 +425,8 @@ el:
       split_invoice: Μοιράστε το τιμολόγιο
       split_this_item: Κάντε κλικ για να μοιράσετε αυτά τα αντικείμενα ένα ένα
       switch_tax_for_this_item: Κάντε κλικ για να αλλάξετε το φόρο αυτού του αντικειμένου
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      change_money: XXX Ρέστα
+      set_booking: XXX Προσθήκη στις κρατήσεις
     login_form:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Συνδεθείτε
@@ -456,7 +456,7 @@ el:
       slideshow: Αρχίστε την προβολή εικόνων
       view: Προβάλετε
     new:
-      new_page: New Page
+      new_page: Νέα σελίδα
   partials:
     default_blurb: Επεξεργαστείτε με
     error_during_evaluation: ! 'Πρόβλημα: '
