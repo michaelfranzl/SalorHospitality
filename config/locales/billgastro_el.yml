@@ -152,8 +152,8 @@ el:
         ticket_tall_font: Ψηλή γραμματοσειρά ετικέτας
         ticket_wide_font: Φαρδιά γραμματοσειρά ετικέτας
         time_offset: Διόρθωση χρόνου (ώρες)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
+        timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (δευτερόλεπτα)
+        use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
     models:
       room:
         one: Δωμάτιο
@@ -252,20 +252,20 @@ el:
         one: Εκτυπωτής
         other: Εκτυπωτές
       booking:
-        one: Booking
-        other: Bookings
+        one: Κράτηση
+        other: Κρατήσεις
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Μέθοδος Πληρωμής
+        other: Μεθόδοι Πληρωμής
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Μέθοδος Πληρωμής
+        other: Μεθόδοι Πληρωμής
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Ποσό Φόρου
+        other: Ποσά Φόρου
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα
   admin: Διαχειριστής
   are_you_sure: Είστε σίγουροι;
   articles:
@@ -332,7 +332,7 @@ el:
       whitewinebottle: Μπουκάλι Λευκό
       whitewineglass: Λευκό Κρασί
     destroy:
-      success: Category successfully deleted
+      success: Η κατηγορία διαγράφηκε επιτυχώς
   clear_order_and_go_back: Σβήστε την παραγγελία και επιστρέψτε
   copy: Αντίγραφο
   cost_centers:
@@ -343,9 +343,9 @@ el:
       edit_cost_center: Επεξεργασία Κέντρου Κόστους
       new_cost_center: Νέο Κέντρο Κόστους
     create:
-      success: Cost Center successfully saved
+      success: Το κέντρο κόστους αποθηκεύτηκε επιτυχώς
     destroy:
-      success: Cost Center successfully deleted
+      success: Το κέντρο κόστους διαγράφηκε επιτυχώς
   count: Μετρήστε
   create: Δημιουργήστε
   dateandtime: Ημερομηνία
@@ -400,7 +400,7 @@ el:
       new_option: Νέα Επιλογή
       select_all: Επιλέξτε όλα
     create:
-      success: Option successfully saved
+      success: Το κέντρο κόστους αποθηκεύτηκε επιτυχώς
     destroy:
       success: Option successfully deleted
   orange: Πορτοκαλί
