@@ -117,35 +117,35 @@ el:
         base_price: Βασική Τιμή
         guest_type_id: Τύπος Πελάτη
         hidden: διαγραφή
-        room_type_id: Zimmerklasse
-        season_id: Season
+        room_type_id: Κατηγορία Δωματίου
+        season_id: Σαιζόν
       room_type:
         hidden: διαγραφή
         name: Όνομα
       season:
         from_date: Από
         hidden: διαγραφή
-        name: Name
-        to_date: To
+        name: Όνομα
+        to_date: Σε
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
-        radio_select: Radio Select
-        season_id: Season
+        amount: Ποσό
+        guest_type_id: Τύπος Πελάτη
+        hidden: διαγραφή
+        name: Όνομα
+        radio_select: Επιλογή Ραδιοφώνου
+        season_id: Σαιζόν
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Ποσό
+        tax_id: Φόρος
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
+        automatic_printing: Αυτόματη Εκτύπωση
+        country: Κανόνες χώρες
+        hidden: διαγραφή
+        invoice_footer_blurb: Συνοπτική περιγραφή υποσέλιδου τιμολογίου
+        invoice_header_blurb: Συνοπτική περιγραφή κεφαλίδας τιμολογίου
         name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
+        receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
+        receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
         saas: Online variant
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
