@@ -67,7 +67,7 @@ el:
         active: ενεργό
         description: Περιγραφή
         hidden: διαγραφή
-        postfix: Postfix
+        postfix: Κατάληξη
         prefix: Όνομα
         price: Μεταβλητή Τιμής
         usage: χρήση
@@ -461,7 +461,7 @@ el:
     default_blurb: Επεξεργαστείτε με
     error_during_evaluation: ! 'Πρόβλημα: '
     no_presentation_found:
-      no_presentations_found: Κανένα περίγραμμα δεν καθορίστηκε για this partial.
+      no_presentations_found: Κανένα περίγραμμα δεν καθορίστηκε για αυτό το στοιχείο.
   pink: Ροζ
   please_enter_item_comment: Ιδιαίτερη επιθυμία
   please_enter_item_price: Ιδιαίτερη τιμή
@@ -478,9 +478,9 @@ el:
     start_date: Μέρα Έναρξης
     usb_device: Μνήμη USB
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
+      backup_database: Αντίγραφο Ασφαλείας Βάσης Δεδομένων
+      backup_logfile: Αντίγραφο Ασφαλείας Αρχείου Καταγραφής
+      header: Αναφορές
   restaurant: Εστιατόριο
   roles:
     new:
