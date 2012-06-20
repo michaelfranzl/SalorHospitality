@@ -194,7 +194,8 @@ add_json_booking_item = (booking_item_id, guest_type_id) ->
     tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select, selected:false}
+        radio_select = record.radio_select == 'true'
+        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
 
 
   
