@@ -113,7 +113,11 @@ set_booking_duration = ->
   update_booking_totals()
 
   
-
+rooms_as_options = ->
+  str = ''
+  $.each _get("rooms.json").rooms, (key,value) ->
+    str += '<option value="'+value.room.id+'">' + value.room.name + '</option>'
+  return str
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
 render_season_buttons = ->
   season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
@@ -124,6 +128,10 @@ render_season_buttons = ->
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
+  rooms_button = create_dom_element 'div', {id: 'choose_room_container'},'',season_container
+  rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
+  rooms_select.on 'change', ->
+    submit_json.model.room_id = $(this).val()
 
 window.change_season = (id) ->
   submit_json.model.season_id = id

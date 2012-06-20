@@ -147,9 +147,21 @@ function is_booked (booking,date) {
   }
   return false;
 }
+function to_day_month(date) {
+  return date.getDate() + "/" + (date.getMonth()+1);
+}
+function get_from_to_of_booking(booking) {
+  var from = new Date(Date.parse(booking.from));
+  var to = new Date(Date.parse(booking.to));
+  return to_day_month(from) + ' -> ' + to_day_month(to);
+}
 function booking_build_inner_div(booking) {
   var inner_div = create_dom_element('div',{class:'inner-div'},'','');
-  var name_div = create_dom_element('span',{class:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
+  var name_div = create_dom_element('div',{class:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
+  inner_div.append("<br />");
+  var date_div = create_dom_element('div',{class: 'date',booking_id: booking.id, roomd_id: booking.room_id},get_from_to_of_booking(booking),inner_div);
+  name_div.on('mouseenter',booking_mouse_enter);
+  name_div.on('mouseout',booking_mouse_out);
   name_div.on('click',function () {
     $('#rooms').hide();
     $('#container').show();
@@ -181,15 +193,32 @@ function get_new_start_end_date(booking_id,new_date) {
   var new_end_date = new Date(new_date.getFullYear(),new_date.getMonth(), new_date.getDate() + duration);
   return [date_as_ymd(new_date),date_as_ymd(new_end_date)];
 }
+function booking_mouse_enter () {
+  $.each($('.room-booking'), function () {
+    $(this).css({'z-index':1005});
+  });
+  var booking_widget = $('#booking_' + $(this).attr('booking_id'));
+  booking_widget.css({'z-index':1009});
+  _set("salor_hotel.pause_redraw",true);
+}
+function booking_mouse_out () {
+  _set("salor_hotel.pause_redraw",false);
+  var booking_widget = $('#booking_' + $(this).attr('booking_id'));
+  booking_widget.css({'z-index':1005});
+}
 function draw_booking(booking) {
   if (!$('#rooms').is(":visible")) {
     return;
+  }
+  if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
+    console.log("Booking not in this view",booking);
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the
   // x coordinate.
   var x = _get("rooms.json").keys.indexOf(booking.room_id) + 1; // plus 1 because arrays are 0 indexed
   var nights = days_between_dates(booking.from, booking.to);
+
   var tpad = _get("salor_hotel.tpad");
   var lpad = _get("salor_hotel.lpad");
   var owidth = _get("salor_hotel.outerWidth");
@@ -202,6 +231,11 @@ function draw_booking(booking) {
   var y = coords[key];
   if (!y)
       y = 1;
+  if (Date.parse(booking.from) < Date.parse($('#show_booking_from').val())) {
+    console.log("calculating size..",booking);
+    nights = days_between_dates($('#show_booking_from').val(), booking.to);
+    y = 1;
+  }
   if (booking_exists(booking)) {
     var booking_widget = $('#booking_' + booking.id);
     if (booking.hidden == true) {
@@ -209,16 +243,24 @@ function draw_booking(booking) {
     }
     
     d = get_date(booking.from);
-    y = get_y_by_date(d);
-    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+    if (y == 1) {
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 40 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+      widget_height += 15;
+    } else {
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+    }
     $('#booking_' + booking.id + ' > div.inner-div > span.name').html(booking.customer_name);
     booking_widget.offset(new_offset);
     booking_widget.css({height: widget_height});
     return;
   }
 
-
-  var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+  if (y == 1) {
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 40 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+    widget_height += 15;
+  } else {
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+  }
   
   //_log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
 
@@ -246,17 +288,8 @@ function draw_booking(booking) {
   booking_widget.attr('y',new_offset.top);
   booking_widget.attr('x',new_offset.left);
   booking_widget.css({height: widget_height});
-  booking_widget.on('mouseenter',function () {
-    $.each($('.room-booking'), function () {
-        $(this).css({'z-index':1005});
-    });
-    $(this).css({'z-index':1009});
-    _set("salor_hotel.pause_redraw",true);
-   });
-  booking_widget.on('mouseout',function () {
-    _set("salor_hotel.pause_redraw",false);
-    $(this).css({'z-index':1005});
-  });
+  booking_widget.on('mouseenter',booking_mouse_enter);
+  booking_widget.on('mouseout',booking_mouse_out);
   booking_widget.draggable({
     drag: function (event,ui) {
       if (_CTRL_DOWN) {
@@ -308,8 +341,10 @@ function draw_bookings() {
   for (var key in _get("rooms.json").bookings) {
     var booking = _get("rooms.json").bookings[key];
     if (booking_exists(booking) && booking.hidden) {
+      console.log("removing", booking);
       $('#booking_' + booking.id).remove();
     } else if (!booking.hidden == true) {
+      console.log("drawing",booking);
       draw_booking(booking);
     }
   }

@@ -1459,7 +1459,8 @@ div.booking_form
       :padding 0px 20px
 
   div.season,
-  div.guest_type
+  div.guest_type,
+  div#choose_room_container
     :display inline-block
     :padding 5px 15px
     :width 10%
@@ -1551,6 +1552,7 @@ div.room-date-column-last
   :-webkit-border-bottom-left-radius 4px
     
 div.room-booking
+  :padding 5px
   :position absolute
   :width 100px
   :height 32px
@@ -1560,12 +1562,20 @@ div.room-booking
   :margin 0px
   :cursor pointer
   :text-align center
-  :font-size 120%
+  :font-size 85%
   :z-index 1005
   :-moz-box-shadow 0px 0px 8px black
   :-moz-border-radius 6px
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 6px
+  div.inner-div
+    div.name
+      :background-color $billgastrogrey1
+      :min-height 25px
+      :color white
+      :-webkit-border-radius 4px
+    div.date
+      :font-size 90%
 div.room-booking-odd
   :background-color $blue
 div.room-booking-even
@@ -1574,6 +1584,7 @@ div.room-booking-thirden
   :background-color $billgastroblue1
 div.room-booking-active
   :background-color $green
+  :color $billgastrogrey1
 div.room-column
   :position absolute
   :display inline-block

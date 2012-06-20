@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
     @rooms_json = {:keys => [], :rooms => {}, :bookings => {}}
     @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
     if params[:from] then
-      from_date = params[:from].to_date - 5.days
+      from_date = params[:from].to_date - 31.days
     else
       from_date = Time.now
     end
@@ -36,7 +36,7 @@ class RoomsController < ApplicationController
     @room = get_model
     redirect_to rooms_path and return unless @room
     if params[:from] then
-      from_date = params[:from].to_date - 5.days
+      from_date = params[:from].to_date - 31.days
     else
       from_date = Time.now
     end
