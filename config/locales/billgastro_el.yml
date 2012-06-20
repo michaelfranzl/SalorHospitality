@@ -513,9 +513,9 @@ el:
       view_all_settlements: Δείτε όλους τους διακανονισμούς
       view_statistics: Δείτε τα στατιστικά
     create:
-      success: Role successfully saved
+      success: Ο ρόλος αποθηκεύτηκε επιτυχώς 
     destroy:
-      success: Role successfully deleted
+      success: Ο ρόλος διαγράφηκε επιτυχώς
   scroll_down: Κινηθείτε προς τα κάτω
   scroll_to_room: Πηγαίνετε στο δωμάτιο
   scroll_up: Κινηθείτε προς τα πάνω
@@ -568,9 +568,9 @@ el:
       edit_table: Επεξεργασία Πίνακα
       new_table: Νέος Πίνακας
     create:
-      success: Table successfully saved
+      success: Ο πίνακας αποθηκεύτηκε επιτυχώς 
     destroy:
-      success: Table successfully deleted
+      success: Ο πίνακας διαγράφηκε επιτυχώς
   taxes:
     new:
       edit_tax: Επεξεργασία Φόρου
@@ -580,9 +580,9 @@ el:
       edit_user: Επεξεργασία Χρήστη
       new_user: Νέος Χρήστης
     create:
-      success: User successfully saved
+      success: Ο χρήστης αποθηκεύτηκε επιτυχώς 
     destroy:
-      success: User successfully deleted
+      success: Ο χρήστης διαγράφηκε επιτυχώς
   violet: Βιολετί
   waiter: Σερβιτόρος
   waiterpad_generic_name: Σημειωματάριο σερβιτόρου
@@ -592,37 +592,37 @@ el:
   yellow: Κίτρινο
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Σερβιριστήκατε από %{χρήστη}
     show:
-      search_by_number: Search by number
+      search_by_number: Αναζήτηση με αριθμό
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Δημιουργήστε σκελετό τιμών
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Επεξεργασία τιμής δωματίου
+      new_room_price: Νέα τιμή δωματίου
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: Επεξεργασία τύπου δωματίου
+      new_room_type: Νέος τύπος δωματίου
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Επεξεργασία δωματίου
+      new_room: Νέο δωμάτιο
   scopes:
-    active: Active
-    waiterpad: Waiterpad
+    active: Ενεργό
+    waiterpad: Σημειοματάριο σερβιτόρου
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Επεξεργασία Σαιζόν
+      new_season: Νέα Σαιζόν
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Λίστα φόρων
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
+      add_tax_amount: Προσθέστε ποσό φόρου
+      common_surcharge: Κοινή Επιβάρυνση 
       edit_surcharge: Edit Surcharge
       new_surcharge: New Surcharge
   tax_amount: XXX Amount
