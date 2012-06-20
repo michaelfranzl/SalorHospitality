@@ -322,10 +322,10 @@ en:
       starter: Starter
       tea: Teacup
       teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
+      whitewinebottle: Бутылка вина
+      whitewineglass: Бокал вина
     destroy:
-      success: Category successfully deleted
+      success: Категория успешно удалена
   clear_order_and_go_back: Clear order and go back
   copy: Copy
   cost_centers:
@@ -359,20 +359,20 @@ en:
   guestroom: Guestroom
   host: Host
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
+    errempty: Неверный файл
+    errsize: Неверный размер файла
+    errtype: Неверный тип файла
   invoice: Invoice
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
   invoices: Invoices
-  is_no_number: is not a number.
+  is_no_number: не число.
   items:
     item_tablerow:
       clear: Clear
       done: Done
       no_printing: no printing
   just_order: Just order
-  kitchen: Kitchen
+  kitchen: Кухня
   layouts:
     application:
       submit_scribe: OK
@@ -479,7 +479,7 @@ en:
     new:
       assign_cost_center: Assign cost center
       cancel_all_items_in_active_order: Cancel all items in active order
-      change_waiter: Change waiter
+      change_waiter: Сменить официнта
       counter_mode: Counter mode
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
@@ -503,21 +503,21 @@ en:
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
-      view_statistics: View statistics
+      view_statistics: Посмотреть статистику
     create:
-      success: Role successfully saved
+      success: Роль успешно сохранена
     destroy:
-      success: Role successfully deleted
-  scroll_down: Scroll down
-  scroll_to_room: Go to room
-  scroll_up: Scroll up
+      success: Роль успешно удалена
+  scroll_down: Пролистать вниз
+  scroll_to_room: Перейти к залу
+  scroll_up: Пролистать вверх
   send_and_go_back: Save and go back
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
   server_no_response: The Bill Gastro Server is not responding any more. It is either
     busy or the radio link is interrupted.
   sessions:
     browser_warning:
-      continue: Continue
+      continue: Продолжить
       warning: Похоже, что вы не используете Mozilla Firefox, Safari, Google Chrome
         или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы
         только в этих браузерах.
@@ -556,31 +556,31 @@ en:
   sum: Sum
   tables:
     new:
-      edit_table: Edit Table
-      new_table: New Table
+      edit_table: Редактировать стол
+      new_table: Новый стол
     create:
-      success: Table successfully saved
+      success: Стол успешно сохранен
     destroy:
-      success: Table successfully deleted
+      success: Стол успешно удален
   taxes:
     new:
-      edit_tax: Edit Tax
-      new_tax: New Tax
+      edit_tax: Редактировать налог
+      new_tax: Новый налог
   users:
     new:
-      edit_user: Edit User
-      new_user: New User
+      edit_user: Редактировать пользователя
+      new_user: Новый пользователь
     create:
-      success: User successfully saved
+      success: Пользователь успешно сохранен
     destroy:
-      success: User successfully deleted
-  violet: Violet
-  waiter: Waiter
+      success: Пользователь успешно удален
+  violet: Фиолетовый
+  waiter: Официант
   waiterpad_generic_name: Waiterpad
-  white: White
-  winered: Wine Red
+  white: Белый
+  winered: Бардовый
   wrong_password: Wrong login data
-  yellow: Yellow
+  yellow: Желтый
   bookings:
     invoice_item_list:
       served_by_X: You were served by %{user}
@@ -598,10 +598,10 @@ en:
       new_room_type: New room type
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Редактировать зал
+      new_room: Новый зал
   scopes:
-    active: Active
+    active: Активный
     waiterpad: Waiterpad
   seasons:
     new:
@@ -609,7 +609,7 @@ en:
       new_season: New Season
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Список налогов
   surcharges:
     new:
       add_tax_amount: Add tax amount
@@ -624,7 +624,7 @@ en:
     pay: Оплатить
     save: Сохранить
     subtotal: Подытог
-    unamed: Unamed
+    unamed: Без имени
   vendors:
     index:
       edit: Редактировать
