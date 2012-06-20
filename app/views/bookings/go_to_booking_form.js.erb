@@ -12,6 +12,8 @@
   $('#booking_customer').val(submit_json.model['customer_name']);
   $('#booking_from').val('<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>');
   $('#booking_to').val('<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>');
+  submit_json.model.to_date = '<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>';
+  submit_json.model.from_date = '<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>';
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
   $('#add_payment_method_button').on('click', function() { add_payment_method(<%= @booking.id %>); });
   $('.payment_methods_container').attr('id', 'payment_methods_container_' + <%= @booking.id %>);
@@ -33,3 +35,4 @@
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');
 <% end %>
 //window.initialize_booking_form();
+ _set("salor_hotel.bookings.dirty",true);

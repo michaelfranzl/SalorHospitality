@@ -16,12 +16,13 @@ class Booking < ActiveRecord::Base
   attr_accessible :customer_name
   def as_json(options={})
     return {
-        :from => self.from_date,
-        :to => self.to_date,
+        :from => self.from_date.strftime("%Y-%m-%d"),
+        :to => self.to_date.strftime("%Y-%m-%d"),
         :id => self.id,
         :customer_name => self.customer_name,
         :room_id => self.room_id,
-        :duration => self.duration
+        :duration => self.duration,
+        :hidden => self.hidden
       }
   end
   def self.create_from_params(params, vendor, user)
