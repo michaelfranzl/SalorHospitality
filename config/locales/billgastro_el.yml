@@ -623,14 +623,14 @@ el:
     new:
       add_tax_amount: Προσθέστε ποσό φόρου
       common_surcharge: Κοινή Επιβάρυνση 
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
-  tax_amount: XXX Amount
+      edit_surcharge: Επεξεργασία Επιβάρυνσης
+      new_surcharge: Νέα Επιβάρυνση
+  tax_amount: XXX Ποσό
   various:
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
-    unamed: Unamed
+    cancel: Ακύρωση
+    common_surcharges: Κοινές Επιβαρύνσεις
+    home: Κύριο Μενού
+    pay: Πληρωστε
+    save: Αποθηκεύστε
+    subtotal: Υποσύνολο
+    unamed: Ανώνυμο
