@@ -5,7 +5,6 @@ var coords = {};
 $(function () {
   setInterval(function () {
     if ($('#rooms').is(":visible") && !_get("salor_hotel.pause_redraw") && _get("salor_hotel.bookings.dirty") == true) {
-      console.log("rendering");
       clear_bookings();
       render_booking_lines();
       _set("salor_hotel.bookings.dirty",false);
@@ -73,7 +72,9 @@ function get_room_from_mouse() {
 function get_day_from_mouse() {
   return get_day_from_xy(_mouse.x,_mouse.y);
 }
-
+function get_booking(id) {
+  return _get("rooms.json").bookings[id];
+}
 window.receive_rooms_db = function (event) {
   var data = event.packet;
   var bookings = [];
@@ -96,7 +97,7 @@ window.update_room_bookings = function (event) {
   // is now done elsewhere
 }
 window.update_bookings_for_room = function (id,bookings) {
-  console.log("Updating Bookings for room",bookings);
+  //console.log("Updating Bookings for room",bookings);
   $.each(bookings, function (index,booking) {
     _get("rooms.json").rooms[id].bookings.push(booking.id);
     _get("rooms.json").bookings[booking.id.toString()] = booking;
@@ -112,7 +113,7 @@ function update_booking_for_room(id,booking) {
       }
     });
   } catch (e) {
-    console.log(e.get_message());
+    //console.log(e.get_message());
   }
   if (updated == false) {
     _get("rooms.json").rooms[id].bookings.push(booking.id);
@@ -211,7 +212,7 @@ function draw_booking(booking) {
     return;
   }
   if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
-    console.log("Booking not in this view",booking);
+    //console.log("Booking not in this view",booking);
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the
@@ -232,10 +233,10 @@ function draw_booking(booking) {
   if (!y)
       y = 1;
   if (Date.parse(booking.from) < Date.parse($('#show_booking_from').val())) {
-    console.log("calculating size..",booking);
     nights = days_between_dates($('#show_booking_from').val(), booking.to);
     y = 1;
   }
+  var widget_height = oheight * (nights + 1);
   if (booking_exists(booking)) {
     var booking_widget = $('#booking_' + booking.id);
     if (booking.hidden == true) {
@@ -293,24 +294,37 @@ function draw_booking(booking) {
   booking_widget.draggable({
     drag: function (event,ui) {
       if (_CTRL_DOWN) {
-        console.log("Setting option to y");
+        //console.log("Setting option to y");
         $(this).draggable("option","axis","y");
       } else {
         $(this).draggable("option","axis","x");
-        console.log("Setting option to x");
+        //console.log("Setting option to x");
       }
     },
     stop: function () {
       try {
         _set("salor_hotel.pause_redraw",true);
         var room = get_room_from_mouse();
-        var new_start_end_date = get_new_start_end_date($(this).attr('booking_id'),get_date_from_xy( $(this).offset() ));
-        console.log("new start end is: ", new_start_end_date,"Room is:",room.room.id);
+        var booking = get_booking($(this).attr('booking_id'));
+        
+        //console.log("new start end is: ", new_start_end_date,"Room is:",room.room.id);
         if (room) {
+          if (Date.parse(booking.from) > Date.parse($('#show_booking_from').val())){
+            // i.e. we  don't update the date unless the booking is fully displayed.
+            try {
+              var new_start_end_date = get_new_start_end_date($(this).attr('booking_id'),get_date_from_xy( $(this).offset() ));
+              var model = { room_id: room.room.id, from_date: new_start_end_date[0], to_date: new_start_end_date[1] };
+            } catch (err) {
+              //console.log(err);
+              var model = { room_id: room.room.id};
+            }
+          } else {
+            var model = { room_id: room.room.id};
+          }
           payload = {
             relation: 'bookings',
             id: $(this).attr('booking_id'), 
-            model: { room_id: room.room.id, from_date: new_start_end_date[0], to_date: new_start_end_date[1] } 
+            model: model
           };
           _push(payload,
                 '/orders/update_ajax',
@@ -319,16 +333,18 @@ function draw_booking(booking) {
                   _set("salor_hotel.pause_redraw",false);
                 }, 
                 function () {
-                  console.log('call failed');
+                  //console.log('call failed');
                   _set("salor_hotel.pause_redraw",false);
                 }
          ); // end _push
         } else {
-          console.log("Couldn't get room");
+          //console.log("Couldn't get room");
           _set("salor_hotel.pause_redraw",false);
         }
 
-      } catch (e) { console.log(e.get_message());}
+      } catch (e) { 
+        //console.log(e.get_message());
+      }
     }
   });
 }
@@ -341,10 +357,9 @@ function draw_bookings() {
   for (var key in _get("rooms.json").bookings) {
     var booking = _get("rooms.json").bookings[key];
     if (booking_exists(booking) && booking.hidden) {
-      console.log("removing", booking);
       $('#booking_' + booking.id).remove();
     } else if (!booking.hidden == true) {
-      console.log("drawing",booking);
+
       draw_booking(booking);
     }
   }
