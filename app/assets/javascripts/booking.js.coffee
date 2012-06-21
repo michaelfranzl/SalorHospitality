@@ -128,10 +128,18 @@ render_season_buttons = ->
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
-  rooms_button = create_dom_element 'div', {id: 'choose_room_container'},'',season_container
+  rooms_button = create_dom_element 'div', {id: 'choose_room_container',class:'season'},'',season_container
   rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
   rooms_select.on 'change', ->
-    submit_json.model.room_id = $(this).val()
+    id = $(this).val()
+    submit_json.model.room_id = id
+    submit_json.model.room_type_id = resources.r[id].rt
+    $.each items_json, (k,v) ->
+      update_base_price k
+    setTimeout ->
+      update_booking_totals()
+      debug 'xx' + submit_json.model.room_type_id
+    , 200
 
 window.change_season = (id) ->
   submit_json.model.season_id = id
@@ -142,7 +150,7 @@ window.change_season = (id) ->
   update_json_booking_items()
   setTimeout ->
     window.render_booking_items_from_json()
-  , 150
+  , 200
 
 
 # This gets unique names of surcharges from the DB. Those names will be rendered as headers for the price calcualtion popup, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later on in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
@@ -212,6 +220,7 @@ add_json_booking_item = (booking_item_id, guest_type_id) ->
 update_base_price = (k) ->
     db = _get 'db'
     db.transaction (tx) ->
+      debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
       tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         if res.rows.length == 0
           base_price = 0
