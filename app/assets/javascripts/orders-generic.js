@@ -1034,6 +1034,7 @@ function manage_counters() {
 function update_tables(){
   $.ajax({
     url: '/tables',
+    dataType: 'script',
     timeout: 2000
   });
 }

@@ -8,11 +8,13 @@
 class TablesController < ApplicationController
 
   before_filter :check_permissions, :except => [:index, :show]
+
+  respond_to :html, :js
   
   def index
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
-    respond_to do |wants|
+    respond_with do |wants|
       wants.html
       wants.js
     end
