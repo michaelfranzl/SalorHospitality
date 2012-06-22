@@ -9,7 +9,8 @@ var tableupdates = -1;
 var automatic_printing = false;
 var debugmessages = [];
 var _CTRL_DOWN = false;
-var _key_codes = {ctrl: 17};
+var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
+var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
 $(function(){
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {
@@ -24,13 +25,17 @@ $(function(){
     }, 10000);
   }
   $(window).keydown(function(e){
-    if (e.keyCode == _key_codes.ctrl) {
-      _CTRL_DOWN = true;
+    for (var key in _key_codes) {
+      if (e.keyCode == _key_codes[key]) {
+        _keys_down[key] = true;
+      }
     }
   });
   $(window).keyup(function(e){
-    if (e.keyCode == _key_codes.ctrl) {
-      _CTRL_DOWN = false;
+    for (var key in _key_codes) {
+      if (e.keyCode == _key_codes[key]) {
+        _keys_down[key] = false;
+      }
     }
   });
 })
@@ -293,7 +298,10 @@ function auto_completable_show_results(elem,results) {
 }
 
 function days_between_dates(from, to) {
-  return Math.floor((Date.parse(to) - Date.parse(from)) / 86400000)
+  var days = Math.floor((Date.parse(to) - Date.parse(from)) / 86400000);
+  if (days == 0)
+    days = 0
+  return days;
 }
 function _log(arg1,arg2,arg3) {
  console.log(arg1,arg2,arg3);
