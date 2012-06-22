@@ -138,7 +138,6 @@ render_season_buttons = ->
       update_base_price k
     setTimeout ->
       update_booking_totals()
-      debug 'xx' + submit_json.model.room_type_id
     , 200
 
 window.change_season = (id) ->

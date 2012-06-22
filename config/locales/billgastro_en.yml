@@ -264,6 +264,7 @@ en:
   articles:
     create:
       success: Article was successfully created
+      license_limited: Your License is limited to %{count} articles
     destroy:
       success: Article was successfully deleted
     find:
@@ -302,6 +303,7 @@ en:
   cancel_and_go_back: Cancel and go back
   categories:
     create:
+      license_limited: Your License is limited to %{count} categories
       success: Category successfully saved
     destroy:
       success: Category successfully deleted
@@ -590,6 +592,7 @@ en:
       new_surcharge: New Surcharge
   tables:
     create:
+      license_limited: Your License is limited to %{count} tables
       success: Table successfully saved
     destroy:
       success: Table successfully deleted

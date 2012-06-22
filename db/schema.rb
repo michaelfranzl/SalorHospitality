@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614123645) do
+ActiveRecord::Schema.define(:version => 20120622112117) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -761,6 +761,12 @@ ActiveRecord::Schema.define(:version => 20120614123645) do
     t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
     t.integer  "largest_booking_number",                        :default => 0
     t.boolean  "use_booking_numbers",                           :default => true
+    t.integer  "max_tables"
+    t.integer  "max_rooms"
+    t.integer  "max_articles"
+    t.integer  "max_options"
+    t.integer  "max_users"
+    t.integer  "max_categories"
   end
 
 end
