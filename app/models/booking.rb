@@ -22,7 +22,9 @@ class Booking < ActiveRecord::Base
         :customer_name => self.customer_name,
         :room_id => self.room_id,
         :duration => self.duration,
-        :hidden => self.hidden
+        :hidden => self.hidden,
+        :finished => self.finished,
+        :paid => self.paid
       }
   end
   def self.create_from_params(params, vendor, user)
