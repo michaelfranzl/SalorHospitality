@@ -321,11 +321,11 @@ function draw_booking(booking) {
                                             booking_build_inner_div(booking), 
                                             $('#rooms')
   );
-  if (is_booked_now(booking) && booking.finished == false) {
+  if (is_booked_now(booking) && booking.finished != true) {
     booking_widget.addClass('room-booking-active');
   } else if (booking.finished == true) {
     booking_widget.addClass('room-booking-finished');
-    if (booking.paid == false)
+    if (booking.paid != true)
       booking_widget.addClass('room-booking-unpaid');
   }
   booking_widget.offset(new_offset);

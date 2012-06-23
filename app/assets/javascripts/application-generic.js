@@ -306,3 +306,58 @@ function days_between_dates(from, to) {
 function _log(arg1,arg2,arg3) {
  console.log(arg1,arg2,arg3);
 }
+function deletable(elem,type,callback) {
+  if (typeof type == 'function') {
+    callback = type;
+    type = 'right'
+  }
+  if (!type)
+    type = 'right';
+  if ($('#' + elem.attr('id') + '_delete').length == 0) {
+    var del_button = create_dom_element('div',{id: elem.attr('id') + '_delete', 'class':'delete', 'target': elem.attr('id')},'',elem);
+    if (!callback) {
+      del_button.on('click',function () {
+        $('#' + $(this).attr('target')).slideUp();
+      });
+    } else {
+      del_button.on('click',callback);
+    }
+  } else {
+    var del_button = $('#' + elem.attr('id') + '_delete');
+  }
+  var offset = elem.offset();
+  if (type == 'right') {
+    offset.left += elem.outerWidth() - del_button.outerWidth() - 5;
+    offset.top += 5
+    del_button.offset(offset);
+  } else if (type == 'append') {
+    elem.append(del_button);
+  }
+  
+}
+function add_button_menu(elem,offset_padding) {
+  if (!offset_padding) {
+    offset_padding = {top: 0, left: 0};
+  }
+  var menu_id = elem.attr('id') + '_button_menu';
+  if ($('#' + menu_id).length == 0) {
+    var menu = create_dom_element('div',{id: menu_id, target: elem.attr('id'), class: 'button_menu'},'',elem);
+  } else {
+    var menu = $('#' + menu_id);
+  }
+  var parent_zindex = elem.css('zIndex');
+  var menu_width = elem.outerWidth() - (elem.outerWidth() / 4);
+  var new_offset = elem.offset();
+  new_offset.top -= (menu.outerHeight() - 5);
+  new_offset.left += 10;
+  new_offset.top += offset_padding.top;
+  new_offset.left += offset_padding.left;
+  menu.offset(new_offset);
+  menu.css({width: menu_width});
+  emit("button_menu.rendered", elem);
+}
+function add_menu_button(elem,button,callback) {
+  var menu = elem.find('.button_menu');
+  menu.append(button);
+  button.on('click',callback);
+}
