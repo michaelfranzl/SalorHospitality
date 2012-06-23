@@ -306,6 +306,8 @@ function days_between_dates(from, to) {
 function _log(arg1,arg2,arg3) {
  console.log(arg1,arg2,arg3);
 }
+/* Adds a delete/X button to the element. Type options  are right and append. The default callback simply slides the element up.
+ if you want special behavior on click, you can pass a closure.*/
 function deletable(elem,type,callback) {
   if (typeof type == 'function') {
     callback = type;
@@ -335,6 +337,7 @@ function deletable(elem,type,callback) {
   }
   
 }
+/* Adds a top button menu to the passed div. offset_padding will be added to the offset before it is used.*/
 function add_button_menu(elem,offset_padding) {
   if (!offset_padding) {
     offset_padding = {top: 0, left: 0};
@@ -354,8 +357,12 @@ function add_button_menu(elem,offset_padding) {
   new_offset.left += offset_padding.left;
   menu.offset(new_offset);
   menu.css({width: menu_width});
+  /* we emit the render and include the element, which will be even.packet. You will have to
+   decide if it is the menu you want in your listener. probably by checking the id of even.packet.attr('id') == 'my_id'*/
   emit("button_menu.rendered", elem);
 }
+/* adds a button element, as created by you, to the button menu of the element. note, this function
+ wants the parent div element, not the actual button menu.*/
 function add_menu_button(elem,button,callback) {
   var menu = elem.find('.button_menu');
   menu.append(button);

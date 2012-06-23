@@ -143,6 +143,11 @@ function is_booked_now(booking) {
   var fdate = get_date(booking.from);
   var tdate = get_date(booking.to);
   var now = new Date();
+  
+  fdate = parseInt(fdate.getMonth() + '' + fdate.getDate());
+  tdate = parseInt(tdate.getMonth() + '' + tdate.getDate());
+  now = parseInt(now.getMonth() + '' + now.getDate());
+  console.log(now,fdate,tdate);
   if (now >= fdate && now <= tdate) {
     return true
   } else {
@@ -321,7 +326,7 @@ function draw_booking(booking) {
                                             booking_build_inner_div(booking), 
                                             $('#rooms')
   );
-  if (is_booked_now(booking) && booking.finished != true) {
+  if (is_booked_now(booking)) {
     booking_widget.addClass('room-booking-active');
   } else if (booking.finished == true) {
     booking_widget.addClass('room-booking-finished');
