@@ -5,7 +5,7 @@ fr:
       article:
         category_id: Catégorie
         description: Description
-        hidden: Invisible
+        hidden: Effacer
         name: Nom
         price: Prix
         usage: Utilisation
@@ -16,7 +16,7 @@ fr:
         color: Couleur
         custom_icon: Mon Icône
         food: Repas
-        hidden: Invisible
+        hidden: Effacer
         icon: Icône
         name: Nom
         tax_id: Taxe
@@ -26,20 +26,20 @@ fr:
       cost_center:
         active: actif
         description: Description
-        hidden: Invisible
+        hidden: Effacer
         name: Nom
       group: groupe
         name: Nom
       option: Option
         category_id: Catégorie
-        hidden: Invisible
+        hidden: Effacer
         name: Nom
         price: Prix
         no_ticket: Ne pas imprimer ticket
         separate_ticket: Ticket séparé
       page: Page
         active: Actif
-        hidden: Invisible
+        hidden: Effacer
         color: Couleur
         height: Hauteur
         image: Image
@@ -47,7 +47,7 @@ fr:
       partial:
         active: Actif
         blurb: Descriptif
-        hidden: Invisible
+        hidden: Effacer
       presentation: Présentation
         active: Actif
         code: Code
@@ -564,34 +564,34 @@ fr:
       success: User successfully saved
     destroy:
       success: User successfully deleted
-  various:
-    cancel: XXX Cancel
+  various: Divers
+    cancel: Annuler
     common_surcharges: Common Surcharges
     home: Home
     pay: Pay
-    save: Save
-    subtotal: Subtotal
+    save: Sauvegarder
+    subtotal: Sous-total
     unamed: Unamed
   violet: Violet
   waiter: Serveur
-  waiterpad_generic_name: Calepin de commandes
-  white: XXXWhite
-  winered: XXXWine Red
-  wrong_password: Données de connexion incorrectes
-  yellow: XXXYellow
-  bookings:
+  waiterpad_generic_name: Carnet de commandes
+  white: Blanc
+  winered: Vin rouge
+  wrong_password: Mot de passe incorrect
+  yellow: Jaune
+  bookings: Réservations
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
   dateandtime: XXX Date
-  finish: XXX Just Finish
+  finish: Terminer
   layouts:
-    application:
+    application: Application
       submit_scribe: OK
-  messages:
-    hello_username: Hello %{name}!
-  print_and_finish: XXX Finish and print
+  messages: Messages
+    hello_username: Bonjour %{nom}!
+  print_and_finish: Terminer et imprimer
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -607,15 +607,15 @@ fr:
       edit_room: Edit Room
       new_room: New Room
   scopes:
-    active: Active
+    active: Actif
     waiterpad: Waiterpad
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Éditer Saison
+      new_season: Nouvelle Saison
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Liste de Taxes
   split_order: XXX Split order
   surcharges:
     new:
@@ -623,8 +623,8 @@ fr:
       common_surcharge: Common Surcharge
       edit_surcharge: Edit Surcharge
       new_surcharge: New Surcharge
-  tax_amount: XXX Amount
-  vendors:
+  tax_amount: Montant
+  vendors: Vendeurs
     index:
       edit: Edit
       switch_to: Select
