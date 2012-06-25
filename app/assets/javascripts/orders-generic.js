@@ -111,10 +111,12 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
@@ -865,7 +867,7 @@ function clone_item(d) {
 }
 
 function add_option_to_item(d, value, cat_id) {
-  if (value != -1) {
+  if (value != -1 && value != 0) {
     $('#options_div_' + d).slideUp();
     d = clone_item(d);
   }
@@ -911,6 +913,7 @@ function number_to_currency(number) {
 }
 
 function render_options(options, d, cat_id) {
+  if (options == null) return;
   jQuery.each(options, function(key,object) {
     if (settings.workstation) {
       button = $(document.createElement('span'));

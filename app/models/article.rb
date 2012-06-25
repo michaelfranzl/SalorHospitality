@@ -22,7 +22,7 @@ class Article < ActiveRecord::Base
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
-  validates_presence_of :name, :category_id
+  validates_presence_of :name, :category_id, :taxes
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden
     existing_quantities = false
