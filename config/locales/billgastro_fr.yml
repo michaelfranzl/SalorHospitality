@@ -39,7 +39,7 @@ fr:
         separate_ticket: Ticket séparé
       page: Page
         active: Actif
-        hidden: Effacer
+        hidden: Invisible
         color: Couleur
         height: Hauteur
         image: Image
@@ -56,7 +56,7 @@ fr:
         markup: XXXERB Markup
         model: Modèle
         name: Nom
-      quantity:
+      quantity: Quantité
         active: actif
         description: Description
         hidden: effacer
@@ -64,52 +64,52 @@ fr:
         prefix: Nom
         price: Prix optionnel
         usage: utilisation
-      role:
+      role: Rôle
         name: Nom
-      settlement:
+      settlement: 
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount
       table:
         abbreviation: Abréviation
         description: Description
-        enabled: XXXactive?
+        enabled: Activé
         height: Hauteur
         height_mobile: Hauteur de l'appareil mobile
-        hidden: XXXdelete?
+        hidden: Effacer
         name: Nom
         width: Largeur
-        width_mobile: Langeur de l'appareil mobile
-        rotate: XXX rotate?
+        width_mobile: Largeur de l'appareil mobile
+        rotate: Pivoter
       tax:
         color: Couleur
-        hidden: XXXdelete
+        hidden: Effacer
         letter: Abréviation
         name: Nom
         percent: Taxe en %
-      user:
+      user: Utilisateur
         color: Couleur
-        hidden: XXXdelete?
+        hidden: Effacer
         language: Langue
         login: Nom d'utilisateur
         password: Mot de passe
         role: Rôle
-        tables: XXXTables
+        tables: Tables
         title: Titre
-        active: XXX active?
+        active: Actif
         screenlock_timeout: XXX Screenlock timeout (sec.)
       vendor_printer:
-        hidden: XXXDelete
-        name: XXXName
-        path: XXXPath
-        copies: XXX Copies
+        hidden: Effacer
+        name: Nom
+        path: Chemin
+        copies: Copies
       guest_type:
-        hidden: delete
-        name: Name
+        hidden: Effacer
+        name: Nom
         taxes: Taxes
       room_price:
-        base_price: Base Price
+        base_price: Prix de base
         guest_type_id: Gast-Typ
-        hidden: löschen
+        hidden: Effacer
         room_type_id: Zimmerklasse
         season_id: Season
       room_type:
