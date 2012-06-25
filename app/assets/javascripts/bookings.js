@@ -3,6 +3,11 @@ var _bounding_boxes = {x:{},y:{}};
 var coords = {};
 
 $(function () {
+  /* Here we set an interval to redraw the display. It's better this way, so we can have a more direct control
+     over the drawing. If we call the redraw inside of functions, it can get out of hand, instead, we need to "mark"
+     the buffer as dirty, i.e. with salor_hotel.bookings.dirty. Sometimes, we are doing something like hovering, or
+     dragging, and we don't want to be redrawing at these points, so we can set salor_hotel.pause_redraw.
+  */
   setInterval(function () {
     if ($('#rooms').is(":visible") && !_get("salor_hotel.pause_redraw") && _get("salor_hotel.bookings.dirty") == true) {
       clear_bookings();
@@ -10,6 +15,7 @@ $(function () {
       _set("salor_hotel.bookings.dirty",false);
     }
   },250);
+  // We need to know the mouse.x and mouse.y
   $('#rooms_container').mousemove(function (event) {
     _mouse.x = event.pageX;
     _mouse.y = event.pageY;
@@ -17,22 +23,10 @@ $(function () {
   
 
 });
-function get_day_from_xy(x,y) {
-  var ret = null;
-  if (typeof x == 'object') {
-    y = x.top;
-  }
-  $.each(_bounding_boxes.y, function (key,value) {
-    var pairs = key.split('-');
-    var top = parseFloat(pairs[0]);
-    var bottom = parseFloat(pairs[1]);
-    if (y >= top && y <= bottom) {
-      ret = value.getDate();
-      return;
-    }
-  });
-  return ret;
-}
+/* 
+ * Here we get the dayte from the y coordinate, the x is actually not used in this function.
+ * You can pass _mouse.x, _mouse.y, or you can pass $(selector).offset()
+ */
 function get_date_from_xy(x,y) {
   var ret = null;
   if (typeof x == 'object') {
@@ -49,6 +43,9 @@ function get_date_from_xy(x,y) {
   });
   return ret;
 }
+/* 
+ * Similar to get_date_from_xy, but uses the x axis to figure out the room. Takes the same arguments, _mouse.x,_mouse.y, or $(selector).offset()
+ */
 function get_room_from_xy(x,y) {
   var ret = null;
   if (typeof x == 'object') {
@@ -66,16 +63,29 @@ function get_room_from_xy(x,y) {
   });
   return ret;
 }
+/* 
+ * The inverse of the above, we sometimes need to know the y position for a certain date.
+ */
+function get_y_by_date(date) {
+  var day = date.getDate();
+  var month = date.getMonth();
+  $.each($('.booking-line'), function () {
+    if ($(this).attr('month') == month && $(this).attr('day') == day) {
+      return $(this).attr('y');
+    }
+  });
+}
 function get_room_from_mouse() {
   return get_room_from_xy(_mouse.x,_mouse.y);
 }
 function get_day_from_mouse() {
-  return get_day_from_xy(_mouse.x,_mouse.y);
+  return get_date_from_xy(_mouse.x,_mouse.y).getDate();
 }
 function get_booking(id) {
   return _get("rooms.json").bookings[id];
 }
-window.receive_rooms_db = function (event) {
+
+function receive_rooms_db (event) {
   var data = event.packet;
   var bookings = [];
   data.get_bookings = function (room_index) {
@@ -88,7 +98,7 @@ window.receive_rooms_db = function (event) {
   _set("salor_hotel.bookings.dirty",true);
 }
 
-window.fetch_rooms = function () {
+function fetch_rooms () {
   _fetch('/rooms?format=json&from=' + _get("salor_hotel.from_input"), function (data) {
     emit('ajax.rooms_index.success', data);
   });
@@ -96,10 +106,18 @@ window.fetch_rooms = function () {
 window.update_room_bookings = function (event) {
   // is now done elsewhere
 }
-window.update_bookings_for_room = function (id,bookings) {
+function update_bookings_for_room (id,bookings) {
   //console.log("Updating Bookings for room",bookings);
   $.each(bookings, function (index,booking) {
-    _get("rooms.json").rooms[id].bookings.push(booking.id);
+    var found = false;
+    for (var i = 0; i < _get("rooms.json").rooms[id].bookings.length;i++) {
+      if (_get("rooms.json").rooms[id].bookings[i].id == booking.id) {
+        found = true;
+        _get("rooms.json").rooms[id].bookings[i] = booking;
+      }
+    }
+    if (!found) 
+      _get("rooms.json").rooms[id].bookings.push(booking.id);
     _get("rooms.json").bookings[booking.id.toString()] = booking;
     _set("salor_hotel.bookings.dirty",true);
   });
@@ -125,12 +143,20 @@ function is_booked_now(booking) {
   var fdate = get_date(booking.from);
   var tdate = get_date(booking.to);
   var now = new Date();
+  
+  fdate = parseInt(fdate.getMonth() + '' + fdate.getDate());
+  tdate = parseInt(tdate.getMonth() + '' + tdate.getDate());
+  now = parseInt(now.getMonth() + '' + now.getDate());
+  console.log(now,fdate,tdate);
   if (now >= fdate && now <= tdate) {
     return true
   } else {
     return false;
   }
 }
+/* 
+ * Finding out if the room is currently booked.
+ */
 function is_booked (booking,date) {
   if (!booking) {
     return false;
@@ -148,14 +174,19 @@ function is_booked (booking,date) {
   }
   return false;
 }
+// just a text formatting helper
 function to_day_month(date) {
   return date.getDate() + "/" + (date.getMonth()+1);
 }
+// Just a format helper
 function get_from_to_of_booking(booking) {
   var from = new Date(Date.parse(booking.from));
   var to = new Date(Date.parse(booking.to));
   return to_day_month(from) + ' -> ' + to_day_month(to);
 }
+/* 
+ * Each booking has an inner div with elements, as new features get added, we put the stuff in here.
+ */
 function booking_build_inner_div(booking) {
   var inner_div = create_dom_element('div',{class:'inner-div'},'','');
   var name_div = create_dom_element('div',{class:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
@@ -173,27 +204,24 @@ function booking_build_inner_div(booking) {
   });
   return inner_div;
 }
-function get_y_by_date(date) {
-  var day = date.getDate();
-  var month = date.getMonth();
-  $.each($('.booking-line'), function () {
-    if ($(this).attr('month') == month && $(this).attr('day') == day) {
-      return $(this).attr('y');
-    }
-  });
-}
+
+// A quick test to see if a booking element exists on the screen
 function booking_exists(booking) {
   if ($('#booking_' + booking.id).length > 0) {
     return true;
   }
   return false;
 }
+/* 
+ * Used for the drag/drop editing of the date of the stay.
+ */
 function get_new_start_end_date(booking_id,new_date) {
   var booking = _get("rooms.json").bookings[booking_id];
   var duration = days_between_dates(booking.from, booking.to);
   var new_end_date = new Date(new_date.getFullYear(),new_date.getMonth(), new_date.getDate() + duration);
   return [date_as_ymd(new_date),date_as_ymd(new_end_date)];
 }
+// General callback for the mousenter event
 function booking_mouse_enter () {
   $.each($('.room-booking'), function () {
     $(this).css({'z-index':1005});
@@ -202,11 +230,17 @@ function booking_mouse_enter () {
   booking_widget.css({'z-index':1009});
   _set("salor_hotel.pause_redraw",true);
 }
+// general callback for the mouseout event
 function booking_mouse_out () {
   _set("salor_hotel.pause_redraw",false);
   var booking_widget = $('#booking_' + $(this).attr('booking_id'));
   booking_widget.css({'z-index':1005});
 }
+/* 
+ * This is the function that we use to actually draw the booking, it should be completely disconnected from everything,
+ * just provide it with a booking object, and it will draw it where it is supposed to be.
+ */
+
 function draw_booking(booking) {
   if (!$('#rooms').is(":visible")) {
     return;
@@ -219,7 +253,8 @@ function draw_booking(booking) {
   // x coordinate.
   var x = _get("rooms.json").keys.indexOf(booking.room_id) + 1; // plus 1 because arrays are 0 indexed
   var nights = days_between_dates(booking.from, booking.to);
-
+  //  negative_offset is used to put the div offset halfway inside the div for the arrive at noon leave at noon concept
+  var negative_offset = _get("salor_hotel.outerHeight") / 2;
   var tpad = _get("salor_hotel.tpad");
   var lpad = _get("salor_hotel.lpad");
   var owidth = _get("salor_hotel.outerWidth");
@@ -228,15 +263,21 @@ function draw_booking(booking) {
   var booking_class = 'odd';
   var offset = $('#rooms').offset();
   var d = get_date(booking.from);
+  // We save the y coords when we generate the booking table to make it easier. Used to be a function, but that
+  // was problematic.
   var key = (d.getMonth() + 1) + '-' + d.getDate();
   var y = coords[key];
   if (!y)
       y = 1;
+  // If the start_date of the booking is before the current view, then we need to 
+  // recalculate the number of nights we need to show for this view
   if (Date.parse(booking.from) < Date.parse($('#show_booking_from').val())) {
     nights = days_between_dates($('#show_booking_from').val(), booking.to);
     y = 1;
   }
-  var widget_height = oheight * (nights + 1);
+  var widget_height = oheight * (nights + 1); // because they leave the afternoon of the next day
+  
+  // If the booking exists, then we only need to update it.
   if (booking_exists(booking)) {
     var booking_widget = $('#booking_' + booking.id);
     if (booking.hidden == true) {
@@ -245,28 +286,31 @@ function draw_booking(booking) {
     
     d = get_date(booking.from);
     if (y == 1) {
-      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 40 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+      negative_offset += 10;
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
       widget_height += 15;
     } else {
-      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
     }
     $('#booking_' + booking.id + ' > div.inner-div > span.name').html(booking.customer_name);
     booking_widget.offset(new_offset);
     booking_widget.css({height: widget_height});
     return;
-  }
+  } // end  if (booking_exists(booking)) {
 
+  // the it's top aligned, probably starts before the current view, so we just move it to the very top
   if (y == 1) {
-    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 40 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
-    widget_height += 15;
+    negative_offset += 10;
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight(), left: offset.left + (owidth * x) + lpad + 10};
+    widget_height += 30; // when we remove the top offset, we have to extend the height of the widget to compensate
   } else {
-    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - 25 + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
   }
   
   //_log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
 
   if (booking.customer_name == '') {
-    booking.customer_name = i18n.unamed;
+    booking.customer_name = i18n.unamed; // this should never happen, they should always set a customer.
   }
   
   var booking_widget = create_dom_element(  'div', 
@@ -284,16 +328,23 @@ function draw_booking(booking) {
   );
   if (is_booked_now(booking)) {
     booking_widget.addClass('room-booking-active');
+  } else if (booking.finished == true) {
+    booking_widget.addClass('room-booking-finished');
+    if (booking.paid != true)
+      booking_widget.addClass('room-booking-unpaid');
   }
   booking_widget.offset(new_offset);
+  // We store most of the information to do with the booking
+  // right on the element itself in attributes.
   booking_widget.attr('y',new_offset.top);
   booking_widget.attr('x',new_offset.left);
   booking_widget.css({height: widget_height});
   booking_widget.on('mouseenter',booking_mouse_enter);
   booking_widget.on('mouseout',booking_mouse_out);
+  
   booking_widget.draggable({
     drag: function (event,ui) {
-      if (_CTRL_DOWN) {
+      if (_keys_down.ctrl) { // _keys_down is setup in application-generic.js
         //console.log("Setting option to y");
         $(this).draggable("option","axis","y");
       } else {
@@ -364,6 +415,7 @@ function draw_bookings() {
     }
   }
 }
+// helper for formating the coords[key]
 function get_coord_key_from_element(elem,axis) {
   var key = '';
   if (axis == 'y') {
@@ -372,7 +424,7 @@ function get_coord_key_from_element(elem,axis) {
     return elem.offset().left + '-' + (elem.offset().left + elem.outerWidth());
   }
 }
-window.render_booking_lines = function () {
+function render_booking_lines () {
   var num_rooms = _get("rooms.json").keys.length;
   var now = new Date(Date.parse($('#show_booking_from').val()))
   var i = 1
@@ -408,6 +460,7 @@ window.render_booking_lines = function () {
       }
     }
     r.offset(css);
+    r.css({height: _get("salor_hotel.outerHeight")});
     
     if (i == 31) {
       r.addClass('room-date-column-last');
@@ -483,7 +536,7 @@ function draw_rooms_header() {
   if (new_width < $(window).width() - 5) {
     new_width = $(window).width() - 5;
   }
-  $('#rooms').css({'width': new_width + 'px', height: 32 * 50})
+  $('#rooms').css({'width': new_width + 'px', height: 32 * room.outerHeight() + room.outerHeight()})
   width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
   css = {top: offset.top + tpad + $('#header').outerHeight() + 20, left: offset.left + lpad}
   room.offset(css);

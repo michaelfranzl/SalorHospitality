@@ -716,9 +716,12 @@ function customer_list_update() {
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
-
-function add_payment_method(model_id) {
+function show_payment_methods(model_id,allow_delete) {
   $('#payment_methods_container_' + model_id).slideDown();
+  if (allow_delete)
+    deletable($('#payment_methods_container_' + model_id));
+}
+function add_payment_method(model_id) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
@@ -769,10 +772,15 @@ function add_payment_method(model_id) {
     var uid = payment_method_uid;
     var mid = model_id;
     pm_input.on('keyup', function(){
-      payment_method_input_change(this, mid, oid);
+      payment_method_input_change(this, uid,mid);
     });
   })();
   pm_row.append(pm_input);
+  if ($('.booking_form').is(":visible")) {
+    deletable(pm_row,'append',function () {
+      $(this).parent().remove();
+    });
+  }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
 }
 

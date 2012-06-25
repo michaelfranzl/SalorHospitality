@@ -4,6 +4,7 @@ $ ->
   connect 'salor_hotel.receive_rooms_db', 'ajax.rooms_index.success', window.receive_rooms_db
   connect 'salor_hotel.refresh_rooms', 'salor_hotel.render_rooms', window.render_rooms
   connect 'salor_hotel.booking_send','send.booking', window.update_room_bookings
+  connect 'salor_hotel.add_button_menu_rendered','button_menu.rendered', add_payment_method_buttons
   if window.openDatabase
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
   # hotel_add_price_form_button()
@@ -15,7 +16,12 @@ $ ->
     if $('#rooms').is(":visible")
       emit 'salor_hotel.render_rooms',{}
 
-
+window.add_payment_method_buttons = (event) ->
+  packet = event.packet
+  if packet.attr('id').indexOf('payment_methods_container') != -1 and $('.booking_form').is(":visible")
+    add_menu_button packet, create_dom_element('div',{'id': 'add_pm_button',class:'add-button', model_id: packet.attr('model_id')},'',''), ->
+      add_payment_method($(this).attr('model_id'));
+      
 # Updates the local DB from JSON objects delivered by rails. Hooked into update_resources of the main app.
 
 
@@ -90,6 +96,7 @@ window.display_booking_form = (room_id) ->
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   #add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
+  
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
 window.initialize_booking_form = ->
