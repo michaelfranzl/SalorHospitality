@@ -5,18 +5,18 @@ fr:
       article:
         category_id: Catégorie
         description: Description
-        hidden: Effacer
+        hidden: Invisible
         name: Nom
         price: Prix
         usage: Utilisation
-        active: XXX active
-        image: XXX Image
-        tax_id: XXX Tax
-      category:
+        active: actif
+        image: Image
+        tax_id: Taxe
+      category: Catégorie
         color: Couleur
         custom_icon: Mon Icône
         food: Repas
-        hidden: XXXdelete
+        hidden: Invisible
         icon: Icône
         name: Nom
         tax_id: Taxe
@@ -24,38 +24,38 @@ fr:
         separate_print: XXX Cut ticket
         user_id: XXX Preparing User
       cost_center:
-        active: actif?
+        active: actif
         description: Description
-        hidden: XXXdelete
+        hidden: Invisible
         name: Nom
-      group:
+      group: groupe
         name: Nom
-      option:
+      option: Option
         category_id: Catégorie
-        hidden: XXXDelete
+        hidden: Invisible
         name: Nom
         price: Prix
-        no_ticket: XXX Dont' print ticket
-        separate_ticket: XXX Cut ticket
-      page:
-        active: XXXactive
-        hidden: XXXdelete
-        color: XXX Color
-        height: XXX Height
-        image: XXX Image
-        width: XXX Width
+        no_ticket: Ne pas imprimer ticket
+        separate_ticket: Ticket séparé
+      page: Page
+        active: Actif
+        hidden: Effacer
+        color: Couleur
+        height: Hauteur
+        image: Image
+        width: Largeur
       partial:
-        active: XXXaktiv
-        blurb: XXXBlurb
-        hidden: XXXdelete
-      presentation:
-        active: XXXactive
-        code: XXXRuby code
-        description: XXXDescription
-        hidden: XXXdelete
+        active: Actif
+        blurb: Descriptif
+        hidden: Invisible
+      presentation: Présentation
+        active: Actif
+        code: Code
+        description: Description
+        hidden: Effacer
         markup: XXXERB Markup
-        model: XXXType
-        name: XXXName
+        model: Modèle
+        name: Nom
       quantity:
         active: actif
         description: Description
