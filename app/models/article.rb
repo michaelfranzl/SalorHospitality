@@ -50,12 +50,12 @@ class Article < ActiveRecord::Base
 
   def price=(price)
     price =  price.gsub(',', '.') if price.class == String
-      write_attribute :price, price
+    write_attribute :price, price
   end
 
   def hide
-    update_attributes :hidden => true, :active => false
-    quantities.update_all :hidden => true, :active => false
+    self.update_attributes :hidden => true, :active => false
+    self.quantities.update_all :hidden => true, :active => false
   end
 
   def name_description
