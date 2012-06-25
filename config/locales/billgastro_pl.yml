@@ -1,5 +1,8 @@
 ---
 pl:
+  vendors:
+    index:
+      switch_to: Wybierz
   activerecord:
     attributes:
       article:
