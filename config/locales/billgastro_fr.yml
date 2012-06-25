@@ -504,24 +504,24 @@ fr:
   scroll_to_room: Aller dans salle
   scroll_up: Monter
   send_and_go_back: Enregistrer et retourner
-  served_by_X_on_table_Y: Vous avez été servi par %{waiter} dans %{table}
+  served_by_X_on_table_Y: Vous avez été servi par %{serveur} dans %{table}
   server_no_response: Le serveur Bill Gastro ne répond plus. La ligne est occupée,
     ou bien le signal wi-fi est interrompu.
-  sessions:
-    browser_warning:
+  sessions: Sessions
+    browser_warning: Avertissement navigateur
       continue: Continuer
       warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium
         comme navigateur. Bill Gastro a exclusivement été configuré pour ces navigateurs.
     new:
       email: Votre e-mail
-      login: psudonyme
+      login: pseudonyme
       password: Mot de passe
-      username: Utilisateur
+      username: Nom d'utilisateur
   settlements:
-    detailed_list:
+    detailed_list: Liste détaillée
       count: Quantité
-      order_number_on_table_on_date: Commande numéro %{number} dans %{table} à %{time}
-      revenue: Revenue
+      order_number_on_table_on_date: Numéro de commande %{numéro} dans %{table} à %{time}
+      revenue: Revenu
       total: Total
       unit_price: Prix unitaire
     index:
@@ -534,7 +534,7 @@ fr:
       print: XXXPrint
       start: XXXStart
       started_at: XXXStarted at
-  statistic: Statistique
+  statistic: Statistiques
   statistics:
     journal: Journal (ordre chronologique)
     weekdays: Jours de la semaine
