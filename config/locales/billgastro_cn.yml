@@ -406,15 +406,15 @@ en:
     functions_header_order_form:
       move_order: 移動訂單到不同的桌子
     index:
-      delivery_list: Delivery list
-      preparation_list: Preparation list
+      delivery_list: 發貨清單
+      preparation_list: 準備清單
     invoice_form:
       just_finish: 完畢
-      print_and_finish: Print and finish this order
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
+      print_and_finish: 打印並完成此訂單
+      set_cost_center: 設置成本中心此訂單
+      set_tax_for_all: 設置成本中心所有項目
+      set_taxes: 設置成本中心
+      split_invoice: 拆分發票
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
       change_money: XXX Change
