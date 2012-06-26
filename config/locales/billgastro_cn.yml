@@ -392,17 +392,17 @@ en:
       new_option: 新選項
       select_all: 選擇所有
     create:
-      success: Option successfully saved
+      success: 股權成功保存了
     destroy:
-      success: Option successfully deleted
-  orange: Orange
+      success: 成功刪除的選項了
+  orange: 橙
   orders:
     functions_header_index:
-      items_notifications: Notifications
-      print_now: Print now
-      show_last_order: Show last order
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      items_notifications: 通知
+      print_now: 打印現在
+      show_last_order: 顯示最近秩序
+      show_last_booking: XXX 顯示最近預訂
+      toggle_between_tables_and_rooms: XXX 客房和表之間切換
     functions_header_order_form:
       move_order: Move order to other table
     index:
