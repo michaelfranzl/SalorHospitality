@@ -310,20 +310,20 @@ en:
       edit_category: 編輯類別
       maindish: 主菜
       new_category: 新類別
-      nonalcoholics: Alcohol Free
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
+      nonalcoholics: 無酒精
+      noodles: 麵條
+      redwinebottle: 一瓶紅葡萄酒
+      redwineglass: 紅葡萄酒
+      rosewinebottle: 一瓶桃紅葡萄酒
+      rosewineglass: 桃紅葡萄酒
+      sidedish: 小菜
+      soup: 湯
+      sparkling: 起泡葡萄酒
+      starter: 開胃菜
+      tea: 茶碗
+      teapot: 茶壺
+      whitewinebottle: 一瓶白葡萄酒
+      whitewineglass: 白葡萄酒
     destroy:
       success: Category successfully deleted
   clear_order_and_go_back: Clear order and go back
