@@ -54,7 +54,6 @@ class Article < ActiveRecord::Base
   end
 
   def hide
-    debugger
     self.update_attributes :hidden => true, :active => false
     self.quantities.update_all :hidden => true, :active => false
   end
