@@ -325,26 +325,26 @@ en:
       whitewinebottle: 一瓶白葡萄酒
       whitewineglass: 白葡萄酒
     destroy:
-      success: Category successfully deleted
-  clear_order_and_go_back: Clear order and go back
-  copy: Copy
+      success: 分類成功刪除了
+  clear_order_and_go_back: 清除秩序，回去
+  copy: 複製
   cost_centers:
     index:
       active: 活躍
       inactive: 待用
     new:
       edit_cost_center: 編輯付款人
-      new_cost_center: N新付款人
+      new_cost_center: 新付款人
     create:
-      success: Cost Center successfully saved
+      success: 成本中心成功地保存了
     destroy:
-      success: Cost Center successfully deleted
+      success: 成本中心成功刪除了
   count: 計算
   create: 創建
   dateandtime: 日期
   default: 默認
   delete: 刪除嗎
-  display: Display
+  display: 食品
   edit: 編輯
   exit: 太平門
   finish: 完畢
@@ -354,8 +354,8 @@ en:
   gross: 合計
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
+      edit_group: 編輯組
+      new_group: 新組
   guestroom: Guestroom
   host: Host
   images:
