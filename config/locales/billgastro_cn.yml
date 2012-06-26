@@ -381,16 +381,16 @@ en:
     hello_username: 餵 %{name}!
   move_order_to_table: 移動訂單到不同的桌子
   must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對物品還是變種
-  net: Net
+  net: 淨
   new: 新
-  no_printing: No printing
-  not_found: Not found
+  no_printing: 沒有印刷
+  not_found: 未找到
   options:
     new:
-      edit_option: Edit Option
+      edit_option: 編輯選項
       hidden: 刪除嗎?
-      new_option: 新 Option
-      select_all: select all
+      new_option: 新選項
+      select_all: 選擇所有
     create:
       success: Option successfully saved
     destroy:
