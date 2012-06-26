@@ -372,16 +372,15 @@ en:
       done: 完成
       no_printing: 沒有印刷
   just_order: 只訂購
-  kitchen: Kitchen
+  kitchen: 廚房
   layouts:
     application:
-      submit_scribe: OK
+      submit_scribe: 好
   logout: 註銷 %{who}
   messages:
     hello_username: 餵 %{name}!
-  move_order_to_table: Move order to different table
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
+  move_order_to_table: 移動訂單到不同的桌子
+  must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對物品還是變種
   net: Net
   new: 新
   no_printing: No printing
