@@ -402,9 +402,9 @@ en:
       print_now: 打印現在
       show_last_order: 顯示最近秩序
       show_last_booking: XXX 顯示最近預訂
-      toggle_between_tables_and_rooms: XXX 客房和表之間切換
+      toggle_between_tables_and_rooms: XXX 房間和桌子之間切換
     functions_header_order_form:
-      move_order: Move order to other table
+      move_order: 移動訂單到不同的桌子
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
