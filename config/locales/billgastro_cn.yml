@@ -356,22 +356,22 @@ en:
     new:
       edit_group: 編輯組
       new_group: 新組
-  guestroom: Guestroom
-  host: Host
+  guestroom: 客房
+  host: 主人
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
-  is_no_number: is not a number.
+    errempty: 無效的文件
+    errsize: 無效的文件大小
+    errtype: 無效的文件類型
+  invoice: 發票
+  invoice_numer_X_at_time: 發票號 %{number} 當 %{datetime}
+  invoices: 發票
+  is_no_number: 不是一個數字
   items:
     item_tablerow:
-      clear: Clear
-      done: D完成
-      no_printing: no printing
-  just_order: Just order
+      clear: 清除
+      done: 完成
+      no_printing: 沒有印刷
+  just_order: 只訂購
   kitchen: Kitchen
   layouts:
     application:
