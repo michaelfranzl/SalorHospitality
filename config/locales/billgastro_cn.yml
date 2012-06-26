@@ -417,10 +417,10 @@ en:
       split_invoice: 拆分發票
       split_this_item: 單擊要分裂這些項目一次一個
       switch_tax_for_this_item: 單擊要更改此項目的稅
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      change_money: XXX 改變
+      set_booking: XXX 分配給預訂
     login_form:
-      email: Your E-Mail
+      email: 您的E-Mail
       login: 登錄
       password: 密碼
       username: 用戶
