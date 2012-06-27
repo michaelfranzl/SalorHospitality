@@ -523,9 +523,9 @@ ru:
         только в этих браузерах.
     new:
       email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
+      login: Логин
+      password: Пароль
+      username: Пользователь
   settlements:
     detailed_list:
       count: Count
@@ -537,7 +537,7 @@ ru:
       all_cost_centers: Все
       end_date: Конечная дата
       start_date: Начальная дата
-      sum_total: Об
+      sum_total: Общая сумма
     settlement:
       finish: Конец
       print: Печать
