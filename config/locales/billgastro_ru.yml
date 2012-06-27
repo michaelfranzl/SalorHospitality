@@ -34,12 +34,12 @@ ru:
         category_id: Категория
         hidden: Удалить
         name: Название
-        no_ticket: Dont' print ticket
-        price: Price
-        separate_ticket: Cut ticket
+        no_ticket: Не печатать заказ-наряд
+        price: Цена
+        separate_ticket: Отрезать заказ-наряд
       page:
         active: active
-        color: Color
+        color: Цвет
         height: Height
         hidden: delete
         image: Image
