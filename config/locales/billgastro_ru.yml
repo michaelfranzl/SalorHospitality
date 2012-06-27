@@ -378,14 +378,14 @@ ru:
       submit_scribe: OK
   logout: log out %{who}
   messages:
-    hello_username: Hello %{name}!
-  move_order_to_table: Move order to different table
+    hello_username: Здравствуйте, %{name}!
+  move_order_to_table: Переместить заказ на другой стол
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
   net: Net
   new: New
   no_printing: No printing
-  not_found: Not found
+  not_found: Не найдено
   options:
     new:
       edit_option: Edit Option
@@ -399,11 +399,11 @@ ru:
   orange: Orange
   orders:
     functions_header_index:
-      items_notifications: Notifications
-      print_now: Print now
-      show_last_order: Show last order
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      items_notifications: Уведомления
+      print_now: Напечатать сейчас
+      show_last_order: Показать последний заказ
+      show_last_booking: Показать последнее резервирование
+      toggle_between_tables_and_rooms: Переключение между залами и столами
     functions_header_order_form:
       move_order: Move order to other table
     index:
