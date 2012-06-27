@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
       @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
       @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
-      @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
+      @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
     end
 
     def set_locale

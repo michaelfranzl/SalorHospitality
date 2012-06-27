@@ -16,6 +16,9 @@ $green: #75b10d
 $blue: #136880
 $blank: #27343b
 
+div.area
+  :height 460px
+
 .errorExplanation
   :font-size small
   :color red
@@ -352,6 +355,9 @@ div.payment_method_row
   input
     :width 60px
     :font-size 130%
+  div.delete
+    :display inline-block
+    :margin-left 10px
 
 span.payment_method.selected
   :-moz-border-radius 4px
@@ -397,7 +403,8 @@ div.booking_form
   div.guest_type
     :background-color $billgastroblue1
   
-  div.season
+  div.season,
+  div#choose_room_container
     :background-color $billgastrogrey1
   
   div.surcharge_col.booking_item_total
@@ -458,3 +465,26 @@ div#ui-datepicker-div
       :background-color $billgastrogrey2
     td.ui-datepicker-unselectable
       :background-color transparent
+
+div.delete 
+  :background-image url(button_small_delete.png)
+  :width 32px
+  :height 35px
+  :cursor pointer
+  :position absolute
+div.add-button
+  :background-image url(button_small_plus.png)
+  :width 32px
+  :height 35px
+  :cursor pointer
+  :position absolute
+div.button_menu
+  :background-color $billgastrogrey1
+  :border 1px solid $billgastrogrey2
+  :border-bottom none
+  :padding 3px
+  :padding-left 10px
+  :padding-top 5px
+  :border-radius 5px
+  :position absolute
+  :height 40px

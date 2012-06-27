@@ -65,6 +65,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#tables').show();
     $('#rooms').hide();
+    $('#areas').show();
     //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
@@ -111,10 +112,12 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
@@ -161,6 +164,7 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#tables').hide();
     $('#rooms').hide();
+    $('#areas').hide();
     $('#inputfields').html('');
     $('#itemstable').html('');
     $('#functions_header_invoice_form').show();
@@ -714,9 +718,12 @@ function customer_list_update() {
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
-
-function add_payment_method(model_id) {
+function show_payment_methods(model_id,allow_delete) {
   $('#payment_methods_container_' + model_id).slideDown();
+  if (allow_delete)
+    deletable($('#payment_methods_container_' + model_id));
+}
+function add_payment_method(model_id) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
@@ -767,10 +774,15 @@ function add_payment_method(model_id) {
     var uid = payment_method_uid;
     var mid = model_id;
     pm_input.on('keyup', function(){
-      payment_method_input_change(this, mid, oid);
+      payment_method_input_change(this, uid,mid);
     });
   })();
   pm_row.append(pm_input);
+  if ($('.booking_form').is(":visible")) {
+    deletable(pm_row,'append',function () {
+      $(this).parent().remove();
+    });
+  }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
 }
 
@@ -865,7 +877,7 @@ function clone_item(d) {
 }
 
 function add_option_to_item(d, value, cat_id) {
-  if (value != -1) {
+  if (value != -1 && value != 0) {
     $('#options_div_' + d).slideUp();
     d = clone_item(d);
   }
@@ -911,6 +923,7 @@ function number_to_currency(number) {
 }
 
 function render_options(options, d, cat_id) {
+  if (options == null) return;
   jQuery.each(options, function(key,object) {
     if (settings.workstation) {
       button = $(document.createElement('span'));
@@ -1034,6 +1047,7 @@ function manage_counters() {
 function update_tables(){
   $.ajax({
     url: '/tables',
+    dataType: 'script',
     timeout: 2000
   });
 }

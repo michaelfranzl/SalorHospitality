@@ -16,7 +16,7 @@ class BookingItem < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     self.surcharge_items.update_all :hidden => true
 
-    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id}.uniq
+    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id if si.surcharge}.uniq
     #puts "XXXXXX existing_surcharge_ids #{existing_surcharge_ids.inspect}"
 
     ids.each do |i|

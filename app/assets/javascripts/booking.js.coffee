@@ -4,6 +4,7 @@ $ ->
   connect 'salor_hotel.receive_rooms_db', 'ajax.rooms_index.success', window.receive_rooms_db
   connect 'salor_hotel.refresh_rooms', 'salor_hotel.render_rooms', window.render_rooms
   connect 'salor_hotel.booking_send','send.booking', window.update_room_bookings
+  connect 'salor_hotel.add_button_menu_rendered','button_menu.rendered', add_payment_method_buttons
   if window.openDatabase
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
   # hotel_add_price_form_button()
@@ -15,7 +16,12 @@ $ ->
     if $('#rooms').is(":visible")
       emit 'salor_hotel.render_rooms',{}
 
-
+window.add_payment_method_buttons = (event) ->
+  packet = event.packet
+  if packet.attr('id').indexOf('payment_methods_container') != -1 and $('.booking_form').is(":visible")
+    add_menu_button packet, create_dom_element('div',{'id': 'add_pm_button',class:'add-button', model_id: packet.attr('model_id')},'',''), ->
+      add_payment_method($(this).attr('model_id'));
+      
 # Updates the local DB from JSON objects delivered by rails. Hooked into update_resources of the main app.
 
 
@@ -90,6 +96,7 @@ window.display_booking_form = (room_id) ->
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   #add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
+  
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
 window.initialize_booking_form = ->
@@ -113,7 +120,11 @@ set_booking_duration = ->
   update_booking_totals()
 
   
-
+rooms_as_options = ->
+  str = ''
+  $.each _get("rooms.json").rooms, (key,value) ->
+    str += '<option value="'+value.room.id+'">' + value.room.name + '</option>'
+  return str
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
 render_season_buttons = ->
   season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
@@ -124,6 +135,17 @@ render_season_buttons = ->
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
+  rooms_button = create_dom_element 'div', {id: 'choose_room_container',class:'season'},'',season_container
+  rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
+  rooms_select.on 'change', ->
+    id = $(this).val()
+    submit_json.model.room_id = id
+    submit_json.model.room_type_id = resources.r[id].rt
+    $.each items_json, (k,v) ->
+      update_base_price k
+    setTimeout ->
+      update_booking_totals()
+    , 200
 
 window.change_season = (id) ->
   submit_json.model.season_id = id
@@ -134,7 +156,7 @@ window.change_season = (id) ->
   update_json_booking_items()
   setTimeout ->
     window.render_booking_items_from_json()
-  , 150
+  , 200
 
 
 # This gets unique names of surcharges from the DB. Those names will be rendered as headers for the price calcualtion popup, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later on in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
@@ -196,13 +218,15 @@ add_json_booking_item = (booking_item_id, guest_type_id) ->
     tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select, selected:false}
+        radio_select = record.radio_select == 'true'
+        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
 
 
   
 update_base_price = (k) ->
     db = _get 'db'
     db.transaction (tx) ->
+      debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
       tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         if res.rows.length == 0
           base_price = 0
