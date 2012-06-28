@@ -28,7 +28,7 @@ el:
         name: Όνομα
         separate_print: Κόψτε ετικέτα
         tax_id: Φόρος
-        user_id: Ετοιμασία Χρήστη
+        user_id: Προετοιμασία Χρήστη
         vendor_printer_id: Εκτυπωτής
       cost_center:
         active: ενεργό;
