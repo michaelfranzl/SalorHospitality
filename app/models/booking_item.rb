@@ -16,7 +16,7 @@ class BookingItem < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     self.surcharge_items.update_all :hidden => true
 
-    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id}.uniq
+    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id if si.surcharge}.uniq
     #puts "XXXXXX existing_surcharge_ids #{existing_surcharge_ids.inspect}"
 
     ids.each do |i|
@@ -52,7 +52,8 @@ class BookingItem < ActiveRecord::Base
     if self.guest_type_id.zero?
       self.base_price = 0
     else
-      self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
+      broom = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
+      broom ? self.base_price = broom.base_price : 0 
     end
     self.sum = self.count * self.base_price
     unless self.guest_type_id.zero?

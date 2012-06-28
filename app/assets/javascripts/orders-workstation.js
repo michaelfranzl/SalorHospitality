@@ -57,7 +57,7 @@ function add_comment_to_item(d) {
 	var comment = $('input#comment_for_item_' + d).val();
 	$('#comment_for_item_' + d).slideUp();
   d = clone_item(d);
-  set_json(d,'o',comment);
+  set_json('order', d,'o',comment);
 	$('#comment_' + d).html(comment);
   $('#tablerow_' + d + '_label').addClass('updated');
 }
@@ -66,7 +66,7 @@ function add_price_to_item(d) {
 	price = $('input#price_for_item_' + d).val();
 	$('#price_' + d).html(price);
 	price = price.replace(',', '.');
-  set_json(d,'p',price);
+  set_json('order', d, 'p', price);
 	calculate_sum();
 	$('#price_for_item_' + d).slideUp();
   $('#tablerow_' + d + '_label').addClass('updated');

@@ -28,11 +28,18 @@ class Surcharge < ActiveRecord::Base
     seasons = vendor.seasons.existing
     surcharge = nil
     seasons.each do |s|
-      guest_types.each do |gt|
-        gt_id = params[:common_surcharge] ? nil : gt.id 
-        surcharge = vendor.surcharges.where(:season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name]).first
-        unless @surcharge
-          surcharge = Surcharge.create :season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name], :vendor_id => vendor.id, :company_id => vendor.company.id
+      if params['common_surcharge'] == '1'
+        surcharge = vendor.surcharges.where(:season_id => s.id, :guest_type_id => nil, :name => params[:surcharge][:name]).first
+        unless surcharge
+          surcharge = Surcharge.create :season_id => s.id, :guest_type_id => nil, :name => params[:surcharge][:name], :vendor_id => vendor.id, :company_id => vendor.company.id
+        end
+      else
+        guest_types.each do |gt|
+          gt_id = params[:common_surcharge] ? nil : gt.id 
+          surcharge = vendor.surcharges.where(:season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name]).first
+          unless surcharge
+            surcharge = Surcharge.create :season_id => s.id, :guest_type_id => gt_id, :name => params[:surcharge][:name], :vendor_id => vendor.id, :company_id => vendor.company.id
+          end
         end
       end
     end

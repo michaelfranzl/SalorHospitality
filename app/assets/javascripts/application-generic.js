@@ -8,7 +8,9 @@
 var tableupdates = -1;
 var automatic_printing = false;
 var debugmessages = [];
-
+var _CTRL_DOWN = false;
+var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
+var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
 $(function(){
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {
@@ -22,6 +24,20 @@ $(function(){
       if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
     }, 10000);
   }
+  $(window).keydown(function(e){
+    for (var key in _key_codes) {
+      if (e.keyCode == _key_codes[key]) {
+        _keys_down[key] = true;
+      }
+    }
+  });
+  $(window).keyup(function(e){
+    for (var key in _key_codes) {
+      if (e.keyCode == _key_codes[key]) {
+        _keys_down[key] = false;
+      }
+    }
+  });
 })
 /*
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
@@ -117,12 +133,71 @@ function date_as_ymd(date) {
 function get_date(str) {
   return new Date(Date.parse(str));
 }
+/*
+  _fetch is a quick way to fetch a result from the server.
+ */
 function _fetch(url,callback) {
   $.ajax({
     url: url,
     context: window,
     success: callback
   });
+}
+/*
+ *  _push is a quick way to deliver an object to the server
+ *  It takes a data object, a string url, and a success callback.
+ *  Additionally, you can pass, after those three an error callback,
+ *  and an object of options to override the options used with
+ *  the ajax request.
+ */
+function _push(object) {
+  var payload = null;
+  var callback = null;
+  var error_callback = function (jqXHR,status,err) {
+    console.log(jqXHR,status,err.get_message());
+  };
+  var user_options = {};
+  var url;
+  for (var i = 0; i < arguments.length; i++) {
+    switch(typeof arguments[i]) {
+      case 'object':
+        if (!payload) {
+          payload = {currentview: 'push', model: {}}
+          $.each(arguments[i], function (key,value) {
+            console.log(key,value);
+            payload[key] = value;
+          });
+        } else {
+          user_options = arguments[i];
+        }
+        break;
+      case 'function':
+        if (!callback) {
+          callback = arguments[i];
+        } else {
+          error_callback = arguments[i];
+        }
+        break;
+      case 'string':
+        url = arguments[i];
+        break;
+    }
+  }
+  options = { 
+    context: window,
+    url: url, 
+    type: 'post', 
+    data: payload, 
+    timeout: 20000, 
+    success: callback, 
+    error: error_callback
+  };
+  if (typeof user_options == 'object') {
+    $.each(user_options, function (key,value) {
+      options[key] = value;
+    });
+  }
+  $.ajax(options);
 }
 function create_dom_element (tag,attrs,content,append_to) {
   element = $(document.createElement(tag));
@@ -223,8 +298,73 @@ function auto_completable_show_results(elem,results) {
 }
 
 function days_between_dates(from, to) {
-  return Math.floor((Date.parse(to) - Date.parse(from)) / 86400000)
+  var days = Math.floor((Date.parse(to) - Date.parse(from)) / 86400000);
+  if (days == 0)
+    days = 0
+  return days;
 }
 function _log(arg1,arg2,arg3) {
  console.log(arg1,arg2,arg3);
+}
+/* Adds a delete/X button to the element. Type options  are right and append. The default callback simply slides the element up.
+ if you want special behavior on click, you can pass a closure.*/
+function deletable(elem,type,callback) {
+  if (typeof type == 'function') {
+    callback = type;
+    type = 'right'
+  }
+  if (!type)
+    type = 'right';
+  if ($('#' + elem.attr('id') + '_delete').length == 0) {
+    var del_button = create_dom_element('div',{id: elem.attr('id') + '_delete', 'class':'delete', 'target': elem.attr('id')},'',elem);
+    if (!callback) {
+      del_button.on('click',function () {
+        $('#' + $(this).attr('target')).slideUp();
+      });
+    } else {
+      del_button.on('click',callback);
+    }
+  } else {
+    var del_button = $('#' + elem.attr('id') + '_delete');
+  }
+  var offset = elem.offset();
+  if (type == 'right') {
+    offset.left += elem.outerWidth() - del_button.outerWidth() - 5;
+    offset.top += 5
+    del_button.offset(offset);
+  } else if (type == 'append') {
+    elem.append(del_button);
+  }
+  
+}
+/* Adds a top button menu to the passed div. offset_padding will be added to the offset before it is used.*/
+function add_button_menu(elem,offset_padding) {
+  if (!offset_padding) {
+    offset_padding = {top: 0, left: 0};
+  }
+  var menu_id = elem.attr('id') + '_button_menu';
+  if ($('#' + menu_id).length == 0) {
+    var menu = create_dom_element('div',{id: menu_id, target: elem.attr('id'), class: 'button_menu'},'',elem);
+  } else {
+    var menu = $('#' + menu_id);
+  }
+  var parent_zindex = elem.css('zIndex');
+  var menu_width = elem.outerWidth() - (elem.outerWidth() / 4);
+  var new_offset = elem.offset();
+  new_offset.top -= (menu.outerHeight() - 5);
+  new_offset.left += 10;
+  new_offset.top += offset_padding.top;
+  new_offset.left += offset_padding.left;
+  menu.offset(new_offset);
+  menu.css({width: menu_width});
+  /* we emit the render and include the element, which will be even.packet. You will have to
+   decide if it is the menu you want in your listener. probably by checking the id of even.packet.attr('id') == 'my_id'*/
+  emit("button_menu.rendered", elem);
+}
+/* adds a button element, as created by you, to the button menu of the element. note, this function
+ wants the parent div element, not the actual button menu.*/
+function add_menu_button(elem,button,callback) {
+  var menu = elem.find('.button_menu');
+  menu.append(button);
+  button.on('click',callback);
 }

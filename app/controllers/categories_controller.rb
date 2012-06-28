@@ -21,6 +21,10 @@ class CategoriesController < ApplicationController
   end
 
   def create
+    if @current_vendor.max_categories and @current_vendor.max_categories < @current_vendor.categories.existing.count
+      flash[:notice] = t('categories.create.license_limited', :count => @current_vendor.max_categories)
+      redirect_to categories_path and return
+    end
     @category = Category.new(Category.process_custom_icon(params[:category]))
     @taxes = @current_vendor.taxes.existing
     @users = @current_vendor.users.existing.active

@@ -264,6 +264,7 @@ gn:
   articles:
     create:
       success: Artikel erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Artikel
     destroy:
       success: Artikel erfolgreich gelöscht
     find:
@@ -303,6 +304,7 @@ gn:
   categories:
     create:
       success: Kategorie erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Kategorien
     destroy:
       success: Kategorie erfolgreich gelöscht
     new:
@@ -591,6 +593,7 @@ gn:
   tables:
     create:
       success: Tisch erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Tische
     destroy:
       success: Tisch erfolgreich gelöscht
     new:

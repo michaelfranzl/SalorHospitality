@@ -8,11 +8,13 @@
 class TablesController < ApplicationController
 
   before_filter :check_permissions, :except => [:index, :show]
+
+  respond_to :html, :js
   
   def index
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
-    respond_to do |wants|
+    respond_with do |wants|
       wants.html
       wants.js
     end
@@ -43,6 +45,10 @@ class TablesController < ApplicationController
   end
 
   def create
+    if @current_vendor.max_tables and @current_vendor.max_tables < @current_vendor.tables.existing.count
+      flash[:notice] = t('tables.create.license_limited', :count => @current_vendor.max_tables)
+      redirect_to tables_path and return
+    end
     @table = Table.new(params[:table])
     @table.vendor = @current_vendor
     @table.company = @current_company

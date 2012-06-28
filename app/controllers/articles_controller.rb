@@ -44,11 +44,15 @@ class ArticlesController < ApplicationController
 
   # tested
   def create
+    if @current_vendor.max_articles and @current_vendor.max_articles < @current_vendor.articles.existing.count
+      flash[:notice] = t('articles.create.license_limited', :count => @current_vendor.max_articles)
+      redirect_to articles_path and return
+    end
     @article = Article.new(params[:article])
     @article.company = @current_company
     @article.vendor = @current_vendor
     if @article.save
-      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company
+      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
