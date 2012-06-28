@@ -174,8 +174,8 @@ el:
         one: Επιπλέον Επιβάρυνση
         other: Επιπλέον Επιβαρύνσεις
       article:
-        one: Κομμάτι
-        other: Κομμάτια
+        one: Αντικείμενο
+        other: Αντικείμενα
       category:
         one: Κατηγορία
         other: Κατηγορίες
@@ -270,9 +270,9 @@ el:
   are_you_sure: Είστε σίγουροι;
   articles:
     create:
-      success: Το κομμάτι δημιουργήθηκε επιτυχώς
+      success: Το αντικείμενο δημιουργήθηκε επιτυχώς
     destroy:
-      success: Το κομμάτι διαγράφηκε επιτυχώς
+      success: Το αντικείμενο διαγράφηκε επιτυχώς
     find:
       variants:
         one: Μεταβλητή
@@ -285,15 +285,15 @@ el:
       update: Ενημέρωση!
       view: Δείτε
     listall:
-      all_articles: Λίστα όλων των κομματιών
+      all_articles: Λίστα όλων των αντικειμένων
     new:
       add_quantity: Προσθέστε Μεταβλητή
-      edit_article: Επεξεργαστείτε κομμάτι
-      new_article: Νέο κομμάτι
+      edit_article: Επεξεργαστείτε το αντικείμενο
+      new_article: Νέο αντικείμενο
       normal: κανονικό
       takeaway: αφαιρέστε
     sort_index:
-      sort: Ταξινομήστε κομμάτια
+      sort: Ταξινομήστε αντικείμενα
   bar: Μπαρ
   black: Μαύρο
   blackboard:
@@ -318,7 +318,7 @@ el:
       maindish: Κυρίως Πιάτο
       new_category: Νέα Κατηγορία
       nonalcoholics: Χωρίς Αλκοόλ
-      noodles: Φιδες
+      noodles: Πάστα
       redwinebottle: Μπουκάλι Ερυθρό
       redwineglass: Ερυθρό Κρασί
       rosewinebottle: Μπουκάλι Ροζέ
@@ -370,14 +370,14 @@ el:
     errsize: Άκυρο μέγεθος αρχείου
     errtype: Άκυρος τύπος αρχείου
   invoice: Τιμολόγιο
-  invoice_numer_X_at_time: Αριθμός Τιμολογίου %{αριθμός} at %{ημερομηνίαώρα}
+  invoice_numer_X_at_time: Αριθμός Τιμολογίου %{αριθμός} στις %{ημερομηνίαώρα}
   invoices: Τιμολόγια
   is_no_number: δεν είναι αριθμός.
   items:
     item_tablerow:
       clear: Καθαρίστε
       done: Τελειωμένο
-      no_printing: μην εκτυπώσετε
+      no_printing: όχι εκτύπωση
   just_order: Απλά παραγγείλετε
   kitchen: Κουζίνα
   layouts:
@@ -388,10 +388,10 @@ el:
     hello_username: Γεια χαρά %{όνομα}!
   move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
   must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
-    το Κομμάτι είτε για τη Μεταβλητή.
+    το αντικείμενο είτε για τη Μεταβλητή.
   net: Καθαρό
   new: Νέο
-  no_printing: Μην εκτυπώσετε
+  no_printing: Όχι εκτύπωση
   not_found: Δεν βρέθηκε
   options:
     new:
