@@ -594,7 +594,7 @@ el:
     invoice_item_list:
       served_by_X: Σερβιριστήκατε από %{χρήστη}
     show:
-      search_by_number: Αναζήτηση με αριθμό
+      search_by_number: Αναζήτηση μέσω αρίθμησης
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών
