@@ -283,7 +283,7 @@ el:
       search_term: Αναζήτηση όρου
       sort: Ταξινομήστε
       update: Ενημέρωση!
-      view: Δείτε
+      view: Προβολή
     listall:
       all_articles: Λίστα όλων των αντικειμένων
     new:
@@ -454,7 +454,7 @@ el:
     edit:
       edit_page: Επεξεργασία Σελίδας
       slideshow: Αρχίστε την προβολή εικόνων
-      view: Προβάλετε
+      view: Προβολή
     new:
       new_page: Νέα σελίδα
   partials:
@@ -495,7 +495,7 @@ el:
       finish_orders: Τελειώστε τις παραγγελίες
       finish_own_settlement: Τελειώστε τον δικό σας διακανονισμό
       make_storno: Ακυρώστε αντικείμενα
-      manage_articles_categories_options: Διαχειριστείτε κομμάτια, κατηγορίες και
+      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και
         επιλογές
       manage_business_invoice: Διαχειριστείτε το εταιρικό τιμολόγιο
       manage_customers: Διαχειριστείτε Πελάτες
@@ -537,7 +537,7 @@ el:
   settlements:
     detailed_list:
       count: Μτρήστε
-      order_number_on_table_on_date: ! '%{παραγγελία} αριθμός %{αριθμός} on %{τραπέζι}
+      order_number_on_table_on_date: ! '%{παραγγελία} αριθμός %{αριθμός} στο %{τραπέζι}
         στις %{ώρα}'
       revenue: Έσοδα
       total: Ολικό
@@ -556,7 +556,7 @@ el:
   statistic: Στατιστικό
   statistics:
     journal: Ημερολόγιο (χρονολογική λίστα)
-    weekdays: Εργάσιμες μέρες
+    weekdays: Μέρες Βδομαδας
   stocks:
     new:
       edit_stock: Επεξεργασία Αποθέματος
