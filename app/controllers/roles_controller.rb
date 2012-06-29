@@ -25,6 +25,8 @@ class RolesController < ApplicationController
 
   def create
     @role = Role.new(params[:role])
+    @role.company = @current_company
+    @role.vendor = @current_vendor
     if @role.save
       flash[:notice] = t('role.create.success')
       redirect_to roles_path
