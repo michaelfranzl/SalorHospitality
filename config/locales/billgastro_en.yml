@@ -478,9 +478,17 @@ en:
       backup_database: Backup database
       backup_logfile: Backup logfile
       header: Reports
+      connected: Connected
+      disconnected: Disconnected
+      connect_ssh: Remote Login
+      connect_vnc: Share Screen
+      password: Password
+      requesting_connection_status: Requesting connection status ...
     save: Save
     start_date: Start Date
     usb_device: USB Stick
+    remote_support: Remote Support
+    download_reports: Download Report
   restaurant: Restaurant
   roles:
     create:

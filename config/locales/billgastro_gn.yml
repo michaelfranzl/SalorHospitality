@@ -478,9 +478,17 @@ gn:
       backup_database: Datenbank herunterladen
       backup_logfile: Logdatei herunterladen
       header: Berichte
+      connected: Verbunden
+      disconnected: Getrennt
+      connect_ssh: Fernwartung
+      connect_vnc: Bildschirm teilen
+      password: Passwort
+      requesting_connection_status: Verbindungsstatus abfragen ...
     save: Speichern
     start_date: Von
     usb_device: Usb Stick
+    remote_support: Fernwartung
+    download_reports: Berichte herunterladen
   restaurant: Restaurant
   roles:
     create:
