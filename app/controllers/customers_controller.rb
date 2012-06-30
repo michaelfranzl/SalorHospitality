@@ -8,6 +8,7 @@
 class CustomersController < ApplicationController
 
   before_filter :check_permissions
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
     @customers = @current_vendor.customers.existing
