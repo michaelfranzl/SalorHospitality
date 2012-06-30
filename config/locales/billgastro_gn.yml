@@ -2,6 +2,21 @@
 gn:
   activerecord:
     attributes:
+      customer:
+        first_name: Vorname
+        last_name: Nachname
+        full_name: Name
+        company_name: Firma
+        address: Adresse
+        city: Ort
+        state: Land
+        postalcode: PLZ
+        m_number: Nummer
+        m_points: Punkte
+        email: E-Mail
+        telephone: Telefon
+        cellphone: Mobil
+        hidden: delete
       article:
         active: aktiv?
         category_id: Kategorie
@@ -490,6 +505,14 @@ gn:
     remote_support: Fernwartung
     download_reports: Berichte herunterladen
   restaurant: Restaurant
+  customers:
+    new:
+      edit_customer: Kunde bearbeiten
+      new_customer: Neuer Kunde
+    create:
+      success: Kunde erfolgreich gespeichert
+    destroy:
+      success: Kunde erfolgreich gelöscht
   roles:
     create:
       success: Rolle erfolgreich gespeichert
