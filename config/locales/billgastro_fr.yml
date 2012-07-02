@@ -113,7 +113,7 @@ fr:
         room_type_id: Zimmerklasse
         season_id: Season
       room_type:
-        hidden: löschen
+        hidden: Effacer
         name: Name
       season:
         from_date: From
