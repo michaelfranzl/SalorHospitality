@@ -65,6 +65,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#tables').show();
     $('#rooms').hide();
+    $('#areas').show();
     //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
@@ -163,6 +164,7 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#tables').hide();
     $('#rooms').hide();
+    $('#areas').hide();
     $('#inputfields').html('');
     $('#itemstable').html('');
     $('#functions_header_invoice_form').show();

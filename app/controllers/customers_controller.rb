@@ -1,100 +1,63 @@
+# coding: UTF-8
+
+# BillGastro -- The innovative Point Of Sales Software for your Restaurant
+# Copyright (C) 2012-2013  Red (E) Tools LTD
+# 
+# See license.txt for the license applying to all files within this software.
+
 class CustomersController < ApplicationController
 
   before_filter :check_permissions
-
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
-  # GET /customers
-  # GET /customers.xml
   def index
-    if params[:keywords] then
-      if params[:keywords].include? ' ' then
-        first,last = params[:keywords].split(' ')
-        @customers = Customer.where("first_name LIKE '#{first}%' and last_name LIKE '#{last}%'")
-      else
-       @customers =  Customer.where("first_name LIKE '#{params[:keywords]}%' or last_name LIKE '%#{params[:keywords]}'")
-      end
-    else
-      @customers = @current_vendor.customers.existing
-    end
-
-    respond_to do |format|
-      format.json { render :json => @customers.to_json }
-      format.html # index.html.erb
-      format.xml  { render :xml => @customers }
-    end
+    @customers = @current_vendor.customers.existing
   end
 
-  # GET /customers/1
-  # GET /customers/1.xml
-  def show
-    @customer = Customer.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @customer }
-    end
-  end
-
-  # GET /customers/new
-  # GET /customers/new.xml
   def new
     @customer = Customer.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @customer }
-    end
   end
 
-  # GET /customers/1/edit
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = get_model
+    redirect_to customers_path and return unless @customer
+    render :new
   end
 
-  # POST /customers
-  # POST /customers.xml
   def create
     @customer = Customer.new(params[:customer])
-
-    respond_to do |format|
-      if @customer.save
-        @current_vendor.update_cache
-        format.html { redirect_to(@customer, :notice => 'Customer was successfully created.') }
-        format.xml  { render :xml => @customer, :status => :created, :location => @customer }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
-      end
+    @customer.company = @current_company
+    @customer.vendor = @current_vendor
+    if @customer.save
+      flash[:notice] = t('customers.create.success')
+      redirect_to customers_path
+    else
+      render :action => 'new'
     end
   end
 
-  # PUT /customers/1
-  # PUT /customers/1.xml
   def update
-    @customer = Customer.find(params[:id])
-
-    respond_to do |format|
-      if @customer.update_attributes(params[:customer])
-        @current_vendor.update_cache
-        format.html { redirect_to(@customer, :notice => 'Customer was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
-      end
+    @customer = get_model
+    redirect_to customers_path and return unless @customer
+    if @customer.update_attributes params[:customer]
+      flash[:notice] = t('customers.create.success')
+      redirect_to customers_path
+    else
+      render :action => 'new'
     end
   end
 
-  # DELETE /customers/1
-  # DELETE /customers/1.xml
   def destroy
-    @customer = Customer.find(params[:id])
-    @customer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(customers_url) }
-      format.xml  { head :ok }
-    end
+    @customer = get_model
+    redirect_to customers_path and return unless @customer
+    @customer.update_attribute :hidden, true
+    flash[:notice] = t('customers.destroy.success')
+    redirect_to customers_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_settings'
+    end
 end

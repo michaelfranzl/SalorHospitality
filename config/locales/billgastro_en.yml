@@ -2,6 +2,21 @@
 en:
   activerecord:
     attributes:
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
       article:
         active: active
         category_id: Category
@@ -478,10 +493,27 @@ en:
       backup_database: Backup database
       backup_logfile: Backup logfile
       header: Reports
+      connected: Connected
+      disconnected: Disconnected
+      connect_ssh: Remote Login
+      connect_vnc: Share Screen
+      password: Password
+      requesting_connection_status: Requesting connection status ...
     save: Save
     start_date: Start Date
     usb_device: USB Stick
+    remote_support: Remote Support
+    download_reports: Download Report
   restaurant: Restaurant
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    index:
+      create:
+        success: Customer successfully saved
+      destroy:
+        success: Customer successfully deleted
   roles:
     create:
       success: Role successfully saved

@@ -49,7 +49,7 @@ class Article < ActiveRecord::Base
   # Methods
 
   def price=(price)
-    price =  price.gsub(',', '.') if price.class == String
+    price = price.gsub(',', '.') if price.class == String
     write_attribute :price, price
   end
 
