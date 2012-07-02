@@ -44,7 +44,7 @@ fr:
         height: Hauteur
         image: Image
         width: Largeur
-      partial:
+      partial: Partiel
         active: Actif
         blurb: Descriptif
         hidden: Effacer
