@@ -259,8 +259,8 @@ ru:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
-  admin: Admin
-  are_you_sure: Are you sure?
+  admin: Админ
+  are_you_sure: Вы уверены?
   articles:
     create:
       success: Article was successfully created
