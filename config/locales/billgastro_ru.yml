@@ -585,7 +585,7 @@ ru:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
-      search_by_number: Search by number
+      search_by_number: Искать по номеру
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
