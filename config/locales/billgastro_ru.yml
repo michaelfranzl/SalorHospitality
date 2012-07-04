@@ -519,8 +519,7 @@ ru:
     browser_warning:
       continue: Продолжить
       warning: Похоже, что вы не используете Mozilla Firefox, Safari, Google Chrome
-        или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы
-        только в этих браузерах.
+        или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы только в этих браузерах.
     new:
       email: Your E-Mail
       login: Логин
