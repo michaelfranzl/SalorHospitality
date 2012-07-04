@@ -174,7 +174,7 @@ class OrdersController < ApplicationController
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
-            @order.hide(@current_user.id) if @order.items.existing.size.zero?
+            #@order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "route('tables', #{@order.table.id});" and return
         end
       when 'room'

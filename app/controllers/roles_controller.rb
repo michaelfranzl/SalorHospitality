@@ -25,8 +25,10 @@ class RolesController < ApplicationController
 
   def create
     @role = Role.new(params[:role])
+    @role.company = @current_company
+    @role.vendor = @current_vendor
     if @role.save
-      flash[:notice] = t('role.create.success')
+      flash[:notice] = t('roles.create.success')
       redirect_to roles_path
     else
       render :action => 'new'
@@ -37,7 +39,7 @@ class RolesController < ApplicationController
     @role = get_model
     redirect_to roles_path and return unless @role
     if @role.update_attributes params[:role]
-      flash[:notice] = t('role.create.success')
+      flash[:notice] = t('roles.create.success')
       redirect_to roles_path
     else
       render :action => 'new'

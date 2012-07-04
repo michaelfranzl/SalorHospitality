@@ -28,10 +28,11 @@ class Booking < ActiveRecord::Base
       }
   end
   def self.create_from_params(params, vendor, user)
-    booking = Booking.create params[:model]
+    booking = Booking.new
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
+    booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
       new_item.booking = booking
@@ -48,7 +49,7 @@ class Booking < ActiveRecord::Base
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip)
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
     end
     self.customer = c
   end

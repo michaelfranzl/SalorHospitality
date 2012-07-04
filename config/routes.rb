@@ -91,7 +91,7 @@ SalorGastro::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :users, :roles, :presentations, :reports, :payment_methods
+  resources :cost_centers, :taxes, :users, :roles, :presentations, :payment_methods
   resources :surcharges
   resources :rooms
   resources :room_types
@@ -99,10 +99,13 @@ SalorGastro::Application.routes.draw do
   resources :guest_types
   resources :room_prices
 
-  resources :companies do
-    get :logo
-    get :backup_database
-    get :backup_logfile
+  resources :reports do
+    collection do
+      get :backup_database
+      get :backup_logfile
+      get :update_connection_status
+      get :connect_remote_service
+    end
   end
 
   resources :items do

@@ -247,6 +247,7 @@ function send_json(object_id) {
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
   items_json_queue[object_id] = items_json;
+  display_queue();
   // reset main jsons
   submit_json = {model:{}};
   items_json = {};
