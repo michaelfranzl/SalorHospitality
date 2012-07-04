@@ -605,21 +605,21 @@ ru:
     waiterpad: Waiterpad
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Редактировать сезон
+      new_season: Новый сезон
   shared:
     invoice_tax_list:
       list_of_taxes: Список налогов
   surcharges:
     new:
       add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
+      common_surcharge: Общая доплата
+      edit_surcharge: Редактировать доплату
+      new_surcharge: Новая доплата
   tax_amount: XXX Amount
   various:
     cancel: Отмена
-    common_surcharges: Common Surcharges
+    common_surcharges: Обычные доплаты
     home: Домой
     pay: Оплатить
     save: Сохранить
