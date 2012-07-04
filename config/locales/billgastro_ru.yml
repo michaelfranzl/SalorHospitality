@@ -40,10 +40,10 @@ ru:
       page:
         active: active
         color: Цвет
-        height: Height
-        hidden: delete
-        image: Image
-        width: Width
+        height: Высота
+        hidden: удалить
+        image: Картинка
+        width: Ширина
       partial:
         active: aktiv
         blurb: Blurb
@@ -152,23 +152,23 @@ ru:
         one: Article
         other: Articles
       category:
-        one: Category
-        other: Categories
+        one: Категория
+        other: Категории
       company:
-        one: Company
-        other: Companies
+        one: Компания
+        other: Компании
       cost_center:
         one: Cost Center
         other: Cost Centers
       coupon:
-        one: Coupon
-        other: Coupons
+        one: Купон
+        other: Купоны
       customer:
-        one: Customer
-        other: Customers
+        one: Посетитель
+        other: Посетители
       discount:
-        one: Discount
-        other: Discounts
+        one: Скидка
+        other: Скидки
       group:
         one: Stock Group
         other: Stock Groups
