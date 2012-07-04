@@ -248,8 +248,8 @@ ru:
         one: Room Type
         other: Room Types
       season:
-        one: Saison
-        other: Saisons
+        one: Сезон
+        other: Сезоны
       surcharge:
         one: Surcharge
         other: Surcharges
@@ -258,7 +258,7 @@ ru:
         other: Tax amounts
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
   admin: Админ
   are_you_sure: Вы уверены?
   articles:
