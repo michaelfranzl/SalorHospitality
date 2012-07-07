@@ -334,22 +334,22 @@ ru:
       inactive: Неактивен
     new:
       edit_cost_center: Редактировать учетный отдел
-      new_cost_center: New Cost Center
+      new_cost_center: Новый учетный отдел
     create:
-      success: Cost Center successfully saved
+      success: Учетный отдел создан
     destroy:
-      success: Cost Center successfully deleted
-  count: Count
-  create: Create
-  dateandtime: Date
-  default: Default
-  delete: Delete
-  display: Display
-  edit: Edit
-  exit: Exit
-  finish: Just Finish
-  food: Foods
-  go_back: Go back
+      success: Учетный отдел удален
+  count: Количество
+  create: Создать
+  dateandtime: Дата
+  default: По умолчанию
+  delete: Удалить
+  display: Показать
+  edit: Редактировать
+  exit: Выход
+  finish: Просто закончить
+  food: Еда
+  go_back: Вернуться
   green: Зеленый
   gross: Gross
   groups:
@@ -357,18 +357,18 @@ ru:
       edit_group: Редактировать группу
       new_group: Новая группа
   guestroom: Комната для гостей
-  host: Хост
+  host: Сервер
   images:
     errempty: Неверный файл
     errsize: Неверный размер файла
     errtype: Неверный тип файла
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
+  invoice: Счет
+  invoice_numer_X_at_time: Счет №. %{number} за %{datetime}
+  invoices: Счета
   is_no_number: не число.
   items:
     item_tablerow:
-      clear: Отчистить
+      clear: Очистить
       done: Готово
       no_printing: не печатать
   just_order: Только заказ
