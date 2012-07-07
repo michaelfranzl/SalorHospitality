@@ -351,7 +351,7 @@ ru:
   food: Еда
   go_back: Вернуться
   green: Зеленый
-  gross: Gross
+  gross: Без вычета налогов
   groups:
     new:
       edit_group: Редактировать группу
@@ -380,10 +380,9 @@ ru:
   messages:
     hello_username: Здравствуйте, %{name}!
   move_order_to_table: Переместить заказ на другой стол
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
-  net: Net
-  new: New
+  must_be_entered_either_for_article_or_for_quantity: нужно ввести для блюда или варианта.
+  net: С вычетом налогов
+  new: Новый
   no_printing: Не печатать
   not_found: Не найдено
   options:
@@ -403,21 +402,21 @@ ru:
       print_now: Напечатать сейчас
       show_last_order: Показать последний заказ
       show_last_booking: Показать последнее резервирование
-      toggle_between_tables_and_rooms: Переключение между залами и столами
+      toggle_between_tables_and_rooms: Переключиться между комнатами и столами
     functions_header_order_form:
       move_order: Переместить заказ на другой стол
     index:
-      delivery_list: Delivery list
-      preparation_list: Preparation list
+      delivery_list: Список доставки
+      preparation_list: Список приготовления
     invoice_form:
-      just_finish: Just finish order
-      print_and_finish: Print and finish this order
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
-      split_this_item: Click to split this items one at a time
-      switch_tax_for_this_item: Click to change the tax for this item
+      just_finish: Только завершить заказ
+      print_and_finish: Печатать и завершить этот заказ
+      set_cost_center: Указать учетный отдел для этого заказа
+      set_tax_for_all: Указать учетный отдел по умолчанию
+      set_taxes: Указать учетный отдел
+      split_invoice: Разбить счет
+      split_this_item: Нажмите, чтобы разбить эту позицию по одной за раз
+      switch_tax_for_this_item: Нажмите, чтобы изменить ноClick to change the tax for this item
       change_money: XXX Change
       set_booking: XXX Assign to Booking
     login_form:
