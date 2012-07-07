@@ -179,8 +179,8 @@ ru:
         one: Item
         other: Items
       option:
-        one: Опц
-        other: Options
+        one: Опция
+        other: Опции
       order:
         one: Заказ
         other: Заказы
@@ -194,17 +194,17 @@ ru:
         one: Шаблон
         other: Шаблоны
       quantity:
-        one: Variant
-        other: Variants
+        one: Вариант
+        other: Варианты
       report:
-        one: Report
-        other: Reports
+        one: Отчет
+        other: Отчеты
       reservation:
-        one: Reservation
-        other: Reservations
+        one: Резервирование
+        other: Резервирования
       role:
-        one: Role
-        other: Roles
+        one: Роль
+        other: Роли
       settlement:
         one: Settlement
         other: Settlements
@@ -227,26 +227,26 @@ ru:
         one: Printer
         other: Printers
       booking:
-        one: Booking
-        other: Bookings
+        one: Бронирование
+        other: Бронирования
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Тип гостя
+        other: Типы гостей
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Метод оплаты
+        other: Методы оплаты
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Метод оплаты
+        other: Методы оплаты
       room:
-        one: Room
-        other: Rooms
+        one: Комната
+        other: Комнаты
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Цена комнаты
+        other: Цены комнат
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Тип комнаты
+        other: Типы комнат
       season:
         one: Сезон
         other: Сезоны
@@ -254,8 +254,8 @@ ru:
         one: Доплата
         other: Доплаты
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Величина налога
+        other: Величины налогов
     errors:
       messages:
         prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
@@ -263,37 +263,37 @@ ru:
   are_you_sure: Вы уверены?
   articles:
     create:
-      success: Article was successfully created
+      success: Блюдо создано
     destroy:
-      success: Article was successfully deleted
+      success: Блюдо удалено
     find:
       variants:
-        one: Variant
-        other: Variants
+        one: Вариант
+        other: Варианты
     index:
-      list_all: List all
-      preview: Preview
-      search_term: Search term
-      sort: Sort
-      update: Update!
-      view: View
+      list_all: Показать все
+      preview: Предварительный просмотр
+      search_term: Искать значение
+      sort: Сортировать
+      update: Обновить!
+      view: Просмотр
     listall:
-      all_articles: List of all articles
+      all_articles: Показать все блюда
     new:
-      add_quantity: Add Variant
-      edit_article: Edit article
-      new_article: New article
-      normal: normal
-      takeaway: take away
+      add_quantity: Добавить вариант
+      edit_article: Редактировать блюдо
+      new_article: Новое блюдо
+      normal: обычное
+      takeaway: с собой
     sort_index:
-      sort: Sort articles
-  bar: Bar
-  black: Black
+      sort: Сортировать блюда
+  bar: Бар
+  black: Черный
   blackboard:
     index:
-      update: Update
-  blank: blank
-  blue: Blue
+      update: Обновить
+  blank: пусто
+  blue: Синий
   cancel_and_go_back: Cancel and go back
   categories:
     create:
