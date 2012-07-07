@@ -294,46 +294,46 @@ ru:
       update: Обновить
   blank: пусто
   blue: Синий
-  cancel_and_go_back: Cancel and go back
+  cancel_and_go_back: Отменить и вернуться
   categories:
     create:
-      success: Success!
+      success: Успешно!
     new:
       aperitif: Аперитив
       beer: Пиво
-      blank: Blank
-      childrendish: Childrens Dish
+      blank: Пусто
+      childrendish: Блюдо для детей
       cigarette: Сигареты
       coffee: Кофе
       dessert: Десерт
-      digestif: Digestif
+      digestif: Дижестив
       edit_category: Редактировать категорию
       maindish: Главные блюда
       new_category: Новая категория
       nonalcoholics: Безалкогольные напитки
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
+      noodles: Лапша
+      redwinebottle: Бутылка красного вина
+      redwineglass: Бокал красного вина
+      rosewinebottle: Бутылка розового вина
+      rosewineglass: Бокал розового вина
+      sidedish: Гарнир
       soup: Супы
       sparkling: Шампанское
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Бутылка вина
-      whitewineglass: Бокал вина
+      starter: Стартер
+      tea: Чашка чая
+      teapot: Чай в чайнике
+      whitewinebottle: Бутылка белого вина
+      whitewineglass: Бокал белого вина
     destroy:
       success: Категория успешно удалена
-  clear_order_and_go_back: Clear order and go back
-  copy: Copy
+  clear_order_and_go_back: Отчистить заказ и вернуться
+  copy: Копия
   cost_centers:
     index:
-      active: Active
-      inactive: Inactive
+      active: Активен
+      inactive: Неактивен
     new:
-      edit_cost_center: Edit Cost Center
+      edit_cost_center: Редактировать учетный отдел
       new_cost_center: New Cost Center
     create:
       success: Cost Center successfully saved
