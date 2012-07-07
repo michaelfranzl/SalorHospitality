@@ -42,7 +42,7 @@ ru:
         color: Цвет
         height: Высота
         hidden: удалить
-        image: Картинка
+        image: Изображение
         width: Ширина
       partial:
         active: aktiv
@@ -103,9 +103,9 @@ ru:
         name: Name
         path: Path
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: удалить
+        name: Название
+        taxes: Налоги
       room_price:
         base_price: Base Price
         guest_type_id: Gast-Typ
@@ -149,8 +149,8 @@ ru:
         use_order_numbers: Use order numbers
     models:
       article:
-        one: Article
-        other: Articles
+        one: Блюдо
+        other: Блюда
       category:
         one: Категория
         other: Категории
