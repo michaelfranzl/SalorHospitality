@@ -19,7 +19,7 @@ ru:
         hidden: удалить
         icon: Иконка
         name: Название
-        separate_print: Cut ticket
+        separate_print: Отрезать заказ-наряд
         tax_id: Налог
         user_id: Preparing User
         vendor_printer_id: Принтер
@@ -38,7 +38,7 @@ ru:
         price: Цена
         separate_ticket: Отрезать заказ-наряд
       page:
-        active: active
+        active: активно
         color: Цвет
         height: Высота
         hidden: удалить
@@ -140,10 +140,10 @@ ru:
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
+        ticket_display_time_order: Время и номер счета на заказ-наряде
+        ticket_item_separator: Линия разделения заказ-наряда
+        ticket_tall_font: Высокий шрифт для заказ-наряда
+        ticket_wide_font: Широкий шрифт для заказ-наряда
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
