@@ -21,7 +21,7 @@ ru:
         name: Название
         separate_print: Отрезать заказ-наряд
         tax_id: Налог
-        user_id: Preparing User
+        user_id: Пользователь
         vendor_printer_id: Принтер
       cost_center:
         active: активный?
@@ -45,9 +45,9 @@ ru:
         image: Изображение
         width: Ширина
       partial:
-        active: aktiv
+        active: 
         blurb: Blurb
-        hidden: delete
+        hidden: удалить
       presentation:
         active: active
         code: Ruby code
