@@ -3,7 +3,7 @@ ru:
   activerecord:
     attributes:
       article:
-        active: active
+        active: активно
         category_id: Категория
         description: Описание
         hidden: удалить
@@ -350,14 +350,14 @@ ru:
   finish: Just Finish
   food: Foods
   go_back: Go back
-  green: Green
+  green: Зеленый
   gross: Gross
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
-  guestroom: Guestroom
-  host: Host
+      edit_group: Редактировать группу
+      new_group: Новая группа
+  guestroom: Комната для гостей
+  host: Хост
   images:
     errempty: Неверный файл
     errsize: Неверный размер файла
@@ -368,15 +368,15 @@ ru:
   is_no_number: не число.
   items:
     item_tablerow:
-      clear: Clear
-      done: Done
-      no_printing: no printing
-  just_order: Just order
+      clear: Отчистить
+      done: Готово
+      no_printing: не печатать
+  just_order: Только заказ
   kitchen: Кухня
   layouts:
     application:
       submit_scribe: OK
-  logout: log out %{who}
+  logout: завершить сеанс %{who}
   messages:
     hello_username: Здравствуйте, %{name}!
   move_order_to_table: Переместить заказ на другой стол
@@ -384,19 +384,19 @@ ru:
     Article or for the Variant.
   net: Net
   new: New
-  no_printing: No printing
+  no_printing: Не печатать
   not_found: Не найдено
   options:
     new:
-      edit_option: Edit Option
-      hidden: delete
-      new_option: New Option
-      select_all: select all
+      edit_option: Редактировать опцию
+      hidden: удалить
+      new_option: Новая опция
+      select_all: выбрать все
     create:
-      success: Option successfully saved
+      success: Опция сохранена
     destroy:
-      success: Option successfully deleted
-  orange: Orange
+      success: Опция удалена
+  orange: Оранжевый
   orders:
     functions_header_index:
       items_notifications: Уведомления
@@ -405,7 +405,7 @@ ru:
       show_last_booking: Показать последнее резервирование
       toggle_between_tables_and_rooms: Переключение между залами и столами
     functions_header_order_form:
-      move_order: Move order to other table
+      move_order: Переместить заказ на другой стол
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
