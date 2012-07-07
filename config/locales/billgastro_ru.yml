@@ -480,12 +480,12 @@ ru:
       cancel_all_items_in_active_order: Отменяет все позиции в активном заказе
       change_waiter: Меняет официанта
       counter_mode: Режим прилавка
-      decrement_items: Понизить позиции
-      delete_items: Удалить позиции поDelete items by decrementing
+      decrement_items: Уменьшает позиции
+      delete_items: Удалят позиции уменьшением
       edit_role: Редактирование роли
-      finish_all_settlements: Finish all settlements
+      finish_all_settlements: Завершает все расчеты
       finish_orders: Завершает заказы
-      finish_own_settlement: Finish own settlement
+      finish_own_settlement: Завершает свой расчет
       make_storno: Отменяет позиции
       manage_articles_categories_options: Управляет блюдами, категориями и опциями
       manage_business_invoice: Управляет счет-фактурами
@@ -501,7 +501,7 @@ ru:
       see_item_notifications: Видит уведомления по позиции
       split_items: Разбивает позиции
       take_orders: Берет заказы
-      view_all_settlements: View all settlements
+      view_all_settlements: Видит все расчеты
       view_statistics: Просматривает статистику
     create:
       success: Роль успешно сохранена
@@ -510,10 +510,9 @@ ru:
   scroll_down: Пролистать вниз
   scroll_to_room: Перейти к залу
   scroll_up: Пролистать вверх
-  send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+  send_and_go_back: Сохранить и вернуться
+  served_by_X_on_table_Y: Вас обслуживал(а) %{waiter} за %{table}
+  server_no_response: Сервер Bill Gastro Server не отвечает. Скорее всего он занят или это проблеми связи.
   sessions:
     browser_warning:
       continue: Продолжить
@@ -526,11 +525,11 @@ ru:
       username: Пользователь
   settlements:
     detailed_list:
-      count: Count
+      count: Количество
       order_number_on_table_on_date: ! '%{order} № %{number} за %{table} в %{time}'
-      revenue: Revenue
-      total: Total
-      unit_price: Unit Price
+      revenue: Выручка
+      total: Всего
+      unit_price: Цена за единицу
     index:
       all_cost_centers: Все
       end_date: Конечная дата
@@ -540,7 +539,7 @@ ru:
       finish: Конец
       print: Печать
       start: Начало
-      started_at: Началось в
+      started_at: Начался в
   split_order: Разбить заказ
   statistic: Статистика
   statistics:
@@ -548,10 +547,10 @@ ru:
     weekdays: Дни недели
   stocks:
     new:
-      edit_stock: Edit Stock
-      new_stock: New Stock
-  storno: Storno
-  sum: Sum
+      edit_stock: Редактировать склад
+      new_stock: Новый склад
+  storno: Отмена
+  sum: Сумма
   tables:
     new:
       edit_table: Редактировать стол
@@ -574,25 +573,25 @@ ru:
       success: Пользователь успешно удален
   violet: Фиолетовый
   waiter: Официант
-  waiterpad_generic_name: Waiterpad
+  waiterpad_generic_name: Поднос
   white: Белый
   winered: Бардовый
-  wrong_password: Wrong login data
+  wrong_password: Неверный пароль
   yellow: Желтый
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Вас обслуживал(а) %{user}
     show:
       search_by_number: Искать по номеру
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Сгенерировать скелет цены
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Редактировать цену комнаты
+      new_room_price: Новая цена комнаты
   room_types:
     new:
-      edit_room_type: Edit room type
+      edit_room_type: Редактирование Edit room type
       new_room_type: New room type
   rooms:
     new:
