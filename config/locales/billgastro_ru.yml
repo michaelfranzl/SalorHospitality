@@ -45,34 +45,34 @@ ru:
         image: Изображение
         width: Ширина
       partial:
-        active: 
-        blurb: Blurb
+        active: активно
+        blurb: Текст
         hidden: удалить
       presentation:
-        active: active
-        code: Ruby code
-        description: Description
-        hidden: delete
-        markup: ERB Markup
-        model: Type
-        name: Name
+        active: активно
+        code: код Ruby
+        description: Описание
+        hidden: удалить
+        markup: Разметка ERB
+        model: Тип
+        name: Название
       quantity:
-        active: aktiv
-        description: Description
-        hidden: delete
-        postfix: Postfix
-        prefix: Name
-        price: Variant Price
-        usage: usage
+        active: активно
+        description: Описание
+        hidden: удалить
+        postfix: Постфикс
+        prefix: Название
+        price: Цена варианта
+        usage: использование
       role:
         name: Название
       settlement:
-        initial_cash: Initial amount
-        revenue: End amount
+        initial_cash: Начальное количество
+        revenue: Конечное количество
       table:
         abbreviation: Сокращение
         description: Описание
-        enabled: активный?
+        enabled: активен?
         height: Высота
         height_mobile: Высота моб.
         hidden: удалить
@@ -83,16 +83,16 @@ ru:
       tax:
         color: Цвет
         hidden: удалить
-        letter: Abbreviation
+        letter: Сокращение
         name: Название
-        percent: Tax in %
+        percent: Налог в %
       user:
-        active: active?
-        color: Color
-        hidden: delete?
-        language: Language
-        login: Login
-        password: Password
+        active: активен?
+        color: Цвет
+        hidden: удалить?
+        language: Язык
+        login: Логин
+        password: Пароль
         role: Role
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
