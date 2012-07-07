@@ -428,7 +428,7 @@ ru:
     order:
       new: Новый заказ
       sum: СУММА
-    served_by: You were served by
+    served_by: Вас обслуживал(а)
     show:
       back: Back
       count: Count
@@ -521,7 +521,7 @@ ru:
       warning: Похоже, что вы не используете Mozilla Firefox, Safari, Google Chrome
         или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы только в этих браузерах.
     new:
-      email: Your E-Mail
+      email: Ваш E-Mail
       login: Логин
       password: Пароль
       username: Пользователь
