@@ -108,24 +108,24 @@ ru:
         taxes: Налоги
       room_price:
         base_price: Базовая цена
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
+        guest_type_id: Тип гостя
+        hidden: удалить
+        room_type_id: Тип комнаты
         season_id: Сезон
       room_type:
-        hidden: löschen
-        name: Name
-      season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
-      surcharge:
-        amount: Количество
-        guest_type_id: Guest Type
         hidden: удалить
         name: Название
-        radio_select: Radio Select
+      season:
+        from_date: С
+        hidden: удалить
+        name: Название
+        to_date: До
+      surcharge:
+        amount: Количество
+        guest_type_id: Тип гостя
+        hidden: удалить
+        name: Название
+        radio_select: Радио выбор
         season_id: Сезон
       tax_amount:
         amount: Количество
@@ -173,26 +173,26 @@ ru:
         one: Stock Group
         other: Stock Groups
       image:
-        one: Image
-        other: Images
+        one: Изображение
+        other: Изображения
       item:
         one: Item
         other: Items
       option:
-        one: Option
+        one: Опц
         other: Options
       order:
-        one: Order
-        other: Orders
+        one: Заказ
+        other: Заказы
       page:
-        one: Card
-        other: Cards
+        one: Карта
+        other: Карты
       partial:
-        one: Partial
-        other: Partials
+        one: Элемент
+        other: Элементы
       presentation:
-        one: Template
-        other: Templates
+        one: Шаблон
+        other: Шаблоны
       quantity:
         one: Variant
         other: Variants
@@ -251,8 +251,8 @@ ru:
         one: Сезон
         other: Сезоны
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Доплата
+        other: Доплаты
       tax_amount:
         one: Tax amount
         other: Tax amounts
@@ -611,7 +611,7 @@ ru:
       list_of_taxes: Список налогов
   surcharges:
     new:
-      add_tax_amount: Add tax amount
+      add_tax_amount: Добавить налог
       common_surcharge: Общая доплата
       edit_surcharge: Редактировать доплату
       new_surcharge: Новая доплата
