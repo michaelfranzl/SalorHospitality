@@ -429,7 +429,7 @@ ru:
       sum: СУММА
     served_by: Вас обслуживал(а)
     show:
-      back: Назад
+      back: Назад 
       count: Количество
       list_of_taxes: Список налогов
       next_invoice: Следующий счет
@@ -476,18 +476,18 @@ ru:
   restaurant: Ресторан
   roles:
     new:
-      assign_cost_center: Назначить учетный отдел
-      cancel_all_items_in_active_order: Отменить все позиции в активном заказе
-      change_waiter: Сменить официнта
+      assign_cost_center: Назначает учетный отдел
+      cancel_all_items_in_active_order: Отменяет все позиции в активном заказе
+      change_waiter: Меняет официанта
       counter_mode: Режим прилавка
       decrement_items: Понизить позиции
       delete_items: Удалить позиции поDelete items by decrementing
-      edit_role: Edit Role
+      edit_role: Редактирование роли
       finish_all_settlements: Finish all settlements
-      finish_orders: Finish orders
+      finish_orders: Завершает заказы
       finish_own_settlement: Finish own settlement
-      make_storno: Отменить позиции
-      manage_articles_categories_options: Управляет Manage articles, categories and options
+      make_storno: Отменяет позиции
+      manage_articles_categories_options: Управляет блюдами, категориями и опциями
       manage_business_invoice: Управляет счет-фактурами
       manage_customers: Упраляет посетителями
       manage_pages: Управляет слайдшоу
@@ -527,7 +527,7 @@ ru:
   settlements:
     detailed_list:
       count: Count
-      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
+      order_number_on_table_on_date: ! '%{order} № %{number} за %{table} в %{time}'
       revenue: Revenue
       total: Total
       unit_price: Unit Price
