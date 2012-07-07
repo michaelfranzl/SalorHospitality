@@ -121,12 +121,12 @@ ru:
         name: Name
         to_date: To
       surcharge:
-        amount: Amount
+        amount: Количество
         guest_type_id: Guest Type
-        hidden: delete
-        name: Name
+        hidden: удалить
+        name: Название
         radio_select: Radio Select
-        season_id: Season
+        season_id: Сезон
       tax_amount:
         amount: Количество
         tax_id: Налог
