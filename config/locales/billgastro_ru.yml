@@ -93,25 +93,25 @@ ru:
         language: Язык
         login: Логин
         password: Пароль
-        role: Role
-        screenlock_timeout: Screenlock timeout (sec.)
-        tables: Tables
-        title: Title
+        role: Роль
+        screenlock_timeout: Блокировать экран через (сек.)
+        tables: Столы
+        title: Имя
       vendor_printer:
-        copies: Copies
-        hidden: Delete
-        name: Name
-        path: Path
+        copies: Копии
+        hidden: Удалить
+        name: Название
+        path: Путь
       guest_type:
         hidden: удалить
         name: Название
         taxes: Налоги
       room_price:
-        base_price: Base Price
+        base_price: Базовая цена
         guest_type_id: Gast-Typ
         hidden: löschen
         room_type_id: Zimmerklasse
-        season_id: Season
+        season_id: Сезон
       room_type:
         hidden: löschen
         name: Name
