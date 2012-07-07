@@ -307,7 +307,7 @@ ru:
       coffee: Кофе
       dessert: Десерт
       digestif: Дижестив
-      edit_category: Редактировать категорию
+      edit_category: Редактирование категории
       maindish: Главные блюда
       new_category: Новая категория
       nonalcoholics: Безалкогольные напитки
@@ -354,7 +354,7 @@ ru:
   gross: Без вычета налогов
   groups:
     new:
-      edit_group: Редактировать группу
+      edit_group: Редактирование группы
       new_group: Новая группа
   guestroom: Комната для гостей
   host: Сервер
@@ -387,7 +387,7 @@ ru:
   not_found: Не найдено
   options:
     new:
-      edit_option: Редактировать опцию
+      edit_option: Редактирование опции
       hidden: удалить
       new_option: Новая опция
       select_all: выбрать все
@@ -444,7 +444,7 @@ ru:
       do_storno: Сделать отмену
   pages:
     edit:
-      edit_page: Редактировать страницу
+      edit_page: Редактирование страницы
       slideshow: Запустить слайдшоу
       view: Посмотреть
     new:
@@ -459,7 +459,7 @@ ru:
   please_enter_item_price: Специальная цена 
   presentations:
     new:
-      edit_presentation: Редактировать шаблон
+      edit_presentation: Редактирование шаблона
       new_presentation: Новый шаблон
   print: Печатать
   print_and_finish: Закончить и напечатать
@@ -547,13 +547,13 @@ ru:
     weekdays: Дни недели
   stocks:
     new:
-      edit_stock: Редактировать склад
+      edit_stock: Редактирование склада
       new_stock: Новый склад
   storno: Отмена
   sum: Сумма
   tables:
     new:
-      edit_table: Редактировать стол
+      edit_table: Редактирование стола
       new_table: Новый стол
     create:
       success: Стол успешно сохранен
@@ -561,11 +561,11 @@ ru:
       success: Стол успешно удален
   taxes:
     new:
-      edit_tax: Редактировать налог
+      edit_tax: Редактирование налога
       new_tax: Новый налог
   users:
     new:
-      edit_user: Редактировать пользователя
+      edit_user: Редактирование пользователя
       new_user: Новый пользователь
     create:
       success: Пользователь успешно сохранен
@@ -602,7 +602,7 @@ ru:
     waiterpad: Поднос
   seasons:
     new:
-      edit_season: Редактировать сезон
+      edit_season: Редактирование сезона
       new_season: Новый сезон
   shared:
     invoice_tax_list:
@@ -611,7 +611,7 @@ ru:
     new:
       add_tax_amount: Добавить налог
       common_surcharge: Общая доплата
-      edit_surcharge: Редактировать доплату
+      edit_surcharge: Редактирование доплаты
       new_surcharge: Новая доплата
   tax_amount: Количество
   various:
@@ -624,7 +624,7 @@ ru:
     unamed: Без имени
   vendors:
     index:
-      edit: Редактировать
+      edit: Редактирование
       switch_to: Выбрать
     new:
       edit_vendor: Редактирование ресторана
