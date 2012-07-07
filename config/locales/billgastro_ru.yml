@@ -128,25 +128,25 @@ ru:
         radio_select: Radio Select
         season_id: Season
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Количество
+        tax_id: Налог
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
-        name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
-        saas: Online variant
+        automatic_printing: Автоматическая печать
+        country: Правила для станы
+        hidden: удалить
+        invoice_footer_blurb: Текст снизу счета
+        invoice_header_blurb: Текст вверху счета
+        name: Название
+        receipt_footer_blurb: Текст снизу квитанции
+        receipt_header_blurb: Текст вверху квитанции
+        saas: Онлайн вариант
         ticket_display_time_order: Время и номер счета на заказ-наряде
         ticket_item_separator: Линия разделения заказ-наряда
         ticket_tall_font: Высокий шрифт для заказ-наряда
         ticket_wide_font: Широкий шрифт для заказ-наряда
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
+        time_offset: Коррекция времени (часы)
+        timeout: Блокировка экрана через (сек.)
+        use_order_numbers: Использовать номера заказов
     models:
       article:
         one: Блюдо
