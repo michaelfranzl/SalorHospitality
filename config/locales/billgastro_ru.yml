@@ -74,7 +74,7 @@ ru:
         description: Описание
         enabled: активен?
         height: Высота
-        height_mobile: Высота моб.
+        height_mobile: Высота (моб.)
         hidden: удалить
         name: Название
         rotate: повернуть?
@@ -158,8 +158,8 @@ ru:
         one: Компания
         other: Компании
       cost_center:
-        one: Cost Center
-        other: Cost Centers
+        one: Учетный отдел
+        other: Учетные отделы
       coupon:
         one: Купон
         other: Купоны
@@ -170,14 +170,14 @@ ru:
         one: Скидка
         other: Скидки
       group:
-        one: Stock Group
-        other: Stock Groups
+        one: Группа складов
+        other: Группы складов
       image:
         one: Изображение
         other: Изображения
       item:
-        one: Item
-        other: Items
+        one: Позиция
+        other: Позиции
       option:
         one: Опция
         other: Опции
@@ -206,26 +206,26 @@ ru:
         one: Роль
         other: Роли
       settlement:
-        one: Settlement
-        other: Settlements
+        one: Расчет
+        other: Расчеты
       stock:
-        one: Stock
-        other: Stocks
+        one: Склад
+        other: Склады
       table:
-        one: Table
-        other: Tables
+        one: Стол
+        other: Столы
       tax:
-        one: Tax Class
-        other: Tax Classes
+        one: Класс налогов
+        other: Классы налогов
       user:
-        one: User
-        other: Users
+        one: Пользователь
+        other: Пользователи
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Ресторан
+        other: Рестораны
       vendor_printer:
-        one: Printer
-        other: Printers
+        one: Принтер
+        other: Принтеры
       booking:
         one: Бронирование
         other: Бронирования
@@ -281,7 +281,7 @@ ru:
       all_articles: Показать все блюда
     new:
       add_quantity: Добавить вариант
-      edit_article: Редактировать блюдо
+      edit_article: Редактирование блюда
       new_article: Новое блюдо
       normal: обычное
       takeaway: с собой
@@ -326,14 +326,14 @@ ru:
       whitewineglass: Бокал белого вина
     destroy:
       success: Категория успешно удалена
-  clear_order_and_go_back: Отчистить заказ и вернуться
+  clear_order_and_go_back: Очистить заказ и вернуться
   copy: Копия
   cost_centers:
     index:
       active: Активен
       inactive: Неактивен
     new:
-      edit_cost_center: Редактировать учетный отдел
+      edit_cost_center: Редактирование учетного отдела
       new_cost_center: Новый учетный отдел
     create:
       success: Учетный отдел создан
@@ -345,7 +345,7 @@ ru:
   default: По умолчанию
   delete: Удалить
   display: Показать
-  edit: Редактировать
+  edit: Редактирование
   exit: Выход
   finish: Просто закончить
   food: Еда
@@ -587,19 +587,19 @@ ru:
     index:
       generate_price_skeleton: Сгенерировать скелет цены
     new:
-      edit_room_price: Редактировать цену комнаты
+      edit_room_price: Редактирование цены комнаты
       new_room_price: Новая цена комнаты
   room_types:
     new:
-      edit_room_type: Редактирование Edit room type
-      new_room_type: New room type
+      edit_room_type: Редактирование типа комнаты
+      new_room_type: Новый тип комнаты
   rooms:
     new:
-      edit_room: Редактировать зал
-      new_room: Новый зал
+      edit_room: Редактирование комнаты
+      new_room: Новая комната
   scopes:
     active: Активный
-    waiterpad: Waiterpad
+    waiterpad: Поднос
   seasons:
     new:
       edit_season: Редактировать сезон
@@ -613,7 +613,7 @@ ru:
       common_surcharge: Общая доплата
       edit_surcharge: Редактировать доплату
       new_surcharge: Новая доплата
-  tax_amount: XXX Amount
+  tax_amount: Количество
   various:
     cancel: Отмена
     common_surcharges: Обычные доплаты
@@ -627,5 +627,5 @@ ru:
       edit: Редактировать
       switch_to: Выбрать
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Редактирование ресторана
+      new_vendor: Новый ресторан
