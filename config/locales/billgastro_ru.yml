@@ -65,18 +65,18 @@ ru:
         price: Variant Price
         usage: usage
       role:
-        name: Name
+        name: Название
       settlement:
         initial_cash: Initial amount
         revenue: End amount
       table:
-        abbreviation: Abbreviation
-        description: Description
-        enabled: active?
-        height: Height
-        height_mobile: Height mobile
+        abbreviation: Сокращение
+        description: Описание
+        enabled: активный?
+        height: Высота
+        height_mobile: Высота моб.
         hidden: удалить
-        name: Name
+        name: Название
         rotate: повернуть?
         width: Ширина
         width_mobile: Ширина (моб.)
