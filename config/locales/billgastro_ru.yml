@@ -465,44 +465,44 @@ ru:
   print_and_finish: Закончить и напечатать
   printing_test: Проверка печати
   reports:
-    end_date: End Date
-    save: Save
-    start_date: Start Date
-    usb_device: USB Stick
+    end_date: Конечная дата
+    save: Сохранить
+    start_date: Начальная дата
+    usb_device: Устройство USB
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-  restaurant: Restaurant
+      backup_database: Резервировать базу данных
+      backup_logfile: Резевировать файл журнала
+      header: Отчеты
+  restaurant: Ресторан
   roles:
     new:
-      assign_cost_center: Assign cost center
-      cancel_all_items_in_active_order: Cancel all items in active order
+      assign_cost_center: Назначить учетный отдел
+      cancel_all_items_in_active_order: Отменить все позиции в активном заказе
       change_waiter: Сменить официнта
-      counter_mode: Counter mode
-      decrement_items: Decrement items
-      delete_items: Delete items by decrementing
+      counter_mode: Режим прилавка
+      decrement_items: Понизить позиции
+      delete_items: Удалить позиции поDelete items by decrementing
       edit_role: Edit Role
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
-      manage_business_invoice: Manage business invoice
-      manage_customers: Manage Customers
-      manage_pages: Manage Slideshow
-      manage_settings: Manage settings
-      manage_users: Manage users
-      move_order: Move order
-      move_tables: Move tables
-      new_role: New Role
-      permissions: Permissions
-      see_debug: See debug messages
-      see_item_notifications: See item notifications
-      split_items: Split items
-      take_orders: Take orders
+      make_storno: Отменить позиции
+      manage_articles_categories_options: Управляет Manage articles, categories and options
+      manage_business_invoice: Управляет счет-фактурами
+      manage_customers: Упраляет посетителями
+      manage_pages: Управляет слайдшоу
+      manage_settings: Управляет настройками
+      manage_users: Управляет пользователями
+      move_order: Перемещает заказ
+      move_tables: Перемещает столы
+      new_role: Новая роль
+      permissions: Разрешения
+      see_debug: Видит отладочные сообщения
+      see_item_notifications: Видит уведомления по позиции
+      split_items: Разбивает позиции
+      take_orders: Берет заказы
       view_all_settlements: View all settlements
-      view_statistics: Посмотреть статистику
+      view_statistics: Просматривает статистику
     create:
       success: Роль успешно сохранена
     destroy:
