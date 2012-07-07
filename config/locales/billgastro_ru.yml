@@ -416,12 +416,12 @@ ru:
       set_taxes: Указать учетный отдел
       split_invoice: Разбить счет
       split_this_item: Нажмите, чтобы разбить эту позицию по одной за раз
-      switch_tax_for_this_item: Нажмите, чтобы изменить ноClick to change the tax for this item
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      switch_tax_for_this_item: Нажмите, чтобы изменить налог для этой позиции
+      change_money: Сдача
+      set_booking: Назначить бронирование
     login_form:
       email: Ваш E-Mail
-      login: Login
+      login: Логин
       password: Пароль
       username: Пользователь
     order:
@@ -429,34 +429,34 @@ ru:
       sum: СУММА
     served_by: Вас обслуживал(а)
     show:
-      back: Back
-      count: Count
-      list_of_taxes: List of taxes
-      next_invoice: Next invoice
-      previous_invoice: Previous invoice
-      print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      back: Назад
+      count: Количество
+      list_of_taxes: Список налогов
+      next_invoice: Следующий счет
+      previous_invoice: Предыдущий счет
+      print_business_invoice: Печатать счет-фактуру
+      print_invoice: Печатать счет
+      search_by_number: Искать по номеру
+      sum: Сумма
+      unit_price: Цена за единицу
     storno_form:
-      do_separate_items: Separate this item
-      do_storno: Make storno
+      do_separate_items: Разделить эту позицию
+      do_storno: Сделать отмену
   pages:
     edit:
-      edit_page: Edit Page
-      slideshow: Start Slideshow
-      view: View
+      edit_page: Редактировать страницу
+      slideshow: Запустить слайдшоу
+      view: Посмотреть
     new:
-      new_page: New Page
+      new_page: Новая страница
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: отредактируй меня!
+    error_during_evaluation: ! 'Ошибка: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
-  pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+      no_presentations_found: Для данного элемента не указан шаблон.
+  pink: Розовый
+  please_enter_item_comment: Особое пожелание
+  please_enter_item_price: Специальная цена 
   presentations:
     new:
       edit_presentation: Редактировать шаблон
