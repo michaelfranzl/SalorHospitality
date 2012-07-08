@@ -3,632 +3,629 @@ ru:
   activerecord:
     attributes:
       article:
-        active: active
+        active: активно
         category_id: Категория
         description: Описание
         hidden: удалить
         image: Изображение
-        name: Name
+        name: Имя
         price: Цена
         tax_id: Налог
-        usage: Usage
+        usage: Использование
       category:
         color: Цвет
-        custom_icon: Моя иконка
+        custom_icon: Моя картинка
         food: Еда?
         hidden: удалить
         icon: Иконка
         name: Название
-        separate_print: Cut ticket
-        tax_id: Tax
-        user_id: Preparing User
+        separate_print: Отрезать заказ-наряд
+        tax_id: Налог
+        user_id: Пользователь
         vendor_printer_id: Принтер
       cost_center:
-        active: active?
-        description: Description
-        hidden: delete
-        name: Name
+        active: активный?
+        description: Описание
+        hidden: удалить
+        name: Имя
       group:
-        name: Name
+        name: Название
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
-        no_ticket: Dont' print ticket
-        price: Price
-        separate_ticket: Cut ticket
+        category_id: Категория
+        hidden: Удалить
+        name: Название
+        no_ticket: Не печатать заказ-наряд
+        price: Цена
+        separate_ticket: Отрезать заказ-наряд
       page:
-        active: active
-        color: Color
-        height: Height
-        hidden: delete
-        image: Image
-        width: Width
+        active: активно
+        color: Цвет
+        height: Высота
+        hidden: удалить
+        image: Изображение
+        width: Ширина
       partial:
-        active: aktiv
-        blurb: Blurb
-        hidden: delete
+        active: активно
+        blurb: Текст
+        hidden: удалить
       presentation:
-        active: active
-        code: Ruby code
-        description: Description
-        hidden: delete
-        markup: ERB Markup
-        model: Type
-        name: Name
+        active: активно
+        code: код Ruby
+        description: Описание
+        hidden: удалить
+        markup: Разметка ERB
+        model: Тип
+        name: Название
       quantity:
-        active: aktiv
-        description: Description
-        hidden: delete
-        postfix: Postfix
-        prefix: Name
-        price: Variant Price
-        usage: usage
+        active: активно
+        description: Описание
+        hidden: удалить
+        postfix: Постфикс
+        prefix: Название
+        price: Цена варианта
+        usage: использование
       role:
-        name: Name
+        name: Название
       settlement:
-        initial_cash: Initial amount
-        revenue: End amount
+        initial_cash: Начальное количество
+        revenue: Конечное количество
       table:
-        abbreviation: Abbreviation
-        description: Description
-        enabled: active?
-        height: Height
-        height_mobile: Height mobile
-        hidden: delete
-        name: Name
-        rotate: rotate?
-        width: Width
-        width_mobile: Width mobile
+        abbreviation: Сокращение
+        description: Описание
+        enabled: активен?
+        height: Высота
+        height_mobile: Высота (моб.)
+        hidden: удалить
+        name: Название
+        rotate: повернуть?
+        width: Ширина
+        width_mobile: Ширина (моб.)
       tax:
-        color: Color
-        hidden: delete
-        letter: Abbreviation
-        name: Name
-        percent: Tax in %
+        color: Цвет
+        hidden: удалить
+        letter: Сокращение
+        name: Название
+        percent: Налог в %
       user:
-        active: active?
-        color: Color
-        hidden: delete?
-        language: Language
-        login: Login
-        password: Password
-        role: Role
-        screenlock_timeout: Screenlock timeout (sec.)
-        tables: Tables
-        title: Title
+        active: активен?
+        color: Цвет
+        hidden: удалить?
+        language: Язык
+        login: Логин
+        password: Пароль
+        role: Роль
+        screenlock_timeout: Блокировать экран через (сек.)
+        tables: Столы
+        title: Имя
       vendor_printer:
-        copies: Copies
-        hidden: Delete
-        name: Name
-        path: Path
+        copies: Копии
+        hidden: Удалить
+        name: Название
+        path: Путь
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: удалить
+        name: Название
+        taxes: Налоги
       room_price:
-        base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
-        season_id: Season
+        base_price: Базовая цена
+        guest_type_id: Тип гостя
+        hidden: удалить
+        room_type_id: Тип комнаты
+        season_id: Сезон
       room_type:
-        hidden: löschen
-        name: Name
+        hidden: удалить
+        name: Название
       season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        from_date: С
+        hidden: удалить
+        name: Название
+        to_date: До
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
-        radio_select: Radio Select
-        season_id: Season
+        amount: Количество
+        guest_type_id: Тип гостя
+        hidden: удалить
+        name: Название
+        radio_select: Радио выбор
+        season_id: Сезон
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Количество
+        tax_id: Налог
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
-        name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
-        saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
+        automatic_printing: Автоматическая печать
+        country: Правила для станы
+        hidden: удалить
+        invoice_footer_blurb: Текст снизу счета
+        invoice_header_blurb: Текст вверху счета
+        name: Название
+        receipt_footer_blurb: Текст снизу квитанции
+        receipt_header_blurb: Текст вверху квитанции
+        saas: Онлайн вариант
+        ticket_display_time_order: Время и номер счета на заказ-наряде
+        ticket_item_separator: Линия разделения заказ-наряда
+        ticket_tall_font: Высокий шрифт для заказ-наряда
+        ticket_wide_font: Широкий шрифт для заказ-наряда
+        time_offset: Коррекция времени (часы)
+        timeout: Блокировка экрана через (сек.)
+        use_order_numbers: Использовать номера заказов
     models:
       article:
-        one: Article
-        other: Articles
+        one: Блюдо
+        other: Блюда
       category:
-        one: Category
-        other: Categories
+        one: Категория
+        other: Категории
       company:
-        one: Company
-        other: Companies
+        one: Компания
+        other: Компании
       cost_center:
-        one: Cost Center
-        other: Cost Centers
+        one: Учетный отдел
+        other: Учетные отделы
       coupon:
-        one: Coupon
-        other: Coupons
+        one: Купон
+        other: Купоны
       customer:
-        one: Customer
-        other: Customers
+        one: Посетитель
+        other: Посетители
       discount:
-        one: Discount
-        other: Discounts
+        one: Скидка
+        other: Скидки
       group:
-        one: Stock Group
-        other: Stock Groups
+        one: Группа складов
+        other: Группы складов
       image:
-        one: Image
-        other: Images
+        one: Изображение
+        other: Изображения
       item:
-        one: Item
-        other: Items
+        one: Позиция
+        other: Позиции
       option:
-        one: Option
-        other: Options
+        one: Опция
+        other: Опции
       order:
-        one: Order
-        other: Orders
+        one: Заказ
+        other: Заказы
       page:
-        one: Card
-        other: Cards
+        one: Карта
+        other: Карты
       partial:
-        one: Partial
-        other: Partials
+        one: Элемент
+        other: Элементы
       presentation:
-        one: Template
-        other: Templates
+        one: Шаблон
+        other: Шаблоны
       quantity:
-        one: Variant
-        other: Variants
+        one: Вариант
+        other: Варианты
       report:
-        one: Report
-        other: Reports
+        one: Отчет
+        other: Отчеты
       reservation:
-        one: Reservation
-        other: Reservations
+        one: Резервирование
+        other: Резервирования
       role:
-        one: Role
-        other: Roles
+        one: Роль
+        other: Роли
       settlement:
-        one: Settlement
-        other: Settlements
+        one: Расчет
+        other: Расчеты
       stock:
-        one: Stock
-        other: Stocks
+        one: Склад
+        other: Склады
       table:
-        one: Table
-        other: Tables
+        one: Стол
+        other: Столы
       tax:
-        one: Tax Class
-        other: Tax Classes
+        one: Класс налогов
+        other: Классы налогов
       user:
-        one: User
-        other: Users
+        one: Пользователь
+        other: Пользователи
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Ресторан
+        other: Рестораны
       vendor_printer:
-        one: Printer
-        other: Printers
+        one: Принтер
+        other: Принтеры
       booking:
-        one: Booking
-        other: Bookings
+        one: Бронирование
+        other: Бронирования
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Тип гостя
+        other: Типы гостей
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Метод оплаты
+        other: Методы оплаты
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Метод оплаты
+        other: Методы оплаты
       room:
-        one: Room
-        other: Rooms
+        one: Комната
+        other: Комнаты
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Цена комнаты
+        other: Цены комнат
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Тип комнаты
+        other: Типы комнат
       season:
-        one: Saison
-        other: Saisons
+        one: Сезон
+        other: Сезоны
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Доплата
+        other: Доплаты
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Величина налога
+        other: Величины налогов
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
-  admin: Admin
-  are_you_sure: Are you sure?
+        prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
+  admin: Админ
+  are_you_sure: Вы уверены?
   articles:
     create:
-      success: Article was successfully created
+      success: Блюдо создано
     destroy:
-      success: Article was successfully deleted
+      success: Блюдо удалено
     find:
       variants:
-        one: Variant
-        other: Variants
+        one: Вариант
+        other: Варианты
     index:
-      list_all: List all
-      preview: Preview
-      search_term: Search term
-      sort: Sort
-      update: Update!
-      view: View
+      list_all: Показать все
+      preview: Предварительный просмотр
+      search_term: Искать значение
+      sort: Сортировать
+      update: Обновить!
+      view: Просмотр
     listall:
-      all_articles: List of all articles
+      all_articles: Показать все блюда
     new:
-      add_quantity: Add Variant
-      edit_article: Edit article
-      new_article: New article
-      normal: normal
-      takeaway: take away
+      add_quantity: Добавить вариант
+      edit_article: Редактирование блюда
+      new_article: Новое блюдо
+      normal: обычное
+      takeaway: с собой
     sort_index:
-      sort: Sort articles
-  bar: Bar
-  black: Black
+      sort: Сортировать блюда
+  bar: Бар
+  black: Черный
   blackboard:
     index:
-      update: Update
-  blank: blank
-  blue: Blue
-  cancel_and_go_back: Cancel and go back
+      update: Обновить
+  blank: пусто
+  blue: Синий
+  cancel_and_go_back: Отменить и вернуться
   categories:
     create:
-      success: Success!
+      success: Успешно!
     new:
-      aperitif: Aperitif
-      beer: Beer
-      blank: Blank
-      childrendish: Childrens Dish
-      cigarette: Tobacco
-      coffee: Coffee
-      dessert: Dessert
-      digestif: Digestif
-      edit_category: Edit Category
-      maindish: Main Dish
-      new_category: New Category
-      nonalcoholics: Alcohol Free
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
+      aperitif: Аперитив
+      beer: Пиво
+      blank: Пусто
+      childrendish: Блюдо для детей
+      cigarette: Сигареты
+      coffee: Кофе
+      dessert: Десерт
+      digestif: Дижестив
+      edit_category: Редактирование категории
+      maindish: Главные блюда
+      new_category: Новая категория
+      nonalcoholics: Безалкогольные напитки
+      noodles: Лапша
+      redwinebottle: Бутылка красного вина
+      redwineglass: Бокал красного вина
+      rosewinebottle: Бутылка розового вина
+      rosewineglass: Бокал розового вина
+      sidedish: Гарнир
+      soup: Супы
+      sparkling: Шампанское
+      starter: Стартер
+      tea: Чашка чая
+      teapot: Чай в чайнике
+      whitewinebottle: Бутылка белого вина
+      whitewineglass: Бокал белого вина
     destroy:
-      success: Category successfully deleted
-  clear_order_and_go_back: Clear order and go back
-  copy: Copy
+      success: Категория успешно удалена
+  clear_order_and_go_back: Очистить заказ и вернуться
+  copy: Копия
   cost_centers:
     index:
-      active: Active
-      inactive: Inactive
+      active: Активен
+      inactive: Неактивен
     new:
-      edit_cost_center: Edit Cost Center
-      new_cost_center: New Cost Center
+      edit_cost_center: Редактирование учетного отдела
+      new_cost_center: Новый учетный отдел
     create:
-      success: Cost Center successfully saved
+      success: Учетный отдел создан
     destroy:
-      success: Cost Center successfully deleted
-  count: Count
-  create: Create
-  dateandtime: Date
-  default: Default
-  delete: Delete
-  display: Display
-  edit: Edit
-  exit: Exit
-  finish: Just Finish
-  food: Foods
-  go_back: Go back
-  green: Green
-  gross: Gross
+      success: Учетный отдел удален
+  count: Количество
+  create: Создать
+  dateandtime: Дата
+  default: По умолчанию
+  delete: Удалить
+  display: Показать
+  edit: Редактирование
+  exit: Выход
+  finish: Просто закончить
+  food: Еда
+  go_back: Вернуться
+  green: Зеленый
+  gross: Без вычета налогов
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
-  guestroom: Guestroom
-  host: Host
+      edit_group: Редактирование группы
+      new_group: Новая группа
+  guestroom: Комната для гостей
+  host: Сервер
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
-  is_no_number: is not a number.
+    errempty: Неверный файл
+    errsize: Неверный размер файла
+    errtype: Неверный тип файла
+  invoice: Счет
+  invoice_numer_X_at_time: Счет №. %{number} за %{datetime}
+  invoices: Счета
+  is_no_number: не число.
   items:
     item_tablerow:
-      clear: Clear
-      done: Done
-      no_printing: no printing
-  just_order: Just order
-  kitchen: Kitchen
+      clear: Очистить
+      done: Готово
+      no_printing: не печатать
+  just_order: Только заказ
+  kitchen: Кухня
   layouts:
     application:
       submit_scribe: OK
-  logout: log out %{who}
+  logout: завершить сеанс %{who}
   messages:
-    hello_username: Hello %{name}!
-  move_order_to_table: Move order to different table
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
-  net: Net
-  new: New
-  no_printing: No printing
-  not_found: Not found
+    hello_username: Здравствуйте, %{name}!
+  move_order_to_table: Переместить заказ на другой стол
+  must_be_entered_either_for_article_or_for_quantity: нужно ввести для блюда или варианта.
+  net: С вычетом налогов
+  new: Новый
+  no_printing: Не печатать
+  not_found: Не найдено
   options:
     new:
-      edit_option: Edit Option
-      hidden: delete
-      new_option: New Option
-      select_all: select all
+      edit_option: Редактирование опции
+      hidden: удалить
+      new_option: Новая опция
+      select_all: выбрать все
     create:
-      success: Option successfully saved
+      success: Опция сохранена
     destroy:
-      success: Option successfully deleted
-  orange: Orange
+      success: Опция удалена
+  orange: Оранжевый
   orders:
     functions_header_index:
-      items_notifications: Notifications
-      print_now: Print now
-      show_last_order: Show last order
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      items_notifications: Уведомления
+      print_now: Напечатать сейчас
+      show_last_order: Показать последний заказ
+      show_last_booking: Показать последнее резервирование
+      toggle_between_tables_and_rooms: Переключиться между комнатами и столами
     functions_header_order_form:
-      move_order: Move order to other table
+      move_order: Переместить заказ на другой стол
     index:
-      delivery_list: Delivery list
-      preparation_list: Preparation list
+      delivery_list: Список доставки
+      preparation_list: Список приготовления
     invoice_form:
-      just_finish: Just finish order
-      print_and_finish: Print and finish this order
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
-      split_this_item: Click to split this items one at a time
-      switch_tax_for_this_item: Click to change the tax for this item
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      just_finish: Только завершить заказ
+      print_and_finish: Печатать и завершить этот заказ
+      set_cost_center: Указать учетный отдел для этого заказа
+      set_tax_for_all: Указать учетный отдел по умолчанию
+      set_taxes: Указать учетный отдел
+      split_invoice: Разбить счет
+      split_this_item: Нажмите, чтобы разбить эту позицию по одной за раз
+      switch_tax_for_this_item: Нажмите, чтобы изменить налог для этой позиции
+      change_money: Сдача
+      set_booking: Назначить бронирование
     login_form:
       email: Ваш E-Mail
-      login: Login
+      login: Логин
       password: Пароль
       username: Пользователь
     order:
       new: Новый заказ
       sum: СУММА
-    served_by: You were served by
+    served_by: Вас обслуживал(а)
     show:
-      back: Back
-      count: Count
-      list_of_taxes: List of taxes
-      next_invoice: Next invoice
-      previous_invoice: Previous invoice
-      print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      back: Назад 
+      count: Количество
+      list_of_taxes: Список налогов
+      next_invoice: Следующий счет
+      previous_invoice: Предыдущий счет
+      print_business_invoice: Печатать счет-фактуру
+      print_invoice: Печатать счет
+      search_by_number: Искать по номеру
+      sum: Сумма
+      unit_price: Цена за единицу
     storno_form:
-      do_separate_items: Separate this item
-      do_storno: Make storno
+      do_separate_items: Разделить эту позицию
+      do_storno: Сделать отмену
   pages:
     edit:
-      edit_page: Edit Page
-      slideshow: Start Slideshow
-      view: View
+      edit_page: Редактирование страницы
+      slideshow: Запустить слайдшоу
+      view: Посмотреть
     new:
-      new_page: New Page
+      new_page: Новая страница
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: отредактируй меня!
+    error_during_evaluation: ! 'Ошибка: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
-  pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+      no_presentations_found: Для данного элемента не указан шаблон.
+  pink: Розовый
+  please_enter_item_comment: Особое пожелание
+  please_enter_item_price: Специальная цена 
   presentations:
     new:
-      edit_presentation: Редактировать шаблон
+      edit_presentation: Редактирование шаблона
       new_presentation: Новый шаблон
   print: Печатать
   print_and_finish: Закончить и напечатать
   printing_test: Проверка печати
   reports:
-    end_date: End Date
-    save: Save
-    start_date: Start Date
-    usb_device: USB Stick
+    end_date: Конечная дата
+    save: Сохранить
+    start_date: Начальная дата
+    usb_device: Устройство USB
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-  restaurant: Restaurant
+      backup_database: Резервировать базу данных
+      backup_logfile: Резевировать файл журнала
+      header: Отчеты
+  restaurant: Ресторан
   roles:
     new:
-      assign_cost_center: Assign cost center
-      cancel_all_items_in_active_order: Cancel all items in active order
-      change_waiter: Change waiter
-      counter_mode: Counter mode
-      decrement_items: Decrement items
-      delete_items: Delete items by decrementing
-      edit_role: Edit Role
-      finish_all_settlements: Finish all settlements
-      finish_orders: Finish orders
-      finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
-      manage_business_invoice: Manage business invoice
-      manage_customers: Manage Customers
-      manage_pages: Manage Slideshow
-      manage_settings: Manage settings
-      manage_users: Manage users
-      move_order: Move order
-      move_tables: Move tables
-      new_role: New Role
-      permissions: Permissions
-      see_debug: See debug messages
-      see_item_notifications: See item notifications
-      split_items: Split items
-      take_orders: Take orders
-      view_all_settlements: View all settlements
-      view_statistics: View statistics
+      assign_cost_center: Назначает учетный отдел
+      cancel_all_items_in_active_order: Отменяет все позиции в активном заказе
+      change_waiter: Меняет официанта
+      counter_mode: Режим прилавка
+      decrement_items: Уменьшает позиции
+      delete_items: Удалят позиции уменьшением
+      edit_role: Редактирование роли
+      finish_all_settlements: Завершает все расчеты
+      finish_orders: Завершает заказы
+      finish_own_settlement: Завершает свой расчет
+      make_storno: Отменяет позиции
+      manage_articles_categories_options: Управляет блюдами, категориями и опциями
+      manage_business_invoice: Управляет счет-фактурами
+      manage_customers: Упраляет посетителями
+      manage_pages: Управляет слайдшоу
+      manage_settings: Управляет настройками
+      manage_users: Управляет пользователями
+      move_order: Перемещает заказ
+      move_tables: Перемещает столы
+      new_role: Новая роль
+      permissions: Разрешения
+      see_debug: Видит отладочные сообщения
+      see_item_notifications: Видит уведомления по позиции
+      split_items: Разбивает позиции
+      take_orders: Берет заказы
+      view_all_settlements: Видит все расчеты
+      view_statistics: Просматривает статистику
     create:
-      success: Role successfully saved
+      success: Роль успешно сохранена
     destroy:
-      success: Role successfully deleted
-  scroll_down: Scroll down
-  scroll_to_room: Go to room
-  scroll_up: Scroll up
-  send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+      success: Роль успешно удалена
+  scroll_down: Пролистать вниз
+  scroll_to_room: Перейти к залу
+  scroll_up: Пролистать вверх
+  send_and_go_back: Сохранить и вернуться
+  served_by_X_on_table_Y: Вас обслуживал(а) %{waiter} за %{table}
+  server_no_response: Сервер Bill Gastro Server не отвечает. Скорее всего он занят или это проблеми связи.
   sessions:
     browser_warning:
-      continue: Continue
+      continue: Продолжить
       warning: Похоже, что вы не используете Mozilla Firefox, Safari, Google Chrome
-        или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы
-        только в этих браузерах.
+        или Chromium в качестве веб браузера. Bill Gastro был оптимизирован для работы только в этих браузерах.
     new:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
+      email: Ваш E-Mail
+      login: Логин
+      password: Пароль
+      username: Пользователь
   settlements:
     detailed_list:
-      count: Count
-      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
-      revenue: Revenue
-      total: Total
-      unit_price: Unit Price
+      count: Количество
+      order_number_on_table_on_date: ! '%{order} № %{number} за %{table} в %{time}'
+      revenue: Выручка
+      total: Всего
+      unit_price: Цена за единицу
     index:
-      all_cost_centers: All
-      end_date: End date
-      start_date: Start date
-      sum_total: Sum total
+      all_cost_centers: Все
+      end_date: Конечная дата
+      start_date: Начальная дата
+      sum_total: Общая сумма
     settlement:
-      finish: Finish
-      print: Print
-      start: Start
-      started_at: Started at
-  split_order: Split order
+      finish: Конец
+      print: Печать
+      start: Начало
+      started_at: Начался в
+  split_order: Разбить заказ
   statistic: Статистика
   statistics:
     journal: Журнал (хронологический список)
     weekdays: Дни недели
   stocks:
     new:
-      edit_stock: Edit Stock
-      new_stock: New Stock
-  storno: Storno
-  sum: Sum
+      edit_stock: Редактирование склада
+      new_stock: Новый склад
+  storno: Отмена
+  sum: Сумма
   tables:
     new:
-      edit_table: Edit Table
-      new_table: New Table
+      edit_table: Редактирование стола
+      new_table: Новый стол
     create:
-      success: Table successfully saved
+      success: Стол успешно сохранен
     destroy:
-      success: Table successfully deleted
+      success: Стол успешно удален
   taxes:
     new:
-      edit_tax: Edit Tax
-      new_tax: New Tax
+      edit_tax: Редактирование налога
+      new_tax: Новый налог
   users:
     new:
-      edit_user: Edit User
-      new_user: New User
+      edit_user: Редактирование пользователя
+      new_user: Новый пользователь
     create:
-      success: User successfully saved
+      success: Пользователь успешно сохранен
     destroy:
-      success: User successfully deleted
-  violet: Violet
-  waiter: Waiter
-  waiterpad_generic_name: Waiterpad
-  white: White
-  winered: Wine Red
-  wrong_password: Wrong login data
-  yellow: Yellow
+      success: Пользователь успешно удален
+  violet: Фиолетовый
+  waiter: Официант
+  waiterpad_generic_name: Поднос
+  white: Белый
+  winered: Бардовый
+  wrong_password: Неверный пароль
+  yellow: Желтый
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Вас обслуживал(а) %{user}
     show:
-      search_by_number: Search by number
+      search_by_number: Искать по номеру
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Сгенерировать скелет цены
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Редактирование цены комнаты
+      new_room_price: Новая цена комнаты
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: Редактирование типа комнаты
+      new_room_type: Новый тип комнаты
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Редактирование комнаты
+      new_room: Новая комната
   scopes:
-    active: Active
-    waiterpad: Waiterpad
+    active: Активный
+    waiterpad: Поднос
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Редактирование сезона
+      new_season: Новый сезон
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Список налогов
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
-  tax_amount: XXX Amount
+      add_tax_amount: Добавить налог
+      common_surcharge: Общая доплата
+      edit_surcharge: Редактирование доплаты
+      new_surcharge: Новая доплата
+  tax_amount: Количество
   various:
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
-    unamed: Unamed
+    cancel: Отмена
+    common_surcharges: Обычные доплаты
+    home: Домой
+    pay: Оплатить
+    save: Сохранить
+    subtotal: Подытог
+    unamed: Без имени
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: Редактирование
+      switch_to: Выбрать
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Редактирование ресторана
+      new_vendor: Новый ресторан
