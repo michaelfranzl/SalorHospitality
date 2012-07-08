@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer  "imageable_id"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.string   "image_type"
   end
 
   add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"

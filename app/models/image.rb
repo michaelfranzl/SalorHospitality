@@ -34,7 +34,7 @@ class Image < ActiveRecord::Base
   end
 
 	def parse_filename(filename, model)
-		xt = filename.split('.').last.downcase.gsub(/(jpeg|bmp)/,'jpg')
+    xt = filename.split('.').last.downcase.gsub(/(jpeg|bmp)/,'jpg')
 		fn = filename.gsub('.'+xt,'').gsub(/[^[:alnum:]]/,'_').gsub(/\s+/,'_').gsub(/_{2,}/,'_').to(59)
 		write_attribute 'name', "#{fn}.#{xt}"
 		#write_attribute 'model', model
@@ -111,8 +111,8 @@ class Image < ActiveRecord::Base
 			@file_data = nil
       # Delete temp folder
       FileUtils.rm_rf(get_path('original')) if File.exists?(get_path('original'))
-			Image.destroy_nulls
 		end
+    Image.destroy_nulls
 	end
 
 	def get_resize_ratio(pic, dimensions)

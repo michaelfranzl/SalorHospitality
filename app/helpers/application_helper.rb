@@ -24,7 +24,15 @@ module ApplicationHelper
 
   def nest_image(object)
     object.tap do |o|
-      o.images.build if o.images.empty?
+      if o.images.empty? then
+        o.images.build
+        o.images.first.image_type = 'logo' if o.class.name == 'Article' and o.images.first.image_type.nil?
+      end
+      if o.class.name == 'Article' and o.images.count < 2 then
+        o.images.first.image_type = 'logo' if o.images.first.image_type.nil?
+        o.images.build
+        o.images.first.image_type == 'logo' ? o.images.last.image_type = 'footer' : o.images.last.image_type = 'logo'
+      end
     end
   end
 
