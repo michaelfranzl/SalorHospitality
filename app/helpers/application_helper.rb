@@ -26,12 +26,12 @@ module ApplicationHelper
     object.tap do |o|
       if o.images.empty? then
         o.images.build
-        o.images.first.image_type = 'logo' if o.class.name == 'Article' and o.images.first.image_type.nil?
+        o.images.first.image_type = 'logo' if o.class.name == 'Vendor' and o.images.first.image_type.nil?
       end
-      if o.class.name == 'Article' and o.images.count < 2 then
+      if o.class.name == 'Vendor' and o.images.count < 2 then
         o.images.first.image_type = 'logo' if o.images.first.image_type.nil?
         o.images.build
-        o.images.first.image_type == 'logo' ? o.images.last.image_type = 'footer' : o.images.last.image_type = 'logo'
+        o.images.first.image_type == 'logo' ? o.images.last.image_type = 'invoice_logo' : o.images.last.image_type = 'logo'
       end
     end
   end

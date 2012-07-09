@@ -5,15 +5,22 @@
       - @vendor.errors.full_messages.each do |msg|
         %li= msg
 
+
 = form_for nest_image(@vendor), :html => { :multipart => true, :class => 'vendor_form' } do |vendor_form|
+  .image
+    = vendor_form.label :logo
+    %img.asset{ :src => @vendor.image('logo') }
+    = vendor_form.label :invoice_logo
+    %img.asset{ :src => @vendor.image('invoice_logo') }
   %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
   %table
     %tr
       %td
         = vendor_form.fields_for :images do |image_form|
-          = image_form.label :logo
+          = vendor_form.label image_form.object.image_type.to_s
           = image_form.file_field :file_data
-        %br
+          = image_form.hidden_field :image_type
+          %br
         = vendor_form.label :rlogo_header
         = vendor_form.file_field :rlogo_header
         %br

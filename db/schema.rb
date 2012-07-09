@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622112117) do
+ActiveRecord::Schema.define(:version => 20120705081651) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,16 +19,18 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "active",      :default => true
+    t.boolean  "active",        :default => true
     t.boolean  "waiterpad"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "hidden",      :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "hidden",        :default => false
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.integer  "tax_id"
+    t.string   "sku",           :default => ""
+    t.float    "quantity_sold", :default => 0.0
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -768,6 +770,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer  "max_options"
     t.integer  "max_users"
     t.integer  "max_categories"
+    t.integer  "max_discounts"
   end
 
 end

@@ -157,6 +157,10 @@ en:
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
+        rlogo_header: Receipt logo header
+        rlogo_footer: Receipt logo footer
+        logo: Screen logo
+        invoice_logo: Invoice Logo
       vendor_printer:
         copies: Copies
         hidden: Delete

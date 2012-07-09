@@ -157,6 +157,10 @@ gn:
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
+        rlogo_header: Beleg-Logo Kopf
+        rlogo_footer: Beleg-Logo Fuß
+        logo: Bildschirm-Logo
+        invoice_logo: Rechnungslogo
       vendor_printer:
         copies: Kopien
         hidden: Löschen
