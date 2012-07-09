@@ -76,8 +76,12 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
-    self.table.user = user
-    self.table.save
+    if self.table
+      self.table.user = user
+      self.table.save
+    else
+      raise "Oops. Order didn't have a table associated to it. This shouldn't have happened."
+    end
     self.user = user
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
