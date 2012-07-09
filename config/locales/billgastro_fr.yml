@@ -112,26 +112,26 @@ en:
         name: Nom
         percent: Taxe en %
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Montant
+        tax_id: Taxe
       user:
-        active: active?
-        color: Color
-        hidden: delete?
-        language: Language
-        login: Login
-        password: Password
-        role: Role
+        active: Activé
+        color: Couleur
+        hidden: Effacer ?
+        language: Langue
+        login: Nom d'utilisateur
+        password: Mot de passe
+        role: Rôle
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
-        title: Title
+        title: Titre
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
+        automatic_printing: Impression automatique
+        country: Règles pour le pays
+        hidden: Effacer
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
-        name: Name
+        name: Nom
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         saas: Online variant
@@ -144,9 +144,9 @@ en:
         use_order_numbers: Use order numbers
       vendor_printer:
         copies: Copies
-        hidden: Delete
-        name: Name
-        path: Path
+        hidden: Effacer
+        name: Nom
+        path: Chemin
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -155,14 +155,14 @@ en:
         one: Article
         other: Articles
       booking:
-        one: Booking
-        other: Bookings
+        one: Réservation
+        other: Réservations
       category:
-        one: Category
-        other: Categories
+        one: Catégorie
+        other: Catégories
       company:
-        one: Company
-        other: Companies
+        one: Société
+        other: Sociétés
       cost_center:
         one: Cost Center
         other: Cost Centers
@@ -170,11 +170,11 @@ en:
         one: Coupon
         other: Coupons
       customer:
-        one: Customer
-        other: Customers
+        one: Client
+        other: Clients
       discount:
-        one: Discount
-        other: Discounts
+        one: Remise
+        other: Remises
       group:
         one: Stock Group
         other: Stock Groups
@@ -191,20 +191,20 @@ en:
         one: Option
         other: Options
       order:
-        one: Order
-        other: Orders
+        one: Commande
+        other: Commandes
       page:
-        one: Card
-        other: Cards
+        one: Carte
+        other: Cartes
       partial:
         one: Partial
         other: Partials
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Mode de paiement
+        other: Modes de paiement
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Mode de paiement
+        other: Modes de paiement
       presentation:
         one: Template
         other: Templates
@@ -215,20 +215,20 @@ en:
         one: Report
         other: Reports
       reservation:
-        one: Reservation
-        other: Reservations
+        one: Réservation
+        other: Réservations
       role:
-        one: Role
-        other: Roles
+        one: Rôle
+        other: Rôles
       room:
-        one: Room
-        other: Rooms
+        one: Chambre
+        other: Chambres
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Tarif de la chambre
+        other: Tarifs de la chambre
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Type de chambre
+        other: Types de chambre
       season:
         one: Saison
         other: Saisons
