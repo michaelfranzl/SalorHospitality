@@ -4,113 +4,113 @@ en:
     attributes:
       article:
         active: active
-        category_id: Category
+        category_id: Catégorie
         description: Description
-        hidden: delete
+        hidden: Effacer
         image: Image
-        name: Name
-        price: Price
-        tax_id: Tax
-        usage: Usage
+        name: Nom
+        price: Prix
+        tax_id: Taxe
+        usage: Utilisation
       category:
-        color: Color
-        custom_icon: My Icon
-        food: Food?
-        hidden: delete
-        icon: Icon
-        name: Name
+        color: Couleur
+        custom_icon: Mon icône
+        food: Aliments ?
+        hidden: Effacer
+        icon: Icône
+        name: Nom
         separate_print: Cut ticket
-        tax_id: Tax
+        tax_id: Taxe
         user_id: Preparing User
         vendor_printer_id: Printer
       cost_center:
-        active: active?
+        active: Activé ?
         description: Description
-        hidden: delete
-        name: Name
+        hidden: Effacer
+        name: Nom
       group:
-        name: Name
+        name: Nom
       guest_type:
-        hidden: delete
-        name: Name
+        hidden: Effacer
+        name: Nom
         taxes: Taxes
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
-        no_ticket: Dont' print ticket
-        price: Price
+        category_id: Catégorie
+        hidden: Effacer
+        name: Nom
+        no_ticket: Ne pas imprimer de ticket
+        price: Prix
         separate_ticket: Cut ticket
       page:
-        active: active
-        color: Color
-        height: Height
-        hidden: delete
+        active: Activé
+        color: Couleur
+        height: Hauteur
+        hidden: Effacer
         image: Image
-        width: Width
+        width: Largeur
       partial:
-        active: aktiv
+        active: Activé
         blurb: Blurb
-        hidden: delete
+        hidden: Effacer
       presentation:
-        active: active
+        active: Activer
         code: Ruby code
         description: Description
-        hidden: delete
+        hidden: Effacer
         markup: ERB Markup
         model: Type
-        name: Name
+        name: Nom
       quantity:
-        active: aktiv
+        active: Activé
         description: Description
-        hidden: delete
+        hidden: Effacer
         postfix: Postfix
-        prefix: Name
+        prefix: Nom
         price: Variant Price
-        usage: usage
+        usage: Utilisation
       role:
-        name: Name
+        name: Nom
       room_price:
-        base_price: Base Price
+        base_price: Prix de vase
         guest_type_id: Gast-Typ
         hidden: löschen
-        room_type_id: Zimmerklasse
-        season_id: Season
+        room_type_id: Type de chambre
+        season_id: Saison
       room_type:
         hidden: löschen
-        name: Name
+        name: Nom
       season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        from_date: De
+        hidden: Effacer
+        name: Nom
+        to_date: À
       settlement:
-        initial_cash: Initial amount
-        revenue: End amount
+        initial_cash: Montant initial
+        revenue: Montant final
       surcharge:
-        amount: Amount
+        amount: Montant
         guest_type_id: Guest Type
-        hidden: delete
-        name: Name
+        hidden: Effacer
+        name: Nom
         radio_select: Radio Select
-        season_id: Season
+        season_id: Saison
       table:
-        abbreviation: Abbreviation
+        abbreviation: Abréviation
         description: Description
-        enabled: active?
-        height: Height
+        enabled: Activé ?
+        height: Hauteur
         height_mobile: Height mobile
-        hidden: delete
-        name: Name
-        rotate: rotate?
-        width: Width
+        hidden: Effacer
+        name: Nom
+        rotate: Pivoter ?
+        width: Largeur
         width_mobile: Width mobile
       tax:
-        color: Color
-        hidden: delete
-        letter: Abbreviation
-        name: Name
-        percent: Tax in %
+        color: Couleur
+        hidden: Effacer
+        letter: Abréviation
+        name: Nom
+        percent: Taxe en %
       tax_amount:
         amount: Amount
         tax_id: Tax
