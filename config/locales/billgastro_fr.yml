@@ -369,45 +369,45 @@ en:
     errempty: Fichier invalide
     errsize: Taille de fichier invalide
     errtype: Type de fichier invalide
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
-  is_no_number: is not a number.
+  invoice: Facture
+  invoice_numer_X_at_time: No. facture %{numéro} à %{date}
+  invoices: Factures
+  is_no_number: Pas un numéro
   items:
     item_tablerow:
       clear: Clear
       done: Done
       no_printing: no printing
   just_order: Just order
-  kitchen: Kitchen
+  kitchen: Cuisine
   layouts:
     application:
       submit_scribe: OK
-  logout: log out %{who}
+  logout: Déconnecter %{qui}
   messages:
-    hello_username: Hello %{name}!
-  move_order_to_table: Move order to different table
+    hello_username: Bonjour %{nom}!
+  move_order_to_table: Déplacer commande à table différente
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
   net: Net
-  new: New
+  new: Nouveau
   no_printing: No printing
-  not_found: Not found
+  not_found: Non trouvé
   options:
     create:
-      success: Option successfully saved
+      success: Option enregistrée avec succès
     destroy:
-      success: Option successfully deleted
+      success: Option supprimée avec succès
     new:
-      edit_option: Edit Option
+      edit_option: Modifier Option
       hidden: delete
-      new_option: New Option
-      select_all: select all
+      new_option: Nouvelle Option
+      select_all: Tout sélectionner
   orange: Orange
   orders:
     functions_header_index:
       items_notifications: Notifications
-      print_now: Print now
+      print_now: Imprimer maintenant
       show_last_booking: Show last booking
       show_last_order: Show last order
       toggle_between_tables_and_rooms: Toggle between rooms and tables
