@@ -147,10 +147,10 @@ el:
         receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
         receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
         saas: Διαδικτυακή εναλλαγή
-        ticket_display_time_order: Χρόνος και αριθμός τιμολογίου στην ετικέτα
-        ticket_item_separator: Διαχωριστική γραμμή ετικέτας
-        ticket_tall_font: Ψηλή γραμματοσειρά ετικέτας
-        ticket_wide_font: Φαρδιά γραμματοσειρά ετικέτας
+        ticket_display_time_order: Χρόνος και αριθμός τιμολογίου στο απόκομμα
+        ticket_item_separator: Διαχωριστική γραμμή αποκόμματος
+        ticket_tall_font: Ψηλή γραμματοσειρά αποκόμματος
+        ticket_wide_font: Φαρδιά γραμματοσειρά αποκόμματος
         time_offset: Διόρθωση χρόνου (ώρες)
         timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (δευτερόλεπτα)
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
