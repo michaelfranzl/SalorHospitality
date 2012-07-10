@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120705081651) do
+ActiveRecord::Schema.define(:version => 20120709152459) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -534,6 +534,7 @@ ActiveRecord::Schema.define(:version => 20120705081651) do
     t.integer  "vendor_id"
     t.boolean  "active",                      :default => true
     t.boolean  "hidden"
+    t.integer  "weight"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -764,13 +765,13 @@ ActiveRecord::Schema.define(:version => 20120705081651) do
     t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
     t.integer  "largest_booking_number",                        :default => 0
     t.boolean  "use_booking_numbers",                           :default => true
-    t.integer  "max_tables"
-    t.integer  "max_rooms"
-    t.integer  "max_articles"
-    t.integer  "max_options"
-    t.integer  "max_users"
-    t.integer  "max_categories"
-    t.integer  "max_discounts"
+    t.integer  "max_tables",                                    :default => 10
+    t.integer  "max_rooms",                                     :default => 5
+    t.integer  "max_articles",                                  :default => 50
+    t.integer  "max_options",                                   :default => 5
+    t.integer  "max_users",                                     :default => 3
+    t.integer  "max_categories",                                :default => 6
+    t.integer  "max_discounts",                                 :default => 3
   end
 
 end

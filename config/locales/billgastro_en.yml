@@ -534,13 +534,20 @@ en:
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
+      refund: Refund items
+      manage_articles: Manage articles, categories and options
+      manage_categories: Manage categories
+      manage_options: Manage options
       manage_business_invoice: Manage business invoice
       manage_customers: Manage Customers
-      manage_pages: Manage Slideshow
-      manage_settings: Manage settings
+      manage_pages: Manage slideshow
+      manage_roles: Manage roles
+      manage_taxes: Manage Taxes
+      manage_cost_centers: Manage Cost Centers
+      manage_payment_methods: Manage Payment Methods
       manage_users: Manage users
+      manage_tables: Manage tables
+      manage_vendors: Manage vendors
       move_order: Move order
       move_tables: Move tables
       new_role: New Role
@@ -550,7 +557,9 @@ en:
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
-      view_statistics: View statistics
+      manage_statistics: View statistics
+      manage_hotel: Manage hotel
+      item_scribe: Enable handwriting
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

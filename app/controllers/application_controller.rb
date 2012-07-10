@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_permissions
-      redirect_to '/' unless @current_user.role.permissions.include? "manage_settings" #{ controller_name }"
+      redirect_to '/' and return unless @current_user.role.permissions.include? "manage_#{ controller_name }"
     end
 
     def workstation?
@@ -79,10 +79,6 @@ class ApplicationController < ActionController::Base
 
     def mobile?
       not workstation?
-    end
-
-    def hotel_mode?
-      SalorGastro::Application::HOTEL_MODE
     end
 
     def mobile_special?

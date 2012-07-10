@@ -533,13 +533,20 @@ gn:
       finish_all_settlements: Alle Abrechnungen abschließen
       finish_orders: Bestellungen abschließen
       finish_own_settlement: Eigene Abrechnung abschließen
-      make_storno: Artikel stornieren
-      manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
+      refund: Artikel stornieren
+      manage_articles: Artikel verwalten
+      manage_categories: Kategorien verwalten
+      manage_options: Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_customers: Kundendatenbank verwalten
       manage_pages: Slideshow verwalten
-      manage_settings: Grundeinstellungen vornehmen
+      manage_roles: Rollen verwalten
+      manage_taxes: Steuerklassen verwalten
+      manage_cost_centers: Kostenstellen verwalten
+      manage_payment_methods: Zahlungsmethoden verwalten
       manage_users: Benutzer verwalten
+      manage_tables: Tische verwalten
+      manage_vendors: Betriebe verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -549,7 +556,9 @@ gn:
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
-      view_statistics: Statistiken ansehen
+      manage_hotel: Hotel managen
+      manage_statistics: Statistiken ansehen
+      item_scribe: Handschrift aktivieren
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

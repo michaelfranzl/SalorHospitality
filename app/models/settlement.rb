@@ -117,10 +117,10 @@ class Settlement < ActiveRecord::Base
         report[s.id][t.id][:gro] = items.sum(:sum)
         report[s.id][t.id][:tax] = items.sum(:tax_sum)
         report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
+
         report[s.id][:total_gro] += report[s.id][t.id][:gro]
         report[s.id][:total_tax] += report[s.id][t.id][:tax]
         report[s.id][:total_net] += report[s.id][t.id][:net]
-
         report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
         report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
         report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]

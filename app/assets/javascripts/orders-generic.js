@@ -1002,10 +1002,12 @@ function display_configuration_of_item(d) {
   price_button.on('click', function(){ display_price_popup_of_item(d); });
   cell.append(price_button);
 
-  scribe_button =  $(document.createElement('span'));
-  scribe_button.addClass('item_scribe');
-  scribe_button.on('click', function(){ init_scribe(d); });
-  cell.append(scribe_button);
+  if (permissions.item_scribe) {
+    scribe_button =  $(document.createElement('span'));
+    scribe_button.addClass('item_scribe');
+    scribe_button.on('click', function(){ init_scribe(d); });
+    cell.append(scribe_button);
+  }
 
   row.html(cell);
   row.addClass('item');

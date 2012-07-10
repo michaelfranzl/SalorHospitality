@@ -1,5 +1,6 @@
 class SurchargesController < ApplicationController
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
@@ -51,4 +52,10 @@ class SurchargesController < ApplicationController
     @surcharge.delete_including_all_relations @current_vendor
     redirect_to surcharges_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_hotel'
+    end
 end

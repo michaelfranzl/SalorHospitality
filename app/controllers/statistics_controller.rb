@@ -7,6 +7,8 @@
 
 class StatisticsController < ApplicationController
 
+  before_filter :check_permissions
+
   def index
   end
 

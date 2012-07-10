@@ -209,7 +209,6 @@ class Vendor < ActiveRecord::Base
 
     resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
-    #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 

@@ -7,6 +7,7 @@
 
 class PagesController < ApplicationController
   
+  before_filter :check_permissions
   skip_before_filter :fetch_logged_in_user, :only => [:iframe]
   
   def index

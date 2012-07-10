@@ -6,9 +6,8 @@
 # See license.txt for the license applying to all files within this software.
 class SettlementsController < ApplicationController
 
-  before_filter :check_permissions, :except => [:open]
-
   def index
+    redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
     @to = @to ? @to.end_of_day : DateTime.now
@@ -20,11 +19,13 @@ class SettlementsController < ApplicationController
   end
 
   def open
+    redirect_to '/' and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
     @users = @current_vendor.users.existing.active
   end
 
   # ajax
   def create
+    render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
     @settlement = Settlement.create params[:settlement]
     @settlement.vendor = @current_vendor
     @settlement.company = @current_company
@@ -33,6 +34,7 @@ class SettlementsController < ApplicationController
 
   # ajax
   def update
+    render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
     @settlement = @current_vendor.settlements.find_by_id params[:id]
     render :nothing => true and return unless @settlement
     @settlement.update_attributes params[:settlement]

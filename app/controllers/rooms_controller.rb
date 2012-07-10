@@ -1,6 +1,7 @@
 class RoomsController < ApplicationController
   respond_to :html,:json
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
@@ -87,4 +88,10 @@ class RoomsController < ApplicationController
     @room.update_attribute :hidden, true
     redirect_to rooms_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_hotel'
+    end
 end

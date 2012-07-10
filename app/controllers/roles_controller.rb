@@ -53,10 +53,4 @@ class RolesController < ApplicationController
     flash[:notice] = t('roles.destroy.success')
     redirect_to roles_path
   end
-
-  private
-
-    def check_permissions
-      redirect_to '/' if not @current_user.role.permissions.include? 'manage_settings'
-    end
 end

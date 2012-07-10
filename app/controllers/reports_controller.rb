@@ -7,8 +7,6 @@
 
 class ReportsController < ApplicationController
 
-  before_filter :check_permissions
-
   def index
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : DateTime.now.beginning_of_day
