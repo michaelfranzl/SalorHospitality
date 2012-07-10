@@ -61,7 +61,7 @@
             - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
               = link_to raw(label), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
             - else
-              = raw(linktext)
+              = raw(label)
         %td.price
           = number_with_precision item.price, :precision => 2
           = raw optionsprices

@@ -2,6 +2,21 @@
 gn:
   activerecord:
     attributes:
+      customer:
+        first_name: Vorname
+        last_name: Nachname
+        full_name: Name
+        company_name: Firma
+        address: Adresse
+        city: Ort
+        state: Land
+        postalcode: PLZ
+        m_number: Nummer
+        m_points: Punkte
+        email: E-Mail
+        telephone: Telefon
+        cellphone: Mobil
+        hidden: delete
       article:
         active: aktiv?
         category_id: Kategorie
@@ -142,6 +157,10 @@ gn:
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
+        rlogo_header: Beleg-Logo Kopf
+        rlogo_footer: Beleg-Logo Fuß
+        logo: Bildschirm-Logo
+        invoice_logo: Rechnungslogo
       vendor_printer:
         copies: Kopien
         hidden: Löschen
@@ -264,6 +283,7 @@ gn:
   articles:
     create:
       success: Artikel erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Artikel
     destroy:
       success: Artikel erfolgreich gelöscht
     find:
@@ -303,6 +323,7 @@ gn:
   categories:
     create:
       success: Kategorie erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Kategorien
     destroy:
       success: Kategorie erfolgreich gelöscht
     new:
@@ -476,10 +497,26 @@ gn:
       backup_database: Datenbank herunterladen
       backup_logfile: Logdatei herunterladen
       header: Berichte
+      connected: Verbunden
+      disconnected: Getrennt
+      connect_ssh: Fernwartung
+      connect_vnc: Bildschirm teilen
+      password: Passwort
+      requesting_connection_status: Verbindungsstatus abfragen ...
     save: Speichern
     start_date: Von
     usb_device: Usb Stick
+    remote_support: Fernwartung
+    download_reports: Berichte herunterladen
   restaurant: Restaurant
+  customers:
+    new:
+      edit_customer: Kunde bearbeiten
+      new_customer: Neuer Kunde
+    create:
+      success: Kunde erfolgreich gespeichert
+    destroy:
+      success: Kunde erfolgreich gelöscht
   roles:
     create:
       success: Rolle erfolgreich gespeichert
@@ -496,13 +533,20 @@ gn:
       finish_all_settlements: Alle Abrechnungen abschließen
       finish_orders: Bestellungen abschließen
       finish_own_settlement: Eigene Abrechnung abschließen
-      make_storno: Artikel stornieren
-      manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
+      refund: Artikel stornieren
+      manage_articles: Artikel verwalten
+      manage_categories: Kategorien verwalten
+      manage_options: Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_customers: Kundendatenbank verwalten
       manage_pages: Slideshow verwalten
-      manage_settings: Grundeinstellungen vornehmen
+      manage_roles: Rollen verwalten
+      manage_taxes: Steuerklassen verwalten
+      manage_cost_centers: Kostenstellen verwalten
+      manage_payment_methods: Zahlungsmethoden verwalten
       manage_users: Benutzer verwalten
+      manage_tables: Tische verwalten
+      manage_vendors: Betriebe verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -512,7 +556,9 @@ gn:
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
-      view_statistics: Statistiken ansehen
+      manage_hotel: Hotel managen
+      manage_statistics: Statistiken ansehen
+      item_scribe: Handschrift aktivieren
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
@@ -591,6 +637,7 @@ gn:
   tables:
     create:
       success: Tisch erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Tische
     destroy:
       success: Tisch erfolgreich gelöscht
     new:

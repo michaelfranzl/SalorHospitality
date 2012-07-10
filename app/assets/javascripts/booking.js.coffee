@@ -4,19 +4,28 @@ $ ->
   connect 'salor_hotel.receive_rooms_db', 'ajax.rooms_index.success', window.receive_rooms_db
   connect 'salor_hotel.refresh_rooms', 'salor_hotel.render_rooms', window.render_rooms
   connect 'salor_hotel.booking_send','send.booking', window.update_room_bookings
+  connect 'salor_hotel.add_button_menu_rendered','button_menu.rendered', add_payment_method_buttons
   if window.openDatabase
     _set 'db', openDatabase('SalorHotel', '1.0', 'salor_hotel_database', 200000)
-  # hotel_add_price_form_button()
   create_dom_element 'div', {id:'rooms'}, '', '#rooms_container'
+  if not _get("salor_hotel.from_input")
+    _set("salor_hotel.from_input",date_as_ymd(new Date()))
   fetch_rooms()
   $(window).on 'resize', ->
     if $('#rooms').is(":visible")
       emit 'salor_hotel.render_rooms',{}
 
 
-# Updates the local DB from JSON objects delivered by rails. Hooked into update_resources of the main app.
+# Functions accessible from window
+# ================================
 
-
+window.add_payment_method_buttons = (event) ->
+  packet = event.packet
+  if packet.attr('id').indexOf('payment_methods_container') != -1 and $('.booking_form').is(":visible")
+    add_menu_button packet, create_dom_element('div',{'id': 'add_pm_button',class:'add-button', model_id: packet.attr('model_id')},'',''), ->
+      add_payment_method($(this).attr('model_id'))
+      
+# Updates the local DB from JSON objects delivered by the Server.
 window.update_salor_hotel_db = ->
   db = _get 'db'
   db.transaction (tx) ->
@@ -33,9 +42,7 @@ window.update_salor_hotel_db = ->
     $.each resources.rp, (k,v) ->
       tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, season_id, base_price) VALUES (?,?,?,?,?);', [k, v.gt, v.rt, v.sn, v.p]
 
-
-
-# Called when clicking on a room. Serves as a replacement for HTML templates.
+# Called when clicking on a room. Displays the booking form dynamically
 window.display_booking_form = (room_id) ->
   render_surcharge_header()
   booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
@@ -69,12 +76,12 @@ window.display_booking_form = (room_id) ->
       $(this).val(customer_name_default)
     if $(this).val() == 'i18n_customer'
       $(this).val("")
-  auto_completable customer_input,resources.customers,{map:true,field: 'name'}, (result) ->
-    console.log(result)
-    $(this).val(result.name)
+  auto_completable customer_input, resources.customers, {map:true, field: 'name'}, (result) ->
+    console.log result
+    $(this).val result.name
     submit_json.model['customer_name'] = result.name
-  #customer_input.on 'keyup'
-  
+  customer_input.on 'keyup', ->
+    submit_json.model['customer_name'] = $(this).val()
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
@@ -86,17 +93,11 @@ window.display_booking_form = (room_id) ->
   render_guest_type_buttons()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
-  #add_category_button i18n.customers, {id:'customers_category_button', handlers:{'mouseup':`function(){show_customers(booking_form)}`}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:booking_tools}
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
-window.initialize_booking_form = ->
-  id = get_unique_booking_number('s')
-  add_json_booking_item id, null
-  setTimeout ->
-    window.render_booking_items_from_json()
-  , 150
 
+# Reads a time span from the submit_json object, writes back the duration, and updates the currently displayed booking totals. This called when the datepicker is changed. The datepicker changes from and to in the submit_json object all by itself.
 window.calculate_booking_duration = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
@@ -105,14 +106,26 @@ window.calculate_booking_duration = ->
   submit_json.model.duration = duration
   update_booking_totals()
 
+# =======================================================
+# Private functions inside of a closure for encapsulation
+# =======================================================
+
+# Called as onchange event of the duration input field.
 set_booking_duration = ->
   duration = $('#booking_duration').val()
   submit_json.model.duration = duration
   update_booking_totals()
 
-  
 
-# Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season.
+# Helper method used by "render_season_buttons". Just outputs options for changing the room.
+rooms_as_options = ->
+  str = ''
+  $.each _get("rooms.json").rooms, (key,value) ->
+    str += '<option value="'+value.room.id+'">' + value.room.name + '</option>'
+  return str
+
+
+# Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season. Also adds a select box for changing the room.
 render_season_buttons = ->
   season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
   $.each resources.sn, (id,v) ->
@@ -122,7 +135,19 @@ render_season_buttons = ->
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
+  rooms_button = create_dom_element 'div', {id: 'choose_room_container',class:'season'},'',season_container
+  rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
+  rooms_select.on 'change', ->
+    id = $(this).val()
+    submit_json.model.room_id = id
+    submit_json.model.room_type_id = resources.r[id].rt
+    $.each items_json, (k,v) ->
+      update_base_price k
+    setTimeout ->
+      update_booking_totals()
+    , 200
 
+# Called when clicking on a season button.
 window.change_season = (id) ->
   submit_json.model.season_id = id
   sbutton = $('#season_' + id)
@@ -132,10 +157,10 @@ window.change_season = (id) ->
   update_json_booking_items()
   setTimeout ->
     window.render_booking_items_from_json()
-  , 150
+  , 200
 
 
-# This gets unique names of surcharges from the DB. Those names will be rendered as headers for the price calcualtion popup, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later on in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
+# This gets unique names of surcharges from the DB. Those names will be rendered as headers for the booking form, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
 render_surcharge_header= ->
   db = _get 'db'
   db.transaction (tx) ->
@@ -153,9 +178,6 @@ render_surcharge_header= ->
         surcharge_headers.guest_type_null.push record.name
       _set 'surcharge_headers', surcharge_headers
 
-
-
-# We can't use the DB results directly to render the input elements, since the headers dictate actually the exact appearance. Not all UserTypes have an identical set of Surcharges. Therefore we build an object called surcharge_guest_object that will be matched later to the surcharge_header object via it's key. We can avoid running several SQL queries with this pre-rendered object.
 
 
 # Called by display_booking_form. Just displays buttons for guest_types, adds an onclick function.
@@ -194,13 +216,15 @@ add_json_booking_item = (booking_item_id, guest_type_id) ->
     tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
-        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:record.radio_select, selected:false}
+        radio_select = record.radio_select == 'true'
+        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
 
 
-  
+# Called when a room is changed (see "render_season_buttons"), when a new booking item is added (see "add_json_booking_item"), and when "update_json_booking_items" is called. It gets the current base room price from the local DB and saves it into the workspace json objects.
 update_base_price = (k) ->
     db = _get 'db'
     db.transaction (tx) ->
+      debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
       tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         if res.rows.length == 0
           base_price = 0
@@ -209,6 +233,7 @@ update_base_price = (k) ->
         set_json 'booking', k, 'base_price', base_price
 
 
+# Called from "change_season". This function loops over all items in items_json and updates the surcharge prices.
 update_json_booking_items = ->
   $.each items_json, (k,v) ->
     guest_type_id = items_json[k].guest_type_id

@@ -1,31 +1,31 @@
 ---
-en:
+cn:
   activerecord:
     attributes:
       article:
         active: 活躍
         category_id: 類別
-        description: Description
+        description: 描述
         hidden: 刪除嗎?
-        image: Image
+        image: 圖像
         name: 名稱
         price: 價格
         tax_id: 稅
-        usage: Usage
+        usage: 運用
       category:
         color: 色彩
-        custom_icon: My Icon
-        food: Food?
+        custom_icon: 我的圖標
+        food: 食物?
         hidden: 刪除嗎?
-        icon: Icon
+        icon: 圖標
         name: 名稱
-        separate_print: Cut ticket
+        separate_print: 剪票
         tax_id: 稅
-        user_id: Preparing User
-        vendor_printer_id: Printer
+        user_id: 準備用戶
+        vendor_printer_id: 打印機
       cost_center:
-        active: active?
-        description: Description
+        active: 活躍?
+        description: 描述
         hidden: 刪除嗎?
         name: 名稱
       group:
@@ -34,36 +34,36 @@ en:
         category_id: 類別
         hidden: 刪除嗎?
         name: 名稱
-        no_ticket: Dont' print ticket
+        no_ticket: 不打印票
         price: 價格
-        separate_ticket: Cut ticket
+        separate_ticket: 剪票
       page:
-        active: active
+        active: 活躍
         color: 色彩
-        height: Height
+        height: 高度
         hidden: 刪除嗎?
-        image: Image
-        width: Width
+        image: 圖像
+        width: 寬度
       partial:
-        active: aktiv
-        blurb: Blurb
+        active: 活躍
+        blurb: 書籍說明
         hidden: 刪除嗎?
       presentation:
-        active: active
-        code: Ruby code
-        description: Description
+        active: 活躍
+        code: Ruby代碼
+        description: 描述
         hidden: 刪除嗎?
-        markup: ERB Markup
-        model: Type
+        markup: ERB 標記
+        model: 類型
         name: 名稱
       quantity:
-        active: aktiv
-        description: Description
+        active: 活躍
+        description: 描述
         hidden: 刪除嗎?
-        postfix: Postfix
+        postfix: 後綴
         prefix: 名稱
         price: 備選案文 價格
-        usage: usage
+        usage: 運用
       role:
         name: 名稱
       settlement:
@@ -71,15 +71,15 @@ en:
         revenue: 下場數目
       table:
         abbreviation: 簡稱
-        description: Description
-        enabled: active?
-        height: Height
-        height_mobile: Height mobile
+        description: 描述
+        enabled: 活躍?
+        height: 高度
+        height_mobile: 高度移動
         hidden: 刪除嗎?
         name: 名稱
-        rotate: rotate?
-        width: Width
-        width_mobile: Width mobile
+        rotate: 輪流?
+        width: 寬度
+        width_mobile: 寬度移動
       tax:
         color: 色彩
         hidden: 刪除嗎?
@@ -90,18 +90,18 @@ en:
         active: 活躍
         color: 色彩
         hidden: 刪除嗎?
-        language: Language
-        login: Login
+        language: 語言
+        login: 登錄
         password: 密碼
-        role: Role
-        screenlock_timeout: Screenlock timeout (sec.)
-        tables: Tables
-        title: Title
+        role: 角色
+        screenlock_timeout: 屏幕鎖超時 (秒)
+        tables: 表
+        title: 標題
       vendor_printer:
-        copies: Copies
+        copies: 副本
         hidden: 刪除嗎?
         name: 名稱
-        path: Path
+        path: 路徑
       guest_type:
         hidden: delete
         name: Name
@@ -149,8 +149,8 @@ en:
         use_order_numbers: Use order numbers
     models:
       article:
-        one: 產品
-        other: 產品
+        one: 物品
+        other: 物品
       category:
         one: 類別
         other: 類別
@@ -170,29 +170,29 @@ en:
         one: 折扣
         other: 折扣
       group:
-        one: Stock Group
-        other: Stock Groups
+        one: 庫存合組
+        other: 庫存合組
       image:
-        one: Image
-        other: Images
+        one: Image 圖像
+        other: Images 圖像
       item:
         one: 訂購產品
         other: 訂購產品
       option:
-        one: Option
-        other: Options
+        one: 選項
+        other: 選項
       order:
         one: 訂購
         other: 訂購
       page:
-        one: Card
-        other: Cards
+        one: 牌
+        other: 牌
       partial:
-        one: Partial
-        other: Partials
+        one: 局部模板
+        other: 局部模板
       presentation:
-        one: Template
-        other: Templates
+        one: 模板
+        other: 模板
       quantity:
         one: 備選案文
         other: 備選案文
@@ -200,17 +200,17 @@ en:
         one: 報告
         other: 報告
       reservation:
-        one: Reservation
-        other: Reservations
+        one: 預訂
+        other: 預訂
       role:
         one: 角色
         other: 角色
       settlement:
-        one: Settlement
-        other: Settlements
+        one: 結算
+        other: 結算
       stock:
-        one: Stock
-        other: Stocks
+        one: Stock 貨物
+        other: Stocks 貨物
       table:
         one: 桌子
         other: 桌子
@@ -224,8 +224,8 @@ en:
         one: 餐廳
         other: 餐廳
       vendor_printer:
-        one: Printer
-        other: Printers
+        one: 打印機
+        other: 打印機
       booking:
         one: Booking
         other: Bookings
@@ -259,57 +259,57 @@ en:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
-  admin: Admin
-  are_you_sure: Are you sure?
+  admin: 管理
+  are_you_sure: 你確定嗎?
   articles:
     create:
-      success: Article was successfully created
+      success: 物品成功地創建了
     destroy:
-      success: Article was successfully deleted
+      success: 物品被成功刪除了
     find:
       variants:
         one: 備選案文
         other: 備選案文
     index:
-      list_all: List all
-      preview: Preview
-      search_term: Search term
-      sort: Sort
-      update: Update!
-      view: View
+      list_all: 列出所有
+      preview: 預覽
+      search_term: 搜索字詞
+      sort: 排序
+      update: 更新!
+      view: 視圖
     listall:
-      all_articles: List of all articles
+      all_articles: 所有物品列表
     new:
       add_quantity: 添加選項
-      edit_article: 編輯產品
-      new_article: 新產品
-      normal: normal
-      takeaway: take away
+      edit_article: 編輯物品
+      new_article: 新物品
+      normal: 正常
+      takeaway: 外賣
     sort_index:
-      sort: Sort articles
-  bar: Bar
-  black: Black
+      sort: 排序物品
+  bar: 吧
+  black: 黑
   blackboard:
     index:
-      update: Update
-  blank: blank
-  blue: Blue
+      update: 更新
+  blank: 空白
+  blue: 藍
   cancel_and_go_back: 取消和回去
   categories:
     create:
-      success: Success!
+      success: 成功了!
     new:
-      aperitif: Aperitif
-      beer: Beer
-      blank: Blank
-      childrendish: Childrens Dish
-      cigarette: Tobacco
-      coffee: Coffee
-      dessert: Dessert
-      digestif: Digestif
-      edit_category: Edit Category
-      maindish: Main Dish
-      new_category: New Category
+      aperitif: 開胃酒
+      beer: 啤酒
+      blank: 空白
+      childrendish: 兒童的菜
+      cigarette: 煙
+      coffee: 咖啡
+      dessert: 點心
+      digestif: 消化劑
+      edit_category: 編輯類別
+      maindish: 主菜
+      new_category: 新類別
       nonalcoholics: Alcohol Free
       noodles: Noodles
       redwinebottle: Bottle Red

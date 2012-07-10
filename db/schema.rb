@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614123645) do
+ActiveRecord::Schema.define(:version => 20120709152459) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,16 +19,18 @@ ActiveRecord::Schema.define(:version => 20120614123645) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "active",      :default => true
+    t.boolean  "active",        :default => true
     t.boolean  "waiterpad"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "hidden",      :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "hidden",        :default => false
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.integer  "tax_id"
+    t.string   "sku",           :default => ""
+    t.float    "quantity_sold", :default => 0.0
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -263,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20120614123645) do
     t.integer  "imageable_id"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.string   "image_type"
   end
 
   add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
@@ -531,6 +534,7 @@ ActiveRecord::Schema.define(:version => 20120614123645) do
     t.integer  "vendor_id"
     t.boolean  "active",                      :default => true
     t.boolean  "hidden"
+    t.integer  "weight"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -761,6 +765,13 @@ ActiveRecord::Schema.define(:version => 20120614123645) do
     t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
     t.integer  "largest_booking_number",                        :default => 0
     t.boolean  "use_booking_numbers",                           :default => true
+    t.integer  "max_tables",                                    :default => 10
+    t.integer  "max_rooms",                                     :default => 5
+    t.integer  "max_articles",                                  :default => 50
+    t.integer  "max_options",                                   :default => 5
+    t.integer  "max_users",                                     :default => 3
+    t.integer  "max_categories",                                :default => 6
+    t.integer  "max_discounts",                                 :default => 3
   end
 
 end

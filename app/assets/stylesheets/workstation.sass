@@ -987,6 +987,10 @@ div.button
   :-moz-border-radius 2px
   :width 120px
   :height 26px
+  :cursor pointer
+  :display inline-block
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
   a
     :color black
     :text-transform uppercase
@@ -1433,7 +1437,7 @@ div.booking_form
     :position absolute
     :left 300px
     :width 500px
-    :height 100px
+    :height 200px
     :background-color $billgastrogrey1
     :padding 20px
     :-moz-box-shadow 0px 0px 8px white
@@ -1459,7 +1463,8 @@ div.booking_form
       :padding 0px 20px
 
   div.season,
-  div.guest_type
+  div.guest_type,
+  div#choose_room_container
     :display inline-block
     :padding 5px 15px
     :width 10%
@@ -1508,15 +1513,15 @@ div#rooms
     :padding-left 15px 
 div.room-header
   :position absolute
-  :width 190px
-  :height 40px
+  :width 120px
+  :height 80px
   :display inline-block
   :border 1px solid gray
   :padding 0px
   :margin 0px
   :cursor pointer
   :text-align center
-  :font-size 150%
+  :font-size 110%
   :background-color $billgastrogrey1
   :-webkit-border-top-left-radius 6px
   :-webkit-border-top-right-radius 6px
@@ -1530,7 +1535,7 @@ div.room-header
 
 div.room-date-column
   :position absolute
-  :width 90%
+  :width 99%
   :height 41px
   :display inline-block
   :border 1px solid gray
@@ -1539,17 +1544,21 @@ div.room-date-column
   :cursor pointer
   :text-align left
   :font-size 150%
+  :padding-left 50px
   :z-index 1000
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
   :-webkit-border-bottom-left-radius 0px
   :-webkit-border-top-left-radius 0px
+  span
+    :opacity 0.5
 div.room-date-column-last
   :-webkit-border-bottom-left-radius 4px
     
 div.room-booking
+  :padding 5px
   :position absolute
-  :width 180px
+  :width 100px
   :height 32px
   :display inline-block
   :border 1px solid gray
@@ -1557,12 +1566,20 @@ div.room-booking
   :margin 0px
   :cursor pointer
   :text-align center
-  :font-size 120%
+  :font-size 85%
   :z-index 1005
   :-moz-box-shadow 0px 0px 8px black
   :-moz-border-radius 6px
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 6px
+  div.inner-div
+    div.name
+      :background-color $billgastrogrey1
+      :min-height 25px
+      :color white
+      :-webkit-border-radius 4px
+    div.date
+      :font-size 90%
 div.room-booking-odd
   :background-color $blue
 div.room-booking-even
@@ -1571,10 +1588,14 @@ div.room-booking-thirden
   :background-color $billgastroblue1
 div.room-booking-active
   :background-color $green
+  :color $billgastrogrey1
+div.room-booking-finished
+  :color white
+  :background-color $billgastrogrey1
+div.room-booking-unpaid
+  :border-color $pink
 div.room-column
   :position absolute
-  :width 190px
-  :height 1200px
   :display inline-block
   :border 1px solid gray
   :padding 0px
@@ -1586,6 +1607,8 @@ div.room-column
 #show_booking_from
   :position relative
   :z-index 1010
+  :font-size 120%
+  :font-weight bolder
 div.room-header-left
   :text-align left
 div#auto_completable
@@ -1603,3 +1626,24 @@ select#season_to_date_1i
 table.hotel
   :display inline-block
   :margin 10px
+
+div#remote_support
+  :float right
+  :width 50%
+
+div#download_reports
+  :float left
+  :width 40%
+
+div#remote_support
+  div.button
+    :color black
+    :text-align center
+    :padding 5px
+    :margin 5px 5px 5px 0px
+  div#connection_status
+    :margin 10px 10px 10px 0px
+    :color white
+    :padding 20px
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px

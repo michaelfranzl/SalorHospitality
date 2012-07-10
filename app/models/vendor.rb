@@ -52,8 +52,8 @@ class Vendor < ActiveRecord::Base
     self.update_attribute :hidden, true
   end
 
-  def image
-    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
+  def logo_image
+    return self.image('logo') unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
     "/assets/client_logo.png"
   end
 
@@ -184,7 +184,7 @@ class Vendor < ActiveRecord::Base
     end
 
     rooms = Hash.new
-    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :sid => b.season_id, :d => b.duration } ) } } }
+    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :sid => b.season_id, :d => b.duration } ) } } }
 
     room_types = Hash.new
     self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
@@ -209,7 +209,6 @@ class Vendor < ActiveRecord::Base
 
     resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
-    #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 

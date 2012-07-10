@@ -1,17 +1,25 @@
 class RoomsController < ApplicationController
   respond_to :html,:json
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
-    @rooms_json = {:keys => [], :rooms => {}}
+    @rooms_json = {:keys => [], :rooms => {}, :bookings => {}}
     @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
+    if params[:from] then
+      from_date = params[:from].to_date - 31.days
+    else
+      from_date = Time.now
+    end
+    n = Time.now + 31.days
     @rooms.each do |room|
       @rooms_json[:keys] << room.id
       @rooms_json[:rooms][room.id.to_s] = {:room => room, :room_type => room.room_type, :bookings => []}
-      bookings = room.bookings.existing
+      bookings = room.bookings.existing.where(["from_date between ? and ?",from_date,n])
       bookings.each do |booking|
-        @rooms_json[:rooms][room.id.to_s][:bookings] << booking
+        @rooms_json[:rooms][room.id.to_s][:bookings] << booking.id
+        @rooms_json[:bookings][booking.id.to_s] = booking
       end
     end
     respond_with(@rooms) do |format|
@@ -28,7 +36,13 @@ class RoomsController < ApplicationController
   def show
     @room = get_model
     redirect_to rooms_path and return unless @room
-    @bookings = @room.bookings.existing.where(:finished => false)
+    if params[:from] then
+      from_date = params[:from].to_date - 31.days
+    else
+      from_date = Time.now
+    end
+    n = Time.now + 31.days
+    @bookings = @room.bookings.existing.where(["from_date between ? and ?",from_date,n])
     if params[:booking_id] then
       @booking = Booking.where(:vendor_id => @current_vendor.id).find_by_id(params[:booking_id])
     end
@@ -74,4 +88,10 @@ class RoomsController < ApplicationController
     @room.update_attribute :hidden, true
     redirect_to rooms_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_hotel'
+    end
 end

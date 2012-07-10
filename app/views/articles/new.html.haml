@@ -10,7 +10,7 @@
 = form_for nest_image(@article), :html => { :multipart => true } do |article_form|
   %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   %div.article_new
-    .image
+    .image{:style=>'text-align: center'}
       %img.asset{ :src => @article.image }
     .main_form
       %div
@@ -46,9 +46,10 @@
     
       %div
         = article_form.fields_for :images do |image_form|
-          %span= article_form.label 'image'
-          %span.input_fields
-            = image_form.file_field :file_data, :size => 15
+          %div
+            %span= article_form.label :image
+            %span.input_fields
+              = image_form.file_field :file_data
 
       %div
         %span

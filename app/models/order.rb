@@ -76,8 +76,12 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
-    self.table.user = user
-    self.table.save
+    if self.table
+      self.table.user = user
+      self.table.save
+    else
+      raise "Oops. Order didn't have a table associated to it. This shouldn't have happened."
+    end
     self.user = user
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
@@ -87,7 +91,7 @@ class Order < ActiveRecord::Base
 
   def calculate_totals
     self.sum = items.existing.sum(:sum)
-    self.refund_sum = items.existing.sum(:refund_sum)
+    self.refund_sum = items.existing.sum(:refund_sum) #frozen hash
     #self.tax_sum = items.existing.sum(:tax_sum)
     self.taxes = {}
     self.items.each do |item|
@@ -110,10 +114,9 @@ class Order < ActiveRecord::Base
     self.vendor.save
     self.table.user = nil
     self.table.save
-    self.hidden = true
-    self.hidden_by = by_user_id
-    self.nr = nil
-    save
+    write_attribute :hidden, true
+    write_attribute :hidden_by, by_user_id
+    write_attribute :nr, nil
   end
 
   def hide_items
@@ -149,7 +152,6 @@ class Order < ActiveRecord::Base
     else
       write_attribute :table_id, target_table_id
     end
-    self.save
 
     # update table users and colors, this should go into table.rb
     origin_table.user = nil if origin_table.orders.existing.where( :finished => false ).empty?

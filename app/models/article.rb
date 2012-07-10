@@ -22,7 +22,7 @@ class Article < ActiveRecord::Base
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
-  validates_presence_of :name, :category_id
+  validates_presence_of :name, :category_id, :taxes
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden
     existing_quantities = false
@@ -49,13 +49,13 @@ class Article < ActiveRecord::Base
   # Methods
 
   def price=(price)
-    price =  price.gsub(',', '.') if price.class == String
-      write_attribute :price, price
+    price = price.gsub(',', '.') if price.class == String
+    write_attribute :price, price
   end
 
   def hide
-    update_attributes :hidden => true, :active => false
-    quantities.update_all :hidden => true, :active => false
+    self.update_attributes :hidden => true, :active => false
+    self.quantities.update_all :hidden => true, :active => false
   end
 
   def name_description

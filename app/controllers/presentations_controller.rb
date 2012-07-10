@@ -42,4 +42,10 @@ class PresentationsController < ApplicationController
     redirect_to presentations_path
   end
 
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_pages'
+    end
+
 end

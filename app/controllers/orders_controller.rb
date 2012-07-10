@@ -52,6 +52,14 @@ class OrdersController < ApplicationController
 
   def update_ajax
     case params[:currentview]
+      # this action is for simple pushing of a model to the server and
+      # getting a json object back.
+      when 'push'
+        if params[:relation] then
+          @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
+          @model.update_attributes(params[:model])
+          render :json => @model and return
+        end
       when 'refund', 'show'
         @order = get_model
         @order.print(['receipt'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
@@ -166,7 +174,7 @@ class OrdersController < ApplicationController
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
-            @order.hide(@current_user.id) if @order.items.existing.size.zero?
+            #@order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "route('tables', #{@order.table.id});" and return
         end
       when 'room'
@@ -187,6 +195,18 @@ class OrdersController < ApplicationController
             @booking.pay
             render :js => "route('rooms');" and return
         end
+      when 'rooms'
+        case params['jsaction']
+          when 'move_booking'
+            @booking = @current_vendor.bookings.find_by_id(params[:model][:id])
+            if @booking
+              @booking.update_attribute(:room_id,params[:model][:room_id]) 
+              render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
+            else
+              render :text => 'Epic Fail' and return
+            end
+        end
+          
     end
   end
 

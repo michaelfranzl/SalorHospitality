@@ -1,5 +1,6 @@
 class RoomPricesController < ApplicationController
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
@@ -52,4 +53,10 @@ class RoomPricesController < ApplicationController
     RoomPrice.generate(@current_vendor)
     redirect_to room_prices_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_hotel'
+    end
 end
