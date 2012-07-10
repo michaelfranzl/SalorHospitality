@@ -248,11 +248,11 @@ en:
         one: Tax Class
         other: Tax Classes
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Montant taxe
+        other: Montants taxe
       user:
-        one: User
-        other: Users
+        one: Utilisateur
+        other: Utilisateurs
       vendor:
         one: Restaurant
         other: Restaurants
@@ -260,115 +260,115 @@ en:
         one: Printer
         other: Printers
   admin: Admin
-  are_you_sure: Are you sure?
+  are_you_sure: Êtes-vous sûr ?
   articles:
     create:
-      success: Article was successfully created
+      success: Article créé avec succès
       license_limited: Your License is limited to %{count} articles
     destroy:
-      success: Article was successfully deleted
+      success: Article supprimé avec succès
     find:
       variants:
-        one: Variant
-        other: Variants
+        one: Variante
+        other: Variantes
     index:
       list_all: List all
-      preview: Preview
-      search_term: Search term
-      sort: Sort
-      update: Update!
-      view: View
+      preview: Aperçu
+      search_term: Chercher terme
+      sort: Trier
+      update:Mise-à-jour !
+      view: Voir
     listall:
-      all_articles: List of all articles
+      all_articles: Liste de tous les articles
     new:
       add_quantity: Add Variant
-      edit_article: Edit article
-      new_article: New article
-      normal: normal
-      takeaway: take away
+      edit_article: Modifier l'article
+      new_article: Nouvel article
+      normal: Normal
+      takeaway: À emporter
     sort_index:
-      sort: Sort articles
+      sort: Trier les articles
   bar: Bar
-  black: Black
+  black: Noir
   blackboard:
     index:
-      update: Update
-  blank: blank
-  blue: Blue
+      update: Mise-à-jour
+  blank: Vide
+  blue: Bleu
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Vous avez été servi par %{utilisateur}
     show:
       search_by_number: Search by number
-  cancel_and_go_back: Cancel and go back
+  cancel_and_go_back: Annuler et revenir
   categories:
     create:
       license_limited: Your License is limited to %{count} categories
-      success: Category successfully saved
+      success: Catégorie enregistrée avec succès
     destroy:
-      success: Category successfully deleted
+      success: Catégorie supprimée avec succès
     new:
-      aperitif: Aperitif
-      beer: Beer
-      blank: Blank
-      childrendish: Childrens Dish
-      cigarette: Tobacco
-      coffee: Coffee
+      aperitif: Apéritif
+      beer: Bière
+      blank: Vide
+      childrendish: Menu enfant
+      cigarette: Tabac
+      coffee: Café
       dessert: Dessert
       digestif: Digestif
-      edit_category: Edit Category
-      maindish: Main Dish
-      new_category: New Category
-      nonalcoholics: Alcohol Free
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
+      edit_category: Modifier catégorie
+      maindish: Plat principal
+      new_category: Nouvelle catégorie
+      nonalcoholics: Sans alcool
+      noodles: Nouilles
+      redwinebottle: Bouteille rouge
+      redwineglass: Vin rouge
+      rosewinebottle: Bouteille rosé
+      rosewineglass: Vin rosé
+      sidedish: Accompagnement
+      soup: Soupe
+      sparkling: Vin mousseux
+      starter: Entrée
+      tea: Tasse de thé
+      teapot: Théière
+      whitewinebottle: Bouteille blanc
+      whitewineglass: Vin blanc
   clear_order_and_go_back: Clear order and go back
-  copy: Copy
+  copy: Copier
   cost_centers:
     create:
       success: Cost Center successfully saved
     destroy:
       success: Cost Center successfully deleted
     index:
-      active: Active
-      inactive: Inactive
+      active: Activé
+      inactive: Inactif
     new:
       edit_cost_center: Edit Cost Center
       new_cost_center: New Cost Center
-  count: Count
-  create: Create
+  count: Compter
+  create: Créer
   dateandtime: Date
-  default: Default
-  delete: Delete
-  display: Display
-  edit: Edit
-  exit: Exit
-  finish: Just Finish
+  default: Défaut
+  delete: Supprimer
+  display: Afficher
+  edit: Modifier
+  exit: Modifier
+  finish: Terminer
   food: Foods
-  go_back: Go back
-  green: Green
+  go_back: Revenir
+  green: Vert
   gross: Gross
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
+      edit_group: Modifier Groupe
+      new_group: Nouveau Groupe
   guestroom: Guestroom
   host: Host
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
+    errempty: Fichier invalide
+    errsize: Taille de fichier invalide
+    errtype: Type de fichier invalide
   invoice: Invoice
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
   invoices: Invoices
