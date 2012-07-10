@@ -26,7 +26,7 @@ el:
         hidden: διαγραφή
         icon: Εικονίδιο
         name: Όνομα
-        separate_print: Κόψτε ετικέτα
+        separate_print: Κόψτε απόκομμα
         tax_id: Φόρος
         user_id: Προετοιμασία Χρήστη
         vendor_printer_id: Εκτυπωτής
@@ -41,9 +41,9 @@ el:
         category_id: Κατηγορία
         hidden: Διαγραφή
         name: Όνομα
-        no_ticket: Μην εκτυπώσετε ετικέτα
+        no_ticket: Μην εκτυπώσετε απόκομμα
         price: Τιμή
-        separate_ticket: Κόψτε ετικέτα
+        separate_ticket: Κόψτε απόκομμα
       page:
         active: ενεργό
         color: Χρώμα
@@ -139,7 +139,7 @@ el:
         tax_id: Φόρος
       vendor:
         automatic_printing: Αυτόματη Εκτύπωση
-        country: Κανόνες χώρες
+        country: Κανόνες χώρας
         hidden: διαγραφή
         invoice_footer_blurb: Συνοπτική περιγραφή υποσέλιδου τιμολογίου
         invoice_header_blurb: Συνοπτική περιγραφή κεφαλίδας τιμολογίου
