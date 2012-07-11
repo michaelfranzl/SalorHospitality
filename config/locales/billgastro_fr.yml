@@ -387,11 +387,10 @@ en:
   messages:
     hello_username: Bonjour %{nom}!
   move_order_to_table: Déplacer commande à table différente
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
+  must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article soit pour la Variant.
   net: Net
   new: Nouveau
-  no_printing: No printing
+  no_printing: Pas d'impression
   not_found: Non trouvé
   options:
     create:
@@ -400,7 +399,7 @@ en:
       success: Option supprimée avec succès
     new:
       edit_option: Modifier Option
-      hidden: delete
+      hidden: Supprimer
       new_option: Nouvelle Option
       select_all: Tout sélectionner
   orange: Orange
@@ -410,7 +409,7 @@ en:
       print_now: Imprimer maintenant
       show_last_booking: Montrer dernière réservation
       show_last_order: Montrer dernière commande
-      toggle_between_tables_and_rooms: Toggle between rooms and tables
+      toggle_between_tables_and_rooms: Alterner chambres et tables
     functions_header_order_form:
       move_order: Déplacer commande vers autre table
     index:
@@ -420,12 +419,12 @@ en:
       change_money: Monnaie rendue
       just_finish: Compléter la commande
       print_and_finish: Imprimer et compléter la commande
-      set_booking: Assign to Booking
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
-      split_this_item: Cliquer pour séparer ces articles un à un
+      set_booking: Atrribuer à réservation
+      set_cost_center: Établir centre de coût pour cette commande
+      set_tax_for_all: Établir centre de coût pour tous les articles
+      set_taxes: Établir centre de coût
+      split_invoice: Diviser facture
+      split_this_item: Cliquer pour diviser ces articles un par un
       switch_tax_for_this_item: Cliquer pour modifier la taxe pour cet article
     login_form:
       email: Votre E-Mail
@@ -437,19 +436,19 @@ en:
       sum: SOMME
     served_by: Vous avez été servi par
     show:
-      back: Back
+      back: Retour
       count: Count
       list_of_taxes: Liste de taxes
       next_invoice: Facture suivante
       previous_invoice: Facture précédente
-      print_business_invoice: Print business invoice
+      print_business_invoice: Imprimer facture commerciale
       print_invoice: Imprimer facture
       search_by_number: Chercher par numéro
       sum: Somme
       unit_price: prix unitaire
     storno_form:
-      do_separate_items: Séparer cet article
-      do_storno: Make storno
+      do_separate_items: Diviser cet article
+      do_storno: Faire une ristourne
   pages:
     edit:
       edit_page: Modifier Page
