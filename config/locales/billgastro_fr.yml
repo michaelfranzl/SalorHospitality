@@ -516,7 +516,7 @@ en:
       view_statistics: Voir les statistiques
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Créer palette de prix
     new:
       edit_room_price: Modifier le prix de la chambre
       new_room_price: Nouveau prix de la chambre
