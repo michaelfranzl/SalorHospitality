@@ -423,8 +423,8 @@ en:
       set_cost_center: Établir centre de coût pour cette commande
       set_tax_for_all: Établir centre de coût pour tous les articles
       set_taxes: Établir centre de coût
-      split_invoice: Diviser facture
-      split_this_item: Cliquer pour diviser ces articles un par un
+      split_invoice: Scinder facture
+      split_this_item: Cliquer pour scinder ces articles un par un
       switch_tax_for_this_item: Cliquer pour modifier la taxe pour cet article
     login_form:
       email: Votre E-Mail
@@ -502,7 +502,7 @@ en:
       manage_business_invoice: Gérer facture commerciale
       manage_customers: Gérer les clients
       manage_pages: Gérer Slideshow
-      manage_settings: Gérer settings
+      manage_settings: Gérer les paramètres
       manage_users: Gérer les utilisateurs
       move_order: Déplacer la commande
       move_tables: Déplacer les tables
@@ -510,7 +510,7 @@ en:
       permissions: Permissions
       see_debug: Voir messages de debug
       see_item_notifications: Voir notifications d'article
-      split_items: Séparer les articles
+      split_items: Scinder les articles
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
       view_statistics: Voir les statistiques
@@ -538,27 +538,27 @@ en:
     new:
       edit_season: Modifier saison
       new_season: Nouvelle saison
-  send_and_go_back: Enregistrer et revenir page précédente
-  served_by_X_on_table_Y: Vous avez été servie par %{serveur} à %{table}
+  send_and_go_back: Enregistrer et revenir à la page précédente
+  served_by_X_on_table_Y: Vous avez été servi par %{serveur} à %{table}
   server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est occupé, soit le lien radio a été interrompu.
   sessions:
     browser_warning:
       continue: Continuer
-      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a été exclusivement optimisé pour ces navigateurs.
+      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a été optimisé exclusivement pour ces navigateurs.
     new:
       email: Votre E-Mail
-      login: Identifiant
+      login: S'identifier
       password: Mot de passe
       username: Nom d'utilisateur
   settlements:
     detailed_list:
-      count: Count
+      count: Compter
       order_number_on_table_on_date: ! '%{commande} numéro %{numéro} à %{table} à %{heure}'
       revenue: Revenu
       total: Total
       unit_price: Prix unitaire
     index:
-      all_cost_centers: Tous
+      all_cost_centers: Tout
       end_date: Date de fin
       start_date: Date de début
       sum_total: Montant total
@@ -570,7 +570,7 @@ en:
   shared:
     invoice_tax_list:
       list_of_taxes: Liste de Taxes
-  split_order: Diviser commande
+  split_order: Scinder commande
   statistic: Statistiques
   statistics:
     journal: Journal (liste chronologique)
@@ -583,7 +583,7 @@ en:
   sum: Somme
   surcharges:
     new:
-      add_tax_amount: Ajouter montant de taxe
+      add_tax_amount: Ajouter montant de la taxe
       common_surcharge: Surtaxe commune
       edit_surcharge: Modifier surtaxe
       new_surcharge: Nouvelle surtaxe
