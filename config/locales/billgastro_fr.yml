@@ -591,44 +591,44 @@ en:
   tables:
     create:
       license_limited: Votre licence est limitée à %{nombre} tables
-      success: Table enregistrée afec succ
+      success: Table enregistrée avec succès
     destroy:
-      success: Table successfully deleted
+      success: Table supprimée avec succès
     new:
-      edit_table: Edit Table
-      new_table: New Table
-  tax_amount: Amount
+      edit_table: Modifier table
+      new_table: Nouvelle table
+  tax_amount: Montant
   taxes:
     new:
-      edit_tax: Edit Tax
-      new_tax: New Tax
+      edit_tax: Modifier taxe
+      new_tax: Nouvelle taxe
   users:
     create:
-      success: User successfully saved
+      success: Utilisateur enregistré avec succès
     destroy:
-      success: User successfully deleted
+      success: Utilisateur supprimé avec succès
     new:
-      edit_user: Edit User
-      new_user: New User
+      edit_user: Modifier utilisateur
+      new_user: Nouvel utilisateur
   various:
-    cancel: Cancel
+    cancel: Annuler
     common_surcharges: Common Surcharges
     home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
+    pay: Payer
+    save: Enregistrer
+    subtotal: Sous-total
     unamed: Unamed
   vendors:
     index:
       edit: Edit
-      switch_to: Select
+      switch_to: Sélectionner
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Modifier vendeur
+      new_vendor: Nouveau vendeur
   violet: Violet
-  waiter: Waiter
+  waiter: Serveur
   waiterpad_generic_name: Waiterpad
-  white: White
-  winered: Wine Red
-  wrong_password: Wrong login data
-  yellow: Yellow
+  white: Blanc
+  winered: Vin rouge
+  wrong_password: Données de connexion erronées
+  yellow: Jaune
