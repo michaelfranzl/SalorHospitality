@@ -73,7 +73,7 @@ en:
       room_price:
         base_price: Prix de base
         guest_type_id: Gast-Typ
-        hidden: löschen
+        hidden: Effacer
         room_type_id: Type de chambre
         season_id: Saison
       room_type:
