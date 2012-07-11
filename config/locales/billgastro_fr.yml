@@ -239,8 +239,8 @@ en:
         one: Stock
         other: Stocks
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Surtaxe
+        other: Surtaxes
       table:
         one: Table
         other: Tables
@@ -491,28 +491,28 @@ en:
       cancel_all_items_in_active_order: Annuler tous les articles de la commande active
       change_waiter: Modifier serveur
       counter_mode: Counter mode
-      decrement_items: Decrement items
-      delete_items: Delete items by decrementing
-      edit_role: Edit Role
+      decrement_items: Decrement articles
+      delete_items: Supprimer articles by decrementing
+      edit_role: Modifier rôle
       finish_all_settlements: Finish all settlements
       finish_orders: Terminer commandes
       finish_own_settlement: Finish own settlement
       make_storno: Annuler les articles
       manage_articles_categories_options: Gérer les articles, les catégories et les options
-      manage_business_invoice: Manage business invoice
+      manage_business_invoice: Gérer facture commerciale
       manage_customers: Gérer les clients
-      manage_pages: Manage Slideshow
-      manage_settings: Manage settings
+      manage_pages: Gérer Slideshow
+      manage_settings: Gérer settings
       manage_users: Gérer les utilisateurs
       move_order: Déplacer la commande
       move_tables: Déplacer les tables
       new_role: Nouveau rôle
       permissions: Permissions
-      see_debug: See debug messages
-      see_item_notifications: See item notifications
+      see_debug: Voir messages de debug
+      see_item_notifications: Voir notifications d'article
       split_items: Séparer les articles
       take_orders: Prendre les commandes
-      view_all_settlements: View all settlements
+      view_all_settlements: Voir tous les settlements
       view_statistics: Voir les statistiques
   room_prices:
     index:
@@ -530,7 +530,7 @@ en:
       new_room: Nouvelle chambre
   scopes:
     active: Actif
-    waiterpad: Waiterpad
+    waiterpad: Tablette du serveur
   scroll_down: Descendre
   scroll_to_room: Aller à chambre
   scroll_up: Remonter
@@ -579,14 +579,14 @@ en:
     new:
       edit_stock: Modifier le stock
       new_stock: Nouveau stock
-  storno: Storno
+  storno: Ristourne
   sum: Somme
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
+      add_tax_amount: Ajouter montant de taxe
+      common_surcharge: Surtaxe commune
+      edit_surcharge: Modifier surtaxe
+      new_surcharge: Nouvelle surtaxe
   tables:
     create:
       license_limited: Votre licence est limitée à %{nombre} tables
@@ -611,8 +611,8 @@ en:
       new_user: Nouvel utilisateur
   various:
     cancel: Annuler
-    common_surcharges: Common Surcharges
-    home: Home
+    common_surcharges: Surtaxes communes
+    home: Accueil
     pay: Payer
     save: Enregistrer
     subtotal: Sous-total
