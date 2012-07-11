@@ -134,7 +134,7 @@ en:
         name: Nom
         receipt_footer_blurb: Texte pied de reçu
         receipt_header_blurb: Texte entête de reçu
-        saas: Online variant
+        saas: Variante en ligne
         ticket_display_time_order: Numéro et heure de facturation sur reçu
         ticket_item_separator: Ligne de séparation du reçu
         ticket_tall_font: Police haute sur reçu
@@ -197,8 +197,8 @@ en:
         one: Carte
         other: Cartes
       partial:
-        one: Partial
-        other: Partials
+        one: Élément
+        other: Éléments
       payment_method:
         one: Mode de paiement
         other: Modes de paiement
@@ -209,8 +209,8 @@ en:
         one: Template
         other: Templates
       quantity:
-        one: Variant
-        other: Variants
+        one: Variante
+        other: Variantes
       report:
         one: Rapport
         other: Rapports
@@ -233,8 +233,8 @@ en:
         one: Saison
         other: Saisons
       settlement:
-        one: Settlement
-        other: Settlements
+        one: Montant encaissé
+        other: Montants encaissés
       stock:
         one: Stock
         other: Stocks
@@ -281,14 +281,14 @@ en:
     listall:
       all_articles: Liste de tous les articles
     new:
-      add_quantity: Ajouter Variant
+      add_quantity: Ajouter Variante
       edit_article: Modifier l'article
       new_article: Nouvel article
       normal: Normal
       takeaway: À emporter
     sort_index:
       sort: Trier les articles
-  bar: Barre
+  bar: En liquide
   black: Noir
   blackboard:
     index:
@@ -387,7 +387,7 @@ en:
   messages:
     hello_username: Bonjour %{name}!
   move_order_to_table: Déplacer commande à table différente
-  must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article soit pour la Variant.
+  must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article soit pour la Variante.
   net: Net
   new: Nouveau
   no_printing: Pas d'impression
@@ -448,11 +448,11 @@ en:
       unit_price: Prix unitaire
     storno_form:
       do_separate_items: Scinder cet article
-      do_storno: Faire une ristourne
+      do_storno: Remboursement
   pages:
     edit:
       edit_page: Modifier Page
-      slideshow: Start Slideshow
+      slideshow: Démarrer présentation
       view: Voir
     new:
       new_page: Nouvelle Page
@@ -460,7 +460,7 @@ en:
     default_blurb: Modifiez-moi
     error_during_evaluation: ! 'Erreur : '
     no_presentation_found:
-      no_presentations_found: Aucun template défini pour ce partial.
+      no_presentations_found: Aucun template défini pour cet élément
   pink: Pink
   please_enter_item_comment: Demande spéciale
   please_enter_item_price: Prix spécial
@@ -501,7 +501,7 @@ en:
       manage_articles_categories_options: Gérer les articles, les catégories et les options
       manage_business_invoice: Gérer facture commerciale
       manage_customers: Gérer les clients
-      manage_pages: Gérer Slideshow
+      manage_pages: Gérer présentation
       manage_settings: Gérer les paramètres
       manage_users: Gérer les utilisateurs
       move_order: Déplacer la commande
@@ -516,7 +516,7 @@ en:
       view_statistics: Voir les statistiques
   room_prices:
     index:
-      generate_price_skeleton: Créer palette de prix
+      generate_price_skeleton: Créer tableau de prix
     new:
       edit_room_price: Modifier le prix de la chambre
       new_room_price: Nouveau prix de la chambre
@@ -554,7 +554,7 @@ en:
     detailed_list:
       count: Compter
       order_number_on_table_on_date: ! '%{order} numéro %{number} à %{table} à %{time}'
-      revenue: Revenu
+      revenue: Montant
       total: Total
       unit_price: Prix unitaire
     index:
@@ -579,7 +579,7 @@ en:
     new:
       edit_stock: Modifier le stock
       new_stock: Nouveau stock
-  storno: Ristourne
+  storno: Remboursement
   sum: Somme
   surcharges:
     new:
