@@ -139,8 +139,8 @@ en:
         ticket_item_separator: Ligne de séparation du reçu
         ticket_tall_font: Police haute sur reçu
         ticket_wide_font: Police large sur reçu
-        time_offset: Correction date (hours)
-        timeout: Expiration du verrouillage de l'écran (seconds)
+        time_offset: Correction date (heures)
+        timeout: Expiration du verrouillage de l'écran (secondes)
         use_order_numbers: Utiliser numéros de commande
       vendor_printer:
         copies: Copies
