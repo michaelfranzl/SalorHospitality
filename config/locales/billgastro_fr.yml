@@ -149,7 +149,7 @@ en:
         path: Chemin
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix ou Postfix à mentionner
+        prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
     models:
       article:
         one: Article
@@ -311,7 +311,7 @@ en:
       aperitif: Apéritif
       beer: Bière
       blank: Vide
-      childrendish: Menu enfant
+      childrendish: Plat enfant
       cigarette: Tabac
       coffee: Café
       dessert: Dessert
@@ -353,7 +353,7 @@ en:
   delete: Supprimer
   display: Afficher
   edit: Modifier
-  exit: Modifier
+  exit: Quitter
   finish: Terminer
   food: Aliments
   go_back: Revenir
@@ -377,7 +377,7 @@ en:
     item_tablerow:
       clear: Effacer
       done: Terminé
-      no_printing: pas d'impression
+      no_printing: Pas d'impression
   just_order: Commander
   kitchen: Cuisine
   layouts:
@@ -428,7 +428,7 @@ en:
       switch_tax_for_this_item: Cliquer pour modifier la taxe pour cet article
     login_form:
       email: Votre E-Mail
-      login: Identifiant
+      login: S'identifier
       password: Mot de passe
       username: Nom d'utilisateur
     order:
@@ -437,7 +437,7 @@ en:
     served_by: Vous avez été servi par
     show:
       back: Retour
-      count: Count
+      count: Compter
       list_of_taxes: Liste de taxes
       next_invoice: Facture suivante
       previous_invoice: Facture précédente
@@ -445,9 +445,9 @@ en:
       print_invoice: Imprimer facture
       search_by_number: Chercher par numéro
       sum: Somme
-      unit_price: prix unitaire
+      unit_price: Prix unitaire
     storno_form:
-      do_separate_items: Diviser cet article
+      do_separate_items: Scinder cet article
       do_storno: Faire une ristourne
   pages:
     edit:
@@ -472,7 +472,7 @@ en:
   print_and_finish: Terminer et imprimer
   printing_test: Test d'impression
   reports:
-    end_date: End Date
+    end_date: Date de fin
     index:
       backup_database: Base de données de sauvegarde
       backup_logfile: Fichier log de sauvegarde
@@ -490,13 +490,13 @@ en:
       assign_cost_center: Attribuer centre de coût
       cancel_all_items_in_active_order: Annuler tous les articles de la commande active
       change_waiter: Modifier serveur
-      counter_mode: Counter mode
-      decrement_items: Decrement articles
-      delete_items: Supprimer articles by decrementing
+      counter_mode: Mode de comptage
+      decrement_items: Réduire articles
+      delete_items: Supprimer articles en réduisant
       edit_role: Modifier rôle
-      finish_all_settlements: Finish all settlements
+      finish_all_settlements: Terminer tous les settlements
       finish_orders: Terminer commandes
-      finish_own_settlement: Finish own settlement
+      finish_own_settlement: Terminer own settlement
       make_storno: Annuler les articles
       manage_articles_categories_options: Gérer les articles, les catégories et les options
       manage_business_invoice: Gérer facture commerciale
