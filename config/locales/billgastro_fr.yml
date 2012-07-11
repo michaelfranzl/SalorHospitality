@@ -139,8 +139,8 @@ en:
         ticket_item_separator: Ligne de séparation du reçu
         ticket_tall_font: Police haute sur reçu
         ticket_wide_font: Police large sur reçu
-        time_offset: Correction date (heures)
-        timeout: Expiration du verrouillage de l'écran (secondes)
+        time_offset: Correction date (hours)
+        timeout: Expiration du verrouillage de l'écran (seconds)
         use_order_numbers: Utiliser numéros de commande
       vendor_printer:
         copies: Copies
@@ -264,7 +264,7 @@ en:
   articles:
     create:
       success: Article créé avec succès
-      license_limited: Votre licence est limitée à %{nombre} articles
+      license_limited: Votre licence est limitée à %{count} articles
     destroy:
       success: Article supprimé avec succès
     find:
@@ -297,13 +297,13 @@ en:
   blue: Bleu
   bookings:
     invoice_item_list:
-      served_by_X: Vous avez été servi par %{utilisateur}
+      served_by_X: Vous avez été servi par %{user}
     show:
       search_by_number: Chercher par numéro
   cancel_and_go_back: Annuler et revenir à la page précédente
   categories:
     create:
-      license_limited: Votre licence est limitée à %{nombre} catégories
+      license_limited: Votre licence est limitée à %{count} catégories
       success: Catégorie enregistrée avec succès
     destroy:
       success: Catégorie supprimée avec succès
@@ -370,7 +370,7 @@ en:
     errsize: Taille de fichier invalide
     errtype: Type de fichier invalide
   invoice: Facture
-  invoice_numer_X_at_time: No. facture %{numéro} à %{date}
+  invoice_numer_X_at_time: No. facture %{number} à %{datetime}
   invoices: Factures
   is_no_number: Pas un numéro
   items:
@@ -383,9 +383,9 @@ en:
   layouts:
     application:
       submit_scribe: OK
-  logout: Déconnecter %{qui}
+  logout: Déconnecter %{who}
   messages:
-    hello_username: Bonjour %{nom}!
+    hello_username: Bonjour %{name}!
   move_order_to_table: Déplacer commande à table différente
   must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article soit pour la Variant.
   net: Net
@@ -539,7 +539,7 @@ en:
       edit_season: Modifier saison
       new_season: Nouvelle saison
   send_and_go_back: Enregistrer et revenir à la page précédente
-  served_by_X_on_table_Y: Vous avez été servi par %{serveur} à %{table}
+  served_by_X_on_table_Y: Vous avez été servi par %{user} à %{table}
   server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est occupé, soit le lien radio a été interrompu.
   sessions:
     browser_warning:
@@ -553,7 +553,7 @@ en:
   settlements:
     detailed_list:
       count: Compter
-      order_number_on_table_on_date: ! '%{commande} numéro %{numéro} à %{table} à %{heure}'
+      order_number_on_table_on_date: ! '%{order} numéro %{number} à %{table} à %{time}'
       revenue: Revenu
       total: Total
       unit_price: Prix unitaire
@@ -589,7 +589,7 @@ en:
       new_surcharge: Nouvelle surtaxe
   tables:
     create:
-      license_limited: Votre licence est limitée à %{nombre} tables
+      license_limited: Votre licence est limitée à %{count} tables
       success: Table enregistrée avec succès
     destroy:
       success: Table supprimée avec succès
