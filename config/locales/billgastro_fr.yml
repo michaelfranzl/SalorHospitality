@@ -547,41 +547,41 @@ en:
       continue: Continuer
       warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a été exclusivement optimisé pour ces navigateurs.
     new:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
+      email: Votre E-Mail
+      login: Identifiant
+      password: Mot de passe
+      username: Nom d'utilisateur
   settlements:
     detailed_list:
       count: Count
-      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
-      revenue: Revenue
+      order_number_on_table_on_date: ! '%{commande} numéro %{numéro} à %{table} à %{heure}'
+      revenue: Revenu
       total: Total
-      unit_price: Unit Price
+      unit_price: Prix unitaire
     index:
-      all_cost_centers: All
-      end_date: End date
-      start_date: Start date
-      sum_total: Sum total
+      all_cost_centers: Tous
+      end_date: Date de fin
+      start_date: Date de début
+      sum_total: Montant total
     settlement:
-      finish: Finish
-      print: Print
-      start: Start
-      started_at: Started at
+      finish: Terminer
+      print: Imprimer
+      start: Commencer
+      started_at: Commencé à
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
-  split_order: Split order
-  statistic: Statistic
+      list_of_taxes: Liste de Taxes
+  split_order: Diviser commande
+  statistic: Statistiques
   statistics:
-    journal: Journal (chronological list)
-    weekdays: Weekdays
+    journal: Journal (liste chronologique)
+    weekdays: Jours de la semaine
   stocks:
     new:
-      edit_stock: Edit Stock
-      new_stock: New Stock
+      edit_stock: Modifier le stock
+      new_stock: Nouveau stock
   storno: Storno
-  sum: Sum
+  sum: Somme
   surcharges:
     new:
       add_tax_amount: Add tax amount
@@ -590,8 +590,8 @@ en:
       new_surcharge: New Surcharge
   tables:
     create:
-      license_limited: Your License is limited to %{count} tables
-      success: Table successfully saved
+      license_limited: Votre licence est limitée à %{nombre} tables
+      success: Table enregistrée afec succ
     destroy:
       success: Table successfully deleted
     new:
