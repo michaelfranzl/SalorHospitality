@@ -137,11 +137,11 @@ en:
         saas: Online variant
         ticket_display_time_order: Numéro et heure de facturation sur reçu
         ticket_item_separator: Ligne de séparation du reçu
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
+        ticket_tall_font: Police haute sur reçu
+        ticket_wide_font: Police large sur reçu
+        time_offset: Correction date (heures)
+        timeout: Expiration du verrouillage de l'écran (secondes)
+        use_order_numbers: Utiliser numéros de commande
       vendor_printer:
         copies: Copies
         hidden: Effacer
@@ -149,7 +149,7 @@ en:
         path: Chemin
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Prefix ou Postfix à mentionner
     models:
       article:
         one: Article
@@ -164,8 +164,8 @@ en:
         one: Société
         other: Sociétés
       cost_center:
-        one: Cost Center
-        other: Cost Centers
+        one: Centre de coût
+        other: Centres de coût
       coupon:
         one: Coupon
         other: Coupons
@@ -179,14 +179,14 @@ en:
         one: Stock Group
         other: Stock Groups
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Type de client
+        other: Types de client
       image:
         one: Image
         other: Images
       item:
-        one: Item
-        other: Items
+        one: Article
+        other: Articles
       option:
         one: Option
         other: Options
