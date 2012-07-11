@@ -19,10 +19,10 @@ en:
         hidden: Effacer
         icon: Icône
         name: Nom
-        separate_print: Cut ticket
+        separate_print: Reçu séparé
         tax_id: Taxe
-        user_id: Preparing User
-        vendor_printer_id: Printer
+        user_id: Preparation de l'utilisateur
+        vendor_printer_id: Imprimante
       cost_center:
         active: Actif ?
         description: Description
@@ -38,9 +38,9 @@ en:
         category_id: Catégorie
         hidden: Effacer
         name: Nom
-        no_ticket: Ne pas imprimer de ticket
+        no_ticket: Ne pas imprimer de reçu
         price: Prix
-        separate_ticket: Cut ticket
+        separate_ticket: Reçu séparé
       page:
         active: Actif
         color: Couleur
@@ -50,7 +50,7 @@ en:
         width: Largeur
       partial:
         active: Actif
-        blurb: Blurb
+        blurb: Descriptif
         hidden: Effacer
       presentation:
         active: Activer
