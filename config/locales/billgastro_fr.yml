@@ -281,14 +281,14 @@ en:
     listall:
       all_articles: Liste de tous les articles
     new:
-      add_quantity: Add Variant
+      add_quantity: Ajouter Variant
       edit_article: Modifier l'article
       new_article: Nouvel article
       normal: Normal
       takeaway: À emporter
     sort_index:
       sort: Trier les articles
-  bar: Bar
+  bar: Barre
   black: Noir
   blackboard:
     index:
@@ -299,11 +299,11 @@ en:
     invoice_item_list:
       served_by_X: Vous avez été servi par %{utilisateur}
     show:
-      search_by_number: Search by number
-  cancel_and_go_back: Annuler et revenir
+      search_by_number: Chercher par numéro
+  cancel_and_go_back: Annuler et revenir à la page précédente
   categories:
     create:
-      license_limited: Your License is limited to %{count} categories
+      license_limited: Votre licence est limitée à %{nombre} catégories
       success: Catégorie enregistrée avec succès
     destroy:
       success: Catégorie supprimée avec succès
@@ -333,19 +333,19 @@ en:
       teapot: Théière
       whitewinebottle: Bouteille blanc
       whitewineglass: Vin blanc
-  clear_order_and_go_back: Clear order and go back
+  clear_order_and_go_back: Effacer commande et revenir à la page précédente
   copy: Copier
   cost_centers:
     create:
-      success: Cost Center successfully saved
+      success: Centre de coût créé avec succès
     destroy:
-      success: Cost Center successfully deleted
+      success: Centre de coût effacé avec succès
     index:
       active: Actif
       inactive: Inactif
     new:
-      edit_cost_center: Edit Cost Center
-      new_cost_center: New Cost Center
+      edit_cost_center: Modifier centre de coût
+      new_cost_center: Nouveau centre de coût
   count: Compter
   create: Créer
   dateandtime: Date
@@ -355,16 +355,16 @@ en:
   edit: Modifier
   exit: Modifier
   finish: Terminer
-  food: Foods
+  food: Aliments
   go_back: Revenir
   green: Vert
-  gross: Gross
+  gross: Brut
   groups:
     new:
       edit_group: Modifier Groupe
       new_group: Nouveau Groupe
-  guestroom: Guestroom
-  host: Host
+  guestroom: Chambre d'amis
+  host: Hôte
   images:
     errempty: Fichier invalide
     errsize: Taille de fichier invalide
@@ -375,10 +375,10 @@ en:
   is_no_number: Pas un numéro
   items:
     item_tablerow:
-      clear: Clear
-      done: Done
-      no_printing: no printing
-  just_order: Just order
+      clear: Effacer
+      done: Terminé
+      no_printing: pas d'impression
+  just_order: Commander
   kitchen: Cuisine
   layouts:
     application:
