@@ -57,7 +57,7 @@ en:
         code: Code Ruby
         description: Description
         hidden: Effacer
-        markup: ERB Markup
+        markup: Code ERB
         model: Type
         name: Nom
       quantity:
@@ -66,7 +66,7 @@ en:
         hidden: Effacer
         postfix: Postfix
         prefix: Nom
-        price: Variant Price
+        price: Prix variante
         usage: Utilisation
       role:
         name: Nom
@@ -92,19 +92,19 @@ en:
         guest_type_id: Type de client
         hidden: Effacer
         name: Nom
-        radio_select: Radio Select
+        radio_select: Sélection unique
         season_id: Saison
       table:
         abbreviation: Abréviation
         description: Description
         enabled: Activé ?
         height: Hauteur
-        height_mobile: Height mobile
+        height_mobile: Hauteur mobile
         hidden: Effacer
         name: Nom
         rotate: Pivoter ?
         width: Largeur
-        width_mobile: Width mobile
+        width_mobile: Largeur mobile
       tax:
         color: Couleur
         hidden: Effacer
