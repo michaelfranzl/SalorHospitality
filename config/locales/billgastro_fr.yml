@@ -3,7 +3,7 @@ en:
   activerecord:
     attributes:
       article:
-        active: active
+        active: Actif
         category_id: Catégorie
         description: Description
         hidden: Effacer
@@ -24,7 +24,7 @@ en:
         user_id: Preparing User
         vendor_printer_id: Printer
       cost_center:
-        active: Activé ?
+        active: Actif ?
         description: Description
         hidden: Effacer
         name: Nom
@@ -42,14 +42,14 @@ en:
         price: Prix
         separate_ticket: Cut ticket
       page:
-        active: Activé
+        active: Actif
         color: Couleur
         height: Hauteur
         hidden: Effacer
         image: Image
         width: Largeur
       partial:
-        active: Activé
+        active: Actif
         blurb: Blurb
         hidden: Effacer
       presentation:
@@ -61,7 +61,7 @@ en:
         model: Type
         name: Nom
       quantity:
-        active: Activé
+        active: Actif
         description: Description
         hidden: Effacer
         postfix: Postfix
@@ -115,7 +115,7 @@ en:
         amount: Montant
         tax_id: Taxe
       user:
-        active: Activé
+        active: Actif
         color: Couleur
         hidden: Effacer ?
         language: Langue
@@ -341,7 +341,7 @@ en:
     destroy:
       success: Cost Center successfully deleted
     index:
-      active: Activé
+      active: Actif
       inactive: Inactif
     new:
       edit_cost_center: Edit Cost Center
@@ -440,38 +440,38 @@ en:
       back: Back
       count: Count
       list_of_taxes: Liste de taxes
-      next_invoice: Facture s
-      previous_invoice: Previous invoice
+      next_invoice: Facture suivante
+      previous_invoice: Facture précédente
       print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      print_invoice: Imprimer facture
+      search_by_number: Chercher par numéro
+      sum: Somme
+      unit_price: prix unitaire
     storno_form:
-      do_separate_items: Separate this item
+      do_separate_items: Séparer cet article
       do_storno: Make storno
   pages:
     edit:
-      edit_page: Edit Page
+      edit_page: Modifier Page
       slideshow: Start Slideshow
-      view: View
+      view: Voir
     new:
-      new_page: New Page
+      new_page: Nouvelle Page
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: Modifiez-moi
+    error_during_evaluation: ! 'Erreur : '
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
   pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+  please_enter_item_comment: Demande spéciale
+  please_enter_item_price: Prix spécial
   presentations:
     new:
       edit_presentation: Edit Template
       new_presentation: New Template
   print: Print
-  print_and_finish: Finish and print
-  printing_test: Printing test
+  print_and_finish: Terminer et imprimer
+  printing_test: Test d'impression
   reports:
     end_date: End Date
     index:
@@ -484,68 +484,67 @@ en:
   restaurant: Restaurant
   roles:
     create:
-      success: Role successfully saved
+      success: Rôle enregistré avec succès
     destroy:
-      success: Role successfully deleted
+      success: Rôle supprimé avec succès
     new:
       assign_cost_center: Assign cost center
-      cancel_all_items_in_active_order: Cancel all items in active order
-      change_waiter: Change waiter
+      cancel_all_items_in_active_order: Annuler tous les articles de la commande active
+      change_waiter: Modifier serveur
       counter_mode: Counter mode
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
       edit_role: Edit Role
       finish_all_settlements: Finish all settlements
-      finish_orders: Finish orders
+      finish_orders: Terminer commandes
       finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
+      make_storno: Annuler les articles
+      manage_articles_categories_options: Gérer les articles, les catégories et les options
       manage_business_invoice: Manage business invoice
-      manage_customers: Manage Customers
+      manage_customers: Gérer les clients
       manage_pages: Manage Slideshow
       manage_settings: Manage settings
-      manage_users: Manage users
-      move_order: Move order
-      move_tables: Move tables
-      new_role: New Role
+      manage_users: Gérer les utilisateurs
+      move_order: Déplacer la commande
+      move_tables: Déplacer les tables
+      new_role: Nouveau rôle
       permissions: Permissions
       see_debug: See debug messages
       see_item_notifications: See item notifications
-      split_items: Split items
-      take_orders: Take orders
+      split_items: Séparer les articles
+      take_orders: Prendre les commandes
       view_all_settlements: View all settlements
-      view_statistics: View statistics
+      view_statistics: Voir les statistiques
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Modifier le prix de la chambre
+      new_room_price: Nouveau prix de la chambre
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: Modifier le type de chambre
+      new_room_type: Nouveau type de chambre
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Modifier chambre
+      new_room: Nouvelle chambre
   scopes:
-    active: Active
+    active: Actif
     waiterpad: Waiterpad
-  scroll_down: Scroll down
-  scroll_to_room: Go to room
-  scroll_up: Scroll up
+  scroll_down: Descendre
+  scroll_to_room: Aller à chambre
+  scroll_up: Remonter
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
-  send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+      edit_season: Modifier saison
+      new_season: Nouvelle saison
+  send_and_go_back: Enregistrer et revenir page précédente
+  served_by_X_on_table_Y: Vous avez été servie par %{serveur} à %{table}
+  server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est occupé, soit le lien radio a été interrompu.
   sessions:
     browser_warning:
-      continue: Continue
+      continue: Continuer
       warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as
         web browser. Bill Gastro was optimized for those browsers exclusively.
     new:
