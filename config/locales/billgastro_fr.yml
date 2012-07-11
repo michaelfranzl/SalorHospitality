@@ -460,25 +460,25 @@ en:
     default_blurb: Modifiez-moi
     error_during_evaluation: ! 'Erreur : '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
+      no_presentations_found: Aucun template défini pour ce partial.
   pink: Pink
   please_enter_item_comment: Demande spéciale
   please_enter_item_price: Prix spécial
   presentations:
     new:
-      edit_presentation: Edit Template
-      new_presentation: New Template
+      edit_presentation: Modifier Template
+      new_presentation: Nouveau Template
   print: Print
   print_and_finish: Terminer et imprimer
   printing_test: Test d'impression
   reports:
     end_date: End Date
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-    save: Save
-    start_date: Start Date
+      backup_database: Base de données de sauvegarde
+      backup_logfile: Fichier log de sauvegarde
+      header: Rapports
+    save: Enregistrer
+    start_date: Date de début
     usb_device: USB Stick
   restaurant: Restaurant
   roles:
