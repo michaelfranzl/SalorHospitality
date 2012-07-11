@@ -530,7 +530,7 @@ en:
       new_room: Nouvelle chambre
   scopes:
     active: Actif
-    waiterpad: Tablette du serveur
+    waiterpad: Tablette serveur
   scroll_down: Descendre
   scroll_to_room: Aller à chambre
   scroll_up: Remonter
@@ -619,14 +619,14 @@ en:
     unamed: Unamed
   vendors:
     index:
-      edit: Edit
+      edit: Modifier
       switch_to: Sélectionner
     new:
       edit_vendor: Modifier vendeur
       new_vendor: Nouveau vendeur
   violet: Violet
   waiter: Serveur
-  waiterpad_generic_name: Waiterpad
+  waiterpad_generic_name: Tablette serveur
   white: Blanc
   winered: Vin rouge
   wrong_password: Données de connexion erronées
