@@ -408,7 +408,7 @@ en:
     functions_header_index:
       items_notifications: Notifications
       print_now: Imprimer maintenant
-      show_last_booking: Show last booking
+      show_last_booking: Montrer dernière réservation
       show_last_order: Show last order
       toggle_between_tables_and_rooms: Toggle between rooms and tables
     functions_header_order_form:
