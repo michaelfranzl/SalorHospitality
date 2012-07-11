@@ -122,21 +122,21 @@ en:
         login: Nom d'utilisateur
         password: Mot de passe
         role: Rôle
-        screenlock_timeout: Screenlock timeout (sec.)
+        screenlock_timeout: Expiration du verrouillage de l'écran (sec.)
         tables: Tables
         title: Titre
       vendor:
         automatic_printing: Impression automatique
         country: Règles pour le pays
         hidden: Effacer
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
+        invoice_footer_blurb: Texte pied de facture
+        invoice_header_blurb: Texte entête de facture
         name: Nom
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
+        receipt_footer_blurb: Texte pied de reçu
+        receipt_header_blurb: Texte entête de reçu
         saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
+        ticket_display_time_order: Numéro et heure de facturation sur reçu
+        ticket_item_separator: Ligne de séparation du reçu
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
         time_offset: Time correction (hours)
