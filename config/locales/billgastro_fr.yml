@@ -479,7 +479,7 @@ en:
       header: Rapports
     save: Enregistrer
     start_date: Date de début
-    usb_device: USB Stick
+    usb_device: Clé USB
   restaurant: Restaurant
   roles:
     create:
