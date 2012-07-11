@@ -545,8 +545,7 @@ en:
   sessions:
     browser_warning:
       continue: Continuer
-      warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as
-        web browser. Bill Gastro was optimized for those browsers exclusively.
+      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a été exclusivement optimisé pour ces navigateurs.
     new:
       email: Your E-Mail
       login: Login
