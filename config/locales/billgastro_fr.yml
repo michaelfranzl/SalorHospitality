@@ -54,7 +54,7 @@ en:
         hidden: Effacer
       presentation:
         active: Activer
-        code: Ruby code
+        code: Code Ruby
         description: Description
         hidden: Effacer
         markup: ERB Markup
@@ -71,13 +71,13 @@ en:
       role:
         name: Nom
       room_price:
-        base_price: Prix de vase
+        base_price: Prix de base
         guest_type_id: Gast-Typ
         hidden: löschen
         room_type_id: Type de chambre
         season_id: Saison
       room_type:
-        hidden: löschen
+        hidden: Effacer
         name: Nom
       season:
         from_date: De
@@ -89,7 +89,7 @@ en:
         revenue: Montant final
       surcharge:
         amount: Montant
-        guest_type_id: Guest Type
+        guest_type_id: Type de client
         hidden: Effacer
         name: Nom
         radio_select: Radio Select
