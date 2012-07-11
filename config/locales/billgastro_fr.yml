@@ -212,8 +212,8 @@ en:
         one: Variant
         other: Variants
       report:
-        one: Report
-        other: Reports
+        one: Rapport
+        other: Rapports
       reservation:
         one: Réservation
         other: Réservations
@@ -245,8 +245,8 @@ en:
         one: Table
         other: Tables
       tax:
-        one: Tax Class
-        other: Tax Classes
+        one: Classe de taxe
+        other: Classes de taxe
       tax_amount:
         one: Montant taxe
         other: Montants taxe
@@ -257,14 +257,14 @@ en:
         one: Restaurant
         other: Restaurants
       vendor_printer:
-        one: Printer
-        other: Printers
+        one: Imprimante
+        other: Imprimantes
   admin: Admin
   are_you_sure: Êtes-vous sûr ?
   articles:
     create:
       success: Article créé avec succès
-      license_limited: Your License is limited to %{count} articles
+      license_limited: Votre licence est limitée à %{nombre} articles
     destroy:
       success: Article supprimé avec succès
     find:
@@ -272,7 +272,7 @@ en:
         one: Variante
         other: Variantes
     index:
-      list_all: List all
+      list_all: Lister tout
       preview: Aperçu
       search_term: Chercher terme
       sort: Trier
