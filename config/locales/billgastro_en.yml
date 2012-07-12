@@ -560,6 +560,7 @@ en:
       manage_statistics: View statistics
       manage_hotel: Manage hotel
       item_scribe: Enable handwriting
+      assign_order_to_booking: Assign orders to a booking
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -657,6 +658,7 @@ en:
     new:
       edit_user: Edit User
       new_user: New User
+      select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
     cancel: Cancel
     common_surcharges: Common Surcharges

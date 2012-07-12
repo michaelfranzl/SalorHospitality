@@ -1,6 +1,7 @@
 - if permit('manage_business_invoice') and not mobile_special?
   %a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order') }
-  %a.iconbutton.invoice_button{ :href => "/bookings/last", :title => t('.show_last_booking') }
+- if permit('manage_hotel')
+  %a.iconbutton.invoice_hotel_button{ :href => "/bookings/last", :title => t('.show_last_booking') }
 
 - if mobile_special?
   = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'

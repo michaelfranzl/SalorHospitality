@@ -89,7 +89,7 @@ class Item < ActiveRecord::Base
     #self.tax_percent = tax.percent
     #self.tax_id = self.tax.id if self.tax_id.nil?
     self.category_id = article.category.id
-    save
+    #save
     if self.refunded
       #self.tax_sum = 0
       self.sum = 0

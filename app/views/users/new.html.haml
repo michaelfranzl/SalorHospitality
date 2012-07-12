@@ -57,6 +57,8 @@
         %td
           = user_form.label :tables
           %br
+          %small= t '.select_with_ctrl_key'
+          %br
           = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
 
 :javascript
