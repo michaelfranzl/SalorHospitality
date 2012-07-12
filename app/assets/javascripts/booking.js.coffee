@@ -256,10 +256,11 @@ update_json_booking_items = ->
         
 
 
-
+# Adds a new row of buttons to the booking form. The source is an item which is already in the local json storage.
 render_booking_item = (booking_item_id) ->
   surcharge_headers = _get 'surcharge_headers'
-  if booking_item_id.indexOf('s')== 0
+  if booking_item_id.indexOf('s') == 0
+    # a dynamically generated booking_item_id with s at the beginning means "special". Special means that the generated row/surchargeitem does not represent a guest_type, but is simply a collection of surcharges.
     guest_type_name = i18n.common_surcharges
     surcharge_headers = surcharge_headers.guest_type_null
   else
@@ -305,12 +306,12 @@ render_booking_item = (booking_item_id) ->
     delete_booking_item(booking_item_id)
   update_booking_totals()
 
-
+# deletes a booking item from the DOM and sets 'hidden' in the json sources.
 delete_booking_item = (booking_item_id) ->
   $('#booking_item' + booking_item_id).remove()
   set_json 'booking', booking_item_id, 'hidden', true
 
-
+# The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
   if $(element).attr('type') == 'radio'
     $.each items_json[booking_item_id].surcharges, (k,v) ->
@@ -327,16 +328,15 @@ save_selected_input_state = (element, booking_item_id, surcharge_name) ->
   update_submit_json_surchageslist booking_item_id
 
 
+# Copy data over into submit_son from items_json, add surcharge IDs to array, which will be interpreted by the Server.
 update_submit_json_surchageslist = (booking_item_id) ->
-  # copy stuff over into submit_son from items_json, add ids to array
   set_json 'booking', booking_item_id, 'surchargeslist', [0]
   $.each items_json[booking_item_id].surcharges, (k,v) ->
     if v.selected
       submit_json.items[booking_item_id].surchargeslist.push v.id
-    
 
 
-
+# render all booking items which are in the items_json object to the DOM
 window.render_booking_items_from_json = ->
   $('#booking_items').html ''
   $.each items_json, (k,v) ->
