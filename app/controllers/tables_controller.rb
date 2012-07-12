@@ -12,7 +12,7 @@ class TablesController < ApplicationController
   respond_to :html, :js
   
   def index
-    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing.order(:name)
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_with do |wants|
       wants.html
