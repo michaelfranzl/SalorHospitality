@@ -12,7 +12,7 @@ class HistoryObserver < ActiveRecord::Observer
       send = 5
     end
     object.changes.keys.each do |k|
-     if [:finished, :sum, :storno_sum, :price, :active,:hidden,:percent].include? k.to_sym then
+     if [:finished, :sum, :refund_sum, :price, :active,:hidden,:percent].include? k.to_sym then
        History.record("#{object.class.to_s.downcase}_edit",object,sen)
        return
      end

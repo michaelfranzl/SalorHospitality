@@ -2,6 +2,8 @@
 gn:
   activerecord:
     attributes:
+      order:
+        change_given: Wechselgeld
       customer:
         first_name: Vorname
         last_name: Nachname
@@ -424,6 +426,10 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Einzelpreis
+      count: Menge
+      sum: Summe
     functions_header_index:
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
@@ -466,9 +472,9 @@ gn:
       search_by_number: Suche nach Bestellnummer
       sum: Summe
       unit_price: Stück
-    storno_form:
+    refund_form:
       do_separate_items: Posten separieren
-      do_storno: Storno durchführen
+      do_refund: Storno durchführen
   pages:
     edit:
       edit_page: Karte bearbeiten
@@ -585,7 +591,7 @@ gn:
       edit_season: Saison bearbeiten
       new_season: Neue Saison
   send_and_go_back: Senden und zurück
-  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf Tisch %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
     oder die Funkverbindung ist abgerissen.
   sessions:
@@ -627,7 +633,7 @@ gn:
     new:
       edit_stock: Lagerartikel bearbeiten
       new_stock: Neuer Lagerartikel
-  storno: Storno
+  refund: Storno
   sum: Summe
   surcharges:
     new:

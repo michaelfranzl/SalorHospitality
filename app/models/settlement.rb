@@ -78,9 +78,9 @@ class Settlement < ActiveRecord::Base
     string += list_of_costcenters
     initial_cash = self.initial_cash ? "\nStartbetrag:  EUR %9.2f\n" % [self.initial_cash] : ''
     revenue = self.revenue ? "Endbetrag:  EUR %9.2f\n" % [self.revenue] : ''
-    storno = "Storno:  EUR %9.2f\n" % [refund_total]
+    refund = "Refund:  EUR %9.2f\n" % [refund_total]
 
-    string += initial_cash + revenue + storno +
+    string += initial_cash + revenue + refund +
 
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +

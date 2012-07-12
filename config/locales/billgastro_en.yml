@@ -2,6 +2,8 @@
 en:
   activerecord:
     attributes:
+      order:
+        change_given: Change
       customer:
         first_name: First Name
         last_name: Last Name
@@ -424,6 +426,10 @@ en:
       select_all: select all
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
     functions_header_index:
       items_notifications: Notifications
       print_now: Print now
@@ -466,9 +472,9 @@ en:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
-    storno_form:
+    refund_form:
       do_separate_items: Separate this item
-      do_storno: Make storno
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Edit Page
@@ -586,7 +592,7 @@ en:
       edit_season: Edit Season
       new_season: New Season
   send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
+  served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
   server_no_response: The Bill Gastro Server is not responding any more. It is either
     busy or the radio link is interrupted.
   sessions:
@@ -628,7 +634,7 @@ en:
     new:
       edit_stock: Edit Stock
       new_stock: New Stock
-  storno: Storno
+  refund: Storno
   sum: Sum
   surcharges:
     new:

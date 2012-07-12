@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
-  def storno
+  def refund
     @order = get_model
   end
 

@@ -65,7 +65,7 @@ SalorGastro::Application.routes.draw do
     collection do
       post :toggle_admin_interface
       post :login
-      get :storno
+      get :refund
       get :last_invoices
       post :update_ajax
       get :logout
@@ -79,7 +79,7 @@ SalorGastro::Application.routes.draw do
     end
   end
 
-  match 'orders/storno/:id' => 'orders#storno'
+  match 'orders/refund/:id' => 'orders#refund'
   match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/print/:id' => 'settlements#print'

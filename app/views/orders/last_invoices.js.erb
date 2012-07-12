@@ -6,7 +6,7 @@ $('#invoices').html('');
   $('#invoices').append("<%= escape_javascript render(:partial => 'settlements/settlement', :locals => { :u => u } ) %>");
 <% end %>
 
-$('#invoices').append('<%= escape_javascript render(:partial => 'storno_form', :collection => @unsettled_orders) %>');
+$('#invoices').append('<%= escape_javascript render(:partial => 'refund_form', :collection => @unsettled_orders) %>');
 
 $('#invoices').show();
 $('#items_notifications').show();

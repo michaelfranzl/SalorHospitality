@@ -73,7 +73,7 @@ class Report
     lines = []
     orders.each do |order|
       line = []
-      [:id,:class,:sum,:storno_sum].each do |cc|
+      [:id,:class,:sum,:refund_sum].each do |cc|
         line << order.send(cc)
       end
       lines << line.join("\t")
