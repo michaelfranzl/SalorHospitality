@@ -9,6 +9,21 @@ el:
       new_vendor: Νέος Προμηθευτής
   activerecord:
     attributes:
+      customer:
+        first_name: Όνομα
+        last_name: Επώνυμο 
+        full_name: Ονοματεπώνυμο 
+        company_name: Όνομα Εταιρίας
+        address: Διεύθυνση 
+        city: Πόλη
+        state: Νομός
+        postalcode: Ταχυδρομικός Κώδικας 
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: ηλεκτρονική διεύθυνση
+        telephone: Τηλέφωνο
+        cellphone: 
+        hidden: delete
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -592,7 +607,7 @@ el:
   yellow: Κίτρινο
   bookings:
     invoice_item_list:
-      served_by_X: Σερβιριστήκατε από %{χρήστη}
+      served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
   room_prices:
@@ -634,17 +649,3 @@ el:
     save: Αποθηκεύστε
     subtotal: Υποσύνολο
     unamed: Ανώνυμο
-    vendors:
-    index:
-      edit: Επεξεργασία
-      switch_to: Select
-    new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
-      violet: Violet
-      waiter: Waiter
-      waiterpad_generic_name: Waiterpad
-      white: White
-      winered: Wine Red
-      wrong_password: Wrong login data
-      yellow: Yellow
