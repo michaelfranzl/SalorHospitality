@@ -6,9 +6,13 @@
 */
 var screenlock_counter = -1;
 
+// document ready code
 $(function(){
-  $('#admin').slideUp();
-  
+  //$('#admin').slideUp();
+
+  admin_report_link = create_dom_element('a',{href:'#'},'Report','.adminlinks');
+  admin_report_link.on('click', gastro.functions.display_report_popup );
+
   $("#customer_search").keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();
@@ -34,6 +38,8 @@ $(function(){
     }, 1001);
   }
 })
+
+
 
 function display_comment_popup_of_item(d) {
   if ( item_changeable(items_json[d].c, items_json[d].sc) ) {

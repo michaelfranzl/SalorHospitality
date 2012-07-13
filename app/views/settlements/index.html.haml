@@ -20,7 +20,7 @@
     %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t :sum }
 
   - if @settlements.any?
-    - @settlements.each do |s|
+    - @settlements.reverse.each do |s|
       %tr
         %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
         %td= l s.created_at, :format => :date_iso

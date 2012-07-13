@@ -18,6 +18,13 @@ class ItemsController < ApplicationController
         render :text => tickets + invoices
       }
       wants.html
+      wants.json do
+        from = Time.parse(params[:from]).beginning_of_day
+        to = Time.parse(params[:to]).end_of_day
+	collection = Item.select("count,items.id,items.refund_sum as r, items.category_id as c,items.taxes as t").where(:created_at => from...to)
+	#render :json => Item.to_json(params[:from], params[:to]) #@collection
+	render :json => collection
+      end
     end
   end
 

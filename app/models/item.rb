@@ -240,5 +240,5 @@ class Item < ActiveRecord::Base
     end
     split_order.calculate_totals
   end
-
+  
 end

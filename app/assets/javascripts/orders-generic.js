@@ -33,6 +33,7 @@ var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
 
+var gastro = {functions:{}, variables:{}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -1154,3 +1155,88 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
+
+
+
+gastro.functions = {
+  render_report:function() {
+    $.ajax({
+      url: '/items',
+      dataType: 'json',
+      data: gastro.variables.report,
+      success: function(data){
+        gastro.variables.report_items = data;
+	$('#report').html('done');
+      }
+    });
+    
+
+  },
+
+  display_report_popup:function() {
+    gastro.variables.report = {};
+    
+    report_popup = create_dom_element('div',{id:'report'}, 'report here', '#main');
+    
+    from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
+    from_input.datepicker({
+      onSelect: function(date, inst) {
+        gastro.variables.report.from = date;
+      }
+    })
+    to_input = create_dom_element('input', {type:'text',id:'report_to'}, '', report_popup);
+    to_input.datepicker({
+      onSelect: function(date, inst) {
+        gastro.variables.report.to = date;
+      }
+    })
+    
+    submit_button = create_dom_element('div',{class:'button'}, 'submit', report_popup);
+    submit_button.on('click', function(){
+      gastro.functions.render_report();
+    })
+  }
+}
+
+
+YAML = {
+  valueOf: function(token) {
+    if (/\d/.exec(token)) {
+      return eval('(' + token + ')');
+    } else {
+      return token;
+    }
+  },
+
+  tokenize: function(str) {
+    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
+    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
+    return tokens;
+  },
+
+  strip: function(str) {
+    return str.replace(/^\s*|\s*$/, '')
+  },
+
+  parse: function(tokens) {
+    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
+    while (token = tokens.shift())
+      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
+	continue
+      else if (key.exec(token) && tokens[0] == "\n")
+	stack[RegExp.$1] = this.parse(tokens)
+      else if (key.exec(token))
+	stack[RegExp.$1] = this.valueOf(tokens.shift())
+      else if (list.exec(token))
+	(stack.constructor == Array ?
+	  stack : (stack = [])).push(this.strip(RegExp.$1))
+    return stack
+  },
+
+  eval: function(str) {
+    return this.parse(this.tokenize(str))
+  }
+}
+
+//print(YAML.eval(readFile('config.yml')).toSource())
+//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"
