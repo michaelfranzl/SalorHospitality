@@ -18,12 +18,12 @@ el:
         city: Πόλη
         state: Νομός
         postalcode: Ταχυδρομικός Κώδικας 
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
+        m_number: Κωδικός Κάρτας Επιβράβευσης 
+        m_points: Πόντοι Κάρτας Επιβράβευσης
         email: ηλεκτρονική διεύθυνση
         telephone: Τηλέφωνο
-        cellphone: 
-        hidden: delete
+        cellphone: κινητό
+        hidden: διαγράψτε
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -402,8 +402,7 @@ el:
   messages:
     hello_username: Γεια χαρά %{name}!
   move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
-  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
-    το αντικείμενο είτε για τη Μεταβλητή.
+  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για το αντικείμενο είτε για τη Μεταβλητή.
   net: Καθαρό
   new: Νέο
   no_printing: Όχι εκτύπωση
