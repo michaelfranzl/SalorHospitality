@@ -509,8 +509,7 @@ el:
       finish_orders: Τελειώστε τις παραγγελίες
       finish_own_settlement: Τελειώστε τον δικό σας διακανονισμό
       make_storno: Ακυρώστε αντικείμενα
-      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και
-        επιλογές
+      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές
       manage_business_invoice: Διαχειριστείτε το εταιρικό τιμολόγιο
       manage_customers: Διαχειριστείτε Πελάτες
       manage_pages: Διαχειριστείτε Προβολή Εικόνων
@@ -540,9 +539,7 @@ el:
   sessions:
     browser_warning:
       continue: Συνεχίστε
-      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium
-        ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε
-        αποκλειστικά για αυτά τα προγράμματα περιήγησης.
+      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε αποκλειστικά για αυτά τα προγράμματα περιήγησης.
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη
@@ -569,8 +566,8 @@ el:
   split_order: Μοιράστε την παραγγελία
   statistic: Στατιστικό
   statistics:
-    journal: Ημερολόγιο (χρονολογική λίστα)
-    weekdays: Μέρες Βδομαδας
+    journal: Ημερολόγιο (chronological list)
+    weekdays: Μέρες Βδομάδας
   stocks:
     new:
       edit_stock: Επεξεργασία Αποθέματος
