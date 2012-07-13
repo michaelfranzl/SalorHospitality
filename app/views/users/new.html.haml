@@ -38,7 +38,9 @@
               %td= user_form.label :role
               %td
                 %select#user_role_id{ :name => 'user[role_id]' }
-                  = options_from_collection_for_select @roles, 'id', 'name', user_form.object.role_id
+                  - @roles.each do |r|
+                    - next if r.weight < @current_user.role.weight
+                    %option{ :value => r.id, :selected => user_form.object.role == r }= r.name
             %tr
               %td= user_form.label :color
               %td

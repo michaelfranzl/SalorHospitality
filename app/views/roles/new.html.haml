@@ -10,6 +10,8 @@
 = form_for @role do |role_form|
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   = role_form.text_field :name, :size => '20'
+  %br
+  = role_form.text_field :weight, :size => '5'
   %span#role_name_display_keyboard.display_keyboard
   %br
   %br
