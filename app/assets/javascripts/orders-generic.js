@@ -1074,6 +1074,7 @@ function update_resouces_success(data) {
 
 
 function update_item_lists() {
+  if (!permissions.see_item_notifications) return;
   $.ajax({
     url: '/items/list?scope=preparation',
     timeout: 2000
