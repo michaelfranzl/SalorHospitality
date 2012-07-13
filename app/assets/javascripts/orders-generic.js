@@ -986,32 +986,36 @@ function calculate_sum() {
 }
 
 function display_configuration_of_item(d) {
-  row = $(document.createElement('tr'));
-  row.attr('id','item_configuration_'+d);
-  cell = $(document.createElement('td'));
-  cell.attr('colspan',4);
-  cell.addClass('item_configuration',4);
+  if ($('#item_configuration_' + d).is(':visible')) {
+    $('#item_configuration_' + d).remove();
+  } else {
+    row = $(document.createElement('tr'));
+    row.attr('id','item_configuration_'+d);
+    cell = $(document.createElement('td'));
+    cell.attr('colspan',4);
+    cell.addClass('item_configuration',4);
 
-  comment_button =  $(document.createElement('span'));
-  comment_button.addClass('item_comment');
-  comment_button.on('click', function(){ display_comment_popup_of_item(d); });
-  cell.append(comment_button);
+    comment_button =  $(document.createElement('span'));
+    comment_button.addClass('item_comment');
+    comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+    cell.append(comment_button);
 
-  price_button =  $(document.createElement('span'));
-  price_button.addClass('item_price');
-  price_button.on('click', function(){ display_price_popup_of_item(d); });
-  cell.append(price_button);
+    price_button =  $(document.createElement('span'));
+    price_button.addClass('item_price');
+    price_button.on('click', function(){ display_price_popup_of_item(d); });
+    cell.append(price_button);
 
-  if (permissions.item_scribe) {
-    scribe_button =  $(document.createElement('span'));
-    scribe_button.addClass('item_scribe');
-    scribe_button.on('click', function(){ init_scribe(d); });
-    cell.append(scribe_button);
+    if (permissions.item_scribe) {
+      scribe_button =  $(document.createElement('span'));
+      scribe_button.addClass('item_scribe');
+      scribe_button.on('click', function(){ init_scribe(d); });
+      cell.append(scribe_button);
+    }
+
+    row.html(cell);
+    row.addClass('item');
+    row.insertAfter('#item_' + d);
   }
-
-  row.html(cell);
-  row.addClass('item');
-  row.insertAfter('#item_' + d);
 }
 
 
