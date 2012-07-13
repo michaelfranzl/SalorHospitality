@@ -23,7 +23,8 @@ module OrdersHelper
       :common_surcharges => escape_javascript(I18n.t('various.common_surcharges')),
       :cancel => escape_javascript(I18n.t('various.cancel')),
       :unamed => escape_javascript(I18n.t('various.unamed')),
-      :customer => escape_javascript(I18n.t('activerecord.models.customer.one'))
+      :customer => escape_javascript(I18n.t('activerecord.models.customer.one')),
+      :browser_warning => escape_javascript(I18n.t('sessions.browser_warning.warning'))
     }
     return i18n.to_json
   end

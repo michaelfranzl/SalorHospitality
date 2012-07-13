@@ -597,8 +597,7 @@ gn:
   sessions:
     browser_warning:
       continue: weiter
-      warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium
-        als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
+      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
