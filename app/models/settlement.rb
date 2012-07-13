@@ -34,6 +34,10 @@ class Settlement < ActiveRecord::Base
     printr.close
   end
 
+  def calculate_totals
+    self.update_attribute :sum, self.orders.sum(:sum)
+  end
+
   def escpos
     string =
     "\e@"     +  # Initialize Printer
@@ -89,47 +93,47 @@ class Settlement < ActiveRecord::Base
     Printr.sanitize(string)
   end
 
-  def self.report(settlements,cost_center=nil)
-    report = {}
-    report[:tax_subtotal_gro] = {}
-    report[:tax_subtotal_tax] = {}
-    report[:tax_subtotal_net] = {}
-    report[:subtotal_gro] = 0
-    report[:subtotal_tax] = 0
-    report[:subtotal_net] = 0
-    vendor = settlements.first.vendor if settlements.first
-
-    vendor.taxes.existing.each do |t|
-      report[:tax_subtotal_gro][t.id] = 0
-      report[:tax_subtotal_tax][t.id] = 0
-      report[:tax_subtotal_net][t.id] = 0
-    end
-
-    settlements.each do |s|
-      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
-      vendor.taxes.existing.each do |t|
-        report[s.id][t.id] = {}
-        if cost_center
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
-        else
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
-        end
-        report[s.id][t.id][:gro] = items.sum(:sum)
-        report[s.id][t.id][:tax] = items.sum(:tax_sum)
-        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
-
-        report[s.id][:total_gro] += report[s.id][t.id][:gro]
-        report[s.id][:total_tax] += report[s.id][t.id][:tax]
-        report[s.id][:total_net] += report[s.id][t.id][:net]
-        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
-        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
-        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
-        report[:subtotal_gro] += report[s.id][t.id][:gro]
-        report[:subtotal_tax] += report[s.id][t.id][:tax]
-        report[:subtotal_net] += report[s.id][t.id][:net]
-      end
-    end
-    report
-  end
+#  def self.report(settlements,cost_center=nil)
+#    report = {}
+#    report[:tax_subtotal_gro] = {}
+#    report[:tax_subtotal_tax] = {}
+#    report[:tax_subtotal_net] = {}
+#    report[:subtotal_gro] = 0
+#    report[:subtotal_tax] = 0
+#    report[:subtotal_net] = 0
+#    vendor = settlements.first.vendor if settlements.first
+#
+#    vendor.taxes.existing.each do |t|
+#      report[:tax_subtotal_gro][t.id] = 0
+#      report[:tax_subtotal_tax][t.id] = 0
+#      report[:tax_subtotal_net][t.id] = 0
+#    end
+#
+#    settlements.each do |s|
+#      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
+#      vendor.taxes.existing.each do |t|
+#        report[s.id][t.id] = {}
+#        if cost_center
+#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
+#        else
+#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
+#        end
+#        report[s.id][t.id][:gro] = items.sum(:sum)
+#        report[s.id][t.id][:tax] = items.sum(:tax_sum)
+#        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
+#
+#        report[s.id][:total_gro] += report[s.id][t.id][:gro]
+#        report[s.id][:total_tax] += report[s.id][t.id][:tax]
+#        report[s.id][:total_net] += report[s.id][t.id][:net]
+#        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
+#        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
+#        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
+#        report[:subtotal_gro] += report[s.id][t.id][:gro]
+#        report[:subtotal_tax] += report[s.id][t.id][:tax]
+#        report[:subtotal_net] += report[s.id][t.id][:net]
+#      end
+#    end
+#    report
+#  end
 
 end

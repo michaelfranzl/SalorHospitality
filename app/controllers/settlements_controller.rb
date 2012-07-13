@@ -11,8 +11,9 @@ class SettlementsController < ApplicationController
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
     @to = @to ? @to.end_of_day : DateTime.now
-    @settlements = @current_vendor.settlements.find(:all, :conditions => { :created_at => @from..@to}).reverse
-    @report = Settlement.report(@settlements) if @settlements.any?
+    @settlements = Settlement.where("created_at >= ? AND created_at <= ?", @from, @to)
+    @settlements_sum = @settlements.sum :sum
+    #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
     @taxes = @current_vendor.taxes.existing
     @cost_centers = @current_vendor.cost_centers.existing.active
     @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
@@ -27,6 +28,7 @@ class SettlementsController < ApplicationController
   def create
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
     @settlement = Settlement.create params[:settlement]
+    @settlement.calculate_totals
     @settlement.vendor = @current_vendor
     @settlement.company = @current_company
     @settlement.save

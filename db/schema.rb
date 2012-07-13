@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712131721) do
+ActiveRecord::Schema.define(:version => 20120713080920) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -595,6 +595,7 @@ ActiveRecord::Schema.define(:version => 20120712131721) do
     t.float    "initial_cash"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.float    "sum"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
