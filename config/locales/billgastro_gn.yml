@@ -566,6 +566,7 @@ gn:
       manage_statistics: Statistiken ansehen
       item_scribe: Handschrift aktivieren
       assign_order_to_booking: Bestellungen einer Buchung zuweisen
+      assign_tables: Tische an Benutzer zuweisen
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

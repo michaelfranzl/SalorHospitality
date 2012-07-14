@@ -567,6 +567,7 @@ en:
       manage_hotel: Manage hotel
       item_scribe: Enable handwriting
       assign_order_to_booking: Assign orders to a booking
+      assign_tables: Assign tables to users
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

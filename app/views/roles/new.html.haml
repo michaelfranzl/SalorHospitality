@@ -116,6 +116,9 @@
   %br
   %input#permissions_item_scribe{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'item_scribe', :checked => role_form.object.permissions.include?('item_scribe') }
   %label{ :for => 'permissions_item_scribe' }= t '.item_scribe'
+  %br
+  %input#permissions_assign_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_tables', :checked => role_form.object.permissions.include?('assign_tables') }
+  %label{ :for => 'permissions_assign_tables' }= t '.assign_tables'
 
 :javascript
   $('#role_name').keyboard( {openOn: '' } );
