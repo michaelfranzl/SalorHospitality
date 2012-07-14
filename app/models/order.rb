@@ -43,6 +43,8 @@ class Order < ActiveRecord::Base
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
+      new_item.vendor = vendor
+      new_item.company = vendor.company
       new_item.cost_center = order.cost_center
       new_item.calculate_totals
       order.items << new_item
