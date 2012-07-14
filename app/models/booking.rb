@@ -142,15 +142,15 @@ class Booking < ActiveRecord::Base
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.each do |item|
-      puts "XXX booking_item #{item.id}"
+      #puts "XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          puts "XXX has key"
-          self.taxes[k][:tax] += v[:tax].round(2)
-          self.taxes[k][:gro] += v[:gro].round(2)
-          self.taxes[k][:net] += v[:net].round(2)
+          #puts "XXX has key"
+          self.taxes[k][:t] += v[:t].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
         else
-          puts "XXX has not key"
+          #puts "XXX has not key"
           self.taxes[k] = v
         end
       end
@@ -159,9 +159,9 @@ class Booking < ActiveRecord::Base
     self.orders.each do |order|
       order.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:gro] += v[:gro].round(2)
-          self.taxes[k][:net] += v[:net].round(2)
-          self.taxes[k][:tax] += v[:tax].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
+          self.taxes[k][:t] += v[:t].round(2)
         else
           self.taxes[k] = v
         end

@@ -103,12 +103,12 @@ class Item < ActiveRecord::Base
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
         self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
-	tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
-	if tax_item
-	  tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
-	else
-	  TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum
-	end
+        tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+        if tax_item
+          tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
+        else
+          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum
+        end
       end
     end
     save

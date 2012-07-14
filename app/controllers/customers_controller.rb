@@ -54,10 +54,4 @@ class CustomersController < ApplicationController
     flash[:notice] = t('customers.destroy.success')
     redirect_to customers_path
   end
-
-  private
-
-    def check_permissions
-      redirect_to '/' if not @current_user.role.permissions.include? 'manage_settings'
-    end
 end

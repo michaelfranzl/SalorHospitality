@@ -18,7 +18,7 @@ class SurchargeItem < ActiveRecord::Base
       tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2)
       gro = (ta.amount).round(2)
       net = (gro - tax_sum).round(2)
-      self.taxes[tax_object.id] = {:percent => tax_object.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax_object.letter, :name => tax_object.name }
+      self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
       self.save
     end
     puts "  XXX set self.taxes to #{self.taxes.inspect}"

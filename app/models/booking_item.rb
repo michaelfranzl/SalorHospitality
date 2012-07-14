@@ -63,7 +63,7 @@ class BookingItem < ActiveRecord::Base
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
-        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+        self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
         puts "    XXX setting self.taxes to #{self.taxes.inspect}"
       end
     end
@@ -71,10 +71,12 @@ class BookingItem < ActiveRecord::Base
     self.surcharge_items.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:tax] += v[:tax]
-          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
-          self.taxes[k][:gro] += (v[:gro]).round(2)
-          self.taxes[k][:net] += (v[:net]).round(2)
+          self.taxes[k][:t] += v[:t]
+          self.taxes[k][:g] += v[:g]
+          self.taxes[k][:n] += v[:n]
+          self.taxes[k][:t] = self.taxes[k][:t].round(2)
+          self.taxes[k][:g] = self.taxes[k][:g].round(2)
+          self.taxes[k][:n] = self.taxes[k][:n].round(2)
         else
           self.taxes[k] = v
         end
