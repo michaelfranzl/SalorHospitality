@@ -1,5 +1,8 @@
-h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock
+h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #main, #draw_controls
   :display none
+  
+div#report_container
+  :display inline
 
 table
   :border-spacing 0px
@@ -49,10 +52,13 @@ table.waiterpad
     :background-color lightgray
 
 
-table.printed_invoice
-  :border 0.1pt solid black
+table.printed_invoice,
+table.settlements
+  :border 0.9pt solid black
+  :margin 5pt
+  :float left
   td, th
-    :border 0.1pt solid black
+    :border 0.9pt solid black
     :padding 3pt
   .one
     :width 30pt

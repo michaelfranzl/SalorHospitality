@@ -673,6 +673,7 @@ en:
     save: Save
     subtotal: Subtotal
     unamed: Unamed
+    tax_amount: Amount
   vendors:
     index:
       edit: Edit

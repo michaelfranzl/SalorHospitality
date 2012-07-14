@@ -24,7 +24,12 @@ module OrdersHelper
       :cancel => escape_javascript(I18n.t('various.cancel')),
       :unamed => escape_javascript(I18n.t('various.unamed')),
       :customer => escape_javascript(I18n.t('activerecord.models.customer.one')),
-      :browser_warning => escape_javascript(I18n.t('sessions.browser_warning.warning'))
+      :browser_warning => escape_javascript(I18n.t('sessions.browser_warning.warning')),
+      :gross => escape_javascript(I18n.t(:gross)),
+      :net => escape_javascript(I18n.t(:net)),
+      :tax_amount => escape_javascript(I18n.t(:tax_amount)),
+      :categories => escape_javascript(I18n.t('activerecord.models.category.other')),
+      :taxes => escape_javascript(I18n.t('activerecord.models.tax.other'))
     }
     return i18n.to_json
   end

@@ -1155,7 +1155,8 @@ function setup_payment_method_keyboad(pmid,id) {
 
 
 salor.functions = {
-  table_from_json: function(source, attrs, target) {
+  table_from_json: function(source, attrs, target, heading) {
+    create_dom_element('h2',{},heading,target);
     table = create_dom_element('table', attrs, '', target);
     header_row = create_dom_element('tr',{},'',table);
     // get table headers from the first JSON object
@@ -1167,7 +1168,7 @@ salor.functions = {
     // render the table header
     var headers = Object.keys(first);
     var sums = {};
-    create_dom_element('td', {}, '', header_row);
+    create_dom_element('td', {class:'link'}, '', header_row);
     for (i in headers) {
       create_dom_element('th',{},headers[i],header_row);
       sums[headers[i]] = 0; // initialize sums for each column
@@ -1198,7 +1199,10 @@ gastro.functions.report = {
       data: {day:gastro.variables.report_day},
       success: function(data){
         gastro.variables.report_items = data;
-        //$('#report').html('done');
+        if (data == "") {
+          $('#report_container').html('');
+          return;
+        }
         gastro.functions.report.convert_from_yaml();
         gastro.functions.report.calculate();
         gastro.functions.report.render();
@@ -1220,16 +1224,16 @@ gastro.functions.report = {
       catname = resources.c[category_id].n;
       if (c.hasOwnProperty(catname)) {
         $.each(v.t, function(s,t) {
-          c[catname].gross += t.g
-          c[catname].net += t.n
-          c[catname].tax += t.t
+          c[catname][i18n.gross] += t.g
+          c[catname][i18n.net] += t.n
+          c[catname][i18n.tax_amount] += t.t
         })
       } else {
         $.each(v.t, function(s,t) {
           c[catname] = {};
-          c[catname].gross = t.g
-          c[catname].net = t.n
-          c[catname].tax = t.t
+          c[catname][i18n.gross] = t.g
+          c[catname][i18n.net] = t.n
+          c[catname][i18n.tax_amount] = t.t
         })
       }
     })
@@ -1239,15 +1243,17 @@ gastro.functions.report = {
     var taxes = {};
     $.each(gastro.variables.report_items, function(key,value) {
       $.each(value.t, function(k,v) {
-        if (taxes.hasOwnProperty(k)) {
-          taxes[k].gross += v.g
-          taxes[k].net += v.n
-          taxes[k].tax += v.t
+        var tax_id = k;
+        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
+        if (taxes.hasOwnProperty(taxname)) {
+          taxes[taxname][i18n.gross] += v.g
+          taxes[taxname][i18n.net] += v.n
+          taxes[taxname][i18n.tax_amount] += v.t
         } else {
-          taxes[k] = {};
-          taxes[k].gross = v.g
-          taxes[k].net = v.n
-          taxes[k].tax = v.t
+          taxes[taxname] = {};
+          taxes[taxname][i18n.gross] = v.g
+          taxes[taxname][i18n.net] = v.n
+          taxes[taxname][i18n.tax_amount] = v.t
         }
       })
     })
@@ -1257,27 +1263,25 @@ gastro.functions.report = {
   
   render: function() {
     $('#report_container').html('');
-    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container');
-    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container');
+    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
+    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
   },
 
   display_popup: function() {
     gastro.variables.report = {};
     $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#main');
-    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
-    
-    from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
+    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
+    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
+    close_button.on('click', function() { $('#report').remove(); });
+    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
     from_input.datepicker({
       onSelect: function(date, inst) {
         gastro.variables.report_day = date;
+        gastro.functions.report.initiate();
       }
     })
-    
-    submit_button = create_dom_element('div',{class:'button'}, 'submit', report_popup);
-    submit_button.on('click', function(){
-      gastro.functions.report.initiate();
-    })
+    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
+    report_popup.fadeIn();
   }
 }
 
