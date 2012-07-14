@@ -966,10 +966,6 @@ function compose_optionnames(object){
   jQuery.each(object.t, function(k,v) {
     names += (v.n + '<br>')
   });
-  if (object.u < -10) {
-  // add course number
-    names += (object.u + 10) * -1 + '. Gang'
-  }
   return names;
 }
 
