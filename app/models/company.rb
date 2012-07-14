@@ -41,4 +41,5 @@ class Company < ActiveRecord::Base
   has_many :payment_method_items
   has_many :surcharge_items
   has_many :tax_amounts
+  has_many :tax_items
 end

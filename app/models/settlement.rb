@@ -12,10 +12,12 @@ class Settlement < ActiveRecord::Base
   belongs_to :user
   has_many :orders
   has_many :items
+  has_many :tax_items
 
   def finish
-    Order.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
-    Item.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id).update_all(:settlement_id => self.id)
+    Order.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
+    Item.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id).update_all(:settlement_id => self.id)
+    TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
   end
 
   def revenue=(revenue)

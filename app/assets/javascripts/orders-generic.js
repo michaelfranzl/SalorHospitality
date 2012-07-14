@@ -33,7 +33,8 @@ var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
 
-var gastro = {functions:{}, variables:{}};
+var gastro = {functions:{ report:{} }, variables:{report:{}}};
+var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -1157,43 +1158,129 @@ function setup_payment_method_keyboad(pmid,id) {
 }
 
 
+salor.functions = {
+  table_from_json: function(source, attrs, target) {
+    table = create_dom_element('table', attrs, '', target);
+    header_row = create_dom_element('tr',{},'',table);
+    // get table headers from the first JSON object
+    var first;
+    $.each(source, function(k,v) {
+      first = v;
+      return false; // break after the first element, since we only need the headers
+    })
+    // render the table header
+    var headers = Object.keys(first);
+    var sums = {};
+    create_dom_element('td', {}, '', header_row);
+    for (i in headers) {
+      create_dom_element('th',{},headers[i],header_row);
+      sums[headers[i]] = 0; // initialize sums for each column
+    }
+    // render the table body
+    $.each(source, function(k,v) {
+      data_row = create_dom_element('tr', {}, '', table);
+      create_dom_element('td', {class:'link'}, k, data_row);
+      for (j in v) {
+        create_dom_element('td', {}, number_to_currency(v[j]), data_row);
+        sums[j] += v[j];
+      }
+    })
+    //render thr table footer
+    footer_row = create_dom_element('tr', {}, '', table);
+    create_dom_element('th', {}, '', footer_row);
+    for (i in headers) {
+      create_dom_element('th',{},number_to_currency(sums[headers[i]]), footer_row);
+    }
+  }
+}
 
-gastro.functions = {
-  render_report:function() {
+gastro.functions.report = {
+  initiate:function() {
     $.ajax({
-      url: '/items',
+      url: '/settlements',
       dataType: 'json',
-      data: gastro.variables.report,
+      data: {day:gastro.variables.report_day},
       success: function(data){
         gastro.variables.report_items = data;
-	$('#report').html('done');
+        //$('#report').html('done');
+        gastro.functions.report.convert_from_yaml();
+        gastro.functions.report.calculate();
+        gastro.functions.report.render();
       }
     });
+  },
+  
+  convert_from_yaml: function() {
+    $.each(gastro.variables.report_items, function(k,v) {
+      gastro.variables.report_items[k].t = YAML.eval(v.t);
+    })
+  },
+  
+  calculate: function() {
+    //calculate sums by category
+    var c = {};
+    $.each(gastro.variables.report_items, function(k,v) {
+      var category_id = v.y;
+      catname = resources.c[category_id].n;
+      if (c.hasOwnProperty(catname)) {
+        $.each(v.t, function(s,t) {
+          c[catname].gross += t.g
+          c[catname].net += t.n
+          c[catname].tax += t.t
+        })
+      } else {
+        $.each(v.t, function(s,t) {
+          c[catname] = {};
+          c[catname].gross = t.g
+          c[catname].net = t.n
+          c[catname].tax = t.t
+        })
+      }
+    })
+    gastro.variables.report.categories = c;
     
-
+    //calculate sums by taxes
+    var taxes = {};
+    $.each(gastro.variables.report_items, function(key,value) {
+      $.each(value.t, function(k,v) {
+        if (taxes.hasOwnProperty(k)) {
+          taxes[k].gross += v.g
+          taxes[k].net += v.n
+          taxes[k].tax += v.t
+        } else {
+          taxes[k] = {};
+          taxes[k].gross = v.g
+          taxes[k].net = v.n
+          taxes[k].tax = v.t
+        }
+      })
+    })
+    gastro.variables.report.taxes = taxes;
+    
+  },
+  
+  render: function() {
+    $('#report_container').html('');
+    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container');
+    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container');
   },
 
-  display_report_popup:function() {
+  display_popup: function() {
     gastro.variables.report = {};
-    
-    report_popup = create_dom_element('div',{id:'report'}, 'report here', '#main');
+    $('#report').remove();
+    report_popup = create_dom_element('div',{id:'report'}, '', '#main');
+    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
     
     from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
     from_input.datepicker({
       onSelect: function(date, inst) {
-        gastro.variables.report.from = date;
-      }
-    })
-    to_input = create_dom_element('input', {type:'text',id:'report_to'}, '', report_popup);
-    to_input.datepicker({
-      onSelect: function(date, inst) {
-        gastro.variables.report.to = date;
+        gastro.variables.report_day = date;
       }
     })
     
     submit_button = create_dom_element('div',{class:'button'}, 'submit', report_popup);
     submit_button.on('click', function(){
-      gastro.functions.render_report();
+      gastro.functions.report.initiate();
     })
   }
 }

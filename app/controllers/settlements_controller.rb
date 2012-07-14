@@ -7,16 +7,28 @@
 class SettlementsController < ApplicationController
 
   def index
-    redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
-    @from, @to = assign_from_to(params)
-    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
-    @to = @to ? @to.end_of_day : DateTime.now
-    @settlements = Settlement.where("created_at >= ? AND created_at <= ?", @from, @to)
-    @settlements_sum = @settlements.sum :sum
-    #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
-    @taxes = @current_vendor.taxes.existing
-    @cost_centers = @current_vendor.cost_centers.existing.active
-    @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
+    respond_to do |wants|
+      wants.html do
+      redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
+      @from, @to = assign_from_to(params)
+      @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
+      @to = @to ? @to.end_of_day : DateTime.now
+      @settlements = Settlement.where("created_at >= ? AND created_at <= ?", @from, @to)
+      @settlements_sum = @settlements.sum :sum
+      #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
+      @taxes = @current_vendor.taxes.existing
+      @cost_centers = @current_vendor.cost_centers.existing.active
+      @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
+      end
+
+      wants.json do
+        from = Time.parse(params[:day]).beginning_of_day
+        to = Time.parse(params[:day]).end_of_day
+	settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
+	items = Item.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
+	render :json => items
+      end
+    end
   end
 
   def open

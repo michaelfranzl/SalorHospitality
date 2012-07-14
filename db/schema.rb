@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713080920) do
+ActiveRecord::Schema.define(:version => 20120714072344) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -682,6 +682,22 @@ ActiveRecord::Schema.define(:version => 20120713080920) do
     t.integer "vendor_id"
     t.boolean "hidden"
     t.integer "company_id"
+  end
+
+  create_table "tax_items", :force => true do |t|
+    t.integer  "tax_id"
+    t.integer  "item_id"
+    t.integer  "booking_item_id"
+    t.integer  "order_id"
+    t.integer  "booking_id"
+    t.integer  "settlement_id"
+    t.float    "gro"
+    t.float    "net"
+    t.float    "tax"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "taxes", :force => true do |t|

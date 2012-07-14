@@ -17,6 +17,7 @@ class Order < ActiveRecord::Base
   belongs_to :booking
   has_many :items, :dependent => :destroy
   has_many :payment_method_items
+  has_many :tax_items
   has_one :order
 
   serialize :taxes
@@ -90,17 +91,19 @@ class Order < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = items.existing.sum(:sum)
-    self.refund_sum = items.existing.sum(:refund_sum) #frozen hash
+    self.sum = items.existing.sum(:sum).round(2)
+    self.refund_sum = items.existing.sum(:refund_sum).round(2) #frozen hash
     #self.tax_sum = items.existing.sum(:tax_sum)
     self.taxes = {}
     self.items.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:tax] += v[:tax]
-          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
-          self.taxes[k][:gro] += (v[:gro]).round(2)
-          self.taxes[k][:net] += (v[:net]).round(2)
+          self.taxes[k][:t] += v[:t].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
+          self.taxes[k][:t] =  self.taxes[k][:t].round(2)
+          self.taxes[k][:g] =  self.taxes[k][:g].round(2)
+          self.taxes[k][:n] =  self.taxes[k][:n].round(2)
         else
           self.taxes[k] = v
         end

@@ -38,6 +38,7 @@ class Vendor < ActiveRecord::Base
   has_many :payment_method_items
   has_many :surcharge_items
   has_many :tax_amounts
+  has_many :tax_items
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
@@ -174,7 +175,7 @@ class Vendor < ActiveRecord::Base
     categories = {}
     category_models.each do |c|
       cid = c.id
-      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
+      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid], :n => c.name }
     end
 
     payment_methods = {}
