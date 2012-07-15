@@ -1,23 +1,77 @@
-= BillGastro -- The innovative Point Of Sale Software for your Restaurant
+= SALOR Hospitality -- The innovative Point of Sale Solution serving the Hospitality Industry
 
-BillGastro is a fully fledged POS Point of Sales Software which helps you manage your daily business in your Restaurant, Bar or Shop. On the client side it is based on HTML, CSS and Javascript, on the server side it is based on Ruby on Rails and a SQL database. Because it is based on standard web technologies, it can immediately be used with a wide variety of cheap devices without much adaption: desktops, laptops, handhelds, tablet PC's and smartphones. Just fire up your browser and enter the BillGastro URL. BillGastro can distinguish between workstations and mobile devices and comes with two styles that accomodate large and small screen sizes. Further, BillGastro supports the ESCPOS language of invoice thermo printers.
+== History
 
-BillGastro features the newest web technologies. Being ported to Ruby 1.9, Rails 3, jQuery, a brand new fully AJAX-ified user interface, having caching buit in, being a lightweight of only 220k bytes of code it delivers optimal performance while having a rich, action-packed set of cool features, from drag & drop to dynamic searches to speaking 5 languages: English, German, French, Spanish and Turkish.
+This software product has been in continuous development and used in real-world settings since beginning of 2009. Red (E) Tools Ltd. (http://red-e.eu) is pleased to make it finally available publicly under the MIT License. This product was formerly known as BillGastro (http://billgastro.com), but after the addition of Hotel features in 2012, it was renamed to "SALOR Hospitality" to reflect it's closeness to the hospitality industry as a whole.
 
-BillGastro is real-world-tested in several gastronomy businesses -- high-stress and high-pressure environments -- and continues to be used live. It has eye-candy graphics and has been optimized for fast and efficient handling over a period of 3 years of feedback from waiters.
+== Overview
 
-Have a look at http://billgastro.com to see a full set of features, screenshots and services.
+"SALOR Hospitality" revolutionizes the day to day operation of the Hospitality Industry, bringing businesses large and small into the 21st century. We believe the time has come to integrate smart technology with customer service, taking both to a new level. "SALOR Hospitality" provides insight into every aspect of your daily operations and business across multiple metrics, allowing you to plan performance improvements.
+
+Cutting edge design:
+  Appealing design with clean lines and colour schemes for table and staff differentiation, product categories, etc. SalorHospitality looks great on any system!
+
+Flexibility:
+  Productive work relationships are the cornerstone of any successful business. SalorHospitality allows you to better coordinate work schedules and responsibilities between staff.
+
+Efficiency:
+  SalorHospitality helps you deliver prompt and friendly service to your customers. It is clear, easy and safe to use, optimising workflow from the back office to the kitchen to the restaurant floor.
+
+Extensibility:
+  As your business grows, SalorHospitality will grow with you. Its unique system design facilitates seamless enhancements to existing functionality.
+
+Versatility:
+  Adapt SalorHospitality to your business by reorganising the table polan, introducing new menus, adding new products and services.
+
+Accessibility:
+  Remote access gives you the freedom to run your business anytime from anywhere.
+
+Virtual Restaurant:
+  SalorHospitality can extend your restaurant or hotel to your customers' homes. They just take orders online or reserve tables, notifying staff who can prepare in advance.
+
+Multi-Functionality:
+  The software multifunctional, allowing you to monitor, export and print customized accounts, statistics and tax reports, update your wholesalers' price lists, easily split receipts, generate professional invoices, and much more.
+  
+International:
+  SALOR Hospitality was translated into 8 languages so far (2012): English, German, French, Spanish, Greek, Russian, Polish, Chinese. Additional languages are currently in the process of translation.
+
+Compatibility:
+  "SALOR Hospitality" will run in the browser of any computer and mobile device like Smartphones, so you needn't buy any special devices. However, Red (E) Ltd. can suggest and source hardware optimized for SalorHospitality -- touchscreens, thermal printers, handhelds or tablets.
+
+Many more interestig features:
+
+* Dynamic search function for product database
+* Tickets for kitchen and bar
+* Instant messaging between all staff
+* Immediate updates between all terminals in use
+* Enter special customer requests directly at the table -- also in handwriting!
+* Compatible with tax schemes in several countries
+* Multiple thermal printers
+* and much more
+
+
+== Philosophy of Technology
+
+The applications consists of a lean Ruby-on-Rails backend (Ruby 1.9.3 and Rails 3.2.6) with a MySQL database which is responsible for delivering and storing of data, whereas the the actual Point of Sale interface is entirely controlled by offline Javascript and an offline database. This concept unites the advantages of networking between many handhelds in one store (or many stores of a restaurant/hotel chain) with an amazing responsiveness of the user interface (UI). Because all Javascript and data are residing in the RAM of the browser, a steady connection to the server is not even required. The Javascript application communicates its data via small JSON objects, which only a few dozen bytes per transaction.
+
+Because SALOR Hospitality is based on standard web technologies, it can immediately be used with a wide variety of standard hardware or Operating Systems without hassle: Windows, Linux, OS X, PC's, MAC's, desktops, laptops, handhelds, tablets and smartphones. Just fire up your browser and enter the the URL of your SALOR server. SALOR can distinguish between large and small screens and delivers styles accordingly.
+
+== Maturity
+
+Many hospitality enterprises -- usually high-stress and high-pressure environments -- already enjoy the use of SALOR Hospitality. They have contributed feedback to make SALOR the excellent product it is today.
+
 
 == Try it live!
 
-You can try BillGastro immediately. Go to [demo.billgastro.com](http://demo.billgastro.com) and log yourself in with username "admin" and password "admin".
+You can try SALOR Hospitality immediately. Install Google Chrome, Chromium, Webkit (or any browser based on Webkit), browse to [sh.red-e.eu](http://sh.red-e.eu) and log in with one of the following passwords:
 
-== Usage Hints
+Quick usage hint for the online demo: After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled.
 
-After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled. The rest of the application is pretty self-explanatory.
+Warning: The database of the demo application refreshes itself frequently. Do not expect your added content to persist.
+
 
 == Contact
 
 Dipl.-Ing. (FH) Michael Franzl
-
-office@billgastro.com
+Red (E) Tools Ltd.
+office@red-e.eu
