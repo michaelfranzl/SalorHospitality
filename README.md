@@ -15,34 +15,34 @@ Overview
 
 "SALOR Hospitality" revolutionizes the day to day operation of the Hospitality Industry, bringing businesses large and small into the 21st century. We believe the time has come to integrate smart technology with customer service, taking both to a new level. "SALOR Hospitality" provides insight into every aspect of your daily operations and business across multiple metrics, allowing you to plan performance improvements.
 
-Cutting edge design:
+**Cutting edge design:**
   Appealing design with clean lines and colour schemes for table and staff differentiation, product categories, etc. SalorHospitality looks great on any system!
 
-Flexibility:
+**Flexibility:**
   Productive work relationships are the cornerstone of any successful business. SalorHospitality allows you to better coordinate work schedules and responsibilities between staff.
 
-Efficiency:
+**Efficiency:**
   SalorHospitality helps you deliver prompt and friendly service to your customers. It is clear, easy and safe to use, optimising workflow from the back office to the kitchen to the restaurant floor.
 
-Extensibility:
+**Extensibility:**
   As your business grows, SalorHospitality will grow with you. Its unique system design facilitates seamless enhancements to existing functionality.
 
-Versatility:
+**Versatility:**
   Adapt SalorHospitality to your business by reorganising the table polan, introducing new menus, adding new products and services.
 
-Accessibility:
+**Accessibility:**
   Remote access gives you the freedom to run your business anytime from anywhere.
 
-Virtual Restaurant:
+**Virtual Restaurant/Hotel:**
   SalorHospitality can extend your restaurant or hotel to your customers' homes. They just take orders online or reserve tables, notifying staff who can prepare in advance.
 
-Multi-Functionality:
+**Multi-Functionality:**
   The software multifunctional, allowing you to monitor, export and print customized accounts, statistics and tax reports, update your wholesalers' price lists, easily split receipts, generate professional invoices, and much more.
   
-International:
+**International:**
   SALOR Hospitality was translated into 8 languages so far (2012): English, German, French, Spanish, Greek, Russian, Polish, Chinese. Additional languages are currently in the process of translation.
 
-Compatibility:
+**Compatibility:**
   "SALOR Hospitality" will run in the browser of any computer and mobile device like Smartphones, so you needn't buy any special devices. However, Red (E) Ltd. can suggest and source hardware optimized for SalorHospitality -- touchscreens, thermal printers, handhelds or tablets.
 
 Many more interestig features:
@@ -93,6 +93,12 @@ You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Sa
 Hint: After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled.
 
 Warning: The database of the online demo resets itself frequently. Do not expect your added content to persist.
+
+
+Give back!
+----------
+
+We have spent hundreds, if not thousands of hours in making this product available to you, for free. If you feel that our product has benefited you, you can support further developments by donating to our Open Source projects: http://red-e.eu .
 
 
 Professional Support and Consulting
