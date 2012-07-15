@@ -96,7 +96,6 @@ class TablesController < ApplicationController
     @table.hidden = true
     @table.name = "DEL#{(rand(99999) + 10000).to_s[0..4]}#{@table.name}"
     @table.update_attribute :hidden, true
-    @table.update
     flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path
   end
