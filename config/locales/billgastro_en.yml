@@ -2,6 +2,12 @@
 en:
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
       order:
         change_given: Change
       customer:

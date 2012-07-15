@@ -67,6 +67,7 @@ class Image < ActiveRecord::Base
   def make_path(path)
     path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
     puts "XXXXXXXXXXXXXXXXXXXXXx makepath #{path} XXXXXXXXXXXXXXXXXXXX"
+    return path
   end
 
 	def original_path
@@ -107,6 +108,7 @@ class Image < ActiveRecord::Base
       file = File.open(original_path,'wb')
       file.puts @file_data.read
       file.close
+
       create_resized('large', LARGE_MAX_SIZE, original_path, large_path)
       create_resized('thumb', THUMB_MAX_SIZE, original_path, thumbnail_path)
 			@file_data = nil

@@ -2,6 +2,12 @@
 gn:
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Betrag
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
       order:
         change_given: Wechselgeld
       customer:

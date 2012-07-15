@@ -1057,6 +1057,7 @@ div.paper_invoice
   
   img
     :float right
+    :width 30%
 
   p.subtotal
     :float right
@@ -1064,11 +1065,12 @@ div.paper_invoice
     :font-weight bold
 
   div.vendor_details
-    :float left
+    :float right
+    :font-size 80%
 
   div.customer_details
-    :padding-top 100px
-    :float right
+    :padding 50px 0px 20px 0px
+    :float left
 
   table
     :width 100%
@@ -1097,12 +1099,16 @@ div.paper_invoice
       
   table.taxes,
   table.payment_methods
-    :width 40%
+    :width 50%
     :border 2px solid #7e868a
     :border-collapse collapse
     td, th
       :border 1px solid #7e868a
       :padding 3px
+      
+  div.invoice_footer
+    :font-size 80%
+
 
 
 div#room1_button

@@ -1,4 +1,4 @@
-h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header
+h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages
   :display none
   
 div#report_container
@@ -9,7 +9,7 @@ table
   :font-size small
 
 body
-  :font-family Trebuchet MS
+  :font-family Arial
 
 h1
   :font-size 110%
@@ -51,13 +51,20 @@ table.waiterpad
     :height 40pt
     :background-color lightgray
 
+   
+
 div.paper_invoice
+  h1
+    :font-size 200%
   img
     :width 30%
     :float right
-    
-
-div.paper_invoice
+  div.vendor_details
+    :float right
+  div.invoice_footer
+    :font-size 80%
+  div.customer_details
+    :font-size 80%
   table
     :display inline
     :border 0.9pt solid black
