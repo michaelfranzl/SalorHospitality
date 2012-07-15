@@ -427,25 +427,25 @@ cn:
     order:
       new: 新秩序
       sum: 總和
-    served_by: You were served by 你是由_服務
+    served_by: You were served by 你是由 _ 服務
     show:
       back: 回去
       count: 計算
-      list_of_taxes: List of taxes
-      next_invoice: Next invoice
-      previous_invoice: Previous invoice
-      print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      list_of_taxes: 稅收名單
+      next_invoice: 下一步發票
+      previous_invoice: 以前的發票
+      print_business_invoice: 打印商業發票
+      print_invoice: 打印發票
+      search_by_number: 按編號搜索
+      sum: 總和
+      unit_price: 單價
     storno_form:
-      do_separate_items: Separate this item
-      do_storno: Make storno
+      do_separate_items: 分開這個項目
+      do_storno: 使storno
   pages:
     edit:
-      edit_page: Edit Page
-      slideshow: Start Slideshow
+      edit_page: 編輯頁面
+      slideshow: 開始幻燈片
       view: View
     new:
       new_page: New Page
