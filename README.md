@@ -3,6 +3,8 @@ SALOR Hospitality
 
 The innovative Point of Sale Solution serving the Hospitality Industry
 
+This document was updated on: July 15 2012
+
 History
 -------
 
@@ -40,7 +42,7 @@ Overview
   The software multifunctional, allowing you to monitor, export and print customized accounts, statistics and tax reports, update your wholesalers' price lists, easily split receipts, generate professional invoices, and much more.
   
 **International:**
-  SALOR Hospitality was translated into 8 languages so far (2012): English, German, French, Spanish, Greek, Russian, Polish, Chinese. Additional languages are currently in the process of translation.
+  SALOR Hospitality has been translated into 8 languages so far (2012): English, German, French, Spanish, Greek, Russian, Polish, Chinese. Additional languages are currently in the process of translation.
 
 **Compatibility:**
   "SALOR Hospitality" will run in the browser of any computer and mobile device like Smartphones, so you needn't buy any special devices. However, Red (E) Ltd. can suggest and source hardware optimized for SalorHospitality -- touchscreens, thermal printers, handhelds or tablets.
@@ -60,7 +62,9 @@ Many more interestig features:
 Features
 --------
 
-For a demonstration of all features, watch the screencasts that are available on our website: http://red-e.eu
+For a quick demonstration of a small part of all features, watch the screencasts that are available on youtube:
+
+http://www.youtube.com/watch?v=SUfm17WYRdA (Restaurant only)
 
 Documentation
 -------------
@@ -88,7 +92,7 @@ SALOR Hospitality has true multi-store (and even multi-company) support built in
 Try it live!
 ------------
 
-You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [sh.red-e.eu](http://sh.red-e.eu) and log in with one of the following passwords:
+You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [sh.red-e.eu](http://sh.red-e.eu) (will be set up soon) and log in with one of the following passwords:
 
 Hint: After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled.
 
@@ -98,13 +102,13 @@ Warning: The database of the online demo resets itself frequently. Do not expect
 Give back!
 ----------
 
-We have spent hundreds, if not thousands of hours in making this product available to you, for free. If you feel that our product has benefited you, you can support further developments by donating to our Open Source projects: http://red-e.eu .
+We have spent hundreds, if not thousands of hours in making this product available to you, for free. If you feel that our product has benefited you, you can support further developments by donating to our Open Source projects: http://red-e.eu (donation buttons will be set up soon).
 
 
 Professional Support and Consulting
 -----------------------------------
 
-Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be! Contact us today! http://red-e.eu !
+Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be! Contact us today! http://red-e.eu ! (contact form will be set up soon)
 
 Contact
 -------
