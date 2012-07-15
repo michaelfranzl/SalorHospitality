@@ -65,7 +65,8 @@ class Image < ActiveRecord::Base
 	end
 
   def make_path(path)
-    File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    puts "XXXXXXXXXXXXXXXXXXXXXx makepath #{path} XXXXXXXXXXXXXXXXXXXX"
   end
 
 	def original_path
@@ -117,7 +118,7 @@ class Image < ActiveRecord::Base
 
 	def get_resize_ratio(pic, dimensions)
 		maxwidth = dimensions[0]
-		maxheight = dimensions[1]
+    maxheight = dimensions[1]
 		imgwidth = pic.columns
 		imgheight = pic.rows
 		if imgwidth < maxwidth and imgheight < maxheight then
