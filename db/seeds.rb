@@ -9,8 +9,15 @@
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
-countries = ['en','at','fr','es','pl','hu']
-languages = ['en','gn','fr','es','pl','hu']
+if ENV['SEED_MODE'] == 'full'
+  puts "SEED_MODE is 'full'"
+  countries = ['en','at','fr','es','pl','hu','ru','it','tr','cn','el']
+  languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
+elsif ENV['SEED_MODE'] == 'minimal'
+  puts "SEED_MODE is 'minimal'"
+  countries = ['en']
+  languages = ['en']
+end
 
 taxes = [20, 10, 0]
 cost_center_names = ['guest','restaurant','broken']
@@ -71,7 +78,7 @@ Article.delete_all
 Quantity.delete_all
 
 
-2.times do |c|
+1.times do |c|
   company = Company.new :name => "Company #{ c }"
   r = company.save
   puts "Company #{ c } created" if r == true
