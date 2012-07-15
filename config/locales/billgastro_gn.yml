@@ -515,6 +515,9 @@ gn:
       connect_vnc: Bildschirm teilen
       password: Passwort
       requesting_connection_status: Verbindungsstatus abfragen ...
+      internet_connection_info: Für die Fernwartung müssen Sie mit dem Internet verbunden sein. Wenn Sie oben das Red (E) Logo sehen, sind Sie mit dem Internet verbunden.
+      remote_support: Fernwartung
+      download_reports: Berichte speichern
     save: Speichern
     start_date: Von
     usb_device: Usb Stick
@@ -573,6 +576,8 @@ gn:
       item_scribe: Handschrift aktivieren
       assign_order_to_booking: Bestellungen einer Buchung zuweisen
       assign_tables: Tische an Benutzer zuweisen
+      remote_support: Fernwartung
+      download_database: Datenbank herunterladen
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
