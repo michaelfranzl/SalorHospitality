@@ -470,10 +470,10 @@ cn:
     start_date: 開始日期
     usb_device: USB記憶棒
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-  restaurant: Restaurant
+      backup_database: 備份數據庫
+      backup_logfile: 備份日誌
+      header: 報告
+  restaurant: 餐廳
   roles:
     new:
       assign_cost_center: Assign cost center
