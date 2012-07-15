@@ -446,22 +446,22 @@ cn:
     edit:
       edit_page: 編輯頁面
       slideshow: 開始幻燈片
-      view: View
+      view: 視圖
     new:
-      new_page: New Page
+      new_page: 新頁
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: 編輯我
+    error_during_evaluation: ! '錯誤: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
-  pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+      no_presentations_found: 這部分沒有定義模板.
+  pink: 粉紅色
+  please_enter_item_comment: 特殊要求
+  please_enter_item_price: 特價
   presentations:
     new:
-      edit_presentation: Edit Template
-      new_presentation: New Template
-  print: Print
+      edit_presentation: 編輯模板
+      new_presentation: 新模板
+  print: 打印
   print_and_finish: Finish and print
   printing_test: Printing test
   reports:
