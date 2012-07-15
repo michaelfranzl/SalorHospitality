@@ -425,9 +425,9 @@ cn:
       password: 密碼
       username: 用戶
     order:
-      new: New order
-      sum: SUM
-    served_by: You were served by
+      new: 新秩序
+      sum: 總和
+    served_by: You were served by 你是由_服務
     show:
       back: 回去
       count: 計算
