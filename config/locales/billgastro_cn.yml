@@ -462,11 +462,11 @@ cn:
       edit_presentation: 編輯模板
       new_presentation: 新模板
   print: 打印
-  print_and_finish: Finish and print
-  printing_test: Printing test
+  print_and_finish: 完成並打印
+  printing_test: 打印測試
   reports:
-    end_date: End Date
-    save: Save
+    end_date: 結束日期
+    save: 儲存
     start_date: 開始日期
     usb_device: USB記憶棒
     index:
