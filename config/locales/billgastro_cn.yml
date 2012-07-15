@@ -476,7 +476,7 @@ cn:
   restaurant: 餐廳
   roles:
     new:
-      assign_cost_center: Assign cost center
+      assign_cost_center: 分配成本中心
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: Change waiter
       counter_mode: Counter mode
