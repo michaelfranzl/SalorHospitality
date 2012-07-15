@@ -12,7 +12,7 @@ class TablesController < ApplicationController
   respond_to :html, :js
   
   def index
-    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing.order(:name)
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_with do |wants|
       wants.html
@@ -90,7 +90,10 @@ class TablesController < ApplicationController
   def destroy
     @table = get_model
     redirect_to tables_path and return unless @table
+    @table.hidden = true
+    @table.name = "DEL#{(rand(99999) + 10000).to_s[0..4]}#{@table.name}"
     @table.update_attribute :hidden, true
+    @table.update
     flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path
   end

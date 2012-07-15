@@ -8,6 +8,7 @@
   %a.iconbutton.next_button{ :href => booking_path(@next_booking), :title => (t '.next_invoice') }
 
 .paper_invoice
+  = image_tag @current_vendor.image 'invoice_logo'
   .vendor_details
     = raw Kramdown::Document.new(@booking.vendor.invoice_header_blurb).to_html if @booking.vendor.invoice_header_blurb
   .customer_details
@@ -29,24 +30,23 @@
   - @booking.orders.each do |order|
     %h3== #{ Order.model_name.human } #{ order.nr }
     = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
-
-  %p.subtotal= number_to_currency @booking.sum
   
   = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
 
-  %p= PaymentMethodItem.model_name.human
+  - if @current_user.role.permissions.include?('manage_payment_methods')
+    %p= PaymentMethodItem.model_name.human
 
-  %table.payment_methods
-    %tr
-      %th.left= PaymentMethodItem.model_name.human
-      %th.right= PaymentMethodItem.human_attribute_name :amount
-    - @booking.payment_method_items.each do |pm|
+    %table.payment_methods
       %tr
-        %td.left= pm.payment_method.name
-        %td.right= number_to_currency pm.amount
-    %tr
-      %td.left= Booking.human_attribute_name :change_given
-      %td.right= number_to_currency @booking.change_given
+        %th.left= PaymentMethodItem.model_name.human
+        %th.right= PaymentMethodItem.human_attribute_name :amount
+      - @booking.payment_method_items.each do |pm|
+        %tr
+          %td.left= pm.payment_method.name
+          %td.right= number_to_currency pm.amount
+      %tr
+        %td.left= Order.human_attribute_name :change_given
+        %td.right= number_to_currency @booking.change_given
 
   .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
 

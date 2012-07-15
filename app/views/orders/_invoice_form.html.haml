@@ -61,7 +61,7 @@
             - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
               = link_to raw(label), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
             - else
-              = raw(linktext)
+              = raw(label)
         %td.price
           = number_with_precision item.price, :precision => 2
           = raw optionsprices
@@ -75,8 +75,9 @@
         %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
-  %div{ :id => "payment_methods_container_#{oid}" }
+  - if @current_user.role.permissions.include? ('manage_payment_methods')
+    %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
+    %div{ :id => "payment_methods_container_#{oid}" }
 
 :javascript
   submit_json.payment_methods[#{ oid }] = {};

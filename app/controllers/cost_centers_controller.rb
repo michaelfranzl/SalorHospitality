@@ -52,5 +52,4 @@ class CostCentersController < ApplicationController
     flash[:notice] = t('cost_centers.destroy.success')
     redirect_to cost_centers_path
   end
-
 end

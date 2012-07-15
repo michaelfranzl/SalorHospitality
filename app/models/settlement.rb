@@ -12,10 +12,12 @@ class Settlement < ActiveRecord::Base
   belongs_to :user
   has_many :orders
   has_many :items
+  has_many :tax_items
 
   def finish
-    Order.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
-    Item.where(:vendor_id => self.vendor_id, :settlement_id => nil, :user_id => self.user_id).update_all(:settlement_id => self.id)
+    Order.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
+    Item.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id).update_all(:settlement_id => self.id)
+    TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
   end
 
   def revenue=(revenue)
@@ -32,6 +34,10 @@ class Settlement < ActiveRecord::Base
     printr.open
     printr.print vendor_printer.id, self.escpos
     printr.close
+  end
+
+  def calculate_totals
+    self.update_attribute :sum, self.orders.sum(:sum)
   end
 
   def escpos
@@ -78,9 +84,9 @@ class Settlement < ActiveRecord::Base
     string += list_of_costcenters
     initial_cash = self.initial_cash ? "\nStartbetrag:  EUR %9.2f\n" % [self.initial_cash] : ''
     revenue = self.revenue ? "Endbetrag:  EUR %9.2f\n" % [self.revenue] : ''
-    storno = "Storno:  EUR %9.2f\n" % [refund_total]
+    refund = "Refund:  EUR %9.2f\n" % [refund_total]
 
-    string += initial_cash + revenue + storno +
+    string += initial_cash + revenue + refund +
 
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
@@ -89,47 +95,47 @@ class Settlement < ActiveRecord::Base
     Printr.sanitize(string)
   end
 
-  def self.report(settlements,cost_center=nil)
-    report = {}
-    report[:tax_subtotal_gro] = {}
-    report[:tax_subtotal_tax] = {}
-    report[:tax_subtotal_net] = {}
-    report[:subtotal_gro] = 0
-    report[:subtotal_tax] = 0
-    report[:subtotal_net] = 0
-    vendor = settlements.first.vendor if settlements.first
-
-    vendor.taxes.existing.each do |t|
-      report[:tax_subtotal_gro][t.id] = 0
-      report[:tax_subtotal_tax][t.id] = 0
-      report[:tax_subtotal_net][t.id] = 0
-    end
-
-    settlements.each do |s|
-      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
-      vendor.taxes.existing.each do |t|
-        report[s.id][t.id] = {}
-        if cost_center
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
-        else
-          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
-        end
-        report[s.id][t.id][:gro] = items.sum(:sum)
-        report[s.id][t.id][:tax] = items.sum(:tax_sum)
-        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
-        report[s.id][:total_gro] += report[s.id][t.id][:gro]
-        report[s.id][:total_tax] += report[s.id][t.id][:tax]
-        report[s.id][:total_net] += report[s.id][t.id][:net]
-
-        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
-        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
-        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
-        report[:subtotal_gro] += report[s.id][t.id][:gro]
-        report[:subtotal_tax] += report[s.id][t.id][:tax]
-        report[:subtotal_net] += report[s.id][t.id][:net]
-      end
-    end
-    report
-  end
+#  def self.report(settlements,cost_center=nil)
+#    report = {}
+#    report[:tax_subtotal_gro] = {}
+#    report[:tax_subtotal_tax] = {}
+#    report[:tax_subtotal_net] = {}
+#    report[:subtotal_gro] = 0
+#    report[:subtotal_tax] = 0
+#    report[:subtotal_net] = 0
+#    vendor = settlements.first.vendor if settlements.first
+#
+#    vendor.taxes.existing.each do |t|
+#      report[:tax_subtotal_gro][t.id] = 0
+#      report[:tax_subtotal_tax][t.id] = 0
+#      report[:tax_subtotal_net][t.id] = 0
+#    end
+#
+#    settlements.each do |s|
+#      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
+#      vendor.taxes.existing.each do |t|
+#        report[s.id][t.id] = {}
+#        if cost_center
+#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
+#        else
+#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
+#        end
+#        report[s.id][t.id][:gro] = items.sum(:sum)
+#        report[s.id][t.id][:tax] = items.sum(:tax_sum)
+#        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
+#
+#        report[s.id][:total_gro] += report[s.id][t.id][:gro]
+#        report[s.id][:total_tax] += report[s.id][t.id][:tax]
+#        report[s.id][:total_net] += report[s.id][t.id][:net]
+#        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
+#        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
+#        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
+#        report[:subtotal_gro] += report[s.id][t.id][:gro]
+#        report[:subtotal_tax] += report[s.id][t.id][:tax]
+#        report[:subtotal_net] += report[s.id][t.id][:net]
+#      end
+#    end
+#    report
+#  end
 
 end

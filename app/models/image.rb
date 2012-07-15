@@ -34,7 +34,7 @@ class Image < ActiveRecord::Base
   end
 
 	def parse_filename(filename, model)
-		xt = filename.split('.').last.downcase.gsub(/(jpeg|bmp)/,'jpg')
+    xt = filename.split('.').last.downcase.gsub(/(jpeg|bmp)/,'jpg')
 		fn = filename.gsub('.'+xt,'').gsub(/[^[:alnum:]]/,'_').gsub(/\s+/,'_').gsub(/_{2,}/,'_').to(59)
 		write_attribute 'name', "#{fn}.#{xt}"
 		#write_attribute 'model', model
@@ -65,7 +65,9 @@ class Image < ActiveRecord::Base
 	end
 
   def make_path(path)
-    File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    puts "XXXXXXXXXXXXXXXXXXXXXx makepath #{path} XXXXXXXXXXXXXXXXXXXX"
+    return path
   end
 
 	def original_path
@@ -106,18 +108,19 @@ class Image < ActiveRecord::Base
       file = File.open(original_path,'wb')
       file.puts @file_data.read
       file.close
+
       create_resized('large', LARGE_MAX_SIZE, original_path, large_path)
       create_resized('thumb', THUMB_MAX_SIZE, original_path, thumbnail_path)
 			@file_data = nil
       # Delete temp folder
       FileUtils.rm_rf(get_path('original')) if File.exists?(get_path('original'))
-			Image.destroy_nulls
 		end
+    Image.destroy_nulls
 	end
 
 	def get_resize_ratio(pic, dimensions)
 		maxwidth = dimensions[0]
-		maxheight = dimensions[1]
+    maxheight = dimensions[1]
 		imgwidth = pic.columns
 		imgheight = pic.rows
 		if imgwidth < maxwidth and imgheight < maxheight then

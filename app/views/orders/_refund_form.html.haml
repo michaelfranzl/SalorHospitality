@@ -1,15 +1,15 @@
-%div.invoice{ :id => "invoice_#{storno_form.id}" }
+%div.invoice{ :id => "invoice_#{refund_form.id}" }
   - if local_variant?
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      = link_to('', "/orders/update_ajax?id=#{ storno_form.id }&printer=#{ p.id }&currentview=refund", :remote => true, :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" )
+      = link_to('', "/orders/update_ajax?id=#{ refund_form.id }&printer=#{ p.id }&currentview=refund", :remote => true, :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" )
   - else
-    = link_to '', "/orders/update_ajax?id=#{ storno_form.id }&printer=0&currentview=refund", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
+    = link_to '', "/orders/update_ajax?id=#{ refund_form.id }&printer=0&currentview=refund", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
 
-  = form_for storno_form, :as => :order, :url => "/orders/storno/#{storno_form.id}", :html => { :method => :put, :id => 'storno_form' }, :remote => true do |order_form|
-    %h3== #{ t(:invoice) } ##{storno_form.nr}, #{ storno_form.table.name }
-    %p= l storno_form.created_at, :format => :long
+  = form_for refund_form, :as => :order, :url => "/orders/refund/#{refund_form.id}", :html => { :method => :put, :id => 'refund_form' }, :remote => true do |order_form|
+    %h3== #{ t(:invoice) } ##{refund_form.nr}, #{ refund_form.table.name }
+    %p= l refund_form.created_at, :format => :long
     %table
       = order_form.fields_for :items, order_form.object.items.existing.positioned do |item_form|
         - item = item_form.object
@@ -21,14 +21,14 @@
 
         %tr{ :style => "background-color: #{color}" }
           %td.count.grey
-            - if not item.refunded and @current_user.role.permissions.include? 'make_storno'
+            - if not item.refunded and @current_user.role.permissions.include? 'refund'
               = link_to item.count, edit_item_path(item), :method => 'get', :remote => true, :title => t('.do_separate_items')
             - else
               = item.count
 
           %td.label{ :id => "item#{item.id}" }
-            - if not item.refunded and @current_user.role.permissions.include? 'make_storno'
-              = link_to item_path(item), :method => 'delete', :remote => true, :title => t('.do_storno') do
+            - if not item.refunded and @current_user.role.permissions.include? 'refund'
+              = link_to item_path(item), :method => 'delete', :remote => true, :title => t('.do_refund') do
                 = label
             - else
               = label
@@ -37,10 +37,10 @@
       %tr
         %td{ :colspan => '2'}= t :sum
         %td{ :style => 'text-align:right'}
-          %b= number_to_currency storno_form.sum
+          %b= number_to_currency refund_form.sum
 
-      - unless storno_form.refund_sum.zero?
+      - unless refund_form.refund_sum.zero?
         %tr
-          %td{ :colspan => '2'}= t :storno
+          %td{ :colspan => '2'}= t :refund
           %td{ :style => 'text-align:right'}
-            %b= number_to_currency storno_form.refund_sum
+            %b= number_to_currency refund_form.refund_sum

@@ -7,8 +7,6 @@
 
 class PartialsController < ApplicationController
 
-  before_filter :check_permissions
-  
   def destroy
     partial = get_model
     partial.delete
@@ -54,5 +52,4 @@ class PartialsController < ApplicationController
     end
     partial_html.force_encoding('UTF-8')
   end
-
 end

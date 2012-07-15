@@ -12,12 +12,13 @@
     %a{ :onclick => "update_order({id:#{@order.id},jsaction:'mark_print_pending',printer:#{p.id}});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
-  = link_to '', "/orders/storno/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:storno)
+  = link_to '', "/orders/refund/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:refund)
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
 .paper_invoice
   .vendor_details
+    = image_tag @current_vendor.image 'invoice_logo'
     = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
   .customer_details
     - if @order.customer
@@ -36,19 +37,19 @@
 
   = render :partial => '/shared/invoice_tax_list', :locals => { :model => @order }
 
-  %p= PaymentMethodItem.model_name.human
-
-  %table.payment_methods
-    %tr
-      %th.left_wide= PaymentMethodItem.model_name.human
-      %th.right_wide= PaymentMethodItem.human_attribute_name :amount
-    - @order.payment_method_items.each do |pm|
+  - if @current_user.role.permissions.include? 'manage_payment_methods'
+    %p= PaymentMethodItem.model_name.human
+    %table.payment_methods
       %tr
-        %td.left_wide= pm.payment_method.name
-        %td.right_wide= number_to_currency pm.amount
-    %tr
-      %td.left_wide= Order.human_attribute_name :change_given
-      %td.right_wide= number_to_currency @order.change_given
+        %th.left_wide= PaymentMethodItem.model_name.human
+        %th.right_wide= PaymentMethodItem.human_attribute_name :amount
+      - @order.payment_method_items.each do |pm|
+        %tr
+          %td.left_wide= pm.payment_method.name
+          %td.right_wide= number_to_currency pm.amount
+      %tr
+        %td.left_wide= Order.human_attribute_name :change_given
+        %td.right_wide= number_to_currency @order.change_given
 
   .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html if @order.vendor.invoice_footer_blurb
 

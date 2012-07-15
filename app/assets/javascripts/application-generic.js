@@ -11,7 +11,13 @@ var debugmessages = [];
 var _CTRL_DOWN = false;
 var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
 var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
+
 $(function(){
+  if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
+    $('#main').html('');
+    create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
+  }
+
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {
           //xhr.setRequestHeader("Accept", "text/javascript");
@@ -39,6 +45,8 @@ $(function(){
     }
   });
 })
+
+
 /*
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */

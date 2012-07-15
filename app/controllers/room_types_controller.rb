@@ -1,5 +1,6 @@
 class RoomTypesController < ApplicationController
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
@@ -38,4 +39,10 @@ class RoomTypesController < ApplicationController
     @room_type.update_attribute :hidden, true
     redirect_to room_types_path
   end
+
+  private
+
+    def check_permissions
+      redirect_to '/' if not @current_user.role.permissions.include? 'manage_hotel'
+    end
 end

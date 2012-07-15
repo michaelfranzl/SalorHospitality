@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
         orders.update_all :print_pending => false
         render :text => tickets + invoices
       }
-      wants.html
+      wants.html { redirect_to orders_path }
     end
   end
 

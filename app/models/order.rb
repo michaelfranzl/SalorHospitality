@@ -17,6 +17,7 @@ class Order < ActiveRecord::Base
   belongs_to :booking
   has_many :items, :dependent => :destroy
   has_many :payment_method_items
+  has_many :tax_items
   has_one :order
 
   serialize :taxes
@@ -42,6 +43,8 @@ class Order < ActiveRecord::Base
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
+      new_item.vendor = vendor
+      new_item.company = vendor.company
       new_item.cost_center = order.cost_center
       new_item.calculate_totals
       order.items << new_item
@@ -76,8 +79,12 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
-    self.table.user = user
-    self.table.save
+    if self.table
+      self.table.user = user
+      self.table.save
+    else
+      raise "Oops. Order didn't have a table associated to it. This shouldn't have happened."
+    end
     self.user = user
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
@@ -86,17 +93,19 @@ class Order < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = items.existing.sum(:sum)
-    self.refund_sum = items.existing.sum(:refund_sum)
+    self.sum = items.existing.sum(:sum).round(2)
+    self.refund_sum = items.existing.sum(:refund_sum).round(2) #frozen hash
     #self.tax_sum = items.existing.sum(:tax_sum)
     self.taxes = {}
     self.items.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:tax] += v[:tax]
-          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
-          self.taxes[k][:gro] += (v[:gro]).round(2)
-          self.taxes[k][:net] += (v[:net]).round(2)
+          self.taxes[k][:t] += v[:t].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
+          self.taxes[k][:t] =  self.taxes[k][:t].round(2)
+          self.taxes[k][:g] =  self.taxes[k][:g].round(2)
+          self.taxes[k][:n] =  self.taxes[k][:n].round(2)
         else
           self.taxes[k] = v
         end
@@ -110,10 +119,9 @@ class Order < ActiveRecord::Base
     self.vendor.save
     self.table.user = nil
     self.table.save
-    self.hidden = true
-    self.hidden_by = by_user_id
-    self.nr = nil
-    save
+    write_attribute :hidden, true
+    write_attribute :hidden_by, by_user_id
+    write_attribute :nr, nil
   end
 
   def hide_items
@@ -149,7 +157,6 @@ class Order < ActiveRecord::Base
     else
       write_attribute :table_id, target_table_id
     end
-    self.save
 
     # update table users and colors, this should go into table.rb
     origin_table.user = nil if origin_table.orders.existing.where( :finished => false ).empty?
@@ -355,10 +362,10 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.options.each do |o|
         next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
       end
 
-      label = item.quantity ? "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.article.name }"
+      label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
       list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:letter]}[0..1].join(''), label, item.price, item.count, item.sum]
       list_of_items += list_of_options
@@ -410,10 +417,10 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.options.each do |o|
         next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:storno) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
       end
 
-      label = item.quantity ? "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:storno) + ' ' if item.refunded }#{ item.article.name }"
+      label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
       list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:letter]}[0..1].join(''), label, item.price, item.count, item.sum]
       list_of_items += list_of_options

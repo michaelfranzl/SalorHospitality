@@ -66,7 +66,9 @@ class VendorsController < ApplicationController
     resources = @current_vendor.resources_cache
     permissions = {
       :delete_items => @current_user.role.permissions.include?("delete_items"),
-      :decrement_items => @current_user.role.permissions.include?("decrement_items")
+      :decrement_items => @current_user.role.permissions.include?("decrement_items"),
+      :item_scribe => @current_user.role.permissions.include?("item_scribe"),
+      :see_item_notifications => @current_user.role.permissions.include?("see_item_notifications")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

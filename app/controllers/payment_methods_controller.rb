@@ -7,7 +7,6 @@
 class PaymentMethodsController < ApplicationController
 
   before_filter :check_permissions
-
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
@@ -54,5 +53,4 @@ class PaymentMethodsController < ApplicationController
     flash[:notice] = t('payment_methods.destroy.success')
     redirect_to payment_methods_path
   end
-
 end

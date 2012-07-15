@@ -1,12 +1,15 @@
-h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock
+h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages
   :display none
+  
+div#report_container
+  :display inline
 
 table
   :border-spacing 0px
   :font-size small
 
 body
-  :font-family Trebuchet MS
+  :font-family Arial
 
 h1
   :font-size 110%
@@ -48,48 +51,66 @@ table.waiterpad
     :height 40pt
     :background-color lightgray
 
+   
 
-table.printed_invoice
-  :border 0.1pt solid black
-  td, th
+div.paper_invoice
+  h1
+    :font-size 200%
+  img
+    :width 30%
+    :float right
+  div.vendor_details
+    :float right
+  div.invoice_footer
+    :font-size 80%
+  div.customer_details
+    :font-size 80%
+  table
+    :display inline
+    :border 0.9pt solid black
+    :margin 5pt
+    :font-size 70%
+    :width 100%
+    td, th
+      :border 0.9pt solid black
+      :padding 3pt
+    .one
+      :width 30pt
+      :text-align center
+    .two
+      :width 200pt
+      :text-align left
+    .three
+      :width 80pt
+      :text-align right
+    .four
+      :width 30pt
+      :text-align center
+    .five
+      :width 80pt
+      :text-align right
+      
+  table.printed_taxes
+    :font-size 55%
     :border 0.1pt solid black
-    :padding 3pt
-  .one
-    :width 30pt
-    :text-align center
-  .two
-    :width 200pt
-    :text-align left
-  .three
-    :width 80pt
-    :text-align right
-  .four
-    :width 30pt
-    :text-align center
-  .five
-    :width 80pt
-    :text-align right
-    
-table.printed_taxes
-  :border 0.1pt solid black
-  td, th
-    :border 0.1pt solid black
-    :padding 3pt
-  .one
-    :width 30pt
-    :text-align center
-  .two
-    :width 30pt
-    :text-align left
-  .three
-    :width 30pt
-    :text-align right
-  .four
-    :width 30pt
-    :text-align center
-  .five
-    :width 30pt
-    :text-align right
+    td, th
+      :border 0.1pt solid black
+      :padding 3pt
+    .one
+      :width 30pt
+      :text-align center
+    .two
+      :width 30pt
+      :text-align left
+    .three
+      :width 30pt
+      :text-align right
+    .four
+      :width 30pt
+      :text-align center
+    .five
+      :width 30pt
+      :text-align right
 
 div.articles_listall
   :margin 10px

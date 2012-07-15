@@ -29,14 +29,14 @@ function display_price_popup_of_item(d) {
 function add_comment_to_item(d,comment) {
   d = clone_item(d);
 	$('#comment_' + d).html(comment);
-  set_json(d,'o',comment);
+  set_json('order', d,'o',comment);
   $('#tablerow_' + d + '_label').addClass('updated');
   $('#item_configuration_' + d).hide();
 }
 
 function add_price_to_item(d,price) {
   d = clone_item(d);
-  set_json(d,'p',price);
+  set_json('order', d,'p',price);
 	$('#price_' + d).html(price);
 	calculate_sum();
   $('#tablerow_' + d + '_label').addClass('updated');

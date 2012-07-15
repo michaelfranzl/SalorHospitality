@@ -2,6 +2,14 @@
 gn:
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Betrag
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Wechselgeld
       customer:
         first_name: Vorname
         last_name: Nachname
@@ -157,6 +165,10 @@ gn:
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
+        rlogo_header: Beleg-Logo Kopf
+        rlogo_footer: Beleg-Logo Fuß
+        logo: Bildschirm-Logo
+        invoice_logo: Rechnungslogo
       vendor_printer:
         copies: Kopien
         hidden: Löschen
@@ -248,8 +260,8 @@ gn:
         one: Saison
         other: Saisonen
       settlement:
-        one: Abrechnung
-        other: Übersicht
+        one: Losungen
+        other: Abrechnungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
@@ -420,6 +432,10 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Einzelpreis
+      count: Menge
+      sum: Summe
     functions_header_index:
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
@@ -462,9 +478,9 @@ gn:
       search_by_number: Suche nach Bestellnummer
       sum: Summe
       unit_price: Stück
-    storno_form:
+    refund_form:
       do_separate_items: Posten separieren
-      do_storno: Storno durchführen
+      do_refund: Storno durchführen
   pages:
     edit:
       edit_page: Karte bearbeiten
@@ -529,13 +545,20 @@ gn:
       finish_all_settlements: Alle Abrechnungen abschließen
       finish_orders: Bestellungen abschließen
       finish_own_settlement: Eigene Abrechnung abschließen
-      make_storno: Artikel stornieren
-      manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
+      refund: Artikel stornieren
+      manage_articles: Artikel verwalten
+      manage_categories: Kategorien verwalten
+      manage_options: Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_customers: Kundendatenbank verwalten
       manage_pages: Slideshow verwalten
-      manage_settings: Grundeinstellungen vornehmen
+      manage_roles: Rollen verwalten
+      manage_taxes: Steuerklassen verwalten
+      manage_cost_centers: Kostenstellen verwalten
+      manage_payment_methods: Zahlungsmethoden verwalten
       manage_users: Benutzer verwalten
+      manage_tables: Tische verwalten
+      manage_vendors: Betriebe verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -545,7 +568,11 @@ gn:
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
-      view_statistics: Statistiken ansehen
+      manage_hotel: Hotel managen
+      manage_statistics: Statistiken ansehen
+      item_scribe: Handschrift aktivieren
+      assign_order_to_booking: Bestellungen einer Buchung zuweisen
+      assign_tables: Tische an Benutzer zuweisen
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
@@ -571,14 +598,13 @@ gn:
       edit_season: Saison bearbeiten
       new_season: Neue Saison
   send_and_go_back: Senden und zurück
-  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf Tisch %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
     oder die Funkverbindung ist abgerissen.
   sessions:
     browser_warning:
       continue: weiter
-      warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium
-        als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
+      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
@@ -613,7 +639,7 @@ gn:
     new:
       edit_stock: Lagerartikel bearbeiten
       new_stock: Neuer Lagerartikel
-  storno: Storno
+  refund: Storno
   sum: Summe
   surcharges:
     new:
@@ -643,6 +669,7 @@ gn:
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
+      select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
     cancel: Abbrechen
     common_surcharges: Aufschläge
@@ -665,3 +692,4 @@ gn:
   winered: Weinrot
   wrong_password: Falsche Logindaten.
   yellow: Gelb
+  invalid_date: Ungültiges Datum

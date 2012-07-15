@@ -15,12 +15,18 @@ class ApplicationController < ActionController::Base
   private
 
     def assign_from_to(p)
-      f = Date.civil( p[:from][:year ].to_i,
-                      p[:from][:month].to_i,
-                      p[:from][:day  ].to_i) if p[:from]
-      t = Date.civil( p[:to  ][:year ].to_i,
-                      p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
+      begin
+        f = Date.civil( p[:from][:year ].to_i,
+                        p[:from][:month].to_i,
+                        p[:from][:day  ].to_i) if p[:from]
+        t = Date.civil( p[:to  ][:year ].to_i,
+                        p[:to  ][:month].to_i,
+                        p[:to  ][:day  ].to_i) + 1.day if p[:to]
+      rescue
+        flash[:error] = t(:invalid_date)
+        f = Time.now.beginning_of_day
+        t = Time.now.end_of_day
+      end
       return f, t
     end
 
@@ -70,7 +76,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_permissions
-      redirect_to '/' unless @current_user.role.permissions.include? "manage_settings" #{ controller_name }"
+      redirect_to '/' and return unless @current_user.role.permissions.include? "manage_#{ controller_name }"
     end
 
     def workstation?
@@ -79,10 +85,6 @@ class ApplicationController < ActionController::Base
 
     def mobile?
       not workstation?
-    end
-
-    def hotel_mode?
-      SalorGastro::Application::HOTEL_MODE
     end
 
     def mobile_special?

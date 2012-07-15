@@ -16,6 +16,7 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :settlement
   belongs_to :cost_center
+  has_many :tax_items
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
@@ -95,13 +96,19 @@ class Item < ActiveRecord::Base
       self.sum = 0
       self.taxes = {}
     else
-      self.sum = full_price
+      self.sum = full_price.round(2)
       self.taxes = {}
       self.article.taxes.each do |tax|
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
-        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+        self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
+        tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+        if tax_item
+          tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
+        else
+          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum
+        end
       end
     end
     save
@@ -240,5 +247,5 @@ class Item < ActiveRecord::Base
     end
     split_order.calculate_totals
   end
-
+  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622112117) do
+ActiveRecord::Schema.define(:version => 20120714072344) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer  "imageable_id"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.string   "image_type"
   end
 
   add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
@@ -531,6 +532,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer  "vendor_id"
     t.boolean  "active",                      :default => true
     t.boolean  "hidden"
+    t.integer  "weight"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -593,6 +595,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.float    "initial_cash"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.float    "sum"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -658,6 +661,7 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer  "active_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",         :default => true
+    t.integer  "position"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -678,6 +682,22 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.integer "vendor_id"
     t.boolean "hidden"
     t.integer "company_id"
+  end
+
+  create_table "tax_items", :force => true do |t|
+    t.integer  "tax_id"
+    t.integer  "item_id"
+    t.integer  "booking_item_id"
+    t.integer  "order_id"
+    t.integer  "booking_id"
+    t.integer  "settlement_id"
+    t.float    "gro"
+    t.float    "net"
+    t.float    "tax"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "taxes", :force => true do |t|
@@ -761,12 +781,12 @@ ActiveRecord::Schema.define(:version => 20120622112117) do
     t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
     t.integer  "largest_booking_number",                        :default => 0
     t.boolean  "use_booking_numbers",                           :default => true
-    t.integer  "max_tables"
-    t.integer  "max_rooms"
-    t.integer  "max_articles"
-    t.integer  "max_options"
-    t.integer  "max_users"
-    t.integer  "max_categories"
+    t.integer  "max_tables",                                    :default => 10
+    t.integer  "max_rooms",                                     :default => 5
+    t.integer  "max_articles",                                  :default => 50
+    t.integer  "max_options",                                   :default => 5
+    t.integer  "max_users",                                     :default => 3
+    t.integer  "max_categories",                                :default => 6
   end
 
 end

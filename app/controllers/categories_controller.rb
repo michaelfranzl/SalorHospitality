@@ -7,6 +7,7 @@
 
 class CategoriesController < ApplicationController
 
+  before_filter :check_permissions
   after_filter :update_vendor_cache, :only => ['create','update','destroy', 'sort']
   
   def index

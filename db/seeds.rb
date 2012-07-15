@@ -11,15 +11,36 @@ category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
 user_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b','#BBBBBB','#000000','#d9d43d','#801212']
 vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other']
+role_names = {
+  'superuser' =>
+    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','view_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug','manage_hotel','manage_roles','item_scribe','assign_tables']},
+  'owner' =>
+    {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
+  'host' =>
+    {:weight => 2, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables'] },
+  'chief_waiter' =>
+    {:weight => 3, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_tables'] },
+  'waiter' =>
+    {:weight => 4, :permissions => ['take_orders','decrement_items','finish_orders','split_items','move_order']},
+  'auxiliary_waiter' =>
+    {:weight => 5, :permissions => ['take_orders','finish_orders']},
+  'terminal' =>
+    {:weight => 6, :permissions => ['take_orders'] },
+  'customer' =>
+    {:weight => 10, :permissions => [] }
+}
+
 user_array = {
-  'Superuser' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings','delete_items','assign_order_to_booking','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug', 'cancel_all_items_in_active_order'],
-  'Owner' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
-  'Host' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options'],
-  'Chief Waiter' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','finish_own_settlement'],
-  'Waiter' => ['take_orders','decrement_items','finish_orders','split_items','finish_own_settlement'],
-  'Auxiliary Waiter' => ['take_orders','decrement_items','finish_orders'],
-  'Restaurant' => ['take_orders']
+  'Superuser' => {:role => 'superuser'},
+  'Owner' => {:role => 'owner'},
+  'Host' => {:role => 'host'},
+  'Chief Waiter' => {:role => 'chief_waiter'},
+  'Waiter' => {:role => 'waiter'},
+  'Auxiliary Waiter' => {:role => 'auxiliary_waiter'},
+  'Terminal' => {:role => 'terminal' },
+  'Customer' => {:role => 'customer' }
   }
+
 radio_surcharge_names = ['Breakfast','Dinner','Full']
 checkbox_surcharge_names = ['Additional Bed']
 common_surcharge_names = ['1 Night', '2 Night']
@@ -128,8 +149,8 @@ Quantity.delete_all
     end
 
     role_objects = Array.new
-    user_array.to_a.size.times do |i|
-      role = Role.new :name => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :permissions => user_array.to_a[i][1]
+    role_names.to_a.size.times do |i|
+      role = Role.new :name => role_names.to_a[i][0], :permissions => role_names.to_a[i][1][:permissions], :weight => role_names.to_a[i][1][:weight]
       role.company = company
       role.vendor = vendor
       r = role.save

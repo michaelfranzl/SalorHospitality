@@ -10,6 +10,8 @@
 = form_for @role do |role_form|
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   = role_form.text_field :name, :size => '20'
+  %br
+  = role_form.text_field :weight, :size => '5'
   %span#role_name_display_keyboard.display_keyboard
   %br
   %br
@@ -36,8 +38,8 @@
   %input#permissions_move_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'move_tables', :checked => role_form.object.permissions.include?('move_tables') }
   %label{ :for => 'permissions_move_tables' }= t '.move_tables'
   %br
-  %input#permissions_make_storno{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'make_storno', :checked => role_form.object.permissions.include?('make_storno') }
-  %label{ :for => 'permissions_make_storno' }= t '.make_storno'
+  %input#permissions_refund{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'refund', :checked => role_form.object.permissions.include?('refund') }
+  %label{ :for => 'permissions_refund' }= t '.refund'
   %br
   %input#permissions_assign_cost_center{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_cost_center', :checked => role_form.object.permissions.include?('assign_cost_center') }
   %label{ :for => 'permissions_assign_cost_center' }= t '.assign_cost_center'
@@ -48,11 +50,14 @@
   %input#permissions_move_order{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'move_order', :checked => role_form.object.permissions.include?('move_order') }
   %label{ :for => 'permissions_move_order' }= t '.move_order'
   %br
-  %input#permissions_change_waiter{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'change_waiter', :checked => role_form.object.permissions.include?('change_waiter') }
-  %label{ :for => 'permissions_change_waiter' }= t '.change_waiter'
+  %input#permissions_manage_articles{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_articles', :checked => role_form.object.permissions.include?('manage_articles') }
+  %label{ :for => 'permissions_manage_articles' }= t '.manage_articles'
   %br
-  %input#permissions_manage_articles_categories_options{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_articles_categories_options', :checked => role_form.object.permissions.include?('manage_articles_categories_options') }
-  %label{ :for => 'permissions_manage_articles_categories_options' }= t '.manage_articles_categories_options'
+  %input#permissions_manage_categories{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_categories', :checked => role_form.object.permissions.include?('manage_categories') }
+  %label{ :for => 'permissions_manage_categories' }= t '.manage_categories'
+  %br
+  %input#permissions_manage_options{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_options', :checked => role_form.object.permissions.include?('manage_options') }
+  %label{ :for => 'permissions_manage_options' }= t '.manage_options'
   %br
   %input#permissions_finish_all_settlements{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'finish_all_settlements', :checked => role_form.object.permissions.include?('finish_all_settlements') }
   %label{ :for => 'permissions_finish_all_settlements' }= t '.finish_all_settlements'
@@ -66,14 +71,27 @@
   %input#permissions_manage_business_invoice{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_business_invoice', :checked => role_form.object.permissions.include?('manage_business_invoice') }
   %label{ :for => 'permissions_manage_business_invoice' }= t '.manage_business_invoice'
   %br
-  %input#permissions_view_statistics{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'view_statistics', :checked => role_form.object.permissions.include?('view_statistics') }
-  %label{ :for => 'permissions_view_statistics' }= t '.view_statistics'
+  %input#permissions_manage_statistics{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_statistics', :checked => role_form.object.permissions.include?('manage_statistics') }
+  %label{ :for => 'permissions_manage_statistics' }= t '.manage_statistics'
   %br
   %input#permissions_manage_users{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_users', :checked => role_form.object.permissions.include?('manage_users') }
   %label{ :for => 'permissions_manage_users' }= t '.manage_users'
   %br
-  %input#permissions_manage_settings{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_settings', :checked => role_form.object.permissions.include?('manage_settings') }
-  %label{ :for => 'permissions_manage_settings' }= t '.manage_settings'
+
+  %input#permissions_manage_taxes{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_taxes', :checked => role_form.object.permissions.include?('manage_taxes') }
+  %label{ :for => 'permissions_manage_taxes' }= t '.manage_taxes'
+  %br
+  %input#permissions_manage_cost_centers{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_cost_centers', :checked => role_form.object.permissions.include?('manage_cost_centers') }
+  %label{ :for => 'permissions_manage_cost_centers' }= t '.manage_cost_centers'
+  %br
+  %input#permissions_manage_payment_methods{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_payment_methods', :checked => role_form.object.permissions.include?('manage_payment_methods') }
+  %label{ :for => 'permissions_manage_payment_methods' }= t '.manage_payment_methods'
+  %br
+  %input#permissions_manage_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_tables', :checked => role_form.object.permissions.include?('manage_tables') }
+  %label{ :for => 'permissions_manage_tables' }= t '.manage_tables'
+  %br
+  %input#permissions_manage_vendors{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_vendors', :checked => role_form.object.permissions.include?('manage_vendors') }
+  %label{ :for => 'permissions_manage_vendors' }= t '.manage_vendors'
   %br
   %input#permissions_counter_mode{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'counter_mode', :checked => role_form.object.permissions.include?('counter_mode') }
   %label{ :for => 'permissions_counter_mode' }= t '.counter_mode'
@@ -89,6 +107,18 @@
   %br
   %input#permissions_see_debug{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_debug', :checked => role_form.object.permissions.include?('see_debug') }
   %label{ :for => 'permissions_see_debug' }= t '.see_debug'
+  %br
+  %input#permissions_manage_hotel{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_hotel', :checked => role_form.object.permissions.include?('manage_hotel') }
+  %label{ :for => 'permissions_manage_hotel' }= t '.manage_hotel'
+  %br
+  %input#permissions_manage_roles{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_roles', :checked => role_form.object.permissions.include?('manage_roles') }
+  %label{ :for => 'permissions_manage_roles' }= t '.manage_roles'
+  %br
+  %input#permissions_item_scribe{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'item_scribe', :checked => role_form.object.permissions.include?('item_scribe') }
+  %label{ :for => 'permissions_item_scribe' }= t '.item_scribe'
+  %br
+  %input#permissions_assign_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_tables', :checked => role_form.object.permissions.include?('assign_tables') }
+  %label{ :for => 'permissions_assign_tables' }= t '.assign_tables'
 
 :javascript
   $('#role_name').keyboard( {openOn: '' } );

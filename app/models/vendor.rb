@@ -38,6 +38,7 @@ class Vendor < ActiveRecord::Base
   has_many :payment_method_items
   has_many :surcharge_items
   has_many :tax_amounts
+  has_many :tax_items
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
@@ -52,8 +53,8 @@ class Vendor < ActiveRecord::Base
     self.update_attribute :hidden, true
   end
 
-  def image
-    return self.images.first.image unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
+  def logo_image
+    return self.image('logo') unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
     "/assets/client_logo.png"
   end
 
@@ -174,7 +175,7 @@ class Vendor < ActiveRecord::Base
     categories = {}
     category_models.each do |c|
       cid = c.id
-      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid] }
+      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid], :n => c.name }
     end
 
     payment_methods = {}
@@ -209,7 +210,6 @@ class Vendor < ActiveRecord::Base
 
     resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
 
-    #resources.merge! SalorApi.run('models.vendor.resources', {:vendor => self})
     return resources.to_json
   end
 
