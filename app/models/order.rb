@@ -306,7 +306,10 @@ class Order < ActiveRecord::Base
 
     separate_receipt_contents = []
     normal_receipt_content = ''
-    self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id).each do |c|
+      
+    selected_categories = printer_id.nil? ? self.vendor.categories.existing.active : self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id)
+    
+    selected_categories.each do |c|
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
@@ -350,47 +353,6 @@ class Order < ActiveRecord::Base
     return logo + output
   end
 
-
-  def escpos_interim_receipt
-    header = ''
-    header +=
-    "\ea\x00" +  # align left
-    "\e!\x01" +  # Font B
-    I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
-
-    header += "\n\n" +
-    "\e!\x00" +  # Font A
-    "                  Artikel  EP     Stk   GP\n" +
-    "------------------------------------------\n"
-
-    list_of_items = ''
-    self.items.existing.positioned.each do |item|
-      next if item.count == 0
-      list_of_options = ''
-      item.options.each do |o|
-        next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
-      end
-
-      label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
-
-      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:letter]}[0..1].join(''), label, item.price, item.count, item.sum]
-      list_of_items += list_of_options
-    end
-
-    sum_format =
-    "                               -----------\r\n" +
-    "\e!\x18" + # double tall, bold
-    "\ea\x02"   # align right
-
-    sum = "SUMME:   EUR %.2f" % self.sum
-
-    duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
-
-    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
-
-    output = Printr.sanitize(header + list_of_items + sum_format + sum + refund + footer) + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
-  end
 
   def escpos_receipt
     vendor = self.vendor

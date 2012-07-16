@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716101629) do
+ActiveRecord::Schema.define(:version => 20120716112757) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -793,6 +793,7 @@ ActiveRecord::Schema.define(:version => 20120716101629) do
     t.integer  "max_options",                                   :default => 5
     t.integer  "max_users",                                     :default => 3
     t.integer  "max_categories",                                :default => 6
+    t.boolean  "print_data_available"
   end
 
 end

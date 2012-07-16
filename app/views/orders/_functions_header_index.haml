@@ -7,7 +7,7 @@
   = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
 
 - if @current_company.mode == 'saas'
-  %a.iconbutton.print1_button{ :onclick => "window.location.href = '/items.bill';", :title => t('.print_now') }
+  %a.iconbutton.print1_button{ :onclick => "window.location.href = '/vendors/print.bill';", :title => t('.print_now') }
 
 - if permit('see_item_notifications')
   %a.iconbutton.items_notifications_button{ :onclick => '$("#items_notifications").slideDown();', :title => t('.items_notifications') }

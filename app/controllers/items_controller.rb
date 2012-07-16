@@ -10,20 +10,6 @@
 
 class ItemsController < ApplicationController
 
-  # Return a file that contains all not yet printed Items and all Orders that are marked for printing
-  def index
-    respond_to do |wants|
-      wants.bill {
-        orders = @current_vendor.orders.existing.where(:print_pending => true)
-        tickets = orders.collect{ |o| o.escpos_tickets }.join
-        invoices = orders.collect{ |o| o.escpos_invoice[params[:printer_id]] }.join
-        orders.update_all :print_pending => false
-        render :text => tickets + invoices
-      }
-      wants.html { redirect_to orders_path }
-    end
-  end
-
   def show
     @item = get_model
     respond_to do |wants|

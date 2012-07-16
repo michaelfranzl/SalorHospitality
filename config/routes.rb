@@ -93,6 +93,7 @@ SalorGastro::Application.routes.draw do
   match 'settlements/print/:id' => 'settlements#print'
   match 'room_prices/generate' => 'room_prices#generate'
   match 'tables/:id/update_coordinates' => 'tables#update_coordinates'
+  match 'vendors/print' => 'vendors#print'
 
 
   if Rails.env.test?

@@ -9,7 +9,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 var tableupdates = -1;
-var automatic_printing = false;
 var debugmessages = [];
 var _CTRL_DOWN = false;
 var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
@@ -28,11 +27,23 @@ $(function(){
       }
   })
 
+  
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
-      if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
-    }, 10000);
+      if ( automatic_printing == true ) {
+        $.ajax({
+          url: '/vendors',
+          dataType: 'json',
+          success: function(data) {
+            if (data.print_data_available == true) {
+              window.location.href = '/vendors/print.bill';
+            }
+          }
+        });
+      }
+    }, 20000);
   }
+  
   $(window).keydown(function(e){
     for (var key in _key_codes) {
       if (e.keyCode == _key_codes[key]) {
@@ -40,6 +51,7 @@ $(function(){
       }
     }
   });
+  
   $(window).keyup(function(e){
     for (var key in _key_codes) {
       if (e.keyCode == _key_codes[key]) {

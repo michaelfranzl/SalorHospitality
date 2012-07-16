@@ -107,6 +107,7 @@ class OrdersController < ApplicationController
             create_payment_method_items @order
             @order.pay
             @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
             redirect_from_invoice and return
           when 'pay_and_no_print'
             create_payment_method_items @order
@@ -162,8 +163,8 @@ class OrdersController < ApplicationController
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             if @current_company.mode == 'local' and not @order.hidden
               @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
-            elsif saas_variant? and not @order.hidden
-              @order.print(['receipt'])
+            #elsif saas_variant? and not @order.hidden
+            #  @order.print(['receipt'])
             end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)

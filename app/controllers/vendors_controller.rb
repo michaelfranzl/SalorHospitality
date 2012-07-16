@@ -13,7 +13,27 @@ class VendorsController < ApplicationController
   before_filter :check_permissions, :except => [:render_resources]
 
   def index
-    @vendors = @current_company.vendors.existing
+    respond_to do |wants|
+      wants.json {
+        status = @current_vendor.print_data_available == true ? 'true' : 'false'
+        render :json => "{\"print_data_available\":#{status}}"
+        return
+      }
+      wants.html {
+        @vendors = @current_company.vendors.existing
+        return
+      }
+    end
+  end
+  
+  def print
+    # Return a file that contains all not yet printed Items and all Orders that are marked for printing
+    orders = @current_vendor.orders.existing.where(:print_pending => true)
+    tickets = orders.collect{ |o| o.escpos_tickets(nil) }.join
+    invoices = orders.collect{ |o| o.escpos_receipt }.join
+    orders.update_all :print_pending => false
+    @current_vendor.update_attribute :print_data_available, false
+    send_data tickets + invoices
   end
 
   # Switches the current vendor and redirects to somewhere else
