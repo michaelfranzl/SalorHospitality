@@ -161,7 +161,8 @@ class Order < ActiveRecord::Base
       target_order.calculate_totals
       target_order.regroup
     else
-      write_attribute :table_id, target_table_id
+      self.table_id = target_table_id
+      self.save
     end
 
     # update table users and colors, this should go into table.rb
