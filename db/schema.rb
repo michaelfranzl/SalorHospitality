@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714072344) do
+ActiveRecord::Schema.define(:version => 20120716101629) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -123,7 +123,14 @@ ActiveRecord::Schema.define(:version => 20120714072344) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.string  "mode",              :default => "local"
+    t.string  "subdomain"
+    t.integer "update_tables",     :default => 20
+    t.integer "update_item_lists", :default => 61
+    t.integer "update_resources",  :default => 182
+    t.boolean "hidden",            :default => false
+    t.boolean "active",            :default => true
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -729,6 +736,7 @@ ActiveRecord::Schema.define(:version => 20120714072344) do
     t.integer  "screenlock_timeout",        :default => -1
     t.boolean  "automatic_printing"
     t.boolean  "onscreen_keyboard_enabled", :default => true
+    t.string   "salt"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
@@ -753,14 +761,12 @@ ActiveRecord::Schema.define(:version => 20120714072344) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name",                                          :default => "Bill Gastro"
-    t.string   "subdomain",                                     :default => "demo"
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
     t.integer  "largest_order_number",                          :default => 0
     t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                   :default => 0
-    t.string   "mode"
     t.text     "resources_cache",           :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"

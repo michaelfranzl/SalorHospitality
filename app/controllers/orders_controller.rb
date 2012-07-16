@@ -160,7 +160,7 @@ class OrdersController < ApplicationController
             @order.regroup
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            if local_variant? and not @order.hidden
+            if @current_company.mode == 'local' and not @order.hidden
               @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
             elsif saas_variant? and not @order.hidden
               @order.print(['receipt'])

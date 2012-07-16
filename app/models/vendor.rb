@@ -88,7 +88,7 @@ class Vendor < ActiveRecord::Base
       self.update_attribute "largest_#{model_name_singular}_number", nr
     else
       #puts '# find Order with largest nr attribute from database. this should happen only once when a new db'
-      last_model = self.send(model_name_plural).existing.where('nr is not NULL').last
+      last_model = self.send(model_name_plural).existing.where('nr is not NULL OR nr <> 0').last
       nr = last_model ? last_model.nr + 1 : 1
       self.update_attribute "largest_#{model_name_singular}_number", nr
     end

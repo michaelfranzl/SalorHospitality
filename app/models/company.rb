@@ -46,4 +46,7 @@ class Company < ActiveRecord::Base
   has_many :surcharge_items
   has_many :tax_amounts
   has_many :tax_items
+  
+  validates_uniqueness_of :subdomain
+  validates_presence_of :name
 end

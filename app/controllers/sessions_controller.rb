@@ -18,21 +18,27 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @current_user = User.where(:password => params[:password], :active => true, :hidden => false).first
-    if @current_user
-      # set these variables for the first time. they will be re-set on each new request by ApplicationController::fetch_logged_in_user
-      session[:user_id] = @current_user.id
-      @current_company = @current_user.company
-      session[:company_id] = @current_company.id
-      session[:vendor_id] = @current_user.vendors.existing.first.id unless session[:vendor_id]
+    subdomain = request.subdomain
+    if subdomain.empty?
+      user = User.where(:password => params[:password], :active => true, :hidden => false).first
+    else
+      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false).first
+      user = User.where(:password => params[:password], :company_id => company.id, :active => true, :hidden => false).first
+    end
+    
+    if user
+      session[:user_id] = user.id
+      session[:company_id] = user.company.id
+      unless session[:vendor_id] and Vendor.find_by_id(session[:vendor_id]).company_id == user.company.id
+        session[:vendor_id] = user.vendors.existing.first.id
+      end
       
-      I18n.locale = @current_user.language
+      I18n.locale = user.language
       session[:admin_interface] = workstation? # admin panel per default on on workstation
       flash[:error] = nil
-      flash[:notice] = t('messages.hello_username', :name => @current_user.login)
+      flash[:notice] = t('messages.hello_username', :name => user.login)
 
       redirect_to orders_path
-      #check_product_key
     else
       flash[:error] = t :wrong_password
       render :new, :layout => 'login'

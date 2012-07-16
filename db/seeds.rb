@@ -9,14 +9,18 @@
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
+company_count = 0
+
 if ENV['SEED_MODE'] == 'full'
   puts "SEED_MODE is 'full'"
   countries = ['en','at','fr','es','pl','hu','ru','it','tr','cn','el']
   languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
+  company_count = 2
 elsif ENV['SEED_MODE'] == 'minimal'
   puts "SEED_MODE is 'minimal'"
   countries = ['en']
   languages = ['en']
+  company_count = 1
 end
 
 taxes = [20, 10, 0]
@@ -78,7 +82,7 @@ Article.delete_all
 Quantity.delete_all
 
 
-1.times do |c|
+company_count.times do |c|
   company = Company.new :name => "Company #{ c }"
   r = company.save
   puts "Company #{ c } created" if r == true

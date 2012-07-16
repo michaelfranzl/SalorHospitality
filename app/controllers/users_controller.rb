@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       redirect_to(users_path)
     else
       @tables = @current_vendor.tables.existing.where(:enabled => true)
-      @roles = @current_vendor.roles.existing.enabled
+      @roles = @current_vendor.roles.existing.active
       render(:new)
     end
   end

@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
-  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :hotel_mode?
 
   private
 
@@ -95,30 +94,6 @@ class ApplicationController < ActionController::Base
        request.user_agent.include?('iPad')
     end
 
-    def saas_variant?
-      @current_vendor.mode == 'saas' or @current_vendor.mode == 'saas_basic' or @current_vendor.mode == 'saas_plus' or @current_vendor.mode == 'saas_pro' if @current_vendor
-    end
-
-    def saas_basic_variant?
-      @current_vendor.mode == 'saas_basic' if @current_vendor
-    end
-
-    def saas_plus_variant?
-      @current_vendor.mode == 'saas_plus' if @current_vendor
-    end
-
-    def saas_pro_variant?
-      @current_vendor.mode == 'saas_pro' if @current_vendor
-    end
-
-    def demo_variant?
-      @current_vendor.mode == 'demo' if @current_vendor
-    end
-
-    def local_variant?
-      @current_vendor.mode.nil? if @current_vendor
-    end
-
     def neighbour_models(model_name, model_object)
       models = @current_vendor.send(model_name).existing.where(:finished => true)
       idx = models.index(model_object)
@@ -128,16 +103,5 @@ class ApplicationController < ActionController::Base
       next_model = model_object if next_model.nil?
       return previous_model, next_model
     end
-
-    def check_product_key
-      # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
-      resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))
-      begin
-        json = JSON.parse(resp)
-        if not json["success"] == true then
-          exit
-        end
-      rescue;end
-    end
-
+    
 end

@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :bookings
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
+  validates_uniqueness_of :password, :scope => :company_id
 
   def tables_array=(ids)
     self.tables = []
