@@ -1,11 +1,11 @@
 %div.invoice{ :id => "invoice_#{refund_form.id}" }
-  - if local_variant?
+  - if @current_company.mode == 'local'
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      = link_to('', "/orders/update_ajax?id=#{ refund_form.id }&printer=#{ p.id }&currentview=refund", :remote => true, :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" )
+      %a{ :onclick => "update_order({id:#{@order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" }
   - else
-    = link_to '', "/orders/update_ajax?id=#{ refund_form.id }&printer=0&currentview=refund", :remote => true, :class => 'iconbutton print_guestroom_button', :title => t(:print)
+    %a{ :onclick => "update_order({id:#{@order.id},jsaction:'mark_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
 
   = form_for refund_form, :as => :order, :url => "/orders/refund/#{refund_form.id}", :html => { :method => :put, :id => 'refund_form' }, :remote => true do |order_form|
     %h3== #{ t(:invoice) } ##{refund_form.nr}, #{ refund_form.table.name }
@@ -44,3 +44,14 @@
           %td{ :colspan => '2'}= t :refund
           %td{ :style => 'text-align:right'}
             %b= number_to_currency refund_form.refund_sum
+            
+:javascript
+  function update_order(data) {
+    data['currentview'] = 'refund';
+    $.ajax({
+      type: 'post',
+      url: '/orders/update_ajax',
+      data: data,
+      timeout: 5000
+    });
+  }

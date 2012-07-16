@@ -63,10 +63,17 @@ class OrdersController < ApplicationController
           @model.update_attributes(params[:model])
           render :json => @model and return
         end
-      when 'refund', 'show'
+      when 'invoice_paper', 'refund'
         @order = get_model
-        @order.print(['receipt'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
-        render :nothing => true and return
+        case params['jsaction']
+          when 'just_print'
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render :nothing => true and return
+          when 'mark_print_pending'
+            @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
+            render :nothing => true and return
+        end
       when 'invoice'
         @order = get_model
         case params['jsaction']
@@ -113,16 +120,6 @@ class OrdersController < ApplicationController
             create_payment_method_items @order
             @order.pay
             redirect_from_invoice and return
-        end
-      when 'invoice_paper'
-        @order = get_model
-        case params['jsaction']
-          when 'just_print'
-            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render :nothing => true and return
-          when 'mark_print_pending'
-            @order.update_attribute :print_pending, true
-            render :nothing => true and return
         end
       when 'table'
         case params['jsaction']

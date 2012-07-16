@@ -22,7 +22,7 @@
     %br
     = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
     
-  - if not (demo_variant? or saas_variant?) and @current_user.role.permissions.include?('download_database')
+  - if @current_company.mode == 'local' and @current_user.role.permissions.include?('download_database')
     %p#backup_database= link_to t('.backup_database'), backup_database_reports_path
     %p#backup_logfile= link_to t('.backup_logfile'), backup_logfile_reports_path
 

@@ -57,7 +57,7 @@ class SettlementsController < ApplicationController
     render :nothing => true and return unless @settlement
     @settlement.update_attributes params[:settlement]
     @settlement.finish
-    @settlement.print if local_variant?
+    @settlement.print if @current_company.mode == 'local'
   end
 
   def detailed_list
