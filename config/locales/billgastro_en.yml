@@ -686,6 +686,10 @@ en:
     subtotal: Subtotal
     unamed: Unamed
     tax_amount: Amount
+    tax: Tax
+    unit_price_abbreviation: SP
+    total_price_abbreviation: TP
+    quantity_abbreviation: Qty.
   vendors:
     index:
       edit: Edit

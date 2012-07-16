@@ -26,3 +26,5 @@ vendor/bundle
 tmp/cache
 tmp/capybara
 .sass-cache
+*.swn
+*.swm
