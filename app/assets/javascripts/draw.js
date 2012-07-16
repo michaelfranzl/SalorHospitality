@@ -146,4 +146,5 @@ function submit_drawing() {
   hide_canvas();
   d = canvas.getAttribute('d');
   set_json('order', d, 'scribe', scribe_contents);
+  $('#scribe_'+d).html('ABC');
 }
