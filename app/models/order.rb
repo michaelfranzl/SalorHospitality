@@ -74,6 +74,8 @@ class Order < ActiveRecord::Base
         item.calculate_totals
       else
         new_item = Item.new(item_params[1])
+        new_item.vendor = self.vendor
+        new_item.company = self.company
         new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item
