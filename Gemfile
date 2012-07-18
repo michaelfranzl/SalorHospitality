@@ -34,16 +34,16 @@ gem 'jquery-rails'
 # end
 
 group :test, :development do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'capybara'
-  gem 'capybara-webkit'
-  gem 'launchy'
-  gem 'database_cleaner'
-  gem 'guard-rspec'
-  gem 'spork' #, '> 0.9.0.rc'
-  gem 'guard-spork'
-  gem 'ruby_core_source', '0.1.5'
+#  gem 'rspec-rails'
+#  gem 'factory_girl_rails'
+#  gem 'capybara'
+#  gem 'capybara-webkit'
+#  gem 'launchy'
+#  gem 'database_cleaner'
+#  gem 'guard-rspec'
+#  gem 'spork' #, '> 0.9.0.rc'
+#  gem 'guard-spork'
+#  gem 'ruby_core_source', '0.1.5'
   gem 'debugger'
 end
 
