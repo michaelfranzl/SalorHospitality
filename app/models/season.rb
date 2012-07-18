@@ -18,19 +18,17 @@ class Season < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :from_date, :to_date, :name
 
-  after_save :calculate_duration
-
   def self.current(vendor)
     now = Time.now
     current_season = Season.where("(MONTH(from_date)<#{now.month} OR (MONTH(from_date) = #{now.month} AND DAY(from_date) <= #{now.day})) AND (MONTH(to_date) > #{now.month} OR (MONTH(to_date) = #{now.month} AND DAY(to_date) > #{now.day})) AND vendor_id = #{vendor.id}").order('duration ASC').first
   end
 
   def from_date=(from)
-    write_attribute :from_date, Time.parse("2012-" + from.strftime("%m-%d"))
+    write_attribute :from_date, Time.parse("2012-" + from.strftime("%m-%d")).beginning_of_day
   end
 
   def to_date=(to)
-    write_attribute :to_date, Time.parse("2012-" + to.strftime("%m-%d"))
+    write_attribute :to_date, Time.parse("2012-" + to.strftime("%m-%d")).end_of_day
   end
 
   def calculate_duration
@@ -39,6 +37,6 @@ class Season < ActiveRecord::Base
     else
       duration = self.to_date - self.from_date
     end
-    write_attribute :duration, duration
+    self.update_attribute :duration, duration
   end
 end

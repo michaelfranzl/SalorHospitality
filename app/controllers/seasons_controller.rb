@@ -12,7 +12,7 @@ class SeasonsController < ApplicationController
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
-    @seasons = @current_vendor.seasons.existing
+    @seasons = @current_vendor.seasons.existing.order(:from_date)
   end
 
   def new
@@ -24,6 +24,7 @@ class SeasonsController < ApplicationController
     @season.vendor = @current_vendor
     @season.company = @current_company
     if @season.save
+      @season.calculate_duration
       redirect_to seasons_path
     else
       render(:new)
@@ -38,7 +39,12 @@ class SeasonsController < ApplicationController
   def update
     @season = Season.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to seasons_path and return unless @season
-    @season.update_attributes(params[:season]) ? redirect_to(seasons_path) : render(:new)
+    if @season.update_attributes(params[:season])
+      @season.calculate_duration
+      redirect_to(seasons_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy
