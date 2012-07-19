@@ -310,41 +310,41 @@ cn:
       edit_category: 編輯類別
       maindish: 主菜
       new_category: 新類別
-      nonalcoholics: Alcohol Free
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
+      nonalcoholics: 無酒精
+      noodles: 麵條
+      redwinebottle: 一瓶紅葡萄酒
+      redwineglass: 紅葡萄酒
+      rosewinebottle: 一瓶桃紅葡萄酒
+      rosewineglass: 桃紅葡萄酒
+      sidedish: 小菜
+      soup: 湯
+      sparkling: 起泡葡萄酒
+      starter: 開胃菜
+      tea: 茶碗
+      teapot: 茶壺
+      whitewinebottle: 一瓶白葡萄酒
+      whitewineglass: 白葡萄酒
     destroy:
-      success: Category successfully deleted
-  clear_order_and_go_back: Clear order and go back
-  copy: Copy
+      success: 分類成功刪除了
+  clear_order_and_go_back: 清除秩序，回去
+  copy: 複製
   cost_centers:
     index:
       active: 活躍
       inactive: 待用
     new:
       edit_cost_center: 編輯付款人
-      new_cost_center: N新付款人
+      new_cost_center: 新付款人
     create:
-      success: Cost Center successfully saved
+      success: 成本中心成功地保存了
     destroy:
-      success: Cost Center successfully deleted
+      success: 成本中心成功刪除了
   count: 計算
   create: 創建
   dateandtime: 日期
   default: 默認
   delete: 刪除嗎
-  display: Display
+  display: 食品
   edit: 編輯
   exit: 太平門
   finish: 完畢
@@ -354,130 +354,129 @@ cn:
   gross: 合計
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
-  guestroom: Guestroom
-  host: Host
+      edit_group: 編輯組
+      new_group: 新組
+  guestroom: 客房
+  host: 主人
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
-  is_no_number: is not a number.
+    errempty: 無效的文件
+    errsize: 無效的文件大小
+    errtype: 無效的文件類型
+  invoice: 發票
+  invoice_numer_X_at_time: 發票號 %{number} 當 %{datetime}
+  invoices: 發票
+  is_no_number: 不是一個數字
   items:
     item_tablerow:
-      clear: Clear
-      done: D完成
-      no_printing: no printing
-  just_order: Just order
-  kitchen: Kitchen
+      clear: 清除
+      done: 完成
+      no_printing: 沒有印刷
+  just_order: 只訂購
+  kitchen: 廚房
   layouts:
     application:
-      submit_scribe: OK
+      submit_scribe: 好
   logout: 註銷 %{who}
   messages:
     hello_username: 餵 %{name}!
-  move_order_to_table: Move order to different table
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
-  net: Net
+  move_order_to_table: 移動訂單到不同的桌子
+  must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對物品還是變種
+  net: 淨
   new: 新
-  no_printing: No printing
-  not_found: Not found
+  no_printing: 沒有印刷
+  not_found: 未找到
   options:
     new:
-      edit_option: Edit Option
+      edit_option: 編輯選項
       hidden: 刪除嗎?
-      new_option: 新 Option
-      select_all: select all
+      new_option: 新選項
+      select_all: 選擇所有
     create:
-      success: Option successfully saved
+      success: 股權成功保存了
     destroy:
-      success: Option successfully deleted
-  orange: Orange
+      success: 成功刪除的選項了
+  orange: 橙
   orders:
     functions_header_index:
-      items_notifications: Notifications
-      print_now: Print now
-      show_last_order: Show last order
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      items_notifications: 通知
+      print_now: 打印現在
+      show_last_order: 顯示最近秩序
+      show_last_booking: XXX 顯示最近預訂
+      toggle_between_tables_and_rooms: XXX 房間和桌子之間切換
     functions_header_order_form:
-      move_order: Move order to other table
+      move_order: 移動訂單到不同的桌子
     index:
-      delivery_list: Delivery list
-      preparation_list: Preparation list
+      delivery_list: 發貨清單
+      preparation_list: 準備清單
     invoice_form:
       just_finish: 完畢
-      print_and_finish: Print and finish this order
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
-      split_this_item: Click to split this items one at a time
-      switch_tax_for_this_item: Click to change the tax for this item
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      print_and_finish: 打印並完成此訂單
+      set_cost_center: 設置成本中心此訂單
+      set_tax_for_all: 設置成本中心所有項目
+      set_taxes: 設置成本中心
+      split_invoice: 拆分發票
+      split_this_item: 單擊要分裂這些項目一次一個
+      switch_tax_for_this_item: 單擊要更改此項目的稅
+      change_money: XXX 改變
+      set_booking: XXX 分配給預訂
     login_form:
-      email: Your E-Mail
+      email: 您的E-Mail
       login: 登錄
       password: 密碼
       username: 用戶
     order:
-      new: New order
-      sum: SUM
-    served_by: You were served by
+      new: 新秩序
+      sum: 總和
+    served_by: You were served by 你是由 _ 服務
     show:
       back: 回去
       count: 計算
-      list_of_taxes: List of taxes
-      next_invoice: Next invoice
-      previous_invoice: Previous invoice
-      print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      list_of_taxes: 稅收名單
+      next_invoice: 下一步發票
+      previous_invoice: 以前的發票
+      print_business_invoice: 打印商業發票
+      print_invoice: 打印發票
+      search_by_number: 按編號搜索
+      sum: 總和
+      unit_price: 單價
     storno_form:
-      do_separate_items: Separate this item
-      do_storno: Make storno
+      do_separate_items: 分開這個項目
+      do_storno: 使storno
   pages:
     edit:
-      edit_page: Edit Page
-      slideshow: Start Slideshow
-      view: View
+      edit_page: 編輯頁面
+      slideshow: 開始幻燈片
+      view: 視圖
     new:
-      new_page: New Page
+      new_page: 新頁
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: 編輯我
+    error_during_evaluation: ! '錯誤: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
-  pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+      no_presentations_found: 這部分沒有定義模板.
+  pink: 粉紅色
+  please_enter_item_comment: 特殊要求
+  please_enter_item_price: 特價
   presentations:
     new:
-      edit_presentation: Edit Template
-      new_presentation: New Template
-  print: Print
-  print_and_finish: Finish and print
-  printing_test: Printing test
+      edit_presentation: 編輯模板
+      new_presentation: 新模板
+  print: 打印
+  print_and_finish: 完成並打印
+  printing_test: 打印測試
   reports:
-    end_date: End Date
-    save: Save
+    end_date: 結束日期
+    save: 儲存
     start_date: 開始日期
     usb_device: USB記憶棒
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-  restaurant: Restaurant
+      backup_database: 備份數據庫
+      backup_logfile: 備份日誌
+      header: 報告
+  restaurant: 餐廳
   roles:
     new:
-      assign_cost_center: Assign cost center
+      assign_cost_center: 分配成本中心
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: Change waiter
       counter_mode: Counter mode
