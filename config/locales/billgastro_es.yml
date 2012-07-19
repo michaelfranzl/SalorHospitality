@@ -1,7 +1,7 @@
 ---
 es:
-  activerecord: Registro Activo
-    attributes: Atributos
+  activerecord:
+    attributes:
       article:
         category_id: Categoría
         description: Descripción
@@ -115,7 +115,7 @@ es:
       room_type:
         hidden: borrar
         name: nombre
-      season: temporada
+      season:
         from_date: De
         hidden: borrar
         name: Nombre
@@ -147,6 +147,33 @@ es:
         time_offset: Corrección de la hora (horas)
         timeout: Espera del bloqueo de pantalla (segundos)?
         use_order_numbers: Usar numeros del orden?
+        rlogo_header: XXX Receipt logo header
+        rlogo_footer: XXX Receipt logo footer
+        logo: XXX Screen logo
+        invoice_logo: XXX Invoice Logo
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
     models:
       article:
         one: Artículo
@@ -166,7 +193,7 @@ es:
       customer:
         one: Cliente
         other: Clientes
-      discount: 
+      discount:
         one: Descuento
         other: Descuentos
       group:
@@ -256,7 +283,7 @@ es:
       tax_amount:
         one: Monto de impuesto
         other: Montos de impuestos
-    errors: 
+    errors:
       messages:
         prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
   admin: Administrador
@@ -285,12 +312,13 @@ es:
       sort: Ordenar arículos
     create:
       success: El artículo se ha creado exitosamente
+      license_limited: XXX Your License is limited to %{count} articles
     destroy:
       success: El artículo se ha eliminado exitosamente
   bar: Barra
   black: Negro
   blackboard:
-    index: índice
+    index:
       update: Actualizar
   blank: nada
   blue: Azul
@@ -324,11 +352,12 @@ es:
       soup: Sopa
     create:
       success: Categoría exitosamente guardada
+      license_limited: XXX Your License is limited to %{count} categories
     destroy:
       success: Categoría exitosamente eliminada
   clear_order_and_go_back: Borrar orden y volver
   copy: copiar
-  cost_centers: centros de coste
+  cost_centers:
     index:
       active: Activo
       inactive: Inactivo
@@ -373,7 +402,8 @@ es:
   kitchen: Cocina
   logout: Desconectar a %{who}
   move_order_to_table: Mover la orden a una mesa diferente
-  must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo o bien para la variante.
+  must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo
+    o bien para la variante.
   net: Neto
   new: Nuevo
   no_printing: No imprimir
@@ -389,7 +419,7 @@ es:
     destroy:
       success: Opción exitosamente eliminada
   orange: Naranja
-  orders: pedidos
+  orders:
     functions_header_index:
       print_now: Imprimir ahora
       items_notifications: Notificaciones
@@ -419,7 +449,7 @@ es:
       new: Nuevo pedido
       sum: TOTAL
     served_by: Ud. fue atendido por
-    show: mostrar
+    show:
       back: Volver
       count: Cantidad
       list_of_taxes: Lista de impuestos
@@ -430,11 +460,15 @@ es:
       search_by_number: Buscar por número
       sum: Total
       unit_price: Precio unitario
-    storno_form:
-      do_separate_items: Separar este item
-      do_storno: Anular item
     functions_header_order_form:
       move_order: Mover pedido a otra mesa
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
+    refund_form:
+      do_separate_items: Separate this item
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Editar página
@@ -444,14 +478,14 @@ es:
       new_page: Nueva página
   partials:
     default_blurb: Texto predeterminado
-    error_during_evaluation: ! 'Error'
+    error_during_evaluation: Error
     no_presentation_found:
       no_presentations_found: No existe una plantilla definida para este parcial.
   pink: Rosado
   please_enter_item_comment: Deseo especial
   please_enter_item_price: Precio especial
   presentations:
-    new: nueva
+    new:
       edit_presentation: Editar plantilla
       new_presentation: Nueva plantilla
   print: Imprimir
@@ -465,27 +499,37 @@ es:
       backup_database: Copia de seguridad de base de datos
       backup_logfile: archivo de registro de copia de seguridad
       header: Reportes
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      connect_ssh: XXX Remote Login
+      connect_vnc: XXX Share Screen
+      password: XXX Password
+      requesting_connection_status: XXX Requesting connection status ...
+      internet_connection_info: XXX To get Remote Support, you must be connected to
+        the internet. If you see the Red (E) Logo above, you are connected to the
+        internet.
+      remote_support: XXX Remote Support
+      download_reports: XXX Save reports
+    remote_support: XXX Remote Support
+    download_reports: XXX Download Report
   restaurant: Restaurante
-  roles: roles
+  roles:
     new:
       assign_cost_center: Designar centro de coste
-      cancel_all_items_in_active_order: Cancelar todos los ítems en pedido activo    change_waiter: Cambiar camarero
+      cancel_all_items_in_active_order: Cancelar todos los ítems en pedido activo
+      change_waiter: Cambiar camarero
       decrement_items: items decreyentes
       delete_items: Borrar ítems decrementando
       finish_all_settlements: Cerrar todos los balances
       finish_orders: Finalizar pedidos
       finish_own_settlement: Cerrar balance propio
-      make_storno: Anular item
-      manage_articles_categories_options: Gestionar artículos, categorías y opciones
       manage_business_invoice: Gestionar factura para empresa
-      manage_settings: Configuración
       manage_users: Gestiónar usuarios
       move_order: Mover pedido
       move_tables: Mover mesas
       split_items: Separar artículos
       take_orders: Tomar pedidos
       view_all_settlements: Ver todos los balances
-      view_statistics: Ver estadísticas
       counter_mode: Modo de contador
       edit_role: Editar rol
       manage_customers: Gestionar clientes
@@ -494,6 +538,23 @@ es:
       permissions: Permisos
       see_debug: Ver mensajes de depuración
       see_item_notifications: Ver notificaciones del ítem
+      refund: XXX Refund items
+      manage_articles: XXX Manage articles, categories and options
+      manage_categories: XXX Manage categories
+      manage_options: XXX Manage options
+      manage_roles: XXX Manage roles
+      manage_taxes: XXX Manage Taxes
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_tables: XXX Manage tables
+      manage_vendors: XXX Manage vendors
+      manage_statistics: XXX View statistics
+      manage_hotel: XXX Manage hotel
+      item_scribe: XXX Enable handwriting
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_tables: XXX Assign tables to users
+      remote_support: XXX Remote Support
+      download_database: XXX Download Database
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -506,8 +567,8 @@ es:
   server_no_response: El servidor Bill Gastro ha dejado de responder. La línea está
     ocupada o bien el vínculo inalámbrico se ha interrumpido.
   sessions:
-    browser_warning: Advertencia del navegador
-      continue: Continar
+    browser_warning:
+      continue: XXX Continue
       warning: Ud. no utiliza Mozilla Firefox, Safari, Google Chrome ni Chromium como
         navegador. Bill Gastro ha sido concebido únicamente para dichos navegadores.
     new:
@@ -523,7 +584,7 @@ es:
       total: Total
       unit_price: Precio unitario
     index:
-      all_cost_centers: Todos 
+      all_cost_centers: Todos
       end_date: Fecha final
       start_date: Fecha de inicio
       sum_total: Suma total
@@ -540,7 +601,6 @@ es:
     new:
       edit_stock: Editar stock
       new_stock: Nuevo stock
-  storno: Anular items
   sum: Total
   tables:
     new:
@@ -548,6 +608,7 @@ es:
       new_table: Nueva mesa
     create:
       success: Mesa guardada exitosamente
+      license_limited: XXX Your License is limited to %{count} tables
     destroy:
       success: Mesa eliminada exitosamente
   taxes:
@@ -558,6 +619,7 @@ es:
     new:
       edit_user: Editar usuario
       new_user: Nuevo usuario
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
     create:
       success: Usuario creado exitosamente
     destroy:
@@ -570,6 +632,11 @@ es:
     save: Guardar
     subtotal: Subtotal
     unamed: Sin nombre
+    tax_amount: XXX Amount
+    tax: XXX Tax
+    unit_price_abbreviation: XXX SP
+    total_price_abbreviation: XXX TP
+    quantity_abbreviation: XXX Qty.
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos
@@ -629,3 +696,14 @@ es:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    index:
+      create:
+        success: Customer successfully saved
+      destroy:
+        success: Customer successfully deleted
+  refund: XXX Refund
+  invalid_date: XXX Invalid date

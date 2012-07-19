@@ -515,7 +515,8 @@ en:
       connect_vnc: Share Screen
       password: Password
       requesting_connection_status: Requesting connection status ...
-      internet_connection_info: To get Remote Support, you must be connected to the internet. If you see the Red (E) Logo above, you are connected to the internet.
+      internet_connection_info: To get Remote Support, you must be connected to the
+        internet. If you see the Red (E) Logo above, you are connected to the internet.
       remote_support: Remote Support
       download_reports: Save reports
     save: Save

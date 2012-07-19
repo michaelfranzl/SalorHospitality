@@ -1,5 +1,5 @@
 ---
-en:
+fr:
   activerecord:
     attributes:
       article:
@@ -142,11 +142,38 @@ en:
         time_offset: Correction date (heures)
         timeout: Expiration du verrouillage de l'écran (secondes)
         use_order_numbers: Utiliser numéros de commande
+        rlogo_header: XXX Receipt logo header
+        rlogo_footer: XXX Receipt logo footer
+        logo: XXX Screen logo
+        invoice_logo: XXX Invoice Logo
       vendor_printer:
         copies: Copies
         hidden: Effacer
         name: Nom
         path: Chemin
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
@@ -276,7 +303,7 @@ en:
       preview: Aperçu
       search_term: Chercher terme
       sort: Trier
-      update:Mise-à-jour !
+      update: Mise-à-jour !
       view: Voir
     listall:
       all_articles: Liste de tous les articles
@@ -387,7 +414,8 @@ en:
   messages:
     hello_username: Bonjour %{name}!
   move_order_to_table: Déplacer commande à table différente
-  must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article soit pour la Variante.
+  must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article
+    soit pour la Variante.
   net: Net
   new: Nouveau
   no_printing: Pas d'impression
@@ -446,9 +474,13 @@ en:
       search_by_number: Chercher par numéro
       sum: Somme
       unit_price: Prix unitaire
-    storno_form:
-      do_separate_items: Scinder cet article
-      do_storno: Remboursement
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
+    refund_form:
+      do_separate_items: Separate this item
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Modifier Page
@@ -477,9 +509,22 @@ en:
       backup_database: Base de données de sauvegarde
       backup_logfile: Fichier log de sauvegarde
       header: Rapports
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      connect_ssh: XXX Remote Login
+      connect_vnc: XXX Share Screen
+      password: XXX Password
+      requesting_connection_status: XXX Requesting connection status ...
+      internet_connection_info: XXX To get Remote Support, you must be connected to
+        the internet. If you see the Red (E) Logo above, you are connected to the
+        internet.
+      remote_support: XXX Remote Support
+      download_reports: XXX Save reports
     save: Enregistrer
     start_date: Date de début
     usb_device: Clé USB
+    remote_support: XXX Remote Support
+    download_reports: XXX Download Report
   restaurant: Restaurant
   roles:
     create:
@@ -497,12 +542,9 @@ en:
       finish_all_settlements: Terminer tous les settlements
       finish_orders: Terminer commandes
       finish_own_settlement: Terminer own settlement
-      make_storno: Annuler les articles
-      manage_articles_categories_options: Gérer les articles, les catégories et les options
       manage_business_invoice: Gérer facture commerciale
       manage_customers: Gérer les clients
       manage_pages: Gérer présentation
-      manage_settings: Gérer les paramètres
       manage_users: Gérer les utilisateurs
       move_order: Déplacer la commande
       move_tables: Déplacer les tables
@@ -513,7 +555,23 @@ en:
       split_items: Scinder les articles
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
-      view_statistics: Voir les statistiques
+      refund: XXX Refund items
+      manage_articles: XXX Manage articles, categories and options
+      manage_categories: XXX Manage categories
+      manage_options: XXX Manage options
+      manage_roles: XXX Manage roles
+      manage_taxes: XXX Manage Taxes
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_tables: XXX Manage tables
+      manage_vendors: XXX Manage vendors
+      manage_statistics: XXX View statistics
+      manage_hotel: XXX Manage hotel
+      item_scribe: XXX Enable handwriting
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_tables: XXX Assign tables to users
+      remote_support: XXX Remote Support
+      download_database: XXX Download Database
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -540,11 +598,13 @@ en:
       new_season: Nouvelle saison
   send_and_go_back: Enregistrer et revenir à la page précédente
   served_by_X_on_table_Y: Vous avez été servi par %{user} à %{table}
-  server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est occupé, soit le lien radio a été interrompu.
+  server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est
+    occupé, soit le lien radio a été interrompu.
   sessions:
     browser_warning:
       continue: Continuer
-      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium comme navigateur. Bill Gastro a été optimisé exclusivement pour ces navigateurs.
+      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium
+        comme navigateur. Bill Gastro a été optimisé exclusivement pour ces navigateurs.
     new:
       email: Votre E-Mail
       login: S'identifier
@@ -579,7 +639,6 @@ en:
     new:
       edit_stock: Modifier le stock
       new_stock: Nouveau stock
-  storno: Remboursement
   sum: Somme
   surcharges:
     new:
@@ -609,6 +668,7 @@ en:
     new:
       edit_user: Modifier utilisateur
       new_user: Nouvel utilisateur
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
   various:
     cancel: Annuler
     common_surcharges: Surtaxes communes
@@ -617,6 +677,11 @@ en:
     save: Enregistrer
     subtotal: Sous-total
     unamed: Unamed
+    tax_amount: XXX Amount
+    tax: XXX Tax
+    unit_price_abbreviation: XXX SP
+    total_price_abbreviation: XXX TP
+    quantity_abbreviation: XXX Qty.
   vendors:
     index:
       edit: Modifier
@@ -631,3 +696,14 @@ en:
   winered: Vin rouge
   wrong_password: Données de connexion erronées
   yellow: Jaune
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    index:
+      create:
+        success: Customer successfully saved
+      destroy:
+        success: Customer successfully deleted
+  refund: XXX Refund
+  invalid_date: XXX Invalid date

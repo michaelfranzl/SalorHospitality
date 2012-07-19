@@ -154,6 +154,33 @@ it:
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
+        rlogo_header: XXX Receipt logo header
+        rlogo_footer: XXX Receipt logo footer
+        logo: XXX Screen logo
+        invoice_logo: XXX Invoice Logo
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
     models:
       room:
         one: Room
@@ -271,6 +298,7 @@ it:
   articles:
     create:
       success: Article was successfully created
+      license_limited: XXX Your License is limited to %{count} articles
     destroy:
       success: Article was successfully deleted
     find:
@@ -305,6 +333,7 @@ it:
   categories:
     create:
       success: Success!
+      license_limited: XXX Your License is limited to %{count} categories
     new:
       aperitif: Aperitif
       beer: Beer
@@ -447,9 +476,13 @@ it:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
-    storno_form:
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
+    refund_form:
       do_separate_items: Separate this item
-      do_storno: Make storno
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Edit Page
@@ -481,6 +514,19 @@ it:
       backup_database: Backup database
       backup_logfile: Backup logfile
       header: Reports
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      connect_ssh: XXX Remote Login
+      connect_vnc: XXX Share Screen
+      password: XXX Password
+      requesting_connection_status: XXX Requesting connection status ...
+      internet_connection_info: XXX To get Remote Support, you must be connected to
+        the internet. If you see the Red (E) Logo above, you are connected to the
+        internet.
+      remote_support: XXX Remote Support
+      download_reports: XXX Save reports
+    remote_support: XXX Remote Support
+    download_reports: XXX Download Report
   restaurant: Restaurant
   roles:
     new:
@@ -494,12 +540,9 @@ it:
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
       manage_business_invoice: Manage business invoice
       manage_customers: Manage Customers
       manage_pages: Manage Slideshow
-      manage_settings: Manage settings
       manage_users: Manage users
       move_order: Move order
       move_tables: Move tables
@@ -510,7 +553,23 @@ it:
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
-      view_statistics: View statistics
+      refund: XXX Refund items
+      manage_articles: XXX Manage articles, categories and options
+      manage_categories: XXX Manage categories
+      manage_options: XXX Manage options
+      manage_roles: XXX Manage roles
+      manage_taxes: XXX Manage Taxes
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_tables: XXX Manage tables
+      manage_vendors: XXX Manage vendors
+      manage_statistics: XXX View statistics
+      manage_hotel: XXX Manage hotel
+      item_scribe: XXX Enable handwriting
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_tables: XXX Assign tables to users
+      remote_support: XXX Remote Support
+      download_database: XXX Download Database
     create:
       success: Role successfully saved
     destroy:
@@ -558,7 +617,6 @@ it:
     new:
       edit_stock: Edit Stock
       new_stock: New Stock
-  storno: Storno
   sum: Sum
   tables:
     new:
@@ -566,6 +624,7 @@ it:
       new_table: New Table
     create:
       success: Table successfully saved
+      license_limited: XXX Your License is limited to %{count} tables
     destroy:
       success: Table successfully deleted
   taxes:
@@ -576,6 +635,7 @@ it:
     new:
       edit_user: Edit User
       new_user: New User
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
     create:
       success: User successfully saved
     destroy:
@@ -631,3 +691,19 @@ it:
     save: Save
     subtotal: Subtotal
     unamed: Unamed
+    tax_amount: XXX Amount
+    tax: XXX Tax
+    unit_price_abbreviation: XXX SP
+    total_price_abbreviation: XXX TP
+    quantity_abbreviation: XXX Qty.
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    index:
+      create:
+        success: Customer successfully saved
+      destroy:
+        success: Customer successfully deleted
+  refund: XXX Refund
+  invalid_date: XXX Invalid date
