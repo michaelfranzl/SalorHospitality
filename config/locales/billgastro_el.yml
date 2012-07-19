@@ -584,9 +584,6 @@ el:
   sessions:
     browser_warning:
       continue: Συνεχίστε
-      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium
-        ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε
-        αποκλειστικά για αυτά τα προγράμματα περιήγησης.
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη

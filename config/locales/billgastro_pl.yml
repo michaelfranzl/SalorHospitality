@@ -581,8 +581,6 @@ pl:
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome
-        oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
     new:
       email: Twój e-mail
       login: Login

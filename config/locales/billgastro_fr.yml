@@ -603,8 +603,6 @@ fr:
   sessions:
     browser_warning:
       continue: Continuer
-      warning: Vous n'utilisez pas Mozilla Firefox, Safari, Google Chrome ou Chromium
-        comme navigateur. Bill Gastro a été optimisé exclusivement pour ces navigateurs.
     new:
       email: Votre E-Mail
       login: S'identifier

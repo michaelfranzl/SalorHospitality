@@ -452,8 +452,6 @@ tr:
       no_printing: XXXNo printing
   sessions:
     browser_warning:
-      warning: Mozilla Firefox, Safari, Google Chrome veya Chromium Browser olarak
-        kullanmiyorsunuz. Bill Gastro bu Browserlar icin hazirlanmisdir.
       continue: Devam
     new:
       username: Kullanici

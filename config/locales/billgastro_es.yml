@@ -569,8 +569,6 @@ es:
   sessions:
     browser_warning:
       continue: XXX Continue
-      warning: Ud. no utiliza Mozilla Firefox, Safari, Google Chrome ni Chromium como
-        navegador. Bill Gastro ha sido concebido únicamente para dichos navegadores.
     new:
       email: Su e-mail
       login: seudónimo
