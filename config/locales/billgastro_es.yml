@@ -1,62 +1,62 @@
 ---
 es:
-  activerecord:
-    attributes:
-      article:
+  activerecord: Registro Activo
+    attributes: Atributos
+      article: artículo
         category_id: Categoría
         description: Descripción
-        hidden: borrar
+        hidden: borrar?
         name: Nombre
         price: Precio
         usage: Uso
-        active: XXX active
-        image: XXX Image
-        tax_id: XXX Tax
-      category:
+        active: activo
+        image: Imagen
+        tax_id: IVA
+      category: categoría
         color: Color
         custom_icon: Mi Ícono
-        food: comida?
-        hidden: XXXdelete
+        food: comida
+        hidden: borrar
         icon: Ícono
         name: Nombre
         tax_id: IVA
-        vendor_printer_id: XXXPrinter
-        separate_print: XXX Cut ticket
-        user_id: XXX Preparing User
-      cost_center:
-        active: activo?
+        vendor_printer_id: Impresora
+        separate_print: cortar boleta
+        user_id: Preparando usuario.
+      cost_center: Centro de coste
+        active: activo
         description: Descripción
-        hidden: XXXdelete
+        hidden: borrar
         name: Nombre
-      group:
+      group: grupo
         name: Nombre
-      option:
+      option: opción
         category_id: Categoría
-        hidden: XXXDelete
+        hidden: borrar
         name: Nombre
         price: Precio
-        no_ticket: XXX Dont' print ticket
-        separate_ticket: XXX Cut ticket
-      page:
-        active: XXXactive
-        hidden: XXXdelete
-        color: XXX Color
-        height: XXX Height
-        image: XXX Image
-        width: XXX Width
-      partial:
-        active: XXXaktiv
+        no_ticket: No imprimir boleta
+        separate_ticket: cortar boleta
+      page: página
+        active: activo
+        hidden: borrar
+        color: Color
+        height: Altura
+        image: Imagen
+        width: Ancho
+      partial: parcial
+        active: activo
         blurb: XXXBlurb
-        hidden: XXXdelete
-      presentation:
-        active: XXXactive
-        code: XXXRuby code
-        description: XXXDescription
-        hidden: XXXdelete
-        markup: XXXERB Markup
-        model: XXXType
-        name: XXXName
-      quantity:
+        hidden: borrar
+      presentation: presentación
+        active: activo
+        code: código ruby
+        description: Descripción
+        hidden: borrar
+        markup: Marcado ERB?
+        model: Tipo
+        name: Nombre
+      quantity: cantidad
         active: activo
         description: Descripción
         hidden: borrar
@@ -64,91 +64,91 @@ es:
         prefix: Nombre
         price: Precio opcional
         usage: uso
-      role:
+      role: rol
         name: Nombre
-      settlement:
-        initial_cash: XXXInitial amount
-        revenue: End XXXamount
-      table:
+      settlement: balance
+        initial_cash: Monto inicial
+        revenue: Monto final
+      table: tabla
         abbreviation: Abreviación
         description: Descripción
-        enabled: XXXactive?
+        enabled: activado
         height: Altura
         height_mobile: altura del aparato móvil
-        hidden: XXXdelete?
+        hidden: borrar
         name: Nombre
         width: Ancho
         width_mobile: ancho del aparato móvil
-        rotate: XXX rotate?
-      tax:
+        rotate: rotar
+      tax: IVA
         color: Color
-        hidden: XXXdelete
+        hidden: borrar
         letter: Abreviación
         name: Nombre
-        percent: IVA en %
-      user:
+        percent: Porcentaje de IVA
+      user: usuario
         color: Color
-        hidden: XXXdelete?
+        hidden: borrar
         language: Idioma
         login: Nombre de usuario
         password: Clave
         role: Rol
-        tables: XXXTables
+        tables: tablas
         title: Título
-        active: XXX active?
-        screenlock_timeout: XXX Screenlock timeout (sec.)
-      vendor_printer:
-        hidden: XXXDelete
-        name: XXXName
-        path: XXXPath
-        copies: XXX Copies
+        active: activo
+        screenlock_timeout: Tiempo de espera de bloqueo de pantalla? (sec.)
+      vendor_printer: Impresora
+        hidden: borrar
+        name: nombre
+        path: ruta
+        copies: copias
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: borrar
+        name: nombre
+        taxes: impuestos/IVA
       room_price:
-        base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
-        season_id: Season
+        base_price: Precio base
+        guest_type_id: Tipo-Invitado
+        hidden: borrar
+        room_type_id: sitio de la clase
+        season_id: temporada
       room_type:
-        hidden: löschen
-        name: Name
-      season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        hidden: borrar
+        name: nombre
+      season: temporada
+        from_date: De
+        hidden: borrar
+        name: Nombre
+        to_date: a
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
+        amount: Monto
+        guest_type_id: Tipo Invitado
+        hidden: borrar
+        name: nombre
         radio_select: Radio Select
-        season_id: Season
-      tax_amount:
-        amount: Amount
-        tax_id: Tax
-      vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
+        season_id: Temporada
+      tax_amount: Monto de IVA
+        amount: Monto
+        tax_id: IVA
+      vendor: vendedor
+        automatic_printing: Impresión automática
+        country: Reglas del país
+        hidden: borrar
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
-        name: Name
+        name: Nombre
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
-        saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
-    models:
-      article:
+        saas: Version Online
+        ticket_display_time_order: Hora y numero de factura en la bolata
+        ticket_item_separator: Línea de separación de la boleta
+        ticket_tall_font: altura de fuente de boleta?
+        ticket_wide_font: ancho de fuente de boleta?
+        time_offset: Corrección de la hora (horas)
+        timeout: Espera del bloqueo de pantalla (segundos)?
+        use_order_numbers: Usar numeros del orden?
+    models: modelos
+      article: artículo
         one: Artículo
         other: Artículos
       category:
@@ -161,23 +161,23 @@ es:
         one: Centro de coste
         other: Centros de coste
       coupon:
-        one: XXXCoupon
-        other: XXXCoupons
+        one: Cupón
+        other: Cupones
       customer:
-        one: XXXCustomer
-        other: XXXCustomers
-      discount:
-        one: XXXDiscount
-        other: XXXDiscounts
+        one: Cliente
+        other: Clientes
+      discount: 
+        one: Descuento
+        other: Descuentos
       group:
-        one: XXXStock Group
-        other: XXXStock Groups
+        one: almacenar grupo?
+        other: almacenar grupos?
       image:
         one: Imagen
         other: Imágenes
       item:
-        one: Item
-        other: Items
+        one: Ítem
+        other: ítems
       option:
         one: Opción
         other: Opciones
@@ -185,26 +185,26 @@ es:
         one: Pedido
         other: Pedidos
       page:
-        one: XXXCard
-        other: XXXCards
+        one: Tarjeta
+        other: Tarjetas
       partial:
-        one: XXXPartial
-        other: XXXPartials
+        one: Parcial
+        other: Parciales
       presentation:
-        one: XXXTemplate
-        other: XXXTemplates
+        one: Plantilla
+        other: Plantillas
       quantity:
         one: Variante
         other: Variantes
       report:
-        one: XXXReport
-        other: XXXReports
+        one: Reporte
+        other: Reportes
       reservation:
-        one: XXXReservation
-        other: XXXReservations
+        one: Reservación
+        other: Reservaciones
       role:
-        one: XXXRole
-        other: XXXRoles
+        one: Rol
+        other: Roles
       settlement:
         one: Balance
         other: Balances
@@ -221,23 +221,23 @@ es:
         one: Usuario
         other: Usuarios
       vendor:
-        one: XXXRestaurant
-        other: XXXRestaurants
+        one: Restaurante
+        other: Restaurantes
       vendor_printer:
-        one: XXXPrinter
-        other: XXXPrinters
+        one: Impresora
+        other: Impresoras
       booking:
-        one: Booking
-        other: Bookings
+        one: Reserva
+        other: Reservas
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Tipo de Invitado
+        other: Tipos de Invitados
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Método de pago
+        other: Métodos de pago
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Método de pago
+        other: Métodos de pago
       room:
         one: Room
         other: Rooms
@@ -248,17 +248,17 @@ es:
         one: Room Type
         other: Room Types
       season:
-        one: Saison
-        other: Saisons
+        one: Temporada
+        other: Temporadas
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Recargo
+        other: Recargos
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
-    errors:
+        one: Monto de impuesto
+        other: Montos de impuestos
+    errors: 
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
   admin: Administrador
   are_you_sure: ¿Está seguro?
   articles:
@@ -270,9 +270,9 @@ es:
       list_all: Listar todo
       preview: Vista previa
       search_term: Buscar término
-      sort: XXXSort
-      update: XXXUpdate!
-      view: XXX View
+      sort: Ordenar
+      update: Actualizar!
+      view: Ver
     listall:
       all_articles: Listar todos los artículos
     new:
@@ -282,25 +282,25 @@ es:
       normal: normal
       takeaway: para llevar
     sort_index:
-      sort: Sort articles
+      sort: Ordenar arículos
     create:
-      success: Article was successfully created
+      success: El artículo se ha creado exitosamente
     destroy:
-      success: Article was successfully deleted
-  bar: Bar
-  black: XXXBlack
-  blackboard:
-    index:
+      success: El artículo se ha eliminado exitosamente
+  bar: Barra
+  black: Negro
+  blackboard: pizarra
+    index: índice
       update: Actualizar
   blank: nada
   blue: Azul
   cancel_and_go_back: Cancelar y volver
-  categories:
-    new:
+  categories: categorías
+    new: nuevo
       aperitif: Aperitivo
       beer: Cerveza
-      blank: nada
-      childrendish: Comida niño
+      blank: en blanco
+      childrendish: Comida para niños
       cigarette: Tabaco
       coffee: Café
       dessert: Postre
@@ -310,53 +310,53 @@ es:
       new_category: Nueva categoría
       nonalcoholics: Sin alcohol
       redwinebottle: Botella tinto
-      redwineglass: Vino tinto
+      redwineglass: copa vino tinto
       rosewinebottle: Botella rosado
-      rosewineglass: Vino rosado
+      rosewineglass: copa vino rosado
       sidedish: Guarnición
       sparkling: Vino espumoso
       starter: Entrada
       tea: Taza de té
       teapot: Tetera
       whitewinebottle: Botella blanco
-      whitewineglass: Vino blanco
-      noodles: XXX Noodles
-      soup: XXX Soup
-    create:
-      success: Category successfully saved
+      whitewineglass: copa vino blanco
+      noodles: fideos/ tallarines
+      soup: Sopa
+    create:crear
+      success: Categoría exitosamente guardada
     destroy:
-      success: Category successfully deleted
-  clear_order_and_go_back: XXXClear order and go back
-  copy: XXXCopy
-  cost_centers:
-    index:
+      success: Categoría exitosamente eliminada
+  clear_order_and_go_back: Borrar orden y volver
+  copy: copiar
+  cost_centers: centros de coste
+    index: índice
       active: Activo
       inactive: Inactivo
-    new:
+    new: nuevo
       edit_cost_center: Editar centro de coste
       new_cost_center: Nuevo centro de coste
     create:
-      success: Cost Center successfully saved
+      success: Centro de coste exitosamente guardado
     destroy:
-      success: Cost Center successfully deleted
+      success: Centro de coste existosamente eliminado
   count: Cantidad
   create: Crear
   default: Predeterminado
   delete: Borrar
   display: Mostrar
   edit: Editar
-  exit: XXXExit
+  exit: Salir
   food: Comidas
   go_back: Volver
   green: Verde
   gross: Bruto
-  groups:
-    new:
+  groups: Grupos
+    new: nuevo
       edit_group: Editar grupo
       new_group: Nuevo grupo
   guestroom: Sala principal
   host: huésped
-  images:
+  images: imágenes
     errempty: Archivo no válido
     errsize: Tamaño de archivo no válido
     errtype: Tipo de archivo no válido
@@ -372,34 +372,34 @@ es:
   just_order: Sólo el pedido
   kitchen: Cocina
   logout: Desconectar a %{who}
-  move_order_to_table: XXXMove order to different table
+  move_order_to_table: Mover la orden a una mesa diferente
   must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo
     o bien para la variante.
   net: Neto
   new: Nuevo
   no_printing: No imprimir
-  not_found: XXX Not found
-  options:
-    new:
+  not_found: No econtrado
+  options: opciones
+    new: nuevo
       edit_option: Editar opción
-      hidden: XXXdelete
+      hidden: borrar
       new_option: Nueva opción
-      select_all: XXX select all
+      select_all: seleccionar todo
     create:
-      success: Option successfully saved
+      success: Opción exitosamente guardada
     destroy:
-      success: Option successfully deleted
+      success: Opción exitosamente eliminada
   orange: Naranja
-  orders:
+  orders: pedidos
     functions_header_index:
       print_now: Imprimir ahora
-      items_notifications: XXX Notifications
-      show_last_booking: XXX Show last booking
-      show_last_order: XXX Show last order
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      items_notifications: Notificaciones
+      show_last_booking: Mostrar última reserva
+      show_last_order: Mostrar último pedido
+      toggle_between_tables_and_rooms: Alternar entre habitaciones y mesas
     index:
-      delivery_list: XXXDelivery list
-      preparation_list: XXXPreparation list
+      delivery_list: Lista de Reparto
+      preparation_list: Lista de preparación
     invoice_form:
       just_finish: Sólo finalizar pedido
       print_and_finish: Imprimir y finalizar este pedido
@@ -409,18 +409,18 @@ es:
       split_invoice: Dividir factura
       split_this_item: Haga clic para dividir estos items uno por uno
       switch_tax_for_this_item: Haga clic para cambiar el % de impuesto
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      change_money: Cambio
+      set_booking: Asignar reserva
     login_form:
       email: Su e-mail
-      login: seudónimo
+      login: Seudónimo
       password: Clave
       username: Nombre de usuario
     order:
       new: Nuevo pedido
       sum: TOTAL
     served_by: Ud. fue atendido por
-    show:
+    show: mostrar
       back: Volver
       count: Cantidad
       list_of_taxes: Lista de impuestos
@@ -428,78 +428,77 @@ es:
       previous_invoice: Factura anterior
       print_business_invoice: Imprimir factura para empresa
       print_invoice: Imprimir factura
-      search_by_number: XXXSearch by number
+      search_by_number: Buscar por número
       sum: Total
       unit_price: Precio unitario
     storno_form:
       do_separate_items: Separar este item
       do_storno: Anular item
     functions_header_order_form:
-      move_order: Move order to other table
-  pages:
-    edit:
-      edit_page: XXXEdit Page
-      view: XXXView
-      slideshow: XXX Start Slideshow
-    new:
-      new_page: New Page
-  partials:
-    default_blurb: XXXDefault Text
-    error_during_evaluation: ! 'XXXError: '
+      move_order: Mover pedido a otra mesa
+  pages: páginas
+    edit: editar
+      edit_page: Editar página
+      view: Ver
+      slideshow: Iniciar presentación de diapositivas
+    new: nuevo
+      new_page: Nueva página
+  partials: parciales
+    default_blurb: Texto predeterminado
+    error_during_evaluation: ! 'Error'
     no_presentation_found:
-      no_presentations_found: XXXNo template defined for this partial.
+      no_presentations_found: No existe una plantilla definida para este parcial.
   pink: Rosado
   please_enter_item_comment: Deseo especial
   please_enter_item_price: Precio especial
-  presentations:
-    new:
-      edit_presentation: XXXEdit Template
-      new_presentation: XXXNew Template
+  presentations: presentaciones
+    new: nueva
+      edit_presentation: Editar plantilla
+      new_presentation: Nueva plantilla
   print: Imprimir
-  printing_test: XXXPrinting test
-  reports:
-    end_date: XXX End Date
-    save: XXX Save
-    start_date: XXX Start Date
-    usb_device: XXX USB Stick
-    index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-  restaurant: Restaurant
-  roles:
-    new:
+  printing_test: Test de impresión
+  reports: reportes
+    end_date: Fecha de finalización
+    save: Guardar
+    start_date: Fecha de inicio
+    usb_device: Dispositivo USB
+    index: índice
+      backup_database: Copia de seguridad de base de datos
+      backup_logfile: archivo de registro de copia de seguridad
+      header: Reportes
+  restaurant: Restaurante
+  roles: roles
+    new: nuevo
       assign_cost_center: Designar centro de coste
-      cancel_all_items_in_active_order: XXXCancel all items in active order
-      change_waiter: Cambiar mozo
+      cancel_all_items_in_active_order: Cancelar todos los ítems en pedido activo    change_waiter: Cambiar camarero
       decrement_items: items decreyentes
-      delete_items: XXXDelete items by decrementing
+      delete_items: Borrar ítems decrementando
       finish_all_settlements: Cerrar todos los balances
       finish_orders: Finalizar pedidos
       finish_own_settlement: Cerrar balance propio
       make_storno: Anular item
-      manage_articles_categories_options: Gestión de artículos, categorías y opciones
-      manage_business_invoice: Gestion factura para empresa
+      manage_articles_categories_options: Gestionar artículos, categorías y opciones
+      manage_business_invoice: Gestionar factura para empresa
       manage_settings: Configuración
-      manage_users: Gestión usuarios
+      manage_users: Gestiónar usuarios
       move_order: Mover pedido
       move_tables: Mover mesas
       split_items: Separar artículos
       take_orders: Tomar pedidos
       view_all_settlements: Ver todos los balances
       view_statistics: Ver estadísticas
-      counter_mode: XXX Counter mode
-      edit_role: XXX Edit Role
-      manage_customers: XXX Manage Customers
-      manage_pages: XXX Manage Slideshow
-      new_role: XXX New Role
-      permissions: XXX Permissions
-      see_debug: XXX See debug messages
-      see_item_notifications: XXX See item notifications
-    create:
-      success: Role successfully saved
+      counter_mode: Modo de contador
+      edit_role: Editar rol
+      manage_customers: Gestionar clientes
+      manage_pages: Gestionar presentación de diapositivas
+      new_role: Nuevo rol
+      permissions: Permisos
+      see_debug: Ver mensajes de depuración
+      see_item_notifications: Ver notificaciones del ítem
+    create: crear
+      success: Rol guardado exitosamente
     destroy:
-      success: Role successfully deleted
+      success: Rol eliminado exitosamente
   scroll_down: Bajar
   scroll_to_room: Ir a sala
   scroll_up: Subir
@@ -507,79 +506,79 @@ es:
   served_by_X_on_table_Y: ! '%{waiter} lo ha servido en %{table}'
   server_no_response: El servidor Bill Gastro ha dejado de responder. La línea está
     ocupada o bien el vínculo inalámbrico se ha interrumpido.
-  sessions:
-    browser_warning:
+  sessions: sesiones
+    browser_warning: Advertencia del navegador
       continue: Continar
       warning: Ud. no utiliza Mozilla Firefox, Safari, Google Chrome ni Chromium como
         navegador. Bill Gastro ha sido concebido únicamente para dichos navegadores.
-    new:
+    new: nuevo
       email: Su e-mail
       login: seudónimo
       password: Clave
       username: Nombre de usuario
-  settlements:
-    detailed_list:
+  settlements: balances
+    detailed_list: Lista detallada
       count: Cantidad
       order_number_on_table_on_date: Pedido número %{number} en %{table} a las %{time}
       revenue: Ganancia
       total: Total
       unit_price: Precio unitario
-    index:
-      all_cost_centers: Todos
+    index: índice
+      all_cost_centers: Todos 
       end_date: Fecha final
       start_date: Fecha de inicio
       sum_total: Suma total
-    settlement:
-      finish: XXXFinish
-      print: XXXPrint
-      start: XXXStart
-      started_at: XXXStarted at
+    settlement: balance
+      finish: Terminar
+      print: Imprimir
+      start: Iniciar
+      started_at: Iniciado a las
   statistic: Estadística
-  statistics:
+  statistics: Estadísticas
     journal: Diario (orden cronológico)
     weekdays: Día de la semana
-  stocks:
+  stocks: ?
     new:
       edit_stock: Editar stock
       new_stock: Nuevo stock
-  storno: Anulación items
+  storno: Anular items
   sum: Total
-  tables:
-    new:
+  tables: mesas
+    new: nueva
       edit_table: Editar mesa
       new_table: Nueva mesa
     create:
-      success: Table successfully saved
+      success: Mesa guardada exitosamente
     destroy:
-      success: Table successfully deleted
-  taxes:
-    new:
+      success: Mesa eliminada exitosamente
+  taxes: impuestos
+    new: nuevo
       edit_tax: Editar impuesto
       new_tax: Nuevo impuesto
-  users:
-    new:
+  users: usuarios
+    new: nuevo
       edit_user: Editar usuario
       new_user: Nuevo usuario
-    create:
-      success: User successfully saved
+    create: crear
+      success: Usuario creado exitosamente
     destroy:
-      success: User successfully deleted
-  various:
-    cancel: XXX Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
+      success: Usuario eliminado exitosamente
+  various: Varios
+    cancel: Cancelar
+    common_surcharges: Recargos comunes
+    home: Inicio
+    pay: Pagar
+    save: Guardar
     subtotal: Subtotal
-    unamed: Unamed
+    unamed: Sin nombre
   violet: Violeta
-  waiter: Mozo
+  waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos
-  white: XXXWhite
-  winered: XXXWine Red
+  white: Blanco
+  winered: Rojo Vino
   wrong_password: datos de conexión incorrectos
-  yellow: XXXYellow
-  bookings:
+  yellow: amarillo
+  bookings: reservas
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
