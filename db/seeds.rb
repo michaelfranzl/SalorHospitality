@@ -1,8 +1,32 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+puts "beginning"
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
-countries = ['en','at','fr','es','pl','hu']
-languages = ['en','gn','fr','es','pl','hu']
+company_count = 0
+
+if ENV['SEED_MODE'] == 'full'
+  puts "SEED_MODE is 'full'"
+  countries = ['en','at','fr','es','pl','hu','ru','it','tr','cn','el']
+  languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
+  company_count = 2
+elsif ENV['SEED_MODE'] == 'minimal'
+  puts "SEED_MODE is 'minimal'"
+  countries = ['en']
+  languages = ['en']
+  company_count = 1
+else
+  puts "SEED_MODE is 'minimal'"
+  countries = ['en']
+  languages = ['en']
+  company_count = 1
+end
 
 taxes = [20, 10, 0]
 cost_center_names = ['guest','restaurant','broken']
@@ -13,7 +37,7 @@ vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other']
 role_names = {
   'superuser' =>
-    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','view_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug','manage_hotel','manage_roles','item_scribe','assign_tables']},
+    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','manage_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug','manage_hotel','manage_roles','item_scribe','assign_tables','download_database','remote_support']},
   'owner' =>
     {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
   'host' =>
@@ -63,7 +87,7 @@ Article.delete_all
 Quantity.delete_all
 
 
-2.times do |c|
+company_count.times do |c|
   company = Company.new :name => "Company #{ c }"
   r = company.save
   puts "Company #{ c } created" if r == true
@@ -275,10 +299,18 @@ Quantity.delete_all
       guest_type_objects << gt
     end
     puts " Creating Seasons for #{c} #{v}"
-    s1 = Season.create :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
-    s2 = Season.create :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
-    s3 = Season.create :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
-    s4 = Season.create :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1.save
+    s1.calculate_duration
+    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2.save
+    s1.calculate_duration
+    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3.save
+    s1.calculate_duration
+    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4.save
+    s1.calculate_duration
     season_objects = [s1,s2,s3,s4]
 
     4.times do |i|

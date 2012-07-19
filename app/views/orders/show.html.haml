@@ -3,13 +3,13 @@
   %span#nr_display_keyboard.display_keyboard
 
 %div#buttons
-  - if local_variant?
+  - if @current_company.mode == 'local'
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
       %a{ :onclick => "update_order({id:#{@order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t(:print) } #{ p.name }" }
   - else
-    %a{ :onclick => "update_order({id:#{@order.id},jsaction:'mark_print_pending',printer:#{p.id}});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
+    %a{ :onclick => "update_order({id:#{@order.id},jsaction:'mark_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
   %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
   = link_to '', "/orders/refund/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:refund)

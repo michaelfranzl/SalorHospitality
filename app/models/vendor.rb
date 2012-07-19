@@ -1,3 +1,11 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
@@ -80,7 +88,7 @@ class Vendor < ActiveRecord::Base
       self.update_attribute "largest_#{model_name_singular}_number", nr
     else
       #puts '# find Order with largest nr attribute from database. this should happen only once when a new db'
-      last_model = self.send(model_name_plural).existing.where('nr is not NULL').last
+      last_model = self.send(model_name_plural).existing.where('nr is not NULL OR nr <> 0').last
       nr = last_model ? last_model.nr + 1 : 1
       self.update_attribute "largest_#{model_name_singular}_number", nr
     end
@@ -201,7 +209,7 @@ class Vendor < ActiveRecord::Base
 
     seasons = Hash.new
     current_season = Season.current(self)
-    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => sn.from_date, :t => sn.to_date, :c => sn == current_season } }
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => I18n.l(sn.from_date, :format => :date_iso), :t => I18n.l(sn.to_date, :format => :date_iso), :c => sn == current_season, :d => sn.duration } }
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }

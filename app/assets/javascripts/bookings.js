@@ -1,3 +1,13 @@
+/*
+Copyright (c) 2012 Red (E) Tools Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 var _mouse = { x: 0, y: 0};
 var _bounding_boxes = {x:{},y:{}};
 var coords = {};
@@ -147,7 +157,7 @@ function is_booked_now(booking) {
   fdate = parseInt(fdate.getMonth() + '' + fdate.getDate());
   tdate = parseInt(tdate.getMonth() + '' + tdate.getDate());
   now = parseInt(now.getMonth() + '' + now.getDate());
-  console.log(now,fdate,tdate);
+  //console.log(now,fdate,tdate);
   if (now >= fdate && now <= tdate) {
     return true
   } else {
@@ -236,6 +246,15 @@ function booking_mouse_out () {
   var booking_widget = $('#booking_' + $(this).attr('booking_id'));
   booking_widget.css({'z-index':1005});
 }
+
+function finish_booking(booking) {
+  var booking_widget = $('#booking_' + booking.id);
+  booking_widget.addClass('room-booking-finished');
+  booking_widget.removeClass('room-booking-active');
+  booking_widget.draggable('disable');
+  booking_widget.find('.name').unbind('click');
+}
+
 /* 
  * This is the function that we use to actually draw the booking, it should be completely disconnected from everything,
  * just provide it with a booking object, and it will draw it where it is supposed to be.
@@ -284,6 +303,10 @@ function draw_booking(booking) {
       booking_widget.remove();
     }
     
+    if (booking.finished == true) {
+      finish_booking(booking);
+    }
+    
     d = get_date(booking.from);
     if (y == 1) {
       negative_offset += 10;
@@ -326,7 +349,7 @@ function draw_booking(booking) {
                                             booking_build_inner_div(booking), 
                                             $('#rooms')
   );
-  if (is_booked_now(booking)) {
+  if (is_booked_now(booking) && !booking.finished == true) {
     booking_widget.addClass('room-booking-active');
   } else if (booking.finished == true) {
     booking_widget.addClass('room-booking-finished');
@@ -341,7 +364,10 @@ function draw_booking(booking) {
   booking_widget.css({height: widget_height});
   booking_widget.on('mouseenter',booking_mouse_enter);
   booking_widget.on('mouseout',booking_mouse_out);
-  
+  if (booking.finished == true) {
+    finish_booking(booking);
+    return;
+  }
   booking_widget.draggable({
     drag: function (event,ui) {
       if (_keys_down.ctrl) { // _keys_down is setup in application-generic.js

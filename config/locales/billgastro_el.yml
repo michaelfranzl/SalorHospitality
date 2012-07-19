@@ -9,6 +9,21 @@ el:
       new_vendor: Νέος Προμηθευτής
   activerecord:
     attributes:
+      customer:
+        first_name: Όνομα
+        last_name: Επώνυμο 
+        full_name: Ονοματεπώνυμο 
+        company_name: Όνομα Εταιρίας
+        address: Διεύθυνση 
+        city: Πόλη
+        state: Νομός
+        postalcode: Ταχυδρομικός Κώδικας 
+        m_number: Κωδικός Κάρτας Επιβράβευσης 
+        m_points: Πόντοι Κάρτας Επιβράβευσης
+        email: ηλεκτρονική διεύθυνση
+        telephone: Τηλέφωνο
+        cellphone: κινητό
+        hidden: διαγράψτε
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -101,7 +116,7 @@ el:
         login: Συνδεθείτε
         password: Κωδικός πρόσβασης
         role: Ρόλος
-        screenlock_timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (δευτερόλεπτα)
+        screenlock_timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         tables: Πίνακες
         title: Τίτλος
       vendor_printer:
@@ -151,8 +166,8 @@ el:
         ticket_item_separator: Διαχωριστική γραμμή αποκόμματος
         ticket_tall_font: Ψηλή γραμματοσειρά αποκόμματος
         ticket_wide_font: Φαρδιά γραμματοσειρά αποκόμματος
-        time_offset: Διόρθωση χρόνου (ώρες)
-        timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (δευτερόλεπτα)
+        time_offset: Διόρθωση χρόνου (hours)
+        timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
     models:
       room:
@@ -370,7 +385,7 @@ el:
     errsize: Άκυρο μέγεθος αρχείου
     errtype: Άκυρος τύπος αρχείου
   invoice: Τιμολόγιο
-  invoice_numer_X_at_time: Αριθμός Τιμολογίου %{αριθμός} στις %{ημερομηνίαώρα}
+  invoice_numer_X_at_time: Αριθμός Τιμολογίου %{number} στις %{datetime}
   invoices: Τιμολόγια
   is_no_number: δεν είναι αριθμός.
   items:
@@ -383,12 +398,11 @@ el:
   layouts:
     application:
       submit_scribe: OK
-  logout: αποσυνδεθείτε %{ποιος}
+  logout: αποσυνδεθείτε %{who}
   messages:
-    hello_username: Γεια χαρά %{όνομα}!
+    hello_username: Γεια χαρά %{name}!
   move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
-  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
-    το αντικείμενο είτε για τη Μεταβλητή.
+  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για το αντικείμενο είτε για τη Μεταβλητή.
   net: Καθαρό
   new: Νέο
   no_printing: Όχι εκτύπωση
@@ -495,8 +509,7 @@ el:
       finish_orders: Τελειώστε τις παραγγελίες
       finish_own_settlement: Τελειώστε τον δικό σας διακανονισμό
       make_storno: Ακυρώστε αντικείμενα
-      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και
-        επιλογές
+      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές
       manage_business_invoice: Διαχειριστείτε το εταιρικό τιμολόγιο
       manage_customers: Διαχειριστείτε Πελάτες
       manage_pages: Διαχειριστείτε Προβολή Εικόνων
@@ -520,15 +533,13 @@ el:
   scroll_to_room: Πηγαίνετε στο δωμάτιο
   scroll_up: Κινηθείτε προς τα πάνω
   send_and_go_back: Αποθηκεύστε κι επιστρέψτε
-  served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{σερβιτόρο} στο %{τραπέζι}
+  served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
   server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι
     απασχολημένος ή η διασύνδεση έχει διακοπεί.
   sessions:
     browser_warning:
       continue: Συνεχίστε
-      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium
-        ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε
-        αποκλειστικά για αυτά τα προγράμματα περιήγησης.
+      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε αποκλειστικά για αυτά τα προγράμματα περιήγησης.
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη
@@ -537,8 +548,8 @@ el:
   settlements:
     detailed_list:
       count: Μτρήστε
-      order_number_on_table_on_date: ! '%{παραγγελία} αριθμός %{αριθμός} στο %{τραπέζι}
-        στις %{ώρα}'
+      order_number_on_table_on_date: ! '%{order} αριθμός %{number} στο %{table}
+        στις %{time}'
       revenue: Έσοδα
       total: Ολικό
       unit_price: Τιμή μονάδας
@@ -555,8 +566,8 @@ el:
   split_order: Μοιράστε την παραγγελία
   statistic: Στατιστικό
   statistics:
-    journal: Ημερολόγιο (χρονολογική λίστα)
-    weekdays: Μέρες Βδομαδας
+    journal: Ημερολόγιο (chronological list)
+    weekdays: Μέρες Βδομάδας
   stocks:
     new:
       edit_stock: Επεξεργασία Αποθέματος
@@ -592,7 +603,7 @@ el:
   yellow: Κίτρινο
   bookings:
     invoice_item_list:
-      served_by_X: Σερβιριστήκατε από %{χρήστη}
+      served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
   room_prices:

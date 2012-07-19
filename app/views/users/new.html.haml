@@ -1,4 +1,4 @@
-t%style= generate_color_style
+%style= generate_color_style
 
 %h2= @user.new_record? ? (t '.new_user') : (t '.edit_user')
 
@@ -56,6 +56,10 @@ t%style= generate_color_style
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :automatic_printing
+              %td= user_form.check_box :automatic_printing
+              
         - if @current_user.role.permissions.include?('assign_tables')
           %td
             = user_form.label :tables

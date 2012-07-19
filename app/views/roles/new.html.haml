@@ -119,6 +119,12 @@
   %br
   %input#permissions_assign_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_tables', :checked => role_form.object.permissions.include?('assign_tables') }
   %label{ :for => 'permissions_assign_tables' }= t '.assign_tables'
+  %br
+  %input#permissions_download_database{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'download_database', :checked => role_form.object.permissions.include?('download_database') }
+  %label{ :for => 'permissions_download_database' }= t '.download_database'
+  %br
+  %input#permissions_remote_support{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'remote_support', :checked => role_form.object.permissions.include?('remote_support') }
+  %label{ :for => 'permissions_remote_support' }= t '.remote_support'
 
 :javascript
   $('#role_name').keyboard( {openOn: '' } );

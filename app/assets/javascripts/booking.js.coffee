@@ -1,3 +1,11 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 # document ready code
 $ ->
   connect 'salor_hotel.refresh_db', 'ajax.update_resources.success', window.update_salor_hotel_db
@@ -32,15 +40,19 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'DROP TABLE IF EXISTS surcharges;'
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
+    tx.executeSql 'DROP TABLE IF EXISTS seasons;'
     tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
+    tx.executeSql 'CREATE TABLE seasons (id INTEGER PRIMARY KEY, name STRING, from_date DATETIME, to_date DATETIME, duration INTEGER);'
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
       tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, season_id, base_price) VALUES (?,?,?,?,?);', [k, v.gt, v.rt, v.sn, v.p]
+    $.each resources.sn, (k,v) ->
+      tx.executeSql 'INSERT INTO seasons (id, name, from_date, to_date, duration) VALUES (?,?,?,?,?);', [k, v.n, v.f, v.t, v.d]
 
 # Called when clicking on a room. Displays the booking form dynamically
 window.display_booking_form = (room_id) ->
@@ -53,6 +65,7 @@ window.display_booking_form = (room_id) ->
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['from_date'] = date
+               window.update_booking_duration()
   }
   to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {

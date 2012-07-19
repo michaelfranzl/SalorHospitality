@@ -16,6 +16,10 @@
   %table
     %tr
       %td
+        %br
+        = vendor_form.label :name
+        = vendor_form.text_field :name
+        %br
         = vendor_form.fields_for :images do |image_form|
           = vendor_form.label image_form.object.image_type.to_s
           = image_form.file_field :file_data
@@ -64,12 +68,8 @@
         %br
         = vendor_form.check_box :ticket_display_time_order
         = vendor_form.label :ticket_display_time_order, :class => 'wide'
-        - if saas_pro_variant?
-          %br
-            = vendor_form.label :automatic_printing
-            = vendor_form.check_box :automatic_printing
 
-        - if local_variant?
+        - if @current_company.mode == 'local'
           %div#vendor_printers
             %h3= t('activerecord.models.vendor_printer.other')
             %p#add_printer

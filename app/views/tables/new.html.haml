@@ -43,6 +43,8 @@
         %td= table_form.label :enabled, Table.human_attribute_name(:enabled)
         %td= table_form.check_box :enabled
       %tr
+        %td= link_to image_tag('button_small_delete.png', :title => Article.human_attribute_name(:hidden), :alt => Table.human_attribute_name(:hidden)), table_path(table_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless table_form.object.new_record?
+      %tr
         %td
         %td= table_form.hidden_field :top, :size => '10'
       %tr

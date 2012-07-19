@@ -1,12 +1,12 @@
 - oid = invoice_form.id
 
 %div.invoice{ :id => "model_#{oid}" }
-  - if local_variant?
+  - if @current_company.mode == 'local'
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
       %a{:onclick => "update_order({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
-  - else
+  - elsif @current_company.mode == 'saas'
     %a{ :onclick => "update_order({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
 
   - if not invoice_form.finished

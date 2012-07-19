@@ -40,9 +40,7 @@
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
-    %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
-
-    = raw SalorApi.run('views.layouts.application.header')
+    %script== automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode == 'saas' and workstation?) ? 'true' : 'false' };
 
 
   %body
@@ -66,6 +64,7 @@
         .left
           = image_tag 'salorgastro-tiny.png'
           == Version #{ SalorGastro::Application::VERSION }
+          == #{ @current_company.name } #{ @current_vendor.name }
         .right
           &copy; 2012 Red (E) Tools Ltd.
           = image_tag 'red-e-tiny.png'
