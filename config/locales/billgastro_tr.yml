@@ -1,3 +1,4 @@
+---
 tr:
   activerecord:
     models:
@@ -79,7 +80,36 @@ tr:
       report:
         one: XXXReport
         other: XXXReports
-
+      booking:
+        one: Booking
+        other: Bookings
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
+        one: Payment Method
+        other: Payment Methods
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Saison
+        other: Saisons
+      surcharge:
+        one: Surcharge
+        other: Surcharges
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
     attributes:
       article:
         price: Fiyat
@@ -87,13 +117,17 @@ tr:
         hidden: Silmek
         description: Ürün tarifi
         category_id: Kategori
-        menucard: Aktif
         usage: Kullanım
+        active: XXX active
+        image: XXX Image
+        tax_id: XXX Tax
       option:
         price: Fiyat
         category_id: Kategori
         name: Isim
         hidden: XXXDelete
+        no_ticket: XXX Dont' print ticket
+        separate_ticket: XXX Cut ticket
       quantity:
         prefix: Isim
         postfix: Ek miktar
@@ -118,16 +152,18 @@ tr:
         height_mobile: Yükseklik mobile
         enabled: aktiv?
         hidden: löschen?
+        rotate: XXX rotate?
       category:
         name: Isim
         tax_id: Vergi derecesi
-        sort_order: Bölümler
         icon: Sembol
         custom_icon: Benim Sembol
         color: Renk
         food: Yemek?
         vendor_printer_id: XXXPrinter
         hidden: XXXdelete
+        separate_print: XXX Cut ticket
+        user_id: XXX Preparing User
       cost_center:
         name: Isim
         description: Tarif
@@ -145,37 +181,14 @@ tr:
         tables: XXXTables
         active: XXXactive?
         hidden: XXXdelete?
-      company:
-        name: Şirket
-        subdomain: Subdomain
-        saas: Online Versiyonu
-        automatic_printing: Otomatik basma imkanı
-        printer_guestroom: Basma makinası müşteri odasında
-        printer_bar: Basma makinası barda
-        printer_kitchen: Basma makinası mutfakda
-        email: E-Mail
-        internet_address: Internet adresi
-        invoice_slogan1: Fatura informasyonu1
-        invoice_slogan2: Fatura informasyonu2
-        bank_account1: XXXBank account detail 1
-        bank_account2: XXXBank account detail 2
-        country: XXXRules for country
-        invoice_subtitle: Fatura Fatura informasyonu3
-        revenue_service_tax_number: VAT numarısı
-        address: adres
-        time_offset: XXXTime Offset (hours)
-        timeout: XXXScreenlock Timeout (seconds)
-        res_fetch_url: XXXFetch Reservations
-        res_confirm_url: XXXConfirm Reservations
-        use_order_numbers: XXXUse order numbers?
-        rlogo_header: Receipt logo header
-        rlogo_footer: Receipt logo footer
+        screenlock_timeout: XXX Screenlock timeout (sec.)
       role:
         name: XXXName
       vendor_printer:
         name: XXXName
         path: XXXPath
         hidden: XXXDelete
+        copies: XXX Copies
       settlement:
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount
@@ -190,11 +203,62 @@ tr:
       page:
         active: XXXactive
         hidden: XXXdelete
+        color: XXX Color
+        height: XXX Height
+        image: XXX Image
+        width: XXX Width
       partial:
         blurb: XXXBlurb
         active: XXXaktiv
         hidden: XXXdelete
-
+      guest_type:
+        hidden: delete
+        name: Name
+        taxes: Taxes
+      room_price:
+        base_price: Base Price
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        room_type_id: Zimmerklasse
+        season_id: Season
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from_date: From
+        hidden: delete
+        name: Name
+        to_date: To
+      surcharge:
+        amount: Amount
+        guest_type_id: Guest Type
+        hidden: delete
+        name: Name
+        radio_select: Radio Select
+        season_id: Season
+      tax_amount:
+        amount: Amount
+        tax_id: Tax
+      vendor:
+        automatic_printing: Automatic printing
+        country: Rules for country
+        hidden: delete
+        invoice_footer_blurb: Invoice footer blurb
+        invoice_header_blurb: Invoice header blurb
+        name: Name
+        receipt_footer_blurb: Receipt footer blurb
+        receipt_header_blurb: Receipt header blurb
+        saas: Online variant
+        ticket_display_time_order: Time and invoice number on ticket
+        ticket_item_separator: Ticket Separation Line
+        ticket_tall_font: Ticket tall font
+        ticket_wide_font: Ticket wide font
+        time_offset: Time correction (hours)
+        timeout: Screen lock timeout (seconds)
+        use_order_numbers: Use order numbers
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
   articles:
     index:
       list_all: Herseyi göster
@@ -202,13 +266,13 @@ tr:
       preview: Öngörüs
       sort: XXXSort
       update: XXXUpdate!
+      view: XXX View
     new:
       new_article: Yeni ürün
       edit_article: Ürün islemek
       add_quantity: Varyant eklemek
       normal: normal
       takeaway: götürmek için
-      weighing: tartmak için
     listall:
       all_articles: Bütün ürünlerin listesi
     find:
@@ -217,21 +281,24 @@ tr:
         other: Varyant
     sort_index:
       sort: Sort articles
-
+    create:
+      success: Article was successfully created
+    destroy:
+      success: Article was successfully deleted
   options:
     new:
       new_option: Yeni secenekler
       edit_option: Seçeneğini islemek
       hidden: XXXdelete
-
+      select_all: XXX select all
+    create:
+      success: Option successfully saved
+    destroy:
+      success: Option successfully deleted
   blackboard:
     index:
       update: Güncelleme
-
   categories:
-    index:
-      foods: Yemekler
-      drinks: Içecekler
     new:
       new_category: Yeni Kategori üretmek
       edit_category: Kategori islemek
@@ -248,7 +315,7 @@ tr:
       rosewineglass: Gülrengi sarap
       redwineglass: Kirmizi sarap
       whitewineglass: Beyaz sarap
-      rosewinebottle: Sise Acikkirmizi sarap 
+      rosewinebottle: Sise Acikkirmizi sarap
       redwinebottle: Sise kirmizi sarap
       whitewinebottle: Sise beyaz sarap
       sparkling: Köpüklü sarap
@@ -256,7 +323,12 @@ tr:
       teapot: Caydanlık
       tea: Cay bardagı
       blank: bos
-
+      noodles: XXX Noodles
+      soup: XXX Soup
+    create:
+      success: Category successfully saved
+    destroy:
+      success: Category successfully deleted
   cost_centers:
     index:
       active: aktif
@@ -264,17 +336,18 @@ tr:
     new:
       new_cost_center: Yeni maliyet merkezi
       edit_cost_center: Maliyet merkezi islemek
-
+    create:
+      success: Cost Center successfully saved
+    destroy:
+      success: Cost Center successfully deleted
   groups:
     new:
       new_group: Yeni depo grubu
       edit_group: Depo grubu islemek
-
   stocks:
     new:
       new_stock: Yeni depo ürünü
       edit_stock: Depo ürünü islemek
-
   orders:
     index:
       preparation_list: XXXPreparation list
@@ -295,45 +368,41 @@ tr:
       list_of_taxes: Vergi listesi
       search_by_number: XXXSearch by number
     invoice_form:
-      split_invoice: Faturayi paylasmak/bölmek
-    login_form:
-      username: Kullanıcı
-      login: Giris yap
-      password: Sifre
-      email: Sizin E-mailiniz
-      realname: Isminiz
-      your_ip_address: IP-Informasyon
-    go_to_tables:
-      warning_only_x_orders_left: "Dikkat, sadece %{credits} sipariş etmek icin hakkiniz var. Hemen www.billgastro.com sipariş kontürlerinizi doldurunuz."
-      warning_only_x_orders_left_upgrade_here: "Dikkat, sadece %{credits} sipariş etmek icin hakkiniz var. Buradan <a href='http://www.billgasto.com'>sipariş kontürlerinizi doldurunuz.</a>"
-    functions_header_index:
-      show_last_order: Son siparişi göster
-      print_now: Hemen basin
-    functions_header_order_form:
-      move_order: siparişi kaydır
-    storno_form:
-      do_separate_items: Posizyonu ayır
-      do_storno: Iptal et
-    invoice_form:
       set_cost_center: Sipariş icin maliyet merkezini ayarla
       print_and_finish: Fişi bas ve siparişi sonucla
       just_finish: Fişi sonucla
       set_taxes: Vergi derecesini kararlaştır
       split_invoice: Faturayi paylasmak/bölmek
       set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
-      split_this_item: Posizyonları  
-      switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin tiklayin
-      
+      split_this_item: Posizyonları
+      switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin
+        tiklayin
+      change_money: XXX Change
+      set_booking: XXX Assign to Booking
+    login_form:
+      username: Kullanıcı
+      login: Giris yap
+      password: Sifre
+      email: Sizin E-mailiniz
+    functions_header_index:
+      show_last_order: Son siparişi göster
+      print_now: Hemen basin
+      items_notifications: XXX Notifications
+      show_last_booking: XXX Show last booking
+      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+    functions_header_order_form:
+      move_order: siparişi kaydır
+    storno_form:
+      do_separate_items: Posizyonu ayır
+      do_storno: Iptal et
   settlements:
     index:
       start_date: Baslangic
       end_date: Bitis
       all_cost_centers: Hepsi
       sum_total: Toplam hesap
-    new:
-      set_date: Hesap tarihi
     detailed_list:
-      order_number_on_table_on_date: '%{order} %{number} auf %{table} am %{time}'
+      order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
       count: Miktar
       unit_price: Tane
       total: Hepsi
@@ -343,59 +412,54 @@ tr:
       finish: XXXFinish
       print: XXXPrint
       started_at: XXXStarted at
-
   items:
     item_tablerow:
       clear: XXXClear
       done: XXXDone
       no_printing: XXXNo printing
-
   sessions:
     browser_warning:
-      warning: Mozilla Firefox, Safari, Google Chrome veya Chromium Browser olarak kullanmiyorsunuz. Bill Gastro bu Browserlar icin hazirlanmisdir.
+      warning: Mozilla Firefox, Safari, Google Chrome veya Chromium Browser olarak
+        kullanmiyorsunuz. Bill Gastro bu Browserlar icin hazirlanmisdir.
       continue: Devam
     new:
       username: Kullanici
       login: Giris Yap
       password: Sifre
       email: Sizin E-Mailiniz
-      realname: Isminiz
-      your_ip_address: IP-Informasyonuz
-
   statistic: Istatistik
   statistics:
     weekdays: Is günleri
     journal: Detayla (tarihli) liste
-
   tables:
     new:
       new_table: Yeni masa
       edit_table: Masa islemek
-
+    create:
+      success: Table successfully saved
+    destroy:
+      success: Table successfully deleted
   taxes:
     new:
       new_tax: Yeni vergi derecesi
       edit_tax: Vergi derecesini islemek
-
   users:
     new:
       new_user: Yeni kullanici
       edit_user: Kullanici islemek
-
-  companies:
-    edit:
-      add_printer: XXXAdd printer
-      backup_database: XXXBackup database
-    update:
-      config_successfully_updated: Belirtiler yenilendi!
-
+    create:
+      success: User successfully saved
+    destroy:
+      success: User successfully deleted
   reports:
-    reports: XXX Reports
     save: XXX Save
     usb_device: XXX USB Stick
     start_date: XXX Start Date
     end_date: XXX End Date
-
+    index:
+      backup_database: Backup database
+      backup_logfile: Backup logfile
+      header: Reports
   roles:
     new:
       take_orders: XXXTake orders
@@ -417,44 +481,47 @@ tr:
       view_statistics: XXXView statistics
       manage_users: XXXManage users
       manage_settings: XXXManage settings
-
+      counter_mode: XXX Counter mode
+      edit_role: XXX Edit Role
+      manage_customers: XXX Manage Customers
+      manage_pages: XXX Manage Slideshow
+      new_role: XXX New Role
+      permissions: XXX Permissions
+      see_debug: XXX See debug messages
+      see_item_notifications: XXX See item notifications
+    create:
+      success: Role successfully saved
+    destroy:
+      success: Role successfully deleted
   partials:
-    error_during_evaluation: 'XXXError: '
+    error_during_evaluation: ! 'XXXError: '
     default_blurb: XXXDefault Text
     no_presentation_found:
       no_presentations_found: XXXNo template defined for this partial.
-      
   presentations:
     new:
       new_presentation: XXXNew Template
       edit_presentation: XXXEdit Template
-      
   pages:
     edit:
       edit_page: XXXEdit Page
       view: XXXView
-
+      slideshow: XXX Start Slideshow
+    new:
+      new_page: New Page
   images:
     errempty: Geçersiz dosya
     errsize: Geçersiz dosya boyutu
     errtype: Geçersiz dosya türü
-
   delete: Silmek
-  are_you_sure: 'Emin misiniz?'
+  are_you_sure: Emin misiniz?
   edit: Islemek
   create: Üretmek
   new: Yeni
   print: Basmak
   display: Göstermek
-  logout: '%{who} cikis yapmak'
-  
-  blackboard_generic_name: Menü tahtasi
+  logout: ! '%{who} cikis yapmak'
   waiterpad_generic_name: Siparis listesi
-  menucard_generic_name: Menü karti
-  unsettled_orders_generic_name: XXXShifts
-
-  print_kitchenlist: Mutfak listesi basmak
-  recent_orders: Hesaplari bak
   scroll_down: Asayi in
   scroll_up: Yukari cik
   scroll_to_room: Odayi gir
@@ -463,19 +530,14 @@ tr:
   cancel_and_go_back: Iptal et ve geriye cik
   clear_order_and_go_back: XXXClear order and go back
   move_order_to_table: XXXMove order to different table
-  finish_order: Siparisi bitir
-
   invoice: Fatura
   invoices: Faturalar
   storno: Iptal
   dateandtime: Tarih
   sum: Toplam
   count: Miktar
-
   net: Net
-  value_added_tax: KDV
   gross: Brüt
-
   violet: Mor
   orange: Portakal
   pink: Pembe
@@ -486,52 +548,86 @@ tr:
   black: XXXBlack
   yellow: XXXYellow
   winered: XXXWine Red
-
   food: Yemekler
-  drink: Içecekler
-  tobacco: Tütün
-
   guestroom: Müşteri odası
   kitchen: Mutfak
   bar: Bar
-  dummy: Deneme
-
   restaurant: Restaurant
-  auxiliary_waiter: Auxiliary Waiter
   waiter: Waiter
-  chief_waiter: Chief waiter
   host: Host
   admin: Admin
-  superuser: Superuser
-
-# TRANSLATIONS FOR MODELS
-  must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde islemek gerikiyor.
+  must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde
+    islemek gerikiyor.
   is_no_number: Rakam degil
-
-# TRANSLATIONS FOR CONTROLLERS
-  was_successfully_deleted: '%{what} silindi.'
-  there_are_no_open_settlements: Acik hesap kalmadi.
-  logout_successful: Cikis yaptiniz.
-  user_not_found: Kullanici bulunmadi.
   wrong_password: Yanlis sifre.
-
-  served_by_X_on_table_Y: Size %{table} %{waiter} hizmet etti. 
+  served_by_X_on_table_Y: Size %{table} %{waiter} hizmet etti.
   invoice_numer_X_at_time: Fatura No. %{number},  %{datetime}
-
-  please_enter_email_and_realname: Lütfen isminzi ve e-mail adresinizi yaziniz.
-
   default: XXXDefault
-  germany: XXXGermany
-  austria: XXXAustria
-
   not_found: XXX Not found
-
-  # Translations for Javascript files
   please_enter_item_comment: Özel istek
   please_enter_item_price: Fiyet
-  server_no_response: 'Server bağlantısı kesildi'
+  server_no_response: Server bağlantısı kesildi
   just_order: XXXJust order
   no_printing: XXXNo printing
   copy: XXXCopy
   exit: XXXExit
   printing_test: XXXPrinting test
+  bookings:
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+    show:
+      search_by_number: Search by number
+  finish: XXX Just Finish
+  layouts:
+    application:
+      submit_scribe: OK
+  messages:
+    hello_username: Hello %{name}!
+  print_and_finish: XXX Finish and print
+  room_prices:
+    index:
+      generate_price_skeleton: Generate price skeleton
+    new:
+      edit_room_price: Edit room price
+      new_room_price: New room price
+  room_types:
+    new:
+      edit_room_type: Edit room type
+      new_room_type: New room type
+  rooms:
+    new:
+      edit_room: Edit Room
+      new_room: New Room
+  scopes:
+    active: Active
+    waiterpad: Waiterpad
+  seasons:
+    new:
+      edit_season: Edit Season
+      new_season: New Season
+  shared:
+    invoice_tax_list:
+      list_of_taxes: List of Taxes
+  split_order: XXX Split order
+  surcharges:
+    new:
+      add_tax_amount: Add tax amount
+      common_surcharge: Common Surcharge
+      edit_surcharge: Edit Surcharge
+      new_surcharge: New Surcharge
+  tax_amount: XXX Amount
+  various:
+    cancel: Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
+  vendors:
+    index:
+      edit: Edit
+      switch_to: Select
+    new:
+      edit_vendor: Edit Vendor
+      new_vendor: New Vendor

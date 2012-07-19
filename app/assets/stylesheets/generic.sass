@@ -1,3 +1,11 @@
+// Copyright (c) 2012 Red (E) Tools Ltd.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 $link_color: white
 $error_text: #C00
 $lightgray: #EEE
@@ -15,6 +23,9 @@ $pink: #cd0052
 $green: #75b10d
 $blue: #136880
 $blank: #27343b
+
+div.area
+  :height 460px
 
 .errorExplanation
   :font-size small
@@ -66,8 +77,6 @@ span.item_price
 
 td.item_configuration
   :text-align center
-
-
 
 a.iconbutton
   :width 50px
@@ -124,18 +133,20 @@ a.kitchenlist_button
 a.invoice_button
   :background-image url(button_mobile_invoice.png)
 
-a.splitinvoice_button
-  :background-image url(button_mobile_splitinvoice.png)
+a.invoice_hotel_button
+  :background-image url(button_mobile_invoice_hotel.png)
 
 a.splitinvoice_button
   :background-image url(button_mobile_splitinvoice.png)
 
-a.storno_button
-  :background-image url(button_mobile_storno.png)
-  :margin-top 50px
+a.splitinvoice_button
+  :background-image url(button_mobile_splitinvoice.png)
+
+a.clear_button
+  :background-image url(button_mobile_clear.png)
 
 a.refund_button
-  :background-image url(button_mobile_storno.png)
+  :background-image url(button_mobile_refund.png)
 
 a.print2_button
   :background-image url(button_mobile_print2.png)
@@ -320,6 +331,8 @@ span.order-customer
 table#itemstable
   td#inputfields
     :display none
+  td.zero_price
+    :background-color #552222
 
 div#note_for_order
   :display none
@@ -345,13 +358,16 @@ canvas
   :background-color white
 
 span.payment_method
-  :padding 5px 10px
+  :padding 5px 2px
   :display inline-block
 
 div.payment_method_row
   input
     :width 60px
     :font-size 130%
+  div.delete
+    :display inline-block
+    :margin-left 10px
 
 span.payment_method.selected
   :-moz-border-radius 4px
@@ -397,11 +413,17 @@ div.booking_form
   div.guest_type
     :background-color $billgastroblue1
   
-  div.season
+  div.season,
+  div#choose_room_container
     :background-color $billgastrogrey1
   
   div.surcharge_col.booking_item_total
     :font-weight bold !important
+
+  div.surcharge_col.booking_item_delete
+    :background-image url(button_small_delete.png)
+    :width 23px
+    :cursor pointer
   
   div#booking_total
     :font-size 150%
@@ -453,3 +475,31 @@ div#ui-datepicker-div
       :background-color $billgastrogrey2
     td.ui-datepicker-unselectable
       :background-color transparent
+
+div.delete 
+  :background-image url(button_small_delete.png)
+  :width 32px
+  :height 35px
+  :cursor pointer
+  :position absolute
+div.add-button
+  :background-image url(button_small_plus.png)
+  :width 32px
+  :height 35px
+  :cursor pointer
+  :position absolute
+div.button_menu
+  :background-color $billgastrogrey1
+  :border 1px solid $billgastrogrey2
+  :border-bottom none
+  :padding 3px
+  :padding-left 10px
+  :padding-top 5px
+  :border-radius 5px
+  :position absolute
+  :height 40px
+
+  
+  
+
+  

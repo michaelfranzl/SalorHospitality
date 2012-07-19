@@ -1,8 +1,11 @@
 /*
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+Copyright (c) 2012 Red (E) Tools Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /* ======================================================*/
@@ -33,6 +36,8 @@ var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
 
+var gastro = {functions:{ report:{} }, variables:{report:{}}};
+var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -51,29 +56,7 @@ $(function(){
 /* ======================================================*/
 /* ============ DYNAMIC VIEW SWITCHING/ROUTING ==========*/
 /* ======================================================*/
-/*
-   Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
- */
-function emit(msg,packet) {
-  $('body').triggerHandler({type: msg, packet:packet});
-}
 
-function connect(unique_name,msg,fun) {
-  var pcd = _get('plugin_callbacks_done');
-  if (!pcd)
-    pcd = [];
-  if (pcd.indexOf(unique_name) == -1) {
-    $('body').on(msg,fun);
-    pcd.push(unique_name);
-  }
-  _set('plugin_callbacks_done',pcd)
-}
-function _get(name) {
-  return $.data(document.body,name);
-}
-function _set(name,value) {
-  return $.data(document.body,name,value);
-}
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
@@ -87,6 +70,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#tables').show();
     $('#rooms').hide();
+    $('#areas').show();
     //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
@@ -133,10 +117,12 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      submit_json.model.table_id = model_id;
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
@@ -183,6 +169,7 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#tables').hide();
     $('#rooms').hide();
+    $('#areas').hide();
     $('#inputfields').html('');
     $('#itemstable').html('');
     $('#functions_header_invoice_form').show();
@@ -198,20 +185,24 @@ function route(target, model_id, action, options) {
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
     submit_json.target = 'rooms';
-    $('#booking_form').hide();
-    $('#tables').hide();
-    $('#areas').hide();
-    $('#rooms').show();
-    $('#functions_header_index').show();
+    // See bookings.js show_rooms_interface() I did this because the showing/hiding, and doing of stuff needs
+    // to be in its own function so that it can be attached to click handlers
+    emit("salor_hotel.render_rooms",{model_id:model_id, action:action, options:options});
+    _set("salor_hotel.bookings.dirty",true);
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
       send_json('booking_' + model_id);
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
+      emit("send.booking",submit_json);
       send_json('booking_' + model_id);
     } else if (action == 'pay') {
       submit_json.jsaction = 'pay';
+      send_json('booking_' + model_id);
+    } else if (action == 'update_bookings') {
+      update_booking_for_room(model_id,options);
+    } else if (action == 'move_booking') {
       send_json('booking_' + model_id);
     } else {
       submit_json = {};
@@ -226,14 +217,29 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOM ===============
   } else if ( target == 'room' ) {
+    // I have switched this to show a new booking every time
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    surcharge_headers = {guest_type_set:[], guest_type_null:[]};
+    _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    window.display_booking_form(model_id);
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
+    window.display_booking_form(model_id);
+  } else if (target == 'booking') {
+    // This one will show the specified booking
+    $('#rooms').hide();
+    $('#areas').hide();
+    $('#tables').hide();
+    $('#functions_header_index').hide();
+    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    surcharge_headers = {guest_type_set:[], guest_type_null:[]};
+    _set('surcharge_headers', surcharge_headers);
+    items_json = {};
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id + '?booking_id=' + options['booking_id'], timeout: 5000 });
+    window.display_booking_form(model_id);
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
@@ -241,10 +247,12 @@ function route(target, model_id, action, options) {
 /* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
+
 function send_json(object_id) {
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
   items_json_queue[object_id] = items_json;
+  display_queue();
   // reset main jsons
   submit_json = {model:{}};
   items_json = {};
@@ -369,8 +377,11 @@ function set_json(model, d, attribute, value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object));
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object));
     $('#itemstable').append(tablerow);
+    if (object.p == 0) {
+      $('#tablerow_' + object.d + '_label').addClass('zero_price');
+    }
     $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
@@ -378,7 +389,15 @@ function render_items() {
   calculate_sum();
 }
 
-
+function scribe_image(object) {
+  var path;
+  if (object.h == true) {
+    path = "<img src='/items/" + object.id + ".svg'>";
+  } else {
+    path = '';
+  }
+  return path;
+}
 
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
@@ -411,6 +430,7 @@ function render_items() {
  * }
  * */
 function find_customer(text) {
+  console.log(text);
    var i = 0;
    var c = text[i];
    var results = [];
@@ -490,6 +510,7 @@ function add_category_button(label,options) {
 }
 
 function customer_search(term) {
+  console.log("customer_search called with " + term);
   var c = term.substr(0,1).toLowerCase();
   var c2 = term.substr(0,2).toLowerCase();
   var results = [];
@@ -676,7 +697,7 @@ function add_new_item(object, add_new, anchor_d) {
   } else {
     d = create_json_record('order', object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -714,9 +735,12 @@ function customer_list_update() {
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
-
-function add_payment_method(model_id) {
+function show_payment_methods(model_id,allow_delete) {
   $('#payment_methods_container_' + model_id).slideDown();
+  if (allow_delete)
+    deletable($('#payment_methods_container_' + model_id));
+}
+function add_payment_method(model_id) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
@@ -767,10 +791,15 @@ function add_payment_method(model_id) {
     var uid = payment_method_uid;
     var mid = model_id;
     pm_input.on('keyup', function(){
-      payment_method_input_change(this, mid, oid);
+      payment_method_input_change(this, uid,mid);
     });
   })();
   pm_row.append(pm_input);
+  if ($('.booking_form').is(":visible")) {
+    deletable(pm_row,'append',function () {
+      $(this).parent().remove();
+    });
+  }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
 }
 
@@ -865,7 +894,7 @@ function clone_item(d) {
 }
 
 function add_option_to_item(d, value, cat_id) {
-  if (value != -1) {
+  if (value != -1 && value != 0) {
     $('#options_div_' + d).slideUp();
     d = clone_item(d);
   }
@@ -892,7 +921,7 @@ function add_option_to_item(d, value, cat_id) {
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
 
-function toggle_order_booking() {
+function toggle_order_booking () {
   if (submit_json.currentview == 'tables') {
     route('rooms');
   } else {
@@ -911,6 +940,7 @@ function number_to_currency(number) {
 }
 
 function render_options(options, d, cat_id) {
+  if (options == null) return;
   jQuery.each(options, function(key,object) {
     if (settings.workstation) {
       button = $(document.createElement('span'));
@@ -950,10 +980,6 @@ function compose_optionnames(object){
   jQuery.each(object.t, function(k,v) {
     names += (v.n + '<br>')
   });
-  if (object.u < -10) {
-  // add course number
-    names += (object.u + 10) * -1 + '. Gang'
-  }
   return names;
 }
 
@@ -972,30 +998,36 @@ function calculate_sum() {
 }
 
 function display_configuration_of_item(d) {
-  row = $(document.createElement('tr'));
-  row.attr('id','item_configuration_'+d);
-  cell = $(document.createElement('td'));
-  cell.attr('colspan',4);
-  cell.addClass('item_configuration',4);
+  if ($('#item_configuration_' + d).is(':visible')) {
+    $('#item_configuration_' + d).remove();
+  } else {
+    row = $(document.createElement('tr'));
+    row.attr('id','item_configuration_'+d);
+    cell = $(document.createElement('td'));
+    cell.attr('colspan',4);
+    cell.addClass('item_configuration',4);
 
-  comment_button =  $(document.createElement('span'));
-  comment_button.addClass('item_comment');
-  comment_button.on('click', function(){ display_comment_popup_of_item(d); });
-  cell.append(comment_button);
+    comment_button =  $(document.createElement('span'));
+    comment_button.addClass('item_comment');
+    comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+    cell.append(comment_button);
 
-  price_button =  $(document.createElement('span'));
-  price_button.addClass('item_price');
-  price_button.on('click', function(){ display_price_popup_of_item(d); });
-  cell.append(price_button);
+    price_button =  $(document.createElement('span'));
+    price_button.addClass('item_price');
+    price_button.on('click', function(){ display_price_popup_of_item(d); });
+    cell.append(price_button);
 
-  scribe_button =  $(document.createElement('span'));
-  scribe_button.addClass('item_scribe');
-  scribe_button.on('click', function(){ init_scribe(d); });
-  cell.append(scribe_button);
+    if (permissions.item_scribe) {
+      scribe_button =  $(document.createElement('span'));
+      scribe_button.addClass('item_scribe');
+      scribe_button.on('click', function(){ init_scribe(d); });
+      cell.append(scribe_button);
+    }
 
-  row.html(cell);
-  row.addClass('item');
-  row.insertAfter('#item_' + d);
+    row.html(cell);
+    row.addClass('item');
+    row.insertAfter('#item_' + d);
+  }
 }
 
 
@@ -1034,6 +1066,7 @@ function manage_counters() {
 function update_tables(){
   $.ajax({
     url: '/tables',
+    dataType: 'script',
     timeout: 2000
   });
 }
@@ -1053,6 +1086,7 @@ function update_resouces_success(data) {
 
 
 function update_item_lists() {
+  if (!permissions.see_item_notifications) return;
   $.ajax({
     url: '/items/list?scope=preparation',
     timeout: 2000
@@ -1132,3 +1166,178 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
+
+
+salor.functions = {
+  table_from_json: function(source, attrs, target, heading) {
+    create_dom_element('h2',{},heading,target);
+    table = create_dom_element('table', attrs, '', target);
+    header_row = create_dom_element('tr',{},'',table);
+    // get table headers from the first JSON object
+    var first;
+    $.each(source, function(k,v) {
+      first = v;
+      return false; // break after the first element, since we only need the headers
+    })
+    // render the table header
+    var headers = Object.keys(first);
+    var sums = {};
+    create_dom_element('td', {class:'link'}, '', header_row);
+    for (i in headers) {
+      create_dom_element('th',{},headers[i],header_row);
+      sums[headers[i]] = 0; // initialize sums for each column
+    }
+    // render the table body
+    $.each(source, function(k,v) {
+      data_row = create_dom_element('tr', {}, '', table);
+      create_dom_element('td', {class:'link'}, k, data_row);
+      for (j in v) {
+        create_dom_element('td', {}, number_to_currency(v[j]), data_row);
+        sums[j] += v[j];
+      }
+    })
+    //render thr table footer
+    footer_row = create_dom_element('tr', {}, '', table);
+    create_dom_element('th', {}, '', footer_row);
+    for (i in headers) {
+      create_dom_element('th',{},number_to_currency(sums[headers[i]]), footer_row);
+    }
+  }
+}
+
+gastro.functions.report = {
+  initiate:function() {
+    $.ajax({
+      url: '/settlements',
+      dataType: 'json',
+      data: {day:gastro.variables.report_day},
+      success: function(data){
+        gastro.variables.report_items = data;
+        if (data == "") {
+          $('#report_container').html('');
+          return;
+        }
+        gastro.functions.report.convert_from_yaml();
+        gastro.functions.report.calculate();
+        gastro.functions.report.render();
+      }
+    });
+  },
+  
+  convert_from_yaml: function() {
+    $.each(gastro.variables.report_items, function(k,v) {
+      gastro.variables.report_items[k].t = YAML.eval(v.t);
+    })
+  },
+  
+  calculate: function() {
+    //calculate sums by category
+    var c = {};
+    $.each(gastro.variables.report_items, function(k,v) {
+      var category_id = v.y;
+      catname = resources.c[category_id].n;
+      if (c.hasOwnProperty(catname)) {
+        $.each(v.t, function(s,t) {
+          c[catname][i18n.gross] += t.g
+          c[catname][i18n.net] += t.n
+          c[catname][i18n.tax_amount] += t.t
+        })
+      } else {
+        $.each(v.t, function(s,t) {
+          c[catname] = {};
+          c[catname][i18n.gross] = t.g
+          c[catname][i18n.net] = t.n
+          c[catname][i18n.tax_amount] = t.t
+        })
+      }
+    })
+    gastro.variables.report.categories = c;
+    
+    //calculate sums by taxes
+    var taxes = {};
+    $.each(gastro.variables.report_items, function(key,value) {
+      $.each(value.t, function(k,v) {
+        var tax_id = k;
+        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
+        if (taxes.hasOwnProperty(taxname)) {
+          taxes[taxname][i18n.gross] += v.g
+          taxes[taxname][i18n.net] += v.n
+          taxes[taxname][i18n.tax_amount] += v.t
+        } else {
+          taxes[taxname] = {};
+          taxes[taxname][i18n.gross] = v.g
+          taxes[taxname][i18n.net] = v.n
+          taxes[taxname][i18n.tax_amount] = v.t
+        }
+      })
+    })
+    gastro.variables.report.taxes = taxes;
+    
+  },
+  
+  render: function() {
+    $('#report_container').html('');
+    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
+    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
+  },
+
+  display_popup: function() {
+    gastro.variables.report = {};
+    $('#report').remove();
+    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
+    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
+    close_button.on('click', function() { $('#report').remove(); });
+    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
+    from_input.datepicker({
+      onSelect: function(date, inst) {
+        gastro.variables.report_day = date;
+        gastro.functions.report.initiate();
+      }
+    })
+    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
+    report_popup.fadeIn();
+  }
+}
+
+
+YAML = {
+  valueOf: function(token) {
+    if (/\d/.exec(token)) {
+      return eval('(' + token + ')');
+    } else {
+      return token;
+    }
+  },
+
+  tokenize: function(str) {
+    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
+    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
+    return tokens;
+  },
+
+  strip: function(str) {
+    return str.replace(/^\s*|\s*$/, '')
+  },
+
+  parse: function(tokens) {
+    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
+    while (token = tokens.shift())
+      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
+	continue
+      else if (key.exec(token) && tokens[0] == "\n")
+	stack[RegExp.$1] = this.parse(tokens)
+      else if (key.exec(token))
+	stack[RegExp.$1] = this.valueOf(tokens.shift())
+      else if (list.exec(token))
+	(stack.constructor == Array ?
+	  stack : (stack = [])).push(this.strip(RegExp.$1))
+    return stack
+  },
+
+  eval: function(str) {
+    return this.parse(this.tokenize(str))
+  }
+}
+
+//print(YAML.eval(readFile('config.yml')).toSource())
+//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"

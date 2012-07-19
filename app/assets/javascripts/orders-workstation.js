@@ -1,14 +1,22 @@
 /*
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+Copyright (c) 2012 Red (E) Tools Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 var screenlock_counter = -1;
 
+// document ready code
 $(function(){
-  $('#admin').slideUp();
-  
+  //$('#admin').slideUp();
+
+  admin_report_link = create_dom_element('a',{href:'#'},'Report','.adminlinks');
+  admin_report_link.on('click', gastro.functions.report.display_popup );
+
   $("#customer_search").keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();
@@ -35,6 +43,8 @@ $(function(){
   }
 })
 
+
+
 function display_comment_popup_of_item(d) {
   if ( item_changeable(items_json[d].c, items_json[d].sc) ) {
     var old_comment = items_json[d].o;
@@ -57,7 +67,7 @@ function add_comment_to_item(d) {
 	var comment = $('input#comment_for_item_' + d).val();
 	$('#comment_for_item_' + d).slideUp();
   d = clone_item(d);
-  set_json(d,'o',comment);
+  set_json('order', d,'o',comment);
 	$('#comment_' + d).html(comment);
   $('#tablerow_' + d + '_label').addClass('updated');
 }
@@ -66,7 +76,7 @@ function add_price_to_item(d) {
 	price = $('input#price_for_item_' + d).val();
 	$('#price_' + d).html(price);
 	price = price.replace(',', '.');
-  set_json(d,'p',price);
+  set_json('order', d, 'p', price);
 	calculate_sum();
 	$('#price_for_item_' + d).slideUp();
   $('#tablerow_' + d + '_label').addClass('updated');

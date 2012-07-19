@@ -1,0 +1,13 @@
+%h2= t('activerecord.models.customer.other')
+
+= link_to (t :new), new_customer_path, :class => 'links'
+
+%table
+  %tr
+    %th{ :style => 'width:150px' }= Customer.human_attribute_name :full_name
+    %th{ :style => 'width:200px' }= Customer.human_attribute_name :city
+  - @customers.each do |c|
+    %tr
+      %td= link_to c.full_name, edit_customer_path(c)
+      %td= c.city
+      %td= link_to image_tag('button_small_delete.png', :title => Customer.human_attribute_name(:hidden), :alt => Customer.human_attribute_name(:hidden)), customer_path(c), :method => :delete, :confirm => t(:are_you_sure)

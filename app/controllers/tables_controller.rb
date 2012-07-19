@@ -1,18 +1,23 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class TablesController < ApplicationController
 
   before_filter :check_permissions, :except => [:index, :show]
 
+  respond_to :html, :js
+  
   def index
-    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
+    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing.order(:name)
     @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
-    respond_to do |wants|
+    respond_with do |wants|
       wants.html
       wants.js
     end
@@ -27,6 +32,9 @@ class TablesController < ApplicationController
       render 'orders/go_to_order_form'
     else
       if @orders.size > 1
+        @cost_centers = @current_vendor.cost_centers.existing.active
+        @taxes = @current_vendor.taxes.existing
+        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
         render 'orders/go_to_invoice_form'
       else
         @order = @orders.first
@@ -40,6 +48,10 @@ class TablesController < ApplicationController
   end
 
   def create
+    if @current_vendor.max_tables and @current_vendor.max_tables < @current_vendor.tables.existing.count
+      flash[:notice] = t('tables.create.license_limited', :count => @current_vendor.max_tables)
+      redirect_to tables_path and return
+    end
     @table = Table.new(params[:table])
     @table.vendor = @current_vendor
     @table.company = @current_company
@@ -64,22 +76,25 @@ class TablesController < ApplicationController
     @table = get_model
     redirect_to tables_path and return unless @table
     success = @table.update_attributes(params[:table])
-    respond_to do |wants|
-      wants.html do
-        if success
-          flash[:notice] = t('tables.create.success')
-          redirect_to tables_path
-        else
-          render :new
-        end
-      end
-      wants.js { render :nothing => true }
+    if success
+      flash[:notice] = t('tables.create.success')
+      redirect_to tables_path
+    else
+      render :new
     end
+  end
+
+  def update_coordinates
+    @table = get_model
+    @table.update_attributes(params[:table])
+    render :nothing => true
   end
 
   def destroy
     @table = get_model
     redirect_to tables_path and return unless @table
+    @table.hidden = true
+    @table.name = "DEL#{(rand(99999) + 10000).to_s[0..4]}#{@table.name}"
     @table.update_attribute :hidden, true
     flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path

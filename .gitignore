@@ -1,5 +1,6 @@
 config/database.yml
 *.*~
+*.swo
 #.*
 #*#
 public/uploads/images
@@ -24,3 +25,6 @@ vendor/bundle
 *.bill
 tmp/cache
 tmp/capybara
+.sass-cache
+*.swn
+*.swm

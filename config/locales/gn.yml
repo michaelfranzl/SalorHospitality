@@ -60,6 +60,7 @@
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
         format: "%u %n"
         unit: "€"
+        friendly_unit: EUR
         # These five are to override number.format and are optional
         separator: ","
         delimiter: "."
@@ -241,6 +242,7 @@
       date_short: "%d. %b %y"
       date_iso: "%Y-%m-%d"
       time_short: "%H:%M"
+      month_and_day: "%d. %B"
     am: ""
     pm: ""
 

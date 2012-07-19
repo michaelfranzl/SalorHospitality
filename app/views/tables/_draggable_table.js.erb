@@ -9,7 +9,7 @@ $('#table<%= table.id %>').draggable({
   stop: function(event, ui){
     $.ajax({
       type: 'PUT',
-      url: '/tables/<%= table.id %>',
+      url: '/tables/<%= table.id %>/update_coordinates',
       data: 'table[<%= left_attribute %>]=' + $('#table<%= table.id %>').position().left + '&table[<%= top_attribute %>]=' + $('#table<%= table.id %>').position().top
     });
    }

@@ -1,10 +1,30 @@
 ---
 gn:
-  vendors:
-    index:
-      switch_to: Auswählen
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Betrag
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Wechselgeld
+      customer:
+        first_name: Vorname
+        last_name: Nachname
+        full_name: Name
+        company_name: Firma
+        address: Adresse
+        city: Ort
+        state: Land
+        postalcode: PLZ
+        m_number: Nummer
+        m_points: Punkte
+        email: E-Mail
+        telephone: Telefon
+        cellphone: Mobil
+        hidden: delete
       article:
         active: aktiv?
         category_id: Kategorie
@@ -23,7 +43,6 @@ gn:
         icon: Icon
         name: Name
         separate_print: Bon schneiden
-        sort_order: Sortierwert
         tax_id: Steuerklasse
         user_id: Zubereitung durch
         vendor_printer_id: Drucker
@@ -34,6 +53,10 @@ gn:
         name: Name
       group:
         name: Name
+      guest_type:
+        hidden: löschen
+        name: Name
+        taxes: Steuern
       option:
         category_id: Kategorie
         hidden: Löschen
@@ -70,9 +93,30 @@ gn:
         usage: Verwendung
       role:
         name: Name
+      room_price:
+        base_price: Grundpreis
+        guest_type_id: Guest Type
+        hidden: löschen
+        room_type_id: Room Type
+        season_id: Saison
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from_date: Von
+        hidden: löschen
+        name: Name
+        to_date: Bis
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
+      surcharge:
+        amount: Betrag
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        name: Name
+        radio_select: Einfache Auswahl
+        season_id: Saison
       table:
         abbreviation: Abkürzung
         description: Beschreibung
@@ -90,6 +134,9 @@ gn:
         letter: Buchstabe
         name: Name
         percent: Steuer in %
+      tax_amount:
+        amount: Betrag
+        tax_id: Steuer
       user:
         active: aktiv?
         color: Farbe
@@ -102,28 +149,15 @@ gn:
         tables: Tische
         title: Anrede
       vendor:
-        address: Adresse
         automatic_printing: Automatisches Drucken
-        bank_account1: Bankverbindung 1
-        bank_account2: Bankverbindung 2
         country: Regeln für Land
-        email: E-Mail
         hidden: löschen
-        internet_address: Internetadresse
-        invoice_slogan1: Rechnungstext 1
-        invoice_slogan2: Rechnungstext 2
-        invoice_subtitle: Rechnungs-Untertitel
+        invoice_footer_blurb: Rechnung Fußzeile
+        invoice_header_blurb: Rechnung Kopfzeile
         name: Firmenname
-        printer_bar: Drucker Bar
-        printer_guestroom: Drucker Gastraum
-        printer_kitchen: Drucker Küche
-        res_confirm_url: Reservierungen bestätigen
-        res_fetch_url: Reservierungen abfragen
-        revenue_service_tax_number: UID Nummer
-        rlogo_footer: Rechnungslogo Fuß
-        rlogo_header: Rechnungslogo Kopf
+        receipt_footer_blurb: Beleg Fußzeile
+        receipt_header_blurb: Beleg Kopfzeile
         saas: Online-Variante
-        subdomain: Subdomain
         ticket_display_time_order: Uhrzeit und Verkaufsnummer auf Ticket
         ticket_item_separator: Ticket Trennlinie
         ticket_tall_font: Ticket hohe Schrift
@@ -131,6 +165,10 @@ gn:
         time_offset: Zeitkorrektur (Stunden)
         timeout: Zeit bis Bildschirmsperre (Sekunden)
         use_order_numbers: Bestellnummern
+        rlogo_header: Beleg-Logo Kopf
+        rlogo_footer: Beleg-Logo Fuß
+        logo: Bildschirm-Logo
+        invoice_logo: Rechnungslogo
       vendor_printer:
         copies: Kopien
         hidden: Löschen
@@ -140,30 +178,12 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
-      payment_method:
-        one: Zahlungsmethode
-        other: Zahlungsmethoden
-      room:
-        one: Zimmer
-        other: Zimmer
-      room_type:
-        one: Zimmerklasse
-        other: Zimmerklassen
-      room_price:
-        one: Zimmerpreis
-        other: Zimmerpreise
-      guest_type:
-        one: Gast-Typ
-        other: Gästetypen
-      season:
-        one: Saison
-        other: Saisonen
-      surcharge:
-        one: Aufschlag
-        other: Aufschläge
       article:
         one: Artikel
         other: Artikel
+      booking:
+        one: Buchung
+        other: Buchungen
       category:
         one: Kategorie
         other: Kategorien
@@ -185,6 +205,9 @@ gn:
       group:
         one: Lagergruppe
         other: Lagergruppen
+      guest_type:
+        one: Gast-Typ
+        other: Gästetypen
       image:
         one: Bild
         other: Bilder
@@ -203,6 +226,12 @@ gn:
       partial:
         one: Element
         other: Elemente
+      payment_method:
+        one: Zahlungsmethode
+        other: Zahlungsmethoden
+      payment_method_item:
+        one: Zahlungsmethode
+        other: Zahlungsmethode
       presentation:
         one: Vorlage
         other: Vorlagen
@@ -218,18 +247,36 @@ gn:
       role:
         one: Rolle
         other: Rollen
+      room:
+        one: Zimmer
+        other: Zimmer
+      room_price:
+        one: Zimmerpreis
+        other: Zimmerpreise
+      room_type:
+        one: Zimmerklasse
+        other: Zimmerklassen
+      season:
+        one: Saison
+        other: Saisonen
       settlement:
-        one: Abrechnung
-        other: Übersicht
+        one: Losungen
+        other: Abrechnungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
+      surcharge:
+        one: Aufschlag
+        other: Aufschläge
       table:
         one: Tisch
         other: Tische
       tax:
         one: Steuerklasse
         other: Steuerklassen
+      tax_amount:
+        one: Steueranteil
+        other: Steueranteile
       user:
         one: Benutzer
         other: Benutzer
@@ -244,6 +291,7 @@ gn:
   articles:
     create:
       success: Artikel erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Artikel
     destroy:
       success: Artikel erfolgreich gelöscht
     find:
@@ -265,28 +313,27 @@ gn:
       new_article: Neuer Artikel
       normal: normal
       takeaway: mitnehmen
-      weighing: abwiegen
     sort_index:
       sort: Artikel sortieren
-  austria: Österreich
-  auxiliary_waiter: Hilfskellner
   bar: Schank
   black: Schwarz
   blackboard:
     index:
       update: Aktualisieren
-  blackboard_generic_name: Speisetafel
   blank: Leer
   blue: Blau
+  bookings:
+    invoice_item_list:
+      served_by_X: Sie wurden bedient von %{user}
+    show:
+      search_by_number: Suche nach Nummer
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:
       success: Kategorie erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Kategorien
     destroy:
       success: Kategorie erfolgreich gelöscht
-    index:
-      drinks: Getränke
-      foods: Speisen
     new:
       aperitif: Aperitif
       beer: Bier
@@ -313,13 +360,7 @@ gn:
       teapot: Teekanne
       whitewinebottle: Flasche Weiß
       whitewineglass: Weißwein
-  chief_waiter: Oberkellner
   clear_order_and_go_back: Bestellung löschen und zurück
-  companies:
-    edit:
-      add_printer: Drucker hinzufügen
-    update:
-      config_successfully_updated: Firmendaten erfolgreich aktualisiert!
   copy: Kopie
   cost_centers:
     create:
@@ -338,13 +379,10 @@ gn:
   default: Allgemein
   delete: Löschen
   display: Anzeigen
-  drink: Getränke
-  dummy: Dummy
   edit: Bearbeiten
   exit: Beenden
   finish: Abschließen
   food: Speisen
-  germany: Deutschland
   go_back: Zurück
   green: Grün
   gross: Brutto
@@ -373,8 +411,6 @@ gn:
     application:
       submit_scribe: OK
   logout: abmelden
-  logout_successful: Sie haben sich erfolgreich abgemeldet.
-  menucard_generic_name: Speisekarte
   messages:
     hello_username: Hallo %{name}
   move_order_to_table: Bestellung auf anderen Tisch verschieben
@@ -396,37 +432,37 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Einzelpreis
+      count: Menge
+      sum: Summe
     functions_header_index:
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
+      show_last_booking: Letzte Buchung anzeigen
       show_last_order: Letzte Bestellung anzeigen
+      toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
     functions_header_order_form:
       move_order: Bestellung verschieben
-    go_to_tables:
-      warning_only_x_orders_left: Achtung, nur noch %{credits} Bestellungen. Auf www.billgasto.com
-        aufladen.
-      warning_only_x_orders_left_upgrade_here: Achtung, nur noch %{credits} Bestellungen.
-        Hier <a href='http://www.billgasto.com'>aufladen</a>
     index:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
     invoice_form:
+      change_money: Retour
       just_finish: Rechnung nur abschließen
       print_and_finish: Drucken und Rechnung abschließen
+      set_booking: Einer Buchung zuweisen
       set_cost_center: Kostenkreis für diese Bestellung festlegen
       set_tax_for_all: Steuerklasse für alle Posten festlegen
       set_taxes: Steuerklassen festlegen
       split_invoice: Rechnung splitten
       split_this_item: Klicken um ein Stück dieses Postens splitten
       switch_tax_for_this_item: Klicken um die Steuerklasse für diesen Posten zu wechseln
-      change_money: Retour
     login_form:
       email: Ihre E-Mail
       login: Login
       password: Passwort
-      realname: Ihr Name
       username: Benutzer
-      your_ip_address: Ihre IP Daten
     order:
       new: Neue Bestellung
       sum: SUMME
@@ -442,9 +478,9 @@ gn:
       search_by_number: Suche nach Bestellnummer
       sum: Summe
       unit_price: Stück
-    storno_form:
+    refund_form:
       do_separate_items: Posten separieren
-      do_storno: Storno durchführen
+      do_refund: Storno durchführen
   pages:
     edit:
       edit_page: Karte bearbeiten
@@ -457,9 +493,7 @@ gn:
     error_during_evaluation: ! 'Fehler: '
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
-  pink: Pink
-  please_enter_email_and_realname: Bitte geben Sie Ihren Namen und Ihre E-Mail Adresse
-    ein.
+  pink: Pink ein.
   please_enter_item_comment: Notiz
   please_enter_item_price: Preis
   presentations:
@@ -468,21 +502,36 @@ gn:
       new_presentation: Neue Elementvorlage
   print: Drucken
   print_and_finish: Abschließen und drucken
-  print_kitchenlist: Küchenliste drucken
   printing_test: Testdruck
-  printr:
-    course: Gang
-  recent_orders: Kürzliche Rechnugen ansehen
   reports:
     end_date: Bis
     index:
       backup_database: Datenbank herunterladen
       backup_logfile: Logdatei herunterladen
       header: Berichte
+      connected: Verbunden
+      disconnected: Getrennt
+      connect_ssh: Fernwartung
+      connect_vnc: Bildschirm teilen
+      password: Passwort
+      requesting_connection_status: Verbindungsstatus abfragen ...
+      internet_connection_info: Für die Fernwartung müssen Sie mit dem Internet verbunden sein. Wenn Sie oben das Red (E) Logo sehen, sind Sie mit dem Internet verbunden.
+      remote_support: Fernwartung
+      download_reports: Berichte speichern
     save: Speichern
     start_date: Von
     usb_device: Usb Stick
+    remote_support: Fernwartung
+    download_reports: Berichte herunterladen
   restaurant: Restaurant
+  customers:
+    new:
+      edit_customer: Kunde bearbeiten
+      new_customer: Neuer Kunde
+    create:
+      success: Kunde erfolgreich gespeichert
+    destroy:
+      success: Kunde erfolgreich gelöscht
   roles:
     create:
       success: Rolle erfolgreich gespeichert
@@ -499,13 +548,20 @@ gn:
       finish_all_settlements: Alle Abrechnungen abschließen
       finish_orders: Bestellungen abschließen
       finish_own_settlement: Eigene Abrechnung abschließen
-      make_storno: Artikel stornieren
-      manage_articles_categories_options: Artikel, Kategorien und Optionen verwalten
+      refund: Artikel stornieren
+      manage_articles: Artikel verwalten
+      manage_categories: Kategorien verwalten
+      manage_options: Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_customers: Kundendatenbank verwalten
       manage_pages: Slideshow verwalten
-      manage_settings: Grundeinstellungen vornehmen
+      manage_roles: Rollen verwalten
+      manage_taxes: Steuerklassen verwalten
+      manage_cost_centers: Kostenstellen verwalten
+      manage_payment_methods: Zahlungsmethoden verwalten
       manage_users: Benutzer verwalten
+      manage_tables: Tische verwalten
+      manage_vendors: Betriebe verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -515,29 +571,50 @@ gn:
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
-      view_statistics: Statistiken ansehen
+      manage_hotel: Hotel managen
+      manage_statistics: Statistiken ansehen
+      item_scribe: Handschrift aktivieren
+      assign_order_to_booking: Bestellungen einer Buchung zuweisen
+      assign_tables: Tische an Benutzer zuweisen
+      remote_support: Fernwartung
+      download_database: Datenbank herunterladen
+  room_prices:
+    index:
+      generate_price_skeleton: Preisgerüst erstellen
+    new:
+      edit_room_price: Zimmerpreis bearbeiten
+      new_room_price: Neuer Zimmerpreis
+  room_types:
+    new:
+      edit_room_type: Zimmerklasse bearbeiten
+      new_room_type: Neue Zimmerklasse
+  rooms:
+    new:
+      edit_room: Zimmer bearbeiten
+      new_room: Neues Zimmer
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock
   scroll_down: Hinunterscrollen
   scroll_to_room: Gehe in Raum
   scroll_up: Hinaufscrollen
+  seasons:
+    new:
+      edit_season: Saison bearbeiten
+      new_season: Neue Saison
   send_and_go_back: Senden und zurück
-  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf Tisch %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
     oder die Funkverbindung ist abgerissen.
   sessions:
     browser_warning:
       continue: weiter
-      warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium
-        als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
+      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
       password: Passwort
-      realname: Ihr Name
       username: Benutzer
-      your_ip_address: Ihre IP Daten
   settlements:
     detailed_list:
       count: Anzahl
@@ -550,13 +627,14 @@ gn:
       end_date: Bis
       start_date: Von
       sum_total: Gesamtsumme
-    new:
-      set_date: Datum für diese Abrechnung
     settlement:
       finish: Abschließen
       print: Drucken
       start: Starten
       started_at: Gestartet am
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Liste aller Steuern
   split_order: Bestellung splitten
   statistic: Statistik
   statistics:
@@ -566,26 +644,28 @@ gn:
     new:
       edit_stock: Lagerartikel bearbeiten
       new_stock: Neuer Lagerartikel
-  storno: Storno
+  refund: Storno
   sum: Summe
-  superuser: Superuser
+  surcharges:
+    new:
+      add_tax_amount: Steueranteil hinzufügen
+      common_surcharge: Allgemeiner Zuschlag
+      edit_surcharge: Preisaufschlag bearbeiten
+      new_surcharge: Neuer Preisaufschlag
   tables:
     create:
       success: Tisch erfolgreich gespeichert
+      license_limited: Ihre Lizenz ist limitiert auf %{count} Tische
     destroy:
       success: Tisch erfolgreich gelöscht
     new:
       edit_table: Tisch bearbeiten
       new_table: Neuer Tisch
+  tax_amount: Steuer
   taxes:
     new:
       edit_tax: Steuerklasse bearbeiten
       new_tax: Neue Steuerklasse
-  there_are_no_open_settlements: Es gibt keine ausständigen Abrechnungen.
-  tobacco: Tabak
-  unsettled_orders_generic_name: Shifts
-  update_database: Datenbank neu laden
-  user_not_found: Benutzer nicht gefunden.
   users:
     create:
       success: Benutzer erfolgreich gespeichert
@@ -594,7 +674,19 @@ gn:
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
-  value_added_tax: USt.
+      select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
+  various:
+    cancel: Abbrechen
+    common_surcharges: Aufschläge
+    home: Start
+    pay: Abschließen
+    save: Speichern
+    subtotal: Gesamt
+    unamed: Unbenannte
+    tax: Steuer
+    unit_price_abbreviation: EP
+    total_price_abbreviation: GP
+    quantity_abbreviation: Stk.
   vendors:
     index:
       edit: bearbeiten
@@ -605,8 +697,8 @@ gn:
   violet: Violett
   waiter: Kellner
   waiterpad_generic_name: Bestellblock
-  was_successfully_deleted: ! '%{what} wurde erfolgreich gelöscht.'
   white: Weiß
   winered: Weinrot
   wrong_password: Falsche Logindaten.
   yellow: Gelb
+  invalid_date: Ungültiges Datum

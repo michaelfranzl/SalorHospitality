@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610141209) do
+ActiveRecord::Schema.define(:version => 20120716112757) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
   end
 
   create_table "bookings", :force => true do |t|
-    t.datetime "from"
-    t.datetime "to"
+    t.datetime "from_date"
+    t.datetime "to_date"
     t.integer  "customer_id"
     t.float    "sum",                           :default => 0.0
     t.boolean  "hidden"
@@ -123,7 +123,14 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.string  "mode",              :default => "local"
+    t.string  "subdomain"
+    t.integer "update_tables",     :default => 20
+    t.integer "update_item_lists", :default => 61
+    t.integer "update_resources",  :default => 182
+    t.boolean "hidden",            :default => false
+    t.boolean "active",            :default => true
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -263,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.integer  "imageable_id"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.string   "image_type"
   end
 
   add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
@@ -531,6 +539,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.integer  "vendor_id"
     t.boolean  "active",                      :default => true
     t.boolean  "hidden"
+    t.integer  "weight"
   end
 
   add_index "roles", ["company_id"], :name => "index_roles_company_id"
@@ -573,14 +582,15 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "seasons", :force => true do |t|
     t.string   "name"
-    t.datetime "from"
-    t.datetime "to"
+    t.datetime "from_date"
+    t.datetime "to_date"
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.boolean  "active",     :default => true
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.integer  "duration"
   end
 
   create_table "settlements", :force => true do |t|
@@ -592,6 +602,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.float    "initial_cash"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.float    "sum"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -627,7 +638,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.string   "name"
     t.integer  "season_id"
     t.integer  "guest_type_id"
-    t.float    "amount"
+    t.float    "amount",        :default => 0.0
     t.boolean  "hidden"
     t.integer  "vendor_id"
     t.integer  "company_id"
@@ -657,6 +668,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.integer  "active_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",         :default => true
+    t.integer  "position"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -677,6 +689,22 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.integer "vendor_id"
     t.boolean "hidden"
     t.integer "company_id"
+  end
+
+  create_table "tax_items", :force => true do |t|
+    t.integer  "tax_id"
+    t.integer  "item_id"
+    t.integer  "booking_item_id"
+    t.integer  "order_id"
+    t.integer  "booking_id"
+    t.integer  "settlement_id"
+    t.float    "gro"
+    t.float    "net"
+    t.float    "tax"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "taxes", :force => true do |t|
@@ -708,6 +736,7 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.integer  "screenlock_timeout",        :default => -1
     t.boolean  "automatic_printing"
     t.boolean  "onscreen_keyboard_enabled", :default => true
+    t.string   "salt"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
@@ -732,14 +761,12 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name",                                          :default => "Bill Gastro"
-    t.string   "subdomain",                                     :default => "demo"
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
     t.integer  "largest_order_number",                          :default => 0
     t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                   :default => 0
-    t.string   "mode"
     t.text     "resources_cache",           :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
@@ -760,6 +787,13 @@ ActiveRecord::Schema.define(:version => 20120610141209) do
     t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
     t.integer  "largest_booking_number",                        :default => 0
     t.boolean  "use_booking_numbers",                           :default => true
+    t.integer  "max_tables",                                    :default => 10
+    t.integer  "max_rooms",                                     :default => 5
+    t.integer  "max_articles",                                  :default => 50
+    t.integer  "max_options",                                   :default => 5
+    t.integer  "max_users",                                     :default => 3
+    t.integer  "max_categories",                                :default => 6
+    t.boolean  "print_data_available"
   end
 
 end

@@ -1,10 +1,7 @@
-= javascript_include_tag 'orders-generic'
-- if workstation?
-  = javascript_include_tag 'orders-workstation'
-
 %h2= @current_user.login
 
-#areas= render 'areas'
+- unless workstation?
+  #areas= render 'areas'
 #tables= render @tables
 #functions
   #functions_header_index= render 'functions_header_index' if workstation?

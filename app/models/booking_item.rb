@@ -1,3 +1,11 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 class BookingItem < ActiveRecord::Base
   attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count
   include Scope
@@ -16,7 +24,7 @@ class BookingItem < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     self.surcharge_items.update_all :hidden => true
 
-    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id}.uniq
+    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id if si.surcharge}.uniq
     #puts "XXXXXX existing_surcharge_ids #{existing_surcharge_ids.inspect}"
 
     ids.each do |i|
@@ -28,23 +36,18 @@ class BookingItem < ActiveRecord::Base
       else
         #puts "XXXXXX Create SurchargeItem for surcharge##{i}"
         s = Surcharge.find_by_id(i.to_i)
-        surcharge_item = SurchargeItem.new :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
-
-        surcharge_item_taxes = {}
-        s.tax_amounts.each do |ta|
-          tax_object = ta.tax
-          tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2)
-          gro = (ta.amount).round(2)
-          net = (gro - tax_sum).round(2)
-          surcharge_item.taxes[tax_object.id] = {:percent => tax_object.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax_object.letter, :name => tax_object.name }
-        end
-        surcharge_item.save
+        surcharge_item = SurchargeItem.create :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
+        self.surcharge_items << surcharge_item
+        surcharge_item.calculate_totals
       end
       existing_surcharge_ids.each do |id|
         #puts "XXXXXX hiding surcharge_items for surcharge##{id}"
         self.surcharge_items.where(:surcharge_id => id).update_all :hidden => true
       end
     end
+    self.save
+    self.reload
+    self.calculate_totals
   end
 
   def hide
@@ -52,21 +55,36 @@ class BookingItem < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.base_price = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first.base_price
-    self.sum = self.count * (self.base_price + self.surcharge_items.sum(:amount))
-    self.guest_type.taxes.each do |tax|
-      tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
-      gro = (self.sum).round(2)
-      net = (gro - tax_sum).round(2)
-      self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+    puts "XXX BookingItem -> calculate_totals"
+    self.taxes = {}
+    if self.guest_type_id.zero?
+      self.base_price = 0
+    else
+      broom = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
+      broom ? self.base_price = broom.base_price : 0 
     end
+    self.sum = self.count * self.base_price
+    unless self.guest_type_id.zero?
+      puts "  XXX for base_price"
+      self.guest_type.taxes.each do |tax|
+        puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"
+        tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
+        gro = (self.sum).round(2)
+        net = (gro - tax_sum).round(2)
+        self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
+        puts "    XXX setting self.taxes to #{self.taxes.inspect}"
+      end
+    end
+    self.sum += self.count * self.surcharge_items.sum(:amount)
     self.surcharge_items.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:tax] += v[:tax]
-          self.taxes[k][:tax] = self.taxes[k][:tax].round(2)
-          self.taxes[k][:gro] += (v[:gro]).round(2)
-          self.taxes[k][:net] += (v[:net]).round(2)
+          self.taxes[k][:t] += v[:t]
+          self.taxes[k][:g] += v[:g]
+          self.taxes[k][:n] += v[:n]
+          self.taxes[k][:t] = self.taxes[k][:t].round(2)
+          self.taxes[k][:g] = self.taxes[k][:g].round(2)
+          self.taxes[k][:n] = self.taxes[k][:n].round(2)
         else
           self.taxes[k] = v
         end

@@ -1,9 +1,12 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ArticlesController < ApplicationController
 
@@ -44,11 +47,15 @@ class ArticlesController < ApplicationController
 
   # tested
   def create
+    if @current_vendor.max_articles and @current_vendor.max_articles < @current_vendor.articles.existing.count
+      flash[:notice] = t('articles.create.license_limited', :count => @current_vendor.max_articles)
+      redirect_to articles_path and return
+    end
     @article = Article.new(params[:article])
     @article.company = @current_company
     @article.vendor = @current_vendor
     if @article.save
-      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company
+      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else

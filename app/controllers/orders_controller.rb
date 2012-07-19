@@ -1,9 +1,12 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class OrdersController < ApplicationController
 
@@ -46,16 +49,31 @@ class OrdersController < ApplicationController
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
   end
 
-  def storno
+  def refund
     @order = get_model
   end
 
   def update_ajax
     case params[:currentview]
-      when 'refund', 'show'
+      # this action is for simple pushing of a model to the server and
+      # getting a json object back.
+      when 'push'
+        if params[:relation] then
+          @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
+          @model.update_attributes(params[:model])
+          render :json => @model and return
+        end
+      when 'invoice_paper', 'refund'
         @order = get_model
-        @order.print(['receipt'],@current_vendor.vendor_printers.find_by_id(params[:printer]))
-        render :nothing => true and return
+        case params['jsaction']
+          when 'just_print'
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render :nothing => true and return
+          when 'mark_print_pending'
+            @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
+            render :nothing => true and return
+        end
       when 'invoice'
         @order = get_model
         case params['jsaction']
@@ -96,21 +114,12 @@ class OrdersController < ApplicationController
             create_payment_method_items @order
             @order.pay
             @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
             redirect_from_invoice and return
           when 'pay_and_no_print'
             create_payment_method_items @order
             @order.pay
             redirect_from_invoice and return
-        end
-      when 'invoice_paper'
-        @order = get_model
-        case params['jsaction']
-          when 'just_print'
-            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render :nothing => true and return
-          when 'mark_print_pending'
-            @order.update_attribute :print_pending, true
-            render :nothing => true and return
         end
       when 'table'
         case params['jsaction']
@@ -149,10 +158,10 @@ class OrdersController < ApplicationController
             @order.regroup
             @order.update_associations(@current_user)
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            if local_variant? and not @order.hidden
+            if @current_company.mode == 'local' and not @order.hidden
               @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
-            elsif saas_variant? and not @order.hidden
-              @order.print(['receipt'])
+            #elsif saas_variant? and not @order.hidden
+            #  @order.print(['receipt'])
             end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
@@ -166,7 +175,7 @@ class OrdersController < ApplicationController
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
-            @order.hide(@current_user.id) if @order.items.existing.size.zero?
+            #@order.hide(@current_user.id) if @order.items.existing.size.zero?
             render :js => "route('tables', #{@order.table.id});" and return
         end
       when 'room'
@@ -178,7 +187,7 @@ class OrdersController < ApplicationController
             unless @booking.booking_items.existing.any?
               @booking.hide(@current_user.id)
             end
-            render :js => "route('rooms');" and return
+            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
           when 'pay'
             get_booking
             @booking.update_associations(@current_user)
@@ -187,6 +196,18 @@ class OrdersController < ApplicationController
             @booking.pay
             render :js => "route('rooms');" and return
         end
+      when 'rooms'
+        case params['jsaction']
+          when 'move_booking'
+            @booking = @current_vendor.bookings.find_by_id(params[:model][:id])
+            if @booking
+              @booking.update_attribute(:room_id,params[:model][:room_id]) 
+              render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
+            else
+              render :text => 'Epic Fail' and return
+            end
+        end
+          
     end
   end
 

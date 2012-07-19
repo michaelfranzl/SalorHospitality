@@ -1,9 +1,12 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Article < ActiveRecord::Base
   include ImageMethods
@@ -22,7 +25,7 @@ class Article < ActiveRecord::Base
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
-  validates_presence_of :name, :category_id
+  validates_presence_of :name, :category_id, :taxes
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden
     existing_quantities = false
@@ -49,13 +52,13 @@ class Article < ActiveRecord::Base
   # Methods
 
   def price=(price)
-    price =  price.gsub(',', '.') if price.class == String
-      write_attribute :price, price
+    price = price.gsub(',', '.') if price.class == String
+    write_attribute :price, price
   end
 
   def hide
-    update_attributes :hidden => true, :active => false
-    quantities.update_all :hidden => true, :active => false
+    self.update_attributes :hidden => true, :active => false
+    self.quantities.update_all :hidden => true, :active => false
   end
 
   def name_description

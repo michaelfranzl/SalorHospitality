@@ -23,8 +23,11 @@
 
           %p
             = option_form.label :price
-            = option_form.text_field :price, :size => '5'
-            %span#option_price_display_keyboard.display_keyboard
+            - if @option.new_record?
+              = option_form.text_field :price, :size => '5'
+              %span#option_price_display_keyboard.display_keyboard
+            - else
+              = number_to_currency @option.price
 
           %p
             = option_form.fields_for :images do |image_form|

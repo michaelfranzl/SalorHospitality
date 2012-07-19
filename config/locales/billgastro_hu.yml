@@ -1,5 +1,6 @@
+---
 hu:
-  activerecord: 
+  activerecord:
     models:
       table:
         one: Table XXX
@@ -49,7 +50,66 @@ hu:
       vendor_printer:
         one: Printer
         other: Printers
-
+      booking:
+        one: Booking
+        other: Bookings
+      coupon:
+        one: Coupon
+        other: Coupons
+      customer:
+        one: Customer
+        other: Customers
+      discount:
+        one: Discount
+        other: Discounts
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      image:
+        one: Image
+        other: Images
+      page:
+        one: Card
+        other: Cards
+      partial:
+        one: Partial
+        other: Partials
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
+        one: Payment Method
+        other: Payment Methods
+      presentation:
+        one: Template
+        other: Templates
+      report:
+        one: Report
+        other: Reports
+      reservation:
+        one: Reservation
+        other: Reservations
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Saison
+        other: Saisons
+      surcharge:
+        one: Surcharge
+        other: Surcharges
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
+      vendor:
+        one: Restaurant
+        other: Restaurants
     attributes:
       article:
         price: Price
@@ -57,13 +117,17 @@ hu:
         hidden: delete
         description: Description
         category_id: Category
-        menucard: active
         usage: Usage
+        active: XXX active
+        image: XXX Image
+        tax_id: XXX Tax
       option:
         price: Price
         category_id: Category
         name: Name
         hidden: Delete
+        no_ticket: XXX Dont' print ticket
+        separate_ticket: XXX Cut ticket
       quantity:
         prefix: Name
         postfix: Postfix
@@ -88,15 +152,18 @@ hu:
         height_mobile: Height mobile
         enabled: active?
         hidden: delete
+        rotate: XXX rotate?
       category:
         name: Name
         tax_id: Tax
-        sort_order: Sort Order
         icon: Icon
         color: Color
         food: Food?
         vendor_printer_id: Printer
         hidden: delete
+        custom_icon: XXX My Icon
+        separate_print: XXX Cut ticket
+        user_id: XXX Preparing User
       cost_center:
         name: Name
         description: Description
@@ -114,37 +181,84 @@ hu:
         tables: Tables
         active: active?
         hidden: delete?
-      company:
-        name: Name
-        subdomain: Subdomain
-        saas: Online-Variant
-        automatic_printing: Automatic printing
-        printer_guestroom: Printer Guestroom
-        printer_bar: Printer Bar
-        printer_kitchen: Printer Kitchen
-        email: e-mail
-        internet_address: Internet address
-        invoice_slogan1: Invoice Slogan 1
-        invoice_slogan2: Invoice Slogan 2
-        bank_account1: Bank account detail 1
-        bank_account2: Bank account detail 2
-        country: Rules for country
-        invoice_subtitle: Invoice Subtitle
-        revenue_service_tax_number: Revenue service tax number
-        address: Address
-        time_offset: Time Offset (hours)
-        timeout: Screenlock Timeout (seconds)
-        use_order_numbers: Use order numbers?
+        screenlock_timeout: XXX Screenlock timeout (sec.)
       role:
         name: Name
       vendor_printer:
         name: Name
         path: Path
         hidden: Delete
+        copies: XXX Copies
       settlement:
         initial_cash: Initial amount
         revenue: End amount
-
+      guest_type:
+        hidden: delete
+        name: Name
+        taxes: Taxes
+      page:
+        active: active
+        color: Color
+        height: Height
+        hidden: delete
+        image: Image
+        width: Width
+      partial:
+        active: aktiv
+        blurb: Blurb
+        hidden: delete
+      presentation:
+        active: active
+        code: Ruby code
+        description: Description
+        hidden: delete
+        markup: ERB Markup
+        model: Type
+        name: Name
+      room_price:
+        base_price: Base Price
+        guest_type_id: Gast-Typ
+        hidden: löschen
+        room_type_id: Zimmerklasse
+        season_id: Season
+      room_type:
+        hidden: löschen
+        name: Name
+      season:
+        from_date: From
+        hidden: delete
+        name: Name
+        to_date: To
+      surcharge:
+        amount: Amount
+        guest_type_id: Guest Type
+        hidden: delete
+        name: Name
+        radio_select: Radio Select
+        season_id: Season
+      tax_amount:
+        amount: Amount
+        tax_id: Tax
+      vendor:
+        automatic_printing: Automatic printing
+        country: Rules for country
+        hidden: delete
+        invoice_footer_blurb: Invoice footer blurb
+        invoice_header_blurb: Invoice header blurb
+        name: Name
+        receipt_footer_blurb: Receipt footer blurb
+        receipt_header_blurb: Receipt header blurb
+        saas: Online variant
+        ticket_display_time_order: Time and invoice number on ticket
+        ticket_item_separator: Ticket Separation Line
+        ticket_tall_font: Ticket tall font
+        ticket_wide_font: Ticket wide font
+        time_offset: Time correction (hours)
+        timeout: Screen lock timeout (seconds)
+        use_order_numbers: Use order numbers
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
   articles:
     index:
       list_all: List all
@@ -152,13 +266,13 @@ hu:
       preview: Preview
       sort: Sort
       update: Update!
+      view: XXX View
     new:
       new_article: New article
       edit_article: Edit article
       add_quantity: Add Variant
       normal: normal
       takeaway: take away
-      weighing: weighing
     listall:
       all_articles: List of all articles
     find:
@@ -167,21 +281,24 @@ hu:
         other: Variants
     sort_index:
       sort: Sort articles
-
+    create:
+      success: Article was successfully created
+    destroy:
+      success: Article was successfully deleted
   options:
     new:
       new_option: New Option
       edit_option: Edit Option
       hidden: delete
-
+      select_all: XXX select all
+    create:
+      success: Option successfully saved
+    destroy:
+      success: Option successfully deleted
   blackboard:
     index:
       update: Update
-
   categories:
-    index:
-      foods: foods
-      drinks: drinks
     new:
       new_category: New Category
       edit_category: Edit Category
@@ -206,7 +323,12 @@ hu:
       teapot: Teapot
       tea: Teacup
       blank: Blank
-
+      noodles: XXX Noodles
+      soup: XXX Soup
+    create:
+      success: Category successfully saved
+    destroy:
+      success: Category successfully deleted
   cost_centers:
     index:
       active: Active
@@ -214,17 +336,18 @@ hu:
     new:
       new_cost_center: New Cost Center
       edit_cost_center: Edit Cost Center
-
+    create:
+      success: Cost Center successfully saved
+    destroy:
+      success: Cost Center successfully deleted
   groups:
     new:
       new_group: New Group
       edit_group: Edit Group
-
   stocks:
     new:
       new_stock: New Stock
       edit_stock: Edit Stock
-
   orders:
     served_by: You were served by
     order:
@@ -242,26 +365,6 @@ hu:
       list_of_taxes: List of taxes
       search_by_number: Search by number
     invoice_form:
-      split_invoice: Split invoice
-    login_form:
-      username: Username
-      login: Login
-      password: Password
-      email: Your E-Mail
-      realname: Your Name
-      your_ip_address: Your IP Data
-    go_to_tables:
-      warning_only_x_orders_left: "Warning, only %{credits} orders left."
-      warning_only_x_orders_left_upgrade_here: "Warning, only %{credits} orders left. Get more from <a href='http://www.billgasto.com'>billgasto.com</a>"
-    functions_header_index:
-      show_last_order: Show last order
-      print_now: Print now
-    functions_header_order_form:
-      move_order: Move order to other table
-    storno_form:
-      do_separate_items: Separate this item
-      do_storno: Make storno
-    invoice_form:
       set_cost_center: Set cost center for this order
       print_and_finish: Print and finish this order
       just_finish: Just finish order
@@ -270,17 +373,35 @@ hu:
       set_tax_for_all: Set cost center for all items
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
-
+      change_money: XXX Change
+      set_booking: XXX Assign to Booking
+    login_form:
+      username: Username
+      login: Login
+      password: Password
+      email: Your E-Mail
+    functions_header_index:
+      show_last_order: Show last order
+      print_now: Print now
+      items_notifications: XXX Notifications
+      show_last_booking: XXX Show last booking
+      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+    functions_header_order_form:
+      move_order: Move order to other table
+    storno_form:
+      do_separate_items: Separate this item
+      do_storno: Make storno
+    index:
+      delivery_list: Delivery list
+      preparation_list: Preparation list
   settlements:
     index:
       start_date: Start date
       end_date: End date
       all_cost_centers: All
       sum_total: Sum total
-    new:
-      set_date: Set a date for this settlement
     detailed_list:
-      order_number_on_table_on_date: '%{order} number %{number} on %{table} at %{time}'
+      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       count: Count
       unit_price: Unit Price
       total: Total
@@ -290,52 +411,53 @@ hu:
       finish: Finish
       print: Print
       started_at: Started at
-
   items:
     item_tablerow:
       clear: Clear
       done: Done
       no_printing: no printing
-
   sessions:
     browser_warning:
-      warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as web browser. Bill Gastro was optimized for those browsers exclusively.
+      warning: You don't use Mozilla Firefox, Safari, Google Chrome or Chromium as
+        web browser. Bill Gastro was optimized for those browsers exclusively.
       continue: Continue
     new:
       username: User
       login: Login
       password: Password
       email: Your E-Mail
-      realname: Your Name
-      your_ip_address: Your IP Data
-
   statistic: Statistic
   statistics:
     weekdays: Weekdays
     journal: Journal (chronological list)
-
   tables:
     new:
       new_table: New Table
       edit_table: Edit Table
-
+    create:
+      success: Table successfully saved
+    destroy:
+      success: Table successfully deleted
   taxes:
     new:
       new_tax: New Tax
       edit_tax: Edit Tax
-
   users:
     new:
       new_user: New User
       edit_user: Edit User
-
-  companies:
-    edit:
-      add_printer: Add printer
-      backup_database: Backup database
-    update:
-      config_successfully_updated: Company data successfully updated!
-
+    create:
+      success: User successfully saved
+    destroy:
+      success: User successfully deleted
+  various:
+    cancel: Cancel
+    common_surcharges: Common Surcharges
+    home: Home
+    pay: Pay
+    save: Save
+    subtotal: Subtotal
+    unamed: Unamed
   roles:
     new:
       take_orders: Take orders
@@ -344,7 +466,6 @@ hu:
       split_items: Split items
       move_tables: Move tables
       make_storno: Cancel items
-      make_immediate_storno: Cancel items immediately
       assign_cost_center: Assign cost center
       move_order: Move order
       change_waiter: Change waiter
@@ -356,23 +477,29 @@ hu:
       view_statistics: View statistics
       manage_users: Manage users
       manage_settings: Manage settings
-
+      cancel_all_items_in_active_order: XXX Cancel all items in active order
+      counter_mode: XXX Counter mode
+      delete_items: XXX Delete items by decrementing
+      edit_role: XXX Edit Role
+      manage_customers: XXX Manage Customers
+      manage_pages: XXX Manage Slideshow
+      new_role: XXX New Role
+      permissions: XXX Permissions
+      see_debug: XXX See debug messages
+      see_item_notifications: XXX See item notifications
+    create:
+      success: Role successfully saved
+    destroy:
+      success: Role successfully deleted
   delete: Delete
-  are_you_sure: 'Are you sure?'
+  are_you_sure: Are you sure?
   edit: Edit
   create: Create
   new: New
   print: Print
   display: Display
-  logout: 'log out %{who}'
-  
-  blackboard_generic_name: Blackboard
+  logout: log out %{who}
   waiterpad_generic_name: Waiterpad
-  menucard_generic_name: Menucard
-  unsettled_orders_generic_name: Shifts
-
-  print_kitchenlist: Print Kitchen Item List
-  recent_orders: View recent orders
   scroll_down: Scroll down
   scroll_up: Scroll up
   scroll_to_room: Go to room
@@ -381,19 +508,13 @@ hu:
   cancel_and_go_back: Cancel and go back
   clear_order_and_go_back: Clear order and go back
   move_order_to_table: Move order to different table
-  finish_order: Finish order
-
   invoice: Invoice
   invoices: Invoices
   storno: Storno
-  datetime: Date
   sum: Sum
   count: Count
-
   net: Net
-  value_added_tax: VAT
   gross: Gross
-
   violet: Violet
   orange: Orange
   pink: Pink
@@ -404,50 +525,109 @@ hu:
   black: Black
   yellow: Yellow
   winered: Wine Red
-
   food: Foods
-  drink: Drinks
-  tobacco: Tobacco
-
   guestroom: Guestroom
   kitchen: Kitchen
   bar: Bar
-  dummy: Dummy
-
   restaurant: Restaurant
-  auxiliary_waiter: Auxiliary Waiter
   waiter: Waiter
-  chief_waiter: Chief waiter
   host: Host
   admin: Admin
-  superuser: Superuser
-
-# TRANSLATIONS FOR MODELS
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the Article or for the Variant.
+  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
+    Article or for the Variant.
   is_no_number: is not a number.
-
-# TRANSLATIONS FOR CONTROLLERS
-  successfully_deleted: '%{what} was successfully deleted.'
-  there_are_no_open_settlements: There are no open settlements.
-  logout_successful: You have logged off successfully.
-  user_not_found: User not found
   wrong_password: Wrong login data
-
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-
-  please_enter_email_and_realname: Please enter your email address and real name.
-
   default: Default
-  germany: Germany
-  austria: Austria
-
-  # Translations for Javascript files
   please_enter_item_comment: Special Wish
   please_enter_item_price: Special Price
-  server_no_response: 'The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.'
+  server_no_response: The Bill Gastro Server is not responding any more. It is either
+    busy or the radio link is interrupted.
   just_order: Just order
   no_printing: No printing
   copy: Copy
   exit: Exit
   printing_test: Printing test
+  bookings:
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+    show:
+      search_by_number: Search by number
+  dateandtime: XXX Date
+  finish: XXX Just Finish
+  images:
+    errempty: Invalid file
+    errsize: Invalid file size
+    errtype: Invalid file type
+  layouts:
+    application:
+      submit_scribe: OK
+  messages:
+    hello_username: Hello %{name}!
+  not_found: XXX Not found
+  pages:
+    edit:
+      edit_page: Edit Page
+      slideshow: Start Slideshow
+      view: View
+    new:
+      new_page: New Page
+  partials:
+    default_blurb: edit me
+    error_during_evaluation: ! 'Error: '
+    no_presentation_found:
+      no_presentations_found: No template defined for this partial.
+  presentations:
+    new:
+      edit_presentation: Edit Template
+      new_presentation: New Template
+  print_and_finish: XXX Finish and print
+  reports:
+    end_date: End Date
+    index:
+      backup_database: Backup database
+      backup_logfile: Backup logfile
+      header: Reports
+    save: Save
+    start_date: Start Date
+    usb_device: USB Stick
+  room_prices:
+    index:
+      generate_price_skeleton: Generate price skeleton
+    new:
+      edit_room_price: Edit room price
+      new_room_price: New room price
+  room_types:
+    new:
+      edit_room_type: Edit room type
+      new_room_type: New room type
+  rooms:
+    new:
+      edit_room: Edit Room
+      new_room: New Room
+  scopes:
+    active: Active
+    waiterpad: Waiterpad
+  seasons:
+    new:
+      edit_season: Edit Season
+      new_season: New Season
+  shared:
+    invoice_tax_list:
+      list_of_taxes: List of Taxes
+  split_order: XXX Split order
+  surcharges:
+    new:
+      add_tax_amount: Add tax amount
+      common_surcharge: Common Surcharge
+      edit_surcharge: Edit Surcharge
+      new_surcharge: New Surcharge
+  tax_amount: XXX Amount
+  vendors:
+    index:
+      edit: Edit
+      switch_to: Select
+    new:
+      edit_vendor: Edit Vendor
+      new_vendor: New Vendor

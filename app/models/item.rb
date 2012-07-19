@@ -1,9 +1,13 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 class Item < ActiveRecord::Base
   include Scope
   belongs_to :order
@@ -16,6 +20,7 @@ class Item < ActiveRecord::Base
   belongs_to :category
   belongs_to :settlement
   belongs_to :cost_center
+  has_many :tax_items
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
@@ -95,13 +100,19 @@ class Item < ActiveRecord::Base
       self.sum = 0
       self.taxes = {}
     else
-      self.sum = full_price
+      self.sum = full_price.round(2)
       self.taxes = {}
       self.article.taxes.each do |tax|
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
-        self.taxes[tax.id] = {:percent => tax.percent, :tax => tax_sum, :gro => gro, :net => net, :letter => tax.letter, :name => tax.name }
+        self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
+        tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+        if tax_item
+          tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
+        else
+          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum
+        end
       end
     end
     save
@@ -240,5 +251,5 @@ class Item < ActiveRecord::Base
     end
     split_order.calculate_totals
   end
-
+  
 end

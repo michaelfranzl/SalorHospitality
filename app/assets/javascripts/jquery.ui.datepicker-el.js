@@ -14,7 +14,7 @@ jQuery(function($){
 		dayNamesShort: ['Κυρ','Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ'],
 		dayNamesMin: ['Κυ','Δε','Τρ','Τε','Πε','Πα','Σα'],
 		weekHeader: 'Εβδ',
-		dateFormat: 'dd/mm/yy',
+		dateFormat: 'yy-mm-dd',
 		firstDay: 1,
 		isRTL: false,
 		showMonthAfterYear: false,

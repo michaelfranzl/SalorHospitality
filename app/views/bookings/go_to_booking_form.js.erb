@@ -1,30 +1,43 @@
+<% if @bookings %>
+  update_bookings_for_room(<%= @room.id %>, <%= raw @bookings.to_json %>);
+<% end %>
 <% if @booking %>
   items_json = <%= raw @booking.booking_items_to_json %>;
   submit_json.id = <%= @booking.id %>;
+  submit_json.model['customer_name'] = '<%= @booking.customer_name %>';
   submit_json['payment_methods'] = {<%= @booking.id %>:{}};
   submit_json['totals'] = {<%= @booking.id %>:{model:<%= @booking.sum %>, payment_methods:0, booking_orders:<%= @booking.orders.sum :sum %>}};
   $('.booking_form').attr('id', 'model_<%= @booking.id %>');
   $('.booking_change').attr('id', 'change_<%= @booking.id %>');
-  $('#booking_from').val('<%= @booking.from.strftime("%Y-%m-%d") if @booking.from %>');
-  $('#booking_to').val('<%= @booking.to.strftime("%Y-%m-%d") if @booking.to %>');
-  $('#booking_duration').val('<%= Integer(@booking.duration) %>');
-  $('#add_payment_method_button').on('click', function() { add_payment_method(<%= @booking.id %>); });
+  $('#booking_customer').val(submit_json.model['customer_name']);
+  $('#booking_from').val('<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>');
+  $('#booking_to').val('<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>');
+  submit_json.model.to_date = '<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>';
+  submit_json.model.from_date = '<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>';
   $('.payment_methods_container').attr('id', 'payment_methods_container_' + <%= @booking.id %>);
+  $('.payment_methods_container').attr('model_id', <%= @booking.id %>);     
+  $('#booking_duration').val('<%= Integer(@booking.duration) %>');
+  $('#add_payment_method_button').on('click', function() { 
+      show_payment_methods(<%= @booking.id %>,true); 
+      add_button_menu($('.payment_methods_container'));
+   });
+  
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
-  window.render_booking_items_from_json();
   window.change_season(<%= @booking.season.id %>);
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};
   submit_json['totals'] = {0:{model:0, payment_methods:0, booking_orders:0}};
-  $('#add_payment_method_button').on('click', function() { add_payment_method(0); });
+  $('#add_payment_method_button').on('click', function() { show_payment_methods(0,true); });
   $('.payment_methods_container').attr('id', 'payment_methods_container_0');
+  $('.payment_methods_container').attr('model_id', 0);
   $('#booking_from').val('<%= Time.now.strftime("%Y-%m-%d") %>');
-  submit_json.model.from = '<%= Time.now.strftime("%Y-%m-%d") %>';
+  submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d") %>';
   $('#booking_to').val('<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>');
-  submit_json.model.to = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
+  submit_json.model.to_date = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
   window.calculate_booking_duration();
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');
 <% end %>
+ _set("salor_hotel.bookings.dirty",true);

@@ -4,11 +4,7 @@
   = link_to(t(:new), new_table_path, :class => 'links')
   = link_to 'mobil', '/tables/mobile?mobile_drag_and_drop=', :class => 'links'
 
-%table
-  %tr
-    %th{ :width => '150px' }
-    %th{ :width => '50px' }
+#table_index
   - @tables.each do |ta|
-    %tr
-      %td= link_to ta.name, edit_table_path(ta)
-      %td= link_to image_tag('button_small_delete.png', :title => Table.human_attribute_name(:hidden), :alt => Table.human_attribute_name(:hidden)), table_path(ta), :method => :delete, :confirm => t(:are_you_sure)
+    = link_to edit_table_path(ta), :class => 'table_links' do
+      %div.table_index= ta.name

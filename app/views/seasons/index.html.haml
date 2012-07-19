@@ -5,12 +5,12 @@
 %table
   %tr
     %th{ :style => 'width:120px' }= Season.human_attribute_name(:name)
-    %th{ :style => 'width:120px' }= Season.human_attribute_name(:from)
-    %th{ :style => 'width:120px' }= Season.human_attribute_name(:to)
+    %th{ :style => 'width:120px' }= Season.human_attribute_name(:from_date)
+    %th{ :style => 'width:120px' }= Season.human_attribute_name(:to_date)
     %th{ :style => 'width:50px' }
   - @seasons.each do |g|
     %tr
       %td= link_to g.name, edit_season_path(g)
-      %td= g.from
-      %td= g.to
+      %td= l g.from_date, :format => :month_and_day
+      %td= l g.to_date, :format => :month_and_day
       %td= link_to image_tag('button_small_delete.png', :title => Season.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), season_path(g), :method => :delete, :confirm => t(:are_you_sure)

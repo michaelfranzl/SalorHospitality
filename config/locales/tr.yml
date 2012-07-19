@@ -32,6 +32,7 @@ tr:
       date_short: "%d. %b %y"
       date_iso: "%Y-%m-%d"
       time_short: "%H:%M"
+      month_and_day: "%d. %B"
 
     am: "öğleden önce"
     pm: "öğleden sonra"
