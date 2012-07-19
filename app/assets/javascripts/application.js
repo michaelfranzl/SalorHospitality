@@ -8,5 +8,4 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require application-generic
-//= require bookings.js
 //= #require_tree .

@@ -1,16 +1,39 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class VendorsController < ApplicationController
 
   before_filter :check_permissions, :except => [:render_resources]
 
   def index
-    @vendors = @current_company.vendors.existing
+    respond_to do |wants|
+      wants.json {
+        status = @current_vendor.print_data_available == true ? 'true' : 'false'
+        render :json => "{\"print_data_available\":#{status}}"
+        return
+      }
+      wants.html {
+        @vendors = @current_company.vendors.existing
+        return
+      }
+    end
+  end
+  
+  def print
+    # Return a file that contains all not yet printed Items and all Orders that are marked for printing
+    orders = @current_vendor.orders.existing.where(:print_pending => true)
+    tickets = orders.collect{ |o| o.escpos_tickets(nil) }.join
+    invoices = orders.collect{ |o| o.escpos_receipt }.join
+    orders.update_all :print_pending => false
+    @current_vendor.update_attribute :print_data_available, false
+    send_data tickets + invoices
   end
 
   # Switches the current vendor and redirects to somewhere else
@@ -67,7 +90,8 @@ class VendorsController < ApplicationController
     permissions = {
       :delete_items => @current_user.role.permissions.include?("delete_items"),
       :decrement_items => @current_user.role.permissions.include?("decrement_items"),
-      :item_scribe => @current_user.role.permissions.include?("item_scribe")
+      :item_scribe => @current_user.role.permissions.include?("item_scribe"),
+      :see_item_notifications => @current_user.role.permissions.include?("see_item_notifications")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

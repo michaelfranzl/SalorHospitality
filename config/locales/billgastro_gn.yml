@@ -2,6 +2,14 @@
 gn:
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Betrag
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Wechselgeld
       customer:
         first_name: Vorname
         last_name: Nachname
@@ -252,8 +260,8 @@ gn:
         one: Saison
         other: Saisonen
       settlement:
-        one: Abrechnung
-        other: Übersicht
+        one: Losungen
+        other: Abrechnungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
@@ -424,6 +432,10 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Einzelpreis
+      count: Menge
+      sum: Summe
     functions_header_index:
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
@@ -466,9 +478,9 @@ gn:
       search_by_number: Suche nach Bestellnummer
       sum: Summe
       unit_price: Stück
-    storno_form:
+    refund_form:
       do_separate_items: Posten separieren
-      do_storno: Storno durchführen
+      do_refund: Storno durchführen
   pages:
     edit:
       edit_page: Karte bearbeiten
@@ -503,6 +515,9 @@ gn:
       connect_vnc: Bildschirm teilen
       password: Passwort
       requesting_connection_status: Verbindungsstatus abfragen ...
+      internet_connection_info: Für die Fernwartung müssen Sie mit dem Internet verbunden sein. Wenn Sie oben das Red (E) Logo sehen, sind Sie mit dem Internet verbunden.
+      remote_support: Fernwartung
+      download_reports: Berichte speichern
     save: Speichern
     start_date: Von
     usb_device: Usb Stick
@@ -559,6 +574,10 @@ gn:
       manage_hotel: Hotel managen
       manage_statistics: Statistiken ansehen
       item_scribe: Handschrift aktivieren
+      assign_order_to_booking: Bestellungen einer Buchung zuweisen
+      assign_tables: Tische an Benutzer zuweisen
+      remote_support: Fernwartung
+      download_database: Datenbank herunterladen
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
@@ -584,14 +603,13 @@ gn:
       edit_season: Saison bearbeiten
       new_season: Neue Saison
   send_and_go_back: Senden und zurück
-  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf %{table}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf Tisch %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
     oder die Funkverbindung ist abgerissen.
   sessions:
     browser_warning:
       continue: weiter
-      warning: Sie verwenden nicht Mozilla Firefox, Safari, Google Chrome oder Chromium
-        als Browser. Bill Gastro wurde ausschließlich auf diese Browser optimiert.
+      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
@@ -626,7 +644,7 @@ gn:
     new:
       edit_stock: Lagerartikel bearbeiten
       new_stock: Neuer Lagerartikel
-  storno: Storno
+  refund: Storno
   sum: Summe
   surcharges:
     new:
@@ -656,6 +674,7 @@ gn:
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
+      select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
     cancel: Abbrechen
     common_surcharges: Aufschläge
@@ -664,6 +683,10 @@ gn:
     save: Speichern
     subtotal: Gesamt
     unamed: Unbenannte
+    tax: Steuer
+    unit_price_abbreviation: EP
+    total_price_abbreviation: GP
+    quantity_abbreviation: Stk.
   vendors:
     index:
       edit: bearbeiten
@@ -678,3 +701,4 @@ gn:
   winered: Weinrot
   wrong_password: Falsche Logindaten.
   yellow: Gelb
+  invalid_date: Ungültiges Datum

@@ -1,3 +1,11 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 # document ready code
 $ ->
   connect 'salor_hotel.refresh_db', 'ajax.update_resources.success', window.update_salor_hotel_db
@@ -32,15 +40,19 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'DROP TABLE IF EXISTS surcharges;'
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
+    tx.executeSql 'DROP TABLE IF EXISTS seasons;'
     tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
+    tx.executeSql 'CREATE TABLE seasons (id INTEGER PRIMARY KEY, name STRING, from_date DATETIME, to_date DATETIME, duration INTEGER);'
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
       tx.executeSql 'INSERT INTO room_prices (id, guest_type_id, room_type_id, season_id, base_price) VALUES (?,?,?,?,?);', [k, v.gt, v.rt, v.sn, v.p]
+    $.each resources.sn, (k,v) ->
+      tx.executeSql 'INSERT INTO seasons (id, name, from_date, to_date, duration) VALUES (?,?,?,?,?);', [k, v.n, v.f, v.t, v.d]
 
 # Called when clicking on a room. Displays the booking form dynamically
 window.display_booking_form = (room_id) ->
@@ -53,6 +65,7 @@ window.display_booking_form = (room_id) ->
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['from_date'] = date
+               window.update_booking_duration()
   }
   to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {
@@ -256,10 +269,11 @@ update_json_booking_items = ->
         
 
 
-
+# Adds a new row of buttons to the booking form. The source is an item which is already in the local json storage.
 render_booking_item = (booking_item_id) ->
   surcharge_headers = _get 'surcharge_headers'
-  if booking_item_id.indexOf('s')== 0
+  if booking_item_id.indexOf('s') == 0
+    # a dynamically generated booking_item_id with s at the beginning means "special". Special means that the generated row/surchargeitem does not represent a guest_type, but is simply a collection of surcharges.
     guest_type_name = i18n.common_surcharges
     surcharge_headers = surcharge_headers.guest_type_null
   else
@@ -305,12 +319,12 @@ render_booking_item = (booking_item_id) ->
     delete_booking_item(booking_item_id)
   update_booking_totals()
 
-
+# deletes a booking item from the DOM and sets 'hidden' in the json sources.
 delete_booking_item = (booking_item_id) ->
   $('#booking_item' + booking_item_id).remove()
   set_json 'booking', booking_item_id, 'hidden', true
 
-
+# The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
   if $(element).attr('type') == 'radio'
     $.each items_json[booking_item_id].surcharges, (k,v) ->
@@ -327,16 +341,15 @@ save_selected_input_state = (element, booking_item_id, surcharge_name) ->
   update_submit_json_surchageslist booking_item_id
 
 
+# Copy data over into submit_son from items_json, add surcharge IDs to array, which will be interpreted by the Server.
 update_submit_json_surchageslist = (booking_item_id) ->
-  # copy stuff over into submit_son from items_json, add ids to array
   set_json 'booking', booking_item_id, 'surchargeslist', [0]
   $.each items_json[booking_item_id].surcharges, (k,v) ->
     if v.selected
       submit_json.items[booking_item_id].surchargeslist.push v.id
-    
 
 
-
+# render all booking items which are in the items_json object to the DOM
 window.render_booking_items_from_json = ->
   $('#booking_items').html ''
   $.each items_json, (k,v) ->

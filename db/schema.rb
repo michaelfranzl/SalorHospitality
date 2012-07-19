@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120709152459) do
+ActiveRecord::Schema.define(:version => 20120716112757) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,18 +19,16 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "active",        :default => true
+    t.boolean  "active",      :default => true
     t.boolean  "waiterpad"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "hidden",        :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "hidden",      :default => false
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.integer  "tax_id"
-    t.string   "sku",           :default => ""
-    t.float    "quantity_sold", :default => 0.0
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -125,7 +123,14 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
   end
 
   create_table "companies", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.string  "mode",              :default => "local"
+    t.string  "subdomain"
+    t.integer "update_tables",     :default => 20
+    t.integer "update_item_lists", :default => 61
+    t.integer "update_resources",  :default => 182
+    t.boolean "hidden",            :default => false
+    t.boolean "active",            :default => true
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -597,6 +602,7 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.float    "initial_cash"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.float    "sum"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -662,6 +668,7 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.integer  "active_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",         :default => true
+    t.integer  "position"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -682,6 +689,22 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.integer "vendor_id"
     t.boolean "hidden"
     t.integer "company_id"
+  end
+
+  create_table "tax_items", :force => true do |t|
+    t.integer  "tax_id"
+    t.integer  "item_id"
+    t.integer  "booking_item_id"
+    t.integer  "order_id"
+    t.integer  "booking_id"
+    t.integer  "settlement_id"
+    t.float    "gro"
+    t.float    "net"
+    t.float    "tax"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "taxes", :force => true do |t|
@@ -713,6 +736,7 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.integer  "screenlock_timeout",        :default => -1
     t.boolean  "automatic_printing"
     t.boolean  "onscreen_keyboard_enabled", :default => true
+    t.string   "salt"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
@@ -737,14 +761,12 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name",                                          :default => "Bill Gastro"
-    t.string   "subdomain",                                     :default => "demo"
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
     t.integer  "largest_order_number",                          :default => 0
     t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                   :default => 0
-    t.string   "mode"
     t.text     "resources_cache",           :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
@@ -771,7 +793,7 @@ ActiveRecord::Schema.define(:version => 20120709152459) do
     t.integer  "max_options",                                   :default => 5
     t.integer  "max_users",                                     :default => 3
     t.integer  "max_categories",                                :default => 6
-    t.integer  "max_discounts",                                 :default => 3
+    t.boolean  "print_data_available"
   end
 
 end

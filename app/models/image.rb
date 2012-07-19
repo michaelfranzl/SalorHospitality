@@ -1,9 +1,12 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require 'RMagick'
 
@@ -65,7 +68,9 @@ class Image < ActiveRecord::Base
 	end
 
   def make_path(path)
-    File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    puts "XXXXXXXXXXXXXXXXXXXXXx makepath #{path} XXXXXXXXXXXXXXXXXXXX"
+    return path
   end
 
 	def original_path
@@ -106,6 +111,7 @@ class Image < ActiveRecord::Base
       file = File.open(original_path,'wb')
       file.puts @file_data.read
       file.close
+
       create_resized('large', LARGE_MAX_SIZE, original_path, large_path)
       create_resized('thumb', THUMB_MAX_SIZE, original_path, thumbnail_path)
 			@file_data = nil
@@ -117,7 +123,7 @@ class Image < ActiveRecord::Base
 
 	def get_resize_ratio(pic, dimensions)
 		maxwidth = dimensions[0]
-		maxheight = dimensions[1]
+    maxheight = dimensions[1]
 		imgwidth = pic.columns
 		imgheight = pic.rows
 		if imgwidth < maxwidth and imgheight < maxheight then

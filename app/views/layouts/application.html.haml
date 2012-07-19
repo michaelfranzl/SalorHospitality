@@ -11,18 +11,19 @@
     = csrf_meta_tag
     = javascript_include_tag 'application'
     = javascript_include_tag 'draw'
-    - if workstation? and @current_user and @current_user.onscreen_keyboard_enabled
+    - if workstation?
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
-    - if workstation?
       = javascript_include_tag 'application-workstation'
       = javascript_include_tag 'jquery.checkbox'
       = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
       = javascript_include_tag 'jquery.modcoder.excolor'
     - if mobile?
       = javascript_include_tag 'application-mobile'
-    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user
+    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user.role.permissions.include?('manage_hotel') and workstation?
       = javascript_include_tag 'booking'
+      = javascript_include_tag 'bookings'
+    - if controller.controller_name == 'orders' and controller.action_name == 'index'
       = javascript_include_tag 'orders-generic'
       - if workstation?
         = javascript_include_tag 'orders-workstation'
@@ -39,9 +40,7 @@
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
-    %script== automatic_printing = #{ (@current_user.automatic_printing and saas_variant? and workstation?) ? 'true' : 'false' };
-
-    = raw SalorApi.run('views.layouts.application.header')
+    %script== automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode == 'saas' and workstation?) ? 'true' : 'false' };
 
 
   %body
@@ -65,6 +64,7 @@
         .left
           = image_tag 'salorgastro-tiny.png'
           == Version #{ SalorGastro::Application::VERSION }
+          == #{ @current_company.name } #{ @current_vendor.name }
         .right
           &copy; 2012 Red (E) Tools Ltd.
           = image_tag 'red-e-tiny.png'

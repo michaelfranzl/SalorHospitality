@@ -1,26 +1,35 @@
 # coding: UTF-8
 
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 require 'net/http'
 class ApplicationController < ActionController::Base
   helper :all
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
-  helper_method :saas_variant?, :saas_pro_variant?, :local_variant?, :demo_variant?, :hotel_mode?
 
   private
 
     def assign_from_to(p)
-      f = Date.civil( p[:from][:year ].to_i,
-                      p[:from][:month].to_i,
-                      p[:from][:day  ].to_i) if p[:from]
-      t = Date.civil( p[:to  ][:year ].to_i,
-                      p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) + 1.day if p[:to]
+      begin
+        f = Date.civil( p[:from][:year ].to_i,
+                        p[:from][:month].to_i,
+                        p[:from][:day  ].to_i) if p[:from]
+        t = Date.civil( p[:to  ][:year ].to_i,
+                        p[:to  ][:month].to_i,
+                        p[:to  ][:day  ].to_i) + 1.day if p[:to]
+      rescue
+        flash[:error] = t(:invalid_date)
+        f = Time.now.beginning_of_day
+        t = Time.now.end_of_day
+      end
       return f, t
     end
 
@@ -85,30 +94,6 @@ class ApplicationController < ActionController::Base
        request.user_agent.include?('iPad')
     end
 
-    def saas_variant?
-      @current_vendor.mode == 'saas' or @current_vendor.mode == 'saas_basic' or @current_vendor.mode == 'saas_plus' or @current_vendor.mode == 'saas_pro' if @current_vendor
-    end
-
-    def saas_basic_variant?
-      @current_vendor.mode == 'saas_basic' if @current_vendor
-    end
-
-    def saas_plus_variant?
-      @current_vendor.mode == 'saas_plus' if @current_vendor
-    end
-
-    def saas_pro_variant?
-      @current_vendor.mode == 'saas_pro' if @current_vendor
-    end
-
-    def demo_variant?
-      @current_vendor.mode == 'demo' if @current_vendor
-    end
-
-    def local_variant?
-      @current_vendor.mode.nil? if @current_vendor
-    end
-
     def neighbour_models(model_name, model_object)
       models = @current_vendor.send(model_name).existing.where(:finished => true)
       idx = models.index(model_object)
@@ -118,16 +103,5 @@ class ApplicationController < ActionController::Base
       next_model = model_object if next_model.nil?
       return previous_model, next_model
     end
-
-    def check_product_key
-      # Removing this code is an act of piracy, systems found with this block tampered with will be subject to prosecution in violation of international Digital Rights laws.
-      resp = Net::HTTP.get(URI("http://updates.red-e.eu/files/get_translations?file_id=12&p=#{ /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join } "))
-      begin
-        json = JSON.parse(resp)
-        if not json["success"] == true then
-          exit
-        end
-      rescue;end
-    end
-
+    
 end

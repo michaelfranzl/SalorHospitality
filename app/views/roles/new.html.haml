@@ -10,6 +10,8 @@
 = form_for @role do |role_form|
   %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
   = role_form.text_field :name, :size => '20'
+  %br
+  = role_form.text_field :weight, :size => '5'
   %span#role_name_display_keyboard.display_keyboard
   %br
   %br
@@ -114,6 +116,15 @@
   %br
   %input#permissions_item_scribe{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'item_scribe', :checked => role_form.object.permissions.include?('item_scribe') }
   %label{ :for => 'permissions_item_scribe' }= t '.item_scribe'
+  %br
+  %input#permissions_assign_tables{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'assign_tables', :checked => role_form.object.permissions.include?('assign_tables') }
+  %label{ :for => 'permissions_assign_tables' }= t '.assign_tables'
+  %br
+  %input#permissions_download_database{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'download_database', :checked => role_form.object.permissions.include?('download_database') }
+  %label{ :for => 'permissions_download_database' }= t '.download_database'
+  %br
+  %input#permissions_remote_support{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'remote_support', :checked => role_form.object.permissions.include?('remote_support') }
+  %label{ :for => 'permissions_remote_support' }= t '.remote_support'
 
 :javascript
   $('#role_name').keyboard( {openOn: '' } );

@@ -1,3 +1,11 @@
+// Copyright (c) 2012 Red (E) Tools Ltd.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 $link_color: white
 $error_text: #C00
 $lightgray: #EEE
@@ -6,6 +14,7 @@ $middlegray: #444
 $background: #333
 $adminbackground: #222
 $billgastroblue1: #5b7682
+$billgastroblue2: #0e1d25
 $billgastrogrey1: #243239
 $billgastrogrey2: #7E868A
 $warning: #74101b
@@ -251,6 +260,9 @@ a.logout
 
 table.settlements
   :font-size 80%
+  :width 35%
+  :margin 10px
+  :float left
   :border-collapse collapse
   :border 1px solid $darkgray
   td.highlighted
@@ -418,7 +430,7 @@ select
 
 input#print_invoice,
 input#split_e,
-input#storno_item,
+input#refund_item,
 a#edit_invoice img,
 a#go_back img
   :vertical-align middle
@@ -761,8 +773,6 @@ table#itemstable
   :border-spacing 1px
   :table-layout fixed
   :width 100%
-  td
-    :padding 3px
 
 #save_order,
 #finish_order
@@ -847,6 +857,8 @@ td.item_label
   :background-color $articlelistbgcolor
   :min-height 30px
   :word-wrap break-word
+  img
+    :width 110px
 
 td.item_options
   :width 17%
@@ -1050,6 +1062,10 @@ div.paper_invoice
   :margin 20px auto
   :-moz-box-shadow 0px 0px 15px black
   :-webkit-box-shadow 0px 0px 15px black
+  
+  img
+    :float right
+    :width 30%
 
   p.subtotal
     :float right
@@ -1057,11 +1073,12 @@ div.paper_invoice
     :font-weight bold
 
   div.vendor_details
-    :float left
+    :float right
+    :font-size 80%
 
   div.customer_details
-    :padding-top 100px
-    :float right
+    :padding 50px 0px 20px 0px
+    :float left
 
   table
     :width 100%
@@ -1090,12 +1107,16 @@ div.paper_invoice
       
   table.taxes,
   table.payment_methods
-    :width 40%
+    :width 50%
     :border 2px solid #7e868a
     :border-collapse collapse
     td, th
       :border 1px solid #7e868a
       :padding 3px
+      
+  div.invoice_footer
+    :font-size 80%
+
 
 
 div#room1_button
@@ -1647,3 +1668,45 @@ div#remote_support
     :padding 20px
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+
+div#table_index
+  a
+    :text-decoration none
+  div.table_index
+    :margin 5px
+    :display inline-block
+    :background-color $billgastrogrey1
+    :font-size 200%
+    :text-align center
+    :padding 10px
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+
+div#message
+  :font-size 200%
+  :text-align center
+  :padding 40px
+
+div#report
+  :background-color rgba(14, 29, 37, 0.95)
+  :position absolute
+  :padding 20px
+  :display none
+  :top 0px
+  :left 0px
+  :z-index 100
+  :width 95%
+  :height 100%
+  input#report_day
+    :font-size 200%
+      span.done,
+  span.done
+    :cursor pointer
+    :position absolute
+    :right 2px
+    :top 2px
+    :background-image url(button_mobile_cancel-small.png)
+    :width 38px
+    :height 38px
+    :background-repeat no-repeat
+    :background-position center center

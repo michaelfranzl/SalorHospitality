@@ -1,8 +1,11 @@
 /*
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+Copyright (c) 2012 Red (E) Tools Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /* ======================================================*/
@@ -33,6 +36,8 @@ var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
 
+var gastro = {functions:{ report:{} }, variables:{report:{}}};
+var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -372,8 +377,11 @@ function set_json(model, d, attribute, value) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object));
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object));
     $('#itemstable').append(tablerow);
+    if (object.p == 0) {
+      $('#tablerow_' + object.d + '_label').addClass('zero_price');
+    }
     $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
     render_options(resources.c[catid].o, object.d, catid);
@@ -381,7 +389,15 @@ function render_items() {
   calculate_sum();
 }
 
-
+function scribe_image(object) {
+  var path;
+  if (object.h == true) {
+    path = "<img src='/items/" + object.id + ".svg'>";
+  } else {
+    path = '';
+  }
+  return path;
+}
 
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
@@ -681,7 +697,7 @@ function add_new_item(object, add_new, anchor_d) {
   } else {
     d = create_json_record('order', object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, ''));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, ''));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -964,10 +980,6 @@ function compose_optionnames(object){
   jQuery.each(object.t, function(k,v) {
     names += (v.n + '<br>')
   });
-  if (object.u < -10) {
-  // add course number
-    names += (object.u + 10) * -1 + '. Gang'
-  }
   return names;
 }
 
@@ -986,32 +998,36 @@ function calculate_sum() {
 }
 
 function display_configuration_of_item(d) {
-  row = $(document.createElement('tr'));
-  row.attr('id','item_configuration_'+d);
-  cell = $(document.createElement('td'));
-  cell.attr('colspan',4);
-  cell.addClass('item_configuration',4);
+  if ($('#item_configuration_' + d).is(':visible')) {
+    $('#item_configuration_' + d).remove();
+  } else {
+    row = $(document.createElement('tr'));
+    row.attr('id','item_configuration_'+d);
+    cell = $(document.createElement('td'));
+    cell.attr('colspan',4);
+    cell.addClass('item_configuration',4);
 
-  comment_button =  $(document.createElement('span'));
-  comment_button.addClass('item_comment');
-  comment_button.on('click', function(){ display_comment_popup_of_item(d); });
-  cell.append(comment_button);
+    comment_button =  $(document.createElement('span'));
+    comment_button.addClass('item_comment');
+    comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+    cell.append(comment_button);
 
-  price_button =  $(document.createElement('span'));
-  price_button.addClass('item_price');
-  price_button.on('click', function(){ display_price_popup_of_item(d); });
-  cell.append(price_button);
+    price_button =  $(document.createElement('span'));
+    price_button.addClass('item_price');
+    price_button.on('click', function(){ display_price_popup_of_item(d); });
+    cell.append(price_button);
 
-  if (permissions.item_scribe) {
-    scribe_button =  $(document.createElement('span'));
-    scribe_button.addClass('item_scribe');
-    scribe_button.on('click', function(){ init_scribe(d); });
-    cell.append(scribe_button);
+    if (permissions.item_scribe) {
+      scribe_button =  $(document.createElement('span'));
+      scribe_button.addClass('item_scribe');
+      scribe_button.on('click', function(){ init_scribe(d); });
+      cell.append(scribe_button);
+    }
+
+    row.html(cell);
+    row.addClass('item');
+    row.insertAfter('#item_' + d);
   }
-
-  row.html(cell);
-  row.addClass('item');
-  row.insertAfter('#item_' + d);
 }
 
 
@@ -1070,6 +1086,7 @@ function update_resouces_success(data) {
 
 
 function update_item_lists() {
+  if (!permissions.see_item_notifications) return;
   $.ajax({
     url: '/items/list?scope=preparation',
     timeout: 2000
@@ -1149,3 +1166,178 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
+
+
+salor.functions = {
+  table_from_json: function(source, attrs, target, heading) {
+    create_dom_element('h2',{},heading,target);
+    table = create_dom_element('table', attrs, '', target);
+    header_row = create_dom_element('tr',{},'',table);
+    // get table headers from the first JSON object
+    var first;
+    $.each(source, function(k,v) {
+      first = v;
+      return false; // break after the first element, since we only need the headers
+    })
+    // render the table header
+    var headers = Object.keys(first);
+    var sums = {};
+    create_dom_element('td', {class:'link'}, '', header_row);
+    for (i in headers) {
+      create_dom_element('th',{},headers[i],header_row);
+      sums[headers[i]] = 0; // initialize sums for each column
+    }
+    // render the table body
+    $.each(source, function(k,v) {
+      data_row = create_dom_element('tr', {}, '', table);
+      create_dom_element('td', {class:'link'}, k, data_row);
+      for (j in v) {
+        create_dom_element('td', {}, number_to_currency(v[j]), data_row);
+        sums[j] += v[j];
+      }
+    })
+    //render thr table footer
+    footer_row = create_dom_element('tr', {}, '', table);
+    create_dom_element('th', {}, '', footer_row);
+    for (i in headers) {
+      create_dom_element('th',{},number_to_currency(sums[headers[i]]), footer_row);
+    }
+  }
+}
+
+gastro.functions.report = {
+  initiate:function() {
+    $.ajax({
+      url: '/settlements',
+      dataType: 'json',
+      data: {day:gastro.variables.report_day},
+      success: function(data){
+        gastro.variables.report_items = data;
+        if (data == "") {
+          $('#report_container').html('');
+          return;
+        }
+        gastro.functions.report.convert_from_yaml();
+        gastro.functions.report.calculate();
+        gastro.functions.report.render();
+      }
+    });
+  },
+  
+  convert_from_yaml: function() {
+    $.each(gastro.variables.report_items, function(k,v) {
+      gastro.variables.report_items[k].t = YAML.eval(v.t);
+    })
+  },
+  
+  calculate: function() {
+    //calculate sums by category
+    var c = {};
+    $.each(gastro.variables.report_items, function(k,v) {
+      var category_id = v.y;
+      catname = resources.c[category_id].n;
+      if (c.hasOwnProperty(catname)) {
+        $.each(v.t, function(s,t) {
+          c[catname][i18n.gross] += t.g
+          c[catname][i18n.net] += t.n
+          c[catname][i18n.tax_amount] += t.t
+        })
+      } else {
+        $.each(v.t, function(s,t) {
+          c[catname] = {};
+          c[catname][i18n.gross] = t.g
+          c[catname][i18n.net] = t.n
+          c[catname][i18n.tax_amount] = t.t
+        })
+      }
+    })
+    gastro.variables.report.categories = c;
+    
+    //calculate sums by taxes
+    var taxes = {};
+    $.each(gastro.variables.report_items, function(key,value) {
+      $.each(value.t, function(k,v) {
+        var tax_id = k;
+        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
+        if (taxes.hasOwnProperty(taxname)) {
+          taxes[taxname][i18n.gross] += v.g
+          taxes[taxname][i18n.net] += v.n
+          taxes[taxname][i18n.tax_amount] += v.t
+        } else {
+          taxes[taxname] = {};
+          taxes[taxname][i18n.gross] = v.g
+          taxes[taxname][i18n.net] = v.n
+          taxes[taxname][i18n.tax_amount] = v.t
+        }
+      })
+    })
+    gastro.variables.report.taxes = taxes;
+    
+  },
+  
+  render: function() {
+    $('#report_container').html('');
+    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
+    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
+  },
+
+  display_popup: function() {
+    gastro.variables.report = {};
+    $('#report').remove();
+    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
+    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
+    close_button.on('click', function() { $('#report').remove(); });
+    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
+    from_input.datepicker({
+      onSelect: function(date, inst) {
+        gastro.variables.report_day = date;
+        gastro.functions.report.initiate();
+      }
+    })
+    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
+    report_popup.fadeIn();
+  }
+}
+
+
+YAML = {
+  valueOf: function(token) {
+    if (/\d/.exec(token)) {
+      return eval('(' + token + ')');
+    } else {
+      return token;
+    }
+  },
+
+  tokenize: function(str) {
+    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
+    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
+    return tokens;
+  },
+
+  strip: function(str) {
+    return str.replace(/^\s*|\s*$/, '')
+  },
+
+  parse: function(tokens) {
+    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
+    while (token = tokens.shift())
+      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
+	continue
+      else if (key.exec(token) && tokens[0] == "\n")
+	stack[RegExp.$1] = this.parse(tokens)
+      else if (key.exec(token))
+	stack[RegExp.$1] = this.valueOf(tokens.shift())
+      else if (list.exec(token))
+	(stack.constructor == Array ?
+	  stack : (stack = [])).push(this.strip(RegExp.$1))
+    return stack
+  },
+
+  eval: function(str) {
+    return this.parse(this.tokenize(str))
+  }
+}
+
+//print(YAML.eval(readFile('config.yml')).toSource())
+//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"

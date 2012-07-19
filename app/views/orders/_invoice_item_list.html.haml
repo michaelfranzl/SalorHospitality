@@ -1,4 +1,4 @@
-%p== #{ order.user.title }, #{ order.table.name }
+%p= t :served_by_X_on_table_Y, :waiter => order.user.title, :table => order.table.name
 %p= l order.created_at, :format => :long
 
 %table
@@ -11,8 +11,8 @@
 
   - order.items.existing.positioned.each do |item|
     %tr
-      %td.one= item.taxes.collect{ |k,v| v[:letter] }.join(',')
-      %td.two= item.quantity_id ? "#{ t(:storno) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:storno) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
+      %td.one= item.taxes.collect{ |k,v| v[:l] }.join(',')
+      %td.two= item.quantity_id ? "#{ t(:refudn) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
       %td.three= number_to_currency item.price
       %td.four= item.count
       %td.five= number_to_currency item.sum
@@ -21,7 +21,7 @@
       - next if o.price == 0
       %tr
         %td.one= item.tax.letter
-        %td.two== #{ t(:storno) + ' ' if item.refunded }#{ o.name }
+        %td.two== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
         %td.three= number_to_currency o.price
         %td.four= item.count
         %td.five= number_to_currency item.refunded ? 0 : item.count * o.price
