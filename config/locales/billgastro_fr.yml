@@ -603,6 +603,8 @@ fr:
   sessions:
     browser_warning:
       continue: Continuer
+      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
       email: Votre E-Mail
       login: S'identifier
@@ -698,10 +700,9 @@ fr:
     new:
       edit_customer: Edit Customer
       new_customer: New Customer
-    index:
-      create:
-        success: Customer successfully saved
-      destroy:
-        success: Customer successfully deleted
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date

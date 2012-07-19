@@ -452,6 +452,8 @@ hu:
   sessions:
     browser_warning:
       continue: Continue
+      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
       username: User
       login: Login
@@ -698,10 +700,9 @@ hu:
     new:
       edit_customer: Edit Customer
       new_customer: New Customer
-    index:
-      create:
-        success: Customer successfully saved
-      destroy:
-        success: Customer successfully deleted
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date

@@ -699,10 +699,9 @@ cn:
     new:
       edit_customer: Edit Customer
       new_customer: New Customer
-    index:
-      create:
-        success: Customer successfully saved
-      destroy:
-        success: Customer successfully deleted
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date

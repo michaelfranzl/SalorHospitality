@@ -529,11 +529,10 @@ en:
     new:
       edit_customer: Edit Customer
       new_customer: New Customer
-    index:
-      create:
-        success: Customer successfully saved
-      destroy:
-        success: Customer successfully deleted
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
   roles:
     create:
       success: Role successfully saved
@@ -611,7 +610,8 @@ en:
   sessions:
     browser_warning:
       continue: Continue
-      warning: Salor only supports the browsers Google Chrome (Windows), Chromium (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
       email: Your E-Mail
       login: Login
