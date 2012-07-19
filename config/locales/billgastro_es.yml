@@ -2,7 +2,7 @@
 es:
   activerecord: Registro Activo
     attributes: Atributos
-      article: artículo
+      article:
         category_id: Categoría
         description: Descripción
         hidden: borrar?
@@ -12,7 +12,7 @@ es:
         active: activo
         image: Imagen
         tax_id: IVA
-      category: categoría
+      category:
         color: Color
         custom_icon: Mi Ícono
         food: comida
@@ -23,32 +23,32 @@ es:
         vendor_printer_id: Impresora
         separate_print: cortar boleta
         user_id: Preparando usuario.
-      cost_center: Centro de coste
+      cost_center:
         active: activo
         description: Descripción
         hidden: borrar
         name: Nombre
-      group: grupo
+      group:
         name: Nombre
-      option: opción
+      option:
         category_id: Categoría
         hidden: borrar
         name: Nombre
         price: Precio
         no_ticket: No imprimir boleta
         separate_ticket: cortar boleta
-      page: página
+      page:
         active: activo
         hidden: borrar
         color: Color
         height: Altura
         image: Imagen
         width: Ancho
-      partial: parcial
+      partial:
         active: activo
         blurb: XXXBlurb
         hidden: borrar
-      presentation: presentación
+      presentation:
         active: activo
         code: código ruby
         description: Descripción
@@ -56,7 +56,7 @@ es:
         markup: Marcado ERB?
         model: Tipo
         name: Nombre
-      quantity: cantidad
+      quantity:
         active: activo
         description: Descripción
         hidden: borrar
@@ -64,12 +64,12 @@ es:
         prefix: Nombre
         price: Precio opcional
         usage: uso
-      role: rol
+      role:
         name: Nombre
-      settlement: balance
+      settlement:
         initial_cash: Monto inicial
         revenue: Monto final
-      table: tabla
+      table:
         abbreviation: Abreviación
         description: Descripción
         enabled: activado
@@ -80,13 +80,13 @@ es:
         width: Ancho
         width_mobile: ancho del aparato móvil
         rotate: rotar
-      tax: IVA
+      tax:
         color: Color
         hidden: borrar
         letter: Abreviación
         name: Nombre
         percent: Porcentaje de IVA
-      user: usuario
+      user:
         color: Color
         hidden: borrar
         language: Idioma
@@ -97,7 +97,7 @@ es:
         title: Título
         active: activo
         screenlock_timeout: Tiempo de espera de bloqueo de pantalla? (sec.)
-      vendor_printer: Impresora
+      vendor_printer:
         hidden: borrar
         name: nombre
         path: ruta
@@ -127,10 +127,10 @@ es:
         name: nombre
         radio_select: Radio Select
         season_id: Temporada
-      tax_amount: Monto de IVA
+      tax_amount:
         amount: Monto
         tax_id: IVA
-      vendor: vendedor
+      vendor:
         automatic_printing: Impresión automática
         country: Reglas del país
         hidden: borrar
@@ -147,8 +147,8 @@ es:
         time_offset: Corrección de la hora (horas)
         timeout: Espera del bloqueo de pantalla (segundos)?
         use_order_numbers: Usar numeros del orden?
-    models: modelos
-      article: artículo
+    models:
+      article:
         one: Artículo
         other: Artículos
       category:
@@ -289,14 +289,14 @@ es:
       success: El artículo se ha eliminado exitosamente
   bar: Barra
   black: Negro
-  blackboard: pizarra
+  blackboard:
     index: índice
       update: Actualizar
   blank: nada
   blue: Azul
   cancel_and_go_back: Cancelar y volver
-  categories: categorías
-    new: nuevo
+  categories:
+    new:
       aperitif: Aperitivo
       beer: Cerveza
       blank: en blanco
@@ -322,17 +322,17 @@ es:
       whitewineglass: copa vino blanco
       noodles: fideos/ tallarines
       soup: Sopa
-    create:crear
+    create:
       success: Categoría exitosamente guardada
     destroy:
       success: Categoría exitosamente eliminada
   clear_order_and_go_back: Borrar orden y volver
   copy: copiar
   cost_centers: centros de coste
-    index: índice
+    index:
       active: Activo
       inactive: Inactivo
-    new: nuevo
+    new:
       edit_cost_center: Editar centro de coste
       new_cost_center: Nuevo centro de coste
     create:
@@ -350,13 +350,13 @@ es:
   go_back: Volver
   green: Verde
   gross: Bruto
-  groups: Grupos
-    new: nuevo
+  groups:
+    new:
       edit_group: Editar grupo
       new_group: Nuevo grupo
   guestroom: Sala principal
   host: huésped
-  images: imágenes
+  images:
     errempty: Archivo no válido
     errsize: Tamaño de archivo no válido
     errtype: Tipo de archivo no válido
@@ -373,14 +373,13 @@ es:
   kitchen: Cocina
   logout: Desconectar a %{who}
   move_order_to_table: Mover la orden a una mesa diferente
-  must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo
-    o bien para la variante.
+  must_be_entered_either_for_article_or_for_quantity: debe ser ingresado para el artículo o bien para la variante.
   net: Neto
   new: Nuevo
   no_printing: No imprimir
   not_found: No econtrado
-  options: opciones
-    new: nuevo
+  options:
+    new:
       edit_option: Editar opción
       hidden: borrar
       new_option: Nueva opción
@@ -436,14 +435,14 @@ es:
       do_storno: Anular item
     functions_header_order_form:
       move_order: Mover pedido a otra mesa
-  pages: páginas
-    edit: editar
+  pages:
+    edit:
       edit_page: Editar página
       view: Ver
       slideshow: Iniciar presentación de diapositivas
-    new: nuevo
+    new:
       new_page: Nueva página
-  partials: parciales
+  partials:
     default_blurb: Texto predeterminado
     error_during_evaluation: ! 'Error'
     no_presentation_found:
@@ -451,24 +450,24 @@ es:
   pink: Rosado
   please_enter_item_comment: Deseo especial
   please_enter_item_price: Precio especial
-  presentations: presentaciones
+  presentations:
     new: nueva
       edit_presentation: Editar plantilla
       new_presentation: Nueva plantilla
   print: Imprimir
   printing_test: Test de impresión
-  reports: reportes
+  reports:
     end_date: Fecha de finalización
     save: Guardar
     start_date: Fecha de inicio
     usb_device: Dispositivo USB
-    index: índice
+    index:
       backup_database: Copia de seguridad de base de datos
       backup_logfile: archivo de registro de copia de seguridad
       header: Reportes
   restaurant: Restaurante
   roles: roles
-    new: nuevo
+    new:
       assign_cost_center: Designar centro de coste
       cancel_all_items_in_active_order: Cancelar todos los ítems en pedido activo    change_waiter: Cambiar camarero
       decrement_items: items decreyentes
@@ -495,7 +494,7 @@ es:
       permissions: Permisos
       see_debug: Ver mensajes de depuración
       see_item_notifications: Ver notificaciones del ítem
-    create: crear
+    create:
       success: Rol guardado exitosamente
     destroy:
       success: Rol eliminado exitosamente
@@ -506,64 +505,64 @@ es:
   served_by_X_on_table_Y: ! '%{waiter} lo ha servido en %{table}'
   server_no_response: El servidor Bill Gastro ha dejado de responder. La línea está
     ocupada o bien el vínculo inalámbrico se ha interrumpido.
-  sessions: sesiones
+  sessions:
     browser_warning: Advertencia del navegador
       continue: Continar
       warning: Ud. no utiliza Mozilla Firefox, Safari, Google Chrome ni Chromium como
         navegador. Bill Gastro ha sido concebido únicamente para dichos navegadores.
-    new: nuevo
+    new:
       email: Su e-mail
       login: seudónimo
       password: Clave
       username: Nombre de usuario
-  settlements: balances
-    detailed_list: Lista detallada
+  settlements:
+    detailed_list:
       count: Cantidad
       order_number_on_table_on_date: Pedido número %{number} en %{table} a las %{time}
       revenue: Ganancia
       total: Total
       unit_price: Precio unitario
-    index: índice
+    index:
       all_cost_centers: Todos 
       end_date: Fecha final
       start_date: Fecha de inicio
       sum_total: Suma total
-    settlement: balance
+    settlement:
       finish: Terminar
       print: Imprimir
       start: Iniciar
       started_at: Iniciado a las
   statistic: Estadística
-  statistics: Estadísticas
+  statistics:
     journal: Diario (orden cronológico)
     weekdays: Día de la semana
-  stocks: ?
+  stocks:
     new:
       edit_stock: Editar stock
       new_stock: Nuevo stock
   storno: Anular items
   sum: Total
-  tables: mesas
-    new: nueva
+  tables:
+    new:
       edit_table: Editar mesa
       new_table: Nueva mesa
     create:
       success: Mesa guardada exitosamente
     destroy:
       success: Mesa eliminada exitosamente
-  taxes: impuestos
-    new: nuevo
+  taxes:
+    new:
       edit_tax: Editar impuesto
       new_tax: Nuevo impuesto
-  users: usuarios
-    new: nuevo
+  users:
+    new:
       edit_user: Editar usuario
       new_user: Nuevo usuario
-    create: crear
+    create:
       success: Usuario creado exitosamente
     destroy:
       success: Usuario eliminado exitosamente
-  various: Varios
+  various:
     cancel: Cancelar
     common_surcharges: Recargos comunes
     home: Inicio
@@ -578,7 +577,7 @@ es:
   winered: Rojo Vino
   wrong_password: datos de conexión incorrectos
   yellow: amarillo
-  bookings: reservas
+  bookings:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
