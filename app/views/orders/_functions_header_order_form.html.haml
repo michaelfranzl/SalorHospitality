@@ -22,7 +22,7 @@
 %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
   
 - if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
-  %a.iconbutton.storno_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
+  %a.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
 
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

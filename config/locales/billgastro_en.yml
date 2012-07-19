@@ -2,6 +2,29 @@
 en:
   activerecord:
     attributes:
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
       article:
         active: active
         category_id: Category
@@ -142,6 +165,10 @@ en:
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
+        rlogo_header: Receipt logo header
+        rlogo_footer: Receipt logo footer
+        logo: Screen logo
+        invoice_logo: Invoice Logo
       vendor_printer:
         copies: Copies
         hidden: Delete
@@ -405,6 +432,10 @@ en:
       select_all: select all
   orange: Orange
   orders:
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
     functions_header_index:
       items_notifications: Notifications
       print_now: Print now
@@ -447,9 +478,9 @@ en:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
-    storno_form:
+    refund_form:
       do_separate_items: Separate this item
-      do_storno: Make storno
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Edit Page
@@ -478,10 +509,30 @@ en:
       backup_database: Backup database
       backup_logfile: Backup logfile
       header: Reports
+      connected: Connected
+      disconnected: Disconnected
+      connect_ssh: Remote Login
+      connect_vnc: Share Screen
+      password: Password
+      requesting_connection_status: Requesting connection status ...
+      internet_connection_info: To get Remote Support, you must be connected to the internet. If you see the Red (E) Logo above, you are connected to the internet.
+      remote_support: Remote Support
+      download_reports: Save reports
     save: Save
     start_date: Start Date
     usb_device: USB Stick
+    remote_support: Remote Support
+    download_reports: Download Report
   restaurant: Restaurant
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    index:
+      create:
+        success: Customer successfully saved
+      destroy:
+        success: Customer successfully deleted
   roles:
     create:
       success: Role successfully saved
@@ -498,13 +549,20 @@ en:
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
-      make_storno: Cancel items
-      manage_articles_categories_options: Manage articles, categories and options
+      refund: Refund items
+      manage_articles: Manage articles, categories and options
+      manage_categories: Manage categories
+      manage_options: Manage options
       manage_business_invoice: Manage business invoice
       manage_customers: Manage Customers
-      manage_pages: Manage Slideshow
-      manage_settings: Manage settings
+      manage_pages: Manage slideshow
+      manage_roles: Manage roles
+      manage_taxes: Manage Taxes
+      manage_cost_centers: Manage Cost Centers
+      manage_payment_methods: Manage Payment Methods
       manage_users: Manage users
+      manage_tables: Manage tables
+      manage_vendors: Manage vendors
       move_order: Move order
       move_tables: Move tables
       new_role: New Role
@@ -514,7 +572,13 @@ en:
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
-      view_statistics: View statistics
+      manage_statistics: View statistics
+      manage_hotel: Manage hotel
+      item_scribe: Enable handwriting
+      assign_order_to_booking: Assign orders to a booking
+      assign_tables: Assign tables to users
+      remote_support: Remote Support
+      download_database: Download Database
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -540,7 +604,7 @@ en:
       edit_season: Edit Season
       new_season: New Season
   send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on %{table}
+  served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
   server_no_response: The Bill Gastro Server is not responding any more. It is either
     busy or the radio link is interrupted.
   sessions:
@@ -582,7 +646,7 @@ en:
     new:
       edit_stock: Edit Stock
       new_stock: New Stock
-  storno: Storno
+  refund: Refund
   sum: Sum
   surcharges:
     new:
@@ -612,6 +676,7 @@ en:
     new:
       edit_user: Edit User
       new_user: New User
+      select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
     cancel: Cancel
     common_surcharges: Common Surcharges
@@ -620,6 +685,11 @@ en:
     save: Save
     subtotal: Subtotal
     unamed: Unamed
+    tax_amount: Amount
+    tax: Tax
+    unit_price_abbreviation: SP
+    total_price_abbreviation: TP
+    quantity_abbreviation: Qty.
   vendors:
     index:
       edit: Edit
@@ -634,3 +704,4 @@ en:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
+  invalid_date: Invalid date

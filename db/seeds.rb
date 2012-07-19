@@ -1,8 +1,32 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+puts "beginning"
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
-countries = ['en','at','fr','es','pl','hu']
-languages = ['en','gn','fr','es','pl','hu']
+company_count = 0
+
+if ENV['SEED_MODE'] == 'full'
+  puts "SEED_MODE is 'full'"
+  countries = ['en','at','fr','es','pl','hu','ru','it','tr','cn','el']
+  languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
+  company_count = 2
+elsif ENV['SEED_MODE'] == 'minimal'
+  puts "SEED_MODE is 'minimal'"
+  countries = ['en']
+  languages = ['en']
+  company_count = 1
+else
+  puts "SEED_MODE is 'minimal'"
+  countries = ['en']
+  languages = ['en']
+  company_count = 1
+end
 
 taxes = [20, 10, 0]
 cost_center_names = ['guest','restaurant','broken']
@@ -11,15 +35,36 @@ category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
 user_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b','#BBBBBB','#000000','#d9d43d','#801212']
 vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other']
+role_names = {
+  'superuser' =>
+    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','manage_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug','manage_hotel','manage_roles','item_scribe','assign_tables','download_database','remote_support']},
+  'owner' =>
+    {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
+  'host' =>
+    {:weight => 2, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables'] },
+  'chief_waiter' =>
+    {:weight => 3, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_tables'] },
+  'waiter' =>
+    {:weight => 4, :permissions => ['take_orders','decrement_items','finish_orders','split_items','move_order']},
+  'auxiliary_waiter' =>
+    {:weight => 5, :permissions => ['take_orders','finish_orders']},
+  'terminal' =>
+    {:weight => 6, :permissions => ['take_orders'] },
+  'customer' =>
+    {:weight => 10, :permissions => [] }
+}
+
 user_array = {
-  'Superuser' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings','delete_items','assign_order_to_booking','counter_mode','see_item_notifications','manage_pages','manage_customers','see_debug', 'cancel_all_items_in_active_order'],
-  'Owner' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice',    'view_statistics','manage_users','manage_settings'],
-  'Host' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','assign_cost_center','move_order',    'change_waiter','manage_articles_categories_options'],
-  'Chief Waiter' => ['take_orders','decrement_items','finish_orders','split_items','move_tables','make_storno','finish_own_settlement'],
-  'Waiter' => ['take_orders','decrement_items','finish_orders','split_items','finish_own_settlement'],
-  'Auxiliary Waiter' => ['take_orders','decrement_items','finish_orders'],
-  'Restaurant' => ['take_orders']
+  'Superuser' => {:role => 'superuser'},
+  'Owner' => {:role => 'owner'},
+  'Host' => {:role => 'host'},
+  'Chief Waiter' => {:role => 'chief_waiter'},
+  'Waiter' => {:role => 'waiter'},
+  'Auxiliary Waiter' => {:role => 'auxiliary_waiter'},
+  'Terminal' => {:role => 'terminal' },
+  'Customer' => {:role => 'customer' }
   }
+
 radio_surcharge_names = ['Breakfast','Dinner','Full']
 checkbox_surcharge_names = ['Additional Bed']
 common_surcharge_names = ['1 Night', '2 Night']
@@ -42,7 +87,7 @@ Article.delete_all
 Quantity.delete_all
 
 
-2.times do |c|
+company_count.times do |c|
   company = Company.new :name => "Company #{ c }"
   r = company.save
   puts "Company #{ c } created" if r == true
@@ -128,8 +173,8 @@ Quantity.delete_all
     end
 
     role_objects = Array.new
-    user_array.to_a.size.times do |i|
-      role = Role.new :name => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :permissions => user_array.to_a[i][1]
+    role_names.to_a.size.times do |i|
+      role = Role.new :name => role_names.to_a[i][0], :permissions => role_names.to_a[i][1][:permissions], :weight => role_names.to_a[i][1][:weight]
       role.company = company
       role.vendor = vendor
       r = role.save
@@ -254,10 +299,18 @@ Quantity.delete_all
       guest_type_objects << gt
     end
     puts " Creating Seasons for #{c} #{v}"
-    s1 = Season.create :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
-    s2 = Season.create :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
-    s3 = Season.create :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
-    s4 = Season.create :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1.save
+    s1.calculate_duration
+    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2.save
+    s1.calculate_duration
+    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3.save
+    s1.calculate_duration
+    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4.save
+    s1.calculate_duration
     season_objects = [s1,s2,s3,s4]
 
     4.times do |i|

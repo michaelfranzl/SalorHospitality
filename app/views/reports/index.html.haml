@@ -1,27 +1,50 @@
 %h2= t('.header')
 
-- if not demo_variant? or saas_variant?
-  %p#backup_database= link_to t('.backup_database'), "companies/backup_database"
-  %p#backup_logfile= link_to t('.backup_logfile'), "companies/backup_logfile"
+#download_reports
+  %h3= t '.download_reports'
+  = form_tag '/reports', :class => 'no-print', :method => :get do
+    = label('from', t('reports.start_date'))
+    %br
+    = select_date(@from, :prefix => 'from')
+    %br
+    = label('to', t('reports.end_date'))
+    %br
+    = select_date(@to, :prefix => 'to')
+    %br
+    = label('usb_device',t("reports.usb_device"))
+    %br
+    %select{:name => 'usb_device', :id => 'usb_device_select'}
+      - Dir.entries("/media").each do |d|
+        - if not d == '.' and not d == '..'
+          %option{ :value => "/media/" + d }= d
+      %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
+    %br
+    %br
+    = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
+    
+  - if @current_company.mode == 'local' and @current_user.role.permissions.include?('download_database')
+    %p#backup_database= link_to t('.backup_database'), backup_database_reports_path
+    %p#backup_logfile= link_to t('.backup_logfile'), backup_logfile_reports_path
 
-= form_tag '/reports', :class => 'no-print', :method => :get do
-  = label('from', t('reports.start_date'))
-  %br
-  = select_date(@from, :prefix => 'from')
-  %br
-  = label('to', t('reports.end_date'))
-  %br
-  = select_date(@to, :prefix => 'to')
-  %br
-  = label('usb_device',t("reports.usb_device"))
-  %br
-  %select{:name => 'usb_device', :id => 'usb_device_select'}
-    - Dir.entries("/media").each do |d|
-      - if not d == '.' and not d == '..'
-        %option{ :value => "/media/" + d }= d
-    %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
-  %br
-  %br
-  = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
+- if @current_user.role.permissions.include?('remote_support')
+  = javascript_include_tag 'request_service'
+  #remote_support
+    %h3= t '.remote_support'
+    %img{:src => 'http://red-e.eu/wp-content/uploads/2012/07/rede-logo-208.png', :width => 80, :height => 80}
+    %br
+    %small= t '.internet_connection_info'
+    %br
+    = text_field_tag 'service_connect_host', 'red-e.eu'
+    %br
+    = text_field_tag 'service_connect_user', 'service'
+    %br
+    = text_field_tag 'service_connect_password', t('.password')
+    %br
+    .connect_service_button_container.button#connect_service_ssh{ :onclick => 'connect_service("ssh");' }= t('.connect_ssh')
+    .connect_service_button_container.button#connect_service_vnc{ :onclick => 'connect_service("vnc");' }= t('.connect_vnc')
+    #connection_status= t('.requesting_connection_status')
+    = image_tag 'ajax-loader2.gif', :id => 'progress'
 
-= image_tag 'ajax-loader2.gif', :id => 'progress', :style => 'display: none'
+:javascript
+  var i18n_connected = "#{ escape_javascript t '.connected' }";
+  var i18n_disconnected = "#{ escape_javascript t '.disconnected' }";

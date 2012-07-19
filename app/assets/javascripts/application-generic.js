@@ -1,17 +1,25 @@
 /*
-# BillGastro -- The innovative Point Of Sales Software for your Restaurant
-# Copyright (C) 2012-2013  Red (E) Tools LTD
-# 
-# See license.txt for the license applying to all files within this software.
+Copyright (c) 2012 Red (E) Tools Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 var tableupdates = -1;
-var automatic_printing = false;
 var debugmessages = [];
 var _CTRL_DOWN = false;
 var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
 var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
+
 $(function(){
+  if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
+    $('#main').html('');
+    create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
+  }
+
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {
           //xhr.setRequestHeader("Accept", "text/javascript");
@@ -19,11 +27,23 @@ $(function(){
       }
   })
 
+  
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
-      if ( automatic_printing == true ) { window.location.href = '/items.bill'; }
-    }, 10000);
+      if ( automatic_printing == true ) {
+        $.ajax({
+          url: '/vendors',
+          dataType: 'json',
+          success: function(data) {
+            if (data.print_data_available == true) {
+              window.location.href = '/vendors/print.bill';
+            }
+          }
+        });
+      }
+    }, 20000);
   }
+  
   $(window).keydown(function(e){
     for (var key in _key_codes) {
       if (e.keyCode == _key_codes[key]) {
@@ -31,6 +51,7 @@ $(function(){
       }
     }
   });
+  
   $(window).keyup(function(e){
     for (var key in _key_codes) {
       if (e.keyCode == _key_codes[key]) {
@@ -39,6 +60,8 @@ $(function(){
     }
   });
 })
+
+
 /*
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */

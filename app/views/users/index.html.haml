@@ -10,10 +10,15 @@
     %th{ :style => 'width:100px' }= User.human_attribute_name(:color)
     %th{ :style => 'width:100px' }= User.human_attribute_name(:language)
   - @users.each do |u|
+    - role = u.role
     %tr
-      %td= link_to u.login, edit_user_path(u)
+      %td
+        - if role.weight > @current_user.role.weight or u == @current_user
+          = link_to u.login, edit_user_path(u)
+        - else
+          = u.login
       %td= u.title
-      %td= u.role.name if u.role
+      %td= u.role.name
       %td= get_colors[u.color]
       %td= SalorGastro::Application::LANGUAGES[u.language]
       %td= link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)

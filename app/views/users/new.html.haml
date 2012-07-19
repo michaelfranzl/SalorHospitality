@@ -38,7 +38,9 @@
               %td= user_form.label :role
               %td
                 %select#user_role_id{ :name => 'user[role_id]' }
-                  = options_from_collection_for_select @roles, 'id', 'name', user_form.object.role_id
+                  - @roles.each do |r|
+                    - next if r.weight < @current_user.role.weight
+                    %option{ :value => r.id, :selected => user_form.object.role == r }= r.name
             %tr
               %td= user_form.label :color
               %td
@@ -54,10 +56,17 @@
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
-        %td
-          = user_form.label :tables
-          %br
-          = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
+            %tr
+              %td= user_form.label :automatic_printing
+              %td= user_form.check_box :automatic_printing
+              
+        - if @current_user.role.permissions.include?('assign_tables')
+          %td
+            = user_form.label :tables
+            %br
+            %small= t '.select_with_ctrl_key'
+            %br
+            = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
 
 :javascript
   $('#user_login').keyboard( {openOn: '' } );

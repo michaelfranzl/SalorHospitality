@@ -1,3 +1,11 @@
+# Copyright (c) 2012 Red (E) Tools Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 class Booking < ActiveRecord::Base
   attr_accessible :company_id, :customer_id, :from_date, :hidden, :note, :paid, :sum, :to_date, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration, :taxes, :change_given
   include Scope
@@ -5,6 +13,7 @@ class Booking < ActiveRecord::Base
   has_many :payment_method_items
   has_many :orders
   has_many :surcharge_items
+  has_many :tax_items
   belongs_to :room
   belongs_to :user
   belongs_to :vendor
@@ -28,10 +37,11 @@ class Booking < ActiveRecord::Base
       }
   end
   def self.create_from_params(params, vendor, user)
-    booking = Booking.create params[:model]
+    booking = Booking.new
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
+    booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
       new_item.booking = booking
@@ -48,7 +58,7 @@ class Booking < ActiveRecord::Base
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip)
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
     end
     self.customer = c
   end
@@ -140,15 +150,15 @@ class Booking < ActiveRecord::Base
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.each do |item|
-      puts "XXX booking_item #{item.id}"
+      #puts "XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          puts "XXX has key"
-          self.taxes[k][:tax] += v[:tax].round(2)
-          self.taxes[k][:gro] += v[:gro].round(2)
-          self.taxes[k][:net] += v[:net].round(2)
+          #puts "XXX has key"
+          self.taxes[k][:t] += v[:t].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
         else
-          puts "XXX has not key"
+          #puts "XXX has not key"
           self.taxes[k] = v
         end
       end
@@ -157,9 +167,9 @@ class Booking < ActiveRecord::Base
     self.orders.each do |order|
       order.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:gro] += v[:gro].round(2)
-          self.taxes[k][:net] += v[:net].round(2)
-          self.taxes[k][:tax] += v[:tax].round(2)
+          self.taxes[k][:g] += v[:g].round(2)
+          self.taxes[k][:n] += v[:n].round(2)
+          self.taxes[k][:t] += v[:t].round(2)
         else
           self.taxes[k] = v
         end
