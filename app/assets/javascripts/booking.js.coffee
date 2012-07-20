@@ -323,6 +323,7 @@ render_booking_item = (booking_item_id) ->
 delete_booking_item = (booking_item_id) ->
   $('#booking_item' + booking_item_id).remove()
   set_json 'booking', booking_item_id, 'hidden', true
+  update_booking_totals()
 
 # The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
@@ -391,6 +392,8 @@ booking_item_total = (booking_item_id) ->
 update_booking_totals = ->
   total = 0
   $.each items_json, (k,v) ->
+    if v.hidden == true
+      return true
     total += booking_item_total k
     true
   total *= submit_json.model.duration
