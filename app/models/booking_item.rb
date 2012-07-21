@@ -55,12 +55,12 @@ class BookingItem < ActiveRecord::Base
   end
 
   def calculate_totals
-    puts "XXX BookingItem -> calculate_totals"
+    #puts "XXX BookingItem -> calculate_totals"
     self.taxes = {}
     if self.guest_type_id.zero?
       self.base_price = 0
     else
-      broom = RoomPrice.where(:season_id => self.booking.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
+      broom = RoomPrice.where(:season_id => self.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
       broom ? self.base_price = broom.base_price : 0 
     end
     self.sum = self.count * self.base_price

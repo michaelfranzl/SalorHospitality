@@ -140,7 +140,7 @@ class Booking < ActiveRecord::Base
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :original => i.original, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716112757) do
+ActiveRecord::Schema.define(:version => 20120721074239) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -55,6 +55,11 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.float    "base_price"
     t.float    "refund_sum",                     :default => 0.0
     t.string   "taxes",         :limit => 10000, :default => "--- {}\n"
+    t.datetime "from_date"
+    t.datetime "to_date"
+    t.integer  "season_id"
+    t.integer  "duration"
+    t.boolean  "original",                       :default => false
   end
 
   create_table "bookings", :force => true do |t|
@@ -72,7 +77,6 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.integer  "room_id"
     t.boolean  "finished",                      :default => false
     t.integer  "user_id"
-    t.integer  "season_id"
     t.integer  "hidden_by"
     t.float    "refund_sum",                    :default => 0.0
     t.integer  "nr"

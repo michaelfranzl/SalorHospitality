@@ -45,6 +45,8 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     tx.executeSql 'CREATE TABLE seasons (id INTEGER PRIMARY KEY, name STRING, from_date DATETIME, to_date DATETIME, duration INTEGER);'
+    if $.isEmptyObject(resources)
+      alert "The resources object is empty. Don't forget to generate the vendors cache."
     $.each resources.sc, (k,v) ->
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
     $.each resources.r, (k,v) ->
@@ -65,18 +67,15 @@ window.display_booking_form = (room_id) ->
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['from_date'] = date
-               window.update_booking_duration()
+               window.calculate_booking_seasons()
   }
   to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['to_date'] = date
-               window.calculate_booking_duration()
+               window.calculate_booking_seasons()
   }
-  duration_input = create_dom_element 'input', {type:'text',id:'booking_duration',value:1}, '', booking_tools
-  duration_input.on 'click', -> $(this).select()
-  duration_input.on 'keyup', -> set_booking_duration()
 
   if submit_json.model['customer_name'] == ''
     customer_name_default = i18n.customer
@@ -116,33 +115,34 @@ window.display_booking_form = (room_id) ->
   pay_link.on 'click', -> route 'rooms', room_id, 'pay'
   cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools
   cancel_link.on 'click', -> route 'rooms'
-  render_season_buttons()
+  #render_season_buttons()
   render_guest_type_buttons()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
+  
+  window.calculate_booking_seasons()
 
 
-# Reads a time span from the submit_json object, writes back the duration, and updates the currently displayed booking totals. This called when the datepicker is changed. The datepicker changes from and to in the submit_json object all by itself.
-window.calculate_booking_duration = ->
+# Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed. The datepicker changes from and to in the submit_json object all by itself.
+window.calculate_booking_seasons = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
-  update_booking_totals()
+  # Jason: This is a mockup for the covered_seasons object that is used to duplicate the booking items
+  submit_json.model.covered_seasons = [
+    {id:2,duration:44},
+    {id:3,duration:45},
+    {id:4,duration:46}
+  ]
+  # instead of update_booking_totals(), delete all non-original BookingItems and re-render them according to covered_seasons.
 
 # =======================================================
 # Private functions inside of a closure for encapsulation
 # =======================================================
-
-# Called as onchange event of the duration input field.
-set_booking_duration = ->
-  duration = $('#booking_duration').val()
-  submit_json.model.duration = duration
-  update_booking_totals()
-
 
 # Helper method used by "render_season_buttons". Just outputs options for changing the room.
 rooms_as_options = ->
@@ -153,28 +153,28 @@ rooms_as_options = ->
 
 
 # Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season. Also adds a select box for changing the room.
-render_season_buttons = ->
-  season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
-  $.each resources.sn, (id,v) ->
-    sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
-    sbutton.on 'click', ->
-      window.change_season(id)
-    if v.c == true
-      sbutton.addClass 'selected'
-      submit_json.model.season_id = id
+#render_season_buttons = ->
+#  season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
+#  $.each resources.sn, (id,v) ->
+#    sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
+#    sbutton.on 'click', ->
+#      window.change_season(id)
+#    if v.c == true
+#      sbutton.addClass 'selected'
+#      submit_json.model.season_id = id
 
 
 # Called when clicking on a season button.
-window.change_season = (id) ->
-  submit_json.model.season_id = id
-  sbutton = $('#season_' + id)
-  $('.season').removeClass 'selected'
-  sbutton.effect 'highlight', {}, 500
-  sbutton.addClass 'selected'
-  update_json_booking_items()
-  setTimeout ->
-    window.render_booking_items_from_json()
-  , 200
+#window.change_season = (id) ->
+#  submit_json.model.season_id = id
+#  sbutton = $('#season_' + id)
+#  $('.season').removeClass 'selected'
+#  sbutton.effect 'highlight', {}, 500
+#  sbutton.addClass 'selected'
+#  update_json_booking_items()
+#  setTimeout ->
+#    window.render_booking_items_from_json()
+#  , 200
 
 
 # This gets unique names of surcharges from the DB. Those names will be rendered as headers for the booking form, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.
@@ -204,53 +204,93 @@ render_guest_type_buttons = ->
     gtbutton = create_dom_element 'div', {class:'guest_type'}, v.n, guest_types_container
     gtbutton.on 'click', ->
       gtbutton.effect 'highlight', {}, 500
-      id = get_unique_booking_number('d')
-      add_json_booking_item id, parseInt(k)
+      id = get_unique_booking_number('d') # d is for "dynamically generated"
+      add_json_booking_item id, parseInt(k), 0
       setTimeout ->
-        render_booking_item(id)
-      , 50
+        #render_booking_item(id)
+        render_booking_items_from_json()
+      , 100
   gtbutton = create_dom_element 'div', {class:'guest_type'}, i18n.common_surcharges, guest_types_container
   gtbutton.on 'click', ->
     gtbutton.effect 'highlight', {}, 500
-    id = get_unique_booking_number('s')
-    add_json_booking_item id, null
+    id = get_unique_booking_number('d') # d is for "dynamically generated"
+    add_json_booking_item id, null, 0
     setTimeout ->
-      render_booking_item(id)
-    , 50
+      #render_booking_item(id)
+      render_booking_items_from_json()
+    , 100
 
 
-# This function renders HTML input tags for the selected GuestType beneath the proper headers, as well as an text field for the quantity of the GuestType. The data source is items_json. It also adds the base RoomPrice for the selected GuestType when no Surcharge radio/checkbox tags are selected. If any radio/checkbox Surcharge tags are selected, onclick events will add the Surcharge amount to the base RoomPrice. This function also manages the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
-add_json_booking_item = (booking_item_id, guest_type_id) ->
-  create_json_record 'booking', {guest_type_id:guest_type_id, d:booking_item_id}
+# This function adds objects to the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking. This only generates "original" booking item objects for the first covered season.
+add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
+  # debug 'called add_json_booking_item with season_index=' + season_index
+  season_id = submit_json.model.covered_seasons[season_index].id
+  duration = submit_json.model.covered_seasons[season_index].duration
+  original = season_index == 0
+  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, original:original}
   if guest_type_id == null
     guest_type_query_string = 'guest_type_id IS NULL'
-    update_base_price booking_item_id
   else
     guest_type_query_string = 'guest_type_id = ' + guest_type_id
-    update_base_price booking_item_id
+  update_base_price booking_item_id
   db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         radio_select = record.radio_select == 'true'
         items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
+      if season_index == 0
+        # a new booking item has been added for the first covered season. Now delete + create (regenerate) all booking_items for the rest of the covered seasons.
+        regenerate_multi_season_booking_items()
 
+      
 
-# Called when a room is changed (see "render_season_buttons"), when a new booking item is added (see "add_json_booking_item"), and when "update_json_booking_items" is called. It gets the current base room price from the local DB and saves it into the workspace json objects.
+regenerate_multi_season_booking_items = () ->
+  # delete all objects with a key that begins with x (x means multi-season items)
+  $.each items_json, (k,v) ->
+    if k.indexOf('x') != -1
+      delete items_json[k]
+      delete submit_json.items[k]
+  # now, copy all remaining "original" items covered_seasons many times
+  $.each items_json, (k,v) ->
+    $.each submit_json.model.covered_seasons, (i,covered_season) ->
+      if i == 0
+        return true
+      id = get_unique_booking_number('x') # x is for multi-season booking_items which are needed for price calculations but won't be displayed
+      add_json_booking_item id, v.guest_type_id, i
+      setTimeout ->
+        copy_attributes k, id
+      , 100 # warning: this timeout value must be smaller than the one below
+  setTimeout ->
+    render_booking_items_from_json()
+    update_booking_totals()
+  , 150
+        
+
+copy_attributes = (from_id, to_id) ->
+  items_json[to_id].count = items_json[from_id].count
+  items_json[to_id].surchargeslist = items_json[from_id].surchargeslist
+  submit_json.items[to_id].count = submit_json.items[from_id].count
+  submit_json.items[to_id].surchargeslist = submit_json.items[from_id].surchargeslist
+  $.each items_json[from_id].surcharges, (k,v) ->
+    items_json[to_id].surcharges[k].selected = v.selected
+    return true
+      
+# Called when a room is changed, when a new booking item is added (see "add_json_booking_item"), and when "update_json_booking_items" is called. It gets the current base room price from the local DB and saves it into the workspace json objects.
 update_base_price = (k) ->
-    db = _get 'db'
-    db.transaction (tx) ->
-      debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
-      tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
-        if res.rows.length == 0
-          base_price = 0
-        else
-          base_price = res.rows.item(0).base_price
-        set_json 'booking', k, 'base_price', base_price
+  db = _get 'db'
+  db.transaction (tx) ->
+    #debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
+    tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + items_json[k].season_id + ';', [], (tx,res) ->
+      if res.rows.length == 0
+        base_price = 0
+      else
+        base_price = res.rows.item(0).base_price
+      set_json 'booking', k, 'base_price', base_price
 
 
-# Called from "change_season". This function loops over all items in items_json and updates the surcharge prices.
+# This function loops over all items in items_json and updates the surcharge prices.
 update_json_booking_items = ->
   $.each items_json, (k,v) ->
     guest_type_id = items_json[k].guest_type_id
@@ -276,7 +316,7 @@ update_json_booking_items = ->
 # Adds a new row of buttons to the booking form. The source is an item which is already in the local json storage.
 render_booking_item = (booking_item_id) ->
   surcharge_headers = _get 'surcharge_headers'
-  if booking_item_id.indexOf('s') == 0
+  if items_json[booking_item_id].guest_type_id == null
     # a dynamically generated booking_item_id with s at the beginning means "special". Special means that the generated row/surchargeitem does not represent a guest_type, but is simply a collection of surcharges.
     guest_type_name = i18n.common_surcharges
     surcharge_headers = surcharge_headers.guest_type_null
@@ -344,6 +384,7 @@ save_selected_input_state = (element, booking_item_id, surcharge_name) ->
     items_json[booking_item_id].surcharges[surcharge_name].selected = false
     element.parent().removeClass 'selected'
   update_submit_json_surchageslist booking_item_id
+  regenerate_multi_season_booking_items()
 
 
 # Copy data over into submit_son from items_json, add surcharge IDs to array, which will be interpreted by the Server.
@@ -375,12 +416,13 @@ render_booking_item_count = (booking_item_id) ->
 change_booking_item_count = (booking_item_id) ->
   count = $('#booking_item_' + booking_item_id + '_count').val()
   set_json 'booking', booking_item_id, 'count', count
-  #items_json[booking_item_id].count = count
-  update_booking_totals()
+  items_json[booking_item_id].count = parseInt(count)
+  regenerate_multi_season_booking_items()
+  #update_booking_totals()
 
 
 
-booking_item_total = (booking_item_id) ->
+update_booking_item_total = (booking_item_id) ->
   total = items_json[booking_item_id].base_price
   $.each items_json[booking_item_id].surcharges, (k,v) ->
     if v.selected == true
@@ -398,9 +440,8 @@ update_booking_totals = ->
   $.each items_json, (k,v) ->
     if v.hidden == true
       return true
-    total += booking_item_total k
+    total += update_booking_item_total(k) * items_json[k].duration
     true
-  total *= submit_json.model.duration
   $('#booking_total').html number_to_currency total
   booking_id = submit_json.id
   $('#booking_subtotal').html number_to_currency total + submit_json.totals[booking_id].booking_orders

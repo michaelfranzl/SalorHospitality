@@ -23,7 +23,6 @@
    });
   
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
-  window.change_season(<%= @booking.season.id %>);
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};
@@ -35,7 +34,7 @@
   submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d") %>';
   $('#booking_to').val('<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>');
   submit_json.model.to_date = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
-  window.calculate_booking_duration();
+  window.calculate_booking_seasons();
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');

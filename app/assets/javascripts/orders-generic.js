@@ -217,12 +217,12 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOM ===============
   } else if ( target == 'room' ) {
-    // I have switched this to show a new booking every time
+    // show a new booking every time
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
@@ -234,7 +234,7 @@ function route(target, model_id, action, options) {
     $('#areas').hide();
     $('#tables').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
@@ -323,13 +323,13 @@ function create_json_record(model, object) {
     s = object.s;
   }
   if (items_json.hasOwnProperty(d)) {
-    d += 'c'; // c for cloned. this happens when an item is split during option add.
+    d += 'c'; // c for cloned. this happens for example when an item is split during option add.
     s += 1;
   }
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, count:1, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, original:object.original, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
@@ -343,7 +343,7 @@ function create_submit_json_record(model, d, object) {
     if (model == 'order') {
       submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
     } else if (model == 'booking') {
-      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id};
+      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id, duration:object.duration, season_id:object.season_id, original:object.original};
     }
     // remove redundant fields
     if (items_json[d].hasOwnProperty('id')) {
@@ -1075,12 +1075,12 @@ function update_resources() {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
-    complete: function(data,state) { update_resouces_success(data) },
+    complete: function(data,state) { update_resources_success(data) },
     timeout: 3000
   });
 }
 
-function update_resouces_success(data) {
+function update_resources_success(data) {
   emit('ajax.update_resources.success', data);
 }
 
