@@ -184,6 +184,7 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
+            create_payment_method_items @booking
             unless @booking.booking_items.existing.any?
               @booking.hide(@current_user.id)
             end
@@ -244,8 +245,13 @@ class OrdersController < ApplicationController
           order_id = nil
           booking_id = associated_object.id
         end
+        if params['payment_methods'].any? then
+          associated_object.payment_method_items.clear
+        end
         params['payment_methods'][params['id']].to_a.each do |pm|
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+          if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s != 'true'
+            PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
+          end
         end
       end
     end

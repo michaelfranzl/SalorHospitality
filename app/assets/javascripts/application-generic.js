@@ -66,6 +66,7 @@ $(function(){
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */
 function emit(msg,packet) {
+  console.log(msg,packet);
   $('body').triggerHandler({type: msg, packet:packet});
 }
 
