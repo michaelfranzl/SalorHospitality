@@ -98,6 +98,7 @@ window.display_booking_form = (room_id) ->
     
   rooms_button = create_dom_element 'span', {id: 'choose_room_container',class:'textbutton'},'',booking_tools
   rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
+  rooms_select.val submit_json.model.room_id
   rooms_select.on 'change', ->
     id = $(this).val()
     submit_json.model.room_id = id
