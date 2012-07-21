@@ -740,7 +740,7 @@ function show_payment_methods(model_id,allow_delete) {
   if (allow_delete)
     deletable($('#payment_methods_container_' + model_id));
 }
-function add_payment_method(model_id) {
+function add_payment_method(model_id,id,amount) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
@@ -752,7 +752,10 @@ function add_payment_method(model_id) {
     pm_button = $(document.createElement('span'));
     pm_button.addClass('payment_method');
     pm_button.html(v.n);
-    if ( j == 1 ) {
+    if ( !id && j == 1 ) {
+      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      pm_button.addClass('selected');
+    } else if (id == v.id) {
       submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     }
@@ -774,6 +777,10 @@ function add_payment_method(model_id) {
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
+  if (amount) {
+    pm_input.val(amount);
+    submit_json.payment_methods[model_id][payment_method_uid].amount = amount;
+  }
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;
@@ -797,6 +804,7 @@ function add_payment_method(model_id) {
   pm_row.append(pm_input);
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
+      submit_json.payment_methods[model_id][payment_method_uid]._delete = true;
       $(this).parent().remove();
     });
   }
@@ -807,6 +815,7 @@ function payment_method_input_change(element, uid, mid) {
   amount = $(element).val();
   amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
+  submit_json.payment_methods[mid][uid]._delete = false;
   submit_json.payment_methods[mid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
   $.each(submit_json.payment_methods[mid], function(k,v) {
