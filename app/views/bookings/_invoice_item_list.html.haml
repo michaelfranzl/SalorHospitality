@@ -1,5 +1,7 @@
-%p= t '.served_by_X', :user => booking.user.title
-%p= l booking.created_at, :format => :long
+/%p= t '.served_by_X', :user => booking.user.title
+%p.floatright= l booking.created_at, :format => :long
+%p== #{ l booking.from_date, :format => :date_iso } ➙ #{ l booking.to_date, :format => :date_iso }
+%p= booking.room.name
 
 %table
   %tr

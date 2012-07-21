@@ -95,6 +95,19 @@ window.display_booking_form = (room_id) ->
     submit_json.model['customer_name'] = result.name
   customer_input.on 'keyup', ->
     submit_json.model['customer_name'] = $(this).val()
+    
+  rooms_button = create_dom_element 'span', {id: 'choose_room_container',class:'textbutton'},'',booking_tools
+  rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
+  rooms_select.on 'change', ->
+    id = $(this).val()
+    submit_json.model.room_id = id
+    submit_json.model.room_type_id = resources.r[id].rt
+    $.each items_json, (k,v) ->
+      update_base_price k
+    setTimeout ->
+      update_booking_totals()
+    , 200
+    
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
@@ -148,17 +161,7 @@ render_season_buttons = ->
     if v.c == true
       sbutton.addClass 'selected'
       submit_json.model.season_id = id
-  rooms_button = create_dom_element 'div', {id: 'choose_room_container',class:'season'},'',season_container
-  rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
-  rooms_select.on 'change', ->
-    id = $(this).val()
-    submit_json.model.room_id = id
-    submit_json.model.room_type_id = resources.r[id].rt
-    $.each items_json, (k,v) ->
-      update_base_price k
-    setTimeout ->
-      update_booking_totals()
-    , 200
+
 
 # Called when clicking on a season button.
 window.change_season = (id) ->
@@ -323,6 +326,7 @@ render_booking_item = (booking_item_id) ->
 delete_booking_item = (booking_item_id) ->
   $('#booking_item' + booking_item_id).remove()
   set_json 'booking', booking_item_id, 'hidden', true
+  update_booking_totals()
 
 # The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
@@ -391,6 +395,8 @@ booking_item_total = (booking_item_id) ->
 update_booking_totals = ->
   total = 0
   $.each items_json, (k,v) ->
+    if v.hidden == true
+      return true
     total += booking_item_total k
     true
   total *= submit_json.model.duration
