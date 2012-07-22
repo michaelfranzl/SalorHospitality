@@ -27,6 +27,7 @@ class GuestTypesController < ApplicationController
     if @guest_type.save
       redirect_to guest_types_path
     else
+      @taxes = @current_vendor.taxes.existing
       render(:new)
     end
   end
@@ -41,7 +42,12 @@ class GuestTypesController < ApplicationController
   def update
     @guest_type = GuestType.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to guest_types_path and return unless @guest_type
-    @guest_type.update_attributes(params[:guest_type]) ? redirect_to(guest_types_path) : render(:new)
+    if @guest_type.update_attributes(params[:guest_type])
+      redirect_to(guest_types_path)
+    else
+      @taxes = @current_vendor.taxes.existing
+      render(:new)
+    end
   end
 
   def destroy

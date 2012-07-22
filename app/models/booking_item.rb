@@ -71,36 +71,62 @@ class BookingItem < ActiveRecord::Base
     end
     self.save
     self.reload
-    self.calculate_totals
   end
 
   def hide
     self.update_attribute :hidden, true
   end
   
+  def invoice_label
+    label = [self.booking.room.room_type.name]
+    label << self.surcharge_items.collect{ |si| si.surcharge.name }.join(', ') if self.surcharge_items.any?
+    label.join(', ')
+  end
+  
+  def tax_letters
+    letters = []
+    letters << self.guest_type.taxes.collect{ |t| t.letter } if self.guest_type_id
+    letters << self.surcharge_items.collect do |si|
+      si.surcharge.tax_amounts.collect{ |ta| ta.tax.letter }
+    end
+    letters.flatten!
+    letters.join(', ')
+  end
+  
   def calculate_totals
-    #puts "XXX BookingItem -> calculate_totals"
-    self.taxes = {}
+    #puts "XXXXXXXXXX BookingItem -> calculate_totals #{ self.id }"
     if self.guest_type_id.nil?
       self.base_price = 0
     else
-      broom = RoomPrice.where(:season_id => self.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
-      broom ? self.base_price = broom.base_price : 0 
+      roomp = RoomPrice.where(:season_id => self.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
+      self.base_price = roomp.base_price
     end
-    self.sum = self.count * self.base_price
+    
+    self.unit_sum = self.base_price
+    self.sum = self.unit_sum * self.count * self.duration
+    
+    # below, calculate taxes
+    self.taxes = {}
     unless self.guest_type_id.nil?
       #puts "  XXX for base_price"
       self.guest_type.taxes.each do |tax|
         #puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
+        #puts "XXXXXXXXXXX self.taxes is #{ self.taxes.inspect }"
+        #puts "XXXXXXXXXXX gro is #{gro}"
         net = (gro - tax_sum).round(2)
         self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
+        #puts "XXXXXXXXXXX self.taxes is #{ self.taxes.inspect }"
         #puts "    XXX setting self.taxes to #{self.taxes.inspect}"
       end
     end
-    self.sum += self.count * self.surcharge_items.sum(:amount)
+    
+    # now, add surcharges to unit_sum, sum, and taxes hash    
+    self.unit_sum += self.surcharge_items.sum(:amount)
+    self.sum += self.surcharge_items.sum(:sum)
     self.surcharge_items.each do |si|
+      #puts "XXXXXXX Adding surcharge taxes to booking_item"
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
           self.taxes[k][:t] += v[:t]

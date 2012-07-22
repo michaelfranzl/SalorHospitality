@@ -37,38 +37,6 @@ class Booking < ActiveRecord::Base
       }
   end
   
-  def self.create_from_params(params, vendor, user)
-    booking = Booking.new
-    booking.user = user
-    booking.vendor = vendor
-    booking.company = vendor.company
-    booking.update_attributes params[:model]
-    params[:items].to_a.each do |item_params|
-      new_item = BookingItem.new(item_params[1])
-      new_item.from_date = booking.from_date
-      new_item.to_date = booking.to_date
-      new_item.ui_id = item_params[0]
-      new_item.booking = booking
-      new_item.calculate_totals
-      #new_item.save
-      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-    end
-    booking.save
-    booking.calculate_totals
-    BookingItem.make_multiseason_associations
-    return booking
-  end
-  
-  def customer_name=(name)
-    last,first = name.split(',')
-    return if not last or not first
-    c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
-    if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
-    end
-    self.customer = c
-  end
-  
   def customer_name
     if self.customer then
       return self.customer.full_name(true)
@@ -81,6 +49,39 @@ class Booking < ActiveRecord::Base
       self.update_attribute :nr, self.vendor.get_unique_model_number('order')
     end
   end
+  
+  def customer_name=(name)
+    last,first = name.split(',')
+    return if not last or not first
+    c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
+    if not c then
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+    end
+    self.customer = c
+  end
+  
+  def self.create_from_params(params, vendor, user)
+    booking = Booking.new
+    booking.user = user
+    booking.vendor = vendor
+    booking.company = vendor.company
+    booking.update_attributes params[:model]
+    params[:items].to_a.each do |item_params|
+      new_item = BookingItem.create(item_params[1])
+      new_item.from_date = booking.from_date
+      new_item.to_date = booking.to_date
+      new_item.ui_id = item_params[0]
+      new_item.booking = booking
+      new_item.save
+      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+      new_item.calculate_totals
+    end
+    booking.save
+    booking.calculate_totals
+    BookingItem.make_multiseason_associations
+    return booking
+  end
+
 
   def update_from_params(params)
     self.update_attributes params[:model]
@@ -91,7 +92,7 @@ class Booking < ActiveRecord::Base
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        # item.calculate_totals # this was already called in update_surcharge_items_from_ids
+        item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
         new_item.from_date = self.from_date
@@ -100,7 +101,7 @@ class Booking < ActiveRecord::Base
         new_item.save
         self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        # new_item.calculate_totals # this was already called in update_surcharge_items_from_ids
+        new_item.calculate_totals
       end
     end
     BookingItem.make_multiseason_associations
@@ -155,11 +156,12 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = self.duration * self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
+    #puts "XXXXXXXXXX calculate_totals for Booking"
+    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
-    self.booking_items.each do |item|
-      #puts "XXX booking_item #{item.id}"
+    self.booking_items.existing.each do |item|
+      #puts "  XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
           #puts "XXX has key"

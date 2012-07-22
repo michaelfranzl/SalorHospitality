@@ -8,7 +8,7 @@
     %th.right_wide= t(:gross)
   - model.taxes.each do |k,v|
     %tr
-      %td.left== #{v[:e]} (#{v[:l]})
+      %td.left== (#{v[:l]}) #{v[:e]}
       %td.left= number_to_percentage v[:p]
       %td.right_wide= number_to_currency v[:n]
       %td.right_wide= number_to_currency v[:t]

@@ -10,34 +10,33 @@
     %th.left
     %th.left= Season.model_name.human
     %th.right= BookingItem.human_attribute_name :base_price
-    %th.right= BookingItem.human_attribute_name :count
-    %th.right= BookingItem.human_attribute_name :duration
+    %th.center= BookingItem.human_attribute_name :count
+    %th.center= BookingItem.human_attribute_name :duration
     %th.right= BookingItem.human_attribute_name :sum
 
   - sum_taxes = Hash.new
   - @current_vendor.taxes.existing.each { |t| sum_taxes[t.id] = 0 }
 
   - booking.booking_items.existing.each do |item|
-    - if item.guest_type
-      %tr
-        %td.left= item.guest_type.taxes.collect{ |t| t.letter }.join(',')
-        %td.left= item.guest_type.name
-        %td.left= item.booking.room.room_type.name
-        %td.left= item.season.name
-        %td.right= number_to_currency item.base_price
-        %td.center= item.count
-        %td.center= item.duration
-        %td.right= number_to_currency item.base_price * item.count * item.duration
-    - item.surcharge_items.each do |si|
-      %tr
-        %td.left= si.taxes.collect{ |k,v| v[:l]}.join(',')
-        %td.left= item.guest_type.name if item.guest_type
-        %td.left= si.surcharge.name
-        %td.left= si.season.name
-        %td.right= number_to_currency si.amount
-        %td.center= item.count
-        %td.center= item.duration
-        %td.right= number_to_currency si.amount * item.count * item.duration
+    %tr
+      %td.left.narrow= item.tax_letters
+      %td.left= item.guest_type.name if item.guest_type
+      %td.left= item.invoice_label
+      %td.left= item.season.name
+      %td.right= number_to_currency item.unit_sum
+      %td.center.narrow= item.count
+      %td.center.narrow= item.duration
+      %td.right= number_to_currency item.sum
+    /- item.surcharge_items.each do |si|
+    /  %tr
+    /    %td.left= si.taxes.collect{ |k,v| v[:l]}.join(',')
+    /    %td.left= item.guest_type.name if item.guest_type
+    /    %td.left= si.surcharge.name
+    /    %td.left= si.season.name
+    /    %td.right= number_to_currency si.amount
+    /    %td.center= item.count
+    /    %td.center= item.duration
+    /    %td.right= number_to_currency si.amount * item.count * item.duration
   %tr
     %td{ :colspan => 7 }= t :sum
-    %td.right= number_to_currency booking.sum
+    %td.right= number_to_currency booking.booking_item_sum

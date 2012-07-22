@@ -125,7 +125,7 @@ window.display_booking_form = (room_id) ->
   window.calculate_booking_seasons()
 
 
-# Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed. The datepicker changes from and to in the submit_json object all by itself.
+# Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed.
 window.calculate_booking_seasons = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
@@ -134,9 +134,9 @@ window.calculate_booking_seasons = ->
   submit_json.model.duration = duration
   # Jason: This is a mockup for the covered_seasons object that is used to duplicate the booking items
   submit_json.model.covered_seasons = [
-    {id:2,duration:44},
-    {id:3,duration:45},
-    {id:4,duration:46}
+    {id:2,duration:1},
+    {id:3,duration:2},
+    {id:4,duration:3}
   ]
 
 # =======================================================
@@ -419,7 +419,6 @@ change_booking_item_count = (booking_item_id) ->
   set_json 'booking', booking_item_id, 'count', count
   items_json[booking_item_id].count = parseInt(count)
   regenerate_multi_season_booking_items(booking_item_id)
-  #update_booking_totals()
 
 
 
