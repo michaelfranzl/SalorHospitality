@@ -21,6 +21,12 @@
     = surcharge_form.label :radio_select
     = surcharge_form.check_box :radio_select
     %br
+    = surcharge_form.label :selected
+    = surcharge_form.check_box :selected
+    %br
+    = surcharge_form.label :visible
+    = surcharge_form.check_box :visible
+    %br
     = link_to image_tag('button_small_delete.png', :title => Surcharge.human_attribute_name(:hidden), :alt => Surcharge.human_attribute_name(:hidden)), surcharge_path(surcharge_form.object), :method => :delete, :confirm => t(:are_you_sure), :class => 'delete' unless surcharge_form.object.new_record?
     - if @surcharge.season_id
       %div#tax_amounts

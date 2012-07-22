@@ -118,6 +118,8 @@ gn:
         name: Name
         radio_select: Einfache Auswahl
         season_id: Saison
+        selected: Ausgewählt?
+        visible: Sichtbar?
       table:
         abbreviation: Abkürzung
         description: Beschreibung

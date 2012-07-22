@@ -41,14 +41,15 @@ window.update_salor_hotel_db = ->
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
     tx.executeSql 'DROP TABLE IF EXISTS room_prices;'
     tx.executeSql 'DROP TABLE IF EXISTS seasons;'
-    tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN);'
+    tx.executeSql 'CREATE TABLE surcharges (id INTEGER PRIMARY KEY, name STRING, season_id INTEGER, guest_type_id INTEGER, amount FLOAT, radio_select BOOLEAN, visible BOOLEAN, selected BOOLEAN);'
     tx.executeSql 'CREATE TABLE rooms (id INTEGER PRIMARY KEY, name STRING, room_type_id INTEGER);'
     tx.executeSql 'CREATE TABLE room_prices (id INTEGER PRIMARY KEY, guest_type_id INTEGER, room_type_id INTEGER, season_id INTEGER, base_price FLOAT);'
     tx.executeSql 'CREATE TABLE seasons (id INTEGER PRIMARY KEY, name STRING, from_date DATETIME, to_date DATETIME, duration INTEGER);'
     if $.isEmptyObject(resources)
       alert "The resources object is empty. Don't forget to generate the vendors cache."
     $.each resources.sc, (k,v) ->
-      tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select) VALUES (?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r]
+      debug 'xx'
+      tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select, visible, selected) VALUES (?,?,?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r, v.v, v.s]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
     $.each resources.rp, (k,v) ->
@@ -235,11 +236,13 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
   update_base_price booking_item_id
   db = _get 'db'
   db.transaction (tx) ->
-    tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + season_id + ';', [], (tx,res) ->
+    tx.executeSql 'SELECT id, name, amount, radio_select, visible, selected FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + season_id + ';', [], (tx,res) ->
       for i in [0..res.rows.length-1]
         record = res.rows.item(i)
         radio_select = record.radio_select == 'true'
-        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
+        visible = record.visible == 'true'
+        selected = record.selected == 'true'
+        items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:selected, visible:visible}
       if season_index == 0
         # a new booking item has been added for the first covered season. Now delete + create (regenerate) all booking_items for the rest of the covered seasons.
         regenerate_multi_season_booking_items(booking_item_id)
@@ -301,12 +304,14 @@ update_json_booking_items = ->
     update_base_price k
     db = _get 'db'
     db.transaction (tx) ->
-      tx.executeSql 'SELECT id, name, amount, radio_select FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
+      tx.executeSql 'SELECT id, name, amount, radio_select, visible, selected FROM surcharges WHERE ' + guest_type_query_string + ' AND season_id = ' + submit_json.model.season_id + ';', [], (tx,res) ->
         for i in [0..res.rows.length-1]
           record = res.rows.item(i)
           items_json[k].surcharges[record.name].id = record.id
           items_json[k].surcharges[record.name].amount = record.amount
           items_json[k].surcharges[record.name].radio_select = record.radio_select
+          #items_json[k].surcharges[record.name].visible = record.visible
+          #items_json[k].surcharges[record.name].selected = record.selected
         update_submit_json_surchageslist k
 
         

@@ -205,7 +205,7 @@ class Vendor < ActiveRecord::Base
     self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
 
     surcharges = Hash.new
-    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
+    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select, :v => sc.visible, :s => sc.selected } }
 
     seasons = Hash.new
     current_season = Season.current(self)

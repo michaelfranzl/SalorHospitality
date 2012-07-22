@@ -118,6 +118,8 @@ en:
         name: Name
         radio_select: Radio Select
         season_id: Season
+        selected: Selected by default
+        visible: Visible?
       table:
         abbreviation: Abbreviation
         description: Description

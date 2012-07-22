@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722102627) do
+ActiveRecord::Schema.define(:version => 20120722130013) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -654,9 +654,11 @@ ActiveRecord::Schema.define(:version => 20120722102627) do
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.boolean  "active",        :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.boolean  "radio_select"
+    t.boolean  "visible",       :default => true
+    t.boolean  "selected",      :default => false
   end
 
   create_table "tables", :force => true do |t|

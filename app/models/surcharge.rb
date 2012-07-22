@@ -63,7 +63,7 @@ class Surcharge < ActiveRecord::Base
       guest_types.each do |gt|
         gt_id = gt ? gt.id : nil
         # this should match only one surcharge at a time
-        surcharge = vendor.surcharges.where(:guest_type_id => gt_id, :season_id => s.id, :name => old_name).update_all :name => params[:surcharge][:name], :radio_select => self.radio_select
+        surcharge = vendor.surcharges.where(:guest_type_id => gt_id, :season_id => s.id, :name => old_name).update_all :name => params[:surcharge][:name], :radio_select => self.radio_select, :selected => self.selected, :visible => self.visible
       end
     end
   end
