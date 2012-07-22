@@ -329,7 +329,7 @@ function create_json_record(model, object) {
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, original:object.original, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_id:object.parent_id, has_children:false, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
@@ -357,7 +357,7 @@ function create_submit_json_record(model, d, object) {
     if (model == 'order') {
       submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
     } else if (model == 'booking') {
-      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id, duration:object.duration, season_id:object.season_id, original:object.original};
+      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id, duration:object.duration, season_id:object.season_id, parent_id:object.parent_id};
     }
     // remove redundant fields
     if (items_json[d].hasOwnProperty('id')) {

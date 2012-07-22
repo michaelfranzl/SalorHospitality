@@ -138,7 +138,6 @@ window.calculate_booking_seasons = ->
     {id:3,duration:45},
     {id:4,duration:46}
   ]
-  # instead of update_booking_totals(), delete all non-original BookingItems and re-render them according to covered_seasons.
 
 # =======================================================
 # Private functions inside of a closure for encapsulation
@@ -221,13 +220,14 @@ render_guest_type_buttons = ->
     , 100
 
 
-# This function adds objects to the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking. This only generates "original" booking item objects for the first covered season.
+# This function adds objects to the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
 add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
   # debug 'called add_json_booking_item with season_index=' + season_index
   season_id = submit_json.model.covered_seasons[season_index].id
   duration = submit_json.model.covered_seasons[season_index].duration
-  original = season_index == 0
-  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, original:original}
+  if season_index == 0
+    parent_id = null
+  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_id:parent_id}
   if guest_type_id == null
     guest_type_query_string = 'guest_type_id IS NULL'
   else
@@ -242,27 +242,26 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
         items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:false}
       if season_index == 0
         # a new booking item has been added for the first covered season. Now delete + create (regenerate) all booking_items for the rest of the covered seasons.
-        regenerate_multi_season_booking_items()
+        regenerate_multi_season_booking_items(booking_item_id)
 
       
 
-regenerate_multi_season_booking_items = (original_booking_item_id) ->
+regenerate_multi_season_booking_items = (parent_booking_item_id) ->
   # delete all objects with a key that begins with x (x means multi-season items)
+  #found = false
   $.each items_json, (k,v) ->
-    if k.indexOf('x') == 0
-      #if v.original_booking_item_id == original_booking_item_id
-      delete items_json[k]
-      delete submit_json.items[k]
-  # now, copy all remaining "original" items covered_seasons many times
-  $.each items_json, (k,v) ->
-    $.each submit_json.model.covered_seasons, (i,covered_season) ->
-      if i == 0
-        return true
-      id = get_unique_booking_number('x') # x is for multi-season booking_items which are needed for price calculations but won't be displayed
-      add_json_booking_item id, v.guest_type_id, i
-      setTimeout ->
-        copy_attributes k, id
-      , 100 # warning: this timeout value must be smaller than the one below
+    if k.indexOf('x') == 0 && v.parent_id == parent_booking_item_id
+      copy_attributes parent_booking_item_id, k
+    else if k.indexOf('x') != 0 && v.has_children == false
+      items_json[k].has_children = true
+      $.each submit_json.model.covered_seasons, (i,covered_season) ->
+        if i == 0
+          return true
+        id = get_unique_booking_number('x') # x is for multi-season booking_items
+        add_json_booking_item id, v.guest_type_id, i
+        setTimeout ->
+          copy_attributes k, id
+        , 100 # warning: this timeout value must be smaller than the one below
   setTimeout ->
     render_booking_items_from_json()
     update_booking_totals()
@@ -271,8 +270,7 @@ regenerate_multi_season_booking_items = (original_booking_item_id) ->
 
 copy_attributes = (from_id, to_id) ->
   set_json 'booking', to_id, 'count', items_json[from_id].count
-  #items_json[to_id].count = items_json[from_id].count
-  #submit_json.items[to_id].count = submit_json.items[from_id].count
+  set_json 'booking', to_id, 'parent_id', from_id
   $.each items_json[from_id].surcharges, (k,v) ->
     items_json[to_id].surcharges[k].selected = v.selected
     update_submit_json_surchageslist(to_id)
@@ -325,7 +323,7 @@ render_booking_item = (booking_item_id) ->
     guest_type_id = items_json[booking_item_id].guest_type_id
     guest_type_name = resources.gt[guest_type_id].n
     surcharge_headers = surcharge_headers.guest_type_set
-  if items_json[booking_item_id].original == false
+  if items_json[booking_item_id].parent_id != null
     add_class = 'semitransparent'
   booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
   create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
@@ -387,7 +385,7 @@ save_selected_input_state = (element, booking_item_id, surcharge_name) ->
     items_json[booking_item_id].surcharges[surcharge_name].selected = false
     element.parent().removeClass 'selected'
   update_submit_json_surchageslist booking_item_id
-  regenerate_multi_season_booking_items()
+  regenerate_multi_season_booking_items(booking_item_id)
 
 
 # Copy data over into submit_son from items_json, add surcharge IDs to array, which will be interpreted by the Server.
@@ -420,7 +418,7 @@ change_booking_item_count = (booking_item_id) ->
   count = $('#booking_item_' + booking_item_id + '_count').val()
   set_json 'booking', booking_item_id, 'count', count
   items_json[booking_item_id].count = parseInt(count)
-  regenerate_multi_season_booking_items()
+  regenerate_multi_season_booking_items(booking_item_id)
   #update_booking_totals()
 
 

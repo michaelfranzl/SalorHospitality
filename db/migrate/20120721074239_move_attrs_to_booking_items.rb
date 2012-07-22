@@ -4,7 +4,9 @@ class MoveAttrsToBookingItems < ActiveRecord::Migration
     add_column :booking_items, :to_date, :datetime
     add_column :booking_items, :season_id, :integer
     add_column :booking_items, :duration, :integer
-    add_column :booking_items, :original, :boolean, :default => false
+    add_column :booking_items, :booking_item_id, :integer
+    add_column :booking_items, :ui_parent_id, :string
+    add_column :booking_items, :ui_id, :string
     remove_column :bookings, :season_id
   end
 
@@ -13,7 +15,9 @@ class MoveAttrsToBookingItems < ActiveRecord::Migration
     remove_column :booking_items, :to_date
     remove_column :booking_items, :season_id
     remove_column :booking_items, :duration
-    remove_column :booking_items, :original
+    remove_column :booking_items, :booking_item_id
+    remove_column :booking_items, :ui_parent_id
+    remove_column :booking_items, :ui_id
     add_column :bookings, :season_id, :integer
   end
 end

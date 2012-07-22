@@ -66,7 +66,7 @@ $(function(){
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */
 function emit(msg,packet) {
-  console.log(msg,packet);
+  //console.log(msg,packet);
   $('body').triggerHandler({type: msg, packet:packet});
 }
 
@@ -178,7 +178,7 @@ function _push(object) {
   var payload = null;
   var callback = null;
   var error_callback = function (jqXHR,status,err) {
-    console.log(jqXHR,status,err.get_message());
+    //console.log(jqXHR,status,err.get_message());
   };
   var user_options = {};
   var url;
@@ -188,7 +188,7 @@ function _push(object) {
         if (!payload) {
           payload = {currentview: 'push', model: {}}
           $.each(arguments[i], function (key,value) {
-            console.log(key,value);
+            //console.log(key,value);
             payload[key] = value;
           });
         } else {
@@ -328,7 +328,7 @@ function days_between_dates(from, to) {
   return days;
 }
 function _log(arg1,arg2,arg3) {
- console.log(arg1,arg2,arg3);
+ //console.log(arg1,arg2,arg3);
 }
 /* Adds a delete/X button to the element. Type options  are right and append. The default callback simply slides the element up.
  if you want special behavior on click, you can pass a closure.*/

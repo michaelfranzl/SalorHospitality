@@ -18,7 +18,6 @@ class Booking < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
   belongs_to :company
-  belongs_to :season
   belongs_to :customer
 
   serialize :taxes
@@ -46,7 +45,9 @@ class Booking < ActiveRecord::Base
     booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
-      #new_item.original = item_params[1]['original'] == 'true'
+      new_item.from_date = booking.from_date
+      new_item.to_date = booking.to_date
+      new_item.ui_id = item_params[0]
       new_item.booking = booking
       new_item.calculate_totals
       #new_item.save
@@ -54,6 +55,7 @@ class Booking < ActiveRecord::Base
     end
     booking.save
     booking.calculate_totals
+    BookingItem.make_multiseason_associations
     return booking
   end
   
@@ -91,12 +93,17 @@ class Booking < ActiveRecord::Base
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         # item.calculate_totals # this was already called in update_surcharge_items_from_ids
       else
-        new_item = BookingItem.create(item_params[1])
+        new_item = BookingItem.new(item_params[1])
+        new_item.from_date = self.from_date
+        new_item.to_date = self.to_date
+        new_item.ui_id = item_params[0]
+        new_item.save
         self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         # new_item.calculate_totals # this was already called in update_surcharge_items_from_ids
       end
     end
+    BookingItem.make_multiseason_associations
     self.save
   end
 
@@ -133,7 +140,8 @@ class Booking < ActiveRecord::Base
   def booking_items_to_json
     booking_items_hash = {}
     self.booking_items.existing.each do |i|
-      d = i.original == true ? "i#{i.id}" : "x#{i.id}"
+      d = i.booking_item_id ? "x#{i.id}" : "i#{i.id}"
+      parent_id = i.booking_item_id ? "i#{i.booking_item_id}" : nil
       surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
       surcharges_hash = {}
       surcharges.each do |s|
@@ -141,7 +149,7 @@ class Booking < ActiveRecord::Base
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :original => i.original, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_id => parent_id, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end
@@ -176,6 +184,7 @@ class Booking < ActiveRecord::Base
         end
       end
     end
+    self.duration = (self.to_date - self.from_date) / 86400
     save
   end
 

@@ -8,6 +8,7 @@ en:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: Days
       order:
         change_given: Change
       customer:

@@ -8,6 +8,7 @@ gn:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: Tage
       order:
         change_given: Wechselgeld
       customer:

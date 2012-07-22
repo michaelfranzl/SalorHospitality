@@ -1,6 +1,6 @@
 /%p= t '.served_by_X', :user => booking.user.title
 %p.floatright= l booking.created_at, :format => :long
-%p== #{ l booking.from_date, :format => :date_iso } ➙ #{ l booking.to_date, :format => :date_iso }
+%p== #{ Season.human_attribute_name :from_date } #{ l booking.from_date, :format => :date_iso } #{ Season.human_attribute_name :to_date } #{ l booking.to_date, :format => :date_iso } (#{ t'datetime.distance_in_words.x_days.other', :count => Integer(booking.duration) })
 %p= booking.room.name
 
 %table
@@ -11,6 +11,7 @@
     %th.left= Season.model_name.human
     %th.right= BookingItem.human_attribute_name :base_price
     %th.right= BookingItem.human_attribute_name :count
+    %th.right= BookingItem.human_attribute_name :duration
     %th.right= BookingItem.human_attribute_name :sum
 
   - sum_taxes = Hash.new
@@ -22,10 +23,11 @@
         %td.left= item.guest_type.taxes.collect{ |t| t.letter }.join(',')
         %td.left= item.guest_type.name
         %td.left= item.booking.room.room_type.name
-        %td.left= item.booking.season.name
+        %td.left= item.season.name
         %td.right= number_to_currency item.base_price
         %td.center= item.count
-        %td.right= number_to_currency item.base_price * item.count
+        %td.center= item.duration
+        %td.right= number_to_currency item.base_price * item.count * item.duration
     - item.surcharge_items.each do |si|
       %tr
         %td.left= si.taxes.collect{ |k,v| v[:l]}.join(',')
@@ -34,7 +36,8 @@
         %td.left= si.season.name
         %td.right= number_to_currency si.amount
         %td.center= item.count
-        %td.right= number_to_currency si.amount * item.count
+        %td.center= item.duration
+        %td.right= number_to_currency si.amount * item.count * item.duration
   %tr
-    %td{ :colspan => 6 }= t :sum
+    %td{ :colspan => 7 }= t :sum
     %td.right= number_to_currency booking.sum

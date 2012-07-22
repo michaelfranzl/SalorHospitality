@@ -7,15 +7,39 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class BookingItem < ActiveRecord::Base
-  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :original
+  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_id, :ui_id
   include Scope
   belongs_to :booking
   belongs_to :vendor
   belongs_to :company
   belongs_to :guest_type
+  belongs_to :booking_item
+  belongs_to :season
+  has_many :booking_items
   has_many :surcharge_items
 
   serialize :taxes
+  
+  alias_attribute :parent_id, :ui_parent_id
+  
+  # For multi-season bookings, the JS frontend maintains parent and children booking items. The parent booking items represent the first covered season. The children booking items represent all other covered seasons. We need to model and store this parent/child relationship in the DB, so that we can deliver the same relations back as JSON.
+  def self.make_multiseason_associations
+    BookingItem.where('ui_parent_id IS NOT NULL AND booking_item_id IS NULL').each do |bi|
+      parent_item = BookingItem.find_by_ui_id(bi.ui_parent_id)
+      parent_item_id = parent_item ? parent_item.id : nil
+      bi.update_attribute :booking_item_id, parent_item_id
+    end
+    # since frontend IDs are unique only per booking form call, and they have done their due, we destroy them.
+    BookingItem.where('ui_parent_id IS NOT NULL OR ui_id IS NOT NULL').update_all :ui_parent_id => nil, :ui_id => nil
+  end
+  
+  def guest_type_id=(id)
+    if id.to_i == 0
+      write_attribute :guest_type_id, nil
+    else
+      write_attribute :guest_type_id, id
+    end
+  end
 
   # This function creates and hides SurchargeItems depending on the selection on the UI.
   def update_surcharge_items_from_ids(ids)
@@ -53,18 +77,18 @@ class BookingItem < ActiveRecord::Base
   def hide
     self.update_attribute :hidden, true
   end
-
+  
   def calculate_totals
     #puts "XXX BookingItem -> calculate_totals"
     self.taxes = {}
-    if self.guest_type_id.zero?
+    if self.guest_type_id.nil?
       self.base_price = 0
     else
       broom = RoomPrice.where(:season_id => self.season_id, :room_type_id => self.booking.room.room_type_id, :guest_type_id => self.guest_type_id).first
       broom ? self.base_price = broom.base_price : 0 
     end
     self.sum = self.count * self.base_price
-    unless self.guest_type_id.zero?
+    unless self.guest_type_id.nil?
       #puts "  XXX for base_price"
       self.guest_type.taxes.each do |tax|
         #puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"

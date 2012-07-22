@@ -166,8 +166,8 @@
         one:   "about 1 hour"
         other: "about %{count} hours"
       x_days:
-        one:   "1 day"
-        other: "%{count} days"
+        one:   "1 Tag"
+        other: "%{count} Tage"
       about_x_months:
         one:   "about 1 month"
         other: "about %{count} months"
