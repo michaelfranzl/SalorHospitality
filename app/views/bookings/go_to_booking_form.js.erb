@@ -18,16 +18,16 @@
   $('.payment_methods_container').attr('model_id', <%= @booking.id %>);     
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
   $('#add_payment_method_button').on('click', function() { 
-      show_payment_methods(<%= @booking.id %>,true); 
-      add_button_menu($('.payment_methods_container'));
-      <% if @booking.payment_method_items.any? then %>
-        <% @booking.payment_method_items.each do |pm|%>
-          add_payment_method(<%= @booking.id %>,<%= pm.payment_method_id %>, <%= pm.amount %>);
-        <% end %>
+    show_payment_methods(<%= @booking.id %>,true); 
+    add_button_menu($('.payment_methods_container'));
+    <% if @booking.payment_method_items.any? then %>
+      <% @booking.payment_method_items.each do |pm|%>
+        add_payment_method(<%= @booking.id %>,<%= pm.payment_method_id %>, <%= pm.amount %>);
       <% end %>
-   });
-  
+    <% end %>
+  });
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
+  window.render_booking_items_from_json();
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};

@@ -215,9 +215,8 @@ function route(target, model_id, action, options) {
     counter_update_tables = timeout_update_tables;
     submit_json.currentview = 'rooms';
 
-  // ========== GO TO ROOM ===============
+  // ========== NEW BOOKING ===============
   } else if ( target == 'room' ) {
-    // show a new booking every time
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
@@ -228,8 +227,9 @@ function route(target, model_id, action, options) {
     items_json = {};
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
+
+  // ========== EXISTING BOOKING ===============
   } else if (target == 'booking') {
-    // This one will show the specified booking
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
@@ -336,6 +336,20 @@ function create_json_record(model, object) {
   return d;
 }
 
+// sets attributes in both, submit_json and items_json
+function set_json(model, d, attribute, value) {
+  if (items_json.hasOwnProperty(d)) {
+    items_json[d][attribute] = value;
+  } else {
+    //alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
+  }
+  if ( attribute != 't' ) {
+    // never copy the options object to submit_json
+    create_submit_json_record(model, d, items_json[d]);
+    submit_json.items[d][attribute] = value;
+  }
+}
+
 // this creates a new record, copied from items_json, which must exist
 function create_submit_json_record(model, d, object) {
   if( !submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
@@ -353,19 +367,6 @@ function create_submit_json_record(model, d, object) {
     if ( ! items_json[d].hasOwnProperty('qi')) {
       delete submit_json.items[d].qi;
     }
-  }
-}
-
-function set_json(model, d, attribute, value) {
-  if (items_json.hasOwnProperty(d)) {
-    items_json[d][attribute] = value;
-  } else {
-    //alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
-  }
-  if ( attribute != 't' ) {
-    // never copy the options object to submit_json
-    create_submit_json_record(model, d, items_json[d]);
-    submit_json.items[d][attribute] = value;
   }
 }
 

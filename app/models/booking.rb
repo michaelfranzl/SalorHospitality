@@ -23,6 +23,7 @@ class Booking < ActiveRecord::Base
 
   serialize :taxes
   attr_accessible :customer_name
+  
   def as_json(options={})
     return {
         :from => self.from_date.strftime("%Y-%m-%d"),
@@ -36,6 +37,7 @@ class Booking < ActiveRecord::Base
         :paid => self.paid
       }
   end
+  
   def self.create_from_params(params, vendor, user)
     booking = Booking.new
     booking.user = user
@@ -44,6 +46,7 @@ class Booking < ActiveRecord::Base
     booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
+      #new_item.original = item_params[1]['original'] == 'true'
       new_item.booking = booking
       new_item.calculate_totals
       #new_item.save
@@ -53,6 +56,7 @@ class Booking < ActiveRecord::Base
     booking.calculate_totals
     return booking
   end
+  
   def customer_name=(name)
     last,first = name.split(',')
     return if not last or not first
@@ -62,12 +66,14 @@ class Booking < ActiveRecord::Base
     end
     self.customer = c
   end
+  
   def customer_name
     if self.customer then
       return self.customer.full_name(true)
     end
     return ""
   end
+  
   def set_nr
     if self.nr.nil?
       self.update_attribute :nr, self.vendor.get_unique_model_number('order')
@@ -126,14 +132,9 @@ class Booking < ActiveRecord::Base
 
   def booking_items_to_json
     booking_items_hash = {}
-    self.booking_items.existing.reverse.each do |i|
-      if i.guest_type_id.zero?
-        d = "s#{i.id}"
-        surcharges = self.vendor.surcharges.where(:season_id => self.season_id)
-      else
-        d = "i#{i.id}"
-        surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
-      end
+    self.booking_items.existing.each do |i|
+      d = i.original == true ? "i#{i.id}" : "x#{i.id}"
+      surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
       surcharges_hash = {}
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }

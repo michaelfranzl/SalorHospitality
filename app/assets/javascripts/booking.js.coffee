@@ -246,10 +246,11 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
 
       
 
-regenerate_multi_season_booking_items = () ->
+regenerate_multi_season_booking_items = (original_booking_item_id) ->
   # delete all objects with a key that begins with x (x means multi-season items)
   $.each items_json, (k,v) ->
-    if k.indexOf('x') != -1
+    if k.indexOf('x') == 0
+      #if v.original_booking_item_id == original_booking_item_id
       delete items_json[k]
       delete submit_json.items[k]
   # now, copy all remaining "original" items covered_seasons many times
@@ -269,12 +270,12 @@ regenerate_multi_season_booking_items = () ->
         
 
 copy_attributes = (from_id, to_id) ->
-  items_json[to_id].count = items_json[from_id].count
-  items_json[to_id].surchargeslist = items_json[from_id].surchargeslist
-  submit_json.items[to_id].count = submit_json.items[from_id].count
-  submit_json.items[to_id].surchargeslist = submit_json.items[from_id].surchargeslist
+  set_json 'booking', to_id, 'count', items_json[from_id].count
+  #items_json[to_id].count = items_json[from_id].count
+  #submit_json.items[to_id].count = submit_json.items[from_id].count
   $.each items_json[from_id].surcharges, (k,v) ->
     items_json[to_id].surcharges[k].selected = v.selected
+    update_submit_json_surchageslist(to_id)
     return true
       
 # Called when a room is changed, when a new booking item is added (see "add_json_booking_item"), and when "update_json_booking_items" is called. It gets the current base room price from the local DB and saves it into the workspace json objects.
@@ -324,7 +325,9 @@ render_booking_item = (booking_item_id) ->
     guest_type_id = items_json[booking_item_id].guest_type_id
     guest_type_name = resources.gt[guest_type_id].n
     surcharge_headers = surcharge_headers.guest_type_set
-  booking_item_row = create_dom_element 'div', {class:'booking_item', id:'booking_item'+booking_item_id}, '', '#booking_items'
+  if items_json[booking_item_id].original == false
+    add_class = 'semitransparent'
+  booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
   create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
   render_booking_item_count booking_item_id
   for header in surcharge_headers

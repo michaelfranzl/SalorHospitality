@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class BookingItem < ActiveRecord::Base
-  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count
+  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :original
   include Scope
   belongs_to :booking
   belongs_to :vendor
@@ -65,14 +65,14 @@ class BookingItem < ActiveRecord::Base
     end
     self.sum = self.count * self.base_price
     unless self.guest_type_id.zero?
-      puts "  XXX for base_price"
+      #puts "  XXX for base_price"
       self.guest_type.taxes.each do |tax|
-        puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"
+        #puts "    XXX tax #{tax.id} of guest_type #{ self.guest_type.id }"
         tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
         gro = (self.sum).round(2)
         net = (gro - tax_sum).round(2)
         self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
-        puts "    XXX setting self.taxes to #{self.taxes.inspect}"
+        #puts "    XXX setting self.taxes to #{self.taxes.inspect}"
       end
     end
     self.sum += self.count * self.surcharge_items.sum(:amount)
