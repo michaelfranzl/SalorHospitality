@@ -330,6 +330,7 @@ gn:
       served_by_X: Sie wurden bedient von %{user}
     show:
       search_by_number: Suche nach Nummer
+      go_to_bookings_calendar: Zum Buchungs-Kalender gehen
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:
@@ -399,7 +400,7 @@ gn:
     errempty: Ungültige Datei
     errsize: Ungültige Dateigröße
     errtype: Ungültige Dateityp
-  invoice: Rechnung
+  invoice: Rechnung  
   invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
   invoices: Invoices
   is_no_number: ist keine Zahl
@@ -694,6 +695,8 @@ gn:
     total_price_abbreviation: GP
     quantity_abbreviation: Stk.
     tax_amount: XXX Amount
+    interim_invoice: Rechnungsvoransicht
+    invoice: Rechnung
   vendors:
     index:
       edit: bearbeiten

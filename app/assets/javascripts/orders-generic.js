@@ -48,8 +48,12 @@ $(function(){
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
-  if (!_get('customers.button_added'))
-    connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  
+  //automatically route to widgets depending on uri parameters
+  var uri_attrs = uri_attributes();
+  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 500);
+  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 500);
 })
 
 
@@ -220,6 +224,8 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    $('#container').show();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
@@ -233,12 +239,14 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    $('#container').show();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id + '?booking_id=' + options['booking_id'], timeout: 5000 });
+    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
     window.display_booking_form(model_id);
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});

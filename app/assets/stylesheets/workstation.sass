@@ -1590,12 +1590,23 @@ div.room-booking
   :-webkit-border-radius 6px
   div.inner-div
     div.name
-      :background-color $billgastrogrey1
-      :min-height 25px
+      :background-color rgba(0,0,0, 0.5)
+      :min-height 40px
       :color white
       :-webkit-border-radius 4px
     div.date
       :font-size 90%
+    a.invoice_button
+      :background-size 30px 32px
+      :width 30px
+      :height 32px
+      :position absolute
+      :bottom 3px
+      :left 3px
+    span.handle
+      :position absolute
+      :top 3px
+      :left 3px
 div.room-booking-odd
   :background-color $blue
 div.room-booking-even

@@ -202,15 +202,13 @@ function booking_build_inner_div(booking) {
   var name_div = create_dom_element('div',{class:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
   inner_div.append("<br />");
   var date_div = create_dom_element('div',{class: 'date',booking_id: booking.id, roomd_id: booking.room_id},get_from_to_of_booking(booking),inner_div);
+  var invoice_button = create_dom_element('a', {class:'iconbutton invoice_button'},'',inner_div);
+  invoice_button.on('click', function(){window.location = '/bookings/' + booking.id});
+  var handle = create_dom_element('span',{class: 'handle', id:'booking_handle_' + booking.id},'',inner_div);
   name_div.on('mouseenter',booking_mouse_enter);
   name_div.on('mouseout',booking_mouse_out);
   name_div.on('click',function () {
-    $('#rooms').hide();
-    $('#container').show();
-    var room_id = $(this).attr('room_id');
-    route('booking', room_id,'show',{'booking_id': $(this).attr('booking_id')});
-    submit_json.model.room_id = room_id;
-    submit_json.model.room_type_id = _get("rooms.json").rooms[room_id].room_type.id;
+    route('booking', booking.id);
   });
   return inner_div;
 }
@@ -253,6 +251,7 @@ function finish_booking(booking) {
   booking_widget.removeClass('room-booking-active');
   booking_widget.draggable('disable');
   booking_widget.find('.name').unbind('click');
+  booking_widget.find('.name').on('click', function() { window.location = '/bookings/' + booking.id});
 }
 
 /* 
@@ -369,6 +368,7 @@ function draw_booking(booking) {
     return;
   }
   booking_widget.draggable({
+    handle: $('#booking_handle_' + booking.id),
     drag: function (event,ui) {
       if (_keys_down.ctrl) { // _keys_down is setup in application-generic.js
         //console.log("Setting option to y");
