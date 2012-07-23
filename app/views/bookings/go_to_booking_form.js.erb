@@ -29,6 +29,7 @@
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
   submit_json.model.room_id = <%= @booking.room_id %>;
   submit_json.model.room_type_id = <%= @booking.room.room_type_id %>;
+  $('#interim_invoice').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_invoice')});
   window.render_booking_items_from_json();
 <% else %>
   submit_json.id = 0;

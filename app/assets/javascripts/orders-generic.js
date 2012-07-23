@@ -65,7 +65,6 @@ $(function(){
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   scroll_to($('#container'),20);
-  //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
     submit_json.target = 'tables';
@@ -75,7 +74,6 @@ function route(target, model_id, action, options) {
     $('#tables').show();
     $('#rooms').hide();
     $('#areas').show();
-    //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();
@@ -248,6 +246,14 @@ function route(target, model_id, action, options) {
     items_json = {};
     $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
     window.display_booking_form(model_id);
+    
+  // ========== REDIRECT ===============
+  } else if (target == 'redirect') {
+    if (action == 'booking_invoice') {
+      submit_json.jsaction = 'send';
+      send_json('booking_' + model_id);
+      window.location = '/bookings/' + model_id;
+    }
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
