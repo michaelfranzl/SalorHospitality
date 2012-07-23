@@ -7,6 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # document ready code
+
 $ ->
   connect 'salor_hotel.refresh_db', 'ajax.update_resources.success', window.update_salor_hotel_db
   connect 'salor_hotel.receive_rooms_db', 'ajax.rooms_index.success', window.receive_rooms_db
@@ -22,6 +23,7 @@ $ ->
   $(window).on 'resize', ->
     if $('#rooms').is(":visible")
       emit 'salor_hotel.render_rooms',{}
+  
 
 
 # Functions accessible from window
@@ -36,6 +38,7 @@ window.add_payment_method_buttons = (event) ->
 # Updates the local DB from JSON objects delivered by the Server.
 window.update_salor_hotel_db = ->
   db = _get 'db'
+  _set 'possible_seasons',create_season_objects(resources.sn)
   db.transaction (tx) ->
     tx.executeSql 'DROP TABLE IF EXISTS surcharges;'
     tx.executeSql 'DROP TABLE IF EXISTS rooms;'
@@ -130,16 +133,17 @@ window.display_booking_form = (room_id) ->
 window.calculate_booking_seasons = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
+  #console.log(Season.applying_seasons(_get('possible_seasons'),from,to))
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
   # Jason: This is a mockup for the covered_seasons object that is used to duplicate the booking items
-  submit_json.model.covered_seasons = [
-    {id:2,duration:1},
-    {id:3,duration:2},
-    {id:4,duration:3}
-  ]
-
+#   submit_json.model.covered_seasons = [
+#     {id:2,duration:1},
+#     {id:3,duration:2},
+#     {id:4,duration:3}
+#   ]
+  submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
 # =======================================================
 # Private functions inside of a closure for encapsulation
 # =======================================================
