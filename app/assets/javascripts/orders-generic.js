@@ -52,8 +52,8 @@ $(function(){
   
   //automatically route to widgets depending on uri parameters
   var uri_attrs = uri_attributes();
-  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 500);
-  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 500);
+  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
+  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
 })
 
 
@@ -64,6 +64,7 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
+  console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
@@ -261,14 +262,14 @@ function route(target, model_id, action, options) {
   // ========== REDIRECT ===============
   } else if (target == 'redirect') {
     if (action == 'booking_interim_invoice') {
-      submit_json.jsaction = 'send';
+      submit_json.jsaction = 'send_and_redirect_to_invoice';
       send_json('booking_' + model_id);
-      window.location = '/bookings/' + model_id; // ajax from orders_controller.rb will trigger a route, but this redirect overpowers it
+      //console.log('booking_interim_invoice');
       
     } else if (action == 'booking_invoice') {
-      submit_json.jsaction = 'pay';
+      submit_json.jsaction = 'pay_and_redirect_to_invoice';
       send_json('booking_' + model_id);
-      window.location = '/bookings/' + model_id; // ajax from orders_controller.rb will trigger a route, but this redirect overpowers it
+      //console.log('booking_invoice');
     }
     
   }

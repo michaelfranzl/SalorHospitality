@@ -54,6 +54,8 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
+    #puts "XXXXXXXXXXXXX #{params[:currentview]}"
+    #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
     case params[:currentview]
       # this action is for simple pushing of a model to the server and
       # getting a json object back.
@@ -211,7 +213,22 @@ class OrdersController < ApplicationController
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             create_payment_method_items @booking
-            render :js => "submit_json.model.booking_id = #{ @booking.id }" # the switch to the table happens in the JS route function from where this was called
+            render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
+          when 'send_and_redirect_to_invoice'
+                        debugger
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            render :js => "window.location = '/bookings/#{ @booking.id }';" and return
+          when 'pay_and_redirect_to_invoice'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            @booking.pay
+            render :js => "window.location = '/bookings/#{ @booking.id }';" and return
+            
         end
       when 'rooms'
         case params['jsaction']

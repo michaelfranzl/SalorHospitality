@@ -48,7 +48,6 @@ window.update_salor_hotel_db = ->
     if $.isEmptyObject(resources)
       alert "The resources object is empty. Don't forget to generate the vendors cache."
     $.each resources.sc, (k,v) ->
-      debug 'xx'
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select, visible, selected) VALUES (?,?,?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r, v.v, v.s]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
