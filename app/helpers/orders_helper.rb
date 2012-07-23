@@ -32,7 +32,9 @@ module OrdersHelper
       :net => escape_javascript(I18n.t(:net)),
       :tax_amount => escape_javascript(I18n.t(:tax_amount)),
       :categories => escape_javascript(I18n.t('activerecord.models.category.other')),
-      :taxes => escape_javascript(I18n.t('activerecord.models.tax.other'))
+      :taxes => escape_javascript(I18n.t('activerecord.models.tax.other')),
+      :interim_invoice => escape_javascript(I18n.t('various.interim_invoice')),
+      :assign_order_to_booking => escape_javascript(I18n.t('various.consumations'))
     }
     return i18n.to_json
   end

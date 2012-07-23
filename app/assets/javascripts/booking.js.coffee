@@ -51,7 +51,6 @@ window.update_salor_hotel_db = ->
     if $.isEmptyObject(resources)
       alert "The resources object is empty. Don't forget to generate the vendors cache."
     $.each resources.sc, (k,v) ->
-      debug 'xx'
       tx.executeSql 'INSERT INTO surcharges (id, name, season_id, guest_type_id, amount, radio_select, visible, selected) VALUES (?,?,?,?,?,?,?,?);', [k, v.n, v.sn, v.gt, v.a, v.r, v.v, v.s]
     $.each resources.r, (k,v) ->
       tx.executeSql 'INSERT INTO rooms (id, name, room_type_id) VALUES (?,?,?);', [k, v.n, v.rt]
@@ -114,12 +113,12 @@ window.display_booking_form = (room_id) ->
     
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
+  interim_invoice_link = create_dom_element 'span', {id:'booking_interim_invoice',class:'textbutton'}, i18n.interim_invoice, booking_tools
+  assign_order_link = create_dom_element 'span', {id:'booking_assign_order',class:'textbutton'}, i18n.assign_order_to_booking, booking_tools
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
   pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, i18n.pay, booking_tools
-  pay_link.on 'click', -> route 'rooms', room_id, 'pay'
   cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools
   cancel_link.on 'click', -> route 'rooms'
-  #render_season_buttons()
   render_guest_type_buttons()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
@@ -154,31 +153,6 @@ rooms_as_options = ->
   $.each _get("rooms.json").rooms, (key,value) ->
     str += '<option value="'+value.room.id+'">' + value.room.name + '</option>'
   return str
-
-
-# Called by display_booking_form. Just displays buttons for seasons, adds an onclick function and highlights the current season. Also adds a select box for changing the room.
-#render_season_buttons = ->
-#  season_container = create_dom_element 'div', {id:'seasons'}, '', '.booking_form'
-#  $.each resources.sn, (id,v) ->
-#    sbutton = create_dom_element 'div', {class:'season',id:'season_'+id}, v.n, season_container
-#    sbutton.on 'click', ->
-#      window.change_season(id)
-#    if v.c == true
-#      sbutton.addClass 'selected'
-#      submit_json.model.season_id = id
-
-
-# Called when clicking on a season button.
-#window.change_season = (id) ->
-#  submit_json.model.season_id = id
-#  sbutton = $('#season_' + id)
-#  $('.season').removeClass 'selected'
-#  sbutton.effect 'highlight', {}, 500
-#  sbutton.addClass 'selected'
-#  update_json_booking_items()
-#  setTimeout ->
-#    window.render_booking_items_from_json()
-#  , 200
 
 
 # This gets unique names of surcharges from the DB. Those names will be rendered as headers for the booking form, and will be stored as an array in the jQuery "surcharge_headers" variable. This variable is used later in the function "render_surcharge_row" to align the corresponding surcharge radio/checkboxes beneath the proper headings. The reason for the alignment is that not all GuestTypes have an identical set of surcharges, so we build a common superset.

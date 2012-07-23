@@ -48,8 +48,12 @@ $(function(){
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
-  if (!_get('customers.button_added'))
-    connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  
+  //automatically route to widgets depending on uri parameters
+  var uri_attrs = uri_attributes();
+  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
+  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
 })
 
 
@@ -60,8 +64,8 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
+  console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
-  //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
     submit_json.target = 'tables';
@@ -71,7 +75,6 @@ function route(target, model_id, action, options) {
     $('#tables').show();
     $('#rooms').hide();
     $('#areas').show();
-    //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();
@@ -105,7 +108,6 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.model = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -115,11 +117,13 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
@@ -132,9 +136,14 @@ function route(target, model_id, action, options) {
       delete items_json_queue['table_' + model_id];
       render_items();
     } else if (action == 'specific_order') {
-      submit_json = {model:{table_id:model_id}};
+      //submit_json = {model:{table_id:model_id}};
+      submit_json.model = {table_id:model_id};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+    } else if (action == 'from_booking') {
+      submit_json.jsaction = 'send_and_go_to_table';
+      send_json('booking_' + options.booking_id);
+      submit_json.model.table_id = model_id;
     } else {
       submit_json = {model:{table_id:model_id}};
       items_json = {};
@@ -146,6 +155,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#areas').hide();
     $('#rooms').hide();
+    $('.booking_form').remove();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_header_order_form').show();
@@ -198,6 +208,7 @@ function route(target, model_id, action, options) {
       emit("send.booking",submit_json);
       send_json('booking_' + model_id);
     } else if (action == 'pay') {
+      // deprecated in favor of invoice redirect
       submit_json.jsaction = 'pay';
       send_json('booking_' + model_id);
     } else if (action == 'update_bookings') {
@@ -220,6 +231,8 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    $('#container').show();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
@@ -233,13 +246,32 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    //$('.booking_form').remove();
+    $('#container').show();
+    $('#orderform').hide();
+    $('#invoices').hide();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id + '?booking_id=' + options['booking_id'], timeout: 5000 });
+    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
     window.display_booking_form(model_id);
+    
+  // ========== REDIRECT ===============
+  } else if (target == 'redirect') {
+    if (action == 'booking_interim_invoice') {
+      submit_json.jsaction = 'send_and_redirect_to_invoice';
+      send_json('booking_' + model_id);
+      //console.log('booking_interim_invoice');
+      
+    } else if (action == 'booking_invoice') {
+      submit_json.jsaction = 'pay_and_redirect_to_invoice';
+      send_json('booking_' + model_id);
+      //console.log('booking_invoice');
+    }
+    
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
@@ -810,6 +842,7 @@ function add_payment_method(model_id,id,amount) {
     });
   }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
+  $('#payment_method_'+ payment_method_uid + '_amount').select();
 }
 
 function payment_method_input_change(element, uid, mid) {

@@ -330,6 +330,7 @@ en:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
+      go_to_bookings_calendar: Go to bookings calendar view
   cancel_and_go_back: Cancel and go back
   categories:
     create:
@@ -693,6 +694,11 @@ en:
     unit_price_abbreviation: SP
     total_price_abbreviation: TP
     quantity_abbreviation: Qty.
+    interim_invoice: Interim Invoice
+    invoice: Invoice
+    restaurant: Restaurant
+    hotel: Hotel
+    consumations: Consumations
   vendors:
     index:
       edit: Edit

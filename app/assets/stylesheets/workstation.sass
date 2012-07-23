@@ -233,24 +233,27 @@ div.adminlinks
     :color white
     
 
-div.adminlinks a,
-a.links
-  :display inline-block
-  :margin-left 1px
-  :margin-bottom 5px
-  :background-color white
-  :-moz-border-radius 3px
-  :-webkit-border-radius 3px
-  :color black
-  :text-decoration none
-  :text-transform uppercase
-  :font-size 100%
-  :padding 8px
-  :border 1px solid #666
-div.adminlinks a:hover,
-a.links:hover
-  :background-color $background
-  :color white
+div.adminlinks
+  a, a.links
+    :display inline-block
+    :margin-left 1px
+    :margin-bottom 5px
+    :background-color white
+    :-moz-border-radius 3px
+    :-webkit-border-radius 3px
+    :color black
+    :text-decoration none
+    :text-transform uppercase
+    :font-size 100%
+    :padding 8px
+    :border 1px solid #666
+  a.special
+    :background-color $billgastroblue1
+    :color white
+  a:hover,
+  a.links:hover
+    :background-color $background
+    :color white
 
 a.logout
   :right 440px
@@ -1417,6 +1420,9 @@ div.active
 
 //============= SALOR HOTEL =============
 
+div#guest_types
+  :display none
+
 div.booking_form
   //:position absolute
   //:width 97%
@@ -1590,12 +1596,23 @@ div.room-booking
   :-webkit-border-radius 6px
   div.inner-div
     div.name
-      :background-color $billgastrogrey1
-      :min-height 25px
+      :background-color rgba(0,0,0, 0.5)
+      :min-height 40px
       :color white
       :-webkit-border-radius 4px
     div.date
       :font-size 90%
+    a.invoice_button
+      :background-size 30px 32px
+      :width 30px
+      :height 32px
+      :position absolute
+      :bottom 3px
+      :left 3px
+    span.handle
+      :position absolute
+      :top 3px
+      :left 3px
 div.room-booking-odd
   :background-color $blue
 div.room-booking-even

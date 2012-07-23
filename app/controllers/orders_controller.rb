@@ -54,6 +54,8 @@ class OrdersController < ApplicationController
   end
 
   def update_ajax
+    #puts "XXXXXXXXXXXXX #{params[:currentview]}"
+    #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
     case params[:currentview]
       # this action is for simple pushing of a model to the server and
       # getting a json object back.
@@ -103,8 +105,11 @@ class OrdersController < ApplicationController
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
             @booking.calculate_totals
-            #@order.print(['interim_receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            redirect_from_invoice and return
+            if mobile?              
+              redirect_from_invoice and return
+            else
+              render :js => "route('booking',#{@booking.id});" and return
+            end
           when 'pay_and_print'
             create_payment_method_items @order
             @order.pay
@@ -132,7 +137,16 @@ class OrdersController < ApplicationController
               @order.hide(@current_user.id)
               @order.unlink
             end
+            if @order.booking
+              @order.update_associations(@current_user)
+              @order.finish
+              @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
+              if @orders.empty?
+                @order.table.update_attribute :user, nil
+              end
+            end
             render :nothing => true and return if @order.hidden
+            render :js => "route('booking',#{@order.booking.id});" and return if @order.booking
             case params[:target]
               when 'tables' then
                 @order.print(['tickets'])
@@ -160,8 +174,6 @@ class OrdersController < ApplicationController
             @order.hide(@current_user.id) if @order.items.existing.size.zero?
             if @current_company.mode == 'local' and not @order.hidden
               @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
-            #elsif saas_variant? and not @order.hidden
-            #  @order.print(['receipt'])
             end
             @order.finish
             @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
@@ -196,6 +208,27 @@ class OrdersController < ApplicationController
             create_payment_method_items @booking
             @booking.pay
             render :js => "route('rooms');" and return
+          when 'send_and_go_to_table'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
+          when 'send_and_redirect_to_invoice'
+                        debugger
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            render :js => "window.location = '/bookings/#{ @booking.id }';" and return
+          when 'pay_and_redirect_to_invoice'
+            get_booking
+            @booking.update_associations(@current_user)
+            @booking.calculate_totals
+            create_payment_method_items @booking
+            @booking.pay
+            render :js => "window.location = '/bookings/#{ @booking.id }';" and return
+            
         end
       when 'rooms'
         case params['jsaction']

@@ -27,6 +27,11 @@
     <% end %>
   });
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
+  submit_json.model.room_id = <%= @booking.room_id %>;
+  submit_json.model.room_type_id = <%= @booking.room.room_type_id %>;
+  $('#booking_interim_invoice').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_interim_invoice')});
+  $('#booking_pay').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_invoice')});
+  $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:active_user_id => nil).first.id %>, 'from_booking', {booking_id:<%= @booking.id %>})});
   window.render_booking_items_from_json();
 <% else %>
   submit_json.id = 0;
@@ -46,5 +51,9 @@
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');
+  $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:active_user_id => nil).first.id %>, 'from_booking', {booking_id:0})});
+  $('#booking_interim_invoice').on('click', function() {route('redirect', 0, 'booking_interim_invoice')});
+  $('#booking_pay').on('click', function() {route('redirect', 0, 'booking_invoice')});
 <% end %>
- _set("salor_hotel.bookings.dirty",true);
+_set("salor_hotel.bookings.dirty",true);
+$('#guest_types').show();
