@@ -697,6 +697,8 @@ gn:
     tax_amount: XXX Amount
     interim_invoice: Rechnungsvoransicht
     invoice: Rechnung
+    restaurant: Restaurant
+    hotel: Hotel
   vendors:
     index:
       edit: bearbeiten

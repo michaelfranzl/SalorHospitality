@@ -696,6 +696,8 @@ en:
     quantity_abbreviation: Qty.
     interim_invoice: Interim Invoice
     invoice: Invoice
+    restaurant: Restaurant
+    hotel: Hotel
   vendors:
     index:
       edit: Edit

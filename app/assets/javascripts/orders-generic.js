@@ -200,6 +200,7 @@ function route(target, model_id, action, options) {
       emit("send.booking",submit_json);
       send_json('booking_' + model_id);
     } else if (action == 'pay') {
+      // deprecated in favor of invoice redirect
       submit_json.jsaction = 'pay';
       send_json('booking_' + model_id);
     } else if (action == 'update_bookings') {
@@ -249,11 +250,17 @@ function route(target, model_id, action, options) {
     
   // ========== REDIRECT ===============
   } else if (target == 'redirect') {
-    if (action == 'booking_invoice') {
+    if (action == 'booking_interim_invoice') {
       submit_json.jsaction = 'send';
       send_json('booking_' + model_id);
-      window.location = '/bookings/' + model_id;
+      window.location = '/bookings/' + model_id; // ajax from orders_controller.rb will trigger a route, but this redirect overpowers it
+      
+    } else if (action == 'booking_invoice') {
+      submit_json.jsaction = 'pay';
+      send_json('booking_' + model_id);
+      window.location = '/bookings/' + model_id; // ajax from orders_controller.rb will trigger a route, but this redirect overpowers it
     }
+    
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
@@ -824,6 +831,7 @@ function add_payment_method(model_id,id,amount) {
     });
   }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
+  $('#payment_method_'+ payment_method_uid + '_amount').select();
 }
 
 function payment_method_input_change(element, uid, mid) {
