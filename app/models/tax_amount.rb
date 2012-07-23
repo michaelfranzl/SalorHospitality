@@ -12,4 +12,6 @@ class TaxAmount < ActiveRecord::Base
   belongs_to :surcharge
   belongs_to :vendor
   belongs_to :company
+  
+  validates_presence_of :tax_id
 end

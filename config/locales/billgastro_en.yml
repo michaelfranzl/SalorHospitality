@@ -698,6 +698,7 @@ en:
     invoice: Invoice
     restaurant: Restaurant
     hotel: Hotel
+    consumations: Consumations
   vendors:
     index:
       edit: Edit

@@ -699,6 +699,7 @@ gn:
     invoice: Rechnung
     restaurant: Restaurant
     hotel: Hotel
+    consumations: Konsumationen
   vendors:
     index:
       edit: bearbeiten

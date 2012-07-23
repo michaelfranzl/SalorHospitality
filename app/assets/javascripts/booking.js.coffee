@@ -112,6 +112,7 @@ window.display_booking_form = (room_id) ->
   submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
   interim_invoice_link = create_dom_element 'span', {id:'booking_interim_invoice',class:'textbutton'}, i18n.interim_invoice, booking_tools
+  assign_order_link = create_dom_element 'span', {id:'booking_assign_order',class:'textbutton'}, i18n.assign_order_to_booking, booking_tools
   payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
   pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, i18n.pay, booking_tools
   cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools

@@ -107,7 +107,6 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.model = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -117,11 +116,13 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
@@ -134,9 +135,14 @@ function route(target, model_id, action, options) {
       delete items_json_queue['table_' + model_id];
       render_items();
     } else if (action == 'specific_order') {
-      submit_json = {model:{table_id:model_id}};
+      //submit_json = {model:{table_id:model_id}};
+      submit_json.model = {table_id:model_id};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+    } else if (action == 'from_booking') {
+      submit_json.jsaction = 'send_and_go_to_table';
+      send_json('booking_' + options.booking_id);
+      submit_json.model.table_id = model_id;
     } else {
       submit_json = {model:{table_id:model_id}};
       items_json = {};
@@ -148,6 +154,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#areas').hide();
     $('#rooms').hide();
+    $('.booking_form').remove();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_header_order_form').show();
@@ -239,7 +246,10 @@ function route(target, model_id, action, options) {
     $('#areas').hide();
     $('#tables').hide();
     $('#rooms').hide();
+    //$('.booking_form').remove();
     $('#container').show();
+    $('#orderform').hide();
+    $('#invoices').hide();
     $('#functions_header_index').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
