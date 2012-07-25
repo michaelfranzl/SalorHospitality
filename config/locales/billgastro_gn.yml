@@ -263,8 +263,8 @@ gn:
         one: Saison
         other: Saisonen
       settlement:
-        one: Losungen
-        other: Abrechnungen
+        one: Losung
+        other: Losungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
