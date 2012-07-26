@@ -14,5 +14,5 @@ class Room < ActiveRecord::Base
   has_many :bookings
 
   validates_presence_of :name, :room_type_id
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :vendor_id
 end

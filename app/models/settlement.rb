@@ -68,7 +68,7 @@ class Settlement < ActiveRecord::Base
     self.orders.existing.each do |o|
       cc = o.cost_center.name if o.cost_center
       t = I18n.l(o.created_at, :format => :time_short)
-      nr = o.nr ? o.nr : 0 # fail save
+      nr = o.nr ? o.nr : 0 # failsafe
       list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [nr, o.table.name, t, cc, o.sum]
       total_costcenter[o.cost_center.id] += o.sum if o.cost_center
       refund_total += o.refund_sum

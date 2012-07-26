@@ -92,6 +92,7 @@ class Booking < ActiveRecord::Base
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        item.update_attribute :ui_id, item_params[0]
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
@@ -142,7 +143,7 @@ class Booking < ActiveRecord::Base
     booking_items_hash = {}
     self.booking_items.existing.each do |i|
       d = i.booking_item_id ? "x#{i.id}" : "i#{i.id}"
-      parent_id = i.booking_item_id ? "i#{i.booking_item_id}" : nil
+      parent_key = i.booking_item_id ? "i#{i.booking_item_id}" : nil
       surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
       surcharges_hash = {}
       surcharges.each do |s|
@@ -150,7 +151,7 @@ class Booking < ActiveRecord::Base
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_id => parent_id, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end

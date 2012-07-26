@@ -35,9 +35,6 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
-
-var gastro = {functions:{ report:{} }, variables:{report:{}}};
-var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -64,7 +61,7 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
-  console.log(target + ' ' + model_id + ' ' + action);
+  //console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
@@ -361,7 +358,7 @@ function create_json_record(model, object) {
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_id:object.parent_id, has_children:false, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_key:object.parent_key, has_children:false, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
@@ -435,71 +432,31 @@ function scribe_image(object) {
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
 /* ===================================================================*/
-/*
- * find_customer(needle); Searches the customer lookup table
- * for an instance where name.indexOf(needle) != -1
- * returns -1 is there is nothing like it, and -2 if there is no secondary index
- * in theory, lookups should be much faster when the list of customers is very large,
- * this way, it is unecessary to loop through every entry, entries are thus grouped
- * into a 26 long array, where each entry is 26 deep, followed by an array of object
- * entries.
- * {
- *   d: {
- *      do: [
- *        {
- *          id: 1,
- *          name: "Doe, John"
- *        }
- *      ]
- *   },
- *   m: {
- *    ma: [
- *      {
- *        id: 2,
- *        name: "Martin, Jason"
- *      }
- *    ]
- *   }
- * }
- * */
+
+
 function find_customer(text) {
-  console.log(text);
-   var i = 0;
-   var c = text[i];
-   var results = [];
-   if (resources.customers[c]) {
-        c2 = c + text[i+1];
-        if (resources.customers[c][c2]) {
-            for (var j in resources.customers[c][c2]) {
-                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
-                  results.push(resources.customers[c][c2][j]);
-                }
-            }
-            return results;
-        } else {
-            return -2;
+  // console.log(text);
+  var i = 0;
+  var c = text[i];
+  var results = [];
+  if (resources.customers[c]) {
+    c2 = c + text[i+1];
+    if (resources.customers[c][c2]) {
+      for (var j in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+          results.push(resources.customers[c][c2][j]);
         }
+      }
+      return results;
     } else {
-        return -1;
+        return -2;
     }
+  } else {
+    return -1;
+  }
 }
-/*
- * add_category_button(label,options); Adds a new category button.
- * options is a hash like so:
- * {
- *    id: "the_html_id_youd_like",
- *    handlers: {
- *      mouseup: function (event) { alert('mouseup fired'); }
- *      ...
- *    },
- *    bgcolor: '205,0,82',
- *    bgimage: '/images/myimage.png',
- *    border: {
- *      top: '205,0,85',
- *      ... bottom, left, right etc.
- *    }
- * }
- * */
+
+
 function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
@@ -1248,143 +1205,6 @@ salor.functions = {
   }
 }
 
-gastro.functions.report = {
-  initiate:function() {
-    $.ajax({
-      url: '/settlements',
-      dataType: 'json',
-      data: {day:gastro.variables.report_day},
-      success: function(data){
-        gastro.variables.report_items = data;
-        if (data == "") {
-          $('#report_container').html('');
-          return;
-        }
-        gastro.functions.report.convert_from_yaml();
-        gastro.functions.report.calculate();
-        gastro.functions.report.render();
-      }
-    });
-  },
-  
-  convert_from_yaml: function() {
-    $.each(gastro.variables.report_items, function(k,v) {
-      gastro.variables.report_items[k].t = YAML.eval(v.t);
-    })
-  },
-  
-  calculate: function() {
-    //calculate sums by category
-    var c = {};
-    $.each(gastro.variables.report_items, function(k,v) {
-      var category_id = v.y;
-      catname = resources.c[category_id].n;
-      if (c.hasOwnProperty(catname)) {
-        $.each(v.t, function(s,t) {
-          c[catname][i18n.gross] += t.g
-          c[catname][i18n.net] += t.n
-          c[catname][i18n.tax_amount] += t.t
-        })
-      } else {
-        $.each(v.t, function(s,t) {
-          c[catname] = {};
-          c[catname][i18n.gross] = t.g
-          c[catname][i18n.net] = t.n
-          c[catname][i18n.tax_amount] = t.t
-        })
-      }
-    })
-    gastro.variables.report.categories = c;
-    
-    //calculate sums by taxes
-    var taxes = {};
-    $.each(gastro.variables.report_items, function(key,value) {
-      $.each(value.t, function(k,v) {
-        var tax_id = k;
-        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
-        if (taxes.hasOwnProperty(taxname)) {
-          taxes[taxname][i18n.gross] += v.g
-          taxes[taxname][i18n.net] += v.n
-          taxes[taxname][i18n.tax_amount] += v.t
-        } else {
-          taxes[taxname] = {};
-          taxes[taxname][i18n.gross] = v.g
-          taxes[taxname][i18n.net] = v.n
-          taxes[taxname][i18n.tax_amount] = v.t
-        }
-      })
-    })
-    gastro.variables.report.taxes = taxes;
-    
-  },
-  
-  render: function() {
-    $('#report_container').html('');
-    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
-    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
-  },
-
-  display_popup: function() {
-    gastro.variables.report = {};
-    $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
-    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
-    close_button.on('click', function() { $('#report').remove(); });
-    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
-    from_input.datepicker({
-      onSelect: function(date, inst) {
-        gastro.variables.report_day = date;
-        gastro.functions.report.initiate();
-      }
-    })
-    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
-    report_popup.fadeIn();
-  }
-}
-
-
-YAML = {
-  valueOf: function(token) {
-    if (/\d/.exec(token)) {
-      return eval('(' + token + ')');
-    } else {
-      return token;
-    }
-  },
-
-  tokenize: function(str) {
-    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
-    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
-    return tokens;
-  },
-
-  strip: function(str) {
-    return str.replace(/^\s*|\s*$/, '')
-  },
-
-  parse: function(tokens) {
-    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
-    while (token = tokens.shift())
-      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
-	continue
-      else if (key.exec(token) && tokens[0] == "\n")
-	stack[RegExp.$1] = this.parse(tokens)
-      else if (key.exec(token))
-	stack[RegExp.$1] = this.valueOf(tokens.shift())
-      else if (list.exec(token))
-	(stack.constructor == Array ?
-	  stack : (stack = [])).push(this.strip(RegExp.$1))
-    return stack
-  },
-
-  eval: function(str) {
-    return this.parse(this.tokenize(str))
-  }
-}
-
-//print(YAML.eval(readFile('config.yml')).toSource())
-//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"
-
 /* Season Object Code */
 var Season = function (s,e) {
   var start = s.split(',')
@@ -1449,7 +1269,7 @@ Season.applying_seasons = function (seasons,b_start,b_end) {
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
     if (s.interested(b_start,b_end)) {
-      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: s.id, duration: s.get_days(b_start,b_end)};
+      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: parseInt(s.id), duration: s.get_days(b_start,b_end)};
       new_seasons.push(ns);
     }
   }
