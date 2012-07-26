@@ -221,8 +221,8 @@ fr:
     abbr_day_names: [Di, Lu, Ma, Me, Je, Ve, Sa]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Julliet, Août, Septembre, Septembre, Novembre, Décembre]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Julliet, Août, Septembre, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Jui, Jul, Aoû, Sep, Oct, Nov, Déc]
     # Used in date_select and datime_select.
     order:
       - :year
