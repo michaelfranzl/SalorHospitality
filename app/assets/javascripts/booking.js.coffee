@@ -70,14 +70,16 @@ window.display_booking_form = (room_id) ->
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['from_date'] = date
-               window.calculate_booking_seasons()
+               window.booking_dates_changed()
+               regenerate_all_multi_season_booking_items()
   }
   to_input = create_dom_element 'input', {type:'text',id:'booking_to'}, '', booking_tools
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
                submit_json.model['to_date'] = date
-               window.calculate_booking_seasons()
+               window.booking_dates_changed()
+               regenerate_all_multi_season_booking_items()
   }
 
   if submit_json.model['customer_name'] == ''
@@ -124,38 +126,20 @@ window.display_booking_form = (room_id) ->
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
-  
-  window.calculate_booking_seasons()
 
 
 # Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed.
-window.calculate_booking_seasons = ->
+window.booking_dates_changed = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
+  if to < from
+    from_date = new Date(from)
+    $('#booking_to').val date_as_ymd(from_date)
+    to = from
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
-  # This is a mockup for the covered_seasons object that is used to duplicate the booking items
-  submit_json.model.covered_seasons = [
-    {id:"9",duration:1},
-    {id:"10",duration:2},
-    {id:"11",duration:3}
-  ]
   submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
-  
-  $.each items_json, (k,v) ->
-    if k.indexOf('x') == 0
-      console.log 'removing ' + k
-      $('#booking_item' + k).remove()
-      delete items_json[k]
-    else
-      items_json[k].has_children = false
-        
-  setTimeout ->
-    $.each items_json, (k,v) ->
-      console.log 'regenerating ' + k
-      regenerate_multi_season_booking_items(k)
-  , 800
   
   
 # =======================================================
@@ -219,9 +203,10 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
   # debug 'called add_json_booking_item with season_index=' + season_index
   season_id = submit_json.model.covered_seasons[season_index].id
   duration = submit_json.model.covered_seasons[season_index].duration
+  #console.log 'setting duration to ' +duration
   if season_index == 0
-    parent_id = null
-  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_id:parent_id}
+    parent_key = null
+  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_key:parent_key}
   if guest_type_id == null
     guest_type_query_string = 'guest_type_id IS NULL'
   else
@@ -239,20 +224,32 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
       if season_index == 0
         # a new booking item has been added for the first covered season. Now delete + create (regenerate) all booking_items for the rest of the covered seasons.
         regenerate_multi_season_booking_items(booking_item_id)
-
+        
+regenerate_all_multi_season_booking_items = () ->
+  # delete all child items. a preservation of existing child booking items would be too complex
+  $.each items_json, (k,v) ->
+    if k.indexOf('x') == 0
+      $('#booking_item' + k).remove()
+      set_json 'booking', k, 'hidden', true
+    else
+      items_json[k].has_children = false
+      items_json[k].duration = submit_json.model.covered_seasons[0].duration
+    return true
+  $.each items_json, (k,v) ->
+    regenerate_multi_season_booking_items(k)
       
-
+# this is a pure JSON operation
 regenerate_multi_season_booking_items = (parent_booking_item_id) ->
   $.each items_json, (k,v) ->
-    if k.indexOf('x') == 0 && v.parent_id == parent_booking_item_id
+    if k.indexOf('x') == 0 && v.parent_key == parent_booking_item_id && v.hidden != true
       # this is a child multiseason item, so just copy attributes from parent
       copy_attributes parent_booking_item_id, k
-    else if k.indexOf('x') != 0 && v.has_children == false
-      # this is a parent multiseason item without existing children, so generate the children
+    else if k.indexOf('x') != 0 && v.has_children == false # this parent item doesn't have children, so we generate one child per covered season
       items_json[k].has_children = true
       $.each submit_json.model.covered_seasons, (i,covered_season) ->
+        # create a child item for all covered seasons
         if i == 0
-          return true
+          return true # the parent item always belongs to the first covered season, so we break the loop
         id = get_unique_booking_number('x') # x is for multi-season booking_items
         add_json_booking_item id, v.guest_type_id, i
         setTimeout ->
@@ -266,7 +263,9 @@ regenerate_multi_season_booking_items = (parent_booking_item_id) ->
 
 copy_attributes = (from_id, to_id) ->
   set_json 'booking', to_id, 'count', items_json[from_id].count
-  set_json 'booking', to_id, 'parent_id', from_id
+  set_json 'booking', to_id, 'parent_key', from_id
+  set_json 'booking', to_id, 'booking_item_id', items_json[from_id].id
+  set_json 'booking', to_id, 'hidden', items_json[from_id].hidden
   $.each items_json[from_id].surcharges, (k,v) ->
     items_json[to_id].surcharges[k].selected = v.selected
     update_submit_json_surchageslist(to_id)
@@ -312,6 +311,8 @@ update_json_booking_items = ->
 
 # Adds a new row of buttons to the booking form. The source is an item which is already in the local json storage.
 render_booking_item = (booking_item_id) ->
+  if items_json[booking_item_id].hidden == true
+    return true
   surcharge_headers = _get 'surcharge_headers'
   if items_json[booking_item_id].guest_type_id == null
     # a dynamically generated booking_item_id with s at the beginning means "special". Special means that the generated row/surchargeitem does not represent a guest_type, but is simply a collection of surcharges.
@@ -321,7 +322,7 @@ render_booking_item = (booking_item_id) ->
     guest_type_id = items_json[booking_item_id].guest_type_id
     guest_type_name = resources.gt[guest_type_id].n
     surcharge_headers = surcharge_headers.guest_type_set
-  if items_json[booking_item_id].parent_id != null
+  if items_json[booking_item_id].parent_key != null
     add_class = 'semitransparent'
   booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
   create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
@@ -366,6 +367,7 @@ render_booking_item = (booking_item_id) ->
 delete_booking_item = (booking_item_id) ->
   $('#booking_item' + booking_item_id).remove()
   set_json 'booking', booking_item_id, 'hidden', true
+  regenerate_all_multi_season_booking_items()
   update_booking_totals()
 
 # The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
@@ -425,11 +427,11 @@ update_booking_item_total = (booking_item_id) ->
   $.each items_json[booking_item_id].surcharges, (k,v) ->
     if v.selected == true
       total += v.amount
-    true
+    return true
   count = items_json[booking_item_id].count
   total *= count
   $('#booking_item_' + booking_item_id + '_total').html number_to_currency total
-  total
+  return total
 
 
 
@@ -444,7 +446,7 @@ update_booking_totals = ->
   booking_id = submit_json.id
   $('#booking_subtotal').html number_to_currency total + submit_json.totals[booking_id].booking_orders
   submit_json.totals[booking_id].model = total
-  total
+  return total
 
 
 make_keyboardable = (element,open_on,accepted,layout) ->

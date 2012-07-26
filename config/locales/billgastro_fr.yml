@@ -603,8 +603,7 @@ fr:
   sessions:
     browser_warning:
       continue: Continuer
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: "Salor ne supporte que les navigateurs suivants: Google Chrome (Windows), Chromium (Linux), et Safari (Apple). S'il vous plaît utilisez un de ceux navigateurs et essayez à nouveau."
     new:
       email: Votre E-Mail
       login: S'identifier
@@ -682,7 +681,7 @@ fr:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
-    interim_invoice: Interim Invoice
+    interim_invoice: Facture spécimen
     consumations: Consumations
   vendors:
     index:

@@ -61,7 +61,7 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
-  console.log(target + ' ' + model_id + ' ' + action);
+  //console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
@@ -358,7 +358,7 @@ function create_json_record(model, object) {
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_id:object.parent_id, has_children:false, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_key:object.parent_key, has_children:false, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
@@ -432,71 +432,31 @@ function scribe_image(object) {
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
 /* ===================================================================*/
-/*
- * find_customer(needle); Searches the customer lookup table
- * for an instance where name.indexOf(needle) != -1
- * returns -1 is there is nothing like it, and -2 if there is no secondary index
- * in theory, lookups should be much faster when the list of customers is very large,
- * this way, it is unecessary to loop through every entry, entries are thus grouped
- * into a 26 long array, where each entry is 26 deep, followed by an array of object
- * entries.
- * {
- *   d: {
- *      do: [
- *        {
- *          id: 1,
- *          name: "Doe, John"
- *        }
- *      ]
- *   },
- *   m: {
- *    ma: [
- *      {
- *        id: 2,
- *        name: "Martin, Jason"
- *      }
- *    ]
- *   }
- * }
- * */
+
+
 function find_customer(text) {
-  console.log(text);
-   var i = 0;
-   var c = text[i];
-   var results = [];
-   if (resources.customers[c]) {
-        c2 = c + text[i+1];
-        if (resources.customers[c][c2]) {
-            for (var j in resources.customers[c][c2]) {
-                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
-                  results.push(resources.customers[c][c2][j]);
-                }
-            }
-            return results;
-        } else {
-            return -2;
+  // console.log(text);
+  var i = 0;
+  var c = text[i];
+  var results = [];
+  if (resources.customers[c]) {
+    c2 = c + text[i+1];
+    if (resources.customers[c][c2]) {
+      for (var j in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+          results.push(resources.customers[c][c2][j]);
         }
+      }
+      return results;
     } else {
-        return -1;
+        return -2;
     }
+  } else {
+    return -1;
+  }
 }
-/*
- * add_category_button(label,options); Adds a new category button.
- * options is a hash like so:
- * {
- *    id: "the_html_id_youd_like",
- *    handlers: {
- *      mouseup: function (event) { alert('mouseup fired'); }
- *      ...
- *    },
- *    bgcolor: '205,0,82',
- *    bgimage: '/images/myimage.png',
- *    border: {
- *      top: '205,0,85',
- *      ... bottom, left, right etc.
- *    }
- * }
- * */
+
+
 function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
@@ -1272,7 +1232,7 @@ Season.prototype.get_days = function (start,end) {
       days++;
       cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
     }
-    return days;
+    return days - 1;
   } else {
     return 0;
   }
@@ -1309,7 +1269,7 @@ Season.applying_seasons = function (seasons,b_start,b_end) {
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
     if (s.interested(b_start,b_end)) {
-      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: s.id, duration: s.get_days(b_start,b_end)};
+      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: parseInt(s.id), duration: s.get_days(b_start,b_end)};
       new_seasons.push(ns);
     }
   }

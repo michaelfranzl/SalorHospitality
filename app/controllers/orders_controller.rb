@@ -215,7 +215,6 @@ class OrdersController < ApplicationController
             create_payment_method_items @booking
             render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
           when 'send_and_redirect_to_invoice'
-                        debugger
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals

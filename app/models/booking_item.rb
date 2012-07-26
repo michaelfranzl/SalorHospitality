@@ -20,7 +20,7 @@ class BookingItem < ActiveRecord::Base
 
   serialize :taxes
   
-  alias_attribute :parent_id, :ui_parent_id
+  alias_attribute :parent_key, :ui_parent_id
   
   # For multi-season bookings, the JS frontend maintains parent and children booking items. The parent booking items represent the first covered season. The children booking items represent all other covered seasons. We need to model and store this parent/child relationship in the DB, so that we can deliver the same relations back as JSON.
   def self.make_multiseason_associations
