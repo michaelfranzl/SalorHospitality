@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722130013) do
+ActiveRecord::Schema.define(:version => 20120726130515) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
+    t.string   "country"
   end
 
   create_table "discounts", :force => true do |t|
