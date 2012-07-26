@@ -682,6 +682,8 @@ fr:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
+    interim_invoice: Interim Invoice
+    consumations: Consumations
   vendors:
     index:
       edit: Modifier

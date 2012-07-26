@@ -15,7 +15,7 @@ class Season < ActiveRecord::Base
   has_many :room_prices
   has_many :bookings
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :vendor_id
   validates_presence_of :from_date, :to_date, :name
 
   def self.current(vendor)

@@ -283,7 +283,7 @@ company_count.times do |c|
     end
 
     puts " Creating Hotel Tax #{c} #{v}"
-    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
+    local_tax = Tax.create :name => "Local Tax #{c} #{v}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
     room_type_objects = Array.new
     guest_type_objects = Array.new
     4.times do |i|
@@ -292,23 +292,23 @@ company_count.times do |c|
       room_type_objects << rt
       puts " Creating Room #{c} #{v} #{i}"
       Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
-      puts " Creating GustType #{c} #{v} #{i}"
-      gt = GuestType.create :name => "GuestType #{company.id} #{vendor.id} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      puts " Creating GuestType #{c} #{v} #{i}"
+      gt = GuestType.new :name => "GuestType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
       gt.taxes << local_tax if i == 1
       gt.save
       guest_type_objects << gt
     end
     puts " Creating Seasons for #{c} #{v}"
-    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-20'), :vendor_id => vendor.id, :company_id => company.id
     s1.save
     s1.calculate_duration
-    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-20'), :vendor_id => vendor.id, :company_id => company.id
     s2.save
     s1.calculate_duration
-    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-20'), :vendor_id => vendor.id, :company_id => company.id
     s3.save
     s1.calculate_duration
-    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-20'), :vendor_id => vendor.id, :company_id => company.id
     s4.save
     s1.calculate_duration
     season_objects = [s1,s2,s3,s4]

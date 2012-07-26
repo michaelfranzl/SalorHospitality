@@ -92,7 +92,7 @@ window.display_booking_form = (room_id) ->
     if $(this).val() == 'i18n_customer'
       $(this).val("")
   auto_completable customer_input, resources.customers, {map:true, field: 'name'}, (result) ->
-    console.log result
+    #console.log result
     $(this).val result.name
     submit_json.model['customer_name'] = result.name
   customer_input.on 'keyup', ->
@@ -132,17 +132,32 @@ window.display_booking_form = (room_id) ->
 window.calculate_booking_seasons = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
-  #console.log(Season.applying_seasons(_get('possible_seasons'),from,to))
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
-  # Jason: This is a mockup for the covered_seasons object that is used to duplicate the booking items
-#   submit_json.model.covered_seasons = [
-#     {id:2,duration:1},
-#     {id:3,duration:2},
-#     {id:4,duration:3}
-#   ]
+  # This is a mockup for the covered_seasons object that is used to duplicate the booking items
+  submit_json.model.covered_seasons = [
+    {id:"9",duration:1},
+    {id:"10",duration:2},
+    {id:"11",duration:3}
+  ]
   submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
+  
+  $.each items_json, (k,v) ->
+    if k.indexOf('x') == 0
+      console.log 'removing ' + k
+      $('#booking_item' + k).remove()
+      delete items_json[k]
+    else
+      items_json[k].has_children = false
+        
+  setTimeout ->
+    $.each items_json, (k,v) ->
+      console.log 'regenerating ' + k
+      regenerate_multi_season_booking_items(k)
+  , 800
+  
+  
 # =======================================================
 # Private functions inside of a closure for encapsulation
 # =======================================================
@@ -228,12 +243,12 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
       
 
 regenerate_multi_season_booking_items = (parent_booking_item_id) ->
-  # delete all objects with a key that begins with x (x means multi-season items)
-  #found = false
   $.each items_json, (k,v) ->
     if k.indexOf('x') == 0 && v.parent_id == parent_booking_item_id
+      # this is a child multiseason item, so just copy attributes from parent
       copy_attributes parent_booking_item_id, k
     else if k.indexOf('x') != 0 && v.has_children == false
+      # this is a parent multiseason item without existing children, so generate the children
       items_json[k].has_children = true
       $.each submit_json.model.covered_seasons, (i,covered_season) ->
         if i == 0
