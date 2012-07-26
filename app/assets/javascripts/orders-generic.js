@@ -1232,7 +1232,7 @@ Season.prototype.get_days = function (start,end) {
       days++;
       cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
     }
-    return days - 1;
+    return days;
   } else {
     return 0;
   }

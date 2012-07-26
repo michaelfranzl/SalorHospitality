@@ -332,7 +332,10 @@ render_booking_item = (booking_item_id) ->
       surcharge_col = create_dom_element 'div', {class:'surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, header, booking_item_row
       (=>
         h = header
+        bid = booking_item_id
         surcharge_col.on 'click', ->
+          if bid.indexOf('x') == 0
+            return true
           el = $(this).children('input')
           if el.attr 'checked'
             el.attr 'checked', false
@@ -365,10 +368,11 @@ render_booking_item = (booking_item_id) ->
 
 # deletes a booking item from the DOM and sets 'hidden' in the json sources.
 delete_booking_item = (booking_item_id) ->
-  $('#booking_item' + booking_item_id).remove()
-  set_json 'booking', booking_item_id, 'hidden', true
-  regenerate_all_multi_season_booking_items()
-  update_booking_totals()
+  if booking_item_id.indexOf('x') != 0
+    $('#booking_item' + booking_item_id).remove()
+    set_json 'booking', booking_item_id, 'hidden', true
+    regenerate_all_multi_season_booking_items()
+    update_booking_totals()
 
 # The DIVs which represent surcharges actually contain hidden HTML input elements like checkbox and radio box. On change of these inputs, their state will be read and saved into the json objects.
 save_selected_input_state = (element, booking_item_id, surcharge_name) ->
@@ -407,6 +411,8 @@ window.render_booking_items_from_json = ->
 render_booking_item_count = (booking_item_id) ->
   count_input_col = create_dom_element 'div', {class:'surcharge_col'}, count_input, '#booking_item' + booking_item_id
   count_input = create_dom_element 'input', {type:'text', id:'booking_item_'+booking_item_id+'_count', class:'booking_item_count', value:items_json[booking_item_id].count}, '', count_input_col
+  if booking_item_id.indexOf('x') == 0
+    return true
   make_keyboardable count_input, '', `function(){ change_booking_item_count(booking_item_id)}`, 'num'
   count_input.select()
   count_input.on 'keyup', ->
