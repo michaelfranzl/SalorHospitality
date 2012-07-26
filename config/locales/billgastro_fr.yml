@@ -152,13 +152,14 @@ fr:
         name: Nom
         path: Chemin
       payment_method_item:
-        amount: Amount
+        amount: montant
       booking_item:
-        base_price: Preis
-        count: Anzahl
-        sum: Summe
+        base_price: Quantité
+        count: Compter
+        duration: Dureé
+        sum: somme
       order:
-        change_given: Change
+        change_given: Monnaie rendue
       customer:
         first_name: First Name
         last_name: Last Name
@@ -475,9 +476,9 @@ fr:
       sum: Somme
       unit_price: Prix unitaire
     invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
+      unit_price: Prix unitaire
+      count: Compter
+      sum: Somme
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
@@ -597,7 +598,7 @@ fr:
       edit_season: Modifier saison
       new_season: Nouvelle saison
   send_and_go_back: Enregistrer et revenir à la page précédente
-  served_by_X_on_table_Y: Vous avez été servi par %{user} à %{table}
+  served_by_X_on_table_Y: "Vous avez été servi par %{waiter} à %{table}"
   server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est
     occupé, soit le lien radio a été interrompu.
   sessions:
