@@ -132,7 +132,7 @@ window.display_booking_form = (room_id) ->
 window.calculate_booking_seasons = ->
   from = Date.parse(submit_json.model.from_date)
   to = Date.parse(submit_json.model.to_date)
-  #console.log(Season.applying_seasons(_get('possible_seasons'),from,to))
+  console.log(Season.applying_seasons(_get('possible_seasons'),from,to))
   duration = Math.floor((to - from) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
