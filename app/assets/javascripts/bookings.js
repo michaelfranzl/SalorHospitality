@@ -254,6 +254,10 @@ function finish_booking(booking) {
   booking_widget.find('.name').on('click', function() { window.location = '/bookings/' + booking.id});
 }
 
+function should_i_draw_this_booking(booking) {
+  
+}
+
 /* 
  * This is the function that we use to actually draw the booking, it should be completely disconnected from everything,
  * just provide it with a booking object, and it will draw it where it is supposed to be.
@@ -265,6 +269,7 @@ function draw_booking(booking) {
   }
   if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
     //console.log("Booking not in this view",booking);
+    return;
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the
