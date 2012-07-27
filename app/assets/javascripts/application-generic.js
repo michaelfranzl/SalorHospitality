@@ -14,6 +14,9 @@ var _CTRL_DOWN = false;
 var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
 var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
 
+var gastro = {functions:{ report:{} }, variables:{report:{}}};
+var salor = {functions: {}, variables: {}};
+
 $(function(){
   if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
     $('#main').html('');
@@ -66,6 +69,7 @@ $(function(){
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */
 function emit(msg,packet) {
+  //console.log(msg,packet);
   $('body').triggerHandler({type: msg, packet:packet});
 }
 
@@ -177,7 +181,7 @@ function _push(object) {
   var payload = null;
   var callback = null;
   var error_callback = function (jqXHR,status,err) {
-    console.log(jqXHR,status,err.get_message());
+    //console.log(jqXHR,status,err.get_message());
   };
   var user_options = {};
   var url;
@@ -187,7 +191,7 @@ function _push(object) {
         if (!payload) {
           payload = {currentview: 'push', model: {}}
           $.each(arguments[i], function (key,value) {
-            console.log(key,value);
+            //console.log(key,value);
             payload[key] = value;
           });
         } else {
@@ -327,7 +331,7 @@ function days_between_dates(from, to) {
   return days;
 }
 function _log(arg1,arg2,arg3) {
- console.log(arg1,arg2,arg3);
+ //console.log(arg1,arg2,arg3);
 }
 /* Adds a delete/X button to the element. Type options  are right and append. The default callback simply slides the element up.
  if you want special behavior on click, you can pass a closure.*/
@@ -391,3 +395,26 @@ function add_menu_button(elem,button,callback) {
   menu.append(button);
   button.on('click',callback);
 }
+
+function uri_attributes() {
+  // This function is anonymous, is executed immediately and 
+  // the return value is assigned to QueryString
+  var query_string = {};
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+        // If first entry with this name
+    if (typeof query_string[pair[0]] === "undefined") {
+      query_string[pair[0]] = pair[1];
+        // If second entry with this name
+    } else if (typeof query_string[pair[0]] === "string") {
+      var arr = [ query_string[pair[0]], pair[1] ];
+      query_string[pair[0]] = arr;
+        // If third or later entry with this name
+    } else {
+      query_string[pair[0]].push(pair[1]);
+    }
+  } 
+    return query_string;
+};

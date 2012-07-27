@@ -35,26 +35,27 @@ class RoomsController < ApplicationController
       format.json { render :json => @rooms_json}
     end
   end
+  
+  def show
+    @room = get_model
+    redirect_to rooms_path and return unless @room
+    #if params[:from] then
+    #  from_date = params[:from].to_date - 31.days
+    #else
+    #  from_date = Time.now
+    #end
+    #n = Time.now + 31.days
+    #@bookings = @room.bookings.existing.where(["from_date between ? and ?",from_date,n])
+    #if params[:booking_id] then
+    #  @booking = Booking.where(:vendor_id => @current_vendor.id).find_by_id(params[:booking_id])
+    #end
+    render 'bookings/go_to_booking_form'
+  end
+
 
   def new
     @room = Room.new
     @room_types = @current_vendor.room_types.existing.active
-  end
-
-  def show
-    @room = get_model
-    redirect_to rooms_path and return unless @room
-    if params[:from] then
-      from_date = params[:from].to_date - 31.days
-    else
-      from_date = Time.now
-    end
-    n = Time.now + 31.days
-    @bookings = @room.bookings.existing.where(["from_date between ? and ?",from_date,n])
-    if params[:booking_id] then
-      @booking = Booking.where(:vendor_id => @current_vendor.id).find_by_id(params[:booking_id])
-    end
-    render 'bookings/go_to_booking_form'
   end
 
   def create

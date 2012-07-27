@@ -18,11 +18,11 @@ class Booking < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
   belongs_to :company
-  belongs_to :season
   belongs_to :customer
 
   serialize :taxes
   attr_accessible :customer_name
+  
   def as_json(options={})
     return {
         :from => self.from_date.strftime("%Y-%m-%d"),
@@ -36,23 +36,20 @@ class Booking < ActiveRecord::Base
         :paid => self.paid
       }
   end
-  def self.create_from_params(params, vendor, user)
-    booking = Booking.new
-    booking.user = user
-    booking.vendor = vendor
-    booking.company = vendor.company
-    booking.update_attributes params[:model]
-    params[:items].to_a.each do |item_params|
-      new_item = BookingItem.new(item_params[1])
-      new_item.booking = booking
-      new_item.calculate_totals
-      #new_item.save
-      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+  
+  def customer_name
+    if self.customer then
+      return self.customer.full_name(true)
     end
-    booking.save
-    booking.calculate_totals
-    return booking
+    return ""
   end
+  
+  def set_nr
+    if self.nr.nil?
+      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
+    end
+  end
+  
   def customer_name=(name)
     last,first = name.split(',')
     return if not last or not first
@@ -62,17 +59,29 @@ class Booking < ActiveRecord::Base
     end
     self.customer = c
   end
-  def customer_name
-    if self.customer then
-      return self.customer.full_name(true)
+  
+  def self.create_from_params(params, vendor, user)
+    booking = Booking.new
+    booking.user = user
+    booking.vendor = vendor
+    booking.company = vendor.company
+    booking.update_attributes params[:model]
+    params[:items].to_a.each do |item_params|
+      new_item = BookingItem.create(item_params[1])
+      new_item.from_date = booking.from_date
+      new_item.to_date = booking.to_date
+      new_item.ui_id = item_params[0]
+      new_item.booking = booking
+      new_item.save
+      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+      new_item.calculate_totals
     end
-    return ""
+    booking.save
+    booking.calculate_totals
+    BookingItem.make_multiseason_associations
+    return booking
   end
-  def set_nr
-    if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
-    end
-  end
+
 
   def update_from_params(params)
     self.update_attributes params[:model]
@@ -83,14 +92,20 @@ class Booking < ActiveRecord::Base
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        # item.calculate_totals # this was already called in update_surcharge_items_from_ids
+        item.update_attribute :ui_id, item_params[0]
+        item.calculate_totals
       else
-        new_item = BookingItem.create(item_params[1])
+        new_item = BookingItem.new(item_params[1])
+        new_item.from_date = self.from_date
+        new_item.to_date = self.to_date
+        new_item.ui_id = item_params[0]
+        new_item.save
         self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        # new_item.calculate_totals # this was already called in update_surcharge_items_from_ids
+        new_item.calculate_totals
       end
     end
+    BookingItem.make_multiseason_associations
     self.save
   end
 
@@ -126,31 +141,28 @@ class Booking < ActiveRecord::Base
 
   def booking_items_to_json
     booking_items_hash = {}
-    self.booking_items.existing.reverse.each do |i|
-      if i.guest_type_id.zero?
-        d = "s#{i.id}"
-        surcharges = self.vendor.surcharges.where(:season_id => self.season_id)
-      else
-        d = "i#{i.id}"
-        surcharges = self.vendor.surcharges.where(:season_id => self.season_id, :guest_type_id => i.guest_type_id)
-      end
+    self.booking_items.existing.each do |i|
+      d = i.booking_item_id ? "x#{i.id}" : "i#{i.id}"
+      parent_key = i.booking_item_id ? "i#{i.booking_item_id}" : nil
+      surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
       surcharges_hash = {}
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end
 
   def calculate_totals
-    self.sum = self.duration * self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
+    #puts "XXXXXXXXXX calculate_totals for Booking"
+    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
-    self.booking_items.each do |item|
-      #puts "XXX booking_item #{item.id}"
+    self.booking_items.existing.each do |item|
+      #puts "  XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
           #puts "XXX has key"
@@ -175,6 +187,7 @@ class Booking < ActiveRecord::Base
         end
       end
     end
+    self.duration = (self.to_date - self.from_date) / 86400
     save
   end
 

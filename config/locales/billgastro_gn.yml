@@ -8,6 +8,7 @@ gn:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: Tage
       order:
         change_given: Wechselgeld
       customer:
@@ -117,6 +118,8 @@ gn:
         name: Name
         radio_select: Einfache Auswahl
         season_id: Saison
+        selected: Ausgewählt?
+        visible: Sichtbar?
       table:
         abbreviation: Abkürzung
         description: Beschreibung
@@ -260,8 +263,8 @@ gn:
         one: Saison
         other: Saisonen
       settlement:
-        one: Losungen
-        other: Abrechnungen
+        one: Losung
+        other: Losungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
@@ -327,6 +330,7 @@ gn:
       served_by_X: Sie wurden bedient von %{user}
     show:
       search_by_number: Suche nach Nummer
+      go_to_bookings_calendar: Zum Buchungs-Kalender gehen
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:
@@ -396,7 +400,7 @@ gn:
     errempty: Ungültige Datei
     errsize: Ungültige Dateigröße
     errtype: Ungültige Dateityp
-  invoice: Rechnung
+  invoice: Rechnung  
   invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
   invoices: Invoices
   is_no_number: ist keine Zahl
@@ -515,7 +519,8 @@ gn:
       connect_vnc: Bildschirm teilen
       password: Passwort
       requesting_connection_status: Verbindungsstatus abfragen ...
-      internet_connection_info: Für die Fernwartung müssen Sie mit dem Internet verbunden sein. Wenn Sie oben das Red (E) Logo sehen, sind Sie mit dem Internet verbunden.
+      internet_connection_info: Für die Fernwartung müssen Sie mit dem Internet verbunden
+        sein. Wenn Sie oben das Red (E) Logo sehen, sind Sie mit dem Internet verbunden.
       remote_support: Fernwartung
       download_reports: Berichte speichern
     save: Speichern
@@ -529,9 +534,9 @@ gn:
       edit_customer: Kunde bearbeiten
       new_customer: Neuer Kunde
     create:
-      success: Kunde erfolgreich gespeichert
+      success: Customer successfully saved
     destroy:
-      success: Kunde erfolgreich gelöscht
+      success: Customer successfully deleted
   roles:
     create:
       success: Rolle erfolgreich gespeichert
@@ -609,7 +614,9 @@ gn:
   sessions:
     browser_warning:
       continue: weiter
-      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und versuchen Sie es erneut.
+      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium
+        (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und
+        versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
@@ -682,11 +689,17 @@ gn:
     pay: Abschließen
     save: Speichern
     subtotal: Gesamt
-    unamed: Unbenannte
+    unamed: Unbenannt
     tax: Steuer
     unit_price_abbreviation: EP
     total_price_abbreviation: GP
     quantity_abbreviation: Stk.
+    tax_amount: XXX Amount
+    interim_invoice: Rechnungsvoransicht
+    invoice: Rechnung
+    restaurant: Restaurant
+    hotel: Hotel
+    consumations: Konsumationen
   vendors:
     index:
       edit: bearbeiten

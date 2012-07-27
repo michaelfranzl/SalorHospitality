@@ -27,9 +27,11 @@ class SettlementsController < ApplicationController
 
       wants.json do
         from = Time.parse(params[:day]).beginning_of_day
-        to = Time.parse(params[:day]).end_of_day
+        to = Time.parse(params[:day]).end_of_day # + 1.month
         settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
         items = Item.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
+        #string = items.collect{|i| "{\"r\":#{i.r},\"t\":\"#{escape_javascript i.t}\",\"y\":#{i.y}}" }.join(',')
+        #render :json => "[#{string}]"
         render :json => items
       end
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716112757) do
+ActiveRecord::Schema.define(:version => 20120726130515) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -47,38 +47,46 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.integer  "guest_type_id"
-    t.float    "sum",                            :default => 0.0
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
-    t.integer  "count",                          :default => 1
+    t.float    "sum",                              :default => 0.0
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.integer  "count",                            :default => 1
     t.integer  "hidden_by"
     t.float    "base_price"
-    t.float    "refund_sum",                     :default => 0.0
-    t.string   "taxes",         :limit => 10000, :default => "--- {}\n"
+    t.float    "refund_sum",                       :default => 0.0
+    t.string   "taxes",           :limit => 10000, :default => "--- {}\n"
+    t.datetime "from_date"
+    t.datetime "to_date"
+    t.integer  "season_id"
+    t.integer  "duration"
+    t.integer  "booking_item_id"
+    t.string   "ui_parent_id"
+    t.string   "ui_id"
+    t.float    "unit_sum"
   end
 
   create_table "bookings", :force => true do |t|
     t.datetime "from_date"
     t.datetime "to_date"
     t.integer  "customer_id"
-    t.float    "sum",                           :default => 0.0
+    t.float    "sum",                               :default => 0.0
     t.boolean  "hidden"
-    t.boolean  "paid",                          :default => false
+    t.boolean  "paid",                              :default => false
     t.text     "note"
     t.integer  "vendor_id"
     t.integer  "company_id"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.integer  "room_id"
-    t.boolean  "finished",                      :default => false
+    t.boolean  "finished",                          :default => false
     t.integer  "user_id"
-    t.integer  "season_id"
     t.integer  "hidden_by"
-    t.float    "refund_sum",                    :default => 0.0
+    t.float    "refund_sum",                        :default => 0.0
     t.integer  "nr"
     t.float    "change_given"
     t.float    "duration"
-    t.string   "taxes",        :limit => 10000, :default => "--- {}\n"
+    t.string   "taxes",            :limit => 10000, :default => "--- {}\n"
+    t.float    "booking_item_sum"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -190,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
+    t.string   "country"
   end
 
   create_table "discounts", :force => true do |t|
@@ -632,6 +641,9 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.integer "guest_type_id"
     t.boolean "hidden"
     t.string  "taxes",           :limit => 1000, :default => "--- {}\n"
+    t.float   "sum"
+    t.integer "duration"
+    t.integer "count"
   end
 
   create_table "surcharges", :force => true do |t|
@@ -643,9 +655,11 @@ ActiveRecord::Schema.define(:version => 20120716112757) do
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.boolean  "active",        :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.boolean  "radio_select"
+    t.boolean  "visible",       :default => true
+    t.boolean  "selected",      :default => false
   end
 
   create_table "tables", :force => true do |t|

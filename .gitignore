@@ -28,3 +28,4 @@ tmp/capybara
 .sass-cache
 *.swn
 *.swm
+*.kate-swp

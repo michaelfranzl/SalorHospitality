@@ -3,9 +3,13 @@
   %span#nr_display_keyboard.display_keyboard
 
 %div#buttons
-  %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
-  %a.iconbutton.previous_button{ :href => booking_path(@previous_booking), :title => (t '.previous_invoice') }
-  %a.iconbutton.next_button{ :href => booking_path(@next_booking), :title => (t '.next_invoice') }
+  %a.iconbutton.tables2_button{ :href => '/orders?rooms=1', :title => t('.go_to_bookings_calendar') }
+  - unless @booking.finished
+    %a.iconbutton.edit_button{ :href => "/orders?booking_id=#{@booking.id}", :title => t(:edit) }
+  %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t 'orders.show.print_business_invoice') }
+  %a.iconbutton.previous_button{ :href => booking_path(@previous_booking), :title => (t 'orders.show.previous_invoice') }
+  %a.iconbutton.next_button{ :href => booking_path(@next_booking), :title => (t 'orders.show.next_invoice') }
+  
 
 .paper_invoice
   = image_tag @current_vendor.image 'invoice_logo'
@@ -22,7 +26,10 @@
       == #{ @booking.customer.postalcode } #{ @booking.customer.city }
   .clear
 
-  %h1== #{ t 'invoice' } #B#{ @booking.nr }
+  - if @booking.finished
+    %h1== #{ t('various.invoice') } #B#{ @booking.nr }
+  - else
+    %h1== #{ t('various.interim_invoice') }
   
   
   = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
@@ -30,6 +37,8 @@
   - @booking.orders.each do |order|
     %h3== #{ Order.model_name.human } #{ order.nr }
     = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
+    
+  %h2.floatright= number_to_currency @booking.sum
   
   = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
 

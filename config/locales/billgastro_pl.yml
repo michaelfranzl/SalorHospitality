@@ -2,7 +2,11 @@
 pl:
   vendors:
     index:
-      switch_to: Wybierz
+      edit: Edit
+      switch_to: Select
+    new:
+      edit_vendor: Edit Vendor
+      new_vendor: New Vendor
   activerecord:
     attributes:
       article:
@@ -150,6 +154,33 @@ pl:
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
         use_order_numbers: Use order numbers
+        rlogo_header: XXX Receipt logo header
+        rlogo_footer: XXX Receipt logo footer
+        logo: XXX Screen logo
+        invoice_logo: XXX Invoice Logo
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
+      customer:
+        first_name: First Name
+        last_name: Last Name
+        full_name: Name
+        company_name: Company Name
+        address: Address
+        city: City
+        state: State
+        postalcode: Postal Code
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        email: email
+        telephone: Telephone
+        cellphone: Cellphone
+        hidden: delete
     models:
       article:
         one: Artykuł
@@ -267,6 +298,7 @@ pl:
   articles:
     create:
       success: Artykuł został pomyślnie dodany
+      license_limited: XXX Your License is limited to %{count} articles
     destroy:
       success: Artykuł został pomyślnie usunięty
     find:
@@ -301,6 +333,7 @@ pl:
   categories:
     create:
       success: Pomyślnie dodano!
+      license_limited: XXX Your License is limited to %{count} categories
     new:
       aperitif: Aperitif
       beer: Piwo
@@ -440,9 +473,13 @@ pl:
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
-    storno_form:
-      do_separate_items: Podziel pozycję
-      do_storno: Zrób storno
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
+    refund_form:
+      do_separate_items: Separate this item
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Edytuj stronę
@@ -474,6 +511,19 @@ pl:
       backup_database: Backup database
       backup_logfile: Backup logfile
       header: Reports
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      connect_ssh: XXX Remote Login
+      connect_vnc: XXX Share Screen
+      password: XXX Password
+      requesting_connection_status: XXX Requesting connection status ...
+      internet_connection_info: XXX To get Remote Support, you must be connected to
+        the internet. If you see the Red (E) Logo above, you are connected to the
+        internet.
+      remote_support: XXX Remote Support
+      download_reports: XXX Save reports
+    remote_support: XXX Remote Support
+    download_reports: XXX Download Report
   restaurant: Restauracja
   roles:
     new:
@@ -487,13 +537,9 @@ pl:
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
       finish_orders: Finalizowanie zamówień
       finish_own_settlement: Kończenie pojedyńczego rozliczenia
-      make_storno: Możliwość natychmiastowego anulowania pozycji
-      manage_articles_categories_options: Zarządzanie artykułami, kategoriami oraz
-        ustawieniami
       manage_business_invoice: Zarządzanie fakturami
       manage_customers: Zarządzaj użytkownikami
       manage_pages: Zarządzaj slajdami
-      manage_settings: Zarządzanie ustawieniami
       manage_users: Zarządzanie użytkownikami
       move_order: Przenoszenie zamówień
       move_tables: Przenoszenie stolików
@@ -504,7 +550,23 @@ pl:
       split_items: Łączenie pozycji
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
-      view_statistics: Dostęp do statystyk
+      refund: XXX Refund items
+      manage_articles: XXX Manage articles, categories and options
+      manage_categories: XXX Manage categories
+      manage_options: XXX Manage options
+      manage_roles: XXX Manage roles
+      manage_taxes: XXX Manage Taxes
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_tables: XXX Manage tables
+      manage_vendors: XXX Manage vendors
+      manage_statistics: XXX View statistics
+      manage_hotel: XXX Manage hotel
+      item_scribe: XXX Enable handwriting
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_tables: XXX Assign tables to users
+      remote_support: XXX Remote Support
+      download_database: XXX Download Database
     create:
       success: Role successfully saved
     destroy:
@@ -519,8 +581,8 @@ pl:
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: Bill Gastro najlepiej działa pod Mozilla Firefox, Safari, Google Chrome
-        oraz Chromium. Aby uniknąć błędów zmień przeglądarkę.
+      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
       email: Twój e-mail
       login: Login
@@ -553,7 +615,6 @@ pl:
     new:
       edit_stock: Edytcja stanu magazynu
       new_stock: Dodawanie stanu magazynu
-  storno: Storno
   sum: Suma
   tables:
     new:
@@ -561,6 +622,7 @@ pl:
       new_table: Dodawanie stolika
     create:
       success: Table successfully saved
+      license_limited: XXX Your License is limited to %{count} tables
     destroy:
       success: Table successfully deleted
   taxes:
@@ -571,6 +633,7 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
     create:
       success: User successfully saved
     destroy:
@@ -629,10 +692,18 @@ pl:
     save: Save
     subtotal: Subtotal
     unamed: Unamed
-  vendors:
-    index:
-      edit: Edit
-      switch_to: Select
+    tax_amount: XXX Amount
+    tax: XXX Tax
+    unit_price_abbreviation: XXX SP
+    total_price_abbreviation: XXX TP
+    quantity_abbreviation: XXX Qty.
+  customers:
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
+  refund: XXX Refund
+  invalid_date: XXX Invalid date

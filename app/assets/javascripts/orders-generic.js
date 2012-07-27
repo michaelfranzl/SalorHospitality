@@ -35,9 +35,6 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
-
-var gastro = {functions:{ report:{} }, variables:{report:{}}};
-var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -48,8 +45,12 @@ $(function(){
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
-  if (!_get('customers.button_added'))
-    connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
+  
+  //automatically route to widgets depending on uri parameters
+  var uri_attrs = uri_attributes();
+  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
+  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
 })
 
 
@@ -60,8 +61,8 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
+  //console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
-  //debug('GOTO | table=' + table_id + ' | target=' + target + ' | action=' + action + ' | order_id=' + order_id + ' | target_table_id=' + target_table_id, true);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
     submit_json.target = 'tables';
@@ -71,7 +72,6 @@ function route(target, model_id, action, options) {
     $('#tables').show();
     $('#rooms').hide();
     $('#areas').show();
-    //$('#order_cancel_button').show();
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();
@@ -105,7 +105,6 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     submit_json.target = 'table';
-    submit_json.model = {table_id:model_id};
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
@@ -115,11 +114,13 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
+      submit_json.model = {table_id:model_id};
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id;
@@ -132,9 +133,14 @@ function route(target, model_id, action, options) {
       delete items_json_queue['table_' + model_id];
       render_items();
     } else if (action == 'specific_order') {
-      submit_json = {model:{table_id:model_id}};
+      //submit_json = {model:{table_id:model_id}};
+      submit_json.model = {table_id:model_id};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+    } else if (action == 'from_booking') {
+      submit_json.jsaction = 'send_and_go_to_table';
+      send_json('booking_' + options.booking_id);
+      submit_json.model.table_id = model_id;
     } else {
       submit_json = {model:{table_id:model_id}};
       items_json = {};
@@ -146,6 +152,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications').hide();
     $('#areas').hide();
     $('#rooms').hide();
+    $('.booking_form').remove();
     $('#functions_header_index').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_header_order_form').show();
@@ -198,6 +205,7 @@ function route(target, model_id, action, options) {
       emit("send.booking",submit_json);
       send_json('booking_' + model_id);
     } else if (action == 'pay') {
+      // deprecated in favor of invoice redirect
       submit_json.jsaction = 'pay';
       send_json('booking_' + model_id);
     } else if (action == 'update_bookings') {
@@ -215,31 +223,52 @@ function route(target, model_id, action, options) {
     counter_update_tables = timeout_update_tables;
     submit_json.currentview = 'rooms';
 
-  // ========== GO TO ROOM ===============
+  // ========== NEW BOOKING ===============
   } else if ( target == 'room' ) {
-    // I have switched this to show a new booking every time
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    $('#container').show();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
     $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
+
+  // ========== EXISTING BOOKING ===============
   } else if (target == 'booking') {
-    // This one will show the specified booking
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
+    $('#rooms').hide();
+    //$('.booking_form').remove();
+    $('#container').show();
+    $('#orderform').hide();
+    $('#invoices').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, season_id:null, room_type_id:null, duration:1}, items:{}};
+    submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id + '?booking_id=' + options['booking_id'], timeout: 5000 });
+    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
     window.display_booking_form(model_id);
+    
+  // ========== REDIRECT ===============
+  } else if (target == 'redirect') {
+    if (action == 'booking_interim_invoice') {
+      submit_json.jsaction = 'send_and_redirect_to_invoice';
+      send_json('booking_' + model_id);
+      //console.log('booking_interim_invoice');
+      
+    } else if (action == 'booking_invoice') {
+      submit_json.jsaction = 'pay_and_redirect_to_invoice';
+      send_json('booking_' + model_id);
+      //console.log('booking_invoice');
+    }
+    
   }
   emit('after.go_to.' + target, {model_id:model_id, action:action, options:options});
 }
@@ -323,39 +352,20 @@ function create_json_record(model, object) {
     s = object.s;
   }
   if (items_json.hasOwnProperty(d)) {
-    d += 'c'; // c for cloned. this happens when an item is split during option add.
+    d += 'c'; // c for cloned. this happens for example when an item is split during option add.
     s += 1;
   }
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, count:1, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_key:object.parent_key, has_children:false, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
   return d;
 }
 
-// this creates a new record, copied from items_json, which must exist
-function create_submit_json_record(model, d, object) {
-  if( !submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
-  if( !submit_json.items.hasOwnProperty(d)) {
-    if (model == 'order') {
-      submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
-    } else if (model == 'booking') {
-      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id};
-    }
-    // remove redundant fields
-    if (items_json[d].hasOwnProperty('id')) {
-      delete submit_json.items[d].ai;
-      delete submit_json.items[d].qi;
-    }
-    if ( ! items_json[d].hasOwnProperty('qi')) {
-      delete submit_json.items[d].qi;
-    }
-  }
-}
-
+// sets attributes in both, submit_json and items_json
 function set_json(model, d, attribute, value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
@@ -366,6 +376,26 @@ function set_json(model, d, attribute, value) {
     // never copy the options object to submit_json
     create_submit_json_record(model, d, items_json[d]);
     submit_json.items[d][attribute] = value;
+  }
+}
+
+// this creates a new record, copied from items_json, which must exist
+function create_submit_json_record(model, d, object) {
+  if( !submit_json.hasOwnProperty('items')) { submit_json.items = {}; };
+  if( !submit_json.items.hasOwnProperty(d)) {
+    if (model == 'order') {
+      submit_json.items[d] = {id:object.id, ai:object.ai, qi:object.qi, s:object.s};
+    } else if (model == 'booking') {
+      submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id, duration:object.duration, season_id:object.season_id, parent_id:object.parent_id};
+    }
+    // remove redundant fields
+    if (items_json[d].hasOwnProperty('id')) {
+      delete submit_json.items[d].ai;
+      delete submit_json.items[d].qi;
+    }
+    if ( ! items_json[d].hasOwnProperty('qi')) {
+      delete submit_json.items[d].qi;
+    }
   }
 }
 
@@ -402,71 +432,31 @@ function scribe_image(object) {
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
 /* ===================================================================*/
-/*
- * find_customer(needle); Searches the customer lookup table
- * for an instance where name.indexOf(needle) != -1
- * returns -1 is there is nothing like it, and -2 if there is no secondary index
- * in theory, lookups should be much faster when the list of customers is very large,
- * this way, it is unecessary to loop through every entry, entries are thus grouped
- * into a 26 long array, where each entry is 26 deep, followed by an array of object
- * entries.
- * {
- *   d: {
- *      do: [
- *        {
- *          id: 1,
- *          name: "Doe, John"
- *        }
- *      ]
- *   },
- *   m: {
- *    ma: [
- *      {
- *        id: 2,
- *        name: "Martin, Jason"
- *      }
- *    ]
- *   }
- * }
- * */
+
+
 function find_customer(text) {
-  console.log(text);
-   var i = 0;
-   var c = text[i];
-   var results = [];
-   if (resources.customers[c]) {
-        c2 = c + text[i+1];
-        if (resources.customers[c][c2]) {
-            for (var j in resources.customers[c][c2]) {
-                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
-                  results.push(resources.customers[c][c2][j]);
-                }
-            }
-            return results;
-        } else {
-            return -2;
+  // console.log(text);
+  var i = 0;
+  var c = text[i];
+  var results = [];
+  if (resources.customers[c]) {
+    c2 = c + text[i+1];
+    if (resources.customers[c][c2]) {
+      for (var j in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+          results.push(resources.customers[c][c2][j]);
         }
+      }
+      return results;
     } else {
-        return -1;
+        return -2;
     }
+  } else {
+    return -1;
+  }
 }
-/*
- * add_category_button(label,options); Adds a new category button.
- * options is a hash like so:
- * {
- *    id: "the_html_id_youd_like",
- *    handlers: {
- *      mouseup: function (event) { alert('mouseup fired'); }
- *      ...
- *    },
- *    bgcolor: '205,0,82',
- *    bgimage: '/images/myimage.png',
- *    border: {
- *      top: '205,0,85',
- *      ... bottom, left, right etc.
- *    }
- * }
- * */
+
+
 function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
@@ -740,7 +730,7 @@ function show_payment_methods(model_id,allow_delete) {
   if (allow_delete)
     deletable($('#payment_methods_container_' + model_id));
 }
-function add_payment_method(model_id) {
+function add_payment_method(model_id,id,amount) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
@@ -752,7 +742,10 @@ function add_payment_method(model_id) {
     pm_button = $(document.createElement('span'));
     pm_button.addClass('payment_method');
     pm_button.html(v.n);
-    if ( j == 1 ) {
+    if ( !id && j == 1 ) {
+      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      pm_button.addClass('selected');
+    } else if (id == v.id) {
       submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     }
@@ -774,6 +767,10 @@ function add_payment_method(model_id) {
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
+  if (amount) {
+    pm_input.val(amount);
+    submit_json.payment_methods[model_id][payment_method_uid].amount = amount;
+  }
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;
@@ -797,16 +794,19 @@ function add_payment_method(model_id) {
   pm_row.append(pm_input);
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
+      submit_json.payment_methods[model_id][payment_method_uid]._delete = true;
       $(this).parent().remove();
     });
   }
   $('#payment_methods_container_' + model_id).prepend(pm_row);
+  $('#payment_method_'+ payment_method_uid + '_amount').select();
 }
 
 function payment_method_input_change(element, uid, mid) {
   amount = $(element).val();
   amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
+  submit_json.payment_methods[mid][uid]._delete = false;
   submit_json.payment_methods[mid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
   $.each(submit_json.payment_methods[mid], function(k,v) {
@@ -1075,12 +1075,12 @@ function update_resources() {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
-    complete: function(data,state) { update_resouces_success(data) },
+    complete: function(data,state) { update_resources_success(data) },
     timeout: 3000
   });
 }
 
-function update_resouces_success(data) {
+function update_resources_success(data) {
   emit('ajax.update_resources.success', data);
 }
 
@@ -1205,139 +1205,153 @@ salor.functions = {
   }
 }
 
-gastro.functions.report = {
-  initiate:function() {
-    $.ajax({
-      url: '/settlements',
-      dataType: 'json',
-      data: {day:gastro.variables.report_day},
-      success: function(data){
-        gastro.variables.report_items = data;
-        if (data == "") {
-          $('#report_container').html('');
-          return;
-        }
-        gastro.functions.report.convert_from_yaml();
-        gastro.functions.report.calculate();
-        gastro.functions.report.render();
-      }
-    });
-  },
-  
-  convert_from_yaml: function() {
-    $.each(gastro.variables.report_items, function(k,v) {
-      gastro.variables.report_items[k].t = YAML.eval(v.t);
-    })
-  },
-  
-  calculate: function() {
-    //calculate sums by category
-    var c = {};
-    $.each(gastro.variables.report_items, function(k,v) {
-      var category_id = v.y;
-      catname = resources.c[category_id].n;
-      if (c.hasOwnProperty(catname)) {
-        $.each(v.t, function(s,t) {
-          c[catname][i18n.gross] += t.g
-          c[catname][i18n.net] += t.n
-          c[catname][i18n.tax_amount] += t.t
-        })
-      } else {
-        $.each(v.t, function(s,t) {
-          c[catname] = {};
-          c[catname][i18n.gross] = t.g
-          c[catname][i18n.net] = t.n
-          c[catname][i18n.tax_amount] = t.t
-        })
-      }
-    })
-    gastro.variables.report.categories = c;
-    
-    //calculate sums by taxes
-    var taxes = {};
-    $.each(gastro.variables.report_items, function(key,value) {
-      $.each(value.t, function(k,v) {
-        var tax_id = k;
-        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
-        if (taxes.hasOwnProperty(taxname)) {
-          taxes[taxname][i18n.gross] += v.g
-          taxes[taxname][i18n.net] += v.n
-          taxes[taxname][i18n.tax_amount] += v.t
-        } else {
-          taxes[taxname] = {};
-          taxes[taxname][i18n.gross] = v.g
-          taxes[taxname][i18n.net] = v.n
-          taxes[taxname][i18n.tax_amount] = v.t
-        }
-      })
-    })
-    gastro.variables.report.taxes = taxes;
-    
-  },
-  
-  render: function() {
-    $('#report_container').html('');
-    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
-    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
-  },
-
-  display_popup: function() {
-    gastro.variables.report = {};
-    $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
-    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
-    close_button.on('click', function() { $('#report').remove(); });
-    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
-    from_input.datepicker({
-      onSelect: function(date, inst) {
-        gastro.variables.report_day = date;
-        gastro.functions.report.initiate();
-      }
-    })
-    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
-    report_popup.fadeIn();
-  }
+/* Season Object Code */
+var Season = function (s,e) {
+  var start = s.split(',')
+  for (var i = 0; i < start.length;i++) { start[i] = parseInt(start[i]); }
+  this.start = new Date();
+  this.start.setMonth(start[1] - 1);
+  this.start.setDate(start[0]);
+  var end = e.split(',');
+  for (var i = 0; i < end.length;i++) { end[i] = parseInt(end[i]); }
+  this.end = new Date();
+  this.end.setMonth(end[1] - 1);
+  this.end.setDate(end[0]);
 }
 
-
-YAML = {
-  valueOf: function(token) {
-    if (/\d/.exec(token)) {
-      return eval('(' + token + ')');
-    } else {
-      return token;
+Season.prototype.get_days = function (start,end) {
+  if (this.interested(start,end)) {
+    var days = 1;
+    var cdate = new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate() + 1);
+    if (cdate < start) {
+      while (cdate < start) {
+        cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
+      }
     }
-  },
-
-  tokenize: function(str) {
-    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
-    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
-    return tokens;
-  },
-
-  strip: function(str) {
-    return str.replace(/^\s*|\s*$/, '')
-  },
-
-  parse: function(tokens) {
-    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
-    while (token = tokens.shift())
-      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
-	continue
-      else if (key.exec(token) && tokens[0] == "\n")
-	stack[RegExp.$1] = this.parse(tokens)
-      else if (key.exec(token))
-	stack[RegExp.$1] = this.valueOf(tokens.shift())
-      else if (list.exec(token))
-	(stack.constructor == Array ?
-	  stack : (stack = [])).push(this.strip(RegExp.$1))
-    return stack
-  },
-
-  eval: function(str) {
-    return this.parse(this.tokenize(str))
+    while (cdate <= this.end && cdate <= end) {
+      days++;
+      cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
+    }
+    return days;
+  } else {
+    return 0;
   }
 }
 
-//print(YAML.eval(readFile('config.yml')).toSource())
-//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"
+Season.prototype.get_total = function (start,end,cost_per_day) {
+  var days = this.get_days(start,end);
+  return days * cost_per_day;
+}
+
+Season.prototype.intersects_with = function (season) {
+  return ( (season.start >= this.start && season.start <= this.end) || (season.end >= this.start && season.end <= this.end) )
+}
+
+Season.prototype.contains = function (season) {
+  return ( (season.start >= this.start && season.start <= this.end) && (season.end >= this.start && season.end <= this.end) )
+}
+
+Season.prototype.interested = function (start,end) {
+  var ts = new Date(start);
+  var te = new Date(end);
+  while (ts <= te) {
+    if ((ts >= this.start && ts <= this.end) || (te <= this.end && te >= this.start)) {
+      return true;
+    }
+    ts = new Date(ts.getFullYear(),ts.getMonth(),ts.getDate() + 1);
+    te = new Date(te.getFullYear(),te.getMonth(),te.getDate() - 1);
+  }
+  return false;
+}
+
+Season.applying_seasons = function (seasons,b_start,b_end) {
+  var new_seasons = [];
+  for (var i = 0; i < seasons.length; i++) {
+    var s = seasons[i];
+    if (s.interested(b_start,b_end)) {
+      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: parseInt(s.id), duration: s.get_days(b_start,b_end)};
+      new_seasons.push(ns);
+    }
+  }
+  return new_seasons;
+}
+Season.md = function (date) {
+  return (date.getMonth() + 1) + "," + date.getDate();
+}
+Season.merge = function (seasons,new_seasons) {
+  for (var i = 0; i < new_seasons.length; i++) {
+    seasons.push(new_seasons[i]);
+  }
+}
+Season.splice = function (season1,season2) {
+  var new_seasons = [];
+  var new_end_date = season1.start;
+  while (new_end_date < season2.start) {
+    new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate() + 1);
+  }
+  new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate() - 2);
+  var new_left_side = new Season("00,00","00,00");
+  new_left_side.id = season1.id;
+  new_left_side.side = 'left';
+  new_left_side.name = season1.name;
+  new_left_side.start = season1.start;
+  new_left_side.end = new_end_date;
+  new_seasons.push(new_left_side);
+  new_seasons.push(season2);
+  var new_start_date = new Date(season2.end.getFullYear(),season2.end.getMonth(),season2.end.getDate() + 1);
+  if (new_start_date < season1.end) {
+    var new_right_side = new Season("00,00","00,00");
+    new_right_side.id = season1.id;
+    new_right_side.side = 'right';
+    new_right_side.name = season1.name;
+    new_right_side.start = new_start_date;
+    new_right_side.end = season1.end;
+    new_seasons.push(new_right_side);
+  }
+  return new_seasons;
+}
+
+function create_season_objects(seasons) {
+  var new_seasons = [];
+  $.each(seasons, function (id,season) {
+    var s       =  new Season("00,00","00,00");
+    s.start     = new Date(Date.parse(season.f));
+    s.end       = new Date(Date.parse(season.t));
+    if (s.end < s.start) {
+      s.end.setFullYear(s.start.getFullYear() + 1);
+    }
+    s.id        = id;
+    s.name      = season.n;
+    new_seasons.push(s);
+  });
+  new_seasons.sort(function (a,b) {
+    if (a.start < b.start) {
+      return -1;
+    } else if (a.start == b.start) {
+      return 0;
+    } else if (a.start > b.start) {
+      return 1;
+    }
+  });
+  var really_new_seasons = [];
+  for (var i = 0; i < new_seasons.length; i++) {
+    var s1 = new_seasons[i];
+    var s2 = new_seasons[i+1];
+    if (s1 && s2 && s1.intersects_with(s2)) {
+      Season.merge(really_new_seasons,Season.splice(s1,s2));
+    } else if (s1 && s2 && s2.intersects_with(s1)) {
+      Season.merge(really_new_seasons,Season.splice(s2,s1));
+    } else {
+      really_new_seasons.push(s1);
+    }
+  }
+  var tmp = {};
+  for (i=0;i<really_new_seasons.length; i++) {
+    var s = really_new_seasons[i];
+    tmp[s.name + s.start + s.end] = s;
+  }
+  really_new_seasons = [];
+  for (key in tmp)
+    really_new_seasons.push(tmp[key]);
+  return really_new_seasons;
+}

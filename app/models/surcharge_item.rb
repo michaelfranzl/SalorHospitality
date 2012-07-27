@@ -18,17 +18,20 @@ class SurchargeItem < ActiveRecord::Base
   serialize :taxes
 
   def calculate_totals
-    puts "XXX SurchargeItem -> calculate_totals"
+    #puts "XXX SurchargeItem -> calculate_totals"
     self.taxes = {}
+    self.duration = self.booking_item.duration
+    self.count = self.booking_item.count
+    self.sum = self.amount * self.count * self.duration
     self.surcharge.tax_amounts.each do |ta|
-      puts "  XXX loop for tax_amount #{ ta.id }"
+      #puts "  XXX loop for tax_amount #{ ta.id }"
       tax_object = ta.tax
-      tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2)
-      gro = (ta.amount).round(2)
+      tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
+      gro = (ta.amount).round(2) * self.count * self.duration
       net = (gro - tax_sum).round(2)
       self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
       self.save
     end
-    puts "  XXX set self.taxes to #{self.taxes.inspect}"
+    #puts "  XXX set self.taxes to #{self.taxes.inspect}"
   end
 end

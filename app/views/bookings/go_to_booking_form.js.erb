@@ -18,26 +18,43 @@
   $('.payment_methods_container').attr('model_id', <%= @booking.id %>);     
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
   $('#add_payment_method_button').on('click', function() { 
-      show_payment_methods(<%= @booking.id %>,true); 
-      add_button_menu($('.payment_methods_container'));
-   });
-  
+    show_payment_methods(<%= @booking.id %>,true); 
+    add_button_menu($('.payment_methods_container'));
+    <% if @booking.payment_method_items.any? then %>
+      <% @booking.payment_method_items.each do |pm|%>
+        add_payment_method(<%= @booking.id %>,<%= pm.payment_method_id %>, <%= pm.amount %>);
+      <% end %>
+    <% end %>
+  });
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
-  window.change_season(<%= @booking.season.id %>);
+  submit_json.model.room_id = <%= @booking.room_id %>;
+  submit_json.model.room_type_id = <%= @booking.room.room_type_id %>;
+  $('#booking_interim_invoice').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_interim_invoice')});
+  $('#booking_pay').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_invoice')});
+  $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:active_user_id => nil).first.id %>, 'from_booking', {booking_id:<%= @booking.id %>})});
+  window.booking_dates_changed();
+  window.render_booking_items_from_json();
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};
   submit_json['totals'] = {0:{model:0, payment_methods:0, booking_orders:0}};
-  $('#add_payment_method_button').on('click', function() { show_payment_methods(0,true); });
+  $('#add_payment_method_button').on('click', function() { 
+    show_payment_methods(0,true); 
+    add_button_menu($('.payment_methods_container')); 
+  });
   $('.payment_methods_container').attr('id', 'payment_methods_container_0');
   $('.payment_methods_container').attr('model_id', 0);
   $('#booking_from').val('<%= Time.now.strftime("%Y-%m-%d") %>');
-  submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d") %>';
   $('#booking_to').val('<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>');
+  submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d") %>';
   submit_json.model.to_date = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
-  window.calculate_booking_duration();
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');
+  $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:active_user_id => nil).first.id %>, 'from_booking', {booking_id:0})});
+  $('#booking_interim_invoice').on('click', function() {route('redirect', 0, 'booking_interim_invoice')});
+  $('#booking_pay').on('click', function() {route('redirect', 0, 'booking_invoice')});
+  window.booking_dates_changed();
 <% end %>
- _set("salor_hotel.bookings.dirty",true);
+_set("salor_hotel.bookings.dirty",true);
+$('#guest_types').show();

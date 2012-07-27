@@ -11,14 +11,14 @@ el:
     attributes:
       customer:
         first_name: Όνομα
-        last_name: Επώνυμο 
-        full_name: Ονοματεπώνυμο 
+        last_name: Επώνυμο
+        full_name: Ονοματεπώνυμο
         company_name: Όνομα Εταιρίας
-        address: Διεύθυνση 
+        address: Διεύθυνση
         city: Πόλη
         state: Νομός
-        postalcode: Ταχυδρομικός Κώδικας 
-        m_number: Κωδικός Κάρτας Επιβράβευσης 
+        postalcode: Ταχυδρομικός Κώδικας
+        m_number: Κωδικός Κάρτας Επιβράβευσης
         m_points: Πόντοι Κάρτας Επιβράβευσης
         email: ηλεκτρονική διεύθυνση
         telephone: Τηλέφωνο
@@ -169,6 +169,18 @@ el:
         time_offset: Διόρθωση χρόνου (hours)
         timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
+        rlogo_header: XXX Receipt logo header
+        rlogo_footer: XXX Receipt logo footer
+        logo: XXX Screen logo
+        invoice_logo: XXX Invoice Logo
+      payment_method_item:
+        amount: Amount
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        sum: Summe
+      order:
+        change_given: Change
     models:
       room:
         one: Δωμάτιο
@@ -286,6 +298,7 @@ el:
   articles:
     create:
       success: Το αντικείμενο δημιουργήθηκε επιτυχώς
+      license_limited: XXX Your License is limited to %{count} articles
     destroy:
       success: Το αντικείμενο διαγράφηκε επιτυχώς
     find:
@@ -320,6 +333,7 @@ el:
   categories:
     create:
       success: Επιτυχία!
+      license_limited: XXX Your License is limited to %{count} categories
     new:
       aperitif: απεριτίφ
       beer: Μπύρα
@@ -402,7 +416,8 @@ el:
   messages:
     hello_username: Γεια χαρά %{name}!
   move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
-  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για το αντικείμενο είτε για τη Μεταβλητή.
+  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
+    το αντικείμενο είτε για τη Μεταβλητή.
   net: Καθαρό
   new: Νέο
   no_printing: Όχι εκτύπωση
@@ -461,9 +476,13 @@ el:
       search_by_number: Αναζήτηση μέσω αριθμού
       sum: Σύνολο
       unit_price: Τιμή μονάδας
-    storno_form:
-      do_separate_items: Διαχωρίστε αυτό το αντικείμενο
-      do_storno: Κάντε μεταφορά
+    invoice_item_list:
+      unit_price: Unit price
+      count: Quantity
+      sum: Sum
+    refund_form:
+      do_separate_items: Separate this item
+      do_refund: Make refund
   pages:
     edit:
       edit_page: Επεξεργασία Σελίδας
@@ -495,6 +514,19 @@ el:
       backup_database: Αντίγραφο Ασφαλείας Βάσης Δεδομένων
       backup_logfile: Αντίγραφο Ασφαλείας Αρχείου Καταγραφής
       header: Αναφορές
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      connect_ssh: XXX Remote Login
+      connect_vnc: XXX Share Screen
+      password: XXX Password
+      requesting_connection_status: XXX Requesting connection status ...
+      internet_connection_info: XXX To get Remote Support, you must be connected to
+        the internet. If you see the Red (E) Logo above, you are connected to the
+        internet.
+      remote_support: XXX Remote Support
+      download_reports: XXX Save reports
+    remote_support: XXX Remote Support
+    download_reports: XXX Download Report
   restaurant: Εστιατόριο
   roles:
     new:
@@ -508,12 +540,9 @@ el:
       finish_all_settlements: Τελειώστε όλους τους διακανονισμούς
       finish_orders: Τελειώστε τις παραγγελίες
       finish_own_settlement: Τελειώστε τον δικό σας διακανονισμό
-      make_storno: Ακυρώστε αντικείμενα
-      manage_articles_categories_options: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές
       manage_business_invoice: Διαχειριστείτε το εταιρικό τιμολόγιο
       manage_customers: Διαχειριστείτε Πελάτες
       manage_pages: Διαχειριστείτε Προβολή Εικόνων
-      manage_settings: Διαχειριστείτε τις Ρυθμίσεις
       manage_users: Διαχειριστείτε τους χρήστες
       move_order: Μετακινείστε την παραγγελία
       move_tables: Μετακινείστε τραπέζια
@@ -524,9 +553,25 @@ el:
       split_items: Μοιράστε αντικείμενα
       take_orders: Πάρτε παραγγελίες
       view_all_settlements: Δείτε όλους τους διακανονισμούς
-      view_statistics: Δείτε τα στατιστικά
+      refund: XXX Refund items
+      manage_articles: XXX Manage articles, categories and options
+      manage_categories: XXX Manage categories
+      manage_options: XXX Manage options
+      manage_roles: XXX Manage roles
+      manage_taxes: XXX Manage Taxes
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_tables: XXX Manage tables
+      manage_vendors: XXX Manage vendors
+      manage_statistics: XXX View statistics
+      manage_hotel: XXX Manage hotel
+      item_scribe: XXX Enable handwriting
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_tables: XXX Assign tables to users
+      remote_support: XXX Remote Support
+      download_database: XXX Download Database
     create:
-      success: Ο ρόλος αποθηκεύτηκε επιτυχώς 
+      success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
       success: Ο ρόλος διαγράφηκε επιτυχώς
   scroll_down: Κινηθείτε προς τα κάτω
@@ -539,7 +584,8 @@ el:
   sessions:
     browser_warning:
       continue: Συνεχίστε
-      warning: Δεν χρησιμοποιείτε Mozilla Firefox, Safari, Google Chrome ή Chromium ως τα προγράμματα περιήγησης σας στο διαδίκτυο. Το Bill Gastro βελτιστοποιήθηκε αποκλειστικά για αυτά τα προγράμματα περιήγησης.
+      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη
@@ -548,8 +594,8 @@ el:
   settlements:
     detailed_list:
       count: Μτρήστε
-      order_number_on_table_on_date: ! '%{order} αριθμός %{number} στο %{table}
-        στις %{time}'
+      order_number_on_table_on_date: ! '%{order} αριθμός %{number} στο %{table} στις
+        %{time}'
       revenue: Έσοδα
       total: Ολικό
       unit_price: Τιμή μονάδας
@@ -572,14 +618,14 @@ el:
     new:
       edit_stock: Επεξεργασία Αποθέματος
       new_stock: Νέο Απόθεμα
-  storno: Μεταφορά
   sum: Σύνολο
   tables:
     new:
       edit_table: Επεξεργασία Πίνακα
       new_table: Νέος Πίνακας
     create:
-      success: Ο πίνακας αποθηκεύτηκε επιτυχώς 
+      success: Ο πίνακας αποθηκεύτηκε επιτυχώς
+      license_limited: XXX Your License is limited to %{count} tables
     destroy:
       success: Ο πίνακας διαγράφηκε επιτυχώς
   taxes:
@@ -590,8 +636,9 @@ el:
     new:
       edit_user: Επεξεργασία Χρήστη
       new_user: Νέος Χρήστης
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
     create:
-      success: Ο χρήστης αποθηκεύτηκε επιτυχώς 
+      success: Ο χρήστης αποθηκεύτηκε επιτυχώς
     destroy:
       success: Ο χρήστης διαγράφηκε επιτυχώς
   violet: Βιολετί
@@ -633,7 +680,7 @@ el:
   surcharges:
     new:
       add_tax_amount: Προσθέστε ποσό φόρου
-      common_surcharge: Κοινή Επιβάρυνση 
+      common_surcharge: Κοινή Επιβάρυνση
       edit_surcharge: Επεξεργασία Επιβάρυνσης
       new_surcharge: Νέα Επιβάρυνση
   tax_amount: XXX Ποσό
@@ -645,3 +692,18 @@ el:
     save: Αποθηκεύστε
     subtotal: Υποσύνολο
     unamed: Ανώνυμο
+    tax_amount: XXX Amount
+    tax: XXX Tax
+    unit_price_abbreviation: XXX SP
+    total_price_abbreviation: XXX TP
+    quantity_abbreviation: XXX Qty.
+  customers:
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
+  refund: XXX Refund
+  invalid_date: XXX Invalid date

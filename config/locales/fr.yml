@@ -1,4 +1,4 @@
-"gn":
+fr:
 # ==================================================================================
 # /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
 # ==================================================================================
@@ -6,32 +6,30 @@
     errors:
       template:
         header:
-          one:  "%{count} Fehler hat verhindert, dass das Formular '%{model}' gespeichert wird."
-          other:  "%{count} Fehler haben verhindert, dass das Formular '%{model}' gespeichert wird."
-        body: "Bitte überprüfen Sie die folgenden Eingaben:"
+          one:  "%{count} error prevented the form '%{model}' from being saved."
+          other:  "%{count} errors prevented the form '%{model}' from being saved."
+        body: "Vérifiez les points suivants:"
 
       messages:
-        inclusion: "ist nicht in der Liste"
-        exclusion: "ist reserviert"
-        invalid: "ist ungültig"
-        confirmation: "stimmt nicht überein"
-        accepted: "must be accepted"
-        empty: "darf nicht leer sein"
-        blank: "muss eingegeben werden"
-        too_long: "ist zu lang (maximal %{count} Zeichen)"
-        too_short: "ist zu kurz (minimum ist %{count} Zeichen)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "wird bereits verwendet"
-        not_a_number: "ist keine Zahl"
-        greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"
-
-
+        inclusion: "n'est pas dans la liste"
+        exclusion: "doit être dans la liste"
+        invalid: "invalide"
+        confirmation: "ne correspond pas"
+        accepted: "doit être accepté"
+        empty: "ne doit pas être vide"
+        blank: "ne doit pas être blanc"
+        too_long: "est trop longue (maximum %{count} characters)"
+        too_short: "est trop court (minimum %{count} characters)"
+        wrong_length: "longueur erronée (should be %{count} characters)"
+        taken: "est déjà pris"
+        not_a_number: "n'est pas un nombre"
+        greater_than: "doit être supérieure à %{count}"
+        greater_than_or_equal_to: "doit être supérieur ou égal à %{count}"
+        equal_to: "doit être égal à %{count}"
+        less_than: "doit être inférieur à %{count}"
+        less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
+        odd: "doit être impair"
+        even: "doit être pair"
 
 # ==================================================================================
 # Adaptiert von:
@@ -43,9 +41,9 @@
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
     format:
       # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: ","
+      separator: "."
       # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: "."
+      delimiter: ","
       # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
       # If set to true, precision will mean the number of significant digits instead
@@ -62,8 +60,8 @@
         unit: "€"
         friendly_unit: EUR
         # These five are to override number.format and are optional
-        separator: ","
-        delimiter: "."
+        separator: "."
+        delimiter: ","
         precision: 2
         significant: false
         strip_insignificant_zeros: false
@@ -82,8 +80,8 @@
     precision:
       format:
         # These three are to override number.format and are optional
-        separator: ","
-        delimiter: "."
+        separator: "."
+        delimiter: ","
         precision: 2
         # significant: false
         # strip_insignificant_zeros: false
@@ -166,8 +164,8 @@
         one:   "about 1 hour"
         other: "about %{count} hours"
       x_days:
-        one:   "1 Tag"
-        other: "%{count} Tage"
+        one:   "1 day"
+        other: "%{count} days"
       about_x_months:
         one:   "about 1 month"
         other: "about %{count} months"
@@ -219,12 +217,12 @@
       short: "%d. %b"
       long: "%d. %B  %Y"
 
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    day_names: [Dimanche, Lundi, Mardi, Mercedi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Di, Lu, Ma, Me, Je, Ve, Sa]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Julliet, Août, Septembre, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fév, Mar, Avr, Mai, Jui, Jul, Aoû, Sep, Oct, Nov, Déc]
     # Used in date_select and datime_select.
     order:
       - :year
@@ -250,7 +248,5 @@
   support:
     array:
      words_connector:
-      two_words_connector: " und "
-      last_word_connector: ", und "
-
-
+      two_words_connector: " et "
+      last_word_connector: ", et "

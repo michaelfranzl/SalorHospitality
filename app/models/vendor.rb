@@ -193,7 +193,7 @@ class Vendor < ActiveRecord::Base
     end
 
     rooms = Hash.new
-    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :sid => b.season_id, :d => b.duration } ) } } }
+    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :d => b.duration } ) } } }
 
     room_types = Hash.new
     self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
@@ -205,7 +205,7 @@ class Vendor < ActiveRecord::Base
     self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
 
     surcharges = Hash.new
-    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select } }
+    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select, :v => sc.visible, :s => sc.selected } }
 
     seasons = Hash.new
     current_season = Season.current(self)
