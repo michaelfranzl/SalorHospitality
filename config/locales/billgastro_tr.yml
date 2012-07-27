@@ -236,6 +236,8 @@ tr:
         name: Name
         radio_select: Radio Select
         season_id: Season
+        selected: XXX Selected by default
+        visible: XXX Visible?
       tax_amount:
         amount: Amount
         tax_id: Tax
@@ -266,6 +268,7 @@ tr:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: XXX Days
       order:
         change_given: Change
       customer:
@@ -637,6 +640,7 @@ tr:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   finish: XXX Just Finish
   layouts:
     application:
@@ -689,6 +693,11 @@ tr:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
+    consumations: XXX Consumations
   vendors:
     index:
       edit: Edit

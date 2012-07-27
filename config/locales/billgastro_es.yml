@@ -127,6 +127,8 @@ es:
         name: nombre
         radio_select: Radio Select
         season_id: Temporada
+        selected: XXX Selected by default
+        visible: XXX Visible?
       tax_amount:
         amount: Monto
         tax_id: IVA
@@ -157,6 +159,7 @@ es:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: XXX Days
       order:
         change_given: Change
       customer:
@@ -637,6 +640,11 @@ es:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
+    consumations: XXX Consumations
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos
@@ -649,6 +657,7 @@ es:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   dateandtime: XXX Date
   finish: XXX Just Finish
   layouts:
