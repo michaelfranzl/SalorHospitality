@@ -86,13 +86,18 @@ gastro.functions.report = {
     from_input.datepicker({
       onSelect: function(date, inst) {
         gastro.variables.report_from = date;
+        if (gastro.variables.hasOwnProperty('report_to')) {
+          gastro.functions.report.initiate();
+        }
       }
     })
     to_input = create_dom_element('input', {type:'text',id:'report_to'}, '', report_popup);
     to_input.datepicker({
       onSelect: function(date, inst) {
         gastro.variables.report_to = date;
-        gastro.functions.report.initiate();
+        if (gastro.variables.hasOwnProperty('report_from')) {
+          gastro.functions.report.initiate();
+        }
       }
     })
     report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);

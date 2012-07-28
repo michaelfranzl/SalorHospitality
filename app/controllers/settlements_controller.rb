@@ -37,11 +37,12 @@ class SettlementsController < ApplicationController
         #render :json => result.to_a[0][0]
         settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
         items = Item.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
-        payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
+        #payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
         #render :json => items
         items_json_string = items.collect{|i| "{\"r\":#{i.r ? i.r : 'null'},\"t\":\"#{i.t}\",\"y\":#{i.y}}" }.join(',')
         items_json_string.gsub! "\n", '\n'
-        render :json => "{\"items_json_string\":[#{items_json_string}], \"payment_methods_json_string\":[#{payment_methods_json_string}]}"
+        #render :json => "{\"items_json_string\":[#{items_json_string}], \"payment_methods_json_string\":[#{payment_methods_json_string}]}"
+        render :json => "[#{items_json_string}]"
       end
     end
   end
