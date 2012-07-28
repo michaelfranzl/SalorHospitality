@@ -1,5 +1,12 @@
 ---
 gn:
+  payment_methods:
+    new:
+      new_payment_method: Neue Zahlungsmethode
+    create:
+      success: Zahlungsmethode erfolgreich gespeichert
+    destroy:
+      success: Zahlungsmethode erfolgreich gelöscht
   activerecord:
     attributes:
       payment_method_item:
@@ -131,6 +138,7 @@ gn:
         rotate: drehen?
         width: Breite
         width_mobile: Breite mobile
+        booking_table: Buchung
       tax:
         color: Farbe
         hidden: löschen

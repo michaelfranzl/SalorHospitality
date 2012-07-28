@@ -9,6 +9,8 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class SettlementsController < ApplicationController
+  #require 'action_view/helpers/javascript_helper'
+  #include ActionView::Helpers::JavaScriptHelper
 
   def index
     respond_to do |wants|
@@ -26,13 +28,20 @@ class SettlementsController < ApplicationController
       end
 
       wants.json do
-        from = Time.parse(params[:day]).beginning_of_day
-        to = Time.parse(params[:day]).end_of_day # + 1.month
+        from = Time.parse(params[:from]).beginning_of_day
+        to = Time.parse(params[:to]).end_of_day
+        #sql = ActiveRecord::Base.connection
+        #x = %q[SELECT CONCAT("[", GROUP_CONCAT(  CONCAT('{"r":', IF(refund_sum, refund_sum,'null'), ',"y":', category_id, ',"t":"', REPLACE(taxes,"\n","\\\n"), '"'),   '}'), ']') FROM items] #30387
+        #x += ";"
+        #result = sql.execute x
+        #render :json => result.to_a[0][0]
         settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
         items = Item.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
-        #string = items.collect{|i| "{\"r\":#{i.r},\"t\":\"#{escape_javascript i.t}\",\"y\":#{i.y}}" }.join(',')
-        #render :json => "[#{string}]"
-        render :json => items
+        payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
+        #render :json => items
+        items_json_string = items.collect{|i| "{\"r\":#{i.r ? i.r : 'null'},\"t\":\"#{i.t}\",\"y\":#{i.y}}" }.join(',')
+        items_json_string.gsub! "\n", '\n'
+        render :json => "{\"items_json_string\":[#{items_json_string}], \"payment_methods_json_string\":[#{payment_methods_json_string}]}"
       end
     end
   end

@@ -131,6 +131,7 @@ en:
         rotate: rotate?
         width: Width
         width_mobile: Width mobile
+        booking_table: Booking
       tax:
         color: Color
         hidden: delete

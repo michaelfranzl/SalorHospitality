@@ -1,9 +1,10 @@
 gastro.functions.report = {
   initiate:function() {
+    $('#report_progress').show();
     $.ajax({
       url: '/settlements',
       dataType: 'json',
-      data: {day:gastro.variables.report_day},
+      data: {from:gastro.variables.report_from, to:gastro.variables.report_to},
       success: function(data){
         gastro.variables.report_items = data;
         if (data == "") {
@@ -13,6 +14,7 @@ gastro.functions.report = {
         gastro.functions.report.convert_from_yaml();
         gastro.functions.report.calculate();
         gastro.functions.report.render();
+        $('#report_progress').hide();
       }
     });
   },
@@ -80,14 +82,21 @@ gastro.functions.report = {
     report_popup = create_dom_element('div',{id:'report'}, '', '#container');
     close_button = create_dom_element('span',{class:'done'}, '', report_popup);
     close_button.on('click', function() { $('#report').remove(); });
-    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
+    from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
     from_input.datepicker({
       onSelect: function(date, inst) {
-        gastro.variables.report_day = date;
+        gastro.variables.report_from = date;
+      }
+    })
+    to_input = create_dom_element('input', {type:'text',id:'report_to'}, '', report_popup);
+    to_input.datepicker({
+      onSelect: function(date, inst) {
+        gastro.variables.report_to = date;
         gastro.functions.report.initiate();
       }
     })
     report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
+    progress_indicator = create_dom_element('img',{id:'report_progress', src:'/images/ajax-loader2.gif', class:'displaynone'}, '', report_popup);
     report_popup.fadeIn();
   }
 }
