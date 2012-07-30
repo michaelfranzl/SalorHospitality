@@ -1274,7 +1274,6 @@ Season.applying_seasons = function (seasons,b_start,b_end) {
       new_seasons.push(ns);
     }
   }
-  console.log(new_seasons);
   return new_seasons;
 }
 Season.md = function (date) {

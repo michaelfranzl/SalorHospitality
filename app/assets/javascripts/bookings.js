@@ -296,14 +296,14 @@ function draw_booking(booking) {
   // If the start_date of the booking is before the current view, then we need to 
   // recalculate the number of nights we need to show for this view
   if (Date.parse(booking.from) < show_booking_from) {
-    
+    nights = days_between_dates($('#show_booking_from').val(), booking.to);
     y = 1;
   }
-  nights = days_between_dates($('#show_booking_from').val(), booking.to);
+  
   if (nights > 31) {
     nights = 31 - y;
   }
-  var widget_height = oheight * (nights + 1); // because they leave the afternoon of the next day
+  var widget_height = oheight * (nights); // because they leave the afternoon of the next day
   
   // If the booking exists, then we only need to update it.
   if (booking_exists(booking)) {
