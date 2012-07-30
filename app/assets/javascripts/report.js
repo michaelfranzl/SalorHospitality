@@ -99,8 +99,8 @@ report.functions = {
   render: function() {
     $('#report_container').html('');
     report.functions.table_from_json(report.variables.categories_tablesource, {class:'settlements'}, '#report_container', i18n.categories);
-    report.functions.table_from_json(report.variables.taxes_tablesource, {class:'settlements'}, '#report_container', i18n.taxes);
     report.functions.table_from_json(report.variables.rooms_tablesource, {class:'settlements'}, '#report_container', i18n.rooms);
+    report.functions.table_from_json(report.variables.taxes_tablesource, {class:'settlements'}, '#report_container', i18n.taxes);
   },
 
   display_popup: function() {
