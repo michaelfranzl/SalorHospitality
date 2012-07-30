@@ -24,7 +24,7 @@ class RoomsController < ApplicationController
     @rooms.each do |room|
       @rooms_json[:keys] << room.id
       @rooms_json[:rooms][room.id.to_s] = {:room => room, :room_type => room.room_type, :bookings => []}
-      bookings = room.bookings.existing.where(["from_date between ? and ?",from_date,n])
+      bookings = room.bookings.existing.where(["(from_date between ? and ?) or (to_date > ? and from_date < ?)",from_date,n,Time.now,Time.now])
       bookings.each do |booking|
         @rooms_json[:rooms][room.id.to_s][:bookings] << booking.id
         @rooms_json[:bookings][booking.id.to_s] = booking

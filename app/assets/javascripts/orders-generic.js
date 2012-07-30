@@ -1168,6 +1168,7 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
+var salor = {};
 salor.functions = {
   table_from_json: function(source, attrs, target, heading) {
     create_dom_element('h2',{},heading,target);
@@ -1273,6 +1274,7 @@ Season.applying_seasons = function (seasons,b_start,b_end) {
       new_seasons.push(ns);
     }
   }
+  console.log(new_seasons);
   return new_seasons;
 }
 Season.md = function (date) {
