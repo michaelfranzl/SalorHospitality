@@ -1291,7 +1291,7 @@ Season.splice = function (season1,season2) {
   while (new_end_date < season2.start) {
     new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate() + 1);
   }
-  new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate() - 2);
+  new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate());
   var new_left_side = new Season("00,00","00,00");
   new_left_side.id = season1.id;
   new_left_side.side = 'left';
@@ -1300,7 +1300,7 @@ Season.splice = function (season1,season2) {
   new_left_side.end = new_end_date;
   new_seasons.push(new_left_side);
   new_seasons.push(season2);
-  var new_start_date = new Date(season2.end.getFullYear(),season2.end.getMonth(),season2.end.getDate() + 1);
+  var new_start_date = new Date(season2.end.getFullYear(),season2.end.getMonth(),season2.end.getDate());
   if (new_start_date < season1.end) {
     var new_right_side = new Season("00,00","00,00");
     new_right_side.id = season1.id;
