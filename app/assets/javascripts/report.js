@@ -99,14 +99,14 @@ report.functions = {
   render: function() {
     $('#report_container').html('');
     report.functions.table_from_json(report.variables.categories_tablesource, {class:'settlements'}, '#report_container', i18n.categories);
-    report.functions.table_from_json(report.variables.taxes_tablesource, {class:'settlements'}, '#report_container', i18n.taxes);
     report.functions.table_from_json(report.variables.rooms_tablesource, {class:'settlements'}, '#report_container', i18n.rooms);
+    report.functions.table_from_json(report.variables.taxes_tablesource, {class:'settlements'}, '#report_container', i18n.taxes);
   },
 
   display_popup: function() {
     report.variables = {};
     $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
+    report_popup = create_dom_element('div',{id:'report'}, '', 'body');
     close_button = create_dom_element('span',{class:'done'}, '', report_popup);
     close_button.on('click', function() { $('#report').remove(); });
     from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);

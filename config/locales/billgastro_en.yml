@@ -243,8 +243,8 @@ en:
         one: Variant
         other: Variants
       report:
-        one: Report
-        other: Reports
+        one: Support
+        other: Support
       reservation:
         one: Reservation
         other: Reservations
@@ -285,8 +285,8 @@ en:
         one: User
         other: Users
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Vendor
+        other: Vendors
       vendor_printer:
         one: Printer
         other: Printers
@@ -700,6 +700,7 @@ en:
     restaurant: Restaurant
     hotel: Hotel
     consumations: Consumations
+    report: Report
   vendors:
     index:
       edit: Edit

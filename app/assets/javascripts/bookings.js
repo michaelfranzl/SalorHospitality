@@ -208,7 +208,7 @@ function booking_build_inner_div(booking) {
   name_div.on('mouseenter',booking_mouse_enter);
   name_div.on('mouseout',booking_mouse_out);
   name_div.on('click',function () {
-    route('booking', booking.id);
+    route('booking', booking.id, null, {room_id:booking.room_id});
   });
   return inner_div;
 }
@@ -268,7 +268,7 @@ function draw_booking(booking) {
     return;
   }
   if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
-    console.log("Booking not in this view",booking);
+    //console.log("Booking not in this view",booking);
     return;
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,

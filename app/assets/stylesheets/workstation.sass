@@ -267,7 +267,6 @@ table.settlements
   :font-size 80%
   :width 35%
   :margin 10px
-  :float left
   :border-collapse collapse
   :border 1px solid $darkgray
   td.highlighted
@@ -1084,9 +1083,22 @@ div.paper_invoice
   div.customer_details
     :padding 50px 0px 20px 0px
     :float left
-
+      
+  table.taxes,
+  table.payment_methods
+    :width 50%
+    :border 2px solid #7e868a
+    :border-collapse collapse
+    td, th
+      :border 1px solid #7e868a
+      :padding 3px
+      
+  div.invoice_footer
+    :font-size 80%
+    
   table
     :width 100%
+    :font-size 90%
     :border 2px solid #7e868a
     :border-collapse collapse
     td, th
@@ -1104,18 +1116,6 @@ div.paper_invoice
       :width 3%
     .wide
       :width 90px
-      
-  table.taxes,
-  table.payment_methods
-    :width 50%
-    :border 2px solid #7e868a
-    :border-collapse collapse
-    td, th
-      :border 1px solid #7e868a
-      :padding 3px
-      
-  div.invoice_footer
-    :font-size 80%
 
 
 
@@ -1712,7 +1712,7 @@ div#report
   :display none
   :top 0px
   :left 0px
-  :z-index 100
+  :z-index 1000
   :width 95%
   :height 100%
   input

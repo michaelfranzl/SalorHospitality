@@ -29,4 +29,8 @@ class RoomPrice < ActiveRecord::Base
       end
     end
   end
+  
+  def base_price=(base_price)
+    write_attribute :base_price, base_price.gsub(',','.')
+  end
 end

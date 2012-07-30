@@ -6,7 +6,7 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages, #tables, h2.current_user
+h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages, #tables, h2.current_user, div#items_notifications
   :display none
   
 div#report_container
@@ -73,31 +73,7 @@ div.paper_invoice
     :font-size 80%
   div.customer_details
     :font-size 80%
-  table
-    :display inline
-    :border 0.9pt solid black
-    :margin 5pt
-    :font-size 70%
-    :width 100%
-    td, th
-      :border 0.9pt solid black
-      :padding 3pt
-    .one
-      :width 30pt
-      :text-align center
-    .two
-      :width 200pt
-      :text-align left
-    .three
-      :width 80pt
-      :text-align right
-    .four
-      :width 30pt
-      :text-align center
-    .five
-      :width 80pt
-      :text-align right
-      
+
   table.printed_taxes
     :font-size 55%
     :border 0.1pt solid black
@@ -119,6 +95,34 @@ div.paper_invoice
     .five
       :width 30pt
       :text-align right
+
+div.paper_invoice table,
+table.settlements
+  :display inline
+  :border 0.9pt solid black
+  :margin 5pt
+  :font-size 70%
+  :width 100%
+  td, th
+    :border 0.9pt solid black
+    :padding 3pt
+  .one
+    :width 30pt
+    :text-align center
+  .two
+    :width 200pt
+    :text-align left
+  .three
+    :width 80pt
+    :text-align right
+  .four
+    :width 30pt
+    :text-align center
+  .five
+    :width 80pt
+    :text-align right
+      
+
 
 div.articles_listall
   :margin 10px

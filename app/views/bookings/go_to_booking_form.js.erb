@@ -31,9 +31,12 @@
   submit_json.model.room_type_id = <%= @booking.room.room_type_id %>;
   $('#booking_interim_invoice').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_interim_invoice')});
   $('#booking_pay').on('click', function() {route('redirect', <%= @booking.id %>, 'booking_invoice')});
+  <% if @current_vendor.tables.existing.where(:booking_table => true).first %>
   $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:booking_table => true).first.id %>, 'from_booking', {booking_id:<%= @booking.id %>})});
+  <% end %>
   window.booking_dates_changed();
   window.render_booking_items_from_json();
+  $('#choose_room').val(<%= @booking.room_id %>);
 <% else %>
   submit_json.id = 0;
   submit_json['payment_methods'] = {0:{}};
