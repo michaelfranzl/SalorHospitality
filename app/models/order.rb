@@ -201,6 +201,7 @@ class Order < ActiveRecord::Base
 
   def finish
     self.updated_at = Time.now
+    self.finished_at = Time.now
     self.finished = true
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
     save

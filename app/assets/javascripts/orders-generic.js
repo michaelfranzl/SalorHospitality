@@ -47,7 +47,7 @@ $(function(){
   }
   if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
   
-  //automatically route to widgets depending on uri parameters
+  //automatically route to views depending on uri parameters
   var uri_attrs = uri_attributes();
   if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
   if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
@@ -1168,8 +1168,6 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
-
-
 salor.functions = {
   table_from_json: function(source, attrs, target, heading) {
     create_dom_element('h2',{},heading,target);
