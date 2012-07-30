@@ -14,4 +14,8 @@ class TaxAmount < ActiveRecord::Base
   belongs_to :company
   
   validates_presence_of :tax_id
+  
+  def amount=(amount)
+    write_attribute :amount, amount.gsub(',','.')
+  end
 end

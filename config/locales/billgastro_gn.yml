@@ -250,8 +250,8 @@ gn:
         one: Variante
         other: Varianten
       report:
-        one: Bericht
-        other: Berichte
+        one: Support
+        other: Support
       reservation:
         one: Reservierung
         other: Reservierungen
@@ -292,8 +292,8 @@ gn:
         one: Benutzer
         other: Benutzer
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Betrieb
+        other: Betriebe
       vendor_printer:
         one: Drucker
         other: Drucker
@@ -708,6 +708,7 @@ gn:
     restaurant: Restaurant
     hotel: Hotel
     consumations: Konsumationen
+    report: Bericht
   vendors:
     index:
       edit: bearbeiten

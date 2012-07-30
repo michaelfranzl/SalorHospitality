@@ -268,7 +268,7 @@ function draw_booking(booking) {
     return;
   }
   if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
-    console.log("Booking not in this view",booking);
+    //console.log("Booking not in this view",booking);
     return;
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,

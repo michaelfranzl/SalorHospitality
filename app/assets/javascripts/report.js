@@ -106,7 +106,7 @@ report.functions = {
   display_popup: function() {
     report.variables = {};
     $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
+    report_popup = create_dom_element('div',{id:'report'}, '', 'body');
     close_button = create_dom_element('span',{class:'done'}, '', report_popup);
     close_button.on('click', function() { $('#report').remove(); });
     from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
