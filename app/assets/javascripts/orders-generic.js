@@ -1221,7 +1221,7 @@ var Season = function (s,e) {
 
 Season.prototype.get_days = function (start,end) {
   if (this.interested(start,end)) {
-    var days = 1;
+    var days = 0;
     var cdate = new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate() + 1);
     if (cdate < start) {
       while (cdate < start) {
