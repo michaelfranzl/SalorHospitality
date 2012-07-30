@@ -15,6 +15,10 @@ class CustomersController < ApplicationController
 
   def index
     @customers = @current_vendor.customers.existing
+    respond_to do |wants|
+      wants.html
+      wants.csv  #{ send_data render( :partial => 'list'), :filename => 'customers.csv' }
+    end
   end
 
   def new

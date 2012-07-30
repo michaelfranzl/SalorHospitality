@@ -72,6 +72,7 @@ class Booking < ActiveRecord::Base
       new_item.to_date = booking.to_date
       new_item.ui_id = item_params[0]
       new_item.booking = booking
+      new_item.room_id = booking.room.id
       new_item.save
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
       new_item.calculate_totals
@@ -99,6 +100,7 @@ class Booking < ActiveRecord::Base
         new_item.from_date = self.from_date
         new_item.to_date = self.to_date
         new_item.ui_id = item_params[0]
+        new_item.room_id = self.room.id
         new_item.save
         self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
@@ -128,7 +130,9 @@ class Booking < ActiveRecord::Base
   end
 
   def finish
-    self.update_attribute :finished, true
+    self.finished = true
+    self.finished_at = Time.now
+    self.save
   end
 
   def update_associations(user)

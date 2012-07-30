@@ -13,38 +13,16 @@ class SettlementsController < ApplicationController
   #include ActionView::Helpers::JavaScriptHelper
 
   def index
-    respond_to do |wants|
-      wants.html do
-      redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
-      @from, @to = assign_from_to(params)
-      @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
-      @to = @to ? @to.end_of_day : DateTime.now
-      @settlements = Settlement.where("created_at >= ? AND created_at <= ?", @from, @to)
-      @settlements_sum = @settlements.sum :sum
-      #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
-      @taxes = @current_vendor.taxes.existing
-      @cost_centers = @current_vendor.cost_centers.existing.active
-      @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
-      end
-
-      wants.json do
-        from = Time.parse(params[:from]).beginning_of_day
-        to = Time.parse(params[:to]).end_of_day
-        #sql = ActiveRecord::Base.connection
-        #x = %q[SELECT CONCAT("[", GROUP_CONCAT(  CONCAT('{"r":', IF(refund_sum, refund_sum,'null'), ',"y":', category_id, ',"t":"', REPLACE(taxes,"\n","\\\n"), '"'),   '}'), ']') FROM items] #30387
-        #x += ";"
-        #result = sql.execute x
-        #render :json => result.to_a[0][0]
-        settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
-        items = Item.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
-        #payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
-        #render :json => items
-        items_json_string = items.collect{|i| "{\"r\":#{i.r ? i.r : 'null'},\"t\":\"#{i.t}\",\"y\":#{i.y}}" }.join(',')
-        items_json_string.gsub! "\n", '\n'
-        #render :json => "{\"items_json_string\":[#{items_json_string}], \"payment_methods_json_string\":[#{payment_methods_json_string}]}"
-        render :json => "[#{items_json_string}]"
-      end
-    end
+    redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
+    @from, @to = assign_from_to(params)
+    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
+    @to = @to ? @to.end_of_day : DateTime.now
+    @settlements = Settlement.where("created_at >= ? AND created_at <= ?", @from, @to)
+    @settlements_sum = @settlements.sum :sum
+    #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
+    @taxes = @current_vendor.taxes.existing
+    @cost_centers = @current_vendor.cost_centers.existing.active
+    @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
 
   def open

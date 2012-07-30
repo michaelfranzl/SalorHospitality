@@ -361,6 +361,7 @@ render_booking_item = (booking_item_id) ->
       if items_json[booking_item_id].surcharges[header].selected
         input_tag.attr 'checked', true
         input_tag.parent().addClass 'selected'
+        update_submit_json_surchageslist booking_item_id
   create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
   delete_col = create_dom_element 'div', {class:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;', booking_item_row
   delete_col.on 'click', ->
