@@ -249,12 +249,17 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#invoices').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:options.room_id, room_type_id:null, duration:1}, items:{}};
+    if (typeof(options) == 'undefined') {
+      room_id = null;
+    } else {
+      room_id = options.room_id;
+    }
+    submit_json = {currentview:'room', model:{room_id:room_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
     $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
-    window.display_booking_form(options.room_id);
+    window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
   } else if (target == 'redirect') {

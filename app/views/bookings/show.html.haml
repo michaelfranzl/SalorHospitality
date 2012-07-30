@@ -34,28 +34,52 @@
   
   = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
 
-  - @booking.orders.each do |order|
-    %h3== #{ Order.model_name.human } #{ order.nr }
-    = render :partial => '/orders/invoice_item_list', :locals => { :order => order }
+  %h3= t 'activerecord.models.order.other'
+  %table.small
+    %tr
+      %th
+      %th= Tax.model_name.human
+      %th= Item.model_name.human
+      %th= t '.unit_price'
+      %th= t '.count'
+      %th= t '.sum'
+    - @booking.orders.each do |order|
+      - order.items.existing.positioned.each do |item|
+        %tr
+          %td.left.narrow== ##{ order.id}
+          %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',')
+          %td.left= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
+          %td.right= number_to_currency item.price
+          %td.right= item.count
+          %td.right= number_to_currency item.sum
+
+        - item.options.each do |o|
+          - next if o.price == 0
+          %tr
+            %td
+            %td= item.tax.letter
+            %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
+            %td= number_to_currency o.price
+            %td= item.count
+            %td= number_to_currency item.refunded ? 0 : item.count * o.price
     
   %h2.floatright= number_to_currency @booking.sum
   
   = render :partial => '/shared/invoice_tax_list', :locals => { :model => @booking }
 
-  - if @current_user.role.permissions.include?('manage_payment_methods')
-    %p= PaymentMethodItem.model_name.human
+  %p= PaymentMethodItem.model_name.human
 
-    %table.payment_methods
+  %table.payment_methods
+    %tr
+      %th.left= PaymentMethodItem.model_name.human
+      %th.right= PaymentMethodItem.human_attribute_name :amount
+    - @booking.payment_method_items.each do |pm|
       %tr
-        %th.left= PaymentMethodItem.model_name.human
-        %th.right= PaymentMethodItem.human_attribute_name :amount
-      - @booking.payment_method_items.each do |pm|
-        %tr
-          %td.left= pm.payment_method.name
-          %td.right= number_to_currency pm.amount
-      %tr
-        %td.left= Order.human_attribute_name :change_given
-        %td.right= number_to_currency @booking.change_given
+        %td.left= pm.payment_method.name
+        %td.right= number_to_currency pm.amount
+    %tr
+      %td.left= Order.human_attribute_name :change_given
+      %td.right= number_to_currency @booking.change_given
 
   .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
 

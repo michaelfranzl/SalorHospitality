@@ -1083,9 +1083,22 @@ div.paper_invoice
   div.customer_details
     :padding 50px 0px 20px 0px
     :float left
-
+      
+  table.taxes,
+  table.payment_methods
+    :width 50%
+    :border 2px solid #7e868a
+    :border-collapse collapse
+    td, th
+      :border 1px solid #7e868a
+      :padding 3px
+      
+  div.invoice_footer
+    :font-size 80%
+    
   table
     :width 100%
+    :font-size 90%
     :border 2px solid #7e868a
     :border-collapse collapse
     td, th
@@ -1103,18 +1116,6 @@ div.paper_invoice
       :width 3%
     .wide
       :width 90px
-      
-  table.taxes,
-  table.payment_methods
-    :width 50%
-    :border 2px solid #7e868a
-    :border-collapse collapse
-    td, th
-      :border 1px solid #7e868a
-      :padding 3px
-      
-  div.invoice_footer
-    :font-size 80%
 
 
 
