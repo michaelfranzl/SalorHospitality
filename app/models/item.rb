@@ -111,7 +111,7 @@ class Item < ActiveRecord::Base
         if tax_item
           tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
         else
-          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum
+          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
         end
       end
     end
@@ -126,16 +126,6 @@ class Item < ActiveRecord::Base
     end
     p
   end
-
-#  def tax
-#    t = Tax.find_by_id (read_attribute :tax_id)
-#    return t if t
-#    t = self.order.tax if self.order
-#    return t if t
-#    t = self.article.tax if self.article
-#    return t if t
-#    return self.article.category.tax if self.article
-#  end
 
   def count=(count)
     c = count.to_i

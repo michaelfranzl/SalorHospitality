@@ -233,7 +233,8 @@ regenerate_all_multi_season_booking_items = () ->
       set_json 'booking', k, 'hidden', true
     else
       items_json[k].has_children = false
-      items_json[k].duration = submit_json.model.covered_seasons[0].duration
+      set_json 'booking', k, 'duration', submit_json.model.covered_seasons[0].duration
+      #items_json[k].duration = submit_json.model.covered_seasons[0].duration
     return true
   $.each items_json, (k,v) ->
     regenerate_multi_season_booking_items(k)

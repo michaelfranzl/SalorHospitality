@@ -134,6 +134,8 @@ it:
         name: Name
         radio_select: Radio Select
         season_id: Season
+        selected: XXX Selected by default
+        visible: XXX Visible?
       tax_amount:
         amount: Amount
         tax_id: Tax
@@ -164,6 +166,7 @@ it:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: XXX Days
       order:
         change_given: Change
       customer:
@@ -652,6 +655,7 @@ it:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -696,6 +700,11 @@ it:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
+    consumations: XXX Consumations
   customers:
     new:
       edit_customer: Edit Customer

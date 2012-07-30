@@ -14,7 +14,11 @@
     %table
       %tr
         %td= tax_form.label('name',Tax.human_attribute_name(:name))
-        %td= tax_form.text_field :name, :size => '20'
+        %td
+          - if @tax.new_record?
+            = tax_form.text_field :name, :size => '20'
+          - else
+            = @tax.name
       %tr
         %td= tax_form.label('percent', Tax.human_attribute_name(:percent))
         %td= tax_form.text_field :percent, :size => '10'

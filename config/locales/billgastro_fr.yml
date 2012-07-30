@@ -94,6 +94,8 @@ fr:
         name: Nom
         radio_select: Sélection unique
         season_id: Saison
+        selected: XXX Selected by default
+        visible: XXX Visible?
       table:
         abbreviation: Abréviation
         description: Description
@@ -328,6 +330,7 @@ fr:
       served_by_X: Vous avez été servi par %{user}
     show:
       search_by_number: Chercher par numéro
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   cancel_and_go_back: Annuler et revenir à la page précédente
   categories:
     create:
@@ -598,13 +601,15 @@ fr:
       edit_season: Modifier saison
       new_season: Nouvelle saison
   send_and_go_back: Enregistrer et revenir à la page précédente
-  served_by_X_on_table_Y: "Vous avez été servi par %{waiter} à %{table}"
+  served_by_X_on_table_Y: Vous avez été servi par %{waiter} à %{table}
   server_no_response: Le serveur de Bill Gastro Server ne répond plus. Soit il est
     occupé, soit le lien radio a été interrompu.
   sessions:
     browser_warning:
       continue: Continuer
-      warning: "Salor ne supporte que les navigateurs suivants: Google Chrome (Windows), Chromium (Linux), et Safari (Apple). S'il vous plaît utilisez un de ceux navigateurs et essayez à nouveau."
+      warning: ! 'Salor ne supporte que les navigateurs suivants: Google Chrome (Windows),
+        Chromium (Linux), et Safari (Apple). S''il vous plaît utilisez un de ceux
+        navigateurs et essayez à nouveau.'
     new:
       email: Votre E-Mail
       login: S'identifier
@@ -684,6 +689,9 @@ fr:
     quantity_abbreviation: XXX Qty.
     interim_invoice: Facture spécimen
     consumations: Consumations
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
   vendors:
     index:
       edit: Modifier

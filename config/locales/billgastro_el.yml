@@ -149,6 +149,8 @@ el:
         name: Όνομα
         radio_select: Επιλογή Ραδιοφώνου
         season_id: Σαιζόν
+        selected: XXX Selected by default
+        visible: XXX Visible?
       tax_amount:
         amount: Ποσό
         tax_id: Φόρος
@@ -179,6 +181,7 @@ el:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: XXX Days
       order:
         change_given: Change
     models:
@@ -653,6 +656,7 @@ el:
       served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών
@@ -697,6 +701,11 @@ el:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
+    consumations: XXX Consumations
   customers:
     new:
       edit_customer: Edit Customer
