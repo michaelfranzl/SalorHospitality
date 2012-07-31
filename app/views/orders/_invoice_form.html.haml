@@ -5,12 +5,12 @@
     - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
       - i += 1
-      %a{:onclick => "update_order({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
+      %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
   - elsif @current_company.mode == 'saas'
-    %a{ :onclick => "update_order({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
+    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
 
   - if not invoice_form.finished
-    %a{ :onclick => "update_order({id:#{oid},jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
+    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
 
 
 
@@ -19,20 +19,20 @@
       - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
       - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
       - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
-        %a{ :onclick => "update_order({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
+        %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
 
       %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
       - if session[:display_tax_colors]
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
           - if invoice_form.tax.nil?
             %option
           = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
       - elsif @current_user.role.permissions.include? 'assign_cost_center'
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
           = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
       - if @current_user.role.permissions.include? 'assign_order_to_booking'
-        %select#order_id{ :onchange => "update_order({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
+        %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
           %option
           = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
@@ -80,16 +80,8 @@
     %div{ :id => "payment_methods_container_#{oid}" }
 
 :javascript
-  submit_json.payment_methods[#{ oid }] = {};
-  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, payment_methods:0 };
-
-  function update_order(data) {
-    data['currentview'] = 'invoice';
-    data['payment_methods'] = submit_json.payment_methods;
-    $.ajax({
-      type: 'post',
-      url: '/orders/update_ajax',
-      data: data,
-      timeout: 5000
-    });
+  submit_json.payment_method_items[#{ oid }] = {};
+  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, payment_method_items:0 };
+  if (permissions.manage_payment_methods) {
+    add_payment_method(#{oid}, null, submit_json.totals[#{oid}].model);
   }

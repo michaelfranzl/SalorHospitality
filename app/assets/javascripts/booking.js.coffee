@@ -452,7 +452,8 @@ update_booking_totals = ->
     true
   $('#booking_total').html number_to_currency total
   booking_id = submit_json.id
-  $('#booking_subtotal').html number_to_currency total + submit_json.totals[booking_id].booking_orders
+  subtotal = total + submit_json.totals[booking_id].booking_orders
+  $('#booking_subtotal').html number_to_currency subtotal
   submit_json.totals[booking_id].model = total
   return total
 

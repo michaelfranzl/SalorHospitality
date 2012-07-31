@@ -185,7 +185,7 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
-    submit_json['payment_methods'] = {};
+    submit_json['payment_method_items'] = {};
     submit_json['totals'] = {};
     submit_json.currentview = 'invoice';
 
@@ -730,17 +730,19 @@ function customer_list_update() {
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
-function show_payment_methods(model_id,allow_delete) {
+
+function show_payment_method_items(model_id,allow_delete) {
   $('#payment_methods_container_' + model_id).slideDown();
-  if (allow_delete)
-    deletable($('#payment_methods_container_' + model_id));
+  add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
+  if (allow_delete) deletable($('#payment_methods_container_' + model_id));
 }
+
 function add_payment_method(model_id,id,amount) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
   pm_row.attr('id', 'payment_method_row' + payment_method_uid);
-  submit_json.payment_methods[model_id][payment_method_uid] = {id:null, amount:0};
+  submit_json.payment_method_items[model_id][payment_method_uid] = {id:null, amount:0};
   var j = 0;
   $.each(resources.pm, function(k,v) {
     j += 1;
@@ -748,16 +750,16 @@ function add_payment_method(model_id,id,amount) {
     pm_button.addClass('payment_method');
     pm_button.html(v.n);
     if ( !id && j == 1 ) {
-      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      submit_json.payment_method_items[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     } else if (id == v.id) {
-      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      submit_json.payment_method_items[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     }
     (function() {
       var uid = payment_method_uid;
       pm_button.on('click', function() {
-        submit_json.payment_methods[model_id][uid].id = v.id;
+        submit_json.payment_method_items[model_id][uid].id = v.id;
         $('#payment_method_row' + uid + ' span').removeClass('selected');
         $(this).addClass('selected');
         $('#payment_method_' + uid + '_amount').select();
@@ -774,8 +776,9 @@ function add_payment_method(model_id,id,amount) {
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
   if (amount) {
     pm_input.val(amount);
-    submit_json.payment_methods[model_id][payment_method_uid].amount = amount;
+    submit_json.payment_method_items[model_id][payment_method_uid].amount = amount;
   }
+  submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;
@@ -799,7 +802,8 @@ function add_payment_method(model_id,id,amount) {
   pm_row.append(pm_input);
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
-      submit_json.payment_methods[model_id][payment_method_uid]._delete = true;
+      submit_json.payment_method_items[model_id][payment_method_uid]._delete = true;
+      payment_method_input_change(pm_input, payment_method_uid, model_id)
       $(this).parent().remove();
     });
   }
@@ -811,13 +815,13 @@ function payment_method_input_change(element, uid, mid) {
   amount = $(element).val();
   amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
-  submit_json.payment_methods[mid][uid]._delete = false;
-  submit_json.payment_methods[mid][uid].amount = parseFloat(amount);
+  //submit_json.payment_method_items[mid][uid]._delete = false;
+  submit_json.payment_method_items[mid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
-  $.each(submit_json.payment_methods[mid], function(k,v) {
-    payment_method_total += v.amount;
+  $.each(submit_json.payment_method_items[mid], function(k,v) {
+    if (v._delete == false) payment_method_total += v.amount;
   });
-  submit_json.totals[mid].payment_methods = payment_method_total;
+  submit_json.totals[mid].payment_method_items = payment_method_total;
   if (submit_json.totals[mid].hasOwnProperty('booking_orders')) {
     booking_order_total  = submit_json.totals[mid].booking_orders;
   } else {
@@ -831,15 +835,15 @@ function payment_method_input_change(element, uid, mid) {
 
 
 function remove_payment_method_by_name(name) {
-  if (!submit_json.payment_methods)
+  if (!submit_json.payment_method_items)
     return;
   npms = [];
-  for (var i in submit_json.payment_methods) {
-    if (!submit_json.payment_methods[i].name == name) {
-      npms.push(submit_json.payment_methods[i]);
+  for (var i in submit_json.payment_method_items) {
+    if (!submit_json.payment_method_items[i].name == name) {
+      npms.push(submit_json.payment_method_items[i]);
     }
   }
-  submit_json.payment_methods = npms;
+  submit_json.payment_method_items = npms;
 }
 
 function increment_item(d) {
@@ -921,7 +925,26 @@ function add_option_to_item(d, value, cat_id) {
   calculate_sum();
 }
 
+function update_order_from_invoice_form(data) {
+  data['currentview'] = 'invoice';
+  data['payment_method_items'] = submit_json.payment_method_items;
+  $.ajax({
+    type: 'post',
+    url: '/orders/update_ajax',
+    data: data,
+    timeout: 5000
+  });
+}
 
+function update_order_from_refund_form(data) {
+  data['currentview'] = 'refund';
+  $.ajax({
+    type: 'post',
+    url: '/orders/update_ajax',
+    data: data,
+    timeout: 5000
+  });
+}
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
@@ -1172,192 +1195,4 @@ function setup_payment_method_keyboad(pmid,id) {
                  }); 
             } } 
           );
-}
-var salor = {};
-salor.functions = {
-  table_from_json: function(source, attrs, target, heading) {
-    create_dom_element('h2',{},heading,target);
-    table = create_dom_element('table', attrs, '', target);
-    header_row = create_dom_element('tr',{},'',table);
-    // get table headers from the first JSON object
-    var first;
-    $.each(source, function(k,v) {
-      first = v;
-      return false; // break after the first element, since we only need the headers
-    })
-    // render the table header
-    var headers = Object.keys(first);
-    var sums = {};
-    create_dom_element('td', {class:'link'}, '', header_row);
-    for (i in headers) {
-      create_dom_element('th',{},headers[i],header_row);
-      sums[headers[i]] = 0; // initialize sums for each column
-    }
-    // render the table body
-    $.each(source, function(k,v) {
-      data_row = create_dom_element('tr', {}, '', table);
-      create_dom_element('td', {class:'link'}, k, data_row);
-      for (j in v) {
-        create_dom_element('td', {}, number_to_currency(v[j]), data_row);
-        sums[j] += v[j];
-      }
-    })
-    //render thr table footer
-    footer_row = create_dom_element('tr', {}, '', table);
-    create_dom_element('th', {}, '', footer_row);
-    for (i in headers) {
-      create_dom_element('th',{},number_to_currency(sums[headers[i]]), footer_row);
-    }
-  }
-}
-
-/* Season Object Code */
-var Season = function (s,e) {
-  var start = s.split(',')
-  for (var i = 0; i < start.length;i++) { start[i] = parseInt(start[i]); }
-  this.start = new Date();
-  this.start.setMonth(start[1] - 1);
-  this.start.setDate(start[0]);
-  var end = e.split(',');
-  for (var i = 0; i < end.length;i++) { end[i] = parseInt(end[i]); }
-  this.end = new Date();
-  this.end.setMonth(end[1] - 1);
-  this.end.setDate(end[0]);
-}
-
-Season.prototype.get_days = function (start,end) {
-  if (this.interested(start,end)) {
-    var days = 0;
-    var cdate = new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate() + 1);
-    if (cdate < start) {
-      while (cdate < start) {
-        cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
-      }
-    }
-    while (cdate <= this.end && cdate <= end) {
-      days++;
-      cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
-    }
-    return days;
-  } else {
-    return 0;
-  }
-}
-
-Season.prototype.get_total = function (start,end,cost_per_day) {
-  var days = this.get_days(start,end);
-  return days * cost_per_day;
-}
-
-Season.prototype.intersects_with = function (season) {
-  return ( (season.start >= this.start && season.start <= this.end) || (season.end >= this.start && season.end <= this.end) )
-}
-
-Season.prototype.contains = function (season) {
-  return ( (season.start >= this.start && season.start <= this.end) && (season.end >= this.start && season.end <= this.end) )
-}
-
-Season.prototype.interested = function (start,end) {
-  var ts = new Date(start);
-  var te = new Date(end);
-  while (ts <= te) {
-    if ((ts >= this.start && ts <= this.end) || (te <= this.end && te >= this.start)) {
-      return true;
-    }
-    ts = new Date(ts.getFullYear(),ts.getMonth(),ts.getDate() + 1);
-    te = new Date(te.getFullYear(),te.getMonth(),te.getDate() - 1);
-  }
-  return false;
-}
-
-Season.applying_seasons = function (seasons,b_start,b_end) {
-  var new_seasons = [];
-  for (var i = 0; i < seasons.length; i++) {
-    var s = seasons[i];
-    if (s.interested(b_start,b_end)) {
-      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: parseInt(s.id), duration: s.get_days(b_start,b_end)};
-      new_seasons.push(ns);
-    }
-  }
-  return new_seasons;
-}
-Season.md = function (date) {
-  return (date.getMonth() + 1) + "," + date.getDate();
-}
-Season.merge = function (seasons,new_seasons) {
-  for (var i = 0; i < new_seasons.length; i++) {
-    seasons.push(new_seasons[i]);
-  }
-}
-Season.splice = function (season1,season2) {
-  var new_seasons = [];
-  var new_end_date = season1.start;
-  while (new_end_date < season2.start) {
-    new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate() + 1);
-  }
-  new_end_date = new Date(new_end_date.getFullYear(),new_end_date.getMonth(),new_end_date.getDate());
-  var new_left_side = new Season("00,00","00,00");
-  new_left_side.id = season1.id;
-  new_left_side.side = 'left';
-  new_left_side.name = season1.name;
-  new_left_side.start = season1.start;
-  new_left_side.end = new_end_date;
-  new_seasons.push(new_left_side);
-  new_seasons.push(season2);
-  var new_start_date = new Date(season2.end.getFullYear(),season2.end.getMonth(),season2.end.getDate());
-  if (new_start_date < season1.end) {
-    var new_right_side = new Season("00,00","00,00");
-    new_right_side.id = season1.id;
-    new_right_side.side = 'right';
-    new_right_side.name = season1.name;
-    new_right_side.start = new_start_date;
-    new_right_side.end = season1.end;
-    new_seasons.push(new_right_side);
-  }
-  return new_seasons;
-}
-
-function create_season_objects(seasons) {
-  var new_seasons = [];
-  $.each(seasons, function (id,season) {
-    var s       =  new Season("00,00","00,00");
-    s.start     = new Date(Date.parse(season.f));
-    s.end       = new Date(Date.parse(season.t));
-    if (s.end < s.start) {
-      s.end.setFullYear(s.start.getFullYear() + 1);
-    }
-    s.id        = id;
-    s.name      = season.n;
-    new_seasons.push(s);
-  });
-  new_seasons.sort(function (a,b) {
-    if (a.start < b.start) {
-      return -1;
-    } else if (a.start == b.start) {
-      return 0;
-    } else if (a.start > b.start) {
-      return 1;
-    }
-  });
-  var really_new_seasons = [];
-  for (var i = 0; i < new_seasons.length; i++) {
-    var s1 = new_seasons[i];
-    var s2 = new_seasons[i+1];
-    if (s1 && s2 && s1.intersects_with(s2)) {
-      Season.merge(really_new_seasons,Season.splice(s1,s2));
-    } else if (s1 && s2 && s2.intersects_with(s1)) {
-      Season.merge(really_new_seasons,Season.splice(s2,s1));
-    } else {
-      really_new_seasons.push(s1);
-    }
-  }
-  var tmp = {};
-  for (i=0;i<really_new_seasons.length; i++) {
-    var s = really_new_seasons[i];
-    tmp[s.name + s.start + s.end] = s;
-  }
-  really_new_seasons = [];
-  for (key in tmp)
-    really_new_seasons.push(tmp[key]);
-  return really_new_seasons;
 }

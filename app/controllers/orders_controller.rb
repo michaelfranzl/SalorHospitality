@@ -77,7 +77,7 @@ class OrdersController < ApplicationController
             render :nothing => true and return
         end
       when 'invoice'
-        @order = get_model
+        @order = get_order
         case params['jsaction']
           when 'display_tax_colors'
             if session[:display_tax_colors]
@@ -111,18 +111,15 @@ class OrdersController < ApplicationController
               render :js => "route('booking',#{@booking.id});" and return
             end
           when 'pay_and_print'
-            create_payment_method_items @order
             @order.pay
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print_pending'
-            create_payment_method_items @order
             @order.pay
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
             redirect_from_invoice and return
           when 'pay_and_no_print'
-            create_payment_method_items @order
             @order.pay
             redirect_from_invoice and return
         end
@@ -196,7 +193,6 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            create_payment_method_items @booking
             unless @booking.booking_items.existing.any?
               @booking.hide(@current_user.id)
             end
@@ -205,26 +201,22 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            create_payment_method_items @booking
             @booking.pay
             render :js => "route('rooms');" and return
           when 'send_and_go_to_table'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            create_payment_method_items @booking
             render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
           when 'send_and_redirect_to_invoice'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            create_payment_method_items @booking
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
           when 'pay_and_redirect_to_invoice'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            create_payment_method_items @booking
             @booking.pay
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
             
@@ -268,36 +260,6 @@ class OrdersController < ApplicationController
       end
     end
 
-    def create_payment_method_items(associated_object)
-      if params['payment_methods']
-        if associated_object.class == Order
-          order_id = associated_object.id
-          booking_id = nil
-        elsif associated_object.class == Booking
-          order_id = nil
-          booking_id = associated_object.id
-        end
-        if params['payment_methods'].any? then
-          associated_object.payment_method_items.clear
-        end
-        params['payment_methods'][params['id']].to_a.each do |pm|
-          if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s != 'true'
-            PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => order_id, :booking_id => booking_id, :vendor_id => @current_vendor.id, :company_id => @current_company.id
-          end
-        end
-      end
-    end
-
-
-    def reduce_stocks(order)
-      order.items.exisiting.each do |item|
-        item.article.ingredients.each do |ingredient|
-          ingredient.stock.balance -= item.count * ingredient.amount
-          ingredient.stock.save
-        end
-      end
-    end
-
     def get_order
       if params[:id]
         @order = get_model
@@ -313,6 +275,7 @@ class OrdersController < ApplicationController
         @order = Order.create_from_params(params, @current_vendor, @current_user)
         @order.set_nr
       end
+      return @order
     end
 
     def get_booking
@@ -323,5 +286,6 @@ class OrdersController < ApplicationController
         @booking = Booking.create_from_params(params, @current_vendor, @current_user)
         @booking.set_nr
       end
+      return @booking
     end
 end

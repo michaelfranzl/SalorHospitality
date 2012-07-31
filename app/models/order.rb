@@ -54,17 +54,12 @@ class Order < ActiveRecord::Base
       order.items << new_item
     end
     order.save
+    order.update_payment_method_items(params)
     return order
   end
 
   def update_from_params(params)
     self.update_attributes params[:model]
-    if params[:payment_methods] then
-      self.payment_methods.clear
-      params[:payment_methods].each do |pm|
-        self.payment_methods << PaymentMethod.new(pm)
-      end
-    end
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
@@ -80,6 +75,18 @@ class Order < ActiveRecord::Base
         new_item.calculate_totals
         self.items << new_item
         self.save
+      end
+    end
+    self.update_payment_method_items(params)
+  end
+  
+  def update_payment_method_items(params)
+    if params[:payment_method_items] then
+      self.payment_method_items.clear
+      params['payment_method_items'][params['id']].to_a.each do |pm|
+        if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s != 'true'
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id
+        end
       end
     end
   end
