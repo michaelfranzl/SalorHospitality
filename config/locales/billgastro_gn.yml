@@ -724,6 +724,9 @@ gn:
     new:
       edit_vendor: Restaurant bearbeiten
       new_vendor: Neues Restaurant
+    form:
+      add_printer: Drucker hinzufügen
+      identify_printers: Drucker identifizieren
   violet: Violett
   waiter: Kellner
   waiterpad_generic_name: Bestellblock

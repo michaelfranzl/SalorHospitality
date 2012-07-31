@@ -122,4 +122,9 @@ class VendorsController < ApplicationController
     render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}]}"
     #render :json => "[#{items_json_string}]"
   end
+  
+  def identify_printers
+    Printr.new.identify
+    render :nothing => true
+  end
 end

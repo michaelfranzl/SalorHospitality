@@ -716,6 +716,9 @@ en:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identiify_printers: Identify Printers
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad

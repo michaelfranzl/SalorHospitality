@@ -72,6 +72,7 @@
         - if @current_company.mode == 'local'
           %div#vendor_printers
             %h3= t('activerecord.models.vendor_printer.other')
+            %span#identify_printers.link= t '.identify_printers'
             %p#add_printer
               %span.link= t '.add_printer'
             = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
@@ -83,4 +84,10 @@
   $('#add_printer').click(function(){
     var new_printer_id = new Date().getTime();
     $('#vendor_printers').append(printer_template.replace(/NEW_RECORD/g, 'new_' + new_printer_id));
+  });
+
+  $('#identify_printers').click(function(){
+    $.ajax({
+      url: '/vendors/identify_printers'
+    });
   });
