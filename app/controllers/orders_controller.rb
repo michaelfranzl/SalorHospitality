@@ -116,15 +116,18 @@ class OrdersController < ApplicationController
             end
           when 'pay_and_print'
             @order.pay
+            @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             redirect_from_invoice and return
           when 'pay_and_print_pending'
             @order.pay
+            @order.reload
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
             redirect_from_invoice and return
           when 'pay_and_no_print'
             @order.pay
+            @order.reload
             redirect_from_invoice and return
         end
       when 'table'

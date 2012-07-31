@@ -11,6 +11,7 @@ en:
         duration: Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -598,6 +599,10 @@ en:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -701,6 +706,9 @@ en:
     hotel: Hotel
     consumations: Consumations
     report: Report
+    begin: Begin
+    end: End
+    time: Time
   vendors:
     index:
       edit: Edit

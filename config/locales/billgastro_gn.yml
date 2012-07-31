@@ -18,6 +18,7 @@ gn:
         duration: Tage
       order:
         change_given: Wechselgeld
+        nr: Nummmer
       customer:
         first_name: Vorname
         last_name: Nachname
@@ -542,9 +543,9 @@ gn:
       edit_customer: Kunde bearbeiten
       new_customer: Neuer Kunde
     create:
-      success: Customer successfully saved
+      success: Kunde erfolgreich gespeichert
     destroy:
-      success: Customer successfully deleted
+      success: Kunde erfolgreich gelöscht
   roles:
     create:
       success: Rolle erfolgreich gespeichert
@@ -605,6 +606,10 @@ gn:
     new:
       edit_room: Zimmer bearbeiten
       new_room: Neues Zimmer
+    create:
+      success: Zimmer erfolgreich gespeichert
+    destroy:
+      success: Zimmer erfolgreich gelöscht
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock
@@ -709,6 +714,9 @@ gn:
     hotel: Hotel
     consumations: Konsumationen
     report: Bericht
+    begin: Anfang
+    end: Ende
+    time: Zeit
   vendors:
     index:
       edit: bearbeiten

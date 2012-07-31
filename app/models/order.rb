@@ -42,14 +42,14 @@ class Order < ActiveRecord::Base
   def self.create_from_params(params, vendor, user)
     order = Order.new params[:model]
     order.user = user
-    order.cost_center = vendor.cost_centers.existing.active.first
+    #order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
       new_item.vendor = vendor
       new_item.company = vendor.company
-      new_item.cost_center = order.cost_center
+      #new_item.cost_center = order.cost_center
       new_item.calculate_totals
       order.items << new_item
     end
@@ -71,7 +71,7 @@ class Order < ActiveRecord::Base
         new_item = Item.new(item_params[1])
         new_item.vendor = self.vendor
         new_item.company = self.company
-        new_item.cost_center = self.cost_center
+        #new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item
         self.save
@@ -294,10 +294,10 @@ class Order < ActiveRecord::Base
     init =
     "\e@"     +  # Initialize Printer
     "\e!" + fontstyle.chr +
-    "\n\n\n"
+    "\n\n\n\n\n"
 
     cut =
-    "\n\n\n\n" +
+    "\n\n\n\n\n\n" +
     "\x1D\x56\x00" +        # paper cut
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 

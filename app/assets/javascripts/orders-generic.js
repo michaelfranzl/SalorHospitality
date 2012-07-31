@@ -927,26 +927,6 @@ function add_option_to_item(d, value, cat_id) {
   calculate_sum();
 }
 
-function update_order_from_invoice_form(data) {
-  data['currentview'] = 'invoice';
-  data['payment_method_items'] = submit_json.payment_method_items;
-  $.ajax({
-    type: 'post',
-    url: '/orders/update_ajax',
-    data: data,
-    timeout: 5000
-  });
-}
-
-function update_order_from_refund_form(data) {
-  data['currentview'] = 'refund';
-  $.ajax({
-    type: 'post',
-    url: '/orders/update_ajax',
-    data: data,
-    timeout: 5000
-  });
-}
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
