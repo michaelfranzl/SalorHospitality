@@ -1,4 +1,5 @@
-%h2.current_user= @current_user.login
+- if workstation?
+  %h2.current_user= @current_user.login
 
 - unless workstation?
   #areas= render 'areas'

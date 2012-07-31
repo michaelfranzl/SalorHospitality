@@ -572,10 +572,12 @@ function show_customers(append_to) {
   qcontainer.addClass('quantities');
   var search_box = $('<input id="customer_search_input" value="" />');
   search_box.change(onCustomerSearchAccept);
-  search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
-  search_box.click(function(){
-    search_box.getkeyboard().reveal();
-  });
+  if (settings.workstation) {
+    search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+    search_box.click(function(){
+      search_box.getkeyboard().reveal();
+    });
+  }
   qcontainer.append(search_box);
   for (i in customers_json) {
     qcontainer = add_customer_button(qcontainer,customers_json[i],true);
