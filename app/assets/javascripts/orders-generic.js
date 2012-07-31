@@ -114,16 +114,16 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.model = {table_id:model_id};
+      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model.table_id = model_id;
+      submit_json.model = {table_id:model_id};
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
-      submit_json.model = {table_id:model_id};
+      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model.table_id = model_id;
+      submit_json.model = {table_id:model_id};
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
@@ -1140,8 +1140,7 @@ function change_item_status(id,status) {
 /* ========================================================*/
 
 function add_customers_button() {
-  if(_get('customers.button_added'))
-    return
+  if(_get('customers.button_added')) return
   opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
   add_category_button(i18n.customers, opts);
   _set('customers.button_added',true);

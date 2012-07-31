@@ -105,6 +105,10 @@ class OrdersController < ApplicationController
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
             @booking.calculate_totals
+            orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+            if orders.empty?
+              @order.table.update_attribute :user, nil
+            end
             if mobile?              
               redirect_from_invoice and return
             else

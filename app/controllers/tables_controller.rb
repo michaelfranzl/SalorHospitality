@@ -34,7 +34,7 @@ class TablesController < ApplicationController
       if @orders.size > 1
         @cost_centers = @current_vendor.cost_centers.existing.active
         @taxes = @current_vendor.taxes.existing
-        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
+        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
         render 'orders/go_to_invoice_form'
       else
         @order = @orders.first

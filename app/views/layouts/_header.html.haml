@@ -8,8 +8,9 @@
   .adminlinks
     = link_to( t('various.restaurant'), '/orders', :class => 'special')
     - if @current_user.role.permissions.include? 'manage_hotel'
-      = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special') 
-    = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
+      = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
+    - if controller.controller_name == 'orders'
+      = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
     = link_to( t('activerecord.models.table.other'), main_app.tables_path) if perms.include? 'manage_tables'
     = link_to( t('activerecord.models.category.other'), main_app.categories_path) if perms.include? 'manage_categories'
     = link_to( t('activerecord.models.article.other'), main_app.articles_path) if perms.include? 'manage_articles'
