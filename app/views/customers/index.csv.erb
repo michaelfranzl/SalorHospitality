@@ -1,4 +1,4 @@
 <%= "id;first_name;last_name;company_name;address;city;state;country;postalcode;m_number;m_points;email;telephone;cellphone" %>
 <% @customers.each do |i| -%>
-<%= sprintf('%u;%s;%s;%s;%s;%s;%s;%s;%s;%s;%u;%s;%s;%s;', i.id, i.first_name, i.last_name, i.company_name, i.address, i.city, i.state, i.country, i.postalcode, i.m_number, i.m_points, i.email, i.telephone, i.cellphone) %>
+<%= sprintf('%u;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;', i.id, i.first_name, i.last_name, i.company_name, i.address, i.city, i.state, i.country, i.postalcode, i.m_number, i.m_points, i.email, i.telephone, i.cellphone) %>
 <% end -%>
