@@ -92,7 +92,8 @@ class VendorsController < ApplicationController
       :decrement_items => @current_user.role.permissions.include?("decrement_items"),
       :item_scribe => @current_user.role.permissions.include?("item_scribe"),
       :see_item_notifications => @current_user.role.permissions.include?("see_item_notifications"),
-      :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods")
+      :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods"),
+      :manage_customers => @current_user.role.permissions.include?("manage_customers")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

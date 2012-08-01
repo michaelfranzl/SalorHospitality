@@ -1124,6 +1124,7 @@ function change_item_status(id,status) {
 
 function add_customers_button() {
   if(_get('customers.button_added')) return
+  if(!permissions.manage_customers) return
   opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
   add_category_button(i18n.customers, opts);
   _set('customers.button_added',true);
