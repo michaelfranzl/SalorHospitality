@@ -20,11 +20,6 @@
   $('#add_payment_method_button').on('click', function() { 
     show_payment_method_items(<%= @booking.id %>,true); 
     add_button_menu($('.payment_methods_container'));
-    <% if @booking.payment_method_items.any? then %>
-      <% @booking.payment_method_items.each do |pm|%>
-        add_payment_method(<%= @booking.id %>,<%= pm.payment_method_id %>, <%= pm.amount %>);
-      <% end %>
-    <% end %>
   });
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => @booking }) %>');
   submit_json.model.room_id = <%= @booking.room_id %>;
@@ -37,6 +32,11 @@
   window.booking_dates_changed();
   window.render_booking_items_from_json();
   $('#choose_room').val(<%= @booking.room_id %>);
+  <% if @booking.payment_method_items.any? then %>
+    <% @booking.payment_method_items.each do |pm|%>
+      add_payment_method(<%= @booking.id %>,<%= pm.payment_method_id %>, <%= pm.amount %>);
+    <% end %>
+  <% end %>
 <% else %>
   submit_json.id = 0;
   submit_json['payment_method_items'] = {0:{}};

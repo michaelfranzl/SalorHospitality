@@ -734,8 +734,8 @@ function customer_list_update() {
 /* ========================================================*/
 
 function show_payment_method_items(model_id,allow_delete) {
-  $('#payment_methods_container_' + model_id).slideDown();
-  add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
+  $('#payment_methods_container_' + model_id).show();
+  if ($.isEmptyObject(submit_json.payment_method_items[model_id]) == true) add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
   if (allow_delete) deletable($('#payment_methods_container_' + model_id));
 }
 

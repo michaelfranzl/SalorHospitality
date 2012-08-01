@@ -84,7 +84,7 @@ class Order < ActiveRecord::Base
     if params[:payment_method_items] then
       self.payment_method_items.clear
       params['payment_method_items'][params['id']].to_a.each do |pm|
-        if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s != 'true'
+        if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
           PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id
         end
       end
