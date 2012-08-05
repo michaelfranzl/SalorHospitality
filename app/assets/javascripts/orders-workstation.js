@@ -14,9 +14,6 @@ var screenlock_counter = -1;
 $(function(){
   //$('#admin').slideUp();
 
-  admin_report_link = create_dom_element('a',{href:'#'},'Report','.adminlinks');
-  admin_report_link.on('click', gastro.functions.report.display_popup );
-
   $("#customer_search").keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();

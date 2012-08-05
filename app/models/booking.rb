@@ -72,6 +72,7 @@ class Booking < ActiveRecord::Base
       new_item.to_date = booking.to_date
       new_item.ui_id = item_params[0]
       new_item.booking = booking
+      new_item.room_id = booking.room.id
       new_item.save
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
       new_item.calculate_totals
@@ -79,6 +80,7 @@ class Booking < ActiveRecord::Base
     booking.save
     booking.calculate_totals
     BookingItem.make_multiseason_associations
+    booking.update_payment_method_items(params)
     return booking
   end
 
@@ -92,12 +94,14 @@ class Booking < ActiveRecord::Base
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        item.update_attribute :ui_id, item_params[0]
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
         new_item.from_date = self.from_date
         new_item.to_date = self.to_date
         new_item.ui_id = item_params[0]
+        new_item.room_id = self.room.id
         new_item.save
         self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
@@ -106,6 +110,18 @@ class Booking < ActiveRecord::Base
     end
     BookingItem.make_multiseason_associations
     self.save
+    self.update_payment_method_items(params)
+  end
+  
+  def update_payment_method_items(params)
+    if params[:payment_method_items] then
+      self.payment_method_items.clear
+      params['payment_method_items'][params['id']].to_a.each do |pm|
+        if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id
+        end
+      end
+    end
   end
 
   def from=(from)
@@ -127,7 +143,9 @@ class Booking < ActiveRecord::Base
   end
 
   def finish
-    self.update_attribute :finished, true
+    self.finished = true
+    self.finished_at = Time.now
+    self.save
   end
 
   def update_associations(user)
@@ -142,7 +160,7 @@ class Booking < ActiveRecord::Base
     booking_items_hash = {}
     self.booking_items.existing.each do |i|
       d = i.booking_item_id ? "x#{i.id}" : "i#{i.id}"
-      parent_id = i.booking_item_id ? "i#{i.booking_item_id}" : nil
+      parent_key = i.booking_item_id ? "i#{i.booking_item_id}" : nil
       surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
       surcharges_hash = {}
       surcharges.each do |s|
@@ -150,7 +168,7 @@ class Booking < ActiveRecord::Base
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_id => parent_id, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end

@@ -71,5 +71,7 @@ class ItemsController < ApplicationController
     @item.update_attribute params[:attribute], params[:value]
     render :nothing => true
   end
+  
+
 
 end

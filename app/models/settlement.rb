@@ -44,33 +44,36 @@ class Settlement < ActiveRecord::Base
   end
 
   def escpos
+    friendly_unit = I18n.t('number.currency.format.friendly_unit')
     string =
     "\e@"     +  # Initialize Printer
+    "\ea\x00" +  # align left
     "\e!\x38"    # doube tall, double wide, bold
 
     title = "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.id }\n#{ self.user.login }\n\n"
 
     string += title +
-    "\ea\x00" +  # align left
     "\e!\x00"    # Font A
 
-    string += "Gestartet:     #{ I18n.l(self.created_at, :format => :datetime_iso) }\n"
-    string += "Abgeschlossen: #{ I18n.l(self.updated_at, :format => :datetime_iso) }\n"
+    string += "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)]
+    string += "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)]
 
-    string += "\nBestnr. Tisch   Zeit  Kostenstelle   Summe\n"
+    string += "\n#{ Order.human_attribute_name :nr } #{ I18n.t 'activerecord.models.table.one' }   #{ I18n.t 'various.time' }  #{ I18n.t 'activerecord.models.cost_center.one' }   #{ I18n.t :sum }\n"
 
     total_costcenter = Hash.new
     costcenters = self.vendor.cost_centers.existing.active
     costcenters.each { |cc| total_costcenter[cc.id] = 0 }
+    total_costcenter[0] = 0 # for orders without cost_center
 
     list_of_orders = ''
     refund_total = 0
     self.orders.existing.each do |o|
       cc = o.cost_center.name if o.cost_center
       t = I18n.l(o.created_at, :format => :time_short)
-      nr = o.nr ? o.nr : 0 # fail save
+      nr = o.nr ? o.nr : 0 # failsafe
       list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [nr, o.table.name, t, cc, o.sum]
-      total_costcenter[o.cost_center.id] += o.sum if o.cost_center
+      cid = o.cost_center_id ? o.cost_center_id : 0
+      total_costcenter[cid] += o.sum
       refund_total += o.refund_sum
     end
 
@@ -80,14 +83,15 @@ class Settlement < ActiveRecord::Base
     "\ea\x02"    # align right
 
     list_of_costcenters = ''
+    list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
     costcenters.each do |cc|
-      list_of_costcenters += "%s:  EUR %9.2f\n" % [cc.name, total_costcenter[cc.id]]
+      list_of_costcenters += "%s:  #{ friendly_unit } %9.2f\n" % [cc.name, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
     end
 
     string += list_of_costcenters
-    initial_cash = self.initial_cash ? "\nStartbetrag:  EUR %9.2f\n" % [self.initial_cash] : ''
-    revenue = self.revenue ? "Endbetrag:  EUR %9.2f\n" % [self.revenue] : ''
-    refund = "Refund:  EUR %9.2f\n" % [refund_total]
+    initial_cash = self.initial_cash ? "\n#{ I18n.t 'various.begin' }:  #{ friendly_unit } %9.2f\n" % [self.initial_cash] : ''
+    revenue = self.revenue ? "#{ I18n.t 'various.end' }:  #{ friendly_unit } %9.2f\n" % [self.revenue] : ''
+    refund = refund_total > 0 ? "#{ I18n.t :refund }:  #{ friendly_unit } %9.2f\n" % [refund_total] : ''
 
     string += initial_cash + revenue + refund +
 

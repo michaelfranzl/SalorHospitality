@@ -35,9 +35,6 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = timeout_update_item_lists;
 var counter_refresh_queue = timeout_refresh_queue;
-
-var gastro = {functions:{ report:{} }, variables:{report:{}}};
-var salor = {functions: {}, variables: {}};
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -50,7 +47,7 @@ $(function(){
   }
   if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
   
-  //automatically route to widgets depending on uri parameters
+  //automatically route to views depending on uri parameters
   var uri_attrs = uri_attributes();
   if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
   if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
@@ -64,7 +61,7 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
-  console.log(target + ' ' + model_id + ' ' + action);
+  //console.log(target + ' ' + model_id + ' ' + action);
   scroll_to($('#container'),20);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
@@ -117,16 +114,16 @@ function route(target, model_id, action, options) {
     $('#quantities').html('');
     if (action == 'send') {
       submit_json.jsaction = 'send';
-      submit_json.model = {table_id:model_id};
+      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model.table_id = model_id;
+      submit_json.model = {table_id:model_id};
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send_and_print';
-      submit_json.model = {table_id:model_id};
+      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model.table_id = model_id;
+      submit_json.model = {table_id:model_id};
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
@@ -188,7 +185,7 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
-    submit_json['payment_methods'] = {};
+    submit_json['payment_method_items'] = {};
     submit_json['totals'] = {};
     submit_json.currentview = 'invoice';
 
@@ -252,12 +249,17 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#invoices').hide();
     $('#functions_header_index').hide();
-    submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
+    if (typeof(options) == 'undefined') {
+      room_id = null;
+    } else {
+      room_id = options.room_id;
+    }
+    submit_json = {currentview:'room', model:{room_id:room_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
     $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
-    window.display_booking_form(model_id);
+    window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
   } else if (target == 'redirect') {
@@ -361,7 +363,7 @@ function create_json_record(model, object) {
   if (model == 'order') {
     items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
   } else if (model == 'booking') {
-    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_id:object.parent_id, has_children:false, surcharges:{}}
+    items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_key:object.parent_key, has_children:false, surcharges:{}}
   }
   if ( ! object.hasOwnProperty('qi')) { delete items_json[d].qi; }
   create_submit_json_record(model,d,items_json[d]);
@@ -410,7 +412,7 @@ function create_submit_json_record(model, d, object) {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object));
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object)).replace(/CATID/g, catid);
     $('#itemstable').append(tablerow);
     if (object.p == 0) {
       $('#tablerow_' + object.d + '_label').addClass('zero_price');
@@ -435,71 +437,31 @@ function scribe_image(object) {
 /* ===================================================================*/
 /* ======= RENDERING ARTICLES, QUANTITIES, ITEMS               =======*/
 /* ===================================================================*/
-/*
- * find_customer(needle); Searches the customer lookup table
- * for an instance where name.indexOf(needle) != -1
- * returns -1 is there is nothing like it, and -2 if there is no secondary index
- * in theory, lookups should be much faster when the list of customers is very large,
- * this way, it is unecessary to loop through every entry, entries are thus grouped
- * into a 26 long array, where each entry is 26 deep, followed by an array of object
- * entries.
- * {
- *   d: {
- *      do: [
- *        {
- *          id: 1,
- *          name: "Doe, John"
- *        }
- *      ]
- *   },
- *   m: {
- *    ma: [
- *      {
- *        id: 2,
- *        name: "Martin, Jason"
- *      }
- *    ]
- *   }
- * }
- * */
+
+
 function find_customer(text) {
-  console.log(text);
-   var i = 0;
-   var c = text[i];
-   var results = [];
-   if (resources.customers[c]) {
-        c2 = c + text[i+1];
-        if (resources.customers[c][c2]) {
-            for (var j in resources.customers[c][c2]) {
-                if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
-                  results.push(resources.customers[c][c2][j]);
-                }
-            }
-            return results;
-        } else {
-            return -2;
+  // console.log(text);
+  var i = 0;
+  var c = text[i];
+  var results = [];
+  if (resources.customers[c]) {
+    c2 = c + text[i+1];
+    if (resources.customers[c][c2]) {
+      for (var j in resources.customers[c][c2]) {
+        if (resources.customers[c][c2][j].name.toLowerCase().indexOf(text) != -1) {
+          results.push(resources.customers[c][c2][j]);
         }
+      }
+      return results;
     } else {
-        return -1;
+        return -2;
     }
+  } else {
+    return -1;
+  }
 }
-/*
- * add_category_button(label,options); Adds a new category button.
- * options is a hash like so:
- * {
- *    id: "the_html_id_youd_like",
- *    handlers: {
- *      mouseup: function (event) { alert('mouseup fired'); }
- *      ...
- *    },
- *    bgcolor: '205,0,82',
- *    bgimage: '/images/myimage.png',
- *    border: {
- *      top: '205,0,85',
- *      ... bottom, left, right etc.
- *    }
- * }
- * */
+
+
 function add_category_button(label,options) {
     var cat = $('<div id="'+options.id+'" class="category"></div>');
     var cat_label = '<div class="category_label"><span>'+label+'</span></div>';
@@ -543,7 +505,7 @@ function add_category_button(label,options) {
 }
 
 function customer_search(term) {
-  console.log("customer_search called with " + term);
+  //console.log("customer_search called with " + term);
   var c = term.substr(0,1).toLowerCase();
   var c2 = term.substr(0,2).toLowerCase();
   var results = [];
@@ -610,10 +572,12 @@ function show_customers(append_to) {
   qcontainer.addClass('quantities');
   var search_box = $('<input id="customer_search_input" value="" />');
   search_box.change(onCustomerSearchAccept);
-  search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
-  search_box.click(function(){
-    search_box.getkeyboard().reveal();
-  });
+  if (settings.workstation) {
+    search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+    search_box.click(function(){
+      search_box.getkeyboard().reveal();
+    });
+  }
   qcontainer.append(search_box);
   for (i in customers_json) {
     qcontainer = add_customer_button(qcontainer,customers_json[i],true);
@@ -730,7 +694,7 @@ function add_new_item(object, add_new, anchor_d) {
   } else {
     d = create_json_record('order', object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, ''));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -768,17 +732,20 @@ function customer_list_update() {
 /* ========================================================*/
 /* ================== POS FUNCTIONALITY ===================*/
 /* ========================================================*/
-function show_payment_methods(model_id,allow_delete) {
-  $('#payment_methods_container_' + model_id).slideDown();
-  if (allow_delete)
-    deletable($('#payment_methods_container_' + model_id));
+
+function show_payment_method_items(model_id,allow_delete) {
+  $('#payment_methods_container_' + model_id).attr('style', 'overflow: visible;');
+  $('#payment_methods_container_' + model_id).show();
+  if ($.isEmptyObject(submit_json.payment_method_items[model_id]) == true) add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
+  if (allow_delete) deletable($('#payment_methods_container_' + model_id));
 }
+
 function add_payment_method(model_id,id,amount) {
   payment_method_uid += 1;
   pm_row = $(document.createElement('div'));
   pm_row.addClass('payment_method_row');
   pm_row.attr('id', 'payment_method_row' + payment_method_uid);
-  submit_json.payment_methods[model_id][payment_method_uid] = {id:null, amount:0};
+  submit_json.payment_method_items[model_id][payment_method_uid] = {id:null, amount:0};
   var j = 0;
   $.each(resources.pm, function(k,v) {
     j += 1;
@@ -786,16 +753,16 @@ function add_payment_method(model_id,id,amount) {
     pm_button.addClass('payment_method');
     pm_button.html(v.n);
     if ( !id && j == 1 ) {
-      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      submit_json.payment_method_items[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     } else if (id == v.id) {
-      submit_json.payment_methods[model_id][payment_method_uid].id = v.id;
+      submit_json.payment_method_items[model_id][payment_method_uid].id = v.id;
       pm_button.addClass('selected');
     }
     (function() {
       var uid = payment_method_uid;
       pm_button.on('click', function() {
-        submit_json.payment_methods[model_id][uid].id = v.id;
+        submit_json.payment_method_items[model_id][uid].id = v.id;
         $('#payment_method_row' + uid + ' span').removeClass('selected');
         $(this).addClass('selected');
         $('#payment_method_' + uid + '_amount').select();
@@ -812,8 +779,9 @@ function add_payment_method(model_id,id,amount) {
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
   if (amount) {
     pm_input.val(amount);
-    submit_json.payment_methods[model_id][payment_method_uid].amount = amount;
+    submit_json.payment_method_items[model_id][payment_method_uid].amount = amount;
   }
+  submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;
@@ -837,7 +805,8 @@ function add_payment_method(model_id,id,amount) {
   pm_row.append(pm_input);
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
-      submit_json.payment_methods[model_id][payment_method_uid]._delete = true;
+      submit_json.payment_method_items[model_id][payment_method_uid]._delete = true;
+      payment_method_input_change(pm_input, payment_method_uid, model_id)
       $(this).parent().remove();
     });
   }
@@ -849,13 +818,13 @@ function payment_method_input_change(element, uid, mid) {
   amount = $(element).val();
   amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
-  submit_json.payment_methods[mid][uid]._delete = false;
-  submit_json.payment_methods[mid][uid].amount = parseFloat(amount);
+  //submit_json.payment_method_items[mid][uid]._delete = false;
+  submit_json.payment_method_items[mid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
-  $.each(submit_json.payment_methods[mid], function(k,v) {
-    payment_method_total += v.amount;
+  $.each(submit_json.payment_method_items[mid], function(k,v) {
+    if (v._delete == false) payment_method_total += v.amount;
   });
-  submit_json.totals[mid].payment_methods = payment_method_total;
+  submit_json.totals[mid].payment_method_items = payment_method_total;
   if (submit_json.totals[mid].hasOwnProperty('booking_orders')) {
     booking_order_total  = submit_json.totals[mid].booking_orders;
   } else {
@@ -869,15 +838,15 @@ function payment_method_input_change(element, uid, mid) {
 
 
 function remove_payment_method_by_name(name) {
-  if (!submit_json.payment_methods)
+  if (!submit_json.payment_method_items)
     return;
   npms = [];
-  for (var i in submit_json.payment_methods) {
-    if (!submit_json.payment_methods[i].name == name) {
-      npms.push(submit_json.payment_methods[i]);
+  for (var i in submit_json.payment_method_items) {
+    if (!submit_json.payment_method_items[i].name == name) {
+      npms.push(submit_json.payment_method_items[i]);
     }
   }
-  submit_json.payment_methods = npms;
+  submit_json.payment_method_items = npms;
 }
 
 function increment_item(d) {
@@ -959,7 +928,6 @@ function add_option_to_item(d, value, cat_id) {
   calculate_sum();
 }
 
-
 /* ========================================================*/
 /* ===================== POS HELPERS ======================*/
 /* ========================================================*/
@@ -983,6 +951,7 @@ function number_to_currency(number) {
 }
 
 function render_options(options, d, cat_id) {
+  //console.log(cat_id);
   if (options == null) return;
   jQuery.each(options, function(key,object) {
     if (settings.workstation) {
@@ -993,6 +962,7 @@ function render_options(options, d, cat_id) {
         var cid = cat_id;
         var o = object;
         button.on('click',function(){
+            //console.log(cid);
           add_option_to_item(d, o.s + '_' + o.id, cid);
         });
       })();
@@ -1153,8 +1123,8 @@ function change_item_status(id,status) {
 /* ========================================================*/
 
 function add_customers_button() {
-  if(_get('customers.button_added'))
-    return
+  if(_get('customers.button_added')) return
+  if(!permissions.manage_customers) return
   opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
   add_category_button(i18n.customers, opts);
   _set('customers.button_added',true);
@@ -1209,178 +1179,3 @@ function setup_payment_method_keyboad(pmid,id) {
             } } 
           );
 }
-
-
-salor.functions = {
-  table_from_json: function(source, attrs, target, heading) {
-    create_dom_element('h2',{},heading,target);
-    table = create_dom_element('table', attrs, '', target);
-    header_row = create_dom_element('tr',{},'',table);
-    // get table headers from the first JSON object
-    var first;
-    $.each(source, function(k,v) {
-      first = v;
-      return false; // break after the first element, since we only need the headers
-    })
-    // render the table header
-    var headers = Object.keys(first);
-    var sums = {};
-    create_dom_element('td', {class:'link'}, '', header_row);
-    for (i in headers) {
-      create_dom_element('th',{},headers[i],header_row);
-      sums[headers[i]] = 0; // initialize sums for each column
-    }
-    // render the table body
-    $.each(source, function(k,v) {
-      data_row = create_dom_element('tr', {}, '', table);
-      create_dom_element('td', {class:'link'}, k, data_row);
-      for (j in v) {
-        create_dom_element('td', {}, number_to_currency(v[j]), data_row);
-        sums[j] += v[j];
-      }
-    })
-    //render thr table footer
-    footer_row = create_dom_element('tr', {}, '', table);
-    create_dom_element('th', {}, '', footer_row);
-    for (i in headers) {
-      create_dom_element('th',{},number_to_currency(sums[headers[i]]), footer_row);
-    }
-  }
-}
-
-gastro.functions.report = {
-  initiate:function() {
-    $.ajax({
-      url: '/settlements',
-      dataType: 'json',
-      data: {day:gastro.variables.report_day},
-      success: function(data){
-        gastro.variables.report_items = data;
-        if (data == "") {
-          $('#report_container').html('');
-          return;
-        }
-        gastro.functions.report.convert_from_yaml();
-        gastro.functions.report.calculate();
-        gastro.functions.report.render();
-      }
-    });
-  },
-  
-  convert_from_yaml: function() {
-    $.each(gastro.variables.report_items, function(k,v) {
-      gastro.variables.report_items[k].t = YAML.eval(v.t);
-    })
-  },
-  
-  calculate: function() {
-    //calculate sums by category
-    var c = {};
-    $.each(gastro.variables.report_items, function(k,v) {
-      var category_id = v.y;
-      catname = resources.c[category_id].n;
-      if (c.hasOwnProperty(catname)) {
-        $.each(v.t, function(s,t) {
-          c[catname][i18n.gross] += t.g
-          c[catname][i18n.net] += t.n
-          c[catname][i18n.tax_amount] += t.t
-        })
-      } else {
-        $.each(v.t, function(s,t) {
-          c[catname] = {};
-          c[catname][i18n.gross] = t.g
-          c[catname][i18n.net] = t.n
-          c[catname][i18n.tax_amount] = t.t
-        })
-      }
-    })
-    gastro.variables.report.categories = c;
-    
-    //calculate sums by taxes
-    var taxes = {};
-    $.each(gastro.variables.report_items, function(key,value) {
-      $.each(value.t, function(k,v) {
-        var tax_id = k;
-        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
-        if (taxes.hasOwnProperty(taxname)) {
-          taxes[taxname][i18n.gross] += v.g
-          taxes[taxname][i18n.net] += v.n
-          taxes[taxname][i18n.tax_amount] += v.t
-        } else {
-          taxes[taxname] = {};
-          taxes[taxname][i18n.gross] = v.g
-          taxes[taxname][i18n.net] = v.n
-          taxes[taxname][i18n.tax_amount] = v.t
-        }
-      })
-    })
-    gastro.variables.report.taxes = taxes;
-    
-  },
-  
-  render: function() {
-    $('#report_container').html('');
-    salor.functions.table_from_json(gastro.variables.report.categories, {class:'settlements'}, '#report_container', i18n.categories);
-    salor.functions.table_from_json(gastro.variables.report.taxes, {class:'settlements'}, '#report_container', i18n.taxes);
-  },
-
-  display_popup: function() {
-    gastro.variables.report = {};
-    $('#report').remove();
-    report_popup = create_dom_element('div',{id:'report'}, '', '#container');
-    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
-    close_button.on('click', function() { $('#report').remove(); });
-    from_input = create_dom_element('input', {type:'text',id:'report_day'}, '', report_popup);
-    from_input.datepicker({
-      onSelect: function(date, inst) {
-        gastro.variables.report_day = date;
-        gastro.functions.report.initiate();
-      }
-    })
-    report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
-    report_popup.fadeIn();
-  }
-}
-
-
-YAML = {
-  valueOf: function(token) {
-    if (/\d/.exec(token)) {
-      return eval('(' + token + ')');
-    } else {
-      return token;
-    }
-  },
-
-  tokenize: function(str) {
-    //tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+)/g)
-    tokens = str.match(/(---|true|false|null|#(.*)|\[(.*?)\]|\{(.*?)\}|[\w\-]+:|-(.+)|\d+\.\d+|\d+|\n+|[^ :].*)/g)
-    return tokens;
-  },
-
-  strip: function(str) {
-    return str.replace(/^\s*|\s*$/, '')
-  },
-
-  parse: function(tokens) {
-    var token, list = /^-(.*)/, key = /^([\w\-]+):/, stack = {}
-    while (token = tokens.shift())
-      if (token[0] == '#' || token == '---' || token == "\n" || token == "")
-	continue
-      else if (key.exec(token) && tokens[0] == "\n")
-	stack[RegExp.$1] = this.parse(tokens)
-      else if (key.exec(token))
-	stack[RegExp.$1] = this.valueOf(tokens.shift())
-      else if (list.exec(token))
-	(stack.constructor == Array ?
-	  stack : (stack = [])).push(this.strip(RegExp.$1))
-    return stack
-  },
-
-  eval: function(str) {
-    return this.parse(this.tokenize(str))
-  }
-}
-
-//print(YAML.eval(readFile('config.yml')).toSource())
-//string = "---\n2:\n  :percent: 20\n  :tax: 0.88\n  :gro: 4.4\n  :net: 3.52\n  :letter: G\n  :name: Getränke"

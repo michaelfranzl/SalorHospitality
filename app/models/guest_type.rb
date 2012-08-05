@@ -15,7 +15,6 @@ class GuestType < ActiveRecord::Base
   has_many :surcharges
   has_many :booking_items
   has_and_belongs_to_many :taxes
-  validates_presence_of :taxes
 
   def taxes_array=(taxes_array)
     self.taxes = []

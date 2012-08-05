@@ -91,8 +91,41 @@ class VendorsController < ApplicationController
       :delete_items => @current_user.role.permissions.include?("delete_items"),
       :decrement_items => @current_user.role.permissions.include?("decrement_items"),
       :item_scribe => @current_user.role.permissions.include?("item_scribe"),
-      :see_item_notifications => @current_user.role.permissions.include?("see_item_notifications")
+      :see_item_notifications => @current_user.role.permissions.include?("see_item_notifications"),
+      :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods"),
+      :manage_customers => @current_user.role.permissions.include?("manage_customers")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
+  end
+  
+  def report
+    from = Time.parse(params[:from]).beginning_of_day
+    to = Time.parse(params[:to]).end_of_day
+    #sql = ActiveRecord::Base.connection
+    #x = %q[SELECT CONCAT("[", GROUP_CONCAT(  CONCAT('{"r":', IF(refund_sum, refund_sum,'null'), ',"y":', category_id, ',"t":"', REPLACE(taxes,"\n","\\\n"), '"'),   '}'), ']') FROM items]
+    #x += ";"
+    #result = sql.execute x
+    #render :json => result.to_a[0][0]
+    #settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
+    order_ids = @current_vendor.orders.where(:finished_at => from..to, :finished => true).collect { |o| o.id }
+    items = Item.select("refund_sum, category_id, taxes").where(:created_at => from...to, :order_id => order_ids, :hidden => nil)
+    items_json_string = items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"y\":#{i.category_id}}" }.join(',')
+    items_json_string.gsub! "\n", '\n'
+    
+    booking_ids = @current_vendor.bookings.where(:finished_at => from..to, :finished => true).collect { |o| o.id }
+    booking_items = BookingItem.select("refund_sum, room_id, taxes").where(:created_at => from...to, :booking_id => booking_ids, :hidden => nil)
+    booking_items_json_string = booking_items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
+    booking_items_json_string.gsub! "\n", '\n'
+    
+    #payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
+    #render :json => items
+
+    render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}]}"
+    #render :json => "[#{items_json_string}]"
+  end
+  
+  def identify_printers
+    Printr.new.identify
+    render :nothing => true
   end
 end

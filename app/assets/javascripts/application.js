@@ -8,4 +8,4 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require application-generic
-//= #require_tree .
+//= require report

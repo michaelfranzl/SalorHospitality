@@ -127,6 +127,8 @@ ru:
         name: Название
         radio_select: Радио выбор
         season_id: Сезон
+        selected: XXX Selected by default
+        visible: XXX Visible?
       tax_amount:
         amount: Количество
         tax_id: Налог
@@ -157,6 +159,7 @@ ru:
         base_price: Preis
         count: Anzahl
         sum: Summe
+        duration: XXX Days
       order:
         change_given: Change
       customer:
@@ -643,6 +646,7 @@ ru:
       served_by_X: Вас обслуживал(а) %{user}
     show:
       search_by_number: Искать по номеру
+      go_to_bookings_calendar: XXX Go to bookings calendar view
   room_prices:
     index:
       generate_price_skeleton: Сгенерировать скелет цены
@@ -687,6 +691,11 @@ ru:
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: Кол-во
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
+    restaurant: XXX Restaurant
+    hotel: XXX Hotel
+    consumations: XXX Consumations
   vendors:
     index:
       edit: Редактирование

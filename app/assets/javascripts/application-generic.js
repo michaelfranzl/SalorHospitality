@@ -14,6 +14,8 @@ var _CTRL_DOWN = false;
 var _key_codes = {tab: 9,shift: 16, ctrl: 17, alt: 18, f2: 113};
 var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
 
+var report = {functions:{}, variables:{}};
+
 $(function(){
   if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
     $('#main').html('');

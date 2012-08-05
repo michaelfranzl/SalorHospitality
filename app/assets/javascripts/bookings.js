@@ -208,7 +208,7 @@ function booking_build_inner_div(booking) {
   name_div.on('mouseenter',booking_mouse_enter);
   name_div.on('mouseout',booking_mouse_out);
   name_div.on('click',function () {
-    route('booking', booking.id);
+    route('booking', booking.id, null, {room_id:booking.room_id});
   });
   return inner_div;
 }
@@ -254,6 +254,10 @@ function finish_booking(booking) {
   booking_widget.find('.name').on('click', function() { window.location = '/bookings/' + booking.id});
 }
 
+function should_i_draw_this_booking(booking) {
+  
+}
+
 /* 
  * This is the function that we use to actually draw the booking, it should be completely disconnected from everything,
  * just provide it with a booking object, and it will draw it where it is supposed to be.
@@ -265,10 +269,12 @@ function draw_booking(booking) {
   }
   if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
     //console.log("Booking not in this view",booking);
+    return;
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the
   // x coordinate.
+  var show_booking_from = new Date(Date.parse($('#show_booking_from').val()));
   var x = _get("rooms.json").keys.indexOf(booking.room_id) + 1; // plus 1 because arrays are 0 indexed
   var nights = days_between_dates(booking.from, booking.to);
   //  negative_offset is used to put the div offset halfway inside the div for the arrive at noon leave at noon concept
@@ -289,11 +295,15 @@ function draw_booking(booking) {
       y = 1;
   // If the start_date of the booking is before the current view, then we need to 
   // recalculate the number of nights we need to show for this view
-  if (Date.parse(booking.from) < Date.parse($('#show_booking_from').val())) {
+  if (Date.parse(booking.from) < show_booking_from) {
     nights = days_between_dates($('#show_booking_from').val(), booking.to);
     y = 1;
   }
-  var widget_height = oheight * (nights + 1); // because they leave the afternoon of the next day
+  
+  if (nights > 31) {
+    nights = 31 - y;
+  }
+  var widget_height = oheight * (nights); // because they leave the afternoon of the next day
   
   // If the booking exists, then we only need to update it.
   if (booking_exists(booking)) {
@@ -431,12 +441,13 @@ function clear_bookings() {
   $('.booking-line-ender').remove();
 }
 function draw_bookings() {
+//   console.log('draw_bookings called');
   for (var key in _get("rooms.json").bookings) {
     var booking = _get("rooms.json").bookings[key];
     if (booking_exists(booking) && booking.hidden) {
       $('#booking_' + booking.id).remove();
     } else if (!booking.hidden == true) {
-
+//       console.log('draw_bookings',booking);
       draw_booking(booking);
     }
   }

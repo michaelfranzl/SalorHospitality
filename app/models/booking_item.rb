@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class BookingItem < ActiveRecord::Base
-  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_id, :ui_id
+  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_key, :ui_id
   include Scope
   belongs_to :booking
   belongs_to :vendor
@@ -20,7 +20,7 @@ class BookingItem < ActiveRecord::Base
 
   serialize :taxes
   
-  alias_attribute :parent_id, :ui_parent_id
+  alias_attribute :parent_key, :ui_parent_id
   
   # For multi-season bookings, the JS frontend maintains parent and children booking items. The parent booking items represent the first covered season. The children booking items represent all other covered seasons. We need to model and store this parent/child relationship in the DB, so that we can deliver the same relations back as JSON.
   def self.make_multiseason_associations

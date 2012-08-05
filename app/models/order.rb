@@ -42,29 +42,24 @@ class Order < ActiveRecord::Base
   def self.create_from_params(params, vendor, user)
     order = Order.new params[:model]
     order.user = user
-    order.cost_center = vendor.cost_centers.existing.active.first
+    #order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
       new_item.vendor = vendor
       new_item.company = vendor.company
-      new_item.cost_center = order.cost_center
+      #new_item.cost_center = order.cost_center
       new_item.calculate_totals
       order.items << new_item
     end
     order.save
+    order.update_payment_method_items(params)
     return order
   end
 
   def update_from_params(params)
     self.update_attributes params[:model]
-    if params[:payment_methods] then
-      self.payment_methods.clear
-      params[:payment_methods].each do |pm|
-        self.payment_methods << PaymentMethod.new(pm)
-      end
-    end
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
@@ -76,10 +71,22 @@ class Order < ActiveRecord::Base
         new_item = Item.new(item_params[1])
         new_item.vendor = self.vendor
         new_item.company = self.company
-        new_item.cost_center = self.cost_center
+        #new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item
         self.save
+      end
+    end
+    self.update_payment_method_items(params)
+  end
+  
+  def update_payment_method_items(params)
+    if params[:payment_method_items] then
+      self.payment_method_items.clear
+      params['payment_method_items'][params['id']].to_a.each do |pm|
+        if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id
+        end
       end
     end
   end
@@ -201,10 +208,11 @@ class Order < ActiveRecord::Base
 
   def finish
     self.updated_at = Time.now
+    self.finished_at = Time.now
     self.finished = true
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
-    save
-    unlink
+    self.save
+    self.unlink
   end
 
   def pay
@@ -286,10 +294,10 @@ class Order < ActiveRecord::Base
     init =
     "\e@"     +  # Initialize Printer
     "\e!" + fontstyle.chr +
-    "\n\n\n"
+    "\n\n\n\n\n"
 
     cut =
-    "\n\n\n\n" +
+    "\n\n\n\n\n\n" +
     "\x1D\x56\x00" +        # paper cut
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 

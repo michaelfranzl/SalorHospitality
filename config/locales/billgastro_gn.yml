@@ -1,5 +1,12 @@
 ---
 gn:
+  payment_methods:
+    new:
+      new_payment_method: Neue Zahlungsmethode
+    create:
+      success: Zahlungsmethode erfolgreich gespeichert
+    destroy:
+      success: Zahlungsmethode erfolgreich gelöscht
   activerecord:
     attributes:
       payment_method_item:
@@ -11,6 +18,7 @@ gn:
         duration: Tage
       order:
         change_given: Wechselgeld
+        nr: Nummmer
       customer:
         first_name: Vorname
         last_name: Nachname
@@ -131,6 +139,7 @@ gn:
         rotate: drehen?
         width: Breite
         width_mobile: Breite mobile
+        booking_table: Buchung
       tax:
         color: Farbe
         hidden: löschen
@@ -242,8 +251,8 @@ gn:
         one: Variante
         other: Varianten
       report:
-        one: Bericht
-        other: Berichte
+        one: Support
+        other: Support
       reservation:
         one: Reservierung
         other: Reservierungen
@@ -263,8 +272,8 @@ gn:
         one: Saison
         other: Saisonen
       settlement:
-        one: Losungen
-        other: Abrechnungen
+        one: Losung
+        other: Losungen
       stock:
         one: Lagerbestand
         other: Lagerbestände
@@ -284,8 +293,8 @@ gn:
         one: Benutzer
         other: Benutzer
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Betrieb
+        other: Betriebe
       vendor_printer:
         one: Drucker
         other: Drucker
@@ -400,7 +409,7 @@ gn:
     errempty: Ungültige Datei
     errsize: Ungültige Dateigröße
     errtype: Ungültige Dateityp
-  invoice: Rechnung  
+  invoice: Rechnung
   invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
   invoices: Invoices
   is_no_number: ist keine Zahl
@@ -534,9 +543,9 @@ gn:
       edit_customer: Kunde bearbeiten
       new_customer: Neuer Kunde
     create:
-      success: Customer successfully saved
+      success: Kunde erfolgreich gespeichert
     destroy:
-      success: Customer successfully deleted
+      success: Kunde erfolgreich gelöscht
   roles:
     create:
       success: Rolle erfolgreich gespeichert
@@ -597,6 +606,10 @@ gn:
     new:
       edit_room: Zimmer bearbeiten
       new_room: Neues Zimmer
+    create:
+      success: Zimmer erfolgreich gespeichert
+    destroy:
+      success: Zimmer erfolgreich gelöscht
   scopes:
     active: Aktiv
     waiterpad: Kellnerblock
@@ -700,6 +713,10 @@ gn:
     restaurant: Restaurant
     hotel: Hotel
     consumations: Konsumationen
+    report: Bericht
+    begin: Anfang
+    end: Ende
+    time: Zeit
   vendors:
     index:
       edit: bearbeiten
@@ -707,6 +724,9 @@ gn:
     new:
       edit_vendor: Restaurant bearbeiten
       new_vendor: Neues Restaurant
+    form:
+      add_printer: Drucker hinzufügen
+      identify_printers: Drucker identifizieren
   violet: Violett
   waiter: Kellner
   waiterpad_generic_name: Bestellblock

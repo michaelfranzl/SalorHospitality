@@ -34,7 +34,7 @@ class TablesController < ApplicationController
       if @orders.size > 1
         @cost_centers = @current_vendor.cost_centers.existing.active
         @taxes = @current_vendor.taxes.existing
-        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from` < ? AND `to` > ?", Time.now, Time.now)
+        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
         render 'orders/go_to_invoice_form'
       else
         @order = @orders.first
@@ -52,6 +52,7 @@ class TablesController < ApplicationController
       flash[:notice] = t('tables.create.license_limited', :count => @current_vendor.max_tables)
       redirect_to tables_path and return
     end
+    @current_vendor.tables.update_all :booking_table => nil if params[:table][:booking_table] == '1'
     @table = Table.new(params[:table])
     @table.vendor = @current_vendor
     @table.company = @current_company
@@ -75,6 +76,7 @@ class TablesController < ApplicationController
   def update
     @table = get_model
     redirect_to tables_path and return unless @table
+    @current_vendor.tables.update_all :booking_table => nil if params[:table][:booking_table] == '1'
     success = @table.update_attributes(params[:table])
     if success
       flash[:notice] = t('tables.create.success')

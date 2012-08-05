@@ -11,6 +11,7 @@ en:
         duration: Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -131,6 +132,7 @@ en:
         rotate: rotate?
         width: Width
         width_mobile: Width mobile
+        booking_table: Booking
       tax:
         color: Color
         hidden: delete
@@ -242,8 +244,8 @@ en:
         one: Variant
         other: Variants
       report:
-        one: Report
-        other: Reports
+        one: Support
+        other: Support
       reservation:
         one: Reservation
         other: Reservations
@@ -284,8 +286,8 @@ en:
         one: User
         other: Users
       vendor:
-        one: Restaurant
-        other: Restaurants
+        one: Vendor
+        other: Vendors
       vendor_printer:
         one: Printer
         other: Printers
@@ -597,6 +599,10 @@ en:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -699,6 +705,10 @@ en:
     restaurant: Restaurant
     hotel: Hotel
     consumations: Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
   vendors:
     index:
       edit: Edit
@@ -706,6 +716,9 @@ en:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identiify_printers: Identify Printers
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722130013) do
+ActiveRecord::Schema.define(:version => 20120730075606) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.string   "ui_parent_id"
     t.string   "ui_id"
     t.float    "unit_sum"
+    t.integer  "room_id"
   end
 
   create_table "bookings", :force => true do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.float    "duration"
     t.string   "taxes",            :limit => 10000, :default => "--- {}\n"
     t.float    "booking_item_sum"
+    t.datetime "finished_at"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
+    t.string   "country"
   end
 
   create_table "discounts", :force => true do |t|
@@ -398,6 +401,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.float    "change_given"
     t.integer  "booking_id"
     t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
+    t.datetime "finished_at"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
@@ -682,6 +686,7 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.integer  "vendor_id"
     t.boolean  "active",         :default => true
     t.integer  "position"
+    t.boolean  "booking_table"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -716,8 +721,12 @@ ActiveRecord::Schema.define(:version => 20120722130013) do
     t.float    "tax"
     t.integer  "company_id"
     t.integer  "vendor_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "letter"
+    t.integer  "surcharge_item_id"
+    t.string   "name"
+    t.string   "percent"
   end
 
   create_table "taxes", :force => true do |t|

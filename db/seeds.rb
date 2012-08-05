@@ -5,7 +5,7 @@
 # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-puts "beginning"
+
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
 category_icons = ['starter','maindish','dessert','rosewineglass','redwineglass','digestif'] #,'nonalcoholics','coffee','teapot','cigarette','beer','aperitif','whitewineglass','sidedish','blank']
 
@@ -22,10 +22,8 @@ elsif ENV['SEED_MODE'] == 'minimal'
   languages = ['en']
   company_count = 1
 else
-  puts "SEED_MODE is 'minimal'"
-  countries = ['en']
-  languages = ['en']
-  company_count = 1
+  puts "\n\nPlease specify the seed mode with `SEED_MODE={full|minimal} rake db:seed`\n\n"
+  Process.exit 0
 end
 
 taxes = [20, 10, 0]
@@ -187,6 +185,7 @@ company_count.times do |c|
       table = Table.new :name => "T#{ c }#{ v }#{ i }", :left => 50 * i + 50, :top => 50 * i + 50, :left_mobile => 50 * i + 50, :top_mobile => 100 * i + 50, :width => 70, :height => 70
       table.company = company
       table.vendor = vendor
+      table.booking_table = true if i == 3
       r = table.save
       table_objects << table
       puts "Table #{ c } #{ v } #{ i } created" if r == true
@@ -283,7 +282,7 @@ company_count.times do |c|
     end
 
     puts " Creating Hotel Tax #{c} #{v}"
-    local_tax = Tax.create :name => "Local Tax #{company.id} #{vendor.id}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
+    #local_tax = Tax.create :name => "Local Tax #{c} #{v}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
     room_type_objects = Array.new
     guest_type_objects = Array.new
     4.times do |i|
@@ -292,23 +291,23 @@ company_count.times do |c|
       room_type_objects << rt
       puts " Creating Room #{c} #{v} #{i}"
       Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
-      puts " Creating GustType #{c} #{v} #{i}"
-      gt = GuestType.create :name => "GuestType #{company.id} #{vendor.id} #{i}", :vendor_id => vendor.id, :company_id => company.id
-      gt.taxes << local_tax if i == 1
+      puts " Creating GuestType #{c} #{v} #{i}"
+      gt = GuestType.new :name => "GuestType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
+      gt.taxes << tax_objects[0]
       gt.save
       guest_type_objects << gt
     end
     puts " Creating Seasons for #{c} #{v}"
-    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-21'), :vendor_id => vendor.id, :company_id => company.id
+    s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-20'), :vendor_id => vendor.id, :company_id => company.id
     s1.save
     s1.calculate_duration
-    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-21'), :vendor_id => vendor.id, :company_id => company.id
+    s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-20'), :vendor_id => vendor.id, :company_id => company.id
     s2.save
     s1.calculate_duration
-    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-21'), :vendor_id => vendor.id, :company_id => company.id
+    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-20'), :vendor_id => vendor.id, :company_id => company.id
     s3.save
     s1.calculate_duration
-    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-21'), :vendor_id => vendor.id, :company_id => company.id
+    s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-20'), :vendor_id => vendor.id, :company_id => company.id
     s4.save
     s1.calculate_duration
     season_objects = [s1,s2,s3,s4]
@@ -350,5 +349,6 @@ company_count.times do |c|
         surcharge.calculate_totals
       end
     end
+    vendor.update_cache
   end
 end
