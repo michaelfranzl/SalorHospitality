@@ -646,7 +646,7 @@ ru:
       served_by_X: Вас обслуживал(а) %{user}
     show:
       search_by_number: Искать по номеру
-      go_to_bookings_calendar: XXX Go to bookings calendar view
+      go_to_bookings_calendar: Перейти к календарю резервирования
   room_prices:
     index:
       generate_price_skeleton: Сгенерировать скелет цены
@@ -686,15 +686,15 @@ ru:
     save: Сохранить
     subtotal: Подытог
     unamed: Без имени
-    tax_amount: XXX Amount
-    tax: XXX Tax
+    tax_amount: Сумма
+    tax: Налог
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: Кол-во
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
-    hotel: XXX Hotel
+    interim_invoice: Временный счет
+    invoice: Счет
+    restaurant: Ресторан
+    hotel: Отель
     consumations: XXX Consumations
   vendors:
     index:
@@ -706,10 +706,10 @@ ru:
   customers:
     new:
       edit_customer: Edit Customer
-      new_customer: New Customer
+      new_customer: Новый клиент
     create:
-      success: Customer successfully saved
+      success: Клиент успешно сохранен
     destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
+      success: Клиент успешно удален
+  refund: Возврат
   invalid_date: Неверная дата
