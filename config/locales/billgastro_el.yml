@@ -692,7 +692,7 @@ el:
     subtotal: Υποσύνολο
     unamed: Ανώνυμο
     tax_amount: Ποσό
-    tax: XXX Tax
+    tax: Φ
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
     quantity_abbreviation: XXX Qty.
