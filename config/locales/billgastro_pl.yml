@@ -163,26 +163,26 @@ pl:
       payment_method_item:
         amount: Amount
       booking_item:
-        base_price: Preis
+        base_price: Cena
         count: Anzahl
         sum: Summe
-        duration: XXX Days
+        duration: XXX Dni
       order:
-        change_given: Change
+        change_given: Zmień
       customer:
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
+        first_name: Imię
+        last_name: Nazwisko
+        full_name: Pełna nazwa
+        company_name: Nazwa firmy
+        address: Adres
+        city: Miasto
+        state: Województwo
+        postalcode: Kod pocztowy
+        m_number: Kod karty lojalnościowej
+        m_points: Punkty lojalnościowe
         email: email
-        telephone: Telephone
-        cellphone: Cellphone
+        telephone: Stacjonarny
+        cellphone: Komórka
         hidden: delete
     models:
       article:
@@ -264,44 +264,44 @@ pl:
         one: Bonownik
         other: Bonowniki
       booking:
-        one: Booking
-        other: Bookings
+        one: Rezerwacja
+        other: Rezerwacje
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Typ klienta
+        other: Typy klientów
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       room:
-        one: Room
-        other: Rooms
+        one: Pokój
+        other: Pokoje
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Cena pokoju
+        other: Ceny pokoi
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Rodzaj pokoju
+        other:  Rodzaje pokoi
       season:
-        one: Saison
-        other: Saisons
+        one: Sezon
+        other: Sezony
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Dopłata
+        other: Dopłaty
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Wysokośc podatku
+        other: Wysokość podatków
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
     create:
       success: Artykuł został pomyślnie dodany
-      license_limited: XXX Your License is limited to %{count} articles
+      license_limited: XXX Twoja licencja ma limit do %{count} artykułów
     destroy:
       success: Artykuł został pomyślnie usunięty
     find:
@@ -336,7 +336,7 @@ pl:
   categories:
     create:
       success: Pomyślnie dodano!
-      license_limited: XXX Your License is limited to %{count} categories
+      license_limited: XXX Twoja licencja ma limit do %{count} kategorii
     new:
       aperitif: Aperitif
       beer: Piwo
@@ -375,9 +375,9 @@ pl:
       edit_cost_center: Edytowanie dodatkowych kosztów
       new_cost_center: Dodawanie dodatkowych kosztów
     create:
-      success: Cost Center successfully saved
+      success: Centrum kosztów zostało pomyślnie zapisane
     destroy:
-      success: Cost Center successfully deleted
+      success: Centrum kosztów zostało pomyślnie skasowane
   count: Podlicz
   create: Dodaj
   dateandtime: Data
@@ -429,17 +429,17 @@ pl:
       new_option: Dodawanie zestawów
       select_all: Zaznacz wszystkie
     create:
-      success: Option successfully saved
+      success: Opcja pomyślnie zapisana
     destroy:
-      success: Option successfully deleted
+      success: Opcja pomyślnie skasowana
   orange: Pomarańczowy
   orders:
     functions_header_index:
       items_notifications: Powiadomienia
       print_now: Drukuj teraz
       show_last_order: Pokaż ostatnie zamówienie
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      show_last_booking: XXX Pokaż ostatnią rezerwację
+      toggle_between_tables_and_rooms: XXX Przełącz pomiędzy ekranem stołów a pokoi
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:
@@ -454,8 +454,8 @@ pl:
       split_invoice: Podziel rachunek
       split_this_item: Kliknij pozycję aby podzielić paragon
       switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      change_money: XXX Zmień
+      set_booking: XXX Przydziel do rezerwacji
     login_form:
       email: Twój e-mail
       login: Login
@@ -477,21 +477,21 @@ pl:
       sum: Suma
       unit_price: Jednostka płatności
     invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
+      unit_price: Cena artykułu
+      count: Ilość
+      sum: Suma
     refund_form:
-      do_separate_items: Separate this item
-      do_refund: Make refund
+      do_separate_items: Podziel ten artykuł
+      do_refund: Dodaj zwrot
   pages:
     edit:
       edit_page: Edytuj stronę
-      slideshow: Präsentation starten
+      slideshow: Rozpocznij prezentację
       view: Podgląd
     new:
-      new_page: New Page
+      new_page: Nowa strona
   partials:
-    default_blurb: edytuj
+    default_blurb: edytuj notatkę
     error_during_evaluation: ! 'Błąd: '
     no_presentation_found:
       no_presentations_found: Nie wybrano szablonu dla tej części.
