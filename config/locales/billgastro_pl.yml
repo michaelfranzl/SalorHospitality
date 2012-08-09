@@ -47,13 +47,13 @@ pl:
       page:
         active: Aktywować?
         color: Hintergrund
-        height: Höhe
+        height: Wysokość
         hidden: Usuń
         image: Bild
         width: Breite
       partial:
         active: Aktywować?
-        blurb: Blurb
+        blurb: Notka
         hidden: Usuń
       presentation:
         active: Aktywować?
@@ -110,62 +110,62 @@ pl:
         name: Nazwa
         path: Skrót
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: skasuj
+        name: Nazwa
+        taxes: Podatek
       room_price:
-        base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
-        season_id: Season
+        base_price: Cena podstawowa
+        guest_type_id: Typ klienta
+        hidden: ukryj
+        room_type_id: Typ pokoju
+        season_id: Sezon
       room_type:
-        hidden: löschen
-        name: Name
+        hidden: ukryj
+        name: Nazwa
       season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        from_date: Od
+        hidden: skasuj
+        name: Nazwa
+        to_date: Do
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
-        radio_select: Radio Select
-        season_id: Season
-        selected: XXX Selected by default
-        visible: XXX Visible?
+        amount: Ilość
+        guest_type_id: Typ klienta
+        hidden: skasuj
+        name: Nazwa
+        radio_select: Wybierz pasno
+        season_id: Sezon
+        selected: XXX Ustaw jako podstawowe
+        visible: XXX Widoczne?
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Ilość
+        tax_id: Podatek
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
+        automatic_printing: Automatyczne drukowanie
+        country: Zasady dla kraju
+        hidden: skasuj
+        invoice_footer_blurb: Notka stopki faktury
+        invoice_header_blurb: Notka nagłówka faktury
         name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
+        receipt_footer_blurb: Notka stopki rachunku
+        receipt_header_blurb: Notka nagłówka rachunku
         saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
-        rlogo_header: XXX Receipt logo header
-        rlogo_footer: XXX Receipt logo footer
+        ticket_display_time_order: Czas i numer rachunku na paragonie
+        ticket_item_separator: Separuj linią
+        ticket_tall_font: Wyskokość czcionki
+        ticket_wide_font: Szerokość czcionki
+        time_offset: Korekta czasu (w godzinach)
+        timeout: Czas zablokowania ekranu (w sekundach)
+        use_order_numbers: Użyj liczby zamówień
+        rlogo_header: XXX Logo nagłówka
+        rlogo_footer: XXX Logo stopki
         logo: XXX Screen logo
-        invoice_logo: XXX Invoice Logo
+        invoice_logo: XXX Logo faktury
       payment_method_item:
-        amount: Amount
+        amount: Ilość
       booking_item:
         base_price: Cena
-        count: Anzahl
-        sum: Summe
+        count: Rozliczenie
+        sum: Suma
         duration: XXX Dni
       order:
         change_given: Zmień
