@@ -553,23 +553,23 @@ el:
       split_items: Μοιράστε αντικείμενα
       take_orders: Πάρτε παραγγελίες 
       view_all_settlements: Δείτε όλους τους διακανονισμούς
-      refund: Επιστροφή
-      manage_articles: Διαχειριστείτε αντικείμενα, κατ categories and options
-      manage_categories: XXX Manage categories
-      manage_options: XXX Manage options
-      manage_roles: XXX Manage roles
-      manage_taxes: XXX Manage Taxes
-      manage_cost_centers: XXX Manage Cost Centers
-      manage_payment_methods: XXX Manage Payment Methods
-      manage_tables: XXX Manage tables
-      manage_vendors: XXX Manage vendors
-      manage_statistics: XXX View statistics
-      manage_hotel: XXX Manage hotel
-      item_scribe: XXX Enable handwriting
-      assign_order_to_booking: XXX Assign orders to a booking
-      assign_tables: XXX Assign tables to users
-      remote_support: XXX Remote Support
-      download_database: XXX Download Database
+      refund: Επιστροφή αντικειμένων
+      manage_articles: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές 
+      manage_categories: Διαχειριστείτε κατηγορίες
+      manage_options: Διαχειριστείτε επιλογές
+      manage_roles: Διαχειριστείτε ρόλους
+      manage_taxes: Διαχειριστείτε φόρους
+      manage_cost_centers: Διαχειριστείτε κέντρα κόστους
+      manage_payment_methods: Διαχειριστείτε μεθόδους πληρωμής
+      manage_tables: Διαχειριστείτε τραπέζια 
+      manage_vendors: Διαχειριστείτε προμηθευτές 
+      manage_statistics: Προβολή στατιστικών
+      manage_hotel: Διαχειριστείτε το ξενοδοχείο
+      item_scribe: Ενεργοποιείστε χειρογραφή
+      assign_order_to_booking: Αναθέστε παραγγελίες σε κράτηση
+      assign_tables: Αναθέστε τραπέζια σε χρήστες
+      remote_support: Εξ’ αποστάσεως Υποστήριξη
+      download_database: Μεταφορτώστε τη βάση δεδομένων
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
@@ -579,7 +579,7 @@ el:
   scroll_up: Κινηθείτε προς τα πάνω
   send_and_go_back: Αποθηκεύστε κι επιστρέψτε
   served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
-  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι
+  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι 
     απασχολημένος ή η διασύνδεση έχει διακοπεί.
   sessions:
     browser_warning:
