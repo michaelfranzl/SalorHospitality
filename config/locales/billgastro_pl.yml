@@ -568,12 +568,12 @@ pl:
       item_scribe: XXX Enable handwriting
       assign_order_to_booking: XXX Assign orders to a booking
       assign_tables: XXX Assign tables to users
-      remote_support: XXX Remote Support
-      download_database: XXX Download Database
+      remote_support: XXX Pomoc zdalna
+      download_database: XXX Pobierz bazę danych
     create:
-      success: Role successfully saved
+      success: Zasada została pomyślnie zapisana
     destroy:
-      success: Role successfully deleted
+      success: Zasada została pomyślnie skasowana
   scroll_down: Przewiń w dół
   scroll_to_room: Idź do
   scroll_up: Przewiń w górę
@@ -584,8 +584,8 @@ pl:
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: XXX Salor wspiera przeglądarki Google Chrome (Windows), Chromium
+        (Linux) lub Safari (Apple). Proszę użyć jednej z powyższych przeglądarek i spróbować ponownie.
     new:
       email: Twój e-mail
       login: Login
@@ -624,10 +624,10 @@ pl:
       edit_table: Edytowanie stolika
       new_table: Dodawanie stolika
     create:
-      success: Table successfully saved
-      license_limited: XXX Your License is limited to %{count} tables
+      success: Stół pomyślnie zapisany
+      license_limited: XXX Twoja licencja ma limit do %{count} stołów
     destroy:
-      success: Table successfully deleted
+      success: Stół pomyślnie skasowany
   taxes:
     new:
       edit_tax: Edytowanie podatku
@@ -636,11 +636,11 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
-      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: XXX Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz myszy
     create:
-      success: User successfully saved
+      success: Użytkownik pomyślnie zapisany
     destroy:
-      success: User successfully deleted
+      success: Użytkownik pomyślnie skasowany
   violet: Fioletowy
   waiter: Kelner
   waiterpad_generic_name: Lista kelnerów(-)
@@ -650,23 +650,23 @@ pl:
   yellow: Żółty
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Byłeś obsługiwany przez %{user}
     show:
-      search_by_number: Search by number
-      go_to_bookings_calendar: XXX Go to bookings calendar view
+      search_by_number: Szukaj wg liczby
+      go_to_bookings_calendar: XXX Sprawdź kalendarz rezerwacji
   layouts:
     application:
       submit_scribe: OK
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Generuj szkielet cen
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Edytuj cenę pokoju
+      new_room_price: Nowa cena pokoju
   room_types:
     new:
-      edit_room_type: Edytuj rodzaj poko
-      new_room_type: New room type
+      edit_room_type: Edytuj typ pokoju
+      new_room_type: Dodaj typ pokoju
   rooms:
     new:
       edit_room: Edytuj pokój
