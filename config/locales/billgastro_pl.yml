@@ -491,10 +491,10 @@ pl:
     new:
       new_page: New Page
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: edytuj
+    error_during_evaluation: ! 'Błąd: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
+      no_presentations_found: Nie wybrano szablonu dla tej części.
   pink: Różowy
   please_enter_item_comment: Specjalne życzenia
   please_enter_item_price: Cena specjalna
@@ -511,22 +511,20 @@ pl:
     start_date: Data początkowa
     usb_device: USB
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-      connected: XXX Connected
-      disconnected: XXX Disconnected
-      connect_ssh: XXX Remote Login
-      connect_vnc: XXX Share Screen
-      password: XXX Password
-      requesting_connection_status: XXX Requesting connection status ...
-      internet_connection_info: XXX To get Remote Support, you must be connected to
-        the internet. If you see the Red (E) Logo above, you are connected to the
-        internet.
-      remote_support: XXX Remote Support
-      download_reports: XXX Save reports
-    remote_support: XXX Remote Support
-    download_reports: XXX Download Report
+      backup_database: Kopia bazy danych
+      backup_logfile: Kopia logu
+      header: Raporty
+      connected: XXX Połączono
+      disconnected: XXX Rozłączono
+      connect_ssh: XXX Login zdalny
+      connect_vnc: XXX Dziel obraz
+      password: XXX Hasło
+      requesting_connection_status: XXX Oczekiwanie na połączenie ...
+      internet_connection_info: XXX Aby pozwolić na połączenie zdalne musisz być podłączony do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie z internetem.
+      remote_support: XXX Pomoc zdalna
+      download_reports: XXX Zapisz raport
+    remote_support: XXX Pomoc zdalna
+    download_reports: XXX Pobierz raport
   restaurant: Restauracja
   roles:
     new:
@@ -553,21 +551,21 @@ pl:
       split_items: Łączenie pozycji
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
-      refund: XXX Refund items
-      manage_articles: XXX Manage articles, categories and options
-      manage_categories: XXX Manage categories
-      manage_options: XXX Manage options
-      manage_roles: XXX Manage roles
-      manage_taxes: XXX Manage Taxes
-      manage_cost_centers: XXX Manage Cost Centers
-      manage_payment_methods: XXX Manage Payment Methods
-      manage_tables: XXX Manage tables
-      manage_vendors: XXX Manage vendors
-      manage_statistics: XXX View statistics
-      manage_hotel: XXX Manage hotel
-      item_scribe: XXX Enable handwriting
-      assign_order_to_booking: XXX Assign orders to a booking
-      assign_tables: XXX Assign tables to users
+      refund: XXX Zwrot przedmiotów
+      manage_articles: XXX Zarządzaj artykułami, kategoriami oraz opcjami
+      manage_categories: XXX Zarządzaj kategoriami
+      manage_options: XXX Zarządzaj opcjami
+      manage_roles: XXX Zarządzaj zasadami
+      manage_taxes: XXX Zarządzaj podatkami
+      manage_cost_centers: XXX Zarządzaj centrum kosztów
+      manage_payment_methods: XXX Zarządzaj rodzajami płatności
+      manage_tables: XXX Zarządzaj stołami
+      manage_vendors: XXX Zarządzaj sprzedawcami
+      manage_statistics: XXX Zobacz statystyki
+      manage_hotel: XXX Zarządzaj hotelami
+      item_scribe: XXX Aktywuj pisanie ręczne
+      assign_order_to_booking: XXX Wyznacz zamówienia dla rezerwacji
+      assign_tables: XXX Przypisz stół dla klienta
       remote_support: XXX Pomoc zdalna
       download_database: XXX Pobierz bazę danych
     create:
