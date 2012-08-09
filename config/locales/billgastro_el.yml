@@ -551,10 +551,10 @@ el:
       see_debug: Δείτε μηνύματα προβλημάτων
       see_item_notifications: Δείτε ειδοποιήσεις για αντικείμενα
       split_items: Μοιράστε αντικείμενα
-      take_orders: Πάρτε παραγγελίες
+      take_orders: Πάρτε παραγγελίες 
       view_all_settlements: Δείτε όλους τους διακανονισμούς
-      refund: XXX Refund items
-      manage_articles: XXX Manage articles, categories and options
+      refund: Επιστροφή
+      manage_articles: Διαχειριστείτε αντικείμενα, κατ categories and options
       manage_categories: XXX Manage categories
       manage_options: XXX Manage options
       manage_roles: XXX Manage roles
