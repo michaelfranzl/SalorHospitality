@@ -522,12 +522,11 @@ el:
       connect_vnc: Μοιραστείτε οθόνη
       password: Κωδικός
       requesting_connection_status: Αίτηση κατάστασης σύνδεσης ...
-      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να είστ. If you see the Red (E) Logo above, you are connected to the
-        internet.
-      remote_support: XXX Remote Support
-      download_reports: XXX Save reports
-    remote_support: XXX Remote Support
-    download_reports: XXX Download Report
+      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να είστε συνδεδεμένοι στο διαδίκτυο. Εάν μπορείτε να δείτε το λογότυπο του Red (E) πιο πάνω, είστε συνδεδεμένοι στο διαδίκτυο. 
+      remote_support: Εξ’ αποστάσεως Υποστήριξη
+      download_reports: Αποθηκεύστε Αναφορές
+    remote_support: Εξ’ αποστάσεως Υποστήριξη
+    download_reports: Μεταφορτώστε Αναφορά
   restaurant: Εστιατόριο
   roles:
     new:
