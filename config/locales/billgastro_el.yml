@@ -440,8 +440,8 @@ el:
       items_notifications: Ανακοινώσεις
       print_now: Εκτυπώστε τώρα
       show_last_order: Δείξτε την τελευταία παραγγελία
-      show_last_booking: XXX Δείξτε την τελευταία κράτηση
-      toggle_between_tables_and_rooms: XXX Εναλλαγή μεταξύ τραπεζιών και δωματίων
+      show_last_booking: Δείξτε την τελευταία κράτηση
+      toggle_between_tables_and_rooms: Εναλλαγή μεταξύ τραπεζιών και δωματίων
     functions_header_order_form:
       move_order: Μετακινήστε την παραγγελία σε άλλο τραπέζι
     index:
@@ -455,9 +455,9 @@ el:
       set_taxes: Ορίστε κέντρο κόστους
       split_invoice: Μοιράστε το τιμολόγιο
       split_this_item: Κάντε κλικ για να μοιράσετε αυτά τα αντικείμενα ένα ένα
-      switch_tax_for_this_item: Κάντε κλικ για να αλλάξετε το φόρο αυτού του αντικειμένου
-      change_money: XXX Ρέστα
-      set_booking: XXX Προσθήκη στις κρατήσεις
+      switch_tax_for_this_item: Κάντε κλικ για να αλλάξετε το φόρο αυτού του αντικειμένο
+      change_money: Ρέστα
+      set_booking: Προσθήκη στις κρατήσεις
     login_form:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Συνδεθείτε
@@ -479,12 +479,12 @@ el:
       sum: Σύνολο
       unit_price: Τιμή μονάδας
     invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
+      unit_price: Τιμή μονάδας
+      count: Ποσότητα
+      sum: Σύνολο
     refund_form:
-      do_separate_items: Separate this item
-      do_refund: Make refund
+      do_separate_items: Ξεχωρίστε αυτό το αντικείμενο
+      do_refund: Κάντε επιστροφή
   pages:
     edit:
       edit_page: Επεξεργασία Σελίδας
@@ -516,14 +516,13 @@ el:
       backup_database: Αντίγραφο Ασφαλείας Βάσης Δεδομένων
       backup_logfile: Αντίγραφο Ασφαλείας Αρχείου Καταγραφής
       header: Αναφορές
-      connected: XXX Connected
-      disconnected: XXX Disconnected
-      connect_ssh: XXX Remote Login
-      connect_vnc: XXX Share Screen
-      password: XXX Password
-      requesting_connection_status: XXX Requesting connection status ...
-      internet_connection_info: XXX To get Remote Support, you must be connected to
-        the internet. If you see the Red (E) Logo above, you are connected to the
+      connected: Συνδεδεμένοι
+      disconnected: Αποσυνδεδεμένοι
+      connect_ssh: Απομακρυσμένη σύνδεση 
+      connect_vnc: Μοιραστείτε οθόνη
+      password: Κωδικός
+      requesting_connection_status: Αίτηση κατάστασης σύνδεσης ...
+      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να είστ. If you see the Red (E) Logo above, you are connected to the
         internet.
       remote_support: XXX Remote Support
       download_reports: XXX Save reports
