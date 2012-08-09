@@ -3,7 +3,7 @@ el:
   vendors:
     index:
       switch_to: Επιλέξτε
-      edit: XXX Επεξεργασία
+      edit: Επεξεργασία
     new:
       edit_vendor: Επεξεργασία Προμηθευτή
       new_vendor: Νέος Προμηθευτής
@@ -149,8 +149,8 @@ el:
         name: Όνομα
         radio_select: Επιλογή Ραδιοφώνου
         season_id: Σαιζόν
-        selected: XXX Selected by default
-        visible: XXX Visible?
+        selected: Επιλεγμένο από προεπιλογή
+        visible: ορατό;
       tax_amount:
         amount: Ποσό
         tax_id: Φόρος
@@ -178,12 +178,12 @@ el:
       payment_method_item:
         amount: Ποσό
       booking_item:
-        base_price: Preis
+        base_price: Τιμή
         count: Anzahl
-        sum: Summe
-        duration: XXX Days
+        sum: Άθροισμα
+        duration: Μέρες
       order:
-        change_given: Change
+        change_given: Αλλαγή
     models:
       room:
         one: Δωμάτιο
@@ -301,7 +301,7 @@ el:
   articles:
     create:
       success: Το αντικείμενο δημιουργήθηκε επιτυχώς
-      license_limited: XXX Your License is limited to %{count} articles
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} αντικείμενα
     destroy:
       success: Το αντικείμενο διαγράφηκε επιτυχώς
     find:
@@ -336,7 +336,7 @@ el:
   categories:
     create:
       success: Επιτυχία!
-      license_limited: XXX Your License is limited to %{count} categories
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} κατηγορίες
     new:
       aperitif: απεριτίφ
       beer: Μπύρα
