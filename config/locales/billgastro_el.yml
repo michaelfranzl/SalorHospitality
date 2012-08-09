@@ -651,7 +651,7 @@ el:
       served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
-      go_to_bookings_calendar: Πηγαίνετε στην προβολή Go to bookings calendar view
+      go_to_bookings_calendar: Πηγαίνετε στην προβολή ημερολογίου κρατήσεων 
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών
@@ -682,7 +682,7 @@ el:
       common_surcharge: Κοινή Επιβάρυνση
       edit_surcharge: Επεξεργασία Επιβάρυνσης
       new_surcharge: Νέα Επιβάρυνση
-  tax_amount: XXX Ποσό
+  tax_amount: Ποσό
   various:
     cancel: Ακύρωση
     common_surcharges: Κοινές Επιβαρύνσεις
@@ -691,7 +691,7 @@ el:
     save: Αποθηκεύστε
     subtotal: Υποσύνολο
     unamed: Ανώνυμο
-    tax_amount: XXX Amount
+    tax_amount: Ποσό
     tax: XXX Tax
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
