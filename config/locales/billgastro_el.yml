@@ -171,12 +171,12 @@ el:
         time_offset: Διόρθωση χρόνου (hours)
         timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
-        rlogo_header: XXX Receipt logo header
-        rlogo_footer: XXX Receipt logo footer
-        logo: XXX Screen logo
-        invoice_logo: XXX Invoice Logo
+        rlogo_header: Λογότυπο απόδειξης κεφαλίδα
+        rlogo_footer: Λογότυπο απόδειξης υποσέλιδο
+        logo: Λογότυπο οθόνης
+        invoice_logo: Λογότυπο τιμολογίου
       payment_method_item:
-        amount: Amount
+        amount: Ποσό
       booking_item:
         base_price: Preis
         count: Anzahl
