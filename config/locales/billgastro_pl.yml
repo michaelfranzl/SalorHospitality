@@ -2,11 +2,11 @@
 pl:
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: Edytuj
+      switch_to: Wybierz
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Edytuj sprzedającego
+      new_vendor: Dodaj sprzedającego
   activerecord:
     attributes:
       article:
@@ -14,7 +14,7 @@ pl:
         category_id: Kategoria
         description: Opis
         hidden: Usuń
-        image: Image
+        image: Obraz
         name: Nazwa
         price: Cena
         tax_id: Podatek
@@ -46,11 +46,11 @@ pl:
         separate_ticket: Oddzielny paragon
       page:
         active: Aktywować?
-        color: Hintergrund
+        color: Kolor tła
         height: Wysokość
         hidden: Usuń
-        image: Bild
-        width: Breite
+        image: Obraz
+        width: szerokość
       partial:
         active: Aktywować?
         blurb: Notka
