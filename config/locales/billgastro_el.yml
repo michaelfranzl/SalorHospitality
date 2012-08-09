@@ -579,13 +579,11 @@ el:
   scroll_up: Κινηθείτε προς τα πάνω
   send_and_go_back: Αποθηκεύστε κι επιστρέψτε
   served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
-  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι 
-    απασχολημένος ή η διασύνδεση έχει διακοπεί.
+  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι απασχολημένος ή η διασύνδεση έχει διακοπεί.
   sessions:
-    browser_warning:
+    browser_warning: 
       continue: Συνεχίστε
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: Το Salor υποστηρίζει μόνο τα προγράμματα περιήγησης Google Chrome (Windows), Chromium (Linux) ή Safari (Apple). Παρακαλούμε όπως χρησιμοποιήσετε ένα από αυτά τα προγράμματα περιήγησης και δοκιμάστε ξανά
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη
@@ -625,7 +623,7 @@ el:
       new_table: Νέος Πίνακας
     create:
       success: Ο πίνακας αποθηκεύτηκε επιτυχώς
-      license_limited: XXX Your License is limited to %{count} tables
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} τραπέζια
     destroy:
       success: Ο πίνακας διαγράφηκε επιτυχώς
   taxes:
@@ -636,7 +634,7 @@ el:
     new:
       edit_user: Επεξεργασία Χρήστη
       new_user: Νέος Χρήστης
-      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί του ποντικιού
     create:
       success: Ο χρήστης αποθηκεύτηκε επιτυχώς
     destroy:
@@ -653,7 +651,7 @@ el:
       served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
-      go_to_bookings_calendar: XXX Go to bookings calendar view
+      go_to_bookings_calendar: Πηγαίνετε στην προβολή Go to bookings calendar view
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών
