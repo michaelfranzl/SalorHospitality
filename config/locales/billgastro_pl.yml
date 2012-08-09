@@ -665,54 +665,54 @@ pl:
       new_room_price: New room price
   room_types:
     new:
-      edit_room_type: Edit room type
+      edit_room_type: Edytuj rodzaj poko
       new_room_type: New room type
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Edytuj pokój
+      new_room: Dodaj pokój
   scopes:
     active: Active
     waiterpad: Waiterpad
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Edytuj sezony
+      new_season: Nowy sezon
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Lista podatków
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
-  tax_amount: XXX Amount
+      add_tax_amount: Dodaj kwotę podatku
+      common_surcharge: Łączne dopłaty
+      edit_surcharge: Edytuj dopłaty
+      new_surcharge: Nowa dopłata
+  tax_amount: XXX Ilość
   various:
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
-    unamed: Unamed
-    tax_amount: XXX Amount
-    tax: XXX Tax
-    unit_price_abbreviation: XXX SP
-    total_price_abbreviation: XXX TP
-    quantity_abbreviation: XXX Qty.
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
+    cancel: Anuluj
+    common_surcharges: Łączne dopłaty
+    home: Powrót
+    pay: Zapłać
+    save: Zapisz
+    subtotal: Razem
+    unamed: Bez nazwy
+    tax_amount: XXX Ilość
+    tax: XXX Podatek
+    unit_price_abbreviation: XXX Cena za sztukę
+    total_price_abbreviation: XXX Cena końcowa
+    quantity_abbreviation: XXX Ilość
+    interim_invoice: XXX Faktura tymczasowa
+    invoice: XXX Faktura
+    restaurant: XXX Restauracja
     hotel: XXX Hotel
     consumations: XXX Consumations
   customers:
     new:
-      edit_customer: Edit Customer
-      new_customer: New Customer
+      edit_customer: Edycja klienta
+      new_customer: Nowy klient
     create:
-      success: Customer successfully saved
+      success: Dane klienta zostały pomyślnie zapisane
     destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
-  invalid_date: XXX Invalid date
+      success: Dane o kliencie zostały pomyślnie skasowane
+  refund: XXX Zwrot
+  invalid_date: XXX Nieprawidłowa data
