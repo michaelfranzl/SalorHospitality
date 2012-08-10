@@ -692,22 +692,22 @@ el:
     subtotal: Υποσύνολο
     unamed: Ανώνυμο
     tax_amount: Ποσό
-    tax: Φ
-    unit_price_abbreviation: XXX SP
-    total_price_abbreviation: XXX TP
-    quantity_abbreviation: XXX Qty.
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
-    hotel: XXX Hotel
-    consumations: XXX Consumations
+    tax: Φόρος
+    unit_price_abbreviation: SP
+    total_price_abbreviation: TP
+    quantity_abbreviation: Qty.
+    interim_invoice: Προσωρινό Τιμολόγιο
+    invoice: Τιμολόγιο
+    restaurant: Εστιατόριο
+    hotel: Ξενοδοχείο 
+    consumations: Εκπληρώσεις
   customers:
     new:
-      edit_customer: Edit Customer
-      new_customer: New Customer
+      edit_customer: Επεξεργασία Πελάτη
+      new_customer: Νέος Πελάτης
     create:
-      success: Customer successfully saved
+      success: Ο πελάτης αποθηκεύτηκε επιτυχώς 
     destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
-  invalid_date: XXX Invalid date
+      success: Ο πελάτης διαγράφηκε επιτυχώς
+  refund: Επιστροφή
+  invalid_date: Άκυρη ημερομηνία
