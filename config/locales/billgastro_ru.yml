@@ -329,7 +329,7 @@ ru:
   categories:
     create:
       success: Успешно!
-      license_limited: XXX Your License is limited to %{count} categories
+      license_limited: Ваша лицензия рассчитана на %{count} категорий
     new:
       aperitif: Аперитив
       beer: Пиво
@@ -472,12 +472,12 @@ ru:
       sum: Сумма
       unit_price: Цена за единицу
     invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
+      unit_price: Цена за единицу
+      count: Количество
+      sum: Сумма
     refund_form:
-      do_separate_items: Separate this item
-      do_refund: Make refund
+      do_separate_items: Отделить эту позицию
+      do_refund: Сделать возврат
   pages:
     edit:
       edit_page: Редактирование страницы
@@ -509,19 +509,19 @@ ru:
       backup_database: Резервировать базу данных
       backup_logfile: Резевировать файл журнала
       header: Отчеты
-      connected: XXX Connected
-      disconnected: XXX Disconnected
+      connected: Соединение установлено
+      disconnected: Соединение разорвано
       connect_ssh: XXX Remote Login
       connect_vnc: XXX Share Screen
-      password: XXX Password
-      requesting_connection_status: XXX Requesting connection status ...
+      password: Пароль
+      requesting_connection_status: Запрос статуса соединения ...
       internet_connection_info: XXX To get Remote Support, you must be connected to
         the internet. If you see the Red (E) Logo above, you are connected to the
         internet.
-      remote_support: XXX Remote Support
-      download_reports: XXX Save reports
-    remote_support: XXX Remote Support
-    download_reports: XXX Download Report
+      remote_support: Удаленная поддержка
+      download_reports: Сохранить отчеты
+    remote_support: Удаленная поддержка
+    download_reports: Скачать отчет
   restaurant: Ресторан
   roles:
     new:
@@ -548,23 +548,23 @@ ru:
       split_items: Разбивает позиции
       take_orders: Берет заказы
       view_all_settlements: Видит все расчеты
-      refund: XXX Refund items
-      manage_articles: XXX Manage articles, categories and options
-      manage_categories: XXX Manage categories
-      manage_options: XXX Manage options
-      manage_roles: XXX Manage roles
-      manage_taxes: XXX Manage Taxes
-      manage_cost_centers: XXX Manage Cost Centers
-      manage_payment_methods: XXX Manage Payment Methods
-      manage_tables: XXX Manage tables
+      refund: Делает возврат
+      manage_articles: Управляет блюдами, категориями и опциями
+      manage_categories: Управляет категориями
+      manage_options: Управляет опциями
+      manage_roles: Управляет ролями
+      manage_taxes: Управляет налогами
+      manage_cost_centers: Управляет учетными отделами
+      manage_payment_methods: Управляет способами оплаты
+      manage_tables: Управляет столами
       manage_vendors: XXX Manage vendors
-      manage_statistics: XXX View statistics
-      manage_hotel: XXX Manage hotel
+      manage_statistics: Видит статистику
+      manage_hotel: Управляет отелем
       item_scribe: XXX Enable handwriting
       assign_order_to_booking: XXX Assign orders to a booking
       assign_tables: XXX Assign tables to users
-      remote_support: XXX Remote Support
-      download_database: XXX Download Database
+      remote_support: Удаленная поддержка
+      download_database: Резервирует базу данных
     create:
       success: Роль успешно сохранена
     destroy:
@@ -579,8 +579,7 @@ ru:
   sessions:
     browser_warning:
       continue: Продолжить
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: Salor рассчитан на работу только в браузерах Google Chrome (Windows), Chromium (Linux) или Safari (Apple).
     new:
       email: Ваш E-Mail
       login: Логин
@@ -619,7 +618,7 @@ ru:
       new_table: Новый стол
     create:
       success: Стол успешно сохранен
-      license_limited: XXX Your License is limited to %{count} tables
+      license_limited: Ваша лицензия рассчитана на %{count} столов
     destroy:
       success: Стол успешно удален
   taxes:
@@ -630,7 +629,7 @@ ru:
     new:
       edit_user: Редактирование пользователя
       new_user: Новый пользователь
-      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: Используйте клавишу [Ctrl] + левая кнопка мыши для выбора и снятия выбора
     create:
       success: Пользователь успешно сохранен
     destroy:
@@ -647,7 +646,7 @@ ru:
       served_by_X: Вас обслуживал(а) %{user}
     show:
       search_by_number: Искать по номеру
-      go_to_bookings_calendar: XXX Go to bookings calendar view
+      go_to_bookings_calendar: Перейти к календарю резервирования
   room_prices:
     index:
       generate_price_skeleton: Сгенерировать скелет цены
@@ -687,15 +686,15 @@ ru:
     save: Сохранить
     subtotal: Подытог
     unamed: Без имени
-    tax_amount: XXX Amount
-    tax: XXX Tax
+    tax_amount: Сумма
+    tax: Налог
     unit_price_abbreviation: XXX SP
     total_price_abbreviation: XXX TP
-    quantity_abbreviation: XXX Qty.
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
-    hotel: XXX Hotel
+    quantity_abbreviation: Кол-во
+    interim_invoice: Временный счет
+    invoice: Счет
+    restaurant: Ресторан
+    hotel: Отель
     consumations: XXX Consumations
   vendors:
     index:
@@ -707,10 +706,10 @@ ru:
   customers:
     new:
       edit_customer: Edit Customer
-      new_customer: New Customer
+      new_customer: Новый клиент
     create:
-      success: Customer successfully saved
+      success: Клиент успешно сохранен
     destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
-  invalid_date: XXX Invalid date
+      success: Клиент успешно удален
+  refund: Возврат
+  invalid_date: Неверная дата
