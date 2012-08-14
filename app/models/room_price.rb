@@ -31,6 +31,6 @@ class RoomPrice < ActiveRecord::Base
   end
   
   def base_price=(base_price)
-    write_attribute :base_price, base_price.gsub(',','.')
+    write_attribute :base_price, base_price.to_s.gsub(',','.')
   end
 end

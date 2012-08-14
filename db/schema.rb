@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730075606) do
+ActiveRecord::Schema.define(:version => 20120814112204) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -183,24 +183,24 @@ ActiveRecord::Schema.define(:version => 20120730075606) do
   add_index "coupons_orders", ["order_id"], :name => "coupons_orders_order_id_index"
 
   create_table "customers", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "company_name"
-    t.text     "address"
-    t.string   "city"
-    t.string   "state"
-    t.string   "postalcode"
+    t.string   "first_name",   :default => ""
+    t.string   "last_name",    :default => ""
+    t.string   "company_name", :default => ""
+    t.string   "address",      :default => ""
+    t.string   "city",         :default => ""
+    t.string   "state",        :default => ""
+    t.string   "postalcode",   :default => ""
     t.string   "m_number"
     t.string   "m_points"
-    t.string   "email"
-    t.string   "telephone"
-    t.string   "cellphone"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "email",        :default => ""
+    t.string   "telephone",    :default => ""
+    t.string   "cellphone",    :default => ""
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
-    t.string   "country"
+    t.string   "country",      :default => ""
   end
 
   create_table "discounts", :force => true do |t|
