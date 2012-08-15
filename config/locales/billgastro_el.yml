@@ -23,7 +23,7 @@ el:
         email: ηλεκτρονική διεύθυνση
         telephone: Τηλέφωνο
         cellphone: κινητό
-        hidden: διαγράψτε
+        hidden: διαγραφή
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -99,7 +99,7 @@ el:
         height_mobile: Ύψος Κινητού
         hidden: διαγραφή
         name: Όνομα
-        rotate: περιστρέψτε;
+        rotate: περιστροφή;
         width: Πλάτος
         width_mobile: Πλάτος Κινητού
       tax:
@@ -179,7 +179,7 @@ el:
         amount: Ποσό
       booking_item:
         base_price: Τιμή
-        count: Anzahl
+        count: Ποσότητα
         sum: Άθροισμα
         duration: Μέρες
       order:
@@ -693,9 +693,9 @@ el:
     unamed: Ανώνυμο
     tax_amount: Ποσό
     tax: Φόρος
-    unit_price_abbreviation: SP
-    total_price_abbreviation: TP
-    quantity_abbreviation: Qty.
+    unit_price_abbreviation: ΤΜ
+    total_price_abbreviation: ΣΤ
+    quantity_abbreviation: Ποσ.
     interim_invoice: Προσωρινό Τιμολόγιο
     invoice: Τιμολόγιο
     restaurant: Εστιατόριο
