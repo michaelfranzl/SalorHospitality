@@ -2,11 +2,11 @@
 pl:
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: Edytuj
+      switch_to: Wybierz
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
+      edit_vendor: Edytuj sprzedającego
+      new_vendor: Dodaj sprzedającego
   activerecord:
     attributes:
       article:
@@ -14,7 +14,7 @@ pl:
         category_id: Kategoria
         description: Opis
         hidden: Usuń
-        image: Image
+        image: Obraz
         name: Nazwa
         price: Cena
         tax_id: Podatek
@@ -46,14 +46,14 @@ pl:
         separate_ticket: Oddzielny paragon
       page:
         active: Aktywować?
-        color: Hintergrund
-        height: Höhe
+        color: Kolor tła
+        height: Wysokość
         hidden: Usuń
-        image: Bild
-        width: Breite
+        image: Obraz
+        width: szerokość
       partial:
         active: Aktywować?
-        blurb: Blurb
+        blurb: Notka
         hidden: Usuń
       presentation:
         active: Aktywować?
@@ -110,79 +110,79 @@ pl:
         name: Nazwa
         path: Skrót
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: skasuj
+        name: Nazwa
+        taxes: Podatek
       room_price:
-        base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
-        season_id: Season
+        base_price: Cena podstawowa
+        guest_type_id: Typ klienta
+        hidden: ukryj
+        room_type_id: Typ pokoju
+        season_id: Sezon
       room_type:
-        hidden: löschen
-        name: Name
+        hidden: ukryj
+        name: Nazwa
       season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        from_date: Od
+        hidden: skasuj
+        name: Nazwa
+        to_date: Do
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
-        radio_select: Radio Select
-        season_id: Season
-        selected: XXX Selected by default
-        visible: XXX Visible?
+        amount: Ilość
+        guest_type_id: Typ klienta
+        hidden: skasuj
+        name: Nazwa
+        radio_select: Wybierz pasno
+        season_id: Sezon
+        selected: XXX Ustaw jako podstawowe
+        visible: XXX Widoczne?
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Ilość
+        tax_id: Podatek
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
+        automatic_printing: Automatyczne drukowanie
+        country: Zasady dla kraju
+        hidden: skasuj
+        invoice_footer_blurb: Notka stopki faktury
+        invoice_header_blurb: Notka nagłówka faktury
         name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
+        receipt_footer_blurb: Notka stopki rachunku
+        receipt_header_blurb: Notka nagłówka rachunku
         saas: Online variant
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
-        rlogo_header: XXX Receipt logo header
-        rlogo_footer: XXX Receipt logo footer
+        ticket_display_time_order: Czas i numer rachunku na paragonie
+        ticket_item_separator: Separuj linią
+        ticket_tall_font: Wyskokość czcionki
+        ticket_wide_font: Szerokość czcionki
+        time_offset: Korekta czasu (w godzinach)
+        timeout: Czas zablokowania ekranu (w sekundach)
+        use_order_numbers: Użyj liczby zamówień
+        rlogo_header: XXX Logo nagłówka
+        rlogo_footer: XXX Logo stopki
         logo: XXX Screen logo
-        invoice_logo: XXX Invoice Logo
+        invoice_logo: XXX Logo faktury
       payment_method_item:
-        amount: Amount
+        amount: Ilość
       booking_item:
-        base_price: Preis
-        count: Anzahl
-        sum: Summe
-        duration: XXX Days
+        base_price: Cena
+        count: Rozliczenie
+        sum: Suma
+        duration: XXX Dni
       order:
-        change_given: Change
+        change_given: Zmień
       customer:
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
+        first_name: Imię
+        last_name: Nazwisko
+        full_name: Pełna nazwa
+        company_name: Nazwa firmy
+        address: Adres
+        city: Miasto
+        state: Województwo
+        postalcode: Kod pocztowy
+        m_number: Kod karty lojalnościowej
+        m_points: Punkty lojalnościowe
         email: email
-        telephone: Telephone
-        cellphone: Cellphone
+        telephone: Stacjonarny
+        cellphone: Komórka
         hidden: delete
     models:
       article:
@@ -264,44 +264,44 @@ pl:
         one: Bonownik
         other: Bonowniki
       booking:
-        one: Booking
-        other: Bookings
+        one: Rezerwacja
+        other: Rezerwacje
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Typ klienta
+        other: Typy klientów
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       room:
-        one: Room
-        other: Rooms
+        one: Pokój
+        other: Pokoje
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Cena pokoju
+        other: Ceny pokoi
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Rodzaj pokoju
+        other:  Rodzaje pokoi
       season:
-        one: Saison
-        other: Saisons
+        one: Sezon
+        other: Sezony
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Dopłata
+        other: Dopłaty
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Wysokośc podatku
+        other: Wysokość podatków
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
     create:
       success: Artykuł został pomyślnie dodany
-      license_limited: XXX Your License is limited to %{count} articles
+      license_limited: XXX Twoja licencja ma limit do %{count} artykułów
     destroy:
       success: Artykuł został pomyślnie usunięty
     find:
@@ -336,7 +336,7 @@ pl:
   categories:
     create:
       success: Pomyślnie dodano!
-      license_limited: XXX Your License is limited to %{count} categories
+      license_limited: XXX Twoja licencja ma limit do %{count} kategorii
     new:
       aperitif: Aperitif
       beer: Piwo
@@ -375,9 +375,9 @@ pl:
       edit_cost_center: Edytowanie dodatkowych kosztów
       new_cost_center: Dodawanie dodatkowych kosztów
     create:
-      success: Cost Center successfully saved
+      success: Centrum kosztów zostało pomyślnie zapisane
     destroy:
-      success: Cost Center successfully deleted
+      success: Centrum kosztów zostało pomyślnie skasowane
   count: Podlicz
   create: Dodaj
   dateandtime: Data
@@ -429,17 +429,17 @@ pl:
       new_option: Dodawanie zestawów
       select_all: Zaznacz wszystkie
     create:
-      success: Option successfully saved
+      success: Opcja pomyślnie zapisana
     destroy:
-      success: Option successfully deleted
+      success: Opcja pomyślnie skasowana
   orange: Pomarańczowy
   orders:
     functions_header_index:
       items_notifications: Powiadomienia
       print_now: Drukuj teraz
       show_last_order: Pokaż ostatnie zamówienie
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      show_last_booking: XXX Pokaż ostatnią rezerwację
+      toggle_between_tables_and_rooms: XXX Przełącz pomiędzy ekranem stołów a pokoi
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:
@@ -454,8 +454,8 @@ pl:
       split_invoice: Podziel rachunek
       split_this_item: Kliknij pozycję aby podzielić paragon
       switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
+      change_money: XXX Zmień
+      set_booking: XXX Przydziel do rezerwacji
     login_form:
       email: Twój e-mail
       login: Login
@@ -477,24 +477,24 @@ pl:
       sum: Suma
       unit_price: Jednostka płatności
     invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
+      unit_price: Cena artykułu
+      count: Ilość
+      sum: Suma
     refund_form:
-      do_separate_items: Separate this item
-      do_refund: Make refund
+      do_separate_items: Podziel ten artykuł
+      do_refund: Dodaj zwrot
   pages:
     edit:
       edit_page: Edytuj stronę
-      slideshow: Präsentation starten
+      slideshow: Rozpocznij prezentację
       view: Podgląd
     new:
-      new_page: New Page
+      new_page: Nowa strona
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: edytuj notatkę
+    error_during_evaluation: ! 'Błąd: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
+      no_presentations_found: Nie wybrano szablonu dla tej części.
   pink: Różowy
   please_enter_item_comment: Specjalne życzenia
   please_enter_item_price: Cena specjalna
@@ -511,22 +511,20 @@ pl:
     start_date: Data początkowa
     usb_device: USB
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      header: Reports
-      connected: XXX Connected
-      disconnected: XXX Disconnected
-      connect_ssh: XXX Remote Login
-      connect_vnc: XXX Share Screen
-      password: XXX Password
-      requesting_connection_status: XXX Requesting connection status ...
-      internet_connection_info: XXX To get Remote Support, you must be connected to
-        the internet. If you see the Red (E) Logo above, you are connected to the
-        internet.
-      remote_support: XXX Remote Support
-      download_reports: XXX Save reports
-    remote_support: XXX Remote Support
-    download_reports: XXX Download Report
+      backup_database: Kopia bazy danych
+      backup_logfile: Kopia logu
+      header: Raporty
+      connected: XXX Połączono
+      disconnected: XXX Rozłączono
+      connect_ssh: XXX Login zdalny
+      connect_vnc: XXX Dziel obraz
+      password: XXX Hasło
+      requesting_connection_status: XXX Oczekiwanie na połączenie ...
+      internet_connection_info: XXX Aby pozwolić na połączenie zdalne musisz być podłączony do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie z internetem.
+      remote_support: XXX Pomoc zdalna
+      download_reports: XXX Zapisz raport
+    remote_support: XXX Pomoc zdalna
+    download_reports: XXX Pobierz raport
   restaurant: Restauracja
   roles:
     new:
@@ -553,27 +551,27 @@ pl:
       split_items: Łączenie pozycji
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
-      refund: XXX Refund items
-      manage_articles: XXX Manage articles, categories and options
-      manage_categories: XXX Manage categories
-      manage_options: XXX Manage options
-      manage_roles: XXX Manage roles
-      manage_taxes: XXX Manage Taxes
-      manage_cost_centers: XXX Manage Cost Centers
-      manage_payment_methods: XXX Manage Payment Methods
-      manage_tables: XXX Manage tables
-      manage_vendors: XXX Manage vendors
-      manage_statistics: XXX View statistics
-      manage_hotel: XXX Manage hotel
-      item_scribe: XXX Enable handwriting
-      assign_order_to_booking: XXX Assign orders to a booking
-      assign_tables: XXX Assign tables to users
-      remote_support: XXX Remote Support
-      download_database: XXX Download Database
+      refund: XXX Zwrot przedmiotów
+      manage_articles: XXX Zarządzaj artykułami, kategoriami oraz opcjami
+      manage_categories: XXX Zarządzaj kategoriami
+      manage_options: XXX Zarządzaj opcjami
+      manage_roles: XXX Zarządzaj zasadami
+      manage_taxes: XXX Zarządzaj podatkami
+      manage_cost_centers: XXX Zarządzaj centrum kosztów
+      manage_payment_methods: XXX Zarządzaj rodzajami płatności
+      manage_tables: XXX Zarządzaj stołami
+      manage_vendors: XXX Zarządzaj sprzedawcami
+      manage_statistics: XXX Zobacz statystyki
+      manage_hotel: XXX Zarządzaj hotelami
+      item_scribe: XXX Aktywuj pisanie ręczne
+      assign_order_to_booking: XXX Wyznacz zamówienia dla rezerwacji
+      assign_tables: XXX Przypisz stół dla klienta
+      remote_support: XXX Pomoc zdalna
+      download_database: XXX Pobierz bazę danych
     create:
-      success: Role successfully saved
+      success: Zasada została pomyślnie zapisana
     destroy:
-      success: Role successfully deleted
+      success: Zasada została pomyślnie skasowana
   scroll_down: Przewiń w dół
   scroll_to_room: Idź do
   scroll_up: Przewiń w górę
@@ -584,8 +582,8 @@ pl:
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: XXX Salor wspiera przeglądarki Google Chrome (Windows), Chromium
+        (Linux) lub Safari (Apple). Proszę użyć jednej z powyższych przeglądarek i spróbować ponownie.
     new:
       email: Twój e-mail
       login: Login
@@ -624,10 +622,10 @@ pl:
       edit_table: Edytowanie stolika
       new_table: Dodawanie stolika
     create:
-      success: Table successfully saved
-      license_limited: XXX Your License is limited to %{count} tables
+      success: Stół pomyślnie zapisany
+      license_limited: XXX Twoja licencja ma limit do %{count} stołów
     destroy:
-      success: Table successfully deleted
+      success: Stół pomyślnie skasowany
   taxes:
     new:
       edit_tax: Edytowanie podatku
@@ -636,11 +634,11 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
-      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: XXX Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz myszy
     create:
-      success: User successfully saved
+      success: Użytkownik pomyślnie zapisany
     destroy:
-      success: User successfully deleted
+      success: Użytkownik pomyślnie skasowany
   violet: Fioletowy
   waiter: Kelner
   waiterpad_generic_name: Lista kelnerów(-)
@@ -650,69 +648,69 @@ pl:
   yellow: Żółty
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: Byłeś obsługiwany przez %{user}
     show:
-      search_by_number: Search by number
-      go_to_bookings_calendar: XXX Go to bookings calendar view
+      search_by_number: Szukaj wg liczby
+      go_to_bookings_calendar: XXX Sprawdź kalendarz rezerwacji
   layouts:
     application:
       submit_scribe: OK
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Generuj szkielet cen
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Edytuj cenę pokoju
+      new_room_price: Nowa cena pokoju
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: Edytuj typ pokoju
+      new_room_type: Dodaj typ pokoju
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Edytuj pokój
+      new_room: Dodaj pokój
   scopes:
     active: Active
     waiterpad: Waiterpad
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
+      edit_season: Edytuj sezony
+      new_season: Nowy sezon
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
+      list_of_taxes: Lista podatków
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
-  tax_amount: XXX Amount
+      add_tax_amount: Dodaj kwotę podatku
+      common_surcharge: Łączne dopłaty
+      edit_surcharge: Edytuj dopłaty
+      new_surcharge: Nowa dopłata
+  tax_amount: XXX Ilość
   various:
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
-    unamed: Unamed
-    tax_amount: XXX Amount
-    tax: XXX Tax
-    unit_price_abbreviation: XXX SP
-    total_price_abbreviation: XXX TP
-    quantity_abbreviation: XXX Qty.
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
+    cancel: Anuluj
+    common_surcharges: Łączne dopłaty
+    home: Powrót
+    pay: Zapłać
+    save: Zapisz
+    subtotal: Razem
+    unamed: Bez nazwy
+    tax_amount: XXX Ilość
+    tax: XXX Podatek
+    unit_price_abbreviation: XXX Cena za sztukę
+    total_price_abbreviation: XXX Cena końcowa
+    quantity_abbreviation: XXX Ilość
+    interim_invoice: XXX Faktura tymczasowa
+    invoice: XXX Faktura
+    restaurant: XXX Restauracja
     hotel: XXX Hotel
     consumations: XXX Consumations
   customers:
     new:
-      edit_customer: Edit Customer
-      new_customer: New Customer
+      edit_customer: Edycja klienta
+      new_customer: Nowy klient
     create:
-      success: Customer successfully saved
+      success: Dane klienta zostały pomyślnie zapisane
     destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
-  invalid_date: XXX Invalid date
+      success: Dane o kliencie zostały pomyślnie skasowane
+  refund: XXX Zwrot
+  invalid_date: XXX Nieprawidłowa data
