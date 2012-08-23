@@ -140,6 +140,10 @@ window.booking_dates_changed = ->
   $('#booking_duration').val duration
   submit_json.model.duration = duration
   submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
+  $.each items_json, (k,v) ->
+    items_json[k].from_date = date_as_ymd(new Date(from))
+    items_json[k].to_date = date_as_ymd(new Date(to))
+    items_json[k].duration = duration
   
   
 # =======================================================
