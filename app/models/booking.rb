@@ -183,9 +183,12 @@ class Booking < ActiveRecord::Base
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
           #puts "XXX has key"
-          self.taxes[k][:t] += v[:t].round(2)
-          self.taxes[k][:g] += v[:g].round(2)
-          self.taxes[k][:n] += v[:n].round(2)
+          self.taxes[k][:t] += v[:t]
+          self.taxes[k][:g] += v[:g]
+          self.taxes[k][:n] += v[:n]
+          self.taxes[k][:g] = self.taxes[k][:g].round(2)
+          self.taxes[k][:n] = self.taxes[k][:n].round(2)
+          self.taxes[k][:t] = self.taxes[k][:t].round(2)
         else
           #puts "XXX has not key"
           self.taxes[k] = v
@@ -196,9 +199,12 @@ class Booking < ActiveRecord::Base
     self.orders.each do |order|
       order.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:g] += v[:g].round(2)
-          self.taxes[k][:n] += v[:n].round(2)
-          self.taxes[k][:t] += v[:t].round(2)
+          self.taxes[k][:g] += v[:g]
+          self.taxes[k][:n] += v[:n]
+          self.taxes[k][:t] += v[:t]
+          self.taxes[k][:g] = self.taxes[k][:g].round(2)
+          self.taxes[k][:n] = self.taxes[k][:n].round(2)
+          self.taxes[k][:t] = self.taxes[k][:t].round(2)
         else
           self.taxes[k] = v
         end
