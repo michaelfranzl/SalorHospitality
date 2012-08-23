@@ -1,12 +1,12 @@
 ActionMailer::Base.sendmail_settings = { :arguments => '-i' }
 ExceptionNotifier::Notifier.append_view_path "#{Rails.root}/app/views"
 
-SalorGastro::Application.configure do
+SalorHospitality::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.action_mailer.delivery_method = :sendmail
 
-  config.middleware.use ExceptionNotifier, :email_prefix => "[SalorGastroException] ", :sender_address => %{"SalorGastro" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorgastro request session environment backtrace)
+  config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => %{"SalorHospitality" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorhospitality request session environment backtrace)
 
   # Code is not reloaded between requests
   config.cache_classes = true

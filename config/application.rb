@@ -19,7 +19,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module SalorGastro
+module SalorHospitality
   class Application < Rails::Application
 
     VERSION = '{{VERSION}}'

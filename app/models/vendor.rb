@@ -10,7 +10,6 @@ class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
   include Scope
-  include SalorGastro
 
   belongs_to :company
   has_and_belongs_to_many :users

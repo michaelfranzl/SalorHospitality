@@ -19,16 +19,16 @@ class Report
     @histories = History.where(["(created_at BETWEEN ? AND ?) OR (updated_at BETWEEN ? AND ?)",from,to,from,to]).order("created_at DESC")
     @receipts = Receipt.where(["(created_at BETWEEN ? AND ?) OR (updated_at BETWEEN ? AND ?)",from,to,from,to]).order("created_at DESC")
 
-    File.open("#{device}/SalorGastroOrders#{tfrom}-#{tto}.tsv","w") do |f|
+    File.open("#{device}/SalorHospitalityOrders#{tfrom}-#{tto}.tsv","w") do |f|
       f.write(orders_csv(@orders))
     end
-    File.open("#{device}/SalorGastroItems#{tfrom}-#{tto}.tsv","w") do |f|
+    File.open("#{device}/SalorHospitalityItems#{tfrom}-#{tto}.tsv","w") do |f|
       f.write(items_csv(@items))
     end
-    File.open("#{device}/SalorGastroHistory#{tfrom}-#{tto}.tsv","w") do |f|
+    File.open("#{device}/SalorHospitalityHistory#{tfrom}-#{tto}.tsv","w") do |f|
       f.write(history_csv(@histories))
     end
-    File.open("#{device}/SalorGastroReceipts#{tfrom}-#{tto}.txt","w") do |f|
+    File.open("#{device}/SalorHospitalityReceipts#{tfrom}-#{tto}.txt","w") do |f|
       @receipts.each do |r|
         f.write("\n---\n#{r.created_at}\n#{r.user.login}\n---\n\n")
         f.write r.content

@@ -1,4 +1,4 @@
-SalorGastro::Application.configure do
+SalorHospitality::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -27,15 +27,4 @@ SalorGastro::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/lib)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/config/locales)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/rooms)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/room_types)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/room_prices)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/seasons)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/surcharges)
-  config.autoload_paths += %W(#{config.root}/../salor_hotel/app/views/salor_hotel/guest_types)
-  ActiveSupport::Dependencies.explicitly_unloadable_constants << 'SalorHotel'
 end
