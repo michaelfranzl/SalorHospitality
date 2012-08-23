@@ -19,19 +19,26 @@ class SurchargeItem < ActiveRecord::Base
 
   def calculate_totals
     #puts "XXX SurchargeItem -> calculate_totals"
-    self.taxes = {}
     self.duration = self.booking_item.duration
     self.count = self.booking_item.count
-    self.sum = self.amount * self.count * self.duration
-    self.surcharge.tax_amounts.each do |ta|
-      #puts "  XXX loop for tax_amount #{ ta.id }"
-      tax_object = ta.tax
-      tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
-      gro = (ta.amount).round(2) * self.count * self.duration
-      net = (gro - tax_sum).round(2)
-      self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
-      self.save
+    self.from_date = self.booking_item.from_date
+    self.to_date = self.booking_item.to_date
+    self.taxes = {}
+    
+    if self.hidden
+      self.sum = 0
+    else
+      self.sum = self.amount * self.count * self.duration
+      self.surcharge.tax_amounts.each do |ta|
+        #puts "  XXX loop for tax_amount #{ ta.id }"
+        tax_object = ta.tax
+        tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
+        gro = (ta.amount).round(2) * self.count * self.duration
+        net = (gro - tax_sum).round(2)
+        self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
+      end
     end
+    self.save
     #puts "  XXX set self.taxes to #{self.taxes.inspect}"
   end
 end

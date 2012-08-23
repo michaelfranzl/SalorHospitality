@@ -41,32 +41,43 @@ class BookingItem < ActiveRecord::Base
     end
   end
 
-  # This function creates and hides SurchargeItems depending on the selection on the UI.
+  # This function creates and hides SurchargeItems depending on the selection on the UI. ids contains an array of currently selected surchargeItems. That means that all other existing SurchargeItems must be hidden.
   def update_surcharge_items_from_ids(ids)
-    # Rails loses session and params for this function if surcharges are selected in the UI. Fortunately, we can copy vendor and company from other models.
+    # Rails loses session and params for this function if surcharges are selected in the UI. Fortunately, we can copy vendor and company from other models. It is insane, but see for yourself:
     #puts "XXXXXXXXXXXXXXXX #{@current_vendor.inspect}"
+    
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
-    self.surcharge_items.update_all :hidden => true
+    
+    # hi
+    self.surcharge_items.where(:hidden => nil).each do |si|
+      si.update_attribute :hidden, true
+      si.calculate_totals
+    end
 
-    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge.id if si.surcharge}.uniq
-    #puts "XXXXXX existing_surcharge_ids #{existing_surcharge_ids.inspect}"
+    existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge_id if si.surcharge}.uniq
 
     ids.each do |i|
-      #puts "XXXXX sid = #{i}"
       if existing_surcharge_ids.include? i.to_i
-        self.surcharge_items.where(:surcharge_id => i).update_all :hidden => nil # this should always update just one SurchargeItem
-        #puts "XXXXXX Don't create SurchargeItem for surcharge##{i}. Just set hidden to false."
+        surcharge_item = self.surcharge_items.where(:surcharge_id => i).first
+        surcharge_item.update_attribute :hidden, nil # this should always update just one SurchargeItem, but we write update_all because that is easier
+        #puts "XXXXXX Don't create SurchargeItem for surcharge##{i}. Just set hidden to nil."
+        #surcharge_item.reload
+        surcharge_item.calculate_totals
         existing_surcharge_ids.delete i.to_i
       else
         #puts "XXXXXX Create SurchargeItem for surcharge##{i}"
         s = Surcharge.find_by_id(i.to_i)
         surcharge_item = SurchargeItem.create :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
         self.surcharge_items << surcharge_item
+        #surcharge_item.reload
         surcharge_item.calculate_totals
       end
       existing_surcharge_ids.each do |id|
         #puts "XXXXXX hiding surcharge_items for surcharge##{id}"
-        self.surcharge_items.where(:surcharge_id => id).update_all :hidden => true
+        surcharge_item = self.surcharge_items.where(:surcharge_id => id).first
+        surcharge_item.update_attribute :hidden, true
+        #surcharge_item.reload
+        surcharge_item.calculate_totals
       end
     end
     self.save

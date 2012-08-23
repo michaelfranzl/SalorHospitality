@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814112204) do
+ActiveRecord::Schema.define(:version => 20120823180120) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -635,18 +635,20 @@ ActiveRecord::Schema.define(:version => 20120814112204) do
   add_index "stocks", ["group_id"], :name => "index_stocks_on_group_id"
 
   create_table "surcharge_items", :force => true do |t|
-    t.integer "surcharge_id"
-    t.integer "booking_item_id"
-    t.float   "amount"
-    t.integer "vendor_id"
-    t.integer "company_id"
-    t.integer "season_id"
-    t.integer "guest_type_id"
-    t.boolean "hidden"
-    t.string  "taxes",           :limit => 1000, :default => "--- {}\n"
-    t.float   "sum"
-    t.integer "duration"
-    t.integer "count"
+    t.integer  "surcharge_id"
+    t.integer  "booking_item_id"
+    t.float    "amount"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.integer  "season_id"
+    t.integer  "guest_type_id"
+    t.boolean  "hidden"
+    t.string   "taxes",           :limit => 1000, :default => "--- {}\n"
+    t.float    "sum"
+    t.integer  "duration"
+    t.integer  "count"
+    t.datetime "from_date"
+    t.datetime "to_date"
   end
 
   create_table "surcharges", :force => true do |t|
