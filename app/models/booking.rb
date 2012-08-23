@@ -46,7 +46,7 @@ class Booking < ActiveRecord::Base
   
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
+      self.update_attribute :nr, self.vendor.get_unique_model_number('booking')
     end
   end
   

@@ -64,7 +64,7 @@ Features
 
 For a quick demonstration of a small part of all features, watch the screencasts that are available on youtube:
 
-http://www.youtube.com/watch?v=SUfm17WYRdA (Restaurant only)
+http://www.youtube.com/watch?v=SUfm17WYRdA (This video covers restaurant functions only)
 
 Documentation
 -------------
@@ -99,16 +99,23 @@ Hint: After you've logged in, you can click on the client logo on the top left o
 Warning: The database of the online demo resets itself frequently. Do not expect your added content to persist.
 
 
+Get Support!
+------------
+
+Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be!
+
+If you find Bugs or want to report Features, please use our Redmine system: http://redmine.red-e.eu/projects/billgastro
+
+If you want to ask questions or get general support, please subscribe to our mailing list: [salor-hospitality-users@googlegroups.com](https://groups.google.com/forum/?fromgroups#!forum/salor-hospitality-users)
+
+For other inquiries, please contact us via the contact form on our website: http://red-e.eu ! (contact form will be set up soon)
+
 Give back!
 ----------
 
 We have spent hundreds, if not thousands of hours in making this product available to you, for free. If you feel that our product has benefited you, you can support further developments by donating to our Open Source projects: http://red-e.eu (donation buttons will be set up soon).
 
-
-Professional Support and Consulting
------------------------------------
-
-Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be! Contact us today! http://red-e.eu ! (contact form will be set up soon)
+If you can't give money right now, sign up to Twitter, "follow" us and post about your experience: [http://twitter.com/RedETools](twitter.com/RedETools)
 
 Contact
 -------
