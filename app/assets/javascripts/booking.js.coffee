@@ -374,15 +374,16 @@ render_booking_item = (booking_item_id) ->
           if bid.indexOf('x') == 0
             return true
           el = $(this).children('input')
-          if el.attr 'checked'
-            el.attr 'checked', false
-            $(this).removeClass 'selected'
-          else
-            el.attr 'checked', true
-            $(this).effect 'highlight', {}, 500
-            $(this).addClass 'selected'
-          save_selected_input_state el, booking_item_id, h
-          update_booking_totals()
+          if items_json[el.attr('booking_item_id')].surcharges[el.attr('surcharge_name')].amount > 0
+            if el.attr 'checked'
+              el.attr 'checked', false
+              $(this).removeClass 'selected'
+            else
+              el.attr 'checked', true
+              $(this).effect 'highlight', {}, 500
+              $(this).addClass 'selected'
+            save_selected_input_state el, booking_item_id, h
+            update_booking_totals()
       )()
       if items_json[booking_item_id].surcharges[header].radio_select
         input_tag = create_dom_element 'input', {type:'radio', name:'radio_surcharge_'+booking_item_id, booking_item_id:booking_item_id, surcharge_name:header}, '', surcharge_col
@@ -394,7 +395,7 @@ render_booking_item = (booking_item_id) ->
           save_selected_input_state this, booking_item_id, h
           update_booking_totals()
         )()
-      if items_json[booking_item_id].surcharges[header].selected
+      if items_json[booking_item_id].surcharges[header].selected and items_json[booking_item_id].surcharges[header].amount > 0
         input_tag.attr 'checked', true
         input_tag.parent().addClass 'selected'
         update_submit_json_surchageslist booking_item_id
