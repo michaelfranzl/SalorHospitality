@@ -121,6 +121,11 @@ window.display_booking_form = (room_id) ->
   pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, i18n.pay, booking_tools
   cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools
   cancel_link.on 'click', -> route 'rooms'
+  delete_link = create_dom_element 'span', {id:'booking_delete',class:'textbutton'}, i18n.delete, booking_tools
+  delete_link.on 'click', ->
+    submit_json.model.hidden = true
+    route 'rooms', room_id, 'send'
+  
   render_guest_type_buttons()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container

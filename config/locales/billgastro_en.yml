@@ -709,6 +709,7 @@ en:
     begin: Begin
     end: End
     time: Time
+    delete: Delete
   vendors:
     index:
       edit: Edit

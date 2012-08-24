@@ -607,11 +607,12 @@ window.render_rooms = function (event) {
   if (!$('#rooms').is(":visible")) {
     show_rooms_interface();
   }
-  if (!_get("salor_hotel.from_input")) {
+  //if (!_get("salor_hotel.from_input")) {
      var d = new Date();
+     d.setDate(d.getDate() - 2);
      //_log(d);
     _set("salor_hotel.from_input",date_as_ymd(d));
-  }
+  //}
   var offset = $('#rooms').offset();
   var tpad = 0;
   var lpad = 20;

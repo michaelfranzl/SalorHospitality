@@ -707,7 +707,7 @@ gn:
     unit_price_abbreviation: EP
     total_price_abbreviation: GP
     quantity_abbreviation: Stk.
-    tax_amount: XXX Amount
+    tax_amount: Betrag
     interim_invoice: Rechnungsvoransicht
     invoice: Rechnung
     restaurant: Restaurant
@@ -717,6 +717,7 @@ gn:
     begin: Anfang
     end: Ende
     time: Zeit
+    delete: Löschen
   vendors:
     index:
       edit: bearbeiten

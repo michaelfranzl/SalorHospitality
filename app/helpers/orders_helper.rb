@@ -35,7 +35,8 @@ module OrdersHelper
       :taxes => escape_javascript(I18n.t('activerecord.models.tax.other')),
       :interim_invoice => escape_javascript(I18n.t('various.interim_invoice')),
       :assign_order_to_booking => escape_javascript(I18n.t('various.consumations')),
-      :rooms => escape_javascript(I18n.t('activerecord.models.room.other'))
+      :rooms => escape_javascript(I18n.t('activerecord.models.room.other')),
+      :delete => escape_javascript(I18n.t('various.delete'))
     }
     return i18n.to_json
   end
