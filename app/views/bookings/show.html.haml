@@ -34,34 +34,35 @@
   
   = render :partial => 'invoice_item_list', :locals => { :booking => @booking }
 
-  %h3= t 'activerecord.models.order.other'
-  %table.small
-    %tr
-      %th
-      %th= Tax.model_name.human
-      %th= Item.model_name.human
-      %th= t '.unit_price'
-      %th= t '.count'
-      %th= t '.sum'
-    - @booking.orders.each do |order|
-      - order.items.existing.positioned.each do |item|
-        %tr
-          %td.left.narrow== ##{ order.id}
-          %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',')
-          %td.left= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
-          %td.right= number_to_currency item.price
-          %td.right= item.count
-          %td.right= number_to_currency item.sum
-
-        - item.options.each do |o|
-          - next if o.price == 0
+  - if @booking.orders.existing.any?
+    %h3= t 'activerecord.models.order.other'
+    %table.small
+      %tr
+        %th
+        %th= Tax.model_name.human
+        %th= Item.model_name.human
+        %th= t '.unit_price'
+        %th= t '.count'
+        %th= t '.sum'
+      - @booking.orders.existing.each do |order|
+        - order.items.existing.positioned.each do |item|
           %tr
-            %td
-            %td= item.tax.letter
-            %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
-            %td= number_to_currency o.price
-            %td= item.count
-            %td= number_to_currency item.refunded ? 0 : item.count * o.price
+            %td.left.narrow== ##{ order.id}
+            %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',')
+            %td.left= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
+            %td.right= number_to_currency item.price
+            %td.right= item.count
+            %td.right= number_to_currency item.sum
+
+          - item.options.each do |o|
+            - next if o.price == 0
+            %tr
+              %td
+              %td= item.tax.letter
+              %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
+              %td= number_to_currency o.price
+              %td= item.count
+              %td= number_to_currency item.refunded ? 0 : item.count * o.price
     
   %h2.floatright= number_to_currency @booking.sum
   
