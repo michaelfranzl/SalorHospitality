@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class BookingItem < ActiveRecord::Base
-  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_key, :ui_id
+  attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_key, :ui_id, :date_locked, :from_date, :to_date
   include Scope
   belongs_to :booking
   belongs_to :vendor
@@ -39,6 +39,14 @@ class BookingItem < ActiveRecord::Base
     else
       write_attribute :guest_type_id, id
     end
+  end
+  
+  def from_date=(from_date)
+    write_attribute :from_date, DateTime.parse(from_date)
+  end
+
+  def to_date=(to_date)
+    write_attribute :to_date, DateTime.parse(to_date)
   end
 
   # This function creates and hides SurchargeItems depending on the selection on the UI. ids contains an array of currently selected surchargeItems. That means that all other existing SurchargeItems must be hidden.

@@ -9,3 +9,4 @@
 //= require jquery_ujs
 //= require application-generic
 //= require report
+//= require json

@@ -140,10 +140,6 @@ window.booking_dates_changed = ->
   $('#booking_duration').val duration
   submit_json.model.duration = duration
   submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
-  $.each items_json, (k,v) ->
-    items_json[k].from_date = date_as_ymd(new Date(from))
-    items_json[k].to_date = date_as_ymd(new Date(to))
-    items_json[k].duration = duration
   
   
 # =======================================================
@@ -207,10 +203,12 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
   # debug 'called add_json_booking_item with season_index=' + season_index
   season_id = submit_json.model.covered_seasons[season_index].id
   duration = submit_json.model.covered_seasons[season_index].duration
+  from_date = $('#booking_from').val()
+  to_date = $('#booking_to').val()
   #console.log 'setting duration to ' +duration
   if season_index == 0
     parent_key = null
-  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_key:parent_key}
+  create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_key:parent_key, from_date:from_date, to_date:to_date}
   if guest_type_id == null
     guest_type_query_string = 'guest_type_id IS NULL'
   else
@@ -232,13 +230,16 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index) ->
 regenerate_all_multi_season_booking_items = () ->
   # delete all child items. a preservation of existing child booking items would be too complex
   $.each items_json, (k,v) ->
+    if items_json[k].date_locked == true
+      return true
     if k.indexOf('x') == 0
       $('#booking_item' + k).remove()
       set_json 'booking', k, 'hidden', true
     else
       items_json[k].has_children = false
       set_json 'booking', k, 'duration', submit_json.model.covered_seasons[0].duration
-      #items_json[k].duration = submit_json.model.covered_seasons[0].duration
+      set_json 'booking', k, 'from_date', date_as_ymd(new Date($('#booking_from').val()))
+      set_json 'booking', k, 'to_date', date_as_ymd(new Date($('#booking_to').val()))
     return true
   $.each items_json, (k,v) ->
     regenerate_multi_season_booking_items(k)
@@ -271,6 +272,7 @@ copy_attributes = (from_id, to_id) ->
   set_json 'booking', to_id, 'parent_key', from_id
   set_json 'booking', to_id, 'booking_item_id', items_json[from_id].id
   set_json 'booking', to_id, 'hidden', items_json[from_id].hidden
+  set_json 'booking', to_id, 'date_locked', items_json[from_id].date_locked
   $.each items_json[from_id].surcharges, (k,v) ->
     items_json[to_id].surcharges[k].selected = v.selected
     update_submit_json_surchageslist(to_id)
@@ -280,7 +282,6 @@ copy_attributes = (from_id, to_id) ->
 update_base_price = (k) ->
   db = _get 'db'
   db.transaction (tx) ->
-    #debug "Updating base price for item " + k + ", for room_type_id " + submit_json.model.room_type_id
     tx.executeSql 'SELECT id, base_price FROM room_prices WHERE room_type_id = ' + submit_json.model.room_type_id + ' AND guest_type_id = ' + items_json[k].guest_type_id + ' AND season_id = ' + items_json[k].season_id + ';', [], (tx,res) ->
       if res.rows.length == 0
         base_price = 0
@@ -307,8 +308,6 @@ update_json_booking_items = ->
           items_json[k].surcharges[record.name].id = record.id
           items_json[k].surcharges[record.name].amount = record.amount
           items_json[k].surcharges[record.name].radio_select = record.radio_select
-          #items_json[k].surcharges[record.name].visible = record.visible
-          #items_json[k].surcharges[record.name].selected = record.selected
         update_submit_json_surchageslist k
 
         
@@ -332,6 +331,34 @@ render_booking_item = (booking_item_id) ->
   booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
   create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
   render_booking_item_count booking_item_id
+  
+  from_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_from_date_col',booking_item_id:booking_item_id}, '',booking_item_row
+  from_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_from_date', class:'booking_item_from_date'}, '', from_date_col
+  from_date_col_input.val items_json[booking_item_id].from_date.replace('2012-','')
+  
+  to_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_to_date_col',booking_item_id:booking_item_id}, '',booking_item_row
+  to_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_to_date', class:'booking_item_to_date'}, '', to_date_col
+  to_date_col_input.val items_json[booking_item_id].to_date.replace('2012-','')
+  
+  if items_json[booking_item_id].date_locked == true
+    from_date_col.addClass 'selected'
+    to_date_col.addClass 'selected'
+
+  from_date_col_input.datepicker {
+    onSelect:(date, inst) ->
+      set_json 'booking', $(from_date_col).attr('booking_item_id'), 'from_date', date
+      from_date_col_input.val items_json[booking_item_id].from_date.replace('2012-','')
+      change_datelock_for_booking_item(booking_item_id, true)
+  }
+  
+  to_date_col_input.datepicker {
+    onSelect:(date, inst) ->
+      set_json 'booking', $(to_date_col).attr('booking_item_id'), 'to_date', date
+      to_date_col_input.val items_json[booking_item_id].to_date.replace('2012-','')
+      change_datelock_for_booking_item(booking_item_id, true)
+  }
+
+    
   for header in surcharge_headers
     if items_json[booking_item_id].surcharges.hasOwnProperty(header)
       surcharge_col = create_dom_element 'div', {class:'surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, header, booking_item_row
@@ -367,10 +394,25 @@ render_booking_item = (booking_item_id) ->
         input_tag.parent().addClass 'selected'
         update_submit_json_surchageslist booking_item_id
   create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
-  delete_col = create_dom_element 'div', {class:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;', booking_item_row
+  delete_col = create_dom_element 'div', {class:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;',booking_item_row
   delete_col.on 'click', ->
     delete_booking_item(booking_item_id)
   update_booking_totals()
+
+# changes the date_lock status and updates all child items
+change_datelock_for_booking_item = (booking_item_id, lock_status) ->
+  if booking_item_id.indexOf('x') == 0
+    return
+  set_json 'booking', booking_item_id, 'date_locked', lock_status
+  if lock_status == true
+    $('#booking_item_'+booking_item_id+'_datelock').addClass 'selected'
+  else
+    $('#booking_item_'+booking_item_id+'_datelock').removeClass 'selected'
+  $.each items_json, (k,v) ->
+    if v.parent_key == booking_item_id && v.hidden != true
+      items_json[k].date_locked = items_json[booking_item_id].date_locked
+  render_booking_items_from_json()
+  regenerate_all_multi_season_booking_items()
 
 # deletes a booking item from the DOM and sets 'hidden' in the json sources.
 delete_booking_item = (booking_item_id) ->

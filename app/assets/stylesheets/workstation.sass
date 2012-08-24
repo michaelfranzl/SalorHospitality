@@ -1484,7 +1484,21 @@ div.booking_form
       :vertical-align middle
     input.booking_item_count
       :display inline
-      :padding 0px 20px
+      :padding 0px
+      :width 23px
+      :font-size 130%
+      :border none
+      :color white
+      :background-color transparent
+    input.booking_item_from_date,
+    input.booking_item_to_date
+      :display inline
+      :padding 0px
+      :font-size 100%
+      :width 50px
+      :border none
+      :color white
+      :background-color transparent
 
   div.season,
   div.guest_type,
@@ -1500,7 +1514,7 @@ div.booking_form
     :width 80%
     div.surcharge_col:first-child,
     div.header:first-child
-      :width 20%
+      :width 14%
     div.header,
 
   div.surcharge_col
@@ -1513,13 +1527,6 @@ div.booking_form
 
   div.selected
     :background-color rgba(255,255,255,0.4)
-  
-  input.booking_item_count
-    :width 20px
-    :font-size 130%
-    :border none
-    :color white
-    :background-color transparent
   
   div#customers_list
     :width 200px

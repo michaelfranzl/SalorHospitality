@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :from_date, :hidden, :note, :paid, :sum, :to_date, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :duration, :taxes, :change_given
+  attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given
   include Scope
   has_many :booking_items
   has_many :payment_method_items
@@ -68,11 +68,9 @@ class Booking < ActiveRecord::Base
     booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.create(item_params[1])
-      new_item.from_date = booking.from_date
-      new_item.to_date = booking.to_date
       new_item.ui_id = item_params[0]
       new_item.booking = booking
-      new_item.room_id = booking.room.id
+      new_item.room_id = booking.room_id
       new_item.save
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
       new_item.calculate_totals
@@ -98,8 +96,6 @@ class Booking < ActiveRecord::Base
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
-        new_item.from_date = self.from_date
-        new_item.to_date = self.to_date
         new_item.ui_id = item_params[0]
         new_item.room_id = self.room.id
         new_item.save
@@ -122,14 +118,6 @@ class Booking < ActiveRecord::Base
         end
       end
     end
-  end
-
-  def from=(from)
-    write_attribute :from, DateTime.parse(from)
-  end
-
-  def to=(to)
-    write_attribute :to, DateTime.parse(to)
   end
 
   def pay
@@ -168,7 +156,7 @@ class Booking < ActiveRecord::Base
         selected = booking_item_surcharges.include? s
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date, :to_date => i.to_date, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date.strftime('%Y-%m-%d'), :to_date => i.to_date.strftime('%Y-%m-%d'), :date_locked => i.date_locked, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
     end
     return booking_items_hash.to_json
   end
@@ -210,8 +198,15 @@ class Booking < ActiveRecord::Base
         end
       end
     end
-    self.duration = (self.to_date - self.from_date) / 86400
+    set_booking_date
     save
+  end
+  
+  def set_booking_date
+    self.from_date = self.booking_items.collect{ |bi| bi.from_date }.min
+    self.to_date = self.booking_items.collect{ |bi| bi.to_date }.max
+    self.duration = (self.to_date - self.from_date) / 86400
+    self.save
   end
 
   def hide(by_user_id)

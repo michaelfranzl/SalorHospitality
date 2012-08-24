@@ -423,10 +423,15 @@ div.booking_form
   
   div.surcharge_col.booking_item_total
     :font-weight bold !important
+    :width 52px
+    :white-space nowrap
 
   div.surcharge_col.booking_item_delete
     :background-image url(button_small_delete.png)
     :width 23px
+    :cursor pointer
+    
+  div.surcharge_col.booking_item_datelock
     :cursor pointer
   
   div#booking_total
@@ -438,7 +443,13 @@ div.booking_form
 
 
 // Datepicker
-div#ui-datepicker-div
+
+div.ui-datepicker
+  :position absolute
+  :z-index 100
+  
+div#ui-datepicker-div,
+div.ui-datepicker
   :-moz-box-shadow 0px 0px 8px white
   :-moz-border-radius 5px
   :-webkit-box-shadow 0px 0px 8px white
