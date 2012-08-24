@@ -123,7 +123,7 @@ class Vendor < ActiveRecord::Base
       if x < 15 then
         cstmers[:regulars] << c.to_hash
       end
-      c1 = c.last_name[0].downcase
+      c1 = c.last_name[0,1].downcase
       c2 = c.last_name[0,2].downcase
       cstmers[c1] ||= {}
       cstmers[c1][c2] ||= []

@@ -109,7 +109,7 @@ class BookingItem < ActiveRecord::Base
       si.surcharge.tax_amounts.collect{ |ta| ta.tax.letter }
     end
     letters.flatten!
-    letters.join(', ')
+    letters.uniq.join(', ')
   end
   
   def calculate_totals

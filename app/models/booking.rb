@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given
+  attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given, :from_date, :to_date, :duration
   include Scope
   has_many :booking_items
   has_many :payment_method_items
@@ -153,7 +153,7 @@ class Booking < ActiveRecord::Base
       surcharges_hash = {}
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
-        selected = booking_item_surcharges.include? s
+        selected = booking_item_surcharges.include?(s) and s.amount > 0
         surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
       end
       booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date.strftime('%Y-%m-%d'), :to_date => i.to_date.strftime('%Y-%m-%d'), :date_locked => i.date_locked, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
@@ -203,9 +203,11 @@ class Booking < ActiveRecord::Base
   end
   
   def set_booking_date
-    self.from_date = self.booking_items.collect{ |bi| bi.from_date }.min
-    self.to_date = self.booking_items.collect{ |bi| bi.to_date }.max
-    self.duration = (self.to_date - self.from_date) / 86400
+    if self.booking_items.existing.any?
+      self.from_date = self.booking_items.collect{ |bi| bi.from_date }.min
+      self.to_date = self.booking_items.collect{ |bi| bi.to_date }.max
+      self.duration = (self.to_date - self.from_date) / 86400
+    end
     self.save
   end
 

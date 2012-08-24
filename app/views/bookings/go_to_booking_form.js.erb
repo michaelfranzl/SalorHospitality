@@ -6,7 +6,7 @@
   submit_json.id = <%= @booking.id %>;
   submit_json.model['customer_name'] = '<%= @booking.customer_name %>';
   submit_json['payment_method_items'] = {<%= @booking.id %>:{}};
-  submit_json['totals'] = {<%= @booking.id %>:{model:<%= @booking.sum %>, payment_method_items:0, booking_orders:<%= @booking.orders.sum :sum %>}};
+  submit_json['totals'] = {<%= @booking.id %>:{model:<%= @booking.sum - @booking.orders.sum(:sum) %>, payment_method_items:0, booking_orders:<%= @booking.orders.sum :sum %>}};
   $('.booking_form').attr('id', 'model_<%= @booking.id %>');
   $('.booking_change').attr('id', 'change_<%= @booking.id %>');
   $('#booking_customer').val(submit_json.model['customer_name']);
@@ -30,6 +30,7 @@
   $('#booking_assign_order').on('click', function(){route('table',<%= @current_vendor.tables.existing.where(:booking_table => true).first.id %>, 'from_booking', {booking_id:<%= @booking.id %>})});
   <% end %>
   window.booking_dates_changed();
+  window.calculate_all_covered_seasons();
   window.render_booking_items_from_json();
   $('#choose_room').val(<%= @booking.room_id %>);
   <% if @booking.payment_method_items.any? then %>

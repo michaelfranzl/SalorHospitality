@@ -340,6 +340,9 @@ gn:
     show:
       search_by_number: Suche nach Nummer
       go_to_bookings_calendar: Zum Buchungs-Kalender gehen
+      unit_price: Einzelpreis
+      count: Anzahl
+      sum: Summe
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:
