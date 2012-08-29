@@ -122,11 +122,10 @@ class Booking < ActiveRecord::Base
 
   def pay
     self.finish
-    puts self.sum
-    puts self.payment_method_items.sum(:amount)
     self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
     self.change_given = 0 if self.change_given < 0
     self.paid = true
+    self.orders.existing.update_all :paid => true
     self.save
   end
 
