@@ -363,6 +363,7 @@ function deletable(elem,type,callback) {
   }
   
 }
+
 /* Adds a top button menu to the passed div. offset_padding will be added to the offset before it is used.*/
 function add_button_menu(elem,offset_padding) {
   if (!offset_padding) {
@@ -370,7 +371,7 @@ function add_button_menu(elem,offset_padding) {
   }
   var menu_id = elem.attr('id') + '_button_menu';
   if ($('#' + menu_id).length == 0) {
-    var menu = create_dom_element('div',{id: menu_id, target: elem.attr('id'), class: 'button_menu'},'',elem);
+    var menu = create_dom_element('div',{id:menu_id, target:elem.attr('id'), class:'button_menu'},'',elem);
   } else {
     var menu = $('#' + menu_id);
   }

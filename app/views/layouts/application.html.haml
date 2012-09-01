@@ -12,15 +12,17 @@
     = javascript_include_tag 'application'
     = javascript_include_tag 'draw'
     - if workstation?
-      = javascript_include_tag 'jquery.keyboard'
-      = javascript_include_tag 'jquery.keyboard.config'
       = javascript_include_tag 'application-workstation'
-      = javascript_include_tag 'jquery.checkbox'
-      = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
-      = javascript_include_tag 'jquery.modcoder.excolor'
+      - unless mobile_special?
+        = javascript_include_tag 'jquery.keyboard'
+        = javascript_include_tag 'jquery.keyboard.config'
+        = javascript_include_tag 'jquery.checkbox'
+        = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
+        = javascript_include_tag 'jquery.modcoder.excolor'
+
     - if mobile?
       = javascript_include_tag 'application-mobile'
-    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user.role.permissions.include?('manage_hotel') and workstation?
+    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user.role.permissions.include?('manage_hotel') and workstation? and not mobile_special?
       = javascript_include_tag 'booking'
       = javascript_include_tag 'bookings'
       = javascript_include_tag 'season'
@@ -50,8 +52,7 @@
     #container
       #draw_controls
         %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
-      - unless mobile_special?
-        #header= render 'layouts/header'
+      #header= render 'layouts/header'
       #flash
         - if flash[:notice]
           #flash_notice= flash[:notice]

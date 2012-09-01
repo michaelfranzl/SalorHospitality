@@ -11,6 +11,11 @@
 #orderform{ :style => 'display: none;' }= render 'order_form'
 
 - if permit('see_item_notifications')
+  #items_notifications_vendor
+    %h3= t '.preparation_list'
+    #preparation_list_vendor
+    %h3= t '.delivery_list'
+    #delivery_list_vendor
   #items_notifications
     %h3= t '.preparation_list'
     #preparation_list

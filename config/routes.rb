@@ -123,6 +123,7 @@ SalorHospitality::Application.routes.draw do
   resources :items do
     collection do
       get :list
+      get :vendors_list
       get :set_attribute
     end
   end

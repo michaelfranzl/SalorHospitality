@@ -1,0 +1,1 @@
+$('#<%= params[:scope] %>_list_vendor').html('<%= escape_javascript render :partial => 'vendors_list', :collection => @vendors_list, :locals => { :scope => params[:scope] } %>');

@@ -41,7 +41,7 @@ var counter_refresh_queue = timeout_refresh_queue;
 
 $(function(){
   update_resources();
-  update_item_lists();
+  counter_update_item_lists = 3;
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
@@ -78,6 +78,7 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     $('#customer_list').hide();
     $('#tablesselect').hide();
+    $('#items_notifications_vendor').show();
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
@@ -100,6 +101,7 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     update_tables();
+    update_item_lists();
     submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
@@ -112,6 +114,7 @@ function route(target, model_id, action, options) {
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
+    $('#items_notifications_vendor').hide();
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.table_id = model_id;
@@ -1063,15 +1066,14 @@ function update_resources_success(data) {
 
 
 function update_item_lists() {
-  if (!permissions.see_item_notifications) return;
-  $.ajax({
-    url: '/items/list?scope=preparation',
-    timeout: 2000
-  });
-  $.ajax({
-    url: '/items/list?scope=delivery',
-    timeout: 2000
-  });
+  if (permissions.see_item_notifications) {
+    $.ajax({ url: '/items/list?scope=preparation', timeout: 2000 });
+    $.ajax({ url: '/items/list?scope=delivery',    timeout: 2000 });
+    if (!settings.mobile) {
+      $.ajax({ url: '/items/vendors_list?scope=preparation', timeout: 2000 });
+      $.ajax({ url: '/items/vendors_list?scope=delivery',    timeout: 2000 });
+    }
+  }
 }
 
 function change_item_status(id,status) {

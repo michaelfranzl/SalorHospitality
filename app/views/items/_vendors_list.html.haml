@@ -1,0 +1,3 @@
+- i = vendors_list
+- user_method = scope + '_user_id'
+.item_list_vendor== #{ i.order.table.name }, #{ User.find(i.send(user_method)).login } <br> #{ i.count } x #{ raw i.quantity_id ? "#{ i.quantity.prefix } #{ i.article.name[0..15] } #{ i.quantity.postfix }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }" : "#{ i.article.name[0..15] }#{ i.formatted_comment }#{ compose_option_names_without_price(i) }" }

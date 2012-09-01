@@ -66,6 +66,15 @@ class ItemsController < ApplicationController
     end
   end
   
+  def vendors_list
+    if @current_user.role.permissions.include?('see_item_notifications')
+      @vendors_list = case params[:scope]
+        when 'preparation' then Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > preparation_count OR preparation_count IS NULL)")
+        when 'delivery' then Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
+      end
+    end
+  end
+  
   def set_attribute
     @item = get_model
     @item.update_attribute params[:attribute], params[:value]
