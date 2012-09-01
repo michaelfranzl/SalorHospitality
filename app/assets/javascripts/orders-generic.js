@@ -687,6 +687,16 @@ function update_order_from_invoice_form(data) {
   });
 }
 
+function update_order_from_refund_form(data) {
+  data['currentview'] = 'refund';
+  $.ajax({
+    type: 'post',
+    url: '/orders/update_ajax',
+    data: data,
+    timeout: 5000
+  });
+}
+
 function show_payment_method_items(model_id,allow_delete) {
   $('#payment_methods_container_' + model_id).attr('style', 'overflow: visible;');
   $('#payment_methods_container_' + model_id).show();

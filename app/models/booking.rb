@@ -203,8 +203,8 @@ class Booking < ActiveRecord::Base
   
   def set_booking_date
     if self.booking_items.existing.any?
-      self.from_date = self.booking_items.collect{ |bi| bi.from_date }.min
-      self.to_date = self.booking_items.collect{ |bi| bi.to_date }.max
+      self.from_date = self.booking_items.existing.collect{ |bi| bi.from_date }.min
+      self.to_date = self.booking_items.existing.collect{ |bi| bi.to_date }.max
       self.duration = (self.to_date - self.from_date) / 86400
     end
     self.save

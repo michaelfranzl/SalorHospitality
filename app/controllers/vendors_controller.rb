@@ -113,7 +113,7 @@ class VendorsController < ApplicationController
     items_json_string.gsub! "\n", '\n'
     
     booking_ids = @current_vendor.bookings.where(:finished_at => from..to, :finished => true).collect { |o| o.id }
-    booking_items = BookingItem.select("refund_sum, room_id, taxes").where(:created_at => from...to, :booking_id => booking_ids, :hidden => nil)
+    booking_items = BookingItem.select("refund_sum, room_id, taxes").where(:booking_id => booking_ids, :hidden => nil)
     booking_items_json_string = booking_items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
     booking_items_json_string.gsub! "\n", '\n'
     

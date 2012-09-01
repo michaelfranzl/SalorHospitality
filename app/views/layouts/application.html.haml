@@ -24,7 +24,7 @@
       = javascript_include_tag 'booking'
       = javascript_include_tag 'bookings'
       = javascript_include_tag 'season'
-    - if controller.controller_name == 'orders' and controller.action_name == 'index'
+    - if controller.controller_name == 'orders' and (controller.action_name == 'index' or controller.action_name == 'refund')
       = javascript_include_tag 'orders-generic'
       - if workstation?
         = javascript_include_tag 'orders-workstation'
@@ -69,3 +69,7 @@
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
+
+:javascript
+  var i18n = #{ get_i18n };
+  var settings = #{ get_settings };
