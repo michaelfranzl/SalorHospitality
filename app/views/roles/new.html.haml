@@ -96,8 +96,11 @@
   %input#permissions_counter_mode{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'counter_mode', :checked => role_form.object.permissions.include?('counter_mode') }
   %label{ :for => 'permissions_counter_mode' }= t '.counter_mode'
   %br
-  %input#permissions_see_item_notifications{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications', :checked => role_form.object.permissions.include?('see_item_notifications') }
-  %label{ :for => 'permissions_see_item_notifications' }= t '.see_item_notifications'
+  %input#permissions_see_item_notifications_preparation{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications_preparation', :checked => role_form.object.permissions.include?('see_item_notifications_preparation') }
+  %label{ :for => 'permissions_see_item_notifications_preparation' }= t '.see_item_notifications_preparation'
+  %br
+  %input#permissions_see_item_notifications_delivery{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications_delivery', :checked => role_form.object.permissions.include?('see_item_notifications_delivery') }
+  %label{ :for => 'permissions_see_item_notifications_delivery' }= t '.see_item_notifications_delivery'
   %br
   %input#permissions_see_item_notifications_vendor{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications_vendor', :checked => role_form.object.permissions.include?('see_item_notifications_vendor') }
   %label{ :for => 'permissions_see_item_notifications_vendor' }= t '.see_item_notifications_vendor'

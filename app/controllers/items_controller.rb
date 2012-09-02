@@ -60,15 +60,14 @@ class ItemsController < ApplicationController
   def list
     items = {}
     items_json_string = {}
-    case params[:type]
-    when 'user'
-      render :nothing => true and return unless @current_user.role.permissions.include?('see_item_notifications')
-      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
-      items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
-    when 'vendor'
+    if (params[:type] == 'vendor')
       render :nothing => true and return unless @current_user.role.permissions.include?('see_item_notifications_vendor')
       items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > preparation_count OR preparation_count IS NULL)")
       items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
+    elsif params[:type] == 'user' 
+      render :nothing => true and return unless (@current_user.role.permissions.include?('see_item_notifications_delivery') or @current_user.role.permissions.include?('see_item_notifications_preparation'))
+      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
+      items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
     end
     [:preparation, :delivery].each do |scope|
       items_json_string[scope] = items[scope].collect { |i|
@@ -78,16 +77,6 @@ class ItemsController < ApplicationController
       }.join(',').gsub("\n", '\n')
     end
     render :js => "{\"preparation\":{#{items_json_string[:preparation]}}, \"delivery\":{#{items_json_string[:delivery]}}}"
-  end
-  
-  def list_vendor
-    if @current_user.role.permissions.include?('see_item_notifications_vendor')
-      @vendors_list = case params[:scope]
-        when 'preparation' then Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > preparation_count OR preparation_count IS NULL)")
-        when 'delivery' then Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
-      end
-      render :js => @vendors_list.to_json
-    end
   end
   
   def set_attribute

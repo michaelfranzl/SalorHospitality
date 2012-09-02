@@ -91,7 +91,8 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_special?
-       request.user_agent.include?('iPad')
+      return true
+      request.user_agent.include?('iPad')
     end
 
     def neighbour_models(model_name, model_object)

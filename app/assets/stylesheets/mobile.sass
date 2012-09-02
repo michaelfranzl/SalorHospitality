@@ -159,13 +159,6 @@ select.target_table
 
 
 
-
-
-
-
-
-
-
 $buttoncolor: #27343b
 $itembgcolor: #556
 $articlelistbgcolor: #3a474d
@@ -353,6 +346,10 @@ div.unsettled_orders
 
 a.clear_button
   :margin-top 0px
+
+  
+div#items_notifications_vendor
+  :display none
   
 div#items_notifications
   :display none
@@ -374,7 +371,6 @@ div.item_list
     :border 1px solid #777
     :margin 5px
     :min-height 30px
-    :background-color #333
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
     :padding 3px
@@ -388,8 +384,6 @@ div.item_list
       :border-bottom 2px solid #222
     .increment, .reference_count
       :width 30px
-    .increment, .update
-      :background-color #3A474D
     .update
       :font-size 95%
       :text-align left

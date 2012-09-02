@@ -103,7 +103,6 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     update_tables();
-    //counter_update_item_lists = 3;
     counter_update_item_lists_vendor = 2;
     submit_json.currentview = 'tables';
 
@@ -237,6 +236,7 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#container').show();
     $('#functions_header_index').hide();
+    $('#items_notifications_vendor').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
@@ -1069,15 +1069,15 @@ function update_resources_success(data) {
 
 
 function update_item_lists() {
-  if (permissions.see_item_notifications) {
+  if ((permissions.see_item_notifications_delivery || permissions.see_item_notifications_preparation) && !permissions.see_item_notifications_vendor) {
     $.ajax({
       url: '/items/list',
       dataType: 'json',
       data: {type:'user'},
       success: function(data) {
         resources.notifications_user = data;
-        render_item_list('preparation');
-        render_item_list('delivery');
+        if (permissions.see_item_notifications_preparation) render_item_list('preparation');
+        if (permissions.see_item_notifications_delivery) render_item_list('delivery_vendor');
       },
       timeout: 2000 
     });
@@ -1092,8 +1092,11 @@ function update_item_lists_vendor() {
       data: {type:'vendor'},
       success: function(data) {
         resources.notifications_vendor = data;
-        render_item_list_vendor('preparation');
-        render_item_list_vendor('delivery');
+        resources.notifications_user = data;
+        if (permissions.see_item_notifications_preparation) render_item_list_vendor('preparation');
+        if (permissions.see_item_notifications_delivery) render_item_list_vendor('delivery');
+        if (permissions.see_item_notifications_preparation) render_item_list('preparation');
+        if (permissions.see_item_notifications_delivery) render_item_list('delivery');
       },
       timeout: 2000 
     });
@@ -1111,16 +1114,6 @@ function change_item_status(id,status) {
 /* ========================================================*/
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
-
-function display_items_notifications() {
-  $("#items_notifications").slideDown();
-  counter_update_item_lists = 1;
-}
-
-function hide_items_notifications() {
-  $("#items_notifications").slideUp();
-  counter_update_item_lists = -1;
-}
 
 function add_customers_button() {
   if(_get('customers.button_added')) return
@@ -1206,7 +1199,7 @@ function render_item_list_vendor(scope) {
     
     var confirmed = v[scope + '_c'] != null
     
-    var label = table_name + " | " + user_name + "<br/>" + v.l
+    var label = table_name + " " + waiting_time + 'min.<br/>' + v.c + ' × ' + v.l
     var item_container = create_dom_element('div',{id:'item_list_vendor_' + scope + '_'+ v.id}, label, list_container);
     item_container.css('background-color', color);
     item_container.addClass('item_list');
@@ -1246,7 +1239,7 @@ function render_item_list(scope) {
     var confirmed = v[scope + '_c'] != null
     
     if (!confirmed) {
-      var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed'}, table_name + " | " + user_name, item_container);
+      var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed'}, table_name + ' | ' + v.c + " × " + v.l, item_container);
       unconfirmed_element.css('background-color', color);
       unconfirmed_element.addClass('unconfirmed');
       unconfirmed_element.on('click', function() {
@@ -1261,7 +1254,7 @@ function render_item_list(scope) {
     if (v.s) var image = create_dom_element('img',{src:'/items/' + v.id +'.svg'},'',confirmed_element);
     var table = create_dom_element('table',{},'',confirmed_element);
     var row = create_dom_element('tr',{},'',table);
-    var cell_tablename = create_dom_element('td',{},table_name + '<br>' + waiting_time + 'min.',row);
+    var cell_tablename = create_dom_element('td',{},table_name,row);
     if (scope == 'delivery') {
       var cell_reference_count_1 = create_dom_element('td',{}, v.c, row);
       cell_reference_count_1.addClass('reference_count');
@@ -1275,9 +1268,9 @@ function render_item_list(scope) {
     });
     var cell_reset = create_dom_element('td',{id:'item_list_' + scope +'_'+v.id + '_reset_button'}, v.l, row);
     cell_reset.addClass('update');
-    cell_reset.on('click', function() {
-      item_list_reset(v.id, scope);
-    });
+    //cell_reset.on('click', function() {
+    //  item_list_reset(v.id, scope);
+    //});
   })
 }
 
@@ -1289,7 +1282,7 @@ function item_list_confirm(id, scope) {
   unconfirmed_element.remove();
   resources.notifications_user[scope][id][scope_count_attribute] = 0;
   $('#item_list_' + scope + '_' + id + '_increment_button').html(0);
-  confirmed_element.slideDown();
+  confirmed_element.show();
   $.ajax({
     method: 'post',
     data: {id:id, attribute:scope+'_count', value:0},

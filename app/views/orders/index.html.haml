@@ -10,18 +10,22 @@
   #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
 #orderform{ :style => 'display: none;' }= render 'order_form'
 
-- if permit('see_item_notifications')
+- if permit('see_item_notifications_vendor')
   #items_notifications_vendor
-    %h3= t '.preparation_list'
-    #list_vendor_preparation
-    %h3= t '.delivery_list'
-    #list_vendor_delivery
-  #items_notifications
+    - if permit('see_item_notifications_preparation')
+      %h3= t '.preparation_list'
+      #list_vendor_preparation
+    - if permit('see_item_notifications_delivery')
+      %h3= t '.delivery_list'
+      #list_vendor_delivery
+#items_notifications
+  - if permit('see_item_notifications_preparation')
     %h3= t '.preparation_list'
     #list_preparation
+  - if permit('see_item_notifications_delivery')
     %h3= t '.delivery_list'
     #list_delivery
-    %span.done{ :onclick => "hide_items_notifications()" }
+  %span.done{ :onclick => "hide_items_notifications()" }
 
 #invoices
 #functions_footer{ :style => 'display: none;' }= render('functions_header_order_form') if mobile?
