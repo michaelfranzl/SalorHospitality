@@ -21,7 +21,7 @@
     #preparation_list
     %h3= t '.delivery_list'
     #delivery_list
-    %span.done{ :onclick => "$('#items_notifications').slideUp();" }
+    %span.done{ :onclick => "hide_items_notifications()" }
 
 #invoices
 #functions_footer{ :style => 'display: none;' }= render('functions_header_order_form') if mobile?

@@ -574,7 +574,8 @@ en:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
-      see_item_notifications: See item notifications
+      see_item_notifications: See item notifications personal
+      see_item_notifications_vendor: See item notifications vendor
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements

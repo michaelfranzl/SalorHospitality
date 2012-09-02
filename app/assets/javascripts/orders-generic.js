@@ -28,12 +28,14 @@ var customers_json = {};
 
 var timeout_update_tables = 20;
 var timeout_update_item_lists = 60;
+var timeout_update_item_lists_vendor = 60;
 var timeout_update_resources = 180;
 var timeout_refresh_queue = 5;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
-var counter_update_item_lists = timeout_update_item_lists;
+var counter_update_item_lists = -1;
+var counter_update_item_lists_vendor = 3;
 var counter_refresh_queue = timeout_refresh_queue;
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
@@ -41,7 +43,6 @@ var counter_refresh_queue = timeout_refresh_queue;
 
 $(function(){
   update_resources();
-  counter_update_item_lists = 3;
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
@@ -1019,6 +1020,7 @@ function manage_counters() {
   counter_update_resources -= 1;
   counter_update_tables -= 1;
   counter_update_item_lists -= 1;
+  counter_update_item_lists_vendor -= 1;
   counter_refresh_queue -= 1;
 
   if (counter_update_resources == 0) {
@@ -1029,6 +1031,11 @@ function manage_counters() {
   if (counter_update_item_lists == 0) {
     update_item_lists();
     counter_update_item_lists = timeout_update_item_lists;
+  }
+  
+  if (counter_update_item_lists_vendor == 0) {
+    update_item_lists_vendor();
+    counter_update_item_lists_vendor = timeout_update_item_lists_vendor;
   }
 
   if (counter_update_tables == 0) {
@@ -1069,10 +1076,13 @@ function update_item_lists() {
   if (permissions.see_item_notifications) {
     $.ajax({ url: '/items/list?scope=preparation', timeout: 2000 });
     $.ajax({ url: '/items/list?scope=delivery',    timeout: 2000 });
-    if (!settings.mobile) {
+  }
+}
+
+function update_item_lists_vendor() {
+  if (permissions.see_item_notifications_vendor && !settings.mobile) {
       $.ajax({ url: '/items/vendors_list?scope=preparation', timeout: 2000 });
       $.ajax({ url: '/items/vendors_list?scope=delivery',    timeout: 2000 });
-    }
   }
 }
 
@@ -1087,6 +1097,16 @@ function change_item_status(id,status) {
 /* ========================================================*/
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
+
+function display_items_notifications() {
+  $("#items_notifications").slideDown();
+  counter_update_item_lists = 1;
+}
+
+function hide_items_notifications() {
+  $("#items_notifications").slideUp();
+  counter_update_item_lists = -1;
+}
 
 function add_customers_button() {
   if(_get('customers.button_added')) return

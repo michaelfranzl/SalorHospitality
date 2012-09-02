@@ -584,7 +584,8 @@ gn:
       new_role: Neue Rolle
       permissions: Berechtigungen
       see_debug: Fehlerbehebungs-Ausgabe anzeigen
-      see_item_notifications: Verkaufs-Benachrichtigungen
+      see_item_notifications: Verkaufs-Benachrichtigungen persönlich
+      see_item_notifications_vendor: Verkaufs-Benachrichtigungen Betrieb
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen

@@ -99,6 +99,9 @@
   %input#permissions_see_item_notifications{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications', :checked => role_form.object.permissions.include?('see_item_notifications') }
   %label{ :for => 'permissions_see_item_notifications' }= t '.see_item_notifications'
   %br
+  %input#permissions_see_item_notifications_vendor{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'see_item_notifications_vendor', :checked => role_form.object.permissions.include?('see_item_notifications_vendor') }
+  %label{ :for => 'permissions_see_item_notifications_vendor' }= t '.see_item_notifications_vendor'
+  %br
   %input#permissions_manage_pages{ :type => 'checkbox', :name => 'role[permissions][]', :value => 'manage_pages', :checked => role_form.object.permissions.include?('manage_pages') }
   %label{ :for => 'permissions_manage_pages' }= t '.manage_pages'
   %br

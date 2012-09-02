@@ -388,6 +388,7 @@ function add_button_menu(elem,offset_padding) {
    decide if it is the menu you want in your listener. probably by checking the id of even.packet.attr('id') == 'my_id'*/
   emit("button_menu.rendered", elem);
 }
+
 /* adds a button element, as created by you, to the button menu of the element. note, this function
  wants the parent div element, not the actual button menu.*/
 function add_menu_button(elem,button,callback) {
