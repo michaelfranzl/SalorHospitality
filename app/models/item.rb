@@ -242,4 +242,8 @@ class Item < ActiveRecord::Base
     split_order.calculate_totals
   end
   
+  def compose_option_names_without_price
+    options.collect{ |o| "<br>#{ o.name }" }.join
+  end
+  
 end

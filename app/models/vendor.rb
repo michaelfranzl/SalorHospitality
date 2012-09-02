@@ -131,11 +131,13 @@ class Vendor < ActiveRecord::Base
       x += 1
     end
     # the following is speedy, no more nested Ruby/SQL loops
-    category_models = self.categories.existing.active.positioned
-    article_models = self.articles.existing.active.positioned
-    quantity_models = self.quantities.existing.active.positioned
-    option_models = self.options.existing.positioned
+    category_models       = self.categories.existing.active.positioned
+    article_models        = self.articles.existing.active.positioned
+    quantity_models       = self.quantities.existing.active.positioned
+    option_models         = self.options.existing.positioned
     payment_method_models = self.payment_methods.existing
+    table_models          = self.tables.existing
+    user_models           = self.users.existing
 
     quantities = {}
     quantity_models.each do |q|
@@ -190,6 +192,18 @@ class Vendor < ActiveRecord::Base
       pmid = pm.id
       payment_methods[pm.id] = { :id => pmid, :n => pm.name }
     end
+    
+    tables = {}
+    table_models.each do |t|
+      tid = t.id
+      tables[tid] = { :id => tid, :n => t.name }
+    end
+    
+    users = {}
+    user_models.each do |u|
+      uid = u.id
+      users[uid] = { :id => uid, :n => u.login }
+    end
 
     rooms = Hash.new
     self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :d => b.duration } ) } } }
@@ -215,7 +229,7 @@ class Vendor < ActiveRecord::Base
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables }
 
     return resources.to_json
   end

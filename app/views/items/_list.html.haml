@@ -53,8 +53,7 @@
     }
     $.ajax({
       scope: 'GET',
-      url: '/items/set_attribute?id=#{ id }&attribute=#{ scope_count_method }&value=' + $('#item_list_#{ scope }_#{ id }_#{ scope_count_method }').val(),
-      success: setTimeout('update_item_lists()', 1000)
+      url: '/items/set_attribute?id=#{ id }&attribute=#{ scope_count_method }&value=' + $('#item_list_#{ scope }_#{ id }_#{ scope_count_method }').val()
     });
     $("#item_list_#{ scope }_#{ id }_increment_button").css('background-color','#3a4d3a');
     $("#item_list_#{ scope }_#{ id }_increment_button").effect('highlight');

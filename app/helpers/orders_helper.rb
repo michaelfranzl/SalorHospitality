@@ -51,8 +51,4 @@ module OrdersHelper
     return settings.to_json
   end
 
-  def compose_option_names_without_price(item)
-    item.options.collect{ |o| "<br>#{ o.name }" }.join
-  end
-
 end

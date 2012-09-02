@@ -11,6 +11,7 @@
 class TablesController < ApplicationController
 
   before_filter :check_permissions, :except => [:index, :show]
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   respond_to :html, :js
   
