@@ -371,7 +371,8 @@ function add_button_menu(elem,offset_padding) {
   }
   var menu_id = elem.attr('id') + '_button_menu';
   if ($('#' + menu_id).length == 0) {
-    var menu = create_dom_element('div',{id:menu_id, target:elem.attr('id'), class:'button_menu'},'',elem);
+    var menu = create_dom_element('div',{id:menu_id,target:elem.attr('id')},'',elem);
+    menu.addClass('button_menu');
   } else {
     var menu = $('#' + menu_id);
   }

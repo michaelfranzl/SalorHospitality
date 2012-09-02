@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /* ================= GLOBAL POS VARIABLES ===============*/
 /* ======================================================*/
 
-var upper_delivery_time_limit = 30 * 60000;
+var upper_delivery_time_limit = 45 * 60000;
 
 var new_order = true;
 var option_position = 0;
@@ -103,7 +103,8 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     update_tables();
-    update_item_lists();
+    //counter_update_item_lists = 3;
+    counter_update_item_lists_vendor = 2;
     submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
@@ -1091,8 +1092,8 @@ function update_item_lists_vendor() {
       data: {type:'vendor'},
       success: function(data) {
         resources.notifications_vendor = data;
-        //render_item_list('preparation');
-        //render_item_list('delivery');
+        render_item_list_vendor('preparation');
+        render_item_list_vendor('delivery');
       },
       timeout: 2000 
     });
@@ -1178,6 +1179,40 @@ function setup_payment_method_keyboad(pmid,id) {
   });
 }
 
+function render_item_list_vendor(scope) {
+  var list_container = $('#list_vendor_' + scope);
+  list_container.html('');
+  $.each(resources.notifications_vendor[scope], function(k,v) {
+    var table_name = resources.tb[v.tid].n;
+    var user_id = v[scope + '_uid'];
+    var user_name = resources.u[user_id].n;
+ 
+    // time calculation
+    var hours = v.t.substring(0,2);
+    var minutes = v.t.substring(3,5);
+    var seconds = v.t.substring(6,8);
+    
+    var t1 = new Date();
+    t1.setHours(hours);
+    t1.setMinutes(minutes);
+    t1.setSeconds(seconds);
+    
+    var t2 = new Date();
+    var difference = t2-t1;
+    var color_intensity = Math.floor(difference/upper_delivery_time_limit * 255);
+    color = 'rgb(' + color_intensity + ', 60, 60)';
+    var waiting_time = Math.floor(difference/60000);
+    //-------------
+    
+    var confirmed = v[scope + '_c'] != null
+    
+    var label = table_name + " | " + user_name + "<br/>" + v.l
+    var item_container = create_dom_element('div',{id:'item_list_vendor_' + scope + '_'+ v.id}, label, list_container);
+    item_container.css('background-color', color);
+    item_container.addClass('item_list');
+  })
+}
+
 
 function render_item_list(scope) {
   var list_container = $('#list_' + scope);
@@ -1187,8 +1222,8 @@ function render_item_list(scope) {
     var user_id = v[scope + '_uid'];
     var user_name = resources.u[user_id].n;
     var reference_count_attribute = (scope == 'preparation') ? 'c' : 'preparation_c'
-    var item_container = create_dom_element('div',{id:'item_list_' + scope + '_'+ v.id, class:'item_list'},'',list_container);
-
+    var item_container = create_dom_element('div',{id:'item_list_' + scope + '_'+ v.id},'',list_container);
+    item_container.addClass('item_list');
     
     // time calculation
     var hours = v.t.substring(0,2);
@@ -1203,31 +1238,43 @@ function render_item_list(scope) {
     var t2 = new Date();
     var difference = t2-t1;
     var color_intensity = Math.floor(difference/upper_delivery_time_limit * 255);
+    color = 'rgb(' + color_intensity + ', 60, 60)';
     var waiting_time = Math.floor(difference/60000);
     //-------------
     
     
     var confirmed = v[scope + '_c'] != null
     
-    var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed', class:'unconfirmed', style:'display: none; background-color: rgb(' + color_intensity + ', 60, 60);'}, table_name + " | " + user_name, item_container);
-    if (!confirmed) unconfirmed_element.show();
-    unconfirmed_element.on('click', function() {
-      item_list_confirm(v.id, scope)
-    });
+    if (!confirmed) {
+      var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed'}, table_name + " | " + user_name, item_container);
+      unconfirmed_element.css('background-color', color);
+      unconfirmed_element.addClass('unconfirmed');
+      unconfirmed_element.on('click', function() {
+        item_list_confirm(v.id, scope)
+      });
+    }
     
-    var confirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_confirmed', class:'confirmed', style:'display: none; background-color: rgb(' + color_intensity + ', 60, 60);'}, '', item_container);
+    var confirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_confirmed', style:'display: none;'}, '', item_container);
+    confirmed_element.addClass('confirmed');
+    confirmed_element.css('background-color', color);
     if (confirmed) confirmed_element.show();
     if (v.s) var image = create_dom_element('img',{src:'/items/' + v.id +'.svg'},'',confirmed_element);
     var table = create_dom_element('table',{},'',confirmed_element);
     var row = create_dom_element('tr',{},'',table);
-    var cell_tablename = create_dom_element('td',{},table_name + '<br>' + waiting_time + ':00',row);
-    if (scope == 'delivery') var cell_reference_count_1 = create_dom_element('td',{class:'reference_count'}, v.c, row);
-    var cell_reference_count_2 = create_dom_element('td',{class:'reference_count'}, v[reference_count_attribute], row);
-    var cell_increment_count = create_dom_element('td',{id:'item_list_' + scope +'_'+ v.id + '_increment_button', class:'increment'}, v[scope + '_c'], row);
+    var cell_tablename = create_dom_element('td',{},table_name + '<br>' + waiting_time + 'min.',row);
+    if (scope == 'delivery') {
+      var cell_reference_count_1 = create_dom_element('td',{}, v.c, row);
+      cell_reference_count_1.addClass('reference_count');
+    }
+    var cell_reference_count_2 = create_dom_element('td', {}, v[reference_count_attribute], row);
+    cell_reference_count_2.addClass('reference_count');
+    var cell_increment_count = create_dom_element('td',{id:'item_list_' + scope +'_'+ v.id + '_increment_button'}, v[scope + '_c'], row);
+    cell_increment_count.addClass('increment');
     cell_increment_count.on('click', function() {
       item_list_increment(v.id, scope);
     });
-    var cell_reset = create_dom_element('td',{id:'item_list_' + scope +'_'+v.id + '_reset_button', class:'update'}, v.l, row);
+    var cell_reset = create_dom_element('td',{id:'item_list_' + scope +'_'+v.id + '_reset_button'}, v.l, row);
+    cell_reset.addClass('update');
     cell_reset.on('click', function() {
       item_list_reset(v.id, scope);
     });
@@ -1238,8 +1285,9 @@ function render_item_list(scope) {
 function item_list_confirm(id, scope) {
   var unconfirmed_element = $('#item_list_' + scope + '_' + id + '_unconfirmed');
   var confirmed_element = $('#item_list_' + scope + '_' + id + '_confirmed');
+  var scope_count_attribute = (scope == 'preparation') ? 'preparation_c' : 'delivery_c'
   unconfirmed_element.remove();
-  resources.notifications_user[scope][id].preparation_c = 0;
+  resources.notifications_user[scope][id][scope_count_attribute] = 0;
   $('#item_list_' + scope + '_' + id + '_increment_button').html(0);
   confirmed_element.slideDown();
   $.ajax({
@@ -1256,7 +1304,6 @@ function item_list_increment(id, scope) {
   var reference_count_attribute = (scope == 'preparation') ? 'c' : 'preparation_c'
   var c = resources.notifications_user[scope][id][scope_count_attribute];
   var r = resources.notifications_user[scope][id][reference_count_attribute];
-  console.log(c, r);
   if ( c < r ) {
     increment_button.html(c + 1);
     resources.notifications_user[scope][id][scope_count_attribute] = c+1;
@@ -1268,7 +1315,8 @@ function item_list_increment(id, scope) {
       success: function() {
         increment_button.css('background-color','#3a4d3a');
         increment_button.effect('highlight');
-        counter_update_item_lists = 3;
+        counter_update_item_lists = 2;
+        counter_update_item_lists_vendor = 3;
       },
       error: function() {
         increment_button.css('background-color','#74101B');

@@ -13,12 +13,12 @@
     = javascript_include_tag 'draw'
     - if workstation?
       = javascript_include_tag 'application-workstation'
-      - unless mobile_special?
-        = javascript_include_tag 'jquery.keyboard'
-        = javascript_include_tag 'jquery.keyboard.config'
-        = javascript_include_tag 'jquery.checkbox'
-        = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
-        = javascript_include_tag 'jquery.modcoder.excolor'
+      = javascript_include_tag 'jquery.modcoder.excolor'
+      = javascript_include_tag 'jquery.checkbox'
+      = javascript_include_tag 'jquery.keyboard'
+      = javascript_include_tag 'jquery.keyboard.config'
+      = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
+
 
     - if mobile?
       = javascript_include_tag 'application-mobile'

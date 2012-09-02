@@ -98,16 +98,17 @@ report.functions = {
   
   render: function() {
     $('#report_container').html('');
-    report.functions.table_from_json(report.variables.categories_tablesource, {class:'settlements'}, '#report_container', i18n.categories);
-    report.functions.table_from_json(report.variables.rooms_tablesource, {class:'settlements'}, '#report_container', i18n.rooms);
-    report.functions.table_from_json(report.variables.taxes_tablesource, {class:'settlements'}, '#report_container', i18n.taxes);
+    report.functions.table_from_json(report.variables.categories_tablesource, 'settlements', '#report_container', i18n.categories);
+    report.functions.table_from_json(report.variables.rooms_tablesource, 'settlements', '#report_container', i18n.rooms);
+    report.functions.table_from_json(report.variables.taxes_tablesource, 'settlements', '#report_container', i18n.taxes);
   },
 
   display_popup: function() {
     report.variables = {};
     $('#report').remove();
     report_popup = create_dom_element('div',{id:'report'}, '', 'body');
-    close_button = create_dom_element('span',{class:'done'}, '', report_popup);
+    close_button = create_dom_element('span',{}, '', report_popup);
+    close_button.addClass('done');
     close_button.on('click', function() { $('#report').remove(); });
     from_input = create_dom_element('input', {type:'text',id:'report_from'}, '', report_popup);
     from_input.datepicker({
@@ -128,14 +129,16 @@ report.functions = {
       }
     })
     report_container = create_dom_element('div',{id:'report_container'}, '', report_popup);
-    progress_indicator = create_dom_element('img',{id:'report_progress', src:'/images/ajax-loader2.gif', class:'displaynone'}, '', report_popup);
+    progress_indicator = create_dom_element('img',{id:'report_progress', src:'/images/ajax-loader2.gif'}, '', report_popup);
+    progress_indicator.addClass('displaynone');
     report_popup.fadeIn();
   },
   
-  table_from_json: function(source, attrs, target, heading) {
+  table_from_json: function(source, cls, target, heading) {
     if ($.isEmptyObject(source)) return;
     create_dom_element('h2',{},heading,target);
-    table = create_dom_element('table', attrs, '', target);
+    table = create_dom_element('table', {}, '', target);
+    table.addClass(cls);
     header_row = create_dom_element('tr',{},'',table);
     // get table headers from the first JSON object
     var first;
@@ -146,7 +149,8 @@ report.functions = {
     // render the table header
     var headers = Object.keys(first);
     var sums = {};
-    create_dom_element('td', {class:'link'}, '', header_row);
+    var empty_element = create_dom_element('td', {}, '', header_row);
+    empty_element.addClass('link');
     for (i in headers) {
       create_dom_element('th',{},headers[i],header_row);
       sums[headers[i]] = 0; // initialize sums for each column
@@ -154,7 +158,8 @@ report.functions = {
     // render the table body
     $.each(source, function(k,v) {
       data_row = create_dom_element('tr', {}, '', table);
-      create_dom_element('td', {class:'link'}, k, data_row);
+      var label_element = create_dom_element('td', {}, k, data_row);
+      label_element.addClass('link');
       for (j in v) {
         create_dom_element('td', {}, number_to_currency(v[j]), data_row);
         sums[j] += v[j];

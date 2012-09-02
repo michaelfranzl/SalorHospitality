@@ -1364,14 +1364,18 @@ img.asset
 
 div#items_notifications_vendor
   :position absolute
-  :right 50px
+  :right 75px
   :top -20px
   :width 200px
   :z-index 5
-  div.item_list_vendor
+  div.item_list
     :display inline-block
+    :margin 3px
+    :width 100%
     :font-size 80%
-    :padding 3px 0px
+    :padding 1px 1px
+    :-moz-border-radius 3px
+    :-webkit-border-radius 3px
 
 div#items_notifications
   :display none
@@ -1409,8 +1413,10 @@ div.item_list
       :border-bottom 2px solid #222
     .increment, .reference_count
       :width 30px
-    .increment, .reference_count, .update
+    .reference_count, .update
       :background-color #3A474D
+    .increment
+      :background-color #74101B
     .update
       :font-size 80%
       :width 100px
