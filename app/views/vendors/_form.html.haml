@@ -19,6 +19,7 @@
         %br
         = vendor_form.label :name
         = vendor_form.text_field :name
+        %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
         = vendor_form.fields_for :images do |image_form|
           = vendor_form.label image_form.object.image_type.to_s
@@ -39,19 +40,23 @@
         %br
         = vendor_form.label :time_offset
         = vendor_form.text_field :time_offset, :size => 2
-
+        %span.display_keyboard{ :id => "vendor_time_offset_display_keyboard" }
         %br
         = vendor_form.label :receipt_header_blurb
         = vendor_form.text_area :receipt_header_blurb
+        %span.display_keyboard{ :id => "vendor_receipt_header_blurb_display_keyboard" }
         %br
         = vendor_form.label :receipt_footer_blurb
         = vendor_form.text_area :receipt_footer_blurb
+        %span.display_keyboard{ :id => "vendor_receipt_footer_blurb_display_keyboard" }
         %br
         = vendor_form.label :invoice_header_blurb
         = vendor_form.text_area :invoice_header_blurb
+        %span.display_keyboard{ :id => "vendor_invoice_header_blurb_display_keyboard" }
         %br
         = vendor_form.label :invoice_footer_blurb
         = vendor_form.text_area :invoice_footer_blurb
+        %span.display_keyboard{ :id => "vendor_invoice_footer_blurb_display_keyboard" }
 
       %td
         = vendor_form.check_box :use_order_numbers
@@ -72,18 +77,34 @@
         - if @current_company.mode == 'local'
           %div#vendor_printers
             %h3= t('activerecord.models.vendor_printer.other')
-            %span#identify_printers.link= t '.identify_printers'
+            %span.button#identify_printers= t '.identify_printers'
             %p#add_printer
-              %span.link= t '.add_printer'
+              %span.button= t '.add_printer'
             = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
               = render :partial => 'vendor_printer', :locals => { :f => f }
             %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
 
 
+- if @current_user.onscreen_keyboard_enabled
+  :javascript
+    $('#vendor_name').keyboard( {openOn: '' } );
+    $('#vendor_name_display_keyboard').click(function(){ $('#vendor_name').getkeyboard().reveal(); });
+    $('#vendor_time_offset').keyboard( {openOn: '' } );
+    $('#vendor_time_offset_display_keyboard').click(function(){ $('#vendor_time_offset').getkeyboard().reveal(); });
+    $('#vendor_receipt_header_blurb').keyboard( {openOn: '' } );
+    $('#vendor_receipt_header_blurb_display_keyboard').click(function(){ $('#vendor_receipt_header_blurb').getkeyboard().reveal(); });
+    $('#vendor_receipt_footer_blurb').keyboard( {openOn: '' } );
+    $('#vendor_receipt_footer_blurb_display_keyboard').click(function(){ $('#vendor_receipt_footer_blurb').getkeyboard().reveal(); });
+    $('#vendor_invoice_header_blurb').keyboard( {openOn: '' } );
+    $('#vendor_invoice_header_blurb_display_keyboard').click(function(){ $('#vendor_invoice_header_blurb').getkeyboard().reveal(); });
+    $('#vendor_invoice_footer_blurb').keyboard( {openOn: '' } );
+    $('#vendor_invoice_footer_blurb_display_keyboard').click(function(){ $('#vendor_invoice_footer_blurb').getkeyboard().reveal(); });
+    
 :javascript
   $('#add_printer').click(function(){
     var new_printer_id = new Date().getTime();
     $('#vendor_printers').append(printer_template.replace(/NEW_RECORD/g, 'new_' + new_printer_id));
+    $
   });
 
   $('#identify_printers').click(function(){

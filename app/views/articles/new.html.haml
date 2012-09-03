@@ -60,7 +60,7 @@
 
 
   %div.add_quantity
-    %a#add_quantity= t '.add_quantity'
+    %span.button#add_quantity= t '.add_quantity'
 
   %ul#quantities_new
     - collection = article_form.object.errors.blank? ? article_form.object.quantities.existing.positioned : article_form.object.quantities

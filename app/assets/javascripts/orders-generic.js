@@ -1193,6 +1193,7 @@ function render_item_list_vendor(scope) {
     var t2 = new Date();
     var difference = t2-t1;
     var color_intensity = Math.floor(difference/upper_delivery_time_limit * 255);
+    color_intensity = (color_intensity < 0) ? 255 : color_intensity;
     color = 'rgb(' + color_intensity + ', 60, 60)';
     var waiting_time = Math.floor(difference/60000);
     //-------------
@@ -1231,6 +1232,7 @@ function render_item_list(scope) {
     var t2 = new Date();
     var difference = t2-t1;
     var color_intensity = Math.floor(difference/upper_delivery_time_limit * 255);
+    color_intensity = (color_intensity < 0) ? 255 : color_intensity;
     color = 'rgb(' + color_intensity + ', 60, 60)';
     var waiting_time = Math.floor(difference/60000);
     //-------------

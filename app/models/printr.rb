@@ -17,7 +17,7 @@ class Printr
     elsif vendor_printers.kind_of? VendorPrinter
       @vendor_printers = [vendor_printers]
     else
-      paths = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/usb/lp0', '/dev/usb/lp1', '/dev/usb/lp2', '/dev/billgastro-printer-front', '/dev/billgastro-printer-top', '/dev/billgastro-printer-back-top-right', '/dev/billgastro-printer-back-top-left', '/dev/billgastro-printer-back-bottom-left', '/dev/billgastro-printer-back-bottom-right']
+      paths = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/usb/lp0', '/dev/usb/lp1', '/dev/usb/lp2', '/dev/salor-hospitality-front', '/dev/salor-hospitality-top', '/dev/salor-hospitality-back-top-left', '/dev/salor-hospitality-back-top-right', '/dev/salor-hospitality-back-bottom-left', '/dev/salor-hospitality-back-bottom-right']
       @vendor_printers = Array.new
       paths.size.times do |i|
         @vendor_printers << VendorPrinter.new(:name => paths[i].gsub('/','-'), :path => paths[i], :copies => 1)
