@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824070145) do
+ActiveRecord::Schema.define(:version => 20120903095852) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20120824070145) do
     t.string   "taxes",            :limit => 10000, :default => "--- {}\n"
     t.float    "booking_item_sum"
     t.datetime "finished_at"
+    t.datetime "paid_at"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -398,11 +399,12 @@ ActiveRecord::Schema.define(:version => 20120824070145) do
     t.float    "tax_sum"
     t.integer  "hidden_by"
     t.boolean  "printed"
-    t.boolean  "paid"
+    t.boolean  "paid",                            :default => false
     t.float    "change_given"
     t.integer  "booking_id"
     t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
     t.datetime "finished_at"
+    t.datetime "paid_at"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_company_id"

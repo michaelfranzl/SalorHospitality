@@ -109,12 +109,12 @@ class VendorsController < ApplicationController
     #result = sql.execute x
     #render :json => result.to_a[0][0]
     #settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
-    order_ids = @current_vendor.orders.where(:finished_at => from..to, :finished => true, :paid => true).collect { |o| o.id }
-    items = Item.select("refund_sum, category_id, taxes").where(:created_at => from...to, :order_id => order_ids, :hidden => nil)
+    order_ids = @current_vendor.orders.where(:paid_at => from..to, :finished => true, :paid => true).collect { |o| o.id }
+    items = Item.select("refund_sum, category_id, taxes").where(:order_id => order_ids, :hidden => nil)
     items_json_string = items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"y\":#{i.category_id}}" }.join(',')
     items_json_string.gsub! "\n", '\n'
     
-    booking_ids = @current_vendor.bookings.where(:finished_at => from..to, :finished => true).collect { |o| o.id }
+    booking_ids = @current_vendor.bookings.where(:paid_at => from..to, :finished => true, :paid => true).collect { |o| o.id }
     booking_items = BookingItem.select("refund_sum, room_id, taxes").where(:booking_id => booking_ids, :hidden => nil)
     booking_items_json_string = booking_items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
     booking_items_json_string.gsub! "\n", '\n'

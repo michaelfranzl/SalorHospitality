@@ -91,7 +91,6 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_special?
-      return true
       request.user_agent.include?('iPad')
     end
 

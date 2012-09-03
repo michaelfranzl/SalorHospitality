@@ -207,7 +207,6 @@ class Order < ActiveRecord::Base
   end
 
   def finish
-    self.updated_at = Time.now
     self.finished_at = Time.now
     self.finished = true
     Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
@@ -220,6 +219,7 @@ class Order < ActiveRecord::Base
     self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
     self.change_given = 0 if self.change_given < 0
     self.paid = true
+    self.paid_at = Time.now
     self.save
   end
 
