@@ -1,6 +1,8 @@
 class CopyTimestamps < ActiveRecord::Migration
   def up
     Order.where(:paid => nil).update_all :paid => false
+    Order.where(:finished => true).update_all :paid => true
+    
     Order.where(:finished => true, :finished_at => nil).each do |o|
       puts "Updating finished_at for Order #{ o.id }"
       o.finished_at = o.updated_at
