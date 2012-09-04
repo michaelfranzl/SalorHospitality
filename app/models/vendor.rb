@@ -66,11 +66,19 @@ class Vendor < ActiveRecord::Base
   end
 
   def rlogo_header=(data)
-    write_attribute :rlogo_header, Escper::Image.new(data.read, :blob).to_s 
+    if data.nil?
+      write_attribute :rlogo_header, nil
+    else
+      write_attribute :rlogo_header, Escper::Image.new(data.read, :blob).to_s 
+    end
   end
 
   def rlogo_footer=(data)
-    write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s 
+    if data.nil?
+      write_attribute :rlogo_footer, nil
+    else
+      write_attribute :rlogo_footer, Escper::Image.new(data.read, :blob).to_s
+    end
   end
 
   def get_unique_model_number(model_name_singular)
