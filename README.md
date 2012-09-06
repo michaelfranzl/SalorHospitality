@@ -88,6 +88,12 @@ Multi-Store, Multi-Company
 
 SALOR Hospitality has true multi-store (and even multi-company) support built in. That way, you deploy once, and serve many of your stores at once.
 
+Installation
+------------
+apt-get install imagemagick libmagick-dev libmagickwand-dev mysql-server mysql-client libmysqlclient-dev reprepro
+set up ruby-1.9.3 with rvm
+cd base_dir
+bundle install
 
 Try it live!
 ------------

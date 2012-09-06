@@ -17,10 +17,8 @@ articles.js
 *.xcf
 *~
 *.deb
-.bundle
 tmp/sass-cache
 tmp/pids
-vendor/bundle
 *.log
 *.bill
 tmp/cache
@@ -30,3 +28,4 @@ tmp/capybara
 *.swm
 *.kate-swp
 config/debian-package/opt
+vendor/bundle
