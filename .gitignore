@@ -29,3 +29,4 @@ tmp/capybara
 *.swn
 *.swm
 *.kate-swp
+config/debian-package/opt

@@ -1,0 +1,4 @@
+#!/bin/bash
+. /usr/share/debconf/confmodule
+echo "preinst called with $1"
+exit 0

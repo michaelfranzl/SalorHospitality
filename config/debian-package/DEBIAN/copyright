@@ -1,0 +1,8 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: salor-hospitality
+Upstream-Contact: Michael Franzl <office@red-e.eu>
+Source: http://github.com/michaelfranzl/SalorHospitality
+
+Files: *
+Copyright: 2009-2013 Red (E) Tools Ltd.
+License: Expat

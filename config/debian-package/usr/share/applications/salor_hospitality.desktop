@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Salor Hospitality Point Of Sale
+GenericName=Salor Hospitality Point Of Sale
+Icon=salor_hospitality
+Exec=salor_hospitality
+Terminal=false
+Categories=GNOME;Office;
+Encoding=UTF-8
+Name[de]=Salor Hospitality Kassensystem

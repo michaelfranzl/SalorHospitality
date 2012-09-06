@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+db_input high salor_hospitality/license_read || true
+db_go
+
+db_input high salor_hospitality/license_accept || true
+db_go
+
+db_get salor_hospitality/license_accept
+accept=$RET
+echo "License accepted is $accept"
+if [ "$accept" = "false" ]
+then
+  echo "License was not accepted. Aborting."
+  exit 1
+fi
+
+db_input high salor_hospitality/enter_database || true
+db_go
+db_input high salor_hospitality/enter_username || true
+db_go
+db_input high salor_hospitality/enter_password || true
+db_go
+db_input high salor_hospitality/exceptions || true
+db_go
+db_get salor_hospitality/dataset || true
+db_go

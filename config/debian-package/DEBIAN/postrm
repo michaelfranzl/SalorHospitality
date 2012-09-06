@@ -1,0 +1,57 @@
+#!/bin/bash
+
+. /usr/share/debconf/confmodule
+
+export RAILS_ENV=production
+export PATH=$PATH:/opt/salor/ruby/bin
+
+case $1 in
+  upgrade)
+    echo "postrm called with upgrade"
+    # do something
+  ;;
+  remove)
+    echo "postrm called with remove"
+    # do something
+  ;;
+  purge)
+    echo "postrm called with purge"
+
+    echo "Backing up salor_hospitality database."
+
+    db_get salor_hospitality/enter_username
+    username=$RET
+    echo "username is $username"
+    db_get salor_hospitality/enter_password
+    password=$RET
+    echo "password is $password"
+    db_get salor_hospitality/enter_database
+    database=$RET
+    echo "database is $database"
+
+    DATE="`date +%Y%m%dT%H%M%S`"
+    echo "Dumping database $database before purge..."
+    mkdir -p /opt/salor/hospitality-db-rolling-backups
+    mysqldump -u $username -p$password $database > /opt/salor/hospitality-db-rolling-backups/database-purge-$DATE.sql
+    bzip2 /opt/salor/hospitality-db-rolling-backups/database-purge-$DATE.sql
+
+    echo "Dropping database $database because of purge..."
+    mysql -u $username -p$password -Bse "drop database $database"
+    db_purge
+  ;;
+  *)
+    echo "postrm called with unknown argument $1"
+  ;;
+esac
+
+db_get salor_hospitality/license_accept
+accept=$RET
+echo "Licence accepted is $accept"
+if [ "$accept" = "false" ]
+then
+  echo "Purging debconf database..."
+  db_purge
+fi
+
+
+exit 0

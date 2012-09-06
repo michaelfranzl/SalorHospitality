@@ -1,0 +1,47 @@
+#!/bin/bash
+
+. /usr/share/debconf/confmodule
+
+export RAILS_ENV=production
+export PATH=$PATH:/opt/salor/ruby/bin
+
+case $1 in
+  remove)
+    echo "prerm called with remove"
+    #do something
+  ;;
+  upgrade)
+    echo "prerm called with upgrade"
+
+    db_get salor_hospitality/enter_username
+    username=$RET
+    echo "username is $username"
+    db_get salor_hospitality/enter_password
+    password=$RET
+    echo "password is $password"
+    db_get salor_hospitality/enter_database
+    database=$RET
+    echo "database is $database"
+
+    echo "Backing up current SALOR Hospitality codebase in compliance with FISC regulations..."
+    DATE="`date +%Y%m%dT%H%M%S`"
+    mkdir -p /opt/salor/hospitality-codebase-backups
+    cp -r /opt/salor/hospitality /opt/salor/hospitality-codebase-backups/$DATE
+    
+    echo "Dumping database $database because of upgrade..."
+    mysqldump -u $username -p$password $database > /opt/salor/hospitality-codebase-backups/$DATE/database.sql
+    
+    echo "Compressing SALOR Hospitality backup. This may take a little while..."
+    cd /opt/salor/hospitality-codebase-backups
+    tar cjf $DATE.tar.bz2 $DATE
+    rm -rf $DATE
+  ;;
+  failed-upgrade)
+    echo "prerm called with failed-upgrade"
+    #do something
+  ;;
+  *)
+    echo "prerm called with unknown argument $1"
+  ;;
+esac
+exit 0
