@@ -29,3 +29,5 @@ tmp/capybara
 *.kate-swp
 config/debian-package/opt
 vendor/bundle
+sha1-signatures.txt
+*.tar.bz2

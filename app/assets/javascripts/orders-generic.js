@@ -116,6 +116,7 @@ function route(target, model_id, action, options) {
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
+    $('.target_table').val('');
     $('#items_notifications_vendor').hide();
     if (action == 'send') {
       submit_json.jsaction = 'send';
