@@ -19,7 +19,7 @@
     - item.options.each do |o|
       - next if o.price == 0
       %tr
-        %td.one= item.tax.letter
+        %td.one= item.taxes.collect{ |k,v| v[:l] }.join(',')
         %td.two== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
         %td.three= number_to_currency o.price
         %td.four= item.count

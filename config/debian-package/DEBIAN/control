@@ -1,7 +1,7 @@
 Package: salor-hospitality
-Version: 4.0.60
+Version: 4.0.61
+Architecture: all
 Maintainer: Michael Franzl <office@red-e.eu>
-Installed-Size: 1200000
 Depends: apache2, apache2-mpm-prefork, mysql-server, mysql-client, exim4, dhcp3-server, onboard, salor-ruby, x11vnc, ssh, beep, expect, chromium-browser, bind9, vim-gnome, apt-show-versions, imagemagick, red-e-support
 Pre-Depends: debconf
 Section: office

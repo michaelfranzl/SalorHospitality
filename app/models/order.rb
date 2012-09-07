@@ -394,7 +394,7 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.options.each do |o|
         next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.tax.letter, "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
       end
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"

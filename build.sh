@@ -15,7 +15,7 @@ export RAILS_ENV=production
 
 BASE=$PWD
 
-ARCHIVE=$BASE/../red-e-archive
+ARCHIVE=$BASE/../debian-archive/salor-hospitality
 
 DEB_BASE=$BASE/config/debian-package
 OPT_BASE=$DEB_BASE/opt
@@ -46,11 +46,13 @@ echo "Running bundle install..."
 cd $SRC_BASE
 $BUNDLE install
 
+mkdir -p $ARCHIVE
+
 echo "Calculating anti-tampering SHA1 signatures..."
 touch $SHA_FILE
 cd $SRC_BASE
 find . -type d \( -name '.git' -o -name 'debian-package' -o -name 'tmp' \) -prune -o -type f \( -name '*~' \) -prune -o -type f -exec sha1sum '{}' >> $SHA_FILE +
-cp $SHA_FILE $ARCHIVE/salor-hospitality/salor-hospitality_$VERSION.sha
+cp $SHA_FILE $ARCHIVE/salor-hospitality_$VERSION.sha
 
 echo "Building Debian package..."
-dpkg-deb --build $BASE/config/debian-package $ARCHIVE/salor-hospitality
+dpkg-deb --build $BASE/config/debian-package $ARCHIVE
