@@ -185,21 +185,18 @@ class Order < ActiveRecord::Base
     n = items.size - 1
     0.upto(n-1) do |i|
       (i+1).upto(n) do |j|
-        Item.transaction do
-          if (items[i].article_id  == items[j].article_id and
-              items[i].quantity_id == items[j].quantity_id and
-              items[i].options     == items[j].options and
-              items[i].price       == items[j].price and
-              items[i].comment     == items[j].comment and
-              items[i].scribe      == items[j].scribe and
-              not items[i].destroyed?
-             )
-            items[i].count += items[j].count
-            items[i].printed_count += items[j].printed_count
-            result = items[i].save
-            raise "Couldn't save item during grouping. Oops!" if not result
-            items[j].destroy
-          end
+        if (items[i].article_id  == items[j].article_id and
+            items[i].quantity_id == items[j].quantity_id and
+            items[i].options     == items[j].options and
+            items[i].price       == items[j].price and
+            items[i].comment     == items[j].comment and
+            items[i].scribe      == items[j].scribe and
+            not items[i].destroyed?
+            )
+          items[i].count += items[j].count
+          items[i].printed_count += items[j].printed_count
+          result = items[i].save
+          items[j].destroy
         end
       end
     end
@@ -451,7 +448,8 @@ class Order < ActiveRecord::Base
       else
         d = "a#{i.article_id}"
       end
-      if i.options.any? or not i.comment.empty? or i.scribe
+      parent_price = i.quantity ? i.quantity.price : i.article.price
+      if i.options.any? or not i.comment.empty? or i.scribe or i.price != parent_price
         d = "i#{i.id}"
       end
       options = {}

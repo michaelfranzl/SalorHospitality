@@ -20,15 +20,8 @@ class ItemsController < ApplicationController
 
   #We'll use update for splitting of items into separate orders
   def update
-    logger.info "[Split] Started function update (actually split item). I attempt to find item id #{params[:id]}"
     @item = get_model
-    logger.info "[Split] @item = #{ @item.inspect }"
-    raise "Dieses Item wurde nicht mehr gefunden. Oops! Möglicherweise wurde es mehrfach angewählt und es ist bereits in einer anderen Rechnung?" if not @item
-    @order = @item.order
-    raise "Dieses Item ist nicht mehr mit einer Bestellung verbunden. Oops!" if not @order
-
-    @item.split
-
+    @item.split if @item
     prepare_objects_for_invoice
   end
 
