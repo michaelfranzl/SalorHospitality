@@ -1,2 +1,0 @@
-#!/bin/bash
-chromium-browser --kiosk --incognito -start-maximized http://salor-hospitality

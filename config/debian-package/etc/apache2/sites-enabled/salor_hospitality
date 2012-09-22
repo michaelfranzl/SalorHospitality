@@ -1,6 +1,0 @@
-<VirtualHost *:80>
-  ServerName salor-hospitality
-  DocumentRoot /opt/salor/hospitality/public
-  RailsEnv production
-  PassengerPreStart http://salor-hospitality/
-</VirtualHost>
