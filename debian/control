@@ -1,0 +1,20 @@
+Source: salor-hospitality
+Section: unknown
+Priority: extra
+Maintainer: Michael Franzl <office@michaelfranzl.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://github.com/michaelfranzl/SalorHospitality.git
+#Vcs-Browser: https://github.com/michaelfranzl/SalorHospitality
+
+Package: salor-hospitality
+Architecture: all
+Depends: ${misc:Depends}
+Description: The innovative Point of Sale Solution serving the Hospitality Industry
+ This package consists of a lean Ruby-on-Rails application, backed from a
+ MySQL database. The actual Point of Sale interface is entirely controlled
+ by offline Javascript and an offline database. This concept unites the
+ advantages of networking between many handhelds in one store (or many
+ stores of a restaurant/hotel chain) with an amazing responsiveness of the
+ user interface (UI).
