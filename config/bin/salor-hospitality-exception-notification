@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ "$1" = "enable" ]
+then
+  echo "Enabling exception notification email for salor-hospitality."
+  apt-get install exim4
+  echo "Setting Exim4 variable dc_eximconfig_configtype to 'internet' ..."
+  sed -i -e "s/dc_eximconfig_configtype='local'/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
+  /usr/sbin/update-exim4.conf
+  sed -i -e 's/^:exception_notification:.*$/:exception_notification: true/' /srv/salor-hospitality/config/salor-hospitality.yml
+fi
+
+if [ "$1" = "disable" ]
+then
+  echo "Disabling exception notification email for salor-hospitality."
+  echo "For security reasons, you may want to set the Exim4 configuration variable dc_eximconfig_configtype to 'local'. Please do that manually. Current value is 'internet'."
+  sed -i -e 's/^:exception_notification:.*$/:exception_notification: false/' /srv/salor-hospitality/config/salor-hospitality.yml
+fi
+
+echo "Please specify 'enable' or 'disable' as command line parameter."

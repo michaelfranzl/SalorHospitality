@@ -1,0 +1,25 @@
+#!/bin/bash
+echo "Testing for SALOR SSL certificates for HTTPS access..."
+if [ ! -d /root/salor_ssl_certificates ]; then
+  echo "SALOR SSL certificates don't exist yet, creating them..."
+  cd /root
+  mkdir salor_ssl_certificates
+  cd salor_ssl_certificates
+  openssl req -new -newkey rsa:4096 -nodes -out salor.csr -keyout salor.key -subj "/C=AT/ST=/L=/O=Salor POS/CN=salor"
+  openssl req -x509 -days 6000 -in salor.csr -key salor.key -out salor.crt
+  chmod 600 salor.*
+  mkdir /etc/apache2/ssl
+  cp salor.key salor.crt /etc/apache2/ssl
+  a2enmod ssl
+else
+  echo "SALOR SSL certificates already exist. Nothing to be done."
+fi
+
+if [ "$1" = "" ]
+then
+  echo "Using Port numbers 443 and 7652 as default. You can re-run this script and specify a different port number as first command line parameter which will be used instead of 7652."
+else
+  echo "Writing SSL port $1 to Salor Hospitality Apache configuration file."
+  sed -i -e "s/^Listen .*$/Listen $1/" /etc/apache2/sites-enabled/salor_hospitality_ssl
+  sed -i -e "s/^<VirtualHost .*>$/<VirtualHost *:$1>/" /etc/apache2/sites-enabled/salor_hospitality_ssl
+fi

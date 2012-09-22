@@ -10,7 +10,7 @@ Homepage: http://red-e.eu/app/salor-hospitality/
 
 Package: salor-hospitality
 Architecture: all
-Depends: ${misc:Depends}, ruby1.9.1, libruby1.9.1, ruby1.9.1-dev, bundler, apache2, libapache2-mod-passenger, mysql-server, libmysqld-dev, onboard, beep, chromium-browser, libmagickwand-dev
+Depends: ${misc:Depends}, ruby1.9.1, libruby1.9.1, ruby1.9.1-dev, bundler, apache2, libapache2-mod-passenger, mysql-server, libmysqld-dev, onboard, beep, chromium-browser, libmagickwand-dev, udev
 Suggests: vim, apt-show-versions, remotesupport, salor-bin, exim4, dhcp3-server, expect, ssh, x11vnc
 Description: The innovative Point of Sale Solution serving the Hospitality Industry
  This package consists of a lean Ruby-on-Rails application, backed from a

@@ -16,9 +16,26 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+. /usr/share/debconf/confmodule
+
+export RAILS_ENV=production
+
+app_root=/srv/salor-hospitality
+backupdir_codebase=$app_root/backups/codebase
 
 case "$1" in
     remove|upgrade|deconfigure)
+      
+      echo "Backing up current SALOR Hospitality codebase in compliance with FISC regulations..."
+      DATE="`date +%Y%m%dT%H%M%S`"
+      mkdir -p $backupdir_codebase/$DATE
+      cp -r $app_root/{app,config,db,debian,doc,lib,log,public,script,spec,tmp,vendor} $backupdir_codebase/$DATE
+      
+      echo "Compressing SALOR Hospitality backup. This may take a little while..."
+      cd $backupdir_codebase
+      tar cjf $DATE.tar.bz2 $DATE
+      rm -rf $DATE
+      echo "Done."
     ;;
 
     failed-upgrade)
