@@ -1,0 +1,19 @@
+<VirtualHost *:443>
+  ServerName salor-hospitality
+  DocumentRoot /opt/salor/hospitality/public
+  RailsEnv production
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/salor.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+</VirtualHost>
+
+Listen 7652
+
+<VirtualHost *:7652>
+  ServerName salor-hospitality
+  DocumentRoot /opt/salor/hospitality/public
+  RailsEnv production
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/salor.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+</VirtualHost>
