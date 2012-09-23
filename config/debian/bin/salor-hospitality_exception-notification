@@ -6,6 +6,7 @@ then
   echo "Setting Exim4 variable dc_eximconfig_configtype to 'internet' ..."
   sed -i -e "s/dc_eximconfig_configtype='local'/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
   /usr/sbin/update-exim4.conf
+  service exim4 restart
   sed -i -e 's/^:exception_notification:.*$/:exception_notification: true/' /srv/salor-hospitality/config/salor-hospitality.yml
 fi
 

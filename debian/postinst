@@ -23,7 +23,7 @@ case "$1" in
     
       . /usr/share/debconf/confmodule
 
-      base_dir=/srv/salor-hospitality
+      app_root=/srv/salor-hospitality
       export RAILS_ENV=production
 
       echo "postinst called with $1"
@@ -39,7 +39,8 @@ case "$1" in
       database=$RET
       echo "database is $database"
 
-      cd $base_dir
+      cd $app_root
+      /usr/bin/bundle install --deployment
 
       echo "Setting username and password for salor_hospitality database ..."
       #cp config/database-default.yml config/database.yml
@@ -69,20 +70,12 @@ case "$1" in
       /usr/bin/rake update_vendor_cache
 
       echo "Changing Permissions ..."
-      chown -R www-data:www-data /opt/salor/hospitality
-      chmod -R 755 /opt/salor/hospitality
-      chmod -R 777 /opt/salor/hospitality/tmp
-      chmod -R 777 /opt/salor/hospitality/log
-      
-      # the following is needed to save FISC reports
-      #mainuser=`ls /home | head -1`
-      #echo "Changing Permissions of /home/$mainuser/Desktop..."
-      #chmod 755 /home/$mainuser/Desktop
-      #chown :www-data /home/$mainuser/Desktop
-      #echo "Adding user $mainuser to group www-data..."
-      #usermod -a -G www-data $mainuser
+      chown -R www-data:www-data $app_root
+      chmod -R 755 $app_root
+      chmod -R 666 $app_root/tmp
+      chmod -R 666 $app_root/log
 
-      echo "Adding to salor-hospitality to /etc/hosts if not yet there..."
+      echo "Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep -c 'salor-hospitality'`
       if [ $result -eq 0 ]; then
         echo "127.0.0.1 salor-hospitality" >> /etc/hosts;
@@ -93,13 +86,9 @@ case "$1" in
       if [ $result -eq 0 ]; then
         echo "pcspkr" >> /etc/modules;
       fi
-      
-      /usr/bin/salor-hospitality-setup-ssl-access
 
       echo "Restarting Apache ..."
       service apache2 restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
-      echo "Restarting Exim4 ..."
-      service exim4 restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
       echo "Restarting udev ..."
       service udev restart 0>/dev/null 1>/dev/null 2>/dev/null 3>/dev/null
 

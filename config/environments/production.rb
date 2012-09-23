@@ -6,7 +6,9 @@ SalorHospitality::Application.configure do
 
   config.action_mailer.delivery_method = :sendmail
 
-  config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => %{"SalorHospitality" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorhospitality request session environment backtrace)
+  if SalorHospitality::Application::SALOR_HOSPITALITY_CONFIGURATION[:exception_notification]
+    config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => %{"SalorHospitality" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorhospitality request session environment backtrace)
+  end
 
   # Code is not reloaded between requests
   config.cache_classes = true
