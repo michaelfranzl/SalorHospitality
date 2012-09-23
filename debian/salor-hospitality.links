@@ -1,0 +1,2 @@
+/etc/salor-hospitality.yml  salor-hospitality/config/salor-hospitality.yml
+/etc/salor-hospitality-database.yml salor-hospitality/config/database.yml
