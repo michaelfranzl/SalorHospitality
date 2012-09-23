@@ -18,8 +18,8 @@ salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/db
 salor-hospitality/db/schema.rb      /var/lib/salor-hospitality/db
 
 
-config/salor-hospitality-http     /etc/apache2/sites-enabled
-config/salor-hospitality-https    /etc/apache2/sites-enabled
+config/salor-hospitality-http     /etc/apache2/sites-available
+config/salor-hospitality-https    /etc/apache2/sites-available
 
 config/salor-hospitality_browser-chromium         /usr/bin
 config/salor-hospitality_console                  /usr/bin
@@ -31,6 +31,7 @@ config/salor-hospitality_environment-vars         /etc/profile.d
 
 config/salor-hospitality-database.yml             /etc
 config/salor-hospitality-config.yml               /etc
+config/90-salor-hospitality.rules                 /etc/udev/rules.d
 
 config/salor-hospitality.desktop               /usr/share/applications
 

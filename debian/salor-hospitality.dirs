@@ -1,1 +1,3 @@
 /var/log/salor-hospitality
+/var/lib/salor-hospitality/public/uploads
+/var/lib/salor-hospitality/public/assets

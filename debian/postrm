@@ -40,7 +40,6 @@ DATE="`date +%Y%m%dT%H%M%S`"
 
 case "$1" in
     purge)
-      #|failed-upgrade|abort-install|abort-upgrade|disappear
       echo "Backing up salor_hospitality database before $1."
       mkdir -p $backupdir_database
       mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
@@ -52,11 +51,17 @@ case "$1" in
     ;;
     
     remove|upgrade)
-      echo "Backing up salor_hospitality database before $1."
-      mkdir -p $backupdir_database
-      mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
-      bzip2 $backupdir_database/database-$1-$DATE.sql
-      
+      result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
+      if [ "$result" != "$database" ]
+      then
+        echo "Backing up salor_hospitality database before $1."
+        mkdir -p $backupdir_database
+        mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
+        bzip2 $backupdir_database/database-$1-$DATE.sql
+      fi
+    ;;
+    
+    failed-upgrade|abort-install|abort-upgrade|disappear)
     ;;
       
     *)

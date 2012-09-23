@@ -1,9 +1,9 @@
 #!/bin/bash
 
-app_root=/srv/salor-hospitality
-backupdir_database=$app_root/backups/database
-backupdir_log=$app_root/backups/log
-database_conf_file=$app_root/config/database.yml
+app_root=/usr/share/salor-hospitality
+backupdir_database=/var/lib/salor-hospitality/backups/database
+backupdir_log=/var/lib/salor-hospitality/backups/log
+database_conf_file=/etc/salor-hospitality-config.yml
 numversions=60
 d=$(date)
 

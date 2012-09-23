@@ -20,7 +20,7 @@ development:
   reconnect: false
   database: salor_hospitality_development
   username: root
-  password: pass
+  password: root
   pool: 5
   host: localhost
 
@@ -33,7 +33,7 @@ test:
   reconnect: false
   database: salor_hospitality_test
   username: root
-  password: pass
+  password: root
   pool: 5
   host: localhost
 
@@ -43,6 +43,6 @@ production:
   reconnect: false
   database: salor_hospitality_production
   username: root
-  password: pass
+  password: root
   pool: 5
   host: localhost

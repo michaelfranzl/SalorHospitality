@@ -9,3 +9,5 @@
 /etc/salor-hospitality-config.yml /usr/share/salor-hospitality/config/salor-hospitality-config.yml
 
 /var/lib/salor-hospitality/db/schema.rb /usr/share/salor-hospitality/db/schema.rb
+
+/etc/apache2/sites-available/salor-hospitality-http /etc/apache2/sites-enabled/salor-hospitality-http

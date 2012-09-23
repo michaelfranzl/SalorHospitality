@@ -23,17 +23,19 @@ export RAILS_ENV=production
 app_root=/usr/share/salor-hospitality
 backupdir_codebase=/var/lib/salor-hospitality/backups/codebase
 
+echo "prerm called with $1"
+
 case "$1" in
     remove|upgrade|deconfigure)
       
       echo "Backing up current SALOR Hospitality codebase in compliance with FISC regulations..."
       DATE="`date +%Y%m%dT%H%M%S`"
       mkdir -p $backupdir_codebase/$DATE
-      cp -r $app_root/{app,config,db,debian,doc,lib,log,public,script,spec,tmp,vendor} $backupdir_codebase/$DATE
+      cp -r $app_root $backupdir_codebase/$DATE
       
       echo "Compressing SALOR Hospitality backup. This may take a little while..."
       cd $backupdir_codebase
-      tar cjf $DATE.tar.bz2 $DATE
+      tar cjhf $DATE.tar.bz2 $DATE
       rm -rf $DATE
       echo "Done."
     ;;

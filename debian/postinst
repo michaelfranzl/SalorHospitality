@@ -23,6 +23,7 @@ case "$1" in
     configure)
 
       app_root=/usr/share/salor-hospitality
+      database_config_file=/etc/salor-hospitality-database.yml
       export RAILS_ENV=production
 
       echo "postinst called with $1"
@@ -42,13 +43,12 @@ case "$1" in
       /usr/bin/bundle install --deployment
 
       echo "Setting username and password for salor_hospitality database ..."
-      #cp config/database-default.yml config/database.yml
-      sed -i -e "s/username:.*/username: $username/" config/database.yml
-      sed -i -e "s/password:.*/password: $password/" config/database.yml
-      sed -i -e "s/database:.*/database: $database/" config/database.yml
+      sed -i -e "s/username:.*/username: $username/" $database_config_file
+      sed -i -e "s/password:.*/password: $password/" $database_config_file
+      sed -i -e "s/database:.*/database: $database/" $database_config_file
 
-      result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
-      if [ "$result" != "$database" ]
+      result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
+      if [ "$result" = "0" ]
       then
         echo "salor_hospitality database doesn't exist, so I'm creating it ..."
         /usr/bin/rake db:create
@@ -71,18 +71,18 @@ case "$1" in
       echo "Changing Permissions ..."
       chown -R www-data:www-data $app_root
       chmod -R 755 $app_root
-      chmod -R 666 $app_root/tmp
-      chmod -R 666 $app_root/log
+      chmod -R 777 $app_root/tmp
+      chmod -R 777 $app_root/log
 
       echo "Adding salor-hospitality to /etc/hosts if not yet there..."
-      result=`cat /etc/hosts | grep -c 'salor-hospitality'`
-      if [ $result -eq 0 ]; then
+      result=`cat /etc/hosts | grep 'salor-hospitality' | wc -l`
+      if [ "$result" = "0" ]; then
         echo "127.0.0.1 salor-hospitality" >> /etc/hosts;
       fi
 
       echo "Adding pcspkr to /etc/modules if not yet there..."
-      result=`cat /etc/modules | grep -c 'pcspkr'`
-      if [ $result -eq 0 ]; then
+      result=`cat /etc/modules | grep 'pcspkr' | wc -l`
+      if [ "$result" = "0" ]; then
         echo "pcspkr" >> /etc/modules;
       fi
 

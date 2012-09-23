@@ -20,6 +20,9 @@ then
   echo "Using Port numbers 443 and 7652 as default. You can re-run this script and specify a different port number as first command line parameter which will be used instead of 7652."
 else
   echo "Writing SSL port $1 to Salor Hospitality Apache configuration file."
-  sed -i -e "s/^Listen .*$/Listen $1/" /etc/apache2/sites-enabled/salor_hospitality_ssl
-  sed -i -e "s/^<VirtualHost .*>$/<VirtualHost *:$1>/" /etc/apache2/sites-enabled/salor_hospitality_ssl
+  sed -i -e "s/^Listen .*$/Listen $1/" /etc/apache2/sites-available/salor_hospitality_ssl
+  sed -i -e "s/^<VirtualHost .*>$/<VirtualHost *:$1>/" /etc/apache2/sites-available/salor_hospitality_ssl
+  cd /etc/apache2/sites-enabled
+  ln -sf ../sites-available/salor_hospitality_ssl salor_hospitality_ssl
+  service apache2 restart
 fi

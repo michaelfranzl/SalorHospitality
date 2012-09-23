@@ -29,6 +29,7 @@ module SalorHospitality
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország', 'el' => 'Ελλάδα', 'ru' => 'Россия', :it => 'Italia', 'cn' => 'China' }
     FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" } # + ['Arial','Times'] # this causes 404's
     
+    SALOR_HOSPITALITY_CONFIGURATION = {}
     SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('etc','salor-hospitality-config.yml'), 'r').read) if File.exists?(File.join('etc','salor-hospitality-config.yml'))
 
     # Settings in config/environments/* take precedence over those specified here.
