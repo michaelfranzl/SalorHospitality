@@ -1,3 +1,0 @@
-#!/bin/bash
-cd /srv/salor-hospitality
-/usr/bin/ruby1.9.1 script/rails c

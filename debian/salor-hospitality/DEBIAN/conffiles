@@ -1,6 +1,0 @@
-/srv/salor-hospitality/config/database.yml
-/etc/udev/rules.d/90-salor-hospitality.rules
-/etc/profile.d/salor-hospitality_environment-vars
-/etc/cron.d/salor-hospitality
-/etc/apache2/sites-enabled/salor-hospitality-http
-/etc/apache2/sites-enabled/salor-hospitality-https
