@@ -1,0 +1,10 @@
+salor-hospitality /srv
+config/90-salor-hospitality.rules /etc/udev/rules.d
+config/salor-hospitality-http /etc/apache2/sites-enabled
+config/salor-hospitality-https /etc/apache2/sites-enabled
+config/salor-hospitality_browser-chromium /usr/bin
+config/salor-hospitality_console /usr/bin
+config/salor-hospitality_exception-notification /usr/bin
+config/salor-hospitality_maintainance /usr/bin
+config/salor-hospitality_setup-https-access /usr/bin
+config/salor-hospitality_environment-vars /etc/profile.d
