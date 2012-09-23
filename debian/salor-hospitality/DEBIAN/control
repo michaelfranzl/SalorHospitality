@@ -1,17 +1,13 @@
-Source: salor-hospitality
+Package: salor-hospitality
+Version: 3.5.0
+Architecture: all
+Maintainer: Michael Franzl <office@michaelfranzl.com>
+Installed-Size: 114887
+Depends: debconf (>= 0.5) | debconf-2.0, debconf, ruby1.9.1, libruby1.9.1, ruby1.9.1-dev, bundler, apache2, libapache2-mod-passenger, mysql-server, libmysqld-dev, onboard, beep, chromium-browser, libmagickwand-dev, udev
+Suggests: vim, apt-show-versions, remotesupport, salor-bin, exim4, dhcp3-server, expect, ssh, x11vnc
 Section: ruby
 Priority: extra
-Maintainer: Michael Franzl <office@michaelfranzl.com>
-Build-Depends: debhelper (>= 8.0.0)
-Standards-Version: 3.9.2
 Homepage: http://red-e.eu/app/salor-hospitality/
-#Vcs-Git: git://github.com/michaelfranzl/SalorHospitality.git
-#Vcs-Browser: https://github.com/michaelfranzl/SalorHospitality
-
-Package: salor-hospitality
-Architecture: all
-Depends: ${misc:Depends}, debconf, ruby1.9.1, libruby1.9.1, ruby1.9.1-dev, bundler, apache2, libapache2-mod-passenger, mysql-server, libmysqld-dev, onboard, beep, chromium-browser, libmagickwand-dev, udev
-Suggests: vim, apt-show-versions, remotesupport, salor-bin, exim4, dhcp3-server, expect, ssh, x11vnc
 Description: The innovative Point of Sale Solution serving the Hospitality Industry
  This package consists of a lean Ruby-on-Rails application, backed from a
  MySQL database. The actual Point of Sale interface is entirely controlled
