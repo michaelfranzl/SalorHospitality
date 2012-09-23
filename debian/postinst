@@ -22,7 +22,7 @@ set -e
 case "$1" in
     configure)
 
-      app_root=/srv/salor-hospitality
+      app_root=/usr/share/salor-hospitality
       export RAILS_ENV=production
 
       echo "postinst called with $1"

@@ -21,8 +21,8 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-app_root=/srv/salor-hospitality
-backupdir_database=$app_root/backups/database
+app_root=/usr/share/salor-hospitality
+backupdir_database=/var/lib/salor-hospitality/backups/database
 echo "postrm called with $1"
 
 db_get salor_hospitality/enter_username

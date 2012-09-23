@@ -4,7 +4,6 @@ salor-hospitality/vendor/bundle   /var/lib/salor-hospitality
 
 salor-hospitality/app             /usr/share/salor-hospitality
 salor-hospitality/config          /usr/share/salor-hospitality
-salor-hospitality/db              /usr/share/salor-hospitality
 salor-hospitality/lib             /usr/share/salor-hospitality
 salor-hospitality/public/*.*      /usr/share/salor-hospitality
 salor-hospitality/script          /usr/share/salor-hospitality
@@ -13,6 +12,11 @@ salor-hospitality/vendor/assets   /usr/share/salor-hospitality
 salor-hospitality/Gemfile*               /usr/share/salor-hospitality
 salor-hospitality/Rakefile               /usr/share/salor-hospitality
 salor-hospitality/config.ru               /usr/share/salor-hospitality
+
+salor-hospitality/db/migrate      /usr/share/salor-hospitality/db
+salor-hospitality/db/seeds.rb      /usr/share/salor-hospitality/db
+salor-hospitality/db/schema.rb      /var/lib/salor-hospitality/schema.rb
+
 
 config/salor-hospitality-http     /etc/apache2/sites-enabled
 config/salor-hospitality-https    /etc/apache2/sites-enabled
@@ -27,3 +31,7 @@ config/salor-hospitality_environment-vars         /etc/profile.d
 
 config/salor-hospitality-database.yml             /etc
 config/salor-hospitality-config.yml               /etc
+
+config/salor-hospitality.desktop               /usr/share/applications
+
+salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable

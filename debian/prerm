@@ -20,8 +20,8 @@ set -e
 
 export RAILS_ENV=production
 
-app_root=/srv/salor-hospitality
-backupdir_codebase=$app_root/backups/codebase
+app_root=/usr/share/salor-hospitality
+backupdir_codebase=/var/lib/salor-hospitality/backups/codebase
 
 case "$1" in
     remove|upgrade|deconfigure)
