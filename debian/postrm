@@ -57,6 +57,8 @@ case "$1" in
       mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
       bzip2 $backupdir_database/database-$1-$DATE.sql
       
+    ;;
+      
     *)
         echo "postrm called with unknown argument \`$1'" >&2
         exit 1
