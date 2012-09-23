@@ -1,21 +1,21 @@
-salor-hospitality/public/uploads  /var/lib/salor-hospitality
-salor-hospitality/public/assets   /var/lib/salor-hospitality
-salor-hospitality/vendor/bundle   /var/lib/salor-hospitality
+salor-hospitality/vendor/bundle   /var/lib/salor-hospitality/vendor
+salor-hospitality/vendor/assets   /usr/share/salor-hospitality/vendor
 
 salor-hospitality/app             /usr/share/salor-hospitality
 salor-hospitality/config          /usr/share/salor-hospitality
 salor-hospitality/lib             /usr/share/salor-hospitality
-salor-hospitality/public/*.*      /usr/share/salor-hospitality
 salor-hospitality/script          /usr/share/salor-hospitality
-salor-hospitality/vendor/assets   /usr/share/salor-hospitality
 
-salor-hospitality/Gemfile*               /usr/share/salor-hospitality
-salor-hospitality/Rakefile               /usr/share/salor-hospitality
-salor-hospitality/config.ru               /usr/share/salor-hospitality
+salor-hospitality/public/*.*      /usr/share/salor-hospitality/public
 
-salor-hospitality/db/migrate      /usr/share/salor-hospitality/db
-salor-hospitality/db/seeds.rb      /usr/share/salor-hospitality/db
-salor-hospitality/db/schema.rb      /var/lib/salor-hospitality/schema.rb
+salor-hospitality/Gemfile*        /usr/share/salor-hospitality
+salor-hospitality/Rakefile        /usr/share/salor-hospitality
+salor-hospitality/config.ru       /usr/share/salor-hospitality
+
+salor-hospitality/db/migrate        /usr/share/salor-hospitality/db
+salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/db
+
+salor-hospitality/db/schema.rb      /var/lib/salor-hospitality/db
 
 
 config/salor-hospitality-http     /etc/apache2/sites-enabled

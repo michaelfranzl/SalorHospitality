@@ -6,5 +6,6 @@
 /var/log/salor-hospitality /usr/share/salor-hospitality/log
 
 /etc/salor-hospitality-database.yml /usr/share/salor-hospitality/config/database.yml
+/etc/salor-hospitality-config.yml /usr/share/salor-hospitality/config/salor-hospitality-config.yml
 
-/var/lib/salor-hospitality/schema.rb /usr/share/salor-hospitality/db/schema.rb
+/var/lib/salor-hospitality/db/schema.rb /usr/share/salor-hospitality/db/schema.rb
