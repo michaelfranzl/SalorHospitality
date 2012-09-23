@@ -1,27 +1,29 @@
-salor-hospitality/public/uploads  /var/lib/salor-hospitality/public/uploads
-salor-hospitality/public/assets   /var/lib/salor-hospitality/public/assets
-salor-hospitality/vendor/bundle   /var/lib/salor-hospitality/vendor/bundle
-salor-hospitality/tmp             /var/tmp/salor-hospitality
-salor-hospitality/log             /var/log/salor-hospitality
+salor-hospitality/public/uploads  /var/lib/salor-hospitality
+salor-hospitality/public/assets   /var/lib/salor-hospitality
+salor-hospitality/vendor/bundle   /var/lib/salor-hospitality
 
-salor-hospitality/app             /usr/share/salor-hospitality/app
-salor-hospitality/config          /usr/share/salor-hospitality/config
-salor-hospitality/db              /usr/share/salor-hospitality/db
-salor-hospitality/lib             /usr/share/salor-hospitality/lib
-salor-hospitality/public/*.*      /usr/share/salor-hospitality/public
-salor-hospitality/script          /usr/share/salor-hospitality/script
-salor-hospitality/vendor/assets   /usr/share/salor-hospitality/vendor/assets
+salor-hospitality/app             /usr/share/salor-hospitality
+salor-hospitality/config          /usr/share/salor-hospitality
+salor-hospitality/db              /usr/share/salor-hospitality
+salor-hospitality/lib             /usr/share/salor-hospitality
+salor-hospitality/public/*.*      /usr/share/salor-hospitality
+salor-hospitality/script          /usr/share/salor-hospitality
+salor-hospitality/vendor/assets   /usr/share/salor-hospitality
+
+salor-hospitality/Gemfile*               /usr/share/salor-hospitality
+salor-hospitality/Rakefile               /usr/share/salor-hospitality
+salor-hospitality/config.ru               /usr/share/salor-hospitality
 
 config/salor-hospitality-http     /etc/apache2/sites-enabled
 config/salor-hospitality-https    /etc/apache2/sites-enabled
 
-config/salor-hospitality_browser-chromium  /usr/bin
-config/salor-hospitality_console           /usr/bin
-config/salor-hospitality_exception-notification /usr/bin
-config/salor-hospitality_maintainance       /usr/bin
-config/salor-hospitality_setup-https-access /usr/bin
+config/salor-hospitality_browser-chromium         /usr/bin
+config/salor-hospitality_console                  /usr/bin
+config/salor-hospitality_exception-notification   /usr/bin
+config/salor-hospitality_maintainance             /usr/bin
+config/salor-hospitality_setup-https-access       /usr/bin
 
-config/salor-hospitality_environment-vars /etc/profile.d
+config/salor-hospitality_environment-vars         /etc/profile.d
 
-config/database.yml               /etc/salor-hospitality-database.yml
-config/salor-hospitality.yml      /etc/salor-hospitality.yml
+config/salor-hospitality-database.yml             /etc
+config/salor-hospitality-config.yml               /etc

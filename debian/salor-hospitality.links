@@ -1,2 +1,8 @@
-/etc/salor-hospitality.yml  salor-hospitality/config/salor-hospitality.yml
-/etc/salor-hospitality-database.yml salor-hospitality/config/database.yml
+/var/lib/salor-hospitality/public/uploads /usr/share/salor-hospitality/public/uploads
+/var/lib/salor-hospitality/public/assets /usr/share/salor-hospitality/public/assets
+/var/lib/salor-hospitality/vendor/bundle /usr/share/salor-hospitality/vendor/bundle
+
+/var/tmp/salor-hospitality /usr/share/salor-hospitality/tmp
+/var/log/salor-hospitality /usr/share/salor-hospitality/log
+
+/etc/salor-hospitality-database.yml /usr/share/salor-hospitality/config/database.yml
