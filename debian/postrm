@@ -18,47 +18,17 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-
 . /usr/share/debconf/confmodule
 
-app_root=/usr/share/salor-hospitality
-backupdir_database=/var/lib/salor-hospitality/backups/database
 echo "postrm called with $1"
-
-db_get salor_hospitality/enter_username
-username=$RET
-echo "username is $username"
-db_get salor_hospitality/enter_password
-password=$RET
-echo "password is $password"
-db_get salor_hospitality/enter_database
-database=$RET
-echo "database is $database"
-
-DATE="`date +%Y%m%dT%H%M%S`"
-
 
 case "$1" in
     purge)
-      echo "Backing up salor_hospitality database before $1."
-      mkdir -p $backupdir_database
-      mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
-      bzip2 $backupdir_database/database-$1-$DATE.sql
-
-      echo "Dropping database $database because of purge..."
-      mysql -u $username -p$password -Bse "drop database $database"
+      # This is called after the configuration files have been removed.
       db_purge
     ;;
     
     remove|upgrade)
-      result=$(mysql -u $username -p$password -Bse 'show databases' | grep $database)
-      if [ "$result" != "$database" ]
-      then
-        echo "Backing up salor_hospitality database before $1."
-        mkdir -p $backupdir_database
-        mysqldump -u $username -p$password $database > $backupdir_database/database-$DATE-$1.sql
-        bzip2 $backupdir_database/database-$1-$DATE.sql
-      fi
     ;;
     
     failed-upgrade|abort-install|abort-upgrade|disappear)

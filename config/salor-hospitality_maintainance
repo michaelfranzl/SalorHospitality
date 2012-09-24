@@ -1,9 +1,9 @@
 #!/bin/bash
 
 app_root=/usr/share/salor-hospitality
-backupdir_database=/var/lib/salor-hospitality/backups/database
-backupdir_log=/var/lib/salor-hospitality/backups/log
-database_conf_file=/etc/salor-hospitality-config.yml
+backupdir_database=/var/log/salor-hospitality
+backupdir_log=/var/log/salor-hospitality
+database_config_file=/etc/salor-hospitality-config.yml
 numversions=60
 d=$(date)
 
@@ -25,21 +25,23 @@ i=$numversions
 rm -rf $backupdir_log/$i-production.log.gz
 while [ $i -gt 0 ]
 do
-  mv $backupdir_log/`expr $i - 1`-production.log.gz $backupdir_log/$i-production.log.gz
+  mv $backupdir_log/`expr $i - 1`-production.log.gz 2> /dev/null $backupdir_log/$i-production.log.gz
   i=`expr $i - 1`
 done
 
 
 # ROLL DATABASE
 
-usernameline=`grep 'username:' $database_conf_file | head -1`
+usernameline=`grep 'username:' $database_config_file | head -1`
 username=`echo $usernameline | sed -e 's/username: //'`
-
-databaseline=`grep 'database:' $database_conf_file | head -1`
+databaseline=`grep 'database:' $database_config_file | head -1`
 database=`echo $databaseline | sed -e 's/database: //'`
-
-passwordline=`grep 'password:' $database_conf_file | head -1`
+passwordline=`grep 'password:' $database_config_file | head -1`
 password=`echo $passwordline | sed -e 's/password: //'`
+
+echo "username is $username"
+echo "password is $password"
+echo "database is $database"
 
 # The most recent backup is called 0-database_name.sql.gz
 mkdir -p $backupdir_database
@@ -52,7 +54,7 @@ i=$numversions
 rm -fr $backupdir_database/$i-$database.sql.gz
 while [ $i -gt 0 ]
 do
-  mv $backupdir_database/`expr $i - 1`-$database.sql.gz $backupdir_database/$i-$database.sql.gz
+  mv $backupdir_database/`expr $i - 1`-$database.sql.gz 2> /dev/null $backupdir_database/$i-$database.sql.gz
   i=`expr $i - 1`
 done
 

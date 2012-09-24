@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # postinst script for salor-hospitality
 #
 # see: dh_installdeb(1)
@@ -19,60 +19,77 @@ set -e
 
 . /usr/share/debconf/confmodule
 
+echo "postinst called with $1"
+
 case "$1" in
     configure)
-
       app_root=/usr/share/salor-hospitality
       database_config_file=/etc/salor-hospitality-database.yml
       export RAILS_ENV=production
 
-      echo "postinst called with $1"
-
-      echo "Reading configuration from Debconf database ..."
-      db_get salor_hospitality/enter_username
-      username=$RET
-      echo "username is $username"
-      db_get salor_hospitality/enter_password
-      password=$RET
-      echo "password is $password"
-      db_get salor_hospitality/enter_database
-      database=$RET
-      echo "database is $database"
-
       cd $app_root
-      /usr/bin/bundle install --deployment
+      bundle install --deployment
 
-      echo "Setting username and password for salor_hospitality database ..."
-      sed -i -e "s/username:.*/username: $username/" $database_config_file
-      sed -i -e "s/password:.*/password: $password/" $database_config_file
-      sed -i -e "s/database:.*/database: $database/" $database_config_file
+      database_config_file=/etc/salor-hospitality-database.yml
+      database_config_default_file=/usr/share/salor-hospitality/config/database-production.default.yml
+      
+      if [[ ! -s $database_config_file ]]
+      then
+        echo "File is empty: $database_config_file. Reading database configuration from Debconf database instead..."
+        db_get salor_hospitality/enter_username
+        username=$RET
+        echo "username is $username"
+        db_get salor_hospitality/enter_password
+        password=$RET
+        echo "password is $password"
+        db_get salor_hospitality/enter_database
+        database=$RET
+        echo "database is $database"
+      
+        echo "Storing Debconf database configuration in configuration file $database_config_file"
+        cp $database_config_default_file $database_config_file
+        sed -i -e "s/^username:.*$/username: $username/" $database_config_file
+        sed -i -e "s/^password:.*$/password: $password/" $database_config_file
+        sed -i -e "s/^database:.*$/database: $database/" $database_config_file
 
+      else
+        echo "Reading database configuration from configuration file  $database_config_file"
+        usernameline=`grep 'username:' $database_config_file | head -1`
+        username=`echo $usernameline | sed -e 's/username: //'`
+        databaseline=`grep 'database:' $database_config_file | head -1`
+        database=`echo $databaseline | sed -e 's/database: //'`
+        passwordline=`grep 'password:' $database_config_file | head -1`
+        password=`echo $passwordline | sed -e 's/password: //'`
+      fi
+      
       result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
       if [ "$result" = "0" ]
       then
         echo "salor_hospitality database doesn't exist, so I'm creating it ..."
-        /usr/bin/rake db:create
+        rake1.9.1 db:create
         echo "Migrating salor_hospitality database ..."
-        /usr/bin/rake db:migrate
+        rake1.9.1 db:migrate
         echo "Populating database with minimal seed data ..."
-        SEED_MODE=minimal /usr/bin/rake db:seed
+        SEED_MODE=minimal rake1.9.1 db:seed
       else
         echo "salor_hospitality database already exists ..."
         echo "Migrating salor_hospitality database ..."
-        /usr/bin/rake db:migrate
+        rake1.9.1 db:migrate
       fi
       
       #echo "Precompiling assets ..."
-      #salor_rake assets:precompile
+      #rake1.9.1 assets:precompile
 
       echo "Updating vendors cache ..."
-      /usr/bin/rake update_vendor_cache
+      rake1.9.1 update_vendor_cache
 
       echo "Changing Permissions ..."
       chown -R www-data:www-data $app_root
       chmod -R 755 $app_root
       chmod -R 777 $app_root/tmp
       chmod -R 777 $app_root/log
+      chmod -R 777 $app_root/public/uploads
+      
 
       echo "Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep 'salor-hospitality' | wc -l`

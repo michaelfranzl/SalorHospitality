@@ -7,6 +7,7 @@ salor-hospitality/lib             /usr/share/salor-hospitality
 salor-hospitality/script          /usr/share/salor-hospitality
 
 salor-hospitality/public/*.*      /usr/share/salor-hospitality/public
+salor-hospitality/public/fonts    /usr/share/salor-hospitality/public
 
 salor-hospitality/Gemfile*        /usr/share/salor-hospitality
 salor-hospitality/Rakefile        /usr/share/salor-hospitality
@@ -30,9 +31,9 @@ config/salor-hospitality_setup-https-access       /usr/bin
 config/salor-hospitality_environment-vars         /etc/profile.d
 
 config/salor-hospitality-database.yml             /etc
+salor-hospitality/config/database-production.default.yml /etc
 config/salor-hospitality-config.yml               /etc
-config/90-salor-hospitality.rules                 /etc/udev/rules.d
 
 config/salor-hospitality.desktop               /usr/share/applications
 
-salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable
+salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable/apps

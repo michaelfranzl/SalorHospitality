@@ -1,6 +1,6 @@
 <VirtualHost *:443>
   ServerName salor-hospitality
-  DocumentRoot /usr/share/salor-hospitality
+  DocumentRoot /usr/share/salor-hospitality/public
   RailsEnv production
   SSLEngine on
   SSLCertificateFile /etc/apache2/ssl/salor.crt
@@ -14,7 +14,7 @@ Listen 7652
 
 <VirtualHost *:7652>
   ServerName salor-hospitality
-  DocumentRoot /usr/share/salor-hospitality
+  DocumentRoot /usr/share/salor-hospitality/public
   RailsEnv production
   SSLEngine on
   SSLCertificateFile /etc/apache2/ssl/salor.crt
