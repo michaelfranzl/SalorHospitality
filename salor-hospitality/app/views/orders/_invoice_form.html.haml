@@ -28,23 +28,29 @@
 
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
-    %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
-      %option
-      = options_from_collection_for_select(@tables, :id, :move_name)
+    %table
+      %tr
+        %td
+          %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
+            %option
+            = options_from_collection_for_select(@tables, :id, :move_name)
         
-    - if session[:display_tax_colors]
-      %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
-        - if invoice_form.tax.nil?
-          %option
-        = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
-    - elsif @current_user.role.permissions.include? 'assign_cost_center'
-      %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
-        %option
-        = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-    - if @current_user.role.permissions.include? 'assign_order_to_booking'
-      %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
-        %option
-        = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
+        - if session[:display_tax_colors]
+          %td
+            %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
+              - if invoice_form.tax.nil?
+                %option
+              = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
+        - elsif @current_user.role.permissions.include? 'assign_cost_center'
+          %td
+            %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+              %option
+              = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
+        - if @current_user.role.permissions.include? 'assign_order_to_booking'
+          %td
+            %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
+              %option
+              = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long

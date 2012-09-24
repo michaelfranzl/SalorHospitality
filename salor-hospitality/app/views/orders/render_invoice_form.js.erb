@@ -1,3 +1,5 @@
 split_items_hash = {};
 counter_split_item = -1;
+route('invoice');
 $('#invoices').html('<%= escape_javascript render :partial => 'orders/invoice_form', :collection => @orders %>');
+                   
