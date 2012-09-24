@@ -21,7 +21,9 @@ function create_json_record(model, object) {
     s = object.s;
   }
   if (items_json.hasOwnProperty(d)) {
-    d += 'c'; // c for cloned. this happens for example when an item is split during option add.
+    //items_json already contains an item with a designator that is identical to the designator of the to-be-added item. When this happens, e.g. when an item is split (see function split_item()), we create an item clone.
+    d = 'c' + item_position + d;
+    // c is a magic designator prefix which means "cloned". Adding item_position to the designator allows us to have several cloned items. This is important for complex Option adding.
     s += 1;
   }
   if (model == 'order') {

@@ -309,7 +309,7 @@ function send_queue(object_id) {
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
-        debug("TIMEOUT from server");
+        alert("TIMEOUT from server");
       } else if (status == 'success') {
         clear_queue(object_id);
       } else if (status == 'error') {
@@ -624,6 +624,9 @@ function display_quantities(quantities, target, cat_id) {
   
 }
 
+// object {hash} contains the attributes of the item that should be created.
+// anchor_d {string} is the item designator before which the newly generated item will be inserted.
+// add_new {boolean} causes always a new item to be created. no incrementation is done.
 function add_new_item(object, add_new, anchor_d) {
   d = object.d;
   catid = object.ci;
@@ -634,9 +637,10 @@ function add_new_item(object, add_new, anchor_d) {
       typeof(items_json[d].x) == 'undefined' &&
       $.isEmptyObject(items_json[d].t)
      ) {
-    // selected item is already there
+    // an item with identical paramters is already in the list, and add_new is false, so just increment
     increment_item(d);
   } else {
+    // an item with identical paramters is not yet in the list, or add_new is true, so create a new item
     d = create_json_record('order', object);
     label = compose_label(object);
     new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid));
@@ -874,7 +878,8 @@ function clone_item(d) {
 }
 
 function add_option_to_item(d, value, cat_id) {
-  if (value != -1 && value != 0) {
+  console.log('called add_option with param ' + d);
+  if (value != -1 && value != 0) {  // 0 is clear
     $('#options_div_' + d).slideUp();
     d = clone_item(d);
   }
@@ -929,6 +934,7 @@ function render_options(options, d, cat_id) {
         var cid = cat_id;
         var o = object;
         button.on('click',function(){
+          console.log('executing add_option with param ' + d);
           add_option_to_item(d, o.s + '_' + o.id, cid);
         });
       })();
