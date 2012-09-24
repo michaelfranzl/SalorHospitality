@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
       
       
       #===============CURRENTVIEW==================
-      # this action is for simple writing of any model to the server and getting a Model object back.
+      # this action is for simple writing of any model to the server and getting a Model object back. TODO: This should actually go into a separate controller, like application controller.
       when 'push'
         if params[:relation] then
           @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
@@ -93,16 +93,15 @@ class OrdersController < ApplicationController
           when 'move'
             former_table = @order.table
             @order.move(params[:target_table_id])
-            #render :js => "route('tables', #{@order.table.id});" and return
-            render_invoice_form(former_table) and return
+            render_invoice_form(former_table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'display_tax_colors'
             if session[:display_tax_colors]
-              session[:display_tax_colors] = !session[:display_tax_colors]
+              session[:display_tax_colors] = !session[:display_tax_colors] # toggle
             else
-              session[:display_tax_colors] = true
+              session[:display_tax_colors] = true # set initial value
             end
-            render_invoice_form(@order.table) and return
+            render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'mass_assign_tax'
             tax = @current_vendor.taxes.find_by_id(params[:tax_id])
@@ -110,45 +109,42 @@ class OrdersController < ApplicationController
               item.calculate_taxes([tax])
             end
             @order.calculate_totals
-            render_invoice_form(@order.table) and return
+            render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'change_cost_center'
             @order.update_attribute(:cost_center_id, params[:cost_center_id])
-            render :nothing => true and return
+            render :nothing => true and return # called from outside the static route() function, but nothing has to be rendered.
           #----------jsaction----------
           when 'assign_to_booking'
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
             @booking.calculate_totals
-            orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-            if orders.empty?
-              @order.table.update_attribute :user, nil
-            end
+            @order.table.update_color
             if mobile?              
               # waiters on mobile devices never should be routed to the booking screen
-              render_invoice_form(@order) and return
+              render_invoice_form(@order) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
             else
-              render :js => "route('booking',#{@booking.id});" and return
+              render :js => "route('booking',#{@booking.id});" and return # called from outside the static route() function, but routing can be done via static JS.
             end
           #----------jsaction----------
           when 'pay_and_print'
             @order.pay
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render_invoice_form(@order.table) and return
+            render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_print_pending'
             @order.pay
             @order.reload
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
-            render_invoice_form(@order.table) and return
+            render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_no_print'
             @order.pay
             @order.reload
-            render_invoice_form(@order.table) and return
+            render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
         end
 
         
@@ -165,59 +161,42 @@ class OrdersController < ApplicationController
               @order.hide(@current_user.id)
               @order.unlink
             end
+            render :nothing => true and return if @order.hidden
             if @order.booking
               @order.update_associations(@current_user)
               @order.finish
-              @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
-              if @orders.empty?
-                @order.table.update_attribute :user, nil
-              end
+              @order.table.update_color
+              render :js => "route('booking',#{@order.booking.id});" and return # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
             end
-            render :nothing => true and return if @order.hidden
-            render :js => "route('booking',#{@order.booking.id});" and return if @order.booking
             case params[:target]
               when 'tables' then
                 @order.print(['tickets'])
-                render :nothing => true and return
-              when 'table' then
-                @order.pay
-                @order.print(['tickets'])
-                @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
-                if @orders.empty?
-                  @order.table.update_attribute :user, nil
-                  render :js => "route('table',#{params[:model][:table_id]});" and return
-                else
-                  render :js => "route('tables',#{params[:model][:table_id]});" and return
-                end
+                render :nothing => true and return # routing is done by the static route() function, so nothing to be done here.
               when 'invoice' then
                 @order.print(['tickets'])
-                render_invoice_form(@order.table) and return
+                render_invoice_form(@order.table) and return # the server has to render dynamically via .js.erb depending on the models.
+              when 'table_no_invoice_print' then
+                @order.pay
+                @order.print(['tickets']) if @current_company.mode == 'local'
+              when 'table_do_invoice_print' then
+                @order.pay
+                @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
             end
-          #----------jsaction----------
-          when 'send_and_print'
-            get_order
-            @order.calculate_totals
-            @order.regroup
-            @order.update_associations(@current_user)
-            @order.hide(@current_user.id) if @order.items.existing.size.zero?
-            if @current_company.mode == 'local' and not @order.hidden
-              @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
-            end
-            @order.finish
-            @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table.id)
+            
+            @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
             if @orders.empty?
               @order.table.update_attribute :user, nil
-              render :js => "route('table', #{@order.table.id});" and return
+              render :js => "route('table',#{params[:model][:table_id]});" and return # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
             else
-              render :js => "route('tables', #{@order.table.id});" and return
+              render :js => "route('tables',#{params[:model][:table_id]});" and return # there is still one order open. it would confuse the user, when he would see the items of this order after he has finished, so we route to the tables view.
             end
+
           #----------jsaction----------
           when 'move'
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
-            #render :js => "route('tables', #{@order.table.id});" and return
-            render :nothing => true and return
+            render :nothing => true and return # routing is done by static javascript to 'tables'
         end
         
       #===============CURRENTVIEW==================
@@ -228,20 +207,20 @@ class OrdersController < ApplicationController
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
+            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly. A timeout would be possible, but oh, well.
           #----------jsaction----------
           when 'pay'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             @booking.pay
-            render :js => "route('rooms');" and return
+            render :js => "route('rooms');" and return # see previous comment
           #----------jsaction----------
           when 'send_and_go_to_table'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
-            render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
+            render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called. the order view variables will not be fully  requested from the server, but submit_json.model.booking_id is the only variable we need for a successful order.
           #----------jsaction----------
           when 'send_and_redirect_to_invoice'
             get_booking
@@ -256,20 +235,6 @@ class OrdersController < ApplicationController
             @booking.pay
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
             
-        end
-        
-      #===============CURRENTVIEW==================
-      when 'rooms'
-        case params['jsaction']
-          #----------jsaction----------
-          when 'move_booking'
-            @booking = @current_vendor.bookings.find_by_id(params[:model][:id])
-            if @booking
-              @booking.update_attribute(:room_id,params[:model][:room_id]) 
-              render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
-            else
-              render :text => 'Epic Fail' and return
-            end
         end
           
     end

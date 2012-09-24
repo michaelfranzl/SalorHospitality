@@ -30,7 +30,7 @@
 
     %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
       %option
-      = options_from_collection_for_select(@tables, :id, :name)
+      = options_from_collection_for_select(@tables, :id, :move_name)
         
     - if session[:display_tax_colors]
       %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }

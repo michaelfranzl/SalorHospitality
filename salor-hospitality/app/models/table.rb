@@ -19,4 +19,15 @@ class Table < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :vendor_id
   has_and_belongs_to_many :users
+  
+  def update_color
+    orders = self.vendor.orders.existing.where(:finished => false, :table_id => self.id)
+    self.update_attribute :user, nil if orders.empty?
+  end
+  
+  def move_name
+    name = self.name
+    name += self.active_user_id ? '☒' : '☐'
+    return name
+  end
 end

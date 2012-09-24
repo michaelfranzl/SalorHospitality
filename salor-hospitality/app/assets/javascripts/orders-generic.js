@@ -123,17 +123,22 @@ function route(target, model_id, action, options) {
     $('#items_notifications_vendor').hide();
     if (action == 'send') {
       submit_json.jsaction = 'send';
+      submit_json.target = 'table_no_invoice_print';
       submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
+      //submit_json.model = {table_id:model_id};
+      //final rendering will be done in orders/update_ajax
     } else if (action == 'send_and_print' ) {
-      submit_json.jsaction = 'send_and_print';
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_do_invoice_print';
       submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
+      //submit_json.model = {table_id:model_id};
+      //final rendering will be done in orders/update_ajax
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      // pure offline mode is not supported as of now, so this never executes
       debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
       submit_json = submit_json_queue['table_' + model_id];
@@ -144,7 +149,11 @@ function route(target, model_id, action, options) {
     } else if (action == 'specific_order') {
       submit_json.model = {table_id:model_id};
       items_json = {};
-      $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
+      $.ajax({
+        type: 'GET',
+        url: '/tables/' + model_id + '?order_id=' + options.order_id,
+        timeout: 5000
+      }); //this repopulates items_json and renders items
     } else if (action == 'from_booking') {
       submit_json.jsaction = 'send_and_go_to_table';
       send_json('booking_' + options.booking_id);
@@ -178,6 +187,7 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       submit_json.model = {table_id:model_id};
       send_json('table_' + model_id);
+      // invoice form will be rendered by the server as .js.erb template. see orders/update_ajax.
     }
     $('#invoices').html('');
     $('#invoices').show();
@@ -213,14 +223,8 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       emit("send.booking",submit_json);
       send_json('booking_' + model_id);
-    } else if (action == 'pay') {
-      // deprecated in favor of invoice redirect
-      submit_json.jsaction = 'pay';
-      send_json('booking_' + model_id);
     } else if (action == 'update_bookings') {
       update_booking_for_room(model_id,options);
-    } else if (action == 'move_booking') {
-      send_json('booking_' + model_id);
     } else {
       submit_json = {};
       items_json = {};
@@ -240,6 +244,7 @@ function route(target, model_id, action, options) {
     $('#rooms').hide();
     $('#container').show();
     $('#functions_header_index').hide();
+    $('#functions_header_order_form').hide();
     $('#items_notifications_vendor').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
@@ -259,6 +264,7 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#invoices').hide();
     $('#functions_header_index').hide();
+    $('#functions_header_order_form').hide();
     $('#items_notifications_vendor').hide();
     if (typeof(options) == 'undefined') {
       room_id = null;
@@ -273,15 +279,16 @@ function route(target, model_id, action, options) {
     window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
+  // these cases don't need static view switching/rendering. the rendering is enterely done by the server.
   } else if (target == 'redirect') {
     
     if (action == 'booking_interim_invoice') {
       submit_json.jsaction = 'send_and_redirect_to_invoice';
-      send_json('booking_' + model_id);
+      send_json('booking_' + model_id); //the server renders a real HTTP redirect
       
     } else if (action == 'booking_invoice') {
       submit_json.jsaction = 'pay_and_redirect_to_invoice';
-      send_json('booking_' + model_id);
+      send_json('booking_' + model_id); //the server renders a real HTTP redirect
       
     } else if (action == 'invoice_move') {
       $.ajax({
