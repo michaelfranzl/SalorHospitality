@@ -49,6 +49,7 @@ class Order < ActiveRecord::Base
       new_item = Item.new(item_params[1])
       new_item.vendor = vendor
       new_item.company = vendor.company
+      new_item.hidden_by = user.id if new_item.hidden
       #new_item.cost_center = order.cost_center
       new_item.calculate_totals
       order.items << new_item
@@ -58,7 +59,7 @@ class Order < ActiveRecord::Base
     return order
   end
 
-  def update_from_params(params)
+  def update_from_params(params, user)
     self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
@@ -66,11 +67,13 @@ class Order < ActiveRecord::Base
         item_params[1].delete(:id)
         item = Item.find_by_id(item_id)
         item.update_attributes(item_params[1])
+        item.hidden_by = user.id if item.hidden
         item.calculate_totals
       else
         new_item = Item.new(item_params[1])
         new_item.vendor = self.vendor
         new_item.company = self.company
+        new_item.hidden_by = user.id if new_item.hidden
         #new_item.cost_center = self.cost_center
         new_item.calculate_totals
         self.items << new_item

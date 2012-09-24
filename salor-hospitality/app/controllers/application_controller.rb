@@ -63,11 +63,19 @@ class ApplicationController < ActionController::Base
       model
     end
 
-    def prepare_objects_for_invoice
-      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
+    # the invoice view can contain 1 or 2 non-finished orders. if it contains 2 orders, and 1 is finished, then stay on the invoice view and just display the remaining order, otherwise go to the main (tables) view.
+    def render_invoice_form(table)
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => table.id)
       @cost_centers = @current_vendor.cost_centers.existing.active
       @taxes = @current_vendor.taxes.existing
+      @tables = @current_vendor.tables.existing
       @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
+      if @orders.empty?
+        table.update_attribute :user, nil if @orders.empty?
+        render :js => "route('tables');" and return
+      else
+        render 'orders/render_invoice_form'
+      end
     end
 
     def set_locale

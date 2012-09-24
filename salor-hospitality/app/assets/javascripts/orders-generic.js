@@ -18,6 +18,7 @@ var new_order = true;
 var option_position = 0;
 var item_position = 0;
 var payment_method_uid = 0;
+var split_items_hash = {};
 
 var resources = {};
 var plugin_callbacks_done = [];
@@ -33,12 +34,14 @@ var timeout_update_item_lists = 60;
 var timeout_update_item_lists_vendor = 60;
 var timeout_update_resources = 180;
 var timeout_refresh_queue = 5;
+var timeout_split_item = 1;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = -1;
 var counter_update_item_lists_vendor = 3;
 var counter_refresh_queue = timeout_refresh_queue;
+var counter_split_item = -1;
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -256,6 +259,7 @@ function route(target, model_id, action, options) {
     $('#orderform').hide();
     $('#invoices').hide();
     $('#functions_header_index').hide();
+    $('#items_notifications_vendor').hide();
     if (typeof(options) == 'undefined') {
       room_id = null;
     } else {
@@ -270,6 +274,7 @@ function route(target, model_id, action, options) {
     
   // ========== REDIRECT ===============
   } else if (target == 'redirect') {
+    
     if (action == 'booking_interim_invoice') {
       submit_json.jsaction = 'send_and_redirect_to_invoice';
       send_json('booking_' + model_id);
@@ -277,6 +282,14 @@ function route(target, model_id, action, options) {
     } else if (action == 'booking_invoice') {
       submit_json.jsaction = 'pay_and_redirect_to_invoice';
       send_json('booking_' + model_id);
+      
+    } else if (action == 'invoice_move') {
+      $.ajax({
+        type: 'post',
+        url: '/orders/update_ajax',
+        data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
+        timeout: 5000
+      })
     }
     
   }
@@ -703,21 +716,52 @@ function update_order_from_invoice_form(data) {
   });
 }
 
-function update_item_from_invoice_form(data) {
-  item_count_td = $('#' + data.order_id + '_' + data.id + '_count');
-  var count = parseInt(item_count_td.html());
-  $('#subtotal_' + data.order_id).html(i18n.currency_unit + '--' + i18n.decimal_separator + '--');
-  $('#change_' + data.order_id).html(i18n.currency_unit + '--' + i18n.decimal_separator + '--');
-  if (count > 0) {
-    count -= 1;
-    item_count_td.html(count);
-    $.ajax({
-      type: 'put',
-      url: '/items/' + data.id,
-      data: data,
-      timeout: 5000
-    });
+
+function rotate_tax_item(id) {
+  $.ajax({
+    type: 'put',
+    url: '/items/rotate_tax',
+    data: {id:id},
+    timeout: 5000
+  });
+}
+
+function split_item(id, order_id) {
+  var item_count_td = $('#' + order_id + '_' + id + '_count');
+  var current_count = parseInt(item_count_td.html());
+
+  if (current_count > 0) {
+    if (split_items_hash.hasOwnProperty(id)) {
+      split_items_hash[id].split_count += 1;
+    } else {
+      split_items_hash[id] = {};
+      split_items_hash[id].split_count = 1;
+      split_items_hash[id].original_count = current_count;
+    }
+    counter_split_item = 3; // this will trigger the function submit_split_items() in 2 seconds after this function was last called.
+    current_count -= 1;
+    item_count_td.html(current_count);
+    if (current_count == 0) {
+      // remove item for better UI responsitivity
+      var item_row = $('tr#order_' + order_id + '_item_' + id);
+      item_row.fadeOut('slow', function() {
+        item_row.remove();
+        if ($('#model_' + order_id + ' table tr').size() == 2) {
+          $('#model_' + order_id).fadeOut();
+        }
+      });
+    }
   }
+  $('.subtotal').html('...');
+}
+
+function submit_split_items() {
+  $.ajax({
+    type: 'put',
+    url: '/items/split',
+    data: {jsaction:'split',split_items_hash:split_items_hash},
+    timeout: 5000
+  });
 }
 
 function update_order_from_refund_form(data) {
@@ -1049,6 +1093,7 @@ function manage_counters() {
   counter_update_item_lists -= 1;
   counter_update_item_lists_vendor -= 1;
   counter_refresh_queue -= 1;
+  counter_split_item -= 1;
 
   if (counter_update_resources == 0) {
     update_resources();
@@ -1069,6 +1114,10 @@ function manage_counters() {
   if (counter_refresh_queue == 0) {
     display_queue();
     counter_refresh_queue = timeout_refresh_queue;
+  }
+  if (counter_split_item == 0) {
+    submit_split_items();
+    // no counter reset. the counter is set to 1 in the split_item() function.
   }
   return 0;
 }

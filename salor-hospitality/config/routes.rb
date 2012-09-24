@@ -88,7 +88,6 @@ SalorHospitality::Application.routes.draw do
   end
 
   match 'orders/refund/:id' => 'orders#refund'
-  match 'items/rotate_tax/:id' => 'items#rotate_tax'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/print/:id' => 'settlements#print'
   match 'room_prices/generate' => 'room_prices#generate'
@@ -123,6 +122,8 @@ SalorHospitality::Application.routes.draw do
   resources :items do
     collection do
       get :list
+      put :split
+      put :rotate_tax
       get :set_attribute
     end
   end

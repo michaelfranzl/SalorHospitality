@@ -83,11 +83,12 @@ class Booking < ActiveRecord::Base
   end
 
 
-  def update_from_params(params)
+  def update_from_params(params, user)
     self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
+        # TODO: hide by system or user
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])

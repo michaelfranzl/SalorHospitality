@@ -203,7 +203,7 @@ class Item < ActiveRecord::Base
     self.save
   end
 
-  def split
+  def split(count)
     parent_order = self.order
     vendor = self.vendor
     split_order = parent_order.order
@@ -223,12 +223,15 @@ class Item < ActiveRecord::Base
       partner_item.item = self # ... and vice versa
     end
     partner_item.order = split_order # this is the actual moving to the new order
-    if self.count > 0
-      partner_item.count += 1
-      partner_item.printed_count += 1
-      self.count -= 1
-      self.printed_count -= 1
-    end
+    
+    count = self.count if count > self.count
+    #  self.count > 0
+      partner_item.count += count
+      partner_item.printed_count += count
+      self.count -= count
+      self.printed_count -= count
+    # end
+    
     if self.count == 0
       self.hide(0)
       self.unlink

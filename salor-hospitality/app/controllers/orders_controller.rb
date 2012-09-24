@@ -57,47 +57,65 @@ class OrdersController < ApplicationController
     #puts "XXXXXXXXXXXXX #{params[:currentview]}"
     #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
     case params[:currentview]
-      # this action is for simple pushing of a model to the server and
-      # getting a json object back.
+      
+      
+      #===============CURRENTVIEW==================
+      # this action is for simple writing of any model to the server and getting a Model object back.
       when 'push'
         if params[:relation] then
           @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
           @model.update_attributes(params[:model])
           render :json => @model and return
         end
+      
+        
+      #===============CURRENTVIEW==================
       when 'invoice_paper', 'refund'
         @order = get_model
         case params['jsaction']
+          #----------jsaction----------
           when 'just_print'
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             render :nothing => true and return
+          #----------jsaction----------
           when 'mark_print_pending'
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
             render :nothing => true and return
         end
+        
+        
+      #===============CURRENTVIEW==================
       when 'invoice'
         @order = get_order
         case params['jsaction']
+          #----------jsaction----------
+          when 'move'
+            former_table = @order.table
+            @order.move(params[:target_table_id])
+            #render :js => "route('tables', #{@order.table.id});" and return
+            render_invoice_form(former_table) and return
+          #----------jsaction----------
           when 'display_tax_colors'
             if session[:display_tax_colors]
               session[:display_tax_colors] = !session[:display_tax_colors]
             else
               session[:display_tax_colors] = true
             end
-            prepare_objects_for_invoice
-            render 'items/update' and return
+            render_invoice_form(@order.table) and return
+          #----------jsaction----------
           when 'mass_assign_tax'
             tax = @current_vendor.taxes.find_by_id(params[:tax_id])
             @order.items.existing.each do |item|
               item.calculate_taxes([tax])
             end
             @order.calculate_totals
-            prepare_objects_for_invoice
-            render 'items/update' and return
+            render_invoice_form(@order.table) and return
+          #----------jsaction----------
           when 'change_cost_center'
             @order.update_attribute(:cost_center_id, params[:cost_center_id])
             render :nothing => true and return
+          #----------jsaction----------
           when 'assign_to_booking'
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
             @order.update_attributes(:booking_id => @booking.id)
@@ -108,28 +126,36 @@ class OrdersController < ApplicationController
               @order.table.update_attribute :user, nil
             end
             if mobile?              
-              redirect_from_invoice and return
+              # waiters on mobile devices never should be routed to the booking screen
+              render_invoice_form(@order) and return
             else
               render :js => "route('booking',#{@booking.id});" and return
             end
+          #----------jsaction----------
           when 'pay_and_print'
             @order.pay
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            redirect_from_invoice and return
+            render_invoice_form(@order.table) and return
+          #----------jsaction----------
           when 'pay_and_print_pending'
             @order.pay
             @order.reload
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
-            redirect_from_invoice and return
+            render_invoice_form(@order.table) and return
+          #----------jsaction----------
           when 'pay_and_no_print'
             @order.pay
             @order.reload
-            redirect_from_invoice and return
+            render_invoice_form(@order.table) and return
         end
+
+        
+      #===============CURRENTVIEW==================
       when 'table'
         case params['jsaction']
+          #----------jsaction----------
           when 'send'
             get_order
             @order.calculate_totals
@@ -165,9 +191,9 @@ class OrdersController < ApplicationController
                 end
               when 'invoice' then
                 @order.print(['tickets'])
-                prepare_objects_for_invoice
-                render 'go_to_invoice_form' and return
+                render_invoice_form(@order.table) and return
             end
+          #----------jsaction----------
           when 'send_and_print'
             get_order
             @order.calculate_totals
@@ -185,36 +211,44 @@ class OrdersController < ApplicationController
             else
               render :js => "route('tables', #{@order.table.id});" and return
             end
+          #----------jsaction----------
           when 'move'
             get_order
             @order.move(params[:target_table_id])
             @order.print(['tickets'])
-            #@order.hide(@current_user.id) if @order.items.existing.size.zero?
-            render :js => "route('tables', #{@order.table.id});" and return
+            #render :js => "route('tables', #{@order.table.id});" and return
+            render :nothing => true and return
         end
+        
+      #===============CURRENTVIEW==================
       when 'room'
         case params['jsaction']
+          #----------jsaction----------
           when 'send'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return
+          #----------jsaction----------
           when 'pay'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             @booking.pay
             render :js => "route('rooms');" and return
+          #----------jsaction----------
           when 'send_and_go_to_table'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called
+          #----------jsaction----------
           when 'send_and_redirect_to_invoice'
             get_booking
             @booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
+          #----------jsaction----------
           when 'pay_and_redirect_to_invoice'
             get_booking
             @booking.update_associations(@current_user)
@@ -223,8 +257,11 @@ class OrdersController < ApplicationController
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
             
         end
+        
+      #===============CURRENTVIEW==================
       when 'rooms'
         case params['jsaction']
+          #----------jsaction----------
           when 'move_booking'
             @booking = @current_vendor.bookings.find_by_id(params[:model][:id])
             if @booking
@@ -250,18 +287,7 @@ class OrdersController < ApplicationController
   end
 
   private
-
-    def redirect_from_invoice
-      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => @order.table_id)
-      if @orders.empty?
-        @order.table.update_attribute :user, nil if @orders.empty?
-        render :js => "route('tables');" and return
-      else
-        prepare_objects_for_invoice
-        render 'go_to_invoice_form' and return
-      end
-    end
-
+    
     def get_order
       if params[:id]
         @order = get_model
@@ -272,7 +298,7 @@ class OrdersController < ApplicationController
         raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
-        @order.update_from_params(params)
+        @order.update_from_params(params, @current_user)
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user)
         @order.set_nr
@@ -283,7 +309,7 @@ class OrdersController < ApplicationController
     def get_booking
       @booking = Booking.accessible_by(@current_user).existing.find_by_id(params[:id]) if params[:id]
       if @booking
-        @booking.update_from_params(params)
+        @booking.update_from_params(params, @current_user)
       else
         @booking = Booking.create_from_params(params, @current_vendor, @current_user)
         @booking.set_nr

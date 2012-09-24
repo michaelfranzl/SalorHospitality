@@ -242,37 +242,40 @@ div.invoice
     :border none
     :background-color #DDDDEE
     :text-align right
-  select#cost_center_and_tax_for_invoice,
-  select#order_id
+  select
     :position relative
-    :width 118px
+    :width 70px
     :height 51px
     :font-size 140%
     :margin-right 8px
     :top -17px
     :left 5px
   table
+    :width 100%
     :border-collapse collapse
     :margin-bottom 20px
     td
       :vertical-align middle
+      :cursor pointer
+      :padding 5px 0px
     td.label
-      :width 131px
+      //:width 131px
     tr.item
       a
         :color #333
         :text-decoration none
         :display block
     td.price
-      :width 70px
+      //:width 70px
       :text-align right
     td.total
-      :width 70px
+      //:width 70px
       :text-align right
     td.count
-      :text-align center
-      :height 30px
-      :width 40px
+      :text-align left
+      :padding 5px 5px
+      :font-weight bold
+      //:width 40px
       a
         :display block
         :height 25px

@@ -1,5 +1,11 @@
 - oid = invoice_form.id
-
+- if session[:display_tax_colors]
+  - onclick_method = 'rotate_tax_item'
+  - linktitle = t('.switch_tax_for_this_item')
+- else
+  - onclick_method = 'split_item'
+  - linktitle = t('.split_this_item')
+  
 %div.invoice{ :id => "model_#{oid}" }
   - if @current_company.mode == 'local'
     - i = 0
@@ -22,13 +28,17 @@
 
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
+    %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
+      %option
+      = options_from_collection_for_select(@tables, :id, :name)
+        
     - if session[:display_tax_colors]
-      %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
+      %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
         - if invoice_form.tax.nil?
           %option
         = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
     - elsif @current_user.role.permissions.include? 'assign_cost_center'
-      %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+      %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
         %option
         = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
     - if @current_user.role.permissions.include? 'assign_order_to_booking'
@@ -46,20 +56,21 @@
       - tax = @current_vendor.taxes.find_by_id(item.taxes.keys.first)
       - color = tax.color
       - letter = tax.letter
-      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? color : '' }" }
-        %td.count{:id => "#{oid}_#{item.id}_count"}= session[:display_tax_colors] ? letter : item.count
+      - count_label = session[:display_tax_colors] ? letter : item.count
+      
+      
+      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? color : ''}", :onclick => "#{onclick_method}(#{item.id},#{oid})" }
+        %td.count{:id => "#{oid}_#{item.id}_count"}= count_label
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
-            - jsaction = session[:display_tax_colors] ? "rotate_tax" : "split"
-            - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
             - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
             - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
             - optionsprices = item.options.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
             - label = raw "%20.20s%s" % [label, optionslabel]
-            - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
-              %div.invoice_item{ :title => linktitle, :id => item.id, :onclick => "update_item_from_invoice_form({id:#{item.id},jsaction:'#{jsaction}',order_id:#{oid}})"}= raw(label)
+            - if @current_user.role.permissions.include? 'split_item' or session[:display_tax_colors]
+              %div.invoice_item{ :title => linktitle, :id => item.id, }= raw(label)
             - else
               = raw(label)
         %td.price

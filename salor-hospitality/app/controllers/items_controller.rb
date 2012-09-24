@@ -18,25 +18,24 @@ class ItemsController < ApplicationController
     end
   end
 
-  #We'll use update for splitting of items into separate orders
-  def update
-    @item = get_model
-    case params[:jsaction]
-    when 'split'
-      @item.split if @item
-      @order = @item.order
-      prepare_objects_for_invoice
-      render :update and return
-    when 'rotate_tax'
-      tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
-      current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
-      current_tax_id_index = tax_ids.index current_item_tax.id
-      next_tax_id = tax_ids.rotate[current_tax_id_index]
-      next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
-      @item.calculate_taxes([next_tax])
-      render :rotate_tax and return
+  def split
+    params['split_items_hash'].each do |k,v|
+      params[:id] = k.to_i # this is required by the get_model method
+      @item = get_model
+      @item.split(v['split_count'].to_i) if @item
     end
-    render :nothing => true
+    render_invoice_form(@item.order.table) and return
+  end
+  
+  def rotate_tax
+    @item = get_model
+    tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
+    current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
+    current_tax_id_index = tax_ids.index current_item_tax.id
+    next_tax_id = tax_ids.rotate[current_tax_id_index]
+    next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
+    @item.calculate_taxes([next_tax])
+    render_invoice_form(@item.order.table) and return
   end
 
   # We'll use edit for separation of items in the refund form

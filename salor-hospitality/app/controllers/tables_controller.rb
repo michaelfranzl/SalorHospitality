@@ -26,20 +26,19 @@ class TablesController < ApplicationController
 
   def show
     @table = get_model
-    redirect_to roles_path and return unless @table
+    redirect_to roles_path and return unless @table # TODO
     @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])
     if params[:order_id] and not params[:order_id].empty?
+      # route directly to the order form, even when there are 2 open orders. this is called from the room view.
       @order = @current_vendor.orders.find_by_id(params[:order_id])
-      render 'orders/go_to_order_form'
+      render 'orders/render_order_form' and return
     else
       if @orders.size > 1
-        @cost_centers = @current_vendor.cost_centers.existing.active
-        @taxes = @current_vendor.taxes.existing
-        @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
-        render 'orders/go_to_invoice_form'
+        render_invoice_form(@table) and return
       else
+        # there is only 1 open order
         @order = @orders.first
-        render 'orders/go_to_order_form'
+        render 'orders/render_order_form' and return
       end
     end
   end
