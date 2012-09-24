@@ -131,7 +131,7 @@ function route(target, model_id, action, options) {
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      debug('Offline mode. Fetching items from queue');
+      alert('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
       submit_json = submit_json_queue['table_' + model_id];
       items_json = items_json_queue['table_' + model_id];
@@ -139,7 +139,6 @@ function route(target, model_id, action, options) {
       delete items_json_queue['table_' + model_id];
       render_items();
     } else if (action == 'specific_order') {
-      //submit_json = {model:{table_id:model_id}};
       submit_json.model = {table_id:model_id};
       items_json = {};
       $.ajax({ type: 'GET', url: '/tables/' + model_id + '?order_id=' + options.order_id, timeout: 5000 }); //this repopulates items_json and renders items
@@ -148,9 +147,10 @@ function route(target, model_id, action, options) {
       send_json('booking_' + options.booking_id);
       submit_json.model.table_id = model_id;
     } else {
+      // click on a table from main view
       submit_json = {model:{table_id:model_id}};
       items_json = {};
-      $.ajax({ type: 'GET', url: '/tables/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
+      get_table_show(model_id);
     }
     $('#orderform').show();
     $('#invoices').hide();
@@ -309,15 +309,16 @@ function send_queue(object_id) {
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
-        alert("TIMEOUT from server");
+        debug('TIMEOUT from server');
+        clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
       } else if (status == 'success') {
         clear_queue(object_id);
       } else if (status == 'error') {
-        debug('ERROR from server: ' + JSON.stringify(data));
-        clear_queue(object_id); // server is not really offline, so no offline behaviour.
+        alert('ERROR from server: ' + JSON.stringify(data));
+        clear_queue(object_id); // server is not really offline, so no resubmission.
       } else if (status == 'parsererror') {
-        debug('Parser error from server: ' + data);
-        clear_queue(object_id); // server is not really offline, so no offline behaviour.
+        alert('PARSER ERROR from server: ' + data);
+        clear_queue(object_id); // server is not really offline, so resubmission.
       }
     }
   });
@@ -835,7 +836,6 @@ function increment_item(d) {
 function decrement_item(d) {
   var i = items_json[d].c;
   var start_count = items_json[d].sc;
-  console.log(start_count);
   if ( i > 1 && ( permissions.decrement_items || i > start_count || ( ! items_json[d].hasOwnProperty('id') ) ) ) {
     i--;
     set_json('order', d, 'c', i)
@@ -878,7 +878,6 @@ function clone_item(d) {
 }
 
 function add_option_to_item(d, value, cat_id) {
-  console.log('called add_option with param ' + d);
   if (value != -1 && value != 0) {  // 0 is clear
     $('#options_div_' + d).slideUp();
     d = clone_item(d);
@@ -934,7 +933,6 @@ function render_options(options, d, cat_id) {
         var cid = cat_id;
         var o = object;
         button.on('click',function(){
-          console.log('executing add_option with param ' + d);
           add_option_to_item(d, o.s + '_' + o.id, cid);
         });
       })();
@@ -1031,27 +1029,46 @@ function manage_counters() {
     update_resources();
     counter_update_resources = timeout_update_resources;
   }
-
   if (counter_update_item_lists == 0) {
     update_item_lists();
     counter_update_item_lists = timeout_update_item_lists;
   }
-  
   if (counter_update_item_lists_vendor == 0) {
     update_item_lists_vendor();
     counter_update_item_lists_vendor = timeout_update_item_lists_vendor;
   }
-
   if (counter_update_tables == 0) {
     update_tables();
     counter_update_tables = timeout_update_tables;
   }
-
   if (counter_refresh_queue == 0) {
     display_queue();
     counter_refresh_queue = timeout_refresh_queue;
   }
   return 0;
+}
+
+function get_table_show(table_id) {
+  $.ajax({
+    type: 'GET',
+    url: '/tables/' + table_id,
+    timeout: 5000,
+    complete: function(data,status) {
+      if (status == 'timeout') {
+        debug('TIMEOUT from server');
+        // Network latency is too great or Server overloaded. re-attempting submission.
+        window.setTimeout(function() { get_table_show(table_id) }, 1000);
+      } else if (status == 'success') {
+        debug('success');
+      } else if (status == 'error') {
+        debug('ERROR from server: ' + JSON.stringify(data));
+        // No network connection. re-attempting submission.
+        window.setTimeout(function() { get_table_show(table_id) }, 1000);
+      } else if (status == 'parsererror') {
+        debug('PARSER ERROR from server: ' + data);
+      }
+    }
+  }); //the JS response repopulates items_json and renders items_json
 }
 
 function update_tables(){
