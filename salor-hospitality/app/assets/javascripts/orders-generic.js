@@ -131,7 +131,7 @@ function route(target, model_id, action, options) {
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      alert('Offline mode. Fetching items from queue');
+      debug('Offline mode. Fetching items from queue');
       $('#order_cancel_button').hide();
       submit_json = submit_json_queue['table_' + model_id];
       items_json = items_json_queue['table_' + model_id];
@@ -309,16 +309,24 @@ function send_queue(object_id) {
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
-        debug('TIMEOUT from server');
+        debug('send_queue: TIMEOUT');
+        alert('Server Timeout.');
         clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
       } else if (status == 'success') {
         clear_queue(object_id);
       } else if (status == 'error') {
-        alert('ERROR from server: ' + JSON.stringify(data));
-        clear_queue(object_id); // server is not really offline, so no resubmission.
+        switch(data.readyState) {
+          case 0:
+            debug('send_queue: No network connection. Re-attempting submission.');
+            window.setTimeout(function() { send_queue(object_id) }, 5000);
+            break;
+          case 4:
+            alert('send_queue: ' + parse_rails_error_message(data.responseText));
+            break;
+        }
       } else if (status == 'parsererror') {
-        alert('PARSER ERROR from server: ' + data);
-        clear_queue(object_id); // server is not really offline, so resubmission.
+        debug('send_queue: parser error: ' + data);
+        clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
       }
     }
   });
@@ -695,6 +703,23 @@ function update_order_from_invoice_form(data) {
   });
 }
 
+function update_item_from_invoice_form(data) {
+  item_count_td = $('#' + data.order_id + '_' + data.id + '_count');
+  var count = parseInt(item_count_td.html());
+  $('#subtotal_' + data.order_id).html(i18n.currency_unit + '--' + i18n.decimal_separator + '--');
+  $('#change_' + data.order_id).html(i18n.currency_unit + '--' + i18n.decimal_separator + '--');
+  if (count > 0) {
+    count -= 1;
+    item_count_td.html(count);
+    $.ajax({
+      type: 'put',
+      url: '/items/' + data.id,
+      data: data,
+      timeout: 5000
+    });
+  }
+}
+
 function update_order_from_refund_form(data) {
   data['currentview'] = 'refund';
   $.ajax({
@@ -1055,17 +1080,22 @@ function get_table_show(table_id) {
     timeout: 5000,
     complete: function(data,status) {
       if (status == 'timeout') {
-        debug('TIMEOUT from server');
-        // Network latency is too great or Server overloaded. re-attempting submission.
+        debug('get_table_show: TIMEOUT');
         window.setTimeout(function() { get_table_show(table_id) }, 1000);
       } else if (status == 'success') {
-        debug('success');
+        debug('get_table_show: success');
       } else if (status == 'error') {
-        debug('ERROR from server: ' + JSON.stringify(data));
-        // No network connection. re-attempting submission.
-        window.setTimeout(function() { get_table_show(table_id) }, 1000);
+        switch(data.readyState) {
+          case 0:
+            debug('get_table_show: No network connection. Re-attempting submission.');
+            window.setTimeout(function() { get_table_show(table_id) }, 5000);
+            break;
+          case 4:
+            alert('get_table_show: ' + parse_rails_error_message(data.responseText));
+            break;
+        }
       } else if (status == 'parsererror') {
-        debug('PARSER ERROR from server: ' + data);
+        debug('get_table_show: parser error: ' + data);
       }
     }
   }); //the JS response repopulates items_json and renders items_json
@@ -1363,4 +1393,14 @@ function item_list_reset(id, scope) {
     }
   })
 
+}
+
+function parse_rails_error_message(raw_message) {
+  var start1 = raw_message.indexOf('<pre>');
+  var end1 = raw_message.indexOf('</pre>');
+  var start2 = raw_message.indexOf('<pre><code>');
+  var end2 = raw_message.indexOf('</code></pre>');
+  var errormessage1 = raw_message.substring(start1,end1).replace(/<.*?>/g, '');
+  var errormessage2 = raw_message.substring(start2,end2).replace(/<.*?>/g, '');
+  return errormessage1 + "\n\n" + errormessage2;
 }

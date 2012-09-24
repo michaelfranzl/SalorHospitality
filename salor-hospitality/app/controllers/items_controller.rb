@@ -21,8 +21,22 @@ class ItemsController < ApplicationController
   #We'll use update for splitting of items into separate orders
   def update
     @item = get_model
-    @item.split if @item
-    prepare_objects_for_invoice
+    case params[:jsaction]
+    when 'split'
+      @item.split if @item
+      @order = @item.order
+      prepare_objects_for_invoice
+      render :update and return
+    when 'rotate_tax'
+      tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
+      current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
+      current_tax_id_index = tax_ids.index current_item_tax.id
+      next_tax_id = tax_ids.rotate[current_tax_id_index]
+      next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
+      @item.calculate_taxes([next_tax])
+      render :rotate_tax and return
+    end
+    render :nothing => true
   end
 
   # We'll use edit for separation of items in the refund form
@@ -37,17 +51,6 @@ class ItemsController < ApplicationController
     item.refund(@current_user)
     @order = item.order
     render 'edit'
-  end
-
-  def rotate_tax
-    @item = get_model
-    tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
-    current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
-    current_tax_id_index = tax_ids.index current_item_tax.id
-    next_tax_id = tax_ids.rotate[current_tax_id_index]
-    next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
-    @item.update_attribute :taxes, {next_tax.id => {:percent => next_tax.percent, :sum => (@item.sum * (next_tax.percent/100.0).round(2))}}
-    @item.reload # re-read is necessary
   end
   
   def list

@@ -14,28 +14,27 @@
 
 
 
-  = form_for invoice_form, :as => :order, :url => { :controller => :orders, :action => :update, :id => oid }, :remote => true, :html => { :method => 'put', :id => "invoice_form_#{ oid }" } do |order_form|
-    - if !invoice_form.finished
-      - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
-      - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
-      - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
-        %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
+  - if !invoice_form.finished
+    - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
+    - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
+    - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
+      %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
 
-      %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
+    %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
-      - if session[:display_tax_colors]
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
-          - if invoice_form.tax.nil?
-            %option
-          = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
-      - elsif @current_user.role.permissions.include? 'assign_cost_center'
-        %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+    - if session[:display_tax_colors]
+      %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
+        - if invoice_form.tax.nil?
           %option
-          = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-      - if @current_user.role.permissions.include? 'assign_order_to_booking'
-        %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
-          %option
-          = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
+        = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
+    - elsif @current_user.role.permissions.include? 'assign_cost_center'
+      %select#cost_center_and_tax_for_invoice{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
+        %option
+        = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
+    - if @current_user.role.permissions.include? 'assign_order_to_booking'
+      %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
+        %option
+        = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
@@ -48,19 +47,19 @@
       - color = tax.color
       - letter = tax.letter
       %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? color : '' }" }
-        %td.count= session[:display_tax_colors] ? letter : item.count
+        %td.count{:id => "#{oid}_#{item.id}_count"}= session[:display_tax_colors] ? letter : item.count
         %td.label{ :id => "item#{item.id}"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
-            - path = session[:display_tax_colors] ? "/items/rotate_tax/#{ item.id }" : item_path(item.id)
+            - jsaction = session[:display_tax_colors] ? "rotate_tax" : "split"
             - linktitle = session[:display_tax_colors] ? t('.switch_tax_for_this_item') : t('.split_this_item')
             - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
             - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
             - optionsprices = item.options.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
             - label = raw "%20.20s%s" % [label, optionslabel]
             - if @current_user.role.permissions.include? 'split_items' or session[:display_tax_colors]
-              = link_to raw(label), path, :method => :put, :remote => true, :class => 'link', :id => item.id, :title => linktitle
+              %div.invoice_item{ :title => linktitle, :id => item.id, :onclick => "update_item_from_invoice_form({id:#{item.id},jsaction:'#{jsaction}',order_id:#{oid}})"}= raw(label)
             - else
               = raw(label)
         %td.price
@@ -70,7 +69,7 @@
 
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
-        %span.subtotal= number_to_currency invoice_form.sum
+        %span.subtotal{:id => "subtotal_#{ oid }"}= number_to_currency invoice_form.sum
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
         %span.subtotal= t '.change_money'

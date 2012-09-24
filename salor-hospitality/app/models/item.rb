@@ -101,18 +101,23 @@ class Item < ActiveRecord::Base
       self.taxes = {}
     else
       self.sum = full_price.round(2)
-      self.taxes = {}
-      self.article.taxes.each do |tax|
-        tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
-        gro = (self.sum).round(2)
-        net = (gro - tax_sum).round(2)
-        self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
-        tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
-        if tax_item
-          tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
-        else
-          TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
-        end
+      self.calculate_taxes(self.article.taxes)
+    end
+    save
+  end
+  
+  def calculate_taxes(tax_array)
+    self.taxes = {}
+    tax_array.each do |tax|
+      tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
+      gro = (self.sum).round(2)
+      net = (gro - tax_sum).round(2)
+      self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
+      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+      if tax_item
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
+      else
+        TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
     end
     save
