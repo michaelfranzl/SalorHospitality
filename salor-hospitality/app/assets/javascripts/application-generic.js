@@ -16,7 +16,20 @@ var _keys_down = {tab: false,shift: false, ctrl: false, alt: false, f2: false};
 
 var report = {functions:{}, variables:{}};
 
+var audio_enabled_count = 0;
+
+function enable_audio() {
+  if (audio_enabled_count < 2) {
+  document.getElementById('audio').load();
+  debug('enable_audio called ' + audio_enabled_count);
+  audio_enabled_count += 1;
+  
+  }
+  
+}
+
 $(function(){
+  enable_audio();
   if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
     $('#main').html('');
     create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
@@ -63,6 +76,9 @@ $(function(){
   });
 })
 
+function alert_audio() {
+  document.getElementById('audio').play();
+}
 
 /*
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.

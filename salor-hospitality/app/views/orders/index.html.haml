@@ -3,7 +3,7 @@
 
 - unless workstation?
   #areas= render 'areas'
-#tables= render @tables
+#tables{ :ontouchstart => "javascript:enable_audio();"}= render @tables
 #functions
   #functions_header_index= render 'functions_header_index' if workstation?
   #functions_header_order_form{ :style => 'display: none;' }= render 'functions_header_order_form'

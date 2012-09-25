@@ -30,16 +30,16 @@ var submit_json_queue = {};
 var customers_json = {};
 
 var timeout_update_tables = 20;
-var timeout_update_item_lists = 60;
-var timeout_update_item_lists_vendor = 60;
+var timeout_update_item_lists = 6;
+var timeout_update_item_lists_vendor = 6;
 var timeout_update_resources = 180;
 var timeout_refresh_queue = 5;
 var timeout_split_item = 1;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
-var counter_update_item_lists = -1;
-var counter_update_item_lists_vendor = 3;
+var counter_update_item_lists = 5;
+var counter_update_item_lists_vendor = -1;
 var counter_refresh_queue = timeout_refresh_queue;
 var counter_split_item = -1;
 /* ======================================================*/
@@ -1187,6 +1187,7 @@ function update_item_lists() {
       data: {type:'user'},
       success: function(data) {
         resources.notifications_user = data;
+        notification_alerts();
         if (permissions.see_item_notifications_preparation) render_item_list('preparation');
         if (permissions.see_item_notifications_delivery) render_item_list('delivery_vendor');
       },
@@ -1204,6 +1205,7 @@ function update_item_lists_vendor() {
       success: function(data) {
         resources.notifications_vendor = data;
         resources.notifications_user = data;
+        notification_alerts();
         if (permissions.see_item_notifications_preparation) render_item_list_vendor('preparation');
         if (permissions.see_item_notifications_delivery) render_item_list_vendor('delivery');
         if (permissions.see_item_notifications_preparation) render_item_list('preparation');
@@ -1212,6 +1214,18 @@ function update_item_lists_vendor() {
       timeout: 2000 
     });
   } 
+}
+
+function notification_alerts() {
+  var delivery_notification_count = Object.keys(resources.notifications_user.delivery).length;
+  var prepraration_notification_count = Object.keys(resources.notifications_user.preparation).length;
+  var total_count = delivery_notification_count + prepraration_notification_count;
+  if (total_count > 0) {
+    $('.items_notifications_button').html(total_count);
+    $('#mobile_last_invoices_button').html(total_count);
+    //debug('beep');
+    alert_audio();
+  }
 }
 
 function change_item_status(id,status) {
@@ -1421,8 +1435,8 @@ function item_list_increment(id, scope) {
       success: function() {
         increment_button.css('background-color','#3a4d3a');
         increment_button.effect('highlight');
-        counter_update_item_lists = 2;
-        counter_update_item_lists_vendor = 3;
+        counter_update_item_lists = 4;
+        counter_update_item_lists_vendor = 5;
       },
       error: function() {
         increment_button.css('background-color','#74101B');
