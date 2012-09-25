@@ -91,9 +91,12 @@ class VendorsController < ApplicationController
       :delete_items => @current_user.role.permissions.include?("delete_items"),
       :decrement_items => @current_user.role.permissions.include?("decrement_items"),
       :item_scribe => @current_user.role.permissions.include?("item_scribe"),
-      :see_item_notifications_delivery => @current_user.role.permissions.include?("see_item_notifications_delivery"),
-      :see_item_notifications_preparation => @current_user.role.permissions.include?("see_item_notifications_preparation"),
-      :see_item_notifications_vendor => @current_user.role.permissions.include?("see_item_notifications_vendor"),
+      :see_item_notifications_user_preparation => @current_user.role.permissions.include?("see_item_notifications_user_preparation"),
+      :see_item_notifications_user_delivery => @current_user.role.permissions.include?("see_item_notifications_user_delivery"),
+      :see_item_notifications_vendor_preparation => @current_user.role.permissions.include?("see_item_notifications_vendor_preparation"),
+      :see_item_notifications_vendor_delivery => @current_user.role.permissions.include?("see_item_notifications_vendor_delivery"),
+      :see_item_notifications_static => @current_user.role.permissions.include?("see_item_notifications_static"),
+      :see_item_notifications_user_delivery => @current_user.role.permissions.include?("see_item_notifications_user_delivery"),
       :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods"),
       :manage_customers => @current_user.role.permissions.include?("manage_customers")
     }

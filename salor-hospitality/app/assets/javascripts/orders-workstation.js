@@ -125,12 +125,11 @@ function catch_keypress(d,type) {
 }
 
 function display_items_notifications() {
-  $("#items_notifications").fadeIn();
+  $("#items_notifications_interactive").fadeIn();
   counter_update_item_lists = 1;
-  counter_update_item_lists_vendor = 1;
 }
 
 function hide_items_notifications() {
-  $("#items_notifications").fadeOut();
-  counter_update_item_lists = -1;
+  $("#items_notifications_interactive").fadeOut();
+  counter_update_item_lists = timeout_update_item_lists;
 }

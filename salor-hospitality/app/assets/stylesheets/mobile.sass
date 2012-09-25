@@ -346,46 +346,45 @@ div.unsettled_orders
 a.clear_button
   :margin-top 0px
 
-  
-div#items_notifications_vendor
+div#items_notifications_static
   :display none
   
-div#items_notifications
-  :display none
+div#items_notifications_interactive
   :vertical-align top
-  #preparation_list,
-  #delivery_list
+  #list_interactive_preparation,
+  #list_interactive_delivery,
+  #list_static_preparation,
+  #list_static_delivery
     :display inline-block
     :vertical-align top
- 
-div.item_list
-  :width 310px
-  :vertical-align top
-  :display inline-block
-  .unconfirmed
-    :cursor pointer
-  .confirmed,
-  .unconfirmed
+  div.item_list
+    :width 310px
     :vertical-align top
-    :border 1px solid #777
-    :margin 5px
-    :min-height 30px
-    :-moz-border-radius 5px
-    :-webkit-border-radius 5px
-    :padding 3px
-    .increment, .reference_count, .update
+    :display inline-block
+    .unconfirmed
       :cursor pointer
-      :text-align center
-      :font-size 150%
-      :border-top 2px solid #555
-      :border-left 2px solid #555
-      :border-right 2px solid #222
-      :border-bottom 2px solid #222
-    .increment, .reference_count
-      :width 30px
-    .update
-      :font-size 95%
-      :text-align left
+    .confirmed,
+    .unconfirmed
+      :vertical-align top
+      :border 1px solid #777
+      :margin 5px
+      :min-height 30px
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      :padding 3px
+      .increment, .reference_count, .update
+        :cursor pointer
+        :text-align center
+        :font-size 150%
+        :border-top 2px solid #555
+        :border-left 2px solid #555
+        :border-right 2px solid #222
+        :border-bottom 2px solid #222
+      .increment, .reference_count
+        :width 30px
+      .update
+        :font-size 95%
+        :text-align left
 
 input#customer_search_input
   :width 90%

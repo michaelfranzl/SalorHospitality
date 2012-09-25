@@ -3,29 +3,31 @@
 
 - unless workstation?
   #areas= render 'areas'
-#tables{ :ontouchstart => "javascript:enable_audio();"}= render @tables
+#tables= render @tables
 #functions
   #functions_header_index= render(:partial => 'functions_header_index') if workstation?
   #functions_header_order_form{ :style => 'display: none;' }= render( :partial => 'functions_header_order_form', :locals => {:position => 'header'})
   #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
 #orderform{ :style => 'display: none;' }= render 'order_form'
 
-- if permit('see_item_notifications_vendor')
-  #items_notifications_vendor
-    - if permit('see_item_notifications_preparation')
-      %h3= t '.preparation_list'
-      #list_vendor_preparation
-    - if permit('see_item_notifications_delivery')
-      %h3= t '.delivery_list'
-      #list_vendor_delivery
-#items_notifications
-  - if permit('see_item_notifications_preparation')
+
+#items_notifications_interactive
+  - if permit('see_item_notifications_user_preparation') or permit('see_item_notifications_vendor_preparation')
     %h3= t '.preparation_list'
-    #list_preparation
-  - if permit('see_item_notifications_delivery')
+    #list_interactive_preparation
+  - if permit('see_item_notifications_user_delivery') or permit('see_item_notifications_vendor_delivery')
     %h3= t '.delivery_list'
-    #list_delivery
+    #list_interactive_delivery
   %span.done{ :onclick => "hide_items_notifications()" }
+  
+- if workstation? && permit('see_item_notifications_static')
+  #items_notifications_static
+    - if permit('see_item_notifications_user_preparation') or permit('see_item_notifications_vendor_preparation')
+      %h3= t '.preparation_list'
+      #list_static_preparation
+    - if permit('see_item_notifications_user_delivery') or permit('see_item_notifications_vendor_delivery')
+      %h3= t '.delivery_list'
+      #list_static_delivery
 
 #invoices
 #functions_footer{ :style => 'display: none;' }= render(:partial => 'functions_header_order_form', :locals => {:position => 'footer' }) if mobile?

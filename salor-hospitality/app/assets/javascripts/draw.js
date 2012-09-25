@@ -19,7 +19,7 @@ var touchdevice = 'ontouchstart' in window;
 
 function init_scribe(d) {
   $('#item_configuration_' + d).hide();
-  if ( ! item_changeable(items_json[d].c, items_json[d].sc) ) {
+  if ( ! item_changeable(d) ) {
     alert('+1');
     return
   }
@@ -132,15 +132,15 @@ function show_canvas(canvas) {
 function hide_canvas() {
   stop_scrolling = false;
   d = canvas.getAttribute('d');
-  if (settings.mobile == true) {
+  if (settings.mobile) {
     $('#orderform').show();
     $('#functions').show();
     $('#functions_footer').show();
     $('h2').show();
-    scroll_to('#item_' + d, 25);
   }
   $(canvas).remove();
   $('#draw_controls').hide();
+  setTimeout(function(){scroll_to('#item_' + d, 25);}, 100); // timeout is needed for iPod 3rd Generation
 }
 
 function submit_drawing() {

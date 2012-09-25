@@ -56,11 +56,9 @@ class ItemsController < ApplicationController
     items = {}
     items_json_string = {}
     if (params[:type] == 'vendor')
-      render :nothing => true and return unless @current_user.role.permissions.include?('see_item_notifications_vendor')
       items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > preparation_count OR preparation_count IS NULL)")
       items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
     elsif params[:type] == 'user' 
-      render :nothing => true and return unless (@current_user.role.permissions.include?('see_item_notifications_delivery') or @current_user.role.permissions.include?('see_item_notifications_preparation'))
       items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
       items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
     end

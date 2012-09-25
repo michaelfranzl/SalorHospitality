@@ -1,5 +1,6 @@
 counter_update_tables = -1;
 counter_update_item_lists = 2;
+counter_update_item_lists_vendor = 3;
 
 $('#invoices').html('');
 
@@ -10,8 +11,9 @@ $('#invoices').html('');
 $('#invoices').append('<%= escape_javascript render(:partial => 'refund_form', :collection => @unsettled_orders) %>');
 
 $('#invoices').show();
-$('#items_notifications').show();
-$('#items_notifications_vendor').hide();
+
+$('#items_notifications_interactive').show();
+
 $('#orderform').hide();
 $('#tables').hide();
 $('#areas').hide();

@@ -908,7 +908,7 @@ div.optionsselect,
 div#tablesselect,
 div.comment_for_item,
 div.price_for_item,
-div#items_notifications,
+div#items_notifications_interactive,
 div#note_for_order
   :display none
   :z-index 100
@@ -1362,7 +1362,7 @@ img.asset
   :-webkit-border-radius 10px
 
 
-div#items_notifications_vendor
+div#items_notifications_static
   :position absolute
   :right 75px
   :top -20px
@@ -1377,50 +1377,49 @@ div#items_notifications_vendor
     :-moz-border-radius 3px
     :-webkit-border-radius 3px
 
-div#items_notifications
+div#items_notifications_interactive
   :display none
   :width 100%
   :height 200%
   :top -110px
   :left -20px
   :vertical-align top
-  #list_preparation,
-  #list_delivery
+  #list_interactive_preparation,
+  #list_interactive_delivery
     :font-size 50%
     :display inline-block
     :vertical-align top
- 
-div.item_list
-  :vertical-align top
-  :display inline-block
-  .unconfirmed
-    :cursor pointer
-  .confirmed,
-  .unconfirmed
+  div.item_list
     :vertical-align top
-    :border 1px solid #777
     :display inline-block
-    :margin 5px
-    :min-width 100px
-    :min-height 30px
-    :-moz-border-radius 5px
-    :-webkit-border-radius 5px
-    :padding 3px
-    .increment, .reference_count, .update
+    .unconfirmed
       :cursor pointer
-      :text-align center
-      :font-size 130%
-      :border-top 2px solid #555
-      :border-left 2px solid #555
-      :border-right 2px solid #222
-      :border-bottom 2px solid #222
-    .increment, .reference_count
-      :width 30px
-    .update
-      :font-size 80%
-      //:width 100px
-      :overflow hidden
-      :text-align left
+    .confirmed,
+    .unconfirmed
+      :vertical-align top
+      :border 1px solid #777
+      :display inline-block
+      :margin 5px
+      :min-width 100px
+      :min-height 30px
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+      :padding 3px
+      .increment, .reference_count, .update
+        :cursor pointer
+        :text-align center
+        :font-size 130%
+        :border-top 2px solid #555
+        :border-left 2px solid #555
+        :border-right 2px solid #222
+        :border-bottom 2px solid #222
+      .increment, .reference_count
+        :width 30px
+      .update
+        :font-size 80%
+        //:width 100px
+        :overflow hidden
+        :text-align left
   
 div.partial_toolbox
   :padding 10px

@@ -584,10 +584,11 @@ gn:
       new_role: Neue Rolle
       permissions: Berechtigungen
       see_debug: Fehlerbehebungs-Ausgabe anzeigen
-      see_item_notifications_delivery: Verkaufs-Benachrichtigungen persönlich Lieferung
-      see_item_notifications_preparation: Verkaufs-Benachrichtigungen persönlich Zubereitung
-      see_item_notifications_mainscreen: Verkaufs-Benachrichtigungen auf Hauptbildschirm
-      see_item_notifications_vendor: Verkaufs-Benachrichtigungen Betrieb
+      see_item_notifications_user_preparation: Bestell-Benachrichtigungen persönlich
+      see_item_notifications_user_delivery: Auslieferungs-Benachrichtigungen persönlich
+      see_item_notifications_vendor_preparation: Bestell-Benachrichtigungen global
+      see_item_notifications_vendor_delivery: Auslieferungs-Benachrichtigungen global
+      see_item_notifications_static: Benachrichtigungs-Zusammenfassung auf Hauptbildschirm
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
