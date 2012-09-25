@@ -18,12 +18,13 @@ var y = 0;
 var touchdevice = 'ontouchstart' in window;
 
 function init_scribe(d) {
+  $('#item_configuration_' + d).hide();
   if ( ! item_changeable(items_json[d].c, items_json[d].sc) ) {
-    return;
+    alert('+1');
+    return
   }
 
   d = clone_item(d);
-  $('#item_configuration_' + d).hide();
 
   canvas = document.createElement('canvas');
   //canvas.setAttribute('id', 'scribearea');
@@ -122,8 +123,8 @@ function show_canvas(canvas) {
     $('#functions').hide();
     $('#functions_footer').hide();
     $('h2').hide();
-    window.scrollTo(0,0);
   }
+  window.scrollTo(0,0);
   $('#draw_controls').show();
   $('#draw_controls').prepend(canvas);
 }
@@ -131,7 +132,7 @@ function show_canvas(canvas) {
 function hide_canvas() {
   stop_scrolling = false;
   d = canvas.getAttribute('d');
-  if (settings.mobile) {
+  if (settings.mobile == true) {
     $('#orderform').show();
     $('#functions').show();
     $('#functions_footer').show();

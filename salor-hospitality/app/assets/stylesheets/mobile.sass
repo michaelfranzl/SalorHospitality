@@ -228,11 +228,11 @@ input#order_sum
 table#itemstable
   :width 100%
   td
-    :padding 5px
+    :padding 4px 1px
 
 td.item_count
   :cursor pointer
-  :width 20%
+  :width 15%
   :text-align center
   :font-size 150%
   :font-weight bold
@@ -241,9 +241,11 @@ td.item_label
   :cursor pointer
   :background-color $articlelistbgcolor
   :min-height 40%
+  :font-size 85%
+  :padding 0px
 
 td.item_minus
-  :width 20%
+  :width 15%
   :cursor pointer
   :text-align center
   :background-image url(button_mobile_minus.png)
@@ -252,7 +254,7 @@ td.item_minus
 
 td.item_options
   :text-aclign center
-  :width 20%
+  :width 15%
   select
     :width 41px
     :height 38px
@@ -384,3 +386,8 @@ div.item_list
     .update
       :font-size 95%
       :text-align left
+
+input#customer_search_input
+  :width 90%
+  :font-size 150%
+  :border none

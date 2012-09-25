@@ -30,8 +30,8 @@ var submit_json_queue = {};
 var customers_json = {};
 
 var timeout_update_tables = 20;
-var timeout_update_item_lists = 6;
-var timeout_update_item_lists_vendor = 6;
+var timeout_update_item_lists = 60;
+var timeout_update_item_lists_vendor = 60;
 var timeout_update_resources = 180;
 var timeout_refresh_queue = 5;
 var timeout_split_item = 1;
@@ -67,9 +67,9 @@ $(function(){
 
 function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
-  scroll_to($('#container'),20);
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
+    scroll_to($('#container'),20);
     submit_json.target = 'tables';
     $('#orderform').hide();
     $('#invoices').hide();
@@ -106,11 +106,11 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     update_tables();
-    counter_update_item_lists_vendor = 2;
     submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
+    scroll_to($('#container'),20);
     submit_json.target = 'table';
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
@@ -210,6 +210,7 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
+    scroll_to($('#container'),20);
     submit_json.target = 'rooms';
     // See bookings.js show_rooms_interface() I did this because the showing/hiding, and doing of stuff needs
     // to be in its own function so that it can be attached to click handlers
@@ -238,6 +239,7 @@ function route(target, model_id, action, options) {
 
   // ========== NEW BOOKING ===============
   } else if ( target == 'room' ) {
+    scroll_to($('#container'),20);
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
@@ -255,6 +257,7 @@ function route(target, model_id, action, options) {
 
   // ========== EXISTING BOOKING ===============
   } else if (target == 'booking') {
+    scroll_to($('#container'),20);
     $('#rooms').hide();
     $('#areas').hide();
     $('#tables').hide();
@@ -281,6 +284,7 @@ function route(target, model_id, action, options) {
   // ========== REDIRECT ===============
   // these cases don't need static view switching/rendering. the rendering is enterely done by the server.
   } else if (target == 'redirect') {
+    scroll_to($('#container'),20);
     
     if (action == 'booking_interim_invoice') {
       submit_json.jsaction = 'send_and_redirect_to_invoice';
@@ -517,9 +521,9 @@ function add_customer_button(qcontainer,customer,active) {
     abutton.on('click', function() {
       highlight_border(element);
       if (settings.workstation) {
-        $('.quantities').slideUp();
+        $('#customers_list').remove('');
       } else {
-        $('.quantities').html('');
+        $('#customers_list').remove('');
       }
     });
   })();
@@ -541,11 +545,15 @@ function onCustomerSearchAccept(){
 }
 
 function show_customers(append_to) {
+  if ($('#customers_list').length == 1) {
+    $('#customers_list').remove(); //this toggles
+    return
+  }
   $('#articles').html('');
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
   var search_box = $('<input id="customer_search_input" value="" />');
-  search_box.change(onCustomerSearchAccept);
+  search_box.on('keyup', onCustomerSearchAccept);
   if (settings.workstation) {
     search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
     search_box.click(function(){
@@ -898,6 +906,7 @@ function remove_payment_method_by_name(name) {
 }
 
 function increment_item(d) {
+  $('#item_configuration_' + d).remove();
   var count = items_json[d].c + 1;
   var start_count = items_json[d].sc;
   var object = items_json[d];
@@ -932,12 +941,14 @@ function decrement_item(d) {
   calculate_sum();
 }
 
-function item_changeable(count, start_count) {
+function item_changeable(d) {
+  var start_count = items_json[d].sc;
+  var count = items_json[d].c;
   return ( (typeof(start_count) == 'undefined') || count > start_count )
 }
 
-function permit_select_open(d, count, start_count) {
-  if ( item_changeable(count, start_count) ) {
+function permit_select_open(d) {
+  if ( item_changeable(d) ) {
     $('#options_select_' + d).attr('disabled',false);
   } else {
     $('#options_select_' + d).attr('disabled',true);
@@ -1066,21 +1077,25 @@ function display_configuration_of_item(d) {
     cell.attr('colspan',4);
     cell.addClass('item_configuration',4);
 
-    comment_button =  $(document.createElement('span'));
-    comment_button.addClass('item_comment');
-    comment_button.on('click', function(){ display_comment_popup_of_item(d); });
-    cell.append(comment_button);
+    if (item_changeable(d)) {
+      comment_button =  $(document.createElement('span'));
+      comment_button.addClass('item_comment');
+      comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+      cell.append(comment_button);
+    }
 
     price_button =  $(document.createElement('span'));
     price_button.addClass('item_price');
     price_button.on('click', function(){ display_price_popup_of_item(d); });
     cell.append(price_button);
 
-    if (permissions.item_scribe) {
-      scribe_button =  $(document.createElement('span'));
-      scribe_button.addClass('item_scribe');
-      scribe_button.on('click', function(){ init_scribe(d); });
-      cell.append(scribe_button);
+    if (item_changeable(d)) {
+      if (permissions.item_scribe) {
+        scribe_button =  $(document.createElement('span'));
+        scribe_button.addClass('item_scribe');
+        scribe_button.on('click', function(){ init_scribe(d); });
+        cell.append(scribe_button);
+      }
     }
 
     row.html(cell);

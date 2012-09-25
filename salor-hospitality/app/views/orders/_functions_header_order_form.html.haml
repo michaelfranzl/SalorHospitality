@@ -1,7 +1,7 @@
 - if workstation?
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
-%a.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
+%a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
 
 - if workstation?
   - if permit('counter_mode')
@@ -9,7 +9,7 @@
     %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish) }
 
 - if @current_user.role.permissions.include? 'finish_orders'
-  %a.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
+  %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
 
 - if @current_user.role.permissions.include?('move_order')
   - if workstation?
@@ -19,12 +19,14 @@
       %option{ :value => '', :selected => true }
       = options_from_collection_for_select(@current_user.tables.existing.order(:name), 'id', 'name')
 
-%a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
-  
-- if @current_user.role.permissions.include? 'cancel_all_items_in_active_order'
-  %a.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
-
+      
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
-- elsif mobile?
+- elsif mobile? and position == 'header'
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
+  
+- if position == 'header'
+  %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
+  
+- if @current_user.role.permissions.include?('cancel_all_items_in_active_order') and position == 'footer'
+  %a#order_clear_button.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }

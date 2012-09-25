@@ -43,16 +43,20 @@ $(function(){
 
 
 function display_comment_popup_of_item(d) {
-  if ( item_changeable(items_json[d].c, items_json[d].sc) ) {
+  $('#item_configuration_' + d).hide();
+  if ( item_changeable(d) ) {
     var old_comment = items_json[d].o;
     $('input#comment_for_item_' + d).val(old_comment);
     $('#comment_for_item_' + d).slideDown();
     $('#item_configuration_' + d).hide();
     $('input#comment_for_item_' + d).select();
+  } else {
+    alert('+1');
   }
 }
 
 function display_price_popup_of_item(d) {
+  $('#item_configuration_' + d).hide();
   var old_price = items_json[d].p;
   $('input#price_for_item_' + d).val(old_price);
   $('#price_for_item_' + d).slideDown();

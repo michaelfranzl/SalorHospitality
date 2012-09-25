@@ -9,15 +9,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function display_comment_popup_of_item(d) {
-  if ( item_changeable(items_json[d].c, items_json[d].sc) ) {
+  $('#item_configuration_' + d).hide();
+  if ( item_changeable(d) ) {
     var old_comment = items_json[d].o;
     var comment = prompt(i18n.enter_comment, old_comment);
     if ( comment == null ) { comment = old_comment };
     add_comment_to_item(d,comment);
+  } else {
+    alert('+1');
   }
 }
 
 function display_price_popup_of_item(d) {
+  $('#item_configuration_' + d).hide();
   var old_price = items_json[d].p;
   if (old_price == 0) { old_price = '' }
   var price = prompt(i18n.enter_price, old_price);
