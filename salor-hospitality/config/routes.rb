@@ -95,6 +95,7 @@ SalorHospitality::Application.routes.draw do
   match 'vendors/print' => 'vendors#print'
   match 'vendors/report' => 'vendors#report'
   match 'vendors/identify_printers' => 'vendors#identify_printers'
+  match 'users/unlock_ip' => 'users#unlock_ip'
   
 
 
@@ -102,13 +103,14 @@ SalorHospitality::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :users, :roles, :presentations, :payment_methods
+  resources :cost_centers, :taxes, :roles, :presentations, :payment_methods, :users
   resources :surcharges
   resources :rooms
   resources :room_types
   resources :seasons
   resources :guest_types
   resources :room_prices
+
 
   resources :reports do
     collection do
@@ -233,6 +235,6 @@ SalorHospitality::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 
-  #match '*path' => 'sessions#catcher'
+  match '*path' => 'session#catcher'
 
 end

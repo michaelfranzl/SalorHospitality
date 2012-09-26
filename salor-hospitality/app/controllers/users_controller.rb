@@ -69,4 +69,10 @@ class UsersController < ApplicationController
     @user.update_attribute :hidden, true
     redirect_to users_path
   end
+  
+  def unlock_ip
+    user = get_model
+    user.update_attribute :current_ip, nil
+    render :nothing => true
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903095852) do
+ActiveRecord::Schema.define(:version => 20120926063112) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -764,6 +764,10 @@ ActiveRecord::Schema.define(:version => 20120903095852) do
     t.boolean  "automatic_printing"
     t.boolean  "onscreen_keyboard_enabled", :default => true
     t.string   "salt"
+    t.string   "current_ip"
+    t.datetime "last_active_at"
+    t.datetime "last_login_at"
+    t.datetime "last_logout_at"
   end
 
   add_index "users", ["role_id"], :name => "index_users_on_role_id"

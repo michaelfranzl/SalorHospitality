@@ -47,7 +47,7 @@
 
 
   %body
-    %audio#audio{ :src=>"alert.wav" }
+    %audio#audio{ :src=>"/alert.wav" }
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #rooms_container
     #container

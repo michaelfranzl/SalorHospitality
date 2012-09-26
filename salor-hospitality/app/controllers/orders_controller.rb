@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
     @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @categories = @current_vendor.categories.positioned
     @users = User.accessible_by(@current_user).active
-    session[:admin_interface] = false
   end
 
   def show
@@ -241,13 +240,13 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)
+    @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)
     if @current_user.role.permissions.include? 'finish_all_settlements'
-      @users = @current_vendor.users
+      @permitted_users = @current_vendor.users
     elsif @current_user.role.permissions.include? 'finish_own_settlement'
-      @users = [@current_user]
+      @permitted_users = [@current_user]
     else
-      @users = []
+      @permitted_users = []
     end
   end
 

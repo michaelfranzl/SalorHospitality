@@ -13,7 +13,6 @@
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
       = javascript_include_tag 'jquery.keyboard.config.js'
-    = javascript_include_tag 'application-generic.js'
     
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
 
@@ -29,8 +28,10 @@
       #header
         = image_tag 'logo-small.png', :id => 'logo'
       #flash
-        #flash_notice= flash[:notice]
-        #flash_error= flash[:error]
+        - if flash[:notice]
+          #flash_notice= flash[:notice]
+        - if flash[:error]
+          #flash_error= flash[:error]
       #main= yield
       #footer
       #copyright
@@ -40,3 +41,8 @@
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
+:javascript
+  if ($('#flash').children().size() > 0) {
+    $('#flash').fadeIn(1000);
+    setTimeout(function(){ $('#flash').fadeOut(1000); }, 5000);
+  }

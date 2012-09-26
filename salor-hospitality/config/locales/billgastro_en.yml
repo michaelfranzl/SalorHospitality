@@ -419,6 +419,7 @@ en:
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Move order to different table
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.

@@ -1,25 +1,24 @@
 counter_update_tables = -1;
 counter_update_item_lists = 2;
-counter_update_item_lists_vendor = 3;
 
 $('#invoices').html('');
 
-<% @users.each do |u| %>
+<% @permitted_users.each do |u| %>
   $('#invoices').append("<%= escape_javascript render(:partial => 'settlements/settlement', :locals => { :u => u } ) %>");
 <% end %>
 
-$('#invoices').append('<%= escape_javascript render(:partial => 'refund_form', :collection => @unsettled_orders) %>');
-
-$('#invoices').show();
-
-$('#items_notifications_interactive').show();
+$('#invoices').append('<%= escape_javascript render(:partial => 'refund_form', :collection => @recent_unsettled_orders) %>');
 
 $('#orderform').hide();
 $('#tables').hide();
 $('#areas').hide();
 $('#rooms').hide();
-
-$('#functions_header_invoice_form').show();
 $('#functions_header_order_form').hide();
 $('#functions_footer').hide();
 $('#functions_header_index').hide();
+//$('#functions_header_index').hide();
+
+$('#invoices').show();
+$('#items_notifications_interactive').show();
+$('#functions_header_last_invoices').show();
+

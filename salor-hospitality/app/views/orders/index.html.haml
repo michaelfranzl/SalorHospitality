@@ -6,6 +6,7 @@
 #tables= render @tables
 #functions
   #functions_header_index= render(:partial => 'functions_header_index') if workstation?
+  #functions_header_last_invoices= render(:partial => 'functions_header_last_invoices') if mobile?
   #functions_header_order_form{ :style => 'display: none;' }= render( :partial => 'functions_header_order_form', :locals => {:position => 'header'})
   #functions_header_invoice_form{ :style => 'display: none;' }= render 'functions_header_invoice_form'
 #orderform{ :style => 'display: none;' }= render 'order_form'

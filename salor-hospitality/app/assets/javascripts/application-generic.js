@@ -23,9 +23,7 @@ function enable_audio() {
   document.getElementById('audio').load();
   debug('enable_audio called ' + audio_enabled_count);
   audio_enabled_count += 1;
-  
   }
-  
 }
 
 $(function(){
@@ -436,3 +434,20 @@ function uri_attributes() {
   } 
     return query_string;
 };
+
+function unlock_user_ip(user_id) {
+  $.ajax({
+    url: '/users/unlock_ip',
+    data: {id:user_id}
+  });
+}
+
+/*
+window.onbeforeunload = submit_logout_notification;
+
+function submit_logout_notification() {
+  $.ajax({
+    url: 'xxx'
+  })
+}
+*/

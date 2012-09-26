@@ -10,10 +10,11 @@
 
 class SessionsController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :set_locale
+  skip_before_filter :fetch_logged_in_user, :set_locale, :except => :destroy
 
   def new
-    #@users = User.all
+    flash[:notice] = nil
+    flash[:error] = nil
     render :layout => 'login'
   end
 
@@ -27,21 +28,24 @@ class SessionsController < ApplicationController
     end
     
     if user
-      session[:user_id] = user.id
-      session[:company_id] = user.company.id
-      unless session[:vendor_id] and Vendor.find_by_id(session[:vendor_id]).company_id == user.company.id
-        session[:vendor_id] = user.vendors.existing.first.id
+      if user.current_ip.nil? or user.current_ip == request.ip
+        session[:user_id] = user.id
+        session[:company_id] = user.company.id
+        session[:vendor_id] = user.vendors.existing.first.id # unless session[:vendor_id] and Vendor.find_by_id(session[:vendor_id]).company_id == user.company.id
+        user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
+        I18n.locale = user.language
+        session[:admin_interface] = false
+        flash[:error] = nil
+        flash[:notice] = t('messages.hello_username', :name => user.login)
+        redirect_to orders_path and return
+      else
+        flash[:error] = t('messages.user_account_is_currently_locked')
+        flash[:notice] = nil
+        render :new, :layout => 'login' and return
       end
-      
-      I18n.locale = user.language
-      session[:admin_interface] = workstation? # admin panel per default on on workstation
-      flash[:error] = nil
-      flash[:notice] = t('messages.hello_username', :name => user.login)
-
-      redirect_to orders_path
     else
       flash[:error] = t :wrong_password
-      render :new, :layout => 'login'
+      render :new, :layout => 'login' and return
     end
   end
 
@@ -50,8 +54,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
     @current_user = session[:user_id] = nil
-    redirect_to '/session/new'
+    redirect_to '/'
   end
 
   def exception_test

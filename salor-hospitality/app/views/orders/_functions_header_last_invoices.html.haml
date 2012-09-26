@@ -1,0 +1,3 @@
+%a.iconbutton.next_button{ :onclick => "route('tables');", :title => t(:cancel_and_go_back) }
+%a.iconbutton.scrolldown_button{ :onclick => "scroll_to('footer')", :title => t(:scroll_down) }
+= button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
