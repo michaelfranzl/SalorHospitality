@@ -30,14 +30,14 @@ var submit_json_queue = {};
 var customers_json = {};
 
 var timeout_update_tables = 20;
-var timeout_update_item_lists = 5;
+var timeout_update_item_lists = 60;
 var timeout_update_resources = 180;
 var timeout_refresh_queue = 5;
 var timeout_split_item = 1;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
-var counter_update_item_lists = 5;
+var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
 var counter_split_item = -1;
 /* ======================================================*/
@@ -532,15 +532,15 @@ function add_customer_button(qcontainer,customer,active) {
   return qcontainer;
 }
 
-function onCustomerSearchAccept(){
-  if ($('#customer_search_input').val().length >= 3) {
-    var results = customer_search($('#customer_search_input').val());
-    if (results.length > 0) {
-      var qcont = $("#customers_list");
-      $('.customer-entry').remove();
-      for (var i in results) {
-        qcont = add_customer_button(qcont,results[i],false);
-      }
+function search_customers() {
+  var searchstring = $('#customer_search_input').val();
+  if (searchstring.length > 2) {
+    submit_json.model['customer_name'] = searchstring;
+    var results = customer_search(searchstring);
+    var qcont = $("#customers_list");
+    $('.customer-entry').remove();
+    for (var i in results) {
+      qcont = add_customer_button(qcont,results[i],false);
     }
   }
 }
@@ -554,9 +554,9 @@ function show_customers(append_to) {
   var qcontainer = $('<div id="customers_list"></div>');
   qcontainer.addClass('quantities');
   var search_box = $('<input id="customer_search_input" value="" />');
-  search_box.on('keyup', onCustomerSearchAccept);
+  search_box.on('keyup', search_customers);
   if (settings.workstation) {
-    search_box.keyboard( {openOn: '', accepted: onCustomerSearchAccept } );
+    search_box.keyboard( {openOn: '', accepted: search_customers } );
     search_box.click(function(){
       search_box.getkeyboard().reveal();
     });
@@ -1253,7 +1253,7 @@ function change_item_status(id,status) {
 function add_customers_button() {
   if(_get('customers.button_added')) return
   if(!permissions.manage_customers) return
-  opts = {id:'customers_category_button', handlers:{'mouseup':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
+  opts = {id:'customers_category_button', handlers:{'mousedown':function(){show_customers('#articles')}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
   add_category_button(i18n.customers, opts);
   _set('customers.button_added',true);
 }

@@ -32,6 +32,25 @@ class Order < ActiveRecord::Base
   validates_presence_of :user_id
 
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
+  
+  def customer_name
+    if self.customer then
+      return self.customer.full_name(true)
+    end
+    return ""
+  end
+
+  def customer_name=(name)
+    last,first = name.split(' ')
+    return if not last or not first
+    c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
+    if not c then
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+      self.vendor.update_cache
+    end
+    self.customer = c
+    self.save
+  end
 
   def set_nr
     if self.nr.nil?
@@ -40,11 +59,11 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user)
-    order = Order.new params[:model]
+    order = Order.new
     order.user = user
-    #order.cost_center = vendor.cost_centers.existing.active.first
     order.vendor = vendor
     order.company = vendor.company
+    order.update_attributes  params[:model]
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
       new_item.vendor = vendor
@@ -257,7 +276,6 @@ class Order < ActiveRecord::Base
 
   def escpos_tickets(printer_id)
     vendor = self.vendor
-
     if vendor.ticket_wide_font
       header_format_time_order = "%-14.14s #%5i\n"
       header_format_user_table = "%-12.12s %8s\n"

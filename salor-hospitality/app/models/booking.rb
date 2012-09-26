@@ -37,27 +37,29 @@ class Booking < ActiveRecord::Base
       }
   end
   
-  def customer_name
-    if self.customer then
-      return self.customer.full_name(true)
-    end
-    return ""
-  end
-  
   def set_nr
     if self.nr.nil?
       self.update_attribute :nr, self.vendor.get_unique_model_number('booking')
     end
   end
   
+  def customer_name
+    if self.customer then
+      return self.customer.full_name(true)
+    end
+    return ""
+  end
+
   def customer_name=(name)
-    last,first = name.split(',')
+    last,first = name.split(' ')
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
       c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+      self.vendor.update_cache
     end
     self.customer = c
+    self.save
   end
   
   def self.create_from_params(params, vendor, user)
