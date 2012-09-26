@@ -21,6 +21,7 @@ class Item < ActiveRecord::Base
   belongs_to :settlement
   belongs_to :cost_center
   has_many :tax_items
+  has_many :option_items
   has_and_belongs_to_many :options
   validates_presence_of :count, :article_id
 
@@ -90,11 +91,11 @@ class Item < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.price = price
+    #self.price = price
     #self.tax_percent = tax.percent
     #self.tax_id = self.tax.id if self.tax_id.nil?
     self.category_id = article.category.id
-    save
+    #save
     if self.refunded
       #self.tax_sum = 0
       self.sum = 0
@@ -113,14 +114,27 @@ class Item < ActiveRecord::Base
       gro = (self.sum).round(2)
       net = (gro - tax_sum).round(2)
       self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
+      
       tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+      
+      # TaxItem creation
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       else
-        TaxItem.create :vendor_id => self.vendor.id, :company_id => self.company.id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
+        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
     end
     save
+  end
+  
+
+  def update_option_items_from_ids(ids)
+    ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
+
+    ids.each do |i|
+      o = Option.find_by_id(i.to_i)
+      option_item = OptionItem.create :vendor_id => o.vendor_id, :company_id => o.company_id, :option_id => o.id, :item_id => self.id, :order_id => self.order_id, :price => o.price, :name => o.name, :count => self.count, :sum => self.count * self.price, :hidden => self.hidden, :hidden_by => self.hidden_by
+    end
   end
 
   def price
@@ -138,20 +152,20 @@ class Item < ActiveRecord::Base
     write_attribute(:max_count, c) if c > self.max_count
   end
 
-  def total_price
-    self.price * self.count
-  end
+  #def total_price
+  #  self.sum
+  #end
 
   def options_price
-    self.options.sum(:price)
+    self.option_items.sum(:price)
   end
 
-  def total_options_price
-    self.options_price * self.count
-  end
+  #def total_options_price
+  #  self.option_items.sum(:sum)
+  #end
 
   def full_price
-    self.total_price + self.total_options_price
+    self.price * self.count + self.option_items.sum(:sum)
   end
 
   def optionslist
@@ -195,6 +209,7 @@ class Item < ActiveRecord::Base
   def hide(by_user_id)
     self.hidden = true
     self.hidden_by = by_user_id
+    self.tax_items.update_all :hidden => true
     self.save
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926063112) do
+ActiveRecord::Schema.define(:version => 20120926123242) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -352,6 +352,22 @@ ActiveRecord::Schema.define(:version => 20120926063112) do
   create_table "items_options", :id => false, :force => true do |t|
     t.integer  "item_id"
     t.integer  "option_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "option_items", :force => true do |t|
+    t.integer  "option_id"
+    t.integer  "item_id"
+    t.integer  "order_id"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.float    "price"
+    t.string   "name"
+    t.integer  "count"
+    t.float    "sum"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -732,6 +748,8 @@ ActiveRecord::Schema.define(:version => 20120926063112) do
     t.integer  "surcharge_item_id"
     t.string   "name"
     t.string   "percent"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
   end
 
   create_table "taxes", :force => true do |t|

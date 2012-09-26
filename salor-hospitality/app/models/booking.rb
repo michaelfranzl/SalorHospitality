@@ -69,8 +69,10 @@ class Booking < ActiveRecord::Base
     booking.company = vendor.company
     booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
-      new_item = BookingItem.create(item_params[1])
+      new_item = BookingItem.new(item_params[1])
       new_item.ui_id = item_params[0]
+      new_item.hidden_by = user.id if new_item.hidden
+      new_item.hide(user) if new_item.count.zero?
       new_item.booking = booking
       new_item.room_id = booking.room_id
       new_item.save
@@ -78,6 +80,7 @@ class Booking < ActiveRecord::Base
       new_item.calculate_totals
     end
     booking.save
+    booking.update_associations(user)
     booking.calculate_totals
     BookingItem.make_multiseason_associations
     booking.update_payment_method_items(params)
@@ -90,25 +93,27 @@ class Booking < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
-        # TODO: hide by system or user
         item_params[1].delete(:id)
         item = BookingItem.find_by_id(item_id)
         item.update_attributes(item_params[1])
-        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         item.update_attribute :ui_id, item_params[0]
+        item.hidden_by = user.id if item.hidden
+        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        item.hide(user) if item.count.zero?
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
         new_item.ui_id = item_params[0]
-        new_item.room_id = self.room.id
+        new_item.room_id = self.room_id
+        new_item.booking = self
         new_item.save
-        self.booking_items << new_item
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         new_item.calculate_totals
       end
     end
     BookingItem.make_multiseason_associations
     self.save
+    self.update_associations(user)
     self.update_payment_method_items(params)
   end
   
@@ -141,10 +146,10 @@ class Booking < ActiveRecord::Base
 
   def update_associations(user)
     self.user = user
-    self.booking_items.each do |i|
-      i.update_attributes :vendor_id => self.vendor.id, :company_id => self.company.id
-    end
     save
+    BookingItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
+    TaxItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
+    #SurchargeItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
   end
 
   def booking_items_to_json
@@ -215,9 +220,14 @@ class Booking < ActiveRecord::Base
   end
 
   def hide(by_user_id)
+    self.vendor.unused_booking_numbers << self.nr
+    self.vendor.save
     self.hidden = true
     self.hidden_by = by_user_id
+    self.nr = nil
     save
+    self.booking_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def info_for_order_assignment

@@ -46,6 +46,7 @@ class Vendor < ActiveRecord::Base
   has_many :surcharge_items
   has_many :tax_amounts
   has_many :tax_items
+  has_many :option_items
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers

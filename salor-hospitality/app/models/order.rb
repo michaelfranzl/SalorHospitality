@@ -22,12 +22,10 @@ class Order < ActiveRecord::Base
   has_many :items, :dependent => :destroy
   has_many :payment_method_items
   has_many :tax_items
+  has_many :option_items
   has_one :order
 
   serialize :taxes
-
-  after_save :hide_items
-
 
   validates_presence_of :user_id
 
@@ -63,17 +61,26 @@ class Order < ActiveRecord::Base
     order.user = user
     order.vendor = vendor
     order.company = vendor.company
-    order.update_attributes  params[:model]
+    order.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
-      new_item.vendor = vendor
-      new_item.company = vendor.company
       new_item.hidden_by = user.id if new_item.hidden
+      #new_item.hide(user) if new_item.count.zero? # 0 cout items are allowed, unlike OrderItems
+      new_item.order = order
       #new_item.cost_center = order.cost_center
+      new_item.save
+      new_item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+      new_item.option_items.each do |oi|
+        oi.hidden = new_item.hidden
+        oi.hidden_by = new_item.hidden_by
+        oi.calculate_totals
+      end
       new_item.calculate_totals
-      order.items << new_item
     end
     order.save
+    #debugger
+    order.update_associations(user)
+    order.calculate_totals
     order.update_payment_method_items(params)
     return order
   end
@@ -87,18 +94,31 @@ class Order < ActiveRecord::Base
         item = Item.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.hidden_by = user.id if item.hidden
+        item.hide(user) if item.count.zero?
+        item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+        item.option_items.each do |oi|
+          oi.hidden = item.hidden
+          oi.hidden_by = item.hidden_by
+          oi.calculate_totals
+        end
         item.calculate_totals
       else
         new_item = Item.new(item_params[1])
-        new_item.vendor = self.vendor
-        new_item.company = self.company
         new_item.hidden_by = user.id if new_item.hidden
+        new_item.order = self
         #new_item.cost_center = self.cost_center
+        new_item.save
+        new_item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+        new_item.option_items.each do |oi|
+          oi.hidden = new_item.hidden
+          oi.hidden_by = new_item.hidden_by
+          oi.calculate_totals
+        end
         new_item.calculate_totals
-        self.items << new_item
-        self.save
       end
     end
+    self.save
+    self.update_associations(user)
     self.update_payment_method_items(params)
   end
   
@@ -121,10 +141,15 @@ class Order < ActiveRecord::Base
       raise "Oops. Order didn't have a table associated to it. This shouldn't have happened."
     end
     self.user = user
+    save
+    
+    Item.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
+    TaxItem.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
+    OptionItem.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
+    # Clear item notifications
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
-    end
-    save
+    end 
   end
 
   def calculate_totals
@@ -154,15 +179,12 @@ class Order < ActiveRecord::Base
     self.vendor.save
     self.table.user = nil
     self.table.save
-    write_attribute :hidden, true
-    write_attribute :hidden_by, by_user_id
-    write_attribute :nr, nil
-  end
-
-  def hide_items
-    if self.hidden
-      self.items.update_all :hidden => true
-    end
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.nr = nil
+    save
+    self.option_items.update_all :hidden => true, :hidden_by => by_user_id if self.option_items.any?
+    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id if self.tax_items.any?
   end
 
   def unlink

@@ -156,14 +156,14 @@ class OrdersController < ApplicationController
             get_order
             @order.calculate_totals
             @order.regroup
-            @order.update_associations(@current_user)
+            #@order.update_associations(@current_user)
             if @order.items.existing.size.zero?
               @order.hide(@current_user.id)
               @order.unlink
             end
             render :nothing => true and return if @order.hidden
             if @order.booking
-              @order.update_associations(@current_user)
+              #@order.update_associations(@current_user)
               @order.finish
               @order.table.update_color
               render :js => "route('booking',#{@order.booking.id});" and return # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
@@ -205,32 +205,32 @@ class OrdersController < ApplicationController
           #----------jsaction----------
           when 'send'
             get_booking
-            @booking.update_associations(@current_user)
+            #@booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly. A timeout would be possible, but oh, well.
           #----------jsaction----------
           when 'pay'
             get_booking
-            @booking.update_associations(@current_user)
+            #@booking.update_associations(@current_user)
             @booking.calculate_totals
             @booking.pay
             render :js => "route('rooms');" and return # see previous comment
           #----------jsaction----------
           when 'send_and_go_to_table'
             get_booking
-            @booking.update_associations(@current_user)
+            #@booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called. the order view variables will not be fully  requested from the server, but submit_json.model.booking_id is the only variable we need for a successful order.
           #----------jsaction----------
           when 'send_and_redirect_to_invoice'
             get_booking
-            @booking.update_associations(@current_user)
+            #@booking.update_associations(@current_user)
             @booking.calculate_totals
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
           #----------jsaction----------
           when 'pay_and_redirect_to_invoice'
             get_booking
-            @booking.update_associations(@current_user)
+            #@booking.update_associations(@current_user)
             @booking.calculate_totals
             @booking.pay
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return

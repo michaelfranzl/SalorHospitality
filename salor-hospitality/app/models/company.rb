@@ -46,6 +46,7 @@ class Company < ActiveRecord::Base
   has_many :surcharge_items
   has_many :tax_amounts
   has_many :tax_items
+  has_many :option_items
   
   validates_presence_of :name
 end

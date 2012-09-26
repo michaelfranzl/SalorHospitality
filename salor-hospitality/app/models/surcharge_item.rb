@@ -18,27 +18,36 @@ class SurchargeItem < ActiveRecord::Base
   serialize :taxes
 
   def calculate_totals
-    #puts "XXX SurchargeItem -> calculate_totals"
     self.duration = self.booking_item.duration
     self.count = self.booking_item.count
     self.from_date = self.booking_item.from_date
     self.to_date = self.booking_item.to_date
-    self.taxes = {}
     
     if self.hidden
       self.sum = 0
     else
       self.sum = self.amount * self.count * self.duration
-      self.surcharge.tax_amounts.each do |ta|
-        #puts "  XXX loop for tax_amount #{ ta.id }"
-        tax_object = ta.tax
-        tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
-        gro = (ta.amount).round(2) * self.count * self.duration
-        net = (gro - tax_sum).round(2)
-        self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
-      end
+      self.calculate_taxes(self.surcharge.tax_amounts)
     end
     self.save
-    #puts "  XXX set self.taxes to #{self.taxes.inspect}"
+  end
+  
+  def calculate_taxes(tax_array)
+    self.taxes = {}
+    tax_array.each do |ta|
+      tax_object = ta.tax
+      tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
+      gro = (ta.amount).round(2) * self.count * self.duration
+      net = (gro - tax_sum).round(2)
+      self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
+      
+      # TaxItem creation
+      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id).first
+      if tax_item
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax_object.letter, :name => tax_object.name, :percent => tax_object.percent
+      else
+        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax_object.letter, :name => tax_object.name, :percent => tax_object.percent
+      end
+    end
   end
 end
