@@ -189,15 +189,12 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_totals
-    #puts "XXXXXXXXXX calculate_totals for Booking"
     self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
     self.refund_sum = booking_items.existing.sum(:refund_sum)
     self.taxes = {}
     self.booking_items.existing.each do |item|
-      #puts "  XXX booking_item #{item.id}"
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          #puts "XXX has key"
           self.taxes[k][:t] += v[:t]
           self.taxes[k][:g] += v[:g]
           self.taxes[k][:n] += v[:n]
@@ -205,7 +202,6 @@ class Booking < ActiveRecord::Base
           self.taxes[k][:n] = self.taxes[k][:n].round(2)
           self.taxes[k][:t] = self.taxes[k][:t].round(2)
         else
-          #puts "XXX has not key"
           self.taxes[k] = v
         end
       end
