@@ -19,9 +19,9 @@ class ItemsController < ApplicationController
   end
 
   def split
+    @item = []
     params['split_items_hash'].each do |k,v|
-      params[:id] = k.to_i # this is required by the get_model method
-      @item = get_model
+      @item = get_model(k.to_i)
       @item.split(v['split_count'].to_i) if @item
     end
     render_invoice_form(@item.order.table) and return

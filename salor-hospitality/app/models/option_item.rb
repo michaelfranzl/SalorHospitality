@@ -7,6 +7,12 @@ class OptionItem < ActiveRecord::Base
   belongs_to :option
   
   def calculate_totals
+    puts "======================"
+    puts "OPTIONITEM CALC TOTALS"
+    puts self.item.inspect
+        puts "======================"
+    puts "OPTIONITEM CALC TOTALS"
+    puts self.inspect
     self.count = self.item.count
     if self.hidden
       self.sum = 0

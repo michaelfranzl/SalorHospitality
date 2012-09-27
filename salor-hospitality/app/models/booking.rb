@@ -63,11 +63,10 @@ class Booking < ActiveRecord::Base
   end
   
   def self.create_from_params(params, vendor, user)
-    booking = Booking.new
+    booking = Booking.new params[:model]
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
-    booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = BookingItem.new(item_params[1])
       new_item.ui_id = item_params[0]

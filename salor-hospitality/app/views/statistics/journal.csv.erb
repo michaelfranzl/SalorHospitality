@@ -5,7 +5,7 @@
 <% line = sprintf('%s;%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.nr, i.article.name, i.quantity ? "#{ i.quantity.prefix } #{ i.quantity.postfix }" : '-', '-', number_with_precision(i.price, :precision => 2, :locale => 'de'), i.count, i.order.cost_center.name) %>
 <%= line %>
 <%
-i.options.each do |o|
+i.option_items.each do |oi|
 option = sprintf('%s;%s;%s;%s;%s;%s;%s;%s;%i;%s', i.order.created_at, i.order.user.login, i.order.table.name, i.order.nr, '-', '-', o.name, number_with_precision(o.price, :precision => 2, :locale => 'de'), i.count, i.order.cost_center.name) -%>
 <%= option %>
 <% end %>

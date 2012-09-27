@@ -14,7 +14,6 @@ class Option < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   has_and_belongs_to_many :categories
-  has_and_belongs_to_many :items
   has_many :partials
   has_many :images, :as => :imageable
   has_one :option_item

@@ -72,8 +72,8 @@
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
             - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-            - optionslabel = item.options.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
-            - optionsprices = item.options.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
+            - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+            - optionsprices = item.option_items.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
             - label = raw "%20.20s%s" % [label, optionslabel]
             - if @current_user.role.permissions.include? 'split_item' or session[:display_tax_colors]
               %div.invoice_item{ :title => linktitle, :id => item.id, }= raw(label)

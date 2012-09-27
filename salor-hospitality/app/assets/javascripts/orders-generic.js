@@ -762,7 +762,7 @@ function split_item(id, order_id) {
       var item_row = $('tr#order_' + order_id + '_item_' + id);
       item_row.fadeOut('slow', function() {
         item_row.remove();
-        if ($('#model_' + order_id + ' table tr').size() == 2) {
+        if ($('#model_' + order_id + ' table tr').size() < 4) {
           $('#model_' + order_id).fadeOut();
         }
       });
@@ -1389,8 +1389,9 @@ function render_item_list(type, model, scope) {
       color_intensity = (color_intensity < 0) ? 255 : color_intensity;
       var color = 'rgb(' + color_intensity + ', 60, 60)';
       var waiting_time = Math.floor(difference/60000);
+      var waiting_time_label = (waiting_time > 0) ? waiting_time + 'min.<br/>' : '';
       var confirmed = v[scope + '_c'] != null;
-      var label = table_name + " " + waiting_time + 'min.<br/>' + v.c + ' × ' + v.l;
+      var label = table_name + " | " + waiting_time_label + v.c + ' × ' + v.l;
       var item_container = create_dom_element('div',{id:'item_list_' + scope + '_' +  v.id}, label, list_container);
       item_container.css('background-color', color);
       item_container.addClass('item_list');

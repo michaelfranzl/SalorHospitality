@@ -27,7 +27,7 @@
           %td.number= item.count
           %td.number= number_to_currency item.price
           %td.colsum= number_to_currency item.sum
-        - item.options.each do |o|
+        - item.option_items.each do |o|
           - next if o.price == 0
           %tr
             %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }

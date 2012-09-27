@@ -57,11 +57,10 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user)
-    order = Order.new
+    order = Order.new params[:model]
     order.user = user
     order.vendor = vendor
     order.company = vendor.company
-    order.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
       new_item.hidden_by = user.id if new_item.hidden
@@ -69,7 +68,7 @@ class Order < ActiveRecord::Base
       new_item.order = order
       #new_item.cost_center = order.cost_center
       new_item.save
-      new_item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+      new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
       new_item.option_items.each do |oi|
         oi.hidden = new_item.hidden
         oi.hidden_by = new_item.hidden_by
@@ -95,7 +94,7 @@ class Order < ActiveRecord::Base
         item.update_attributes(item_params[1])
         item.hidden_by = user.id if item.hidden
         item.hide(user) if item.count.zero?
-        item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+        item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
         item.option_items.each do |oi|
           oi.hidden = item.hidden
           oi.hidden_by = item.hidden_by
@@ -108,7 +107,7 @@ class Order < ActiveRecord::Base
         new_item.order = self
         #new_item.cost_center = self.cost_center
         new_item.save
-        new_item.update_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+        new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
         new_item.option_items.each do |oi|
           oi.hidden = new_item.hidden
           oi.hidden_by = new_item.hidden_by
@@ -138,7 +137,7 @@ class Order < ActiveRecord::Base
       self.table.user = user
       self.table.save
     else
-      raise "Oops. Order didn't have a table associated to it. This shouldn't have happened."
+      raise "Oops. Order didn't have a table associated to it. This is a JS issue and shouldn't have happened."
     end
     self.user = user
     save
@@ -153,9 +152,9 @@ class Order < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = items.existing.sum(:sum).round(2)
-    self.refund_sum = items.existing.sum(:refund_sum).round(2) #frozen hash
-    #self.tax_sum = items.existing.sum(:tax_sum)
+    self.sum = self.items.existing.sum(:sum).round(2)
+    self.refund_sum = items.existing.sum(:refund_sum).round(2)
+    self.tax_sum = items.existing.sum(:tax_sum).round(2)
     self.taxes = {}
     self.items.each do |item|
       item.taxes.each do |k,v|
@@ -177,24 +176,31 @@ class Order < ActiveRecord::Base
   def hide(by_user_id)
     self.vendor.unused_order_numbers << self.nr
     self.vendor.save
-    self.table.user = nil
-    self.table.save
+    
+    self.nr = nil
     self.hidden = true
     self.hidden_by = by_user_id
-    self.nr = nil
-    save
-    self.option_items.update_all :hidden => true, :hidden_by => by_user_id if self.option_items.any?
-    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id if self.tax_items.any?
+    self.save
+    
+    self.option_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def unlink
-    self.items.update_all :item_id => nil
-    self.update_attribute :order_id, nil
-    parent_order = self.order
-    if parent_order
-      parent_order.items.update_all :item_id => nil
-      parent_order.update_attribute :order_id, nil
+    split_order = self.order
+    if split_order
+      split_order.order = nil
+      split_order.save
     end
+    self.order = nil
+    self.save
+    #parent_order = self.order
+    #if parent_order
+    #  parent_order.items.update_all :item_id => nil
+    #  parent_order.update_attribute :order_id, nil
+    #end
+    #self.items.update_all :item_id => nil
+    #self.update_attribute :order_id, nil
   end
 
   def move(target_table_id)
@@ -231,7 +237,7 @@ class Order < ActiveRecord::Base
       (i+1).upto(n) do |j|
         if (items[i].article_id  == items[j].article_id and
             items[i].quantity_id == items[j].quantity_id and
-            items[i].options     == items[j].options and
+            items[i].option_items== items[j].option_items and
             items[i].price       == items[j].price and
             items[i].comment     == items[j].comment and
             items[i].scribe      == items[j].scribe and
@@ -361,18 +367,18 @@ class Order < ActiveRecord::Base
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
-        next if i.options.find_all_by_no_ticket(true).any?
+        next if i.option_items.find_all_by_no_ticket(true).any?
         itemstring = ''
         itemstring += article_format % [ i.count - i.printed_count, i.article.name]
         itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
         itemstring += comment_format % [i.comment] unless i.comment.empty?
-        i.options.each do |po|
-          itemstring += option_format % [po.name]
+        i.option_items.each do |oi|
+          itemstring += option_format % [oi.name]
         end
         itemstring = Printr.sanitize(itemstring)
         itemstring += i.scribe_escpos.encode('ISO-8859-15') if i.scribe_escpos
         itemstring += Printr.sanitize(item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]) if vendor.ticket_item_separator
-        if i.options.find_all_by_separate_ticket(true).any?
+        if i.option_items.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
         else
           catstring += itemstring
@@ -432,9 +438,9 @@ class Order < ActiveRecord::Base
     self.items.existing.positioned.each do |item|
       next if item.count == 0
       list_of_options = ''
-      item.options.each do |o|
-        next if o.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ o.name }", o.price, item.count, item.refunded ? 0 : (o.price * item.count)]
+      item.option_items.each do |oi|
+        next if oi.price == 0
+        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
       end
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
@@ -492,21 +498,89 @@ class Order < ActiveRecord::Base
         d = "a#{i.article_id}"
       end
       parent_price = i.quantity ? i.quantity.price : i.article.price
-      if i.options.any? or not i.comment.empty? or i.scribe or i.price != parent_price
+      if i.option_items.any? or not i.comment.empty? or i.scribe or i.price != parent_price
         d = "i#{i.id}"
       end
       options = {}
       optioncount = 0
-      i.options.each do |opt|
+      i.option_items.existing.each do |oi|
         optioncount += 1
-        options.merge! optioncount => { :id => opt.id, :n => opt.name, :p => opt.price }
+        options.merge! optioncount => { :id => oi.option_id, :n => oi.name, :p => oi.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.i, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.optionslist, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
       else
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.i, :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.optionslist, :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
       end
     end
     return a.to_json
+  end
+  
+  def check
+    puts "================"
+    puts "Checking internal order TAX correctness"
+    order_sum = self.sum
+    order_tax_sum = self.tax_sum
+    order_hash_tax = 0
+    self.taxes.each do |k,v|
+      order_hash_tax += v[:t]
+    end
+    order_hash_tax = order_hash_tax.round(2)
+    puts "order.tax_sum = #{ order_tax_sum }  ==  order_hash_tax #{ order_hash_tax }"
+    order_equality = (order_tax_sum == order_hash_tax )
+    if order_equality
+      puts "PASSED"
+    else
+      return false
+    end
+    
+    
+    puts "================"
+    puts "Checking TaxItem Taxes with Order"
+    tax_items_tax = self.tax_items.existing.sum(:tax).round(2)
+    
+    puts "order.tax_sum = #{ order_tax_sum }  ==  tax_items_tax #{ tax_items_tax }"
+    tax_items_equality =  (order_tax_sum == tax_items_tax )
+    if tax_items_equality
+      puts "PASSED"
+    else
+      return false
+    end
+    
+    puts "================"
+    puts "Checking interal consistency of all items"
+    items_internal_eqaulity = self.items.existing.all?  do |i|
+      r = i.check
+      puts "  Item #{i.id}: #{ r.inspect }"
+      r
+    end
+    if items_internal_eqaulity
+      puts "PASSED"
+    else
+      return false
+    end
+
+    
+    puts "============================================"
+    puts "Checking consistency of all items with order"
+    items_sum = self.items.existing.sum(:sum).round(2)
+    items_tax_sum = self.items.existing.sum(:tax_sum).round(2)
+
+    puts "order_sum = #{ order_sum }  ==  items_sum #{ items_sum }"
+    puts "order_tax_sum = #{ order_tax_sum }  ==  items_tax_sum #{ items_tax_sum }"
+    items_equality = (order_sum == items_sum ) &&
+                     (order_tax_sum == items_tax_sum )
+    if items_equality
+      puts "PASSED"
+    else
+      return false
+    end
+    
+    puts "======"
+    puts order_sum
+    puts "======"
+    return true
+    
+    
   end
 end

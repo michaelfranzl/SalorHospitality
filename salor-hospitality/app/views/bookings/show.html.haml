@@ -54,11 +54,11 @@
             %td.right= item.count
             %td.right= number_to_currency item.sum
 
-          - item.options.each do |o|
+          - item.option_items.each do |o|
             - next if o.price == 0
             %tr
               %td
-              %td= item.tax.letter
+              %td= item.tax.letter # options are just an item price modification, so they have the same taxes
               %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
               %td= number_to_currency o.price
               %td= item.count

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926123242) do
+ActiveRecord::Schema.define(:version => 20120927060210) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -233,19 +233,6 @@ ActiveRecord::Schema.define(:version => 20120926123242) do
 
   add_index "discounts_orders", ["order_id"], :name => "index_discounts_orders_order_id"
 
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.integer  "company_id"
-    t.integer  "vendor_id"
-    t.boolean  "active",     :default => true
-    t.boolean  "hidden"
-  end
-
-  add_index "groups", ["company_id"], :name => "index_groups_company_id"
-  add_index "groups", ["name"], :name => "index_groups_on_name"
-
   create_table "guest_types", :force => true do |t|
     t.string   "name"
     t.boolean  "hidden"
@@ -349,13 +336,6 @@ ActiveRecord::Schema.define(:version => 20120926123242) do
   add_index "items", ["quantity_id"], :name => "index_items_on_quantity_id"
   add_index "items", ["tax_id"], :name => "index_items_on_tax_id"
 
-  create_table "items_options", :id => false, :force => true do |t|
-    t.integer  "item_id"
-    t.integer  "option_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "option_items", :force => true do |t|
     t.integer  "option_id"
     t.integer  "item_id"
@@ -368,8 +348,10 @@ ActiveRecord::Schema.define(:version => 20120926123242) do
     t.string   "name"
     t.integer  "count"
     t.float    "sum"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.boolean  "no_ticket"
+    t.boolean  "separate_ticket"
   end
 
   create_table "options", :force => true do |t|

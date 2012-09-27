@@ -53,14 +53,15 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path unless @current_user and @current_vendor
     end
 
-    def get_model
-      if params[:id]
-        model = controller_name.classify.constantize.accessible_by(@current_user).existing.find_by_id(params[:id])
+    def get_model(model_id=nil)
+      id = model_id ? model_id : params[:id]
+      if id
+        model = controller_name.classify.constantize.accessible_by(@current_user).existing.find_by_id(id)
         if model.nil?
           flash[:error] = t('not_found')
         end
       end
-      model
+      return model
     end
 
     # the invoice view can contain 1 or 2 non-finished orders. if it contains 2 orders, and 1 is finished, then stay on the invoice view and just display the remaining order, otherwise go to the main (tables) view.
