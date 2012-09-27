@@ -74,11 +74,19 @@ class Booking < ActiveRecord::Base
       new_item.hide(user) if new_item.count.zero?
       new_item.booking = booking
       new_item.room_id = booking.room_id
+      new_item.vendor = vendor
+      new_item.company = vendor.company
       new_item.save
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+      new_item.surcharge_items.each do |si|
+        si.hidden = new_item.hidden
+        si.hidden_by = new_item.hidden_by
+        si.calculate_totals
+      end
       new_item.calculate_totals
     end
     booking.save
+    # unlike Orders, we don't delete Booking when 0 BookinItems present
     booking.update_associations(user)
     booking.calculate_totals
     BookingItem.make_multiseason_associations
@@ -99,20 +107,35 @@ class Booking < ActiveRecord::Base
         item.hidden_by = user.id if item.hidden
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         item.hide(user) if item.count.zero?
+        item.surcharge_items.each do |si|
+          si.hidden = new_item.hidden
+          si.hidden_by = new_item.hidden_by
+          si.calculate_totals
+        end
         item.calculate_totals
       else
         new_item = BookingItem.new(item_params[1])
+        new_item.hidden_by = user.id if new_item.hidden
         new_item.ui_id = item_params[0]
         new_item.room_id = self.room_id
         new_item.booking = self
+        new_item.vendor = vendor
+        new_item.company = vendor.company
         new_item.save
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
+        new_item.surcharge_items.each do |si|
+          si.hidden = new_item.hidden
+          si.hidden_by = new_item.hidden_by
+          si.calculate_totals
+        end
         new_item.calculate_totals
       end
     end
-    BookingItem.make_multiseason_associations
     self.save
+    # unlike Orders, we don't delete Booking when 0 BookinItems present
     self.update_associations(user)
+    self.calculate_totals
+    BookingItem.make_multiseason_associations
     self.update_payment_method_items(params)
   end
   
@@ -146,9 +169,6 @@ class Booking < ActiveRecord::Base
   def update_associations(user)
     self.user = user
     save
-    BookingItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
-    TaxItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
-    #SurchargeItem.where(:booking_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
   end
 
   def booking_items_to_json

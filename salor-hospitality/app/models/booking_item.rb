@@ -17,6 +17,7 @@ class BookingItem < ActiveRecord::Base
   belongs_to :season
   has_many :booking_items
   has_many :surcharge_items
+  has_many :tax_items
 
   serialize :taxes
   
@@ -129,6 +130,7 @@ class BookingItem < ActiveRecord::Base
   
   def calculate_taxes(tax_array)
     self.taxes = {}
+    tax_sum_total = 0
     tax_array.each do |tax|
       tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
       gro = (self.sum).round(2)
@@ -142,8 +144,9 @@ class BookingItem < ActiveRecord::Base
       else
         TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :tax_id => tax.id, :booking_id => self.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
+      tax_sum_total += tax_sum
     end
-    
+
     # now, add surcharges to unit_sum, sum, and taxes hash    
     self.unit_sum += self.surcharge_items.sum(:amount)
     self.sum += self.surcharge_items.sum(:sum)
@@ -159,9 +162,35 @@ class BookingItem < ActiveRecord::Base
         else
           self.taxes[k] = v
         end
+        tax_sum_total += v[:t]
       end
     end
+    self.tax_sum = tax_sum_total
     save
+  end
+  
+  def check
+    item_hash_tax = 0
+    self.taxes.each do |k,v|
+      item_hash_tax += v[:t]
+    end
+    item_hash_tax = item_hash_tax.round(2)
+    test1 = self.tax_sum == item_hash_tax
+    raise "Item test1 failed" unless test1
+    
+    # test taxItem count vs. self.tax_items + self.surcharge_items.tax_items
+
+    #self.surcharge_items.existing.each do |o|
+    #  o.check
+    #end
+    
+    tax_items_tax_sum = self.tax_items.existing.sum(:tax).round(2)
+    item_tax_sum = 0
+    self.taxes.each do |k,v|
+      item_tax_sum += v[:t]
+    end
+    test5 = tax_items_tax_sum.round(2) == item_tax_sum.round(2)
+    raise "Item test5 failed" unless test5
   end
   
 end

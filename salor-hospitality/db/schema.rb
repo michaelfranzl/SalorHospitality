@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120927060210) do
+ActiveRecord::Schema.define(:version => 20120927175127) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20120927060210) do
     t.float    "unit_sum"
     t.integer  "room_id"
     t.boolean  "date_locked",                      :default => false
+    t.float    "tax_sum"
   end
 
   create_table "bookings", :force => true do |t|
@@ -650,6 +651,7 @@ ActiveRecord::Schema.define(:version => 20120927060210) do
     t.integer  "count"
     t.datetime "from_date"
     t.datetime "to_date"
+    t.integer  "hidden_by"
   end
 
   create_table "surcharges", :force => true do |t|

@@ -64,9 +64,11 @@ class Order < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       new_item = Item.new(item_params[1])
       new_item.hidden_by = user.id if new_item.hidden
-      #new_item.hide(user) if new_item.count.zero? # 0 cout items are allowed, unlike OrderItems
+      #new_item.hide(user) if new_item.count.zero? # 0 count items are allowed, unlike OrderItems
       new_item.order = order
       #new_item.cost_center = order.cost_center
+      new_item.vendor = vendor
+      new_item.company = vendor.company
       new_item.save
       new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
       new_item.option_items.each do |oi|
@@ -77,12 +79,10 @@ class Order < ActiveRecord::Base
       new_item.calculate_totals
     end
     order.save
-    
     unless order.items.existing.any?
       order.unlink
       order.hide(user.id)
     end
-    
     order.update_associations(user)
     order.calculate_totals
     order.update_payment_method_items(params)
@@ -98,8 +98,8 @@ class Order < ActiveRecord::Base
         item = Item.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.hidden_by = user.id if item.hidden
-        #item.hide(user) if item.count.zero?
         item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
+        #item.hide(user) if item.count.zero?
         item.option_items.each do |oi|
           oi.hidden = item.hidden
           oi.hidden_by = item.hidden_by
@@ -111,6 +111,8 @@ class Order < ActiveRecord::Base
         new_item.hidden_by = user.id if new_item.hidden
         new_item.order = self
         #new_item.cost_center = self.cost_center
+        new_item.vendor = vendor
+        new_item.company = vendor.company
         new_item.save
         new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
         new_item.option_items.each do |oi|
@@ -122,7 +124,6 @@ class Order < ActiveRecord::Base
       end
     end
     self.save
-    
     unless self.items.existing.any?
       self.unlink
       self.hide(user.id)
@@ -143,19 +144,9 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
-    if self.table
-      self.table.user = self.hidden ? nil : user
-      self.table.save
-    else
-      raise "Oops. Order didn't have a table associated to it. This is a JS issue and shouldn't have happened."
-    end
+    self.table.update_color if self.table
     self.user = user
     save
-    
-    Item.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
-    TaxItem.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
-    OptionItem.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
-    
     # Set item notifications
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id

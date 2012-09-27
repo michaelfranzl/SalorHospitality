@@ -14,6 +14,7 @@ class SurchargeItem < ActiveRecord::Base
   belongs_to :booking_item
   belongs_to :booking
   belongs_to :season
+  has_many :tax_items
 
   serialize :taxes
 
@@ -42,12 +43,13 @@ class SurchargeItem < ActiveRecord::Base
       self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
       
       # TaxItem creation
-      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id).first
+      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :booking_item_id => self.booking_item.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id).first
       if tax_item
         tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax_object.letter, :name => tax_object.name, :percent => tax_object.percent
       else
-        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax_object.letter, :name => tax_object.name, :percent => tax_object.percent
+        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :surcharge_item_id => self.id, :tax_id => tax_object.id, :booking_id => self.booking_item.booking_id, :booking_item_id => self.booking_item.id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax_object.letter, :name => tax_object.name, :percent => tax_object.percent
       end
     end
+    self.save
   end
 end

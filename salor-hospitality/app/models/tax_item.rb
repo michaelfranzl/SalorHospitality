@@ -12,6 +12,7 @@ class TaxItem < ActiveRecord::Base
   belongs_to :company
   belongs_to :item
   belongs_to :booking_item
+  belongs_to :surcharge_item
   belongs_to :order
   belongs_to :booking
   belongs_to :settlement
