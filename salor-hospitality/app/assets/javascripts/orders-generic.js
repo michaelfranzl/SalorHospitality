@@ -776,7 +776,7 @@ function submit_split_items() {
     type: 'put',
     url: '/items/split',
     data: {jsaction:'split',split_items_hash:split_items_hash},
-    timeout: 5000
+    timeout: 15000
   });
 }
 

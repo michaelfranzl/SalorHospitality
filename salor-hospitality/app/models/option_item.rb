@@ -17,18 +17,10 @@ class OptionItem < ActiveRecord::Base
   end
   
   def check
-    puts "============================================"
-    puts "Checking internal consistency of option #{ self.id}"
-    
-    option_equality = (self.sum == self.price * self.count)
-    
-    if option_equality
-      puts "PASSED"
-    else
-      puts "FAIL"
-      return false
-    end
-    return true
+    test1 = self.item.refunded.nil? ? (self.sum == self.price * self.count) : (self.sum == 0)
+    raise "OptionItem test1 failed" unless test1
+    test2 = self.count == self.item.count
+    raise "OptionItem test2 failed" unless test2
   end
   
 end

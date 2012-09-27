@@ -524,72 +524,24 @@ class Order < ActiveRecord::Base
   end
   
   def check
-    puts "================"
-    puts "Checking internal order TAX correctness"
-    order_sum = self.sum
-    order_tax_sum = self.tax_sum
-    order_hash_tax = 0
+    order_hash_tax_sum = 0
     self.taxes.each do |k,v|
-      order_hash_tax += v[:t]
+      order_hash_tax_sum += v[:t]
     end
-    order_hash_tax = order_hash_tax.round(2)
-    puts "order.tax_sum = #{ order_tax_sum }  ==  order_hash_tax #{ order_hash_tax }"
-    order_equality = (order_tax_sum == order_hash_tax )
-    if order_equality
-      puts "PASSED"
-    else
-      return false
-    end
-    
-    
-    puts "================"
-    puts "Checking TaxItem Taxes with Order"
-    tax_items_tax = self.tax_items.existing.sum(:tax).round(2)
-    
-    puts "order.tax_sum = #{ order_tax_sum }  ==  tax_items_tax #{ tax_items_tax }"
-    tax_items_equality =  (order_tax_sum == tax_items_tax )
-    if tax_items_equality
-      puts "PASSED"
-    else
-      return false
-    end
-    
-    puts "================"
-    puts "Checking interal consistency of all items"
-    items_internal_eqaulity = self.items.existing.all?  do |i|
-      r = i.check
-      puts "  Item #{i.id}: #{ r.inspect }"
-      r
-    end
-    if items_internal_eqaulity
-      puts "PASSED"
-    else
-      return false
-    end
+    test1 = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
+    raise "Order test1 failed" unless test1
 
-    
-    puts "============================================"
-    puts "Checking consistency of all items with order"
-    items_sum = self.items.existing.sum(:sum).round(2)
-    items_tax_sum = self.items.existing.sum(:tax_sum).round(2)
+    test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
+    raise "Order test3 failed" unless test3
 
-    puts "order_sum = #{ order_sum }  ==  items_sum #{ items_sum }"
-    puts "order_tax_sum = #{ order_tax_sum }  ==  items_tax_sum #{ items_tax_sum }"
-    items_equality = (order_sum == items_sum ) &&
-                     (order_tax_sum == items_tax_sum )
-    if items_equality
-      puts "PASSED"
-    else
-      return false
+    self.items.existing.each do |i|
+      i.check
     end
     
+    test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
+    raise "Order test4 failed" unless test4
     
-    
-    puts "======"
-    puts order_sum
-    puts "======"
-    return true
-    
-    
+    test5 = self.items.existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
+    raise "Order test5 failed" unless test5
   end
 end

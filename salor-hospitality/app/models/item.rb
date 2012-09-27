@@ -307,8 +307,6 @@ class Item < ActiveRecord::Base
   end
   
   def check
-    puts "============================================"
-    puts "Checking internal consistency of item #{ self.id }"
     item_sum = self.sum
     item_tax_sum = self.tax_sum
     item_hash_gro = 0
@@ -319,32 +317,32 @@ class Item < ActiveRecord::Base
     end
     item_hash_tax = item_hash_tax.round(2)
     item_hash_gro = item_hash_gro.round(2)
-    puts "item_sum = #{ item_sum }  ==  item_hash_gro #{ item_hash_gro }"
-    puts "item_tax_sum = #{ item_tax_sum }  ==  item_hash_tax #{ item_hash_tax }"
-    item_equality = (item_sum == item_hash_gro ) &&
-                    (item_tax_sum == item_hash_tax )
-    if item_equality
-      puts "PASSED"
+    test1 = (item_sum == item_hash_gro ) && (item_tax_sum == item_hash_tax )
+    raise "Item test1 failed" unless test1
+    
+    if self.refunded
+      test2 = item_sum == 0
+      raise "Item test2 failed" unless test2
+      test3 = self.tax_items.existing.sum(:tax).round(2) == 0
+      raise "Item test3 failed" unless test3
     else
-      puts "FAIL"
-      return false
+      test3a = self.tax_items.existing.count == self.taxes.keys.count
+      raise "Item test3a failed" unless test3a
+      test4 = self.option_items.existing.sum(:sum) == (self.sum - (self.price * self.count))
+      raise "Item test4 failed" unless test4
     end
     
-    return true if (!self.option_items.existing.any?) or self.refunded == true
-    puts "============================================"
-    puts "Checking internal consistency of item #{ self.id } with all it's options"
-    options_sum = self.option_items.existing.sum(:sum)
-    item_options_equality = options_sum == (self.sum - (self.price * self.count))
-    puts "options_sum = #{ options_sum } == #{ (self.sum - (self.price * self.count))}"
-    if item_options_equality
-      puts "PASSED"
-    else
-      puts "FAIL"
-      return false
+    self.option_items.existing.each do |o|
+      o.check
     end
     
-    
-    return true
+    tax_items_tax_sum = self.tax_items.existing.sum(:tax).round(2)
+    item_tax_sum = 0
+    self.taxes.each do |k,v|
+      item_tax_sum += v[:t]
+    end
+    test5 = tax_items_tax_sum.round(2) == item_tax_sum.round(2)
+    raise "Item test5 failed" unless test5
   end
   
 end
