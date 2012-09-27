@@ -28,5 +28,5 @@
 - if position == 'header'
   %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
   
-- if @current_user.role.permissions.include?('cancel_all_items_in_active_order') and position == 'footer'
+- if @current_user.role.permissions.include?('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)
   %a#order_clear_button.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }

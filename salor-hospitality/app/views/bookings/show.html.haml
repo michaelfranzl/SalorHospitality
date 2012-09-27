@@ -47,22 +47,22 @@
       - @booking.orders.existing.each do |order|
         - order.items.existing.positioned.each do |item|
           %tr
-            %td.left.narrow== ##{ order.id}
+            %td.left.narrow== ##{ order.nr }
             %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',')
             %td.left= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
             %td.right= number_to_currency item.price
             %td.right= item.count
-            %td.right= number_to_currency item.sum
+            %td.right= number_to_currency item.refunded ? 0 : item.count * item.price
 
           - item.option_items.each do |o|
             - next if o.price == 0
             %tr
-              %td
-              %td= item.tax.letter # options are just an item price modification, so they have the same taxes
-              %td== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
-              %td= number_to_currency o.price
-              %td= item.count
-              %td= number_to_currency item.refunded ? 0 : item.count * o.price
+              %td.left.narrow== ##{ order.nr }
+              %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',') # options are just an item price modification, so they have the same taxes
+              %td.left== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
+              %td.right= number_to_currency o.price
+              %td.right= item.count
+              %td.right= number_to_currency item.refunded ? 0 : o.count * o.price
     
   %h2.floatright= number_to_currency @booking.sum
   

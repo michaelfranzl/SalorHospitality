@@ -11,7 +11,7 @@
 class Item < ActiveRecord::Base
   attr_accessible :position, :comment, :price, :article_id, :quantity_id, :category_id, :count, :printed_count, :usage, :hidden, :customers_ids
   attr_accessible :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
-  attr_accessible :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price
+  attr_accessible :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id
   
   include Scope
   belongs_to :order
@@ -62,9 +62,18 @@ class Item < ActiveRecord::Base
 
     separated_item.count += 1
     separated_item.save
+    separated_item.option_items.each do |o| 
+      o.calculate_totals
+    end
+    
+    self.save
+    self.option_items.each do |o| 
+      o.calculate_totals
+    end
 
     separated_item.calculate_totals
     self.calculate_totals
+    self.order.calculate_totals
   end
 
   def scribe_bitmap
@@ -93,6 +102,8 @@ class Item < ActiveRecord::Base
     self.refunded = true
     self.refunded_by = by_user.id
     self.refund_sum = self.sum
+    self.tax_items.update_all :gro => 0, :net => 0, :tax => 0
+    self.option_items.update_all :sum => 0
     self.calculate_totals
     self.order.calculate_totals
   end
@@ -296,6 +307,8 @@ class Item < ActiveRecord::Base
   end
   
   def check
+    puts "============================================"
+    puts "Checking internal consistency of item #{ self.id }"
     item_sum = self.sum
     item_tax_sum = self.tax_sum
     item_hash_gro = 0
@@ -316,6 +329,21 @@ class Item < ActiveRecord::Base
       puts "FAIL"
       return false
     end
+    
+    return true if (!self.option_items.existing.any?) or self.refunded == true
+    puts "============================================"
+    puts "Checking internal consistency of item #{ self.id } with all it's options"
+    options_sum = self.option_items.existing.sum(:sum)
+    item_options_equality = options_sum == (self.sum - (self.price * self.count))
+    puts "options_sum = #{ options_sum } == #{ (self.sum - (self.price * self.count))}"
+    if item_options_equality
+      puts "PASSED"
+    else
+      puts "FAIL"
+      return false
+    end
+    
+    
     return true
   end
   

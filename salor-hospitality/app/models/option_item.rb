@@ -7,12 +7,6 @@ class OptionItem < ActiveRecord::Base
   belongs_to :option
   
   def calculate_totals
-    puts "======================"
-    puts "OPTIONITEM CALC TOTALS"
-    puts self.item.inspect
-        puts "======================"
-    puts "OPTIONITEM CALC TOTALS"
-    puts self.inspect
     self.count = self.item.count
     if self.hidden
       self.sum = 0
@@ -20,6 +14,21 @@ class OptionItem < ActiveRecord::Base
       self.sum = self.price * self.count
     end
     self.save
+  end
+  
+  def check
+    puts "============================================"
+    puts "Checking internal consistency of option #{ self.id}"
+    
+    option_equality = (self.sum == self.price * self.count)
+    
+    if option_equality
+      puts "PASSED"
+    else
+      puts "FAIL"
+      return false
+    end
+    return true
   end
   
 end

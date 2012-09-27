@@ -247,7 +247,7 @@ function route(target, model_id, action, options) {
     $('#functions_header_index').hide();
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
-    //$('#items_notifications_static').hide();
+    $('#items_notifications_static').hide();
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);

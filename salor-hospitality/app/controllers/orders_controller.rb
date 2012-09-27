@@ -157,10 +157,6 @@ class OrdersController < ApplicationController
             @order.calculate_totals
             @order.regroup
             #@order.update_associations(@current_user)
-            if @order.items.existing.size.zero?
-              @order.hide(@current_user.id)
-              @order.unlink
-            end
             render :nothing => true and return if @order.hidden
             if @order.booking
               #@order.update_associations(@current_user)

@@ -77,7 +77,12 @@ class Order < ActiveRecord::Base
       new_item.calculate_totals
     end
     order.save
-    #debugger
+    
+    unless order.items.existing.any?
+      order.unlink
+      order.hide(user.id)
+    end
+    
     order.update_associations(user)
     order.calculate_totals
     order.update_payment_method_items(params)
@@ -93,7 +98,7 @@ class Order < ActiveRecord::Base
         item = Item.find_by_id(item_id)
         item.update_attributes(item_params[1])
         item.hidden_by = user.id if item.hidden
-        item.hide(user) if item.count.zero?
+        #item.hide(user) if item.count.zero?
         item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
         item.option_items.each do |oi|
           oi.hidden = item.hidden
@@ -117,6 +122,11 @@ class Order < ActiveRecord::Base
       end
     end
     self.save
+    
+    unless self.items.existing.any?
+      self.unlink
+      self.hide(user.id)
+    end
     self.update_associations(user)
     self.update_payment_method_items(params)
   end
@@ -134,7 +144,7 @@ class Order < ActiveRecord::Base
 
   def update_associations(user)
     if self.table
-      self.table.user = user
+      self.table.user = self.hidden ? nil : user
       self.table.save
     else
       raise "Oops. Order didn't have a table associated to it. This is a JS issue and shouldn't have happened."
@@ -142,10 +152,11 @@ class Order < ActiveRecord::Base
     self.user = user
     save
     
-    Item.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
-    TaxItem.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
-    OptionItem.where(:order_id => self.id).update_all :vendor_id => self.vendor.id, :company_id => self.company.id
-    # Clear item notifications
+    Item.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
+    TaxItem.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
+    OptionItem.where(:order_id => self.id).update_all :vendor_id => self.vendor_id, :company_id => self.company_id
+    
+    # Set item notifications
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
     end 
@@ -187,20 +198,16 @@ class Order < ActiveRecord::Base
   end
 
   def unlink
+
     split_order = self.order
     if split_order
+      split_order.items.update_all :item_id => nil
       split_order.order = nil
       split_order.save
     end
     self.order = nil
     self.save
-    #parent_order = self.order
-    #if parent_order
-    #  parent_order.items.update_all :item_id => nil
-    #  parent_order.update_attribute :order_id, nil
-    #end
-    #self.items.update_all :item_id => nil
-    #self.update_attribute :order_id, nil
+    self.items.update_all :item_id => nil
   end
 
   def move(target_table_id)
@@ -575,6 +582,8 @@ class Order < ActiveRecord::Base
     else
       return false
     end
+    
+    
     
     puts "======"
     puts order_sum
