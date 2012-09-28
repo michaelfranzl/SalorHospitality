@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
             @order.items.existing.each do |item|
               item.calculate_taxes([tax])
             end
-            @order.calculate_totals
+            #@order.calculate_totals
             render_invoice_form(@order.table) and return # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'change_cost_center'
@@ -113,7 +113,7 @@ class OrdersController < ApplicationController
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
-            @booking.calculate_totals
+            #@booking.calculate_totals
             @order.table.update_color
             if mobile?              
               # waiters on mobile devices never should be routed to the booking screen
@@ -146,7 +146,7 @@ class OrdersController < ApplicationController
           #----------jsaction----------
           when 'send'
             get_order
-            @order.calculate_totals
+            #@order.calculate_totals
             @order.regroup
             render :nothing => true and return if @order.hidden
             if @order.booking
@@ -191,28 +191,28 @@ class OrdersController < ApplicationController
           #----------jsaction----------
           when 'send'
             get_booking
-            @booking.calculate_totals
+            #@booking.calculate_totals
             render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" and return #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly. A timeout would be possible, but oh, well.
           #----------jsaction----------
           when 'pay'
             get_booking
-            @booking.calculate_totals
+            #@booking.calculate_totals
             @booking.pay
             render :js => "route('rooms');" and return # see previous comment
           #----------jsaction----------
           when 'send_and_go_to_table'
             get_booking
-            @booking.calculate_totals
+            #@booking.calculate_totals
             render :js => "submit_json.model.booking_id = #{ @booking.id }" and return # the switch to the table happens in the JS route function from where this was called. the order view variables will not be fully  requested from the server, but submit_json.model.booking_id is the only variable we need for a successful order.
           #----------jsaction----------
           when 'send_and_redirect_to_invoice'
             get_booking
-            @booking.calculate_totals
+            #@booking.calculate_totals
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
           #----------jsaction----------
           when 'pay_and_redirect_to_invoice'
             get_booking
-            @booking.calculate_totals
+            #@booking.calculate_totals
             @booking.pay
             render :js => "window.location = '/bookings/#{ @booking.id }';" and return
         end

@@ -72,9 +72,7 @@ class Order < ActiveRecord::Base
       new_item.save
       new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
       new_item.option_items.each do |oi|
-        oi.hidden = new_item.hidden
-        oi.hidden_by = new_item.hidden_by
-        oi.calculate_totals
+        oi.hide(new_item) if new_item.hidden
       end
       new_item.calculate_totals
     end
@@ -101,9 +99,7 @@ class Order < ActiveRecord::Base
         item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
         #item.hide(user) if item.count.zero?
         item.option_items.each do |oi|
-          oi.hidden = item.hidden
-          oi.hidden_by = item.hidden_by
-          oi.calculate_totals
+          oi.hide(item) if item.hidden
         end
         item.calculate_totals
       else
@@ -129,6 +125,7 @@ class Order < ActiveRecord::Base
       self.hide(user.id)
     end
     self.update_associations(user)
+    self.calculate_totals
     self.update_payment_method_items(params)
   end
   
@@ -159,7 +156,7 @@ class Order < ActiveRecord::Base
     self.refund_sum = self.items.existing.sum(:refund_sum).round(2)
     self.tax_sum = self.items.existing.sum(:tax_sum).round(2)
     self.taxes = {}
-    self.items.each do |item|
+    self.items.existing.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
           self.taxes[k][:t] += v[:t].round(2)
@@ -173,7 +170,7 @@ class Order < ActiveRecord::Base
         end
       end
     end
-    save
+    self.save
   end
 
   def hide(by_user_id)
@@ -516,6 +513,11 @@ class Order < ActiveRecord::Base
   end
   
   def check
+    
+    self.items.each do |i|
+      i.check
+    end
+    
     order_hash_tax_sum = 0
     self.taxes.each do |k,v|
       order_hash_tax_sum += v[:t]
@@ -528,9 +530,7 @@ class Order < ActiveRecord::Base
     test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
     raise "Order test3 failed" unless test3
 
-    self.items.existing.each do |i|
-      i.check
-    end
+
     
     test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
     raise "Order test4 failed" unless test4

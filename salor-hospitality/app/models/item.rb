@@ -136,7 +136,7 @@ class Item < ActiveRecord::Base
       
       # TaxItem creation
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :hidden => nil, :hidden_by => nil
       else
         TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
@@ -151,7 +151,7 @@ class Item < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     ids.each do |i|
       o = Option.find_by_id(i.to_i)
-      option_item = OptionItem.create :vendor_id => o.vendor_id, :company_id => o.company_id, :option_id => o.id, :item_id => self.id, :order_id => self.order_id, :price => o.price, :name => o.name, :count => self.count, :sum => self.count * self.price, :hidden => self.hidden, :hidden_by => self.hidden_by, :no_ticket => o.no_ticket, :separate_ticket => o.separate_ticket
+      option_item = OptionItem.create :vendor_id => o.vendor_id, :company_id => o.company_id, :option_id => o.id, :item_id => self.id, :order_id => self.order_id, :price => o.price, :name => o.name, :count => self.count, :sum => self.count * o.price, :hidden => self.hidden, :hidden_by => self.hidden_by, :no_ticket => o.no_ticket, :separate_ticket => o.separate_ticket
     end
   end
 

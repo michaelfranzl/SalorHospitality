@@ -80,9 +80,6 @@ class Booking < ActiveRecord::Base
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
       new_item.surcharge_items.each do |si|
         si.hide(new_item.hidden_by) if new_item.hidden
-        #si.hidden = new_item.hidden
-        #si.hidden_by = new_item.hidden_by
-        #si.calculate_totals
       end
       new_item.calculate_totals
     end
@@ -128,9 +125,6 @@ class Booking < ActiveRecord::Base
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         new_item.surcharge_items.each do |si|
           si.hide(new_item.hidden_by) if new_item.hidden
-          #si.hidden = new_item.hidden
-          #si.hidden_by = new_item.hidden_by
-          #si.calculate_totals
         end
         new_item.calculate_totals
       end
