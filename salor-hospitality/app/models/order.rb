@@ -144,6 +144,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
+    self.save
     self.table.update_color if self.table
     self.user = user
     save
@@ -155,8 +156,8 @@ class Order < ActiveRecord::Base
 
   def calculate_totals
     self.sum = self.items.existing.sum(:sum).round(2)
-    self.refund_sum = items.existing.sum(:refund_sum).round(2)
-    self.tax_sum = items.existing.sum(:tax_sum).round(2)
+    self.refund_sum = self.items.existing.sum(:refund_sum).round(2)
+    self.tax_sum = self.items.existing.sum(:tax_sum).round(2)
     self.taxes = {}
     self.items.each do |item|
       item.taxes.each do |k,v|
@@ -254,7 +255,7 @@ class Order < ActiveRecord::Base
   def finish
     self.finished_at = Time.now
     self.finished = true
-    Item.connection.execute('UPDATE items SET preparation_count = count, delivery_count = count;')
+    Item.connection.execute("UPDATE items SET preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
   end
@@ -520,6 +521,8 @@ class Order < ActiveRecord::Base
       order_hash_tax_sum += v[:t]
     end
     test1 = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
+    puts order_hash_tax_sum.round(2)
+    puts self.tax_sum.round(2)
     raise "Order test1 failed" unless test1
 
     test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)

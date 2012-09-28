@@ -79,12 +79,14 @@ class Booking < ActiveRecord::Base
       new_item.save
       new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
       new_item.surcharge_items.each do |si|
-        si.hidden = new_item.hidden
-        si.hidden_by = new_item.hidden_by
-        si.calculate_totals
+        si.hide(new_item.hidden_by) if new_item.hidden
+        #si.hidden = new_item.hidden
+        #si.hidden_by = new_item.hidden_by
+        #si.calculate_totals
       end
       new_item.calculate_totals
     end
+    booking.hide(user.id) if booking.hidden
     booking.save
     # unlike Orders, we don't delete Booking when 0 BookinItems present
     booking.update_associations(user)
@@ -108,9 +110,10 @@ class Booking < ActiveRecord::Base
         item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         item.hide(user) if item.count.zero?
         item.surcharge_items.each do |si|
-          si.hidden = new_item.hidden
-          si.hidden_by = new_item.hidden_by
-          si.calculate_totals
+          si.hide(item.hidden_by) if item.hidden
+          #si.hidden = item.hidden
+          #si.hidden_by = item.hidden_by
+          #si.calculate_totals
         end
         item.calculate_totals
       else
@@ -124,13 +127,15 @@ class Booking < ActiveRecord::Base
         new_item.save
         new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
         new_item.surcharge_items.each do |si|
-          si.hidden = new_item.hidden
-          si.hidden_by = new_item.hidden_by
-          si.calculate_totals
+          si.hide(new_item.hidden_by) if new_item.hidden
+          #si.hidden = new_item.hidden
+          #si.hidden_by = new_item.hidden_by
+          #si.calculate_totals
         end
         new_item.calculate_totals
       end
     end
+    self.hide(user.id) if self.hidden
     self.save
     # unlike Orders, we don't delete Booking when 0 BookinItems present
     self.update_associations(user)
@@ -189,9 +194,11 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
-    self.refund_sum = booking_items.existing.sum(:refund_sum)
+    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum).round(2)
+    self.refund_sum = self.booking_items.existing.sum(:refund_sum).round(2)
+    self.tax_sum = self.booking_items.existing.sum(:tax_sum).round(2)
     self.taxes = {}
+    
     self.booking_items.existing.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
@@ -237,15 +244,51 @@ class Booking < ActiveRecord::Base
   def hide(by_user_id)
     self.vendor.unused_booking_numbers << self.nr
     self.vendor.save
+    
+    self.nr = nil
     self.hidden = true
     self.hidden_by = by_user_id
-    self.nr = nil
-    save
+    self.save
+    
     self.booking_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.surcharge_items.update_all :hidden => true, :hidden_by => by_user_id
     self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def info_for_order_assignment
     "#{ self.room.name } #{ self.customer.full_name if self.customer }"
+  end
+  
+  def check
+    self.booking_items.each do |bi|
+      puts "checking #{bi.id}"
+      bi.check
+    end
+    
+    test1 = self.sum.round(2) == self.booking_items.existing.sum(:sum).round(2)
+    raise "BookingItem test1 failed for id #{ self.id }" unless test1
+    
+    test2 = self.booking_item_sum.round(2) == self.booking_items.existing.sum(:sum).round(2)
+    raise "BookingItem test2 failed for id #{ self.id }" unless test2
+    
+    test3 = self.tax_sum.round(2) == self.booking_items.existing.sum(:tax_sum).round(2)
+    raise "BookingItem test3 failed for id #{ self.id }" unless test3
+    
+    if self.hidden
+      test4 = self.tax_items.all?{|ti| ti.hidden} && self.surcharge_items.all?{|si| si.hidden} && self.booking_items.all?{|bi| bi.hidden}
+      raise "BookingItem test4 failed for id #{ self.id }" unless test4
+    end
+    
+    self.orders.each do |o|
+      o.check
+    end
+    
+    booking_tax_sum = 0
+    self.taxes.each do |k,v|
+      booking_tax_sum += v[:t]
+    end
+    test5 = self.tax_sum.round(2) == booking_tax_sum.round(2)
+    raise "BookingItem test5 failed for id #{ self.id }" unless test5
+    return true
   end
 end

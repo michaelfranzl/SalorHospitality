@@ -22,7 +22,11 @@ class Table < ActiveRecord::Base
   
   def update_color
     orders = self.vendor.orders.existing.where(:finished => false, :table_id => self.id)
-    self.update_attribute :user, nil if orders.empty?
+    if orders.empty?
+      self.update_attribute :active_user_id, nil 
+    else
+      self.update_attribute :active_user_id, orders.last.user_id
+    end
   end
   
   def move_name

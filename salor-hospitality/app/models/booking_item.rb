@@ -58,8 +58,9 @@ class BookingItem < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     
     self.surcharge_items.where(:hidden => nil).each do |si|
-      si.update_attribute :hidden, true
-      si.calculate_totals
+      si.hide(0)
+      #si.update_attribute :hidden, true
+      #si.calculate_totals
     end
 
     existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge_id if si.surcharge}.uniq
@@ -67,18 +68,18 @@ class BookingItem < ActiveRecord::Base
     ids.each do |i|
       if existing_surcharge_ids.include? i.to_i
         surcharge_item = self.surcharge_items.where(:surcharge_id => i).first
-        surcharge_item.update_attribute :hidden, nil # this should always update just one SurchargeItem, but we write update_all because that is easier
+        surcharge_item.update_attributes :hidden => nil, :hidden_by => nil # this should always restore just one SurchargeItem, but we write update_all because that is easier
         surcharge_item.calculate_totals
         existing_surcharge_ids.delete i.to_i
       else
         s = Surcharge.find_by_id(i.to_i)
-        surcharge_item = SurchargeItem.create :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id
+        surcharge_item = SurchargeItem.create :amount => s.amount, :vendor_id => s.vendor.id, :company_id => s.company.id, :season_id => s.season_id, :guest_type_id => s.guest_type_id, :surcharge_id => s.id, :booking_item_id => self.id, :booking_id => self.booking_id
         surcharge_item.calculate_totals
       end
       existing_surcharge_ids.each do |id|
         surcharge_item = self.surcharge_items.where(:surcharge_id => id).first
-        surcharge_item.update_attribute :hidden, true
-        surcharge_item.calculate_totals
+        surcharge_item.hide(0)
+        #surcharge_item.calculate_totals
       end
     end
     self.save
@@ -109,7 +110,6 @@ class BookingItem < ActiveRecord::Base
   end
   
   def calculate_totals
-    #puts "XXXXXXXXXX BookingItem -> calculate_totals #{ self.id }"
     if self.guest_type_id.nil?
       self.base_price = 0
     else
@@ -138,9 +138,9 @@ class BookingItem < ActiveRecord::Base
       self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
       
       # TaxItem creation
-      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :tax_id => tax.id, :booking_id => self.booking_id).first
+      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :surcharge_item_id => nil, :tax_id => tax.id, :booking_id => self.booking_id).first
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :hidden => nil, :hidden_by => nil
       else
         TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :tax_id => tax.id, :booking_id => self.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
@@ -148,9 +148,9 @@ class BookingItem < ActiveRecord::Base
     end
 
     # now, add surcharges to unit_sum, sum, and taxes hash    
-    self.unit_sum += self.surcharge_items.sum(:amount)
-    self.sum += self.surcharge_items.sum(:sum)
-    self.surcharge_items.each do |si|
+    self.unit_sum += self.surcharge_items.existing.sum(:amount)
+    self.sum += self.surcharge_items.existing.sum(:sum)
+    self.surcharge_items.existing.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
           self.taxes[k][:t] += v[:t]
@@ -166,7 +166,7 @@ class BookingItem < ActiveRecord::Base
       end
     end
     self.tax_sum = tax_sum_total
-    save
+    self.save
   end
   
   def check
@@ -174,23 +174,32 @@ class BookingItem < ActiveRecord::Base
     self.taxes.each do |k,v|
       item_hash_tax += v[:t]
     end
-    item_hash_tax = item_hash_tax.round(2)
-    test1 = self.tax_sum == item_hash_tax
-    raise "Item test1 failed" unless test1
+    test1 = self.tax_sum.round(2) == item_hash_tax.round(2)
+    raise "BookingItem test1 failed for id #{ self.id }" unless test1
     
-    # test taxItem count vs. self.tax_items + self.surcharge_items.tax_items
+    test1a = self.tax_sum.round(2) == (self.surcharge_items.existing.sum(:tax_sum) + self.tax_items.existing.where(:surcharge_item_id => nil).sum(:tax) ).round(2)
+    raise "BookingItem test1a failed for id #{ self.id }" unless test1a
 
-    #self.surcharge_items.existing.each do |o|
-    #  o.check
-    #end
+    self.surcharge_items.each do |si|
+      si.check
+    end
     
-    tax_items_tax_sum = self.tax_items.existing.sum(:tax).round(2)
     item_tax_sum = 0
     self.taxes.each do |k,v|
       item_tax_sum += v[:t]
     end
-    test5 = tax_items_tax_sum.round(2) == item_tax_sum.round(2)
-    raise "Item test5 failed" unless test5
+    test5 = self.tax_sum.round(2) == self.tax_items.existing.sum(:tax).round(2)
+    raise "BookingItem test5 failed for id #{ self.id }" unless test5
+    
+    test6 = self.sum.round(2) - self.base_price.round(2) * self.count * self.duration == self.surcharge_items.existing.sum(:sum).round(2)
+    raise "BookingItem test6 failed for id #{ self.id }" unless test6
+    
+    if self.hidden
+      test7 = self.surcharge_items.all?{ |si| si.hidden }
+      raise "BookingItem test7 failed for id #{ self.id }" unless test6
+    end
+    
+    return true
   end
   
 end

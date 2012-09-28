@@ -16,4 +16,10 @@ class TaxItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :booking
   belongs_to :settlement
+  
+  def hide(by_user)
+    self.hidden = true
+    self.hidden_by = by_user
+    self.save
+  end
 end
