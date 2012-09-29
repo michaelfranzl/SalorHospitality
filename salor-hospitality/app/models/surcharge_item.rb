@@ -95,11 +95,6 @@ class SurchargeItem < ActiveRecord::Base
     
     test8 = self.tax_items.count == self.taxes.keys.count
     raise "SurchargeItem test8 failed for id #{ self.id }" unless test8
-    
-    if self.hidden
-      test9 = self.tax_items.all?{ |ti| ti.hidden }
-      raise "SurchargeItem test9 failed for id #{ self.id }" unless test9
-    end
     return true
   end
 end

@@ -276,9 +276,6 @@ class Booking < ActiveRecord::Base
     raise "Booking test5 failed for id #{ self.id }" unless test5
     
     test6 = self.tax_sum.round(2) == (self.tax_items.existing.sum(:tax) + self.orders.collect{|o| TaxItem.where(:order_id => o.id).existing.sum(:tax)}.sum ).round(2)
-    puts self.tax_sum.round(2)
-    puts self.tax_items.existing.sum(:tax).round(2)
-    puts (self.orders.collect{|o| TaxItem.where(:order_id => o.id).existing.sum(:tax)}.sum ).round(2)
     raise "Booking test6 failed for id #{ self.id }" unless test6
     
     return true

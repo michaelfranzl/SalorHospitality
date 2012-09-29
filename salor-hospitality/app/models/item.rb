@@ -100,7 +100,7 @@ class Item < ActiveRecord::Base
     self.refunded = true
     self.refunded_by = by_user.id
     self.refund_sum = self.sum
-    self.tax_items.update_all :gro => 0, :net => 0, :tax => 0
+    self.tax_items.update_all :hidden => true, :hidden_by => -5
     self.option_items.update_all :sum => 0
     self.calculate_totals
     self.order.calculate_totals
@@ -254,7 +254,7 @@ class Item < ActiveRecord::Base
     partner_item.printed_count += count
     self.count -= count
     self.printed_count -= count
-    self.hide(0) if self.count.zero?
+    self.hide(-3) if self.count.zero?
     partner_item.save # only a direct method of self has access to unsaved object changes. since we call OptionItem.calculate_totals below, this methods would not have access to those changes if we wouldn't save. therefore, we must save here.
     partner_item.option_items.each do |o|
       o.calculate_totals
@@ -266,7 +266,7 @@ class Item < ActiveRecord::Base
     partner_item.calculate_totals
     self.calculate_totals
     if parent_order.items.existing.empty?
-      parent_order.hide(0)
+      parent_order.hide(-3)
     else
       parent_order.calculate_totals
     end
@@ -275,6 +275,17 @@ class Item < ActiveRecord::Base
   
   def compose_option_names_without_price
     self.option_items.collect{ |o| "#{ o.name }" }.join("<br />")
+  end
+  
+  def rotate_tax
+    tax_ids = self.vendor.taxes.existing.collect { |t| t.id }
+    current_item_tax = self.vendor.taxes.find_by_id(self.taxes.keys.first)
+    current_tax_id_index = tax_ids.index current_item_tax.id
+    next_tax_id = tax_ids.rotate[current_tax_id_index]
+    next_tax = self.vendor.taxes.find_by_id(next_tax_id)
+    self.tax_items.update_all :hidden => true, :hidden_by => -4
+    self.calculate_taxes([next_tax])
+    self.order.calculate_totals
   end
   
   def check
@@ -298,7 +309,7 @@ class Item < ActiveRecord::Base
     if self.refunded
       test2 = item_sum == 0
       raise "Item test2 failed for id #{id}" unless test2
-      test3 = self.tax_items.sum(:tax).round(2) == 0
+      test3 = self.tax_items.existing.sum(:tax).round(2) == 0
       raise "Item test3 failed for id #{id}" unless test3
       test3b =  self.option_items.sum(:sum).round(2) == 0
       raise "Item test3b failed for id #{id}" unless test3b
@@ -307,11 +318,10 @@ class Item < ActiveRecord::Base
     unless self.hidden
       test3a = self.tax_items.existing.count == self.taxes.keys.count
       raise "Item test3a failed for id #{id}" unless test3a
-      test4 = self.option_items.sum(:sum).round(2) == (self.sum - (self.price * self.count)).round(2)
+      test4 = self.option_items.sum(:sum).round(2) == 0
       raise "Item test4 failed for id #{id}" unless test4
       
     #TODO TaxItems at refund_sum
-    #TODO at Germany tax
     
       item_tax_sum = 0
       self.taxes.each do |k,v|

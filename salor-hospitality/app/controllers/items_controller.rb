@@ -24,18 +24,13 @@ class ItemsController < ApplicationController
       @item = get_model(k.to_i)
       @item.split(v['split_count'].to_i) if @item
     end
-    render_invoice_form(@item.order.table) and return
+    render_invoice_form(@item.order.table)
   end
   
   def rotate_tax
     @item = get_model
-    tax_ids = @current_vendor.taxes.existing.collect { |t| t.id }
-    current_item_tax = @current_vendor.taxes.find_by_id(@item.taxes.keys.first)
-    current_tax_id_index = tax_ids.index current_item_tax.id
-    next_tax_id = tax_ids.rotate[current_tax_id_index]
-    next_tax = @current_vendor.taxes.find_by_id(next_tax_id)
-    @item.calculate_taxes([next_tax])
-    render_invoice_form(@item.order.table) and return
+    @item.rotate_tax
+    render_invoice_form(@item.order.table) 
   end
 
   # We'll use edit for separation of items in the refund form
