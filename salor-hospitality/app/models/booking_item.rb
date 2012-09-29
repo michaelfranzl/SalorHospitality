@@ -132,9 +132,9 @@ class BookingItem < ActiveRecord::Base
     self.taxes = {}
     tax_sum_total = 0
     tax_array.each do |tax|
-      tax_sum = (self.sum * ( tax.percent / 100.0 )).round(2)
-      gro = (self.sum).round(2)
-      net = (gro - tax_sum).round(2)
+      gro = (self.sum * self.count * self.duration).round(2)
+      net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
+      tax_sum = (gro - net).round(2)
       self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
       
       # TaxItem creation

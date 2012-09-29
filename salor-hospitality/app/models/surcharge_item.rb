@@ -34,9 +34,9 @@ class SurchargeItem < ActiveRecord::Base
     tax_sum_total = 0
     tax_array.each do |ta|
       tax_object = ta.tax
-      tax_sum = (ta.amount * ( tax_object.percent / 100.0 )).round(2) * self.count * self.duration
-      gro = (ta.amount).round(2) * self.count * self.duration
-      net = (gro - tax_sum).round(2)
+      gro = (self.sum).round(2)
+      net = (gro / ( 1.0 + ( tax_object.percent / 100.0 ))).round(2)
+      tax_sum = (gro - net).round(2)
       self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
       
       # TaxItem creation

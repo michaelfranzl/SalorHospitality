@@ -246,11 +246,11 @@ class Booking < ActiveRecord::Base
   
   def check
 
-    self.orders.each do |o|
+    self.orders.existing.each do |o|
       o.check
     end
     
-    self.booking_items.each do |bi|
+    self.booking_items.existing.each do |bi|
       bi.check
     end
     
