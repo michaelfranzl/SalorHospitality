@@ -170,6 +170,8 @@ class BookingItem < ActiveRecord::Base
   end
   
   def check
+    puts self.inspect
+    puts ''
     item_hash_tax = 0
     self.taxes.each do |k,v|
       item_hash_tax += v[:t]

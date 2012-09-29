@@ -14,8 +14,189 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
+  
+  def route
+    #puts "XXXXXXXXXXXXX #{params[:currentview]}"
+    #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
+    case params[:currentview]
+      #===============CURRENTVIEW==================
+      # this action is for simple writing of any model to the server and getting a Model object back. TODO: This should actually go into a separate controller, like application controller.
+      when 'push'
+        if params[:relation]
+          @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
+          @model.update_attributes(params[:model])
+          render :json => @model
+        end
+      #===============CURRENTVIEW==================
+      when 'invoice_paper', 'refund'
+        get_order
+        case params['jsaction']
+          #----------jsaction----------
+          when 'just_print'
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render :nothing => true
+          #----------jsaction----------
+          when 'mark_print_pending'
+            @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
+            render :nothing => true
+        end
+      #===============CURRENTVIEW==================
+      when 'invoice'
+        get_order
+        case params['jsaction']
+          #----------jsaction----------
+          when 'move'
+            former_table = @order.table
+            @order.move(params[:target_table_id])
+            render_invoice_form(former_table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+          #----------jsaction----------
+          when 'display_tax_colors'
+            if session[:display_tax_colors]
+              session[:display_tax_colors] = !session[:display_tax_colors] # toggle
+            else
+              session[:display_tax_colors] = true # set initial value
+            end
+            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+          #----------jsaction----------
+          when 'mass_assign_tax'
+            tax = @current_vendor.taxes.find_by_id(params[:tax_id])
+            @order.items.existing.each do |item|
+              item.calculate_taxes([tax])
+            end
+            #@order.calculate_totals
+            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+          #----------jsaction----------
+          when 'change_cost_center'
+            @order.update_attribute(:cost_center_id, params[:cost_center_id])
+            render :nothing => true # called from outside the static route() function, but nothing has to be rendered.
+          #----------jsaction----------
+          when 'assign_to_booking'
+            @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
+            @order.update_attributes(:booking_id => @booking.id)
+            @order.finish
+            @booking.calculate_totals
+            @order.table.update_color
+            if mobile?              
+              # waiters on mobile devices never should be routed to the booking screen
+              render_invoice_form(@order) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+            else
+              render :js => "route('booking',#{@booking.id});" # called from outside the static route() function, but routing can be done via static JS.
+            end
+          #----------jsaction----------
+          when 'pay_and_print'
+            @order.pay
+            @order.reload
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+          #----------jsaction----------
+          when 'pay_and_print_pending'
+            @order.pay
+            @order.reload
+            @order.update_attribute :print_pending, true
+            @current_vendor.update_attribute :print_data_available, true
+            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+          #----------jsaction----------
+          when 'pay_and_no_print'
+            @order.pay
+            @order.reload
+            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+        end
+      #===============CURRENTVIEW==================
+      when 'table'
+        get_order
+        case params['jsaction']
+          #----------jsaction----------
+          when 'send'
+            render :nothing => true and return if @order.hidden
+            if @order.booking
+              @order.finish
+              @order.table.update_color
+              render :js => "route('booking',#{@order.booking.id});" # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
+            end
+            case params[:target]
+              when 'tables' then
+                @order.print(['tickets'])
+                render :nothing => true # routing is done by the static route() function, so nothing to be done here.
+              when 'invoice'
+                @order.print(['tickets'])
+                render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
+              when 'table_no_invoice_print'
+                @order.pay
+                @order.print(['tickets']) if @current_company.mode == 'local'
+              when 'table_do_invoice_print'
+                @order.pay
+                @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
+            end
+            
+            @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
+            if @orders.empty?
+              @order.table.update_attribute :user, nil
+              render :js => "route('table',#{params[:model][:table_id]});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+            else
+              render :js => "route('tables',#{params[:model][:table_id]});" # there is still one order open. it would confuse the user, when he would see the items of this order after he has finished, so we route to the tables view.
+            end
+          #----------jsaction----------
+          when 'move'
+            @order.move(params[:target_table_id])
+            @order.print(['tickets'])
+            render :nothing => true # routing is done by static javascript to 'tables'
+        end
+      #===============CURRENTVIEW==================
+      when 'room'
+        get_booking
+        case params['jsaction']
+          #----------jsaction----------
+          when 'send'
+            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly. A timeout would be possible, but oh, well.
+          #----------jsaction----------
+          when 'pay'
+            @booking.pay
+            render :js => "route('rooms');" # see previous comment
+          #----------jsaction----------
+          when 'send_and_go_to_table'
+            render :js => "submit_json.model.booking_id = #{ @booking.id }" # the switch to the table happens in the JS route function from where this was called. the order view variables will not be fully  requested from the server, but submit_json.model.booking_id is the only variable we need for a successful order.
+          #----------jsaction----------
+          when 'send_and_redirect_to_invoice'
+            render :js => "window.location = '/bookings/#{ @booking.id }';"
+          #----------jsaction----------
+          when 'pay_and_redirect_to_invoice'
+            @booking.pay
+            render :js => "window.location = '/bookings/#{ @booking.id }';"
+        end
+    end
+  end
 
   private
+  
+    def get_order
+      if params[:id]
+        @order = get_model
+      elsif params[:model] and params[:model][:table_id]
+        # Reuse the order on table if possible
+        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
+      else
+        raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
+      end
+      if @order
+        @order.update_from_params(params, @current_user)
+      else
+        @order = Order.create_from_params(params, @current_vendor, @current_user)
+        @order.set_nr
+      end
+      return @order
+    end
+
+    def get_booking
+      @booking = Booking.accessible_by(@current_user).existing.find_by_id(params[:id]) if params[:id]
+      if @booking
+        @booking.update_from_params(params, @current_user)
+      else
+        @booking = Booking.create_from_params(params, @current_vendor, @current_user)
+        @booking.set_nr
+      end
+      return @booking
+    end
 
     def assign_from_to(p)
       begin

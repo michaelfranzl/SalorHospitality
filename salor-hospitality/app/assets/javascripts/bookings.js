@@ -414,7 +414,7 @@ function draw_booking(booking) {
             model: model
           };
           _push(payload,
-                '/orders/update_ajax',
+                '/route',
                 function (data) {
                   update_booking_for_room(data.room_id,data);
                   _set("salor_hotel.pause_redraw",false);

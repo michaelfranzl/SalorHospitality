@@ -75,7 +75,6 @@ SalorHospitality::Application.routes.draw do
       post :login
       get :refund
       get :last_invoices
-      post :update_ajax
       get :logout
       post :by_nr
     end
@@ -96,6 +95,7 @@ SalorHospitality::Application.routes.draw do
   match 'vendors/report' => 'vendors#report'
   match 'vendors/identify_printers' => 'vendors#identify_printers'
   match 'users/unlock_ip' => 'users#unlock_ip'
+  match 'route' => 'application#route'
   
 
 

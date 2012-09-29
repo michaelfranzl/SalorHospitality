@@ -82,6 +82,7 @@ class Order < ActiveRecord::Base
       order.hide(user.id)
     end
     order.update_associations(user)
+    order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
     return order
@@ -125,6 +126,7 @@ class Order < ActiveRecord::Base
       self.hide(user.id)
     end
     self.update_associations(user)
+    self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
   end

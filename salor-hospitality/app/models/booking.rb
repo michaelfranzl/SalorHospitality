@@ -254,6 +254,7 @@ class Booking < ActiveRecord::Base
   end
   
   def check
+    self.reload
     self.booking_items.each do |bi|
       puts "checking #{bi.id}"
       bi.check

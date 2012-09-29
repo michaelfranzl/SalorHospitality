@@ -127,7 +127,7 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       //submit_json.model = {table_id:model_id};
-      //final rendering will be done in orders/update_ajax
+      //final rendering will be done in application#route
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
@@ -135,7 +135,7 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       //submit_json.model = {table_id:model_id};
-      //final rendering will be done in orders/update_ajax
+      //final rendering will be done in application#route
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       // pure offline mode is not supported as of now, so this never executes
       debug('Offline mode. Fetching items from queue');
@@ -185,7 +185,7 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       submit_json.model = {table_id:model_id};
       send_json('table_' + model_id);
-      // invoice form will be rendered by the server as .js.erb template. see orders/update_ajax.
+      // invoice form will be rendered by the server as .js.erb template. see application#route
     }
     $('#invoices').html('');
     $('#invoices').show();
@@ -298,7 +298,7 @@ function route(target, model_id, action, options) {
     } else if (action == 'invoice_move') {
       $.ajax({
         type: 'post',
-        url: '/orders/update_ajax',
+        url: '/route',
         data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
         timeout: 5000
       })
@@ -328,7 +328,7 @@ function send_queue(object_id) {
   debug('SEND QUEUE table ' + object_id);
   $.ajax({
     type: 'post',
-    url: '/orders/update_ajax',
+    url: '/route',
     data: submit_json_queue[object_id],
     timeout: 20000,
     complete: function(data,status) {
@@ -726,7 +726,7 @@ function update_order_from_invoice_form(data) {
   data['payment_method_items'] = submit_json.payment_method_items;
   $.ajax({
     type: 'post',
-    url: '/orders/update_ajax',
+    url: '/route',
     data: data,
     timeout: 5000
   });
@@ -784,7 +784,7 @@ function update_order_from_refund_form(data) {
   data['currentview'] = 'refund';
   $.ajax({
     type: 'post',
-    url: '/orders/update_ajax',
+    url: '/route',
     data: data,
     timeout: 5000
   });
