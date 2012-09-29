@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
     case params[:currentview]
       #===============CURRENTVIEW==================
-      # this action is for simple writing of any model to the server and getting a Model object back. TODO: This should actually go into a separate controller, like application controller.
+      # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'
         if params[:relation]
           @model = @current_vendor.send(params[:relation]).existing.find_by_id(params[:id])
@@ -34,13 +34,12 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'just_print'
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render :nothing => true
           #----------jsaction----------
           when 'mark_print_pending'
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
-            render :nothing => true
         end
+        render :nothing => true
       #===============CURRENTVIEW==================
       when 'invoice'
         get_order
@@ -108,38 +107,36 @@ class ApplicationController < ActionController::Base
         case params['jsaction']
           #----------jsaction----------
           when 'send'
-            render :nothing => true and return if @order.hidden
+            #render :nothing => true and return if @order.hidden
+            @order.table.update_color
             if @order.booking
               @order.finish
-              @order.table.update_color
+              @order.booking.calculate_totals
               render :js => "route('booking',#{@order.booking.id});" # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
-            end
-            case params[:target]
-              when 'tables' then
-                @order.print(['tickets'])
-                render :nothing => true # routing is done by the static route() function, so nothing to be done here.
-              when 'invoice'
-                @order.print(['tickets'])
-                render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
-              when 'table_no_invoice_print'
-                @order.pay
-                @order.print(['tickets']) if @current_company.mode == 'local'
-              when 'table_do_invoice_print'
-                @order.pay
-                @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
-            end
-            
-            @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id])
-            if @orders.empty?
-              @order.table.update_attribute :user, nil
-              render :js => "route('table',#{params[:model][:table_id]});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+            elsif not @order.hidden
+              case params[:target]
+                when 'tables'
+                  @order.print(['tickets'])
+                  render :nothing => true # routing is done by the static route() function, so nothing to be done here.
+                when 'invoice'
+                  @order.print(['tickets'])
+                  render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
+                when 'table_no_invoice_print'
+                  @order.pay
+                  @order.print(['tickets']) if @current_company.mode == 'local'
+                  render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+                when 'table_do_invoice_print'
+                  @order.pay
+                  @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
+                  render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+              end
             else
-              render :js => "route('tables',#{params[:model][:table_id]});" # there is still one order open. it would confuse the user, when he would see the items of this order after he has finished, so we route to the tables view.
+              render :nothing => true
             end
           #----------jsaction----------
           when 'move'
-            @order.move(params[:target_table_id])
             @order.print(['tickets'])
+            @order.move(params[:target_table_id])
             render :nothing => true # routing is done by static javascript to 'tables'
         end
       #===============CURRENTVIEW==================
@@ -165,13 +162,26 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
+    return
   end
 
   private
   
+    def get_model(model_id=nil, model=nil)
+      id = model_id ? model_id : params[:id]
+      if id
+        model ||= controller_name.classify.constantize
+        object = model.accessible_by(@current_user).existing.find_by_id(id)
+        if object.nil?
+          flash[:error] = t('not_found')
+        end
+      end
+      return object
+    end
+  
     def get_order
       if params[:id]
-        @order = get_model
+        @order = get_model(params[:id], Order)
       elsif params[:model] and params[:model][:table_id]
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
@@ -232,17 +242,6 @@ class ApplicationController < ActionController::Base
       $Params = params
 
       redirect_to new_session_path unless @current_user and @current_vendor
-    end
-
-    def get_model(model_id=nil)
-      id = model_id ? model_id : params[:id]
-      if id
-        model = controller_name.classify.constantize.accessible_by(@current_user).existing.find_by_id(id)
-        if model.nil?
-          flash[:error] = t('not_found')
-        end
-      end
-      return model
     end
 
     # the invoice view can contain 1 or 2 non-finished orders. if it contains 2 orders, and 1 is finished, then stay on the invoice view and just display the remaining order, otherwise go to the main (tables) view.

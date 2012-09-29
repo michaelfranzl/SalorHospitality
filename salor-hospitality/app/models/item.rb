@@ -65,12 +65,10 @@ class Item < ActiveRecord::Base
     separated_item.option_items.each do |o| 
       o.calculate_totals
     end
-    
     self.save
     self.option_items.each do |o| 
       o.calculate_totals
     end
-
     separated_item.calculate_totals
     self.calculate_totals
     self.order.calculate_totals
@@ -136,7 +134,7 @@ class Item < ActiveRecord::Base
       
       # TaxItem creation
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :hidden => nil, :hidden_by => nil
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       else
         TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       end
@@ -148,6 +146,7 @@ class Item < ActiveRecord::Base
   
 
   def create_option_items_from_ids(ids)
+    return if ids.nil?
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     ids.each do |i|
       o = Option.find_by_id(i.to_i)
@@ -170,17 +169,9 @@ class Item < ActiveRecord::Base
     write_attribute(:max_count, c) if c > self.max_count
   end
 
-  #def total_price
-  #  self.sum
-  #end
-
   def options_price
     self.option_items.sum(:price)
   end
-
-  #def total_options_price
-  #  self.option_items.sum(:sum)
-  #end
 
   def full_price
     self.price * self.count + self.option_items.sum(:sum)
@@ -189,14 +180,6 @@ class Item < ActiveRecord::Base
   def optionslist
     self.option_items.collect{ |oi| oi.option_id }
   end
-
-#   def optionslist=(optionslist)
-#     optionslist.delete '0' # 0 is sent by JS always, otherwise optionslist is not defined
-#     self.options = []
-#     optionslist.each do |o|
-#       self.options << Option.find_by_id(o.to_i)
-#     end
-#   end
 
   def usage
     u = read_attribute :usage
@@ -228,21 +211,23 @@ class Item < ActiveRecord::Base
     self.hidden = true
     self.hidden_by = by_user_id
     self.save
-    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
-    self.option_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.unlink
+    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
+    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def unlink
     partner_item = self.item
-    partner_item.item = nil
-    partner_item.save
+    if partner_item
+      partner_item.item = nil
+      partner_item.save
+    end
     self.item = nil
     self.save
   end
 
   def split(count=1)
     parent_order = self.order
-    
     split_order = parent_order.order
     if split_order.nil?
       split_order = Order.new(parent_order.attributes)
@@ -250,7 +235,6 @@ class Item < ActiveRecord::Base
       parent_order.order = split_order
       split_order.order = parent_order
     end
-    
     partner_item = self.item
     if partner_item.nil?
       partner_item = Item.new(self.attributes) # attention: at this point, partner_item will still have the id of self. below, we call partner_item.save, and only at this point it gets the new id.
@@ -265,33 +249,23 @@ class Item < ActiveRecord::Base
       partner_item.item = self
       partner_item.order = split_order 
     end
-    
     count = self.count if count > self.count # do not decrement into negative numbers
     partner_item.count += count
     partner_item.printed_count += count
     self.count -= count
     self.printed_count -= count
-    
-    if self.count.zero?
-      self.unlink
-      self.hide(0)
-    end
-    
+    self.hide(0) if self.count.zero?
     partner_item.save # only a direct method of self has access to unsaved object changes. since we call OptionItem.calculate_totals below, this methods would not have access to those changes if we wouldn't save. therefore, we must save here.
     partner_item.option_items.each do |o|
       o.calculate_totals
     end
-    
     self.save
     self.option_items.each do |o| 
       o.calculate_totals
     end
-
     partner_item.calculate_totals
     self.calculate_totals
-    
     if parent_order.items.existing.empty?
-      parent_order.unlink
       parent_order.hide(0)
     else
       parent_order.calculate_totals
@@ -304,6 +278,10 @@ class Item < ActiveRecord::Base
   end
   
   def check
+    self.option_items.existing.each do |o|
+      o.check
+    end
+    
     item_sum = self.sum
     item_tax_sum = self.tax_sum
     item_hash_gro = 0
@@ -315,31 +293,33 @@ class Item < ActiveRecord::Base
     item_hash_tax = item_hash_tax.round(2)
     item_hash_gro = item_hash_gro.round(2)
     test1 = (item_sum == item_hash_gro ) && (item_tax_sum == item_hash_tax )
-    raise "Item test1 failed" unless test1
+    raise "Item test1 failed for id #{id}" unless test1
     
     if self.refunded
       test2 = item_sum == 0
-      raise "Item test2 failed" unless test2
-      test3 = self.tax_items.existing.sum(:tax).round(2) == 0
-      raise "Item test3 failed" unless test3
-    else
+      raise "Item test2 failed for id #{id}" unless test2
+      test3 = self.tax_items.sum(:tax).round(2) == 0
+      raise "Item test3 failed for id #{id}" unless test3
+      test3b =  self.option_items.sum(:sum).round(2) == 0
+      raise "Item test3b failed for id #{id}" unless test3b
+    end
+    
+    unless self.hidden
       test3a = self.tax_items.existing.count == self.taxes.keys.count
-      raise "Item test3a failed" unless test3a
-      test4 = self.option_items.existing.sum(:sum) == (self.sum - (self.price * self.count))
-      raise "Item test4 failed" unless test4
-    end
+      raise "Item test3a failed for id #{id}" unless test3a
+      test4 = self.option_items.sum(:sum).round(2) == (self.sum - (self.price * self.count)).round(2)
+      raise "Item test4 failed for id #{id}" unless test4
+      
+    #TODO TaxItems at refund_sum
+    #TODO at Germany tax
     
-    self.option_items.existing.each do |o|
-      o.check
+      item_tax_sum = 0
+      self.taxes.each do |k,v|
+        item_tax_sum += v[:t]
+      end
+      test5 = self.tax_items.existing.sum(:tax).round(2) == item_tax_sum.round(2)
+      raise "Item test5 failed for id #{id}" unless test5
     end
-    
-    tax_items_tax_sum = self.tax_items.existing.sum(:tax).round(2)
-    item_tax_sum = 0
-    self.taxes.each do |k,v|
-      item_tax_sum += v[:t]
-    end
-    test5 = tax_items_tax_sum.round(2) == item_tax_sum.round(2)
-    raise "Item test5 failed" unless test5
   end
   
 end

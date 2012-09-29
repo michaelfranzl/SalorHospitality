@@ -62,29 +62,14 @@ class Order < ActiveRecord::Base
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
-      new_item = Item.new(item_params[1])
-      new_item.hidden_by = user.id if new_item.hidden
-      #new_item.hide(user) if new_item.count.zero? # 0 count items are allowed, unlike OrderItems
-      new_item.order = order
-      #new_item.cost_center = order.cost_center
-      new_item.vendor = vendor
-      new_item.company = vendor.company
-      new_item.save
-      new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
-      new_item.option_items.each do |oi|
-        oi.hide(new_item) if new_item.hidden
-      end
-      new_item.calculate_totals
+      order.create_new_item(item_params)
     end
     order.save
-    unless order.items.existing.any?
-      order.unlink
-      order.hide(user.id)
-    end
     order.update_associations(user)
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
+    order.hide(user.id) unless order.items.existing.any?
     return order
   end
 
@@ -93,42 +78,39 @@ class Order < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
-        item_params[1].delete(:id)
-        item = Item.find_by_id(item_id)
-        item.update_attributes(item_params[1])
-        item.hidden_by = user.id if item.hidden
-        item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
-        #item.hide(user) if item.count.zero?
-        item.option_items.each do |oi|
-          oi.hide(item) if item.hidden
-        end
-        item.calculate_totals
+        self.update_item(item_id, item_params)
       else
-        new_item = Item.new(item_params[1])
-        new_item.hidden_by = user.id if new_item.hidden
-        new_item.order = self
-        #new_item.cost_center = self.cost_center
-        new_item.vendor = vendor
-        new_item.company = vendor.company
-        new_item.save
-        new_item.create_option_items_from_ids(item_params[1][:i]) if item_params[1][:i]
-        new_item.option_items.each do |oi|
-          oi.hidden = new_item.hidden
-          oi.hidden_by = new_item.hidden_by
-          oi.calculate_totals
-        end
-        new_item.calculate_totals
+        self.create_new_item(item_params)
       end
     end
     self.save
-    unless self.items.existing.any?
-      self.unlink
-      self.hide(user.id)
-    end
     self.update_associations(user)
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
+    self.hide(user.id) unless self.items.existing.any?
+  end
+  
+  def create_new_item(p)
+    i = Item.new(p[1])
+    i.order = self
+    i.vendor = vendor
+    i.company = vendor.company
+    i.save
+    i.create_option_items_from_ids p[1][:i]
+    i.option_items.each { |oi| oi.calculate_totals }
+    i.calculate_totals
+    i.hide(user.id) if i.hidden
+  end
+  
+  def update_item(id, p)
+    p[1].delete(:id)
+    i = Item.find_by_id(id)
+    i.update_attributes(p[1])
+    i.create_option_items_from_ids p[1][:i]
+    i.option_items.each { |oi| oi.calculate_totals }
+    i.calculate_totals
+    i.hide(user.id) if i.hidden
   end
   
   def update_payment_method_items(params)
@@ -157,6 +139,11 @@ class Order < ActiveRecord::Base
     self.sum = self.items.existing.sum(:sum).round(2)
     self.refund_sum = self.items.existing.sum(:refund_sum).round(2)
     self.tax_sum = self.items.existing.sum(:tax_sum).round(2)
+    self.calculate_taxes
+    self.save
+  end
+  
+  def calculate_taxes
     self.taxes = {}
     self.items.existing.each do |item|
       item.taxes.each do |k,v|
@@ -178,18 +165,16 @@ class Order < ActiveRecord::Base
   def hide(by_user_id)
     self.vendor.unused_order_numbers << self.nr
     self.vendor.save
-    
     self.nr = nil
     self.hidden = true
     self.hidden_by = by_user_id
     self.save
-    
+    self.unlink
     self.option_items.update_all :hidden => true, :hidden_by => by_user_id
     self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def unlink
-
     split_order = self.order
     if split_order
       split_order.items.update_all :item_id => nil
@@ -211,21 +196,20 @@ class Order < ActiveRecord::Base
 
     if target_order
       self.items.update_all :order_id => target_order.id
+      self.option_items.update_all :order_id => target_order.id
+      self.tax_items.update_all :order_id => target_order.id
       self.reload
-      self.destroy
-      target_order.calculate_totals
+      self.calculate_totals
+      self.hide(-1)
       target_order.regroup
+      target_order.items.existing.each { |i| i.calculate_totals }
+      target_order.calculate_totals
     else
       self.table_id = target_table_id
       self.save
     end
-
-    # update table users and colors, this should go into table.rb
-    origin_table.user = nil if origin_table.orders.existing.where( :finished => false ).empty?
-    origin_table.save
-    
-    target_table.user = self.user
-    target_table.save
+    origin_table.update_color
+    target_table.update_color
   end
 
   def regroup
@@ -233,22 +217,23 @@ class Order < ActiveRecord::Base
     n = items.size - 1
     0.upto(n-1) do |i|
       (i+1).upto(n) do |j|
-        if (items[i].article_id  == items[j].article_id and
-            items[i].quantity_id == items[j].quantity_id and
-            items[i].option_items== items[j].option_items and
-            items[i].price       == items[j].price and
-            items[i].comment     == items[j].comment and
-            items[i].scribe      == items[j].scribe and
+        if (items[i].article_id  == items[j].article_id    and
+            items[i].quantity_id == items[j].quantity_id   and
+            items[i].option_items.existing.collect{|oi| oi.option.id}.uniq.sort == items[j].option_items.existing.collect{|oi| oi.option.id}.uniq  and
+            items[i].price       == items[j].price         and
+            items[i].comment     == items[j].comment       and
+            items[i].scribe      == items[j].scribe        and
             not items[i].destroyed?
             )
           items[i].count += items[j].count
           items[i].printed_count += items[j].printed_count
-          result = items[i].save
-          items[j].destroy
+          items[i].save # this is needed for the next step
+          items[i].option_items.each{|oi| oi.calculate_totals }
+          items[i].calculate_totals
+          items[j].hide(-2)
         end
       end
     end
-    self.reload
   end
 
   def finish
@@ -515,7 +500,6 @@ class Order < ActiveRecord::Base
   end
   
   def check
-    
     self.items.each do |i|
       i.check
     end
@@ -525,19 +509,15 @@ class Order < ActiveRecord::Base
       order_hash_tax_sum += v[:t]
     end
     test1 = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
-    puts order_hash_tax_sum.round(2)
-    puts self.tax_sum.round(2)
-    raise "Order test1 failed" unless test1
+    raise "Order test1 failed for id #{ self.id }" unless test1
 
     test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
-    raise "Order test3 failed" unless test3
-
-
+    raise "Order test3 failed for id #{ self.id }" unless test3
     
     test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
-    raise "Order test4 failed" unless test4
+    raise "Order test4 failed for id #{ self.id }" unless test4
     
     test5 = self.items.existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
-    raise "Order test5 failed" unless test5
+    raise "Order test5 failed for id #{ self.id }" unless test5
   end
 end

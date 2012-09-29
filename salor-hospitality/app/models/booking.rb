@@ -68,74 +68,60 @@ class Booking < ActiveRecord::Base
     booking.vendor = vendor
     booking.company = vendor.company
     params[:items].to_a.each do |item_params|
-      new_item = BookingItem.new(item_params[1])
-      new_item.ui_id = item_params[0]
-      new_item.hidden_by = user.id if new_item.hidden
-      new_item.hide(user) if new_item.count.zero?
-      new_item.booking = booking
-      new_item.room_id = booking.room_id
-      new_item.vendor = vendor
-      new_item.company = vendor.company
-      new_item.save
-      new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-      new_item.surcharge_items.each do |si|
-        si.hide(new_item.hidden_by) if new_item.hidden
-      end
-      new_item.calculate_totals
+      booking.create_new_item(item_params)
     end
-    booking.hide(user.id) if booking.hidden
     booking.save
-    # unlike Orders, we don't delete Booking when 0 BookinItems present
     booking.update_associations(user)
     booking.calculate_totals
     BookingItem.make_multiseason_associations
     booking.update_payment_method_items(params)
+    booking.hide(user.id) if booking.hidden
     return booking
   end
-
 
   def update_from_params(params, user)
     self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
-        item_params[1].delete(:id)
-        item = BookingItem.find_by_id(item_id)
-        item.update_attributes(item_params[1])
-        item.update_attribute :ui_id, item_params[0]
-        item.hidden_by = user.id if item.hidden
-        item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        item.hide(user) if item.count.zero?
-        item.surcharge_items.each do |si|
-          si.hide(item.hidden_by) if item.hidden
-          #si.hidden = item.hidden
-          #si.hidden_by = item.hidden_by
-          #si.calculate_totals
-        end
-        item.calculate_totals
+        self.update_item(item_id, item_params)
       else
-        new_item = BookingItem.new(item_params[1])
-        new_item.hidden_by = user.id if new_item.hidden
-        new_item.ui_id = item_params[0]
-        new_item.room_id = self.room_id
-        new_item.booking = self
-        new_item.vendor = vendor
-        new_item.company = vendor.company
-        new_item.save
-        new_item.update_surcharge_items_from_ids(item_params[1][:surchargeslist]) if item_params[1][:surchargeslist]
-        new_item.surcharge_items.each do |si|
-          si.hide(new_item.hidden_by) if new_item.hidden
-        end
-        new_item.calculate_totals
+        self.create_new_item(item_params)
       end
     end
     self.hide(user.id) if self.hidden
     self.save
-    # unlike Orders, we don't delete Booking when 0 BookinItems present
     self.update_associations(user)
     self.calculate_totals
     BookingItem.make_multiseason_associations
     self.update_payment_method_items(params)
+  end
+  
+  def create_new_item(p)
+    i = BookingItem.new(p[1])
+    i.ui_id = p[0]
+    i.room_id = self.room_id
+    i.booking = self
+    i.vendor = vendor
+    i.company = vendor.company
+    i.save
+    i.update_surcharge_items_from_ids p[1][:surchargeslist]
+    i.surcharge_items.each do |si|
+      si.calculate_totals
+    end
+    i.calculate_totals
+    i.hide(user.id) if i.hidden or i.count.zero?
+  end
+  
+  def update_item(id, p)
+    p[1].delete(:id)
+    i = BookingItem.find_by_id(id)
+    i.update_attributes(p[1])
+    i.update_attribute :ui_id, p[0]
+    i.update_surcharge_items_from_ids p[1][:surchargeslist]
+    i.surcharge_items.each { |si| si.calculate_totals }
+    i.calculate_totals
+    i.hide(user.id) if i.hidden or i.count.zero?
   end
   
   def update_payment_method_items(params)
@@ -189,10 +175,18 @@ class Booking < ActiveRecord::Base
 
   def calculate_totals
     self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum).round(2)
+    self.sum += Order.where(:booking_id => self.id).existing.sum(:sum)
     self.refund_sum = self.booking_items.existing.sum(:refund_sum).round(2)
     self.tax_sum = self.booking_items.existing.sum(:tax_sum).round(2)
+    self.tax_sum += Order.where(:booking_id => self.id).existing.sum(:tax_sum)
+    self.save
+    self.calculate_taxes
+    self.set_booking_date
+    self.save
+  end
+  
+  def calculate_taxes
     self.taxes = {}
-    
     self.booking_items.existing.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
@@ -207,7 +201,6 @@ class Booking < ActiveRecord::Base
         end
       end
     end
-    self.sum += Order.where(:booking_id => self.id).sum(:sum)
     self.orders.each do |order|
       order.taxes.each do |k,v|
         if self.taxes.has_key? k
@@ -222,8 +215,6 @@ class Booking < ActiveRecord::Base
         end
       end
     end
-    set_booking_date
-    save
   end
   
   def set_booking_date
@@ -254,28 +245,27 @@ class Booking < ActiveRecord::Base
   end
   
   def check
-    self.reload
+
+    self.orders.each do |o|
+      o.check
+    end
+    
     self.booking_items.each do |bi|
-      puts "checking #{bi.id}"
       bi.check
     end
     
-    test1 = self.sum.round(2) == self.booking_items.existing.sum(:sum).round(2)
-    raise "BookingItem test1 failed for id #{ self.id }" unless test1
+    test1 = self.sum.round(2) == (self.booking_items.existing.sum(:sum) + self.orders.existing.sum(:sum)).round(2)
+    raise "Booking test1 failed for id #{ self.id }" unless test1
     
     test2 = self.booking_item_sum.round(2) == self.booking_items.existing.sum(:sum).round(2)
-    raise "BookingItem test2 failed for id #{ self.id }" unless test2
+    raise "Booking test2 failed for id #{ self.id }" unless test2
     
-    test3 = self.tax_sum.round(2) == self.booking_items.existing.sum(:tax_sum).round(2)
-    raise "BookingItem test3 failed for id #{ self.id }" unless test3
+    test3 = self.tax_sum.round(2) == (self.booking_items.existing.sum(:tax_sum) + self.orders.existing.sum(:tax_sum)).round(2)
+    raise "Booking test3 failed for id #{ self.id }" unless test3
     
     if self.hidden
       test4 = self.tax_items.all?{|ti| ti.hidden} && self.surcharge_items.all?{|si| si.hidden} && self.booking_items.all?{|bi| bi.hidden}
-      raise "BookingItem test4 failed for id #{ self.id }" unless test4
-    end
-    
-    self.orders.each do |o|
-      o.check
+      raise "Booking test4 failed for id #{ self.id }" unless test4
     end
     
     booking_tax_sum = 0
@@ -283,7 +273,14 @@ class Booking < ActiveRecord::Base
       booking_tax_sum += v[:t]
     end
     test5 = self.tax_sum.round(2) == booking_tax_sum.round(2)
-    raise "BookingItem test5 failed for id #{ self.id }" unless test5
+    raise "Booking test5 failed for id #{ self.id }" unless test5
+    
+    test6 = self.tax_sum.round(2) == (self.tax_items.existing.sum(:tax) + self.orders.collect{|o| TaxItem.where(:order_id => o.id).existing.sum(:tax)}.sum ).round(2)
+    puts self.tax_sum.round(2)
+    puts self.tax_items.existing.sum(:tax).round(2)
+    puts (self.orders.collect{|o| TaxItem.where(:order_id => o.id).existing.sum(:tax)}.sum ).round(2)
+    raise "Booking test6 failed for id #{ self.id }" unless test6
+    
     return true
   end
 end

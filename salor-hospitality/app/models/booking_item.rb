@@ -52,6 +52,7 @@ class BookingItem < ActiveRecord::Base
 
   # This function creates and hides SurchargeItems depending on the selection on the UI. ids contains an array of currently selected surchargeItems. That means that all other existing SurchargeItems must be hidden.
   def update_surcharge_items_from_ids(ids)
+    return if ids.nil?
     # Rails loses session and params for this function if surcharges are selected in the UI. Fortunately, we can copy vendor and company from other models. It is insane, but see for yourself:
     #puts "XXXXXXXXXXXXXXXX #{@current_vendor.inspect}"
     
@@ -87,10 +88,11 @@ class BookingItem < ActiveRecord::Base
   end
 
   def hide(by_user_id)
-    self.update_attribute :hidden, true
+    self.hidden= true
     self.hidden_by = by_user_id
-    self.tax_items.update_all :hidden => true
     self.save
+    self.surcharge_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
   end
   
   def invoice_label
@@ -118,14 +120,16 @@ class BookingItem < ActiveRecord::Base
     end
     
     self.unit_sum = self.base_price
+    self.unit_sum += self.surcharge_items.existing.sum(:amount)
     self.sum = self.unit_sum * self.count * self.duration
+    self.sum += self.surcharge_items.existing.sum(:sum)
     
     if self.guest_type_id.nil?
       self.calculate_taxes([])
     else
       self.calculate_taxes(self.guest_type.taxes)
     end
-    save
+    self.save
   end
   
   def calculate_taxes(tax_array)
@@ -140,16 +144,14 @@ class BookingItem < ActiveRecord::Base
       # TaxItem creation
       tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :surcharge_item_id => nil, :tax_id => tax.id, :booking_id => self.booking_id).first
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :hidden => nil, :hidden_by => nil
+        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
       else
-        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :tax_id => tax.id, :booking_id => self.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
+        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :booking_item_id => self.id, :tax_id => tax.id, :booking_id => self.booking_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :hidden => self.hidden, :hidden_by => self.hidden_by
       end
       tax_sum_total += tax_sum
     end
 
     # now, add surcharges to unit_sum, sum, and taxes hash    
-    self.unit_sum += self.surcharge_items.existing.sum(:amount)
-    self.sum += self.surcharge_items.existing.sum(:sum)
     self.surcharge_items.existing.each do |si|
       si.taxes.each do |k,v|
         if self.taxes.has_key? k
@@ -170,8 +172,6 @@ class BookingItem < ActiveRecord::Base
   end
   
   def check
-    puts self.inspect
-    puts ''
     item_hash_tax = 0
     self.taxes.each do |k,v|
       item_hash_tax += v[:t]
@@ -179,7 +179,7 @@ class BookingItem < ActiveRecord::Base
     test1 = self.tax_sum.round(2) == item_hash_tax.round(2)
     raise "BookingItem test1 failed for id #{ self.id }" unless test1
     
-    test1a = self.tax_sum.round(2) == (self.surcharge_items.existing.sum(:tax_sum) + self.tax_items.existing.where(:surcharge_item_id => nil).sum(:tax) ).round(2)
+    test1a = self.tax_sum.round(2) == (self.surcharge_items.existing.sum(:tax_sum) + self.tax_items.where(:surcharge_item_id => nil).sum(:tax) ).round(2)
     raise "BookingItem test1a failed for id #{ self.id }" unless test1a
 
     self.surcharge_items.each do |si|
@@ -190,10 +190,10 @@ class BookingItem < ActiveRecord::Base
     self.taxes.each do |k,v|
       item_tax_sum += v[:t]
     end
-    test5 = self.tax_sum.round(2) == self.tax_items.existing.sum(:tax).round(2)
+    test5 = self.tax_sum.round(2) == self.tax_items.sum(:tax).round(2)
     raise "BookingItem test5 failed for id #{ self.id }" unless test5
     
-    test6 = self.sum.round(2) - self.base_price.round(2) * self.count * self.duration == self.surcharge_items.existing.sum(:sum).round(2)
+    test6 = (self.sum - self.unit_sum * self.count * self.duration).round(2)  == self.surcharge_items.existing.sum(:sum).round(2)
     raise "BookingItem test6 failed for id #{ self.id }" unless test6
     
     if self.hidden
