@@ -251,6 +251,7 @@ class Order < ActiveRecord::Base
     self.paid = true
     self.paid_at = Time.now
     self.save
+    self.table.update_color
   end
 
   def print(what, vendor_printer=nil)

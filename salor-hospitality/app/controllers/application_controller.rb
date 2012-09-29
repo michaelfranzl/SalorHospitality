@@ -162,6 +162,8 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
+    @order.check if @order
+    @booking.check if @booking
     return
   end
 
