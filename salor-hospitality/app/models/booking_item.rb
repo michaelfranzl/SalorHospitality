@@ -58,18 +58,16 @@ class BookingItem < ActiveRecord::Base
     
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     
-    self.surcharge_items.where(:hidden => nil).each do |si|
+    self.surcharge_items.each do |si|
       si.hide(0)
-      #si.update_attribute :hidden, true
-      #si.calculate_totals
     end
 
     existing_surcharge_ids = self.surcharge_items.collect{|si| si.surcharge_id if si.surcharge}.uniq
-
     ids.each do |i|
       if existing_surcharge_ids.include? i.to_i
         surcharge_item = self.surcharge_items.where(:surcharge_id => i).first
-        surcharge_item.update_attributes :hidden => nil, :hidden_by => nil # this should always restore just one SurchargeItem, but we write update_all because that is easier
+        surcharge_item.update_attributes :hidden => nil, :hidden_by => nil
+        surcharge_item.tax_items.update_all :hidden => nil, :hidden_by => nil
         surcharge_item.calculate_totals
         existing_surcharge_ids.delete i.to_i
       else
@@ -80,7 +78,6 @@ class BookingItem < ActiveRecord::Base
       existing_surcharge_ids.each do |id|
         surcharge_item = self.surcharge_items.where(:surcharge_id => id).first
         surcharge_item.hide(0)
-        #surcharge_item.calculate_totals
       end
     end
     self.save
@@ -91,8 +88,8 @@ class BookingItem < ActiveRecord::Base
     self.hidden= true
     self.hidden_by = by_user_id
     self.save
-    self.surcharge_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
-    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
+    self.surcharge_items.existing.update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.existing.update_all :hidden => true, :hidden_by => by_user_id
   end
   
   def invoice_label
@@ -119,16 +116,15 @@ class BookingItem < ActiveRecord::Base
       self.base_price = roomp.base_price
     end
     
-    self.unit_sum = self.base_price
-    self.unit_sum += self.surcharge_items.existing.sum(:amount)
+    self.unit_sum = self.base_price + self.surcharge_items.existing.sum(:amount)
     self.sum = self.unit_sum * self.count * self.duration
-    self.sum += self.surcharge_items.existing.sum(:sum)
     
     if self.guest_type_id.nil?
       self.calculate_taxes([])
     else
       self.calculate_taxes(self.guest_type.taxes)
     end
+
     self.save
   end
   
@@ -172,6 +168,10 @@ class BookingItem < ActiveRecord::Base
   end
   
   def check
+    self.surcharge_items.each do |si|
+      si.check
+    end
+    
     item_hash_tax = 0
     self.taxes.each do |k,v|
       item_hash_tax += v[:t]
@@ -179,26 +179,19 @@ class BookingItem < ActiveRecord::Base
     test1 = self.tax_sum.round(2) == item_hash_tax.round(2)
     raise "BookingItem test1 failed for id #{ self.id }" unless test1
     
-    test1a = self.tax_sum.round(2) == (self.surcharge_items.existing.sum(:tax_sum) + self.tax_items.where(:surcharge_item_id => nil).sum(:tax) ).round(2)
-    raise "BookingItem test1a failed for id #{ self.id }" unless test1a
+    unless self.hidden
+      test1a = self.tax_sum.round(2) == (self.surcharge_items.existing.sum(:tax_sum) + self.tax_items.where(:surcharge_item_id => nil).sum(:tax) ).round(2)
+      raise "BookingItem test1a failed for id #{ self.id }" unless test1a
+    
+      test5 = self.tax_sum.round(2) == self.tax_items.existing.sum(:tax).round(2)
+      raise "BookingItem test5 failed for id #{ self.id }" unless test5
 
-    self.surcharge_items.each do |si|
-      si.check
+      test6 = (self.sum - self.base_price * self.count * self.duration).round(2)  == self.surcharge_items.existing.sum(:sum).round(2)
+      raise "BookingItem test6 failed for id #{ self.id }" unless test6
     end
-    
-    item_tax_sum = 0
-    self.taxes.each do |k,v|
-      item_tax_sum += v[:t]
-    end
-    test5 = self.tax_sum.round(2) == self.tax_items.sum(:tax).round(2)
-    raise "BookingItem test5 failed for id #{ self.id }" unless test5
-    
-    test6 = (self.sum - self.unit_sum * self.count * self.duration).round(2)  == self.surcharge_items.existing.sum(:sum).round(2)
-    raise "BookingItem test6 failed for id #{ self.id }" unless test6
-    
     if self.hidden
       test7 = self.surcharge_items.all?{ |si| si.hidden }
-      raise "BookingItem test7 failed for id #{ self.id }" unless test6
+      raise "BookingItem test7 failed for id #{ self.id }" unless test7
     end
     
     return true

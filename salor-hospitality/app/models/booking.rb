@@ -119,7 +119,7 @@ class Booking < ActiveRecord::Base
     i.update_attributes(p[1])
     i.update_attribute :ui_id, p[0]
     i.update_surcharge_items_from_ids p[1][:surchargeslist]
-    i.surcharge_items.each { |si| si.calculate_totals }
+    i.surcharge_items.existing.each { |si| si.calculate_totals }
     i.calculate_totals
     i.hide(user.id) if i.hidden or i.count.zero?
   end

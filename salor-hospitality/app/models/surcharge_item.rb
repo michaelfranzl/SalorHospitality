@@ -53,10 +53,10 @@ class SurchargeItem < ActiveRecord::Base
   end
   
   def hide(user_id)
+    self.tax_items.existing.update_all :hidden => true, :hidden_by => user_id
     self.hidden = true
     self.hidden_by = user_id
     self.save
-    self.tax_items.existing.update_all :hidden => true, :hidden_by => user_id
   end
   
   def check
@@ -69,8 +69,10 @@ class SurchargeItem < ActiveRecord::Base
       raise "SurchargeItem test2 failed for id #{ self.id }" unless test2
     end
     
-    test3 = self.count == self.booking_item.count
-    raise "SurchargeItem test3 failed for id #{ self.id }" unless test3
+    unless self.hidden
+      test3 = self.count == self.booking_item.count
+      raise "SurchargeItem test3 failed for id #{ self.id }" unless test3
+    end
     
     test4 = self.sum == self.amount * self.count * self.duration
     raise "SurchargeItem test4 failed for id #{ self.id }" unless test4
