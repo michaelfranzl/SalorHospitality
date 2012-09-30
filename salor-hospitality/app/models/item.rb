@@ -292,7 +292,6 @@ class Item < ActiveRecord::Base
     self.option_items.existing.each do |o|
       o.check
     end
-raise "xx"
     item_sum = self.sum
     item_tax_sum = self.tax_sum
     item_hash_gro = 0
@@ -320,8 +319,6 @@ raise "xx"
       raise "Item test3a failed for id #{id}" unless test3a
       test4 = self.option_items.sum(:sum).round(2) == (self.sum - self.price * self.count).round(2)
       raise "Item test4 failed for id #{id}" unless test4
-      
-    #TODO TaxItems at refund_sum
     
       item_tax_sum = 0
       self.taxes.each do |k,v|
