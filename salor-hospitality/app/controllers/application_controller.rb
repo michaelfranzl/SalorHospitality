@@ -124,11 +124,19 @@ class ApplicationController < ActionController::Base
                 when 'table_no_invoice_print'
                   @order.pay
                   @order.print(['tickets']) if @current_company.mode == 'local'
-                  render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+                  
+                  @table = @order.table
+                  @order = nil
+                  render 'orders/render_order_form'
+                  #render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
                 when 'table_do_invoice_print'
                   @order.pay
                   @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
-                  render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
+                  
+                  @table = @order.table
+                  @order = nil
+                  render 'orders/render_order_form'
+                  #render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
               end
             else
               render :nothing => true

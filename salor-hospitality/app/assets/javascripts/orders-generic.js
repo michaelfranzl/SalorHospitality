@@ -64,6 +64,7 @@ $(function(){
 
 
 function route(target, model_id, action, options) {
+  debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
@@ -113,7 +114,7 @@ function route(target, model_id, action, options) {
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
-    $('#inputfields').html('');
+    //$('#inputfields').html('');
     $('#itemstable').html('');
     $('#articles').html('');
     $('#quantities').html('');
@@ -126,7 +127,7 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      //submit_json.model = {table_id:model_id};
+      submit_json.model = {table_id:model_id};
       //final rendering will be done in application#route
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send';
@@ -134,7 +135,7 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      //submit_json.model = {table_id:model_id};
+      submit_json.model = {table_id:model_id};
       //final rendering will be done in application#route
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       // pure offline mode is not supported as of now, so this never executes
@@ -195,7 +196,7 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#rooms').hide();
     $('#areas').hide();
-    $('#inputfields').html('');
+    //$('#inputfields').html('');
     $('#itemstable').html('');
     $('#functions_header_invoice_form').show();
     $('#functions_header_order_form').hide();

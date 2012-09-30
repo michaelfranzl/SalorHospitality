@@ -25,6 +25,7 @@ class TablesController < ApplicationController
   end
 
   def show
+    sleep 4
     @table = get_model
     redirect_to roles_path and return unless @table # TODO
     @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])

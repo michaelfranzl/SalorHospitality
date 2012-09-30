@@ -26,6 +26,9 @@
         %td= l s.created_at, :format => :date_iso
         %td{ :class => 'br' }= s.user.login
         %td= number_to_currency s.sum
+        %td= number_to_currency s.tax_items.existing.sum(:gro)
+        %td= number_to_currency s.tax_items.existing.sum(:net)
+        %td= number_to_currency s.tax_items.existing.sum(:tax)
     %tr
       %th{ :colspan => 3 }= t('.sum_total')
       %th{ :class => 'br sum' }= number_to_currency @settlements_sum
