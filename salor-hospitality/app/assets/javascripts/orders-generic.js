@@ -121,6 +121,7 @@ function route(target, model_id, action, options) {
     $('.target_table').val('');
     $('#items_notifications_interactive').hide();
     $('#items_notifications_static').hide();
+    $('#functions_header_last_invoices').hide();
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';

@@ -292,7 +292,7 @@ class Item < ActiveRecord::Base
     self.option_items.existing.each do |o|
       o.check
     end
-
+raise "xx"
     item_sum = self.sum
     item_tax_sum = self.tax_sum
     item_hash_gro = 0

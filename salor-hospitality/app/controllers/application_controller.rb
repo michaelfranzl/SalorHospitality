@@ -128,7 +128,6 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
-                  #render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
                 when 'table_do_invoice_print'
                   @order.pay
                   @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
@@ -136,7 +135,6 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
-                  #render :js => "route('table',#{@order.table_id});" # the table view (variables, etc.) must be refreshed via an "AJAX-redirect".
               end
             else
               render :nothing => true
@@ -170,8 +168,10 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
-    @order.check if @order
-    @booking.check if @booking
+    if @current_user.role.permissions.include?('see_debug')
+      @order.check if @order
+      @booking.check if @booking
+    end
     return
   end
 
