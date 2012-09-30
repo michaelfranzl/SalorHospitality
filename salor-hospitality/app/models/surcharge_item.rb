@@ -36,13 +36,12 @@ class SurchargeItem < ActiveRecord::Base
       tax_object = ta.tax
       if self.vendor.country == 'us'
         net = (self.sum).round(2)
-        gro = (net * (tax_object.percent / 100.0)).round(2)
-        tax_sum = (gro - net).round(2)
+        gro = (net * ( 1.0 + (tax_object.percent / 100.0))).round(2)
       else
         gro = (self.sum).round(2)
         net = (gro / ( 1.0 + ( tax_object.percent / 100.0 ))).round(2)
-        tax_sum = (gro - net).round(2)
       end
+      tax_sum = (gro - net).round(2)
       self.taxes[tax_object.id] = {:p => tax_object.percent, :t => tax_sum, :g => gro, :n => net, :l => tax_object.letter, :e => tax_object.name }
       
       # TaxItem creation

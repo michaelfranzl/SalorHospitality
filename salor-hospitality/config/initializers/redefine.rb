@@ -17,8 +17,8 @@ module ActionView
         orig_number_to_currency(args, :locale => @region)
       end
       
-      def number_with_precision(args)
-        orig_number_with_precision(args, :locale => @region)
+      def number_with_precision(arg1, arg2)
+        orig_number_with_precision(arg1, arg2)
       end
       
       def number_to_percentage(args)
