@@ -438,6 +438,9 @@ change_date_for_booking_item = (booking_item_id) ->
     else
       from = Date.parse(v.from_date)
       to = Date.parse(v.to_date)
+      if from > to
+        to = from
+        return
       items_json[k].covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
       set_json 'booking', k, 'duration', items_json[k].covered_seasons[0].duration
   render_booking_items_from_json()
