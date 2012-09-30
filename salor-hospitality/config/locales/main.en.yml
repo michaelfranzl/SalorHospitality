@@ -724,7 +724,8 @@ en:
       new_vendor: New Vendor
     form:
       add_printer: Add printer
-      identiify_printers: Identify Printers
+      identify_printers: Identify Printers
+      test_printers: Test Printers
     create:
       success: Vendor was successfully created
     destroy:

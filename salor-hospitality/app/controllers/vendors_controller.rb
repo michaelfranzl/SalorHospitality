@@ -40,7 +40,6 @@ class VendorsController < ApplicationController
     send_data tickets + invoices
   end
 
-  # Switches the current vendor and redirects to somewhere else
   def show
     vendor = get_model
     redirect_to vendor_path and return unless vendor
@@ -53,6 +52,8 @@ class VendorsController < ApplicationController
   def edit
     @vendor = get_model
     redirect_to vendor_path and return unless @vendor
+    @current_vendor = vendor
+    session[:vendor_id] = params[:id] if @current_vendor
     @vendor ? render(:new) : redirect_to(vendors_path)
   end
 
@@ -135,6 +136,11 @@ class VendorsController < ApplicationController
   
   def identify_printers
     Printr.new.identify
+    render :nothing => true
+  end
+  
+  def test_printers
+    Printr.new(@current_vendor.vendor_printers.existing).identify
     render :nothing => true
   end
 end

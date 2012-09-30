@@ -46,7 +46,7 @@ class Settlement < ActiveRecord::Base
   end
 
   def escpos
-    friendly_unit = I18n.t('number.currency.format.friendly_unit')
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])
     string =
     "\e@"     +  # Initialize Printer
     "\ea\x00" +  # align left

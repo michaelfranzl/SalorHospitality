@@ -78,7 +78,10 @@
           %div#vendor_printers
             %h3= t('activerecord.models.vendor_printer.other')
             %span.button#identify_printers= t '.identify_printers'
-            %p#add_printer
+            %br
+            %span.button#test_printers= t '.test_printers'
+            %br
+            %span#add_printer
               %span.button= t '.add_printer'
             = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
               = render :partial => 'vendor_printer', :locals => { :f => f }
@@ -110,5 +113,11 @@
   $('#identify_printers').click(function(){
     $.ajax({
       url: '/vendors/identify_printers'
+    });
+  });
+  
+  $('#test_printers').click(function(){
+    $.ajax({
+      url: '/vendors/test_printers'
     });
   });

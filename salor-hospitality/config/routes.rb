@@ -94,6 +94,7 @@ SalorHospitality::Application.routes.draw do
   match 'vendors/print' => 'vendors#print'
   match 'vendors/report' => 'vendors#report'
   match 'vendors/identify_printers' => 'vendors#identify_printers'
+  match 'vendors/test_printers' => 'vendors#test_printers'
   match 'users/unlock_ip' => 'users#unlock_ip'
   match 'route' => 'application#route'
   

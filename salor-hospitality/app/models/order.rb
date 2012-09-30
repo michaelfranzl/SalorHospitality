@@ -69,6 +69,7 @@ class Order < ActiveRecord::Base
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
+    order.hide(user.id) if order.hidden
     order.hide(user.id) unless order.items.existing.any?
     return order
   end
@@ -88,6 +89,7 @@ class Order < ActiveRecord::Base
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
+    self.hide(user.id) if self.hidden
     self.hide(user.id) unless self.items.existing.any?
   end
   
@@ -172,6 +174,7 @@ class Order < ActiveRecord::Base
     self.unlink
     self.option_items.update_all :hidden => true, :hidden_by => by_user_id
     self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def unlink
@@ -424,7 +427,7 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.option_items.each do |oi|
         next if oi.price == 0
-        list_of_options += "%s %22.22s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
+        list_of_options += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
       end
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
@@ -438,9 +441,9 @@ class Order < ActiveRecord::Base
     "\e!\x18" + # double tall, bold
     "\ea\x02"   # align right
 
-    sum = "#{I18n.t(:sum).upcase}:   #{I18n.t('number.currency.format.friendly_unit')} %.2f" % self.sum
+    sum = "#{I18n.t(:sum).upcase}:   #{I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])} %.2f" % self.sum
 
-    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{I18n.t('number.currency.format.friendly_unit')} %.2f" % self.refund_sum)
+    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])} %.2f" % self.refund_sum)
 
     tax_format = "\n\n" +
     "\ea\x01" +  # align center
@@ -512,13 +515,24 @@ class Order < ActiveRecord::Base
     test1 = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
     raise "Order test1 failed for id #{ self.id }" unless test1
 
-    test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
-    raise "Order test3 failed for id #{ self.id }" unless test3
+    unless self.hidden
+      test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
+      raise "Order test3 failed for id #{ self.id }" unless test3
     
-    test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
-    raise "Order test4 failed for id #{ self.id }" unless test4
+      test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
+      raise "Order test4 failed for id #{ self.id }" unless test4
+
+      test5 = self.items.existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
+      raise "Order test5 failed for id #{ self.id }" unless test5
+    end
     
-    test5 = self.items.existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
-    raise "Order test5 failed for id #{ self.id }" unless test5
+    if self.hidden
+      test6 = self.tax_items.all?{|ti| ti.hidden}
+      raise "Order test6 failed for id #{ self.id }" unless test6
+      test7 = self.option_items.all?{|oi| oi.hidden}
+      raise "Order test7 failed for id #{ self.id }" unless test7
+      test8 = self.items.all?{|i| i.hidden}
+      raise "Order test8 failed for id #{ self.id }" unless test8
+    end
   end
 end

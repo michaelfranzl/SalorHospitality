@@ -736,6 +736,7 @@ gn:
     form:
       add_printer: Drucker hinzufügen
       identify_printers: Drucker identifizieren
+      test_printers: Drucker testen
     create:
       success: Betrieb wurde erfolgreich gespeichert
     destroy:
