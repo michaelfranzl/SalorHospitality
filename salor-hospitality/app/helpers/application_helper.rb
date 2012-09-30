@@ -42,5 +42,4 @@ module ApplicationHelper
   def permit(p)
     @current_user.role.permissions.include?(p)
   end
-
 end

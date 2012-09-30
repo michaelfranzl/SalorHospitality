@@ -736,6 +736,10 @@ gn:
     form:
       add_printer: Drucker hinzufügen
       identify_printers: Drucker identifizieren
+    create:
+      success: Betrieb wurde erfolgreich gespeichert
+    destroy:
+      success: Betrieb wurde erfolgreich gelöscht
   violet: Violett
   waiter: Kellner
   waiterpad_generic_name: Bestellblock

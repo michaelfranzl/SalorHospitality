@@ -26,8 +26,10 @@ module SalorHospitality
 
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese'}
-    COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország', 'el' => 'Ελλάδα', 'ru' => 'Россия', :it => 'Italia', 'cn' => 'China' }
-    FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" } # + ['Arial','Times'] # this causes 404's
+    COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország', 'el' => 'Ελλάδα', 'ru' => 'Россия', :it => 'Italia', 'cn' => 'China', 'us' => 'USA', 'gb' => 'England' }
+    COUNTRIES_REGIONS = { 'cc' => 'en-us', 'de' => 'gn-de', 'at' => 'gn-de', 'tr' => 'tr-tr', 'fr' => 'fr-fr', 'es' => 'es-es', 'pl' => 'pl-pl', 'hu' => 'hu-hu', 'el' => 'el-el', 'ru' => 'ru-ru', 'it' => 'it-it', 'cn' => 'cn-cn', 'us' => 'en-us', 'gb' => 'en-gb' }
+    
+    FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" }
     
     SALOR_HOSPITALITY_CONFIGURATION = {}
     SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('etc','salor-hospitality-config.yml'), 'r').read) if File.exists?(File.join('etc','salor-hospitality-config.yml'))

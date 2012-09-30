@@ -21,6 +21,10 @@ class VendorsController < ApplicationController
       }
       wants.html {
         @vendors = @current_company.vendors.existing
+        if @vendors.count == 1
+          @vendor = @vendors.first
+          render :edit
+        end
         return
       }
     end
@@ -59,8 +63,7 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
-    printr = Printr.new(@vendor.vendor_printers.existing)
-    printr.identify
+    flash[:notice] = t('vendors.create.success')
     redirect_to vendors_path
   end
 
@@ -72,6 +75,7 @@ class VendorsController < ApplicationController
     @vendor = Vendor.new params[:vendor]
     @vendor.company = @current_company
     if @vendor.save
+      flash[:notice] = t('vendors.create.success')
       redirect_to vendors_path
     else
       render :new

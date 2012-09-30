@@ -40,7 +40,6 @@ class Item < ActiveRecord::Base
   alias_attribute :pc, :printed_count
   alias_attribute :u, :usage
   alias_attribute :x, :hidden
-  #alias_attribute :i, :optionslist
   alias_attribute :cids, :customers_ids
 
   def separate
@@ -124,9 +123,15 @@ class Item < ActiveRecord::Base
     self.taxes = {}
     tax_sum_total = 0
     tax_array.each do |tax|
-      gro = (self.sum).round(2)
-      net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
-      tax_sum = (gro - net).round(2)
+      if self.vendor.country == 'us'
+        net = (self.sum).round(2)
+        gro = (net * (tax.percent / 100.0)).round(2)
+        tax_sum = (gro - net).round(2)
+      else
+        gro = (self.sum).round(2)
+        net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
+        tax_sum = (gro - net).round(2)
+      end
       self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
       
       self.save if self.new_record? # we need an id for the next step

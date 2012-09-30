@@ -26,7 +26,7 @@
       - if @current_company.vendors.existing.count > 1
         = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
       - else
-        = link_to( t('activerecord.models.vendor.one'), "/vendors/#{@current_vendor.id}/edit")
+        = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)
     = link_to( t('activerecord.models.customer.other'), main_app.customers_path) if perms.include? 'manage_customers'
     = link_to( t('activerecord.models.page.other'), main_app.pages_path) if perms.include? 'manage_pages'
     = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if perms.include? 'manage_pages'

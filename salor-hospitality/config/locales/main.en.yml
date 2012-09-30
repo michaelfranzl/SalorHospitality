@@ -725,6 +725,10 @@ en:
     form:
       add_printer: Add printer
       identiify_printers: Identify Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   violet: Violet
   waiter: Waiter
   waiterpad_generic_name: Waiterpad

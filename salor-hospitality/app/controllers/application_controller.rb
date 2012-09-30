@@ -271,6 +271,7 @@ class ApplicationController < ActionController::Base
 
     def set_locale
       I18n.locale = @current_user ? @current_user.language : 'en'
+      @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country]
     end
 
     def update_vendor_cache
