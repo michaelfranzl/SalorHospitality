@@ -970,6 +970,7 @@ function clone_item(d) {
 function add_option_to_item(d, value, cat_id) {
   if (value != -1 && value != 0) {  // 0 is clear
     $('#options_div_' + d).slideUp();
+    $('#options_select_' + d).val('');
     d = clone_item(d);
   }
   if (value == 0) {
@@ -1200,6 +1201,7 @@ function update_item_lists() {
       data: {type:'vendor'},
       success: function(data) {
         resources.notifications_vendor = data;
+        notification_alerts('vendor');
         if (permissions.see_item_notifications_vendor_preparation) render_item_list('interactive', 'vendor', 'preparation');
         if (permissions.see_item_notifications_vendor_delivery)    render_item_list('interactive', 'vendor', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
@@ -1216,7 +1218,7 @@ function update_item_lists() {
       data: {type:'user'},
       success: function(data) {
         resources.notifications_user = data;
-        notification_alerts();
+        notification_alerts('user');
         if (permissions.see_item_notifications_user_preparation) render_item_list('interactive', 'user', 'preparation');
         if (permissions.see_item_notifications_user_delivery)    render_item_list('interactive', 'user', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
@@ -1229,10 +1231,16 @@ function update_item_lists() {
   }
 }
 
-function notification_alerts() {
-  var delivery_notification_count = Object.keys(resources.notifications_user.delivery).length;
-  var prepraration_notification_count = Object.keys(resources.notifications_user.preparation).length;
-  var total_count = delivery_notification_count + prepraration_notification_count;
+function notification_alerts(model) {
+  if (model == 'user') {
+    var delivery_notification_user_count = Object.keys(resources.notifications_user.delivery).length;
+    var prepraration_notification_user_count = Object.keys(resources.notifications_user.preparation).length;
+    var total_count = delivery_notification_user_count + prepraration_notification_user_count;
+  } else if (model == 'vendor') {
+    var delivery_notification_vendor_count = Object.keys(resources.notifications_vendor.delivery).length;
+    var prepraration_notification_vendor_count = Object.keys(resources.notifications_vendor.preparation).length;
+    var total_count = delivery_notification_vendor_count + prepraration_notification_vendor_count;
+  }
   if (total_count > 0) {
     $('.items_notifications_button').html(total_count);
     $('#mobile_last_invoices_button').html(total_count);

@@ -16,7 +16,6 @@
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
     %a{ :onmouseup => "open_options_div('DESIGNATOR');" }
     %select.optionsselect{ :id => "options_select_DESIGNATOR", :onchange => "add_option_to_item('DESIGNATOR', $(this).val(), 'CATID')" }
-      %option{ :value => '' }= t('.done')
       %option{ :value => 0 }= t('.clear')
     %div.optionsselect{ :id => "options_div_DESIGNATOR" }
       %h3= t 'activerecord.models.option.other'
