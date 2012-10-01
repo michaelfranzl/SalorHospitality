@@ -414,7 +414,7 @@ class Order < ActiveRecord::Base
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long, :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])) if vendor.use_order_numbers
 
     header += "\n\n" +
     "\e!\x00" +  # Font A

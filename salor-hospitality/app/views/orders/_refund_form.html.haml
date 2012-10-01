@@ -9,7 +9,7 @@
 
   = form_for refund_form, :as => :order, :url => "/orders/refund/#{refund_form.id}", :html => { :method => :put, :id => 'refund_form' }, :remote => true do |order_form|
     %h3== #{ t(:invoice) } ##{refund_form.nr}, #{ refund_form.table.name }
-    %p= l refund_form.created_at, :format => :long
+    %p= l refund_form.created_at, :format => :long, :locale => @region
     %table
       = order_form.fields_for :items, order_form.object.items.existing.positioned do |item_form|
         - item = item_form.object

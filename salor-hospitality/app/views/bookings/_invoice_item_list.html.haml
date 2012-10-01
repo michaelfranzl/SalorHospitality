@@ -1,5 +1,5 @@
 /%p= t '.served_by_X', :user => booking.user.title
-%p.floatright= l booking.created_at, :format => :long
+%p.floatright= l booking.created_at, :format => :long, :locale => @region
 %p== #{ Season.human_attribute_name :from_date } #{ l booking.from_date, :format => :date_iso, :locale => @region} #{ Season.human_attribute_name :to_date } #{ l booking.to_date, :format => :date_iso, :locale => @region } (#{ t'datetime.distance_in_words.x_days.other', :count => Integer(booking.duration) })
 %p= booking.room.name
 
