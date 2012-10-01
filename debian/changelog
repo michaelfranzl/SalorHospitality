@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.6) unstable; urgency=low
+
+  * fixed path for expect script
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 01 Oct 2012 11:50:44 +0200
+
 salor-hospitality (4.1.0.5) unstable; urgency=low
 
   * Initial Release.
