@@ -6,13 +6,6 @@ class AddHabtmTableForUsersAndTables < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
     end
-    User.all.each do |u|
-      Table.all.each do |t|
-        puts "Adding table #{ t.id } to user #{ u.id }."
-        u.tables << t
-      end
-      u.save
-    end
   end
 
   def self.down

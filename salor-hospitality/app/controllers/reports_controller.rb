@@ -57,10 +57,7 @@ class ReportsController < ApplicationController
     if params[:type] == 'vnc'
       @status_vnc = `netstat -pna | grep :28`
       if @status_vnc.empty? # don't create more process than one
-        connection_thread_vnc = fork do
-          exec "expect #{ File.join('/', 'usr', 'share', 'remotesupport', 'remotesupportvnc.expect').to_s } #{ params[:host] } #{ params[:user] } #{ params[:pw] }"
-        end
-        Process.detach(connection_thread_vnc)
+        spawn "expect /usr/share/remotesupport/remotesupportvnc.expect #{ params[:host] } #{ params[:user] } #{ params[:pw] }", :out => "/tmp/salor-hospitality-x11vnc-stdout.log", :err => "/tmp/salor-hospitality-x11vnc-stderr.log"
       end
     end
     render :nothing => true

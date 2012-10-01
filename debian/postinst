@@ -90,6 +90,9 @@ case "$1" in
       chmod -R 777 $app_root/log
       chmod -R 777 $app_root/public/uploads
       
+      mainuser=`ls /home | head -1`
+      echo "Will run Rack application as user $mainuser"
+      chown $mainuser:$mainuser $app_root/config.ru
 
       echo "Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep 'salor-hospitality' | wc -l`
