@@ -1,4 +1,38 @@
 tr:
+# ==================================================================================
+# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
+# ==================================================================================
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "%{model} girişi kaydedilemedi: 1 hata."
+          other: "%{model} girişi kadedilemedi: %{count} hata."
+        body: "Lütfen aşağıdaki hataları düzeltiniz:"
+
+      messages:
+        inclusion: "kabul edilen bir kelime değil"
+        exclusion: "kullanılamaz"
+        invalid: "geçersiz"
+        confirmation: "teyidiyle uyuşmamakta"
+        accepted: "kabul edilmeli"
+        empty: "doldurulmalı"
+        blank: "doldurulmalı"
+        too_long: "çok uzun (en fazla %{count} karakter)"
+        too_short: "çok kısa (en az %{count} karakter)"
+        wrong_length: "yanlış uzunlukta (tam olarak %{count} karakter olmalı)"
+        taken: "hali hazırda kullanılmakta"
+        not_a_number: "geçerli bir sayı değil"
+        greater_than: "%{count} sayısından büyük olmalı"
+        greater_than_or_equal_to: "%{count} sayısına eşit veya büyük olmalı"
+        equal_to: "tam olarak %{count} olmalı"
+        less_than: "%{count} sayısından küçük olmalı"
+        less_than_or_equal_to: "%{count} sayısına eşit veya küçük olmalı"
+        odd: "tek olmalı"
+        even: "çift olmalı"
+        record_invalid: "Doğrulama başarısız oldu: %{errors}"
+
+tr:
   locale:
     native_name: Türkçe
     address_separator: " "
@@ -34,9 +68,7 @@ tr:
       time_short: "%H:%M"
       month_and_day: "%d. %B"
 
-    am: "öğleden önce"
-    pm: "öğleden sonra"
-      
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
       half_a_minute: 'yarım dakika'
@@ -75,72 +107,30 @@ tr:
       almost_x_years:
         one: "neredeyse 1 yıl"
         other: "neredeyse %{count} yıl"
-      
-  number:
-    format:
-      precision: 2
-      separator: ','
-      delimiter: '.'
-    currency:
-      format:
-        unit: 'TL'
-        format: '%n %u'
-        separator: ','
-        delimiter: '.'
-        precision: 2
-    percentage:
-      format:
-        delimiter: '.'
-        separator: ','
-        precision: 2
-    precision:
-      format:
-        delimiter: '.'
-        separator: ','
-    human:
-      format:
-        delimiter: '.'
-        separator: ','
-        precision: 2
+    prompts:
+      year:   "Year"
+      month:  "Month"
+      day:    "Day"
+      hour:   "Hour"
+      minute: "Minute"
+      second: "Seconds"
 
-  support:
+  helpers:
     select:
       # default value for :prompt => true in FormOptionsHelper
       prompt: "Lütfen seçiniz"
+      
+    # Default translation keys for submit FormHelper
+    submit:
+      create: 'Create %{model}'
+      update: 'Update %{model}'
+      submit: 'Save %{model}'
+
+# Used in array.to_sentence.
+  support:
     array:
       sentence_connector: "ve"
       skip_last_comma: true
       words_connector: ", "
       two_words_connector: " ve "
       last_word_connector: " ve "
-        
-  activerecord:
-    errors:
-      template:
-        header:
-          one: "%{model} girişi kaydedilemedi: 1 hata."
-          other: "%{model} girişi kadedilemedi: %{count} hata."
-        body: "Lütfen aşağıdaki hataları düzeltiniz:"
-
-      messages:
-        inclusion: "kabul edilen bir kelime değil"
-        exclusion: "kullanılamaz"
-        invalid: "geçersiz"
-        confirmation: "teyidiyle uyuşmamakta"
-        accepted: "kabul edilmeli"
-        empty: "doldurulmalı"
-        blank: "doldurulmalı"
-        too_long: "çok uzun (en fazla %{count} karakter)"
-        too_short: "çok kısa (en az %{count} karakter)"
-        wrong_length: "yanlış uzunlukta (tam olarak %{count} karakter olmalı)"
-        taken: "hali hazırda kullanılmakta"
-        not_a_number: "geçerli bir sayı değil"
-        greater_than: "%{count} sayısından büyük olmalı"
-        greater_than_or_equal_to: "%{count} sayısına eşit veya büyük olmalı"
-        equal_to: "tam olarak %{count} olmalı"
-        less_than: "%{count} sayısından küçük olmalı"
-        less_than_or_equal_to: "%{count} sayısına eşit veya küçük olmalı"
-        odd: "tek olmalı"
-        even: "çift olmalı"
-        record_invalid: "Doğrulama başarısız oldu: %{errors}"
-      models:

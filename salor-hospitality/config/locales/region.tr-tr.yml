@@ -25,8 +25,8 @@ tr-tr:
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
         format: "%u %n"
-        unit: "€"
-        friendly_unit: EUR
+        unit: "$"
+        friendly_unit: USD
         # These five are to override number.format and are optional
         separator: "."
         delimiter: ","
@@ -101,3 +101,43 @@ tr-tr:
           billion: Billion
           trillion: Trillion
           quadrillion: Quadrillion
+
+# ==================================================================================
+# Adaptiert von:
+# /usr/lib/ruby/gems/1.8/gems/activesupport-2.2.1/lib/active_support/locale/en-US.yml
+# ==================================================================================
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%d. %b"
+      long: "%d. %B  %Y"
+
+    day_names: [Pazar, Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi]
+    abbr_day_names: [Pzr, Pzt, Sal, Çrş, Prş, Cum, Cts]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Ekim, Kasım, Aralık]
+    abbr_month_names: [~, Oca, Şub, Mar, Nis, May, Haz, Tem, Ağu, Eyl, Eki, Kas, Ara]
+    # Used in date_select and datime_select.
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      datetime_iso2: "%Y%m%dT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: "öğleden önce"
+    pm: "öğleden sonra"

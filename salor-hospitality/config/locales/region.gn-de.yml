@@ -101,3 +101,44 @@ gn-de:
           billion: Billion
           trillion: Trillion
           quadrillion: Quadrillion
+          
+# ==================================================================================
+# Adaptiert von:
+# /usr/lib/ruby/gems/1.8/gems/activesupport-2.2.1/lib/active_support/locale/en-US.yml
+# ==================================================================================
+
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%d. %b"
+      long: "%d. %B  %Y"
+
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    # Used in date_select and datime_select.
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      datetime_iso2: "%Y%m%dT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: ""
+    pm: ""

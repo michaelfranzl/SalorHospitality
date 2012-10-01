@@ -134,6 +134,7 @@ DEPENDENCIES
   kramdown (= 0.13.7)
   mysql2
   rails (= 3.2.6)
+  sass (= 3.2.1)
   sass-rails (= 3.2.5)
   serialport (= 1.1.0)
   therubyracer
