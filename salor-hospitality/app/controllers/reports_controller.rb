@@ -49,7 +49,7 @@ class ReportsController < ApplicationController
       @status_ssh = `netstat -pna | grep :26`
       if @status_ssh.empty? # don't create more process than one
         connection_thread_ssh = fork do
-          exec "expect #{ File.join('/', 'usr', 'share', 'red-e_ssh_reverse_connect.expect').to_s } #{ params[:host] } #{ params[:user] } #{ params[:pw] }"
+          exec "expect #{ File.join('/', 'usr', 'share', 'remotesupport', 'remotesupportssh.expect').to_s } #{ params[:host] } #{ params[:user] } #{ params[:pw] }"
         end
         Process.detach(connection_thread_ssh)
       end
