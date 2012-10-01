@@ -141,10 +141,3 @@ hu-hu:
       month_and_day: "%d. %B"
     am: ""
     pm: ""
-
-# Used in array.to_sentence.
-  support:
-    array:
-     words_connector:
-      two_words_connector: " and "
-      last_word_connector: ", and "
