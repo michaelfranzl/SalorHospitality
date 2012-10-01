@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.8) unstable; urgency=low
+
+  * fixed migration, made vnc connection work from rails
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 01 Oct 2012 14:59:35 +0200
+
 salor-hospitality (4.1.0.7) unstable; urgency=low
 
   * re-added vnc support
