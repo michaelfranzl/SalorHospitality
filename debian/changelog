@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.7) unstable; urgency=low
+
+  * re-added vnc support
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 01 Oct 2012 12:37:39 +0200
+
 salor-hospitality (4.1.0.6) unstable; urgency=low
 
   * fixed path for expect script
