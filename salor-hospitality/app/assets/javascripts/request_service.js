@@ -10,7 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 $(function(){
   $('#service_connect_password').select();
-  setInterval("update_connection_status()", 5000);
+  setInterval("update_connection_status()", 4000);
 })
 
 function update_connection_status(){
@@ -66,7 +66,7 @@ function connect_service(type) {
       url: "/reports/connect_remote_service",
       data: {type:'ssh', host:host, user:user, pw:password}
     });
-  } else {
+  } else if (type == 'vnc') {
     $.ajax({
       url: "/reports/connect_remote_service",
       data: {type:'vnc', host:host, user:user, pw:password}

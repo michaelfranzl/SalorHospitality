@@ -40,7 +40,7 @@ class ReportsController < ApplicationController
     @status_ssh = not(`netstat -pna | grep :26`.empty?)
     @status_vnc = not(`netstat -pna | grep :28`.empty?)
     #@status_ssh = false
-    #@status_vnc = true
+    #@status_vnc = false
     render :js => "connection_status = {ssh:#{@status_ssh}, vnc:#{@status_vnc}};"
   end
 
@@ -52,6 +52,15 @@ class ReportsController < ApplicationController
           exec "expect #{ File.join('/', 'usr', 'share', 'remotesupport', 'remotesupportssh.expect').to_s } #{ params[:host] } #{ params[:user] } #{ params[:pw] }"
         end
         Process.detach(connection_thread_ssh)
+      end
+    end
+    if params[:type] == 'vnc'
+      @status_vnc = `netstat -pna | grep :28`
+      if @status_vnc.empty? # don't create more process than one
+        connection_thread_vnc = fork do
+          exec "expect #{ File.join('/', 'usr', 'share', 'remotesupport', 'remotesupportvnc.expect').to_s } #{ params[:host] } #{ params[:user] } #{ params[:pw] }"
+        end
+        Process.detach(connection_thread_vnc)
       end
     end
     render :nothing => true
