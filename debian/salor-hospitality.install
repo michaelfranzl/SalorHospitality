@@ -8,6 +8,7 @@ salor-hospitality/script          /usr/share/salor-hospitality
 
 salor-hospitality/public/*.*      /usr/share/salor-hospitality/public
 salor-hospitality/public/fonts    /usr/share/salor-hospitality/public
+salor-hospitality/public/images   /usr/share/salor-hospitality/public
 
 salor-hospitality/Gemfile*        /usr/share/salor-hospitality
 salor-hospitality/Rakefile        /usr/share/salor-hospitality
