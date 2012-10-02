@@ -225,7 +225,7 @@ class ApplicationController < ActionController::Base
                         p[:from][:day  ].to_i) if p[:from]
         t = Date.civil( p[:to  ][:year ].to_i,
                         p[:to  ][:month].to_i,
-                        p[:to  ][:day  ].to_i) + 1.day if p[:to]
+                        p[:to  ][:day  ].to_i) if p[:to]
       rescue
         flash[:error] = t(:invalid_date)
         f = Time.now.beginning_of_day

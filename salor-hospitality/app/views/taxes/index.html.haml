@@ -11,6 +11,6 @@
   - @taxes.each do |ta|
     %tr
       %td= link_to ta.name, edit_tax_path(ta)
-      %td= number_to_percentage ta.percent, :precision => 0
+      %td= number_to_percentage ta.percent
       %td= ta.letter
       %td= link_to image_tag('button_small_delete.png', :title => Tax.human_attribute_name(:hidden), :alt => Tax.human_attribute_name(:hidden)), tax_path(ta), :method => :delete, :confirm => t(:are_you_sure)
