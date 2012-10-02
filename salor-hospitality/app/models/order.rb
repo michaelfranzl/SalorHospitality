@@ -389,9 +389,10 @@ class Order < ActiveRecord::Base
     output += (Printr.sanitize(header) + normal_receipt_content + Printr.sanitize(cut)) unless normal_receipt_content.empty?
     return '' if output == init
 
-    logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
-    logo = "\ea\x01" + logo + "\ea\x00"
-    return logo + output
+    #logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
+    #logo = "\ea\x01" + logo + "\ea\x00"
+    #return logo + output
+    return output
   end
 
 

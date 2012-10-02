@@ -153,7 +153,7 @@ function route(target, model_id, action, options) {
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id + '?order_id=' + options.order_id,
-        timeout: 5000
+        timeout: 10000
       }); //this repopulates items_json and renders items
     } else if (action == 'from_booking') {
       submit_json.jsaction = 'send_and_go_to_table';
@@ -254,7 +254,7 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 5000 }); //this repopulates items_json and renders items
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 10000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
 
   // ========== EXISTING BOOKING ===============
@@ -281,7 +281,7 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 5000 });
+    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 10000 });
     window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
@@ -302,7 +302,7 @@ function route(target, model_id, action, options) {
         type: 'post',
         url: '/route',
         data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
-        timeout: 5000
+        timeout: 10000
       })
     }
     
@@ -730,7 +730,7 @@ function update_order_from_invoice_form(data) {
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 5000
+    timeout: 20000
   });
 }
 
@@ -740,7 +740,7 @@ function rotate_tax_item(id) {
     type: 'put',
     url: '/items/rotate_tax',
     data: {id:id},
-    timeout: 5000
+    timeout: 10000
   });
 }
 
@@ -788,7 +788,7 @@ function update_order_from_refund_form(data) {
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 5000
+    timeout: 15000
   });
 }
 
@@ -1147,7 +1147,7 @@ function get_table_show(table_id) {
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
-    timeout: 5000,
+    timeout: 10000,
     complete: function(data,status) {
       if (status == 'timeout') {
         debug('get_table_show: TIMEOUT');
@@ -1175,7 +1175,7 @@ function update_tables(){
   $.ajax({
     url: '/tables',
     dataType: 'script',
-    timeout: 2000
+    timeout: 5000
   });
 }
 
@@ -1184,7 +1184,7 @@ function update_resources() {
     url: '/vendors/render_resources',
     dataType: 'script',
     complete: function(data,state) { update_resources_success(data) },
-    timeout: 3000
+    timeout: 8000
   });
 }
 
@@ -1209,7 +1209,7 @@ function update_item_lists() {
           if (permissions.see_item_notifications_vendor_delivery) render_item_list('static', 'vendor', 'delivery');
         }
       },
-      timeout: 2000 
+      timeout: 5000 
     });
   } else if (permissions.see_item_notifications_user_preparation || permissions.see_item_notifications_user_delivery) {
     $.ajax({
@@ -1226,7 +1226,7 @@ function update_item_lists() {
           if (permissions.see_item_notifications_user_delivery) render_item_list('static', 'user', 'delivery');
         }
       },
-      timeout: 2000 
+      timeout: 5000 
     });
   }
 }

@@ -7,3 +7,13 @@
     Options FollowSymLinks
   </Directory>
 </VirtualHost>
+
+PassengerMaxRequests 0
+RailsAutoDetect off
+PassengerStatThrottleRate 120
+RailsAppSpawnerIdleTime 0
+PassengerHighPerformance on
+PassengerSpawnMethod conservative
+PassengerMaxPoolSize 2
+PassengerMinInstances 2
+PassengerPoolIdleTime 0
