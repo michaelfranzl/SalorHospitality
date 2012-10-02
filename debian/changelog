@@ -1,3 +1,10 @@
+salor-hospitality (4.1.0.10) unstable; urgency=low
+
+  * timeouts, removed salor logo from tickets
+  * fixed empty.png problem
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 02 Oct 2012 15:03:53 +0200
+
 salor-hospitality (4.1.0.9) unstable; urgency=low
 
   * conditional migration
