@@ -1,3 +1,11 @@
+salor-hospitality (4.1.0.9) unstable; urgency=low
+
+  * conditional migration
+  * rearranged translations
+  * fixes
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 02 Oct 2012 13:16:11 +0200
+
 salor-hospitality (4.1.0.8) unstable; urgency=low
 
   * fixed migration, made vnc connection work from rails
