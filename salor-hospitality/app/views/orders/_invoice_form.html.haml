@@ -53,7 +53,7 @@
               = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
   %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
-  %p= l invoice_form.created_at, :format => :long, :locale => @region
+  %p= l invoice_form.created_at, :format => :long
   %table.invoice
     - invoice_form.items.existing.each do |item|
       - article_label = item.article.name[0..13]

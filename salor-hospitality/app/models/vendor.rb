@@ -60,6 +60,10 @@ class Vendor < ActiveRecord::Base
   def hide
     self.update_attribute :hidden, true
   end
+  
+  def region
+    SalorHospitality::Application::COUNTRIES_REGIONS[self.country]
+  end
 
   def logo_image
     return self.image('logo') unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
@@ -231,7 +235,7 @@ class Vendor < ActiveRecord::Base
 
     seasons = Hash.new
     current_season = Season.current(self)
-    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => I18n.l(sn.from_date, :format => :date_iso, :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.country]), :t => I18n.l(sn.to_date, :format => :date_iso, :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.country]), :c => sn == current_season, :d => sn.duration } }
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => I18n.l(sn.from_date, :format => :date_iso), :t => I18n.l(sn.to_date, :format => :date_iso), :c => sn == current_season, :d => sn.duration } }
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }

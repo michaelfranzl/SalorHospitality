@@ -414,7 +414,7 @@ class Order < ActiveRecord::Base
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long, :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])) if vendor.use_order_numbers
+    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long) if vendor.use_order_numbers
 
     header += "\n\n" +
     "\e!\x00" +  # Font A
@@ -441,9 +441,9 @@ class Order < ActiveRecord::Base
     "\e!\x18" + # double tall, bold
     "\ea\x02"   # align right
 
-    sum = "#{I18n.t(:sum).upcase}:   #{I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])} %.2f" % self.sum
+    sum = "#{I18n.t(:sum).upcase}:   #{I18n.t('number.currency.format.friendly_unit'} %.2f" % self.sum
 
-    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[self.vendor.country])} %.2f" % self.refund_sum)
+    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{I18n.t('number.currency.format.friendly_unit')} %.2f" % self.refund_sum)
 
     tax_format = "\n\n" +
     "\ea\x01" +  # align center

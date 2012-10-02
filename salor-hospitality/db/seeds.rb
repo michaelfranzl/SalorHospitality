@@ -205,7 +205,7 @@ company_count.times do |c|
       role.vendor = vendor
       r = role.save
       role_objects << role
-      puts "Role #{ user_array.to_a[i][0] } #{ c } #{ v } #{ i } created" if r == true
+      puts "Role #{ role_names.to_a[i][0] } #{ c } #{ v } #{ i } created" if r == true
     end
 
     table_objects = Array.new

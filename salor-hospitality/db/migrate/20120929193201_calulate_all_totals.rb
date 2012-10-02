@@ -4,7 +4,7 @@ class CalulateAllTotals < ActiveRecord::Migration
     TaxItem.delete_all
     
     puts "Calling .calculate_totals for all Items... This may take a while."
-    Item.update_all :taxes => {}
+    Item.update_all :taxes => "--- {}\n"
     Item.existing.each do |item|
       puts "  Processing Item #{item.id}"
       item.calculate_totals

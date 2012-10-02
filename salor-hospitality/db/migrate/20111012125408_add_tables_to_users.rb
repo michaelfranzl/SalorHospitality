@@ -7,6 +7,7 @@ class AddTablesToUsers < ActiveRecord::Migration
         puts "Adding table #{ t.id } to user #{ u.id }."
         u.tables << t
       end
+      
       u.save
     end
   end

@@ -23,7 +23,7 @@
     - @settlements.reverse.each do |s|
       %tr
         %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
-        %td= l s.created_at, :format => :date_iso, :locale => @region
+        %td= l s.created_at, :format => :date_iso
         %td{ :class => 'br' }= s.user.login
         %td= number_to_currency s.sum
     %tr

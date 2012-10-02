@@ -28,7 +28,8 @@ class ReportsController < ApplicationController
     password = dbconfig[mode]['password']
     database = dbconfig[mode]['database']
     `mysqldump -u #{username} -p#{password} #{database} > tmp/backup.sql`
-    send_file 'tmp/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
+    send_file 'tmp/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2, :locale => @region }.sql"
+    
   end
 
   def backup_logfile
