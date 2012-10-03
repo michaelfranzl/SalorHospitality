@@ -8,6 +8,11 @@
   = f.text_field :path, :size => 20
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_path_display_keyboard" }
   %br
+  = f.label :print_button_filename, :class => 'medium'
+  %select#print_button_filename{ :name => "vendor[vendor_printers_attributes][#{ id }][print_button_filename]" }
+    %option
+    = options_for_select get_print_button_filename_array, f.object.print_button_filename
+  %br
   = f.label :copies, :class => 'medium'
   = f.text_field :copies, :size => 1
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_copies_display_keyboard" }

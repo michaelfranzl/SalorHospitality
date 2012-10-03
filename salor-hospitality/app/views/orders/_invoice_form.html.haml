@@ -8,10 +8,8 @@
   
 %div.invoice{ :id => "model_#{oid}" }
   - if @current_company.mode == 'local'
-    - i = 0
     - @current_vendor.vendor_printers.existing.each do |p|
-      - i += 1
-      %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton printinvoice#{ i }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
+      %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
   - elsif @current_company.mode == 'saas'
     %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
 

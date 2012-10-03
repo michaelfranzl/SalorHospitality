@@ -474,7 +474,7 @@ class Order < ActiveRecord::Base
     headerlogo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
     footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
 
-    output = headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + list_of_payment_methods + footer + duplicate) + "\n" + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
+    output = "\e@" + headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + list_of_payment_methods + footer + duplicate) + "\n" + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
   end
 
   def items_to_json

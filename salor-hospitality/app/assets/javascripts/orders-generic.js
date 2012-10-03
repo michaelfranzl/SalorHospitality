@@ -29,11 +29,11 @@ var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
 
-var timeout_update_tables = 20;
-var timeout_update_item_lists = 60;
-var timeout_update_resources = 180;
-var timeout_refresh_queue = 5;
-var timeout_split_item = 1;
+var timeout_update_tables = 30;
+var timeout_update_item_lists = 71;
+var timeout_update_resources = 182;
+var timeout_refresh_queue = 4;
+var timeout_split_item = 2;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
@@ -756,7 +756,7 @@ function split_item(id, order_id) {
       split_items_hash[id].split_count = 1;
       split_items_hash[id].original_count = current_count;
     }
-    counter_split_item = 3; // this will trigger the function submit_split_items() in 2 seconds after this function was last called.
+    counter_split_item = timeout_split_item; // this will trigger the function submit_split_items() in x seconds after this function was last called.
     current_count -= 1;
     item_count_td.html(current_count);
     if (current_count == 0) {
@@ -778,7 +778,7 @@ function submit_split_items() {
     type: 'put',
     url: '/items/split',
     data: {jsaction:'split',split_items_hash:split_items_hash},
-    timeout: 15000
+    timeout: 25000
   });
 }
 
@@ -1138,7 +1138,7 @@ function manage_counters() {
   }
   if (counter_split_item == 0) {
     submit_split_items();
-    // no counter reset. the counter is set to 1 in the split_item() function.
+    counter_split_item = -1; //disable the counter, this counter is not periodic.
   }
   return 0;
 }
