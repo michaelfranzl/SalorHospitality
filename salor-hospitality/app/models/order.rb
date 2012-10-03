@@ -458,10 +458,12 @@ class Order < ActiveRecord::Base
     end
     
     list_of_payment_methods = "\n"
-    self.payment_method_items.each do |pm|
-      list_of_payment_methods += "%20.20s %7.2f\n" % [pm.payment_method.name, pm.amount]
+    if self.user.role.permissions.include? 'manage_payment_methods'
+      self.payment_method_items.each do |pm|
+        list_of_payment_methods += "%20.20s %7.2f\n" % [pm.payment_method.name, pm.amount]
+      end
+      list_of_payment_methods += "%20.20s %7.2f\n" % [Order.human_attribute_name(:change_given), self.change_given] if self.change_given
     end
-    list_of_payment_methods += "%20.20s %7.2f\n" % [Order.human_attribute_name(:change_given), self.change_given] if self.change_given
 
     footer = ''
     footer = 
