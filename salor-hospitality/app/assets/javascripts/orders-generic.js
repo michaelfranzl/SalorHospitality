@@ -81,6 +81,7 @@ function route(target, model_id, action, options) {
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();
     $('#functions_footer').hide();
+    $('#functions_header_last_invoices').hide();
     $('#customer_list').hide();
     $('#tablesselect').hide();
     if (action == 'destroy') {
