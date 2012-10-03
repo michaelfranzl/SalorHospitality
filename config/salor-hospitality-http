@@ -17,3 +17,4 @@ PassengerSpawnMethod conservative
 PassengerMaxPoolSize 2
 PassengerMinInstances 2
 PassengerPoolIdleTime 0
+PassengerMaxRequests 1000
