@@ -22,7 +22,7 @@ end
 module SalorHospitality
   class Application < Rails::Application
 
-    VERSION = '{{VERSION}}'
+    VERSION = `dpkg -s salor-hospitality | grep Version`
 
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese'}

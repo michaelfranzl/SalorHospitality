@@ -1,2 +1,3 @@
 #!/bin/bash
+echo "Loading Chromium. Please wait..."
 chromium-browser --kiosk --incognito -start-maximized http://salor-hospitality

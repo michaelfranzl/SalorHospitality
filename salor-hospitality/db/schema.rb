@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003111820) do
+ActiveRecord::Schema.define(:version => 20121003175408) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -33,8 +33,11 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
   add_index "articles", ["company_id"], :name => "index_articles_company_id"
+  add_index "articles", ["company_id"], :name => "index_articles_on_company_id"
+  add_index "articles", ["hidden"], :name => "index_articles_on_hidden"
   add_index "articles", ["name", "description", "price"], :name => "index_articles_on_name_and_description_and_price"
   add_index "articles", ["position"], :name => "index_articles_on_position"
+  add_index "articles", ["vendor_id"], :name => "index_articles_on_vendor_id"
 
   create_table "articles_taxes", :id => false, :force => true do |t|
     t.integer "tax_id"
@@ -68,6 +71,17 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.float    "tax_sum"
   end
 
+  add_index "booking_items", ["booking_id"], :name => "index_booking_items_on_booking_id"
+  add_index "booking_items", ["booking_item_id"], :name => "index_booking_items_on_booking_item_id"
+  add_index "booking_items", ["company_id"], :name => "index_booking_items_on_company_id"
+  add_index "booking_items", ["guest_type_id"], :name => "index_booking_items_on_guest_type_id"
+  add_index "booking_items", ["hidden"], :name => "index_booking_items_on_hidden"
+  add_index "booking_items", ["room_id"], :name => "index_booking_items_on_room_id"
+  add_index "booking_items", ["season_id"], :name => "index_booking_items_on_season_id"
+  add_index "booking_items", ["ui_id"], :name => "index_booking_items_on_ui_id"
+  add_index "booking_items", ["ui_parent_id"], :name => "index_booking_items_on_ui_parent_id"
+  add_index "booking_items", ["vendor_id"], :name => "index_booking_items_on_vendor_id"
+
   create_table "bookings", :force => true do |t|
     t.datetime "from_date"
     t.datetime "to_date"
@@ -94,6 +108,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.datetime "paid_at"
     t.float    "tax_sum"
   end
+
+  add_index "bookings", ["company_id"], :name => "index_bookings_on_company_id"
+  add_index "bookings", ["hidden"], :name => "index_bookings_on_hidden"
+  add_index "bookings", ["vendor_id"], :name => "index_bookings_on_vendor_id"
 
   create_table "cash_drawers", :force => true do |t|
     t.string  "name"
@@ -125,8 +143,11 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
   end
 
   add_index "categories", ["company_id"], :name => "index_categories_company_id"
+  add_index "categories", ["company_id"], :name => "index_categories_on_company_id"
+  add_index "categories", ["hidden"], :name => "index_categories_on_hidden"
   add_index "categories", ["name"], :name => "index_categories_on_name"
   add_index "categories", ["position"], :name => "index_categories_on_position"
+  add_index "categories", ["vendor_id"], :name => "index_categories_on_vendor_id"
   add_index "categories", ["vendor_printer_id"], :name => "index_categories_on_vendor_printer_id"
 
   create_table "categories_options", :id => false, :force => true do |t|
@@ -331,12 +352,24 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
+  add_index "items", ["category_id"], :name => "index_items_on_category_id"
   add_index "items", ["company_id"], :name => "index_items_company_id"
+  add_index "items", ["company_id"], :name => "index_items_on_company_id"
+  add_index "items", ["cost_center_id"], :name => "index_items_on_cost_center_id"
+  add_index "items", ["count"], :name => "index_items_on_count"
+  add_index "items", ["delivery_count"], :name => "index_items_on_delivery_count"
+  add_index "items", ["delivery_user_id"], :name => "index_items_on_delivery_user_id"
+  add_index "items", ["hidden"], :name => "index_items_on_hidden"
   add_index "items", ["item_id"], :name => "index_items_on_item_id"
   add_index "items", ["order_id"], :name => "index_items_on_order_id"
   add_index "items", ["position"], :name => "index_items_on_sort"
+  add_index "items", ["preparation_count"], :name => "index_items_on_preparation_count"
+  add_index "items", ["preparation_user_id"], :name => "index_items_on_preparation_user_id"
   add_index "items", ["quantity_id"], :name => "index_items_on_quantity_id"
+  add_index "items", ["refunded"], :name => "index_items_on_refunded"
+  add_index "items", ["settlement_id"], :name => "index_items_on_settlement_id"
   add_index "items", ["tax_id"], :name => "index_items_on_tax_id"
+  add_index "items", ["vendor_id"], :name => "index_items_on_vendor_id"
 
   create_table "option_items", :force => true do |t|
     t.integer  "option_id"
@@ -356,6 +389,13 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.boolean  "separate_ticket"
   end
 
+  add_index "option_items", ["company_id"], :name => "index_option_items_on_company_id"
+  add_index "option_items", ["hidden"], :name => "index_option_items_on_hidden"
+  add_index "option_items", ["item_id"], :name => "index_option_items_on_item_id"
+  add_index "option_items", ["option_id"], :name => "index_option_items_on_option_id"
+  add_index "option_items", ["order_id"], :name => "index_option_items_on_order_id"
+  add_index "option_items", ["vendor_id"], :name => "index_option_items_on_vendor_id"
+
   create_table "options", :force => true do |t|
     t.integer  "option_id"
     t.string   "name"
@@ -372,8 +412,11 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
   end
 
   add_index "options", ["company_id"], :name => "index_options_company_id"
+  add_index "options", ["company_id"], :name => "index_options_on_company_id"
+  add_index "options", ["hidden"], :name => "index_options_on_hidden"
   add_index "options", ["name"], :name => "index_options_on_name"
   add_index "options", ["option_id"], :name => "index_options_on_option_id"
+  add_index "options", ["vendor_id"], :name => "index_options_on_vendor_id"
 
   create_table "orders", :force => true do |t|
     t.boolean  "finished",                        :default => false
@@ -407,15 +450,22 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.datetime "paid_at"
   end
 
+  add_index "orders", ["booking_id"], :name => "index_orders_on_booking_id"
   add_index "orders", ["company_id"], :name => "index_orders_company_id"
+  add_index "orders", ["company_id"], :name => "index_orders_on_company_id"
   add_index "orders", ["cost_center_id"], :name => "index_orders_on_cost_center_id"
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
+  add_index "orders", ["finished"], :name => "index_orders_on_finished"
+  add_index "orders", ["hidden"], :name => "index_orders_on_hidden"
   add_index "orders", ["nr"], :name => "index_orders_on_nr"
   add_index "orders", ["order_id"], :name => "index_orders_on_order_id"
+  add_index "orders", ["paid"], :name => "index_orders_on_paid"
+  add_index "orders", ["print_pending"], :name => "index_orders_on_print_pending"
   add_index "orders", ["settlement_id"], :name => "index_orders_on_settlement_id"
   add_index "orders", ["table_id"], :name => "index_orders_on_table_id"
   add_index "orders", ["tax_id"], :name => "index_orders_on_tax_id"
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+  add_index "orders", ["vendor_id"], :name => "index_orders_on_vendor_id"
 
   create_table "pages", :force => true do |t|
     t.boolean  "active",     :default => true
@@ -514,7 +564,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"
   add_index "quantities", ["company_id"], :name => "index_quantities_company_id"
+  add_index "quantities", ["company_id"], :name => "index_quantities_on_company_id"
+  add_index "quantities", ["hidden"], :name => "index_quantities_on_hidden"
   add_index "quantities", ["position"], :name => "index_quantities_on_position"
+  add_index "quantities", ["vendor_id"], :name => "index_quantities_on_vendor_id"
 
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
@@ -573,6 +626,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.integer  "season_id"
   end
 
+  add_index "room_prices", ["company_id"], :name => "index_room_prices_on_company_id"
+  add_index "room_prices", ["hidden"], :name => "index_room_prices_on_hidden"
+  add_index "room_prices", ["vendor_id"], :name => "index_room_prices_on_vendor_id"
+
   create_table "room_types", :force => true do |t|
     t.string   "name"
     t.boolean  "hidden"
@@ -594,6 +651,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  add_index "rooms", ["company_id"], :name => "index_rooms_on_company_id"
+  add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
+  add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
 
   create_table "seasons", :force => true do |t|
     t.string   "name"
@@ -621,7 +682,9 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
+  add_index "settlements", ["company_id"], :name => "index_settlements_on_company_id"
   add_index "settlements", ["user_id"], :name => "index_settlements_on_user_id"
+  add_index "settlements", ["vendor_id"], :name => "index_settlements_on_vendor_id"
 
   create_table "stocks", :force => true do |t|
     t.float    "balance"
@@ -657,6 +720,15 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.integer  "booking_id"
   end
 
+  add_index "surcharge_items", ["booking_id"], :name => "index_surcharge_items_on_booking_id"
+  add_index "surcharge_items", ["booking_item_id"], :name => "index_surcharge_items_on_booking_item_id"
+  add_index "surcharge_items", ["company_id"], :name => "index_surcharge_items_on_company_id"
+  add_index "surcharge_items", ["guest_type_id"], :name => "index_surcharge_items_on_guest_type_id"
+  add_index "surcharge_items", ["hidden"], :name => "index_surcharge_items_on_hidden"
+  add_index "surcharge_items", ["season_id"], :name => "index_surcharge_items_on_season_id"
+  add_index "surcharge_items", ["surcharge_id"], :name => "index_surcharge_items_on_surcharge_id"
+  add_index "surcharge_items", ["vendor_id"], :name => "index_surcharge_items_on_vendor_id"
+
   create_table "surcharges", :force => true do |t|
     t.string   "name"
     t.integer  "season_id"
@@ -672,6 +744,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.boolean  "visible",       :default => true
     t.boolean  "selected",      :default => false
   end
+
+  add_index "surcharges", ["company_id"], :name => "index_surcharges_on_company_id"
+  add_index "surcharges", ["hidden"], :name => "index_surcharges_on_hidden"
+  add_index "surcharges", ["vendor_id"], :name => "index_surcharges_on_vendor_id"
 
   create_table "tables", :force => true do |t|
     t.string   "name"
@@ -699,7 +775,10 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
   add_index "tables", ["company_id"], :name => "index_tables_company_id"
+  add_index "tables", ["company_id"], :name => "index_tables_on_company_id"
+  add_index "tables", ["hidden"], :name => "index_tables_on_hidden"
   add_index "tables", ["user_id"], :name => "index_tables_on_user_id"
+  add_index "tables", ["vendor_id"], :name => "index_tables_on_vendor_id"
 
   create_table "tables_users", :id => false, :force => true do |t|
     t.integer  "table_id"
@@ -739,6 +818,17 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.integer  "hidden_by"
   end
 
+  add_index "tax_items", ["booking_id"], :name => "index_tax_items_on_booking_id"
+  add_index "tax_items", ["booking_item_id"], :name => "index_tax_items_on_booking_item_id"
+  add_index "tax_items", ["company_id"], :name => "index_tax_items_on_company_id"
+  add_index "tax_items", ["hidden"], :name => "index_tax_items_on_hidden"
+  add_index "tax_items", ["item_id"], :name => "index_tax_items_on_item_id"
+  add_index "tax_items", ["order_id"], :name => "index_tax_items_on_order_id"
+  add_index "tax_items", ["settlement_id"], :name => "index_tax_items_on_settlement_id"
+  add_index "tax_items", ["surcharge_item_id"], :name => "index_tax_items_on_surcharge_item_id"
+  add_index "tax_items", ["tax_id"], :name => "index_tax_items_on_tax_id"
+  add_index "tax_items", ["vendor_id"], :name => "index_tax_items_on_vendor_id"
+
   create_table "taxes", :force => true do |t|
     t.integer  "percent"
     t.string   "name"
@@ -775,6 +865,8 @@ ActiveRecord::Schema.define(:version => 20121003111820) do
     t.datetime "last_logout_at"
   end
 
+  add_index "users", ["company_id"], :name => "index_users_on_company_id"
+  add_index "users", ["hidden"], :name => "index_users_on_hidden"
   add_index "users", ["role_id"], :name => "index_users_on_role_id"
 
   create_table "users_vendors", :id => false, :force => true do |t|

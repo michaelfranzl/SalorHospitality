@@ -1,3 +1,4 @@
 #!/bin/bash
+export RAILS_ENV=production
 cd /usr/share/salor-hospitality
 /usr/bin/ruby1.9.1 script/rails c

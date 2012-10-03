@@ -29,7 +29,7 @@ config/salor-hospitality_exception-notification   /usr/bin
 config/salor-hospitality_maintainance             /usr/bin
 config/salor-hospitality_setup-https-access       /usr/bin
 
-config/salor-hospitality_environment-vars         /etc/profile.d
+config/salor-hospitality_environment-vars.sh      /etc/profile.d
 
 config/salor-hospitality-database.yml             /etc
 salor-hospitality/config/database-production.default.yml /etc
