@@ -18,6 +18,7 @@
 .paper_invoice
   .vendor_details
     = image_tag @current_vendor.image 'invoice_logo'
+    .clear
     = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
   .customer_details
     - if @order.customer
@@ -28,6 +29,19 @@
       = @order.customer.address
       %br
       == #{ @order.customer.postalcode } #{ @order.customer.city }
+    %p.show_paper_invoice_notes{:onclick => "$('#paper_invoice_notes').slideDown();"}== #{ t('.add_notes') } ∇
+    %div#paper_invoice_notes{:style => "display:none;"}
+      %input
+      %br
+      %input
+      %br
+      %input
+      %br
+      %input
+      %br
+      %input
+      %br
+      %input
   .clear
 
   %h1== #{ t 'invoice' } ##{ @order.nr }

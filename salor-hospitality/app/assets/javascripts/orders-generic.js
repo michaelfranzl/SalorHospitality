@@ -211,6 +211,11 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
+    if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
+      $('#main').html('');
+      create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
+      return;
+    }
     scroll_to($('#container'),20);
     submit_json.target = 'rooms';
     // See bookings.js show_rooms_interface() I did this because the showing/hiding, and doing of stuff needs

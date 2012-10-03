@@ -485,6 +485,7 @@ en:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
+      add_notes: Add notes
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund

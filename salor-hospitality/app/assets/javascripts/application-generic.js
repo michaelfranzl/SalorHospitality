@@ -28,10 +28,6 @@ function enable_audio() {
 
 $(function(){
   enable_audio();
-  if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
-    $('#main').html('');
-    create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
-  }
 
   jQuery.ajaxSetup({
       'beforeSend': function(xhr) {

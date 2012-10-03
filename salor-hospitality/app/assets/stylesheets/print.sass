@@ -9,6 +9,9 @@
 h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages, #tables, h2.current_user, div#items_notifications
   :display none
   
+div.clear
+  :clear both
+  
 div#report_container
   :display inline
 
@@ -20,7 +23,7 @@ body
   :font-family Arial
 
 h1
-  :font-size 110%
+  :font-size 80%
 
 a.logout
   :display none
@@ -63,16 +66,24 @@ table.waiterpad
 
 div.paper_invoice
   h1
-    :font-size 200%
+    :font-size 150%
   img
-    :width 30%
+    :width 50%
     :float right
   div.vendor_details
     :float right
+    :width 50%
+    :text-align right
+    :font-size 80%
   div.invoice_footer
     :font-size 80%
+    :text-align center
   div.customer_details
-    :font-size 80%
+    :margin 20pt 0pt 0pt 0pt
+    :font-size 100%
+    :width 50%
+    input
+      :font-size 100%
 
   table.printed_taxes
     :font-size 55%
@@ -137,7 +148,11 @@ div.articles_listall
     :width 60px
     :display inline-block
 
-input#customer_data_1,
-input#customer_data_2,
-input#customer_data_3
-  :width 400px
+
+.show_paper_invoice_notes
+  :display none
+
+#paper_invoice_notes
+  input
+    :width 400px
+    :border none
