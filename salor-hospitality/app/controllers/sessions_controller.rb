@@ -21,9 +21,14 @@ class SessionsController < ApplicationController
   def create
     subdomain = request.subdomain
     if subdomain.empty?
-      user = User.where(:password => params[:password], :active => true, :hidden => false).first
+      # local login
+      company = Company.where( :active => true, :hidden => false, :mode => 'local').first
     else
+      # SaaS login
       company = Company.where( :subdomain => subdomain, :active => true, :hidden => false).first
+    end
+    
+    if company
       user = User.where(:password => params[:password], :company_id => company.id, :active => true, :hidden => false).first
     end
     
