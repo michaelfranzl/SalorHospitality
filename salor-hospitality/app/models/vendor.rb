@@ -90,16 +90,16 @@ class Vendor < ActiveRecord::Base
     model_name_plural = model_name_singular + 's'
     return 0 if not self.send("use_#{model_name_singular}_numbers")
     if not self.send("unused_#{model_name_singular}_numbers").empty?
-      # puts '# reuse order numbers if present'
+      # reuse order numbers if present'
       nr = self.send("unused_#{model_name_singular}_numbers").first
       self.send("unused_#{model_name_singular}_numbers").delete(nr)
       self.save
     elsif not self.send("largest_#{model_name_singular}_number").zero?
-      # puts '# increment largest model number'
+      # increment largest model number'
       nr = self.send("largest_#{model_name_singular}_number") + 1
       self.update_attribute "largest_#{model_name_singular}_number", nr
     else
-      #puts '# find Order with largest nr attribute from database. this should happen only once when a new db'
+      # find Order with largest nr attribute from database. this should happen only once when a new db'
       last_model = self.send(model_name_plural).existing.where('nr is not NULL OR nr <> 0').last
       nr = last_model ? last_model.nr + 1 : 1
       self.update_attribute "largest_#{model_name_singular}_number", nr

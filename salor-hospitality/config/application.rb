@@ -32,7 +32,7 @@ module SalorHospitality
     FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" }
     
     SALOR_HOSPITALITY_CONFIGURATION = {}
-    SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('etc','salor-hospitality-config.yml'), 'r').read) if File.exists?(File.join('etc','salor-hospitality-config.yml'))
+    SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('/', 'etc','salor-hospitality-config.yml'), 'r').read) if File.exists?(File.join('/', 'etc','salor-hospitality-config.yml'))
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
