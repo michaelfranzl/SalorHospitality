@@ -1,8 +1,8 @@
-salor-hospitality (4.1.0.12ubuntu1) precise; urgency=low
+salor-hospitality (4.1.0.13) unstable; urgency=low
 
-  * 
+  * initialize global var only once
 
- -- Michael Franzl <office@michaelfranzl.com>  Sat, 06 Oct 2012 10:06:49 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 06 Oct 2012 10:07:41 +0200
 
 salor-hospitality (4.1.0.12) unstable; urgency=low
 
