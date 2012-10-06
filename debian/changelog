@@ -1,3 +1,16 @@
+salor-hospitality (4.1.0.12) unstable; urgency=low
+
+  * prevent login error when subdomain not set
+  * active user name on tables
+  * self.nr failsafe
+  * set nr improvement
+  * assets precompiling
+  * change order.user only if changes were made
+  * apple icons
+  * fixed configuration file
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 06 Oct 2012 09:53:29 +0200
+
 salor-hospitality (4.1.0.11) unstable; urgency=low
 
   * feature #1309
