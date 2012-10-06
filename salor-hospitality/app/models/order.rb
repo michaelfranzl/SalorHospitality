@@ -86,7 +86,8 @@ class Order < ActiveRecord::Base
       end
     end
     self.save
-    self.update_associations(user)
+    new_user = params[:items] ? user : nil
+    self.update_associations(new_user)
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
@@ -128,10 +129,9 @@ class Order < ActiveRecord::Base
   end
 
   def update_associations(user)
+    self.user = user if user
     self.save
     self.table.update_color if self.table
-    self.user = user
-    save
     # Set item notifications
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
       i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
