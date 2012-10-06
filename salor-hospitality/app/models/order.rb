@@ -92,7 +92,6 @@ class Order < ActiveRecord::Base
     self.update_payment_method_items(params)
     self.hide(user.id) if self.hidden
     self.hide(user.id) unless self.items.existing.any?
-    self.set_nr
   end
   
   def create_new_item(p)

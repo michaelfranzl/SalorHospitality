@@ -76,6 +76,7 @@ class Booking < ActiveRecord::Base
     BookingItem.make_multiseason_associations
     booking.update_payment_method_items(params)
     booking.hide(user.id) if booking.hidden
+    booking.set_nr
     return booking
   end
 

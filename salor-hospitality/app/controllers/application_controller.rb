@@ -212,7 +212,6 @@ class ApplicationController < ActionController::Base
         @booking.update_from_params(params, @current_user)
       else
         @booking = Booking.create_from_params(params, @current_vendor, @current_user)
-        @booking.set_nr
       end
       return @booking
     end
