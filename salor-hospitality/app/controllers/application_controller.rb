@@ -202,7 +202,6 @@ class ApplicationController < ActionController::Base
         @order.update_from_params(params, @current_user)
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user)
-        @order.set_nr
       end
       return @order
     end

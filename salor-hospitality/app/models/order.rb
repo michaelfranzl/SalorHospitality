@@ -71,6 +71,7 @@ class Order < ActiveRecord::Base
     order.update_payment_method_items(params)
     order.hide(user.id) if order.hidden
     order.hide(user.id) unless order.items.existing.any?
+    order.set_nr
     return order
   end
 
@@ -91,6 +92,7 @@ class Order < ActiveRecord::Base
     self.update_payment_method_items(params)
     self.hide(user.id) if self.hidden
     self.hide(user.id) unless self.items.existing.any?
+    self.set_nr
   end
   
   def create_new_item(p)
@@ -335,9 +337,9 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 
     header = ''
-
+    nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
     if vendor.ticket_display_time_order
-      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? self.nr : 0)]
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? nr : 0)]
     end
 
     header += header_format_user_table % [self.user.login, self.table.name]
