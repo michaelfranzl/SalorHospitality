@@ -77,8 +77,8 @@ case "$1" in
         rake1.9.1 db:migrate
       fi
       
-      #echo "Precompiling assets ..."
-      #rake1.9.1 assets:precompile
+      echo "Precompiling assets ..."
+      rake1.9.1 assets:precompile
 
       echo "Updating vendors cache ..."
       rake1.9.1 update_vendor_cache
