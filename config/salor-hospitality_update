@@ -34,7 +34,7 @@ fi
 echo ""
 echo "============"
 echo "Backing up codebase before upgrade in compliance with FISC regulations."
-tar cjhf codebase-before-update-$DATE.tar.bz2 $app_root -C $app_root
+tar cjhf $logdir/codebase-before-update-$DATE.tar.bz2 $app_root -C $app_root
 echo "Done."
 
 echo ""

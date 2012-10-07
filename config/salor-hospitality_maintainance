@@ -3,7 +3,7 @@
 app_root=/usr/share/salor-hospitality
 backupdir_database=/var/log/salor-hospitality
 backupdir_log=/var/log/salor-hospitality
-database_config_file=/etc/salor-hospitality-config.yml
+database_config_file=/etc/salor-hospitality-database.yml
 numversions=60
 d=$(date)
 
@@ -12,11 +12,11 @@ d=$(date)
 mkdir -p $backupdir_log
 
 cd $app_root/log
+touch production.log
 mv production.log 0-production.log
 touch production.log
 chmod 777 production.log
 gzip 0-production.log
-mv 0-production.log.gz $backupdir_log
 
 cd $backupdir_log
 
@@ -58,10 +58,10 @@ do
   i=`expr $i - 1`
 done
 
-# Copy the latest backup to the Desktop
+# Copy the latest backup to the Home Folder
 # TODO: Add check if ls /home | wc -l equals 1, so that we don't put the database to the Desktop of a different user.
 mainuser=`ls /home | head -1`
-cp ${backupdir_database}/1-$database.sql.gz /home/$mainuser/Desktop/salor-hospitality-database.sql.gz
-chmod 666 /home/$mainuser/Desktop/salor-hospitality-database.sql.gz
+cp ${backupdir_database}/1-$database.sql.gz /home/$mainuser/salor-hospitality-database.sql.gz
+chmod 666 /home/$mainuser/salor-hospitality-database.sql.gz
 
 exit 0

@@ -19,6 +19,7 @@ class AddRolesAndPermissions < ActiveRecord::Migration
         {:weight => 10, :permissions => [] }
     }
     
+    Role.reset_column_information
     Company.all.each do |company|
       c = company.id
       company.vendors.all.each do |vendor|
