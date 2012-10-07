@@ -153,6 +153,7 @@ en:
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
         title: Title
+        audio: Acoustic signals
       vendor:
         automatic_printing: Automatic printing
         country: Rules for country

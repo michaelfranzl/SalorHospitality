@@ -160,6 +160,7 @@ gn:
         screenlock_timeout: Zeit Bildschirmsperre (sek.)
         tables: Tische
         title: Anrede
+        audio: Akustische Signale
       vendor:
         automatic_printing: Automatisches Drucken
         country: Regeln für Land

@@ -1250,7 +1250,7 @@ function notification_alerts(model) {
   if (total_count > 0) {
     $('.items_notifications_button').html(total_count);
     $('#mobile_last_invoices_button').html(total_count);
-    alert_audio();
+    if (permissions.audio) { alert_audio(); }
   }
 }
 

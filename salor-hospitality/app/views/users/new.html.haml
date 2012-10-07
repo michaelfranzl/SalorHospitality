@@ -59,6 +59,9 @@
             %tr
               %td= user_form.label :automatic_printing
               %td= user_form.check_box :automatic_printing
+            %tr
+              %td= user_form.label :audio
+              %td= user_form.check_box :audio
               
         - if @current_user.role.permissions.include?('assign_tables')
           %td
