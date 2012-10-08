@@ -175,11 +175,15 @@ class Booking < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum).round(2)
+    self.sum = self.booking_item_sum = self.booking_items.existing.where(:booking_id => self.id).sum(:sum)
     self.sum += Order.where(:booking_id => self.id).existing.sum(:sum)
-    self.refund_sum = self.booking_items.existing.sum(:refund_sum).round(2)
-    self.tax_sum = self.booking_items.existing.sum(:tax_sum).round(2)
+    self.sum = self.sum.round(3)
+    self.refund_sum = self.booking_items.existing.sum(:refund_sum).round(3)
+    self.tax_sum = self.booking_items.existing.sum(:tax_sum)
+    puts self.tax_sum
     self.tax_sum += Order.where(:booking_id => self.id).existing.sum(:tax_sum)
+    self.tax_sum = self.tax_sum.round(3)
+    puts self.tax_sum
     self.save
     self.calculate_taxes
     self.set_booking_date
@@ -194,9 +198,9 @@ class Booking < ActiveRecord::Base
           self.taxes[k][:t] += v[:t]
           self.taxes[k][:g] += v[:g]
           self.taxes[k][:n] += v[:n]
-          self.taxes[k][:g] = self.taxes[k][:g].round(2)
-          self.taxes[k][:n] = self.taxes[k][:n].round(2)
-          self.taxes[k][:t] = self.taxes[k][:t].round(2)
+          self.taxes[k][:g] = self.taxes[k][:g].round(3)
+          self.taxes[k][:n] = self.taxes[k][:n].round(3)
+          self.taxes[k][:t] = self.taxes[k][:t].round(3)
         else
           self.taxes[k] = v
         end
@@ -208,9 +212,9 @@ class Booking < ActiveRecord::Base
           self.taxes[k][:g] += v[:g]
           self.taxes[k][:n] += v[:n]
           self.taxes[k][:t] += v[:t]
-          self.taxes[k][:g] = self.taxes[k][:g].round(2)
-          self.taxes[k][:n] = self.taxes[k][:n].round(2)
-          self.taxes[k][:t] = self.taxes[k][:t].round(2)
+          self.taxes[k][:g] = self.taxes[k][:g].round(3)
+          self.taxes[k][:n] = self.taxes[k][:n].round(3)
+          self.taxes[k][:t] = self.taxes[k][:t].round(3)
         else
           self.taxes[k] = v
         end
@@ -246,7 +250,6 @@ class Booking < ActiveRecord::Base
   end
   
   def check
-
     self.orders.existing.each do |o|
       o.check
     end

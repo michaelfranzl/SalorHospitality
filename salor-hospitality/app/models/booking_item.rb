@@ -133,13 +133,13 @@ class BookingItem < ActiveRecord::Base
     tax_sum_total = 0
     tax_array.each do |tax|
       if self.vendor.country == 'us'
-        net = (self.sum * self.count * self.duration).round(2)
-        gro = (net * ( 1.0 + (tax.percent / 100.0))).round(2)
+        net = (self.sum * self.count * self.duration).round(3)
+        gro = (net * ( 1.0 + (tax.percent / 100.0))).round(3)
       else
-        gro = (self.sum * self.count * self.duration).round(2)
-        net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
+        gro = (self.sum * self.count * self.duration).round(3)
+        net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(3)
       end
-      tax_sum = (gro - net).round(2)
+      tax_sum = (gro - net).round(3)
       self.taxes[tax.id] = {:p => tax.percent, :t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name }
       
       # TaxItem creation
@@ -159,9 +159,9 @@ class BookingItem < ActiveRecord::Base
           self.taxes[k][:t] += v[:t]
           self.taxes[k][:g] += v[:g]
           self.taxes[k][:n] += v[:n]
-          self.taxes[k][:t] = self.taxes[k][:t].round(2)
-          self.taxes[k][:g] = self.taxes[k][:g].round(2)
-          self.taxes[k][:n] = self.taxes[k][:n].round(2)
+          self.taxes[k][:t] = self.taxes[k][:t].round(3)
+          self.taxes[k][:g] = self.taxes[k][:g].round(3)
+          self.taxes[k][:n] = self.taxes[k][:n].round(3)
         else
           self.taxes[k] = v
         end
