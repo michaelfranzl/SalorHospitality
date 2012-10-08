@@ -151,12 +151,12 @@ class Order < ActiveRecord::Base
     self.items.existing.each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
-          self.taxes[k][:t] += v[:t].round(2)
-          self.taxes[k][:g] += v[:g].round(2)
-          self.taxes[k][:n] += v[:n].round(2)
-          self.taxes[k][:t] =  self.taxes[k][:t].round(2)
-          self.taxes[k][:g] =  self.taxes[k][:g].round(2)
-          self.taxes[k][:n] =  self.taxes[k][:n].round(2)
+          self.taxes[k][:t] += v[:t]
+          self.taxes[k][:g] += v[:g]
+          self.taxes[k][:n] += v[:n]
+          self.taxes[k][:t] =  self.taxes[k][:t].round(3)
+          self.taxes[k][:g] =  self.taxes[k][:g].round(3)
+          self.taxes[k][:n] =  self.taxes[k][:n].round(3)
         else
           self.taxes[k] = v
         end
