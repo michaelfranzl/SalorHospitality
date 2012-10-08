@@ -136,13 +136,12 @@ window.display_booking_form = (room_id) ->
 
 # Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed.
 window.booking_dates_changed = ->
-  from = Date.parse(submit_json.model.from_date)
-  to = Date.parse(submit_json.model.to_date)
+  from = new Date(Date.parse(submit_json.model.from_date))
+  to = new Date(Date.parse(submit_json.model.to_date))
   if to < from
-    from_date = new Date(from)
-    $('#booking_to').val date_as_ymd(from_date)
+    $('#booking_to').val date_as_ymd(from)
     to = from
-  duration = Math.floor((to - from) / 86400000)
+  duration = Math.floor((to.getTime() - from.getTime()) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
   submit_json.model.covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
@@ -150,8 +149,8 @@ window.booking_dates_changed = ->
   
 window.calculate_all_covered_seasons = ->
   $.each items_json, (k,v) ->
-    from = Date.parse(items_json[k].from_date)
-    to = Date.parse(items_json[k].to_date)
+    from = new Date(Date.parse(items_json[k].from_date))
+    to = new Date(Date.parse(items_json[k].to_date))
     items_json[k].covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
   
   
@@ -217,14 +216,17 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index, parent_ke
     covered_seasons = submit_json.model.covered_seasons
     season_id = covered_seasons[season_index].id
     duration = covered_seasons[season_index].duration
+    from_date = covered_seasons[season_index].start
+    to_date = covered_seasons[season_index].end
   else
     covered_seasons = items_json[parent_key].covered_seasons
+    #covered_seasons = submit_json.model.covered_seasons
     season_id = covered_seasons[season_index].id
     duration = covered_seasons[season_index].duration
+    from_date = covered_seasons[season_index].start
+    to_date = covered_seasons[season_index].end
     covered_seasons = null
-    
-  from_date = $('#booking_from').val()
-  to_date = $('#booking_to').val()
+  
   create_json_record 'booking', {d:booking_item_id, guest_type_id:guest_type_id, season_id:season_id, duration:duration, parent_key:parent_key, from_date:from_date, to_date:to_date, covered_seasons:covered_seasons}
   if guest_type_id == null
     guest_type_query_string = 'guest_type_id IS NULL'
@@ -247,20 +249,25 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index, parent_ke
 regenerate_all_multi_season_booking_items = () ->
   # delete all child items. a preservation of existing child booking items would be too complex
   $.each items_json, (k,v) ->
-    #if items_json[k].date_locked == true
-    #  return true # date locked items will be ignored
     if k.indexOf('x') == 0 # child item
       $('#booking_item' + k).remove()
       set_json 'booking', k, 'hidden', true
     else # parent item
       items_json[k].has_children = false
       if v.date_locked == false
-        from = Date.parse(submit_json.model.from_date)
-        to = Date.parse(submit_json.model.to_date)
-        items_json[k].covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)        
-        set_json 'booking', k, 'duration', submit_json.model.covered_seasons[0].duration
-        set_json 'booking', k, 'from_date', date_as_ymd(new Date($('#booking_from').val()))
-        set_json 'booking', k, 'to_date', date_as_ymd(new Date($('#booking_to').val()))
+        from = new Date(Date.parse(submit_json.model.from_date))
+        to = new Date(Date.parse(submit_json.model.to_date))
+        items_json[k].covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
+        
+        duration = submit_json.model.covered_seasons[0].duration
+        start = new Date(Date.parse(submit_json.model.covered_seasons[0].start))
+        end = new Date(Date.parse(submit_json.model.covered_seasons[0].end))
+        update_base_price(k)
+        
+        set_json 'booking', k, 'duration', duration
+        set_json 'booking', k, 'from_date', date_as_ymd(start)
+        set_json 'booking', k, 'to_date', date_as_ymd(end)
+        set_json 'booking', k, 'season_id', submit_json.model.covered_seasons[0].id
     return true
   $.each items_json, (k,v) ->
     regenerate_multi_season_booking_items(k)
@@ -294,8 +301,6 @@ regenerate_multi_season_booking_items = (parent_booking_item_id) ->
 copy_attributes = (from_id, to_id) ->
   set_json 'booking', to_id, 'count', items_json[from_id].count
   set_json 'booking', to_id, 'parent_key', from_id
-  set_json 'booking', to_id, 'from_date', items_json[from_id].from_date
-  set_json 'booking', to_id, 'to_date', items_json[from_id].to_date
   set_json 'booking', to_id, 'booking_item_id', items_json[from_id].id
   set_json 'booking', to_id, 'hidden', items_json[from_id].hidden
   set_json 'booking', to_id, 'date_locked', items_json[from_id].date_locked
@@ -360,11 +365,13 @@ render_booking_item = (booking_item_id) ->
   
   from_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_from_date_col',booking_item_id:booking_item_id}, '',booking_item_row
   from_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_from_date', class:'booking_item_from_date'}, '', from_date_col
-  from_date_col_input.val items_json[booking_item_id].from_date.replace('2012-','')
+  from_date_col_input.val items_json[booking_item_id].from_date
   
   to_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_to_date_col',booking_item_id:booking_item_id}, '',booking_item_row
   to_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_to_date', class:'booking_item_to_date'}, '', to_date_col
-  to_date_col_input.val items_json[booking_item_id].to_date.replace('2012-','')
+  to_date_col_input.val items_json[booking_item_id].to_date
+  
+  duration_col = create_dom_element 'div', {class:'surcharge_col',id:'booking_item_'+booking_item_id+'_duration_col',booking_item_id:booking_item_id}, items_json[booking_item_id].duration, booking_item_row
   
   if items_json[booking_item_id].date_locked == true
     from_date_col.addClass 'selected'
@@ -373,13 +380,13 @@ render_booking_item = (booking_item_id) ->
   from_date_col_input.datepicker {
     onSelect:(date, inst) ->
       set_json 'booking', $(from_date_col).attr('booking_item_id'), 'from_date', date
-      from_date_col_input.val items_json[booking_item_id].from_date.replace('2012-','')
+      from_date_col_input.val items_json[booking_item_id].from_date
       change_date_for_booking_item(booking_item_id)
   }
   to_date_col_input.datepicker {
     onSelect:(date, inst) ->
       set_json 'booking', $(to_date_col).attr('booking_item_id'), 'to_date', date
-      to_date_col_input.val items_json[booking_item_id].to_date.replace('2012-','')
+      to_date_col_input.val items_json[booking_item_id].to_date
       change_date_for_booking_item(booking_item_id)
   }
 
@@ -436,8 +443,8 @@ change_date_for_booking_item = (booking_item_id) ->
     if v.parent_key == booking_item_id
       items_json[k].date_locked = true
     else
-      from = Date.parse(v.from_date)
-      to = Date.parse(v.to_date)
+      from = new Date(Date.parse(v.from_date))
+      to = new Date(Date.parse(v.to_date))
       if from > to
         to = from
         return

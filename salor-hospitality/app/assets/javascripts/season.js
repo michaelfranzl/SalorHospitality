@@ -16,7 +16,7 @@ var Season = function (s,e) {
 Season.prototype.get_days = function (start,end) {
   if (this.interested(start,end)) {
     var days = 0;
-    var cdate = new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate() + 1);
+    var cdate = new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate());
     if (cdate < start) {
       while (cdate < start) {
         cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
@@ -63,7 +63,17 @@ Season.applying_seasons = function (seasons,b_start,b_end) {
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
     if (s.interested(b_start,b_end)) {
-      var ns = {start: date_as_ymd(s.start), end: date_as_ymd(s.end),name: s.name,id: parseInt(s.id), duration: s.get_days(b_start,b_end)};
+      
+      var duration = s.get_days(b_start,b_end);
+      if (s.start > b_start) {
+        var start_date = s.start;
+      } else {
+        var start_date = b_start;
+      }
+
+      var end_date = (s.end < b_end) ? s.end : b_end;
+      
+      var ns = {start: date_as_ymd(start_date), end: date_as_ymd(end_date),name: s.name,id: parseInt(s.id), duration:duration};
       new_seasons.push(ns);
     }
   }
