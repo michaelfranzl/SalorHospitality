@@ -12,8 +12,9 @@
   
 
 .paper_invoice
-  = image_tag @current_vendor.image 'invoice_logo'
   .vendor_details
+    = image_tag @current_vendor.image 'invoice_logo'
+    .clear
     = raw Kramdown::Document.new(@booking.vendor.invoice_header_blurb).to_html if @booking.vendor.invoice_header_blurb
   .customer_details
     - if @booking.customer
