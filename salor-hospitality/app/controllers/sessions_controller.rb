@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     end
     
     if user
-      if user.current_ip.nil? or user.current_ip == request.ip
+      if company.mode == 'local' or user.current_ip.nil? or (user.current_ip == request.ip)
         session[:user_id] = user.id
         session[:company_id] = user.company.id
         session[:vendor_id] = user.vendors.existing.first.id # unless session[:vendor_id] and Vendor.find_by_id(session[:vendor_id]).company_id == user.company.id

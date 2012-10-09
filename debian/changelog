@@ -1,3 +1,16 @@
+salor-hospitality (4.1.0.14ubuntu1) precise; urgency=low
+
+  * audio switch for users
+  * more precise rounding
+  * fixed error in multi-season booking item calculation, better UI styling
+  * rounding to 3 digits for bookings
+  * fixed multiseason calculation, better UI
+  * better handling of booking moving on calendar view
+  * invoice formatting, booking bug
+  * invoice formatting
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 09 Oct 2012 10:34:59 +0200
+
 salor-hospitality (4.1.0.14) unstable; urgency=low
 
   * auxiliary script fixes, migration fix
