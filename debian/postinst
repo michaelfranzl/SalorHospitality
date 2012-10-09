@@ -65,7 +65,7 @@ case "$1" in
       result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
       if [ "$result" = "0" ]
       then
-        echo "salor_hospitality database doesn't exist, so I'm creating it ..."
+        echo "Database $database doesn't exist, so I'm creating it ..."
         rake1.9.1 db:create
         echo "Migrating salor_hospitality database ..."
         rake1.9.1 db:migrate

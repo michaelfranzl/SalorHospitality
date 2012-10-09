@@ -133,10 +133,10 @@ class BookingItem < ActiveRecord::Base
     tax_sum_total = 0
     tax_array.each do |tax|
       if self.vendor.country == 'us'
-        net = (self.sum * self.count * self.duration).round(3)
+        net = (self.base_price * self.count * self.duration).round(3)
         gro = (net * ( 1.0 + (tax.percent / 100.0))).round(3)
       else
-        gro = (self.sum * self.count * self.duration).round(3)
+        gro = (self.base_price * self.count * self.duration).round(3)
         net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(3)
       end
       tax_sum = (gro - net).round(3)
