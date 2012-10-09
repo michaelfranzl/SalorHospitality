@@ -53,8 +53,8 @@ $(function(){
   
   //automatically route to views depending on uri parameters
   var uri_attrs = uri_attributes();
-  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 600);
-  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 600);
+  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 1500);
+  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 1500);
 })
 
 

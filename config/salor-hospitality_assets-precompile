@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /usr/share/salor-hospitality
+rake1.9.1 assets:precompile
+chmod -R 777 tmp/cache
+chmod -R 777 public/assets
+service apache2 restart
