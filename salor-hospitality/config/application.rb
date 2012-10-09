@@ -22,7 +22,11 @@ end
 module SalorHospitality
   class Application < Rails::Application
 
-    VERSION = `dpkg -s salor-hospitality | grep Version`
+    if File.exists?(File.join(Rails.root, '..', 'debian', 'changelog'))
+      changelog = File.open(File.join(Rails.root, '..', 'debian', 'changelog'), 'r').read.split("\n")[0]
+      VERSION = "Version " + /.*\((.*)\).*/.match(changelog)[1]
+    end
+    VERSION ||= `dpkg -s salor-hospitality | grep Version`
 
     INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese'}
