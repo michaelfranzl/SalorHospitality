@@ -1,4 +1,4 @@
-salor-hospitality (4.1.0.14ubuntu1) precise; urgency=low
+salor-hospitality (4.1.0.15) unstable; urgency=low
 
   * audio switch for users
   * more precise rounding
@@ -8,8 +8,11 @@ salor-hospitality (4.1.0.14ubuntu1) precise; urgency=low
   * better handling of booking moving on calendar view
   * invoice formatting, booking bug
   * invoice formatting
+  * feature #1324
+  * feature #1280
+  * feature #1330
 
- -- Michael Franzl <office@michaelfranzl.com>  Tue, 09 Oct 2012 10:34:59 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 09 Oct 2012 10:57:51 +0200
 
 salor-hospitality (4.1.0.14) unstable; urgency=low
 
