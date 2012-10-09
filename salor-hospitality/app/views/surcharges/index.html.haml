@@ -5,10 +5,10 @@
 - @seasons.each do |s|
   %table.settlements.hotel
     %tr
-      %th{ :style => 'width:100px' }
+      %th
         %b= s.name.upcase
       - @guest_types.each do |gt|
-        %th{ :style => 'width:70px' }
+        %th
           = gt ? gt.name : t('surcharges.new.common_surcharge')
     - @surcharge_names.each do |n|
       - next unless n

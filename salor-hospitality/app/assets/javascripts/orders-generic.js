@@ -338,7 +338,7 @@ function send_queue(object_id) {
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
-    timeout: 20000,
+    timeout: 30000,
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
@@ -736,7 +736,7 @@ function update_order_from_invoice_form(data) {
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 20000
+    timeout: 30000
   });
 }
 
@@ -746,7 +746,7 @@ function rotate_tax_item(id) {
     type: 'put',
     url: '/items/rotate_tax',
     data: {id:id},
-    timeout: 10000
+    timeout: 20000
   });
 }
 
@@ -784,7 +784,7 @@ function submit_split_items() {
     type: 'put',
     url: '/items/split',
     data: {jsaction:'split',split_items_hash:split_items_hash},
-    timeout: 25000
+    timeout: 30000
   });
 }
 
@@ -794,7 +794,7 @@ function update_order_from_refund_form(data) {
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 15000
+    timeout: 20000
   });
 }
 

@@ -213,17 +213,21 @@ render_guest_type_buttons = ->
 # This function adds objects to the items_json and submit_json objects so that they can be submitted to the server where they will be saved as a Booking.
 add_json_booking_item = (booking_item_id, guest_type_id, season_index, parent_key) ->
   if booking_item_id.indexOf('x') != 0
+    # this is a parent item
     covered_seasons = submit_json.model.covered_seasons
     season_id = covered_seasons[season_index].id
     duration = covered_seasons[season_index].duration
     from_date = covered_seasons[season_index].start
     to_date = covered_seasons[season_index].end
   else
+    # this is a multi-season child item
     covered_seasons = items_json[parent_key].covered_seasons
-    #covered_seasons = submit_json.model.covered_seasons
     season_id = covered_seasons[season_index].id
     duration = covered_seasons[season_index].duration
     from_date = covered_seasons[season_index].start
+    from_date_object = new Date Date.parse(from_date)
+    from_date_object.setDate from_date_object.getDate() - 1
+    from_date = date_as_ymd(from_date_object)
     to_date = covered_seasons[season_index].end
     covered_seasons = null
   
@@ -253,6 +257,7 @@ regenerate_all_multi_season_booking_items = () ->
       $('#booking_item' + k).remove()
       set_json 'booking', k, 'hidden', true
     else # parent item
+      $('#booking_item' + k).remove()
       items_json[k].has_children = false
       if v.date_locked == false
         from = new Date(Date.parse(submit_json.model.from_date))
@@ -377,18 +382,23 @@ render_booking_item = (booking_item_id) ->
     from_date_col.addClass 'selected'
     to_date_col.addClass 'selected'
 
-  from_date_col_input.datepicker {
-    onSelect:(date, inst) ->
-      set_json 'booking', $(from_date_col).attr('booking_item_id'), 'from_date', date
-      from_date_col_input.val items_json[booking_item_id].from_date
-      change_date_for_booking_item(booking_item_id)
-  }
-  to_date_col_input.datepicker {
-    onSelect:(date, inst) ->
-      set_json 'booking', $(to_date_col).attr('booking_item_id'), 'to_date', date
-      to_date_col_input.val items_json[booking_item_id].to_date
-      change_date_for_booking_item(booking_item_id)
-  }
+  if items_json[booking_item_id].has_children
+    from_date_col_input.datepicker {
+      onSelect:(date, inst) ->
+        if Date.parse(date) > Date.parse(items_json[booking_item_id].to_date)
+          items_json[booking_item_id].to_date = date
+        set_json 'booking', $(from_date_col).attr('booking_item_id'), 'from_date', date
+        from_date_col_input.val items_json[booking_item_id].from_date
+        change_date_for_booking_item(booking_item_id)
+    }
+    to_date_col_input.datepicker {
+      onSelect:(date, inst) ->
+        if Date.parse(date) < Date.parse(items_json[booking_item_id].from_date)
+          items_json[booking_item_id].from_date = date
+        set_json 'booking', $(to_date_col).attr('booking_item_id'), 'to_date', date
+        to_date_col_input.val items_json[booking_item_id].to_date
+        change_date_for_booking_item(booking_item_id)
+    }
 
     
   for header in surcharge_headers
@@ -491,7 +501,13 @@ update_submit_json_surchageslist = (booking_item_id) ->
 window.render_booking_items_from_json = ->
   $('#booking_items').html ''
   $.each items_json, (k,v) ->
+    if k.indexOf('x') == 0
+      # Skip child items, these will be rendered directly below the parent items
+      return true
     render_booking_item k
+    $.each items_json, (i,j) ->
+      if j.parent_key == k
+        render_booking_item i
 
 
 
