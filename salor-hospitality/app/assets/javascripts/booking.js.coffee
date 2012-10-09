@@ -196,7 +196,6 @@ render_guest_type_buttons = ->
       id = get_unique_booking_number('d') # d is for "dynamically generated"
       add_json_booking_item id, parseInt(k), 0, null
       setTimeout ->
-        #render_booking_item(id)
         render_booking_items_from_json()
       , 200
   gtbutton = create_dom_element 'div', {class:'guest_type'}, i18n.common_surcharges, guest_types_container
@@ -205,7 +204,6 @@ render_guest_type_buttons = ->
     id = get_unique_booking_number('d') # d is for "dynamically generated"
     add_json_booking_item id, null, 0, null
     setTimeout ->
-      #render_booking_item(id)
       render_booking_items_from_json()
     , 200
 
@@ -382,7 +380,7 @@ render_booking_item = (booking_item_id) ->
     from_date_col.addClass 'selected'
     to_date_col.addClass 'selected'
 
-  if items_json[booking_item_id].has_children
+  if booking_item_id.indexOf('x') != 0
     from_date_col_input.datepicker {
       onSelect:(date, inst) ->
         if Date.parse(date) > Date.parse(items_json[booking_item_id].to_date)

@@ -222,10 +222,25 @@ class Booking < ActiveRecord::Base
     end
   end
   
+  def from_date=(from_date)
+    if self.booking_items.existing.where(:date_locked => false).any?
+      self.booking_items.existing.where(:date_locked => false).update_all :from_date => from_date
+      self.set_booking_date
+    end
+  end
+  
+  def to_date=(to_date)
+    if self.booking_items.existing.where(:date_locked => false).any?
+      self.booking_items.existing.where(:date_locked => false).update_all :to_date => to_date
+      self.set_booking_date
+    end
+  end
+  
+  
   def set_booking_date
     if self.booking_items.existing.any?
-      self.from_date = self.booking_items.existing.collect{ |bi| bi.from_date }.min
-      self.to_date = self.booking_items.existing.collect{ |bi| bi.to_date }.max
+      write_attribute :from_date, self.booking_items.existing.collect{ |bi| bi.from_date }.min
+      write_attribute :to_date, self.booking_items.existing.collect{ |bi| bi.to_date }.max
       self.duration = (self.to_date - self.from_date) / 86400
     end
     self.save

@@ -198,6 +198,7 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#rooms').hide();
     $('#areas').hide();
+    //$('#screenwait').hide();
     //$('#inputfields').html('');
     $('#itemstable').html('');
     $('#functions_header_invoice_form').show();
@@ -298,10 +299,12 @@ function route(target, model_id, action, options) {
     if (action == 'booking_interim_invoice') {
       submit_json.jsaction = 'send_and_redirect_to_invoice';
       send_json('booking_' + model_id); //the server renders a real HTTP redirect
+      $('#screenwait').show();
       
     } else if (action == 'booking_invoice') {
       submit_json.jsaction = 'pay_and_redirect_to_invoice';
       send_json('booking_' + model_id); //the server renders a real HTTP redirect
+      $('#screenwait').show();
       
     } else if (action == 'invoice_move') {
       $.ajax({
