@@ -226,6 +226,8 @@ class Booking < ActiveRecord::Base
     if self.booking_items.existing.where(:date_locked => false).any?
       self.booking_items.existing.where(:date_locked => false).update_all :from_date => from_date
       self.set_booking_date
+    else
+      write_attribute :from_date, from_date
     end
   end
   
@@ -233,6 +235,8 @@ class Booking < ActiveRecord::Base
     if self.booking_items.existing.where(:date_locked => false).any?
       self.booking_items.existing.where(:date_locked => false).update_all :to_date => to_date
       self.set_booking_date
+    else
+      write_attribute :to_date, to_date
     end
   end
   

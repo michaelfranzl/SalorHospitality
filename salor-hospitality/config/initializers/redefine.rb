@@ -22,7 +22,7 @@ module ActionView
       end
       
       def number_to_percentage(args)
-        orig_number_to_percentage(args, :locale => @region)
+        orig_number_to_percentage(args, :precision => 0, :locale => @region)
       end
     end
   end
