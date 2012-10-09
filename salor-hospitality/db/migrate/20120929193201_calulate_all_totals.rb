@@ -1,5 +1,7 @@
 class CalulateAllTotals < ActiveRecord::Migration
   def up
+    
+    # THIS NEEDS TO BE RUN FROM THE CONSOLE. FOR SOME INSANE REASON, CALLING .calculate_totals FROM A MIGRATION LEAVES .tax_sum AS NIL.
     puts "Delete all TaxItems"
     TaxItem.delete_all
     
