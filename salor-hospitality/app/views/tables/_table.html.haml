@@ -20,4 +20,6 @@
   - elsif table.enabled
     %a{ :onmousedown => "route('table', #{ table.id })" }
       = table.name
-      %span= table.user.login if table.user
+      %span
+        = table.user.login if table.user
+        = raw "<br />#{table.orders.first.note}" if table.orders.any?
