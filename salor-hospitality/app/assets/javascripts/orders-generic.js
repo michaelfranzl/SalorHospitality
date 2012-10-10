@@ -848,7 +848,12 @@ function add_payment_method(model_id,id,amount) {
     pm_input.val(amount);
     submit_json.payment_method_items[model_id][payment_method_uid].amount = amount;
   } else {
-    pm_input.val(submit_json.totals[model_id].model -submit_json.totals[model_id].payment_method_items);
+    if (submit_json.totals[model_id].hasOwnProperty('booking_orders')) {
+      booking_order_total  = submit_json.totals[model_id].booking_orders;
+    } else {
+      booking_order_total = 0;
+    }
+    pm_input.val(submit_json.totals[model_id].model + booking_order_total -submit_json.totals[model_id].payment_method_items);
   }
   submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
   payment_method_input_change(pm_input, payment_method_uid, model_id)
