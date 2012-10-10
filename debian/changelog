@@ -1,3 +1,11 @@
+salor-hospitality (4.1.0.18) unstable; urgency=low
+
+  * fixed tests
+  * fixed payment method input
+  * fixed table color update
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 10 Oct 2012 11:03:20 +0200
+
 salor-hospitality (4.1.0.17) unstable; urgency=low
 
   * more timeout, added assets precompile script
