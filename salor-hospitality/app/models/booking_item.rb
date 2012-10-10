@@ -116,8 +116,8 @@ class BookingItem < ActiveRecord::Base
       self.base_price = roomp.base_price
     end
     
-    self.unit_sum = self.base_price + self.surcharge_items.existing.sum(:amount)
-    self.sum = self.unit_sum * self.count * self.duration
+    self.unit_sum = (self.base_price + self.surcharge_items.existing.sum(:amount)).round(3)
+    self.sum = (self.unit_sum * self.count * self.duration).round(3)
     
     if self.guest_type_id.nil?
       self.calculate_taxes([])

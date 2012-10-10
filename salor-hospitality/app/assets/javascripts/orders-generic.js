@@ -836,7 +836,6 @@ function add_payment_method(model_id,id,amount) {
         $('#payment_method_' + uid + '_amount').select();
         if(settings.workstation) {
           $('#payment_method_'+ uid + '_amount').select();
-          //$('#payment_method_row'+ uid + ' .ui-keyboard-input').select();
         }
       });
     })();
@@ -848,8 +847,11 @@ function add_payment_method(model_id,id,amount) {
   if (amount) {
     pm_input.val(amount);
     submit_json.payment_method_items[model_id][payment_method_uid].amount = amount;
+  } else {
+    pm_input.val(submit_json.totals[model_id].model -submit_json.totals[model_id].payment_method_items);
   }
   submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
+  payment_method_input_change(pm_input, payment_method_uid, model_id)
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;
@@ -871,6 +873,7 @@ function add_payment_method(model_id,id,amount) {
     });
   })();
   pm_row.append(pm_input);
+  
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
       submit_json.payment_method_items[model_id][payment_method_uid]._delete = true;
@@ -886,7 +889,6 @@ function payment_method_input_change(element, uid, mid) {
   amount = $(element).val();
   amount = amount.replace(',','.');
   if (amount == '') { amount = 0; }
-  //submit_json.payment_method_items[mid][uid]._delete = false;
   submit_json.payment_method_items[mid][uid].amount = parseFloat(amount);
   payment_method_total = 0;
   $.each(submit_json.payment_method_items[mid], function(k,v) {
@@ -899,8 +901,18 @@ function payment_method_input_change(element, uid, mid) {
     booking_order_total = 0;
   }
   change = - ( submit_json.totals[mid].model + booking_order_total - payment_method_total);
-  if (change < 0 ) { change = 0 };
   $('#change_' + mid).html(number_to_currency(change));
+  if (change < 0) {
+    $('#change_' + mid).css("color", "red");
+  } else if (change == 0) {
+    if ($('.booking_form').is(":visible")) {
+      $('#change_' + mid).css("color", "white");
+    } else {
+      $('#change_' + mid).css("color", "white");
+    }
+  } else {
+    $('#change_' + mid).css("color", "green");
+  }
 }
 
 
