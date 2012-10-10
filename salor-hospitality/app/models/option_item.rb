@@ -19,10 +19,13 @@ class OptionItem < ActiveRecord::Base
   def check
     if self.item.refunded
       test1 = self.sum.round(2) == 0
+      puts "self.sum.round(2) should be 0 and is #{self.sum.round(2)}"
       raise "OptionItem test1 failed for id #{ self.id }" unless test1
+    else
+      test2 = self.sum.round(2) == (self.price * self.count).round(2)
+      puts "self.sum.round(2) #{self.sum.round(2) } == (self.price * self.count).round(2) #{(self.price * self.count).round(2)}"
+      raise "OptionItem test2 failed for id #{ self.id }" unless test2
     end
-    test2 = self.sum.round(2) == (self.price * self.count).round(2)
-    raise "OptionItem test2 failed for id #{ self.id }" unless test2
     test3 = self.count == self.item.count
     raise "OptionItem test3 failed for id #{ self.id }" unless test3
   end

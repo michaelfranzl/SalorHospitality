@@ -296,39 +296,53 @@ class Item < ActiveRecord::Base
     self.option_items.existing.each do |o|
       o.check
     end
-    item_sum = self.sum
-    item_tax_sum = self.tax_sum
     item_hash_gro = 0
     item_hash_tax = 0
     self.taxes.each do |k,v|
       item_hash_tax += v[:t]
       item_hash_gro = v[:g]
     end
-    item_hash_tax = item_hash_tax.round(2)
-    item_hash_gro = item_hash_gro.round(2)
-    test1 = (item_sum == item_hash_gro ) && (item_tax_sum == item_hash_tax )
-    raise "Item test1 failed for id #{id}" unless test1
+    item_hash_tax = item_hash_tax.round(3)
+    item_hash_gro = item_hash_gro.round(3)
+    test1a = (self.sum == item_hash_gro )
+    puts "self.sum #{self.sum} == item_hash_gro #{item_hash_gro}"
+    raise "Item test1a failed for id #{id}" unless test1a
+    
+    test1b = (self.tax_sum == item_hash_tax )
+    puts "self.tax_sum #{self.tax_sum} == item_hash_tax #{item_hash_tax}"
+    raise "Item test1b failed for id #{id}" unless test1b
     
     if self.refunded
-      test2 = item_sum == 0
+      test2 = self.sum == 0
+      puts "self.sum should be 0 and is #{self.sum}"
       raise "Item test2 failed for id #{id}" unless test2
-      test3 = self.tax_items.existing.sum(:tax).round(2) == 0
+      
+      test3 = self.tax_items.existing.sum(:tax) == 0
+      puts "self.tax_items.existing.sum(:tax) should be 0 and is #{self.tax_items.existing.sum(:tax)}"
       raise "Item test3 failed for id #{id}" unless test3
-      test3b =  self.option_items.sum(:sum).round(2) == 0
+      
+      test3b =  self.option_items.sum(:sum) == 0
+      puts "self.option_items.sum(:sum) should be 0 and is #{self.option_items.sum(:sum)}"
       raise "Item test3b failed for id #{id}" unless test3b
     end
     
     unless self.hidden
       test3a = self.tax_items.existing.count == self.taxes.keys.count
+      puts "self.tax_items.existing.count #{self.tax_items.existing.count} ==  self.taxes.keys.count #{self.taxes.keys.count}"
       raise "Item test3a failed for id #{id}" unless test3a
-      test4 = self.option_items.sum(:sum).round(2) == (self.sum - self.price * self.count).round(2)
-      raise "Item test4 failed for id #{id}" unless test4
+      
+      unless self.refunded
+        test4 = self.option_items.sum(:sum).round(3) == (self.sum - self.price * self.count).round(3)
+        puts "self.option_items.sum(:sum).round(3) #{self.option_items.sum(:sum).round(3)} ==  (self.sum - self.price * self.count).round(3) #{(self.sum - self.price * self.count).round(3)}"
+        raise "Item test4 failed for id #{id}" unless test4
+      end
     
       item_tax_sum = 0
       self.taxes.each do |k,v|
         item_tax_sum += v[:t]
       end
-      test5 = self.tax_items.existing.sum(:tax).round(2) == item_tax_sum.round(2)
+      test5 = self.tax_items.existing.sum(:tax).round(3) == item_tax_sum.round(3)
+      puts "self.tax_items.existing.sum(:tax).round(3) #{self.tax_items.existing.sum(:tax).round(3)} ==  item_tax_sum.round(3) #{item_tax_sum.round(3)}"
       raise "Item test5 failed for id #{id}" unless test5
     end
   end
