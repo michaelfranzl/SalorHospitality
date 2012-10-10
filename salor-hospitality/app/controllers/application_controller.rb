@@ -75,7 +75,6 @@ class ApplicationController < ActionController::Base
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
             @booking.calculate_totals
-            @order.table.update_color
             if mobile?              
               # waiters on mobile devices never should be routed to the booking screen
               render_invoice_form(@order) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
@@ -107,8 +106,6 @@ class ApplicationController < ActionController::Base
         case params['jsaction']
           #----------jsaction----------
           when 'send'
-            #render :nothing => true and return if @order.hidden
-            @order.table.update_color
             if @order.booking
               @order.finish
               @order.booking.calculate_totals
@@ -124,14 +121,12 @@ class ApplicationController < ActionController::Base
                 when 'table_no_invoice_print'
                   @order.pay
                   @order.print(['tickets']) if @current_company.mode == 'local'
-                  
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
                 when 'table_do_invoice_print'
                   @order.pay
                   @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
-                  
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
@@ -203,6 +198,7 @@ class ApplicationController < ActionController::Base
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user)
       end
+      @order.table.update_color
       return @order
     end
 
