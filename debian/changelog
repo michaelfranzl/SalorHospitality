@@ -1,3 +1,10 @@
+salor-hospitality (4.1.0.25) unstable; urgency=low
+
+  * fixed nil error
+  * removed acts as list, mysql2
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 11 Oct 2012 14:46:41 +0200
+
 salor-hospitality (4.1.0.24) unstable; urgency=low
 
   * no debugger
