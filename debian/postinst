@@ -28,7 +28,7 @@ case "$1" in
       export RAILS_ENV=production
 
       cd $app_root
-      bundle install --deployment --without=development test
+      bundle install --local --without=development test
 
       database_config_file=/etc/salor-hospitality-database.yml
       database_config_default_file=/usr/share/salor-hospitality/config/database-production.default.yml
