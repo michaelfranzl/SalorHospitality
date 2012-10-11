@@ -19,6 +19,7 @@ salor-hospitality/tmp/sockets
 salor-hospitality/public/uploads/images
 salor-hospitality/vendor/bundle
 salor-hospitality/vendor/plugins
+salor-hospitality/.bundle
 *.log
 *.bill
 .sass-cache
