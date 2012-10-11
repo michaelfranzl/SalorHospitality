@@ -1,5 +1,5 @@
 production:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: false
   database: salor_hospitality_production

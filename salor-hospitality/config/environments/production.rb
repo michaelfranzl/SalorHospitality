@@ -1,5 +1,8 @@
 ActionMailer::Base.sendmail_settings = { :arguments => '-i' }
-ExceptionNotifier::Notifier.append_view_path "#{Rails.root}/app/views"
+
+if SalorHospitality::Application::SALOR_HOSPITALITY_CONFIGURATION[:exception_notification]
+  ExceptionNotifier::Notifier.append_view_path "#{Rails.root}/app/views"
+end
 
 SalorHospitality::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb

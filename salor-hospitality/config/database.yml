@@ -1,5 +1,5 @@
 development:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: false
   database: salor_hospitality_development
@@ -9,7 +9,7 @@ development:
   host: localhost
 
 test:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: false
   database: salor_hospitality_test
@@ -19,7 +19,7 @@ test:
   host: localhost
 
 production:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: false
   database: salor_hospitality_production
