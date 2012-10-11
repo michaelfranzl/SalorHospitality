@@ -33,6 +33,10 @@ case "$1" in
       database_config_file=/etc/salor-hospitality-database.yml
       database_config_default_file=/usr/share/salor-hospitality/config/database-production.default.yml
       
+      mainuser=`ls /home | head -1`
+      echo "Will run Rack application as user $mainuser"
+      chown $mainuser:$mainuser $app_root/config.ru
+      
       if [[ ! -s $database_config_file ]]
       then
         echo "File is empty: $database_config_file. Reading database configuration from Debconf database instead..."
@@ -89,10 +93,7 @@ case "$1" in
       chmod -R 777 $app_root/tmp
       chmod -R 777 $app_root/log
       chmod -R 777 $app_root/public/uploads
-      
-      mainuser=`ls /home | head -1`
-      echo "Will run Rack application as user $mainuser"
-      chown $mainuser:$mainuser $app_root/config.ru
+      chmod -R 777 $app_root/public/assets
 
       echo "Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep 'salor-hospitality' | wc -l`
