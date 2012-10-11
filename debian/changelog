@@ -1,3 +1,10 @@
+salor-hospitality (4.1.0.26) unstable; urgency=low
+
+  * no bundler any more
+  * permissions, no asset compression
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 11 Oct 2012 15:28:19 +0200
+
 salor-hospitality (4.1.0.25) unstable; urgency=low
 
   * fixed nil error
