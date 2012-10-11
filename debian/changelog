@@ -1,4 +1,4 @@
-salor-hospitality (4.1.0.19) precise; urgency=low
+salor-hospitality (4.1.0.19) unstable; urgency=low
 
   * debian gem dependencies
 
