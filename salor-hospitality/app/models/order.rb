@@ -134,7 +134,7 @@ class Order < ActiveRecord::Base
     self.table.update_color if self.table
     # Set item notifications
     self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
-      i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => user.id
+      i.update_attributes :user_id => user.id, :vendor_id => self.vendor.id, :company_id => self.company.id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => self.user_id
     end
   end
 
