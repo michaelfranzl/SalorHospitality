@@ -25,7 +25,7 @@ debian/conf/salor-hospitality-https       /etc/apache2/sites-available
 
 debian/dbconfig/database.yml.template     /usr/share/salor-hospitality/config
 
-debian/dbconfig/salor-hospitality-installdb.sh /usr/share/dbconfig-common/scripts/salor-hospitality/install/mysql
+debian/dbconfig/mysql /usr/share/dbconfig-common/scripts/salor-hospitality/install
 
 
 debian/bin/salor-hospitality_browser-chromium         /usr/bin

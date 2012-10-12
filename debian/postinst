@@ -19,14 +19,19 @@ set -e
 
 . /usr/share/debconf/confmodule
 
+# source dbconfig-common shell library, and call the hook function
+if [ -f /usr/share/dbconfig-common/dpkg/config.mysql ]; then
+  . /usr/share/dbconfig-common/dpkg/postinst.mysql 
+fi
+
 echo "postinst called with $1"
 
 case "$1" in
     configure)
-#       app_root=/usr/share/salor-hospitality
+        app_root=/usr/share/salor-hospitality
 #       database_config_file=/etc/salor-hospitality-database.yml
 #       
-#       cd $app_root
+
 # 
 #       database_config_file=/etc/salor-hospitality-database.yml
 #       database_config_default_file=/usr/share/salor-hospitality/config/database-production.default.yml
@@ -84,9 +89,11 @@ case "$1" in
       
       dbc_generate_include=template:/etc/salor-hospitality-database.yml
       dbc_generate_include_args="-o template_infile=/usr/share/salor-hospitality/config/database.yml.template"
+      dbc_go salor-hospitality $@
 
       echo "Updating vendors cache ..."
-      rake1.9.1 update_vendor_cache
+      cd $app_root
+      RAILS_ENV=production rake1.9.1 update_vendor_cache
 
       echo "Changing Permissions ..."
       chown -R www-data:www-data $app_root
