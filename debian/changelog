@@ -1,3 +1,10 @@
+salor-hospitality (4.1.0.20) unstable; urgency=low
+
+  * restored files and changes
+  * more restauration of changes
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 16 Oct 2012 16:29:30 +0200
+
 salor-hospitality (4.1.0.19) unstable; urgency=low
 
   * debian gem dependencies
