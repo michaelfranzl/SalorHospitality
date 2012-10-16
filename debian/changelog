@@ -1,3 +1,36 @@
+salor-hospitality (4.1.0.19) unstable; urgency=low
+
+  * debian gem dependencies
+  * build
+  * build
+  * bundle fix
+  * build
+  * changelog
+  * fix
+  * build
+  * build
+  * build
+  * no debugger
+  * build
+  * fixed nil error
+  * removed acts as list, mysql2
+  * build
+  * build
+  * no bundler any more
+  * fixed nil error
+  * got rid of acts_as_list, added rmagick gem
+  * ignore .bundle
+  * permissions, no asset compression
+  * build
+  * fixed nil error, no asset precompilation, cleaner gems
+  * build
+  * dbconfig integration
+  * more dbconfig integration
+  * added Gemfile.development
+  * fixed changelog
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 16 Oct 2012 15:46:34 +0200
+
 salor-hospitality (4.1.0.18) unstable; urgency=low
 
   * fixed tests
