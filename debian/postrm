@@ -23,25 +23,76 @@ set -e
 echo "postrm called with $1"
 
 case "$1" in
-    purge)
-      # This is called after the configuration files have been removed.
-      rm -f /etc/salor-hospitality-database.yml
-      if which ucf >/dev/null 2>&1; then
-        ucf --purge /etc/salor-hospitality-database.yml
-      fi
-      db_purge
-    ;;
+  purge)
+    db_get salor-hospitality/old-instances || true
+    gOldInstances="${RET}"
+    db_get salor-hospitality/current-instances || true
+    gInstances="${RET}"
+    if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
+      for lInstance in $gOldInstances; do
+        db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
+        if [ "$RET" = "true" ]; then
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+        fi
+      done
+      for lInstance in $gInstances; do
+        db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
+        if [ "$RET" = "true" ]; then
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+        fi
+      done
+    fi
+    if which ucf >/dev/null 2>&1; then
+      for lInstance in $gOldInstances; do
+        ucf --purge /etc/salor-hospitality/$lInstance/database.yml
+        ucf --purge /etc/salor-hospitality/$lInstance/config.yml
+      done
+      for lInstance in $gInstances; do
+        ucf --purge /etc/salor-hospitality/$lInstance/database.yml
+        ucf --purge /etc/salor-hospitality/$lInstance/config.yml
+      done
+    fi
     
-    remove|upgrade)
-    ;;
+    # package-generated or runtime files are removed
+    rm -rf /usr/share/salor-hospitality/source/Gemfile.lock
     
-    failed-upgrade|abort-install|abort-upgrade|disappear)
-    ;;
-      
-    *)
-        echo "postrm called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+    # removing /var/run files is not needed : it is mounted tmpfs in wheezy - anyway it does not hurt
+    rm -rf /var/log/salor-hospitality
+    rm -rf /var/cache/salor-hospitality
+    rm -rf /etc/salor-hospitality
+
+    rmdir /var/lib/salor-hospitality/* || true
+    db_purge
+  ;;
+    
+  remove)
+    db_get salor-hospitality/old-instances || true
+    gOldInstances="${RET}"
+    db_get salor-hospitality/current-instances || true
+    gInstances="${RET}"
+    if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
+      for lInstance in $gOldInstances; do
+        db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
+        if [ "$RET" = "true" ]; then
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+        fi
+      done
+      for lInstance in $gInstances; do
+        db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
+        if [ "$RET" = "true" ]; then
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+        fi
+      done
+    fi
+  ;;
+  
+  upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+  ;;
+    
+  *)
+      echo "postrm called with unknown argument \`$1'" >&2
+      exit 1
+  ;;
 esac
 
 # dh_installdeb will replace this with shell code automatically

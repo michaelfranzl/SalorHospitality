@@ -1,27 +1,23 @@
-Template: salor_hospitality/enter_database
+Template: salor-hospitality/old-instances
 Type: string
-Default: salor_hospitality_production
-Description: Please enter the name of the SALOR Hospitality database:
- If you've already created a database for SALOR Hospitality, enter the name here, otherwise leave the default.
+Description: Salor Hospitality instances to be deconfigured:
+ Configuration files for these instances will be removed.
+ .
+ Database (de)configuration will be asked accordingly.
 
-Template: salor_hospitality/enter_username
+Template: salor-hospitality/current-instances
 Type: string
-Default: root
-_Description: Please enter the username for the database:
- If you've created a dedicated user for the SALOR Hospitality database, please enter the name here, otherwise enter 'root'.
+Default: default
+Description: Salor Hospitality instances to be configured or upgraded:
+ Space-separated list of instances identifiers.
+ . 
+ Each instance has its configuration files in /etc/salor-hospitality/<instance-identifier>/
+ .
+ To deconfigure an instance, remove its identifier from this list.
 
-Template: salor_hospitality/enter_password
-Type: password
-_Description: Please enter the password for the database:
- The default root password of mysql2 is 'root'.
-
-Template: salor_hospitality/license_read
-Type: note
-_Description: Software License Agreement
- Copyright (c) 2012 Red (E) Tools Ltd.
- .
- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- .
- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- .
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Template: salor-hospitality/user
+Type: select
+Choices: ${availableUsers}
+Default: www-data
+Description: User to run the Salor Hospitality Rails application with.
+ Salor Hospitality can write files to your Desktop and supports to share your Desktop screen in combination with the remotesupport package. For this to work, the application must run as the user you are working with normally. If you are not going to use Salor Hospitality as a desktop application, but provide it as a Software as a Service, it is recommended to leave the default, www-data.

@@ -1,0 +1,24 @@
+# Global Passenger configuration. Uncomment this only once in all of your sites.
+
+#PassengerMaxPoolSize 2
+#PassengerPoolIdleTime 15000
+
+<VirtualHost *:80>
+  ServerName INSTANCE_ID.sh
+  SetEnv SH_DEBIAN_SITEID INSTANCE_ID
+  DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
+  PassengerPreStart http://INSTANCE_ID.sh/
+  
+  <Directory /usr/share/salor-hospitality>
+    Options FollowSymLinks
+  </Directory>
+  
+  # Passenger configuration for this VirtualHost
+  PassengerMaxRequests 2000
+  RailsAutoDetect off
+  PassengerStatThrottleRate 30
+  PassengerSpawnMethod smart
+  RailsAppSpawnerIdleTime 36000
+  PassengerHighPerformance on
+  PassengerMinInstances 1
+</VirtualHost>

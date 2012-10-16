@@ -1,0 +1,30 @@
+# Global Passenger configuration. Uncomment this only once in all of your sites.
+
+#PassengerMaxPoolSize 2
+#PassengerPoolIdleTime 15000
+
+<VirtualHost *:443>
+  ServerName salor-hospitality
+  SetEnv SH_DEBIAN_SITEID INSTANCE_ID
+  DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/salor.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+  <Directory /usr/share/salor-hospitality>
+    Options FollowSymLinks
+  </Directory>
+</VirtualHost>
+
+#Listen 7652
+#
+#<VirtualHost *:7652>
+#  ServerName salor-hospitality
+#  DocumentRoot /usr/share/salor-hospitality/public
+#  RailsEnv production
+#  SSLEngine on
+#  SSLCertificateFile /etc/apache2/ssl/salor.crt
+#  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+#  <Directory /usr/share/salor-hospitality>
+#    Options FollowSymLinks
+#  </Directory>
+#</VirtualHost>
