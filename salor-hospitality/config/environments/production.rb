@@ -12,7 +12,12 @@ SalorHospitality::Application.configure do
   if SalorHospitality::Application::SALOR_HOSPITALITY_CONFIGURATION[:exception_notification]
     config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => %{"SalorHospitality" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorhospitality request session environment backtrace)
   end
-
+  
+  config.paths['log'] = ["/var/log/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/production.log"]
+  config.paths['config/database'] = ["/etc/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/database.yml"]
+  config.paths['tmp'] = ["/var/tmp/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}"]
+  ENV['SCHEMA'] = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'schema.rb')
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -49,7 +54,7 @@ SalorHospitality::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :file_store, File.join('/', 'var', 'cache', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

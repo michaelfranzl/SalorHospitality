@@ -21,22 +21,33 @@ end
 
 module SalorHospitality
   class Application < Rails::Application
-
+    
+    if ENV['SH_DEBIAN_SITEID']
+      SH_DEBIAN_SITEID = ENV['SH_DEBIAN_SITEID']
+    else
+      SH_DEBIAN_SITEID = 'default'
+    end
+    
+    puts "Using database set by environment variable SH_DEBIAN_SITEID (#{SH_DEBIAN_SITEID})"
+    
     if File.exists?(File.join(Rails.root, '..', 'debian', 'changelog'))
       changelog = File.open(File.join(Rails.root, '..', 'debian', 'changelog'), 'r').read.split("\n")[0]
       VERSION = "Version " + /.*\((.*)\).*/.match(changelog)[1]
     end
     VERSION ||= `dpkg -s salor-hospitality | grep Version`
+    
+    
+    if File.exists?(File.join('/', 'etc','salor-hospitality', SH_DEBIAN_SITEID, 'config.yml'))
+      SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('/', 'etc','salor-hospitality', SH_DEBIAN_SITEID, 'config.yml'), 'r').read)
+    else
+      SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join(Rails.root, 'config', 'config.yml'), 'r').read)
+    end
 
-    INITIAL_CREDITS = 100
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese'}
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország', 'el' => 'Ελλάδα', 'ru' => 'Россия', :it => 'Italia', 'cn' => 'China', 'us' => 'USA', 'gb' => 'England' }
     COUNTRIES_REGIONS = { 'cc' => 'en-us', 'de' => 'gn-de', 'at' => 'gn-de', 'tr' => 'tr-tr', 'fr' => 'fr-fr', 'es' => 'es-es', 'pl' => 'pl-pl', 'hu' => 'hu-hu', 'el' => 'el-el', 'ru' => 'ru-ru', 'it' => 'it-it', 'cn' => 'cn-cn', 'us' => 'en-us', 'gb' => 'en-gb' }
     
     FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" }
-    
-    SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('/', 'etc','salor-hospitality-config.yml'), 'r').read) if File.exists?(File.join('/', 'etc','salor-hospitality-config.yml'))
-    SALOR_HOSPITALITY_CONFIGURATION ||= {}
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -50,7 +61,8 @@ module SalorHospitality
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-
+    #config.active_record.observers = [:history_observer]
+    
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Vienna'
@@ -70,7 +82,5 @@ module SalorHospitality
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
-    config.active_record.observers = [:history_observer]
   end
 end
