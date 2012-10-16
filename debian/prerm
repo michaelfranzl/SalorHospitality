@@ -7,7 +7,7 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-echo "prerm called with $1"
+echo "prerm called with $@"
 
 case "$1" in
   remove)
@@ -15,7 +15,7 @@ case "$1" in
     gOldInstances="${RET}"
     db_get salor-hospitality/current-instances || true
     gInstances="${RET}"
-    if [ -f /usr/share/dbconfig-common/dpkg/prerm ]; then
+    if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
       for lInstance in $gOldInstances; do
         db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
         if [ "$RET" = "true" ]; then
@@ -30,13 +30,13 @@ case "$1" in
       done
     fi
   ;;
-
+  
   purge|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
   ;;
     
   *)
-    echo "prerm called with unknown argument \`$1'" >&2
-    exit 1
+      echo "prerm called with unknown argument \`$1'" >&2
+      exit 1
   ;;
 esac
 
