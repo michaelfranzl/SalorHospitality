@@ -83,7 +83,7 @@ for lInstance in $gInstances; do
   
   echo "  postinst: creating symlinks"
   ln -sf $app_root /usr/share/salor-hospitality/${lInstance}
-  ln -sf $rails_var/pubilc/uploads $app_root/public/uploads/${lInstance}
+  ln -sf $rails_var/public/uploads $app_root/public/uploads/${lInstance}
   
   use_dbconfig=false
   
