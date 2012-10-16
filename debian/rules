@@ -9,7 +9,11 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-xxx_dir=abc
-
 %:
 	dh $@ 
+
+override_dh_auto_clean:
+	rm -rf salor-hospitality/log/*.log
+
+override_dh_auto_install:
+	# cp migration script to version

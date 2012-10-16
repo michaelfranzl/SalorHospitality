@@ -25,6 +25,10 @@ echo "postrm called with $1"
 case "$1" in
     purge)
       # This is called after the configuration files have been removed.
+      rm -f /etc/salor-hospitality-database.yml
+      if which ucf >/dev/null 2>&1; then
+        ucf --purge /etc/salor-hospitality-database.yml
+      fi
       db_purge
     ;;
     

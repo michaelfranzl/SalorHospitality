@@ -29,3 +29,4 @@ salor-hospitality/.bundle
 sha1-signatures.txt
 *.tar.bz2
 debian/salor-hospitality
+Gemfile.lock

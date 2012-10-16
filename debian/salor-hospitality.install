@@ -19,24 +19,25 @@ salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/db
 
 salor-hospitality/db/schema.rb      /var/lib/salor-hospitality/db
 
+debian/conf/salor-hospitality-config.yml  /etc
+debian/conf/salor-hospitality-http        /etc/apache2/sites-available
+debian/conf/salor-hospitality-https       /etc/apache2/sites-available
 
-config/salor-hospitality-http     /etc/apache2/sites-available
-config/salor-hospitality-https    /etc/apache2/sites-available
+debian/dbconfig/database.yml.template     /usr/share/salor-hospitality/config
 
-config/salor-hospitality_browser-chromium         /usr/bin
-config/salor-hospitality_console                  /usr/bin
-config/salor-hospitality_exception-notification   /usr/bin
-config/salor-hospitality_maintainance             /usr/bin
-config/salor-hospitality_setup-https-access       /usr/bin
-config/salor-hospitality_update                   /usr/bin
-config/salor-hospitality_assets-precompile        /usr/bin
+debian/dbconfig/mysql /usr/share/dbconfig-common/scripts/salor-hospitality/install
 
-config/salor-hospitality_environment-vars.sh      /etc/profile.d
 
-config/salor-hospitality-database.yml             /etc
-salor-hospitality/config/database-production.default.yml /etc
-config/salor-hospitality-config.yml               /etc
+debian/bin/salor-hospitality_browser-chromium         /usr/bin
+debian/bin/salor-hospitality_console                  /usr/bin
+debian/bin/salor-hospitality_exception-notification   /usr/bin
+debian/bin/salor-hospitality_maintainance             /usr/bin
+debian/bin/salor-hospitality_setup-https-access       /usr/bin
+debian/bin/salor-hospitality_update                   /usr/bin
+debian/bin/salor-hospitality_assets-precompile        /usr/bin
 
-config/salor-hospitality.desktop               /usr/share/applications
+debian/bin/salor-hospitality_environment-vars.sh      /etc/profile.d
+
+debian/conf/salor-hospitality.desktop                 /usr/share/applications
 
 salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable/apps
