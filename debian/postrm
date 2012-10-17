@@ -58,7 +58,7 @@ case "$1" in
     rm -rf /var/log/salor-hospitality
     rm -rf /var/cache/salor-hospitality
     rm -rf /etc/salor-hospitality
-    rmdir /var/lib/salor-hospitality/* || true
+    rmdir --ignore-fail-on-non-empty /var/lib/salor-hospitality/* || true
     db_purge
   ;;
     

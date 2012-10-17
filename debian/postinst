@@ -141,14 +141,14 @@ for lInstance in $gInstances; do
       echo "  postinst: Deleting the asset cache"
       rm -rf $app_root/tmp/cache/assets
       
-      if [ -e db/schema.rb ]; then
+      if [ -e $app_root/db/schema.rb ]; then
         echo "  postinst: Copying schema.rb to instance directory."
-        cp db/schema.rb $rails_var
+        cp $app_root/db/schema.rb $rails_var
       fi
-      if [ -e config/config.yml ]; then
+      if [ -e $app_root/config/config.yml ]; then
         echo "  postinst: Copying config.yml to etc directory and registering as config file."
-        cp config/config.yml $rails_etc
-        ucf --debconf-ok config/config.yml $rails_etc/config.yml
+        cp $app_root/config/config.yml $rails_etc
+        ucf --debconf-ok $app_root/config/config.yml $rails_etc/config.yml
         chmod 660 $rails_etc/config.yml
       fi
       
@@ -174,7 +174,7 @@ for lInstance in $gInstances; do
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi
       
-      for protocol in "http https"; do
+      for protocol in http https; do
         echo "  postinst: creating apache2 site configuration file $protocol..."
         apache_site_maintainer_config=/etc/apache2/sites-available/sh-${lInstance}-$protocol
         cp $app_root/config/apache-site-$protocol.template $apache_site_maintainer_config.maintainer
@@ -182,7 +182,9 @@ for lInstance in $gInstances; do
         ucf --debconf-ok $apache_site_maintainer_config.maintainer $apache_site_maintainer_config
         rm -rf $apache_site_maintainer_config.maintainer
         cd /etc/apache2/sites-enabled
-        ln -sf ../sites-available/sh-${lInstance}-$protocol sh-${lInstance}-$protocol
+        if [ $protocol = "http" ]; then
+          ln -sf ../sites-available/sh-${lInstance}-$protocol sh-${lInstance}-$protocol
+        fi
       done
       
       echo "  postinst: Adding salor-hospitality to /etc/hosts if not yet there..."

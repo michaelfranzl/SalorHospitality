@@ -7,4 +7,6 @@ fi
 
 echo "Starting Rails Console for instance '$siteid'..."
 cd /usr/share/salor-hospitality/$siteid
-/usr/bin/ruby1.9.1 script/rails c RAILS_ENV=production SH_DEBIAN_SITEID=$siteid
+export RAILS_ENV=production
+export SH_DEBIAN_SITEID=$siteid
+/usr/bin/ruby1.9.1 script/rails c

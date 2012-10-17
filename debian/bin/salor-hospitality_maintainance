@@ -68,8 +68,9 @@ for instance in $instances; do
   mainuser=`debconf-show salor-hospitality | grep salor-hospitality/user | sed 's/^.*: //'`
   if [ -d /home/$mainuser ]; then
     cp ${backupdir_database}/1-$database.sql.gz /home/$mainuser/salor-hospitality-database.sql.gz
+    chown $mainuser:$mainuser /home/$mainuser/salor-hospitality-database.sql.gz
+    chmod 666 /home/$mainuser/salor-hospitality-database.sql.gz
   fi
-  chown $mainuser:$mainuser /home/$mainuser/salor-hospitality-database.sql.gz
-  chmod 666 /home/$mainuser/salor-hospitality-database.sql.gz
+
 done
 exit 0
