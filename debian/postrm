@@ -22,23 +22,24 @@ set -e
 
 echo "postrm called with $1"
 
+db_get salor-hospitality/old-instances || true
+gOldInstances="${RET}"
+db_get salor-hospitality/current-instances || true
+gInstances="${RET}"
+    
 case "$1" in
   purge)
-    db_get salor-hospitality/old-instances || true
-    gOldInstances="${RET}"
-    db_get salor-hospitality/current-instances || true
-    gInstances="${RET}"
     if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
       for lInstance in $gOldInstances; do
         db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
         if [ "$RET" = "true" ]; then
-          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance purge )
         fi
       done
       for lInstance in $gInstances; do
         db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
         if [ "$RET" = "true" ]; then
-          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance purge )
         fi
       done
     fi
@@ -53,34 +54,26 @@ case "$1" in
       done
     fi
     
-    # package-generated or runtime files are removed
-    rm -rf /usr/share/salor-hospitality/source/Gemfile.lock
-    
-    # removing /var/run files is not needed : it is mounted tmpfs in wheezy - anyway it does not hurt
+    rm -rf /usr/share/salor-hospitality/source/Gemfile.lock    
     rm -rf /var/log/salor-hospitality
     rm -rf /var/cache/salor-hospitality
     rm -rf /etc/salor-hospitality
-
     rmdir /var/lib/salor-hospitality/* || true
     db_purge
   ;;
     
   remove)
-    db_get salor-hospitality/old-instances || true
-    gOldInstances="${RET}"
-    db_get salor-hospitality/current-instances || true
-    gInstances="${RET}"
     if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
       for lInstance in $gOldInstances; do
         db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
         if [ "$RET" = "true" ]; then
-          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance remove )
         fi
       done
       for lInstance in $gInstances; do
         db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
         if [ "$RET" = "true" ]; then
-          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ( . /usr/share/dbconfig-common/dpkg/postrm ; dbc_go salor-hospitality/instances/$lInstance remove )
         fi
       done
     fi

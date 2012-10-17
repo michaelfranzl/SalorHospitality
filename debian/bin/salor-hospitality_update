@@ -1,7 +1,13 @@
 #!/bin/bash
-database_config_file=/etc/salor-hospitality-database.yml
-app_root=/usr/share/salor-hospitality
-logdir=/var/log/salor-hospitality
+
+siteid=default
+if [ $1 = "" ]; then
+  siteid=$1
+fi
+
+database_config_file=/etc/salor-hospitality/$siteid/database.yml
+app_root=/usr/share/salor-hospitality/$siteid
+logdir=/var/log/salor-hospitality/$siteid
 DATE="`date +%Y%m%dT%H%M%S`"
 
 echo ""
@@ -21,7 +27,6 @@ echo "Backing up database $database before upgrade."
 result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
 if [ "$result" != "0" ]
 then
-  #mkdir -p $logdir
   echo "Dumping..."
   mysqldump -u $username -p$password $database > $logdir/database-before-update-$DATE.sql
   echo "Compressing..."

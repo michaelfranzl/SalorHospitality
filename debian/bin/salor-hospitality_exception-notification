@@ -1,21 +1,33 @@
 #!/bin/bash
+
+siteid=default
+if [ $2 = "" ]; then
+  siteid=$2
+fi
+
 if [ "$1" = "enable" ]
 then
   echo ""
-  echo "Enabling exception notification emails in the salor-hospitality source."
+  
+  echo "Installing Exim4 mail client..."
   apt-get install exim4
-  echo "Setting Exim4 variable dc_eximconfig_configtype to 'internet' ..."
+  
+  echo "Setting Exim4 variable dc_eximconfig_configtype to 'internet', updating configuration, and restarting Exim4 ..."
   sed -i -e "s/dc_eximconfig_configtype='local'/dc_eximconfig_configtype='internet'/" /etc/exim4/update-exim4.conf.conf
   /usr/sbin/update-exim4.conf
   service exim4 restart
-  sed -i -e 's/^:exception_notification:.*$/:exception_notification: true/' /etc/salor-hospitality-config.yml
+  
+  echo "Enabling exception notification emails in the salor-hospitality source for instance '$siteid' ..."
+  sed -i -e 's/^:exception_notification:.*$/:exception_notification: true/' /etc/salor-hospitality/$siteid/config.yml
   
 elif [ "$1" = "disable" ]
 then
   echo ""
-  echo "Disabling exception notification emails in the salor-hospitality source."
-  sed -i -e 's/^:exception_notification:.*$/:exception_notification: false/' /etc/salor-hospitality-config.yml
-  echo "Not changing the Exim4 configuration because this script doesn't make assumptions. For security reasons, you may want to set the Exim4 configuration variable dc_eximconfig_configtype to the default value 'local' in /etc/exim4/update-exim4.conf.conf, then run /usr/sbin/update-exim4.conf. You can do that manually."
+  
+  echo "Disabling exception notification emails in the salor-hospitality source for instance '$siteid' ..."
+  sed -i -e 's/^:exception_notification:.*$/:exception_notification: false/' /etc/salor-hospitality/$siteid/config.yml
+  
+  echo "Not changing the Exim4 configuration. For security reasons, you may want to set the Exim4 configuration variable dc_eximconfig_configtype to the default value 'local' in /etc/exim4/update-exim4.conf.conf, then run '/usr/sbin/update-exim4.conf' and do 'service exim4 restart' You can do that manually."
 
 else
   echo ""

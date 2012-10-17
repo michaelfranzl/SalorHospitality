@@ -26,6 +26,11 @@ echo "POSTINST called with $@"
 echo "===================================="
 
 echo "  Remove and purge old-instances"
+# the following code to clear old instances must be here in postinst because of the following reasons:
+#   1) dpkg-reconfigure DOES call prerm but does NOT call postrm, therefore the code cannot go into postrm.
+#   2) prerm is called BEFORE the config script. Since old-instances is set up only in the config script, the code cannot be in prerm.
+#   3) Therefore, the only place is here in postrm.
+
 db_get salor-hospitality/old-instances || true
 gOldInstances="${RET}"
 for lInstance in $gOldInstances; do
@@ -40,7 +45,14 @@ for lInstance in $gOldInstances; do
     ucf --purge /etc/salor-hospitality/$lInstance/database.yml
     ucf --purge /etc/salor-hospitality/$lInstance/config.yml
   fi
+  
   rm -rf /etc/salor-hospitality/$lInstance
+  rm -rf /etc/apache2/sites-available/sh-$lInstance-http
+  rm -rf /etc/apache2/sites-enabled/sh-$lInstance-http
+  rm -rf /usr/share/salor-hospitality/$lInstance
+  rm -rf /var/log/salor-hospitality/$lInstance
+  rm -rf /var/cache/salor-hospitality/$lInstance
+  rm -rf /var/lib/salor-hospitality/$lInstance
 done
 db_set salor-hospitality/old-instances ""
 
@@ -78,6 +90,12 @@ for lInstance in $gInstances; do
       rails_cache=/var/cache/salor-hospitality/$lInstance
       rails_var=/var/lib/salor-hospitality/$lInstance
       
+      echo "  postinst: creating directories"
+      mkdir -p $rails_etc
+      mkdir -p $rails_log
+      mkdir -p $rails_cache
+      mkdir -p $rails_var/public/uploads
+      
       use_dbconfig=false
       
       db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
@@ -110,12 +128,6 @@ for lInstance in $gInstances; do
           rm -rf $database_config_yml
         fi
       fi
-      
-      echo "  postinst: creating directories"
-      mkdir -p $rails_etc
-      mkdir -p $rails_log
-      mkdir -p $rails_cache
-      mkdir -p $rails_var/public/uploads
 
       echo "  postinst: creating symlinks"
       ln -sf $app_root /usr/share/salor-hospitality/${lInstance}
@@ -162,14 +174,16 @@ for lInstance in $gInstances; do
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi
       
-      echo "  postinst: creating apache2 site configuration file..."
-      apache_site_maintainer_config=/etc/apache2/sites-available/sh-${lInstance}-http
-      cp $app_root/config/apache-site-http.template $apache_site_maintainer_config.maintainer
-      sed -i "s/INSTANCE_ID/${lInstance}/" $apache_site_maintainer_config.maintainer
-      ucf --debconf-ok $apache_site_maintainer_config.maintainer $apache_site_maintainer_config
-      rm -rf $apache_site_maintainer_config.maintainer
-      cd /etc/apache2/sites-enabled
-      ln -sf ../sites-available/sh-${lInstance}-http sh-${lInstance}-http
+      for protocol in "http https"; do
+        echo "  postinst: creating apache2 site configuration file $protocol..."
+        apache_site_maintainer_config=/etc/apache2/sites-available/sh-${lInstance}-$protocol
+        cp $app_root/config/apache-site-$protocol.template $apache_site_maintainer_config.maintainer
+        sed -i "s/INSTANCE_ID/${lInstance}/" $apache_site_maintainer_config.maintainer
+        ucf --debconf-ok $apache_site_maintainer_config.maintainer $apache_site_maintainer_config
+        rm -rf $apache_site_maintainer_config.maintainer
+        cd /etc/apache2/sites-enabled
+        ln -sf ../sites-available/sh-${lInstance}-$protocol sh-${lInstance}-$protocol
+      done
       
       echo "  postinst: Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep "${lInstance}.sh" | wc -l`
