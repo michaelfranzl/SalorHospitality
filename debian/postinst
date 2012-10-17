@@ -66,60 +66,60 @@ esac
 db_get salor-hospitality/current-instances || true
 gInstances="${RET}"
 for lInstance in $gInstances; do
-  echo ""
-  echo "               $lInstance"
-  echo "  -----------------------------------"
-  
-  rails_etc=/etc/salor-hospitality/$lInstance
-  rails_log=/var/log/salor-hospitality/$lInstance
-  rails_cache=/var/cache/salor-hospitality/$lInstance
-  rails_var=/var/lib/salor-hospitality/$lInstance
-
-  echo "  postinst: creating directories"
-  mkdir -p $rails_etc
-  mkdir -p $rails_log
-  mkdir -p $rails_cache
-  mkdir -p $rails_var/public/uploads
-  
-  echo "  postinst: creating symlinks"
-  ln -sf $app_root /usr/share/salor-hospitality/${lInstance}
-  ln -sf $rails_var/public/uploads $app_root/public/uploads/${lInstance}
-  
-  use_dbconfig=false
-  
-  db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
-  if [ "$RET" = "true" ]; then
-    echo "  postinst: dbconfig-install is $RET. Setting use_dbconfig to TRUE"
-    use_dbconfig=true
-    db_get salor-hospitality/instances/$lInstance/dbconfig-reinstall || true
-    if [ "$RET" = "false" ]; then
-      echo "  postinst: dbconfig-reinstall is $RET"
-      db_fget salor-hospitality/instances/$lInstance/dbconfig-reinstall seen || true
-      if [ "$RET" = "true" ]; then
-        echo "  postinst: dbconfig-reinstall seen is $RET. Setting use_dbconfig to FALSE."
-        use_dbconfig=false
-      fi
-    fi
-  fi
-  
-  if [ ! -f /etc/salor-hospitality/$lInstance/database.yml.lock ]; then
-    database_config_yml_template="$app_root/config/database.yml.template"
-    database_config_yml=$rails_etc/database.yml.new
-    if [ $use_dbconfig = true ]; then
-      echo "  postinst: generating database.yml configuration file"
-      dbc_generate_include=template:$database_config_yml
-      dbc_generate_include_args="-o template_infile=$database_config_yml_template"
-      ucf --purge $database_config_yml
-      ( . /usr/share/dbconfig-common/dpkg/postinst ; dbc_go salor-hospitality/instances/$lInstance $@ )
-      ucf --purge $database_config_yml
-      ucf --debconf-ok $database_config_yml /etc/salor-hospitality/$lInstance/database.yml
-      chmod 660 /etc/salor-hospitality/$lInstance/database.yml
-      rm -rf $database_config_yml
-    fi
-  fi
-  
   case "$1" in
-    configure|reconfigure)
+    configure)
+    
+      echo ""
+      echo "               $lInstance"
+      echo "  -----------------------------------"
+      
+      rails_etc=/etc/salor-hospitality/$lInstance
+      rails_log=/var/log/salor-hospitality/$lInstance
+      rails_cache=/var/cache/salor-hospitality/$lInstance
+      rails_var=/var/lib/salor-hospitality/$lInstance
+      
+      use_dbconfig=false
+      
+      db_get salor-hospitality/instances/$lInstance/dbconfig-install || true
+      if [ "$RET" = "true" ]; then
+        echo "  postinst: dbconfig-install is $RET. Setting use_dbconfig to TRUE"
+        use_dbconfig=true
+        db_get salor-hospitality/instances/$lInstance/dbconfig-reinstall || true
+        if [ "$RET" = "false" ]; then
+          echo "  postinst: dbconfig-reinstall is $RET"
+          db_fget salor-hospitality/instances/$lInstance/dbconfig-reinstall seen || true
+          if [ "$RET" = "true" ]; then
+            echo "  postinst: dbconfig-reinstall seen is $RET. Setting use_dbconfig to FALSE."
+            use_dbconfig=false
+          fi
+        fi
+      fi
+      
+      if [ ! -f /etc/salor-hospitality/$lInstance/database.yml.lock ]; then
+        database_config_yml_template="$app_root/config/database.yml.template"
+        database_config_yml=$rails_etc/database.yml.new
+        if [ $use_dbconfig = true ]; then
+          echo "  postinst: generating database.yml configuration file"
+          dbc_generate_include=template:$database_config_yml
+          dbc_generate_include_args="-o template_infile=$database_config_yml_template"
+          ucf --purge $database_config_yml
+          ( . /usr/share/dbconfig-common/dpkg/postinst ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ucf --purge $database_config_yml
+          ucf --debconf-ok $database_config_yml /etc/salor-hospitality/$lInstance/database.yml
+          chmod 660 /etc/salor-hospitality/$lInstance/database.yml
+          rm -rf $database_config_yml
+        fi
+      fi
+      
+      echo "  postinst: creating directories"
+      mkdir -p $rails_etc
+      mkdir -p $rails_log
+      mkdir -p $rails_cache
+      mkdir -p $rails_var/public/uploads
+
+      echo "  postinst: creating symlinks"
+      ln -sf $app_root /usr/share/salor-hospitality/${lInstance}
+      ln -sf $rails_var/public/uploads $app_root/public/uploads/${lInstance}
  
       if [ $use_dbconfig = true ]; then
         # this file prevents dbconfig-common to ask for reconfiguration of the instance during dpkg-reconfigure. see config script.
