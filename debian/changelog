@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.25) unstable; urgency=low
+
+  * binary path fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 18 Oct 2012 08:13:16 +0200
+
 salor-hospitality (4.1.0.24) unstable; urgency=low
 
   * fixed binary scripts
