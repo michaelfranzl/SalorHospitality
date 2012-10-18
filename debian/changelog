@@ -1,8 +1,8 @@
-salor-hospitality (4.1.0.25ubuntu1) precise; urgency=low
+salor-hospitality (4.1.0.26) unstable; urgency=low
 
-  * 
+  * adapted update script for multi instance, gemfile fix for older debian versions
 
- -- Michael Franzl <office@michaelfranzl.com>  Thu, 18 Oct 2012 08:54:54 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 18 Oct 2012 09:04:57 +0200
 
 salor-hospitality (4.1.0.25) unstable; urgency=low
 
