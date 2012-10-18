@@ -54,10 +54,10 @@ case "$1" in
       done
     fi
     
-    #rm -rf /usr/share/salor-hospitality
+    rm -rf /usr/share/salor-hospitality
     rm -rf /var/log/salor-hospitality/*
     rm -rf /var/cache/salor-hospitality/*
-    #rm -rf /etc/salor-hospitality
+    rm -rf /etc/salor-hospitality
     rm -rf /var/lib/salor-hospitality/*
   ;;
     
