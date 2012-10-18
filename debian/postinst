@@ -165,7 +165,7 @@ for lInstance in $gInstances; do
         fi
 
         echo "  postinst: migrating the database. this may take a while."
-        rake db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" > /dev/null
+        rake1.9.1 db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" > /dev/null
         echo "  postinst: running db:seed ..."
         rake1.9.1 db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" > /dev/null
         echo "  postinst: updating vendors cache ..."
