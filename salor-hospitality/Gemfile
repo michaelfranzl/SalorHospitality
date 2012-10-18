@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.6'
 gem 'mysql'
 gem 'serialport'
 gem 'kramdown'
@@ -9,3 +9,4 @@ gem 'haml'
 gem 'sass'
 gem 'sass-rails'
 gem 'rmagick'
+gem 'uglifier'

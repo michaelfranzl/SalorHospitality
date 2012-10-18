@@ -1,46 +1,53 @@
 #!/bin/bash
 
-siteid=default
-if [ $1 = "" ]; then
-  siteid=$1
-fi
+instances=`debconf-show salor-hospitality | grep current-instances | sed 's/^.*: //'`
 
-database_config_file=/etc/salor-hospitality/$siteid/database.yml
-app_root=/usr/share/salor-hospitality/$siteid
-logdir=/var/log/salor-hospitality/$siteid
-DATE="`date +%Y%m%dT%H%M%S`"
+for instance in $instances; do
 
-echo ""
-echo "============"
-echo "Reading database configuration from $database_config_file"
-usernameline=`grep 'username:' $database_config_file | head -1`
-username=`echo $usernameline | sed -e 's/username: //'`
-databaseline=`grep 'database:' $database_config_file | head -1`
-database=`echo $databaseline | sed -e 's/database: //'`
-passwordline=`grep 'password:' $database_config_file | head -1`
-password=`echo $passwordline | sed -e 's/password: //'`
+  echo ""
+  echo "          $instance"
+  echo "---------------------------------"
+
+  database_config_file=/etc/salor-hospitality/$instance/database.yml
+  app_root=/usr/share/salor-hospitality/source
+  logdir=/var/log/salor-hospitality/$instance
+  DATE="`date +%Y%m%dT%H%M%S`"
+
+  echo ""
+  echo "============"
+  echo "Reading database configuration from $database_config_file"
+  usernameline=`grep 'username:' $database_config_file | head -1`
+  username=`echo $usernameline | sed -e 's/username: //'`
+  databaseline=`grep 'database:' $database_config_file | head -1`
+  database=`echo $databaseline | sed -e 's/database: //'`
+  passwordline=`grep 'password:' $database_config_file | head -1`
+  password=`echo $passwordline | sed -e 's/password: //'`
 
 
-echo ""
-echo "============"
-echo "Backing up database $database before upgrade."
-result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
-if [ "$result" != "0" ]
-then
-  echo "Dumping..."
-  mysqldump -u $username -p$password $database > $logdir/database-before-update-$DATE.sql
-  echo "Compressing..."
-  bzip2 $logdir/database-before-update-$DATE.sql
-  echo "Done: $logdir/database-before-update-$DATE.sql.gz"
-else
-  echo "Database $database does not yet exist. Doing nothing."
-fi
+  echo ""
+  echo "============"
+  echo "Backing up database $database before upgrade."
+  result=`mysql -u $username -p$password -Bse 'show databases' | grep $database | wc -l`
+  if [ "$result" != "0" ]
+  then
+    echo "Dumping..."
+    mysqldump -u $username -p$password $database > $logdir/database-before-update-$DATE.sql
+    echo "Compressing..."
+    bzip2 $logdir/database-before-update-$DATE.sql
+    echo "Done: $logdir/database-before-update-$DATE.sql.gz"
+  else
+    echo "Database $database does not yet exist. Doing nothing."
+  fi
+done
 
 echo ""
 echo "============"
 echo "Backing up codebase before upgrade in compliance with FISC regulations."
-tar cjhf $logdir/codebase-before-update-$DATE.tar.bz2 $app_root -C $app_root
+codebasedir=/var/log/salor-hospitality/codebase-upgrades
+mkdir -p $codebasedir
+tar cjf $codebasedir/codebase-before-update-$DATE.tar.bz2 $app_root -C $app_root
 echo "Done."
+
 
 echo ""
 echo "============"

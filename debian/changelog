@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.25ubuntu1) precise; urgency=low
+
+  * 
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 18 Oct 2012 08:54:54 +0200
+
 salor-hospitality (4.1.0.25) unstable; urgency=low
 
   * binary path fix
