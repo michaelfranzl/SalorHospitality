@@ -6,8 +6,9 @@ if [ ! -f /etc/apache2/ssl/salor-hospitality.crt ]; then
   cd /root
   mkdir salor-hospitality_ssl_certificates
   cd salor-hospitality_ssl_certificates
-  openssl req -new -newkey rsa:4096 -nodes -out salor-hospitality.csr -keyout salor-hospitality.key -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality"
-  openssl req -x509 -days 6000 -in salor-hospitality.csr -key salor-hospitality.key -out salor-hospitality.crt
+  
+
+  
   chmod 600 salor-hospitality.*
   mkdir /etc/apache2/ssl
   cp salor-hospitality.key salor-hospitality.crt /etc/apache2/ssl
@@ -17,7 +18,7 @@ fi
 
 
 siteid=default
-if [ "$1" = "" ]; then
+if [ "$1" != "" ]; then
   siteid=$1
 fi
 

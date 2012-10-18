@@ -1,6 +1,5 @@
-/usr/share/salor-hospitality/source/public/uploads
 /var/log/salor-hospitality
-/var/lib/salor-hospitality/public/uploads
-/var/lib/salor-hospitality/public/assets
+/var/lib/salor-hospitality
+/var/cache/salor-hospitality
 /usr/share/dbconfig-common/scripts/salor-hospitality/install
 /usr/share/dbconfig-common/scripts/salor-hospitality/upgrade/mysql

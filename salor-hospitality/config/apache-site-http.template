@@ -4,10 +4,10 @@
 #PassengerPoolIdleTime 15000
 
 <VirtualHost *:80>
-  ServerName INSTANCE_ID.sh
+  ServerName INSTANCE_ID.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
-  PassengerPreStart http://INSTANCE_ID.sh/
+  PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
   
   <Directory /usr/share/salor-hospitality>
     Options FollowSymLinks

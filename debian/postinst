@@ -188,9 +188,9 @@ for lInstance in $gInstances; do
       done
       
       echo "  postinst: Adding salor-hospitality to /etc/hosts if not yet there..."
-      result=`cat /etc/hosts | grep "${lInstance}.sh" | wc -l`
+      result=`cat /etc/hosts | grep "${lInstance}.sh.red-e.eu" | wc -l`
       if [ "$result" = "0" ]; then
-        echo "127.0.0.1 ${lInstance}.sh" >> /etc/hosts;
+        echo "127.0.0.1 ${lInstance}.sh.red-e.eu" >> /etc/hosts;
       fi
       ;;
 

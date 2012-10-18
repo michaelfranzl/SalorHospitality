@@ -54,12 +54,11 @@ case "$1" in
       done
     fi
     
-    rm -rf /usr/share/salor-hospitality/source/Gemfile.lock    
-    rm -rf /var/log/salor-hospitality
-    rm -rf /var/cache/salor-hospitality
-    rm -rf /etc/salor-hospitality
-    rmdir --ignore-fail-on-non-empty /var/lib/salor-hospitality/* || true
-    db_purge
+    #rm -rf /usr/share/salor-hospitality
+    rm -rf /var/log/salor-hospitality/*
+    rm -rf /var/cache/salor-hospitality/*
+    #rm -rf /etc/salor-hospitality
+    rm -rf /var/lib/salor-hospitality/*
   ;;
     
   remove)

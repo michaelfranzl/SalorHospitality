@@ -1,0 +1,48 @@
+#!/bin/bash
+
+siteid=default
+if [ $1 = "" ]; then
+  siteid=$1
+fi
+
+servertype=master
+if [ $2 = "" ]; then
+  servertype=$2
+fi
+
+mycnf=/etc/mysql/my.cnf
+database_config_file=/etc/salor-hospitality/$instance/database.yml
+
+usernameline=`grep 'username:' $database_config_file | head -1`
+username=`echo $usernameline | sed -e 's/username: //'`
+databaseline=`grep 'database:' $database_config_file | head -1`
+database=`echo $databaseline | sed -e 's/database: //'`
+passwordline=`grep 'password:' $database_config_file | head -1`
+password=`echo $passwordline | sed -e 's/password: //'`
+
+echo "username is $username"
+echo "password is $password"
+echo "database is $database"
+
+if [ $servertype = 'master' ]; then
+
+  # create a self signed (x509) root certificate
+  openssl req -newkey rsa:2048 -keyout ca-key.pem -x509 -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out ca-crt.pem
+  
+  # create certificate sign request for SERVER
+  openssl req -newkey rsa:2048 -keyout server-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out server-req.pem
+  # sign SERVER certificate sign request (outputs signed certificate)
+  openssl x509 -req -in server-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out server-crt.pem
+  
+  # create certificate sign request for CLIENT
+  openssl req -newkey rsa:2048 -keyout client-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out client-req.pem
+  # sign CLIENT certificate sign request (outputs signed certificate)
+  openssl x509 -req -in client-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out client-crt.pem
+
+
+
+  sed -i 's/#server-id/server-id/' $mycnf
+  sed -i 's/#log_bin/log_bin/' $mycnf
+  sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\
+  #binlog_do_db = include_database_name/" $mycnf
+fi
