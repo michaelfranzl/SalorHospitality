@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
 
   def create
     subdomain = request.subdomain
-    if subdomain.empty?
+    if subdomain.empty? or true
       # local login
       company = Company.where( :active => true, :hidden => false, :mode => 'local').first
     else

@@ -1,17 +1,51 @@
 #!/bin/bash
 
-siteid=default
-if [ $1 = "" ]; then
-  siteid=$1
-fi
-
-servertype=master
-if [ $2 = "" ]; then
-  servertype=$2
-fi
-
 mycnf=/etc/mysql/my.cnf
-database_config_file=/etc/salor-hospitality/$instance/database.yml
+
+servertype=$1
+
+
+cd /etc/mysql
+
+if [ "$servertype" = "master" ]; then
+  if [ ! -e ca-key.pem ]; then
+    echo "create a self signed (x509) root certificate"
+    openssl req -newkey rsa:2048 -keyout ca-key.pem -x509 -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out ca-crt.pem
+
+    echo "create certificate sign request for MASTER"
+    openssl req -newkey rsa:2048 -keyout master-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out master-req.pem
+    
+    echo "sign MASTER certificate sign request (outputs signed certificate)"
+    openssl x509 -req -in master-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out master-crt.pem
+    
+    echo "create certificate sign request for SLAVE"
+    openssl req -newkey rsa:2048 -keyout slave-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out slave-req.pem
+    
+    echo "sign SLAVE certificate sign request (outputs signed certificate)"
+    openssl x509 -req -in slave-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out slave-crt.pem
+    
+    echo "Now copy ca-crt.pem slave-key.pem slave-crt.pem to /etc/mysql of SLAVE"
+  else
+    echo "Master keys already exist. Nothing to be done."
+  fi
+elif [ "$servertype" = "slave" ]; then
+  if [ ! -e slave-key.pem ]; then
+    echo "download and copy ca-crt.pem slave-key.pem slave-crt.pem to /etc/mysql"
+  else
+    echo "Slave keys already exist. Nothing to be done."
+  fi
+else
+  echo "You have to specify 'master' or 'slave' as first command line parameter."
+  exit 1
+fi
+
+siteid=default
+if [ "$2" != "" ]; then
+  siteid=$2
+fi
+
+
+database_config_file=/etc/salor-hospitality/$siteid/database.yml
 
 usernameline=`grep 'username:' $database_config_file | head -1`
 username=`echo $usernameline | sed -e 's/username: //'`
@@ -24,25 +58,37 @@ echo "username is $username"
 echo "password is $password"
 echo "database is $database"
 
-if [ $servertype = 'master' ]; then
+if [ ! -e $mycnf.orig ]; then
+  echo "Backing up my.cnf before modification."
+  cp $mycnf $mycnf.orig
 
-  # create a self signed (x509) root certificate
-  openssl req -newkey rsa:2048 -keyout ca-key.pem -x509 -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out ca-crt.pem
+  if [ "$servertype" = 'master' ]; then
+    sed -i 's/^bind-address/#bind-address/' $mycnf
+    sed -i 's/#server-id.*$/server-id = 1/' $mycnf
+    sed -i 's/#log_bin/log_bin/' $mycnf
+    sed -i "s/#binlog_do_db.*$/binlog_do_db = ${database}
+    #binlog_do_db = include_database_name/" $mycnf
+    sed -i "s/# ssl-ca.*/ssl\
+    ssl-ca=\/etc\/mysql\/ca-crt.pem/" $mycnf
+    sed -i "s/# ssl-cert.*$/ssl-cert=\/etc\/mysql\/master-crt.pem/" $mycnf
+    sed -i "s/# ssl-key.*$/ssl-key=\/etc\/mysql\/master-key.pem/" $mycnf
+    
+    echo "CREATE USER 'salorreplicator3'@'localhost' IDENTIFIED BY 'salorreplicator3'; GRANT REPLICATION SLAVE ON *.* TO 'salorreplicator3'@'localhost' REQUIRE SSL; FLUSH PRIVILEGES;" | mysql -u root -proot
+
+  elif [ $servertype = 'slave' ]; then
+    sed -i 's/#server-id.*$/server-id = 2/' $mycnf
+    sed -i 's/#log_bin/log_bin/' $mycnf
+    sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\
+    #binlog_do_db = include_database_name/" $mycnf
+    
+    sed -i "s/#binlog_ignore_db/relay-log = \/var\/lib\/mysql\/mysql-relay-bin\
+    relay-log-index = \/var\/lib\/mysql\/mysql-relay-bin.index\
+    master-host = MASTER_IP\
+    master-user = salorreplicator3\
+    master-password = salorreplicator3\
+    report-host = 127.0.0.1/" $mycnf
+  fi
   
-  # create certificate sign request for SERVER
-  openssl req -newkey rsa:2048 -keyout server-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out server-req.pem
-  # sign SERVER certificate sign request (outputs signed certificate)
-  openssl x509 -req -in server-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out server-crt.pem
-  
-  # create certificate sign request for CLIENT
-  openssl req -newkey rsa:2048 -keyout client-key.pem -nodes -days 6000 -subj "/C=AT/ST=/L=/O=SalorHospitality POS/CN=salor-hospitality" -out client-req.pem
-  # sign CLIENT certificate sign request (outputs signed certificate)
-  openssl x509 -req -in client-req.pem -CA ca-crt.pem -CAkey ca-key.pem -set_serial 01 -out client-crt.pem
-
-
-
-  sed -i 's/#server-id/server-id/' $mycnf
-  sed -i 's/#log_bin/log_bin/' $mycnf
-  sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\
-  #binlog_do_db = include_database_name/" $mycnf
+else
+  echo "This script already has modified /etc/mysl/my.cnf. Not running twice. You have to manually inspect the changes."
 fi
