@@ -28,5 +28,8 @@ salor-hospitality/.bundle
 *.kate-swp
 sha1-signatures.txt
 *.tar.bz2
-debian/salor-hospitality
 Gemfile.lock
+debian/salor-hospitality
+debian/files
+*.debhelper
+*.substvars
