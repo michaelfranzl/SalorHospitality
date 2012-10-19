@@ -1,7 +1,6 @@
 #!/bin/bash
 
 mycnf=/etc/mysql/my.cnf
-
 servertype=$1
 
 
@@ -66,29 +65,34 @@ if [ ! -e $mycnf.orig ]; then
     sed -i 's/^bind-address/#bind-address/' $mycnf
     sed -i 's/#server-id.*$/server-id = 1/' $mycnf
     sed -i 's/#log_bin/log_bin/' $mycnf
-    sed -i "s/#binlog_do_db.*$/binlog_do_db = ${database}
-    #binlog_do_db = include_database_name/" $mycnf
-    sed -i "s/# ssl-ca.*/ssl\
-    ssl-ca=\/etc\/mysql\/ca-crt.pem/" $mycnf
+    sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\\`echo -e '\n\r'`#binlog_do_db = include_database_name/" $mycnf
+    
+    sed -i "s/^#binlog_ignore_db.*$/relay-log = \/var\/lib\/mysql\/mysql-relay-bin\\`echo -e '\n\r'`relay-log-index = \/var\/lib\/mysql\/mysql-relay-bin.index/" $mycnf
+    
+    sed -i "s/# ssl-ca.*/ssl\\`echo -e '\n\r'`ssl-ca=\/etc\/mysql\/ca-crt.pem/" $mycnf
     sed -i "s/# ssl-cert.*$/ssl-cert=\/etc\/mysql\/master-crt.pem/" $mycnf
     sed -i "s/# ssl-key.*$/ssl-key=\/etc\/mysql\/master-key.pem/" $mycnf
     
-    echo "CREATE USER 'salorreplicator3'@'localhost' IDENTIFIED BY 'salorreplicator3'; GRANT REPLICATION SLAVE ON *.* TO 'salorreplicator3'@'localhost' REQUIRE SSL; FLUSH PRIVILEGES;" | mysql -u root -proot
+    echo "CREATE USER 'salorreplicator6'@'%' IDENTIFIED BY 'salorreplicator6'; GRANT REPLICATION SLAVE ON *.* TO 'salorreplicator6'@'%' REQUIRE SSL; FLUSH PRIVILEGES;" | mysql -u root -proot
 
   elif [ $servertype = 'slave' ]; then
     sed -i 's/#server-id.*$/server-id = 2/' $mycnf
     sed -i 's/#log_bin/log_bin/' $mycnf
-    sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\
-    #binlog_do_db = include_database_name/" $mycnf
+    sed -i "s/#binlog_do_db.*$/binlog_do_db=${database}\\`echo -e '\n\r'`#binlog_do_db = include_database_name/" $mycnf
     
-    sed -i "s/#binlog_ignore_db/relay-log = \/var\/lib\/mysql\/mysql-relay-bin\
-    relay-log-index = \/var\/lib\/mysql\/mysql-relay-bin.index\
-    master-host = MASTER_IP\
-    master-user = salorreplicator3\
-    master-password = salorreplicator3\
-    report-host = 127.0.0.1/" $mycnf
+    sed -i "s/^#binlog_ignore_db.*$/relay-log = \/var\/lib\/mysql\/mysql-relay-bin\\`echo -e '\n\r'`relay-log-index = \/var\/lib\/mysql\/mysql-relay-bin.index\\`echo -e '\n\r'`master-host = MASTER_IP\\`echo -e '\n\r'`master-user = salorreplicator6\\`echo -e '\n\r'`master-password = salorreplicator6\\`echo -e '\n\r'`report-host = 127.0.0.1/" $mycnf
+    
+    sed -i "s/# ssl-ca.*/ssl\\`echo -e '\n\r'`ssl-ca=\/etc\/mysql\/ca-crt.pem/" $mycnf
+    sed -i "s/# ssl-cert.*$/ssl-cert=\/etc\/mysql\/slave-crt.pem/" $mycnf
+    sed -i "s/# ssl-key.*$/ssl-key=\/etc\/mysql\/slave-key.pem/" $mycnf
   fi
   
+  service mysql restart
+  echo "show variables like '%ssl%';" | mysql -u root -proot
 else
   echo "This script already has modified /etc/mysl/my.cnf. Not running twice. You have to manually inspect the changes."
 fi
+
+# stop slave;
+# reset slave;
+# start slave;
