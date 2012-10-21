@@ -1,3 +1,11 @@
+salor-hospitality (4.1.0.30) unstable; urgency=low
+
+  * use special SH_DEBIAN_SITEID configuration only if explicitly set
+  * database config renamed
+  * require mysql2
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 21 Oct 2012 23:47:25 +0200
+
 salor-hospitality (4.1.0.29) unstable; urgency=low
 
   * gems, scripts
