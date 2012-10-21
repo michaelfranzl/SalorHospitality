@@ -25,7 +25,7 @@ module SalorHospitality
     if ENV['SH_DEBIAN_SITEID']
       SH_DEBIAN_SITEID = ENV['SH_DEBIAN_SITEID']
     else
-      SH_DEBIAN_SITEID = 'default'
+      SH_DEBIAN_SITEID = 'none'
     end
     
     puts "Using database set by environment variable SH_DEBIAN_SITEID (#{SH_DEBIAN_SITEID})"

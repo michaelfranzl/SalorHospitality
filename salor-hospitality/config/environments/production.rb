@@ -13,10 +13,18 @@ SalorHospitality::Application.configure do
     config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => %{"SalorHospitality" <michael@billgastro.com>}, :exception_recipients => %w{office@billgastro.com}, :sections => %w(salorhospitality request session environment backtrace)
   end
   
-  config.paths['log'] = ["/var/log/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/production.log"]
-  config.paths['config/database'] = ["/etc/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/database.yml"]
-  config.paths['tmp'] = ["/var/tmp/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}"]
-  ENV['SCHEMA'] = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'schema.rb')
+  if SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+    ENV['SCHEMA'] = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'schema.rb')
+    
+    config.paths['log'] = ["/var/log/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/production.log"]
+    
+    config.paths['config/database'] = ["/etc/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/database.yml"]
+    
+    config.paths['tmp'] = ["/var/tmp/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}"]
+    
+    # Use a different cache store in production
+    config.cache_store = :file_store, File.join('/', 'var', 'cache', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
+  end
   
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -52,9 +60,6 @@ SalorHospitality::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
-
-  # Use a different cache store in production
-  config.cache_store = :file_store, File.join('/', 'var', 'cache', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
