@@ -1,6 +1,3 @@
-salor-hospitality/vendor/bundle   /var/lib/salor-hospitality/vendor
-salor-hospitality/vendor/assets   /usr/share/salor-hospitality/source/vendor
-
 salor-hospitality/app             /usr/share/salor-hospitality/source
 salor-hospitality/config          /usr/share/salor-hospitality/source
 salor-hospitality/lib             /usr/share/salor-hospitality/source
@@ -10,21 +7,13 @@ salor-hospitality/public/*.*      /usr/share/salor-hospitality/source/public
 salor-hospitality/public/fonts    /usr/share/salor-hospitality/source/public
 salor-hospitality/public/images   /usr/share/salor-hospitality/source/public
 
-salor-hospitality/Gemfile*        /usr/share/salor-hospitality/source
+salor-hospitality/vendor/assets   /usr/share/salor-hospitality/source/vendor
+
+salor-hospitality/Gemfile         /usr/share/salor-hospitality/source
 salor-hospitality/Rakefile        /usr/share/salor-hospitality/source
 salor-hospitality/config.ru       /usr/share/salor-hospitality/source
 
 salor-hospitality/db/migrate        /usr/share/salor-hospitality/source/db
 salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/source/db
-
-debian/bin/salor-hospitality.desktop                  /usr/share/applications
-debian/bin/salor-hospitality_browser-chromium         /usr/bin
-debian/bin/salor-hospitality_console                  /usr/bin
-debian/bin/salor-hospitality_exception-notification   /usr/bin
-debian/bin/salor-hospitality_maintainance             /usr/bin
-debian/bin/salor-hospitality_setup-https-access       /usr/bin
-debian/bin/salor-hospitality_setup-db-replication     /usr/bin
-debian/bin/salor-hospitality_update                   /usr/bin
-debian/bin/salor-hospitality_environment-vars.sh      /etc/profile.d
 
 salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable/apps

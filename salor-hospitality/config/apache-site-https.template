@@ -1,15 +1,17 @@
-# Global Passenger configuration. Uncomment this only once in all of your sites.
+# ---
+# Global Passenger configuration. Uncomment the following two lines only once in all of your enabled sites.
 
 #PassengerMaxPoolSize 2
 #PassengerPoolIdleTime 15000
+# --- 
 
 <VirtualHost *:443>
   ServerName INSTANCE_ID.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
   SSLEngine on
-  SSLCertificateFile /etc/apache2/ssl/salor.crt
-  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+  SSLCertificateFile /etc/apache2/ssl/salor-crt.pem
+  SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
   <Directory /usr/share/salor-hospitality>
     Options FollowSymLinks
   </Directory>
@@ -22,8 +24,8 @@
 #  SetEnv SH_DEBIAN_SITEID INSTANCE_ID
 #  DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
 #  SSLEngine on
-#  SSLCertificateFile /etc/apache2/ssl/salor.crt
-#  SSLCertificateKeyFile /etc/apache2/ssl/salor.key
+#  SSLCertificateFile /etc/apache2/ssl/salor-crt.pem
+#  SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
 #  <Directory /usr/share/salor-hospitality>
 #    Options FollowSymLinks
 #  </Directory>

@@ -63,6 +63,12 @@ case "$1" in
     if [ "$result" = "0" ]; then
       echo "pcspkr" >> /etc/modules;
     fi
+    
+    if [ ! -e /usr/lib/ruby/vendor_ruby/uglifier.rb ]; then
+      echo "  postinst: This is an older Debian version than Jessie. We have to run bundle install to get gems from rubygems.org."
+      cd /usr/share/salor-hospitality/source
+      bundle install
+    fi
   ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
@@ -152,18 +158,9 @@ for lInstance in $gInstances; do
         chmod 660 $rails_etc/config.yml
       fi
       
-      
       if [ -e $rails_etc/database.yml ]; then
-        echo "  postinst: this instance has a configure database."
-        
-        cd $app_root
-        rm -rf $app_root/Gemfile.lock
-        # The following is an ugly hack. Since this package can be installed into various distributions, we conditionally have to run `bundle install`. Beginning with Debian Jessie, all the required gems are present (package ruby-uglifier for the first time), so we need not run `bundle install`. If anyone knows a better solution for this, please email me at office@red-e.eu.
-        if [ ! -e /usr/lib/ruby/vendor_ruby/uglifier.rb ]; then
-          echo "  postinst: This is an older Debian version than Jessie. We have to run bundle install to get gems from rubygems.org."
-          bundle install
-        fi
-
+        echo "  postinst: this instance has a configured database."
+        cd $app_root        
         echo "  postinst: migrating the database. this may take a while."
         rake1.9.1 db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" > /dev/null
         echo "  postinst: running db:seed ..."
