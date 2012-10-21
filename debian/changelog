@@ -1,3 +1,18 @@
+salor-hospitality (4.1.0.27) unstable; urgency=low
+
+  * gems, scripts
+  * build
+  * better purging
+  * build
+  * more work on mysql replication script
+  * more sql work
+  * gitignore
+  * more mysql replication work
+  * replication script is working
+  * moved script into separate package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 21 Oct 2012 11:48:23 +0200
+
 salor-hospitality (4.1.0.26) unstable; urgency=low
 
   * adapted update script for multi instance, gemfile fix for older debian versions
