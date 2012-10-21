@@ -33,3 +33,4 @@ debian/salor-hospitality
 debian/files
 *.debhelper
 *.substvars
+salor-hospitality/config/database.yml

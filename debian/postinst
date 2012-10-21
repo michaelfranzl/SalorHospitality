@@ -64,7 +64,7 @@ case "$1" in
       echo "pcspkr" >> /etc/modules;
     fi
     
-    if [ ! -e /usr/lib/ruby/vendor_ruby/uglifier.rb ]; then
+    if [ ! -e /usr/lib/ruby/vendor_ruby/mysql2.rb ]; then
       echo "  postinst: This is an older Debian version than Jessie. We have to run bundle install to get gems from rubygems.org."
       cd /usr/share/salor-hospitality/source
       bundle install

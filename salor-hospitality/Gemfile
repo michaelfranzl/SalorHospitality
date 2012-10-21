@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.6'
-gem 'mysql'
+gem 'mysql2'
 gem 'serialport'
 gem 'kramdown'
 gem 'jquery-rails'
