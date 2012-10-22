@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.33) unstable; urgency=low
+
+  * fixed postinst bug
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 22 Oct 2012 10:12:18 +0200
+
 salor-hospitality (4.1.0.32) unstable; urgency=low
 
   * more mysql2, salor-virtual can install gems
