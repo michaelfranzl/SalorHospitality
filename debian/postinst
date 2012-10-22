@@ -64,8 +64,8 @@ case "$1" in
       echo "pcspkr" >> /etc/modules;
     fi
     
-    dpkg-query -Wf'${db:Status-abbrev}' salor-virtual 2>/dev/null | grep -q '^i'
-    if [ "$?" = "1" ]; then
+    hasPack=$(dpkg -l | grep salor-virtual | wc -l)
+    if [ "$hasPack" = "0" ]; then
       echo "  postinst: Some of the required gems are not available as Debian packages. We have to run bundle install to download gems from rubygems.org."
       salor-installgems h
     else
