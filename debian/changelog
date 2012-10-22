@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.32) unstable; urgency=low
+
+  * more mysql2, salor-virtual can install gems
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 22 Oct 2012 09:39:27 +0200
+
 salor-hospitality (4.1.0.31) unstable; urgency=low
 
   * disabled mysql2
