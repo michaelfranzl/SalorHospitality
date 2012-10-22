@@ -15,6 +15,21 @@
   <Directory /usr/share/salor-hospitality>
     Options FollowSymLinks
   </Directory>
+  
+  <Directory />
+    AllowOverride none
+    #AUTH: Order deny,allow
+    #AUTH: Deny from all
+    #AUTH: Allow from 127.0.0.1
+    #AUTH: AuthType Digest
+    #AUTH: AuthName "SALOR"
+    #AUTH: AuthDigestDomain /
+    #AUTH: AuthDigestProvider file
+    #AUTH: AuthUserFile /etc/apache2/salor-auth-users
+    #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
+    #AUTH: Require group INSTANCE_ID
+    #AUTH: Satisfy any
+  </Directory>
 </VirtualHost>
 
 #Listen 7652
@@ -28,5 +43,20 @@
 #  SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
 #  <Directory /usr/share/salor-hospitality>
 #    Options FollowSymLinks
+#  </Directory>
+#  
+#  <Directory />
+#    AllowOverride none
+#    #AUTH: Order deny,allow
+#    #AUTH: Deny from all
+#    #AUTH: Allow from 127.0.0.1
+#    #AUTH: AuthType Digest
+#    #AUTH: AuthName "SALOR"
+#    #AUTH: AuthDigestDomain /
+#    #AUTH: AuthDigestProvider file
+#    #AUTH: AuthUserFile /etc/apache2/salor-auth-users
+#    #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
+#    #AUTH: Require group INSTANCE_ID
+#    #AUTH: Satisfy any
 #  </Directory>
 #</VirtualHost>

@@ -1,8 +1,10 @@
-SalorHospitality Version <%= SalorHospitality::Application::VERSION %>
-
-eth0 Mac addr: <%= /(..):(..):(..):(..):(..):(..)/.match(`/sbin/ifconfig eth0`.split("\n")[0])[1..6].join %>
+SalorHospitality <%= SalorHospitality::Application::VERSION %>
 
 <% user = User.find_by_id(@request.session[:user_id]) %>
-User: <%= user.login if user %>
+<% vendor = Vendor.find_by_id(@request.session[:vendor_id]) %>
 
 Company: <%= user.company.name if user %>
+
+Vendor: <%= vendor.name if vendor %>
+
+User: <%= user.login if user %>

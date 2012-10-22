@@ -185,7 +185,7 @@ for lInstance in $gInstances; do
           ln -sf ../sites-available/sh-${lInstance}-$protocol sh-${lInstance}-$protocol
         fi
       done
-      
+     
       echo "  postinst: Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep "${lInstance}.sh.red-e.eu" | wc -l`
       if [ "$result" = "0" ]; then
