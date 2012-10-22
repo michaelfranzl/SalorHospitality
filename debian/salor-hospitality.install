@@ -16,4 +16,6 @@ salor-hospitality/config.ru       /usr/share/salor-hospitality/source
 salor-hospitality/db/migrate        /usr/share/salor-hospitality/source/db
 salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/source/db
 
+debian/bin/salor-hospitality.desktop  /usr/share/applications
+debian/bin/salor-hospitality          /usr/bin
 salor-hospitality/app/assets/images/salor-hospitality-icon.svg          /usr/share/icons/hicolor/scalable/apps
