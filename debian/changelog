@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.36) unstable; urgency=low
+
+  * exception notification fix, http auth adaption, cron fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 22 Oct 2012 15:46:31 +0200
+
 salor-hospitality (4.1.0.35) unstable; urgency=low
 
   * binary was missing
