@@ -11,9 +11,9 @@ class CopyTaxIdToTaxesForArticles < ActiveRecord::Migration
     Article.all.each do |a|
       puts "Copying tax for Article #{ a.id }"
       a.taxes = []
-      tax = Tax.find_by_id(a.category.tax_id)
+      tax = Tax.find_by_id(a.category.tax_id) if a.category
       tax = Tax.find_by_id(a.tax_id) if a.tax_id
-      a.taxes << tax
+      a.taxes << tax unless tax.nil?
       a.save
     end
   end
