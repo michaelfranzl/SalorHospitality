@@ -1,3 +1,9 @@
+salor-hospitality (4.1.0.34) unstable; urgency=low
+
+  * fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 22 Oct 2012 10:19:41 +0200
+
 salor-hospitality (4.1.0.33) unstable; urgency=low
 
   * fixed postinst bug
