@@ -119,13 +119,16 @@ class VendorsController < ApplicationController
     #render :json => result.to_a[0][0]
     #settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
     
+    #------------------------ START WITH PARENT MODELS
+    settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
+    
+    order_ids = @current_vendor.orders.existing.where(:paid_at => from..to).collect { |o| o.id } unless settlement_ids.any? # If the user doesn't use the Settlement feature, user Orders gracefully instead.
+    
+    
     #------------------------ ITEMS
-    settlement_ids = @current_vendor.settlements.existing.where(:created_at => from..to).collect { |s| s.id }
     if settlement_ids.any?
       items = Item.select("refund_sum, category_id, taxes").where(:settlement_id => settlement_ids, :hidden => nil)
     else
-      # User is not using the Settlement feature. Load orders strictly by date instead. This has the disadvantage that orders, which were taken after midnight, but by common sense belong to the previous workday, will count for the next day.
-      order_ids = @current_vendor.orders.existing.where(:paid_at => from..to).collect { |o| o.id }
       items = Item.select("refund_sum, category_id, taxes").where(:order_id => order_ids, :hidden => nil)
     end
     items_json_string = items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"y\":#{i.category_id}}" }.join(',')
@@ -133,19 +136,25 @@ class VendorsController < ApplicationController
     
     
     #------------------------ BOOKINGITEMS
+    # Currently, the Settlements feature does not support Bookings, since it doesn't make much sense.
     booking_ids = @current_vendor.bookings.existing.where(:paid_at => from..to).collect { |o| o.id }
     booking_items = BookingItem.select("refund_sum, room_id, taxes, id").where(:booking_id => booking_ids, :hidden => nil)
     booking_items_json_string = booking_items.collect{|i| "{\"id\":#{i.id},\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
     booking_items_json_string.gsub! "\n", '\n'
     
     #------------------------ PAYMENTMETHODITEMS
-    
-    booking_items = BookingItem.select("refund_sum, room_id, taxes, id").where(:booking_id => booking_ids, :hidden => nil)
-    #payment_methods_json_string = PaymentMethodItems.select("items.refund_sum as r, items.category_id as y,items.taxes as t").where(:created_at => from...to, :settlement_id => settlement_ids)
-    #render :json => items
 
-    render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}]}"
-    #render :json => "[#{items_json_string}]"
+    if settlement_ids.any?
+      payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:settlement_id => settlement_ids, :hidden => nil)
+    else
+      payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:order_id => order_ids, :hidden => nil)
+    end
+    
+    payment_methods_json_string = payment_method_items.collect{|pmi| "{\"id\":#{pmi.id},\"r\":#{pmi.refunded ? 'true' : 'false'},\"a\":#{pmi.amount},\"pm_id\":#{pmi.payment_method_id}}" }.join(',')
+    payment_methods_json_string.gsub! "\n", '\n'
+    
+    #------------------------ OUTPUT
+    render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}],\"payment_method_items\":[#{payment_methods_json_string}]}"
   end
   
   def identify_printers

@@ -26,7 +26,7 @@
           %td= item.quantity ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
           %td.number= item.count
           %td.number= number_to_currency item.price
-          %td.colsum= number_to_currency item.sum
+          %td.colsum= number_to_currency item.refunded ? 0 : item.sum
         - item.option_items.each do |o|
           - next if o.price == 0
           %tr

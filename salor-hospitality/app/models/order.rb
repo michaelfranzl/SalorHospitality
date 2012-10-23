@@ -176,6 +176,7 @@ class Order < ActiveRecord::Base
     self.option_items.update_all :hidden => true, :hidden_by => by_user_id
     self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
     self.items.update_all :hidden => true, :hidden_by => by_user_id
+    self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id
   end
 
   def unlink
@@ -247,6 +248,14 @@ class Order < ActiveRecord::Base
     self.save
     self.unlink
     self.table.update_color
+    
+    unless self.payment_method_items.existing.any?
+      payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
+      cash_payment_method = payment_methods.first
+      if cash_payment_method
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum
+      end
+    end
   end
 
   def pay

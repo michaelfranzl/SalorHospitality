@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121023181236) do
+ActiveRecord::Schema.define(:version => 20121023185319) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -519,6 +519,9 @@ ActiveRecord::Schema.define(:version => 20121023181236) do
     t.boolean  "refunded"
     t.boolean  "cash"
     t.integer  "refund_item_id"
+    t.integer  "settlement_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
   end
 
   create_table "payment_methods", :force => true do |t|

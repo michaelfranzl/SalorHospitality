@@ -21,7 +21,7 @@ module OrdersHelper
       :clear => escape_javascript(I18n.t(':clear')),
       :customers => escape_javascript(I18n.t('activerecord.models.customer.other')),
       :save => escape_javascript(I18n.t('various.save')),
-      :payment_method => escape_javascript(PaymentMethodItem.model_name.human),
+      :payment_method => escape_javascript(I18n.t('activerecord.models.payment_method.other')),
       :pay => escape_javascript(I18n.t('various.pay')),
       :common_surcharges => escape_javascript(I18n.t('various.common_surcharges')),
       :cancel => escape_javascript(I18n.t('various.cancel')),
@@ -36,7 +36,8 @@ module OrdersHelper
       :interim_invoice => escape_javascript(I18n.t('various.interim_invoice')),
       :assign_order_to_booking => escape_javascript(I18n.t('various.consumations')),
       :rooms => escape_javascript(I18n.t('activerecord.models.room.other')),
-      :delete => escape_javascript(I18n.t('various.delete'))
+      :delete => escape_javascript(I18n.t('various.delete')),
+      :refund => escape_javascript(I18n.t(:refund))
     }
     return i18n.to_json
   end

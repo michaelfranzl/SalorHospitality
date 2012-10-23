@@ -14,6 +14,7 @@ report.functions = {
           report.functions.calculate_categories_table();
           report.functions.calculate_rooms_table();
           report.functions.calculate_taxes_table();
+          report.functions.calculate_payment_methods_table();
           report.functions.render();
         }
         $('#report_progress').hide();
@@ -27,19 +28,21 @@ report.functions = {
     $.each(report.variables.datasource.items, function(k,v) {
       var category_id = v.y;
       catname = resources.c[category_id].n;
-      if (c.hasOwnProperty(catname)) {
-        $.each(v.t, function(s,t) {
-          c[catname][i18n.gross] += t.g
-          c[catname][i18n.net] += t.n
-          c[catname][i18n.tax_amount] += t.t
-        })
-      } else {
-        $.each(v.t, function(s,t) {
-          c[catname] = {};
-          c[catname][i18n.gross] = t.g
-          c[catname][i18n.net] = t.n
-          c[catname][i18n.tax_amount] = t.t
-        })
+      if ( v.r == null ) {
+        if (c.hasOwnProperty(catname)) {
+          $.each(v.t, function(s,t) {
+            c[catname][i18n.gross] += t.g
+            c[catname][i18n.net] += t.n
+            c[catname][i18n.tax_amount] += t.t
+          })
+        } else {
+          $.each(v.t, function(s,t) {
+            c[catname] = {};
+            c[catname][i18n.gross] = t.g
+            c[catname][i18n.net] = t.n
+            c[catname][i18n.tax_amount] = t.t
+          })
+        }
       }
     })
     report.variables.categories_tablesource = c;
@@ -66,6 +69,27 @@ report.functions = {
     report.variables.rooms_tablesource = r;
   },
   
+  calculate_payment_methods_table: function() {    
+    //calculate sums by method
+    var output = {};
+    $.each(report.variables.datasource.payment_method_items, function(k,v) {
+      var pm_id = v.pm_id;
+      pmname = resources.pm[pm_id].n;
+      if (! output.hasOwnProperty(pmname)) {
+        // column headers
+        output[pmname] = {}
+        output[pmname][' '] = 0
+        output[pmname][i18n.refund] = 0
+      }
+      if (v.r == true) {
+        output[pmname][i18n.refund] += v.a
+      } else {
+        output[pmname][' '] += v.a
+      }
+    })
+    report.variables.payment_methods_tablesource = output;
+  },
+  
   calculate_taxes_table: function() {    
     //calculate sums by taxes
     var taxes = {};
@@ -81,16 +105,19 @@ report.functions = {
   accumulate_taxes: function(taxes, object) {
     $.each(object.t, function(k,v) {
       var tax_id = k;
-      taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
-      if (taxes.hasOwnProperty(taxname)) {
-        taxes[taxname][i18n.gross] += v.g
-        taxes[taxname][i18n.net] += v.n
-        taxes[taxname][i18n.tax_amount] += v.t
-      } else {
-        taxes[taxname] = {};
-        taxes[taxname][i18n.gross] = v.g
-        taxes[taxname][i18n.net] = v.n
-        taxes[taxname][i18n.tax_amount] = v.t
+      if ( object.r == null ) {
+        // not refunded
+        taxname = resources.t[tax_id].n + ' (' + resources.t[tax_id].p + '%)';
+        if (taxes.hasOwnProperty(taxname)) {
+          taxes[taxname][i18n.gross] += v.g
+          taxes[taxname][i18n.net] += v.n
+          taxes[taxname][i18n.tax_amount] += v.t
+        } else {
+          taxes[taxname] = {};
+          taxes[taxname][i18n.gross] = v.g
+          taxes[taxname][i18n.net] = v.n
+          taxes[taxname][i18n.tax_amount] = v.t
+        }
       }
     })
     return taxes;
@@ -101,6 +128,7 @@ report.functions = {
     report.functions.table_from_json(report.variables.categories_tablesource, 'settlements', '#report_container', i18n.categories);
     report.functions.table_from_json(report.variables.rooms_tablesource, 'settlements', '#report_container', i18n.rooms);
     report.functions.table_from_json(report.variables.taxes_tablesource, 'settlements', '#report_container', i18n.taxes);
+    report.functions.table_from_json(report.variables.payment_methods_tablesource, 'settlements', '#report_container', i18n.payment_method);
   },
 
   display_popup: function() {

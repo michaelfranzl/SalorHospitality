@@ -21,6 +21,11 @@ class Settlement < ActiveRecord::Base
     Order.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
     Item.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
     TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
+    PaymentMethodItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
+    self.calculate_totals
+  end
+  
+  def calculate_totals
     self.sum = Order.where(:settlement_id => self.id).sum(:sum).round(2)
     self.save
   end

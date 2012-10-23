@@ -97,7 +97,7 @@ class Item < ActiveRecord::Base
 
   def refund(by_user, payment_method_id)
     payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
-    PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => - self.sum, :refunded => true, :refund_item_id => self.id
+    PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => - self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id
     
     self.refunded = true
     self.refunded_by = by_user.id
@@ -106,6 +106,8 @@ class Item < ActiveRecord::Base
     #self.option_items.update_all :sum => 0
     self.calculate_totals
     self.order.calculate_totals
+    
+    self.settlement.calculate_totals if self.settlement
   end
 
   def calculate_totals
