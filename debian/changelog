@@ -1,3 +1,15 @@
+salor-hospitality (4.1.0.37) unstable; urgency=low
+
+  * closes #1339, #1338
+  * rewrote neighbour_models for higher speed, fixed migrations, apache permissions
+  * fixed category icon nil default
+  * closes #1320
+  * for time range report, use settlements if available
+  * let payment method items track refunds in cash/noncash
+  * add payment methods to report
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 23 Oct 2012 21:47:28 +0200
+
 salor-hospitality (4.1.0.36) unstable; urgency=low
 
   * exception notification fix, http auth adaption, cron fix
