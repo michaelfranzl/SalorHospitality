@@ -9,18 +9,30 @@
   ServerName INSTANCE_ID.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
+  
   SSLEngine on
   SSLCertificateFile /etc/apache2/ssl/salor-crt.pem
   SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
+
   <Directory /usr/share/salor-hospitality>
     Options FollowSymLinks
-  </Directory>
-  
-  <Directory />
     AllowOverride none
-    #AUTH: Order deny,allow
-    #AUTH: Deny from all
-    #AUTH: Allow from 127.0.0.1
+  </Directory>
+
+  <Directory /usr/share/salor-hospitality/INSTANCE_ID/public/uploads>
+    Order deny,allow
+    Deny from all
+  </Directory>
+
+  <Directory /usr/share/salor-hospitality/INSTANCE_ID/public/uploads/INSTANCE_ID>
+    Order deny,allow
+    Allow from all
+  </Directory>
+
+  <Location />
+    Order deny,allow
+    Deny from all
+    Allow from 127.0.0.1 192.168 10.0
     #AUTH: AuthType Digest
     #AUTH: AuthName "SALOR"
     #AUTH: AuthDigestDomain /
@@ -28,35 +40,12 @@
     #AUTH: AuthUserFile /etc/apache2/salor-auth-users
     #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
     #AUTH: Require group INSTANCE_ID
-    #AUTH: Satisfy any
-  </Directory>
+    Satisfy any
+  </Location>
 </VirtualHost>
 
 #Listen 7652
 #
 #<VirtualHost *:7652>
-#  ServerName INSTANCE_ID.sh.red-e.eu
-#  SetEnv SH_DEBIAN_SITEID INSTANCE_ID
-#  DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
-#  SSLEngine on
-#  SSLCertificateFile /etc/apache2/ssl/salor-crt.pem
-#  SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
-#  <Directory /usr/share/salor-hospitality>
-#    Options FollowSymLinks
-#  </Directory>
-#  
-#  <Directory />
-#    AllowOverride none
-#    #AUTH: Order deny,allow
-#    #AUTH: Deny from all
-#    #AUTH: Allow from 127.0.0.1
-#    #AUTH: AuthType Digest
-#    #AUTH: AuthName "SALOR"
-#    #AUTH: AuthDigestDomain /
-#    #AUTH: AuthDigestProvider file
-#    #AUTH: AuthUserFile /etc/apache2/salor-auth-users
-#    #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
-#    #AUTH: Require group INSTANCE_ID
-#    #AUTH: Satisfy any
-#  </Directory>
+#  # Copy the contents from the above VirtualHost into here
 #</VirtualHost>

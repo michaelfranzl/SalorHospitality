@@ -24,7 +24,9 @@ class OrdersController < ApplicationController
       @order = @current_vendor.orders.existing.find_all_by_paid(true).last
     end
     redirect_to '/' and return if not @order
+    
     @previous_order, @next_order = neighbour_models('orders',@order)
+    
     respond_to do |wants|
       wants.html
       wants.bill { render :text => generate_escpos_invoice(@order) }

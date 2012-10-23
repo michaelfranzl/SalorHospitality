@@ -289,12 +289,24 @@ class ApplicationController < ActionController::Base
     end
 
     def neighbour_models(model_name, model_object)
-      models = @current_vendor.send(model_name).existing.where(:finished => true)
-      idx = models.index(model_object)
-      previous_model = models[idx-1] if idx
-      previous_model = model_object if previous_model.nil?
-      next_model = models[idx+1] if idx
-      next_model = model_object if next_model.nil?
+      first_model = @current_vendor.send(model_name).existing.where(:finished => true).first
+      last_model = @current_vendor.send(model_name).existing.where(:finished => true).last
+      search_id = model_object.id
+      previous_model = model_object == first_model ? model_object : nil
+      while previous_model.nil?
+        search_id -= 1
+        model = @current_vendor.send(model_name).existing.find_by_id(search_id)
+        previous_model = model if model and model.finished
+      end
+      
+      search_id = model_object.id
+      next_model = model_object == last_model ? model_object : nil
+      while next_model.nil?
+        search_id += 1
+        model = @current_vendor.send(model_name).existing.find_by_id(search_id)
+        next_model = model if model and model.finished
+      end
+      
       return previous_model, next_model
     end
     

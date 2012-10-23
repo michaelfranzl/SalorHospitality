@@ -1,0 +1,29 @@
+# This script doesn't work as a migration for some insane Rails-reason. Run each part manually in the console. It is limited to 5000 models at a time, due to an insane Ruby or Rake memory leak, so run the parts as often as needed until all models are processed.
+
+# comment the following out ONLY the first time
+#TaxItem.delete_all 
+#Item.update_all :taxes => "--- {}\n"
+#Order.update_all :taxes => "--- {}\n"
+#SurchargeItem.update_all :taxes => "--- {}\n"
+#BookingItem.update_all :taxes => "--- {}\n"
+#Booking.update_all :taxes => "--- {}\n"
+
+Item.existing.where(:taxes => "--- {}\n")[0..5000].each do |item|
+  item.calculate_totals
+end
+
+Order.existing.where(:taxes => "--- {}\n")[0..5000].each do |order|
+  order.calculate_totals
+end
+
+SurchargeItem.where(:taxes => "--- {}\n").existing[0..5000].each do |si|
+  si.calculate_totals
+end
+
+BookingItem.where(:taxes => "--- {}\n").existing[0..5000].each do |bi|
+  bi.calculate_totals
+end
+
+Booking.where(:taxes => "--- {}\n").existing[0..5000].each do |b|
+  b.calculate_totals
+end
