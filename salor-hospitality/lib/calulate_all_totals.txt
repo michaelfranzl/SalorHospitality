@@ -27,3 +27,13 @@ end
 Booking.where(:taxes => "--- {}\n").existing[0..5000].each do |b|
   b.calculate_totals
 end
+
+----------------
+
+Settlement.all.each { |s| s.sum = s.orders.existing.sum(:sum); s.save }
+
+----------------
+
+Item.connection.execute("UPDATE items SET preparation_count = count, delivery_count = count;")
+
+----------------
