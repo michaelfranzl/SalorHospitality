@@ -1,3 +1,10 @@
+salor-hospitality (4.1.0.38) unstable; urgency=low
+
+  * build
+  * more verbose postscript
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 23 Oct 2012 21:59:32 +0200
+
 salor-hospitality (4.1.0.37) unstable; urgency=low
 
   * closes #1339, #1338
