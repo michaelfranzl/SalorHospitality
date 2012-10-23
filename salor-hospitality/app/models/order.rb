@@ -139,16 +139,16 @@ class Order < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.sum = self.items.existing.sum(:sum).round(2)
-    self.refund_sum = self.items.existing.sum(:refund_sum).round(2)
-    self.tax_sum = self.items.existing.sum(:tax_sum).round(2)
+    self.sum = self.items.existing.where(:refunded => nil).sum(:sum).round(2)
+    self.refund_sum = self.items.existing.where(:refunded => true).sum(:refund_sum).round(2)
+    self.tax_sum = self.items.existing.where(:refunded => nil).sum(:tax_sum).round(2)
     self.calculate_taxes
     self.save
   end
   
   def calculate_taxes
     self.taxes = {}
-    self.items.existing.each do |item|
+    self.items.existing.where(:refunded => nil).each do |item|
       item.taxes.each do |k,v|
         if self.taxes.has_key? k
           self.taxes[k][:t] += v[:t]

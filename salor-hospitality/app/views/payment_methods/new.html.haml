@@ -12,3 +12,7 @@
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
     = payment_method_form.label :name
     = payment_method_form.text_field :name, :size => '10'
+
+    %br
+    = payment_method_form.label :cash
+    = payment_method_form.check_box :cash

@@ -29,15 +29,21 @@ class ApplicationController < ActionController::Base
         end
       #===============CURRENTVIEW==================
       when 'invoice_paper', 'refund'
-        get_order
         case params['jsaction']
           #----------jsaction----------
           when 'just_print'
+            get_order
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
           #----------jsaction----------
           when 'mark_print_pending'
+            get_order
             @order.update_attribute :print_pending, true
             @current_vendor.update_attribute :print_data_available, true
+          when 'do_refund'
+            item = get_model(params[:id], Item)
+            item.refund(@current_user, params[:payment_method_id])
+            @order = item.order
+            render 'items/edit' and return # this renders a .js.erb tempate, which in turn renders partial => 'orders/refund_form'
         end
         render :nothing => true
       #===============CURRENTVIEW==================

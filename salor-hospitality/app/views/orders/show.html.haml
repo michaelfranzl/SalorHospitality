@@ -57,9 +57,14 @@
         %th.left_wide= PaymentMethodItem.model_name.human
         %th.right_wide= PaymentMethodItem.human_attribute_name :amount
       - @order.payment_method_items.each do |pm|
-        %tr
-          %td.left_wide= pm.payment_method.name
-          %td.right_wide= number_to_currency pm.amount
+        - if not pm.refunded
+          %tr
+            %td.left_wide= pm.payment_method.name
+            %td.right_wide= number_to_currency pm.amount
+        - else
+          %tr
+            %td.left_wide== #{ t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}
+            %td.right_wide= number_to_currency pm.amount
       %tr
         %td.left_wide= Order.human_attribute_name :change_given
         %td.right_wide= number_to_currency @order.change_given

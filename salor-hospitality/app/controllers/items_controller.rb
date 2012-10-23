@@ -42,9 +42,11 @@ class ItemsController < ApplicationController
 
   def destroy
     item = get_model
-    item.refund(@current_user)
+    item.refund(@current_user, params[:payment_method_id])
     @order = item.order
-    render 'edit'
+    @payment_method_items = @current_vendor.payment_method_items.existing
+    @selected_payment_method = @current_vendor.payment_methods.existing.where(:cash => true).first
+    render 'edit' # this renders a .js.erb tempate, which in turn renders partial => 'orders/refund_form'
   end
   
   def list

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121007154458) do
+ActiveRecord::Schema.define(:version => 20121023181236) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -516,6 +516,9 @@ ActiveRecord::Schema.define(:version => 20121007154458) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "booking_id"
+    t.boolean  "refunded"
+    t.boolean  "cash"
+    t.integer  "refund_item_id"
   end
 
   create_table "payment_methods", :force => true do |t|
@@ -527,6 +530,7 @@ ActiveRecord::Schema.define(:version => 20121007154458) do
     t.boolean  "hidden"
     t.integer  "company_id"
     t.integer  "vendor_id"
+    t.boolean  "cash"
   end
 
   create_table "presentations", :force => true do |t|

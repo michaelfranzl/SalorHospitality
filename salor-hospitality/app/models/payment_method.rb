@@ -7,11 +7,13 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class PaymentMethod < ActiveRecord::Base
-  attr_accessible :amount, :name, :order_id
+  attr_accessible :amount, :name, :order_id, :cash
   include Scope
   belongs_to :order
   belongs_to :vendor
   belongs_to :company
+  
+  validates_presence_of :name
 
   def amount=(amnt)
     write_attribute :amount,amnt.to_s.gsub(',','.')
