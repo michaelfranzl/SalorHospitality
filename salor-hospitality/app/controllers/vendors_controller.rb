@@ -118,8 +118,17 @@ class VendorsController < ApplicationController
     #result = sql.execute x
     #render :json => result.to_a[0][0]
     #settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
-    order_ids = @current_vendor.orders.existing.where(:paid_at => from..to).collect { |o| o.id }
-    items = Item.select("refund_sum, category_id, taxes").where(:order_id => order_ids, :hidden => nil)
+    
+    #------------------------
+    settlement_ids = @current_vendor.settlements.existing.where(:created_at => from..to).collect { |s| s.id }
+    if settlement_ids.any?
+      items = Item.select("refund_sum, category_id, taxes").where(:settlement_id => settlement_ids, :hidden => nil)
+    else
+      # User is not using the Settlement feature. Load orders strictly by date instead. This has the disadvantage that orders, which were taken after midnight, but by common sense belong to the previous workday, will count for the next day.
+      order_ids = @current_vendor.orders.existing.where(:paid_at => from..to).collect { |o| o.id }
+      items = Item.select("refund_sum, category_id, taxes").where(:order_id => order_ids, :hidden => nil)
+    end
+    
     items_json_string = items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"y\":#{i.category_id}}" }.join(',')
     items_json_string.gsub! "\n", '\n'
     
