@@ -28,10 +28,11 @@
 
     %table
       %tr
-        %td
-          %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
-            %option
-            = options_from_collection_for_select(@tables, :id, :move_name)
+        - if permit('move_order_from_invoice_form')
+          %td
+            %select{ :onchange => "route('redirect', #{oid}, 'invoice_move', {target_table_id:$(this).val()});", :title => t('.move_order') }
+              %option
+              = options_from_collection_for_select(@tables, :id, :move_name)
         
         - if session[:display_tax_colors]
           %td
@@ -39,12 +40,12 @@
               - if invoice_form.tax.nil?
                 %option
               = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
-        - elsif @current_user.role.permissions.include? 'assign_cost_center'
+        - elsif permit('assign_cost_center')
           %td
             %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
               %option
               = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-        - if @current_user.role.permissions.include? 'assign_order_to_booking'
+        - if permit('assign_order_to_booking')
           %td
             %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
               %option
@@ -91,8 +92,9 @@
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
   - if @current_user.role.permissions.include? ('manage_payment_methods')
-    %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}= t('activerecord.models.payment_method.other')
+    %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}== + #{ t('activerecord.models.payment_method.other')}
     %div{ :id => "payment_methods_container_#{oid}" }
+      %table
 
 :javascript
   submit_json.payment_method_items[#{ oid }] = {};

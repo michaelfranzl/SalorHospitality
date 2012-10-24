@@ -55,6 +55,7 @@ $(function(){
   var uri_attrs = uri_attributes();
   if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 1500);
   if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 1500);
+  if (uri_attrs.report == '1') setTimeout(function(){report.functions.display_popup()}, 1500);
 })
 
 
@@ -801,23 +802,30 @@ function update_order_from_refund_form(data) {
   });
 }
 
+// This is only called from the rooms view. For historical reasons, the order invoice view has the ocntainers hardcoded.
 function show_payment_method_items(model_id,allow_delete) {
-  $('#payment_methods_container_' + model_id).attr('style', 'overflow: visible;');
-  $('#payment_methods_container_' + model_id).show();
+  var pm_container = $('#payment_methods_container_' + model_id);
+  pm_container.attr('style', 'overflow: visible;');
+  var pm_table = $(document.createElement('table'));
+  pm_container.append(pm_table);
+  pm_container.show();
   if ($.isEmptyObject(submit_json.payment_method_items[model_id]) == true) add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
-  if (allow_delete) deletable($('#payment_methods_container_' + model_id));
+  if (allow_delete) deletable(pm_container);
 }
 
 function add_payment_method(model_id,id,amount) {
   payment_method_uid += 1;
-  pm_row = $(document.createElement('div'));
+  var pm_container = $('#payment_methods_container_' + model_id);
+  var pm_table = $('#payment_methods_container_' + model_id + ' table');
+  
+  pm_row = $(document.createElement('tr'));
   pm_row.addClass('payment_method_row');
   pm_row.attr('id', 'payment_method_row' + payment_method_uid);
   submit_json.payment_method_items[model_id][payment_method_uid] = {id:null, amount:0};
   var j = 0;
   $.each(resources.pm, function(k,v) {
     j += 1;
-    pm_button = $(document.createElement('span'));
+    pm_button = $(document.createElement('td'));
     pm_button.addClass('payment_method');
     pm_button.html(v.n);
     if ( !id && j == 1 ) {
@@ -831,7 +839,7 @@ function add_payment_method(model_id,id,amount) {
       var uid = payment_method_uid;
       pm_button.on('click', function() {
         submit_json.payment_method_items[model_id][uid].id = v.id;
-        $('#payment_method_row' + uid + ' span').removeClass('selected');
+        $('#payment_method_row' + uid + ' td').removeClass('selected');
         $(this).addClass('selected');
         $('#payment_method_' + uid + '_amount').select();
         if(settings.workstation) {
@@ -845,7 +853,7 @@ function add_payment_method(model_id,id,amount) {
   pm_input.attr('type', 'text');
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
   if (amount) {
-    pm_input.val(amount);
+    pm_input.val(number_with_precision(amount,2));
     submit_json.payment_method_items[model_id][payment_method_uid].amount = amount;
   } else {
     if (submit_json.totals[model_id].hasOwnProperty('booking_orders')) {
@@ -853,7 +861,7 @@ function add_payment_method(model_id,id,amount) {
     } else {
       booking_order_total = 0;
     }
-    pm_input.val(submit_json.totals[model_id].model + booking_order_total -submit_json.totals[model_id].payment_method_items);
+    pm_input.val(number_with_precision(submit_json.totals[model_id].model + booking_order_total - submit_json.totals[model_id].payment_method_items, 2));
   }
   submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
   payment_method_input_change(pm_input, payment_method_uid, model_id)
@@ -877,7 +885,12 @@ function add_payment_method(model_id,id,amount) {
       payment_method_input_change(this, uid,mid);
     });
   })();
-  pm_row.append(pm_input);
+  pm_input_cell = $(document.createElement('td'));
+  pm_input_cell.addClass('payment_method_input');
+  pm_input_cell.append(pm_input);
+  pm_row.append(pm_input_cell);
+  
+  pm_table.append(pm_row);
   
   if ($('.booking_form').is(":visible")) {
     deletable(pm_row,'append',function () {
@@ -886,7 +899,7 @@ function add_payment_method(model_id,id,amount) {
       $(this).parent().remove();
     });
   }
-  $('#payment_methods_container_' + model_id).prepend(pm_row);
+  $('#payment_methods_container_' + model_id + ' table').prepend(pm_row);
   $('#payment_method_'+ payment_method_uid + '_amount').select();
 }
 
@@ -905,7 +918,7 @@ function payment_method_input_change(element, uid, mid) {
   } else {
     booking_order_total = 0;
   }
-  change = - ( submit_json.totals[mid].model + booking_order_total - payment_method_total);
+  change = - number_with_precision(submit_json.totals[mid].model + booking_order_total - payment_method_total, 2);
   $('#change_' + mid).html(number_to_currency(change));
   if (change < 0) {
     $('#change_' + mid).css("color", "red");
@@ -913,7 +926,7 @@ function payment_method_input_change(element, uid, mid) {
     if ($('.booking_form').is(":visible")) {
       $('#change_' + mid).css("color", "white");
     } else {
-      $('#change_' + mid).css("color", "white");
+      $('#change_' + mid).css("color", "black");
     }
   } else {
     $('#change_' + mid).css("color", "green");
@@ -1107,12 +1120,10 @@ function display_configuration_of_item(d) {
     cell.attr('colspan',4);
     cell.addClass('item_configuration',4);
 
-    if (item_changeable(d)) {
-      comment_button =  $(document.createElement('span'));
-      comment_button.addClass('item_comment');
-      comment_button.on('click', function(){ display_comment_popup_of_item(d); });
-      cell.append(comment_button);
-    }
+    comment_button =  $(document.createElement('span'));
+    comment_button.addClass('item_comment');
+    comment_button.on('click', function(){ display_comment_popup_of_item(d); });
+    cell.append(comment_button);
 
     price_button =  $(document.createElement('span'));
     price_button.addClass('item_price');
@@ -1351,6 +1362,9 @@ function render_item_list(type, model, scope) {
     $.each(resources['notifications_' + model][scope], function(k,v) {
       var table_name = resources.tb[v.tid].n;
       var user_id = v[scope + '_uid'];
+      if (user_id == null) {
+        return true
+      }
       var user_name = resources.u[user_id].n;
       var reference_count_attribute = (scope == 'preparation') ? 'c' : 'preparation_c'
       var item_container = create_dom_element('div',{id:'item_list_' + scope + '_'+ v.id},'',list_container);
@@ -1408,7 +1422,11 @@ function render_item_list(type, model, scope) {
     $.each(resources['notifications_' + model][scope], function(k,v) {
       var table_name = resources.tb[v.tid].n;
       var user_id = v[scope + '_uid'];
+      if (user_id == null) {
+        return true
+      }
       var user_name = resources.u[user_id].n;
+      
       var hours = v.t.substring(0,2);
       var minutes = v.t.substring(3,5);
       var seconds = v.t.substring(6,8);

@@ -21,14 +21,11 @@ if ENV['SEED_MODE'] == 'full'
   countries = ['en','at','fr','es','pl','hu','ru','it','tr','cn','el']
   languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
   company_count = 2
-elsif ENV['SEED_MODE'] == 'minimal'
+else
   puts "SEED_MODE is 'minimal'"
   countries = ['en']
   languages = ['en']
   company_count = 1
-else
-  puts "\n\nPlease specify the seed mode with `SEED_MODE={full|minimal} rake db:seed`\n\n"
-  Process.exit 0
 end
 
 taxes = [20, 10, 0]

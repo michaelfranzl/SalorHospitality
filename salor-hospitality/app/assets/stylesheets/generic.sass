@@ -260,7 +260,7 @@ div.invoice
   :font-family Monospace
   :font-size 150%
   :color #333
-  :padding 30px 10px
+  :padding 20px 10px
   :margin 10px
   :letter-spacing -1.5px
   :-moz-border-radius 2px
@@ -281,13 +281,9 @@ div.invoice
   table
     :width 100%
     :border-collapse collapse
-    :margin-bottom 20px
     td
       :vertical-align middle
       :cursor pointer
-      :padding 5px 0px
-    td.label
-      //:width 131px
     tr.item
       a
         :color #333
@@ -397,29 +393,43 @@ div#draw_controls
 canvas
   :background-color white
 
-span.payment_method
-  :padding 5px 2px
-  :display inline-block
+  
+  
 
-div.payment_method_row
+tr.payment_method_row
   input
     :width 60px
     :font-size 130%
   div.delete
     :display inline-block
     :margin-left 10px
+  td
+    :padding 0px !important
+  td.payment_method
+    :text-align center
+  td.payment_method_input
+    :width 60px
 
-span.payment_method.selected
-  :-moz-border-radius 4px
-  :-webkit-border-radius 2px
+div#invoices
+  td.payment_method
+    :border 1px solid #DDD
+    :background-color white
+  td.payment_method.selected
+    :border 2px solid black
+    :background-color #DDDDEE
 
-div#invoices span.payment_method.selected
-  :border 2px solid black
+div.booking_form
+  td.payment_method.selected
+    :background-color #3A474D
+
+div.add_payment_method
+  :padding 5px
+  :margin 7px
   :background-color #DDDDEE
-
-div.booking_form span.payment_method.selected
-  :background-color #3A474D
-
+  :display inline-block
+    
+    
+    
 input#customer_search_input
   :width 100%
 
@@ -477,6 +487,7 @@ div.booking_form
   div.booking_change
     :font-size 150%
     :float right
+    :margin-top 40px
 
 
 // Datepicker
