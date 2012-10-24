@@ -3,6 +3,6 @@
 - else
   %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login }
 
-%a.iconbutton.print2_button{ :href => "/settlements/print/#{ @settlement.id }" }
+= link_to '', "/settlements/print/#{ @settlement.id }", :class => 'iconbutton print2_button', :remote => true
 
 = render :partial => 'detailed_list', :locals => { :orders => @orders }

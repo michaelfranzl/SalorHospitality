@@ -52,104 +52,68 @@ class Settlement < ActiveRecord::Base
 
   def escpos
     friendly_unit = I18n.t('number.currency.format.friendly_unit')
-    string =
-    "\e@"     +  # Initialize Printer
-    "\ea\x00" +  # align left
-    "\e!\x38"    # doube tall, double wide, bold
-
-    title = "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.id }\n#{ self.user.login }\n\n"
-
-    string += title +
-    "\e!\x00"    # Font A
-
-    string += "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)]
-    string += "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)]
-
-    string += "\n#{ Order.human_attribute_name :nr } #{ I18n.t 'activerecord.models.table.one' }   #{ I18n.t 'various.time' }  #{ I18n.t 'activerecord.models.cost_center.one' }   #{ I18n.t :sum }\n"
-
-    total_costcenter = Hash.new
-    costcenters = self.vendor.cost_centers.existing.active
-    costcenters.each { |cc| total_costcenter[cc.id] = 0 }
-    total_costcenter[0] = 0 # for orders without cost_center
-
+    
+    total_payment_methods = {}
+    total_payment_methods_refund = {}
     list_of_orders = ''
-    refund_total = 0
     self.orders.existing.each do |o|
-      cc = o.cost_center.name if o.cost_center
       t = I18n.l(o.created_at, :format => :time_short)
       nr = o.nr ? o.nr : 0 # failsafe
-      list_of_orders += "#%6.6u %6.6s %7.7s %10.10s %8.2f\n" % [nr, o.table.name, t, cc, o.sum]
-      cid = o.cost_center_id ? o.cost_center_id : 0
-      total_costcenter[cid] += o.sum
-      refund_total += o.refund_sum
+      list_of_orders += "#%7.7u   %10.10s  %7.7s    %8.2f\n" % [nr, o.table.name, t, o.sum]
+
+      o.payment_method_items.each do |pmi|
+        if pmi.refunded
+          if total_payment_methods_refund.has_key? pmi.payment_method_id
+            total_payment_methods_refund[pmi.payment_method_id][:amount] += pmi.amount
+          else
+            total_payment_methods_refund[pmi.payment_method_id] = {:amount => pmi.amount, :name => "#{ I18n.t(:refund)} #{pmi.payment_method.name}"}
+          end
+        else
+          if total_payment_methods.has_key? pmi.payment_method_id
+            total_payment_methods[pmi.payment_method_id][:amount] += pmi.amount
+          else
+            total_payment_methods[pmi.payment_method_id] = {:amount => pmi.amount, :name => "#{pmi.payment_method.name}"}
+          end
+        end
+      end
+    end
+    
+    list_of_payment_methods = ''
+    total_payment_methods.each do |id,amount|
+      list_of_payment_methods += "%s:  #{ friendly_unit } %9.2f\n" % [total_payment_methods[id][:name], total_payment_methods[id][:amount]] unless total_payment_methods[id][:amount].zero?
     end
 
-    string += list_of_orders +
-    "                               -----------\n" +
-    "\e!\x18" +  # double tall, bold
-    "\ea\x02"    # align right
-
-    list_of_costcenters = ''
-    list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
-    costcenters.each do |cc|
-      list_of_costcenters += "%s:  #{ friendly_unit } %9.2f\n" % [cc.name, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
+    list_of_payment_methods_refund = ''
+    total_payment_methods_refund.each do |id,amount|
+      list_of_payment_methods_refund += "%s:  #{ friendly_unit } %9.2f\n" % [total_payment_methods_refund[id][:name], total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
     end
-
-    string += list_of_costcenters
+    
     initial_cash = self.initial_cash ? "\n#{ I18n.t 'various.begin' }:  #{ friendly_unit } %9.2f\n" % [self.initial_cash] : ''
     revenue = self.revenue ? "#{ I18n.t 'various.end' }:  #{ friendly_unit } %9.2f\n" % [self.revenue] : ''
-    refund = refund_total > 0 ? "#{ I18n.t :refund }:  #{ friendly_unit } %9.2f\n" % [refund_total] : ''
-
-    string += initial_cash + revenue + refund +
-
+    
+    output =
+    "\e@"     +  # Initialize Printer
+    "\ea\x00" +  # align left
+    "\e!\x38" +  # doube tall, double wide, bold
+    "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.id }\n#{ self.user.login }\n\n"    +
+    "\e!\x00" +  # Font A
+    "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
+    "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +
+    "\n#%7.7s   %10.10s  %7.7s    %8.8s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('various.time'),  I18n.t(:sum)]+
+    list_of_orders +
+    "                               -----------\n" +
+    "\e!\x18" +  # double tall, bold
+    "\ea\x02" +  # align right
+    "%s:  #{ friendly_unit } %9.2f\n" % [I18n.t(:sum), self.sum] +
+    list_of_payment_methods +
+    list_of_payment_methods_refund +
+    initial_cash +
+    revenue +
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
     "\x1DV\x00" # paper cut
 
-    Printr.sanitize(string)
+    Printr.sanitize(output)
   end
-
-#  def self.report(settlements,cost_center=nil)
-#    report = {}
-#    report[:tax_subtotal_gro] = {}
-#    report[:tax_subtotal_tax] = {}
-#    report[:tax_subtotal_net] = {}
-#    report[:subtotal_gro] = 0
-#    report[:subtotal_tax] = 0
-#    report[:subtotal_net] = 0
-#    vendor = settlements.first.vendor if settlements.first
-#
-#    vendor.taxes.existing.each do |t|
-#      report[:tax_subtotal_gro][t.id] = 0
-#      report[:tax_subtotal_tax][t.id] = 0
-#      report[:tax_subtotal_net][t.id] = 0
-#    end
-#
-#    settlements.each do |s|
-#      report[s.id] = {:total_gro => 0, :total_tax => 0, :total_net => 0}
-#      vendor.taxes.existing.each do |t|
-#        report[s.id][t.id] = {}
-#        if cost_center
-#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s, :cost_center_id => cost_center).where("tax_percent = #{t.percent}")
-#        else
-#          items = Item.where(:hidden => nil, :refunded => nil, :vendor_id => vendor, :refunded => nil, :settlement_id => s).where("tax_percent = #{t.percent}")
-#        end
-#        report[s.id][t.id][:gro] = items.sum(:sum)
-#        report[s.id][t.id][:tax] = items.sum(:tax_sum)
-#        report[s.id][t.id][:net] = report[s.id][t.id][:gro] - report[s.id][t.id][:tax]
-#
-#        report[s.id][:total_gro] += report[s.id][t.id][:gro]
-#        report[s.id][:total_tax] += report[s.id][t.id][:tax]
-#        report[s.id][:total_net] += report[s.id][t.id][:net]
-#        report[:tax_subtotal_gro][t.id] += report[s.id][t.id][:gro]
-#        report[:tax_subtotal_tax][t.id] += report[s.id][t.id][:tax]
-#        report[:tax_subtotal_net][t.id] += report[s.id][t.id][:net]
-#        report[:subtotal_gro] += report[s.id][t.id][:gro]
-#        report[:subtotal_tax] += report[s.id][t.id][:tax]
-#        report[:subtotal_net] += report[s.id][t.id][:net]
-#      end
-#    end
-#    report
-#  end
 
 end

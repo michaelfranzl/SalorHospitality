@@ -9,8 +9,6 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class SettlementsController < ApplicationController
-  #require 'action_view/helpers/javascript_helper'
-  #include ActionView::Helpers::JavaScriptHelper
 
   def index
     redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
@@ -21,8 +19,6 @@ class SettlementsController < ApplicationController
     @settlements_sum = @settlements.sum :sum
     #@report = Settlement.report(@settlements) if @settlements.any? # This is deprecated in favor of the JS time range report
     @taxes = @current_vendor.taxes.existing
-    @cost_centers = @current_vendor.cost_centers.existing.active
-    @selected_cost_center = @current_vendor.cost_centers.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and !params[:cost_center_id].empty?
   end
 
   def open
@@ -48,6 +44,13 @@ class SettlementsController < ApplicationController
     @settlement.update_attributes params[:settlement]
     @settlement.finish
     @settlement.print if @current_company.mode == 'local'
+  end
+  
+  # ajax
+  def print
+    @settlement = get_model
+    @settlement.print
+    render :nothing => true
   end
 
   def detailed_list

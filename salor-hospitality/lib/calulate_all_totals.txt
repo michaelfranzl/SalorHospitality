@@ -30,7 +30,7 @@ end
 
 ----------------
 
-Settlement.all.each { |s| s.sum = s.orders.existing.sum(:sum); s.save }
+Settlement.all.each { |s| s.calculate_totals }
 
 ----------------
 

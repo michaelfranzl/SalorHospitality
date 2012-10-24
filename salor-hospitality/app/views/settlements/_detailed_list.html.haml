@@ -15,8 +15,6 @@
         %br
         == #{ User.model_name.human }: #{ so.user.title }
         %br
-        == #{ CostCenter.model_name.human }: #{ so.cost_center.name if so.cost_center }
-        %br
         = so.printed_from if so.printed_from
         %br
         = link_to t(:invoice), order_path(so)

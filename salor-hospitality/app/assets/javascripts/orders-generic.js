@@ -995,7 +995,7 @@ function clone_item(d) {
 
 function add_option_to_item(d, value, cat_id) {
   if (value != -1 && value != 0) {  // 0 is clear
-    $('#options_div_' + d).slideUp();
+    //$('#options_div_' + d).slideUp();
     $('#options_select_' + d).val('');
     d = clone_item(d);
   }

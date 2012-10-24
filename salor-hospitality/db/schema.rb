@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121023185319) do
+ActiveRecord::Schema.define(:version => 20121024091424) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -686,6 +686,8 @@ ActiveRecord::Schema.define(:version => 20121023185319) do
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.float    "sum"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"

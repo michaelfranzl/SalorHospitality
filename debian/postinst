@@ -177,7 +177,7 @@ for lInstance in $gInstances; do
         echo "  postinst: creating apache2 site configuration file $protocol..."
         apache_site_maintainer_config=/etc/apache2/sites-available/sh-${lInstance}-$protocol
         cp $app_root/config/apache-site-$protocol.template $apache_site_maintainer_config.maintainer
-        sed -i "s/INSTANCE_ID/${lInstance}/" $apache_site_maintainer_config.maintainer
+        sed -i "s/INSTANCE_ID/${lInstance}/g" $apache_site_maintainer_config.maintainer
         ucf --debconf-ok $apache_site_maintainer_config.maintainer $apache_site_maintainer_config
         rm -rf $apache_site_maintainer_config.maintainer
         cd /etc/apache2/sites-enabled

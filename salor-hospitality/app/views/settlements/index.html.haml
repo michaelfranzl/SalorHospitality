@@ -2,18 +2,15 @@
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 = form_tag settlements_path, :method => :get do
+  = submit_tag t(:display)
   = label 'from', t('.start_date'), :class => 'right'
   = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
   = label 'to', t('.end_date'), :class => 'right'
   = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
-  = label 'cc', CostCenter.model_name.human, :class => 'right'
-  %select{ :name => 'cost_center_id' }
-    %option{ :value => '' }= t '.all_cost_centers'
-    = options_from_collection_for_select(@cost_centers, :id, :name)
-  = submit_tag t(:display)
 
 %table{ :class => 'settlements' }
   %tr
+    %th{ :class => 'bb', :style => 'width:40px' }
     %th{ :class => 'bb', :style => 'width:40px' }
     %th{ :class => 'bb' }= t :dateandtime
     %th{ :class => 'br bb' }= User.model_name.human
@@ -23,9 +20,10 @@
     - @settlements.reverse.each do |s|
       %tr
         %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
+        %td= link_to '', "/settlements/print/#{ s.id }", :class => 'print1_button_small', :remote => true
         %td= l s.created_at, :format => :date_iso
         %td{ :class => 'br' }= s.user.login
         %td= number_to_currency s.sum
     %tr
-      %th{ :colspan => 3 }= t('.sum_total')
+      %th{ :colspan => 4 }= t('.sum_total')
       %th{ :class => 'br sum' }= number_to_currency @settlements_sum

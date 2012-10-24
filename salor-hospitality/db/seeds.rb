@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 if User.any?
-  puts "Database is already populated. Not running seed script."
+  puts "Database is already seeded. Not running seed script."
   Process.exit 0
 end
 
@@ -40,7 +40,7 @@ vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other']
 role_names = {
   'superuser' =>
-    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','manage_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery','see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery','see_item_notifications_static','manage_pages','manage_customers','manage_hotel','manage_roles','item_scribe','assign_tables','download_database','remote_support']},
+    {:weight => 0, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','assign_cost_center','assign_order_to_booking','move_order','manage_articles','manage_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','manage_business_invoice','manage_statistics','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery','see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery','see_item_notifications_static','manage_pages','manage_customers','manage_hotel','manage_roles','item_scribe','assign_tables','download_database','remote_support','mobile_show_tools']},
   'owner' =>
     {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
   'host' =>
