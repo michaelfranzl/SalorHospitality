@@ -22,14 +22,13 @@ class ReportsController < ApplicationController
   end
 
   def backup_database
-    dbconfig = YAML::load(File.open('config/database.yml'))
+    dbconfig = YAML::load(File.open(SalorHospitality::Application.config.paths['config/database'].first))
     mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
     username = dbconfig[mode]['username']
     password = dbconfig[mode]['password']
     database = dbconfig[mode]['database']
     `mysqldump -u #{username} -p#{password} #{database} > tmp/backup.sql`
-    send_file 'tmp/backup.sql', :filename => "billgastro-backup-#{ l Time.now, :format => :datetime_iso2, :locale => @region }.sql"
-    
+    send_file 'tmp/backup.sql', :filename => "salor-hospitality-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
   end
 
   def backup_logfile
