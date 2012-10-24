@@ -806,8 +806,6 @@ function update_order_from_refund_form(data) {
 function show_payment_method_items(model_id,allow_delete) {
   var pm_container = $('#payment_methods_container_' + model_id);
   pm_container.attr('style', 'overflow: visible;');
-  var pm_table = $(document.createElement('table'));
-  pm_container.append(pm_table);
   pm_container.show();
   if ($.isEmptyObject(submit_json.payment_method_items[model_id]) == true) add_payment_method(model_id, null, submit_json.totals[model_id].model + submit_json.totals[model_id].booking_orders);
   if (allow_delete) deletable(pm_container);

@@ -254,7 +254,7 @@ class Order < ActiveRecord::Base
   def pay
     self.finish
     
-    # create a default payment method item if none was set in the UI
+    # create a default cash payment method item if none was set in the UI
     unless self.payment_method_items.existing.any?
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first

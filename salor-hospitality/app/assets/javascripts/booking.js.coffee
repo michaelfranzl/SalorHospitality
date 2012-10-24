@@ -131,6 +131,7 @@ window.display_booking_form = (room_id) ->
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
   payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
+  create_dom_element 'table', {}, '', payment_methods_container
   create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
 
 

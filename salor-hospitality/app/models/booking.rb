@@ -130,7 +130,8 @@ class Booking < ActiveRecord::Base
       self.payment_method_items.clear
       params['payment_method_items'][params['id']].to_a.each do |pm|
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id
+          payment_method = self.vendor.payment_methods.existing.find_by_id(pm[1]['id'])
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash
         end
       end
     end
@@ -138,8 +139,25 @@ class Booking < ActiveRecord::Base
 
   def pay
     self.finish
-    self.change_given = - (self.sum - self.payment_method_items.sum(:amount))
-    self.change_given = 0 if self.change_given < 0
+    
+    # create a default cash payment method item if none was set in the UI
+    unless self.payment_method_items.existing.any?
+      cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
+      cash_payment_method = cash_payment_methods.first
+      if cash_payment_method
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :booking_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum
+      end
+    end
+    
+    payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
+    
+    # create a change payment method item
+    unless self.payment_method_items.where(:change => true).any?
+      change_payment_methods = self.vendor.payment_methods.where(:change => true)
+      PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :booking_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+    end
+    
+    self.change_given = (payment_method_sum - self.sum).round(2)
     self.paid = true
     self.paid_at = Time.now
     self.orders.existing.update_all :paid => true, :paid_at => Time.now
