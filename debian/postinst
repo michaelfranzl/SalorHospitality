@@ -129,7 +129,7 @@ for lInstance in $gInstances; do
           dbc_generate_include=template:$database_config_yml
           dbc_generate_include_args="-o template_infile=$database_config_yml_template"
           ucf --purge $database_config_yml
-          ( . /usr/share/dbconfig-common/dpkg/postinst ; dbc_go salor-hospitality/instances/$lInstance $@ )
+          ( . /usr/share/dbconfig-common/dpkg/postinst ; dbc_go salor-hospitality/instances/$lInstance $@ ) # dbc_go is automatically registering database.yml.new as config file. however, since this is only our temporary file, we have to purge it. The real, permanent file is called database.yml
           ucf --purge $database_config_yml
           ucf --debconf-ok $database_config_yml /etc/salor-hospitality/$lInstance/database.yml
           chmod 660 /etc/salor-hospitality/$lInstance/database.yml

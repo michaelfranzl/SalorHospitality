@@ -97,13 +97,12 @@ class Item < ActiveRecord::Base
 
   def refund(by_user, payment_method_id)
     payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
-    PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => - self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id
+    PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id
     
     self.refunded = true
     self.refunded_by = by_user.id
     self.refund_sum = self.sum
-    self.tax_items.update_all :hidden => true, :hidden_by => -5
-    #self.option_items.update_all :sum => 0
+    self.tax_items.existing.update_all :refunded => true
     self.calculate_totals
     self.order.calculate_totals
     
@@ -113,15 +112,9 @@ class Item < ActiveRecord::Base
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
     self.category_id = self.article.category.id
-    #if self.refunded
-    #  self.tax_sum = 0
-    #  self.sum = 0
-    #  self.taxes = {}
-    #else
     self.sum = full_price
     self.calculate_taxes(self.article.taxes)
-    #end
-    save
+    self.save
   end
   
   def calculate_taxes(tax_array)

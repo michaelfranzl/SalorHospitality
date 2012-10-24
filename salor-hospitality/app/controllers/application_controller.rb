@@ -48,15 +48,16 @@ class ApplicationController < ActionController::Base
         render :nothing => true
       #===============CURRENTVIEW==================
       when 'invoice'
-        get_order
         case params['jsaction']
           #----------jsaction----------
           when 'move'
+            get_order
             former_table = @order.table
             @order.move(params[:target_table_id])
             render_invoice_form(former_table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'display_tax_colors'
+            get_order
             if session[:display_tax_colors]
               session[:display_tax_colors] = !session[:display_tax_colors] # toggle
             else
@@ -65,6 +66,7 @@ class ApplicationController < ActionController::Base
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'mass_assign_tax'
+            get_order
             tax = @current_vendor.taxes.find_by_id(params[:tax_id])
             @order.items.existing.each do |item|
               item.calculate_taxes([tax])
@@ -73,10 +75,17 @@ class ApplicationController < ActionController::Base
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'change_cost_center'
-            @order.update_attribute(:cost_center_id, params[:cost_center_id])
+            cid = params[:cost_center_id]
+            params[:payment_method_items] = nil # we want to create them when user is done with the invoice form.
+            get_order
+            @order.update_attribute :cost_center_id, cid 
+            @order.tax_items.update_all :cost_center_id => cid
+            @order.payment_method_items.update_all :cost_center_id => cid
+            @order.items.update_all :cost_center_id => cid
             render :nothing => true # called from outside the static route() function, but nothing has to be rendered.
           #----------jsaction----------
           when 'assign_to_booking'
+            get_order
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
             @order.update_attributes(:booking_id => @booking.id)
             @order.finish
@@ -89,12 +98,14 @@ class ApplicationController < ActionController::Base
             end
           #----------jsaction----------
           when 'pay_and_print'
+            get_order
             @order.pay
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_print_pending'
+            get_order
             @order.pay
             @order.reload
             @order.update_attribute :print_pending, true
@@ -102,6 +113,7 @@ class ApplicationController < ActionController::Base
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_no_print'
+            get_order
             @order.pay
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.

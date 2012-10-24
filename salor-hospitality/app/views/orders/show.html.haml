@@ -65,9 +65,6 @@
           %tr
             %td.left_wide== #{ t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}
             %td.right_wide= number_to_currency pm.amount
-      %tr
-        %td.left_wide= Order.human_attribute_name :change_given
-        %td.right_wide= number_to_currency @order.change_given
 
   .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html if @order.vendor.invoice_footer_blurb
 

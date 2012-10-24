@@ -148,7 +148,7 @@ class Vendor < ActiveRecord::Base
     article_models        = self.articles.existing.active.positioned
     quantity_models       = self.quantities.existing.active.positioned
     option_models         = self.options.existing.positioned
-    payment_method_models = self.payment_methods.existing
+    payment_method_models = self.payment_methods.existing.where(:change => false)
     table_models          = self.tables.existing
     user_models           = self.users.existing
 
