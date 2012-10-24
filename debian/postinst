@@ -155,7 +155,6 @@ for lInstance in $gInstances; do
       fi
       if [ -e $app_root/config/config.yml ]; then
         echo "  postinst: Copying config.yml to etc directory and registering as config file."
-        cp $app_root/config/config.yml $rails_etc
         ucf --debconf-ok $app_root/config/config.yml $rails_etc/config.yml
         chmod 660 $rails_etc/config.yml
       fi
