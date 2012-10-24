@@ -20,6 +20,6 @@
 
 #items
   .ordersum_container
-    %span== #{ t '.sum' } #{ t 'number.currency.format.unit' }
+    %span== #{ t '.sum' } #{ t 'number.currency.format.unit', :locale => @region }
     %span#order_sum
   %table#itemstable

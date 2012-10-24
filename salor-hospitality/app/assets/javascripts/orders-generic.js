@@ -405,7 +405,7 @@ function display_queue() {
 function render_items() {
   jQuery.each(items_json, function(k,object) {
     catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object)).replace(/CATID/g, catid);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object)).replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit);
     $('#itemstable').append(tablerow);
     if (object.p == 0) {
       $('#tablerow_' + object.d + '_label').addClass('zero_price');
@@ -693,7 +693,7 @@ function add_new_item(object, add_new, anchor_d) {
     // an item with identical paramters is not yet in the list, or add_new is true, so create a new item
     d = create_json_record('order', object);
     label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid));
+    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
@@ -999,25 +999,25 @@ function permit_select_open(d) {
 
 function clone_item(d) {
   if (items_json[d].c > 1) {
+    // clone only if count > 1
+    $('#options_div_' + d).slideUp();
     var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
+    $('#options_div_' + d).slideDown();
   }
   return d
 }
 
 function add_option_to_item(d, value, cat_id) {
-  if (value != -1 && value != 0) {  // 0 is clear
-    //$('#options_div_' + d).slideUp();
-    $('#options_select_' + d).val('');
-    d = clone_item(d);
-  }
   if (value == 0) {
-    // delete all options
+    // clear all options
     set_json('order', d, 'i', [0]);
     set_json('order', d, 't', {});
     $('#optionsnames_' + d).html('');
   } else {
+    $('#options_select_' + d).val(''); //needed for mobile phones to be able to choose the same option seveal times
+    d = clone_item(d);
     var optionobject = resources.c[cat_id].o[value];
     var option_uid = items_json[d].i.length + 1;
     items_json[d].t[option_uid] = optionobject;

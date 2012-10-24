@@ -51,7 +51,9 @@ class Settlement < ActiveRecord::Base
   end
 
   def escpos
-    friendly_unit = I18n.t('number.currency.format.friendly_unit')
+    vendor = self.vendor
+    
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
     
     total_payment_methods = {}
     total_payment_methods_refund = {}

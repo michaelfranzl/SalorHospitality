@@ -409,6 +409,9 @@ class Order < ActiveRecord::Base
 
   def escpos_receipt
     vendor = self.vendor
+    
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
+
     logo =
     "\e@"     +  # Initialize Printer
     "\ea\x01" +  # align center
@@ -453,9 +456,9 @@ class Order < ActiveRecord::Base
     "\e!\x18" + # double tall, bold
     "\ea\x02"   # align right
 
-    sum = "#{I18n.t(:sum).upcase}:   #{I18n.t('number.currency.format.friendly_unit')} %.2f" % self.sum
+    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
 
-    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{I18n.t('number.currency.format.friendly_unit')} %.2f" % self.refund_sum)
+    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{friendly_unit} %.2f" % self.refund_sum)
 
     tax_format = "\n\n" +
     "\ea\x01" +  # align center

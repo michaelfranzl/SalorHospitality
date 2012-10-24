@@ -210,12 +210,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def optionsnames
-    usage = self.usage == 1 ? "<br>#{ I18n.t 'articles.new.takeaway' }" : ''
-    options = self.option_items.collect{ |o| "<br>#{ o.name } #{ number_to_currency o.price }" }.join
-    usage + options
-  end
-
   def hide(by_user_id)
     self.hidden = true
     self.hidden_by = by_user_id
