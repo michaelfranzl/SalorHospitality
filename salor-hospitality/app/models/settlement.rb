@@ -66,11 +66,24 @@ class Settlement < ActiveRecord::Base
     
     total_payment_methods = {}
     total_payment_methods_refund = {}
+    total_costcenter = {}
+    
+    costcenters = self.vendor.cost_centers.existing.active
+    costcenters.each do |cc|
+      total_costcenter[cc.id] = 0 #initialize
+    end
+    total_costcenter[0] = 0 # for orders without costcenter
+    
     list_of_orders = ''
     self.orders.existing.each do |o|
+      
+      cid = o.cost_center_id ? o.cost_center_id : 0
+      total_costcenter[cid] += o.sum
+      
       t = I18n.l(o.created_at, :format => :time_short)
+      costcentername = o.cost_center.name if o.cost_center
       nr = o.nr ? o.nr : 0 # failsafe
-      list_of_orders += "#%7.7u   %10.10s  %7.7s    %8.2f\n" % [nr, o.table.name, t, o.sum]
+      list_of_orders += "\n#%07i %7.7s %10.10s  %5.5s  %6.2f" % [nr, o.table.name, costcentername, t, o.sum]
 
       o.payment_method_items.each do |pmi|
         if pmi.refunded
@@ -86,7 +99,7 @@ class Settlement < ActiveRecord::Base
             total_payment_methods[pmi.payment_method_id] = {:amount => pmi.amount, :name => "#{pmi.payment_method.name}"}
           end
         end
-      end
+      end      
     end
     
     list_of_payment_methods = ''
@@ -97,6 +110,12 @@ class Settlement < ActiveRecord::Base
     list_of_payment_methods_refund = ''
     total_payment_methods_refund.each do |id,amount|
       list_of_payment_methods_refund += "%s:  #{ friendly_unit } %9.2f\n" % [total_payment_methods_refund[id][:name], total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
+    end
+    
+    list_of_costcenters = ''
+    list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
+    costcenters.each do |cc|
+      list_of_costcenters += "%s:  #{ friendly_unit } %9.2f\n" % [cc.name, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
     end
     
     initial_cash = self.initial_cash ? "\n#{ I18n.t 'various.begin' }:  #{ friendly_unit } %9.2f\n" % [self.initial_cash] : ''
@@ -110,16 +129,21 @@ class Settlement < ActiveRecord::Base
     "\e!\x00" +  # Font A
     "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
     "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +
-    "\n#%7.7s   %10.10s  %7.7s    %8.8s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('various.time'),  I18n.t(:sum)]+
+    "\n#%7.7s %7.7s  %10.10s %5.5s  %5.5s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('activerecord.models.cost_center.one'), I18n.t('various.time'),  I18n.t(:sum)]+
     list_of_orders +
-    "                               -----------\n" +
+    "\n" +
     "\e!\x18" +  # double tall, bold
     "\ea\x02" +  # align right
     "%s:  #{ friendly_unit } %9.2f\n" % [I18n.t(:sum), self.sum] +
+    "\xc4" * 42 + "\n" +
+    list_of_costcenters +
+    "\xc4" * 42 + "\n" +
     list_of_payment_methods +
     list_of_payment_methods_refund +
+    "\xc4" * 42 + "\n" +
     initial_cash +
     revenue +
+    "\xc4" * 42 + "\n" +
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
     "\x1DV\x00" # paper cut
