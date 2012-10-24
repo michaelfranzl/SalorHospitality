@@ -139,7 +139,7 @@ class VendorsController < ApplicationController
     # Currently, the Settlements feature does not support Bookings, since it doesn't make much sense.
     booking_ids = @current_vendor.bookings.existing.where(:paid_at => from..to).collect { |o| o.id }
     booking_items = BookingItem.select("refund_sum, room_id, taxes, id").where(:booking_id => booking_ids, :hidden => nil)
-    booking_items_json_string = booking_items.collect{|i| "{\"id\":#{i.id},\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
+    booking_items_json_string = booking_items.collect{|i| "{\"id\":#{i.id},\"r\":#{i.refund_sum.zero? ? 'null' : i.refund_sum},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
     booking_items_json_string.gsub! "\n", '\n'
     
     #------------------------ PAYMENTMETHODITEMS
@@ -147,11 +147,12 @@ class VendorsController < ApplicationController
     if settlement_ids.any?
       payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:settlement_id => settlement_ids, :hidden => nil)
     else
-      payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:order_id => order_ids, :hidden => nil)
+      payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:booking_id => booking_ids, :hidden => nil)
     end
     
     payment_methods_json_string = payment_method_items.collect{|pmi| "{\"id\":#{pmi.id},\"r\":#{pmi.refunded ? 'true' : 'false'},\"a\":#{pmi.amount},\"pm_id\":#{pmi.payment_method_id}}" }.join(',')
     payment_methods_json_string.gsub! "\n", '\n'
+    payment_methods_json_string = ''
     
     #------------------------ OUTPUT
     render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}],\"payment_method_items\":[#{payment_methods_json_string}]}"

@@ -459,7 +459,8 @@ class Order < ActiveRecord::Base
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
-      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item.sum]
+      item_sum = item.refunded ? 0 : item.sum
+      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
       list_of_items += list_of_options
     end
 
@@ -486,9 +487,9 @@ class Order < ActiveRecord::Base
     list_of_payment_methods = "\n"
     if self.user.role.permissions.include? 'manage_payment_methods'
       self.payment_method_items.each do |pm|
-        list_of_payment_methods += "%20.20s %7.2f\n" % [pm.payment_method.name, pm.amount]
+        name = pm.refunded ? "#{ I18n.t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}" : pm.payment_method.name
+        list_of_payment_methods += "%22.22s: %7.2f\n" % [name, pm.amount]
       end
-      list_of_payment_methods += "%20.20s %7.2f\n" % [Order.human_attribute_name(:change_given), self.change_given] if self.change_given
     end
 
     footer = ''

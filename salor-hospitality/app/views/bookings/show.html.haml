@@ -79,9 +79,6 @@
       %tr
         %td.left= pm.payment_method.name
         %td.right= number_to_currency pm.amount
-    %tr
-      %td.left= Order.human_attribute_name :change_given
-      %td.right= number_to_currency @booking.change_given
 
   .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
 

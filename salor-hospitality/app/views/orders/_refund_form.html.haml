@@ -1,4 +1,4 @@
-- payment_methods = @current_vendor.payment_methods.existing
+- payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
 - cash_payment_method = @current_vendor.payment_methods.existing.where(:cash => true).first
 - selected_payment_method_id = cash_payment_method.id.to_s if cash_payment_method
 

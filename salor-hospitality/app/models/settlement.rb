@@ -19,10 +19,18 @@ class Settlement < ActiveRecord::Base
   has_many :payment_method_items
 
   def finish
-    Order.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id, :finished => true).update_all(:settlement_id => self.id)
-    Item.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
-    TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
-    PaymentMethodItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil).update_all(:settlement_id => self.id)
+    orders = Order.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :user_id => self.user_id, :finished => true)
+    
+    order_ids = orders.collect {|o| o.id}
+    
+    orders.update_all(:settlement_id => self.id)
+    
+    Item.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :order_id => order_ids).update_all(:settlement_id => self.id)
+    
+    TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :order_id => order_ids).update_all(:settlement_id => self.id)
+    
+    PaymentMethodItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :order_id => order_ids).update_all(:settlement_id => self.id)
+    
     self.calculate_totals
   end
   
