@@ -1,2 +1,4 @@
 ---
 :exception_notification: false
+:exception_notification_sender: Sender Name <user@example.com>
+:exception_notification_receipients: receipient1@example.com receipient2@example.com

@@ -38,9 +38,9 @@ module SalorHospitality
     
     
     if File.exists?(File.join('/', 'etc','salor-hospitality', SH_DEBIAN_SITEID, 'config.yml'))
-      SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join('/', 'etc','salor-hospitality', SH_DEBIAN_SITEID, 'config.yml'), 'r').read)
+      CONFIGURATION = YAML::load(File.open(File.join('/', 'etc','salor-hospitality', SH_DEBIAN_SITEID, 'config.yml'), 'r').read)
     else
-      SALOR_HOSPITALITY_CONFIGURATION = YAML::load(File.open(File.join(Rails.root, 'config', 'config.yml'), 'r').read)
+      CONFIGURATION = YAML::load(File.open(File.join(Rails.root, 'config', 'config.yml'), 'r').read)
     end
 
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese'}
