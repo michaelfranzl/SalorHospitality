@@ -822,6 +822,10 @@ function add_payment_method(model_id,id,amount) {
   submit_json.payment_method_items[model_id][payment_method_uid] = {id:null, amount:0};
   var j = 0;
   $.each(resources.pm, function(k,v) {
+    if (v.chg) {
+      //do not display the change money paymet method
+      return true
+    }
     j += 1;
     pm_button = $(document.createElement('td'));
     pm_button.addClass('payment_method');

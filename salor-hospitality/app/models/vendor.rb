@@ -203,7 +203,7 @@ class Vendor < ActiveRecord::Base
     payment_methods = {}
     payment_method_models.each do |pm|
       pmid = pm.id
-      payment_methods[pm.id] = { :id => pmid, :n => pm.name }
+      payment_methods[pm.id] = { :id => pmid, :n => pm.name, :chg => pm.change }
     end
     
     tables = {}
