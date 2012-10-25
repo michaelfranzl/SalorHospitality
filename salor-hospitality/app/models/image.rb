@@ -20,7 +20,7 @@ class Image < ActiveRecord::Base
   
   validate :is_valid_upload
   
-	DIRECTORY = File.join('public','uploads','images')
+	DIRECTORY = File.join('public','uploads',SalorHospitality::Application::SH_DEBIAN_SITEID,'images')
 	THUMB_MAX_SIZE = [90,90]
   LARGE_MAX_SIZE = [800,800]
 	VERSIONS = ['original','thumb','large']
@@ -46,7 +46,7 @@ class Image < ActiveRecord::Base
 
 	def file_data=(file)
     @file_data = file
-		parse_filename(@file_data.original_filename.split('\\').last.split('/').last, file.class.to_s)
+    parse_filename(@file_data.original_filename.split('\\').last.split('/').last, file.class.to_s)
 	end
 
 	def versions
@@ -69,7 +69,6 @@ class Image < ActiveRecord::Base
 
   def make_path(path)
     path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
-    puts "XXXXXXXXXXXXXXXXXXXXXx makepath #{path} XXXXXXXXXXXXXXXXXXXX"
     return path
   end
 
