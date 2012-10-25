@@ -1,7 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Exception</title>
+  </head>
+  <body>
+    <pre style="font-size: 12px">
 <%= @exception.class.to_s =~ /^[aeiou]/i ? 'An' : 'A' %> <%= @exception.class %> occurred in <%= @kontroller.controller_name %>#<%= @kontroller.action_name %>:
 
-  <%= raw @exception.message %>
-  <%= raw @backtrace.first %>
+<%= raw @exception.message %>
+<%= raw @backtrace.first %>
 
 <%
     sections = @sections.map do |section|
@@ -23,3 +31,6 @@
 %>
 
 <%= raw sections %>
+  </pre>
+  </body>
+</html>

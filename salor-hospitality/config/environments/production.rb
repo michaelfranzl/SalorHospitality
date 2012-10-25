@@ -1,20 +1,19 @@
 ActionMailer::Base.sendmail_settings = { :arguments => '-i' }
 
-if SalorHospitality::Application::CONFIGURATION[:exception_notification]
-  require 'exception_notification'
-  ExceptionNotifier::Notifier.append_view_path "#{Rails.root}/app/views"
-end
-
 SalorHospitality::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.action_mailer.delivery_method = :sendmail
   
-  sender_address = SalorHospitality::Application::CONFIGURATION[:exception_notification_sender]
-  exception_recipients = SalorHospitality::Application::CONFIGURATION[:exception_notification_receipients]
-
-  if SalorHospitality::Application::CONFIGURATION[:exception_notification]
-    config.middleware.use ExceptionNotifier, :email_prefix => "[SalorHospitalityException] ", :sender_address => sender_address, :exception_recipients => exception_recipients, :sections => %w(salorhospitality request session environment backtrace)
+  if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true
+    require File.join(Rails.root, 'lib', 'exceptions.rb')
+    sender_address = SalorHospitality::Application::CONFIGURATION[:exception_notification_sender]
+    exception_recipients = SalorHospitality::Application::CONFIGURATION[:exception_notification_receipients]
+    config.middleware.use ExceptionNotifier,
+        :email_prefix => "[SalorHospitalityException] ",
+        :sender_address => sender_address,
+        :exception_recipients => exception_recipients,
+        :sections => %w(salor request session environment backtrace)
   end
   
   if SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
