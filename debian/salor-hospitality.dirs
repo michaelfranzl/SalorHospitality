@@ -1,6 +1,3 @@
 /var/log/salor-hospitality
-/var/lib/salor-hospitality/bundle
 /var/cache/salor-hospitality
 /usr/share/salor-hospitality/source/public/uploads
-/usr/share/dbconfig-common/scripts/salor-hospitality/install
-/usr/share/dbconfig-common/scripts/salor-hospitality/upgrade/mysql

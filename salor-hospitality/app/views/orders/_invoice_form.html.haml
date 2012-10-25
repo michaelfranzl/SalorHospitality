@@ -1,9 +1,10 @@
 - oid = invoice_form.id
-- if session[:display_tax_colors]
-  - onclick_method = 'rotate_tax_item'
+- display_tax_colors = @current_vendor.country == 'cc' or @current_vendor.country == 'de'
+- if display_tax_colors
+  - label_onclick_method = 'rotate_tax_item'
   - linktitle = t('.switch_tax_for_this_item')
 - else
-  - onclick_method = 'split_item'
+  - label_onclick_method = ''
   - linktitle = t('.split_this_item')
   
 %div.invoice{ :id => "model_#{oid}" }
@@ -19,11 +20,6 @@
 
 
   - if !invoice_form.finished
-    - buttonclass = session[:display_tax_colors] ? 'splitinvoice_button' : 'tables2_button'
-    - buttontitle = session[:display_tax_colors] ? t('.split_invoice') : t('.set_taxes')
-    - if @current_vendor.country == 'cc' or @current_vendor.country == 'de'
-      %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'display_tax_colors'});", :class => "iconbutton #{ buttonclass }", :title => '', :title => buttontitle}
-
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
     %table
@@ -34,7 +30,7 @@
               %option
               = options_from_collection_for_select(@tables, :id, :move_name)
         
-        - if session[:display_tax_colors]
+        - if display_tax_colors
           %td
             %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'mass_assign_tax',tax_id:$(this).val()});", :title => t('.set_tax_for_all') }
               - if invoice_form.tax.nil?
@@ -60,12 +56,13 @@
       - tax = @current_vendor.taxes.find_by_id(item.taxes.keys.first)
       - color = tax.color
       - letter = tax.letter
-      - count_label = session[:display_tax_colors] ? letter : item.count
+      - count_label = item.count
       
-      
-      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ session[:display_tax_colors] ? color : ''}", :onclick => "#{onclick_method}(#{item.id},#{oid})" }
-        %td.count{:id => "#{oid}_#{item.id}_count"}= count_label
-        %td.label{ :id => "item#{item.id}"}
+      / ----------------- ITEM ROW -----------------------
+      %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ display_tax_colors ? color : ''}" }
+        %td.count{:id => "#{oid}_#{item.id}_count", :onclick => "split_item(#{item.id},#{oid}, 1)"}= count_label
+        %td.count_split{:id => "#{oid}_#{item.id}_count_split", :onclick => "split_item(#{item.id},#{oid}, -1)"}
+        %td.label{ :id => "item#{item.id}", :onclick => "#{label_onclick_method}(#{item.id},#{oid})"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
           - else
@@ -73,17 +70,20 @@
             - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
             - optionsprices = item.option_items.collect { |o| "<br>#{ number_with_precision o.price, :precision => 2 }" unless o.price.zero? }.join
             - label = raw "%20.20s%s" % [label, optionslabel]
-            - if @current_user.role.permissions.include? 'split_item' or session[:display_tax_colors]
+            - if @current_user.role.permissions.include? 'split_item' or display_tax_colors
               %div.invoice_item{ :title => linktitle, :id => item.id, }= raw(label)
             - else
               = raw(label)
-        %td.price
-          = number_with_precision item.price, :precision => 2
-          = raw optionsprices
+        /%td.price
+        /  = number_with_precision item.price, :precision => 2
+        /  = raw optionsprices
         %td.total= number_with_precision item.full_price, :precision => 2
+        / --------------------------------------------------------
 
     %tr
-      %td{ :colspan => '4', :style => 'text-align:right'}
+      %td{ :colspan => '2' }
+        %a{ :onclick => "submit_split_items();", :class => 'iconbutton splitinvoice_button', :title => t('.split_invoice')}
+      %td{ :colspan => '2', :style => 'text-align:right'}
         %span.subtotal{:id => "subtotal_#{ oid }"}= number_to_currency invoice_form.sum
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}

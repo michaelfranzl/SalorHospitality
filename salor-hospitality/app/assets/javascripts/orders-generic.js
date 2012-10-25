@@ -33,13 +33,11 @@ var timeout_update_tables = 30;
 var timeout_update_item_lists = 71;
 var timeout_update_resources = 182;
 var timeout_refresh_queue = 4;
-var timeout_split_item = 2;
 
 var counter_update_resources = timeout_update_resources;
 var counter_update_tables = timeout_update_tables;
 var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
-var counter_split_item = -1;
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -754,33 +752,27 @@ function rotate_tax_item(id) {
   });
 }
 
-function split_item(id, order_id) {
+function split_item(id, order_id, increment) {
   var item_count_td = $('#' + order_id + '_' + id + '_count');
-  var current_count = parseInt(item_count_td.html());
+  var item_count_split_td = $('#' + order_id + '_' + id + '_count_split');
+  
+  var original_count = item_count_td.html() == '' ? 0 : parseInt(item_count_td.html());
+  var split_count = item_count_split_td.html() == '' ? 0 : parseInt(item_count_split_td.html());
 
-  if (current_count > 0) {
+  if (((increment == 1) && (original_count > 0) || (increment == -1) && (split_count > 0))) {
     if (split_items_hash.hasOwnProperty(id)) {
-      split_items_hash[id].split_count += 1;
+      split_items_hash[id].split_count += increment;
     } else {
       split_items_hash[id] = {};
       split_items_hash[id].split_count = 1;
-      split_items_hash[id].original_count = current_count;
+      split_items_hash[id].original_count = original_count;
     }
-    counter_split_item = timeout_split_item; // this will trigger the function submit_split_items() in x seconds after this function was last called.
-    current_count -= 1;
-    item_count_td.html(current_count);
-    if (current_count == 0) {
-      // remove item for better UI responsitivity
-      var item_row = $('tr#order_' + order_id + '_item_' + id);
-      item_row.fadeOut('slow', function() {
-        item_row.remove();
-        if ($('#model_' + order_id + ' table tr').size() < 4) {
-          $('#model_' + order_id).fadeOut();
-        }
-      });
-    }
+    original_count -= increment;
+    split_count += increment;
+    
+    item_count_td.html(original_count == 0 ? '' : original_count);
+    item_count_split_td.html(split_count == 0 ? '' : split_count);
   }
-  $('.subtotal').html('...');
 }
 
 function submit_split_items() {
@@ -1157,7 +1149,6 @@ function manage_counters() {
   counter_update_tables -= 1;
   counter_update_item_lists -= 1;
   counter_refresh_queue -= 1;
-  counter_split_item -= 1;
 
   if (counter_update_resources == 0) {
     update_resources();
@@ -1174,10 +1165,6 @@ function manage_counters() {
   if (counter_refresh_queue == 0) {
     display_queue();
     counter_refresh_queue = timeout_refresh_queue;
-  }
-  if (counter_split_item == 0) {
-    submit_split_items();
-    counter_split_item = -1; //disable the counter, this counter is not periodic.
   }
   return 0;
 }

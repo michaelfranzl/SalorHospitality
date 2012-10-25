@@ -280,7 +280,6 @@ div.invoice
     :width 100%
   table
     :width 100%
-    :border-collapse collapse
     td
       :vertical-align middle
       :cursor pointer
@@ -295,17 +294,23 @@ div.invoice
     td.total
       //:width 70px
       :text-align right
-    td.count
+    td.count,
+    td.count_split
       :text-align left
       :padding 5px 5px
       :font-weight bold
-      //:width 40px
+      :width 30px
+      :background-color #DDE
+      :text-align center
       a
         :display block
         :height 25px
-        :color #333
         :padding-top 5px
         :text-decoration none
+    td.count
+      :color #373
+    td.count_split
+      :color #C33
     td.grey
       a
         :background-color lightgrey
@@ -424,7 +429,7 @@ div.booking_form
 
 div.add_payment_method
   :padding 5px
-  :margin 7px
+  :margin 0px 0px 7px 0px
   :background-color #DDDDEE
   :display inline-block
     

@@ -138,8 +138,8 @@ for lInstance in $gInstances; do
       fi
 
       echo "  postinst: creating symlinks"
-      ln -sf $app_root /usr/share/salor-hospitality/${lInstance}
-      ln -sf $rails_var/public/uploads $app_root/public/uploads/${lInstance}
+      ln -sfn $app_root /usr/share/salor-hospitality/${lInstance}
+      ln -sfn $rails_var/public/uploads $app_root/public/uploads/${lInstance}
  
       if [ $use_dbconfig = true ]; then
         # this file prevents dbconfig-common to ask for reconfiguration of the instance during dpkg-reconfigure. see config script.
