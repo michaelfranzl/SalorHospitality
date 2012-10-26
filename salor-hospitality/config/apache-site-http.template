@@ -9,27 +9,14 @@
   ServerName INSTANCE_ID.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
-  PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
+  #PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
   
-  <Directory /usr/share/salor-hospitality>
-    Options FollowSymLinks
-    AllowOverride none
-  </Directory>
-
-  <Directory /usr/share/salor-hospitality/INSTANCE_ID/public/uploads>
-    Order deny,allow
-    Deny from all
-  </Directory>
-
-  <Directory /usr/share/salor-hospitality/INSTANCE_ID/public/uploads/INSTANCE_ID>
-    Order deny,allow
-    Allow from all
-  </Directory>
-
   <Location />
     Order deny,allow
     Deny from all
     Allow from 127.0.0.1 192.168 10.0
+    #Allow from all
+    
     #AUTH: AuthType Digest
     #AUTH: AuthName "SALOR"
     #AUTH: AuthDigestDomain /
@@ -40,6 +27,14 @@
     Satisfy any
   </Location>
   
+  <Location /uploads>
+    Deny from all
+  </Location>
+  
+  <Location /uploads/INSTANCE_ID>
+    Allow from all
+  </Location>
+  
   # Passenger configuration for this VirtualHost
   PassengerMaxRequests 2000
   RailsAutoDetect off
@@ -47,5 +42,5 @@
   PassengerSpawnMethod smart
   RailsAppSpawnerIdleTime 36000
   PassengerHighPerformance on
-  PassengerMinInstances 1
+  #PassengerMinInstances 1
 </VirtualHost>

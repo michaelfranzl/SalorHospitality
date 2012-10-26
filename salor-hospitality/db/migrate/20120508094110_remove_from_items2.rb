@@ -1,7 +1,7 @@
 class RemoveFromItems2 < ActiveRecord::Migration
   def up
     Item.where(:storno_status => 2).delete_all
-    Item.where(:storno_status => 3).update_attribute :refunded => true
+    Item.where(:storno_status => 3).update_all :refunded => true
     remove_column :items, :partial_order
     remove_column :items, :storno_status
     remove_column :items, :storno_item_id
