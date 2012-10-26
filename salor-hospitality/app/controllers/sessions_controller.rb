@@ -20,12 +20,12 @@ class SessionsController < ApplicationController
 
   def create
     subdomain = request.subdomain
-    if subdomain.empty? or true
-      # local login
+    if subdomain.empty?
+      # local login from mobile devices, since DNS is not set up there. It is save to select the first company, because local installs always have only one company.
       company = Company.where( :active => true, :hidden => false, :mode => 'local').first
     else
       # SaaS login
-      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false).first
+      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false, :mode => 'saas').first
     end
     
     if company
