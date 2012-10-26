@@ -281,30 +281,34 @@ class Order < ActiveRecord::Base
   end
 
   def print(what, vendor_printer=nil)
-    # prepare vendor printers
+    # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
-      printr = Printr.new(vendor_printers)
+      printr = Printr.new(self.company.mode, vendor_printers)
     else
-      printr = Printr.new(vendor_printer)
+      printr = Printr.new(self.company.mode, vendor_printer)
     end
 
     printr.open
 
     # print
     if what.include? 'tickets'
-      vendor_printers.each do |p|
-        printr.print p.id, self.escpos_tickets(p.id)
+      unless self.vendor.categories.existing.all? {|c| c.vendor_printer_id == nil}
+        vendor_printers.each do |p|
+          printr.print p.id, self.escpos_tickets(p.id)
+        end
       end
     end
+    
     if what.include? 'receipt'
       if vendor_printer
         printr.print vendor_printer.id, self.escpos_receipt
         self.update_attribute :printed, true
-      else
-        self.update_attribute :print_pending, true
       end
-    elsif what.include? 'interim_receipt'
+    end
+    
+    if what.include? 'interim_receipt'
+      # this is currently not implemented and never called.
       if vendor_printer
         printr.print vendor_printer.id, self.escpos_interim_receipt
       end
@@ -504,6 +508,10 @@ class Order < ActiveRecord::Base
     footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
 
     output = "\e@" + headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + list_of_payment_methods + footer + duplicate) + "\n" + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
+  end
+  
+  def escpos_interim_receipt
+    return "To be implemented in the future."
   end
 
   def items_to_json

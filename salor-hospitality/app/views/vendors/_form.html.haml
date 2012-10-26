@@ -19,13 +19,14 @@
         %br
         = vendor_form.label :name
         = vendor_form.text_field :name
-        %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
-        %br
-        = vendor_form.fields_for :images do |image_form|
-          = vendor_form.label image_form.object.image_type.to_s
-          = image_form.file_field :file_data
-          = image_form.hidden_field :image_type
+        - if permit 'receipt_logo'
+          %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
           %br
+          = vendor_form.fields_for :images do |image_form|
+            = vendor_form.label image_form.object.image_type.to_s
+            = image_form.file_field :file_data
+            = image_form.hidden_field :image_type
+        %br
         = vendor_form.label :rlogo_header
         = vendor_form.file_field :rlogo_header
         %br
@@ -74,18 +75,18 @@
         = vendor_form.check_box :ticket_display_time_order
         = vendor_form.label :ticket_display_time_order, :class => 'wide'
 
-        - if @current_company.mode == 'local'
-          %div#vendor_printers
-            %h3= t('activerecord.models.vendor_printer.other')
+        %div#vendor_printers
+          %h3= t('activerecord.models.vendor_printer.other')
+          - if @current_company.mode == 'local'
             %span.button#identify_printers= t '.identify_printers'
             %br
-            %span.button#test_printers= t '.test_printers'
-            %br
-            %span#add_printer
-              %span.button= t '.add_printer'
-            = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
-              = render :partial => 'vendor_printer', :locals => { :f => f }
-            %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
+          %span.button#test_printers= t '.test_printers'
+          %br
+          %span#add_printer
+            %span.button= t '.add_printer'
+          = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
+            = render :partial => 'vendor_printer', :locals => { :f => f }
+          %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
 
 
 - if @current_user.onscreen_keyboard_enabled

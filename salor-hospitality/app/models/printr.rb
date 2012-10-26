@@ -10,13 +10,18 @@
 
 class Printr
 
-  def initialize(vendor_printers=nil)
+  # mode can be local or sass
+  # vendor_printers can either be a single VendorPrinter object, or an Array of VendorPrinter objects, or an ActiveRecord Relation containing VendorPrinter objects.
+  def initialize(mode, vendor_printers=nil)
+    @mode = mode
     @open_printers = Hash.new
     if vendor_printers.kind_of?(ActiveRecord::Relation) or vendor_printers.kind_of?(Array)
       @vendor_printers = vendor_printers
     elsif vendor_printers.kind_of? VendorPrinter
       @vendor_printers = [vendor_printers]
     else
+      # If no available VendorPrinters are initialized, create a set of temporary VendorPrinters with usual device paths.
+      puts "No VendorPrinters specified. Creating a set of temporary printers with usual device paths"
       paths = ['/dev/ttyUSB0', '/dev/ttyUSB1', '/dev/ttyUSB2', '/dev/usb/lp0', '/dev/usb/lp1', '/dev/usb/lp2', '/dev/salor-hospitality-front', '/dev/salor-hospitality-top', '/dev/salor-hospitality-back-top-left', '/dev/salor-hospitality-back-top-right', '/dev/salor-hospitality-back-bottom-left', '/dev/salor-hospitality-back-bottom-right']
       @vendor_printers = Array.new
       paths.size.times do |i|
@@ -48,8 +53,10 @@ class Printr
     ActiveRecord::Base.logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
     text.force_encoding 'ISO-8859-15'
     printer[:copies].times do |i|
+      # The method .write works both for SerialPort object and File object, so we don't have to distinguis here.
       @open_printers[printer_id][:device].write text
     end
+    # The method .flush works both for SerialPort object and File object, so we don't have to distinguis here.
     @open_printers[printer_id][:device].flush
   end
 
@@ -84,14 +91,19 @@ class Printr
 
   def open
     ActiveRecord::Base.logger.info "[PRINTING]============"
-    ActiveRecord::Base.logger.info "[PRINTING]INITIALIZE Printers..."
+    ActiveRecord::Base.logger.info "[PRINTING]OPEN Printers..."
     @vendor_printers.size.times do |i|
       p = @vendor_printers[i]
-      ActiveRecord::Base.logger.info "[PRINTING]  Trying to open #{ p.name } @ #{ p.path } ..."
+      name = p.name
+      path = p.path
+      if @mode == 'saas' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+        path = "/var/lib/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/public/" + path + ".bill"
+      end
+      ActiveRecord::Base.logger.info "[PRINTING]  Trying to open #{ name } @ #{ path } ..."
       pid = p.id ? p.id : i
       begin
-        printer = SerialPort.new p.path, 9600
-        @open_printers.merge! pid => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
+        printer = SerialPort.new path, 9600
+        @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
         ActiveRecord::Base.logger.info "[PRINTING]    Success for SerialPort: #{ printer.inspect }"
         next
       rescue Exception => e
@@ -99,31 +111,31 @@ class Printr
       end
 
       begin
-        printer = File.open p.path, 'w:ISO-8859-15'
-        @open_printers.merge! pid => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
+        printer = File.open path, 'a:ISO-8859-15'
+        @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
         ActiveRecord::Base.logger.info "[PRINTING]    Success for File: #{ printer.inspect }"
         next
       rescue Errno::EBUSY
-        ActiveRecord::Base.logger.info "[PRINTING]    The File #{ p.path } is already open."
+        ActiveRecord::Base.logger.info "[PRINTING]    The File #{ path } is already open."
         ActiveRecord::Base.logger.info "[PRINTING]      Trying to reuse already opened printers."
         previously_opened_printers = @open_printers.clone
         previously_opened_printers.each do |key, val|
           ActiveRecord::Base.logger.info "[PRINTING]      Trying to reuse already opened File #{ key }: #{ val.inspect }"
           if val[:path] == p[:path] and val[:device].class == File
             ActiveRecord::Base.logger.info "[PRINTING]      Reused."
-            @open_printers.merge! pid => { :name => p.name, :path => p.path, :copies => p.copies, :device => val[:device] }
+            @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => val[:device] }
             break
           end
         end
         unless @open_printers.has_key? p.id
-          printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
-          @open_printers.merge! pid => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
+          printer = File.open(File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, "#{ p.id }-#{ name }-fallback-busy.bill"), 'a:ISO-8859-15')
+          @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
           ActiveRecord::Base.logger.info "[PRINTING]      Failed to open as either SerialPort or USB File and resource IS busy. This should not have happened. Created #{ printer.inspect } instead."
         end
         next
       rescue Exception => e
-        printer = File.open(Rails.root.join('tmp',"#{ p.id }-#{ p.name }.bill"), 'a:ISO-8859-15')
-        @open_printers.merge! pid => { :name => p.name, :path => p.path, :copies => p.copies, :device => printer }
+        printer = File.open(File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, "#{ p.id }-#{ name }-fallback-notbusy.bill"), 'a:ISO-8859-15')
+        @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
         ActiveRecord::Base.logger.info "[PRINTING]    Failed to open as either SerialPort or USB File and resource is NOT busy. Created #{ printer.inspect } instead."
       end
     end

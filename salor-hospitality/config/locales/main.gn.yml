@@ -602,6 +602,8 @@ gn:
       assign_tables: Tische an Benutzer zuweisen
       remote_support: Fernwartung
       download_database: Datenbank herunterladen
+      receipt_logo: Beleg Logos
+      mobile_show_tools: Werkzeug-Button auf Mobilgeräten
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

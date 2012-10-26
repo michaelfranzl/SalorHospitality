@@ -40,15 +40,7 @@ $(function(){
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
       if ( automatic_printing == true ) {
-        $.ajax({
-          url: '/vendors',
-          dataType: 'json',
-          success: function(data) {
-            if (data.print_data_available == true) {
-              window.location.href = '/vendors/print.bill';
-            }
-          }
-        });
+        window.location.href = '/vendors/print.bill';
       }
     }, 20000);
   }

@@ -20,4 +20,8 @@ class PaymentMethod < ActiveRecord::Base
   def amount=(amnt)
     write_attribute :amount,amnt.to_s.gsub(',','.')
   end
+  
+  def refund_name
+    I18n.t(:refund) + ': ' + self.name
+  end
 end

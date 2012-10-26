@@ -19,7 +19,7 @@
     = link_to( t('activerecord.models.option.other'), main_app.options_path) if perms.include? 'manage_options'
     = link_to( t('activerecord.models.settlement.one'), '/settlements/open') if perms.include?('finish_own_settlement') or perms.include?('finish_all_settlements')
     = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if perms.include? 'view_all_settlements'
-    = link_to( t('activerecord.models.report.other'), '/reports')
+    = link_to( t('activerecord.models.report.other'), '/reports') unless @current_company.mode == 'saas'
     = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if perms.include? 'manage_taxes'
     = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if perms.include? 'manage_cost_centers'
     = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if perms.include? 'manage_payment_methods'

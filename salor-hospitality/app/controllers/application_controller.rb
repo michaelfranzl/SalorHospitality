@@ -34,11 +34,6 @@ class ApplicationController < ActionController::Base
           when 'just_print'
             get_order
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-          #----------jsaction----------
-          when 'mark_print_pending'
-            get_order
-            @order.update_attribute :print_pending, true
-            @current_vendor.update_attribute :print_data_available, true
           when 'do_refund'
             item = get_model(params[:id], Item)
             item.refund(@current_user, params[:payment_method_id])
@@ -102,14 +97,6 @@ class ApplicationController < ActionController::Base
             @order.pay
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
-          #----------jsaction----------
-          when 'pay_and_print_pending'
-            get_order
-            @order.pay
-            @order.reload
-            @order.update_attribute :print_pending, true
-            @current_vendor.update_attribute :print_data_available, true
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_no_print'

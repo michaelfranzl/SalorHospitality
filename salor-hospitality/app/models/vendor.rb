@@ -52,10 +52,19 @@ class Vendor < ActiveRecord::Base
   serialize :unused_booking_numbers
 
   validates_presence_of :name
+  
+  after_commit :sanitize_vendor_printer_paths
 
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+  
+  def sanitize_vendor_printer_paths
+    self.vendor_printers.existing.update_all :company_id => self.company_id
+    self.vendor_printers.existing.each do |vp|
+      vp.sanitize_path
+    end
+  end
 
   def hide
     self.update_attribute :hidden, true

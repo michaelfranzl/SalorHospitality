@@ -592,6 +592,8 @@ en:
       assign_tables: Assign tables to users
       remote_support: Remote Support
       download_database: Download Database
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

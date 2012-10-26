@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024184929) do
+ActiveRecord::Schema.define(:version => 20121026102425) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -431,7 +431,6 @@ ActiveRecord::Schema.define(:version => 20121024184929) do
     t.string   "printed_from"
     t.integer  "nr"
     t.integer  "tax_id"
-    t.boolean  "print_pending"
     t.float    "refund_sum",                      :default => 0.0
     t.integer  "company_id"
     t.string   "note"
@@ -460,7 +459,6 @@ ActiveRecord::Schema.define(:version => 20121024184929) do
   add_index "orders", ["nr"], :name => "index_orders_on_nr"
   add_index "orders", ["order_id"], :name => "index_orders_on_order_id"
   add_index "orders", ["paid"], :name => "index_orders_on_paid"
-  add_index "orders", ["print_pending"], :name => "index_orders_on_print_pending"
   add_index "orders", ["settlement_id"], :name => "index_orders_on_settlement_id"
   add_index "orders", ["table_id"], :name => "index_orders_on_table_id"
   add_index "orders", ["tax_id"], :name => "index_orders_on_tax_id"
@@ -937,7 +935,6 @@ ActiveRecord::Schema.define(:version => 20121024184929) do
     t.integer  "max_options",                                   :default => 5
     t.integer  "max_users",                                     :default => 3
     t.integer  "max_categories",                                :default => 6
-    t.boolean  "print_data_available"
   end
 
 end

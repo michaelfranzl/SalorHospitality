@@ -8,18 +8,12 @@
   - linktitle = t('.split_this_item')
   
 %div.invoice{ :id => "model_#{oid}" }
-  - if @current_company.mode == 'local'
-    - @current_vendor.vendor_printers.existing.each do |p|
-      %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
-  - elsif @current_company.mode == 'saas'
-    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t('.print_and_finish') }
+  - @current_vendor.vendor_printers.existing.each do |p|
+    %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
 
   - if not invoice_form.finished
     %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
 
-
-
-  - if !invoice_form.finished
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
     %table

@@ -1,50 +1,35 @@
-- payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
-- cash_payment_method = @current_vendor.payment_methods.existing.where(:cash => true).first
+- payment_methods = order.vendor.payment_methods.existing.where(:change => false)
+- cash_payment_method = order.vendor.payment_methods.existing.where(:cash => true).first
 - selected_payment_method_id = cash_payment_method.id.to_s if cash_payment_method
 
-%div.invoice{ :id => "invoice_#{refund_form.id}" }
-  - if @current_company.mode == 'local'
-    - @current_vendor.vendor_printers.existing.each do |p|
-      %a{ :onclick => "update_order_from_refund_form({id:#{refund_form.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
-  - elsif @current_company.mode == 'saas'
-    %a{ :onclick => "update_order_from_refund_form({id:#{refund_form.id},jsaction:'mark_print_pending'});", :class => 'iconbutton print_guestroom_button', :title => t(:print) }
-    
-  = select_tag 'payment_method_selector', options_from_collection_for_select(payment_methods, 'id', 'name', selected_payment_method_id)
+%div.invoice{ :id => "invoice_#{order.id}" }
+  - @current_vendor.vendor_printers.existing.each do |p|
+    %a{ :onclick => "update_order_from_refund_form({id:#{order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
 
-  = form_for refund_form, :as => :order, :url => "/orders/refund/#{refund_form.id}", :html => { :method => :put, :id => 'refund_form' }, :remote => true do |order_form|
-    %h3== #{ t(:invoice) } ##{refund_form.nr}, #{ refund_form.table.name }
-    %p= l refund_form.created_at, :format => :long
-    %table
-      = order_form.fields_for :items, order_form.object.items.existing.positioned do |item_form|
-        - item = item_form.object
-        - itemnumber = /order\[items_attributes\]\[(.*)\]/.match(item_form.object_name)[1]
-        - color = item.refunded ? '#FAA' : 'transparent'
-        - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
-        - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
-        - label = raw "%20.20s%s" % [label, optionslabel]
+  %h3== #{ t(:invoice) } ##{order.nr}, #{ order.table.name }
+  %p= l order.created_at, :format => :long
+  = select_tag 'payment_method_selector', options_from_collection_for_select(payment_methods, 'id', 'refund_name', selected_payment_method_id)
+  %table
+    - order.items.existing.positioned.each do |item|
+      - color = item.refunded ? '#FAA' : 'transparent'
+      - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
+      - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+      - label = raw "%20.20s%s" % [label, optionslabel]
+      - onclick_method_refund = (not item.refunded and permit('refund')) ? "update_order_from_refund_form({id:#{item.id},jsaction:'do_refund',payment_method_id:$('#payment_method_selector').val()});" : ''
+      - onclick_method_separate = (not item.refunded and permit('refund')) ? "$.ajax({url:'/items/#{item.id}/edit'});" : ''
 
-        %tr{ :style => "background-color: #{color}" }
-          %td.count.grey
-            - if not item.refunded and @current_user.role.permissions.include? 'refund'
-              = link_to item.count, edit_item_path(item), :method => 'get', :remote => true, :title => t('.do_separate_items')
-            - else
-              = item.count
+      %tr{ :style => "background-color: #{color}" }
+        %td.count.count_separate{ :onclick => onclick_method_separate, :title => t('.do_separate_items') }= item.count
+        %td.label{ :id => "item#{item.id}", :onclick => onclick_method_refund, :title => t('.do_refund') }= label
+        %td.total{ :style => 'text-align:right' }= number_to_currency item.sum
 
-          %td.label{ :id => "item#{item.id}" }
-            - if not item.refunded and @current_user.role.permissions.include? 'refund'
-              %a{ :onclick => "update_order_from_refund_form({id:#{item.id},jsaction:'do_refund',payment_method_id:$('#payment_method_selector').val()});", :title => t('.do_refund') }
-                = label
-            - else
-              = label
-          %td.total{ :style => 'text-align:right' }= number_to_currency item.sum
+    %tr
+      %td{ :colspan => '2'}= t :sum
+      %td{ :style => 'text-align:right'}
+        %b= number_to_currency order.sum
 
+    - unless order.refund_sum.zero?
       %tr
-        %td{ :colspan => '2'}= t :sum
+        %td{ :colspan => '2'}= t :refund
         %td{ :style => 'text-align:right'}
-          %b= number_to_currency refund_form.sum
-
-      - unless refund_form.refund_sum.zero?
-        %tr
-          %td{ :colspan => '2'}= t :refund
-          %td{ :style => 'text-align:right'}
-            %b= number_to_currency refund_form.refund_sum
+          %b= number_to_currency order.refund_sum

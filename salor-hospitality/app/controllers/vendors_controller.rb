@@ -13,31 +13,17 @@ class VendorsController < ApplicationController
   before_filter :check_permissions, :except => [:render_resources]
 
   def index
-    respond_to do |wants|
-      wants.json {
-        status = @current_vendor.print_data_available == true ? 'true' : 'false'
-        render :json => "{\"print_data_available\":#{status}}"
-        return
-      }
-      wants.html {
-        @vendors = @current_company.vendors.existing
-        if @vendors.count == 1
-          @vendor = @vendors.first
-          render :edit
-        end
-        return
-      }
+    @vendors = @current_company.vendors.existing
+    if @vendors.count == 1
+      @vendor = @vendors.first
+      render :edit
     end
+    return
   end
   
   def print
     # Return a file that contains all not yet printed Items and all Orders that are marked for printing
-    orders = @current_vendor.orders.existing.where(:print_pending => true)
-    tickets = orders.collect{ |o| o.escpos_tickets(nil) }.join
-    invoices = orders.collect{ |o| o.escpos_receipt }.join
-    orders.update_all :print_pending => false
-    @current_vendor.update_attribute :print_data_available, false
-    send_data tickets + invoices
+    send_data file
   end
 
   def show
@@ -59,7 +45,9 @@ class VendorsController < ApplicationController
 
   def update
     @vendor = get_model
-    redirect_to vendors_path and return unless @vendor
+    unless @vendor
+      redirect_to vendors_path and return
+    end
     unless @vendor.update_attributes params[:vendor]
       @vendor.images.reload
       render(:edit) and return 
@@ -159,12 +147,12 @@ class VendorsController < ApplicationController
   end
   
   def identify_printers
-    Printr.new.identify
+    Printr.new(@current_company.mode).identify
     render :nothing => true
   end
   
   def test_printers
-    Printr.new(@current_vendor.vendor_printers.existing).identify
+    Printr.new(@current_company.mode, @current_vendor.vendor_printers.existing).identify
     render :nothing => true
   end
 end

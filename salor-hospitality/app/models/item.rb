@@ -43,7 +43,7 @@ class Item < ActiveRecord::Base
   alias_attribute :cids, :customers_ids
 
   def separate
-    return if self.count == 1
+    return if self.count == 1 or self.refunded
     separated_item = self.item
     if separated_item.nil?
       separated_item = Item.create(self.attributes)
@@ -107,6 +107,7 @@ class Item < ActiveRecord::Base
     self.order.calculate_totals
     
     self.settlement.calculate_totals if self.settlement
+    self.unlink
   end
 
   def calculate_totals
