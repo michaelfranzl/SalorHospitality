@@ -2,6 +2,10 @@
 en:
   activerecord:
     attributes:
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
       payment_method_item:
         amount: Amount
       booking_item:
@@ -53,6 +57,7 @@ en:
         description: Description
         hidden: delete
         name: Name
+        no_payment_methods: No Payment Methods
       group:
         name: Name
       guest_type:

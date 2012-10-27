@@ -118,7 +118,7 @@ class Order < ActiveRecord::Base
   end
   
   def update_payment_method_items(params)
-    if params[:payment_method_items] then
+    if params[:payment_method_items] and self.cost_center.no_payment_methods == false
       self.payment_method_items.clear
       params['payment_method_items'][params['id']].to_a.each do |pm|
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
@@ -131,6 +131,7 @@ class Order < ActiveRecord::Base
 
   def update_associations(user)
     self.user = user if user
+    self.cost_center = self.vendor.cost_centers.existing.first unless self.cost_center
     self.save
     self.table.update_color if self.table
     # Set item notifications
@@ -255,7 +256,7 @@ class Order < ActiveRecord::Base
     self.finish
     
     # create a default cash payment method item if none was set in the UI
-    unless self.payment_method_items.existing.any?
+    unless self.payment_method_items.existing.where(:cash => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first
       if cash_payment_method
@@ -266,7 +267,7 @@ class Order < ActiveRecord::Base
     payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
     
     # create a change payment method item
-    unless self.payment_method_items.where(:change => true).any?
+    unless self.payment_method_items.existing.where(:change => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
       PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
     end

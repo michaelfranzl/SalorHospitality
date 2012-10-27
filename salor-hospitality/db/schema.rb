@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026102425) do
+ActiveRecord::Schema.define(:version => 20121027075802) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -171,12 +171,13 @@ ActiveRecord::Schema.define(:version => 20121026102425) do
   create_table "cost_centers", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "active",      :default => true
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "active",             :default => true
     t.integer  "company_id"
     t.boolean  "hidden"
     t.integer  "vendor_id"
+    t.boolean  "no_payment_methods", :default => false
   end
 
   add_index "cost_centers", ["company_id"], :name => "index_cost_centers_company_id"

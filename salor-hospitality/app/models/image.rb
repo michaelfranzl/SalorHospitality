@@ -20,7 +20,7 @@ class Image < ActiveRecord::Base
   
   validate :is_valid_upload
   
-	DIRECTORY = File.join('public','uploads',SalorHospitality::Application::SH_DEBIAN_SITEID,'images')
+	DIRECTORY = File.join(Rails.root, 'public','uploads',SalorHospitality::Application::SH_DEBIAN_SITEID,'images')
 	THUMB_MAX_SIZE = [90,90]
   LARGE_MAX_SIZE = [800,800]
 	VERSIONS = ['original','thumb','large']

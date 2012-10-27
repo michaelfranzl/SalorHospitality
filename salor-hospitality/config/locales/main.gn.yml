@@ -9,6 +9,10 @@ gn:
       success: Zahlungsmethode erfolgreich gelöscht
   activerecord:
     attributes:
+      payment_method:
+        name: Name
+        cash: Bar
+        change: Wechselgeld
       payment_method_item:
         amount: Betrag
       booking_item:
@@ -60,6 +64,7 @@ gn:
         description: Beschreibung
         hidden: löschen
         name: Name
+        no_payment_methods: Keine Zahlungsmethoden
       group:
         name: Name
       guest_type:

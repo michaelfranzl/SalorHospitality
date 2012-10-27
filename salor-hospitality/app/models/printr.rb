@@ -128,13 +128,23 @@ class Printr
           end
         end
         unless @open_printers.has_key? p.id
-          printer = File.open(File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, "#{ p.id }-#{ name }-fallback-busy.bill"), 'a:ISO-8859-15')
+          if SalorHospitality::Application::SH_DEBIAN_SITEID == 'none'
+            path = File.join(Rails.root, 'tmp')
+          else
+            path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
+          end
+          printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-busy.bill"), 'a:ISO-8859-15')
           @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
           ActiveRecord::Base.logger.info "[PRINTING]      Failed to open as either SerialPort or USB File and resource IS busy. This should not have happened. Created #{ printer.inspect } instead."
         end
         next
       rescue Exception => e
-        printer = File.open(File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, "#{ p.id }-#{ name }-fallback-notbusy.bill"), 'a:ISO-8859-15')
+        if SalorHospitality::Application::SH_DEBIAN_SITEID == 'none'
+          path = File.join(Rails.root, 'tmp')
+        else
+          path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
+        end
+        printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-notbusy.bill"), 'a:ISO-8859-15')
         @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
         ActiveRecord::Base.logger.info "[PRINTING]    Failed to open as either SerialPort or USB File and resource is NOT busy. Created #{ printer.inspect } instead."
       end
