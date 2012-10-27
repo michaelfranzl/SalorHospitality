@@ -20,11 +20,14 @@ class ItemsController < ApplicationController
 
   def split
     @item = []
-    params['split_items_hash'].each do |k,v|
-      @item = get_model(k.to_i)
-      @item.split(v['split_count'].to_i) if @item
+    if params['split_items_hash']
+      params['split_items_hash'].each do |k,v|
+        @item = get_model(k.to_i)
+        @item.split(v['split_count'].to_i) if @item
+      end
+      render_invoice_form(@item.order.table) and return
     end
-    render_invoice_form(@item.order.table)
+    render :nothing => true and return
   end
   
   def rotate_tax

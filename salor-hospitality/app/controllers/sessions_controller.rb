@@ -24,8 +24,8 @@ class SessionsController < ApplicationController
       # local login from mobile devices, since DNS is not set up there. It is save to select the first company, because local installs always have only one company.
       company = Company.where( :active => true, :hidden => false, :mode => 'local').first
     else
-      # SaaS login
-      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false, :mode => 'saas').first
+      # SaaS login AND optionally local login, depending on how the local host is configured in /etc/hosts
+      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false).first
     end
     
     if company

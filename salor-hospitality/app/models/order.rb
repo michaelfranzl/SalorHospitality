@@ -463,7 +463,7 @@ class Order < ActiveRecord::Base
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
-      item_sum = item.refunded ? 0 : item.sum
+      item_sum = item.refunded ? 0 : item.price * item.count
       list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
       list_of_items += list_of_options
     end

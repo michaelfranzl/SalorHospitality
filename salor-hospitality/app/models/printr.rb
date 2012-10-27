@@ -97,7 +97,7 @@ class Printr
       name = p.name
       path = p.path
       if @mode == 'saas' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
-        path = "/var/lib/salor-hospitality/#{SalorHospitality::Application::SH_DEBIAN_SITEID}/public/" + path + ".bill"
+        path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'public', 'uploads', "#{path}.bill")
       end
       ActiveRecord::Base.logger.info "[PRINTING]  Trying to open #{ name } @ #{ path } ..."
       pid = p.id ? p.id : i

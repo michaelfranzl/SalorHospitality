@@ -49,7 +49,7 @@ class Settlement < ActiveRecord::Base
 
   def print
     vendor_printer = self.vendor.vendor_printers.existing.first
-    printr = Printr.new(vendor_printer)
+    printr = Printr.new(self.company.mode, vendor_printer)
     printr.open
     printr.print vendor_printer.id, self.escpos
     printr.close

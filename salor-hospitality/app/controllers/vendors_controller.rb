@@ -38,7 +38,7 @@ class VendorsController < ApplicationController
   def edit
     @vendor = get_model
     redirect_to vendor_path and return unless @vendor
-    @current_vendor = vendor
+    @current_vendor = @vendor
     session[:vendor_id] = params[:id] if @current_vendor
     @vendor ? render(:new) : redirect_to(vendors_path)
   end

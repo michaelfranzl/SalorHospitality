@@ -19,19 +19,20 @@
         %br
         = vendor_form.label :name
         = vendor_form.text_field :name
+        %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
+        %br
+        = vendor_form.fields_for :images do |image_form|
+          = vendor_form.label image_form.object.image_type.to_s
+          = image_form.file_field :file_data
+          = image_form.hidden_field :image_type
+          
         - if permit 'receipt_logo'
-          %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
           %br
-          = vendor_form.fields_for :images do |image_form|
-            = vendor_form.label image_form.object.image_type.to_s
-            = image_form.file_field :file_data
-            = image_form.hidden_field :image_type
-        %br
-        = vendor_form.label :rlogo_header
-        = vendor_form.file_field :rlogo_header
-        %br
-        = vendor_form.label :rlogo_footer
-        = vendor_form.file_field :rlogo_footer
+            = vendor_form.label :rlogo_header
+            = vendor_form.file_field :rlogo_header
+            %br
+            = vendor_form.label :rlogo_footer
+            = vendor_form.file_field :rlogo_footer
 
         %br
         = vendor_form.label :country
