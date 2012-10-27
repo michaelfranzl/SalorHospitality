@@ -125,13 +125,13 @@ class ApplicationController < ActionController::Base
                   render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
                 when 'table_no_invoice_print'
                   @order.pay
-                  @order.print(['tickets']) if @current_company.mode == 'local'
+                  @order.print(['tickets'])
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
                 when 'table_do_invoice_print'
                   @order.pay
-                  @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first) if @current_company.mode == 'local'
+                  @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'

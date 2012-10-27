@@ -6,11 +6,22 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-desc 'Updates the vendor cache'
-
-task :update_vendor_cache => :environment do
+desc 'Configures this instance'
+# Call like: rake salor_configure['saas']
+task :salor_configure, [:mode] => :environment do |t, args|
   Vendor.all.each do |v|
     puts "Updating cache of Vendor #{v.id}"
     v.update_cache
   end
+  
+  puts :mode.inspect
+  
+  subdomain = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}.sh" : nil
+  
+  unless Company.where(:subdomain => subdomain).any?
+    puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
+    Company.where(:subdomain => nil).last.update_attributes :mode => args[:mode], :subdomain => subdomain
+  end
 end
+
+

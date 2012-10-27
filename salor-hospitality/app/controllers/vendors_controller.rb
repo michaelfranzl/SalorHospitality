@@ -11,6 +11,7 @@
 class VendorsController < ApplicationController
 
   before_filter :check_permissions, :except => [:render_resources]
+  after_filter :update_vendor_cache, :only => ['create','update']
 
   def index
     @vendors = @current_company.vendors.existing

@@ -11,6 +11,10 @@
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
   #PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
   
+  ScriptAlias /cgi-bin/ /usr/share/salor-helper/cgi/
+  AddHandler bill-type .bill
+  Action bill-type /cgi-bin/bill.cgi
+
   <Location />
     Order deny,allow
     Deny from all

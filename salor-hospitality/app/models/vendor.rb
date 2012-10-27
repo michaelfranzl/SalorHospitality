@@ -252,9 +252,19 @@ class Vendor < ActiveRecord::Base
 
     templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables }
+    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
 
     return resources.to_json
+  end
+  
+  def vendor_printers_hash
+    vendor_printer_models = self.vendor_printers.existing
+    vendor_printers = {}
+    vendor_printer_models.each do |vp|
+      vpid = vp.id
+      vendor_printers[vpid] = { :id => vpid, :p => vp.path }
+    end
+    return vendor_printers
   end
 
 end

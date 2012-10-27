@@ -35,15 +35,6 @@ $(function(){
           xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
       }
   })
-
-  
-  if (typeof(automatic_printing_timeout) == 'undefined') {
-    automatic_printing_timeout = window.setInterval(function() {
-      if ( automatic_printing == true ) {
-        window.location.href = '/vendors/print.bill';
-      }
-    }, 20000);
-  }
   
   $(window).keydown(function(e){
     for (var key in _key_codes) {

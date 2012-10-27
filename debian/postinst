@@ -168,7 +168,7 @@ for lInstance in $gInstances; do
         echo "  postinst: running db:seed ..."
         rake1.9.1 db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" #> /dev/null
         echo "  postinst: updating vendors cache ..."
-        rake1.9.1 update_vendor_cache RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" #> /dev/null
+        rake1.9.1 salor_configure['saas'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" #> /dev/null
       else
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi
