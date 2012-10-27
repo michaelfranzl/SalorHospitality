@@ -84,7 +84,7 @@
         %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  - if @current_user.role.permissions.include? ('manage_payment_methods')
+  - if @current_user.role.permissions.include? ('manage_payment_methods') and invoice_form.cost_center and invoice_form.cost_center.no_payment_methods == false
     %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}== + #{ t('activerecord.models.payment_method.other')}
     %div{ :id => "payment_methods_container_#{oid}" }
       %table

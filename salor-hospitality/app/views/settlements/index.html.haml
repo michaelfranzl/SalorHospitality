@@ -32,7 +32,7 @@
 
   - if @settlements.any?
     - @settlements.reverse.each do |s|
-      - next if s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:gro).zero? and @selected_cost_center
+      - #next if s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:gro).zero? and @selected_cost_center
       %tr
         %td.link= link_to "##{s.id}", "settlements/detailed_list?settlement_id=#{ s.id }"
         %td= link_to '', "/settlements/print/#{ s.id }", :class => 'print1_button_small', :remote => true

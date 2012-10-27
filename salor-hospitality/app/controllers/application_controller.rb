@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
             @order.tax_items.update_all :cost_center_id => cid
             @order.payment_method_items.update_all :cost_center_id => cid
             @order.items.update_all :cost_center_id => cid
-            render :nothing => true # called from outside the static route() function, but nothing has to be rendered.
+            render_invoice_form(@order.table)
           #----------jsaction----------
           when 'assign_to_booking'
             get_order

@@ -131,7 +131,11 @@ class Order < ActiveRecord::Base
 
   def update_associations(user)
     self.user = user if user
-    self.cost_center = self.vendor.cost_centers.existing.first unless self.cost_center
+    unless self.cost_center 
+      self.cost_center = self.vendor.cost_centers.existing.first
+      self.tax_items.update_all :cost_center_id => self.cost_center
+      self.payment_method_items.update_all :cost_center_id => self.cost_center
+    end
     self.save
     self.table.update_color if self.table
     # Set item notifications
