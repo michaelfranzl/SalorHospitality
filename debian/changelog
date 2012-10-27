@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.7) unstable; urgency=low
+
+  * saas login
+  * fixes
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 27 Oct 2012 09:32:55 +0200
+
 salor-hospitality (4.1.1.6) unstable; urgency=low
 
   * improved splitting
