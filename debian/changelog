@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.9) unstable; urgency=low
+
+  * fixed splitting, image paths, live fixes
+  * saas printing
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 27 Oct 2012 15:10:30 +0200
+
 salor-hospitality (4.1.1.8) unstable; urgency=low
 
   * no payment method items for cost centers
