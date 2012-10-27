@@ -47,7 +47,7 @@ class SettlementsController < ApplicationController
     render :nothing => true and return unless @settlement
     @settlement.update_attributes params[:settlement]
     @settlement.finish
-    @settlement.print if @current_company.mode == 'local'
+    @settlement.print
   end
   
   # ajax

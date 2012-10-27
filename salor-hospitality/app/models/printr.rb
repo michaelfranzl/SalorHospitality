@@ -97,7 +97,7 @@ class Printr
       name = p.name
       path = p.path
       if @mode == 'saas' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
-        path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'public', 'uploads', "#{path}.bill")
+        path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'public', 'uploads', "#{path}.salor")
       end
       ActiveRecord::Base.logger.info "[PRINTING]  Trying to open #{ name } @ #{ path } ..."
       pid = p.id ? p.id : i
@@ -133,7 +133,7 @@ class Printr
           else
             path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
           end
-          printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-busy.bill"), 'a:ISO-8859-15')
+          printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-busy.salor"), 'a:ISO-8859-15')
           @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
           ActiveRecord::Base.logger.info "[PRINTING]      Failed to open as either SerialPort or USB File and resource IS busy. This should not have happened. Created #{ printer.inspect } instead."
         end
@@ -144,7 +144,7 @@ class Printr
         else
           path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
         end
-        printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-notbusy.bill"), 'a:ISO-8859-15')
+        printer = File.open(File.join(path, "#{ p.id }-#{ name }-fallback-notbusy.salor"), 'a:ISO-8859-15')
         @open_printers.merge! pid => { :name => name, :path => path, :copies => p.copies, :device => printer }
         ActiveRecord::Base.logger.info "[PRINTING]    Failed to open as either SerialPort or USB File and resource is NOT busy. Created #{ printer.inspect } instead."
       end
