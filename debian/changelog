@@ -1,8 +1,10 @@
 salor-hospitality (4.1.1.8) unstable; urgency=low
 
   * no payment method items for cost centers
+  * build
+  * don't display payment method items for certain cost centers
 
- -- Michael Franzl <office@michaelfranzl.com>  Sat, 27 Oct 2012 10:31:02 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 27 Oct 2012 10:56:49 +0200
 
 salor-hospitality (4.1.1.7) unstable; urgency=low
 
