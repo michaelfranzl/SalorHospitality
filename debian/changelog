@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.10) unstable; urgency=low
+
+  * changed bill to salor print file extension, added windows scripts
+  * default payment method item creation fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 29 Oct 2012 10:36:58 +0100
+
 salor-hospitality (4.1.1.9) unstable; urgency=low
 
   * fixed splitting, image paths, live fixes
