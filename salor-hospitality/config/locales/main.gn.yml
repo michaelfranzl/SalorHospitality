@@ -563,6 +563,8 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      move_order_from_invoice_form: Bestellung von Rechnungs-Ansicht verschieben
+      assign_order_to_user: Benutzer der Bestellung zuweisen
       assign_cost_center: Kostenstelle zuweisen
       cancel_all_items_in_active_order: Alle Artikel einer aktiven Bestellung löschen
       change_waiter: Zugehörigkeit der Bestellung verändern

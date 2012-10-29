@@ -9,6 +9,12 @@
     %span.done{ :onclick => "$('#tablesselect').slideUp();" }
     - @current_user.tables.existing.each do |t|
       %span.option{ :onclick => "route('tables', submit_json.model.table_id, 'move', {target_table_id:#{t.id}});" }== #{ t.name }
+      
+  #usersselect
+    %h3= t('roles.new.assign_order_to_user')
+    %span.done{ :onclick => "$('#usersselect').slideUp();" }
+    - @users.each do |u|
+      %span.option{ :onclick => "submit_json.model.user_id = #{ u.id}; $('#usersselect').slideUp();" }== #{ u.login }
 
 #categories
   - @categories.existing.active.positioned.each do |category|

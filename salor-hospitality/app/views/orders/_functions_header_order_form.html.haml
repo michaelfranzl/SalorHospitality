@@ -19,6 +19,9 @@
       %option{ :value => '', :selected => true }
       = options_from_collection_for_select(@current_user.tables.existing.order(:name), 'id', 'name')
 
+- if @current_user.role.permissions.include?('assign_order_to_user')
+  - if workstation?
+    %a.iconbutton.user_button{ :onclick => "$('#usersselect').slideDown();", :title => t('roles.new.assign_order_to_user') }
       
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

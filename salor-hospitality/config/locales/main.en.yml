@@ -553,6 +553,8 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
       assign_cost_center: Assign cost center
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: Change waiter
