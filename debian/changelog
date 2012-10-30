@@ -3,7 +3,7 @@ salor-hospitality (4.1.1.12) unstable; urgency=low
   * fixed cronjob
   * closes #1366, #1350, other improvements
 
- -- Michael Franzl <office@michaelfranzl.com>  Tue, 30 Oct 2012 16:37:55 +0100
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 30 Oct 2012 16:43:44 +0100
 
 salor-hospitality (4.1.1.11) unstable; urgency=low
 
