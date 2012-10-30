@@ -12,6 +12,7 @@
 :javascript
   $('#date').datepicker({
     onSelect: function(date, inst) {
+      $(this).val('OK');
       $.ajax({
         url: '/route',
         data: {currentview:'push',relation:'settlements',id:#{@settlement.id},model:{created_at:date + ' 00:00:00'}}
