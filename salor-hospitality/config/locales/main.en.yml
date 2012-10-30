@@ -553,6 +553,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       assign_cost_center: Assign cost center
@@ -566,7 +567,7 @@ en:
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
       refund: Refund items
-      manage_articles: Manage articles, categories and options
+      manage_articles: Manage articles
       manage_categories: Manage categories
       manage_options: Manage options
       manage_business_invoice: Manage business invoice

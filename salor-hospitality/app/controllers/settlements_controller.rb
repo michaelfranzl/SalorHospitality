@@ -15,7 +15,7 @@ class SettlementsController < ApplicationController
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
     @to = @to ? @to.end_of_day : DateTime.now
-    @settlements = Settlement.where(:created_at => @from..@to, :finished => true)
+    @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
     @settlement_ids = @settlements.collect{ |s| s.id }
     @taxes = @current_vendor.taxes.existing
     @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)

@@ -563,6 +563,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      generate_statistics: Statistiken erzeugen
       move_order_from_invoice_form: Bestellung von Rechnungs-Ansicht verschieben
       assign_order_to_user: Benutzer der Bestellung zuweisen
       assign_cost_center: Kostenstelle zuweisen
