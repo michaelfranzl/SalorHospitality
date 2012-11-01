@@ -1,3 +1,9 @@
+salor-hospitality (4.1.1.14) unstable; urgency=low
+
+  * fixed booking#show endless loop  when only one unfinished booking
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 01 Nov 2012 19:56:33 +0100
+
 salor-hospitality (4.1.1.13) unstable; urgency=low
 
   * build
