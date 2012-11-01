@@ -21,7 +21,9 @@ class BookingsController < ApplicationController
           @booking = @current_vendor.bookings.existing.find_all_by_finished(true).last
         end
         redirect_to '/' and return if not @booking
-        @previous_booking, @next_booking = neighbour_models('bookings', @booking)
+        if @booking.finished
+          @previous_booking, @next_booking = neighbour_models('bookings', @booking)
+        end
       }
     end
   end

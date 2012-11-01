@@ -7,8 +7,9 @@
   - unless @booking.finished
     %a.iconbutton.edit_button{ :href => "/orders?booking_id=#{@booking.id}", :title => t(:edit) }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t 'orders.show.print_business_invoice') }
-  %a.iconbutton.previous_button{ :href => booking_path(@previous_booking), :title => (t 'orders.show.previous_invoice') }
-  %a.iconbutton.next_button{ :href => booking_path(@next_booking), :title => (t 'orders.show.next_invoice') }
+  - if @booking.finished
+    %a.iconbutton.previous_button{ :href => booking_path(@previous_booking), :title => (t 'orders.show.previous_invoice') }
+    %a.iconbutton.next_button{ :href => booking_path(@next_booking), :title => (t 'orders.show.next_invoice') }
   
 
 .paper_invoice
