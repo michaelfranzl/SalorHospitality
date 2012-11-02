@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 SalorHospitality::Application.routes.draw do
-  #mount SalorHotel::Engine, :at => "salor_hotel"
+
   get "reservations/fetch"
   get "orders/attach_coupon"
   get "orders/attach_discount"
@@ -226,6 +226,7 @@ SalorHospitality::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+
   root :to => 'orders#index'
 
 
@@ -235,7 +236,15 @@ SalorHospitality::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  
 
-  match '*path' => 'sessions#new'
+  if defined?(SalorSaas) == 'constant'
+    mount SalorSaas::Engine => "/saas"
+    match '*path' => 'salor_saas/sessions#new'
+  else
+    match '*path' => 'sessions#new'
+  end
+  
+
 
 end

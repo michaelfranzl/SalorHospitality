@@ -9,9 +9,9 @@ salor-hospitality/public/images   /usr/share/salor-hospitality/source/public
 
 salor-hospitality/vendor/assets   /usr/share/salor-hospitality/source/vendor
 
-salor-hospitality/Gemfile         /usr/share/salor-hospitality/source
-salor-hospitality/Rakefile        /usr/share/salor-hospitality/source
-salor-hospitality/config.ru       /usr/share/salor-hospitality/source
+salor-hospitality/Gemfile.production  /usr/share/salor-hospitality/source
+salor-hospitality/Rakefile            /usr/share/salor-hospitality/source
+salor-hospitality/config.ru           /usr/share/salor-hospitality/source
 
 salor-hospitality/db/migrate        /usr/share/salor-hospitality/source/db
 salor-hospitality/db/seeds.rb       /usr/share/salor-hospitality/source/db

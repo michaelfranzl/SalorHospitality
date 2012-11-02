@@ -250,7 +250,13 @@ class ApplicationController < ActionController::Base
       $Request = request
       $Params = params
 
-      redirect_to new_session_path unless @current_user and @current_vendor
+      unless @current_user and @current_vendor
+        if defined?(SalorSaas) == 'constant'
+          redirect_to salor_saas.new_session_path
+        else
+          redirect_to new_session_path
+        end
+      end
     end
 
     # the invoice view can contain 1 or 2 non-finished orders. if it contains 2 orders, and 1 is finished, then stay on the invoice view and just display the remaining order, otherwise go to the main (tables) view.

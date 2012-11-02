@@ -13,38 +13,14 @@ class SessionsController < ApplicationController
   skip_before_filter :fetch_logged_in_user, :set_locale, :except => :destroy
 
   def new
-    flash[:notice] = nil
-    flash[:error] = nil
+    @submit_path = session_path # this calls the correct path for SessionsController and SalorSaas::SessionsController
     render :layout => 'login'
-  end
-  
-  def index
-    redirect_to '/'
-  end
-  
-  def show
-    redirect_to '/'
   end
 
   def create
-    subdomain = request.subdomain
-    
-    if request.subdomain.empty? or Company.existing.active.all? { |c| c.mode == 'local' }
-      company = Company.existing.active.where( :mode => 'local').first
-    else
-      company = Company.existing.active.where( :subdomain => subdomain ).first
-    end
-
-    if company and company.mode == 'saas'
-      auth_string = request.env['HTTP_AUTHORIZATION']
-      auth_user_match = /Digest username="(.*?)"/.match(auth_string)
-      auth_user = auth_user_match[1] if auth_user_match
-      if company.subdomain != auth_user
-        UserMailer.plain_message("User attempted to log into a foreign account", request, company).deliver if company.email
-        company = nil
-      end
-    end
-
+    # Simple login
+    company = Company.existing.active.where( :mode => 'local').first
+ 
     if company
       user = company.users.existing.active.where(:password => params[:password]).first
     end
@@ -59,7 +35,7 @@ class SessionsController < ApplicationController
         session[:admin_interface] = false
         flash[:error] = nil
         flash[:notice] = t('messages.hello_username', :name => user.login)
-        UserMailer.plain_message("Login occurred", request, company).deliver if company.email
+        UserMailer.plain_message("Login occurred", request, company).deliver if company.email and SalorHospitality::Application::SH_DEBIAN_SITED != 'none'
         redirect_to orders_path and return
       else
         flash[:error] = t('messages.user_account_is_currently_locked')

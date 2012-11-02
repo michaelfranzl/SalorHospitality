@@ -9,6 +9,7 @@
   ServerName INSTANCE_ID.sh.red-e.eu
   #ServerAlias *.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
+  SetEnv BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
   #PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
   
