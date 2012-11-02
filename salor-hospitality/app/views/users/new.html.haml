@@ -56,7 +56,7 @@
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
-            - if @current_company.mode == 'saas'
+            - if @current_company.mode != 'local'
               %tr
                 %td= user_form.label :automatic_printing
                 %td= user_form.check_box :automatic_printing

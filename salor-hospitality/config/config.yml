@@ -2,6 +2,4 @@
 :exception_notification: false
 :exception_notification_sender: Sender Name <nobody@localhost>
 :exception_notification_receipients: nobody@localhost
-:user_mailer: true
-:user_mailer_sender: UserMailer <nobody@localhost>
-:user_mailer_receipients: office@billgastro.com
+:login_email: false

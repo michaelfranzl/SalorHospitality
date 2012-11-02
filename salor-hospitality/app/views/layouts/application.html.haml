@@ -47,7 +47,7 @@
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
     %script
-      == automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode == 'saas' and workstation?) ? 'true' : 'false' };
+      == automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
       == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
 
   %body

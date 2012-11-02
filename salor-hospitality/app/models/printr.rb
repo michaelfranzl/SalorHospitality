@@ -96,7 +96,7 @@ class Printr
       p = @vendor_printers[i]
       name = p.name
       path = p.path
-      if @mode == 'saas' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+      if @mode != 'local' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
         path = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'public', 'uploads', "#{path}.salor")
       end
       ActiveRecord::Base.logger.info "[PRINTING]  Trying to open #{ name } @ #{ path } ..."

@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
   before_filter :check_permissions
   
   def check_permissions
-    redirect_to '/' and return if @current_company.mode == 'saas'
+    redirect_to '/' and return if @current_company.mode != 'local'
   end
   
   def index
