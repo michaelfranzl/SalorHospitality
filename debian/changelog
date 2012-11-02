@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.15) unstable; urgency=low
+
+  * style fix
+  * added mailer
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 02 Nov 2012 11:55:28 +0100
+
 salor-hospitality (4.1.1.14) unstable; urgency=low
 
   * fixed booking#show endless loop  when only one unfinished booking
