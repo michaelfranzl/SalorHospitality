@@ -49,4 +49,6 @@ class Company < ActiveRecord::Base
   has_many :option_items
   
   validates_presence_of :name
+  validates_uniqueness_of :subdomain
+  validates_uniqueness_of :name
 end

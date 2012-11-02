@@ -20,16 +20,25 @@ class SessionsController < ApplicationController
 
   def create
     subdomain = request.subdomain
-    if subdomain.empty?
-      # local login from mobile devices, since DNS is not set up there. It is save to select the first LOCAL company, because local installs always have only one company.
-      company = Company.where( :active => true, :hidden => false, :mode => 'local').first
-    else
-      # SaaS login AND optionally local login, depending on how the local host is configured in /etc/hosts
-      company = Company.where( :subdomain => subdomain, :active => true, :hidden => false).first
-    end
     
+    if request.subdomain.empty? or Company.existing.active.all? { |c| c.mode == 'local' }
+      company = Company.existing.active.where( :mode => 'local').first
+    else
+      company = Company.existing.active.where( :subdomain => subdomain ).first
+    end
+
+    if company and company.mode == 'saas'
+      auth_string = request.env['HTTP_AUTHORIZATION']
+      auth_user_match = /Digest username="(.*?)"/.match(auth_string)
+      auth_user = auth_user_match[1] if auth_user_match
+      if company.subdomain != auth_user
+        UserMailer.plain_message("User attempted to log into a foreign account", request, company).deliver if company.email
+        company = nil
+      end
+    end
+
     if company
-      user = User.where(:password => params[:password], :company_id => company.id, :active => true, :hidden => false).first
+      user = company.users.existing.active.where(:password => params[:password]).first
     end
     
     if user
@@ -42,7 +51,7 @@ class SessionsController < ApplicationController
         session[:admin_interface] = false
         flash[:error] = nil
         flash[:notice] = t('messages.hello_username', :name => user.login)
-        UserMailer.login_email(company, request).deliver
+        UserMailer.plain_message("Login occurred", request, company).deliver if company.email
         redirect_to orders_path and return
       else
         flash[:error] = t('messages.user_account_is_currently_locked')

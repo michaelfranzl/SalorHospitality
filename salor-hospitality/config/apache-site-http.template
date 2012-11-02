@@ -7,6 +7,7 @@
 
 <VirtualHost *:80>
   ServerName INSTANCE_ID.sh.red-e.eu
+  #ServerAlias *.sh.red-e.eu
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
   #PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
@@ -27,7 +28,7 @@
     #AUTH: AuthDigestProvider file
     #AUTH: AuthUserFile /etc/apache2/salor-auth-users
     #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
-    #AUTH: Require group shINSTANCE_ID
+    #AUTH: Require group INSTANCE_ID.sh
     Satisfy any
   </Location>
   
