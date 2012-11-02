@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121027075802) do
+ActiveRecord::Schema.define(:version => 20121102103331) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20121027075802) do
     t.integer "update_resources",  :default => 182
     t.boolean "hidden",            :default => false
     t.boolean "active",            :default => true
+    t.string  "email"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -877,6 +878,7 @@ ActiveRecord::Schema.define(:version => 20121027075802) do
     t.datetime "last_login_at"
     t.datetime "last_logout_at"
     t.boolean  "audio"
+    t.string   "email"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
@@ -936,6 +938,7 @@ ActiveRecord::Schema.define(:version => 20121027075802) do
     t.integer  "max_options",                                   :default => 5
     t.integer  "max_users",                                     :default => 3
     t.integer  "max_categories",                                :default => 6
+    t.string   "email"
   end
 
 end

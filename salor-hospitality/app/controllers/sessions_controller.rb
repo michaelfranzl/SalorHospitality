@@ -42,6 +42,7 @@ class SessionsController < ApplicationController
         session[:admin_interface] = false
         flash[:error] = nil
         flash[:notice] = t('messages.hello_username', :name => user.login)
+        UserMailer.login_email(company, request).deliver
         redirect_to orders_path and return
       else
         flash[:error] = t('messages.user_account_is_currently_locked')
