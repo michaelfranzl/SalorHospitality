@@ -17,6 +17,14 @@ class SessionsController < ApplicationController
     flash[:error] = nil
     render :layout => 'login'
   end
+  
+  def index
+    redirect_to '/'
+  end
+  
+  def show
+    redirect_to '/'
+  end
 
   def create
     subdomain = request.subdomain
@@ -45,7 +53,7 @@ class SessionsController < ApplicationController
       if ( not user.role.permissions.include?('login_locking') ) or company.mode != 'local' or user.current_ip.nil? or user.current_ip == request.ip
         session[:user_id] = user.id
         session[:company_id] = user.company.id
-        session[:vendor_id] = user.vendors.existing.first.id # unless session[:vendor_id] and Vendor.find_by_id(session[:vendor_id]).company_id == user.company.id
+        session[:vendor_id] = user.vendors.existing.first.id
         user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
         I18n.locale = user.language
         session[:admin_interface] = false
@@ -83,6 +91,6 @@ class SessionsController < ApplicationController
   end
 
   def catcher
-    redirect_to '/session/new'
+    redirect_to 'new'
   end
 end

@@ -10,8 +10,15 @@
 
 - if workstation?
   :javascript
-    $('#password').keyboard( {openOn: '', position: { at: 'center bottom' }, accepted: function(){ $('#login form').submit(); } } );
-    $('#password_display_keyboard').click(function(){ $('#password').getkeyboard().reveal();  } );
-    $(function(){
+    $('#password').keyboard({
+      openOn: '',
+      position: { at: 'center bottom' },
+      accepted: function(){
+        if ( $('.ui-keyboard-input').val() != "" ) {
+          $('#login form').submit();
+        }
+      }
+    });
+    $('#password_display_keyboard').click(function() {
       $('#password').getkeyboard().reveal();
-    })
+    });
