@@ -14,8 +14,6 @@ task :salor_configure, [:mode] => :environment do |t, args|
     v.update_cache
   end
   
-  puts :mode.inspect
-  
   subdomain = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}.sh" : nil
   
   unless Company.where(:subdomain => subdomain).any?

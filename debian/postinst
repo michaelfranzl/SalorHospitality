@@ -169,11 +169,11 @@ for lInstance in $gInstances; do
         echo "  postinst: this instance has a configured database."
         cd $app_root        
         echo "  postinst: migrating the database. this may take a while."
-        rake1.9.1 db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFIlE="${gemfile_target}"   #> /dev/null
+        rake1.9.1 db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
         echo "  postinst: running db:seed ..."
-        rake1.9.1 db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFIlE="${gemfile_target}" #> /dev/null
+        rake1.9.1 db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
         echo "  postinst: updating vendors cache ..."
-        rake1.9.1 salor_configure['saas'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFIlE="${gemfile_target}" #> /dev/null
+        rake1.9.1 salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
       else
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi

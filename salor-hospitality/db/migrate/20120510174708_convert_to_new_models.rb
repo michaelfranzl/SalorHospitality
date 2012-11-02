@@ -1,5 +1,6 @@
 class ConvertToNewModels < ActiveRecord::Migration
   def up
+    begin
     if not Company.all.any?
       puts "Converting company"
       company = Company.create :name => 'Company'
@@ -25,6 +26,8 @@ class ConvertToNewModels < ActiveRecord::Migration
       puts "Converting User"
       User.update_all :company_id => company.id
       User.all.each { |u| u.vendors << vendor; u.save }
+    end
+    rescue
     end
   end
 
