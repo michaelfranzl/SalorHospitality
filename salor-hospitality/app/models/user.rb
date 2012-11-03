@@ -28,33 +28,4 @@ class User < ActiveRecord::Base
       self.tables << Table.find_by_id(id.to_i)
     end
   end
-  
-  #def create_salt
-  #  self.salt = (0...5).map{ ('a'..'z').to_a[rand(26)] }.join
-  #end
-  
-  #def generate_password(string)
-  #  create_salt
-  #  return Digest::SHA2.hexdigest("#{self.salt}#{string}")
-  #end
-  
-  #def self.login(email,pass)
-  #  user = User.find_by_email(email)
-  #  if user then
-  #    return user if user.encrypted_password == Digest::SHA2.hexdigest("#{user.salt}#{pass}")
-  #  end
-  #  return nil
-  #end
-  
-  #def password=(string)
-  #  return if string.empty? and not self.encrypted_password.empty?
-  #  if string.length < 5 then
-  #    self.errors[:base] << "password must be greater than or equal to 5 characters."
-  #  end
-  #  write_attribute(:encrypted_password, generate_password(string))
-  #end
-  
-  #def password
-  #  "ActiveRecord Error: Invalid attribute 'password'."
-  #end
 end

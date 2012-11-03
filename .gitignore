@@ -20,6 +20,7 @@ salor-hospitality/public/uploads/*
 salor-hospitality/vendor/bundle
 salor-hospitality/vendor/plugins
 salor-hospitality/.bundle
+salor-hospitality/config/database.yml
 *.log
 *.bill
 .sass-cache
@@ -28,9 +29,11 @@ salor-hospitality/.bundle
 *.kate-swp
 sha1-signatures.txt
 *.tar.bz2
+Gemfile
 Gemfile.lock
 debian/salor-hospitality
 debian/files
 *.debhelper
 *.substvars
-salor-hospitality/config/database.yml
+*.salor_saas.rb
+bar

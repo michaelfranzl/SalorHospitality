@@ -28,6 +28,7 @@ class ConvertToNewModels < ActiveRecord::Migration
       User.all.each { |u| u.vendors << vendor; u.save }
     end
     rescue
+      puts "XXXXXXXXXXXXXXX RESCUED ERROR XXXXXXXXXXXXXXXXXXX"
     end
   end
 

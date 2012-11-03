@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102103331) do
+ActiveRecord::Schema.define(:version => 20121103113159) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(:version => 20121102103331) do
     t.boolean "hidden",            :default => false
     t.boolean "active",            :default => true
     t.string  "email"
+    t.string  "auth_user"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -666,6 +667,11 @@ ActiveRecord::Schema.define(:version => 20121102103331) do
   add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
   add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
 
+  create_table "salor_saas_users", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "seasons", :force => true do |t|
     t.string   "name"
     t.datetime "from_date"
@@ -872,13 +878,14 @@ ActiveRecord::Schema.define(:version => 20121102103331) do
     t.integer  "screenlock_timeout",        :default => -1
     t.boolean  "automatic_printing"
     t.boolean  "onscreen_keyboard_enabled", :default => true
-    t.string   "salt"
     t.string   "current_ip"
     t.datetime "last_active_at"
     t.datetime "last_login_at"
     t.datetime "last_logout_at"
     t.boolean  "audio"
     t.string   "email"
+    t.string   "salt"
+    t.string   "encrypted_password"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"

@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   skip_before_filter :fetch_logged_in_user, :set_locale, :except => :destroy
 
   def new
-    @submit_path = session_path # this calls the correct path for SessionsController and SalorSaas::SessionsController
+    @submit_path = session_path
     render :layout => 'login'
   end
 
@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
         session[:admin_interface] = false
         flash[:error] = nil
         flash[:notice] = t('messages.hello_username', :name => user.login)
-        UserMailer.plain_message("Login occurred", request, company).deliver if company.email and SalorHospitality::Application::SH_DEBIAN_SITED != 'none'
+        UserMailer.plain_message("Login occurred", request, company).deliver if company.email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITED != 'none'
         redirect_to orders_path and return
       else
         flash[:error] = t('messages.user_account_is_currently_locked')

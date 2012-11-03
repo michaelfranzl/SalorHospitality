@@ -96,7 +96,6 @@ for lInstance in $gInstances; do
       mkdir -p $rails_cache
       mkdir -p $rails_var/public/uploads
       
-      
       use_dbconfig=false
       
       db_get salor-hospitality/instances/$lInstance/dbconfig-install || true

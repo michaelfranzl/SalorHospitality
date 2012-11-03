@@ -11,7 +11,6 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'rmagick'
 gem 'uglifier'
-gem 'salor_saas', :path => '../../SalorSaas'
 
 group :test, :development do
   gem 'rspec-rails'
