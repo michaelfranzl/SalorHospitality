@@ -1,8 +1,9 @@
-salor-hospitality (4.1.1.17) precise; urgency=low
+salor-hospitality (4.1.1.17) unstable; urgency=low
 
   * ruby-uglifier dependency
+  * build
 
- -- Michael Franzl <office@michaelfranzl.com>  Sat, 03 Nov 2012 15:29:41 +0100
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 03 Nov 2012 15:30:04 +0100
 
 salor-hospitality (4.1.1.16) unstable; urgency=low
 
