@@ -2,8 +2,13 @@ salor-hospitality (4.1.1.16) unstable; urgency=low
 
   * changed saas to != local
   * SaaS HTTP authentication security
+  * build
+  * optimized login redirections
+  * integrated SalorSaas, Gemfile as configuration file
+  * Gemfile as config file working, SalorSaas working
+  * fixes
 
- -- Michael Franzl <office@michaelfranzl.com>  Fri, 02 Nov 2012 17:25:28 +0100
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 03 Nov 2012 15:14:40 +0100
 
 salor-hospitality (4.1.1.15) unstable; urgency=low
 
