@@ -51,7 +51,7 @@ def merge(source,target)
   source.each do |key,value|
     if not value.is_a? Hash and not target[key] then
       puts "  #{key} not present in target. Copying"
-      target[key] = "XXX " + source[key]
+      target[key] = source[key]
     elsif value.is_a? Hash and not target[key] then
       target[key] = value
     elsif value.is_a? Hash and target[key] then
@@ -156,7 +156,7 @@ def write_translation(translation, translationlang, transfile)
 end
 
 namespace :translations do
-  # usage: rake compare_locales['main.gn.yml','main.pl.yml']
+  # usage: rake translations:compare_locales['main.gn.yml','main.pl.yml']
   desc "Compare locales" 
   task :compare, :sourcefile, :transfile do |t, args|
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
@@ -193,6 +193,7 @@ namespace :translations do
   
   end
   
+  # usage: rake translations:merge['main.gn.yml','main.pl.yml']
   task :merge, :sourcefile, :transfile do |t,args|
     puts "Merging #{args[:sourcefile]} -> #{args[:transfile]}...\n"
     source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
@@ -200,6 +201,7 @@ namespace :translations do
     write_translation(translation, translationlang, transfile)
   end
   
+  # usage: rake translations:clean['main.gn.yml','main.pl.yml']
   task :clean, :sourcefile, :transfile do |t,args|
     puts "Cleaning #{args[:sourcefile]} -> #{args[:transfile]}...\n"
     source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
@@ -207,6 +209,7 @@ namespace :translations do
     write_translation(translation, translationlang, transfile)
   end
 
+  # usage: rake translations:equalize['main.gn.yml','main.pl.yml']
   task :equalize, :sourcefile, :transfile do |t,args|
     puts "Equalizing #{args[:sourcefile]} -> #{args[:transfile]}...\n"
     source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(args[:sourcefile], args[:transfile])
@@ -214,6 +217,7 @@ namespace :translations do
     write_translation(translation, translationlang, transfile)
   end
   
+  # usage: rake translations:order['main.gn.yml']
   task :order, :sourcefile do |t,args|
     puts "Sorting #{ args.inspect }...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
@@ -226,6 +230,7 @@ namespace :translations do
     File.open(sourcefile,'w'){ |f| f.write output_source.to_yaml }
   end
   
+  # usage: rake translations:find_deprecations['main.gn.yml']
   task :find_deprecations, :sourcefile do |t,args|
     puts "Finding deprecations...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
@@ -236,6 +241,7 @@ namespace :translations do
     puts "#{$unused} keys found."
   end
   
+  # usage: rake translations:remove_deprecations['main.gn.yml']
   task :remove_deprecations, :sourcefile do |t,args|
     puts "Removing deprecations...\n"
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
@@ -249,6 +255,7 @@ namespace :translations do
     puts "#{$unused} keys found."
   end
   
+  # usage: rake translations:update
   task :update do
     base_path = File.join(Rails.root,'config','locales')
     base_name = "main.XXX.yml" # i.e. the pattern name of the files
