@@ -27,7 +27,7 @@ module SalorHospitality
     else
       SH_DEBIAN_SITEID = 'none'
     end
-    SH_DEBIAN_SITEID = 'none'
+
     puts "Using database set by environment variable SH_DEBIAN_SITEID (#{SH_DEBIAN_SITEID})"
     
     if File.exists?(File.join(Rails.root, '..', 'debian', 'changelog'))

@@ -156,7 +156,7 @@ def write_translation(translation, translationlang, transfile)
 end
 
 namespace :translations do
-  # usage: rake compare_locales['billgastro_gn.yml','billgastro_pl.yml']
+  # usage: rake compare_locales['main.gn.yml','main.pl.yml']
   desc "Compare locales" 
   task :compare, :sourcefile, :transfile do |t, args|
     sourcefile = File.join(Rails.root,'config','locales',args[:sourcefile])
@@ -251,7 +251,7 @@ namespace :translations do
   
   task :update do
     base_path = File.join(Rails.root,'config','locales')
-    base_name = "billgastro_XXX.yml" # i.e. the pattern name of the files
+    base_name = "main.XXX.yml" # i.e. the pattern name of the files
     langs = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
     default_file = File.join(base_path,base_name.gsub('XXX',langs[0])) #i.e. the first file is the default file
     langs.each do |lang|

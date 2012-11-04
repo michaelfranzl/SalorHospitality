@@ -6,7 +6,5 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require jquery_ujs
 //= require application-generic
-//= require report
-//= require json
+//= reqxxx salor_saas/application

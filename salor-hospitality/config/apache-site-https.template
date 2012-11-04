@@ -12,15 +12,30 @@
   SetEnv BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
   
+  ScriptAlias /cgi-bin/ /usr/share/salor-helper/cgi/
+  AddHandler bill-type .bill
+  Action bill-type /cgi-bin/bill.cgi
+  
+  SetEnvIf Host ^.*-b\.sh\.red-e\.eu USE_AUTH
+  SetEnvIf Host ^.*-d\.sh\.red-e\.eu USE_AUTH
+  SetEnvIf Host ^.*-a\.sh\.red-e\.eu USE_HTTPS=no
+  SetEnvIf Host ^.*-b\.sh\.red-e\.eu USE_HTTPS=no
+  
+  RewriteEngine on
+  RewriteCond %{HTTPS} on
+  RewriteCond %{ENV:USE_HTTPS} no
+  RewriteRule ^/(.*) http://%{HTTP_HOST}/$1
+  
   SSLEngine on
   SSLCertificateFile /etc/apache2/ssl/salor-crt.pem
   SSLCertificateKeyFile /etc/apache2/ssl/salor-key.pem
 
   <Location />
-    Order deny,allow
-    Deny from all
+    Order allow,deny
     Allow from 127.0.0.1 192.168 10.0
     #Allow from all
+    
+    Allow from env=!USE_AUTH
     
     #AUTH: AuthType Digest
     #AUTH: AuthName "SALOR"
@@ -29,6 +44,7 @@
     #AUTH: AuthUserFile /etc/apache2/salor-auth-users
     #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
     #AUTH: Require group INSTANCE_ID.sh
+    
     Satisfy any
   </Location>
   
@@ -40,10 +56,12 @@
     Allow from all
   </Location>
 
+  # Passenger configuration for this VirtualHost
+  PassengerMaxRequests 2000
+  RailsAutoDetect off
+  PassengerStatThrottleRate 30
+  PassengerSpawnMethod smart
+  RailsAppSpawnerIdleTime 36000
+  PassengerHighPerformance on
+  #PassengerMinInstances 2
 </VirtualHost>
-
-#Listen 7652
-#
-#<VirtualHost *:7652>
-#  # Copy the contents from the above VirtualHost into here
-#</VirtualHost>

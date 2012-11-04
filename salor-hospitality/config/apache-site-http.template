@@ -16,13 +16,17 @@
   ScriptAlias /cgi-bin/ /usr/share/salor-helper/cgi/
   AddHandler bill-type .bill
   Action bill-type /cgi-bin/bill.cgi
+  
+  SetEnvIf Host ^.*-b\.sh\.red-e\.eu USE_AUTH
+  SetEnvIf Host ^.*-d\.sh\.red-e\.eu USE_AUTH
 
   <Location />
-    Order deny,allow
-    Deny from all
+    Order allow,deny
     Allow from 127.0.0.1 192.168 10.0
     #Allow from all
     
+    Allow from env=!USE_AUTH
+
     #AUTH: AuthType Digest
     #AUTH: AuthName "SALOR"
     #AUTH: AuthDigestDomain /
@@ -30,6 +34,7 @@
     #AUTH: AuthUserFile /etc/apache2/salor-auth-users
     #AUTH: AuthGroupFile /etc/apache2/salor-auth-groups
     #AUTH: Require group INSTANCE_ID.sh
+    
     Satisfy any
   </Location>
   
@@ -48,5 +53,5 @@
   PassengerSpawnMethod smart
   RailsAppSpawnerIdleTime 36000
   PassengerHighPerformance on
-  #PassengerMinInstances 1
+  #PassengerMinInstances 2
 </VirtualHost>
