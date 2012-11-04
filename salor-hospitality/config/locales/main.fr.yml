@@ -28,6 +28,7 @@ fr:
         description: Description
         hidden: Effacer
         name: Nom
+        no_payment_methods: No Payment Methods
       group:
         name: Nom
       guest_type:
@@ -107,6 +108,7 @@ fr:
         rotate: Pivoter ?
         width: Largeur
         width_mobile: Largeur mobile
+        booking_table: Booking
       tax:
         color: Couleur
         hidden: Effacer
@@ -127,6 +129,7 @@ fr:
         screenlock_timeout: Expiration du verrouillage de l'écran (sec.)
         tables: Tables
         title: Titre
+        audio: Acoustic signals
       vendor:
         automatic_printing: Impression automatique
         country: Règles pour le pays
@@ -162,6 +165,7 @@ fr:
         sum: somme
       order:
         change_given: Monnaie rendue
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -177,6 +181,10 @@ fr:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
@@ -417,6 +425,7 @@ fr:
   logout: Déconnecter %{who}
   messages:
     hello_username: Bonjour %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Déplacer commande à table différente
   must_be_entered_either_for_article_or_for_quantity: doit être entré soit pour l'Article
     soit pour la Variante.
@@ -478,6 +487,7 @@ fr:
       search_by_number: Chercher par numéro
       sum: Somme
       unit_price: Prix unitaire
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Prix unitaire
       count: Compter
@@ -555,7 +565,6 @@ fr:
       new_role: Nouveau rôle
       permissions: Permissions
       see_debug: Voir messages de debug
-      see_item_notifications: Voir notifications d'article
       split_items: Scinder les articles
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
@@ -576,6 +585,16 @@ fr:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -590,6 +609,10 @@ fr:
     new:
       edit_room: Modifier chambre
       new_room: Nouvelle chambre
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Actif
     waiterpad: Tablette serveur
@@ -692,6 +715,11 @@ fr:
     invoice: XXX Invoice
     restaurant: XXX Restaurant
     hotel: XXX Hotel
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   vendors:
     index:
       edit: Modifier
@@ -699,6 +727,14 @@ fr:
     new:
       edit_vendor: Modifier vendeur
       new_vendor: Nouveau vendeur
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   violet: Violet
   waiter: Serveur
   waiterpad_generic_name: Tablette serveur

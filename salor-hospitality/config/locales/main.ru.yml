@@ -28,6 +28,7 @@ ru:
         description: Описание
         hidden: удалить
         name: Имя
+        no_payment_methods: No Payment Methods
       group:
         name: Название
       option:
@@ -80,6 +81,7 @@ ru:
         rotate: повернуть?
         width: Ширина
         width_mobile: Ширина (моб.)
+        booking_table: Booking
       tax:
         color: Цвет
         hidden: удалить
@@ -97,6 +99,7 @@ ru:
         screenlock_timeout: Блокировать экран через (сек.)
         tables: Столы
         title: Имя
+        audio: Acoustic signals
       vendor_printer:
         copies: Копии
         hidden: Удалить
@@ -162,6 +165,7 @@ ru:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -177,6 +181,10 @@ ru:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       article:
         one: Блюдо
@@ -411,6 +419,7 @@ ru:
   logout: завершить сеанс %{who}
   messages:
     hello_username: Здравствуйте, %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Переместить заказ на другой стол
   must_be_entered_either_for_article_or_for_quantity: нужно ввести для блюда или варианта.
   net: С вычетом налогов
@@ -471,6 +480,7 @@ ru:
       search_by_number: Искать по номеру
       sum: Сумма
       unit_price: Цена за единицу
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Цена за единицу
       count: Количество
@@ -544,7 +554,6 @@ ru:
       new_role: Новая роль
       permissions: Разрешения
       see_debug: Видит отладочные сообщения
-      see_item_notifications: Видит уведомления по позиции
       split_items: Разбивает позиции
       take_orders: Берет заказы
       view_all_settlements: Видит все расчеты
@@ -565,6 +574,16 @@ ru:
       assign_tables: XXX Assign tables to users
       remote_support: Удаленная поддержка
       download_database: Резервирует базу данных
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Роль успешно сохранена
     destroy:
@@ -579,7 +598,8 @@ ru:
   sessions:
     browser_warning:
       continue: Продолжить
-      warning: Salor рассчитан на работу только в браузерах Google Chrome (Windows), Chromium (Linux) или Safari (Apple).
+      warning: Salor рассчитан на работу только в браузерах Google Chrome (Windows),
+        Chromium (Linux) или Safari (Apple).
     new:
       email: Ваш E-Mail
       login: Логин
@@ -629,7 +649,8 @@ ru:
     new:
       edit_user: Редактирование пользователя
       new_user: Новый пользователь
-      select_with_ctrl_key: Используйте клавишу [Ctrl] + левая кнопка мыши для выбора и снятия выбора
+      select_with_ctrl_key: Используйте клавишу [Ctrl] + левая кнопка мыши для выбора
+        и снятия выбора
     create:
       success: Пользователь успешно сохранен
     destroy:
@@ -661,6 +682,10 @@ ru:
     new:
       edit_room: Редактирование комнаты
       new_room: Новая комната
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Активный
     waiterpad: Поднос
@@ -696,6 +721,11 @@ ru:
     restaurant: Ресторан
     hotel: Отель
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   vendors:
     index:
       edit: Редактирование
@@ -703,6 +733,14 @@ ru:
     new:
       edit_vendor: Редактирование ресторана
       new_vendor: Новый ресторан
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

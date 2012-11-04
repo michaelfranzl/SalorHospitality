@@ -28,6 +28,7 @@ cn:
         description: 描述
         hidden: 刪除嗎?
         name: 名稱
+        no_payment_methods: No Payment Methods
       group:
         name: 名稱
       option:
@@ -80,6 +81,7 @@ cn:
         rotate: 輪流?
         width: 寬度
         width_mobile: 寬度移動
+        booking_table: Booking
       tax:
         color: 色彩
         hidden: 刪除嗎?
@@ -97,6 +99,7 @@ cn:
         screenlock_timeout: 屏幕鎖超時 (秒)
         tables: 表
         title: 標題
+        audio: Acoustic signals
       vendor_printer:
         copies: 副本
         hidden: 刪除嗎?
@@ -162,6 +165,7 @@ cn:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -177,6 +181,10 @@ cn:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       article:
         one: 物品
@@ -411,6 +419,7 @@ cn:
   logout: 註銷 %{who}
   messages:
     hello_username: 餵 %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: 移動訂單到不同的桌子
   must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對物品還是變種
   net: 淨
@@ -471,6 +480,7 @@ cn:
       search_by_number: 按編號搜索
       sum: 總和
       unit_price: 單價
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -544,7 +554,6 @@ cn:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
-      see_item_notifications: See item notifications
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
@@ -565,6 +574,16 @@ cn:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -662,6 +681,10 @@ cn:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -697,6 +720,11 @@ cn:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   vendors:
     index:
       edit: Edit
@@ -704,6 +732,14 @@ cn:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

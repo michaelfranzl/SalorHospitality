@@ -153,6 +153,7 @@ hu:
         enabled: active?
         hidden: delete
         rotate: XXX rotate?
+        booking_table: Booking
       category:
         name: Name
         tax_id: Tax
@@ -169,6 +170,7 @@ hu:
         description: Description
         active: active?
         hidden: delete
+        no_payment_methods: No Payment Methods
       group:
         name: Name
       user:
@@ -182,6 +184,7 @@ hu:
         active: active?
         hidden: delete?
         screenlock_timeout: XXX Screenlock timeout (sec.)
+        audio: Acoustic signals
       role:
         name: Name
       vendor_printer:
@@ -271,6 +274,7 @@ hu:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -286,6 +290,10 @@ hu:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -396,6 +404,7 @@ hu:
       sum: Sum
       list_of_taxes: List of taxes
       search_by_number: Search by number
+      add_notes: Add notes
     invoice_form:
       set_cost_center: Set cost center for this order
       print_and_finish: Print and finish this order
@@ -506,6 +515,11 @@ hu:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   roles:
     new:
       take_orders: Take orders
@@ -530,7 +544,6 @@ hu:
       new_role: XXX New Role
       permissions: XXX Permissions
       see_debug: XXX See debug messages
-      see_item_notifications: XXX See item notifications
       refund: XXX Refund items
       manage_articles: XXX Manage articles, categories and options
       manage_categories: XXX Manage categories
@@ -548,6 +561,16 @@ hu:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -626,6 +649,7 @@ hu:
       submit_scribe: OK
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   not_found: XXX Not found
   pages:
     edit:
@@ -680,6 +704,10 @@ hu:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -705,6 +733,14 @@ hu:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

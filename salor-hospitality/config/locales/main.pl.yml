@@ -7,6 +7,14 @@ pl:
     new:
       edit_vendor: Edytuj sprzedającego
       new_vendor: Dodaj sprzedającego
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   activerecord:
     attributes:
       article:
@@ -35,6 +43,7 @@ pl:
         description: Opis
         hidden: Usuń
         name: Nazwa
+        no_payment_methods: No Payment Methods
       group:
         name: Nazwa
       option:
@@ -87,6 +96,7 @@ pl:
         rotate: Obrócić?
         width: Szerokość
         width_mobile: Szerokość
+        booking_table: Booking
       tax:
         color: Kolor
         hidden: Usuń
@@ -104,6 +114,7 @@ pl:
         screenlock_timeout: Blokowanie ekranu (sek.)
         tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej)
         title: Tytuł
+        audio: Acoustic signals
       vendor_printer:
         copies: Kopia
         hidden: Usuń
@@ -169,6 +180,7 @@ pl:
         duration: XXX Dni
       order:
         change_given: Zmień
+        nr: Number
       customer:
         first_name: Imię
         last_name: Nazwisko
@@ -184,6 +196,10 @@ pl:
         telephone: Stacjonarny
         cellphone: Komórka
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       article:
         one: Artykuł
@@ -283,7 +299,7 @@ pl:
         other: Ceny pokoi
       room_type:
         one: Rodzaj pokoju
-        other:  Rodzaje pokoi
+        other: Rodzaje pokoi
       season:
         one: Sezon
         other: Sezony
@@ -415,6 +431,7 @@ pl:
   logout: wyloguj %{who}
   messages:
     hello_username: Witaj %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Przenieś zamówienie na inny stolik
   must_be_entered_either_for_article_or_for_quantity: muszą zostać przypisane dla
     artykułu oraz ilości.
@@ -476,6 +493,7 @@ pl:
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Cena artykułu
       count: Ilość
@@ -520,7 +538,9 @@ pl:
       connect_vnc: XXX Dziel obraz
       password: XXX Hasło
       requesting_connection_status: XXX Oczekiwanie na połączenie ...
-      internet_connection_info: XXX Aby pozwolić na połączenie zdalne musisz być podłączony do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie z internetem.
+      internet_connection_info: XXX Aby pozwolić na połączenie zdalne musisz być podłączony
+        do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie
+        z internetem.
       remote_support: XXX Pomoc zdalna
       download_reports: XXX Zapisz raport
     remote_support: XXX Pomoc zdalna
@@ -547,7 +567,6 @@ pl:
       new_role: Dodawanie kryteriów
       permissions: Dostęp do zezwoleń
       see_debug: Dostęp do logów systemu
-      see_item_notifications: Sprawdź powiadomienia
       split_items: Łączenie pozycji
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
@@ -568,6 +587,16 @@ pl:
       assign_tables: XXX Przypisz stół dla klienta
       remote_support: XXX Pomoc zdalna
       download_database: XXX Pobierz bazę danych
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Zasada została pomyślnie zapisana
     destroy:
@@ -582,8 +611,9 @@ pl:
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: XXX Salor wspiera przeglądarki Google Chrome (Windows), Chromium
-        (Linux) lub Safari (Apple). Proszę użyć jednej z powyższych przeglądarek i spróbować ponownie.
+      warning: XXX Salor wspiera przeglądarki Google Chrome (Windows), Chromium (Linux)
+        lub Safari (Apple). Proszę użyć jednej z powyższych przeglądarek i spróbować
+        ponownie.
     new:
       email: Twój e-mail
       login: Login
@@ -634,7 +664,8 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
-      select_with_ctrl_key: XXX Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz myszy
+      select_with_ctrl_key: XXX Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
+        myszy
     create:
       success: Użytkownik pomyślnie zapisany
     destroy:
@@ -669,6 +700,10 @@ pl:
     new:
       edit_room: Edytuj pokój
       new_room: Dodaj pokój
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -704,6 +739,11 @@ pl:
     restaurant: XXX Restauracja
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   customers:
     new:
       edit_customer: Edycja klienta

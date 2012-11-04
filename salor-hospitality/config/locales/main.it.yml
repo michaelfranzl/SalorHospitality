@@ -7,6 +7,14 @@ it:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   activerecord:
     attributes:
       article:
@@ -35,6 +43,7 @@ it:
         description: Description
         hidden: delete
         name: Name
+        no_payment_methods: No Payment Methods
       group:
         name: Name
       option:
@@ -87,6 +96,7 @@ it:
         rotate: rotate?
         width: Width
         width_mobile: Width mobile
+        booking_table: Booking
       tax:
         color: Color
         hidden: delete
@@ -104,6 +114,7 @@ it:
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
         title: Title
+        audio: Acoustic signals
       vendor_printer:
         copies: Copies
         hidden: Delete
@@ -169,6 +180,7 @@ it:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -184,6 +196,10 @@ it:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       room:
         one: Room
@@ -418,6 +434,7 @@ it:
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Move order to different table
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
@@ -479,6 +496,7 @@ it:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -552,7 +570,6 @@ it:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
-      see_item_notifications: See item notifications
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
@@ -573,6 +590,16 @@ it:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -670,6 +697,10 @@ it:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -705,6 +736,11 @@ it:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   customers:
     new:
       edit_customer: Edit Customer

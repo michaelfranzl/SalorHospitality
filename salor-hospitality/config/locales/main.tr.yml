@@ -153,6 +153,7 @@ tr:
         enabled: aktiv?
         hidden: löschen?
         rotate: XXX rotate?
+        booking_table: Booking
       category:
         name: Isim
         tax_id: Vergi derecesi
@@ -169,6 +170,7 @@ tr:
         description: Tarif
         active: aktif?
         hidden: XXXdelete
+        no_payment_methods: No Payment Methods
       group:
         name: Isim
       user:
@@ -182,6 +184,7 @@ tr:
         active: XXXactive?
         hidden: XXXdelete?
         screenlock_timeout: XXX Screenlock timeout (sec.)
+        audio: Acoustic signals
       role:
         name: XXXName
       vendor_printer:
@@ -271,6 +274,7 @@ tr:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -286,6 +290,10 @@ tr:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -399,6 +407,7 @@ tr:
       sum: Toplam
       list_of_taxes: Vergi listesi
       search_by_number: XXXSearch by number
+      add_notes: Add notes
     invoice_form:
       set_cost_center: Sipariş icin maliyet merkezini ayarla
       print_and_finish: Fişi bas ve siparişi sonucla
@@ -535,7 +544,6 @@ tr:
       new_role: XXX New Role
       permissions: XXX Permissions
       see_debug: XXX See debug messages
-      see_item_notifications: XXX See item notifications
       refund: XXX Refund items
       manage_articles: XXX Manage articles, categories and options
       manage_categories: XXX Manage categories
@@ -553,6 +561,16 @@ tr:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -647,6 +665,7 @@ tr:
       submit_scribe: OK
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   print_and_finish: XXX Finish and print
   room_prices:
     index:
@@ -662,6 +681,10 @@ tr:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -698,6 +721,11 @@ tr:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   vendors:
     index:
       edit: Edit
@@ -705,6 +733,14 @@ tr:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

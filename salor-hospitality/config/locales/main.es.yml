@@ -28,6 +28,7 @@ es:
         description: Descripción
         hidden: borrar
         name: Nombre
+        no_payment_methods: No Payment Methods
       group:
         name: Nombre
       option:
@@ -80,6 +81,7 @@ es:
         width: Ancho
         width_mobile: ancho del aparato móvil
         rotate: rotar
+        booking_table: Booking
       tax:
         color: Color
         hidden: borrar
@@ -97,6 +99,7 @@ es:
         title: Título
         active: activo
         screenlock_timeout: Tiempo de espera de bloqueo de pantalla? (sec.)
+        audio: Acoustic signals
       vendor_printer:
         hidden: borrar
         name: nombre
@@ -162,6 +165,7 @@ es:
         duration: XXX Days
       order:
         change_given: Change
+        nr: Number
       customer:
         first_name: First Name
         last_name: Last Name
@@ -177,6 +181,10 @@ es:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       article:
         one: Artículo
@@ -463,6 +471,7 @@ es:
       search_by_number: Buscar por número
       sum: Total
       unit_price: Precio unitario
+      add_notes: Add notes
     functions_header_order_form:
       move_order: Mover pedido a otra mesa
     invoice_item_list:
@@ -540,7 +549,6 @@ es:
       new_role: Nuevo rol
       permissions: Permisos
       see_debug: Ver mensajes de depuración
-      see_item_notifications: Ver notificaciones del ítem
       refund: XXX Refund items
       manage_articles: XXX Manage articles, categories and options
       manage_categories: XXX Manage categories
@@ -558,6 +566,16 @@ es:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -645,6 +663,11 @@ es:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos
@@ -665,6 +688,7 @@ es:
       submit_scribe: OK
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   print_and_finish: XXX Finish and print
   room_prices:
     index:
@@ -680,6 +704,10 @@ es:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -705,6 +733,14 @@ es:
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

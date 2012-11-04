@@ -1,12 +1,5 @@
 ---
 gn:
-  payment_methods:
-    new:
-      new_payment_method: Neue Zahlungsmethode
-    create:
-      success: Zahlungsmethode erfolgreich gespeichert
-    destroy:
-      success: Zahlungsmethode erfolgreich gelöscht
   activerecord:
     attributes:
       payment_method:
@@ -346,9 +339,6 @@ gn:
     show:
       search_by_number: Suche nach Nummer
       go_to_bookings_calendar: Zum Buchungs-Kalender gehen
-      unit_price: Einzelpreis
-      count: Anzahl
-      sum: Summe
   cancel_and_go_back: Abbrechen und zurück
   categories:
     create:

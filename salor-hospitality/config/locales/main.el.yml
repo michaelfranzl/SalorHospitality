@@ -7,6 +7,14 @@ el:
     new:
       edit_vendor: Επεξεργασία Προμηθευτή
       new_vendor: Νέος Προμηθευτής
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   activerecord:
     attributes:
       customer:
@@ -50,6 +58,7 @@ el:
         description: Περιγραφή
         hidden: διαγραφή
         name: Όνομα
+        no_payment_methods: No Payment Methods
       group:
         name: Όνομα
       option:
@@ -102,6 +111,7 @@ el:
         rotate: περιστροφή;
         width: Πλάτος
         width_mobile: Πλάτος Κινητού
+        booking_table: Booking
       tax:
         color: Χρώμα
         hidden: διαγραφή
@@ -119,6 +129,7 @@ el:
         screenlock_timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         tables: Πίνακες
         title: Τίτλος
+        audio: Acoustic signals
       vendor_printer:
         copies: Αντίγραφα
         hidden: Διαγραφή
@@ -184,6 +195,11 @@ el:
         duration: Μέρες
       order:
         change_given: Αλλαγή
+        nr: Number
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       room:
         one: Δωμάτιο
@@ -418,8 +434,10 @@ el:
   logout: αποσυνδεθείτε %{who}
   messages:
     hello_username: Γεια χαρά %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
-  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για το αντικείμενο είτε για τη Μεταβλητή.
+  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
+    το αντικείμενο είτε για τη Μεταβλητή.
   net: Καθαρό
   new: Νέο
   no_printing: Όχι εκτύπωση
@@ -478,6 +496,7 @@ el:
       search_by_number: Αναζήτηση μέσω αριθμού
       sum: Σύνολο
       unit_price: Τιμή μονάδας
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Τιμή μονάδας
       count: Ποσότητα
@@ -518,11 +537,13 @@ el:
       header: Αναφορές
       connected: Συνδεδεμένοι
       disconnected: Αποσυνδεδεμένοι
-      connect_ssh: Απομακρυσμένη σύνδεση 
+      connect_ssh: Απομακρυσμένη σύνδεση
       connect_vnc: Μοιραστείτε οθόνη
       password: Κωδικός
       requesting_connection_status: Αίτηση κατάστασης σύνδεσης ...
-      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να είστε συνδεδεμένοι στο διαδίκτυο. Εάν μπορείτε να δείτε το λογότυπο του Red (E) πιο πάνω, είστε συνδεδεμένοι στο διαδίκτυο. 
+      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να
+        είστε συνδεδεμένοι στο διαδίκτυο. Εάν μπορείτε να δείτε το λογότυπο του Red
+        (E) πιο πάνω, είστε συνδεδεμένοι στο διαδίκτυο.
       remote_support: Εξ’ αποστάσεως Υποστήριξη
       download_reports: Αποθηκεύστε Αναφορές
     remote_support: Εξ’ αποστάσεως Υποστήριξη
@@ -549,20 +570,19 @@ el:
       new_role: Νέος ρόλος
       permissions: Εγκρίσεις
       see_debug: Δείτε μηνύματα προβλημάτων
-      see_item_notifications: Δείτε ειδοποιήσεις για αντικείμενα
       split_items: Μοιράστε αντικείμενα
-      take_orders: Πάρτε παραγγελίες 
+      take_orders: Πάρτε παραγγελίες
       view_all_settlements: Δείτε όλους τους διακανονισμούς
       refund: Επιστροφή αντικειμένων
-      manage_articles: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές 
+      manage_articles: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές
       manage_categories: Διαχειριστείτε κατηγορίες
       manage_options: Διαχειριστείτε επιλογές
       manage_roles: Διαχειριστείτε ρόλους
       manage_taxes: Διαχειριστείτε φόρους
       manage_cost_centers: Διαχειριστείτε κέντρα κόστους
       manage_payment_methods: Διαχειριστείτε μεθόδους πληρωμής
-      manage_tables: Διαχειριστείτε τραπέζια 
-      manage_vendors: Διαχειριστείτε προμηθευτές 
+      manage_tables: Διαχειριστείτε τραπέζια
+      manage_vendors: Διαχειριστείτε προμηθευτές
       manage_statistics: Προβολή στατιστικών
       manage_hotel: Διαχειριστείτε το ξενοδοχείο
       item_scribe: Ενεργοποιείστε χειρογραφή
@@ -570,6 +590,16 @@ el:
       assign_tables: Αναθέστε τραπέζια σε χρήστες
       remote_support: Εξ’ αποστάσεως Υποστήριξη
       download_database: Μεταφορτώστε τη βάση δεδομένων
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
@@ -579,11 +609,14 @@ el:
   scroll_up: Κινηθείτε προς τα πάνω
   send_and_go_back: Αποθηκεύστε κι επιστρέψτε
   served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
-  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι απασχολημένος ή η διασύνδεση έχει διακοπεί.
+  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι
+    απασχολημένος ή η διασύνδεση έχει διακοπεί.
   sessions:
-    browser_warning: 
+    browser_warning:
       continue: Συνεχίστε
-      warning: Το Salor υποστηρίζει μόνο τα προγράμματα περιήγησης Google Chrome (Windows), Chromium (Linux) ή Safari (Apple). Παρακαλούμε όπως χρησιμοποιήσετε ένα από αυτά τα προγράμματα περιήγησης και δοκιμάστε ξανά
+      warning: Το Salor υποστηρίζει μόνο τα προγράμματα περιήγησης Google Chrome (Windows),
+        Chromium (Linux) ή Safari (Apple). Παρακαλούμε όπως χρησιμοποιήσετε ένα από
+        αυτά τα προγράμματα περιήγησης και δοκιμάστε ξανά
     new:
       email: Η Ηλεκτρονική σας Διεύθυνση
       login: Όνομα Χρήστη
@@ -634,7 +667,8 @@ el:
     new:
       edit_user: Επεξεργασία Χρήστη
       new_user: Νέος Χρήστης
-      select_with_ctrl_key: Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί του ποντικιού
+      select_with_ctrl_key: Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί
+        του ποντικιού
     create:
       success: Ο χρήστης αποθηκεύτηκε επιτυχώς
     destroy:
@@ -651,7 +685,7 @@ el:
       served_by_X: Σερβιριστήκατε από %{user}
     show:
       search_by_number: Αναζήτηση μέσω αρίθμησης
-      go_to_bookings_calendar: Πηγαίνετε στην προβολή ημερολογίου κρατήσεων 
+      go_to_bookings_calendar: Πηγαίνετε στην προβολή ημερολογίου κρατήσεων
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών
@@ -666,6 +700,10 @@ el:
     new:
       edit_room: Επεξεργασία δωματίου
       new_room: Νέο δωμάτιο
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Ενεργό
     waiterpad: Σημειοματάριο σερβιτόρου
@@ -699,14 +737,19 @@ el:
     interim_invoice: Προσωρινό Τιμολόγιο
     invoice: Τιμολόγιο
     restaurant: Εστιατόριο
-    hotel: Ξενοδοχείο 
+    hotel: Ξενοδοχείο
     consumations: Εκπληρώσεις
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   customers:
     new:
       edit_customer: Επεξεργασία Πελάτη
       new_customer: Νέος Πελάτης
     create:
-      success: Ο πελάτης αποθηκεύτηκε επιτυχώς 
+      success: Ο πελάτης αποθηκεύτηκε επιτυχώς
     destroy:
       success: Ο πελάτης διαγράφηκε επιτυχώς
   refund: Επιστροφή
