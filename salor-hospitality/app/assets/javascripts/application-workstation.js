@@ -26,11 +26,14 @@ $(document).ready(function() {
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
       if ( automatic_printing == true ) {
-        url_parts = window.location.host.split('.');
-        //$.each(vendor_printers, function(k,v) {
-          window.location.href = '/uploads/' + url_parts[0] + '/1.salor';
-        //})
+        download_printfile(1);
       }
     }, 15000);
   }
 })
+
+function download_printfile(path) {
+  url_parts = window.location.host.split('.');
+  //$.each(vendor_printers, function(k,v) {
+  window.location.href = '/uploads/' + url_parts[0] + '/' + path + '.salor';
+}

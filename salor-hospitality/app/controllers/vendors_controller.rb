@@ -22,11 +22,6 @@ class VendorsController < ApplicationController
     return
   end
   
-  def print
-    # Return a file that contains all not yet printed Items and all Orders that are marked for printing
-    send_data file
-  end
-
   def show
     vendor = get_model
     redirect_to vendor_path and return unless vendor

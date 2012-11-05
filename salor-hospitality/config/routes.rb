@@ -91,7 +91,6 @@ SalorHospitality::Application.routes.draw do
   match 'settlements/print/:id' => 'settlements#print'
   match 'room_prices/generate' => 'room_prices#generate'
   match 'tables/:id/update_coordinates' => 'tables#update_coordinates'
-  match 'vendors/print' => 'vendors#print'
   match 'vendors/report' => 'vendors#report'
   match 'vendors/identify_printers' => 'vendors#identify_printers'
   match 'vendors/test_printers' => 'vendors#test_printers'
