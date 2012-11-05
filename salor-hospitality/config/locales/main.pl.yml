@@ -8,13 +8,13 @@ pl:
       edit_vendor: Edytuj sprzedającego
       new_vendor: Dodaj sprzedającego
     form:
-      add_printer: Add printer
-      identify_printers: Identify Printers
-      test_printers: Test Printers
+      add_printer: Dodaj bonownik
+      identify_printers: Wykryj bonownik
+      test_printers: Testuj bonownik
     create:
-      success: Vendor was successfully created
+      success: Sprzedawca został pomyślnie dodany
     destroy:
-      success: Vendor was successfully deleted
+      success: Sprzedawca został pomyślnie skasowany
   activerecord:
     attributes:
       article:
@@ -43,7 +43,7 @@ pl:
         description: Opis
         hidden: Usuń
         name: Nazwa
-        no_payment_methods: No Payment Methods
+        no_payment_methods: Nie wybrano rodzaju płatności
       group:
         name: Nazwa
       option:
@@ -112,7 +112,7 @@ pl:
         password: Hasło
         role: Poziom dostępu
         screenlock_timeout: Blokowanie ekranu (sek.)
-        tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej)
+        tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej pozycji)
         title: Tytuł
         audio: Acoustic signals
       vendor_printer:
@@ -197,9 +197,9 @@ pl:
         cellphone: Komórka
         hidden: delete
       payment_method:
-        name: Name
-        cash: Cash
-        change: Change
+        name: Nazwa
+        cash: Gotówka
+        change: Zamiana
     models:
       article:
         one: Artykuł
@@ -326,7 +326,7 @@ pl:
         other: Pozycje
     index:
       list_all: Pokaż wszystkie
-      preview: Voransicht
+      preview: Podgląd
       search_term: Szukaj wg
       sort: Sortuj wg typu
       update: Aktualizuj!
@@ -380,7 +380,7 @@ pl:
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
     destroy:
-      success: Category successfully deleted
+      success: Kategoria została pomyślnie skasowana
   clear_order_and_go_back: Wyczyść zamówienie i wróć
   copy: Kopiuj
   cost_centers:
@@ -431,7 +431,7 @@ pl:
   logout: wyloguj %{who}
   messages:
     hello_username: Witaj %{name}!
-    user_account_is_currently_locked: Account is locked
+    user_account_is_currently_locked: Konto zostało zablokowane
   move_order_to_table: Przenieś zamówienie na inny stolik
   must_be_entered_either_for_article_or_for_quantity: muszą zostać przypisane dla
     artykułu oraz ilości.
@@ -493,7 +493,7 @@ pl:
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
-      add_notes: Add notes
+      add_notes: Dodaj notatkę
     invoice_item_list:
       unit_price: Cena artykułu
       count: Ilość
@@ -587,16 +587,16 @@ pl:
       assign_tables: XXX Przypisz stół dla klienta
       remote_support: XXX Pomoc zdalna
       download_database: XXX Pobierz bazę danych
-      generate_statistics: Generate statistics
+      generate_statistics: Generuj statystyki
       move_order_from_invoice_form: Move order to table from invoice form
-      assign_order_to_user: Assign order to user
+      assign_order_to_user: Przydziel zamówienie dla użtkownika
       see_item_notifications_user_preparation: Item notifications personal preparation
       see_item_notifications_user_delivery: Item notifications personal delivery
       see_item_notifications_vendor_preparation: Item notifications vendor preparation
       see_item_notifications_vendor_delivery: Item notifications vendor delivery
       see_item_notifications_static: Item notifications summary list on main screen
-      receipt_logo: Receipt Logos
-      mobile_show_tools: Show tool button on mobile devices
+      receipt_logo: Logo na rachunku
+      mobile_show_tools: Pokaż przycisk "narzędzia" na telefonach komórkowych
     create:
       success: Zasada została pomyślnie zapisana
     destroy:
@@ -701,11 +701,11 @@ pl:
       edit_room: Edytuj pokój
       new_room: Dodaj pokój
     create:
-      success: Room successfully saved
+      success: Pokój został pomyślnie dodany
     destroy:
-      success: Room successfully deleted
+      success: Pokój został pomyśłnie skasowany
   scopes:
-    active: Active
+    active: Aktywuj
     waiterpad: Waiterpad
   seasons:
     new:
@@ -739,11 +739,11 @@ pl:
     restaurant: XXX Restauracja
     hotel: XXX Hotel
     consumations: XXX Consumations
-    report: Report
-    begin: Begin
-    end: End
-    time: Time
-    delete: Delete
+    report: Raport
+    begin: Początek
+    end: Koniec
+    time: Czas
+    delete: Usuń
   customers:
     new:
       edit_customer: Edycja klienta
