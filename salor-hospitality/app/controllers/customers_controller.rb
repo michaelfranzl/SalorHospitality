@@ -23,10 +23,12 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
+    @tables = @current_vendor.tables.existing
   end
 
   def edit
     @customer = get_model
+    @tables = @current_vendor.tables.existing
     redirect_to customers_path and return unless @customer
     render :new
   end
@@ -39,6 +41,7 @@ class CustomersController < ApplicationController
       flash[:notice] = t('customers.create.success')
       redirect_to customers_path
     else
+      @tables = @current_vendor.tables.existing
       render :action => 'new'
     end
   end
@@ -50,6 +53,7 @@ class CustomersController < ApplicationController
       flash[:notice] = t('customers.create.success')
       redirect_to customers_path
     else
+      @tables = @current_vendor.tables.existing
       render :action => 'new'
     end
   end

@@ -146,6 +146,8 @@ class Order < ActiveRecord::Base
       table.confirmations_pending = false
       table.request_finish = false
       table.request_waiter = false
+    else
+      table.confirmations_pending = true
     end
     table.customer = customer # is nil when waiter re-submits the order.
     table.save
@@ -154,7 +156,7 @@ class Order < ActiveRecord::Base
     remote_orders = self.vendor.remote_orders
     self.items.existing.each do |i|
       if customer.nil?
-        # waiter confirms all
+        # waiter confirms
         confirmation_count = i.count
       else
         confirmation_count = i.confirmation_count # do nothing

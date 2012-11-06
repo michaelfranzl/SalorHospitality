@@ -54,6 +54,9 @@ $(function(){
   if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 1500);
   if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 1500);
   if (uri_attrs.report == '1') setTimeout(function(){report.functions.display_popup()}, 1500);
+  if (customer) {
+    setTimeout(function(){route('table', customer.table_id);}, 1500);
+  }
 })
 
 
@@ -129,7 +132,7 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
-    } else if (action == 'customer_request_end') {
+    } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
       submit_json.model.table_id = model_id;
@@ -1486,11 +1489,24 @@ function render_item_list(type, model, scope) {
       var color = 'rgb(' + color_intensity + ', 60, 60)';
       var waiting_time = Math.floor(difference/60000);
       var waiting_time_label = (waiting_time > 0) ? waiting_time + 'min.<br/>' : '';
-      var confirmed = v[scope + '_c'] != null;
-      var label = table_name + " | " + waiting_time_label + v.c + ' × ' + v.l;
-      var item_container = create_dom_element('div',{id:'item_list_' + scope + '_' +  v.id}, label, list_container);
-      item_container.css('background-color', color);
-      item_container.addClass('item_list');
+
+      switch(scope) {
+        case 'confirmation':
+          var count = v.c - v.confirmation_c;
+          break;
+        case 'preparation':
+          var count = v.confirmation_c - v.preparation_c;
+          break;
+        case 'delivery':
+          var count = v.preparation_c - v.delivery_c;
+          break;
+      }
+      if (count != null) {
+        var label = table_name + " | " + waiting_time_label + count + ' × ' + v.l;
+        var item_container = create_dom_element('div',{id:'item_list_' + scope + '_' +  v.id}, label, list_container);
+        item_container.css('background-color', color);
+        item_container.addClass('item_list');
+      }
     })
   }
 }

@@ -208,7 +208,7 @@ company_count.times do |c|
     end
 
     table_objects = Array.new
-    3.times do |i|
+    5.times do |i|
       table = Table.new :name => "T#{ c }#{ v }#{ i }", :left => 50 * i + 50, :top => 50 * i + 50, :left_mobile => 50 * i + 50, :top_mobile => 100 * i + 50, :width => 70, :height => 70
       table.company = company
       table.vendor = vendor
@@ -229,8 +229,8 @@ company_count.times do |c|
     end
 
     customer_objects = Array.new
-    10.times do |i|
-      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}"
+    5.times do |i|
+      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}", :table_id => table_objects[i].id
       customer.company = company
       customer.vendor = vendor
       r = customer.save

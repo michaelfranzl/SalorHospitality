@@ -15,7 +15,7 @@ class Customer < ActiveRecord::Base
   validates_presence_of :login
 
   def to_hash
-    {:id => self.id, :name => self.full_name(true)}
+    {:id => self.id, :name => self.full_name(true), :table_id => self.table_id }
   end
 
   def full_name(simple = false)
