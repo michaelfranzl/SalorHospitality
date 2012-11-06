@@ -185,6 +185,7 @@ hu:
         hidden: delete?
         screenlock_timeout: XXX Screenlock timeout (sec.)
         audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       role:
         name: Name
       vendor_printer:
@@ -265,6 +266,7 @@ hu:
         rlogo_footer: XXX Receipt logo footer
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
+        remote_orders: Remote orders
       payment_method_item:
         amount: Amount
       booking_item:
@@ -290,6 +292,7 @@ hu:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+        table_id: Default Table
       payment_method:
         name: Name
         cash: Cash
@@ -432,6 +435,7 @@ hu:
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
+      confirmation_list: Self-order list
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -471,6 +475,11 @@ hu:
       login: Login
       password: Password
       email: Your E-Mail
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   statistic: Statistic
   statistics:
     weekdays: Weekdays
@@ -520,6 +529,16 @@ hu:
     end: End
     time: Time
     delete: Delete
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
   roles:
     new:
       take_orders: Take orders

@@ -115,6 +115,7 @@ pl:
         tables: Stoły (przytrzymaj "ctrl" aby zaznaczyć więcej pozycji)
         title: Tytuł
         audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       vendor_printer:
         copies: Kopia
         hidden: Usuń
@@ -171,6 +172,7 @@ pl:
         rlogo_footer: XXX Logo stopki
         logo: XXX Screen logo
         invoice_logo: XXX Logo faktury
+        remote_orders: Remote orders
       payment_method_item:
         amount: Ilość
       booking_item:
@@ -196,6 +198,7 @@ pl:
         telephone: Stacjonarny
         cellphone: Komórka
         hidden: delete
+        table_id: Default Table
       payment_method:
         name: Nazwa
         cash: Gotówka
@@ -462,6 +465,7 @@ pl:
     index:
       delivery_list: Lista dostaw
       preparation_list: Lista przygotowywanych zamówień
+      confirmation_list: Self-order list
     invoice_form:
       just_finish: Po prostu zakończ zamówienie
       print_and_finish: Zakończ zamówienie i drukuj
@@ -619,6 +623,11 @@ pl:
       login: Login
       password: Hasło
       username: Użytkownik
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   settlements:
     detailed_list:
       count: Ilość
@@ -744,6 +753,16 @@ pl:
     end: Koniec
     time: Czas
     delete: Usuń
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
   customers:
     new:
       edit_customer: Edycja klienta

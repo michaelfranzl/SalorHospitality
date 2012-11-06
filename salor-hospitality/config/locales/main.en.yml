@@ -718,8 +718,10 @@ en:
     customer_request_finish: Request payment
     customer_request_waiter: Request waiter
     order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    finish_was_requested: You have requested payment. Please have a little patience, we will be there for your shortly.
-    waiter_was_requested: You have requested a waiter. Please have a little patience, we will be there for your shortly.
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
     cancel: Cancel

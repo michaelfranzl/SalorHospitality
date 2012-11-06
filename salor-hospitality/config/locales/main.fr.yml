@@ -130,6 +130,7 @@ fr:
         tables: Tables
         title: Titre
         audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       vendor:
         automatic_printing: Impression automatique
         country: Règles pour le pays
@@ -151,6 +152,7 @@ fr:
         rlogo_footer: XXX Receipt logo footer
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
+        remote_orders: Remote orders
       vendor_printer:
         copies: Copies
         hidden: Effacer
@@ -181,6 +183,7 @@ fr:
         telephone: Telephone
         cellphone: Cellphone
         hidden: delete
+        table_id: Default Table
       payment_method:
         name: Name
         cash: Cash
@@ -456,6 +459,7 @@ fr:
     index:
       delivery_list: Liste de livraison
       preparation_list: Liste de préparation
+      confirmation_list: Self-order list
     invoice_form:
       change_money: Monnaie rendue
       just_finish: Compléter la commande
@@ -638,6 +642,11 @@ fr:
       login: S'identifier
       password: Mot de passe
       username: Nom d'utilisateur
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   settlements:
     detailed_list:
       count: Compter
@@ -720,6 +729,16 @@ fr:
     end: End
     time: Time
     delete: Delete
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
   vendors:
     index:
       edit: Modifier

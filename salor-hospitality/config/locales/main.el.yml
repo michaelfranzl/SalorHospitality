@@ -32,6 +32,7 @@ el:
         telephone: Τηλέφωνο
         cellphone: κινητό
         hidden: διαγραφή
+        table_id: Default Table
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -130,6 +131,7 @@ el:
         tables: Πίνακες
         title: Τίτλος
         audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       vendor_printer:
         copies: Αντίγραφα
         hidden: Διαγραφή
@@ -186,6 +188,7 @@ el:
         rlogo_footer: Λογότυπο απόδειξης υποσέλιδο
         logo: Λογότυπο οθόνης
         invoice_logo: Λογότυπο τιμολογίου
+        remote_orders: Remote orders
       payment_method_item:
         amount: Ποσό
       booking_item:
@@ -465,6 +468,7 @@ el:
     index:
       delivery_list: Λίστα παράδοσης
       preparation_list: Λίστα προετοιμασίας
+      confirmation_list: Self-order list
     invoice_form:
       just_finish: Απλά τελειώστε την παραγγελία
       print_and_finish: Εκτυπώστε και τελειώστε αυτή την παραγγελία
@@ -622,6 +626,11 @@ el:
       login: Όνομα Χρήστη
       password: Κωδικός Πρόσβασης
       username: Χρήστης
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   settlements:
     detailed_list:
       count: Μτρήστε
@@ -744,6 +753,16 @@ el:
     end: End
     time: Time
     delete: Delete
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
   customers:
     new:
       edit_customer: Επεξεργασία Πελάτη

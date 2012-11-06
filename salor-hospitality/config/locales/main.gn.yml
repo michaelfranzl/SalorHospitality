@@ -649,6 +649,11 @@ gn:
       login: Login
       password: Passwort
       username: Benutzer
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   settlements:
     detailed_list:
       count: Anzahl
@@ -714,8 +719,10 @@ gn:
     customer_request_finish: Bezahlung anfragen
     customer_request_waiter: Kellner anfragen
     order_will_be_confirmed: Ihre Bestellung wird in Kürze von einem Keller bestätigt
-    finish_was_requested: Sie haben die Bezahlung angefordert. Bitte haben Sie ein wenig Geduld.
-    waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig Geduld.
+    finish_was_requested: Sie haben die Bezahlung angefordert. Bitte haben Sie ein
+      wenig Geduld.
+    waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig
+      Geduld.
     mobile_view: Ansicht Mobilgeräten
     workstation_view: Ansicht Basisstation
     cancel: Abbrechen
