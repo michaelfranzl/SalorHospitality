@@ -24,7 +24,7 @@ class TablesController < ApplicationController
         tables = {}
         @tables.each do |t|
           tid = t.id
-          tables[tid] = { :id => tid, :n => t.name, :l => t.left, :t => t.top, :w => t.width, :h => t.height, :lm => t.left_mobile, :tm => t.top_mobile, :wm => t.width_mobile, :hm => t.height_mobile, :r => t.rotate, :auid => t.active_user_id , :e => t.enabled, :cp => t.confirmations_pending, :crid => t.customer_id  }
+          tables[tid] = { :id => tid, :n => t.name, :l => t.left, :t => t.top, :w => t.width, :h => t.height, :lm => t.left_mobile, :tm => t.top_mobile, :wm => t.width_mobile, :hm => t.height_mobile, :r => t.rotate, :auid => t.active_user_id , :e => t.enabled, :cp => t.confirmations_pending, :crid => t.customer_id, :rf => t.request_finish, :rw => t.request_waiter  }
         end
         render :json => tables
       }

@@ -141,8 +141,13 @@ class Order < ActiveRecord::Base
     
     table = self.table
     table.update_color #if table
-    table.confirmations_pending = ! customer.nil?
-    table.customer = customer
+    if customer.nil?
+      # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order.
+      table.confirmations_pending = false
+      table.request_finish = false
+      table.request_waiter = false
+    end
+    table.customer = customer # is nil when waiter re-submits the order.
     table.save
     
     # Set item notifications

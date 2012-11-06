@@ -1614,13 +1614,37 @@ function render_tables() {
       table.css('color', 'black');
       table.css('background-color', 'white');
     }
+    
+    if (v.rf) {
+      var cash_icon = create_dom_element('a',{},'',table);
+      cash_icon.addClass('iconbutton');
+      cash_icon.addClass('cash_button'); 
+      if (permissions.confirmation_user) {
+        table.effect("pulsate", { times:2000 }, 3000);
+      }
+      table.css('color', 'black');
+      table.css('background-color', 'white');
+    }
+    
+    if (v.rw) {
+      var cash_icon = create_dom_element('a',{},'',table);
+      cash_icon.addClass('iconbutton');
+      cash_icon.addClass('user_button'); 
+      if (permissions.confirmation_user) {
+        table.effect("pulsate", { times:2000 }, 3000);
+      }
+      table.css('color', 'black');
+      table.css('background-color', 'white');
+    }
+    
     if (permissions.move_tables && settings.mobile_drag_and_drop || settings.admin_interface) {
       table.draggable({ stop: function() {
         update_table_coordinates(v.id)}
       })
       table.css('background-color', 'grey');      
     } else {
-      if (v.e && !(!permissions.confirmation_user && v.cp)) {
+      if (v.e && !(!permissions.confirmation_user && (v.cp || v.rf || v.rw))) {
+        // when confirmation_user is false, this user cannot view the order if any customer requests are pending
         table.on('mousedown', function() {
           route('table',v.id);
         });
