@@ -77,8 +77,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
-    @current_user = session[:user_id] = nil
+    if @current_user
+      @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+    elsif @current_customer
+      @current_customer.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+    end
+    @current_user = @current_customer = session[:user_id] = session[:customer_id] = nil
     redirect_to '/'
   end
 
