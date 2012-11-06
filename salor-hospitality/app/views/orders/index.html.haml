@@ -1,8 +1,6 @@
-- if workstation?
-  %h2.current_user= @current_user.login
+%span#drag_and_drop_toggle_view_button.button= t 'various.mobile_view'
 
-- unless workstation?
-  #areas= render 'areas'
+#areas= render 'areas'
 #tables
 #functions
   #functions_header_index= render(:partial => 'functions_header_index') if workstation?

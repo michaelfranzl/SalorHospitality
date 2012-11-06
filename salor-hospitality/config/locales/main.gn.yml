@@ -706,6 +706,8 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    mobile_view: Ansicht Mobilgeräten
+    workstation_view: Ansicht Basisstation
     cancel: Abbrechen
     common_surcharges: Aufschläge
     home: Start

@@ -38,6 +38,21 @@ $(function(){
       screenlock_counter -= 1;
     }, 1001);
   }
+  
+  $('#drag_and_drop_toggle_view_button').on('click', function() {
+    var newstatus = !settings.mobile_drag_and_drop
+    settings.mobile_drag_and_drop = newstatus;
+    if (newstatus == true) {
+      $('#areas').show();
+      $('#mobile_last_invoices_button').hide();
+      $('#drag_and_drop_toggle_view_button').html(i18n.workstation_view);
+    } else {
+      $('#areas').hide();
+      $('#mobile_last_invoices_button').show();
+      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
+    }
+    update_tables();
+  })
 })
 
 
@@ -128,4 +143,28 @@ function display_items_notifications() {
 function hide_items_notifications() {
   $("#items_notifications_interactive").fadeOut();
   counter_update_item_lists = timeout_update_item_lists;
+}
+
+function toggle_admin_interface() {
+  $.ajax({
+    type: 'POST',
+    url:'/orders/toggle_admin_interface',
+    dataType: 'json',
+    success: function(result) {
+      if (result) {
+        $('#admin').slideDown('slow');
+        $('#drag_and_drop_toggle_view_button').show();
+        $('#items_notifications_static').hide();
+      } else {
+        $('#admin').slideUp('slow');
+        $('#drag_and_drop_toggle_view_button').hide();
+        $('#items_notifications_static').show();
+        settings.mobile_drag_and_drop = false;
+        $('#areas').hide();
+      }
+      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
+      settings.admin_interface = result;
+      render_tables();
+    }
+  });
 }

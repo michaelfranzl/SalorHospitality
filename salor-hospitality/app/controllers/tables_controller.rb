@@ -94,7 +94,7 @@ class TablesController < ApplicationController
   end
 
   def update_coordinates
-    if params[:mobile_drag_and_drop] == true
+    if params[:mobile_drag_and_drop] == 'true'
       left_attribute = :left_mobile
       top_attribute = :top_mobile
     else

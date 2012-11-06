@@ -8,23 +8,6 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-function toggle_admin_interface() {
-  $.ajax({
-    type: 'POST',
-    url:'/orders/toggle_admin_interface',
-    dataType: 'json',
-    success: function(result) {
-      if (result) {
-        $('#admin').slideDown('slow');
-      } else {
-        $('#admin').slideUp('slow');
-      }
-      settings.admin_interface = result;
-      render_tables();
-    }
-  });
-}
-
 $(document).ready(function() {
   // ":not([safari])" is desirable but not necessary selector
   $('input:checkbox:not([safari])').checkbox();

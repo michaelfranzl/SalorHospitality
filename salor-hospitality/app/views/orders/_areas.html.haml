@@ -1,10 +1,17 @@
 - areas = 4
 - 1.upto(areas) do |area|
   %div.area{ :id => "area#{ area }" }
-    - if mobile? or params[:mobile_drag_and_drop]
-      = link_to('', '/orders/last_invoices', :remote => true, :class => 'iconbutton previous_button', :id => 'mobile_last_invoices_button') if permit('mobile_show_tools')
-      - 1.upto(areas) do |icon|
-        - style = icon == area ? "border: 2px solid #{ @current_user.color };" : ''
-        %a{ :class => "iconbutton area#{icon}_button", :style => style, :onclick => "scroll_to('#area#{ icon }',10)", :title => "#{t(:scroll_to_area)} #{ icon }" }
-      /%a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }
+    - if permit('mobile_show_tools')
+      %a#mobile_last_invoices_button.iconbutton.previous_button
+    - 1.upto(areas) do |icon|
+      - style = icon == area ? "border: 2px solid #{ @current_user.color };" : ''
+      %a{ :class => "iconbutton area#{icon}_button", :style => style, :onclick => "scroll_to('#area#{ icon }',10)", :title => "#{t(:scroll_to_area)} #{ icon }" }
+    /%a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }
 #logout= button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
+
+:javascript
+  $('#mobile_last_invoices_button').on('mousedown', function() {
+    $.ajax({
+      url: '/orders/last_invoices'
+    })
+  })

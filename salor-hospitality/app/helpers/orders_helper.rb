@@ -37,7 +37,9 @@ module OrdersHelper
       :assign_order_to_booking => escape_javascript(I18n.t('various.consumations')),
       :rooms => escape_javascript(I18n.t('activerecord.models.room.other')),
       :delete => escape_javascript(I18n.t('various.delete')),
-      :refund => escape_javascript(I18n.t(:refund))
+      :refund => escape_javascript(I18n.t(:refund)),
+      :mobile_view => escape_javascript(I18n.t('various.mobile_view')),
+      :workstation_view => escape_javascript(I18n.t('various.workstation_view'))
     }
     return i18n.to_json
   end

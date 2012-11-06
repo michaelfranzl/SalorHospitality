@@ -35,7 +35,7 @@ var timeout_update_resources = 182;
 var timeout_refresh_queue = 4;
 
 var counter_update_resources = timeout_update_resources;
-var counter_update_tables = timeout_update_tables;
+var counter_update_tables = 3;
 var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
 /* ======================================================*/
@@ -75,7 +75,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications_static').show();
     $('#tables').show();
     $('#rooms').hide();
-    $('#areas').show();
+    if (settings.mobile) { $('#areas').show(); }
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
     $('#functions_header_invoice_form').hide();

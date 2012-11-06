@@ -705,6 +705,8 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
     cancel: Cancel
     common_surcharges: Common Surcharges
     home: Home
