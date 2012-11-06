@@ -146,52 +146,52 @@ pl:
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
-      half_a_minute: "half a minute"
+      half_a_minute: "pół minuty"
       less_than_x_seconds:
-        one:   "less than 1 second"
-        other: "less than %{count} seconds"
+        one:   "mniej niż 1 sekunda"
+        other: "mniej niż %{count} sekund"
       x_seconds:
-        one:   "1 second"
-        other: "%{count} seconds"
+        one:   "1 sekunda"
+        other: "%{count} sekund"
       less_than_x_minutes:
-        one:   "less than a minute"
-        other: "less than %{count} minutes"
+        one:   "mniej niż minuta"
+        other: "mniej niż %{count} minut"
       x_minutes:
-        one:   "1 minute"
-        other: "%{count} minutes"
+        one:   "1 minuta"
+        other: "%{count} minut"
       about_x_hours:
-        one:   "about 1 hour"
-        other: "about %{count} hours"
+        one:   "około 1 godziny"
+        other: "około %{count} godzin"
       x_days:
-        one:   "1 day"
-        other: "%{count} days"
+        one:   "1 dzień"
+        other: "%{count} dni"
       about_x_months:
-        one:   "about 1 month"
-        other: "about %{count} months"
+        one:   "około 1 miesiąca"
+        other: "około %{count} miesięcy"
       x_months:
-        one:   "1 month"
-        other: "%{count} months"
+        one:   "1 miesiąc"
+        other: "%{count} miesięcy"
       about_x_years:
-        one:   "about 1 year"
-        other: "about %{count} years"
+        one:   "około 1 roku"
+        other: "około %{count} lat"
       over_x_years:
-        one:   "over 1 year"
-        other: "over %{count} years"
+        one:   "ponad 1 rok"
+        other: "ponad %{count} lat"
       almost_x_years:
-        one:   "almost 1 year"
-        other: "almost %{count} years"
+        one:   "prawie 1 rok"
+        other: "prawie %{count} lat"
     prompts:
-      year:   "Year"
-      month:  "Month"
-      day:    "Day"
-      hour:   "Hour"
-      minute: "Minute"
-      second: "Seconds"
+      year:   "Rok"
+      month:  "Miesiąc"
+      day:    "Dzień"
+      hour:   "Godzina"
+      minute: "Minuta"
+      second: "Sekunda"
 
   helpers:
     select:
       # Default value for :prompt => true in FormOptionsHelper
-      prompt: "Please select"
+      prompt: "Prosz wybrać"
 
     # Default translation keys for submit FormHelper
     submit:
@@ -203,8 +203,8 @@ pl:
   support:
     array:
      words_connector:
-      two_words_connector: " and "
-      last_word_connector: ", and "
+      two_words_connector: " oraz "
+      last_word_connector: ", oraz "
       
 # ==================================================================================
 # Adaptiert von:
@@ -216,16 +216,16 @@ pl:
       # Use the strftime parameters for formats.
       # When no format has been given, it uses default.
       # You can provide other formats here if you like!
-      default: "%Y-%m-%d"
+      default: "%d-%m-%Y"
       short: "%d. %b"
       long: "%d. %B  %Y"
 
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    day_names: [Niedziela, Poniedziałek, Wtorek, Środa, Czwartek, Piątek, Sobota]
+    abbr_day_names: [Ni, Pon, Wt, Śr, Czw, Pt, Sob]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names: [~, Styczeń, Luty, Marzec, Kwiecień, Maj, Czerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień]
+    abbr_month_names: [~, St, Lu, Marz, Kwi, Maj, Cze, Lip, Si, Wrze, Paź, Lis, Gr]
     # Used in date_select and datime_select.
     order:
       - :year
@@ -237,11 +237,11 @@ pl:
       default: "%a, %d. %b. %Y, %H:%M:%S %z"
       short: "%d. %b. %y  %y %H:%M"
       long: "%d. %B %Y %H:%M:%S"
-      datetime_iso: "%Y-%m-%d %H:%M:%S"
-      datetime_iso2: "%Y%m%dT%H%M%S"
+      datetime_iso: "%d-%m-%Y %H:%M:%S"
+      datetime_iso2: "%d%m%YT%H%M%S"
       date_normal: "%d. %B %Y"
       date_short: "%d. %b %y"
-      date_iso: "%Y-%m-%d"
+      date_iso: "%d-%m-%Y"
       time_short: "%H:%M"
       month_and_day: "%d. %B"
     am: ""
