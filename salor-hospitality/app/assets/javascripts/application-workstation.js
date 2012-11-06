@@ -9,7 +9,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function toggle_admin_interface() {
-  $.ajax({ type: 'POST', url:'/orders/toggle_admin_interface' });
+  $.ajax({
+    type: 'POST',
+    url:'/orders/toggle_admin_interface',
+    dataType: 'json',
+    success: function(result) {
+      if (result) {
+        $('#admin').slideDown('slow');
+      } else {
+        $('#admin').slideUp('slow');
+      }
+      settings.admin_interface = result;
+      render_tables();
+    }
+  });
 }
 
 $(document).ready(function() {

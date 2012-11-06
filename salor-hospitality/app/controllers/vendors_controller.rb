@@ -88,7 +88,8 @@ class VendorsController < ApplicationController
       :see_item_notifications_user_delivery => @current_user.role.permissions.include?("see_item_notifications_user_delivery"),
       :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods"),
       :manage_customers => @current_user.role.permissions.include?("manage_customers"),
-      :audio => @current_user.audio
+      :audio => @current_user.audio,
+      :move_tables => @current_user.role.permissions.include?("move_tables")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
     else
       session[:admin_interface] = true
     end
-    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
+    render :json => session[:admin_interface]
   end
 
   def refund

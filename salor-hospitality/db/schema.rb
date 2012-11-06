@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103113159) do
+ActiveRecord::Schema.define(:version => 20121106055427) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -779,8 +779,6 @@ ActiveRecord::Schema.define(:version => 20121103113159) do
     t.integer  "top_mobile",     :default => 50
     t.integer  "width_mobile",   :default => 70
     t.integer  "height_mobile",  :default => 45
-    t.integer  "user_id"
-    t.boolean  "enabled",        :default => true
     t.boolean  "hidden",         :default => false
     t.boolean  "rotate"
     t.integer  "company_id"
@@ -789,13 +787,13 @@ ActiveRecord::Schema.define(:version => 20121103113159) do
     t.boolean  "active",         :default => true
     t.integer  "position"
     t.boolean  "booking_table"
+    t.boolean  "enabled",        :default => true
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
   add_index "tables", ["company_id"], :name => "index_tables_company_id"
   add_index "tables", ["company_id"], :name => "index_tables_on_company_id"
   add_index "tables", ["hidden"], :name => "index_tables_on_hidden"
-  add_index "tables", ["user_id"], :name => "index_tables_on_user_id"
   add_index "tables", ["vendor_id"], :name => "index_tables_on_vendor_id"
 
   create_table "tables_users", :id => false, :force => true do |t|

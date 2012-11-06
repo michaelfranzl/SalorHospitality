@@ -16,11 +16,18 @@ class TablesController < ApplicationController
   respond_to :html, :js
   
   def index
-    @tables = @current_user.tables.where(:vendor_id => @current_vendor).existing.order(:name)
-    @last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
+    @tables = @current_user.tables.existing.active.where(:vendor_id => @current_vendor).order(:name)
+    #@last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
     respond_with do |wants|
       wants.html
-      wants.js
+      wants.js {
+        tables = {}
+        @tables.each do |t|
+          tid = t.id
+          tables[tid] = { :id => tid, :n => t.name, :l => t.left, :t => t.top, :w => t.width, :h => t.height, :lm => t.left_mobile, :tm => t.top_mobile, :wm => t.width_mobile, :hm => t.height_mobile, :r => t.rotate, :auid => t.active_user_id , :e => t.enabled  }
+        end
+        render :json => tables
+      }
     end
   end
 
@@ -87,8 +94,15 @@ class TablesController < ApplicationController
   end
 
   def update_coordinates
+    if params[:mobile_drag_and_drop] == true
+      left_attribute = :left_mobile
+      top_attribute = :top_mobile
+    else
+      left_attribute = :left
+      top_attribute = :top
+    end
     @table = get_model
-    @table.update_attributes(params[:table])
+    @table.update_attributes(left_attribute => params[:left], top_attribute => params[:top])
     render :nothing => true
   end
 

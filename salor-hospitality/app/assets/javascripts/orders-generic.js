@@ -1200,8 +1200,12 @@ function get_table_show(table_id) {
 function update_tables(){
   $.ajax({
     url: '/tables',
-    dataType: 'script',
-    timeout: 5000
+    dataType: 'json',
+    timeout: 5000,
+    success: function(data) {
+      resources.t = data;
+      render_tables();
+    }
   });
 }
 
@@ -1501,8 +1505,68 @@ function item_list_reset(id, scope) {
       increment_button.css('background-color','#74101B');
     }
   })
-
 }
+
+function render_tables() {
+  $('#tables').html('');
+  $.each(resources.t, function(k,v) {
+    var mobile_mode = settings.mobile || settings.mobile_drag_and_drop;
+    var left = mobile_mode ? v.lm : v.l;
+    var top = mobile_mode  ? v.tm : v.t;
+    var width = mobile_mode ? v.wm : v.w;
+    var height = mobile_mode ? v.hm : v.h;
+    if (v.r) {
+      var tmp = width;
+      width = height;
+      height = tmp;
+    }
+         
+    var statusclass = v.auid ? 'occupied' : 'vacant';
+    var table = create_dom_element('div',{id:'table'+v.id,ontouchstart:'javascript:enable_audio();'}, v.n, '#tables');
+    
+    var bgcolor = null;
+    if (v.auid) {
+      bgcolor = resources.u[v.auid].c;
+      create_dom_element('span', {}, resources.u[v.auid].n, table);
+    }
+    if (!v.e) { bgcolor = 'black' }
+    table.addClass(statusclass);
+    table.addClass('table');
+    table.css('left', left);
+    table.css('top', top);
+    table.css('width', width);
+    table.css('height', height);
+    if (typeof(bgcolor) == 'string') {
+      table.css('background-color', bgcolor);
+    }
+    if (permissions.move_tables && settings.mobile_drag_and_drop || settings.admin_interface) {
+      table.draggable({ stop: function() {
+        update_table_coordinates(v.id)}
+      })
+      table.css('background-color', 'grey');      
+    } else {
+      if (v.e) {
+        table.on('mousedown', function() {
+          route('table',v.id);
+        });
+      }
+    }
+  })
+}
+
+function update_table_coordinates(id) {
+  var table = $('#table' + id);
+  var left = table.position().left;
+  var top = table.position().top; 
+  $.ajax({
+    type: 'put',
+    url: '/tables/' + id + '/update_coordinates',
+    data: {left:left, top:top, mobile_drag_and_drop:settings.mobile_drag_and_drop},
+    success: update_tables
+  })
+}
+
+
 
 function parse_rails_error_message(raw_message) {
   var start1 = raw_message.indexOf('<pre>');

@@ -215,6 +215,7 @@ class Vendor < ActiveRecord::Base
       payment_methods[pm.id] = { :id => pmid, :n => pm.name, :chg => pm.change }
     end
     
+    # TODO: This is overwritten by a direct ajax call to tables#index
     tables = {}
     table_models.each do |t|
       tid = t.id
@@ -224,7 +225,7 @@ class Vendor < ActiveRecord::Base
     users = {}
     user_models.each do |u|
       uid = u.id
-      users[uid] = { :id => uid, :n => u.login }
+      users[uid] = { :id => uid, :n => u.login, :c => u.color }
     end
 
     rooms = Hash.new
@@ -250,7 +251,9 @@ class Vendor < ActiveRecord::Base
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
 
-    templates = { :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow')) }
+    templates = {
+      :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow'))
+    }
 
     resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
 
