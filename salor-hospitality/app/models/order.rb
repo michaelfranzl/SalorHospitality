@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
 
   serialize :taxes
 
-  validates_presence_of :user_id
+  #validates_presence_of :user_id
 
   accepts_nested_attributes_for :items, :allow_destroy => true #, :reject_if => proc { |attrs| attrs['count'] == '0' || ( attrs['article_id'] == '' && attrs['quantity_id'] == '') }
   
@@ -56,16 +56,17 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.create_from_params(params, vendor, user)
+  def self.create_from_params(params, vendor, user, customer)
     order = Order.new params[:model]
     order.user = user
+    order.customer = customer
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
       order.create_new_item(item_params)
     end
-    order.save
-    order.update_associations(user)
+    raise "Order could not be saved." unless order.save
+    order.update_associations(user,customer)
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
@@ -75,7 +76,7 @@ class Order < ActiveRecord::Base
     return order
   end
 
-  def update_from_params(params, user)
+  def update_from_params(params, user, customer)
     self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
@@ -86,8 +87,8 @@ class Order < ActiveRecord::Base
       end
     end
     self.save
-    new_user = params[:items] ? user : nil
-    self.update_associations(new_user)
+    new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
+    self.update_associations(new_user, customer)
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
@@ -129,7 +130,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def update_associations(user)
+  def update_associations(user,customer)
     self.user = user if user
     unless self.cost_center 
       self.cost_center = self.vendor.cost_centers.existing.first
@@ -137,10 +138,23 @@ class Order < ActiveRecord::Base
       self.payment_method_items.update_all :cost_center_id => self.cost_center
     end
     self.save
-    self.table.update_color if self.table
+    
+    table = self.table
+    table.update_color #if table
+    table.confirmations_pending = ! customer.nil?
+    table.customer = customer
+    table.save
+    
     # Set item notifications
-    self.items.where( :user_id => nil, :preparation_user_id => nil, :delivery_user_id => nil ).each do |i|
-      i.update_attributes :user_id => self.user_id, :vendor_id => self.vendor_id, :company_id => self.company_id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => self.user_id
+    remote_orders = self.vendor.remote_orders
+    self.items.existing.each do |i|
+      if customer.nil?
+        # waiter confirms all
+        confirmation_count = i.count
+      else
+        confirmation_count = i.confirmation_count # do nothing
+      end
+      i.update_attributes :user_id => self.user_id, :vendor_id => self.vendor_id, :company_id => self.company_id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => self.user_id, :confirmation_count => confirmation_count
     end
   end
 
@@ -250,7 +264,7 @@ class Order < ActiveRecord::Base
   def finish
     self.finished_at = Time.now
     self.finished = true
-    Item.connection.execute("UPDATE items SET preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
+    Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
     self.table.update_color

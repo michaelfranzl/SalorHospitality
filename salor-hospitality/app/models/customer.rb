@@ -12,6 +12,7 @@ class Customer < ActiveRecord::Base
   belongs_to :company
   has_many :orders
   has_many :bookings
+  validates_presence_of :login
 
   def to_hash
     {:id => self.id, :name => self.full_name(true)}

@@ -62,21 +62,29 @@ class ItemsController < ApplicationController
   def list
     items = {}
     items_json_string = {}
+    
+    if @current_user.confirmation_user
+      # unlike the following queries, this one is always global, not assigned to a single user, i.e. returns all confirmations for the vendor.
+      items[:confirmation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > confirmation_count OR confirmation_count IS NULL)")
+    else
+      items[:confirmation] = []
+    end
+      
     if (params[:type] == 'vendor')
-      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (count > preparation_count OR preparation_count IS NULL)")
+      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (confirmation_count > preparation_count OR (preparation_count IS NULL AND confirmation_count > 0))")
       items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
-    elsif params[:type] == 'user' 
-      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND preparation_user_id = #{ @current_user.id } AND (count > preparation_count OR preparation_count IS NULL)")
+    elsif params[:type] == 'user'
+      items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND preparation_user_id = #{ @current_user.id } AND (confirmation_count > preparation_count OR (preparation_count IS NULL AND confirmation_count > 0))")
       items[:delivery] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND delivery_user_id = #{ @current_user.id } AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))")
     end
-    [:preparation, :delivery].each do |scope|
+    [:confirmation, :preparation, :delivery].each do |scope|
       items_json_string[scope] = items[scope].collect { |i|
         label = i.quantity_id ? "#{ i.quantity.prefix } #{ i.article.name[0..15] } #{ i.quantity.postfix }#{ i.formatted_comment }#{ i.compose_option_names_without_price }" : "#{ i.article.name[0..15] }#{ i.formatted_comment }#{ i.compose_option_names_without_price}"
 
-        "\"#{i.id}\":{\"id\":#{i.id},\"tid\":#{i.order.table_id},\"cid\":#{i.category_id},\"aid\":#{i.article_id},\"qid\":#{i.quantity_id ? i.quantity_id : 'null'},\"preparation_uid\":#{i.preparation_user_id ? i.preparation_user_id : 'null'},\"delivery_uid\":#{i.delivery_user_id ? i.delivery_user_id : 'null'},\"preparation_c\":#{i.preparation_count ? i.preparation_count : 'null'},\"delivery_c\":#{i.delivery_count ? i.delivery_count : 'null'},\"c\":#{i.count},\"s\":#{!i.scribe.nil?},\"l\":\"#{label}\",\"t\":\"#{i.created_at.strftime('%H:%M:%S')}\"}"
+        "\"#{i.id}\":{\"id\":#{i.id},\"tid\":#{i.order.table_id},\"cid\":#{i.category_id},\"aid\":#{i.article_id},\"qid\":#{i.quantity_id ? i.quantity_id : 'null'},\"preparation_uid\":#{i.preparation_user_id ? i.preparation_user_id : 'null'},\"delivery_uid\":#{i.delivery_user_id ? i.delivery_user_id : 'null'},\"confirmation_c\":#{i.confirmation_count ? i.confirmation_count : 'null'},\"preparation_c\":#{i.preparation_count ? i.preparation_count : 'null'},\"delivery_c\":#{i.delivery_count ? i.delivery_count : 'null'},\"c\":#{i.count},\"s\":#{!i.scribe.nil?},\"l\":\"#{label}\",\"t\":\"#{i.created_at.strftime('%H:%M:%S')}\"}"
       }.join(',').gsub("\n", '\n')
     end
-    render :js => "{\"preparation\":{#{items_json_string[:preparation]}}, \"delivery\":{#{items_json_string[:delivery]}}}"
+    render :js => "{\"confirmation\":{#{items_json_string[:confirmation]}}, \"preparation\":{#{items_json_string[:preparation]}}, \"delivery\":{#{items_json_string[:delivery]}}}"
   end
   
   def set_attribute

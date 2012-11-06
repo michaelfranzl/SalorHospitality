@@ -63,6 +63,9 @@
             %tr
               %td= user_form.label :audio
               %td= user_form.check_box :audio
+            %tr
+              %td= user_form.label :confirmation_user
+              %td= user_form.check_box :confirmation_user
               
         - if @current_user.role.permissions.include?('assign_tables')
           %td

@@ -39,7 +39,10 @@ module OrdersHelper
       :delete => escape_javascript(I18n.t('various.delete')),
       :refund => escape_javascript(I18n.t(:refund)),
       :mobile_view => escape_javascript(I18n.t('various.mobile_view')),
-      :workstation_view => escape_javascript(I18n.t('various.workstation_view'))
+      :workstation_view => escape_javascript(I18n.t('various.workstation_view')),
+      :order_will_be_confirmed => escape_javascript(I18n.t('various.order_will_be_confirmed')),
+      :finish_was_requested => escape_javascript(I18n.t('various.finish_was_requested')),
+      :waiter_was_requested => escape_javascript(I18n.t('various.waiter_was_requested'))
     }
     return i18n.to_json
   end

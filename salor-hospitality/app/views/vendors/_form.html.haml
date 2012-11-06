@@ -75,6 +75,10 @@
         %br
         = vendor_form.check_box :ticket_display_time_order
         = vendor_form.label :ticket_display_time_order, :class => 'wide'
+        - if @current_user.role.weight == 0
+          %br
+          = vendor_form.check_box :remote_orders
+          = vendor_form.label :remote_orders
 
         %div#vendor_printers
           %h3= t('activerecord.models.vendor_printer.other')

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106093429) do
+ActiveRecord::Schema.define(:version => 20121106163555) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -326,28 +326,28 @@ ActiveRecord::Schema.define(:version => 20121106093429) do
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "count",                                :default => 1
+    t.integer  "count",                                 :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.integer  "position"
     t.integer  "quantity_id"
-    t.string   "comment",                              :default => ""
+    t.string   "comment",                               :default => ""
     t.float    "price"
-    t.integer  "printed_count",       :limit => 1,     :default => 0
+    t.integer  "printed_count",        :limit => 1,     :default => 0
     t.integer  "item_id"
     t.integer  "tax_id"
-    t.integer  "max_count",                            :default => 0
+    t.integer  "max_count",                             :default => 0
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
-    t.string   "preparation_comment",                  :default => ""
+    t.string   "preparation_comment",                   :default => ""
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
-    t.string   "delivery_comment",                     :default => ""
+    t.string   "delivery_comment",                      :default => ""
     t.boolean  "hidden"
     t.integer  "category_id"
     t.float    "tax_percent"
@@ -361,7 +361,9 @@ ActiveRecord::Schema.define(:version => 20121106093429) do
     t.integer  "cost_center_id"
     t.text     "scribe"
     t.text     "scribe_escpos"
-    t.string   "taxes",               :limit => 10000, :default => "--- {}\n"
+    t.string   "taxes",                :limit => 10000, :default => "--- {}\n"
+    t.integer  "confirmation_count"
+    t.integer  "confirmation_user_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -779,25 +781,29 @@ ActiveRecord::Schema.define(:version => 20121106093429) do
 
   create_table "tables", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "left",           :default => 50
-    t.integer  "top",            :default => 50
-    t.integer  "width",          :default => 70
-    t.integer  "height",         :default => 45
-    t.integer  "left_mobile",    :default => 50
-    t.integer  "top_mobile",     :default => 50
-    t.integer  "width_mobile",   :default => 70
-    t.integer  "height_mobile",  :default => 45
-    t.boolean  "hidden",         :default => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.integer  "left",                  :default => 50
+    t.integer  "top",                   :default => 50
+    t.integer  "width",                 :default => 70
+    t.integer  "height",                :default => 45
+    t.integer  "left_mobile",           :default => 50
+    t.integer  "top_mobile",            :default => 50
+    t.integer  "width_mobile",          :default => 70
+    t.integer  "height_mobile",         :default => 45
+    t.boolean  "hidden",                :default => false
     t.boolean  "rotate"
     t.integer  "company_id"
     t.integer  "active_user_id"
     t.integer  "vendor_id"
-    t.boolean  "active",         :default => true
+    t.boolean  "active",                :default => true
     t.integer  "position"
     t.boolean  "booking_table"
-    t.boolean  "enabled",        :default => true
+    t.boolean  "enabled",               :default => true
+    t.boolean  "confirmations_pending"
+    t.integer  "customer_id"
+    t.boolean  "request_finish"
+    t.boolean  "request_waiter"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
@@ -894,6 +900,7 @@ ActiveRecord::Schema.define(:version => 20121106093429) do
     t.string   "email"
     t.string   "salt"
     t.string   "encrypted_password"
+    t.boolean  "confirmation_user"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
@@ -954,6 +961,7 @@ ActiveRecord::Schema.define(:version => 20121106093429) do
     t.integer  "max_users",                                     :default => 3
     t.integer  "max_categories",                                :default => 6
     t.string   "email"
+    t.boolean  "remote_orders"
   end
 
 end

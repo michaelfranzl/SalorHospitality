@@ -1,7 +1,12 @@
 - if workstation?
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
-%a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
+- unless @current_customer
+  %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
+- else
+  %a#order_submit_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_send');", :title => t('various.customer_request_send') }
+  %a#order_submit_button.iconbutton.cash_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_finish');", :title => t('various.customer_request_finish') }
+  %a#order_submit_button.iconbutton.user_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_waiter');", :title => t('various.customer_request_waiter') }
 
 - if workstation?
   - if permit('counter_mode')
@@ -28,7 +33,7 @@
 - elsif mobile? and position == 'header'
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
   
-- if position == 'header'
+- if position == 'header' and not @current_customer
   %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
   
 - if permit('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)

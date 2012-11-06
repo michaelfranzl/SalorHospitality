@@ -129,7 +129,30 @@ function route(target, model_id, action, options) {
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
-      //final rendering will be done in application#route
+    } else if (action == 'customer_request_end') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_send';
+      submit_json.model.table_id = model_id;
+      //submit_json.model.note = $('#order_note').val();
+      alert(i18n.order_will_be_confirmed);
+      send_json('table_' + model_id);
+      submit_json.model = {table_id:model_id};
+    } else if (action == 'customer_request_finish') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_finish';
+      submit_json.model.table_id = model_id;
+      alert(i18n.finish_was_requested);
+      //submit_json.model.note = $('#order_note').val();
+      send_json('table_' + model_id);
+      submit_json.model = {table_id:model_id};
+    } else if (action == 'customer_request_waiter') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_waiter';
+      submit_json.model.table_id = model_id;
+      alert(i18n.waiter_was_requested);
+      //submit_json.model.note = $('#order_note').val();
+      send_json('table_' + model_id);
+      submit_json.model = {table_id:model_id};
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
@@ -1225,6 +1248,7 @@ function update_resources_success(data) {
 
 function update_item_lists() {
   if (permissions.see_item_notifications_vendor_preparation || permissions.see_item_notifications_vendor_delivery) {
+    // permitting any of the vendor notification overrides all of the user notifications
     $.ajax({
       url: '/items/list',
       dataType: 'json',
@@ -1232,9 +1256,11 @@ function update_item_lists() {
       success: function(data) {
         resources.notifications_vendor = data;
         notification_alerts('vendor');
+        //if (permissions.confirmation_user) render_item_list('interactive', 'vendor', 'confirmation');
         if (permissions.see_item_notifications_vendor_preparation) render_item_list('interactive', 'vendor', 'preparation');
         if (permissions.see_item_notifications_vendor_delivery)    render_item_list('interactive', 'vendor', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
+          if (permissions.confirmation_user) render_item_list('static', 'vendor', 'confirmation');
           if (permissions.see_item_notifications_vendor_preparation) render_item_list('static', 'vendor', 'preparation');
           if (permissions.see_item_notifications_vendor_delivery) render_item_list('static', 'vendor', 'delivery');
         }
@@ -1249,9 +1275,11 @@ function update_item_lists() {
       success: function(data) {
         resources.notifications_user = data;
         notification_alerts('user');
+        //if (permissions.confirmation_user) render_item_list('interactive', 'user', 'confirmation');
         if (permissions.see_item_notifications_user_preparation) render_item_list('interactive', 'user', 'preparation');
         if (permissions.see_item_notifications_user_delivery)    render_item_list('interactive', 'user', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
+          if (permissions.confirmation_user) render_item_list('static', 'user', 'confirmation');
           if (permissions.see_item_notifications_user_preparation) render_item_list('static', 'user', 'preparation');
           if (permissions.see_item_notifications_user_delivery) render_item_list('static', 'user', 'delivery');
         }
@@ -1261,12 +1289,14 @@ function update_item_lists() {
   }
 }
 
-function notification_alerts(model) {
+function notification_alerts(model) {    
   if (model == 'user') {
+    //var confirmation_notification_user_count = Object.keys(resources.notifications_user.confirmation).length;
     var delivery_notification_user_count = Object.keys(resources.notifications_user.delivery).length;
     var prepraration_notification_user_count = Object.keys(resources.notifications_user.preparation).length;
     var total_count = delivery_notification_user_count + prepraration_notification_user_count;
   } else if (model == 'vendor') {
+    //var confirmation_notification_vendor_count = Object.keys(resources.notifications_vendor.confirmation).length;
     var delivery_notification_vendor_count = Object.keys(resources.notifications_vendor.delivery).length;
     var prepraration_notification_vendor_count = Object.keys(resources.notifications_vendor.preparation).length;
     var total_count = delivery_notification_vendor_count + prepraration_notification_vendor_count;
@@ -1352,14 +1382,17 @@ function render_item_list(type, model, scope) {
   if (type == 'interactive') {
     var list_container = $('#list_interactive_' + scope);
     list_container.html('');
+    //console.log(type);
+    //console.log(model);
+    //console.log(scope);
     $.each(resources['notifications_' + model][scope], function(k,v) {
+      
       var table_name = resources.tb[v.tid].n;
       var user_id = v[scope + '_uid'];
-      if (user_id == null) {
-        return true
+      if (user_id != null) {
+        var user_name = resources.u[user_id].n;
       }
-      var user_name = resources.u[user_id].n;
-      var reference_count_attribute = (scope == 'preparation') ? 'c' : 'preparation_c'
+      
       var item_container = create_dom_element('div',{id:'item_list_' + scope + '_'+ v.id},'',list_container);
       item_container.addClass('item_list');
       var hours = v.t.substring(0,2);
@@ -1395,12 +1428,29 @@ function render_item_list(type, model, scope) {
       var table = create_dom_element('table',{},'',confirmed_element);
       var row = create_dom_element('tr',{},'',table);
       var cell_tablename = create_dom_element('td',{},table_name,row);
-      if (scope == 'delivery') {
-        var cell_reference_count_1 = create_dom_element('td',{}, v.c, row);
-        cell_reference_count_1.addClass('reference_count');
+
+      switch(scope) {
+        case 'confirmation':
+          var cell_reference_count_1 = create_dom_element('td', {}, v.c, row);
+          cell_reference_count_1.addClass('reference_count');
+          break;
+        case 'preparation':
+          var cell_reference_count_1 = create_dom_element('td', {}, v.c, row);
+          cell_reference_count_1.addClass('reference_count');
+          var cell_reference_count_2 = create_dom_element('td', {}, v.confirmation_c, row);
+          cell_reference_count_2.addClass('reference_count');
+          break;
+        case 'delivery':
+          var cell_reference_count_1 = create_dom_element('td', {}, v.c, row);
+          cell_reference_count_1.addClass('reference_count');
+          var cell_reference_count_2 = create_dom_element('td', {}, v.confirmation_c, row);
+          cell_reference_count_2.addClass('reference_count');
+          var cell_reference_count_3 = create_dom_element('td', {}, v.preparation_c, row);
+          cell_reference_count_3.addClass('reference_count');
+          break;
       }
-      var cell_reference_count_2 = create_dom_element('td', {}, v[reference_count_attribute], row);
-      cell_reference_count_2.addClass('reference_count');
+     
+      
       var cell_increment_count = create_dom_element('td',{id:'item_list_' + scope +'_'+ v.id + '_increment_button'}, v[scope + '_c'], row);
       cell_increment_count.addClass('increment');
       cell_increment_count.on('click', function() {
@@ -1415,10 +1465,9 @@ function render_item_list(type, model, scope) {
     $.each(resources['notifications_' + model][scope], function(k,v) {
       var table_name = resources.tb[v.tid].n;
       var user_id = v[scope + '_uid'];
-      if (user_id == null) {
-        return true
+      if (user_id != null) {
+        var user_name = resources.u[user_id].n;
       }
-      var user_name = resources.u[user_id].n;
       
       var hours = v.t.substring(0,2);
       var minutes = v.t.substring(3,5);
@@ -1464,10 +1513,26 @@ function item_list_confirm(id, model, scope) {
 
 function item_list_increment(id, model, scope) {
   var increment_button = $('#item_list_' + scope + '_' + id + '_increment_button');
-  var scope_count_attribute = (scope == 'preparation') ? 'preparation_c' : 'delivery_c'
-  var reference_count_attribute = (scope == 'preparation') ? 'c' : 'preparation_c'
+  
+  var scope_count_attribute = null;
+  switch(scope) {
+    case 'confirmation':
+      var reference_count_attribute = 'c';
+      var scope_count_attribute = 'confirmation_c'
+      break;
+    case 'preparation':
+      var reference_count_attribute = 'confirmation_c';
+      var scope_count_attribute = 'preparation_c'
+      break;
+    case 'delivery':
+      var reference_count_attribute = 'preparation_c';
+      var scope_count_attribute = 'delivery_c'
+      break;
+  }
+  
   var c = resources['notifications_' + model][scope][id][scope_count_attribute];
   var r = resources['notifications_' + model][scope][id][reference_count_attribute];
+  
   if ( c < r ) {
     increment_button.html(c + 1);
     resources['notifications_' + model][scope][id][scope_count_attribute] = c+1;
@@ -1525,7 +1590,9 @@ function render_tables() {
     var table = create_dom_element('div',{id:'table'+v.id,ontouchstart:'javascript:enable_audio();'}, v.n, '#tables');
     
     var bgcolor = null;
-    if (v.auid) {
+    if (v.crid) {
+      create_dom_element('span', {}, resources.customers.all[v.crid].n, table);
+    } else if (v.auid) {
       bgcolor = resources.u[v.auid].c;
       create_dom_element('span', {}, resources.u[v.auid].n, table);
     }
@@ -1539,13 +1606,21 @@ function render_tables() {
     if (typeof(bgcolor) == 'string') {
       table.css('background-color', bgcolor);
     }
+    if (v.cp) {
+      // confirmation pending
+      if (permissions.confirmation_user) {
+        table.effect("pulsate", { times:2000 }, 3000);
+      }
+      table.css('color', 'black');
+      table.css('background-color', 'white');
+    }
     if (permissions.move_tables && settings.mobile_drag_and_drop || settings.admin_interface) {
       table.draggable({ stop: function() {
         update_table_coordinates(v.id)}
       })
       table.css('background-color', 'grey');      
     } else {
-      if (v.e) {
+      if (v.e && !(!permissions.confirmation_user && v.cp)) {
         table.on('mousedown', function() {
           route('table',v.id);
         });

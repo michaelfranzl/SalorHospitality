@@ -159,7 +159,9 @@ gn:
         tables: Tische
         title: Anrede
         audio: Akustische Signale
+        confirmation_user: Fernbestellungen bestätigen
       vendor:
+        remote_orders: Fernbestellungen
         automatic_printing: Automatisches Drucken
         country: Regeln für Land
         hidden: löschen
@@ -458,6 +460,7 @@ gn:
     functions_header_order_form:
       move_order: Bestellung verschieben
     index:
+      confirmation_list: Selbstbedienung
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
     invoice_form:
@@ -706,6 +709,12 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    customer_request_send: Bestellung anfragen
+    customer_request_finish: Bezahlung anfragen
+    customer_request_waiter: Kellner anfragen
+    order_will_be_confirmed: Ihre Bestellung wird in Kürze von einem Keller bestätigt
+    finish_was_requested: Sie haben die Bezahlung angefordert. Bitte haben Sie ein wenig Geduld.
+    waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig Geduld.
     mobile_view: Ansicht Mobilgeräten
     workstation_view: Ansicht Basisstation
     cancel: Abbrechen

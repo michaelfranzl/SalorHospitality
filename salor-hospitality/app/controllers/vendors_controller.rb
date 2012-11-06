@@ -90,7 +90,8 @@ class VendorsController < ApplicationController
       :manage_payment_methods => permit("manage_payment_methods"),
       :manage_customers => permit("manage_customers"),
       :audio => (@current_user.audio unless @current_customer),
-      :move_tables => permit("move_tables")
+      :move_tables => permit("move_tables"),
+      :confirmation_user => (@current_user.confirmation_user unless @current_customer)
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

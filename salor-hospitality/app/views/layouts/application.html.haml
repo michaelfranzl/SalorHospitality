@@ -46,10 +46,9 @@
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
-    - unless @current_customer
-      %script
-        == automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
-        == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
+    %script
+      == automatic_printing = #{ (@current_customer.nil? and @current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
+      == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
 
   %body
     %audio#audio{ :src=>"/alert.wav" }

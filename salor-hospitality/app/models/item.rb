@@ -11,7 +11,7 @@
 class Item < ActiveRecord::Base
   attr_accessible :position, :comment, :price, :article_id, :quantity_id, :category_id, :count, :printed_count, :usage, :hidden, :customers_ids
   attr_accessible :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
-  attr_accessible :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe
+  attr_accessible :user_id, :confirmation_count, :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe
   
   include Scope
   belongs_to :order

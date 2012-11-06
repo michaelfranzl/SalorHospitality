@@ -159,7 +159,9 @@ en:
         tables: Tables
         title: Title
         audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       vendor:
+        remote_orders: Remote orders
         automatic_printing: Automatic printing
         country: Rules for country
         hidden: delete
@@ -458,6 +460,7 @@ en:
     functions_header_order_form:
       move_order: Move order to other table
     index:
+      confirmation_list: Self-order list
       delivery_list: Delivery list
       preparation_list: Preparation list
     invoice_form:
@@ -710,6 +713,12 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience, we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience, we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
     cancel: Cancel

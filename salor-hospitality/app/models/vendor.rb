@@ -138,10 +138,21 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
+    
+    # the following is speedy, no more nested Ruby/SQL loops
+    category_models       = self.categories.existing.active.positioned
+    article_models        = self.articles.existing.active.positioned
+    quantity_models       = self.quantities.existing.active.positioned
+    option_models         = self.options.existing.positioned
+    payment_method_models = self.payment_methods.existing
+    table_models          = self.tables.existing
+    user_models           = self.users.existing
+    customer_models       = self.customers.existing.active
+    
     cstmers = {}
     cstmers[:regulars] = []
     x = 0
-    self.customers.order("m_points DESC").each do |c|
+    self.customers.existing.active.order("m_points DESC").each do |c|
       if x < 15 then
         cstmers[:regulars] << c.to_hash
       end
@@ -152,15 +163,12 @@ class Vendor < ActiveRecord::Base
       cstmers[c1][c2] << c.to_hash
       x += 1
     end
-    # the following is speedy, no more nested Ruby/SQL loops
-    category_models       = self.categories.existing.active.positioned
-    article_models        = self.articles.existing.active.positioned
-    quantity_models       = self.quantities.existing.active.positioned
-    option_models         = self.options.existing.positioned
-    payment_method_models = self.payment_methods.existing
-    table_models          = self.tables.existing
-    user_models           = self.users.existing
-
+    cstmers[:all] = {}
+    customer_models.each do |c|
+      cuid = c.id
+      cstmers[:all][cuid] = { :id => cuid, :n => c.full_name(true) }
+    end
+    
     quantities = {}
     quantity_models.each do |q|
       ai = q.article_id

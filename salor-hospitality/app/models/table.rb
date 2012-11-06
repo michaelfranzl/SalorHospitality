@@ -14,6 +14,7 @@ class Table < ActiveRecord::Base
   belongs_to :user
   belongs_to :company
   belongs_to :vendor
+  belongs_to :customer
   belongs_to :user, :class_name => 'User', :foreign_key => 'active_user_id'
 
   validates_presence_of :name
@@ -33,5 +34,15 @@ class Table < ActiveRecord::Base
     name = self.name
     name += self.active_user_id ? '☒' : '☐'
     return name
+  end
+  
+  def set_request_finish
+    self.request_finish = true
+    self.save
+  end
+  
+  def set_request_waiter
+    self.request_waiter = true
+    self.save
   end
 end

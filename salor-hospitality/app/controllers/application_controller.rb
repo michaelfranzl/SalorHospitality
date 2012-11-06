@@ -135,6 +135,17 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
+                when 'table_request_send'
+                  @table = @order.table
+                  render 'orders/render_order_form'
+                when 'table_request_finish'
+                  @table = @order.table
+                  @table.set_request_finish
+                  render 'orders/render_order_form'
+                when 'table_request_waiter'
+                  @table = @order.table
+                  @table.set_request_waiter
+                  render 'orders/render_order_form'
               end
             else
               render :nothing => true
@@ -168,7 +179,7 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
-    if @current_user.role.permissions.include?('see_debug')
+    if permit('see_debug')
       @order.check if @order
       @booking.check if @booking
     end
@@ -199,9 +210,9 @@ class ApplicationController < ActionController::Base
         raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
-        @order.update_from_params(params, @current_user)
+        @order.update_from_params(params, @current_user, @current_customer)
       else
-        @order = Order.create_from_params(params, @current_vendor, @current_user)
+        @order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
       end
       @order.table.update_color
       return @order
@@ -287,7 +298,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_permissions
-      redirect_to '/' and return unless @current_user.role.permissions.include? "manage_#{ controller_name }"
+      redirect_to '/' and return unless permit("manage_#{ controller_name }")
     end
 
     def workstation?
