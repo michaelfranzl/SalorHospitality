@@ -8,10 +8,10 @@
     %a.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish) }
     %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish) }
 
-- if @current_user.role.permissions.include? 'finish_orders'
+- if permit('finish_orders')
   %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
 
-- if @current_user.role.permissions.include?('move_order')
+- if permit('move_order')
   - if workstation?
     %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
   - elsif mobile?
@@ -19,7 +19,7 @@
       %option{ :value => '', :selected => true }
       = options_from_collection_for_select(@current_user.tables.existing.order(:name), 'id', 'name')
 
-- if @current_user.role.permissions.include?('assign_order_to_user')
+- if permit('assign_order_to_user')
   - if workstation?
     %a.iconbutton.user_button{ :onclick => "$('#usersselect').slideDown();", :title => t('roles.new.assign_order_to_user') }
       
@@ -31,5 +31,5 @@
 - if position == 'header'
   %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
   
-- if @current_user.role.permissions.include?('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)
+- if permit('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)
   %a#order_clear_button.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }

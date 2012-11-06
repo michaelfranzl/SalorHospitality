@@ -16,8 +16,8 @@ class TablesController < ApplicationController
   respond_to :html, :js
   
   def index
-    @tables = @current_user.tables.existing.active.where(:vendor_id => @current_vendor).order(:name)
-    #@last_finished_order = @current_vendor.orders.existing.where(:finished => true).last
+    @tables = @current_user.tables.existing.active.where(:vendor_id => @current_vendor).order(:name) unless @current_customer
+    @tables ||= []
     respond_with do |wants|
       wants.html
       wants.js {

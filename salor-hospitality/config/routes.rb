@@ -200,6 +200,7 @@ SalorHospitality::Application.routes.draw do
   resource :session do
     get :exception_test
     get :permission_denied
+    get :new_customer
   end
 
   # Sample resource route with sub-resources:

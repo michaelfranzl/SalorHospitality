@@ -3,7 +3,7 @@
 
 #note_for_order= render 'note'
 
-- if workstation?
+- if workstation? and not @current_customer
   #tablesselect
     %h3= t :move_order_to_table
     %span.done{ :onclick => "$('#tablesselect').slideUp();" }

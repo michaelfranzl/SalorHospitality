@@ -12,6 +12,7 @@ class VendorsController < ApplicationController
 
   before_filter :check_permissions, :except => [:render_resources]
   after_filter :update_vendor_cache, :only => ['create','update']
+  helper_method :permit
 
   def index
     @vendors = @current_company.vendors.existing
@@ -77,19 +78,19 @@ class VendorsController < ApplicationController
   def render_resources
     resources = @current_vendor.resources_cache
     permissions = {
-      :delete_items => @current_user.role.permissions.include?("delete_items"),
-      :decrement_items => @current_user.role.permissions.include?("decrement_items"),
-      :item_scribe => @current_user.role.permissions.include?("item_scribe"),
-      :see_item_notifications_user_preparation => @current_user.role.permissions.include?("see_item_notifications_user_preparation"),
-      :see_item_notifications_user_delivery => @current_user.role.permissions.include?("see_item_notifications_user_delivery"),
-      :see_item_notifications_vendor_preparation => @current_user.role.permissions.include?("see_item_notifications_vendor_preparation"),
-      :see_item_notifications_vendor_delivery => @current_user.role.permissions.include?("see_item_notifications_vendor_delivery"),
-      :see_item_notifications_static => @current_user.role.permissions.include?("see_item_notifications_static"),
-      :see_item_notifications_user_delivery => @current_user.role.permissions.include?("see_item_notifications_user_delivery"),
-      :manage_payment_methods => @current_user.role.permissions.include?("manage_payment_methods"),
-      :manage_customers => @current_user.role.permissions.include?("manage_customers"),
-      :audio => @current_user.audio,
-      :move_tables => @current_user.role.permissions.include?("move_tables")
+      :delete_items => permit("delete_items"),
+      :decrement_items => permit("decrement_items"),
+      :item_scribe => permit("item_scribe"),
+      :see_item_notifications_user_preparation => permit("see_item_notifications_user_preparation"),
+      :see_item_notifications_user_delivery => permit("see_item_notifications_user_delivery"),
+      :see_item_notifications_vendor_preparation => permit("see_item_notifications_vendor_preparation"),
+      :see_item_notifications_vendor_delivery => permit("see_item_notifications_vendor_delivery"),
+      :see_item_notifications_static => permit("see_item_notifications_static"),
+      :see_item_notifications_user_delivery => permit("see_item_notifications_user_delivery"),
+      :manage_payment_methods => permit("manage_payment_methods"),
+      :manage_customers => permit("manage_customers"),
+      :audio => (@current_user.audio unless @current_customer),
+      :move_tables => permit("move_tables")
     }
     render :js => "permissions = #{ permissions.to_json }; resources = #{ resources };"
   end

@@ -644,6 +644,11 @@ en:
       login: Login
       password: Password
       username: User
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
   settlements:
     detailed_list:
       count: Count

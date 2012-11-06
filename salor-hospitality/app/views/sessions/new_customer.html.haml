@@ -5,7 +5,7 @@
     %p
       = label_tag 'password', (t '.password')
       = password_field_tag 'password', '', :size => 9, :class => 'qwerty ui-keyboard-input'
-      = hidden_field_tag 'mode', 'user'
+      = hidden_field_tag 'mode', 'customer'
       %span#password_display_keyboard.display_keyboard
     %p= submit_tag t('.login'), :class => 'submit'
 

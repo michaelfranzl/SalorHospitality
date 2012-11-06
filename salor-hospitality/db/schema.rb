@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106055427) do
+ActiveRecord::Schema.define(:version => 20121106093429) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -211,24 +211,34 @@ ActiveRecord::Schema.define(:version => 20121106055427) do
   add_index "coupons_orders", ["order_id"], :name => "coupons_orders_order_id_index"
 
   create_table "customers", :force => true do |t|
-    t.string   "first_name",   :default => ""
-    t.string   "last_name",    :default => ""
-    t.string   "company_name", :default => ""
-    t.string   "address",      :default => ""
-    t.string   "city",         :default => ""
-    t.string   "state",        :default => ""
-    t.string   "postalcode",   :default => ""
+    t.string   "first_name",                :default => ""
+    t.string   "last_name",                 :default => ""
+    t.string   "company_name",              :default => ""
+    t.string   "address",                   :default => ""
+    t.string   "city",                      :default => ""
+    t.string   "state",                     :default => ""
+    t.string   "postalcode",                :default => ""
     t.string   "m_number"
     t.string   "m_points"
-    t.string   "email",        :default => ""
-    t.string   "telephone",    :default => ""
-    t.string   "cellphone",    :default => ""
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "email",                     :default => ""
+    t.string   "telephone",                 :default => ""
+    t.string   "cellphone",                 :default => ""
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
-    t.string   "country",      :default => ""
+    t.string   "country",                   :default => ""
+    t.string   "password"
+    t.string   "login"
+    t.integer  "role_id"
+    t.string   "language"
+    t.boolean  "active",                    :default => true
+    t.boolean  "onscreen_keyboard_enabled", :default => false
+    t.string   "current_ip"
+    t.datetime "last_active_at"
+    t.datetime "last_login_at"
+    t.datetime "last_logout_at"
   end
 
   create_table "discounts", :force => true do |t|

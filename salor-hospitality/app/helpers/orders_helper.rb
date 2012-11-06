@@ -49,7 +49,7 @@ module OrdersHelper
       :mobile => mobile?,
       :workstation => workstation?,
       :mobile_special => mobile_special?,
-      :screenlock_timeout => @current_user.screenlock_timeout,
+      :screenlock_timeout => (@current_user.screenlock_timeout if @current_user),
       :mobile_drag_and_drop => false
     }
     return settings.to_json

@@ -25,7 +25,7 @@
 
     - if mobile?
       = javascript_include_tag 'application-mobile'
-    - if controller.controller_name == 'orders' and controller.action_name == 'index' and @current_user.role.permissions.include?('manage_hotel') and workstation? and not mobile_special?
+    - if controller.controller_name == 'orders' and controller.action_name == 'index' and permit('manage_hotel') and workstation? and not mobile_special?
       = javascript_include_tag 'booking'
       = javascript_include_tag 'bookings'
       = javascript_include_tag 'season'
@@ -46,9 +46,10 @@
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
-    %script
-      == automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
-      == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
+    - unless @current_customer
+      %script
+        == automatic_printing = #{ (@current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
+        == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
 
   %body
     %audio#audio{ :src=>"/alert.wav" }
@@ -64,7 +65,7 @@
           #flash_notice= flash[:notice]
         - if flash[:error]
           #flash_error= flash[:error]
-      - if @current_user.role.permissions.include? 'see_debug'
+      - if permit('see_debug')
         #messages messages
       #main= yield
       #footer

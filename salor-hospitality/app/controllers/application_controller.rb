@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   helper :all
   before_filter :fetch_logged_in_user, :set_locale
 
-  helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?
+  helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?, :permit
   
   def route
     #puts "XXXXXXXXXXXXX #{params[:currentview]}"
@@ -238,9 +238,12 @@ class ApplicationController < ActionController::Base
     end
 
     def fetch_logged_in_user
-      @current_user = User.find_by_id session[:user_id] if session[:user_id]
-      @current_company = @current_user.company if @current_user
+      @current_user = User.existing.active.find_by_id session[:user_id] if session[:user_id]
+      @current_customer = Customer.find_by_id session[:customer_id] if session[:customer_id]
+      
+      @current_company = Company.existing.find_by_id session[:company_id] if session[:company_id]
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
+
       session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
 
       # we need these for the history observer because we don't have control at the time
@@ -250,7 +253,7 @@ class ApplicationController < ActionController::Base
       $Request = request
       $Params = params
 
-      unless @current_user and @current_vendor
+      unless (@current_user or @current_customer) and @current_vendor
         if defined?(SalorSaas) == 'constant'
           redirect_to salor_saas.new_session_path
         else
@@ -289,6 +292,14 @@ class ApplicationController < ActionController::Base
 
     def workstation?
       request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('iPad')
+    end
+    
+    def permit(p)
+      if @current_user
+        return @current_user.role.permissions.include?(p)
+      elsif @current_customer
+        return false #@current_customer.role.permissions.include?(p)
+      end
     end
 
     def mobile?

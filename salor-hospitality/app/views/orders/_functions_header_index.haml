@@ -15,4 +15,4 @@
 - if permit('manage_hotel')
   %a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.toggle_between_tables_and_rooms') }
 
-= button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
+= button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
