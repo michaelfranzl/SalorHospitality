@@ -1,3 +1,30 @@
+salor-hospitality (4.1.1.18) unstable; urgency=low
+
+  [ Michael Franzl ]
+  * various fixes
+  * usage for translation task
+  * updated translations from english
+
+  [ jokerwader ]
+  * Update salor-hospitality/config/locales/main.pl.yml
+  * Update salor-hospitality/config/locales/system.pl.yml
+
+  [ Michael Franzl ]
+  * default printfile is called 1.salor
+  * js table rendering instead of rails templates
+  * fixes and improvements
+  * customer login without errors
+  * logout fix
+  * customer ordering working
+  * call waiter and request payment
+  * auto-login for customers
+  * updated translations
+  * fix
+  * assign cost_center_id to items, ajax loader for split items
+  * stable
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 07 Nov 2012 22:33:08 +0100
+
 salor-hospitality (4.1.1.17) unstable; urgency=low
 
   * ruby-uglifier dependency
