@@ -240,7 +240,7 @@ company_count.times do |c|
 
     payment_method_objects = Array.new
     payment_method_names.size.times do |i|
-      pm = PaymentMethod.new :name => "#{ payment_method_names[i] }#{c}#{v}#{i}", :cash => (payment_method_names[i] == 'Cash') ? true : nil, :change => (payment_method_names[i] == 'Change') ? true : nil
+      pm = PaymentMethod.new :name => "#{ payment_method_names[i] }#{c}#{v}#{i}", :cash => (payment_method_names[i] == 'Cash') ? true : false, :change => (payment_method_names[i] == 'Change') ? true : false
       pm.company = company
       pm.vendor = vendor
       r = pm.save

@@ -3,19 +3,20 @@
 - else
   %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login }
 
-= link_to '', "/settlements/print/#{ @settlement.id }", :class => 'iconbutton print2_button', :remote => true
-
-%p= text_field_tag 'date'
+- if @settlement.id
+  = link_to '', "/settlements/print/#{ @settlement.id }", :class => 'iconbutton print2_button', :remote => true
+  %p= text_field_tag 'date'
 
 = render :partial => 'detailed_list', :locals => { :orders => @orders }
 
-:javascript
-  $('#date').datepicker({
-    onSelect: function(date, inst) {
-      $(this).val('OK');
-      $.ajax({
-        url: '/route',
-        data: {currentview:'push',relation:'settlements',id:#{@settlement.id},model:{created_at:date + ' 00:00:00'}}
-      })
-    }
-  })
+- if @settlement.id
+  :javascript
+    $('#date').datepicker({
+      onSelect: function(date, inst) {
+        $(this).val('OK');
+        $.ajax({
+          url: '/route',
+          data: {currentview:'push',relation:'settlements',id:#{@settlement.id},model:{created_at:date + ' 00:00:00'}}
+        })
+      }
+    })

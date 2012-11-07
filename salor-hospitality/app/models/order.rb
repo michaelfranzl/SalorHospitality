@@ -256,6 +256,8 @@ class Order < ActiveRecord::Base
             items[i].price       == items[j].price         and
             items[i].comment     == items[j].comment       and
             items[i].scribe      == items[j].scribe        and
+            items[i].refunded    == nil                    and
+            items[j].refunded    == nil                    and
             not items[i].destroyed?
             )
           items[i].count += items[j].count
