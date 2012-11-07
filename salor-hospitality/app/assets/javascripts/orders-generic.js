@@ -43,20 +43,11 @@ var counter_refresh_queue = timeout_refresh_queue;
 /* ======================================================*/
 
 $(function(){
-  update_resources();
+  update_resources('documentready');
   if (typeof(manage_counters_interval) == 'undefined') {
     manage_counters_interval = window.setInterval("manage_counters();", 1000);
   }
   if (!_get('customers.button_added')) connect('customers_entry_hook','after.go_to.table',add_customers_button);
-  
-  //automatically route to views depending on uri parameters
-  var uri_attrs = uri_attributes();
-  if (uri_attrs.rooms == '1') setTimeout(function(){route('rooms')}, 1500);
-  if (uri_attrs.booking_id != undefined) setTimeout(function(){route('booking', uri_attrs.booking_id);}, 1500);
-  if (uri_attrs.report == '1') setTimeout(function(){report.functions.display_popup()}, 1500);
-  if (customer) {
-    setTimeout(function(){route('table', customer.table_id);}, 1500);
-  }
 })
 
 
@@ -801,13 +792,20 @@ function split_item(id, order_id, increment) {
   }
 }
 
-function submit_split_items() {
-  $.ajax({
-    type: 'put',
-    url: '/items/split',
-    data: {jsaction:'split',split_items_hash:split_items_hash},
-    timeout: 30000
-  });
+function submit_split_items(order_id) {
+  if (! $.isEmptyObject(split_items_hash)) {
+    var splitbutton = $('#model_' + order_id + ' a.splitinvoice_button');
+    var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', splitbutton);
+    loader.css('margin', '7px');
+
+    $.ajax({
+      type: 'put',
+      url: '/items/split',
+      data: {jsaction:'split',split_items_hash:split_items_hash},
+      timeout: 30000
+    });
+    split_items_hash = {};
+  }
 }
 
 function update_order_from_refund_form(data) {
@@ -1235,12 +1233,23 @@ function update_tables(){
   });
 }
 
-function update_resources() {
+function update_resources(mode) {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
     complete: function(data,state) { update_resources_success(data) },
-    timeout: 8000
+    timeout: 8000,
+    success: function() {
+      if (mode == 'documentready') {
+        update_tables();
+        //automatically route to views depending on uri parameters
+        var uri_attrs = uri_attributes();
+        if (uri_attrs.rooms == '1') route('rooms');
+        if (uri_attrs.booking_id != undefined) route('booking', uri_attrs.booking_id);
+        if (uri_attrs.report == '1') report.functions.display_popup();
+        if (customer != null) route('table', customer.table_id);
+      }
+    }
   });
 }
 

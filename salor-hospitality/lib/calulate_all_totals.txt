@@ -1,18 +1,20 @@
 # This script doesn't work as a migration for some insane Rails-reason. Run each part manually in the console. It is limited to 5000 models at a time, due to an insane Ruby or Rake memory leak, so run the parts as often as needed until all models are processed.
 
 # comment the following out ONLY the first time
-#TaxItem.delete_all 
-#Item.update_all :taxes => "--- {}\n"
-#Order.update_all :taxes => "--- {}\n"
-#SurchargeItem.update_all :taxes => "--- {}\n"
-#BookingItem.update_all :taxes => "--- {}\n"
-#Booking.update_all :taxes => "--- {}\n"
+TaxItem.delete_all 
+Item.update_all :taxes => "--- {}\n"
+Order.update_all :taxes => "--- {}\n"
+SurchargeItem.update_all :taxes => "--- {}\n"
+BookingItem.update_all :taxes => "--- {}\n"
+Booking.update_all :taxes => "--- {}\n"
 
-Item.existing.where(:taxes => "--- {}\n")[0..5000].each do |item|
+
+
+Item.existing.where(:created_at => from..to, :taxes => "--- {}\n")[0..5000].each do |item|
   item.calculate_totals
 end
 
-Order.existing.where(:taxes => "--- {}\n")[0..5000].each do |order|
+Order.existing.where(:created_at => from..to, :taxes => "--- {}\n")[0..5000].each do |order|
   order.calculate_totals
 end
 
@@ -27,6 +29,17 @@ end
 Booking.where(:taxes => "--- {}\n").existing[0..5000].each do |b|
   b.calculate_totals
 end
+----------------
+
+Order.existing.where(:created_at => from..to).each do |order|
+  order.items.update_all(:settlement_id => order.settlement_id, :cost_center_id => order.cost_center_id)
+  order.tax_items.update_all(:settlement_id => order.settlement_id, :cost_center_id => order.cost_center_id)
+  order.payment_method_items.update_all(:settlement_id => order.settlement_id, :cost_center_id => order.cost_center_id)
+end
+
+----------------
+
+
 
 ----------------
 
@@ -34,6 +47,6 @@ Settlement.all.each { |s| s.calculate_totals }
 
 ----------------
 
-Item.connection.execute("UPDATE items SET preparation_count = count, delivery_count = count;")
+Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count;")
 
 ----------------

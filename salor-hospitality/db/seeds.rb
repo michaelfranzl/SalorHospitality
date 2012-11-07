@@ -37,7 +37,7 @@ vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other','Change']
 role_names = {
   'superuser' =>
-    {:weight => 0, :permissions => SalorHospitality::Application::PERMISSIONS,
+    {:weight => 0, :permissions => SalorHospitality::Application::PERMISSIONS },
   'owner' =>
     {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
   'host' =>
@@ -49,7 +49,7 @@ role_names = {
   'auxiliary_waiter' =>
     {:weight => 5, :permissions => ['take_orders','finish_orders']},
   'terminal' =>
-    {:weight => 6, :permissions => ['take_orders'] }
+    {:weight => 6, :permissions => ['take_orders']}
 }
 
 user_array = {

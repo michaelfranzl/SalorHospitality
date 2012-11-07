@@ -2,162 +2,150 @@
 it:
   vendors:
     index:
-      switch_to: Select
-      edit: XXX Edit
+      switch_to: Seleziona
+      edit: XXX Edita
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
-    form:
-      add_printer: Add printer
-      identify_printers: Identify Printers
-      test_printers: Test Printers
-    create:
-      success: Vendor was successfully created
-    destroy:
-      success: Vendor was successfully deleted
+      edit_vendor: Edita Venditore
+      new_vendor: Nuovo Venditore
   activerecord:
     attributes:
       article:
-        active: active
-        category_id: Category
-        description: Description
-        hidden: delete
-        image: Image
-        name: Name
-        price: Price
-        tax_id: Tax
-        usage: Usage
+        active: attivo
+        category_id: Categoria
+        description: Descrizione
+        hidden: cancella
+        image: Immagine
+        name: Nome
+        price: Prezzo
+        tax_id: Tassa
+        usage: Utilizzo
       category:
-        color: Color
-        custom_icon: My Icon
-        food: Food?
-        hidden: delete
-        icon: Icon
-        name: Name
-        separate_print: Cut ticket
-        tax_id: Tax
-        user_id: Preparing User
-        vendor_printer_id: Printer
+        color: Colore
+        custom_icon: Mia Icona
+        food: Cibo?
+        hidden: cancella
+        icon: Icona
+        name: Nome
+        separate_print: Taglia biglietto
+        tax_id: Tassa
+        user_id: Preparazione Utente
+        vendor_printer_id: Stampante
       cost_center:
-        active: active?
-        description: Description
-        hidden: delete
-        name: Name
-        no_payment_methods: No Payment Methods
+        active: attivo?
+        description: Descrizione
+        hidden: cancella
+        name: Nome
       group:
-        name: Name
+        name: Nome
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
-        no_ticket: Dont' print ticket
-        price: Price
-        separate_ticket: Cut ticket
+        category_id: Categoria
+        hidden: Cancella
+        name: Nome
+        no_ticket: Non stampare biglietto
+        price: Prezzo
+        separate_ticket: Taglia biglietto
       page:
-        active: active
-        color: Color
-        height: Height
-        hidden: delete
-        image: Image
-        width: Width
+        active: attivo
+        color: Colore
+        height: Altezza
+        hidden: cancella
+        image: Immagine
+        width: Larghezza
       partial:
-        active: aktiv
+        active: attivo
         blurb: Blurb
-        hidden: delete
+        hidden: cancella
       presentation:
-        active: active
+        active: attivo
         code: Ruby code
-        description: Description
-        hidden: delete
+        description: Descrizione
+        hidden: cancella
         markup: ERB Markup
-        model: Type
-        name: Name
+        model: Tipo
+        name: Nome
       quantity:
-        active: aktiv
-        description: Description
-        hidden: delete
+        active: attivo
+        description: Descrizione
+        hidden: cancella
         postfix: Postfix
-        prefix: Name
+        prefix: Nome
         price: Variant Price
-        usage: usage
+        usage: utilizzo
       role:
-        name: Name
+        name: Nome
       settlement:
         initial_cash: Initial amount
         revenue: End amount
       table:
-        abbreviation: Abbreviation
-        description: Description
-        enabled: active?
-        height: Height
-        height_mobile: Height mobile
-        hidden: delete
-        name: Name
-        rotate: rotate?
-        width: Width
-        width_mobile: Width mobile
-        booking_table: Booking
+        abbreviation: Abbreviazione
+        description: Descrizione
+        enabled: attivo?
+        height: Altezza
+        height_mobile: Altezza mobile
+        hidden: cancella
+        name: Nome
+        rotate: ruotare?
+        width: Larghezza
+        width_mobile: Larghezza mobile
       tax:
-        color: Color
-        hidden: delete
-        letter: Abbreviation
-        name: Name
-        percent: Tax in %
+        color: Colore
+        hidden: cancella
+        letter: Abbreviazione
+        name: Nome
+        percent: Tassa in %
       user:
-        active: active?
-        color: Color
-        hidden: delete?
-        language: Language
+        active: attivo?
+        color: Colore
+        hidden: cancella?
+        language: Lingua
         login: Login
         password: Password
-        role: Role
+        role: Ruolo
         screenlock_timeout: Screenlock timeout (sec.)
-        tables: Tables
-        title: Title
-        audio: Acoustic signals
-        confirmation_user: Confirm remote orders
+        tables: Tabelle
+        title: Titolo
       vendor_printer:
-        copies: Copies
-        hidden: Delete
-        name: Name
-        path: Path
+        copies: Copie
+        hidden: Cancella
+        name: Nome
+        path: Percorso
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: cancella
+        name: Nome
+        taxes: Tasse
       room_price:
-        base_price: Base Price
+        base_price: Prezzo Base
         guest_type_id: Gast-Typ
         hidden: löschen
         room_type_id: Zimmerklasse
-        season_id: Season
+        season_id: Stagione
       room_type:
         hidden: löschen
-        name: Name
+        name: Nome
       season:
-        from_date: From
-        hidden: delete
-        name: Name
-        to_date: To
+        from_date: Da
+        hidden: cancella
+        name: Nome
+        to_date: A
       surcharge:
         amount: Amount
         guest_type_id: Guest Type
-        hidden: delete
-        name: Name
+        hidden: cancella
+        name: Nome
         radio_select: Radio Select
-        season_id: Season
-        selected: XXX Selected by default
-        visible: XXX Visible?
+        season_id: Stagione
+        selected: XXX Selezionato per default
+        visible: XXX Visibile?
       tax_amount:
         amount: Amount
-        tax_id: Tax
+        tax_id: Tassa
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        hidden: delete
+        automatic_printing: Stampa automatica
+        country: Ruoli per nazione
+        hidden: cancella
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
-        name: Name
+        name: Nome
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         saas: Online variant
@@ -172,37 +160,30 @@ it:
         rlogo_footer: XXX Receipt logo footer
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
-        remote_orders: Remote orders
       payment_method_item:
         amount: Amount
       booking_item:
         base_price: Preis
         count: Anzahl
         sum: Summe
-        duration: XXX Days
+        duration: XXX Giorni
       order:
-        change_given: Change
-        nr: Number
+        change_given: Cambio
       customer:
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
+        first_name: Nome
+        last_name: Cognome
+        full_name: Nome Completo
+        company_name: Nome Azienda
+        address: Indirizzo
+        city: Città
+        state: Stato
+        postalcode: Codice Postale
         m_number: Loyalty Card Code
         m_points: Loyalty Points
         email: email
-        telephone: Telephone
-        cellphone: Cellphone
-        hidden: delete
-        table_id: Default Table
-      payment_method:
-        name: Name
-        cash: Cash
-        change: Change
+        telephone: Telefono
+        cellphone: Cellulare
+        hidden: cancella
     models:
       room:
         one: Room
@@ -437,7 +418,6 @@ it:
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
-    user_account_is_currently_locked: Account is locked
   move_order_to_table: Move order to different table
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
@@ -468,7 +448,6 @@ it:
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
-      confirmation_list: Self-order list
     invoice_form:
       just_finish: Just finish order
       print_and_finish: Print and finish this order
@@ -500,7 +479,6 @@ it:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
-      add_notes: Add notes
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -574,6 +552,7 @@ it:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
+      see_item_notifications: See item notifications
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
@@ -594,16 +573,6 @@ it:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
-      generate_statistics: Generate statistics
-      move_order_from_invoice_form: Move order to table from invoice form
-      assign_order_to_user: Assign order to user
-      see_item_notifications_user_preparation: Item notifications personal preparation
-      see_item_notifications_user_delivery: Item notifications personal delivery
-      see_item_notifications_vendor_preparation: Item notifications vendor preparation
-      see_item_notifications_vendor_delivery: Item notifications vendor delivery
-      see_item_notifications_static: Item notifications summary list on main screen
-      receipt_logo: Receipt Logos
-      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -621,11 +590,6 @@ it:
       warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
         (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
-    new_customer:
       email: Your E-Mail
       login: Login
       password: Password
@@ -706,10 +670,6 @@ it:
     new:
       edit_room: Edit Room
       new_room: New Room
-    create:
-      success: Room successfully saved
-    destroy:
-      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -745,21 +705,6 @@ it:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
-    report: Report
-    begin: Begin
-    end: End
-    time: Time
-    delete: Delete
-    customer_request_send: Request these items
-    customer_request_finish: Request payment
-    customer_request_waiter: Request waiter
-    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    finish_was_requested: You have requested payment. Please have a little patience,
-      we will be there for your shortly.
-    waiter_was_requested: You have requested a waiter. Please have a little patience,
-      we will be there for your shortly.
-    mobile_view: Mobile device view
-    workstation_view: Workstation view
   customers:
     new:
       edit_customer: Edit Customer

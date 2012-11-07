@@ -49,7 +49,7 @@
     %script
       == automatic_printing = #{ (@current_customer.nil? and @current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
       == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
-      == customer = #{ raw @current_customer.to_hash.to_json };
+      == customer = #{ @current_customer ? raw(@current_customer.to_hash.to_json) : 'null'};
 
   %body
     %audio#audio{ :src=>"/alert.wav" }
