@@ -1,3 +1,12 @@
+salor-hospitality (4.1.1.19) unstable; urgency=low
+
+  [ jokerwader ]
+  * Update salor-hospitality/config/locales/main.pl.yml
+
+  [ Michael Franzl ]
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 08 Nov 2012 16:54:21 +0100
+
 salor-hospitality (4.1.1.18) unstable; urgency=low
 
   [ Michael Franzl ]
