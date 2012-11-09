@@ -5,20 +5,20 @@ pl:
       edit: Edytuj
       switch_to: Wybierz
     new:
-      edit_vendor: Edytuj sprzedającego
-      new_vendor: Dodaj sprzedającego
+      edit_vendor: Edytuj restaurację
+      new_vendor: Dodaj restaurację
     form:
-      add_printer: Dodaj bonownik
-      identify_printers: Wykryj bonownik
-      test_printers: Testuj bonownik
+      add_printer: Dodaj drukarkę
+      identify_printers: Wykry drukarkę
+      test_printers: Testuj drukarkę
     create:
-      success: Sprzedawca został pomyślnie dodany.
+      success: Restauracja została pomyślnie zapisana!
     destroy:
-      success: Sprzedawca został pomyślnie skasowany.
+      success: Restauracja została pomyślnie skasowana.
   activerecord:
     attributes:
       article:
-        active: Aktywować?
+        active: Aktywny
         category_id: Kategoria
         description: Opis
         hidden: Usuń
@@ -39,7 +39,7 @@ pl:
         user_id: Użytkownik
         vendor_printer_id: Bonownik
       cost_center:
-        active: Aktywować?
+        active: Aktywny
         description: Opis
         hidden: Usuń
         name: Nazwa
@@ -54,18 +54,18 @@ pl:
         price: Cena
         separate_ticket: Oddzielny paragon
       page:
-        active: Aktywować?
+        active: Aktywny
         color: Kolor tła
         height: Wysokość
         hidden: Usuń
         image: Obraz
-        width: szerokość
+        width: Szerokość
       partial:
-        active: Aktywować?
+        active: Aktywny
         blurb: Notka
         hidden: Usuń
       presentation:
-        active: Aktywować?
+        active: Aktywny
         code: Kod Ruby
         description: Opis
         hidden: Usuń
@@ -73,7 +73,7 @@ pl:
         model: Typ
         name: Nazwa
       quantity:
-        active: Aktywuj
+        active: Aktywny
         description: Opis
         hidden: Usuń
         postfix: Postfix
@@ -83,68 +83,68 @@ pl:
       role:
         name: Nazwa
       settlement:
-        initial_cash: Cena początkowa
-        revenue: Cena końcowa
+        initial_cash: Stan początkowy
+        revenue: Stan końcowy
       table:
         abbreviation: Skrót
         description: Opis
-        enabled: Aktywować?
+        enabled: Aktywny
         height: Wysokość
-        height_mobile: Wysokość
+        height_mobile: Wysokość na urządzeniach mobilnych
         hidden: Usuń
         name: Nazwa/Numer stolika
-        rotate: Obróć
+        rotate: Obróć o 90º
         width: Szerokość
-        width_mobile: Szerokość
-        booking_table: Rezerwacja
+        width_mobile: Szerokość na urządzeniach mobilnych
+        booking_table: Możliwość rezerwacji
       tax:
         color: Kolor
         hidden: Usuń
         letter: Skrót
         name: Nazwa podatku
-        percent: Podatek w %
+        percent: Wysokość podatku w %
       user:
-        active: Aktywować?
+        active: Aktywny
         color: Kolor
-        hidden: Usunąć?
+        hidden: Usuń
         language: Język
         login: Login
         password: Hasło
         role: Poziom dostępu
-        screenlock_timeout: Blokowanie ekranu (sek.)
-        tables: Stoły (aby zaznaczyć więcej przytrzymaj [Ctrl] + Lewy klawisz myszy)
+        screenlock_timeout: Blokowanie ekranu (w sek.)
+        tables: Przypisz stoliki
         title: Tytuł
         audio: Sygnał dzwiekowy
-        confirmation_user: Potwierdź zamówienia zdalne
+        confirmation_user: Potwierdzanie zamówień zdalnych
       vendor_printer:
         copies: Kopia
         hidden: Usuń
         name: Nazwa
         path: Skrót
       guest_type:
-        hidden: Skasuj
+        hidden: Usuń
         name: Nazwa
         taxes: Podatek
       room_price:
         base_price: Cena podstawowa
         guest_type_id: Typ klienta
-        hidden: ukryj
+        hidden: Usuń
         room_type_id: Typ pokoju
         season_id: Sezon
       room_type:
-        hidden: ukryj
+        hidden: Usuń
         name: Nazwa
       season:
         from_date: Od
-        hidden: skasuj
+        hidden: Usuń
         name: Nazwa
         to_date: Do
       surcharge:
         amount: Ilość
         guest_type_id: Typ klienta
-        hidden: skasuj
+        hidden: Usuń
         name: Nazwa
-        radio_select: Wybierz pasno
+        radio_select: Wybierz pasmo
         season_id: Sezon
         selected: Ustaw jako podstawowy
         visible: Widoczne?
@@ -154,7 +154,7 @@ pl:
       vendor:
         automatic_printing: Automatyczne drukowanie
         country: Zasady dla kraju
-        hidden: skasuj
+        hidden: Usuń
         invoice_footer_blurb: Notka stopki faktury
         invoice_header_blurb: Notka nagłówka faktury
         name: Nazwa
@@ -186,36 +186,36 @@ pl:
       customer:
         first_name: Imię
         last_name: Nazwisko
-        full_name: Pełna nazwa
+        full_name: Pełne Imię
         company_name: Nazwa firmy
         address: Adres
         city: Miasto
         state: Województwo
         postalcode: Kod pocztowy
         m_number: Numer karty lojalnościowej
-        m_points: Numer karty punktów lojalnościowych
-        email: email
-        telephone: Stacjonarny
-        cellphone: Komórka
-        hidden: delete
-        table_id: Przypisz stół domyślny
+        m_points: Numer karty punktowej
+        email: e-mail
+        telephone: Telefon stacjonarny
+        cellphone: Telefon komórkowy
+        hidden: Usuń
+        table_id: Przypisz stół
       payment_method:
         name: Nazwa
         cash: Gotówka
         change: Zamiana
     models:
       article:
-        one: Artykuł
-        other: Artykuły
+        one: Pozycja Menu
+        other: Pozycje Menu
       category:
-        one: Kategoria
-        other: Kategorie
+        one: Kategoria Menu
+        other: Kategorie Menu
       company:
         one: Firma
         other: Firmy
       cost_center:
-        one: Rodzaj zamówienia
-        other: Rodzaje zamówień
+        one: Dodatkowy koszt
+        other: Dodatkowe koszta
       coupon:
         one: Kupon
         other: Kupony
@@ -235,20 +235,20 @@ pl:
         one: Pozycja
         other: Pozycje
       option:
-        one: Zestaw
-        other: Zestawy
+        one: Dodatek Menu
+        other: Dodatki Menu
       order:
         one: Zamówienie
         other: Zamówienia
       page:
-        one: Oferta specjalna
-        other: Oferty specjalne
+        one: Pokaz slajdów
+        other: Pokaz slajdów
       partial:
         one: Ulubione
         other: Ulubione
       presentation:
-        one: Szblon
-        other: Szblony
+        one: Szablon ERB
+        other: Szablony ERB
       quantity:
         one: Wariant
         other: Warianty
@@ -295,20 +295,20 @@ pl:
         one: Rodzaj płatności
         other: Rodzaje płatności
       room:
-        one: Pokój
-        other: Pokoje
+        one: Pokój H.
+        other: Pokoje H.
       room_price:
-        one: Cena pokoju
-        other: Ceny pokoi
+        one: Cena pokoju H.
+        other: Ceny pokojów H.
       room_type:
-        one: Rodzaj pokoju
-        other: Rodzaje pokoi
+        one: Rodzaj pokoju H.
+        other: Rodzaje pokojów H.
       season:
-        one: Sezon
-        other: Sezony
+        one: Sezon H.
+        other: Sezony H.
       surcharge:
-        one: Dopłata
-        other: Dopłaty
+        one: Dopłata dla sezonu H.
+        other: Dopłaty dla sezonów H.
       tax_amount:
         one: Wysokośc podatku
         other: Wysokość podatków
@@ -319,18 +319,18 @@ pl:
   are_you_sure: Potwierdź aby usunąć
   articles:
     create:
-      success: Artykuł został pomyślnie dodany
-      license_limited: Twoja licencja ma limit do %{count} artykułów.
+      success: Pozycja menu została pomyślnie zapisana!
+      license_limited: Twoja licencja ma limit do %{count} pozycji menu.
     destroy:
-      success: Artykuł został pomyślnie usunięty
+      success: Pozycja menu została pomyślnie skasowana.
     find:
       variants:
-        one: Pozycję
-        other: Pozycje
+        one: Wariant
+        other: Warianty
     index:
       list_all: Pokaż wszystkie
       preview: Podgląd
-      search_term: Szukaj wg
+      search_term: Szukaj wg nazwy
       sort: Sortuj wg typu
       update: Aktualizuj!
       view: Podgląd
@@ -341,7 +341,7 @@ pl:
       edit_article: Edytowanie artykułu
       new_article: Dodawanie artykułu
       normal: Na miejscu
-      takeaway: Wynos
+      takeaway: Na wynos
     sort_index:
       sort: Sortuj artykuły
   bar: Bar
@@ -354,8 +354,8 @@ pl:
   cancel_and_go_back: Anuluj i wróć
   categories:
     create:
-      success: Pomyślnie dodano!
-      license_limited: Twoja licencja ma limit do %{count} kategorii.
+      success: Kategoria menu została pomyślnie zapisana!
+      license_limited: Twoja licencja ma limit do %{count} kategorii menu.
     new:
       aperitif: Aperitif
       beer: Piwo
@@ -383,7 +383,7 @@ pl:
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
     destroy:
-      success: Kategoria została pomyślnie skasowana
+      success: Kategoria menu została pomyślnie skasowana.
   clear_order_and_go_back: Wyczyść zamówienie i wróć
   copy: Kopiuj
   cost_centers:
@@ -394,9 +394,9 @@ pl:
       edit_cost_center: Edytowanie dodatkowych kosztów
       new_cost_center: Dodawanie dodatkowych kosztów
     create:
-      success: Dodatkowe koszta zostały pomyślnie zapisane
+      success: Dodatkowe koszta zostały pomyślnie zapisane!
     destroy:
-      success: Dodatkowe koszta zostały pomyślnie skasowane
+      success: Dodatkowe koszta zostały pomyślnie skasowane.
   count: Podlicz
   create: Dodaj
   dateandtime: Data
@@ -423,35 +423,34 @@ pl:
   invoice: Rachunek
   invoice_numer_X_at_time: Rachunek numer %{number} dnia %{datetime}
   invoices: Rachunki
-  is_no_number: Nie jest liczbą
+  is_no_number: nie jest liczbą
   items:
     item_tablerow:
       clear: Wyczyść
       done: Zrobione
-      no_printing: nie drukuj
+      no_printing: Nie drukuj
   just_order: Tylko zamówienie
   kitchen: Kuchnia
   logout: Wyloguj %{who}
   messages:
     hello_username: Witaj %{name}!
-    user_account_is_currently_locked: Twoje konto zostało zablokowane.
+    user_account_is_currently_locked: Twoje konto zostało zablokowane!
   move_order_to_table: Przenieś zamówienie na inny stolik
-  must_be_entered_either_for_article_or_for_quantity: Muszą zostać przypisane dla
-    artykułu oraz ilości.
+  must_be_entered_either_for_article_or_for_quantity: nie została wpisana
   net: Netto
   new: Dodaj
   no_printing: Nie drukuj
   not_found: Nie znaleziono
   options:
     new:
-      edit_option: Edytowanie zestawów
+      edit_option: Edytowanie dodatków
       hidden: Usuń
-      new_option: Dodawanie zestawów
+      new_option: Dodawanie dodatków
       select_all: Zaznacz wszystkie
     create:
-      success: Opcja została pomyślnie zapisana
+      success: Opcja została pomyślnie zapisana!
     destroy:
-      success: Opcja została pomyślnie skasowana
+      success: Opcja została pomyślnie skasowana.
   orange: Pomarańczowy
   orders:
     functions_header_index:
@@ -463,9 +462,9 @@ pl:
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:
-      delivery_list: Lista dostaw
-      preparation_list: Lista przygotowywanych zamówień
-      confirmation_list: Lista własnych zamówień
+      delivery_list: Lista gotowych zamówień
+      preparation_list: Lista przyjętych zamówień
+      confirmation_list: Zamówienia do potwierdzenia
     invoice_form:
       just_finish: Po prostu zakończ zamówienie
       print_and_finish: Zakończ zamówienie i drukuj
@@ -533,8 +532,8 @@ pl:
     start_date: Data początkowa
     usb_device: USB
     index:
-      backup_database: Stwórz kopie bazy danych
-      backup_logfile: Stwórz kopie logu
+      backup_database: Stwórz kopię bazy danych
+      backup_logfile: Stwórz kopię logu
       header: Raporty
       connected: Połączono
       disconnected: Rozłączono
@@ -561,50 +560,50 @@ pl:
       edit_role: Edytowanie zezwoleń
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
       finish_orders: Możliwość finalizowania wszystkich zamówień
-      finish_own_settlement: Możliwość własnego rozliczenia
+      finish_own_settlement: Możliwość własnego rozliczania
       manage_business_invoice: Zarządzanie fakturami
-      manage_customers: Zarządzani użytkownikami
-      manage_pages: Zarządzanie slajdami
+      manage_customers: Zarządzanie listą klientów
+      manage_pages: Zarządzanie pokazem slajdów
       manage_users: Zarządzanie użytkownikami
-      move_order: Przenoszenie zamówień
-      move_tables: Przenoszenie stolików
+      move_order: Możliwość przenoszenia zamówień
+      move_tables: Możliwość przenoszenia stolików
       new_role: Dodawanie zezwoleń
       permissions: Dostęp do zezwoleń
       see_debug: Dostęp do logów systemu
       split_items: Łączenie pozycji
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
-      refund: Zwrot przedmiotów
-      manage_articles: Zarządzaj artykułami, kategoriami oraz opcjami
-      manage_categories: Zarządzaj kategoriami
-      manage_options: Zarządzaj opcjami
-      manage_roles: Zarządzaj zasadami
-      manage_taxes: Zarządzaj podatkami
-      manage_cost_centers: Zarządzaj centrum kosztów
-      manage_payment_methods: Zarządzaj rodzajami płatności
-      manage_tables: Zarządzaj stołami
-      manage_vendors: Zarządzaj sprzedawcami
-      manage_statistics: Zobacz statystyki
-      manage_hotel: Zarządzaj hotelami
-      item_scribe: Aktywuj pisanie ręczne
-      assign_order_to_booking: Wyznacz zamówienia dla rezerwacji
-      assign_tables: Przypisz stół dla klienta
-      remote_support: Pomoc zdalna
-      download_database: Pobierz bazę danych
-      generate_statistics: Generuj statystyki
-      move_order_from_invoice_form: Przenies zamówienie na stół z paragonu
-      assign_order_to_user: Przydziel zamówienie dla użtkownika
-      see_item_notifications_user_preparation: Powiadomienia zamówionych pozycji- przygotowanie osobiste
-      see_item_notifications_user_delivery: Powiadomienia zamówionych pozycji- dostawa osobista
-      see_item_notifications_vendor_preparation: Powiadomienia zamówionych pozycji- przygotowanie przez sprzedawcę
-      see_item_notifications_vendor_delivery: Powiadomienia zamówionych pozycji- dostawa przez sprzedawcę
-      see_item_notifications_static: Powiadomienia zamówionych pozycji- lista zbiorcza na głównym oknie
-      receipt_logo: Logo na rachunku
-      mobile_show_tools: Pokaż przycisk "narzędzia" na telefonach komórkowych
+      refund: Możliwość zwrotów
+      manage_articles: Zarządzanie artykułami, kategoriami oraz dodatkami
+      manage_categories: Zarządzanie kategoriami
+      manage_options: Zarządzanie dodatkami
+      manage_roles: Zarządzanie poziomami dostępu
+      manage_taxes: Zarządzanie podatkami
+      manage_cost_centers: Zarządzanie dodatkowymi kosztami
+      manage_payment_methods: Zarządzanie rodzajami płatności
+      manage_tables: Zarządzanie stołami
+      manage_vendors: Zarządzanie restauracjami
+      manage_statistics: Przeglądanie statystyk
+      manage_hotel: Zarządzanie hotelami
+      item_scribe: Możliwość pisania ręcznego
+      assign_order_to_booking: Przydzielanie zamówienia do rezerwacji
+      assign_tables: Przypisywanie stołu do klienta
+      remote_support: Aktywacja pomocy zdalnej
+      download_database: Pobieranie bazy danych
+      generate_statistics: Generowanie statystyk
+      move_order_from_invoice_form: Przenoszenie zamówienia z paragonu
+      assign_order_to_user: Wyznaczanie użytkownika do zamówienia
+      see_item_notifications_user_preparation: Osobista lista powiadomień o zamawianych pozycjach
+      see_item_notifications_user_delivery: Osobista lista powiadomień o pozycjach do dostarczenia
+      see_item_notifications_vendor_preparation: Ogólna lista powiadomień o zamawianych pozycjach
+      see_item_notifications_vendor_delivery: Ogólna lista powiadomień o pozycjach do dostarczenia
+      see_item_notifications_static: Lista powiadomień na głównym ekranie
+      receipt_logo: Ustawianie logo na rachunku
+      mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
     create:
-      success: Zasada została pomyślnie zapisana
+      success: Zasada została pomyślnie zapisana!
     destroy:
-      success: Zasada została pomyślnie skasowana
+      success: Zasada została pomyślnie skasowana.
   scroll_down: Przewiń w dół
   scroll_to_room: Idź do
   scroll_up: Przewiń w górę
@@ -660,10 +659,10 @@ pl:
       edit_table: Edytowanie stolika
       new_table: Dodawanie stolika
     create:
-      success: Stolik został pomyślnie zapisany
+      success: Stolik został pomyślnie zapisany!
       license_limited: Twoja licencja ma limit do %{count} stołów
     destroy:
-      success: Stolik został pomyślnie skasowany
+      success: Stolik został pomyślnie skasowany.
   taxes:
     new:
       edit_tax: Edytowanie podatku
@@ -674,15 +673,15 @@ pl:
       new_user: Dodawanie użytkownika
       select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz myszy
     create:
-      success: Użytkownik pomyślnie zapisany
+      success: Użytkownik został pomyślnie zapisany!
     destroy:
-      success: Użytkownik pomyślnie skasowany
+      success: Użytkownik został pomyślnie skasowany.
   violet: Fioletowy
   waiter: Kelner
   waiterpad_generic_name: Lista kelnerów(-)
   white: Biały
   winered: Winny
-  wrong_password: Błędne dane do logowania
+  wrong_password: Błędne dane do logowania!
   yellow: Żółty
   bookings:
     invoice_item_list:
@@ -695,7 +694,7 @@ pl:
       submit_scribe: OK
   room_prices:
     index:
-      generate_price_skeleton: Generuj szkielet cen
+      generate_price_skeleton: Generuj tabelę cen
     new:
       edit_room_price: Edytuj cenę pokoju
       new_room_price: Nowa cena pokoju
@@ -708,9 +707,9 @@ pl:
       edit_room: Edytuj pokój
       new_room: Dodaj pokój
     create:
-      success: Pokój został pomyślnie dodany
+      success: Pokój został pomyślnie zapisany!
     destroy:
-      success: Pokój został pomyśłnie skasowany
+      success: Pokój został pomyśłnie skasowany.
   scopes:
     active: Aktywuj
     waiterpad: Notes kelnerski
@@ -727,7 +726,7 @@ pl:
       common_surcharge: Łączne dopłaty
       edit_surcharge: Edytuj dopłaty
       new_surcharge: Nowa dopłata
-  tax_amount: Ilość
+  tax_amount: Podatek
   various:
     cancel: Anuluj
     common_surcharges: Wszystkie dopłaty
@@ -736,12 +735,12 @@ pl:
     save: Zapisz
     subtotal: Razem
     unamed: Bez nazwy
-    tax_amount: Ilość
+    tax_amount: Podatek
     tax: Podatek
     unit_price_abbreviation: Cena za sztukę
     total_price_abbreviation: Cena końcowa
     quantity_abbreviation: Ilość
-    interim_invoice: Faktura tymczasowa
+    interim_invoice: Pre-Faktura
     invoice: Faktura
     restaurant: Restauracja
     hotel: Hotel
@@ -755,17 +754,17 @@ pl:
     customer_request_finish: Poproś o rachunek
     customer_request_waiter: Poproś kelnera
     order_will_be_confirmed: Twoje zamówienie musi zostać potwierdzone przez kelnera, prosimy o cierpliwość.
-    finish_was_requested: Poprosiłeś kelnera o rachunek. Powiadomienie zostało wysłane, prosimy o cierpliwość.
-    waiter_was_requested: Poprosiłeś kelnera do stolika. Powiadomienie zostało wysłane, prosimy o cierpliwość.
-    mobile_view: Widok dla telefonu komórkowego
-    workstation_view: Widok dla komputera przenośnego lub stacjonarnego
+    finish_was_requested: Poprosiłeś kelnera o rachunek. Twoje powiadomienie zostało wysłane, prosimy o cierpliwość.
+    waiter_was_requested: Poprosiłeś kelnera do stolika. Twoje powiadomienie zostało wysłane, prosimy o cierpliwość.
+    mobile_view: Widok dla urządzeń mobilnych
+    workstation_view: Widok dla komputera stacjonarnego
   customers:
     new:
       edit_customer: Edycja klienta
       new_customer: Nowy klient
     create:
-      success: Dane klienta zostały pomyślnie zapisane
+      success: Dane o kliencie zostały pomyślnie zapisane!
     destroy:
-      success: Dane o kliencie zostały pomyślnie skasowane
+      success: Dane o kliencie zostały pomyślnie skasowane.
   refund: Zwrot
   invalid_date: Nieprawidłowa data
