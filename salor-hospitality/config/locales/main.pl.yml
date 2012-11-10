@@ -594,11 +594,16 @@ pl:
       generate_statistics: Generuj statystyki
       move_order_from_invoice_form: Przenies zamówienie na stół z paragonu
       assign_order_to_user: Przydziel zamówienie dla użtkownika
-      see_item_notifications_user_preparation: Powiadomienia zamówionych pozycji- przygotowanie osobiste
-      see_item_notifications_user_delivery: Powiadomienia zamówionych pozycji- dostawa osobista
-      see_item_notifications_vendor_preparation: Powiadomienia zamówionych pozycji- przygotowanie przez sprzedawcę
-      see_item_notifications_vendor_delivery: Powiadomienia zamówionych pozycji- dostawa przez sprzedawcę
-      see_item_notifications_static: Powiadomienia zamówionych pozycji- lista zbiorcza na głównym oknie
+      see_item_notifications_user_preparation: Powiadomienia zamówionych pozycji-
+        przygotowanie osobiste
+      see_item_notifications_user_delivery: Powiadomienia zamówionych pozycji- dostawa
+        osobista
+      see_item_notifications_vendor_preparation: Powiadomienia zamówionych pozycji-
+        przygotowanie przez sprzedawcę
+      see_item_notifications_vendor_delivery: Powiadomienia zamówionych pozycji- dostawa
+        przez sprzedawcę
+      see_item_notifications_static: Powiadomienia zamówionych pozycji- lista zbiorcza
+        na głównym oknie
       receipt_logo: Logo na rachunku
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonach komórkowych
     create:
@@ -631,7 +636,8 @@ pl:
   settlements:
     detailed_list:
       count: Ilość
-      order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia %{time}'
+      order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia
+        %{time}'
       revenue: Suma całkowita
       total: Suma
       unit_price: Cena
@@ -672,7 +678,8 @@ pl:
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
-      select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz myszy
+      select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
+        myszy
     create:
       success: Użytkownik pomyślnie zapisany
     destroy:
@@ -754,9 +761,12 @@ pl:
     customer_request_send: Wyślij zamówienie
     customer_request_finish: Poproś o rachunek
     customer_request_waiter: Poproś kelnera
-    order_will_be_confirmed: Twoje zamówienie musi zostać potwierdzone przez kelnera, prosimy o cierpliwość.
-    finish_was_requested: Poprosiłeś kelnera o rachunek. Powiadomienie zostało wysłane, prosimy o cierpliwość.
-    waiter_was_requested: Poprosiłeś kelnera do stolika. Powiadomienie zostało wysłane, prosimy o cierpliwość.
+    order_will_be_confirmed: Twoje zamówienie musi zostać potwierdzone przez kelnera,
+      prosimy o cierpliwość.
+    finish_was_requested: Poprosiłeś kelnera o rachunek. Powiadomienie zostało wysłane,
+      prosimy o cierpliwość.
+    waiter_was_requested: Poprosiłeś kelnera do stolika. Powiadomienie zostało wysłane,
+      prosimy o cierpliwość.
     mobile_view: Widok dla telefonu komórkowego
     workstation_view: Widok dla komputera przenośnego lub stacjonarnego
   customers:

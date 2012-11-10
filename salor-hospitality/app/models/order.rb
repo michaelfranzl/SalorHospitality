@@ -58,7 +58,7 @@ class Order < ActiveRecord::Base
 
   def self.create_from_params(params, vendor, user, customer)
     order = Order.new params[:model]
-    order.user = user
+    order.user = user unless order.user
     order.customer = customer
     order.vendor = vendor
     order.company = vendor.company
@@ -66,7 +66,8 @@ class Order < ActiveRecord::Base
       order.create_new_item(item_params)
     end
     raise "Order could not be saved." unless order.save
-    order.update_associations(user,customer)
+    #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
+    order.update_associations(customer)
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
@@ -87,8 +88,8 @@ class Order < ActiveRecord::Base
       end
     end
     self.save
-    new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
-    self.update_associations(new_user, customer)
+    #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
+    self.update_associations(customer)
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
@@ -130,8 +131,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def update_associations(user,customer)
-    self.user = user if user
+  def update_associations(customer)
     unless self.cost_center
       self.cost_center = self.vendor.cost_centers.existing.first
       self.items.update_all :cost_center_id => self.cost_center
@@ -601,5 +601,9 @@ class Order < ActiveRecord::Base
       test8 = self.items.all?{|i| i.hidden}
       raise "Order test8 failed for id #{ self.id }" unless test8
     end
+  end
+  
+  def user_login
+    self.user ? self.user.login : self.customer.login
   end
 end

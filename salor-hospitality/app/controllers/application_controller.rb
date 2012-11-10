@@ -214,7 +214,7 @@ class ApplicationController < ActionController::Base
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
       end
-      @order.table.update_color
+      #@order.table.update_color
       return @order
     end
 

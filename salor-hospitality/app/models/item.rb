@@ -112,7 +112,7 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
-    self.category_id = self.article.category.id
+    self.category_id = self.article.category_id
     self.sum = full_price
     self.calculate_taxes(self.article.taxes)
     self.save

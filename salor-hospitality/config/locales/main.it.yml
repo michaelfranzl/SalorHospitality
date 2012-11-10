@@ -7,6 +7,14 @@ it:
     new:
       edit_vendor: Edita Venditore
       new_vendor: Nuovo Venditore
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      test_printers: Test Printers
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
   activerecord:
     attributes:
       article:
@@ -35,6 +43,7 @@ it:
         description: Descrizione
         hidden: cancella
         name: Nome
+        no_payment_methods: No Payment Methods
       group:
         name: Nome
       option:
@@ -87,6 +96,7 @@ it:
         rotate: ruotare?
         width: Larghezza
         width_mobile: Larghezza mobile
+        booking_table: Booking
       tax:
         color: Colore
         hidden: cancella
@@ -104,6 +114,8 @@ it:
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tabelle
         title: Titolo
+        audio: Acoustic signals
+        confirmation_user: Confirm remote orders
       vendor_printer:
         copies: Copie
         hidden: Cancella
@@ -160,6 +172,7 @@ it:
         rlogo_footer: XXX Receipt logo footer
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
+        remote_orders: Remote orders
       payment_method_item:
         amount: Amount
       booking_item:
@@ -169,6 +182,7 @@ it:
         duration: XXX Giorni
       order:
         change_given: Cambio
+        nr: Number
       customer:
         first_name: Nome
         last_name: Cognome
@@ -184,6 +198,11 @@ it:
         telephone: Telefono
         cellphone: Cellulare
         hidden: cancella
+        table_id: Default Table
+      payment_method:
+        name: Name
+        cash: Cash
+        change: Change
     models:
       room:
         one: Room
@@ -418,6 +437,7 @@ it:
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
   move_order_to_table: Move order to different table
   must_be_entered_either_for_article_or_for_quantity: must be entered either for the
     Article or for the Variant.
@@ -448,6 +468,7 @@ it:
     index:
       delivery_list: Delivery list
       preparation_list: Preparation list
+      confirmation_list: Self-order list
     invoice_form:
       just_finish: Just finish order
       print_and_finish: Print and finish this order
@@ -479,6 +500,7 @@ it:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
+      add_notes: Add notes
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -552,7 +574,6 @@ it:
       new_role: New Role
       permissions: Permissions
       see_debug: See debug messages
-      see_item_notifications: See item notifications
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
@@ -573,6 +594,16 @@ it:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
+      generate_statistics: Generate statistics
+      move_order_from_invoice_form: Move order to table from invoice form
+      assign_order_to_user: Assign order to user
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_static: Item notifications summary list on main screen
+      receipt_logo: Receipt Logos
+      mobile_show_tools: Show tool button on mobile devices
     create:
       success: Role successfully saved
     destroy:
@@ -590,6 +621,11 @@ it:
       warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
         (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
+    new_customer:
       email: Your E-Mail
       login: Login
       password: Password
@@ -670,6 +706,10 @@ it:
     new:
       edit_room: Edit Room
       new_room: New Room
+    create:
+      success: Room successfully saved
+    destroy:
+      success: Room successfully deleted
   scopes:
     active: Active
     waiterpad: Waiterpad
@@ -705,6 +745,21 @@ it:
     restaurant: XXX Restaurant
     hotel: XXX Hotel
     consumations: XXX Consumations
+    customer_request_send: Request these items
+    customer_request_finish: Request payment
+    customer_request_waiter: Request waiter
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    mobile_view: Mobile device view
+    workstation_view: Workstation view
+    report: Report
+    begin: Begin
+    end: End
+    time: Time
+    delete: Delete
   customers:
     new:
       edit_customer: Edit Customer
