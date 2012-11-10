@@ -604,6 +604,10 @@ class Order < ActiveRecord::Base
   end
   
   def user_login
-    self.user ? self.user.login : self.customer.login
+    if self.user
+      return self.user.login if self.user
+    else
+      return self.customer.login if self.customer
+    end
   end
 end
