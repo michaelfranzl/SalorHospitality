@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.20) unstable; urgency=low
+
+  * permanent order user_id, user_id selection on order create, user display on pos screen
+  * fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 10 Nov 2012 20:06:37 +0100
+
 salor-hospitality (4.1.1.19) unstable; urgency=low
 
   [ jokerwader ]
