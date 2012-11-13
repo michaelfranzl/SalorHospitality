@@ -61,7 +61,7 @@ def merge(source,target)
   return target
 end
 
-# this copies translations from source into target, if they are not existing there AND deletes all nodes from target not present in source
+# this deletes all nodes from target not present in source
 def clean(source,target)
   source.stringify_keys!
   target.stringify_keys!
@@ -72,7 +72,7 @@ def clean(source,target)
     elsif value.is_a? Hash and source[key]
       output[key] = clean(source[key],value)
     else
-      puts "  Not copying #{key} to output"
+      puts "  Cleaning #{key} from target"
     end
   end
   return output
@@ -269,6 +269,8 @@ namespace :translations do
       else
         t = base_name.gsub('XXX',lang)
         s = base_name.gsub('XXX',langs[0])
+        next if sourcelang == translationlang
+        puts "\n\nEqualizing #{sourcelang} => #{translationlang}"
         source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(s,t)
         translation = equalize(source,translation)
         write_translation(translation, translationlang, transfile)
