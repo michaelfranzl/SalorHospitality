@@ -5,12 +5,16 @@
     - if mobile? or mobile_special?
       %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
-      %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "/apple-touch-icon-114x114.png"}
+      - branding_codename = SalorHospitality::Application::CONFIGURATION[:branding_codename]
+      - icon57 = "/apple-touch-icon-57x57-#{branding_codename}.png"
+      - icon72 = "/apple-touch-icon-72x72-#{branding_codename}.png"
+      - icon114 = "/apple-touch-icon-114x114-#{branding_codename}.png"
+      %link{ :rel => "apple-touch-icon", :href => icon57 }
+      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => icon72 }
+      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => icon114}
       
 
-    %title SalorHospitality Login
+    %title== #{ SalorHospitality::Application::CONFIGURATION[:branding_title] } Login
     = javascript_include_tag 'jquery'
     = javascript_include_tag 'jquery-ui'
     = stylesheet_link_tag('generic', :media => 'screen')
@@ -30,7 +34,7 @@
   %body
     #container
       #header
-        = image_tag 'logo-small.png', :id => 'logo'
+        = image_tag "logo-small-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :id => 'logo'
       #flash
         - if flash[:notice]
           #flash_notice= flash[:notice]
@@ -40,7 +44,7 @@
       #footer
       #copyright
         .left
-          = image_tag 'logo-tiny.png', :class => 'logo_tiny'
+          = image_tag "logo-tiny-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :class => 'logo_tiny'
           = SalorHospitality::Application::VERSION
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)

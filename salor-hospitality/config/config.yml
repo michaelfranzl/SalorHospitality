@@ -3,3 +3,5 @@
 :exception_notification_sender: Sender Name <nobody@localhost>
 :exception_notification_receipients: nobody@localhost
 :login_email: false
+:branding_codename: salorhospitality
+:branding_title: SalorHospitality

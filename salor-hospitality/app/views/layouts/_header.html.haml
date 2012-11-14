@@ -1,4 +1,4 @@
-= image_tag 'logo-small.png', :id => 'logo'
+= image_tag "logo-small-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :id => 'logo'
 - if workstation?
   %div#toggle_admin_interface{ :onclick => "#{ 'toggle_admin_interface();' if controller.controller_name == 'orders' and ( controller.action_name == 'index' or controller.action_name == 'login' )}" }
     = image_tag @current_vendor.logo_image
