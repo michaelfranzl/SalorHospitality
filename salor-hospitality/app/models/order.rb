@@ -279,6 +279,12 @@ class Order < ActiveRecord::Base
     self.save
     self.unlink
     self.table.update_color
+    self.items.existing.each do |i|
+      i.option_items.existing.each do |oi|
+        oi.hide(-10) if oi.price == 0.0
+      end
+    end
+    self.regroup
   end
 
   def pay
