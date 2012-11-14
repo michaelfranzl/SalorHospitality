@@ -757,6 +757,7 @@ function update_order_from_invoice_form(data) {
     data: data,
     timeout: 30000
   });
+  route('tables');
 }
 
 
