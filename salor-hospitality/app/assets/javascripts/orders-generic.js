@@ -1019,11 +1019,11 @@ function permit_select_open(d) {
 function clone_item(d) {
   if (items_json[d].c > 1) {
     // clone only if count > 1
-    //if (settings.mobile) $('#options_div_' + d).slideUp();
+    $('#options_div_' + d).hide();
     var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
-    //if (settings.mobile) $('#options_div_' + d).slideDown();
+    $('#options_div_' + d).show();
   }
   return d
 }
