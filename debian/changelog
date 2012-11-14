@@ -1,3 +1,18 @@
+salor-hospitality (4.1.1.21) unstable; urgency=low
+
+  * renamed
+  * statistics
+  * user_id when rendering invoice form
+  * immediate route at order finish from invoice form
+  * Closes #1408
+  * no select for options on mobile
+  * fixed scrolling for really old ipods
+  * branding
+  * branding
+  * fixed option splitting
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 15 Nov 2012 00:08:48 +0100
+
 salor-hospitality (4.1.1.20) unstable; urgency=low
 
   * permanent order user_id, user_id selection on order create, user display on pos screen
