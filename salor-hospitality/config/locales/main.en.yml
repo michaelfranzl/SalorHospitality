@@ -606,6 +606,7 @@ en:
       download_database: Download Database
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      manage_statistics: Statistics
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -714,6 +715,7 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    statistics: Statistics
     customer_request_send: Request these items
     customer_request_finish: Request payment
     customer_request_waiter: Request waiter

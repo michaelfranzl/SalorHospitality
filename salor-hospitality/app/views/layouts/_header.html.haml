@@ -20,6 +20,7 @@
       = link_to( t('activerecord.models.option.other'), main_app.options_path) if permit('manage_options')
       = link_to( t('activerecord.models.settlement.one'), '/settlements/open') if permit('finish_own_settlement') or permit('finish_all_settlements')
       = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if permit('view_all_settlements')
+      = link_to( t('various.statistics'), main_app.statistics_path) if permit('manage_statistics')
       = link_to( t('activerecord.models.report.other'), '/reports') if @current_company.mode == 'local'
       = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
       = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')

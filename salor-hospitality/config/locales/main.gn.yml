@@ -606,6 +606,7 @@ gn:
       download_database: Datenbank herunterladen
       receipt_logo: Beleg Logos
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
+      manage_statistics: Statistiken
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

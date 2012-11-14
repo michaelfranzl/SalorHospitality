@@ -13,6 +13,18 @@ class StatisticsController < ApplicationController
   before_filter :check_permissions
 
   def index
+    @from, @to = assign_from_to(params)
+    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
+    @to = @to ? @to.end_of_day : DateTime.now
+    @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
+    @settlement_ids = @settlements.collect{ |s| s.id }
+    @taxes = @current_vendor.taxes.existing
+    @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
+    @cost_centers = @current_vendor.cost_centers.existing
+    cost_center_ids = @cost_centers.collect{ |cc| cc.id }
+    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : @current_vendor.cost_centers.existing.first
+    @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
+    @tables = @current_vendor.tables.existing.active
   end
 
   def tables
@@ -27,53 +39,4 @@ class StatisticsController < ApplicationController
       @weekdaysums[day] = Order.sum( 'sum', :conditions => "WEEKDAY(created_at)=#{day} AND created_at BETWEEN '#{@from.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{@to.strftime('%Y-%m-%d %H:%M:%S')}'" )
     end
   end
-
-  def users
-    @from, @to = assign_from_to(params)
-    @users = User.all
-  end
-
-  def journal
-    @from, @to = assign_from_to(params)
-    if not params[:cost_center_id] or params[:cost_center_id].empty?
-      @orders = Order.find(:all, :conditions => { :created_at => @from..@to })
-    else
-      @orders = Order.find(:all, :conditions => { :created_at => @from..@to, :cost_center_id => params[:cost_center_id] })
-    end
-    @cost_centers = CostCenter.all
-    render '/statistics/journal.csv' if params[:commit] == 'CSV'
-  end
-
-  def articles
-    @from, @to = assign_from_to(params)
-    Article.all.each do |a|
-      @items = Item.find(:all, :conditions => { :created_at => @from..@to, :article_id => a.id })
-      count = 0
-      @items.each { |i| count += i.count }
-      a.update_attribute :sort, count
-      a.quantities.each do |q|
-        @items = Item.find(:all, :conditions => { :created_at => @from..@to, :quantity_id => q.id })
-        count = 0
-        @items.each { |i| count += i.count }
-        q.update_attribute :sort, count
-      end
-    end
-    @articles_by_sort = Article.find(:all, :order => 'id ASC')
-    @quantities_by_sort = Quantity.find(:all, :order => 'article_id ASC')
-  end
-
-  private
-
-    def assign_from_to(p)
-      f = Date.civil( p[:from][:year ].to_i,
-                      p[:from][:month].to_i,
-                      p[:from][:day  ].to_i) if p[:from]
-      t = Date.civil( p[:to  ][:year ].to_i,
-                      p[:to  ][:month].to_i,
-                      p[:to  ][:day  ].to_i) if p[:to]
-      f ||= 1.month.ago
-      t ||= 0.day.ago
-      return f, t
-    end
-
 end
