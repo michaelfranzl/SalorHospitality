@@ -1019,11 +1019,11 @@ function permit_select_open(d) {
 function clone_item(d) {
   if (items_json[d].c > 1) {
     // clone only if count > 1
-    if (settings.mobil) $('#options_div_' + d).slideUp();
+    //if (settings.mobile) $('#options_div_' + d).slideUp();
     var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
-    if (settings.mobil) $('#options_div_' + d).slideDown();
+    //if (settings.mobile) $('#options_div_' + d).slideDown();
   }
   return d
 }
@@ -1074,26 +1074,37 @@ function number_to_currency(number) {
 function render_options(options, d, cat_id) {
   if (options == null) return;
   jQuery.each(options, function(key,object) {
-    if (settings.workstation) {
-      button = $(document.createElement('span'));
-      button.html(object.n);
-      button.addClass('option');
-      (function() {
-        var cid = cat_id;
-        var o = object;
-        button.on('click',function(){
-          add_option_to_item(d, o.s + '_' + o.id, cid);
-        });
-      })();
-      $('#options_div_' + d).append(button);
-    } else if (settings.mobile) {
-      option_tag = $(document.createElement('option'));
-      option_tag.html(object.n);
-      var s = object.s == null ? 0 : object.s;
-      option_tag.val(s + '_' + object.id);
-      $('#options_select_' + d).append(option_tag);
-    }
+    button = $(document.createElement('span'));
+    button.html(object.n);
+    button.addClass('option');
+    (function() {
+      var cid = cat_id;
+      var o = object;
+      button.on('click',function(){
+        $(this).effect('highlight');
+        add_option_to_item(d, o.s + '_' + o.id, cid);
+      });
+    })();
+    $('#options_div_' + d).append(button);
   });
+}
+
+function open_options_div(d) {
+  if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
+    if (settings.mobile) {
+      $('#options_div_'+d).show();
+    } else {
+      $('#options_div_'+d).slideDown();
+    }
+  }
+}
+
+function close_options_div(d) {
+  if (settings.mobile) {
+    $('#options_div_'+d).hide();
+  } else {
+    $('#options_div_'+d).slideUp();
+  }
 }
 
 function compose_label(object){

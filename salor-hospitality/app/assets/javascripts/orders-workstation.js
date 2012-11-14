@@ -116,12 +116,6 @@ function enable_keyboard_for_items(item_designator) {
   });
 }
 
-function open_options_div(d) {
-  if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
-    $('#options_div_'+d).slideDown();
-  }
-}
-
 function catch_keypress(d,type) {
   if (event.keyCode == 27) {
     // Escape
