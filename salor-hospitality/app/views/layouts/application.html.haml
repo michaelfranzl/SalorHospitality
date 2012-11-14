@@ -52,7 +52,6 @@
       == customer = #{ @current_customer ? raw(@current_customer.to_hash.to_json) : 'null'};
 
   %body
-    %audio#audio{ :src=>"/alert.wav" }
     #screenwait
     = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #rooms_container
@@ -77,6 +76,7 @@
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
+    %audio#audio{ :src=>"/alert.wav" }
 
 :javascript
   var i18n = #{ get_i18n };
