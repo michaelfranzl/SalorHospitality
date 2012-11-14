@@ -74,6 +74,7 @@ class Order < ActiveRecord::Base
     order.hide(user.id) if order.hidden
     order.hide(user.id) unless order.items.existing.any?
     order.set_nr
+    order.table.update_color
     return order
   end
 
@@ -95,6 +96,7 @@ class Order < ActiveRecord::Base
     self.update_payment_method_items(params)
     self.hide(user.id) if self.hidden
     self.hide(user.id) unless self.items.existing.any?
+    self.table.update_color
   end
   
   def create_new_item(p)
@@ -141,7 +143,6 @@ class Order < ActiveRecord::Base
     self.save
     
     table = self.table
-    table.update_color #if table
     if customer.nil?
       # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order.
       table.confirmations_pending = false

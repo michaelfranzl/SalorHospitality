@@ -31,7 +31,7 @@
       %td= day
       %td= number_to_currency sums[i]
       %td
-        .statistics_bar{ :style => "width:#{sums[i]*100/maximum}px" }
+        .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
     - i += 1
     
 %table.settlements.statistics
@@ -51,7 +51,7 @@
       %td== #{hour}:00
       %td= number_to_currency sums[hour]
       %td
-        .statistics_bar{ :style => "width:#{sums[hour]*100/maximum}px" }
+        .statistics_bar{ :style => "width:#{2 + sums[hour]*100/maximum}px" }
       
 %table.settlements.statistics
   %tr
@@ -70,7 +70,7 @@
       %td= table.name
       %td= number_to_currency sums[i]
       %td
-        .statistics_bar{ :style => "width:#{sums[i]*100/maximum}px" }
+        .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
     - i += 1
         
         

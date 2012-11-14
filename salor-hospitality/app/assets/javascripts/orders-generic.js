@@ -202,7 +202,7 @@ function route(target, model_id, action, options) {
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
-      submit_json.model = {table_id:model_id};
+      submit_json.model.table_id = model_id;
       send_json('table_' + model_id);
       // invoice form will be rendered by the server as .js.erb template. see application#route
     }
@@ -1394,9 +1394,6 @@ function render_item_list(type, model, scope) {
   if (type == 'interactive') {
     var list_container = $('#list_interactive_' + scope);
     list_container.html('');
-    //console.log(type);
-    //console.log(model);
-    //console.log(scope);
     $.each(resources['notifications_' + model][scope], function(k,v) {
       
       var table_name = resources.tb[v.tid].n;
