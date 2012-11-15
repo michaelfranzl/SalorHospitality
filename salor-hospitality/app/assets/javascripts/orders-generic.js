@@ -1608,7 +1608,21 @@ function item_list_reset(id, scope) {
 
 function render_tables() {
   $('#tables').html('');
+  $('#tablesselect_container').html('');
   $.each(resources.t, function(k,v) {
+    // determine color
+    var bgcolor = null;
+    if (v.auid) bgcolor = resources.u[v.auid].c;
+    if (!v.e) bgcolor = 'black';
+   
+    // render spans for the move function
+    var move_table_span = create_dom_element('span', {}, v.n, '#tablesselect_container');
+    move_table_span.on('click', function() {
+      route('tables', submit_json.model.table_id, 'move', {target_table_id:v.id});
+    })
+    move_table_span.addClass('option');
+    if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
+    // render divs for the actual tables
     var mobile_mode = settings.mobile || settings.mobile_drag_and_drop;
     var left = mobile_mode ? v.lm : v.l;
     var top = mobile_mode  ? v.tm : v.t;
@@ -1623,23 +1637,20 @@ function render_tables() {
     var statusclass = v.auid ? 'occupied' : 'vacant';
     var table = create_dom_element('div',{id:'table'+v.id,ontouchstart:'javascript:enable_audio();'}, v.n, '#tables');
     
-    var bgcolor = null;
     if (v.crid) {
       create_dom_element('span', {}, resources.customers.all[v.crid].n, table);
     } else if (v.auid) {
-      bgcolor = resources.u[v.auid].c;
       create_dom_element('span', {}, resources.u[v.auid].n, table);
     }
-    if (!v.e) { bgcolor = 'black' }
+
     table.addClass(statusclass);
     table.addClass('table');
     table.css('left', left);
     table.css('top', top);
     table.css('width', width);
     table.css('height', height);
-    if (typeof(bgcolor) == 'string') {
-      table.css('background-color', bgcolor);
-    }
+    if (typeof(bgcolor) == 'string') table.css('background-color', bgcolor);
+
     if (v.cp) {
       // confirmation pending
       if (permissions.confirmation_user) {

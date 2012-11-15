@@ -31,8 +31,8 @@ class Table < ActiveRecord::Base
   end
   
   def move_name
-    name = self.name
-    name += self.active_user_id ? '☒' : '☐'
+    name = self.active_user_id ? '☒' : '☐'
+    name += self.name
     return name
   end
   

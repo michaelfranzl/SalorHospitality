@@ -17,12 +17,7 @@
   %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
 
 - if permit('move_order')
-  - if workstation?
-    %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
-  - elsif mobile?
-    %select.target_table{ :onchange => "route('tables', submit_json.model.table_id, 'move', {target_table_id:$(this).val()});" }
-      %option{ :value => '', :selected => true }
-      = options_from_collection_for_select(@current_user.tables.existing.order(:name), 'id', 'name')
+  %a.iconbutton.move-to-table_button{ :onclick => "$('#tablesselect').slideDown();", :title => t(:move_order_to_table) }
 
 - if permit('assign_order_to_user')
   - if workstation?
