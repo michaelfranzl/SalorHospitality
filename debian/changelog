@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.22) unstable; urgency=low
+
+  * removed select tag for order move
+  * finishing an order assigns it to @current_user
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 16 Nov 2012 14:50:28 +0100
+
 salor-hospitality (4.1.1.21) unstable; urgency=low
 
   * renamed
