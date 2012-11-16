@@ -22,7 +22,7 @@
   - i = 0
   - sums = []
   - days.each do |day|
-    - sums[i] = Order.where(:settlement_id => @settlement_ids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
+    - sums[i] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
     - i += 1
   - maximum = sums.sort.last
   - i = 0
@@ -41,7 +41,7 @@
     %th.bb
   - sums = []
   - 8.upto(23).each do |hour|
-    - sums[hour] = Order.where(:settlement_id => @settlement_ids).where("HOUR(finished_at) = #{hour}").sum(:sum)
+    - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum)
     - sums[hour] ||= 0
   - stripped_sums = sums.clone
   - stripped_sums.delete(nil)
@@ -61,7 +61,7 @@
   - sums = []
   - i = 0
   - @tables.each do |table|
-    - sums[i] = Order.where(:settlement_id => @settlement_ids, :table_id => table).sum(:sum)
+    - sums[i] = Order.where(:settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
     - i += 1
   - maximum = sums.sort.last
   - i = 0
