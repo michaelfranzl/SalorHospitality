@@ -1107,6 +1107,22 @@ function close_options_div(d) {
   }
 }
 
+function open_table_div() {
+  if (settings.mobile) {
+    $('#tablesselect').show();
+  } else {
+    $('#tablesselect').slideDown();
+  }
+}
+
+function close_table_div() {
+  if (settings.mobile) {
+    $('#tablesselect').hide();
+  } else {
+    $('#tablesselect').slideUp();
+  }
+}
+
 function compose_label(object){
   if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
     //object_type = 'quantity';
@@ -1672,6 +1688,7 @@ function render_tables() {
     }
     
     if (v.rw) {
+      // requested waiter
       var cash_icon = create_dom_element('a',{},'',table);
       cash_icon.addClass('iconbutton');
       cash_icon.addClass('user_button'); 

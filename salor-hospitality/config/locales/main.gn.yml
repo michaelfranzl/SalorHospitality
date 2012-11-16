@@ -429,7 +429,7 @@ gn:
   messages:
     hello_username: Hallo %{name}
     user_account_is_currently_locked: Konto ist gesperrt
-  move_order_to_table: Bestellung auf anderen Tisch verschieben
+  move_order_to_table: Verschieben
   must_be_entered_either_for_article_or_for_quantity: muss entweder beim Artikel oder
     bei der Variante eingegeben werden.
   net: Netto

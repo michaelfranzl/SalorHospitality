@@ -6,7 +6,7 @@
 - unless @current_customer
   #tablesselect
     %h3= t :move_order_to_table
-    %span.done{ :onclick => "$('#tablesselect').slideUp();" }
+    %span.done{ :onclick => "close_table_div();" }
     #tablesselect_container
 
 - if workstation? and not @current_customer

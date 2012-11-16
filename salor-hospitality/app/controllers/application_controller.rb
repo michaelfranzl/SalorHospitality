@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
             get_order
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
             @order.update_attributes(:booking_id => @booking.id)
-            @order.finish
+            @order.finish(@current_user)
             @booking.calculate_totals
             if mobile?              
               # waiters on mobile devices never should be routed to the booking screen
@@ -93,14 +93,14 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_print'
             get_order
-            @order.pay
+            @order.pay(@current_user)
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'pay_and_no_print'
             get_order
-            @order.pay
+            @order.pay(@current_user)
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
         end
@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'send'
             if @order.booking
-              @order.finish
+              @order.finish(@current_user)
               @order.booking.calculate_totals
               render :js => "route('booking',#{@order.booking.id});" # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
             elsif not @order.hidden
@@ -123,13 +123,13 @@ class ApplicationController < ActionController::Base
                   @order.print(['tickets'])
                   render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
                 when 'table_no_invoice_print'
-                  @order.pay
+                  @order.pay(@current_user)
                   @order.print(['tickets'])
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
                 when 'table_do_invoice_print'
-                  @order.pay
+                  @order.pay(@current_user)
                   @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
                   @table = @order.table
                   @order = nil

@@ -272,8 +272,9 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def finish
+  def finish(user)
     self.finished_at = Time.now
+    self.user = user if user
     self.finished = true
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
@@ -287,9 +288,8 @@ class Order < ActiveRecord::Base
     self.regroup
   end
 
-  def pay
-    self.finish
-    
+  def pay(user)
+    self.finish(user)
     # create a default cash payment method item if none was set in the UI
     unless self.payment_method_items.existing.any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
