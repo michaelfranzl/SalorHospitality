@@ -543,6 +543,10 @@ gn:
     remote_support: Fernwartung
     download_reports: Berichte herunterladen
   restaurant: Restaurant
+  statistics:
+    index:
+      hour: Stunde
+      weekday: Wochentag
   customers:
     new:
       edit_customer: Kunde bearbeiten
@@ -557,7 +561,6 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
-      generate_statistics: Statistiken erzeugen
       move_order_from_invoice_form: Bestellung von Rechnungs-Ansicht verschieben
       assign_order_to_user: Benutzer der Bestellung zuweisen
       assign_cost_center: Kostenstelle zuweisen
@@ -599,6 +602,13 @@ gn:
       view_all_settlements: Alle Abrechnungen ansehen
       manage_hotel: Hotel managen
       manage_statistics: Statistiken ansehen
+      manage_statistics_hotel: Statistiken Hotel ansehen
+      statistics_weekday: Statistik Wochentag
+      statistics_hour: Statistik Stunde
+      statistics_table: Statistik Tisch
+      statistics_payment_method: Statistik Zahlungsmethode
+      statistics_category: Statistik Kategorie
+      statistics_tax: Statistik Steuern
       item_scribe: Handschrift aktivieren
       assign_order_to_booking: Bestellungen einer Buchung zuweisen
       assign_tables: Tische an Benutzer zuweisen
@@ -677,9 +687,6 @@ gn:
       list_of_taxes: Liste aller Steuern
   split_order: Bestellung splitten
   statistic: Statistik
-  statistics:
-    journal: Journal (chronologische Liste)
-    weekdays: Wochentage
   stocks:
     new:
       edit_stock: Lagerartikel bearbeiten
@@ -716,6 +723,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    statistics: Statistik
     customer_request_send: Bestellung anfragen
     customer_request_finish: Bezahlung anfragen
     customer_request_waiter: Kellner anfragen

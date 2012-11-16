@@ -557,7 +557,6 @@ en:
     destroy:
       success: Role successfully deleted
     new:
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       assign_cost_center: Assign cost center
@@ -598,6 +597,13 @@ en:
       take_orders: Take orders
       view_all_settlements: View all settlements
       manage_statistics: View statistics
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
       manage_hotel: Manage hotel
       item_scribe: Enable handwriting
       assign_order_to_booking: Assign orders to a booking
@@ -676,9 +682,6 @@ en:
       list_of_taxes: List of Taxes
   split_order: Split order
   statistic: Statistic
-  statistics:
-    journal: Journal (chronological list)
-    weekdays: Weekdays
   stocks:
     new:
       edit_stock: Edit Stock
@@ -705,6 +708,10 @@ en:
     new:
       edit_tax: Edit Tax
       new_tax: New Tax
+  statistics:
+    index:
+      hour: Hour
+      weekday: Weekday
   users:
     create:
       success: User successfully saved

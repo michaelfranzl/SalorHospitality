@@ -25,6 +25,8 @@ class StatisticsController < ApplicationController
     @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : @current_vendor.cost_centers.existing.first
     @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
     @tables = @current_vendor.tables.existing.active
+    @categories = @current_vendor.categories.existing
+    @payment_methods = @current_vendor.payment_methods.existing
   end
 
   def tables
