@@ -498,6 +498,8 @@ pl:
       sum: Suma
       unit_price: Jednostka płatności
       add_notes: Dodaj notatkę
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_item_list:
       unit_price: Cena artykułu
       count: Ilość
@@ -591,7 +593,6 @@ pl:
       assign_tables: Przypisz stół dla klienta
       remote_support: Pomoc zdalna
       download_database: Pobierz bazę danych
-      generate_statistics: Generuj statystyki
       move_order_from_invoice_form: Przenies zamówienie na stół z paragonu
       assign_order_to_user: Przydziel zamówienie dla użtkownika
       see_item_notifications_user_preparation: Powiadomienia zamówionych pozycji-
@@ -606,6 +607,14 @@ pl:
         na głównym oknie
       receipt_logo: Logo na rachunku
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonach komórkowych
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Zasada została pomyślnie zapisana
     destroy:
@@ -654,8 +663,9 @@ pl:
   split_order: Podziel zamówienie
   statistic: Statystyki
   statistics:
-    journal: Dziennik (lista chronologiczna)
-    weekdays: Dzień powszedni
+    index:
+      hour: Hour
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edytcja stanu magazynu
@@ -769,6 +779,7 @@ pl:
       prosimy o cierpliwość.
     mobile_view: Widok dla telefonu komórkowego
     workstation_view: Widok dla komputera przenośnego lub stacjonarnego
+    statistics: Statistics
   customers:
     new:
       edit_customer: Edycja klienta

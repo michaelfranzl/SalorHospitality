@@ -604,7 +604,7 @@ gn:
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Abrechnungen ansehen
       manage_hotel: Hotel managen
-      manage_statistics: Statistiken ansehen
+      manage_statistics: Statistiken
       manage_statistics_hotel: Statistiken Hotel ansehen
       statistics_weekday: Statistik Wochentag
       statistics_hour: Statistik Stunde
@@ -619,7 +619,6 @@ gn:
       download_database: Datenbank herunterladen
       receipt_logo: Beleg Logos
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
-      manage_statistics: Statistiken
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

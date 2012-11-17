@@ -485,6 +485,8 @@ ru:
       sum: Сумма
       unit_price: Цена за единицу
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_item_list:
       unit_price: Цена за единицу
       count: Количество
@@ -578,7 +580,6 @@ ru:
       assign_tables: XXX Assign tables to users
       remote_support: Удаленная поддержка
       download_database: Резервирует базу данных
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -588,6 +589,14 @@ ru:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Роль успешно сохранена
     destroy:
@@ -634,8 +643,9 @@ ru:
   split_order: Разбить заказ
   statistic: Статистика
   statistics:
-    journal: Журнал (хронологический список)
-    weekdays: Дни недели
+    index:
+      hour: Hour
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Редактирование склада
@@ -745,6 +755,7 @@ ru:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   vendors:
     index:
       edit: Редактирование

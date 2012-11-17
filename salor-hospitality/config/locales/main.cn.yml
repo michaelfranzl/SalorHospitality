@@ -485,6 +485,8 @@ cn:
       sum: 總和
       unit_price: 單價
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_item_list:
       unit_price: Unit price
       count: Quantity
@@ -578,7 +580,6 @@ cn:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -588,6 +589,14 @@ cn:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Role successfully saved
     destroy:
@@ -634,8 +643,9 @@ cn:
   split_order: Split order
   statistic: Statistic
   statistics:
-    journal: Journal (chronological list)
-    weekdays: Weekdays
+    index:
+      hour: Hour
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edit Stock
@@ -744,6 +754,7 @@ cn:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   vendors:
     index:
       edit: Edit

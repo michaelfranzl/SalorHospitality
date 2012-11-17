@@ -476,6 +476,8 @@ es:
       sum: Total
       unit_price: Precio unitario
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     functions_header_order_form:
       move_order: Mover pedido a otra mesa
     invoice_item_list:
@@ -570,7 +572,6 @@ es:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -580,6 +581,14 @@ es:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -625,8 +634,9 @@ es:
       started_at: Iniciado a las
   statistic: Estadística
   statistics:
-    journal: Diario (orden cronológico)
-    weekdays: Día de la semana
+    index:
+      hour: Hour
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Editar stock
@@ -687,6 +697,7 @@ es:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos

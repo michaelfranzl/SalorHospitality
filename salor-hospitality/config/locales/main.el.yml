@@ -501,6 +501,8 @@ el:
       sum: Σύνολο
       unit_price: Τιμή μονάδας
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_item_list:
       unit_price: Τιμή μονάδας
       count: Ποσότητα
@@ -594,7 +596,6 @@ el:
       assign_tables: Αναθέστε τραπέζια σε χρήστες
       remote_support: Εξ’ αποστάσεως Υποστήριξη
       download_database: Μεταφορτώστε τη βάση δεδομένων
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -604,6 +605,14 @@ el:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
@@ -652,8 +661,9 @@ el:
   split_order: Μοιράστε την παραγγελία
   statistic: Στατιστικό
   statistics:
-    journal: Ημερολόγιο (chronological list)
-    weekdays: Μέρες Βδομάδας
+    index:
+      hour: Hour
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Επεξεργασία Αποθέματος
@@ -763,6 +773,7 @@ el:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   customers:
     new:
       edit_customer: Επεξεργασία Πελάτη

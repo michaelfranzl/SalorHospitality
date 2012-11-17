@@ -79,7 +79,6 @@ def clean(source,target)
 end
 
 def equalize(source,target)
-  puts "\n\nEqualizing..."
   cleaned_target = clean(source,target)
   merged_target = merge(source,cleaned_target)
   return merged_target
@@ -269,8 +268,8 @@ namespace :translations do
       else
         t = base_name.gsub('XXX',lang)
         s = base_name.gsub('XXX',langs[0])
-        next if sourcelang == translationlang
-        puts "\n\nEqualizing #{sourcelang} => #{translationlang}"
+        next if lang == langs[0]
+        puts "\n\nEqualizing #{langs[0]} => #{lang}"
         source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(s,t)
         translation = equalize(source,translation)
         write_translation(translation, translationlang, transfile)

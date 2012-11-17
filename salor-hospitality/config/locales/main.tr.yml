@@ -412,6 +412,8 @@ tr:
       list_of_taxes: Vergi listesi
       search_by_number: XXXSearch by number
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_form:
       set_cost_center: Sipariş icin maliyet merkezini ayarla
       print_and_finish: Fişi bas ve siparişi sonucla
@@ -483,8 +485,9 @@ tr:
       username: User
   statistic: Istatistik
   statistics:
-    weekdays: Is günleri
-    journal: Detayla (tarihli) liste
+    index:
+      hour: Hour
+      weekday: Weekday
   tables:
     new:
       new_table: Yeni masa
@@ -570,7 +573,6 @@ tr:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -580,6 +582,14 @@ tr:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Role successfully saved
     destroy:
@@ -745,6 +755,7 @@ tr:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   vendors:
     index:
       edit: Edit

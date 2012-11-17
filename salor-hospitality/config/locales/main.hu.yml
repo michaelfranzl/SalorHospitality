@@ -408,6 +408,8 @@ hu:
       list_of_taxes: List of taxes
       search_by_number: Search by number
       add_notes: Add notes
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
     invoice_form:
       set_cost_center: Set cost center for this order
       print_and_finish: Print and finish this order
@@ -482,8 +484,9 @@ hu:
       username: User
   statistic: Statistic
   statistics:
-    weekdays: Weekdays
-    journal: Journal (chronological list)
+    index:
+      hour: Hour
+      weekday: Weekday
   tables:
     new:
       new_table: New Table
@@ -539,6 +542,7 @@ hu:
       we will be there for your shortly.
     mobile_view: Mobile device view
     workstation_view: Workstation view
+    statistics: Statistics
   roles:
     new:
       take_orders: Take orders
@@ -580,7 +584,6 @@ hu:
       assign_tables: XXX Assign tables to users
       remote_support: XXX Remote Support
       download_database: XXX Download Database
-      generate_statistics: Generate statistics
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -590,6 +593,14 @@ hu:
       see_item_notifications_static: Item notifications summary list on main screen
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
+      reactivate_orders: Reactivate orders
+      manage_statistics_hotel: View hotel statistics
+      statistics_weekday: Statistics Weekday
+      statistics_hour: Statistics Hour
+      statistics_table: Statistics Tisch
+      statistics_payment_method: Statistics Payment Methods
+      statistics_category: Statistics Category
+      statistics_tax: Statistics Tax
     create:
       success: Role successfully saved
     destroy:
