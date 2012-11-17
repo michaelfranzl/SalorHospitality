@@ -13,132 +13,143 @@
       - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
       = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
 
-- if permit('statistics_weekday')
-  - days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= t '.weekday'
-      %th.bb= t :sum
-      %th.bb
-    - i = 0
-    - sums = []
-    - days.each do |day|
-      - sums[i] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
-      - i += 1
-    - maximum = sums.sort.last
-    - i = 0
-    - days.each do |day|
+  - if permit('statistics_weekday')
+    %table.settlements.statistics
       %tr
-        %td= day
-        %td= number_to_currency sums[i]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-      - i += 1
+        %th.bb{ :style => 'width:40px' }= t '.weekday'
+        %th.bb= t :sum
+        %th.bb
+      - i = 0
+      - sums = []
+      - @days.each do |day|
+        - sums[i] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @days.each do |day|
+        %tr
+          %td= day
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
 
-- if permit('statistics_hour')
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= t '.hour'
-      %th.bb= t :sum
-      %th.bb
-    - sums = []
-    - 8.upto(23).each do |hour|
-      - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum)
-      - sums[hour] ||= 0
-    - stripped_sums = sums.clone
-    - stripped_sums.delete(nil)
-    - maximum = stripped_sums.sort.last
-    - 8.upto(23).each do |hour|
+  - if permit('statistics_hour')
+    %table.settlements.statistics
       %tr
-        %td== #{hour}:00
-        %td= number_to_currency sums[hour]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[hour]*100/maximum}px" }
+        %th.bb{ :style => 'width:40px' }= t '.hour'
+        %th.bb= t :sum
+        %th.bb
+          %select{ :name => 'weekday', :onchange => '$("form").submit()', :value => @weekday }
+            %option
+            - i = 0
+            - @days.each do |day|
+              - if i == @weekday
+                %option{ :value => i, :selected => 1 }= day
+              - else
+                %option{ :value => i }= day
+              - i += 1
+      - sums = []
+      - 8.upto(23).each do |hour|
+        - if @weekday
+          - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour} AND WEEKDAY(finished_at) = #{@weekday}").sum(:sum)
+        - else
+          - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum)
+        - sums[hour] ||= 0
+      - stripped_sums = sums.clone
+      - stripped_sums.delete(nil)
+      - maximum = stripped_sums.sort.last
+      - 8.upto(23).each do |hour|
+        %tr
+          %td== #{hour}:00
+          %td= number_to_currency sums[hour]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[hour]*100/maximum}px" }
 
-- if permit('statistics_table')
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= Table.model_name.human
-      %th.bb= t :sum
-      %th.bb
-    - sums = []
-    - i = 0
-    - @tables.each do |table|
-      - sums[i] = Order.where(:settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
-      - i += 1
-    - maximum = sums.sort.last
-    - i = 0
-    - @tables.each do |table|
+  - if permit('statistics_table')
+    %table.settlements.statistics
       %tr
-        %td= table.name
-        %td= number_to_currency sums[i]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-      - i += 1
+        %th.bb{ :style => 'width:40px' }= Table.model_name.human
+        %th.bb= t :sum
+        %th.bb
+      - sums = []
+      - i = 0
+      - @tables.each do |table|
+        - sums[i] = Order.where(:settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @tables.each do |table|
+        %tr
+          %td= table.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
 
-- if permit('statistics_category')
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= Category.model_name.human
-      %th.bb= t :sum
-      %th.bb
-    - sums = []
-    - i = 0
-    - @categories.each do |cat|
-      - sums[i] = Item.where(:settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum)
-      - i += 1
-    - maximum = sums.sort.last
-    - i = 0
-    - @categories.each do |cat|
+  - if permit('statistics_category')
+    %table.settlements.statistics
       %tr
-        %td= cat.name
-        %td= number_to_currency sums[i]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-      - i += 1
+        %th.bb{ :style => 'width:40px' }= Category.model_name.human
+        %th.bb= t :sum
+        %th.bb
+      - sums = []
+      - i = 0
+      - @categories.each do |cat|
+        - sums[i] = Item.where(:settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @categories.each do |cat|
+        %tr
+          %td= cat.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
 
-- if permit('statistics_payment_method')
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= PaymentMethod.model_name.human
-      %th.bb= t :sum
-      %th.bb
-    - sums = []
-    - i = 0
-    - @payment_methods.each do |pm|
-      - sums[i] = PaymentMethodItem.where(:settlement_id => @settlement_ids, :payment_method_id => pm, :cost_center_id => @scids).sum(:amount)
-      - i += 1
-    - maximum = sums.sort.last
-    - i = 0
-    - @payment_methods.each do |pm|
+  - if permit('statistics_payment_method')
+    %table.settlements.statistics
       %tr
-        %td= pm.name
-        %td= number_to_currency sums[i]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-      - i += 1
-      
-- if permit('statistics_tax')
-  %table.settlements.statistics
-    %tr
-      %th.bb{ :style => 'width:40px' }= Tax.model_name.human
-      %th.bb= t :sum
-      %th.bb
-    - sums = []
-    - i = 0
-    - @taxes.each do |tax|
-      - sums[i] = TaxItem.where(:settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro)
-      - i += 1
-    - maximum = sums.sort.last
-    - i = 0
-    - @taxes.each do |tax|
-      %tr
-        %td= tax.name
-        %td= number_to_currency sums[i]
-        %td
-          .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-      - i += 1
+        %th.bb{ :style => 'width:40px' }= PaymentMethod.model_name.human
+        %th.bb= t :sum
+        %th.bb
+      - sums = []
+      - i = 0
+      - @payment_methods.each do |pm|
+        - sums[i] = PaymentMethodItem.where(:settlement_id => @settlement_ids, :payment_method_id => pm, :cost_center_id => @scids).sum(:amount)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @payment_methods.each do |pm|
+        %tr
+          %td= pm.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
         
+  - if permit('statistics_tax')
+    %table.settlements.statistics
+      %tr
+        %th.bb{ :style => 'width:40px' }= Tax.model_name.human
+        %th.bb= t :sum
+        %th.bb
+      - sums = []
+      - i = 0
+      - @taxes.each do |tax|
+        - sums[i] = TaxItem.where(:settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @taxes.each do |tax|
+        %tr
+          %td= tax.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
+          
         
       
 .clear
