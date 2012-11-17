@@ -1274,6 +1274,7 @@ function update_resources(mode) {
         var uri_attrs = uri_attributes();
         if (uri_attrs.rooms == '1') route('rooms');
         if (uri_attrs.booking_id != undefined) route('booking', uri_attrs.booking_id);
+        if (uri_attrs.table_id != undefined) route('table', uri_attrs.table_id);
         if (uri_attrs.report == '1') report.functions.display_popup();
         if (customer != null) route('table', customer.table_id);
       }

@@ -485,6 +485,8 @@ gn:
       sum: SUMME
     served_by: Sie wurden bedient von
     show:
+      cannot_reactivate: Reaktivierung fehlgeschlagen. Derzeit ist kein Tisch frei.
+      reactivate: Reaktivieren
       back: zurück
       count: Anzahl
       list_of_taxes: Liste der Steuern
@@ -561,6 +563,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      reactivate_orders: Bestellungen reaktivieren
       move_order_from_invoice_form: Bestellung von Rechnungs-Ansicht verschieben
       assign_order_to_user: Benutzer der Bestellung zuweisen
       assign_cost_center: Kostenstelle zuweisen

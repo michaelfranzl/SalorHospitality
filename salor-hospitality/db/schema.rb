@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106172142) do
+ActiveRecord::Schema.define(:version => 20121117124809) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -463,6 +463,9 @@ ActiveRecord::Schema.define(:version => 20121106172142) do
     t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
     t.datetime "finished_at"
     t.datetime "paid_at"
+    t.boolean  "reactivated"
+    t.integer  "reactivated_by"
+    t.datetime "reactivated_at"
   end
 
   add_index "orders", ["booking_id"], :name => "index_orders_on_booking_id"

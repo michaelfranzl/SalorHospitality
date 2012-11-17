@@ -485,6 +485,8 @@ en:
       sum: SUM
     served_by: You were served by
     show:
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      reactivate: Reactivate
       back: Back
       count: Count
       list_of_taxes: List of taxes
@@ -557,6 +559,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      reactivate_orders: Reactivate orders
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       assign_cost_center: Assign cost center

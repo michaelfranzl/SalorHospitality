@@ -87,6 +87,7 @@ SalorHospitality::Application.routes.draw do
   end
 
   match 'orders/refund/:id' => 'orders#refund'
+  match 'orders/reactivate/:id' => 'orders#reactivate'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/print/:id' => 'settlements#print'
   match 'room_prices/generate' => 'room_prices#generate'

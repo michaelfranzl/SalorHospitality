@@ -54,6 +54,17 @@ class OrdersController < ApplicationController
   def refund
     @order = get_model
   end
+  
+  def reactivate
+    @order = get_model
+    table = @order.reactivate(@current_user)
+    if table
+      redirect_to "/orders?table_id=#{table.id}"
+    else
+      redirect_to order_path(@order)
+      flash[:notice] = I18n.t('orders.show.cannot_reactivate')
+    end
+  end
 
   def last_invoices
     @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)

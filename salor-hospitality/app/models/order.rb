@@ -315,6 +315,31 @@ class Order < ActiveRecord::Base
     self.save
     self.table.update_color
   end
+  
+  def reactivate(user)
+    # try to restore the original table
+    used_table = self.vendor.tables.existing.where(:id => self.table_id, :active_user_id => nil).first
+    if used_table.nil?
+      # if original table is occupied, use the first empty table
+      used_table = self.vendor.tables.existing.where(:active_user_id => nil).first
+    end
+    return nil unless used_table
+    self.table_id = used_table.id
+    self.finished = false
+    self.finished_at = nil
+    self.reactivated  = true
+    self.reactivated_by = user.id
+    self.reactivated_at = Time.now
+    self.user_id = user.id
+    self.paid = false
+    self.change_given = nil
+    self.taxes = {}
+    self.paid_at = nil
+    self.save
+    self.payment_method_items.update_all :hidden => true, :hidden_by => user.id
+    used_table.update_color
+    return used_table
+  end
 
   def print(what, vendor_printer=nil)
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
