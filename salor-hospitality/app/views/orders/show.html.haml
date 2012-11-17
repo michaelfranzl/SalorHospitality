@@ -9,7 +9,8 @@
   %a.iconbutton.tables_button{ :href => '/orders', :title => t(:go_back) }
   - unless @order.booking_id
     = link_to '', "/orders/refund/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:refund)
-  %a.iconbutton.gear_button{ :href => "/orders/reactivate/#{@order.id}", :title => (t '.reactivate') }
+  - if permit('reactivate_orders')
+    %a.iconbutton.gear_button{ :href => "/orders/reactivate/#{@order.id}", :title => (t '.reactivate') }
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
