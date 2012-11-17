@@ -88,8 +88,8 @@ class Order < ActiveRecord::Base
         self.create_new_item(item_params)
       end
     end
+    self.user = user if params[:items] and params[:model][:user_id].nil?
     self.save
-    #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
     self.update_associations(customer)
     self.regroup
     self.calculate_totals

@@ -121,6 +121,9 @@ class ApplicationController < ActionController::Base
                   render :nothing => true # routing is done by the static route() function, so nothing to be done here.
                 when 'invoice'
                   @order.print(['tickets'])
+                  @order.user = @current_user
+                  @order.save
+                  @order.table.update_color
                   render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
                 when 'table_no_invoice_print'
                   @order.pay(@current_user)
