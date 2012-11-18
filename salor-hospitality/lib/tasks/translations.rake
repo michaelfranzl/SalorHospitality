@@ -270,6 +270,7 @@ namespace :translations do
         s = base_name.gsub('XXX',langs[0])
         source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(s,t)
         next if sourcelang == translationlang
+        puts "\n\nEqualizing #{sourcelang} => #{translationlang}"
         translation = equalize(source,translation)
         write_translation(translation, translationlang, transfile)
       end
