@@ -64,6 +64,7 @@ function route(target, model_id, action, options) {
   if ( target == 'tables' ) {
     scroll_to($('#container'),20);
     submit_json.target = 'tables';
+    invoice_update = true;
     $('#orderform').hide();
     $('#invoices').hide();
     $('#items_notifications_interactive').hide();
@@ -106,6 +107,7 @@ function route(target, model_id, action, options) {
   } else if ( target == 'table') {
     scroll_to($('#container'),20);
     submit_json.target = 'table';
+    invoice_update = true;
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
     $('#order_info').html(i18n.just_order);
     $('#order_note').val('');
