@@ -35,7 +35,7 @@ class Settlement < ActiveRecord::Base
   end
   
   def calculate_totals
-    self.sum = Order.where(:settlement_id => self.id).sum(:sum).round(2)
+    self.sum = Order.existing.where(:settlement_id => self.id).sum(:sum).round(2)
     self.save
   end
 
@@ -53,10 +53,6 @@ class Settlement < ActiveRecord::Base
     printr.open
     printr.print vendor_printer.id, self.escpos
     printr.close
-  end
-
-  def calculate_totals
-    self.update_attribute :sum, self.orders.sum(:sum)
   end
 
   def escpos
