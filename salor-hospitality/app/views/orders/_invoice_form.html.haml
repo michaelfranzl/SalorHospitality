@@ -80,6 +80,8 @@
         %a{ :onclick => "submit_split_items(#{oid});", :class => 'iconbutton splitinvoice_button', :title => t('.split_invoice')}
       %td{ :colspan => '2', :style => 'text-align:right'}
         %span.subtotal{:id => "subtotal_#{ oid }"}= number_to_currency invoice_form.sum
+        %br
+        %span.subtotal.split{:id => "subtotal_split_#{ oid }"}= number_to_currency 0
     %tr
       %td{ :colspan => '4', :style => 'text-align:right'}
         %span.subtotal= t '.change_money'

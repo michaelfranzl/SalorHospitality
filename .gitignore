@@ -37,3 +37,4 @@ debian/files
 *.substvars
 *.salor_saas.rb
 bar
+*.salor

@@ -836,11 +836,13 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
     
     // update totals
     var subtotal_span_original = $('#subtotal_' + ooid);
+    var subtotal_span_split_original = $('#subtotal_split_' + ooid);
     var split_subtotal_original = 0;
     $.each(submit_json.split_items_hash[ooid], function(k,v) {
       split_subtotal_original += v.sum;
     })
     var subtotal_span_partner = $('#subtotal_' + poid);
+    var subtotal_span_split_partner = $('#subtotal_split_' + poid);
     var split_subtotal_partner = 0;
     if (partner_mode) {
       $.each(submit_json.split_items_hash[poid], function(k,v) {
@@ -856,11 +858,13 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
     var subtotal_original = submit_json.totals[ooid].model_original - split_subtotal_original + split_subtotal_partner;
     submit_json.totals[ooid].model = subtotal_original;
     subtotal_span_original.html(number_to_currency(subtotal_original));
+    subtotal_span_split_original.html(number_to_currency(split_subtotal_original));
     
     if (partner_mode) {
       var subtotal_partner = submit_json.totals[poid].model_original - split_subtotal_partner + split_subtotal_original;
       submit_json.totals[poid].model = subtotal_partner;
       subtotal_span_partner.html(number_to_currency(subtotal_partner));
+      subtotal_span_split_partner.html(number_to_currency(split_subtotal_partner));
     }
     
     // update payment methods
