@@ -1308,7 +1308,7 @@ function get_table_show(table_id) {
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
-    timeout: 10000,
+    timeout: 20000,
     complete: function(data,status) {
       if (status == 'timeout') {
         debug('get_table_show: TIMEOUT');

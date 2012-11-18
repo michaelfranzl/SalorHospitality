@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117124809) do
+ActiveRecord::Schema.define(:version => 20121118174626) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -599,8 +599,15 @@ ActiveRecord::Schema.define(:version => 20121117124809) do
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.integer  "vendor_printer_id"
+    t.integer  "bytes_sent"
+    t.integer  "bytes_written"
+    t.integer  "order_id"
+    t.integer  "order_nr"
   end
 
   create_table "reservations", :force => true do |t|

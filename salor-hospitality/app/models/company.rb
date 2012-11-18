@@ -47,6 +47,7 @@ class Company < ActiveRecord::Base
   has_many :tax_amounts
   has_many :tax_items
   has_many :option_items
+  has_many :receipts
   
   validates_presence_of :name
   validates_uniqueness_of :subdomain

@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :vendors
   has_many :histories
   has_many :bookings
+  has_many :receipts
   has_and_belongs_to_many :tables
   validates_presence_of :login, :password, :title
   validates_uniqueness_of :password, :scope => :company_id

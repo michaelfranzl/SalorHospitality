@@ -52,12 +52,15 @@ class Printr
     raise 'Mismatch between open_printers and printer_id' if printer.nil?
     ActiveRecord::Base.logger.info "[PRINTING]  Printing on #{ printer[:name] } @ #{ printer[:device].inspect.force_encoding('UTF-8') }."
     text.force_encoding 'ISO-8859-15'
+    bytes_written = nil
     printer[:copies].times do |i|
-      # The method .write works both for SerialPort object and File object, so we don't have to distinguis here.
-      @open_printers[printer_id][:device].write text
+      # The method .write works both for SerialPort object and File object, so we don't have to distinguish here.
+      bytes_written = @open_printers[printer_id][:device].write text
+      ActiveRecord::Base.logger.info "[PRINTING]ERROR: Byte count mismatch: sent #{text.length} written #{bytes_written}" unless text.length == bytes_written
     end
-    # The method .flush works both for SerialPort object and File object, so we don't have to distinguis here.
+    # The method .flush works both for SerialPort object and File object, so we don't have to distinguish here.
     @open_printers[printer_id][:device].flush
+    return bytes_written
   end
 
   def identify

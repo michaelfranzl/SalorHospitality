@@ -13,6 +13,7 @@ class VendorPrinter < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   has_many :categories
+  has_many :receipts
   
   def sanitize_path
     unless self.company.mode == 'local'

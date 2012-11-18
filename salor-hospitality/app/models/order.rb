@@ -23,6 +23,7 @@ class Order < ActiveRecord::Base
   has_many :payment_method_items
   has_many :tax_items
   has_many :option_items
+  has_many :receipts
   has_one :order
 
   serialize :taxes
@@ -356,7 +357,11 @@ class Order < ActiveRecord::Base
     if what.include? 'tickets'
       unless self.vendor.categories.existing.all? {|c| c.vendor_printer_id == nil}
         vendor_printers.each do |p|
-          printr.print p.id, self.escpos_tickets(p.id)
+          content = self.escpos_tickets(p.id)
+          bytes_written = printr.print p.id, content
+          
+          bytes_sent = content.force_encoding('ISO-8859-15').length
+          Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => content, :bytes_sent => bytes_sent, :bytes_written => bytes_written) unless content.empty?
         end
       end
     end
