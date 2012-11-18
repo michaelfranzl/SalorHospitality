@@ -1,3 +1,11 @@
+salor-hospitality (4.1.1.30) unstable; urgency=low
+
+  * Closes #1443
+  * Closes #1444
+  * Closes #1445
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 18 Nov 2012 19:51:57 +0100
+
 salor-hospitality (4.1.1.29) unstable; urgency=low
 
   * Closes #1440
