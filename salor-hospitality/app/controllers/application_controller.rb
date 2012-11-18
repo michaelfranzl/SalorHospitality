@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
           when 'pay_and_print'
             get_order
             Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
-            @order.pay(@current_user)
+            @order.pay
             @order.reload
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
           when 'pay_and_no_print'
             get_order
             Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
-            @order.pay(@current_user)
+            @order.pay
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
         end
@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
                   render :nothing => true # routing is done by the static route() function, so nothing to be done here.
                 when 'invoice'
                   @order.print(['tickets'])
-                  #@order.user = @current_user
+                  @order.user = @current_user unless workstation?
                   @order.save
                   @order.table.update_color
                   render_invoice_form(@order.table) # the server has to render dynamically via .js.erb depending on the models.
