@@ -1,3 +1,10 @@
+salor-hospitality (4.1.1.27) unstable; urgency=low
+
+  * Closes #1440
+  * Closes #1441, use Rake 0.9.2.2 by default
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 18 Nov 2012 11:47:06 +0100
+
 salor-hospitality (4.1.1.26) unstable; urgency=low
 
   * Closes #1493
