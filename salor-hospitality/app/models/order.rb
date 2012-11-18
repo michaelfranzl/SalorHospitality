@@ -280,6 +280,7 @@ class Order < ActiveRecord::Base
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
+    self.set_nr
     self.table.update_color
     self.items.existing.each do |i|
       i.option_items.existing.each do |oi|
