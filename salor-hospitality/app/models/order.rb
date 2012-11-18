@@ -602,6 +602,10 @@ class Order < ActiveRecord::Base
     return a.to_json
   end
   
+  def invoice_items_to_json
+    # to be implemented
+  end
+  
   def check
     self.items.each do |i|
       i.check

@@ -222,8 +222,31 @@ class Item < ActiveRecord::Base
     self.item = nil
     self.save
   end
+  
+  def self.split_items(items, order)
+    items.each do |k,v|
+      item = Item.find_by_id(k)
+      item.split(v['split_count'].to_i) unless v['split_count'].to_i.zero?
+    end
+    
+    partner_order = order.order
+    if order.items.existing.any?
+      order.calculate_totals
+    else
+      order.hide(-3) 
+    end
+    
+    if partner_order
+      if partner_order.items.existing.any?
+        partner_order.calculate_totals
+      elsif partner_order
+        partner_order.hide(-3) 
+      end
+    end
+  end
 
   def split(count=1)
+    puts "called split for item #{self.id} with count #{count}"
     parent_order = self.order
     split_order = parent_order.order
     if split_order.nil?
@@ -252,22 +275,10 @@ class Item < ActiveRecord::Base
     self.count -= count
     self.printed_count -= count
     self.hide(-3) if self.count.zero?
-    partner_item.save # only a direct method of self has access to unsaved object changes. since we call OptionItem.calculate_totals below, this methods would not have access to those changes if we wouldn't save. therefore, we must save here.
-    partner_item.option_items.each do |o|
-      o.calculate_totals
-    end
-    self.save
-    self.option_items.each do |o| 
-      o.calculate_totals
-    end
+    partner_item.save
     partner_item.calculate_totals
+    self.save
     self.calculate_totals
-    if parent_order.items.existing.empty?
-      parent_order.hide(-3)
-    else
-      parent_order.calculate_totals
-    end
-    split_order.calculate_totals
   end
   
   def compose_option_names_without_price

@@ -20,19 +20,11 @@ class ItemsController < ApplicationController
 
   def split
     if params['split_items_hash']
-      table = nil
-      
-      params['split_items_hash'].each do |k,v|
-        @item = get_model(k.to_i)
-        if @item
-          table = @item.order.table if @item.order
-          @item.split(v['split_count'].to_i) unless v['split_count'].to_i.zero?
-        end
-      end
-      
-      if table
-        render_invoice_form(table) and return
-      end
+      order = @current_vendor.orders.existing.find_by_id(params[:order_id])
+      render :nothing => true and return unless order
+      Item.split_items(params['split_items_hash'], order)
+      table = order.table
+      render_invoice_form(table) and return
     end
     render :nothing => true and return
   end

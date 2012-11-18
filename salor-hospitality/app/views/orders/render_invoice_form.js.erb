@@ -1,5 +1,6 @@
-split_items_hash = {};
-counter_split_item = -1;
-route('invoice');
-$('#invoices').html('<%= escape_javascript render :partial => 'orders/invoice_form', :collection => @orders %>');
-                   
+if (invoice_update == true) {
+  route('invoice');
+  $('#invoices').html('<%= escape_javascript render :partial => 'orders/invoice_form', :collection => @orders %>');
+}
+submit_json.split_items_hash.original = <%= @orders.first ? @orders.first.id : 'null' %>;
+submit_json.split_items_hash.partner = <%= @orders.last ? @orders.last.id : 'null' %>;

@@ -9,10 +9,10 @@
   
 %div.invoice{ :id => "model_#{oid}" }
   - @current_vendor.vendor_printers.existing.each do |p|
-    %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
+    %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}}, this);", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
 
   - if not invoice_form.finished
-    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print'});", :class => 'iconbutton finish_button', :title => t('.just_finish')}
+    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print'}, this);", :class => 'iconbutton finish_button', :title => t('.just_finish')}
 
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
 
@@ -47,15 +47,16 @@
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
-      - tax = @current_vendor.taxes.find_by_id(item.taxes.keys.first)
-      - color = tax.color
-      - letter = tax.letter
+      - if display_tax_colors
+        - tax = @current_vendor.taxes.find_by_id(item.taxes.keys.first)
+        - color = tax.color
+        - letter = tax.letter
       - count_label = item.count
       
       / ----------------- ITEM ROW -----------------------
       %tr.item{ :id => "order_#{oid}_item_#{item.id}", :style => "background-color: #{ display_tax_colors ? color : ''}" }
-        %td.count{:id => "#{oid}_#{item.id}_count", :onclick => "split_item(#{item.id},#{oid}, 1)"}= count_label
-        %td.count_split{:id => "#{oid}_#{item.id}_count_split", :onclick => "split_item(#{item.id},#{oid}, -1)"}
+        %td.count{:id => "#{oid}_#{item.id}_count", :onclick => "split_item(#{item.id}, #{oid}, #{item.price + item.options_price}, #{item.item_id ? item.item_id : 'null'}, 1)"}= count_label
+        %td.count_split{:id => "#{oid}_#{item.id}_count_split", :onclick => "split_item(#{item.id}, #{oid}, #{item.price + item.options_price}, #{item.item_id ? item.item_id : 'null'}, -1)"}
         %td.label{ :id => "item#{item.id}", :onclick => "#{label_onclick_method}(#{item.id},#{oid})"}
           - if invoice_form.finished
             == #{ prefix_label } #{ article_label } #{ item.comment }<br>#{ postfix_label }
@@ -91,7 +92,8 @@
 
 :javascript
   submit_json.payment_method_items[#{ oid }] = {};
-  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, payment_method_items:0 };
+  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, model_original:#{ invoice_form.sum }, payment_method_items:0 };
+  submit_json.split_items_hash[#{ oid }] = {};
   if (permissions.manage_payment_methods) {
     add_payment_method(#{oid}, null, submit_json.totals[#{oid}].model);
   }

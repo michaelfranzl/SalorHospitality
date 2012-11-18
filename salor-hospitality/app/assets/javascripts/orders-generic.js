@@ -14,11 +14,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 var upper_delivery_time_limit = 45 * 60000;
 
+var invoice_update = true;
+
 var new_order = true;
 var option_position = 0;
 var item_position = 0;
 var payment_method_uid = 0;
-var split_items_hash = {};
 
 var resources = {};
 var plugin_callbacks_done = [];
@@ -170,7 +171,7 @@ function route(target, model_id, action, options) {
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id + '?order_id=' + options.order_id,
-        timeout: 10000
+        timeout: 15000
       }); //this repopulates items_json and renders items
     } else if (action == 'from_booking') {
       submit_json.jsaction = 'send_and_go_to_table';
@@ -223,8 +224,9 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
-    submit_json['payment_method_items'] = {};
-    submit_json['totals'] = {};
+    submit_json.payment_method_items = {};
+    submit_json.split_items_hash = {};
+    submit_json.totals = {};
     submit_json.currentview = 'invoice';
 
   // ========== GO TO ROOMS ===============
@@ -277,7 +279,7 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 10000 }); //this repopulates items_json and renders items
+    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 15000 }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
 
   // ========== EXISTING BOOKING ===============
@@ -304,7 +306,7 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 10000 });
+    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 15000 });
     window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
@@ -327,7 +329,7 @@ function route(target, model_id, action, options) {
         type: 'post',
         url: '/route',
         data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
-        timeout: 10000
+        timeout: 15000
       })
     }
     
@@ -357,12 +359,12 @@ function send_queue(object_id) {
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
-    timeout: 30000,
+    timeout: 40000,
     complete: function(data,status) {
       update_tables();
       if (status == 'timeout') {
         debug('send_queue: TIMEOUT');
-        alert('Server Timeout.');
+        //alert('Server Timeout.');
         clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
       } else if (status == 'success') {
         clear_queue(object_id);
@@ -748,65 +750,33 @@ function customer_list_update() {
 /* ========================================================*/
 
 
-function update_order_from_invoice_form(data) {
-  data['currentview'] = 'invoice';
-  data['payment_method_items'] = submit_json.payment_method_items;
+function update_order_from_invoice_form(data, button) {
+  data.currentview = 'invoice';
+  data.payment_method_items = submit_json.payment_method_items;
+  if (! $.isEmptyObject(submit_json.split_items_hash[data.id])) {
+    data.split_items_hash = submit_json.split_items_hash[data.id];
+  }
   $.ajax({
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 30000
+    timeout: 40000
   });
-  route('tables');
-}
-
-
-function rotate_tax_item(id) {
-  $.ajax({
-    type: 'put',
-    url: '/items/rotate_tax',
-    data: {id:id},
-    timeout: 20000
-  });
-}
-
-function split_item(id, order_id, increment) {
-  var item_count_td = $('#' + order_id + '_' + id + '_count');
-  var item_count_split_td = $('#' + order_id + '_' + id + '_count_split');
+  //submit_json.split_items_hash.[data.id] = {};
+  var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', $(button));
+  loader.css('margin', '7px');
+  loader.css('position','absolute');
   
-  var original_count = item_count_td.html() == '' ? 0 : parseInt(item_count_td.html());
-  var split_count = item_count_split_td.html() == '' ? 0 : parseInt(item_count_split_td.html());
-
-  if (((increment == 1) && (original_count > 0) || (increment == -1) && (split_count > 0))) {
-    if (split_items_hash.hasOwnProperty(id)) {
-      split_items_hash[id].split_count += increment;
+  if ($.isEmptyObject(submit_json.split_items_hash[data.id])) {
+    if ($('div.invoice:visible').length == 1) {
+      route('tables');
     } else {
-      split_items_hash[id] = {};
-      split_items_hash[id].split_count = 1;
-      split_items_hash[id].original_count = original_count;
+      // stay on invoice page but remove the current invoice from DOM
+      $('#model_' + data.id).hide();
+      delete submit_json.split_items_hash[data.id];
     }
-    original_count -= increment;
-    split_count += increment;
-    
-    item_count_td.html(original_count == 0 ? '' : original_count);
-    item_count_split_td.html(split_count == 0 ? '' : split_count);
   }
-}
-
-function submit_split_items(order_id) {
-  if (! $.isEmptyObject(split_items_hash)) {
-    var splitbutton = $('#model_' + order_id + ' a.splitinvoice_button');
-    var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', splitbutton);
-    loader.css('margin', '7px');
-
-    $.ajax({
-      type: 'put',
-      url: '/items/split',
-      data: {jsaction:'split',split_items_hash:split_items_hash},
-      timeout: 30000
-    });
-    split_items_hash = {};
-  }
+  invoice_update = true; // if any of the print or finish buttons is pressed, always let the server response update the invoices. splitting an item can interrupt this.
 }
 
 function update_order_from_refund_form(data) {
@@ -817,6 +787,114 @@ function update_order_from_refund_form(data) {
     data: data,
     timeout: 20000
   });
+}
+
+function rotate_tax_item(id) {
+  $.ajax({
+    type: 'put',
+    url: '/items/rotate_tax',
+    data: {id:id},
+    timeout: 20000
+  });
+}
+
+function split_item(id, order_id, sum, partner_item_id, increment) {
+  // in case the user splits the invoice, a pending response from the server should not re-render the invoices and therefore overwrite the users input. this is a global variable and will be checked in orders/render_invoice_form.js.erb
+  invoice_update = false;
+  
+  var partner_mode = $('div.invoice:visible').length == 2; //submit_json.split_items_hash.original != submit_json.split_items_hash.partner;
+  
+  if (order_id == submit_json.split_items_hash.original) {
+    var ooid = submit_json.split_items_hash.original;
+    var poid = submit_json.split_items_hash.partner;
+  } else {
+    var ooid = submit_json.split_items_hash.partner;
+    var poid = submit_json.split_items_hash.original;
+  }
+  var oiid = id; // original item id
+  var piid = partner_item_id;
+  
+  var item_count_td = $('#' + ooid + '_' + oiid + '_count');
+  var item_count_split_td = $('#' + ooid + '_' + oiid + '_count_split');
+  var original_count = item_count_td.html() == '' ? 0 : parseInt(item_count_td.html());
+  var split_count = item_count_split_td.html() == '' ? 0 : parseInt(item_count_split_td.html());
+
+  if (((increment == 1) && (original_count > 0) || (increment == -1) && (split_count > 0))) {
+    if (submit_json.split_items_hash[ooid].hasOwnProperty(oiid)) {
+      submit_json.split_items_hash[ooid][oiid].split_count += increment;
+      submit_json.split_items_hash[ooid][oiid].sum = submit_json.split_items_hash[ooid][oiid].split_count * sum;
+    } else {
+      submit_json.split_items_hash[ooid][oiid] = {};
+      submit_json.split_items_hash[ooid][oiid].split_count = 1;
+      submit_json.split_items_hash[ooid][oiid].original_count = original_count;
+      submit_json.split_items_hash[ooid][oiid].sum = sum;
+    }
+    original_count -= increment;
+    split_count += increment;
+    item_count_td.html(original_count == 0 ? '' : original_count);
+    item_count_split_td.html(split_count == 0 ? '' : split_count);
+    
+    // update totals
+    var subtotal_span_original = $('#subtotal_' + ooid);
+    var split_subtotal_original = 0;
+    $.each(submit_json.split_items_hash[ooid], function(k,v) {
+      split_subtotal_original += v.sum;
+    })
+    var subtotal_span_partner = $('#subtotal_' + poid);
+    var split_subtotal_partner = 0;
+    if (partner_mode) {
+      $.each(submit_json.split_items_hash[poid], function(k,v) {
+        split_subtotal_partner += v.sum;
+      })
+    }
+
+    var total_all_models = 0
+    $.each(submit_json.totals, function(k,v) {
+      total_all_models += v.model_original;
+    })
+
+    var subtotal_original = submit_json.totals[ooid].model_original - split_subtotal_original + split_subtotal_partner;
+    submit_json.totals[ooid].model = subtotal_original;
+    subtotal_span_original.html(number_to_currency(subtotal_original));
+    
+    if (partner_mode) {
+      var subtotal_partner = submit_json.totals[poid].model_original - split_subtotal_partner + split_subtotal_original;
+      submit_json.totals[poid].model = subtotal_partner;
+      subtotal_span_partner.html(number_to_currency(subtotal_partner));
+    }
+    
+    // update payment methods
+    var payment_method_inputs_original = $('#payment_methods_container_' + ooid + ' td.payment_method_input input');
+    var payment_method_input_original = payment_method_inputs_original[payment_method_inputs_original.length - 1];
+    $(payment_method_input_original).val(subtotal_original);
+    var pmid = $(payment_method_input_original).attr('pmid');
+    payment_method_input_change(payment_method_input_original, pmid, ooid)
+    
+    if (partner_mode) {
+      var payment_method_inputs_partner = $('#payment_methods_container_' + poid + ' td.payment_method_input input');
+      var payment_method_input_partner = payment_method_inputs_partner[payment_method_inputs_partner.length - 1];
+      $(payment_method_input_partner).val(subtotal_partner);
+      var pmid = $(payment_method_input_partner).attr('pmid');
+      payment_method_input_change(payment_method_input_partner, pmid, poid)
+    }
+  }
+}
+
+function submit_split_items(order_id) {
+  if (! $.isEmptyObject(submit_json.split_items_hash[order_id])) {
+    var splitbutton = $('#model_' + order_id + ' a.splitinvoice_button');
+    var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', splitbutton);
+    loader.css('margin', '7px');
+
+    $.ajax({
+      type: 'put',
+      url: '/items/split',
+      data: {jsaction:'split',split_items_hash:submit_json.split_items_hash[order_id],order_id:order_id},
+      timeout: 30000
+    });
+    //split_items_hash = {};
+    invoice_update = true; // when pressing the split button, always let the server repsonse refresh the invoice view.
+  }
 }
 
 // This is only called from the rooms view. For historical reasons, the order invoice view has the ocntainers hardcoded.
@@ -870,6 +948,7 @@ function add_payment_method(model_id,id,amount) {
   });
   pm_input = $(document.createElement('input'));
   pm_input.attr('type', 'text');
+  pm_input.attr('pmid', payment_method_uid);
   pm_input.attr('id', 'payment_method_' + payment_method_uid + '_amount');
   if (amount) {
     pm_input.val(number_with_precision(amount,2));
@@ -1253,7 +1332,7 @@ function update_tables(){
   $.ajax({
     url: '/tables',
     dataType: 'json',
-    timeout: 5000,
+    timeout: 15000,
     success: function(data) {
       resources.t = data;
       render_tables();
@@ -1266,7 +1345,7 @@ function update_resources(mode) {
     url: '/vendors/render_resources',
     dataType: 'script',
     complete: function(data,state) { update_resources_success(data) },
-    timeout: 8000,
+    timeout: 15000,
     success: function() {
       if (mode == 'documentready') {
         update_tables();
@@ -1306,7 +1385,7 @@ function update_item_lists() {
           if (permissions.see_item_notifications_vendor_delivery) render_item_list('static', 'vendor', 'delivery');
         }
       },
-      timeout: 5000 
+      timeout: 15000 
     });
   } else if (permissions.see_item_notifications_user_preparation || permissions.see_item_notifications_user_delivery) {
     $.ajax({
@@ -1325,7 +1404,7 @@ function update_item_lists() {
           if (permissions.see_item_notifications_user_delivery) render_item_list('static', 'user', 'delivery');
         }
       },
-      timeout: 5000 
+      timeout: 15000 
     });
   }
 }

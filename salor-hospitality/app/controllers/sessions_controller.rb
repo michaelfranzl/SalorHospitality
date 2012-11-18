@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   skip_before_filter :fetch_logged_in_user, :set_locale, :except => :destroy
 
   def new
-    session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
+    #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
     @submit_path = session_path
     render :layout => 'login'
   end
