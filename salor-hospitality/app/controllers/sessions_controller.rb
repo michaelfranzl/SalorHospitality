@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)
-          UserMailer.plain_message("Login occurred #{params[:password]}", request, company).deliver if company.email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITED != 'none'
+          UserMailer.plain_message("Login occurred #{params[:password]}", request, company).deliver if company.email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
           redirect_to orders_path and return
         else
           flash[:error] = t('messages.user_account_is_currently_locked')

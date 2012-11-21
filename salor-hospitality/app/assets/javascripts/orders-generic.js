@@ -377,7 +377,7 @@ function send_queue(object_id) {
             window.setTimeout(function() { send_queue(object_id) }, 5000);
             break;
           case 4:
-            alert('send_queue: ' + parse_rails_error_message(data.responseText));
+            debug('send_queue: ' + parse_rails_error_message(data.responseText));
             break;
         }
       } else if (status == 'parsererror') {
@@ -1324,7 +1324,7 @@ function get_table_show(table_id) {
             window.setTimeout(function() { get_table_show(table_id) }, 5000);
             break;
           case 4:
-            alert('get_table_show: ' + parse_rails_error_message(data.responseText));
+            debug('get_table_show: ' + parse_rails_error_message(data.responseText));
             break;
         }
       } else if (status == 'parsererror') {
