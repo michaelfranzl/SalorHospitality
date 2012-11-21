@@ -601,12 +601,12 @@ en:
       view_all_settlements: View all settlements
       manage_statistics: View statistics
       manage_statistics_hotel: View hotel statistics
-      statistics_weekday: Statistics Weekday
-      statistics_hour: Statistics Hour
-      statistics_table: Statistics Tisch
+      statistics_weekday: Statistics Weekdays
+      statistics_hour: Statistics Hours
+      statistics_table: Statistics Tables
       statistics_payment_method: Statistics Payment Methods
-      statistics_category: Statistics Category
-      statistics_tax: Statistics Tax
+      statistics_category: Statistics Categories
+      statistics_tax: Statistics Taxes
       manage_hotel: Manage hotel
       item_scribe: Enable handwriting
       assign_order_to_booking: Assign orders to a booking
