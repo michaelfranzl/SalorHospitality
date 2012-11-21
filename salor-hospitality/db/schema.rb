@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118174626) do
+ActiveRecord::Schema.define(:version => 20121121091911) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -634,12 +634,12 @@ ActiveRecord::Schema.define(:version => 20121118174626) do
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "permissions", :limit => 1000, :default => "--- []\n"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.string   "permissions", :limit => 10000, :default => "--- []\n"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
-    t.boolean  "active",                      :default => true
+    t.boolean  "active",                       :default => true
     t.boolean  "hidden"
     t.integer  "weight"
   end
