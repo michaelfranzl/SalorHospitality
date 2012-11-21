@@ -1,3 +1,12 @@
+salor-hospitality (4.1.1.31) unstable; urgency=low
+
+  * Closes #1446
+  * Closes #1465, #1466
+  * Closes #1463 Add permission for order notes
+  * Closes #1462 Hide payment methods on settlements#index unless permitted to use payment methods
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 21 Nov 2012 09:37:09 +0100
+
 salor-hospitality (4.1.1.30) unstable; urgency=low
 
   * Closes #1443
