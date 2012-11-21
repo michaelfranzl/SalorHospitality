@@ -1,5 +1,5 @@
 %h3
-  - if permit?('order_notes')
+  - if permit('order_notes')
     %span#order_info{ :onclick => '$("#note_for_order").slideDown()'}= t :just_order
   - else
     %span#order_info= t :just_order
