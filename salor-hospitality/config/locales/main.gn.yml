@@ -725,9 +725,11 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
-    no_connection_retry: Keine Verbindung zum Server. Nochmals absenden? Bei Abbruch bleiben die Artikel lokal gespeichert.
+    no_connection_retry: Keine Verbindung zum Server. Nochmals absenden? Bei Abbruch
+      bleiben die Artikel lokal gespeichert.
     successfully_sent: Die Artikel wurden erfolgreich abgesendet.
-    table_contains_offline_items: Dieser Tisch enthält Artikel, die noch nicht gesendet wurden. Jetzt absenden?
+    table_contains_offline_items: Dieser Tisch enthält Artikel, die noch nicht gesendet
+      wurden. Jetzt absenden?
     statistics: Statistik
     customer_request_send: Bestellung anfragen
     customer_request_finish: Bezahlung anfragen

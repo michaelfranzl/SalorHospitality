@@ -1,3 +1,12 @@
+salor-hospitality (4.1.1.33) unstable; urgency=low
+
+  * Closes #1476 Reinstallation after purge doesn't recreate configuration files since still registered
+  * Closes #1478 Improved handling when client offline
+  * Closes #1478 Improved handling when client offline
+  * Closes #1479 All cost centers at settlemtent#index
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 22 Nov 2012 17:48:06 +0100
+
 salor-hospitality (4.1.1.32) unstable; urgency=low
 
   * Closes #1467 Permission attribute on Role is too short

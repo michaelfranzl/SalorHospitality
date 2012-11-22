@@ -771,6 +771,11 @@ it:
     time: Time
     delete: Delete
     statistics: Statistics
+    no_connection_retry: No connection to the Server. Send again? If you cancel, the
+      items will be saved locally.
+    successfully_sent: The items were successfully sent.
+    table_contains_offline_items: This table contains items which haven't been sent
+      yet. Send them now?
   customers:
     new:
       edit_customer: Edit Customer

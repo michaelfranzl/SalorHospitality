@@ -756,6 +756,11 @@ tr:
     mobile_view: Mobile device view
     workstation_view: Workstation view
     statistics: Statistics
+    no_connection_retry: No connection to the Server. Send again? If you cancel, the
+      items will be saved locally.
+    successfully_sent: The items were successfully sent.
+    table_contains_offline_items: This table contains items which haven't been sent
+      yet. Send them now?
   vendors:
     index:
       edit: Edit
