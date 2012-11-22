@@ -780,7 +780,7 @@ function update_order_from_invoice_form(data, button) {
   loader.css('margin', '7px');
   loader.css('position','absolute');
   
-  if ($.isEmptyObject(submit_json.split_items_hash[data.id])) {
+  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && data.jsaction != 'change_cost_center') {
     if ($('div.invoice:visible').length == 1) {
       route('tables');
     } else {
