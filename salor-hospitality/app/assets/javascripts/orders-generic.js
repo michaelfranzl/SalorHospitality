@@ -1318,6 +1318,7 @@ function manage_counters() {
 }
 
 function get_table_show(table_id) {
+  debug('xxx get_table_show_called');
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
