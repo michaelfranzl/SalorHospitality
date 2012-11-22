@@ -1,3 +1,9 @@
+salor-hospitality (4.1.1.34) unstable; urgency=low
+
+  * Closes #1480 Switching cost center routes to tables
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 22 Nov 2012 18:03:52 +0100
+
 salor-hospitality (4.1.1.33) unstable; urgency=low
 
   * Closes #1476 Reinstallation after purge doesn't recreate configuration files since still registered
