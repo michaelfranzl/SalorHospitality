@@ -21,7 +21,7 @@ class SettlementsController < ApplicationController
     @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
     @cost_centers = @current_vendor.cost_centers.existing
     cost_center_ids = @cost_centers.collect{ |cc| cc.id }
-    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : @current_vendor.cost_centers.existing.first
+    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : nil
     @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
   end
 
