@@ -27,7 +27,7 @@ function create_json_record(model, object) {
     s += 1;
   }
   if (model == 'order') {
-    items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci};
+    items_json[d] = {ai:object.ai, qi:object.qi, d:d, c:1, o:'', t:{}, i:[], p:object.p, pre:'', post:'', n:object.n, s:s, ci:object.ci, changed:true};
   } else if (model == 'booking') {
     items_json[d] = {guest_type_id:object.guest_type_id, season_id:object.season_id, duration:object.duration, count:1, parent_key:object.parent_key, has_children:false, surcharges:{}, date_locked:false, from_date:object.from_date, to_date:object.to_date, covered_seasons:object.covered_seasons}
   }
@@ -40,6 +40,7 @@ function create_json_record(model, object) {
 function set_json(model, d, attribute, value) {
   if (items_json.hasOwnProperty(d)) {
     items_json[d][attribute] = value;
+    items_json[d].changed = true;
   } else {
     //alert('Unexpected error: Object items_json doesnt have the key ' + d + ' yet');
   }
