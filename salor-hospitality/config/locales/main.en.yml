@@ -725,6 +725,9 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    no_connection_retry: No connection to the Server. Send again? If you cancel, the items will be saved locally.
+    successfully_sent: The items were successfully sent.
+    table_contains_offline_items: "This table contains items which haven't been sent yet. Send them now?"
     statistics: Statistics
     customer_request_send: Request these items
     customer_request_finish: Request payment

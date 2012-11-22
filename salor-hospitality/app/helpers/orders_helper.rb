@@ -41,7 +41,13 @@ module OrdersHelper
       :workstation_view => escape_javascript(I18n.t('various.workstation_view', :locale => @locale)),
       :order_will_be_confirmed => escape_javascript(I18n.t('various.order_will_be_confirmed', :locale => @locale)),
       :finish_was_requested => escape_javascript(I18n.t('various.finish_was_requested', :locale => @locale)),
-      :waiter_was_requested => escape_javascript(I18n.t('various.waiter_was_requested', :locale => @locale))
+      :waiter_was_requested => escape_javascript(I18n.t('various.waiter_was_requested', :locale => @locale)),
+      :no_connection_retry =>
+      escape_javascript(I18n.t('various.no_connection_retry', :locale => @locale)),
+      :successfully_sent =>
+      escape_javascript(I18n.t('various.successfully_sent', :locale => @locale)),
+      :table_contains_offline_items =>
+      escape_javascript(I18n.t('various.table_contains_offline_items', :locale => @locale))
     }
     return i18n.to_json
   end

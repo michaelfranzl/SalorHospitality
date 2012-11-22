@@ -15,6 +15,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 var upper_delivery_time_limit = 45 * 60000;
 
 var invoice_update = true;
+var get_table_show_retry = true;
+var offline_tables = {};
+var last_table_id = null;
 
 var new_order = true;
 var option_position = 0;
@@ -62,9 +65,9 @@ function route(target, model_id, action, options) {
   emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
-    scroll_to($('#container'),20);
     submit_json.target = 'tables';
     invoice_update = true;
+    get_table_show_retry = false;
     $('#orderform').hide();
     $('#invoices').hide();
     $('#items_notifications_interactive').hide();
@@ -101,6 +104,12 @@ function route(target, model_id, action, options) {
     item_position = 0;
     counter_update_tables = timeout_update_tables;
     update_tables();
+    if (settings.mobile && typeof(model_id) != 'undefined') {
+      console.log('scrolling' + model_id);
+      scroll_to($('#table' + model_id), 20);
+    } else {
+      scroll_to($('#container'),20);
+    }
     submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
@@ -108,17 +117,11 @@ function route(target, model_id, action, options) {
     scroll_to($('#container'),20);
     submit_json.target = 'table';
     invoice_update = true;
+    get_table_show_retry = true;
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
-    $('#order_info').html(i18n.just_order);
-    $('#order_note').val('');
-    //$('#inputfields').html('');
-    $('#itemstable').html('');
-    $('#articles').html('');
-    $('#quantities').html('');
-    $('.target_table').val('');
-    $('#items_notifications_interactive').hide();
-    $('#items_notifications_static').hide();
-    $('#functions_header_last_invoices').hide();
+    switch_to_table();
+    screenlock_counter = -1;
+    counter_update_tables = -1;
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';
@@ -158,15 +161,22 @@ function route(target, model_id, action, options) {
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
       //final rendering will be done in application#route
-    } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      // pure offline mode is not supported as of now, so this never executes
-      debug('Offline mode. Fetching items from queue');
+    } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
       $('#order_cancel_button').hide();
       submit_json = submit_json_queue['table_' + model_id];
       items_json = items_json_queue['table_' + model_id];
       delete submit_json_queue['table_' + model_id];
       delete items_json_queue['table_' + model_id];
+//       $.each(items_json, function(k,v) {
+//         items_json[k].offline = true;
+//       })
       render_items();
+      var answer = confirm('Dieser Tisch enthält Artikel, die noch nicht gesendet wurden. Jetzt absenden?');
+      if (answer == true) {
+        send_json('table_' + model_id);
+      } else {
+        // do nothing
+      }
     } else if (action == 'specific_order') {
       submit_json.model = {table_id:model_id};
       items_json = {};
@@ -180,23 +190,11 @@ function route(target, model_id, action, options) {
       send_json('booking_' + options.booking_id);
       submit_json.model.table_id = model_id;
     } else {
-      // click on a table from main view
+      // regular click on a table from main view
       submit_json = {model:{table_id:model_id}};
       items_json = {};
       get_table_show(model_id);
     }
-    $('#orderform').show();
-    $('#invoices').hide();
-    $('#tables').hide();
-    $('#areas').hide();
-    $('#rooms').hide();
-    $('.booking_form').remove();
-    $('#functions_header_index').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_header_order_form').show();
-    if (settings.mobile) { $('#functions_footer').show(); }
-    screenlock_counter = -1;
-    counter_update_tables = -1;
     submit_json.currentview = 'table';
 
   // ========== GO TO INVOICE ===============
@@ -363,18 +361,34 @@ function send_queue(object_id) {
     data: submit_json_queue[object_id],
     timeout: 40000,
     complete: function(data,status) {
-      update_tables();
+      //status = 'error';
+      //data.readyState = 0;
       if (status == 'timeout') {
         debug('send_queue: TIMEOUT');
-        //alert('Server Timeout.');
         clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
       } else if (status == 'success') {
+        debug('send_queue: SUCCESS');
+        table_id = submit_json_queue[object_id].model.table_id;
+        if (offline_tables.hasOwnProperty(table_id)) {
+          debug('deleting offline_tables ' + table_id);
+          delete offline_tables[table_id];
+          $('#table' + table_id).css('border', '1px solid gray');
+          clear_queue(object_id);
+          route('table', table_id);
+          alert('Artikel erfolgreich abgesendet');
+        }
         clear_queue(object_id);
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            debug('send_queue: No network connection. Re-attempting submission.');
-            window.setTimeout(function() { send_queue(object_id) }, 5000);
+            var answer = confirm(i18n.no_connection_retry);
+            if (answer == true) {
+              send_queue(object_id);
+            } else {
+              var table_id = submit_json_queue[object_id].model.table_id;
+              $('#table' + table_id).css('border', '3px solid white');
+              offline_tables[table_id] = true;
+            }
             break;
           case 4:
             debug('send_queue: ' + parse_rails_error_message(data.responseText));
@@ -384,6 +398,7 @@ function send_queue(object_id) {
         debug('send_queue: parser error: ' + data);
         clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
       }
+      update_tables();
     }
   });
 }
@@ -426,6 +441,12 @@ function render_items() {
     catid = object.ci;
     tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object)).replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit);
     $('#itemstable').append(tablerow);
+    if (object.changed == true) {
+      $('td#tablerow_' + object.d + '_count').addClass('updated');
+    }
+    if (object.offline) {
+      $('#tablerow_' + object.d + '_count').addClass('offline');
+    }
     if (object.p == 0) {
       $('#tablerow_' + object.d + '_label').addClass('zero_price');
     }
@@ -1307,6 +1328,7 @@ function manage_counters() {
 }
 
 function get_table_show(table_id) {
+  debug('xxx get_table_show_called');
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
@@ -1314,14 +1336,22 @@ function get_table_show(table_id) {
     complete: function(data,status) {
       if (status == 'timeout') {
         debug('get_table_show: TIMEOUT');
-        window.setTimeout(function() { get_table_show(table_id) }, 1000);
+        if ( get_table_show_retry ) {
+          window.setTimeout(function() {
+            get_table_show(table_id)
+          }, 1000);
+        }
       } else if (status == 'success') {
         debug('get_table_show: success');
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            debug('get_table_show: No network connection. Re-attempting submission.');
-            window.setTimeout(function() { get_table_show(table_id) }, 5000);
+            debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
+            if ( get_table_show_retry ) {
+              window.setTimeout(function() {
+                get_table_show(table_id)
+              }, 5000);
+            }
             break;
           case 4:
             debug('get_table_show: ' + parse_rails_error_message(data.responseText));
@@ -1329,6 +1359,8 @@ function get_table_show(table_id) {
         }
       } else if (status == 'parsererror') {
         debug('get_table_show: parser error: ' + data);
+      } else {
+        debug('get_table_show: unsupported status');
       }
     }
   }); //the JS response repopulates items_json and renders items_json
@@ -1751,6 +1783,9 @@ function render_tables() {
     table.css('top', top);
     table.css('width', width);
     table.css('height', height);
+    if (offline_tables.hasOwnProperty(v.id)) {
+      table.css('border', '3px solid white');
+    }
     if (typeof(bgcolor) == 'string') table.css('background-color', bgcolor);
 
     if (v.cp) {
@@ -1813,6 +1848,30 @@ function update_table_coordinates(id) {
   })
 }
 
+function switch_to_table() {
+  $('#order_info').html(i18n.just_order);
+  $('#order_note').val('');
+  //$('#inputfields').html('');
+  $('#itemstable').html('');
+  $('#articles').html('');
+  $('#quantities').html('');
+  $('.target_table').val('');
+  $('#items_notifications_interactive').hide();
+  $('#items_notifications_static').hide();
+  $('#functions_header_last_invoices').hide();
+  $('#order_cancel_button').show();
+  //---
+  $('#orderform').show();
+  $('#invoices').hide();
+  $('#tables').hide();
+  $('#areas').hide();
+  $('#rooms').hide();
+  $('.booking_form').remove();
+  $('#functions_header_index').hide();
+  $('#functions_header_invoice_form').hide();
+  $('#functions_header_order_form').show();
+  if (settings.mobile) { $('#functions_footer').show(); }
+}
 
 
 function parse_rails_error_message(raw_message) {
