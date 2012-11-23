@@ -74,6 +74,7 @@ class Item < ActiveRecord::Base
   end
 
   def scribe_bitmap
+    return nil unless self.scribe
     canvas = Magick::Image.new(512, 128)
     gc = Magick::Draw.new
     gc.stroke('black')

@@ -347,29 +347,30 @@ class Order < ActiveRecord::Base
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
-      printr = Printr.new(self.company.mode, vendor_printers)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printers)
     else
-      printr = Printr.new(self.company.mode, vendor_printer)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printer)
     end
 
-    printr.open
+    print_engine.open
 
     # print
     if what.include? 'tickets'
       unless self.vendor.categories.existing.all? {|c| c.vendor_printer_id == nil}
         vendor_printers.each do |p|
-          content = self.escpos_tickets(p.id)
-          bytes_written = printr.print p.id, content
+          contents = self.escpos_tickets(p.id)
+          bytes_written, content_written = print_engine.print(p.id, contents[:text], contents[:raw_insertations])
           
-          bytes_sent = content.force_encoding('ISO-8859-15').length
-          Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => content, :bytes_sent => bytes_sent, :bytes_written => bytes_written) unless content.empty?
+          bytes_sent = content_written.length
+          Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written) unless content_written.empty?
         end
       end
     end
     
     if what.include? 'receipt'
       if vendor_printer
-        printr.print vendor_printer.id, self.escpos_receipt
+        contents = self.escpos_receipt
+        print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         self.update_attribute :printed, true
       end
     end
@@ -377,10 +378,10 @@ class Order < ActiveRecord::Base
     if what.include? 'interim_receipt'
       # this is currently not implemented and never called.
       if vendor_printer
-        printr.print vendor_printer.id, self.escpos_interim_receipt
+        print_engine.print(vendor_printer.id, self.escpos_interim_receipt)
       end
     end
-    printr.close
+    print_engine.close
   end
 
   def escpos_tickets(printer_id)
@@ -419,8 +420,9 @@ class Order < ActiveRecord::Base
     fontstyle = fontsize | 0x08
 
     init =
-    "\e@"     +  # Initialize Printer
-    "\e!" + fontstyle.chr +
+    "\e@" +  # Initialize Printer
+    "\e!" +
+    fontstyle.chr +
     "\n\n\n\n\n"
 
     cut =
@@ -429,6 +431,7 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"  # beep
 
     header = ''
+    
     nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
     if vendor.ticket_display_time_order
       header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? nr : 0)]
@@ -444,6 +447,7 @@ class Order < ActiveRecord::Base
       
     selected_categories = printer_id.nil? ? self.vendor.categories.existing.active : self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id)
     
+    raw_insertations = {}
     selected_categories.each do |c|
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
@@ -456,9 +460,17 @@ class Order < ActiveRecord::Base
         i.option_items.each do |oi|
           itemstring += option_format % [oi.name]
         end
-        itemstring = Printr.sanitize(itemstring)
-        itemstring += i.scribe_escpos.encode('ISO-8859-15') if i.scribe_escpos
-        itemstring += Printr.sanitize(item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]) if vendor.ticket_item_separator
+        
+        if i.scribe_escpos
+          raw_insertations.merge! :"scribe#{i.id}" => i.scribe_escpos.force_encoding('ASCII-8BIT')
+          markup = "{::escper}scribe#{i.id}{:/}"
+          itemstring += markup
+        end
+
+        if vendor.ticket_item_separator
+          itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]
+        end
+        
         if i.option_items.find_all_by_separate_ticket(true).any?
           separate_receipt_contents << itemstring
         else
@@ -478,15 +490,26 @@ class Order < ActiveRecord::Base
 
     output = init
     separate_receipt_contents.each do |content|
-      output += (Printr.sanitize(header) + content + Printr.sanitize(cut)) unless content.empty?
+      unless content.empty?
+        output +=
+            header +
+            content +
+            cut
+      end
     end
-    output += (Printr.sanitize(header) + normal_receipt_content + Printr.sanitize(cut)) unless normal_receipt_content.empty?
-    return '' if output == init
-
-    #logo = self.vendor.rlogo_footer ? self.vendor.rlogo_footer.encode('ISO-8859-15') : ''
-    #logo = "\ea\x01" + logo + "\ea\x00"
-    #return logo + output
-    return output
+    
+    unless normal_receipt_content.empty?
+      output +=
+          header +
+          normal_receipt_content +
+          cut
+    end
+    
+    if output == init
+      return {:text => '', :raw_insertations => {}}
+    else
+      return {:text => output, :raw_insertations => raw_insertations }
+    end
   end
 
 
@@ -495,7 +518,7 @@ class Order < ActiveRecord::Base
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
 
-    logo =
+    vendorname =
     "\e@"     +  # Initialize Printer
     "\ea\x01" +  # align center
     "\e!\x38" +  # doube tall, double wide, bold
@@ -544,9 +567,10 @@ class Order < ActiveRecord::Base
 
     refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{friendly_unit} %.2f" % self.refund_sum)
 
-    tax_format = "\n\n" +
-    "\ea\x01" +  # align center
-    "\e!\x01" # Font A
+    tax_format =
+        "\n\n" +
+        "\ea\x01" +  # align center
+        "\e!\x01" # Font A
 
     tax_header = "         #{I18n.t(:net)}  #{I18n.t('various.tax')}   #{I18n.t(:gross)}\n"
 
@@ -564,17 +588,51 @@ class Order < ActiveRecord::Base
     end
 
     footer = ''
-    footer = 
-    "\ea\x01" +  # align center
-    "\e!\x00" + # font A
-    "\n" + vendor.receipt_footer_blurb + "\n" if vendor.receipt_footer_blurb
+    if vendor.receipt_footer_blurb
+      footer = 
+      "\ea\x01" +  # align center
+      "\e!\x00" + # font A
+      "\n" +
+      vendor.receipt_footer_blurb +
+      "\n"
+    end
 
     duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
+    
+    raw_insertations = {}
+    if vendor.rlogo_header
+      headerlogo = "{::escper}headerlogo{:/}"
+      raw_insertations.merge! :headerlogo => vendor.rlogo_header
+    else
+      headerlogo = vendorname
+    end
+    
+    if vendor.rlogo_footer
+      footerlogo = "{::escper}footerlogo{:/}"
+      raw_insertations.merge! :footerlogo => vendor.rlogo_footer
+    else
+      footerlogo = ''
+    end
 
-    headerlogo = vendor.rlogo_header ? vendor.rlogo_header.encode!('ISO-8859-15') : Printr.sanitize(logo)
-    footerlogo = vendor.rlogo_footer ? vendor.rlogo_footer.encode!('ISO-8859-15') : ''
-
-    output = "\e@" + headerlogo + Printr.sanitize(header + list_of_items + sum_format + sum + refund + tax_format + tax_header + list_of_taxes + list_of_payment_methods + footer + duplicate) + "\n" + footerlogo + "\n\n\n\n\n\n" +  "\x1DV\x00\x0C" # paper cut
+    output_text =
+        "\e@" +
+        headerlogo +
+        header +
+        list_of_items +
+        sum_format +
+        sum +
+        refund +
+        tax_format +
+        tax_header +
+        list_of_taxes +
+        list_of_payment_methods +
+        footer +
+        duplicate +
+        "\n" +
+        footerlogo +
+        "\n\n\n\n\n\n" +
+        "\x1DV\x00\x0C" # paper cut
+    return { :text => output_text, :raw_insertations => raw_insertations }
   end
   
   def escpos_interim_receipt

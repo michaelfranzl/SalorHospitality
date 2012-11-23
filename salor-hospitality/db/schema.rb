@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121091911) do
+ActiveRecord::Schema.define(:version => 20121123180710) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -361,7 +361,7 @@ ActiveRecord::Schema.define(:version => 20121121091911) do
     t.integer  "settlement_id"
     t.integer  "cost_center_id"
     t.text     "scribe"
-    t.text     "scribe_escpos"
+    t.binary   "scribe_escpos"
     t.string   "taxes",                :limit => 10000, :default => "--- {}\n"
     t.integer  "confirmation_count"
     t.integer  "confirmation_user_id"
@@ -933,6 +933,7 @@ ActiveRecord::Schema.define(:version => 20121121091911) do
     t.integer  "copies",                :default => 1
     t.integer  "vendor_id"
     t.string   "print_button_filename"
+    t.integer  "codepage"
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
@@ -952,8 +953,8 @@ ActiveRecord::Schema.define(:version => 20121121091911) do
     t.integer  "company_id"
     t.boolean  "active",                                        :default => true
     t.boolean  "hidden"
-    t.text     "rlogo_header"
-    t.text     "rlogo_footer"
+    t.binary   "rlogo_header"
+    t.binary   "rlogo_footer"
     t.boolean  "ticket_item_separator",                         :default => true
     t.boolean  "ticket_wide_font",                              :default => true
     t.boolean  "ticket_tall_font",                              :default => true
