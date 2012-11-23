@@ -1,3 +1,9 @@
+salor-hospitality (4.1.1.38) unstable; urgency=low
+
+  * build
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 23 Nov 2012 23:55:04 +0100
+
 salor-hospitality (4.1.1.37) unstable; urgency=low
 
   * Amends #1481
