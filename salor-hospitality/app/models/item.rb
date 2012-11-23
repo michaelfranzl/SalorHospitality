@@ -93,7 +93,7 @@ class Item < ActiveRecord::Base
   def scribe=(scribe)
     return if scribe.nil?
     write_attribute :scribe, scribe
-    write_attribute :scribe_escpos, Escper::Image.new(self.scribe_bitmap,:object).to_s
+    write_attribute :scribe_escpos, Escper::Img.new(self.scribe_bitmap,:obj).to_s
   end
 
   def refund(by_user, payment_method_id)

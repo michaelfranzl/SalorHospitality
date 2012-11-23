@@ -520,7 +520,6 @@ class Order < ActiveRecord::Base
 
     vendorname =
     "\e@"     +  # Initialize Printer
-    "\ea\x01" +  # align center
     "\e!\x38" +  # doube tall, double wide, bold
     vendor.name + "\n"
 
@@ -615,7 +614,8 @@ class Order < ActiveRecord::Base
     end
 
     output_text =
-        "\e@" +
+        "\e@" +     # initialize
+        "\ea\x01" + # align center
         headerlogo +
         header +
         list_of_items +

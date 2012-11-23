@@ -18,14 +18,6 @@ var y = 0;
 var touchdevice = 'ontouchstart' in window;
 
 function init_scribe(d) {
-  $('#item_configuration_' + d).hide();
-  if ( ! item_changeable(d) ) {
-    alert('+1');
-    return
-  }
-
-  d = clone_item(d);
-
   canvas = document.createElement('canvas');
   //canvas.setAttribute('id', 'scribearea');
   canvas.setAttribute('d', d);

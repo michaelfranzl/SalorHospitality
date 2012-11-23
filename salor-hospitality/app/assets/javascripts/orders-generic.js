@@ -1114,12 +1114,9 @@ function permit_select_open(d) {
 
 function clone_item(d) {
   if (items_json[d].c > 1) {
-    // clone only if count > 1
-    $('#options_div_' + d).hide();
     var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
-    $('#options_div_' + d).show();
   }
   return d
 }
@@ -1187,10 +1184,13 @@ function render_options(options, d, cat_id) {
 
 function open_options_div(d) {
   if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
-    if (settings.mobile) {
-      $('#options_div_'+d).show();
-    } else {
-      $('#options_div_'+d).slideDown();
+    if (item_changeable(d)) {
+      d = clone_item(d);
+      if (settings.mobile) {
+        $('#options_div_'+d).show();
+      } else {
+        $('#options_div_'+d).slideDown();
+      }
     }
   }
 }
@@ -1276,7 +1276,11 @@ function display_configuration_of_item(d) {
       if (permissions.item_scribe) {
         scribe_button =  $(document.createElement('span'));
         scribe_button.addClass('item_scribe');
-        scribe_button.on('click', function(){ init_scribe(d); });
+        scribe_button.on('click', function() {
+          $('#item_configuration_' + d).hide();
+          d = clone_item(d);
+          init_scribe(d);
+        });
         cell.append(scribe_button);
       }
     }
