@@ -12,6 +12,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'rmagick'
 gem 'uglifier'
+gem 'escper', '1.0.5'
 
 group :test, :development do
   gem 'rspec-rails'
