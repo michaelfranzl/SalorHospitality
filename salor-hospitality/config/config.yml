@@ -5,3 +5,4 @@
 :login_email: false
 :branding_codename: salorhospitality
 :branding_title: SalorHospitality
+:use_safe_device_path: false
