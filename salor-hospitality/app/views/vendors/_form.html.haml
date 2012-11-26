@@ -22,17 +22,18 @@
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
         = vendor_form.fields_for :images do |image_form|
+          %br
           = vendor_form.label image_form.object.image_type.to_s
           = image_form.file_field :file_data
           = image_form.hidden_field :image_type
           
         - if permit 'receipt_logo'
           %br
-            = vendor_form.label :rlogo_header
-            = vendor_form.file_field :rlogo_header
-            %br
-            = vendor_form.label :rlogo_footer
-            = vendor_form.file_field :rlogo_footer
+          = vendor_form.label :rlogo_header
+          = vendor_form.file_field :rlogo_header
+          %br
+          = vendor_form.label :rlogo_footer
+          = vendor_form.file_field :rlogo_footer
 
         %br
         = vendor_form.label :country
@@ -87,6 +88,8 @@
             %br
           %span.button#test_printers= t '.test_printers'
           %br
+          %span.button#test_printers_chartest= t '.test_printers_chartest'
+          %br
           %span#add_printer
             %span.button= t '.add_printer'
           = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
@@ -125,5 +128,12 @@
   $('#test_printers').click(function(){
     $.ajax({
       url: '/vendors/test_printers'
+    });
+  });
+  
+  $('#test_printers_chartest').click(function(){
+    $.ajax({
+      url: '/vendors/test_printers',
+      data: {chartest:true}
     });
   });

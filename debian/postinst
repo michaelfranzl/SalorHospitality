@@ -44,6 +44,7 @@ for lInstance in $gOldInstances; do
   if which ucf >/dev/null 2>&1; then
     ucf --purge /etc/salor-hospitality/$lInstance/database.yml
     ucf --purge /etc/salor-hospitality/$lInstance/config.yml
+    ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
   fi
   
   rm -rf /etc/salor-hospitality/$lInstance
@@ -149,6 +150,11 @@ for lInstance in $gInstances; do
         echo "  postinst: Installing config.yml as config file ..."
         ucf --debconf-ok $app_root/config/config.yml $rails_etc/config.yml
         chmod 660 $rails_etc/config.yml
+      fi
+      if [ -e $app_root/config/codepages.yml ]; then
+        echo "  postinst: Installing codepages.yml as config file ..."
+        ucf --debconf-ok $app_root/config/codepages.yml $rails_etc/codepages.yml
+        chmod 660 $rails_etc/codepages.yml
       fi
       
       echo "  postinst: Installing Gemfile as configuration file ..."

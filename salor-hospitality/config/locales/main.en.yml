@@ -776,6 +776,7 @@ en:
       add_printer: Add printer
       identify_printers: Identify Printers
       test_printers: Test Printers
+      test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully created
     destroy:

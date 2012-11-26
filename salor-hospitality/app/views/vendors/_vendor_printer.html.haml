@@ -17,6 +17,10 @@
   = f.text_field :copies, :size => 1
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_copies_display_keyboard" }
   %br
+  = f.label :codepage, :class => 'medium'
+  = f.text_field :codepage, :size => 1
+  %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_codepage_display_keyboard" }
+  %br
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#vendor_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => VendorPrinter.human_attribute_name(:hidden), :alt => VendorPrinter.human_attribute_name(:hidden))
 
@@ -32,3 +36,5 @@
     $('#vendor_vendor_printers_attributes_#{ id }_path_display_keyboard').click(function(){ $('#vendor_vendor_printers_attributes_#{ id }_path').getkeyboard().reveal(); });
     $('#vendor_vendor_printers_attributes_#{ id }_copies').keyboard( {openOn: '', layout:'num' } );
     $('#vendor_vendor_printers_attributes_#{ id }_copies_display_keyboard').click(function(){ $('#vendor_vendor_printers_attributes_#{ id }_copies').getkeyboard().reveal(); });
+    $('#vendor_vendor_printers_attributes_#{ id }_copies').keyboard( {openOn: '', layout:'num' } );
+    $('#vendor_vendor_printers_attributes_#{ id }_codepage_display_keyboard').click(function(){ $('#vendor_vendor_printers_attributes_#{ id }_codepage').getkeyboard().reveal(); });

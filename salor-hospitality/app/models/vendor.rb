@@ -81,7 +81,7 @@ class Vendor < ActiveRecord::Base
   end
 
   def rlogo_header=(data)
-    if data.nil?
+    if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_header, nil
     else
       write_attribute :rlogo_header, Escper::Img.new(data.read, :blob).to_s 
@@ -89,7 +89,7 @@ class Vendor < ActiveRecord::Base
   end
 
   def rlogo_footer=(data)
-    if data.nil?
+    if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_footer, nil
     else
       write_attribute :rlogo_footer, Escper::Img.new(data.read, :blob).to_s
