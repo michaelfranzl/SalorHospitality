@@ -9,10 +9,11 @@ BookingItem.update_all :taxes => "--- {}\n"
 Booking.update_all :taxes => "--- {}\n"
 
 from = Time.parse '2012-09-01 00:00:00'
-to = Time.now
+from = Time.parse '2010-01-01 00:00:00'
 to = Time.parse '2012-09-01 00:00:00'
+to = Time.now
 
-Item.existing.where(:created_at => from..to, :taxes => "--- {}\n")[0..5000].each do |item|
+Item.existing.where(:created_at => from..to, :taxes => "--- {}\n")[0..2500].each do |item|
   item.calculate_totals
 end
 

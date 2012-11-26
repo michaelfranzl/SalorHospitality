@@ -145,6 +145,8 @@ gn:
         letter: Buchstabe
         name: Name
         percent: Steuer in %
+        include_in_statistics: In Losungs-Statistik
+        statistics_by_category: Losungs-Statistik nach Kategorie
       tax_amount:
         amount: Betrag
         tax_id: Steuer
@@ -619,6 +621,8 @@ gn:
       download_database: Datenbank herunterladen
       receipt_logo: Beleg Logos
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
+      settlement_statistics_taxes: Losungsausdruck Statistik Steuern
+      settlement_statistics_taxes_categories: Losungsausdruck Statistik Steuer mit Kategorien
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

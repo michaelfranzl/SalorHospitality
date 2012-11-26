@@ -13,20 +13,24 @@
     %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
     %table
       %tr
-        %td= tax_form.label('name',Tax.human_attribute_name(:name))
-        %td
-          - if @tax.new_record?
-            = tax_form.text_field :name, :size => '20'
-          - else
-            = @tax.name
+        %td= tax_form.label :name
+        %td= tax_form.text_field :name, :size => '20'
       %tr
-        %td= tax_form.label('percent', Tax.human_attribute_name(:percent))
+        %td= tax_form.label :percent
         %td= tax_form.text_field :percent, :size => '10'
       %tr
-        %td= tax_form.label('percent', Tax.human_attribute_name(:letter))
+        %td= tax_form.label :letter
         %td= tax_form.text_field :letter, :size => '10'
       %tr
-        %td= tax_form.label('color', Tax.human_attribute_name(:color))
+        %td= tax_form.label :color
         %td
           %select#category_color{ :name => 'tax[color]' }
             = options_for_select(get_tax_colors.invert.to_a, tax_form.object.color)
+      - if permit('settlement_statistics_taxes')
+        %tr
+          %td= tax_form.label :include_in_statistics
+          %td= tax_form.check_box :include_in_statistics
+      - if permit('settlement_statistics_taxes_categories')
+        %tr
+          %td= tax_form.label :statistics_by_category
+          %td= tax_form.check_box :statistics_by_category

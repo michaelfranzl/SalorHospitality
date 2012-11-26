@@ -145,6 +145,8 @@ en:
         letter: Abbreviation
         name: Name
         percent: Tax in %
+        include_in_statistics: In Settlement Statistics
+        statistics_by_category: Settlement Statistics by Category
       tax_amount:
         amount: Amount
         tax_id: Tax
@@ -616,6 +618,8 @@ en:
       receipt_logo: Receipt Logos
       mobile_show_tools: Show tool button on mobile devices
       manage_statistics: Statistics
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

@@ -49,7 +49,7 @@ class Settlement < ActiveRecord::Base
 
   def print
     vendor_printer = self.vendor.vendor_printers.existing.first
-    printr = Printr.new(self.company.mode, vendor_printer)
+    printr = Escper::Printer.new(self.company.mode, vendor_printer)
     printr.open
     printr.print vendor_printer.id, self.escpos
     printr.close
@@ -57,6 +57,7 @@ class Settlement < ActiveRecord::Base
 
   def escpos
     vendor = self.vendor
+    permissions = self.user.role.permissions
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
     
@@ -98,25 +99,53 @@ class Settlement < ActiveRecord::Base
       end      
     end
     
-    list_of_payment_methods = ''
-    total_payment_methods.each do |id,amount|
-      list_of_payment_methods += "%s:  #{ friendly_unit } %9.2f\n" % [total_payment_methods[id][:name], total_payment_methods[id][:amount]] unless total_payment_methods[id][:amount].zero?
+    if permissions.include?('manage_payment_methods')
+      list_of_payment_methods = ''
+      total_payment_methods.each do |id,amount|
+        list_of_payment_methods += "%-27s  %s %9.2f\n" % [total_payment_methods[id][:name], friendly_unit, total_payment_methods[id][:amount]] unless total_payment_methods[id][:amount].zero?
+      end
+      list_of_payment_methods_refund = ''
+      total_payment_methods_refund.each do |id,amount|
+        list_of_payment_methods_refund += "%-27s:  %s %9.2f\n" % [total_payment_methods_refund[id][:name], friendly_unit, total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
+      end
+      list_of_payment_methods_refund += "\xc4" * 42 + "\n"
+    end
+    
+    if permissions.include?('manage_cost_centers')
+      list_of_costcenters = ''
+      list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
+      costcenters.each do |cc|
+        list_of_costcenters += "%-27s  %s %9.2f\n" % [cc.name, friendly_unit, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
+      end
+      list_of_costcenters += "\xc4" * 42 + "\n"
+    end
+    
+    initial_cash = self.initial_cash ? "%s:  %s %9.2f\n" % [I18n.t('various.begin'), self.initial_cash, friendly_unit] : ''
+    revenue = self.revenue ? "%s:  %s %9.2f\n" % [I18n.t('various.end'), self.revenue, friendly_unit] : ''
+    
+    tax_attribute = vendor.country == 'us' ? :net : :gro
+
+    list_of_taxes = ''
+    if permissions.include?('settlement_statistics_taxes')
+      self.vendor.taxes.existing.where(:include_in_statistics => true, :statistics_by_category => false).each do |tax|
+        sum = self.tax_items.where(:tax_id => tax.id).sum(tax_attribute)
+        list_of_taxes += "%-27s  %s %9.2f\n" % [tax.name, friendly_unit, sum]
+      end
+      list_of_taxes += "\xc4" * 42 + "\n" unless permissions.include?('settlement_statistics_taxes_categories')
+    end
+    
+    list_of_taxes_categories = ''
+    if permissions.include?('settlement_statistics_taxes_categories')
+      self.vendor.taxes.existing.where(:include_in_statistics => true, :statistics_by_category => true).each do |tax|
+        list_of_taxes_categories += "%s:\n" % [tax.name]
+        self.vendor.categories.existing.each do |cat|
+          sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id).sum(tax_attribute)
+          list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+        end
+      end
+      list_of_taxes_categories += "\xc4" * 42 + "\n"
     end
 
-    list_of_payment_methods_refund = ''
-    total_payment_methods_refund.each do |id,amount|
-      list_of_payment_methods_refund += "%s:  #{ friendly_unit } %9.2f\n" % [total_payment_methods_refund[id][:name], total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
-    end
-    
-    list_of_costcenters = ''
-    list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
-    costcenters.each do |cc|
-      list_of_costcenters += "%s:  #{ friendly_unit } %9.2f\n" % [cc.name, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
-    end
-    
-    initial_cash = self.initial_cash ? "\n#{ I18n.t 'various.begin' }:  #{ friendly_unit } %9.2f\n" % [self.initial_cash] : ''
-    revenue = self.revenue ? "#{ I18n.t 'various.end' }:  #{ friendly_unit } %9.2f\n" % [self.revenue] : ''
-    
     output =
     "\e@"     +  # Initialize Printer
     "\ea\x00" +  # align left
@@ -129,22 +158,19 @@ class Settlement < ActiveRecord::Base
     list_of_orders +
     "\n" +
     "\e!\x18" +  # double tall, bold
-    "\ea\x02" +  # align right
-    "%s:  #{ friendly_unit } %9.2f\n" % [I18n.t(:sum), self.sum] +
+    "%-27s  %s %9.2f\n" % [I18n.t(:sum), friendly_unit, self.sum] +
     "\xc4" * 42 + "\n" +
     list_of_costcenters +
-    "\xc4" * 42 + "\n" +
     list_of_payment_methods +
     list_of_payment_methods_refund +
-    "\xc4" * 42 + "\n" +
+    list_of_taxes +
+    list_of_taxes_categories +
     initial_cash +
     revenue +
     "\xc4" * 42 + "\n" +
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
     "\x1DV\x00" # paper cut
-
-    Printr.sanitize(output)
   end
 
 end
