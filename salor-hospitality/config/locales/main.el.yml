@@ -11,6 +11,7 @@ el:
       add_printer: Add printer
       identify_printers: Identify Printers
       test_printers: Test Printers
+      test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully created
     destroy:
@@ -33,6 +34,7 @@ el:
         cellphone: κινητό
         hidden: διαγραφή
         table_id: Default Table
+        language: Language
       article:
         active: ενεργό
         category_id: Κατηγορία
@@ -119,6 +121,8 @@ el:
         letter: Συντομογραφία
         name: Όνομα
         percent: Φόρος ανά %
+        include_in_statistics: In Settlement Statistics
+        statistics_by_category: Settlement Statistics by Category
       user:
         active: ενεργό;
         color: Χρώμα
@@ -613,6 +617,8 @@ el:
       statistics_payment_method: Statistics Payment Methods
       statistics_category: Statistics Category
       statistics_tax: Statistics Tax
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:

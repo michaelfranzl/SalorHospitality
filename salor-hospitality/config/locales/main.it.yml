@@ -11,6 +11,7 @@ it:
       add_printer: Add printer
       identify_printers: Identify Printers
       test_printers: Test Printers
+      test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully created
     destroy:
@@ -103,6 +104,8 @@ it:
         letter: Abbreviazione
         name: Nome
         percent: Tassa in %
+        include_in_statistics: In Settlement Statistics
+        statistics_by_category: Settlement Statistics by Category
       user:
         active: attivo?
         color: Colore
@@ -199,6 +202,7 @@ it:
         cellphone: Cellulare
         hidden: cancella
         table_id: Default Table
+        language: Language
       payment_method:
         name: Name
         cash: Cash
@@ -613,6 +617,8 @@ it:
       statistics_payment_method: Statistics Payment Methods
       statistics_category: Statistics Category
       statistics_tax: Statistics Tax
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
     create:
       success: Role successfully saved
     destroy:

@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.1) unstable; urgency=low
+
+  * Closes #1528 No user assigned to order when confirming for customer
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 27 Nov 2012 22:43:32 +0100
+
 salor-hospitality (4.1.2.0) unstable; urgency=low
 
   * fix

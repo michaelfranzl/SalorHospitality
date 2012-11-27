@@ -11,6 +11,7 @@ pl:
       add_printer: Dodaj bonownik
       identify_printers: Wykryj bonownik
       test_printers: Testuj bonownik
+      test_printers_chartest: Test all characters
     create:
       success: Sprzedawca został pomyślnie dodany.
     destroy:
@@ -103,6 +104,8 @@ pl:
         letter: Skrót
         name: Nazwa podatku
         percent: Podatek w %
+        include_in_statistics: In Settlement Statistics
+        statistics_by_category: Settlement Statistics by Category
       user:
         active: Aktywować?
         color: Kolor
@@ -199,6 +202,7 @@ pl:
         cellphone: Komórka
         hidden: delete
         table_id: Przypisz stół domyślny
+        language: Language
       payment_method:
         name: Nazwa
         cash: Gotówka
@@ -615,6 +619,8 @@ pl:
       statistics_payment_method: Statistics Payment Methods
       statistics_category: Statistics Category
       statistics_tax: Statistics Tax
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
     create:
       success: Zasada została pomyślnie zapisana
     destroy:

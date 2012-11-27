@@ -88,6 +88,8 @@ ru:
         letter: Сокращение
         name: Название
         percent: Налог в %
+        include_in_statistics: In Settlement Statistics
+        statistics_by_category: Settlement Statistics by Category
       user:
         active: активен?
         color: Цвет
@@ -184,6 +186,7 @@ ru:
         cellphone: Cellphone
         hidden: delete
         table_id: Default Table
+        language: Language
       payment_method:
         name: Name
         cash: Cash
@@ -597,6 +600,8 @@ ru:
       statistics_payment_method: Statistics Payment Methods
       statistics_category: Statistics Category
       statistics_tax: Statistics Tax
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
     create:
       success: Роль успешно сохранена
     destroy:
@@ -772,6 +777,7 @@ ru:
       add_printer: Add printer
       identify_printers: Identify Printers
       test_printers: Test Printers
+      test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully created
     destroy:
