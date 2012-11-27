@@ -23,6 +23,7 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
+    @customer.language = @current_user.language
     @tables = @current_vendor.tables.existing
   end
 

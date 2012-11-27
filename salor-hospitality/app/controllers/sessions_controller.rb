@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
 
   def new
     #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
+    session[:customer_id] = @current_customer = nil
     @submit_path = session_path
     render :layout => 'login'
   end
@@ -69,7 +70,7 @@ class SessionsController < ApplicationController
         redirect_to orders_path and return
       else
         flash[:error] = t :wrong_password
-        render :new, :layout => 'login' and return
+        render :new_customer, :layout => 'login' and return
       end
     end
   end

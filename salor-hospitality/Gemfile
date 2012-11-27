@@ -12,7 +12,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'rmagick'
 gem 'uglifier'
-gem 'escper', '1.1.1'
+gem 'escper', '1.1.2'
 #gem 'salor_saas', :path => '../../SalorSaas'
 
 group :test, :development do

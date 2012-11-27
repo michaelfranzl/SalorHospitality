@@ -293,7 +293,13 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      I18n.locale = @locale = @current_user ? @current_user.language : 'en'
+      if @current_user
+        I18n.locale = @locale = @current_user.language
+      elsif @current_customer
+        I18n.locale = @locale = @current_customer.language
+      else
+        I18n.locale = @locale = 'en'
+      end
       @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country]
     end
 

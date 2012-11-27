@@ -17,6 +17,7 @@ gn:
         change_given: Wechselgeld
         nr: Nummmer
       customer:
+        language: Sprache
         table_id: Standard-Tisch
         first_name: Vorname
         last_name: Nachname

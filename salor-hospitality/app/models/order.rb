@@ -89,7 +89,7 @@ class Order < ActiveRecord::Base
         self.create_new_item(item_params)
       end
     end
-    self.user = user if params[:items] and params[:model][:user_id].nil?
+    self.user = user if self.user.nil? or (params[:items] and params[:model][:user_id].nil?)
     self.save
     self.update_associations(customer)
     self.regroup
