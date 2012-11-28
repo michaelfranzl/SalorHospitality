@@ -1,5 +1,5 @@
 - if permit('manage_business_invoice') and not mobile_special?
-  %a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order') }
+  %a.iconbutton.invoice_button{ :href => "/orders/last", :title => t('.show_last_order'), :style => branding_override_style(:buttons, :invoice)}
 - if permit('manage_hotel')
   %a.iconbutton.invoice_hotel_button{ :href => "/bookings/last", :title => t('.show_last_booking') }
 
@@ -15,4 +15,4 @@
 - if permit('manage_hotel')
   %a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.toggle_between_tables_and_rooms') }
 
-= button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
+= button_to '', session_path, :method => :delete, :title => t(:logout, :who => ''), :style => branding_override_style(:buttons, :logout)

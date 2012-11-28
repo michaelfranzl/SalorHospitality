@@ -14,7 +14,7 @@
     %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish) }
 
 - if permit('finish_orders')
-  %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order) }
+  %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order), :style => branding_override_style(:buttons, :cash) }
 
 - if permit('move_order')
   %a.iconbutton.move-to-table_button{ :onclick => "open_table_div()", :title => t(:move_order_to_table) }

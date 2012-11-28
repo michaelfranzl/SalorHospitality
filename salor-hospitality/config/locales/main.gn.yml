@@ -647,7 +647,7 @@ gn:
     active: Aktiv
     waiterpad: Kellnerblock
   scroll_down: Hinunterscrollen
-  scroll_to_room: Gehe in Raum
+  scroll_to_area: Gehe in Raum
   scroll_up: Hinaufscrollen
   seasons:
     new:

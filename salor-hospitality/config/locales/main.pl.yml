@@ -626,7 +626,7 @@ pl:
     destroy:
       success: Zasada została pomyślnie skasowana
   scroll_down: Przewiń w dół
-  scroll_to_room: Idź do
+  scroll_to_area: Idź do
   scroll_up: Przewiń w górę
   send_and_go_back: Zapisz i wróć
   served_by_X_on_table_Y: Obsługiwał Cię %{waiter} przy stoliku %{table}
