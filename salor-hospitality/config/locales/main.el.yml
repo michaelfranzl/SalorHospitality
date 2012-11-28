@@ -624,7 +624,6 @@ el:
     destroy:
       success: Ο ρόλος διαγράφηκε επιτυχώς
   scroll_down: Κινηθείτε προς τα κάτω
-  scroll_to_room: Πηγαίνετε στο δωμάτιο
   scroll_up: Κινηθείτε προς τα πάνω
   send_and_go_back: Αποθηκεύστε κι επιστρέψτε
   served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
@@ -795,3 +794,4 @@ el:
       success: Ο πελάτης διαγράφηκε επιτυχώς
   refund: Επιστροφή
   invalid_date: Άκυρη ημερομηνία
+  scroll_to_area: Go to room

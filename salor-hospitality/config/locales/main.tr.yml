@@ -630,7 +630,6 @@ tr:
   waiterpad_generic_name: Siparis listesi
   scroll_down: Asayi in
   scroll_up: Yukari cik
-  scroll_to_room: Odayi gir
   send_and_go_back: Kayit et ve geriye cik
   go_back: Geri
   cancel_and_go_back: Iptal et ve geriye cik
@@ -792,3 +791,4 @@ tr:
       success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date
+  scroll_to_area: Go to room

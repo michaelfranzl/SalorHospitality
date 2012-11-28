@@ -624,7 +624,6 @@ it:
     destroy:
       success: Role successfully deleted
   scroll_down: Scroll down
-  scroll_to_room: Go to room
   scroll_up: Scroll up
   send_and_go_back: Save and go back
   served_by_X_on_table_Y: You were served by %{waiter} on %{table}
@@ -792,3 +791,4 @@ it:
       success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date
+  scroll_to_area: Go to room

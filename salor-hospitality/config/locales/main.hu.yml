@@ -626,7 +626,6 @@ hu:
   waiterpad_generic_name: Waiterpad
   scroll_down: Scroll down
   scroll_up: Scroll up
-  scroll_to_room: Go to room
   send_and_go_back: Save and go back
   go_back: Go back
   cancel_and_go_back: Cancel and go back
@@ -792,3 +791,4 @@ hu:
       success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date
+  scroll_to_area: Go to room

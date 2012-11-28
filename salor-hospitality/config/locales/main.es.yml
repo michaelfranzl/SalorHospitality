@@ -599,7 +599,6 @@ es:
     destroy:
       success: Rol eliminado exitosamente
   scroll_down: Bajar
-  scroll_to_room: Ir a sala
   scroll_up: Subir
   send_and_go_back: Guardar y volver
   served_by_X_on_table_Y: ! '%{waiter} lo ha servido en %{table}'
@@ -792,3 +791,4 @@ es:
       success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date
+  scroll_to_area: Go to room

@@ -635,7 +635,6 @@ fr:
     active: Actif
     waiterpad: Tablette serveur
   scroll_down: Descendre
-  scroll_to_room: Aller à chambre
   scroll_up: Remonter
   seasons:
     new:
@@ -793,3 +792,4 @@ fr:
       success: Customer successfully deleted
   refund: XXX Refund
   invalid_date: XXX Invalid date
+  scroll_to_area: Go to room

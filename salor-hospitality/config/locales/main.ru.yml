@@ -607,7 +607,6 @@ ru:
     destroy:
       success: Роль успешно удалена
   scroll_down: Пролистать вниз
-  scroll_to_room: Перейти к залу
   scroll_up: Пролистать вверх
   send_and_go_back: Сохранить и вернуться
   served_by_X_on_table_Y: Вас обслуживал(а) %{waiter} за %{table}
@@ -792,3 +791,4 @@ ru:
       success: Клиент успешно удален
   refund: Возврат
   invalid_date: Неверная дата
+  scroll_to_area: Go to room
