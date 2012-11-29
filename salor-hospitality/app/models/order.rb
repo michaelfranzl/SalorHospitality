@@ -60,7 +60,7 @@ class Order < ActiveRecord::Base
   def self.create_from_params(params, vendor, user, customer)
     order = Order.new params[:model]
     order.user = user unless order.user
-    order.customer = customer
+    order.customer = customer if customer
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
