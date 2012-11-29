@@ -26,6 +26,15 @@ $(document).ready(function() {
       }
     }, 15000);
   }
+  
+  $('#admin').hover(function(){
+    $('#admin').stop(true,true);
+    $('#admin').animate({height:154});
+  },
+  function(){
+    $('#admin').stop(true,true);
+    $('#admin').animate({height:109});
+  })
 })
 
 function download_printfile(path) {

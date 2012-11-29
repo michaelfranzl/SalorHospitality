@@ -4,41 +4,40 @@
     = image_tag @current_vendor.logo_image
 
 - unless @current_customer
-  #admin{ :style => "display: visible;" }
-    .adminlinks
-      = link_to( t('various.restaurant'), '/orders', :class => 'special')
-      - if permit('manage_hotel')
-        = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
-      - if permit('manage_statistics_hotel')
-        - if controller.controller_name == 'orders'
-          = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
-        - else
-          = link_to( t('various.report'), '/orders?report=1')
-      = link_to( t('activerecord.models.table.other'), main_app.tables_path) if permit('manage_tables')
-      = link_to( t('activerecord.models.category.other'), main_app.categories_path) if permit('manage_categories')
-      = link_to( t('activerecord.models.statistic_category.other'), main_app.statistic_categories_path) if permit('manage_statistic_categories')
-      = link_to( t('activerecord.models.article.other'), main_app.articles_path) if permit('manage_articles')
-      = link_to( t('activerecord.models.option.other'), main_app.options_path) if permit('manage_options')
-      = link_to( t('activerecord.models.settlement.one'), '/settlements/open') if permit('finish_own_settlement') or permit('finish_all_settlements')
-      = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if permit('view_all_settlements')
-      = link_to( t('various.statistics'), main_app.statistics_path) if permit('manage_statistics')
-      = link_to( t('activerecord.models.report.other'), '/reports') if @current_company.mode == 'local'
-      = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
-      = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')
-      = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if permit('manage_payment_methods')
-      = link_to( t('activerecord.models.user.other'), main_app.users_path) if permit('manage_users')
-      - if permit('manage_vendors')
-        - if @current_company.vendors.existing.count > 1
-          = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
-        - else
-          = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)
-      = link_to( t('activerecord.models.customer.other'), main_app.customers_path) if permit('manage_customers')
-      = link_to( t('activerecord.models.page.other'), main_app.pages_path) if permit('manage_pages')
-      = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if permit('manage_pages')
-      - if permit('manage_hotel')
-        = link_to( t('activerecord.models.room.other'), rooms_path)
-        = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
-        = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
-        = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
-        = link_to( t('activerecord.models.surcharge.other'), main_app.surcharges_path)
-        = link_to( t('activerecord.models.season.other'), main_app.seasons_path)
+  #admin.adminlinks
+    = link_to( t('various.restaurant'), '/orders', :class => 'special')
+    - if permit('manage_hotel')
+      = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
+    - if permit('manage_statistics_hotel')
+      - if controller.controller_name == 'orders'
+        = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
+      - else
+        = link_to( t('various.report'), '/orders?report=1')
+    = link_to( t('activerecord.models.table.other'), main_app.tables_path) if permit('manage_tables')
+    = link_to( t('activerecord.models.category.other'), main_app.categories_path) if permit('manage_categories')
+    = link_to( t('activerecord.models.statistic_category.other'), main_app.statistic_categories_path) if permit('manage_statistic_categories')
+    = link_to( t('activerecord.models.article.other'), main_app.articles_path) if permit('manage_articles')
+    = link_to( t('activerecord.models.option.other'), main_app.options_path) if permit('manage_options')
+    = link_to( t('activerecord.models.settlement.one'), '/settlements/open') if permit('finish_own_settlement') or permit('finish_all_settlements')
+    = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if permit('view_all_settlements')
+    = link_to( t('various.statistics'), main_app.statistics_path) if permit('manage_statistics')
+    = link_to( t('activerecord.models.report.other'), '/reports') if @current_company.mode == 'local'
+    = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
+    = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')
+    = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if permit('manage_payment_methods')
+    = link_to( t('activerecord.models.user.other'), main_app.users_path) if permit('manage_users')
+    - if permit('manage_vendors')
+      - if @current_company.vendors.existing.count > 1
+        = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
+      - else
+        = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)
+    = link_to( t('activerecord.models.customer.other'), main_app.customers_path) if permit('manage_customers')
+    = link_to( t('activerecord.models.page.other'), main_app.pages_path) if permit('manage_pages')
+    = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if permit('manage_pages')
+    - if permit('manage_hotel')
+      = link_to( t('activerecord.models.room.other'), rooms_path)
+      = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
+      = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
+      = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
+      = link_to( t('activerecord.models.surcharge.other'), main_app.surcharges_path)
+      = link_to( t('activerecord.models.season.other'), main_app.seasons_path)

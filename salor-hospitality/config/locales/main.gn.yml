@@ -592,6 +592,7 @@ gn:
       refund: Artikel stornieren
       manage_articles: Artikel verwalten
       manage_categories: Kategorien verwalten
+      manage_statistic_categories: Statistik-Kategorien verwalten
       manage_options: Optionen verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_customers: Kundendatenbank verwalten
