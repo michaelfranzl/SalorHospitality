@@ -207,6 +207,9 @@ el:
         name: Name
         cash: Cash
         change: Change
+      statistic_category:
+        hidden: löschen
+        name: Name
     models:
       room:
         one: Δωμάτιο
@@ -316,6 +319,9 @@ el:
       tax_amount:
         one: Ποσό Φόρου
         other: Ποσά Φόρου
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
     errors:
       messages:
         prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα
@@ -619,6 +625,7 @@ el:
       statistics_tax: Statistics Tax
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      manage_statistic_categories: Manage Statistic Categories
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
@@ -795,3 +802,7 @@ el:
   refund: Επιστροφή
   invalid_date: Άκυρη ημερομηνία
   scroll_to_area: Go to room
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category

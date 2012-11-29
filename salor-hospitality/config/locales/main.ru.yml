@@ -191,6 +191,9 @@ ru:
         name: Name
         cash: Cash
         change: Change
+      statistic_category:
+        hidden: löschen
+        name: Name
     models:
       article:
         one: Блюдо
@@ -300,6 +303,9 @@ ru:
       tax_amount:
         one: Величина налога
         other: Величины налогов
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
     errors:
       messages:
         prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
@@ -602,6 +608,7 @@ ru:
       statistics_tax: Statistics Tax
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      manage_statistic_categories: Manage Statistic Categories
     create:
       success: Роль успешно сохранена
     destroy:
@@ -792,3 +799,7 @@ ru:
   refund: Возврат
   invalid_date: Неверная дата
   scroll_to_area: Go to room
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category

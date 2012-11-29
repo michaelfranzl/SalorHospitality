@@ -191,6 +191,9 @@ es:
         name: Name
         cash: Cash
         change: Change
+      statistic_category:
+        hidden: löschen
+        name: Name
     models:
       article:
         one: Artículo
@@ -300,6 +303,9 @@ es:
       tax_amount:
         one: Monto de impuesto
         other: Montos de impuestos
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
     errors:
       messages:
         prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
@@ -594,6 +600,7 @@ es:
       statistics_tax: Statistics Tax
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      manage_statistic_categories: Manage Statistic Categories
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -792,3 +799,7 @@ es:
   refund: XXX Refund
   invalid_date: XXX Invalid date
   scroll_to_area: Go to room
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category

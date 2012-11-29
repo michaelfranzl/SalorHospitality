@@ -207,6 +207,9 @@ pl:
         name: Nazwa
         cash: Gotówka
         change: Zamiana
+      statistic_category:
+        hidden: löschen
+        name: Name
     models:
       article:
         one: Artykuł
@@ -316,6 +319,9 @@ pl:
       tax_amount:
         one: Wysokośc podatku
         other: Wysokość podatków
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -621,6 +627,7 @@ pl:
       statistics_tax: Statistics Tax
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      manage_statistic_categories: Manage Statistic Categories
     create:
       success: Zasada została pomyślnie zapisana
     destroy:
@@ -801,3 +808,7 @@ pl:
       success: Dane o kliencie zostały pomyślnie skasowane
   refund: Zwrot
   invalid_date: Nieprawidłowa data
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category

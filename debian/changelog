@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.3) unstable; urgency=low
+
+  * Closes #1537 Add StatisticsCategory model and relations
+  * Closes #1538 Improve behaviour for admin menu
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 29 Nov 2012 10:44:38 +0100
+
 salor-hospitality (4.1.2.2) unstable; urgency=low
 
   * Closes #1536 Branding for buttons
