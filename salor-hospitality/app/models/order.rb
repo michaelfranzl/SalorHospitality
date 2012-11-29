@@ -583,7 +583,7 @@ class Order < ActiveRecord::Base
     if self.user.role.permissions.include? 'manage_payment_methods'
       self.payment_method_items.each do |pm|
         name = pm.refunded ? "#{ I18n.t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}" : pm.payment_method.name
-        list_of_payment_methods += "%22.22s: %7.2f\n" % [name, pm.amount]
+        list_of_payment_methods += "%22.22s: %7.2f\n" % [name, pm.amount] unless pm.amount.zero?
       end
     end
 
