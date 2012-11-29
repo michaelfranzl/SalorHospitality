@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126163927) do
+ActiveRecord::Schema.define(:version => 20121129083839) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -19,16 +19,17 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
     t.text     "recipe"
     t.integer  "category_id"
     t.float    "price"
-    t.boolean  "active",      :default => true
+    t.boolean  "active",                :default => true
     t.boolean  "waiterpad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",      :default => false
+    t.boolean  "hidden",                :default => false
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.integer  "tax_id"
+    t.integer  "statistic_category_id"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -327,27 +328,27 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "count",                                :default => 1
+    t.integer  "count",                                  :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
     t.integer  "quantity_id"
-    t.string   "comment",                              :default => ""
+    t.string   "comment",                                :default => ""
     t.float    "price"
-    t.integer  "printed_count",       :limit => 1,     :default => 0
+    t.integer  "printed_count",         :limit => 1,     :default => 0
     t.integer  "item_id"
-    t.integer  "max_count",                            :default => 0
+    t.integer  "max_count",                              :default => 0
     t.integer  "company_id"
     t.integer  "preparation_count"
     t.integer  "delivery_count"
-    t.string   "preparation_comment",                  :default => ""
+    t.string   "preparation_comment",                    :default => ""
     t.integer  "user_id"
     t.integer  "preparation_user_id"
     t.integer  "delivery_user_id"
     t.integer  "vendor_id"
-    t.string   "delivery_comment",                     :default => ""
+    t.string   "delivery_comment",                       :default => ""
     t.boolean  "hidden"
     t.integer  "category_id"
     t.float    "tax_percent"
@@ -361,8 +362,9 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
     t.integer  "cost_center_id"
     t.text     "scribe"
     t.binary   "scribe_escpos"
-    t.string   "taxes",               :limit => 10000, :default => "--- {}\n"
+    t.string   "taxes",                 :limit => 10000, :default => "--- {}\n"
     t.integer  "confirmation_count"
+    t.integer  "statistic_category_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -571,19 +573,20 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
   add_index "presentations", ["name"], :name => "index_presentations_on_name"
 
   create_table "quantities", :force => true do |t|
-    t.string   "prefix",      :default => ""
+    t.string   "prefix",                :default => ""
     t.float    "price"
     t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",      :default => true
-    t.boolean  "hidden",      :default => false
-    t.string   "postfix",     :default => ""
+    t.boolean  "active",                :default => true
+    t.boolean  "hidden",                :default => false
+    t.string   "postfix",               :default => ""
     t.integer  "sort"
     t.integer  "position"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.integer  "category_id"
+    t.integer  "statistic_category_id"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"
@@ -719,6 +722,15 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
   add_index "settlements", ["user_id"], :name => "index_settlements_on_user_id"
   add_index "settlements", ["vendor_id"], :name => "index_settlements_on_vendor_id"
 
+  create_table "statistic_categories", :force => true do |t|
+    t.string   "name"
+    t.boolean  "hidden"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "stocks", :force => true do |t|
     t.float    "balance"
     t.string   "unit"
@@ -843,8 +855,8 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
     t.float    "tax"
     t.integer  "company_id"
     t.integer  "vendor_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.string   "letter"
     t.integer  "surcharge_item_id"
     t.string   "name"
@@ -854,6 +866,7 @@ ActiveRecord::Schema.define(:version => 20121126163927) do
     t.boolean  "refunded"
     t.integer  "cost_center_id"
     t.integer  "category_id"
+    t.integer  "statistic_category_id"
   end
 
   add_index "tax_items", ["booking_id"], :name => "index_tax_items_on_booking_id"

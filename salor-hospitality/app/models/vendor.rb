@@ -15,6 +15,7 @@ class Vendor < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :articles
   has_many :categories
+  has_many :statistic_categories
   has_many :cost_centers
   has_many :customers
   has_many :groups

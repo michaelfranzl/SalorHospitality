@@ -16,6 +16,7 @@
           = link_to( t('various.report'), '/orders?report=1')
       = link_to( t('activerecord.models.table.other'), main_app.tables_path) if permit('manage_tables')
       = link_to( t('activerecord.models.category.other'), main_app.categories_path) if permit('manage_categories')
+      = link_to( t('activerecord.models.statistic_category.other'), main_app.statistic_categories_path) if permit('manage_statistic_categories')
       = link_to( t('activerecord.models.article.other'), main_app.articles_path) if permit('manage_articles')
       = link_to( t('activerecord.models.option.other'), main_app.options_path) if permit('manage_options')
       = link_to( t('activerecord.models.settlement.one'), '/settlements/open') if permit('finish_own_settlement') or permit('finish_all_settlements')

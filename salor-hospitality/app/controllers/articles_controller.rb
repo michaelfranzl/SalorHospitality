@@ -17,6 +17,7 @@ class ArticlesController < ApplicationController
     @scopes = ['active','waiterpad']
     @articleshash = build_articleshash(@scopes)
     @categories = @current_vendor.categories.existing.active.positioned
+    @statistic_categories = @current_vendor.statistic_categories.existing
     respond_to do |wants|
       wants.html
       wants.js { send_data @current_vendor.cache, :content_type => 'text/javascript', :disposition => 'inline' }
@@ -42,6 +43,7 @@ class ArticlesController < ApplicationController
   def new
     @article = Article.new
     @categories = @current_vendor.categories.existing.active.positioned
+    @statistic_categories = @current_vendor.statistic_categories.existing
     @taxes = @current_vendor.taxes.existing
   end
 
@@ -55,11 +57,12 @@ class ArticlesController < ApplicationController
     @article.company = @current_company
     @article.vendor = @current_vendor
     if @article.save
-      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id
+      @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
       @categories = @current_vendor.categories.existing.active.positioned
+      @statistic_categories = @current_vendor.statistic_categories.existing
       @taxes = @current_vendor.taxes.existing
       render :new
     end
@@ -68,6 +71,7 @@ class ArticlesController < ApplicationController
   # tested
   def edit
     @categories = @current_vendor.categories.existing.active.positioned
+    @statistic_categories = @current_vendor.statistic_categories.existing
     @taxes = @current_vendor.taxes.existing
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
@@ -91,6 +95,7 @@ class ArticlesController < ApplicationController
       end
     else
       @categories = @current_vendor.categories.active.existing
+      @statistic_categories = @current_vendor.statistic_categories.existing
       @taxes = @current_vendor.taxes.existing
       render :new
     end

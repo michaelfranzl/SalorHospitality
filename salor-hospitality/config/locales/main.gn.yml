@@ -1,7 +1,14 @@
 ---
 gn:
+  statistic_categories:
+    new:
+      edit_statistic_category: Statistik-Kategorie bearbeiten
+      new_statistic_category: Neue Statistik-Kategorie
   activerecord:
     attributes:
+      statistic_category:
+        hidden: löschen
+        name: Name
       payment_method:
         name: Name
         cash: Bar
@@ -195,6 +202,9 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
+      statistic_category:
+        one: Statistik-Kategorie
+        other: Statistik-Kategorien
       article:
         one: Artikel
         other: Artikel

@@ -111,6 +111,7 @@ SalorHospitality::Application.routes.draw do
   resources :seasons
   resources :guest_types
   resources :room_prices
+  resources :statistic_categories
 
 
   resources :reports do

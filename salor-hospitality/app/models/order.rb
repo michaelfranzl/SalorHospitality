@@ -105,6 +105,7 @@ class Order < ActiveRecord::Base
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
+    i.statistic_category_id = i.article.statistic_category_id
     i.save
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }

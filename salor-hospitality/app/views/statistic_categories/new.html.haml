@@ -1,0 +1,16 @@
+%h2= @statistic_category.new_record? ? (t '.new_statistic_category') : (t '.edit_statistic_category')
+
+- if @statistic_category.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @statistic_category.errors.size, :model => StatisticCategory.model_name.human
+    %ul
+      - @statistic_category.errors.full_messages.each do |msg|
+        %li= msg
+
+.form_fields
+  = form_for @statistic_category do |statistic_category_form|
+    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    %table
+      %tr
+        %td= statistic_category_form.label 'name'
+        %td= statistic_category_form.text_field :name, :size => '10'

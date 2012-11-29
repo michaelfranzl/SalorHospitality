@@ -138,10 +138,18 @@ class Settlement < ActiveRecord::Base
     if permissions.include?('settlement_statistics_taxes_categories')
       self.vendor.taxes.existing.where(:include_in_statistics => true, :statistics_by_category => true).each do |tax|
         list_of_taxes_categories += "%s:\n" % [tax.name]
-        self.vendor.categories.existing.each do |cat|
-          sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id).sum(tax_attribute)
-          list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+        if permissions.include?('manage_statistic_categories')
+          self.vendor.statistic_categories.existing.each do |cat|
+            sum = self.tax_items.existing.where(:tax_id => tax.id, :statistic_category_id => cat.id).sum(tax_attribute)
+            list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+          end
+        else
+          self.vendor.categories.existing.each do |cat|
+            sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id).sum(tax_attribute)
+            list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+          end
         end
+
       end
       list_of_taxes_categories += "\xc4" * 42 + "\n"
     end
