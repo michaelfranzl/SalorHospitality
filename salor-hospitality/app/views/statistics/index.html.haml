@@ -1,5 +1,5 @@
 %h2= t 'various.statistics'
-
+%a.iconbutton.print2_button{ :onclick => "window.print()" }
 = form_tag statistics_path, :method => :get do
   = submit_tag t(:display)
   = label 'from', t('settlements.index.start_date'), :class => 'right'
@@ -13,6 +13,8 @@
       - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
       = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
 
+  .clear
+  
   - if permit('statistics_weekday')
     %table.settlements.statistics
       %tr
