@@ -14,58 +14,8 @@
   %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice') }
   %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice') }
 
-.paper_invoice
-  .vendor_details
-    = image_tag @current_vendor.image 'invoice_logo'
-    .clear
-    = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
-  .customer_details
-    - if @order.customer
-      = @order.customer.company_name
-      %br
-      == #{ @order.customer.first_name } #{ @order.customer.last_name}
-      %br
-      = @order.customer.address
-      %br
-      == #{ @order.customer.postalcode } #{ @order.customer.city }
-    %p.show_paper_invoice_notes{:onclick => "$('#paper_invoice_notes').slideDown();"}== #{ t('.add_notes') } ∇
-    %div#paper_invoice_notes{:style => "display:none;"}
-      %input
-      %br
-      %input
-      %br
-      %input
-      %br
-      %input
-      %br
-      %input
-      %br
-      %input
-  .clear
+.paper_invoice= render :partial => "orders/invoice_styles/#{SalorHospitality::Application::COUNTRIES_INVOICES[@current_vendor.country]}"
 
-  %h1== #{ t 'invoice' } ##{ @order.nr }
-  
-  = render :partial => 'invoice_item_list', :locals => { :order => @order }
-
-  = render :partial => '/shared/invoice_tax_list', :locals => { :model => @order }
-
-  - if @current_user.role.permissions.include? 'manage_payment_methods'
-    %p= PaymentMethodItem.model_name.human
-    %table.payment_methods
-      %tr
-        %th.left_wide= PaymentMethodItem.model_name.human
-        %th.right_wide= PaymentMethodItem.human_attribute_name :amount
-      - @order.payment_method_items.existing.each do |pm|
-        - if not pm.refunded
-          %tr
-            %td.left_wide= pm.payment_method.name
-            %td.right_wide= number_to_currency pm.amount
-        - else
-          %tr
-            %td.left_wide== #{ t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}
-            %td.right_wide= number_to_currency pm.amount
-
-  .invoice_footer= raw Kramdown::Document.new(@order.vendor.invoice_footer_blurb).to_html if @order.vendor.invoice_footer_blurb
 
 :javascript
   $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );
