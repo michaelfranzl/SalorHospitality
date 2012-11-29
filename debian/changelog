@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.4) unstable; urgency=low
+
+  * Closes #1539 Clear maximal model numbers
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 29 Nov 2012 10:52:41 +0100
+
 salor-hospitality (4.1.2.3) unstable; urgency=low
 
   * Closes #1537 Add StatisticsCategory model and relations
