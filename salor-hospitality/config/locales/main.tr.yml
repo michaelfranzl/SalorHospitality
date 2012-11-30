@@ -124,6 +124,7 @@ tr:
         active: XXX active
         image: XXX Image
         tax_id: XXX Tax
+        statistic_category_id: Statistic-Category
       option:
         price: Fiyat
         category_id: Kategori
@@ -622,6 +623,9 @@ tr:
       slideshow: XXX Start Slideshow
     new:
       new_page: New Page
+    form:
+      view: View
+      slideshow: Slideshow
   images:
     errempty: Geçersiz dosya
     errsize: Geçersiz dosya boyutu

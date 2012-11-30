@@ -111,8 +111,8 @@ class Settlement < ActiveRecord::Base
       list_of_payment_methods_refund += "\xc4" * 42 + "\n"
     end
     
+    list_of_costcenters = ''
     if permissions.include?('manage_cost_centers')
-      list_of_costcenters = ''
       list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
       costcenters.each do |cc|
         list_of_costcenters += "%-27s  %s %9.2f\n" % [cc.name, friendly_unit, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?

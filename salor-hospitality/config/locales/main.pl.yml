@@ -28,6 +28,7 @@ pl:
         price: Cena
         tax_id: Podatek
         usage: Zużycie
+        statistic_category_id: Statistic-Category
       category:
         color: Kolor
         custom_icon: Ikona własna
@@ -524,6 +525,9 @@ pl:
       view: Podgląd
     new:
       new_page: Nowa strona
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: Edytuj notatkę
     error_during_evaluation: ! 'Błąd: '

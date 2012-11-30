@@ -12,6 +12,7 @@ fr:
         price: Prix
         tax_id: Taxe
         usage: Utilisation
+        statistic_category_id: Statistic-Category
       category:
         color: Couleur
         custom_icon: Mon icône
@@ -517,6 +518,9 @@ fr:
       view: Voir
     new:
       new_page: Nouvelle Page
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: Modifiez-moi
     error_during_evaluation: ! 'Erreur : '

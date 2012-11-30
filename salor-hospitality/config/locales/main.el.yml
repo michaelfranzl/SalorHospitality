@@ -45,6 +45,7 @@ el:
         price: Τιμή
         tax_id: Φόρος
         usage: Χρήση
+        statistic_category_id: Statistic-Category
       category:
         color: Χρώμα
         custom_icon: Το Εικονίδιο Μου
@@ -527,6 +528,9 @@ el:
       view: Προβολή
     new:
       new_page: Νέα σελίδα
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: Επεξεργαστείτε με
     error_during_evaluation: ! 'Πρόβλημα: '

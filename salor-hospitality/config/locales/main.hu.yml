@@ -124,6 +124,7 @@ hu:
         active: XXX active
         image: XXX Image
         tax_id: XXX Tax
+        statistic_category_id: Statistic-Category
       option:
         price: Price
         category_id: Category
@@ -704,6 +705,9 @@ hu:
       view: View
     new:
       new_page: New Page
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: edit me
     error_during_evaluation: ! 'Error: '

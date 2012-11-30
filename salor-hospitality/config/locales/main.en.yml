@@ -41,6 +41,7 @@ en:
         cellphone: Cellphone
         hidden: delete
       article:
+        statistic_category_id: Statistic-Category
         active: active
         category_id: Category
         description: Description
@@ -96,7 +97,7 @@ en:
         code: Ruby code
         description: Description
         hidden: delete
-        markup: ERB Markup
+        markup: Secure ERB Markup
         model: Type
         name: Name
       quantity:
@@ -521,6 +522,9 @@ en:
       view: View
     new:
       new_page: New Page
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: edit me
     error_during_evaluation: ! 'Error: '

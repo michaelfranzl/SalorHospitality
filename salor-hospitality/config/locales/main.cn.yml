@@ -12,6 +12,7 @@ cn:
         price: 價格
         tax_id: 稅
         usage: 運用
+        statistic_category_id: Statistic-Category
       category:
         color: 色彩
         custom_icon: 我的圖標
@@ -510,6 +511,9 @@ cn:
       view: 視圖
     new:
       new_page: 新頁
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: 編輯我
     error_during_evaluation: ! '錯誤: '

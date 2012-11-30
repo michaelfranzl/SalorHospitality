@@ -41,6 +41,7 @@ gn:
         cellphone: Mobil
         hidden: delete
       article:
+        statistic_category_id: Statistik-Kategorie
         active: aktiv?
         category_id: Kategorie
         description: Beschreibung
@@ -521,6 +522,9 @@ gn:
       view: Anzeigen
     new:
       new_page: Neue Karte
+    form:
+      view: Anzeigen
+      slideshow: Slideshow
   partials:
     default_blurb: Text
     error_during_evaluation: ! 'Fehler: '
@@ -756,7 +760,7 @@ gn:
       wenig Geduld.
     waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig
       Geduld.
-    mobile_view: Ansicht Mobilgeräten
+    mobile_view: Ansicht Mobilgeräte
     workstation_view: Ansicht Basisstation
     cancel: Abbrechen
     common_surcharges: Aufschläge

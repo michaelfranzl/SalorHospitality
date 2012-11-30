@@ -12,6 +12,7 @@ ru:
         price: Цена
         tax_id: Налог
         usage: Использование
+        statistic_category_id: Statistic-Category
       category:
         color: Цвет
         custom_icon: Моя картинка
@@ -510,6 +511,9 @@ ru:
       view: Посмотреть
     new:
       new_page: Новая страница
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: отредактируй меня!
     error_during_evaluation: ! 'Ошибка: '

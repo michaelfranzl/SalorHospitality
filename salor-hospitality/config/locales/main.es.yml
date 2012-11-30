@@ -12,6 +12,7 @@ es:
         active: activo
         image: Imagen
         tax_id: IVA
+        statistic_category_id: Statistic-Category
       category:
         color: Color
         custom_icon: Mi Ícono
@@ -503,6 +504,9 @@ es:
       slideshow: Iniciar presentación de diapositivas
     new:
       new_page: Nueva página
+    form:
+      view: View
+      slideshow: Slideshow
   partials:
     default_blurb: Texto predeterminado
     error_during_evaluation: Error
