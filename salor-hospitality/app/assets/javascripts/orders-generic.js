@@ -27,15 +27,16 @@ var payment_method_uid = 0;
 var resources = {};
 var plugin_callbacks_done = [];
 var permissions = {};
+var intervals = {};
 var items_json = {};
 var submit_json = {currentview:'tables'};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
 
-var timeout_update_tables = 30;
-var timeout_update_item_lists = 71;
-var timeout_update_resources = 182;
+var timeout_update_tables = 19;
+var timeout_update_item_lists = 31;
+var timeout_update_resources = 127;
 var timeout_refresh_queue = 4;
 
 var counter_update_resources = timeout_update_resources;
@@ -1376,7 +1377,9 @@ function update_resources(mode) {
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
-    complete: function(data,state) { update_resources_success(data) },
+    complete: function(data,state) {
+      update_resources_success(data)
+    },
     timeout: 15000,
     success: function() {
       if (mode == 'documentready') {

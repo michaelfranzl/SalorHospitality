@@ -35,16 +35,29 @@
           = vendor_form.label :rlogo_footer
           = vendor_form.file_field :rlogo_footer
 
-        %br
-        = vendor_form.label :country
-        %select#category_color{ :name => 'vendor[country]' }
-          - SalorHospitality::Application::COUNTRIES.each do |key, val|
-            %option{ :value => key, :selected => vendor_form.object.country == key }= t val
-        %br
-        = vendor_form.label :time_offset
-        = vendor_form.text_field :time_offset, :size => 2
-        %span.display_keyboard{ :id => "vendor_time_offset_display_keyboard" }
-        %br
+        - if @current_user.role.weight == 0
+          = vendor_form.label :country
+          %select{ :name => 'vendor[country]' }
+            - SalorHospitality::Application::COUNTRIES.each do |key, val|
+              %option{ :value => key, :selected => vendor_form.object.country == key }= t val
+          %br
+          = vendor_form.label :time_offset
+          = vendor_form.text_field :time_offset, :size => 2
+          %span.display_keyboard{ :id => "vendor_time_offset_display_keyboard" }
+          %br
+          - if @current_company.mode == 'local'
+            = vendor_form.label :update_tables_interval
+            = vendor_form.text_field :update_tables_interval, :size => 2
+            %span.display_keyboard{ :id => "vendor_update_tables_interval_display_keyboard" }
+            %br
+            = vendor_form.label :update_item_lists_interval
+            = vendor_form.text_field :update_item_lists_interval, :size => 2
+            %span.display_keyboard{ :id => "vendor_update_item_lists_interval_display_keyboard" }
+            %br
+            = vendor_form.label :update_resources_interval
+            = vendor_form.text_field :update_resources_interval, :size => 2
+            %span.display_keyboard{ :id => "vendor_update_resources_interval_display_keyboard" }
+            %br
         = vendor_form.label :receipt_header_blurb
         = vendor_form.text_area :receipt_header_blurb
         %span.display_keyboard{ :id => "vendor_receipt_header_blurb_display_keyboard" }
@@ -101,8 +114,19 @@
   :javascript
     $('#vendor_name').keyboard( {openOn: '' } );
     $('#vendor_name_display_keyboard').click(function(){ $('#vendor_name').getkeyboard().reveal(); });
-    $('#vendor_time_offset').keyboard( {openOn: '' } );
+    
+    $('#vendor_time_offset').keyboard( {openOn: '', layout:'num' } );
     $('#vendor_time_offset_display_keyboard').click(function(){ $('#vendor_time_offset').getkeyboard().reveal(); });
+    
+    $('#vendor_update_tables_interval').keyboard( {openOn: '', layout:'num' } );
+    $('#vendor_update_tables_interval_display_keyboard').click(function(){ $('#vendor_update_tables_interval').getkeyboard().reveal(); });
+    
+    $('#vendor_update_item_lists_interval').keyboard( {openOn: '', layout:'num' } );
+    $('#vendor_update_item_lists_interval_display_keyboard').click(function(){ $('#vendor_update_item_lists_interval').getkeyboard().reveal(); });
+    
+    $('#vendor_update_resources_interval').keyboard( {openOn: '', layout:'num' } );
+    $('#vendor_update_resources_interval_display_keyboard').click(function(){ $('#vendor_update_resources_interval').getkeyboard().reveal(); });
+    
     $('#vendor_receipt_header_blurb').keyboard( {openOn: '' } );
     $('#vendor_receipt_header_blurb_display_keyboard').click(function(){ $('#vendor_receipt_header_blurb').getkeyboard().reveal(); });
     $('#vendor_receipt_footer_blurb').keyboard( {openOn: '' } );

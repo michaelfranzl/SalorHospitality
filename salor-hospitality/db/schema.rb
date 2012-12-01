@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201192439) do
+ActiveRecord::Schema.define(:version => 20121201192942) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -160,13 +160,10 @@ ActiveRecord::Schema.define(:version => 20121201192439) do
 
   create_table "companies", :force => true do |t|
     t.string  "name"
-    t.string  "mode",              :default => "local"
+    t.string  "mode",      :default => "local"
     t.string  "subdomain"
-    t.integer "update_tables",     :default => 20
-    t.integer "update_item_lists", :default => 61
-    t.integer "update_resources",  :default => 182
-    t.boolean "hidden",            :default => false
-    t.boolean "active",            :default => true
+    t.boolean "hidden",    :default => false
+    t.boolean "active",    :default => true
     t.string  "email"
     t.string  "auth_user"
   end
@@ -946,33 +943,33 @@ ActiveRecord::Schema.define(:version => 20121201192439) do
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
 
   create_table "vendors", :force => true do |t|
-    t.string   "name",                                          :default => "Bill Gastro"
+    t.string   "name",                                           :default => "Bill Gastro"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "largest_order_number",                          :default => 0
-    t.string   "unused_order_numbers",      :limit => 10000,    :default => "--- []\n"
+    t.integer  "largest_order_number",                           :default => 0
+    t.string   "unused_order_numbers",       :limit => 10000,    :default => "--- []\n"
     t.string   "country"
-    t.integer  "time_offset",                                   :default => 0
-    t.text     "resources_cache",           :limit => 16777215
-    t.boolean  "use_order_numbers",                             :default => true
+    t.integer  "time_offset",                                    :default => 0
+    t.text     "resources_cache",            :limit => 16777215
+    t.boolean  "use_order_numbers",                              :default => true
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
     t.integer  "company_id"
-    t.boolean  "active",                                        :default => true
+    t.boolean  "active",                                         :default => true
     t.boolean  "hidden"
     t.binary   "rlogo_header"
     t.binary   "rlogo_footer"
-    t.boolean  "ticket_item_separator",                         :default => true
-    t.boolean  "ticket_wide_font",                              :default => true
-    t.boolean  "ticket_tall_font",                              :default => true
-    t.boolean  "ticket_display_time_order",                     :default => true
+    t.boolean  "ticket_item_separator",                          :default => true
+    t.boolean  "ticket_wide_font",                               :default => true
+    t.boolean  "ticket_tall_font",                               :default => true
+    t.boolean  "ticket_display_time_order",                      :default => true
     t.text     "receipt_header_blurb"
     t.text     "receipt_footer_blurb"
     t.text     "invoice_header_blurb"
     t.text     "invoice_footer_blurb"
-    t.string   "unused_booking_numbers",    :limit => 10000,    :default => "--- []\n"
-    t.integer  "largest_booking_number",                        :default => 0
-    t.boolean  "use_booking_numbers",                           :default => true
+    t.string   "unused_booking_numbers",     :limit => 10000,    :default => "--- []\n"
+    t.integer  "largest_booking_number",                         :default => 0
+    t.boolean  "use_booking_numbers",                            :default => true
     t.integer  "max_tables"
     t.integer  "max_rooms"
     t.integer  "max_articles"
@@ -981,6 +978,9 @@ ActiveRecord::Schema.define(:version => 20121201192439) do
     t.integer  "max_categories"
     t.string   "email"
     t.boolean  "remote_orders"
+    t.integer  "update_tables_interval",                         :default => 19
+    t.integer  "update_item_lists_interval",                     :default => 31
+    t.integer  "update_resources_interval",                      :default => 127
   end
 
 end
