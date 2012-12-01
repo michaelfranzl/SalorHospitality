@@ -10,7 +10,7 @@
 
 class SessionsController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :set_locale, :except => :destroy
+  skip_before_filter :fetch_logged_in_user, :except => :destroy
 
   def new
     #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
@@ -38,6 +38,7 @@ class SessionsController < ApplicationController
           session[:user_id] = user.id
           session[:company_id] = user.company_id
           session[:vendor_id] = user.vendors.existing.first.id
+          session[:locale] = user.language
           user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
           I18n.locale = user.language
           session[:admin_interface] = false
@@ -63,6 +64,7 @@ class SessionsController < ApplicationController
         session[:customer_id] = customer.id
         session[:company_id] = customer.company_id
         session[:vendor_id] = customer.vendor_id
+        session[:locale] = customer.language
         customer.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
         I18n.locale = customer.language
         flash[:error] = nil

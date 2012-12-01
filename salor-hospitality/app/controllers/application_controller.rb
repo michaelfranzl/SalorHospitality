@@ -293,14 +293,19 @@ class ApplicationController < ActionController::Base
     end
 
     def set_locale
-      if @current_user
-        I18n.locale = @locale = @current_user.language
+      if params[:l] and I18n.available_locales.include? params[:l].to_sym
+        I18n.locale = @locale = session[:locale] = params[:l]
+      elsif session[:locale]
+        I18n.locale = @locale = session[:locale]
+      elsif @current_user
+        I18n.locale = @locale = session[:locale] = @current_user.language
       elsif @current_customer
-        I18n.locale = @locale = @current_customer.language
+        I18n.locale = @locale = session[:locale] = @current_customer.language
       else
         I18n.locale = @locale = 'en'
       end
-      @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country]
+      
+      @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country] if @current_vendor
     end
 
     def update_vendor_cache
