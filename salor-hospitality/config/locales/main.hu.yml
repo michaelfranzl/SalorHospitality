@@ -171,6 +171,7 @@ hu:
         custom_icon: XXX My Icon
         separate_print: XXX Cut ticket
         user_id: XXX Preparing User
+        image: Icon
       cost_center:
         name: Name
         description: Description
@@ -273,6 +274,9 @@ hu:
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
         remote_orders: Remote orders
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       payment_method_item:
         amount: Amount
       booking_item:

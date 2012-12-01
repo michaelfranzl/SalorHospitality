@@ -24,6 +24,7 @@ es:
         vendor_printer_id: Impresora
         separate_print: cortar boleta
         user_id: Preparando usuario.
+        image: Icon
       cost_center:
         active: activo
         description: Descripción
@@ -161,6 +162,9 @@ es:
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
         remote_orders: Remote orders
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       payment_method_item:
         amount: Amount
       booking_item:

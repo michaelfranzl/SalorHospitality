@@ -24,6 +24,7 @@ ru:
         tax_id: Налог
         user_id: Пользователь
         vendor_printer_id: Принтер
+        image: Icon
       cost_center:
         active: активный?
         description: Описание
@@ -161,6 +162,9 @@ ru:
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
         remote_orders: Remote orders
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       payment_method_item:
         amount: Amount
       booking_item:

@@ -57,6 +57,7 @@ el:
         tax_id: Φόρος
         user_id: Προετοιμασία Χρήστη
         vendor_printer_id: Εκτυπωτής
+        image: Icon
       cost_center:
         active: ενεργό;
         description: Περιγραφή
@@ -194,6 +195,9 @@ el:
         logo: Λογότυπο οθόνης
         invoice_logo: Λογότυπο τιμολογίου
         remote_orders: Remote orders
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       payment_method_item:
         amount: Ποσό
       booking_item:

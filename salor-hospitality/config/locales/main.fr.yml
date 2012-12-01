@@ -24,6 +24,7 @@ fr:
         tax_id: Taxe
         user_id: Preparation de l'utilisateur
         vendor_printer_id: Imprimante
+        image: Icon
       cost_center:
         active: Actif ?
         description: Description
@@ -156,6 +157,9 @@ fr:
         logo: XXX Screen logo
         invoice_logo: XXX Invoice Logo
         remote_orders: Remote orders
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       vendor_printer:
         copies: Copies
         hidden: Effacer

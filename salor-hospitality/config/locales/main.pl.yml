@@ -40,6 +40,7 @@ pl:
         tax_id: Podatek
         user_id: Użytkownik
         vendor_printer_id: Bonownik
+        image: Icon
       cost_center:
         active: Aktywować?
         description: Opis
@@ -177,6 +178,9 @@ pl:
         logo: Logo ekranu
         invoice_logo: Logo faktury
         remote_orders: Zamówienia zdalne
+        update_tables_interval: Interval update tables
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
       payment_method_item:
         amount: Ilość
       booking_item:

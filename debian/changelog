@@ -1,3 +1,12 @@
+salor-hospitality (4.1.2.7) unstable; urgency=low
+
+  * Closes #1553 Add more translations
+  * Closes #1551 Remove active from cost centers
+  * Closes #1550 Make refresh rate of item notifications configurable on Vendor
+  * Closes #1548 Set locale via URL for sessions controller, store in session
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 01 Dec 2012 22:25:29 +0100
+
 salor-hospitality (4.1.2.6) unstable; urgency=low
 
   * Closes #1543 No translations in Slideshow
