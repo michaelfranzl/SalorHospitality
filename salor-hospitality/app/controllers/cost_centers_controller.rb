@@ -13,7 +13,7 @@ class CostCentersController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @cost_centers = @current_vendor.cost_centers.existing.active
+    @cost_centers = @current_vendor.cost_centers.existing
   end
 
   def new

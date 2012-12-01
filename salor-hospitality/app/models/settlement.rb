@@ -65,7 +65,7 @@ class Settlement < ActiveRecord::Base
     total_payment_methods_refund = {}
     total_costcenter = {}
     
-    costcenters = self.vendor.cost_centers.existing.active
+    costcenters = self.vendor.cost_centers.existing
     costcenters.each do |cc|
       total_costcenter[cc.id] = 0 #initialize
     end
