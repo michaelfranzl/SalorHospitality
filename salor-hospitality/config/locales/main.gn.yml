@@ -62,6 +62,7 @@ gn:
         tax_id: Steuerklasse
         user_id: Zubereitung durch
         vendor_printer_id: Drucker
+        image: Icon
       cost_center:
         active: aktiv?
         description: Beschreibung

@@ -62,6 +62,7 @@ en:
         tax_id: Tax
         user_id: Preparing User
         vendor_printer_id: Printer
+        image: Icon
       cost_center:
         active: active?
         description: Description
