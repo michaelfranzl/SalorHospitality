@@ -23,6 +23,7 @@ var new_order = true;
 var option_position = 0;
 var item_position = 0;
 var payment_method_uid = 0;
+var audio_enabled = true;
 
 var resources = {};
 var plugin_callbacks_done = [];
@@ -393,6 +394,8 @@ function send_queue(object_id) {
         clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
       }
       update_tables();
+      audio_enabled = false; // skip one beep
+      counter_update_item_lists = 2;
     }
   });
 }
@@ -1459,7 +1462,10 @@ function notification_alerts(model) {
   if (total_count > 0) {
     $('.items_notifications_button').html(total_count);
     $('#mobile_last_invoices_button').html(total_count);
-    if (permissions.audio) { alert_audio(); }
+    if (permissions.audio && audio_enabled) {
+      alert_audio();
+    }
+    audio_enabled = true;
   }
 }
 
@@ -1710,6 +1716,7 @@ function item_list_increment(id, model, scope) {
         increment_button.css('background-color','#3a4d3a');
         //increment_button.effect('highlight');
         counter_update_item_lists = 4;
+        audio_enabled = false; // skip one beep
       },
       error: function() {
         increment_button.css('background-color','#74101B');

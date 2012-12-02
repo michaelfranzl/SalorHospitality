@@ -132,6 +132,7 @@ function catch_keypress(d,type) {
 function display_items_notifications() {
   $("#items_notifications_interactive").fadeIn();
   counter_update_item_lists = 1;
+  audio_enabled = false; // skip one beep
 }
 
 function hide_items_notifications() {
