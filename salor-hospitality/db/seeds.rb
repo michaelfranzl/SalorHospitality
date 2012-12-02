@@ -220,7 +220,7 @@ company_count.times do |c|
 
     cost_center_objects = Array.new
     cost_center_names.size.times do |i|
-      cost_center = CostCenter.new :name => "CC #{ c }#{ v }#{ i }", :active => true
+      cost_center = CostCenter.new :name => "CC #{ c }#{ v }#{ i }"
       cost_center.company = company
       cost_center.vendor = vendor
       r = cost_center.save

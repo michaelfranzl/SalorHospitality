@@ -15,5 +15,8 @@ class Role < ActiveRecord::Base
   has_many :users
 
   validates_presence_of :name
+  validates_presence_of :weight
+  validates_numericality_of :weight
+  validates_uniqueness_of :weight
   serialize :permissions
 end
