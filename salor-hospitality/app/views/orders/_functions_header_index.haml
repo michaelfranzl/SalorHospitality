@@ -15,4 +15,6 @@
 - if permit('manage_hotel')
   %a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.toggle_between_tables_and_rooms') }
 
-= button_to '', session_path, :method => :delete, :title => t(:logout, :who => ''), :style => branding_override_style(:buttons, :logout)
+= button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
+
+%a#exit_button.iconbutton.exit_button{ :onclick => "window.open('', '_self', ''); window.close();", :title => t('.exit') }

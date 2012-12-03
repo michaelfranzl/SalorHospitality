@@ -9,7 +9,6 @@
 :branding_override_styles:
   :buttons:
     :cash: cash
-    :logout: logout
     :finish: finish
     :finish_and_print: finish-and-print
     :user: user

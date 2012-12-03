@@ -27,6 +27,10 @@ $(document).ready(function() {
     }, 15000);
   }
   
+  if ( is_fullscreen() == false ) {
+    $('#exit_button').hide();
+  }
+  
   $('#admin').hover(function(){
     $('#admin').stop(true,true);
     $('#admin').animate({height:154});
@@ -41,4 +45,8 @@ function download_printfile(path) {
   url_parts = window.location.host.split('.');
   //$.each(vendor_printers, function(k,v) {
   window.location.href = '/uploads/' + url_parts[0] + '/' + path + '.salor';
+}
+
+function is_fullscreen() {
+  return window.outerWidth == screen.width && window.outerHeight == screen.height;
 }

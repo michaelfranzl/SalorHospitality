@@ -476,6 +476,7 @@ gn:
       show_last_booking: Letzte Buchung anzeigen
       show_last_order: Letzte Bestellung anzeigen
       toggle_between_tables_and_rooms: Zwischen Tischen und Zimmern wechseln
+      exit: Beenden
     functions_header_order_form:
       move_order: Bestellung verschieben
     index:
