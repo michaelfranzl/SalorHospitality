@@ -581,6 +581,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      allow_exit: Allow Exit
       reactivate_orders: Reactivate orders
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user

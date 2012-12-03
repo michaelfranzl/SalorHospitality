@@ -17,4 +17,5 @@
 
 = button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
 
-%a#exit_button.iconbutton.exit_button{ :onclick => "window.open('', '_self', ''); window.close();", :title => t('.exit') }
+- if permit('allow_exit')
+  %a#exit_button.iconbutton.exit_button{ :onclick => "window.open('', '_self', ''); window.close();", :title => t('.exit') }
