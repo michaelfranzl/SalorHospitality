@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'just_print'
             get_order
-            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer]), {:with_customer_lines => true}) if params[:printer]
           when 'do_refund'
             item = get_model(params[:id], Item)
             item.refund(@current_user, params[:payment_method_id])

@@ -344,7 +344,7 @@ class Order < ActiveRecord::Base
     return used_table
   end
 
-  def print(what, vendor_printer=nil)
+  def print(what, vendor_printer=nil, options={})
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
@@ -370,7 +370,7 @@ class Order < ActiveRecord::Base
     
     if what.include? 'receipt'
       if vendor_printer
-        contents = self.escpos_receipt
+        contents = self.escpos_receipt(options)
         print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         self.update_attribute :printed, true
       end
@@ -514,7 +514,7 @@ class Order < ActiveRecord::Base
   end
 
 
-  def escpos_receipt
+  def escpos_receipt(options={})
     vendor = self.vendor
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
@@ -524,20 +524,29 @@ class Order < ActiveRecord::Base
     "\e!\x38" +  # doube tall, double wide, bold
     vendor.name + "\n"
 
-    header = ''
-    header +=
+    header1 = ''
+    header1 +=
     "\e!\x01" +  # Font B
     "\ea\x01" +  # center
     "\n" + vendor.receipt_header_blurb + "\n" if vendor.receipt_header_blurb
     
-    header +=
+    lines = ''
+    if options[:with_customer_lines] == true
+      lines += "\e!\x00"  # Font A
+      4.times do |i|
+        lines += "\xc4" * 42 + "\n\n"
+      end
+    end
+    
+    header2 = ''
+    header2 +=
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
-    header += "\n\n" +
+    header2 += "\n\n" +
     "\e!\x00" +  # Font A
     "                 #{I18n.t('activerecord.models.article.one')}   #{I18n.t('various.unit_price_abbreviation')}   #{I18n.t('various.quantity_abbreviation')}    #{I18n.t('various.total_price_abbreviation')}\n" +
     "\xc4" * 42 + "\n"
@@ -618,7 +627,9 @@ class Order < ActiveRecord::Base
         "\e@" +     # initialize
         "\ea\x01" + # align center
         headerlogo +
-        header +
+        header1 +
+        lines +
+        header2 +
         list_of_items +
         sum_format +
         sum +
