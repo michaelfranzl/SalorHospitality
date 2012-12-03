@@ -461,6 +461,7 @@ cn:
       show_last_order: 顯示最近秩序
       show_last_booking: XXX 顯示最近預訂
       toggle_between_tables_and_rooms: XXX 房間和桌子之間切換
+      exit: Exit
     functions_header_order_form:
       move_order: 移動訂單到不同的桌子
     index:

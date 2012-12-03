@@ -451,6 +451,7 @@ tr:
       items_notifications: XXX Notifications
       show_last_booking: XXX Show last booking
       toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
+      exit: Exit
     functions_header_order_form:
       move_order: siparişi kaydır
     invoice_item_list:

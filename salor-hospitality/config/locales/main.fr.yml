@@ -468,6 +468,7 @@ fr:
       show_last_booking: Montrer dernière réservation
       show_last_order: Montrer dernière commande
       toggle_between_tables_and_rooms: Alterner chambres et tables
+      exit: Exit
     functions_header_order_form:
       move_order: Déplacer commande vers autre table
     index:

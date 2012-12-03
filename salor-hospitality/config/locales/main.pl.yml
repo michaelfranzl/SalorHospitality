@@ -475,6 +475,7 @@ pl:
       show_last_order: Pokaż ostatnie zamówienie
       show_last_booking: Pokaż ostatnią rezerwację
       toggle_between_tables_and_rooms: Przełącz pomiędzy ekranem stołów a pokoi
+      exit: Exit
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:

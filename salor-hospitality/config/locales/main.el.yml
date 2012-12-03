@@ -478,6 +478,7 @@ el:
       show_last_order: Δείξτε την τελευταία παραγγελία
       show_last_booking: Δείξτε την τελευταία κράτηση
       toggle_between_tables_and_rooms: Εναλλαγή μεταξύ τραπεζιών και δωματίων
+      exit: Exit
     functions_header_order_form:
       move_order: Μετακινήστε την παραγγελία σε άλλο τραπέζι
     index:
