@@ -148,7 +148,9 @@ function toggle_admin_interface() {
     success: function(result) {
       if (result) {
         $('#admin').slideDown('slow');
-        $('#drag_and_drop_toggle_view_button').show();
+        if (! $('#orderform').is(':visible')) {
+          $('#drag_and_drop_toggle_view_button').show();
+        }
         $('#items_notifications_static').hide();
       } else {
         $('#admin').slideUp('slow');
