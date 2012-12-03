@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.13) unstable; urgency=low
+
+  * updated PL translations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 03 Dec 2012 21:45:32 +0100
+
 salor-hospitality (4.1.2.12) unstable; urgency=low
 
   * Closes #1560 Add permission for program exit
