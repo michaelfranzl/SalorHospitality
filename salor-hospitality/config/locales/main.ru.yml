@@ -618,6 +618,7 @@ ru:
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       manage_statistic_categories: Manage Statistic Categories
+      allow_exit: Allow Exit
     create:
       success: Роль успешно сохранена
     destroy:

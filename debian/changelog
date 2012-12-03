@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.12) unstable; urgency=low
+
+  * Closes #1560 Add permission for program exit
+  * Closes #1508 order notification display bug
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 03 Dec 2012 21:19:42 +0100
+
 salor-hospitality (4.1.2.11) unstable; urgency=low
 
   * Closes #1559 Print lines on receipt for customers to enter their address
