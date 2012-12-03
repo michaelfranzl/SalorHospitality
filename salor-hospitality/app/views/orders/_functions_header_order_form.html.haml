@@ -2,7 +2,7 @@
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
 - unless @current_customer
-  %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back) }
+  %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back), :style => branding_override_style(:buttons, :tables) }
 - else
   %a#order_submit_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_send');", :title => t('various.customer_request_send') }
   %a#order_submit_button.iconbutton.cash_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_finish');", :title => t('various.customer_request_finish') }
@@ -10,8 +10,8 @@
 
 - if workstation?
   - if permit('counter_mode')
-    %a.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish) }
-    %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish) }
+    %a.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish), :style => branding_override_style(:buttons, :finish) }
+    %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish), :style => branding_override_style(:buttons, :finish_and_print) }
 
 - if permit('finish_orders')
   %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order), :style => branding_override_style(:buttons, :cash) }
@@ -21,7 +21,7 @@
 
 - if permit('assign_order_to_user')
   - if workstation?
-    %a.iconbutton.user_button{ :onclick => "$('#usersselect').slideDown();", :title => t('roles.new.assign_order_to_user') }
+    %a.iconbutton.user_button{ :onclick => "$('#usersselect').slideDown();", :title => t('roles.new.assign_order_to_user'), :style => branding_override_style(:buttons, :user) }
       
 - if workstation?
   %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }

@@ -10,4 +10,9 @@
   :buttons:
     :cash: cash
     :logout: logout
-    :invoice: invoice
+    :finish: finish
+    :finish_and_print: finish-and-print
+    :user: user
+    :tables: tables
+    :refund: refund
+    :last_invoice: last-invoice
