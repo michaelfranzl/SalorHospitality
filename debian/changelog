@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.14) unstable; urgency=low
+
+  * Closes #1567 Various issues
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 05 Dec 2012 10:51:29 +0100
+
 salor-hospitality (4.1.2.13) unstable; urgency=low
 
   * updated PL translations
