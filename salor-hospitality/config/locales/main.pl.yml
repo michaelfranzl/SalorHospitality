@@ -476,7 +476,7 @@ pl:
       show_last_booking: Pokaż ostatnią rezerwację
       show_last_order: Wcześniejsze zamówienia
       toggle_between_tables_and_rooms: Przełącz pomiędzy ekranem stołów a pokoi
-      exit: Exit
+      exit: Zakończ SalorGastro
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:
@@ -584,6 +584,7 @@ pl:
     destroy:
       success: Zezwolenia zostały usunięte
     new:
+      allow_exit: Prawo do zamykania programu
       reactivate_orders: Odnawianie zamówień
       move_order_from_invoice_form: Przenoszenie zamówienia z paragonu
       assign_order_to_user: Wyznaczanie użytkownika do danego zamówienia
@@ -643,7 +644,6 @@ pl:
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
       settlement_statistics_taxes: Pokaż statystyki podatkowe
       settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
-      allow_exit: Allow Exit
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen

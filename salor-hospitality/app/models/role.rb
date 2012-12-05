@@ -17,6 +17,6 @@ class Role < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :weight
   validates_numericality_of :weight
-  validates_uniqueness_of :weight
+  validates_uniqueness_of :weight, :scope => :vendor_id
   serialize :permissions
 end

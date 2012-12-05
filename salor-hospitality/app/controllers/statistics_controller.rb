@@ -27,6 +27,7 @@ class StatisticsController < ApplicationController
     @tables = @current_vendor.tables.existing.active
     @categories = @current_vendor.categories.existing
     @payment_methods = @current_vendor.payment_methods.existing
+    test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
     @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
   end

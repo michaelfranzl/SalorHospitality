@@ -11,7 +11,7 @@
     :cash: cash
     :finish: finish
     :finish_and_print: finish-and-print
-    :user: user
+    :user: user-arrow
     :tables: tables
     :refund: refund
     :last_invoice: last-invoice
