@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.15) unstable; urgency=low
+
+  * Closes #1577 Add Cameras
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 10 Dec 2012 16:46:38 +0100
+
 salor-hospitality (4.1.2.14) unstable; urgency=low
 
   * Closes #1567 Various issues

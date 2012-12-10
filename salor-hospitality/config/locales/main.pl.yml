@@ -203,6 +203,15 @@ pl:
         hidden: Usuń
         name: Nazwa
         path: Skrót
+      camera:
+        name: Name
+        description: Description
+        host_internal: Internal host
+        host_external: External host
+        port: Port
+        url: URL
+        active: active
+        hidden: delete
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -318,6 +327,9 @@ pl:
       vendor_printer:
         one: Bonownik
         other: Bonowniki
+      camera:
+        one: Camera
+        other: Cameras
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
@@ -644,6 +656,7 @@ pl:
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
       settlement_statistics_taxes: Pokaż statystyki podatkowe
       settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
+      manage_cameras: Manage cameras
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
@@ -821,3 +834,10 @@ pl:
   wrong_password: Błędne dane do logowania!
   yellow: Żółty
   invalid_date: Nieprawidłowa data
+  cameras:
+    index:
+      show: Show
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted

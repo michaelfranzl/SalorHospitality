@@ -199,6 +199,15 @@ es:
       statistic_category:
         hidden: löschen
         name: Name
+      camera:
+        name: Name
+        description: Description
+        host_internal: Internal host
+        host_external: External host
+        port: Port
+        url: URL
+        active: active
+        hidden: delete
     models:
       article:
         one: Artículo
@@ -311,6 +320,9 @@ es:
       statistic_category:
         one: Statistic-Category
         other: Statistic-Categories
+      camera:
+        one: Camera
+        other: Cameras
     errors:
       messages:
         prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
@@ -611,6 +623,7 @@ es:
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       manage_statistic_categories: Manage Statistic Categories
       allow_exit: Allow Exit
+      manage_cameras: Manage cameras
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -813,3 +826,10 @@ es:
     new:
       edit_statistic_category: Edit Statistic-Category
       new_statistic_category: New Statistic-Category
+  cameras:
+    index:
+      show: Show
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted

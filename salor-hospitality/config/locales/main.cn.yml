@@ -199,6 +199,15 @@ cn:
       statistic_category:
         hidden: löschen
         name: Name
+      camera:
+        name: Name
+        description: Description
+        host_internal: Internal host
+        host_external: External host
+        port: Port
+        url: URL
+        active: active
+        hidden: delete
     models:
       article:
         one: 物品
@@ -311,6 +320,9 @@ cn:
       statistic_category:
         one: Statistic-Category
         other: Statistic-Categories
+      camera:
+        one: Camera
+        other: Cameras
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -619,6 +631,7 @@ cn:
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       manage_statistic_categories: Manage Statistic Categories
       allow_exit: Allow Exit
+      manage_cameras: Manage cameras
     create:
       success: Role successfully saved
     destroy:
@@ -812,3 +825,10 @@ cn:
     new:
       edit_statistic_category: Edit Statistic-Category
       new_statistic_category: New Statistic-Category
+  cameras:
+    index:
+      show: Show
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted

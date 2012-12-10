@@ -199,6 +199,15 @@ fr:
       statistic_category:
         hidden: löschen
         name: Name
+      camera:
+        name: Name
+        description: Description
+        host_internal: Internal host
+        host_external: External host
+        port: Port
+        url: URL
+        active: active
+        hidden: delete
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
@@ -314,6 +323,9 @@ fr:
       statistic_category:
         one: Statistic-Category
         other: Statistic-Categories
+      camera:
+        one: Camera
+        other: Cameras
   admin: Admin
   are_you_sure: Êtes-vous sûr ?
   articles:
@@ -630,6 +642,7 @@ fr:
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       manage_statistic_categories: Manage Statistic Categories
       allow_exit: Allow Exit
+      manage_cameras: Manage cameras
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -814,3 +827,10 @@ fr:
     new:
       edit_statistic_category: Edit Statistic-Category
       new_statistic_category: New Statistic-Category
+  cameras:
+    index:
+      show: Show
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted
