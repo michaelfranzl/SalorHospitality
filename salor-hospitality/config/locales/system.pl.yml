@@ -56,8 +56,8 @@ pl:
     currency:
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
-        format: "%u %n"
-        unit: "$"
+        format: "%n %u"
+        unit: "zł"
         # These five are to override number.format and are optional
         separator: "."
         delimiter: ","
@@ -244,5 +244,5 @@ pl:
       date_iso: "%d-%m-%Y"
       time_short: "%H:%M"
       month_and_day: "%d. %B"
-    am: ""
-    pm: ""
+    am: "am"
+    pm: "pm"

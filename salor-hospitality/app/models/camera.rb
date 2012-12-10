@@ -6,11 +6,9 @@ class Camera < ActiveRecord::Base
   
   attr_accessible :company_id, :enabled, :hidden, :hidden_at, :hidden_by, :name, :url, :vendor_id, :port, :host_internal, :host_external
   
-  validates_uniqueness_of :name, :scope => :vendor_id
   validates_presence_of :name
   validates_presence_of :url
   validates_presence_of :host_internal
-  validates_presence_of :host_external
   validates_presence_of :port
   
   def resource(mode=:internal)

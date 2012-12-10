@@ -204,14 +204,14 @@ pl:
         name: Nazwa
         path: Skrót
       camera:
-        name: Name
-        description: Description
-        host_internal: Internal host
-        host_external: External host
+        name: Kamera
+        description: Opis
+        host_internal: Host wewnętrzny
+        host_external: Host zewnętrzny
         port: Port
         url: URL
-        active: active
-        hidden: delete
+        active: Włącz
+        hidden: Usuń
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -328,8 +328,8 @@ pl:
         one: Bonownik
         other: Bonowniki
       camera:
-        one: Camera
-        other: Cameras
+        one: Kamera
+        other: Kamery
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
@@ -656,7 +656,7 @@ pl:
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
       settlement_statistics_taxes: Pokaż statystyki podatkowe
       settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
-      manage_cameras: Manage cameras
+      manage_cameras: Zarządzanie kamerami
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
@@ -836,8 +836,8 @@ pl:
   invalid_date: Nieprawidłowa data
   cameras:
     index:
-      show: Show
+      show: Podgląd
     create:
-      success: Camera was successfully saved
+      success: Zapisano zmiany w kamerze
     destroy:
-      success: Camera was successfully deleted
+      success: Kamera została skaowana

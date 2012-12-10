@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210112939) do
+ActiveRecord::Schema.define(:version => 20121210175353) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -702,6 +702,16 @@ ActiveRecord::Schema.define(:version => 20121210112939) do
   add_index "rooms", ["company_id"], :name => "index_rooms_on_company_id"
   add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
   add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
+
+  create_table "salor_saas_subscription_users", :force => true do |t|
+    t.string   "ip"
+    t.string   "subdomain"
+    t.boolean  "https"
+    t.boolean  "httpauth"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "seasons", :force => true do |t|
     t.string   "name"

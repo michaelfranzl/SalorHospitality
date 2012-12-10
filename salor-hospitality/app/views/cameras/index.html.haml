@@ -9,7 +9,7 @@
     %p.delete= link_to image_tag('button_small_delete.png', :title => Camera.human_attribute_name(:hidden), :alt => Camera.human_attribute_name(:hidden)), camera_path(c), :method => :delete, :confirm => t(:are_you_sure)
     %h3= link_to c.name, edit_camera_path(c)
     %p= c.description
-    = image_tag c.resource
+    = image_tag c.resource, :class => 'stream'
     %p= link_to t('.show'), camera_path(c)
 
 
