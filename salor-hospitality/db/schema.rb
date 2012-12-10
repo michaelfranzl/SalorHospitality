@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201192942) do
+ActiveRecord::Schema.define(:version => 20121210112939) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -113,6 +113,23 @@ ActiveRecord::Schema.define(:version => 20121201192942) do
   add_index "bookings", ["company_id"], :name => "index_bookings_on_company_id"
   add_index "bookings", ["hidden"], :name => "index_bookings_on_hidden"
   add_index "bookings", ["vendor_id"], :name => "index_bookings_on_vendor_id"
+
+  create_table "cameras", :force => true do |t|
+    t.string   "name"
+    t.string   "host_internal"
+    t.string   "host_external"
+    t.string   "port"
+    t.string   "url"
+    t.string   "description"
+    t.boolean  "active",        :default => true
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
 
   create_table "cash_drawers", :force => true do |t|
     t.string  "name"

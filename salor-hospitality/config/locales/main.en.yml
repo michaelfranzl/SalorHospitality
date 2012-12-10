@@ -6,8 +6,17 @@ en:
       new_statistic_category: New Statistic-Category
   activerecord:
     attributes:
+      camera:
+        name: Name
+        description: Description
+        host_internal: Internal host
+        host_external: External host
+        port: Port
+        url: URL
+        active: active
+        hidden: delete
       statistic_category:
-        hidden: löschen
+        hidden: delete
         name: Name
       payment_method:
         name: Name
@@ -16,9 +25,9 @@ en:
       payment_method_item:
         amount: Amount
       booking_item:
-        base_price: Preis
-        count: Anzahl
-        sum: Summe
+        base_price: Price
+        count: Count
+        sum: Sum
         duration: Days
       order:
         change_given: Change
@@ -113,12 +122,12 @@ en:
         name: Name
       room_price:
         base_price: Base Price
-        guest_type_id: Gast-Typ
-        hidden: löschen
-        room_type_id: Zimmerklasse
+        guest_type_id: Guest Type
+        hidden: delete
+        room_type_id: Room Type
         season_id: Season
       room_type:
-        hidden: löschen
+        hidden: delete
         name: Name
       season:
         from_date: From
@@ -207,6 +216,9 @@ en:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
     models:
+      camera:
+        one: Camera
+        other: Cameras
       statistic_category:
         one: Statistic-Category
         other: Statistic-Categories
@@ -322,7 +334,7 @@ en:
   are_you_sure: Are you sure?
   articles:
     create:
-      success: Article was successfully created
+      success: Article was successfully saved
       license_limited: Your License is limited to %{count} articles
     destroy:
       success: Article was successfully deleted
@@ -610,6 +622,7 @@ en:
       manage_users: Manage users
       manage_tables: Manage tables
       manage_vendors: Manage vendors
+      manage_cameras: Manage cameras
       move_order: Move order
       move_tables: Move tables
       new_role: New Role
@@ -800,7 +813,7 @@ en:
       test_printers: Test Printers
       test_printers_chartest: Test all characters
     create:
-      success: Vendor was successfully created
+      success: Vendor was successfully saved
     destroy:
       success: Vendor was successfully deleted
   violet: Violet
@@ -811,3 +824,10 @@ en:
   wrong_password: Wrong login data
   yellow: Yellow
   invalid_date: Invalid date
+  cameras:
+    index:
+      show: Show
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted

@@ -6,6 +6,15 @@ gn:
       new_statistic_category: Neue Statistik-Kategorie
   activerecord:
     attributes:
+      camera:
+        name: Name
+        description: Beschreibung
+        host_internal: Server intern
+        host_external: Server extern
+        port: Port
+        url: URL
+        active: aktiv?
+        hidden: löschen
       statistic_category:
         hidden: löschen
         name: Name
@@ -207,6 +216,9 @@ gn:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
+      camera:
+        one: Kamera
+        other: Kameras
       statistic_category:
         one: Statistik-Kategorie
         other: Statistik-Kategorien
@@ -614,6 +626,7 @@ gn:
       manage_users: Benutzer verwalten
       manage_tables: Tische verwalten
       manage_vendors: Betriebe verwalten
+      manage_cameras: Kameras verwalten
       move_order: Bestellung verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
@@ -814,3 +827,10 @@ gn:
   wrong_password: Falsche Logindaten.
   yellow: Gelb
   invalid_date: Ungültiges Datum
+  cameras:
+    index:
+      show: Anzeigen
+    create:
+      success: Kamera erfolgreich gespeichert
+    destroy:
+      success: Kamera erfolgreich gelöscht

@@ -1,0 +1,15 @@
+%h2= t('activerecord.models.camera.other')
+
+= link_to (t :new), new_camera_path, :class => 'links'
+
+.clear
+
+- @cameras.each do |c|
+  %div.camera
+    %p.delete= link_to image_tag('button_small_delete.png', :title => Camera.human_attribute_name(:hidden), :alt => Camera.human_attribute_name(:hidden)), camera_path(c), :method => :delete, :confirm => t(:are_you_sure)
+    %h3= link_to c.name, edit_camera_path(c)
+    %p= c.description
+    = image_tag c.resource
+    %p= link_to t('.show'), camera_path(c)
+
+

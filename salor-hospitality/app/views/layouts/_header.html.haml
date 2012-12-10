@@ -25,6 +25,7 @@
     = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
     = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')
     = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if permit('manage_payment_methods')
+    = link_to( t('activerecord.models.camera.other'), main_app.cameras_path) if permit('manage_cameras')
     = link_to( t('activerecord.models.user.other'), main_app.users_path) if permit('manage_users')
     - if permit('manage_vendors')
       - if @current_company.vendors.existing.count > 1
