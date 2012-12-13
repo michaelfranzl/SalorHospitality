@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210175353) do
+ActiveRecord::Schema.define(:version => 20121213145154) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -709,8 +709,16 @@ ActiveRecord::Schema.define(:version => 20121210175353) do
     t.boolean  "https"
     t.boolean  "httpauth"
     t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "salt"
+    t.boolean  "confirmation_email_sent"
+    t.boolean  "confirmation_link_clicked"
+    t.boolean  "completed"
+    t.string   "payment_provider"
+    t.datetime "last_paid_at"
+    t.integer  "last_paid_amount"
+    t.integer  "payment_interval"
   end
 
   create_table "seasons", :force => true do |t|
