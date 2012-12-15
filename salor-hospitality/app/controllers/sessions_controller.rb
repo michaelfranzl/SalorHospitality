@@ -10,7 +10,7 @@
 
 class SessionsController < ApplicationController
 
-  skip_before_filter :fetch_logged_in_user, :except => :destroy
+  skip_before_filter :fetch_logged_in_user, :except => [:destroy, :test_mail]
 
   def new
     #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)
-          UserMailer.plain_message("Login occurred #{params[:password]}", request, company).deliver if company.email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+          UserMailer.technician_message(company, "Login to #{ company.name }", '', request).deliver if company.technician_email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
           redirect_to orders_path and return
         else
           flash[:error] = t('messages.user_account_is_currently_locked')
@@ -78,7 +78,7 @@ class SessionsController < ApplicationController
   end
 
   def request_specs_login
-    create
+    #create
   end
 
   def destroy
@@ -91,8 +91,13 @@ class SessionsController < ApplicationController
     redirect_to '/'
   end
 
-  def exception_test
-    nil.throw_whiny_nil_error_please
+  def test_exception
+    nil.throw_whiny_nil_error # this method does not exist, which throws an exception.
+  end
+  
+  def test_mail
+    UserMailer.technician_message(@current_company, "Test").deliver if @current_company and @current_company.technician_email
+    render :nothing => true
   end
 
   def permission_denied
