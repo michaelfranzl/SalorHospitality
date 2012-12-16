@@ -240,19 +240,16 @@ SalorHospitality::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
-  
+
+  if defined?(SalorCart) == 'constant'
+    mount SalorCart::Engine => "/cart"
+  end
 
   if defined?(SalorSaas) == 'constant'
-    mount SalorSaas::Engine #=> "/saas"
-    match '*path' => 'salor_saas/sessions#new'
+    mount SalorSaas::Engine => "/saas"
+    match '*path' => 'saas/sessions#new'
   else
     match '*path' => 'sessions#new'
   end
-  
-  if defined?(SalorCart) == 'constant'
-    mount SalorCart::Engine #=> "/cart"
-  end
-  
-
 
 end
