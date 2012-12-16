@@ -243,10 +243,14 @@ SalorHospitality::Application.routes.draw do
   
 
   if defined?(SalorSaas) == 'constant'
-    mount SalorSaas::Engine => "/saas"
+    mount SalorSaas::Engine #=> "/saas"
     match '*path' => 'salor_saas/sessions#new'
   else
     match '*path' => 'sessions#new'
+  end
+  
+  if defined?(SalorCart) == 'constant'
+    mount SalorCart::Engine #=> "/cart"
   end
   
 
