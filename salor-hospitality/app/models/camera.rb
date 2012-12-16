@@ -10,7 +10,19 @@ class Camera < ActiveRecord::Base
   validates_presence_of :url
   validates_presence_of :port
   
-  def resource(mode=:internal)
+  def resource(ip)
+    match = /^(.*?)\.(.*?)\..*/.match(ip)
+    if match.length == 3
+      space = match[0] + '.' + match[1]
+    else
+      return "blank.gif"
+    end
+    if match[1] == "192" or match[1] == "10" or match[1] == "127" or (match[1] == "172" and match[2].to_i >= 16)
+      mode = :internal
+    else
+      mode = :external
+    end
+
     if mode == :internal
      return "#{ self.host_internal }:#{ self.port }#{ url }"
     elsif mode == :external

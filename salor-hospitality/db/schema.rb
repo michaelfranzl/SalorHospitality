@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121214200726) do
+ActiveRecord::Schema.define(:version => 20121216123748) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -182,8 +182,8 @@ ActiveRecord::Schema.define(:version => 20121214200726) do
     t.boolean "hidden",           :default => false
     t.boolean "active",           :default => true
     t.string  "email"
-    t.string  "auth_user"
     t.string  "technician_email"
+    t.string  "auth_user"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -704,6 +704,24 @@ ActiveRecord::Schema.define(:version => 20121214200726) do
   add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
   add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
 
+  create_table "salor_cart_new_order_notifications", :force => true do |t|
+    t.string   "serial_number"
+    t.datetime "timestamp"
+    t.string   "google_order_number"
+    t.integer  "order_total_fractional"
+    t.string   "order_total_currency"
+    t.string   "fulfillment_order_state"
+    t.string   "financial_order_state"
+    t.string   "buyer_id"
+    t.integer  "order_adjustment_total_tax_fractional"
+    t.integer  "order_adjustment_total_tax_currency"
+    t.boolean  "order_adjustment_merchant_calculation_successful"
+    t.integer  "order_adjustment_adjustment_total_fractional"
+    t.integer  "order_adjustment_adjustment_total_currency"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+  end
+
   create_table "salor_saas_subscription_users", :force => true do |t|
     t.string   "ip"
     t.string   "subdomain"
@@ -949,9 +967,9 @@ ActiveRecord::Schema.define(:version => 20121214200726) do
     t.datetime "last_logout_at"
     t.boolean  "audio"
     t.string   "email"
+    t.boolean  "confirmation_user"
     t.string   "salt"
     t.string   "encrypted_password"
-    t.boolean  "confirmation_user"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"

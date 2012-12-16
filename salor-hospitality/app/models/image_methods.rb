@@ -11,12 +11,12 @@
 module ImageMethods
   def image(typ=nil)
     if typ.nil? then
-      return self.images.first.image unless Image.where(:imageable_id => self.id).count == 0
+      return self.images.first.image unless self.images.first.nil? or Image.where(:imageable_id => self.id).count == 0
     else
       tmp = self.images.where(:image_type => typ).first
       return tmp.image unless tmp.nil?
     end
-    return File.join("/assets", "empty.png")    
+    return File.join("/assets", "empty.png")
   end
 
   def thumb(typ=nil)
