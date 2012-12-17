@@ -23,10 +23,11 @@
   - if workstation?
     %a.iconbutton.user_button{ :onclick => "$('#usersselect').slideDown();", :title => t('roles.new.assign_order_to_user'), :style => branding_override_style(:buttons, :user) }
       
-- if workstation?
-  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
-- elsif mobile? and position == 'header'
-  %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
+- if permit('scrolldown_button')
+  - if workstation?
+    %a.iconbutton.scrolldown_button{ :onclick => 'scroll_for(200,20)', :title => t(:scroll_down) }
+  - elsif mobile? and position == 'header'
+    %a.iconbutton.scrolldown_button{ :onclick => 'scroll_to($("#footer"),20)', :title => t(:scroll_down) }
   
 - if position == 'header' and not @current_customer
   %a#order_cancel_button.iconbutton.cancel_button{ :onclick => "route('tables', submit_json.model.table_id);", :title => t(:cancel_and_go_back) }
