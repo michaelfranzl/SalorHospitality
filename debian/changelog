@@ -1,8 +1,10 @@
-salor-hospitality (4.1.2.19ubuntu1) precise; urgency=low
+salor-hospitality (4.1.2.20) unstable; urgency=low
 
   * do not install migrations of engines
+  * build
+  * routes
 
- -- Michael Franzl <office@michaelfranzl.com>  Sun, 16 Dec 2012 14:58:48 +0100
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 17 Dec 2012 09:30:42 +0100
 
 salor-hospitality (4.1.2.19) unstable; urgency=low
 
