@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217123635) do
+ActiveRecord::Schema.define(:version => 20121217125451) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -705,6 +705,64 @@ ActiveRecord::Schema.define(:version => 20121217123635) do
   add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
   add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
 
+  create_table "salor_cart_authorization_amount_notifications", :force => true do |t|
+    t.string   "serial_number"
+    t.string   "google_order_number"
+    t.integer  "authorization_amount_fractional"
+    t.string   "authorization_amount_currency"
+    t.datetime "authorization_expiration_date"
+    t.string   "avs_response"
+    t.string   "cvn_response"
+    t.datetime "timestamp"
+    t.integer  "salor_cart_raw_google_notification_id"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
+  create_table "salor_cart_buyers", :force => true do |t|
+    t.string   "sku"
+    t.boolean  "marketing_preferences_email_allowed"
+    t.string   "billing_phone"
+    t.string   "billing_fax"
+    t.string   "billing_last_name"
+    t.string   "billing_first_name"
+    t.string   "billing_email"
+    t.string   "billing_contact_name"
+    t.string   "billing_company_name"
+    t.string   "billing_address1"
+    t.string   "billing_address2"
+    t.string   "billing_postal_code"
+    t.string   "billing_country_code"
+    t.string   "billing_city"
+    t.string   "billing_region"
+    t.string   "shipping_phone"
+    t.string   "shipping_fax"
+    t.string   "shipping_first_name"
+    t.string   "shipping_last_name"
+    t.string   "shipping_email"
+    t.string   "shipping_contact_name"
+    t.string   "shipping_company_name"
+    t.string   "shipping_address1"
+    t.string   "shipping_address2"
+    t.string   "shipping_postal_code"
+    t.string   "shipping_country_code"
+    t.string   "shipping_city"
+    t.string   "shipping_region"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "salor_cart_cancelled_subscription_notifications", :force => true do |t|
+    t.string   "serial_number"
+    t.datetime "timestamp"
+    t.string   "reason"
+    t.string   "item_ids",                              :limit => 10000, :default => "--- []\n"
+    t.string   "google_order_number"
+    t.integer  "salor_cart_raw_google_notification_id"
+    t.datetime "created_at",                                                                     :null => false
+    t.datetime "updated_at",                                                                     :null => false
+  end
+
   create_table "salor_cart_new_order_notifications", :force => true do |t|
     t.string   "serial_number"
     t.datetime "timestamp"
@@ -726,11 +784,40 @@ ActiveRecord::Schema.define(:version => 20121217123635) do
     t.integer  "salor_cart_raw_google_notification_id"
   end
 
+  create_table "salor_cart_order_state_change_notifications", :force => true do |t|
+    t.datetime "timestamp"
+    t.string   "serial_number"
+    t.string   "google_order_number"
+    t.string   "new_financial_order_state"
+    t.string   "previous_financial_order_state"
+    t.string   "new_fulfillment_order_state"
+    t.string   "previous_fulfillment_order_state"
+    t.string   "reason"
+    t.integer  "salor_cart_raw_google_notification_id"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
   create_table "salor_cart_raw_google_notifications", :force => true do |t|
     t.string   "type"
     t.text     "raw_xml",    :limit => 16777215
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "salor_cart_risk_information_notifications", :force => true do |t|
+    t.string   "serial_number"
+    t.datetime "timestamp"
+    t.string   "partial_card_number"
+    t.string   "ip_address"
+    t.string   "google_order_number"
+    t.boolean  "eligible_for_protection"
+    t.string   "cvn_response"
+    t.integer  "buyer_account_age"
+    t.string   "avs_response"
+    t.integer  "salor_cart_raw_google_notification_id"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "salor_saas_subscription_users", :force => true do |t|
