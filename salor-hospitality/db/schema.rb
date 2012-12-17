@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217125451) do
+ActiveRecord::Schema.define(:version => 20121217162239) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -799,10 +799,11 @@ ActiveRecord::Schema.define(:version => 20121217125451) do
   end
 
   create_table "salor_cart_raw_google_notifications", :force => true do |t|
-    t.string   "type"
-    t.text     "raw_xml",    :limit => 16777215
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.string   "klass"
+    t.text     "raw_xml",             :limit => 16777215
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "google_order_number"
   end
 
   create_table "salor_cart_risk_information_notifications", :force => true do |t|
