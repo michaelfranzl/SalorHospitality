@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.21) unstable; urgency=low
+
+  * Closes Feature #1593 remov scrolldown button and make distances between order buttons smaller
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 17 Dec 2012 10:30:15 +0100
+
 salor-hospitality (4.1.2.20) unstable; urgency=low
 
   * do not install migrations of engines
