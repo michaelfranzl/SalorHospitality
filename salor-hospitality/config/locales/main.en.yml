@@ -12,7 +12,8 @@ en:
         host_internal: Internal host
         host_external: External host
         port: Port
-        url: URL
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
         active: active
         hidden: delete
       statistic_category:

@@ -27,8 +27,11 @@
         %td= camera_form.label :port
         %td= camera_form.text_field :port, :size => '20'
       %tr
-        %td= camera_form.label :url
-        %td= camera_form.text_field :url, :size => '20'
+        %td= camera_form.label :url_snapshot
+        %td= camera_form.text_field :url_snapshot, :size => '20'
+      %tr
+        %td= camera_form.label :url_stream
+        %td= camera_form.text_field :url_stream, :size => '20'
       %tr
         %td= camera_form.label :active
         %td= camera_form.check_box :active

@@ -1,3 +1,3 @@
 %h2= @camera.name
 %p= @camera.description
-%img{ :src => @camera.resource(request.ip) }
+%img{ :src => @camera.resource(request.ip, 'stream') }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216123748) do
+ActiveRecord::Schema.define(:version => 20121217123635) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20121216123748) do
     t.string   "host_internal"
     t.string   "host_external"
     t.string   "port"
-    t.string   "url"
+    t.string   "url_stream"
     t.string   "description"
     t.boolean  "active",        :default => true
     t.integer  "vendor_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20121216123748) do
     t.datetime "hidden_at"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.string   "url_snapshot"
   end
 
   create_table "cash_drawers", :force => true do |t|
@@ -720,6 +721,16 @@ ActiveRecord::Schema.define(:version => 20121216123748) do
     t.integer  "order_adjustment_adjustment_total_currency"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.integer  "internal_status_number"
+    t.string   "insternal_status_text"
+    t.integer  "salor_cart_raw_google_notification_id"
+  end
+
+  create_table "salor_cart_raw_google_notifications", :force => true do |t|
+    t.string   "type"
+    t.text     "raw_xml",    :limit => 16777215
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "salor_saas_subscription_users", :force => true do |t|

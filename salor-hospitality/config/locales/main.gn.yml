@@ -12,7 +12,8 @@ gn:
         host_internal: Server intern
         host_external: Server extern
         port: Port
-        url: URL
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
         active: aktiv?
         hidden: löschen
       statistic_category:
