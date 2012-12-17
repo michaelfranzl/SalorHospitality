@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.22) unstable; urgency=low
+
+  * Closes Feature #1594 Show snapshots on cameras#index and stream on cameras#show
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 17 Dec 2012 13:44:46 +0100
+
 salor-hospitality (4.1.2.21) unstable; urgency=low
 
   * Closes Feature #1593 remov scrolldown button and make distances between order buttons smaller

@@ -209,9 +209,10 @@ pl:
         host_internal: Host wewnętrzny
         host_external: Host zewnętrzny
         port: Port
-        url: URL
         active: Włącz
         hidden: Usuń
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix

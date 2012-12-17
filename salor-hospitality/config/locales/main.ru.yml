@@ -205,9 +205,10 @@ ru:
         host_internal: Internal host
         host_external: External host
         port: Port
-        url: URL
         active: active
         hidden: delete
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
     models:
       article:
         one: Блюдо
