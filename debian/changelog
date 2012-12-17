@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.23) unstable; urgency=low
+
+  * iPad is a mobile device
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 17 Dec 2012 14:33:30 +0100
+
 salor-hospitality (4.1.2.22) unstable; urgency=low
 
   * Closes Feature #1594 Show snapshots on cameras#index and stream on cameras#show
