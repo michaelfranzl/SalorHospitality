@@ -111,6 +111,7 @@ Any Rails developer will not have any problems running SalorHospitality, since i
     rake db:migrate
     rake db:seed
     rails s
+    {{ browse to localhost:3000 and enter 000 as password }}
     
 For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions (Debian Wheezy, Ubuntu 10.04, Ubuntu 10.10, Ubuntu 12.04 LTS, Ubuntu 12.10) that make the installation a breeze! Have a look at the installation instructions at http://documentation.red-e.eu/installation/index.html
 
