@@ -29,9 +29,15 @@
     %input
 .clear
 
-%h1== #{ t 'invoice' } ##{ @order.nr }
+%h1== #{ t 'invoice' }
 
-%p.date= l @order.finished_at, :format => :datetime_iso
+%p.date== ##{ @order.nr } #{ l @order.finished_at, :format => :datetime_iso }
+
+.clear
+
+%select.original_copy
+  %option= t 'orders.show.original'
+  %option= t 'orders.show.duplicate'
 
 = render :partial => 'invoice_item_list', :locals => { :order => @order }
 

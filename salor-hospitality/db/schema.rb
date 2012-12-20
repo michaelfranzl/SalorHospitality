@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217162239) do
+ActiveRecord::Schema.define(:version => 20121218123223) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -748,8 +748,19 @@ ActiveRecord::Schema.define(:version => 20121217162239) do
     t.string   "shipping_country_code"
     t.string   "shipping_city"
     t.string   "shipping_region"
+    t.string   "signup_email"
+    t.string   "signup_ip"
+    t.boolean  "signup_confirmation_email_sent"
+    t.boolean  "signup_confirmation_email_received"
+    t.boolean  "signup_completed"
+    t.string   "signup_payment_provider"
+    t.string   "password_salt"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.string   "id_hash"
+    t.string   "password_encrypted"
+    t.string   "confirmation_salt"
+    t.boolean  "signup_password_email_sent"
   end
 
   create_table "salor_cart_cancelled_subscription_notifications", :force => true do |t|
@@ -761,6 +772,33 @@ ActiveRecord::Schema.define(:version => 20121217162239) do
     t.integer  "salor_cart_raw_google_notification_id"
     t.datetime "created_at",                                                                     :null => false
     t.datetime "updated_at",                                                                     :null => false
+  end
+
+  create_table "salor_cart_items", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "name"
+    t.integer  "quantity"
+    t.integer  "unit_price_fractional"
+    t.string   "unit_price_currency"
+    t.string   "description"
+    t.string   "sku"
+    t.boolean  "digital_content"
+    t.string   "digital_content_key"
+    t.string   "digital_content_url"
+    t.string   "digital_content_description"
+    t.boolean  "subscription"
+    t.string   "subscription_period"
+    t.string   "subscription_type"
+    t.datetime "subscription_start_date"
+    t.integer  "subscription_maximum_charge_fractional"
+    t.string   "subscription_maximum_charge_currency"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  create_table "salor_cart_items_options", :force => true do |t|
+    t.integer "item_id"
+    t.integer "option_id"
   end
 
   create_table "salor_cart_new_order_notifications", :force => true do |t|
@@ -777,11 +815,18 @@ ActiveRecord::Schema.define(:version => 20121217162239) do
     t.boolean  "order_adjustment_merchant_calculation_successful"
     t.integer  "order_adjustment_adjustment_total_fractional"
     t.integer  "order_adjustment_adjustment_total_currency"
+    t.string   "merchant_order_number"
+    t.integer  "order_id"
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
-    t.integer  "internal_status_number"
-    t.string   "insternal_status_text"
-    t.integer  "salor_cart_raw_google_notification_id"
+  end
+
+  create_table "salor_cart_options", :force => true do |t|
+    t.string   "name"
+    t.integer  "unit_price_fractional"
+    t.string   "unit_price_currency"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "salor_cart_order_state_change_notifications", :force => true do |t|
@@ -796,6 +841,21 @@ ActiveRecord::Schema.define(:version => 20121217162239) do
     t.integer  "salor_cart_raw_google_notification_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+  end
+
+  create_table "salor_cart_orders", :force => true do |t|
+    t.string   "google_order_number"
+    t.string   "merchant_order_number"
+    t.datetime "payment_last_date"
+    t.integer  "payment_last_fractional"
+    t.string   "payment_last_currency"
+    t.string   "payment_interval"
+    t.string   "saas_subdomain"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.boolean  "subscription"
+    t.boolean  "active"
+    t.integer  "buyer_id"
   end
 
   create_table "salor_cart_raw_google_notifications", :force => true do |t|
@@ -819,24 +879,6 @@ ActiveRecord::Schema.define(:version => 20121217162239) do
     t.integer  "salor_cart_raw_google_notification_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-  end
-
-  create_table "salor_saas_subscription_users", :force => true do |t|
-    t.string   "ip"
-    t.string   "subdomain"
-    t.boolean  "https"
-    t.boolean  "httpauth"
-    t.string   "email"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.string   "salt"
-    t.boolean  "confirmation_email_sent"
-    t.boolean  "confirmation_link_clicked"
-    t.boolean  "completed"
-    t.string   "payment_provider"
-    t.datetime "last_paid_at"
-    t.integer  "last_paid_amount"
-    t.integer  "payment_interval"
   end
 
   create_table "seasons", :force => true do |t|

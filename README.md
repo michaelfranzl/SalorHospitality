@@ -3,14 +3,16 @@ SALOR Hospitality
 
 The innovative Point of Sale Solution serving the Hospitality Industry
 
-This document was updated on: July 15 2012
+This document was updated on: December 20, 2012
 
 History
 -------
 
 This software product has been in continuous development and used in real-world settings since beginning of 2009. Red (E) Tools Ltd. (http://red-e.eu) is pleased to make it finally available publicly under the MIT License. This product was formerly known as BillGastro (http://billgastro.com), but after the addition of features for Hotels and many new improvements in 2012, it was renamed to "SALOR Hospitality" to reflect it's closeness to the hospitality industry as a whole. From launch of concept to full operation, SALOR Hospitality was developed with real-time input from waiters and kitchen personnel in successful, high-pressure environments.
 
-"SALOR Hospitality" is part of the SALOR software family. Its sister, "SALOR Retail" is a pure Javascript offline application aimed at serving supermarkets and retail stores, currently in development. Its new and unique architectural design -- zero dependency on any web framework -- was inspired by our rather painful real-life experiences of what actually works -- and what doesn't -- in the world of web application development. "SALOR Retail" is available at https://github.com/jasonknight/salor .
+"SALOR Hospitality" is part of the SALOR software family and is aimed at Restaurants, Bars, Hotels, food stores, etc. Its sister, "SALOR Retail" is aimed at Retail stores, supermarkets, industries, etc. It is available at https://github.com/jasonknight/salor-retail
+
+"SALOR Retail" is currently being re-written as a pure Javascript offline application. Its new and unique architectural design -- zero dependency on any web framework -- was inspired by our rather painful real-life experiences of what actually works in the world of web application development, and what doesn't. This project is available at https://github.com/jasonknight/salor .
 
 Overview
 --------
@@ -62,14 +64,16 @@ Many more interestig features:
 Features
 --------
 
-For a quick demonstration of a small part of all features, watch the screencasts that are available on youtube:
+For a quick demonstration of a small part of the features (the Restaurant part), watch the screencasts that are available on Youtube:
 
 http://www.youtube.com/watch?v=SUfm17WYRdA (This video covers restaurant functions only)
 
 Documentation
 -------------
 
-Software documentation will be online soon. Work in progress!
+Software documentation is work in progress!
+
+http://documentation.red-e.eu
 
 Philosophy of technology
 ------------------------
@@ -90,27 +94,42 @@ SALOR Hospitality has true multi-store (and even multi-company) support built in
 
 Installation
 ------------
-apt-get install imagemagick libmagick-dev libmagickwand-dev mysql-server mysql-client libmysqlclient-dev reprepro
-set up ruby-1.9.3 with rvm
-cd base_dir
-bundle install
+
+You need a few packages so that native extensions of ruby gems will compile successfully:
+
+    apt-get install mysql-server mysql-client libmysqlclient-dev imagemagick libmagick-dev libmagickwand-dev
+
+Depending on your Linux Distribution, you also must install the Ruby interpreter of the version family 1.9 (we work with ruby-1.9.3.194), either via `apt-get install ruby1.9.1` or a Ruby Version Manager like `rvm`.
+
+Any Rails developer will not have any problems running SalorHospitality, since it is just a plain Rails project without any special magic going on:
+
+    git clone git://github.com/michaelfranzl/SalorHospitality.git
+    cd SalorHospitality/salor-hospitality
+    bundle install
+    {{ edit config/database.yml for your MySQL installation }}
+    rake db:create
+    rake db:migrate
+    rake db:seed
+    rails s
+    
+For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions (Debian Wheezy, Ubuntu 10.04, Ubuntu 10.10, Ubuntu 12.04 LTS, Ubuntu 12.10) that make the installation a breeze! Have a look at the installation instructions at http://documentation.red-e.eu/installation/index.html
 
 Try it live!
 ------------
 
-You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [sh.red-e.eu](http://sh.red-e.eu) (will be set up soon) and log in with one of the following passwords:
+You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [demo1.sh.red-e.eu](http://demo1.sh.red-e.eu) and log in with the default password 000 (zero-zero-zero).
 
-Hint: After you've logged in, you can click on the client logo on the top left of the screen. This opens up the admin menu and enables drag and drop of the tables. When the admin menu is closed, table dragging is disabled.
-
-Warning: The database of the online demo resets itself frequently. Do not expect your added content to persist.
+Support for Mozilla Firefox is limited to the Restaurant part. The Hotel part makes use of a browser-internal SQL database, which is not supported in Firefox. We never really tested Microsoft Internet Explorer, so you are on your own if you want to use this browser.
 
 
 Get Support!
 ------------
 
-Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be!
+Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. It's software products all are in production stage since years. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be!
 
-If you find Bugs or want to report Features, please use our Redmine system: http://redmine.red-e.eu/projects/billgastro
+If you find Bugs or want to request new features, please subscribe and use our Redmine bugtracking system: 
+
+http://redmine.red-e.eu
 
 If you want to ask questions or get general support, please subscribe to our mailing list: [salor-hospitality-users@googlegroups.com](https://groups.google.com/forum/?fromgroups#!forum/salor-hospitality-users)
 

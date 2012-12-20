@@ -442,7 +442,7 @@ pl:
     errempty: Nieprawidłowy plik
     errsize: Nieprawidłowy rozmiar pliku
     errtype: Nieprawidłowy typ pliku
-  invoice: Faktura
+  invoice: Faktura VAT
   invoice_numer_X_at_time: Paragon numer %{number} dnia %{datetime}
   invoices: Paragony
   is_no_number: nie jest liczbą
@@ -517,6 +517,8 @@ pl:
       sum: Suma
     served_by: Zostałeś obsłużony przez
     show:
+      duplicate: Duplicate
+      original: Original
       cannot_reactivate: Błąd podczas przywracania zamówienia. Wszystkie stoły są
         zajęte.
       reactivate: Przywróć zamówienie
