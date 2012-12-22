@@ -21,8 +21,8 @@
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
       = javascript_include_tag 'jquery.keyboard.config.js'
-      - if defined?(SalorSaas) == 'constant'
-        = javascript_include_tag 'salor_saas/application'
+      - if defined?(ShSaas) == 'constant'
+        = javascript_include_tag 'sh_saas/application'
     
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
 
@@ -33,8 +33,8 @@
     - elsif workstation?
       = stylesheet_link_tag('workstation', :media => 'screen')
 
-    - if defined?(SalorSaas) == 'constant'
-      = stylesheet_link_tag('salor_saas/application.css', :media => 'screen')
+    - if defined?(ShSaas) == 'constant'
+      = stylesheet_link_tag('sh_saas/application.css', :media => 'screen')
       
 
   %body

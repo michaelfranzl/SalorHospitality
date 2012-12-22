@@ -269,8 +269,8 @@ class ApplicationController < ActionController::Base
       $Params = params
 
       unless (@current_user or @current_customer) and @current_vendor
-        if defined?(SalorSaas) == 'constant'
-          redirect_to salor_saas.new_session_path
+        if defined?(ShSaas) == 'constant'
+          redirect_to sh_saas.new_session_path
         else
           redirect_to new_session_path
         end

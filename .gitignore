@@ -35,7 +35,6 @@ debian/salor-hospitality
 debian/files
 *.debhelper
 *.substvars
-*.salor_saas.rb
-*.salor_cart.rb
+*.sh_saas.rb
 bar
 *.salor
