@@ -120,8 +120,8 @@ class Settlement < ActiveRecord::Base
       list_of_costcenters += "\xc4" * 42 + "\n"
     end
     
-    initial_cash = self.initial_cash ? "%s:  %s %9.2f\n" % [I18n.t('various.begin'), self.initial_cash, friendly_unit] : ''
-    revenue = self.revenue ? "%s:  %s %9.2f\n" % [I18n.t('various.end'), self.revenue, friendly_unit] : ''
+    initial_cash = self.initial_cash ? "%s:  %s %9.2f\n" % [I18n.t('various.begin'), friendly_unit, self.initial_cash] : ''
+    revenue = self.revenue ? "%s:  %s %9.2f\n" % [I18n.t('various.end'), friendly_unit, self.revenue] : ''
     
     tax_attribute = vendor.country == 'us' ? :net : :gro
 

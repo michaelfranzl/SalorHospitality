@@ -21,8 +21,6 @@
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
       = javascript_include_tag 'jquery.keyboard.config.js'
-      - if defined?(ShSaas) == 'constant'
-        = javascript_include_tag 'sh_saas/application'
     
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
 
@@ -31,11 +29,7 @@
     - if mobile?
       = stylesheet_link_tag('mobile', :media => 'screen')
     - elsif workstation?
-      = stylesheet_link_tag('workstation', :media => 'screen')
-
-    - if defined?(ShSaas) == 'constant'
-      = stylesheet_link_tag('sh_saas/application.css', :media => 'screen')
-      
+      = stylesheet_link_tag('workstation', :media => 'screen')      
 
   %body
     #container
