@@ -24,6 +24,10 @@ class SettlementsController < ApplicationController
     @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : nil
     @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
   end
+  
+  def show
+    redirect_to settlements_path
+  end
 
   def open
     redirect_to '/' and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
