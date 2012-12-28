@@ -204,6 +204,7 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
     } else {
       // regular click on a table from main view
+      alert(model_id);
       submit_json = {model:{table_id:model_id}};
       items_json = {};
       get_table_show(model_id);
@@ -378,6 +379,7 @@ function send_json(object_id) {
     // an attempt to fix an obscure bug
     send_email('send_json', 'send_json called with ' + object_id + ' submit_json is ' + JSON.stringify(submit_json));
     submit_json.model.table_id = object_id.replace('table_', '');
+    // JASON: Ask user for table id
   }
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
@@ -1793,6 +1795,7 @@ function render_tables() {
     if (v.auid) bgcolor = resources.u[v.auid].c;
     if (!v.e) bgcolor = 'black';
    
+    //--------------------------
     // render spans for the move function
     var move_table_span = create_dom_element('span', {}, v.n, '#tablesselect_container');
     move_table_span.on('click', function() {
@@ -1800,6 +1803,11 @@ function render_tables() {
     })
     move_table_span.addClass('option');
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
+    // -------------------------
+    
+    // JASON
+    
+    // ------------------------
     // render divs for the actual tables
     var mobile_mode = settings.mobile || settings.mobile_drag_and_drop;
     var left = mobile_mode ? v.lm : v.l;
@@ -1872,12 +1880,14 @@ function render_tables() {
     } else {
       if (v.e && !(!permissions.confirmation_user && (v.cp || v.rf || v.rw))) {
         // when confirmation_user is false, this user cannot view the order if any customer requests are pending
+        _set('table',v,table);
         table.on('mousedown', function() {
+          var v = _get('table',$(this));
           route('table',v.id);
         });
       }
     }
-  })
+  });
 }
 
 function update_table_coordinates(id) {
@@ -1889,7 +1899,7 @@ function update_table_coordinates(id) {
     url: '/tables/' + id + '/update_coordinates',
     data: {left:left, top:top, mobile_drag_and_drop:settings.mobile_drag_and_drop},
     success: update_tables
-  })
+  });
 }
 
 function switch_to_table() {

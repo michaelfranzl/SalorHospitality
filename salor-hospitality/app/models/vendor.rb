@@ -230,7 +230,6 @@ class Vendor < ActiveRecord::Base
       payment_methods[pm.id] = { :id => pmid, :n => pm.name, :chg => pm.change }
     end
     
-    # TODO: This is overwritten by a direct ajax call to tables#index
     tables = {}
     table_models.each do |t|
       tid = t.id
