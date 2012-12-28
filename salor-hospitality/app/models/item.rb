@@ -97,8 +97,10 @@ class Item < ActiveRecord::Base
   end
 
   def refund(by_user, payment_method_id)
-    payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
-    PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id
+    unless self.cost_center.no_payment_methods == true
+      payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
+      PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id
+    end
     
     self.refunded = true
     self.refunded_by = by_user.id
