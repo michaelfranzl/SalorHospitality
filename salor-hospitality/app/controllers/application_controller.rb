@@ -212,7 +212,7 @@ class ApplicationController < ActionController::Base
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
       else
-        UserMailer.technician_message(@current_company, "params[:model][:table_id] was not set").deliver
+        UserMailer.technician_message(@current_company, "params[:model][:table_id] was not set").deliver  if @current_company.technician_email
         # raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
@@ -220,7 +220,6 @@ class ApplicationController < ActionController::Base
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
       end
-      #@order.table.update_color
       return @order
     end
 

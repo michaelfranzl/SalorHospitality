@@ -110,10 +110,10 @@ class Order < ActiveRecord::Base
     i.option_items.each { |oi| oi.calculate_totals }
     i.calculate_totals
     i.hide(user.id) if i.hidden
-    if nil #i.article
+    if i.article
       i.update_attribute :statistic_category_id, i.article.statistic_category_id
     else
-      message = "The item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
+      message = "Could not set statistic_category_id for Item. The Item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
       UserMailer.technician_message(self.company, "Item without Article", p.inspect).deliver if company.technician_email
     end
   end
