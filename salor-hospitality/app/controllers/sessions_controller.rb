@@ -104,6 +104,16 @@ class SessionsController < ApplicationController
     UserMailer.technician_message(company, subject, message).deliver if company and company.technician_email
     render :nothing => true
   end
+  
+  def test_email
+    subject = params[:s]
+    subject ||= "Test"
+    message = params[:m]
+    message ||= "Message"
+    company = Company.find_by_id(session[:company_id])
+    UserMailer.technician_message(company, subject, message).deliver if company and company.technician_email
+    redirect_to '/'
+  end
 
   def permission_denied
     render :layout => 'login'

@@ -203,6 +203,7 @@ SalorHospitality::Application.routes.draw do
   resource :session do
     get :test_exception
     post :email
+    get :test_email
     get :permission_denied
     get :new_customer
   end
