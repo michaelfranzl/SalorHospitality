@@ -212,7 +212,8 @@ class ApplicationController < ActionController::Base
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
       else
-        raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
+        UserMailer.technician_message(@current_company, "params[:model][:table_id] was not set").deliver
+        # raise "params[:model][:table_id] was not set. This is probably a JS issue and should never happen."
       end
       if @order
         @order.update_from_params(params, @current_user, @current_customer)
