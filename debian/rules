@@ -16,4 +16,4 @@ override_dh_auto_clean:
 	rm -rf salor-hospitality/log/*.log
 
 override_dh_install:
-	dh_install --exclude=salor_saas --exclude=salor_cart
+	dh_install --exclude=salor_saas --exclude=salor_cart --exclude=sh_saas

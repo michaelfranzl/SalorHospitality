@@ -36,5 +36,7 @@ debian/files
 *.debhelper
 *.substvars
 *.sh_saas.rb
+*.salor_cart.rb
+*.salor_saas.rb
 bar
 *.salor
