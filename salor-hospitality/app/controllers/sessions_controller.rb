@@ -95,8 +95,13 @@ class SessionsController < ApplicationController
     nil.throw_whiny_nil_error # this method does not exist, which throws an exception.
   end
   
-  def test_mail
-    UserMailer.technician_message(@current_company, "Test").deliver if @current_company and @current_company.technician_email
+  def email
+    subject = params[:s]
+    subject ||= "Test"
+    message = params[:m]
+    message ||= "Message"
+    company = Company.find_by_id(session[:company_id])
+    UserMailer.technician_message(company, subject, message).deliver if company and company.technician_email
     render :nothing => true
   end
 

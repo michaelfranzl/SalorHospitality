@@ -64,9 +64,18 @@ $(function(){
 
 function route(target, model_id, action, options) {
   debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
-  emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
+  //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
+    if (action == 'destroy' || action == 'send' || action == 'move') {
+      if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
+        send_email('route to tables without model_id', 'action is: ' + action);
+        alert("Es ist ein Fehler aufgetreten. Änderungen gehen verloren.");
+        location.reload();
+        return
+      }
+    }
+    
     submit_json.target = 'tables';
     invoice_update = true;
     get_table_show_retry = false;
@@ -84,6 +93,7 @@ function route(target, model_id, action, options) {
     $('#functions_header_last_invoices').hide();
     $('#customer_list').hide();
     $('#tablesselect').hide();
+    
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
@@ -116,6 +126,12 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
+    if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
+      send_email('route to table without model_id', 'action is: ' + action);
+      alert("Es ist ein Fehler aufgetreten. Seite wird neu geladen.");
+      location.reload();
+      return
+    }
     scroll_to($('#container'),20);
     submit_json.target = 'table';
     invoice_update = true;
@@ -198,6 +214,12 @@ function route(target, model_id, action, options) {
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
     if (action == 'send') {
+      if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
+        send_email('route to invoice without model_id', 'action is: ' + action);
+        alert("Es ist ein Fehler aufgetreten. Änderungen gehen verloren.");
+        location.reload();
+        return
+      }
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
       submit_json.model.table_id = model_id;
@@ -335,10 +357,28 @@ function route(target, model_id, action, options) {
 }
 
 /* ======================================================*/
+/* ============       DEBUG               ===============*/
+/* ======================================================*/
+
+function send_email(subject, message) {
+  console.log('Sending email: ' + subject + ' ' + message);
+  $.ajax({
+    type: 'post',
+    url:'/session/email',
+    data: {s:subject, m:message}
+  })
+}
+
+/* ======================================================*/
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
 
 function send_json(object_id) {
+  if (typeof(submit_json.model.table_id) == 'undefined' || submit_json.model.table_id == null || submit_json.model.table_id == '') {
+    // an attempt to fix an obscure bug
+    send_email('send_json', 'send_json called with ' + object_id + ' submit_json is ' + JSON.stringify(submit_json));
+    submit_json.model.table_id = object_id.replace('table_', '');
+  }
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
   items_json_queue[object_id] = items_json;
