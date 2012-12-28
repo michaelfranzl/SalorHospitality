@@ -58,6 +58,11 @@
             = vendor_form.text_field :update_resources_interval, :size => 2
             %span.display_keyboard{ :id => "vendor_update_resources_interval_display_keyboard" }
             %br
+          - else
+            = vendor_form.label :automatic_printing_interval
+            = vendor_form.text_field :automatic_printing_interval, :size => 2
+            %span.display_keyboard{ :id => "vendor_automatic_printing_interval_display_keyboard" }
+            %br
         = vendor_form.label :receipt_header_blurb
         = vendor_form.text_area :receipt_header_blurb
         %span.display_keyboard{ :id => "vendor_receipt_header_blurb_display_keyboard" }
@@ -126,6 +131,9 @@
     
     $('#vendor_update_resources_interval').keyboard( {openOn: '', layout:'num' } );
     $('#vendor_update_resources_interval_display_keyboard').click(function(){ $('#vendor_update_resources_interval').getkeyboard().reveal(); });
+    
+    $('#vendor_automatic_printing_interval').keyboard( {openOn: '', layout:'num' } );
+    $('#vendor_automatic_printing_interval_display_keyboard').click(function(){ $('#vendor_automatic_printing_interval').getkeyboard().reveal(); });
     
     $('#vendor_receipt_header_blurb').keyboard( {openOn: '' } );
     $('#vendor_receipt_header_blurb_display_keyboard').click(function(){ $('#vendor_receipt_header_blurb').getkeyboard().reveal(); });

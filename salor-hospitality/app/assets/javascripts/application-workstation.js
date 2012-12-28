@@ -8,6 +8,8 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+var automatic_printing_interval = 60000;
+
 $(document).ready(function() {
   // ":not([safari])" is desirable but not necessary selector
   $('input:checkbox:not([safari])').checkbox();
@@ -22,9 +24,13 @@ $(document).ready(function() {
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
       if ( automatic_printing == true ) {
-        download_printfile(1);
+        if ( window.location.port == 80 ) {
+          download_printfile(1);
+        } else {
+          console.log("Automatic printing not available in development mode.");
+        }
       }
-    }, 15000);
+    }, automatic_printing_interval);
   }
   
   if ( is_fullscreen() == false ) {
@@ -44,7 +50,7 @@ $(document).ready(function() {
 function download_printfile(path) {
   url_parts = window.location.host.split('.');
   //$.each(vendor_printers, function(k,v) {
-  window.location.href = '/uploads/' + url_parts[0] + '/' + path + '.salor';
+  window.location.href = '/uploads/' + url_parts[0] + '/' + path + '.bill';
 }
 
 function is_fullscreen() {

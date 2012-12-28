@@ -517,8 +517,6 @@ pl:
       sum: Suma
     served_by: Zostałeś obsłużony przez
     show:
-      duplicate: Duplicate
-      original: Original
       cannot_reactivate: Błąd podczas przywracania zamówienia. Wszystkie stoły są
         zajęte.
       reactivate: Przywróć zamówienie

@@ -1,3 +1,13 @@
+salor-hospitality (4.1.2.25) unstable; urgency=low
+
+  * updated README
+  * improved README
+  * migration to sh_saas
+  * Closes Bug #1602 Exception when settlement begin/end value entered
+  * Closes Feature #1601 Disable settlements#show
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 28 Dec 2012 12:17:15 +0100
+
 salor-hospitality (4.1.2.24) unstable; urgency=low
 
   * layout fix

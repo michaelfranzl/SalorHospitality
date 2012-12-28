@@ -93,7 +93,7 @@ class VendorsController < ApplicationController
       :move_tables => permit("move_tables"),
       :confirmation_user => (@current_user.confirmation_user unless @current_customer)
     }
-    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources }; timeout_update_tables = #{ @current_vendor.update_tables_interval }; timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval }; timeout_update_resources = #{ @current_vendor.update_resources_interval };"
+    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources }; timeout_update_tables = #{ @current_vendor.update_tables_interval }; timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval }; timeout_update_resources = #{ @current_vendor.update_resources_interval }; automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 };"
   end
   
   def report

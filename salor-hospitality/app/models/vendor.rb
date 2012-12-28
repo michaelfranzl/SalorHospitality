@@ -58,6 +58,7 @@ class Vendor < ActiveRecord::Base
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
   validates :update_item_lists_interval, :numericality => { :greater_than => 29 }
   validates :update_resources_interval, :numericality => { :greater_than => 101 }
+  validates :automatic_printing_interval, :numericality => { :greater_than => 20 }
   
   after_commit :sanitize_vendor_printer_paths
 

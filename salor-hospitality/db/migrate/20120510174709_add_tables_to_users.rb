@@ -1,5 +1,6 @@
 class AddTablesToUsers < ActiveRecord::Migration
   def self.up
+    User.reset_column_information
     User.all.each do |u|
       next if u.tables.any?
       u.tables = []
