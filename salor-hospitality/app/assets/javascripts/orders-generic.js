@@ -1814,7 +1814,7 @@ function item_list_reset(id, scope) {
   })
 }
 function render_rescue_tables_select(callback) {
-  var d = create_dom_element('div', {},'', $('body'));
+  var d = create_dom_element('div', {id:'rescuetablesselect'},'');
   d.html('');
   d.addClass('comment_for_item');
   
@@ -1837,12 +1837,14 @@ function render_rescue_tables_select(callback) {
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
   });
   d.show();
-  d.css({position: 'absolute'});
-  d.width($('body').width() * 0.60);
-  var offset = $('body').offset();
-  offset.top += $('body').height() * 0.5;
-  offset.left += $('body').width() * 0.2;
-  d.offset(offset);
+  $('#main').prepend(d);
+//   d.css({position: 'absolute'});
+//   d.width($('body').width() * 0.60);
+//   var offset = $('body').offset();
+//   offset.top += $('body').height() * 0.5;
+//   offset.left += $('body').width() * 0.2;
+//   d.offset(offset);
+  scroll_to($('#rescuetablesselect'),20);
 }
 
 function render_tables() {
