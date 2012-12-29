@@ -38,9 +38,8 @@ class SessionsController < ApplicationController
           session[:user_id] = user.id
           session[:company_id] = user.company_id
           session[:vendor_id] = user.vendors.existing.first.id
-          session[:locale] = user.language
+          session[:locale] = I18n.local = user.language
           user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
-          I18n.locale = user.language
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)

@@ -49,7 +49,7 @@ class Settlement < ActiveRecord::Base
 
   def print
     vendor_printer = self.vendor.vendor_printers.existing.first
-    printr = Escper::Printer.new(self.company.mode, vendor_printer)
+    printr = Escper::Printer.new(self.company.mode, vendor_printer, self.company.subdomain)
     printr.open
     printr.print vendor_printer.id, self.escpos
     printr.close
