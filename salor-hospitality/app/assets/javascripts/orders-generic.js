@@ -70,12 +70,12 @@ function route(target, model_id, action, options) {
     if (action == 'destroy' || action == 'send' || action == 'move') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
         send_email('route to tables without model_id', 'action is: ' + action);
-        alert("Es ist ein Fehler aufgetreten. Änderungen gehen verloren.");
+        alert("Es ist ein Fehler aufgetreten. Änderungen gehen verloren. ");
         render_tables_select(function () {
           var table = _get("table",$(this));
           submit_json.model.table_id = table.id;
           //send_json(object_id);
-          route(target, model_id, action, options);
+          route(target, table.id, action, options);
         });
         return
       }
@@ -133,12 +133,12 @@ function route(target, model_id, action, options) {
   } else if ( target == 'table') {
     if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
       send_email('route to table without model_id', 'action is: ' + action);
-      alert("Es ist ein Fehler aufgetreten. Seite wird neu geladen.");
+      alert("Es ist ein Fehler aufgetreten. Seite wird neu geladen. ");
       render_tables_select(function () {
         var table = _get("table",$(this));
         submit_json.model.table_id = table.id;
         //send_json(object_id);
-        route(target, model_id, action, options);
+        route(target, table.id, action, options);
       });
       return
     }
@@ -231,7 +231,7 @@ function route(target, model_id, action, options) {
           var table = _get("table",$(this));
           submit_json.model.table_id = table.id;
           //send_json(object_id);
-          route(target, model_id, action, options);
+          route(target, table.id, action, options);
         });
         return
       }
