@@ -24,7 +24,7 @@ $(document).ready(function() {
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
       if ( automatic_printing == true ) {
-        if ( window.location.port == 80 ) {
+        if ( window.location.port == '' ) {
           download_printfile(1);
         } else {
           console.log("Automatic printing not available in development mode.");
@@ -48,9 +48,13 @@ $(document).ready(function() {
 })
 
 function download_printfile(path) {
-  url_parts = window.location.host.split('.');
+  var subdomain = window.location.host.replace('.red-e.eu','');
+  //url_parts = window.location.host.split('.');
   //$.each(vendor_printers, function(k,v) {
-  window.location.href = '/uploads/' + url_parts[0] + '/' + path + '.bill';
+  for (var first_key in vendor_printers) { break }
+  var printer = vendor_printers[first_key];
+  var printer_path = printer.p;
+  window.location.href = '/uploads/' + sh_debian_siteid + '/' + subdomain + '/' + printer_path + '.bill';
 }
 
 function is_fullscreen() {

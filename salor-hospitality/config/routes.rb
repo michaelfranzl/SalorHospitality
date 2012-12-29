@@ -104,7 +104,8 @@ SalorHospitality::Application.routes.draw do
     match 'session/request_specs_login' => 'sessions#request_specs_login'
   end
 
-  resources :cost_centers, :taxes, :roles, :presentations, :payment_methods, :users
+  resources :cost_centers, :taxes, :roles, :presentations, :payment_methods
+  resources :users
   resources :surcharges
   resources :rooms
   resources :room_types

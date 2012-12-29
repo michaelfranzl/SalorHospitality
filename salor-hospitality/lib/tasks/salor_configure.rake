@@ -18,7 +18,8 @@ task :salor_configure, [:mode] => :environment do |t, args|
   
   unless Company.where(:subdomain => subdomain).any?
     puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
-    Company.where(:subdomain => nil).last.update_attributes :mode => args[:mode], :subdomain => subdomain
+    c = Company.where(:subdomain => nil).last
+    c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
   end
 end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228104834) do
+ActiveRecord::Schema.define(:version => 20121229082553) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1001,6 +1001,7 @@ ActiveRecord::Schema.define(:version => 20121228104834) do
     t.integer  "update_item_lists_interval",                      :default => 31
     t.integer  "update_resources_interval",                       :default => 127
     t.integer  "automatic_printing_interval",                     :default => 31
+    t.string   "hash_id"
   end
 
 end

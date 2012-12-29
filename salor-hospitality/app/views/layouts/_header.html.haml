@@ -36,7 +36,7 @@
     = link_to( t('activerecord.models.page.other'), main_app.pages_path) if permit('manage_pages')
     = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if permit('manage_pages')
     - if permit('manage_hotel')
-      = link_to( t('activerecord.models.room.other'), rooms_path)
+      = link_to( t('activerecord.models.room.other'), main_app.rooms_path)
       = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
       = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
       = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
