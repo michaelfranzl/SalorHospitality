@@ -67,19 +67,21 @@ function route(target, model_id, action, options) {
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
-    
     //---------------------------------------------------------------
     if (action == 'destroy' || action == 'send' || action == 'move') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
         fallback_model_id = $('#table_id').val();
-        send_email('missing model_id', 'target=' + target + ', action=' + action + ', options=' + options + ', fallback_model_id=' + fallback_model_id);
+        send_email('route to tables without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
         if ( fallback_model_id != '' ) {
           model_id = fallback_model_id;
+          submit_json.model.table_id = fallback_model_id;
         } else {
           render_rescue_tables_select(function () {
             var table = _get("table",$(this));
             submit_json.model.table_id = table.id;
-            route(target, table.id, action, options);
+            $('#table_id').val(table.id);
+            model_id = table.id;
+            route(target, model_id, action, options);
           });
           return
         }
@@ -142,11 +144,14 @@ function route(target, model_id, action, options) {
       send_email('route to table without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
       if ( fallback_model_id != '' ) {
         model_id = fallback_model_id;
+        submit_json.model.table_id = fallback_model_id;
       } else {
-        render_tables_select(function () {
+        render_rescue_tables_select(function () {
           var table = _get("table",$(this));
           submit_json.model.table_id = table.id;
-          route(target, table.id, action, options);
+          $('#table_id').val(table.id);
+          model_id = table.id;
+          route(target, model_id, action, options);
         });
         return
       }
@@ -238,11 +243,14 @@ function route(target, model_id, action, options) {
         send_email('route to invoice without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
         if ( fallback_model_id != '' ) {
           model_id = fallback_model_id;
+          submit_json.model.table_id = fallback_model_id;
         } else {
           render_rescue_tables_select(function () {
             var table = _get("table",$(this));
             submit_json.model.table_id = table.id;
-            route(target, table.id, action, options);
+            $('#table_id').val(table.id);
+            model_id = table.id;
+            route(target, model_id, action, options);
           });
           return
         }
@@ -401,17 +409,6 @@ function send_email(subject, message) {
 /* ======================================================*/
 
 function send_json(object_id) {
-  if (typeof(submit_json.model.table_id) == 'undefined' || submit_json.model.table_id == null || submit_json.model.table_id == '') {
-    // an attempt to fix an obscure bug
-    send_email('send_json', 'send_json called with ' + object_id + ' submit_json is ' + JSON.stringify(submit_json));
-    //submit_json.model.table_id = object_id.replace('table_', '');
-    render_rescue_tables_select(function () {
-      var table = _get("table",$(this));
-      submit_json.model.table_id = table.id;
-      send_json(object_id);
-    });
-    return;
-  }
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
   items_json_queue[object_id] = items_json;
@@ -1816,12 +1813,12 @@ function item_list_reset(id, scope) {
     }
   })
 }
-function render_rescue_tables_select (callback) {
+function render_rescue_tables_select(callback) {
   var d = create_dom_element('div', {},'', $('body'));
   d.html('');
   d.addClass('comment_for_item');
   
-  create_dom_element('h3', {},'Select Table', d);
+  create_dom_element('h3', {},'Bitte erneut Tisch auswählen', d);
   create_dom_element('hr', {},'', d);
   
   $.each(resources.tb, function(k,v) {
@@ -1838,7 +1835,7 @@ function render_rescue_tables_select (callback) {
     
     move_table_span.addClass('option');
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
-  }); // end each resources.tb
+  });
   d.show();
   d.css({position: 'absolute'});
   d.width($('body').width() * 0.60);
