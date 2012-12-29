@@ -1,3 +1,28 @@
+salor-hospitality (4.1.2.27) unstable; urgency=low
+
+  [ Michael Franzl ]
+  * Closes Bug #1603
+  * Closes Bug #1604
+  * Closes Bug #1605 order.rb still contains debug code
+  * more
+  * more
+
+  [ Jason Knight ]
+  * Added table select
+  * Removed many send_email calls xcept that one in send_json
+
+  [ Michael Franzl ]
+  * more
+
+  [ Jason Knight ]
+  * xxx
+
+  [ Michael Franzl ]
+  * more
+  * Closes Bug #1606 add printer subdomain to Escper call
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 29 Dec 2012 04:01:35 +0100
+
 salor-hospitality (4.1.2.26) unstable; urgency=low
 
   * 
