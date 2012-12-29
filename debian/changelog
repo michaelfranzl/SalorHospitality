@@ -1,3 +1,11 @@
+salor-hospitality (4.1.2.30) unstable; urgency=low
+
+  * Closes Bug #1607 Add fallback table_id and user prompt in case JS loses the variable table_id
+  * build
+  * styling
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 29 Dec 2012 11:46:54 +0100
+
 salor-hospitality (4.1.2.29) unstable; urgency=low
 
   * saas stuff
