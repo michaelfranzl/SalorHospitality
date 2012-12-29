@@ -67,17 +67,25 @@ function route(target, model_id, action, options) {
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
+    
+    //---------------------------------------------------------------
     if (action == 'destroy' || action == 'send' || action == 'move') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-        send_email('route to tables without model_id', 'action is: ' + action);
-        render_tables_select(function () {
-          var table = _get("table",$(this));
-          submit_json.model.table_id = table.id;
-          route(target, table.id, action, options);
-        });
-        return
+        fallback_model_id = $('#table_id').val();
+        send_email('missing model_id', 'target=' + target + ', action=' + action + ', options=' + options + ', fallback_model_id=' + fallback_model_id);
+        if ( fallback_model_id != '' ) {
+          model_id = fallback_model_id;
+        } else {
+          render_rescue_tables_select(function () {
+            var table = _get("table",$(this));
+            submit_json.model.table_id = table.id;
+            route(target, table.id, action, options);
+          });
+          return
+        }
       }
     }
+    //---------------------------------------------------------------
     
     submit_json.target = 'tables';
     invoice_update = true;
@@ -129,15 +137,20 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-//     if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-//       send_email('route to table without model_id', 'action is: ' + action);
-//       render_tables_select(function () {
-//         var table = _get("table",$(this));
-//         submit_json.model.table_id = table.id;
-//         route(target, table.id, action, options);
-//       });
-//       return
-//     }
+    if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
+      fallback_model_id = $('#table_id').val();
+      send_email('route to table without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
+      if ( fallback_model_id != '' ) {
+        model_id = fallback_model_id;
+      } else {
+        render_tables_select(function () {
+          var table = _get("table",$(this));
+          submit_json.model.table_id = table.id;
+          route(target, table.id, action, options);
+        });
+        return
+      }
+    }
     scroll_to($('#container'),20);
     submit_json.target = 'table';
     invoice_update = true;
@@ -221,13 +234,18 @@ function route(target, model_id, action, options) {
     submit_json.target = 'invoice';
     if (action == 'send') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-        send_email('route to invoice without model_id', 'action is: ' + action);
-        render_tables_select(function () {
-          var table = _get("table",$(this));
-          submit_json.model.table_id = table.id;
-          route(target, table.id, action, options);
-        });
-        return
+        fallback_model_id = $('#table_id').val();
+        send_email('route to invoice without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
+        if ( fallback_model_id != '' ) {
+          model_id = fallback_model_id;
+        } else {
+          render_rescue_tables_select(function () {
+            var table = _get("table",$(this));
+            submit_json.model.table_id = table.id;
+            route(target, table.id, action, options);
+          });
+          return
+        }
       }
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
@@ -387,7 +405,7 @@ function send_json(object_id) {
     // an attempt to fix an obscure bug
     send_email('send_json', 'send_json called with ' + object_id + ' submit_json is ' + JSON.stringify(submit_json));
     //submit_json.model.table_id = object_id.replace('table_', '');
-    render_tables_select(function () {
+    render_rescue_tables_select(function () {
       var table = _get("table",$(this));
       submit_json.model.table_id = table.id;
       send_json(object_id);
@@ -1425,7 +1443,7 @@ function update_tables(){
     dataType: 'json',
     timeout: 15000,
     success: function(data) {
-      resources.t = data;
+      resources.tb = data;
       render_tables();
     }
   });
@@ -1798,7 +1816,7 @@ function item_list_reset(id, scope) {
     }
   })
 }
-function render_tables_select (callback) {
+function render_rescue_tables_select (callback) {
   var d = create_dom_element('div', {},'', $('body'));
   d.html('');
   d.addClass('comment_for_item');
@@ -1806,7 +1824,7 @@ function render_tables_select (callback) {
   create_dom_element('h3', {},'Select Table', d);
   create_dom_element('hr', {},'', d);
   
-  $.each(resources.t, function(k,v) {
+  $.each(resources.tb, function(k,v) {
     var bgcolor = null;
     if (v.auid) { bgcolor = resources.u[v.auid].c;}
     if (!v.e) { bgcolor = 'black';}
@@ -1820,7 +1838,7 @@ function render_tables_select (callback) {
     
     move_table_span.addClass('option');
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
-  }); // end each resources.t
+  }); // end each resources.tb
   d.show();
   d.css({position: 'absolute'});
   d.width($('body').width() * 0.60);
@@ -1829,10 +1847,11 @@ function render_tables_select (callback) {
   offset.left += $('body').width() * 0.2;
   d.offset(offset);
 }
+
 function render_tables() {
   $('#tables').html('');
   $('#tablesselect_container').html('');
-  $.each(resources.t, function(k,v) {
+  $.each(resources.tb, function(k,v) {
     // determine color
     var bgcolor = null;
     if (v.auid) bgcolor = resources.u[v.auid].c;
@@ -1927,6 +1946,7 @@ function render_tables() {
         table.on('mousedown', function() {
           var v = _get('table',$(this));
           route('table',v.id);
+          $('#table_id').val(v.id); // fallback table_id
           //route('table',null); // uncomment this for debugging
         });
       }

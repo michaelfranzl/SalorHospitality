@@ -184,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20121229082553) do
     t.boolean "active",           :default => true
     t.string  "email"
     t.string  "technician_email"
-    t.string  "auth_user"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -933,8 +932,6 @@ ActiveRecord::Schema.define(:version => 20121229082553) do
     t.boolean  "audio"
     t.string   "email"
     t.boolean  "confirmation_user"
-    t.string   "salt"
-    t.string   "encrypted_password"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
