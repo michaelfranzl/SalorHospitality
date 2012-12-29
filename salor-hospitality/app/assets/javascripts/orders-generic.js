@@ -204,7 +204,6 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
     } else {
       // regular click on a table from main view
-      alert(model_id);
       submit_json = {model:{table_id:model_id}};
       items_json = {};
       get_table_show(model_id);
@@ -378,8 +377,13 @@ function send_json(object_id) {
   if (typeof(submit_json.model.table_id) == 'undefined' || submit_json.model.table_id == null || submit_json.model.table_id == '') {
     // an attempt to fix an obscure bug
     send_email('send_json', 'send_json called with ' + object_id + ' submit_json is ' + JSON.stringify(submit_json));
-    submit_json.model.table_id = object_id.replace('table_', '');
-    // JASON: Ask user for table id
+    //submit_json.model.table_id = object_id.replace('table_', '');
+    render_tables_select(function () {
+      var table = _get("table",$(this));
+      submit_json.model.table_id = table.id;
+      send_json(object_id);
+    });
+    return;
   }
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
@@ -1785,7 +1789,37 @@ function item_list_reset(id, scope) {
     }
   })
 }
-
+function render_tables_select (callback) {
+  var d = create_dom_element('div', {},'', $('body'));
+  d.html('');
+  d.addClass('comment_for_item');
+  
+  create_dom_element('h3', {},'Select Table', d);
+  create_dom_element('hr', {},'', d);
+  
+  $.each(resources.t, function(k,v) {
+    var bgcolor = null;
+    if (v.auid) { bgcolor = resources.u[v.auid].c;}
+    if (!v.e) { bgcolor = 'black';}
+    
+    var move_table_span = create_dom_element('span', {}, v.n, d);
+    
+    // -- Callback goes here, whatever you want it to do
+    _set("table",v,move_table_span);
+    move_table_span.on('click', callback);
+    move_table_span.on('click', function () { d.hide();});
+    
+    move_table_span.addClass('option');
+    if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
+  }); // end each resources.t
+  d.show();
+  d.css({position: 'absolute'});
+  d.width($('body').width() * 0.60);
+  var offset = $('body').offset();
+  offset.top += $('body').height() * 0.5;
+  offset.left += $('body').width() * 0.2;
+  d.offset(offset);
+}
 function render_tables() {
   $('#tables').html('');
   $('#tablesselect_container').html('');
@@ -1805,7 +1839,7 @@ function render_tables() {
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
     // -------------------------
     
-    // JASON
+    // See function above, render_tables_select
     
     // ------------------------
     // render divs for the actual tables
