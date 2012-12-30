@@ -140,13 +140,13 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def update_associations(customer)
-    unless self.cost_center
-      self.cost_center = self.vendor.cost_centers.existing.first
-      self.items.update_all :cost_center_id => self.cost_center
-      self.tax_items.update_all :cost_center_id => self.cost_center
-      self.payment_method_items.update_all :cost_center_id => self.cost_center
-    end
+  def update_associations(customer=nil)
+    self.cost_center = self.vendor.cost_centers.existing.first unless self.cost_center
+    
+    self.items.update_all :cost_center_id => self.cost_center
+    self.tax_items.update_all :cost_center_id => self.cost_center
+    self.payment_method_items.update_all :cost_center_id => self.cost_center
+
     self.save
     
     table = self.table
@@ -312,7 +312,9 @@ class Order < ActiveRecord::Base
     # create a change payment method item
     unless self.payment_method_items.existing.where(:change => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
-      PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+      if change_payment_methods.any?
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+      end
     end
     
     self.payment_method_items.update_all :cost_center_id => self.cost_center_id

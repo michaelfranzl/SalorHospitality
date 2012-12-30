@@ -97,9 +97,11 @@ class Item < ActiveRecord::Base
   end
 
   def refund(by_user, payment_method_id)
-    unless self.cost_center.no_payment_methods == true
+    unless self.cost_center and self.cost_center.no_payment_methods == true
       payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
-      PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id
+      if payment_method
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id
+      end
     end
     
     self.refunded = true
@@ -262,7 +264,7 @@ class Item < ActiveRecord::Base
     if partner_item.nil?
       partner_item = Item.new(self.attributes) # attention: at this point, partner_item will still have the id of self. below, we call partner_item.save, and only at this point it gets the new id.
       partner_item.option_items = []
-      self.option_items.each do |o|
+      self.option_items.existing.each do |o|
         partner_option_item = OptionItem.create o.attributes # warning: at this point, the OptionItem still has the wrong count. calling OptionItem.calculate_totals below will fix that.
         partner_item.option_items << partner_option_item
       end

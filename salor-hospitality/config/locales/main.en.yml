@@ -59,7 +59,7 @@ en:
         image: Image
         name: Name
         price: Price
-        tax_id: Tax
+        taxes: Tax
         usage: Usage
       category:
         color: Color

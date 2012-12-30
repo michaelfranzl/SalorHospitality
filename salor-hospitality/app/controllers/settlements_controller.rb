@@ -31,7 +31,7 @@ class SettlementsController < ApplicationController
 
   def open
     redirect_to '/' and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @users = @current_vendor.users.existing.active
+    @users = @current_vendor.users.existing.active.where('role_weight > 0')
   end
 
   # ajax

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229082553) do
+ActiveRecord::Schema.define(:version => 20121230102450) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -932,6 +932,7 @@ ActiveRecord::Schema.define(:version => 20121229082553) do
     t.boolean  "audio"
     t.string   "email"
     t.boolean  "confirmation_user"
+    t.integer  "role_weight"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"

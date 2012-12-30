@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    redirect_to '/saas/users/new' and return if defined?(ShSaas) == 'constant'
+    redirect_to "/saas/users/#{ params[:id] }/edit" and return if defined?(ShSaas) == 'constant'
     @user = get_model
     redirect_to users_path and return unless @user
     @roles = @current_vendor.roles.existing.active

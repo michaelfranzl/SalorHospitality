@@ -23,6 +23,8 @@ class ItemsController < ApplicationController
       order = @current_vendor.orders.existing.find_by_id(params[:order_id])
       render :nothing => true and return unless order
       Item.split_items(params['split_items_hash'], order)
+      order.update_associations
+      order.order.update_associations if order.order
       table = order.table
       render_invoice_form(table) and return
     end

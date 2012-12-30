@@ -20,7 +20,7 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     @taxes = @current_vendor.taxes.existing
-    @users = @current_vendor.users.existing.active
+    @users = @current_vendor.users.existing.active.where('role_weight > 0')
     @printers = @current_vendor.vendor_printers.existing
   end
 
@@ -31,7 +31,7 @@ class CategoriesController < ApplicationController
     end
     @category = Category.new(Category.process_custom_icon(params[:category]))
     @taxes = @current_vendor.taxes.existing
-    @users = @current_vendor.users.existing.active
+    @users = @current_vendor.users.existing.active.where('role_weight > 0')
     @printers = @current_vendor.vendor_printers.existing
     @category.vendor = @current_vendor
     @category.company = @current_company
@@ -47,7 +47,7 @@ class CategoriesController < ApplicationController
     @category = get_model
     redirect_to categories_path and return unless @category
     @taxes = @current_vendor.taxes.existing
-    @users = @current_vendor.users.existing.active
+    @users = @current_vendor.users.existing.active.where('role_weight > 0')
     @printers = @current_vendor.vendor_printers.existing
     render :new
   end
@@ -60,7 +60,7 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
     else
       @taxes = @current_vendor.taxes.existing
-      @users = @current_vendor.users.existing.active
+      @users = @current_vendor.users.existing.active.where('role_weight > 0')
       @printers = @current_vendor.vendor_printers.existing
       render :new
     end

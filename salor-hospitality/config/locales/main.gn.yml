@@ -59,7 +59,7 @@ gn:
         image: Bild
         name: Name
         price: Preis
-        tax_id: Steuer
+        taxes: Steuer
         usage: Verwendung
       category:
         color: Farbe
