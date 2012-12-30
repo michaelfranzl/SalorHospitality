@@ -1,5 +1,5 @@
 - if @settlement.id
-  %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.id } #{ @settlement.user.login }
+  %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.nr } #{ @settlement.user.login }
 - else
   %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login }
 

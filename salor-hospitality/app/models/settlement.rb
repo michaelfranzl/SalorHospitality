@@ -99,6 +99,8 @@ class Settlement < ActiveRecord::Base
       end      
     end
     
+    list_of_payment_methods = ''
+    list_of_payment_methods_refund = ''
     if permissions.include?('manage_payment_methods')
       list_of_payment_methods = ''
       total_payment_methods.each do |id,amount|
@@ -158,7 +160,7 @@ class Settlement < ActiveRecord::Base
     "\e@"     +  # Initialize Printer
     "\ea\x00" +  # align left
     "\e!\x38" +  # doube tall, double wide, bold
-    "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.id }\n#{ self.user.login }\n\n"    +
+    "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.nr }\n#{ self.user.login }\n\n"    +
     "\e!\x00" +  # Font A
     "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
     "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +

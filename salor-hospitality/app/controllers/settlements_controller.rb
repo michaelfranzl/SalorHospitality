@@ -38,6 +38,7 @@ class SettlementsController < ApplicationController
   def create
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
     @settlement = Settlement.create params[:settlement]
+    @settlement.nr = @current_vendor.get_unique_model_number('settlement')
     @settlement.calculate_totals
     @settlement.vendor = @current_vendor
     @settlement.company = @current_company

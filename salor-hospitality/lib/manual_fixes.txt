@@ -1,5 +1,5 @@
-* A Update all quantities with article.category_id
-* B Update all quantities with article.statistic_category_id
+* A Update all quantities with article.category_id, FIXED in code
+* B Update all quantities with article.statistic_category_id, FIXED in code
 * C Update tax_items with CostCenter of Order (caused by split_items, FIXED in code by update_associations):
     DB fix:
     Settlement.all.each { |s| s.tax_items.existing.where(:cost_center_id => nil).each { |ti| ti.update_attribute :cost_center_id, ti.order.cost_center_id }}
@@ -7,6 +7,9 @@
 * E Update payment_method_items with CostCenter of Order (caused by ???):
     DB fix:
     Settlement.all.each { |s| s.payment_method_items.existing.where(:cost_center_id => nil).each { |pmi| pmi.update_attribute :cost_center_id, pmi.order.cost_center_id }}
+* F Copy Order.hidden to payment_method_items, caused by split_items in pay_and_no_print, FIXED in code)
+    DB fix:
+    Settlement.find(619).orders.each { |o| o.payment_method_items.update_all :hidden => o.hidden, :hidden_by => o.hidden_by }
 
 
 
@@ -29,9 +32,8 @@ Settlement.find(626).tax_items.existing.where(:refunded => nil).sum(:gro).round(
 
 Check if Settlement.PaymentMethodItem sum is identical with Settlement.Order sum:
 -------------------------------------------------
-619.upto(619).collect { |i| s=Settlement.find_by_id(i);diff = (s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => nil, :change => false).sum(:amount).round(2) - s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => nil, :change => true).sum(:amount).round(2) - s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => true).sum(:amount).round(2)).round(2) - s.orders.existing.where(:cost_center_id => 1).sum(:sum).round(2); "#{s.id}:#{diff}" unless diff.zero? }.uniq
+550.upto(629).collect { |i| s=Settlement.find_by_id(i);diff = (s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => nil, :change => false).sum(:amount).round(2) - s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => nil, :change => true).sum(:amount).round(2) - s.payment_method_items.existing.where(:cost_center_id => 1, :refunded => true).sum(:amount).round(2)).round(2) - s.orders.existing.where(:cost_center_id => 1).sum(:sum).round(2); "#{s.id}:#{diff}" unless diff.zero? }.uniq
 
-"619:23.0", "625:31.200000000000045", "626:21.09999999999991"]
 
 
 

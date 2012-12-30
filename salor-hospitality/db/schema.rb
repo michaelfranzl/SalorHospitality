@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230102450) do
+ActiveRecord::Schema.define(:version => 20121230140138) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -729,6 +729,7 @@ ActiveRecord::Schema.define(:version => 20121230102450) do
     t.float    "sum"
     t.boolean  "hidden"
     t.integer  "hidden_by"
+    t.integer  "nr"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -964,7 +965,7 @@ ActiveRecord::Schema.define(:version => 20121230102450) do
     t.datetime "created_at",                                                                 :null => false
     t.datetime "updated_at",                                                                 :null => false
     t.integer  "largest_order_number",                            :default => 0
-    t.string   "unused_order_numbers",        :limit => 10000,    :default => "--- []\n"
+    t.string   "unused_order_numbers",        :limit => 1000,     :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                     :default => 0
     t.text     "resources_cache",             :limit => 16777215
@@ -1000,6 +1001,9 @@ ActiveRecord::Schema.define(:version => 20121230102450) do
     t.integer  "update_resources_interval",                       :default => 127
     t.integer  "automatic_printing_interval",                     :default => 31
     t.string   "hash_id"
+    t.integer  "largest_settlement_number",                       :default => 0
+    t.string   "unused_settlement_numbers",   :limit => 1000,     :default => "--- []\n"
+    t.boolean  "use_settlement_numbers",                          :default => true
   end
 
 end
