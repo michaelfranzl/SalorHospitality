@@ -1,0 +1,25 @@
+* Update all quantities with article.category_id
+* Update all quantities with article.statistic_category_id
+* Update tax_items with CostCenter of Order (caused by split_items, fixed by update_associations):
+    Settlement.all.each { |s| s.tax_items.existing.where(:cost_center_id => nil).each { |ti| ti.update_attribute :cost_center_id, ti.order.cost_center_id }}
+
+
+
+
+
+
+Check if TaxItem sum is identical with Order sum:
+-------------------------------------------------
+Settlement.find(627).orders.existing.collect { |o| o.id if o.sum.round(2) != o.tax_items.existing.where(:refunded => nil).sum(:gro).round(2) }.uniq
+
+Check if Order.PaymentMethodItem sum is identical with Order sum:
+-------------------------------------------------
+Settlement.find(627).orders.existing.collect { |o| o.id if o.sum.round(2) != ( o.payment_method_items.existing.where(:refunded => nil).sum(:amount).round(2) - o.payment_method_items.existing.where(:refunded => true).sum(:amount).round(2) ) }
+
+Check if number of payment_method_items is sane
+-----------------------------------------------
+Settlement.find(627).payment_method_items.existing.count == Settlement.find(627).orders.existing.collect { |o| o.payment_method_items.existing.count }.sum
+
+Check if Settlement.PaymentMethodItem sum
+-----------------------------------------------
+Settlement.find(627).payment_method_items.existing.where(:refunded => nil).sum(:amount) - Settlement.find(627).payment_method_items.existing.where(:refunded => true).sum(:amount)

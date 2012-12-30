@@ -118,6 +118,8 @@ class Item < ActiveRecord::Base
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
     self.category_id = self.article.category_id
+    self.statistic_category_id = self.article.statistic_category_id
+    self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
     self.sum = full_price
     self.calculate_taxes(self.article.taxes)
     self.save
@@ -149,7 +151,7 @@ class Item < ActiveRecord::Base
       tax_sum_total += tax_sum
     end
     self.tax_sum = tax_sum_total
-    save
+    self.save
   end
   
 
@@ -234,9 +236,10 @@ class Item < ActiveRecord::Base
       item.split(v['split_count'].to_i) unless v['split_count'].to_i.zero?
     end
     
-    partner_order = order.order
+    partner_order = order.order # it seems that at this point, partner_order is still unsaved
     if order.items.existing.any?
       order.calculate_totals
+      order.update_associations
     else
       order.hide(-3) 
     end
@@ -244,6 +247,7 @@ class Item < ActiveRecord::Base
     if partner_order
       if partner_order.items.existing.any?
         partner_order.calculate_totals
+        partner_order.update_associations
       elsif partner_order
         partner_order.hide(-3) 
       end
