@@ -297,6 +297,7 @@ class Order < ActiveRecord::Base
   end
 
   def pay(user=nil)
+    return if self.hidden # this happens when called from application_controller, 'pay_and_no_print' when splitting an item and order is deleted.
     self.finish(user)
     # create a default cash payment method item if none was set in the UI
     unless self.payment_method_items.existing.any? or (self.cost_center and self.cost_center.no_payment_methods == true)

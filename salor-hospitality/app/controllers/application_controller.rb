@@ -102,7 +102,9 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_no_print'
             get_order
-            Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
+            if params[:split_items_hash]
+              Item.split_items(params[:split_items_hash], @order)
+            end
             @order.pay
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.

@@ -97,6 +97,7 @@ class Item < ActiveRecord::Base
   end
 
   def refund(by_user, payment_method_id)
+    return if self.refunded
     unless self.cost_center and self.cost_center.no_payment_methods == true
       payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
       if payment_method
