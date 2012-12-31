@@ -733,6 +733,11 @@ class Order < ActiveRecord::Base
       tests[19] = self.tax_items.collect{ |i| i.hidden == self.hidden }.all?
     end
     tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+    
+    # finished orders have to have nr set
+    if self.finished
+      tests[21] = !self.nr.nil?
+    end
 
     0.upto(tests.size-1).each do |i|
       messages << "Order #{ self.id }: test#{i} failed." if tests[i] == false

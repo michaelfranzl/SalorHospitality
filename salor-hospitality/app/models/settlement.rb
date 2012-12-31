@@ -61,69 +61,69 @@ class Settlement < ActiveRecord::Base
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
     
-    total_payment_methods = {}
-    total_payment_methods_refund = {}
-    total_costcenter = {}
-    
-    costcenters = self.vendor.cost_centers.existing
-    costcenters.each do |cc|
-      total_costcenter[cc.id] = 0 #initialize
+    costcenter_ids = self.vendor.cost_centers.existing.collect{ |cc| cc.id }
+    costcenter_ids << nil
+    costcenters_hash = costcenter_ids.collect do |ccid|
+      sum = self.items.existing.where(:cost_center_id => ccid, :refunded => nil).sum(:sum)
+      cost_center = self.vendor.cost_centers.find_by_id(ccid)
+      if cost_center
+        returnvalue = {:name => cost_center.name, :sum => sum}
+      else
+        returnvalue = {:name => '', :sum => sum}
+      end
     end
-    total_costcenter[0] = 0 # for orders without costcenter
+
+    payment_method_ids = self.vendor.payment_methods.collect{ |pm| pm.id }
+    payment_methods_hash = payment_method_ids.collect do |pmid|
+      payment_method = self.vendor.payment_methods.existing.find_by_id(pmid)
+      next if payment_method.change
+      if payment_method.cash
+        sum_refund = self.payment_method_items.existing.where(:payment_method_id => pmid, :refunded => true).sum(:amount)
+        sum = self.payment_method_items.existing.where(:payment_method_id => pmid, :refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount) - sum_refund
+      else
+        sum_refund = self.payment_method_items.existing.where(:payment_method_id => pmid, :refunded => true).sum(:amount)
+        sum = self.payment_method_items.existing.where(:payment_method_id => pmid, :refunded => nil).sum(:amount) - sum_refund
+      end
+      name = payment_method.name
+      returnvalue = {:name => name, :sum => sum, :sum_refund => sum_refund}
+    end
+    payment_methods_hash.delete(nil)
     
     list_of_orders = ''
     self.orders.existing.each do |o|
-      
-      cid = o.cost_center_id ? o.cost_center_id : 0
-      total_costcenter[cid] += o.sum
-      
       t = I18n.l(o.created_at, :format => :time_short)
       costcentername = o.cost_center.name if o.cost_center
       nr = o.nr ? o.nr : 0 # failsafe
       list_of_orders += "\n#%07i %7.7s %10.10s  %5.5s  %6.2f" % [nr, o.table.name, costcentername, t, o.sum]
-
-      o.payment_method_items.each do |pmi|
-        if pmi.refunded
-          if total_payment_methods_refund.has_key? pmi.payment_method_id
-            total_payment_methods_refund[pmi.payment_method_id][:amount] += pmi.amount
-          else
-            total_payment_methods_refund[pmi.payment_method_id] = {:amount => pmi.amount, :name => "#{ I18n.t(:refund)} #{pmi.payment_method.name}"}
-          end
-        else
-          if total_payment_methods.has_key? pmi.payment_method_id
-            total_payment_methods[pmi.payment_method_id][:amount] += pmi.amount
-          else
-            total_payment_methods[pmi.payment_method_id] = {:amount => pmi.amount, :name => "#{pmi.payment_method.name}"}
-          end
-        end
-      end      
     end
     
     list_of_payment_methods = ''
     list_of_payment_methods_refund = ''
     if permissions.include?('manage_payment_methods')
-      list_of_payment_methods = ''
-      total_payment_methods.each do |id,amount|
-        list_of_payment_methods += "%-27s  %s %9.2f\n" % [total_payment_methods[id][:name], friendly_unit, total_payment_methods[id][:amount]] unless total_payment_methods[id][:amount].zero?
+      payment_methods_hash.each do |hash|
+        unless hash[:sum].zero?
+          list_of_payment_methods += "%-27s  %s %9.2f\n" % [hash[:name], friendly_unit, hash[:sum]]
+        end
+        unless hash[:sum_refund].zero?
+          name = I18n.t('refund') + ' ' + hash[:name]
+          list_of_payment_methods_refund += "%-27s  %s %9.2f\n" % [name, friendly_unit, hash[:sum_refund]]
+        end
       end
-      list_of_payment_methods_refund = ''
-      total_payment_methods_refund.each do |id,amount|
-        list_of_payment_methods_refund += "%-27s  %s %9.2f\n" % [total_payment_methods_refund[id][:name], friendly_unit, total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
-      end
-      list_of_payment_methods_refund += "\xc4" * 42 + "\n"
+      list_of_payment_methods += "\xc4" * 42 + "\n" unless list_of_payment_methods.empty?
+      list_of_payment_methods_refund += "\xc4" * 42 + "\n" unless list_of_payment_methods_refund.empty?
     end
     
     list_of_costcenters = ''
     if permissions.include?('manage_cost_centers')
-      list_of_costcenters += "     #{ friendly_unit } %9.2f\n" % [total_costcenter[0]] unless total_costcenter[0].zero?
-      costcenters.each do |cc|
-        list_of_costcenters += "%-27s  %s %9.2f\n" % [cc.name, friendly_unit, total_costcenter[cc.id]] unless total_costcenter[cc.id].zero?
+      costcenters_hash.each do |hash|
+        list_of_costcenters += "%-27s  %s %9.2f\n" % [hash[:name], friendly_unit, hash[:sum]] unless hash[:sum].zero?
       end
-      list_of_costcenters += "\xc4" * 42 + "\n"
+      list_of_costcenters += "\xc4" * 42 + "\n" unless list_of_costcenters.empty?
     end
     
     initial_cash = self.initial_cash ? "%s:  %s %9.2f\n" % [I18n.t('various.begin'), friendly_unit, self.initial_cash] : ''
     revenue = self.revenue ? "%s:  %s %9.2f\n" % [I18n.t('various.end'), friendly_unit, self.revenue] : ''
+    revenue += "\xc4" * 42 + "\n" unless revenue.empty?
     
     tax_attribute = vendor.country == 'us' ? :net : :gro
 
@@ -133,7 +133,7 @@ class Settlement < ActiveRecord::Base
         sum = self.tax_items.where(:tax_id => tax.id).sum(tax_attribute)
         list_of_taxes += "%-27s  %s %9.2f\n" % [tax.name, friendly_unit, sum]
       end
-      list_of_taxes += "\xc4" * 42 + "\n" unless permissions.include?('settlement_statistics_taxes_categories')
+      list_of_taxes += "\xc4" * 42 + "\n" unless list_of_taxes.empty? #permissions.include?('settlement_statistics_taxes_categories')
     end
     
     list_of_taxes_categories = ''
@@ -142,18 +142,18 @@ class Settlement < ActiveRecord::Base
         list_of_taxes_categories += "%s:\n" % [tax.name]
         if permissions.include?('manage_statistic_categories')
           self.vendor.statistic_categories.existing.each do |cat|
-            sum = self.tax_items.existing.where(:tax_id => tax.id, :statistic_category_id => cat.id).sum(tax_attribute)
+            sum = self.tax_items.existing.where(:tax_id => tax.id, :statistic_category_id => cat.id, :refunded => nil).sum(tax_attribute)
             list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
           end
         else
           self.vendor.categories.existing.each do |cat|
-            sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id).sum(tax_attribute)
+            sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id, :refunded => nil).sum(tax_attribute)
             list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
           end
         end
 
       end
-      list_of_taxes_categories += "\xc4" * 42 + "\n"
+      list_of_taxes_categories += "\xc4" * 42 + "\n" unless list_of_taxes_categories.empty?
     end
 
     output =
@@ -177,7 +177,6 @@ class Settlement < ActiveRecord::Base
     list_of_taxes_categories +
     initial_cash +
     revenue +
-    "\xc4" * 42 + "\n" +
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
     "\x1DV\x00" # paper cut
