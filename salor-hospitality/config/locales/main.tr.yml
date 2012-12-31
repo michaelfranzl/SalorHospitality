@@ -126,8 +126,8 @@ tr:
         usage: Kullanım
         active: XXX active
         image: XXX Image
-        tax_id: XXX Tax
         statistic_category_id: Statistic-Category
+        taxes: Tax
       option:
         price: Fiyat
         category_id: Kategori

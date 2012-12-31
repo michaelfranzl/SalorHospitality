@@ -10,9 +10,9 @@ fr:
         image: Image
         name: Nom
         price: Prix
-        tax_id: Taxe
         usage: Utilisation
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: Couleur
         custom_icon: Mon icône

@@ -11,8 +11,8 @@ es:
         usage: Uso
         active: activo
         image: Imagen
-        tax_id: IVA
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: Color
         custom_icon: Mi Ícono

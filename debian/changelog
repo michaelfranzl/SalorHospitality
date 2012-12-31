@@ -1,3 +1,14 @@
+salor-hospitality (4.1.2.31) unstable; urgency=low
+
+  * Bug #1610, Feature #1609, Bug #1608, Bug #1603, Feature #1587
+  * Bug #1611
+  * Bug #1613, #1614
+  * Feature #1612 Add vendor specific number to Settlements
+  * Feature #1615 Sanity checks for Settlement, Order, Item, OptionItem
+  * Feature #1616 Don't list change money on settlements printout, merge refund payment methods into main payment methods
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 31 Dec 2012 16:00:29 +0100
+
 salor-hospitality (4.1.2.30) unstable; urgency=low
 
   * Closes Bug #1607 Add fallback table_id and user prompt in case JS loses the variable table_id

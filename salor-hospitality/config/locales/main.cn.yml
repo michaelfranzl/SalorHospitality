@@ -10,9 +10,9 @@ cn:
         image: 圖像
         name: 名稱
         price: 價格
-        tax_id: 稅
         usage: 運用
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: 色彩
         custom_icon: 我的圖標

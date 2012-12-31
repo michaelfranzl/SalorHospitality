@@ -26,9 +26,9 @@ it:
         image: Immagine
         name: Nome
         price: Prezzo
-        tax_id: Tassa
         usage: Utilizzo
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: Colore
         custom_icon: Mia Icona

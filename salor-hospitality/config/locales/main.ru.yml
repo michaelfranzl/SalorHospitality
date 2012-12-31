@@ -10,9 +10,9 @@ ru:
         image: Изображение
         name: Имя
         price: Цена
-        tax_id: Налог
         usage: Использование
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: Цвет
         custom_icon: Моя картинка

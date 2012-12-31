@@ -43,9 +43,9 @@ el:
         image: Απεικόνιση
         name: Όνομα
         price: Τιμή
-        tax_id: Φόρος
         usage: Χρήση
         statistic_category_id: Statistic-Category
+        taxes: Tax
       category:
         color: Χρώμα
         custom_icon: Το Εικονίδιο Μου

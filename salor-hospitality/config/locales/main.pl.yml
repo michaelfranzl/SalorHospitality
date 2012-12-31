@@ -49,8 +49,8 @@ pl:
         image: Obraz
         name: Nazwa
         price: Cena
-        tax_id: Podatek
         usage: Zużycie
+        taxes: Tax
       category:
         color: Kolor
         custom_icon: Ikona własna
