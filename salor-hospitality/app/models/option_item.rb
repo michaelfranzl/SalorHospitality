@@ -17,17 +17,21 @@ class OptionItem < ActiveRecord::Base
   end
   
   def check
+    tests = []
+    
     if self.item.refunded
-      test1 = self.sum.round(2) == 0
-      puts "self.sum.round(2) should be 0 and is #{self.sum.round(2)}"
-      raise "OptionItem test1 failed for id #{ self.id }" unless test1
+      test[1] = self.sum.round(2) == 0
     else
-      test2 = self.sum.round(2) == (self.price * self.count).round(2)
-      puts "self.sum.round(2) #{self.sum.round(2) } == (self.price * self.count).round(2) #{(self.price * self.count).round(2)}"
-      raise "OptionItem test2 failed for id #{ self.id }" unless test2
+      test[2] = self.sum.round(2) == (self.price * self.count).round(2)
     end
-    test3 = self.count == self.item.count
-    raise "OptionItem test3 failed for id #{ self.id }" unless test3
+    
+    test[3] = self.count == self.item.count
+    
+    messages = []
+    0.upto(tests.size-1).each do |i|
+      messages << "OptionItem #{ self.id }: test #{i} failed." if tests[i] == false
+    end
+    return messages
   end
   
   def hide(by_user)

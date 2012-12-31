@@ -691,36 +691,53 @@ class Order < ActiveRecord::Base
   end
   
   def check
+    messages = []
+    tests = []
     self.items.each do |i|
-      i.check
+      messages << i.check
     end
     
     order_hash_tax_sum = 0
     self.taxes.each do |k,v|
       order_hash_tax_sum += v[:t]
     end
-    test1 = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
-    raise "Order test1 failed for id #{ self.id }" unless test1
+    tests[1] = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
 
     unless self.hidden
-      test3 = self.tax_sum == self.tax_items.existing.sum(:tax).round(2)
-      raise "Order test3 failed for id #{ self.id }" unless test3
-    
-      test4 = self.items.existing.sum(:sum).round(2) == self.sum.round(2)
-      raise "Order test4 failed for id #{ self.id }" unless test4
-
-      test5 = self.items.existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
-      raise "Order test5 failed for id #{ self.id }" unless test5
+      tests[2] = self.tax_sum.round(2) == self.tax_items.where(:refunded => nil).existing.sum(:tax).round(2)
+      tests[3] = self.items.where(:refunded => nil).existing.sum(:sum).round(2) == self.sum.round(2)
+      tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
     end
     
+    # order sum must match the PAYMENT METHOD ITEM sum
+    if self.paid
+      tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount)).round(2) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)
+    end
+  
+    # cost_center_id may only be nil if there are no CostCenters defined
+    tests[8] = self.cost_center_id or (self.cost_center_id.nil? and not self.vendor.cost_centers.existing.any?)
+    
+    # all associations must have the same COST CENTER
+    tests[12] = self.items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
+    tests[13] = self.tax_items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
+    tests[14] = self.payment_method_items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
+    
+    # all associations must have the same SETTLEMENT
+    tests[15] = self.items.collect{ |i| i.settlement_id == self.settlement_id }.all?
+    tests[16] = self.tax_items.collect{ |i| i.settlement_id == self.settlement_id }.all?
+    tests[17] = self.payment_method_items.collect{ |i| i.settlement_id == self.settlement_id }.all?
+    
+    # all associations must be HIDDEN
     if self.hidden
-      test6 = self.tax_items.all?{|ti| ti.hidden}
-      raise "Order test6 failed for id #{ self.id }" unless test6
-      test7 = self.option_items.all?{|oi| oi.hidden}
-      raise "Order test7 failed for id #{ self.id }" unless test7
-      test8 = self.items.all?{|i| i.hidden}
-      raise "Order test8 failed for id #{ self.id }" unless test8
+      tests[18] = self.items.collect{ |i| i.hidden == self.hidden }.all?
+      tests[19] = self.tax_items.collect{ |i| i.hidden == self.hidden }.all?
     end
+    tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+
+    0.upto(tests.size-1).each do |i|
+      messages << "Order #{ self.id }: test#{i} failed." if tests[i] == false
+    end
+    return messages
   end
   
   def user_login

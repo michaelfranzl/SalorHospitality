@@ -108,7 +108,7 @@ class Settlement < ActiveRecord::Base
       end
       list_of_payment_methods_refund = ''
       total_payment_methods_refund.each do |id,amount|
-        list_of_payment_methods_refund += "%-27s:  %s %9.2f\n" % [total_payment_methods_refund[id][:name], friendly_unit, total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
+        list_of_payment_methods_refund += "%-27s  %s %9.2f\n" % [total_payment_methods_refund[id][:name], friendly_unit, total_payment_methods_refund[id][:amount]] unless total_payment_methods_refund[id][:amount].zero?
       end
       list_of_payment_methods_refund += "\xc4" * 42 + "\n"
     end
@@ -181,6 +181,21 @@ class Settlement < ActiveRecord::Base
     "\e!\x01" + # Font A
     "\n\n\n\n\n" +
     "\x1DV\x00" # paper cut
+  end
+  
+  def check
+    messages = []
+    tests = []
+    
+    self.orders.each do |o|
+      messages << o.check
+    end
+    
+    tests[1] = self.sum.round(2) == self.orders.sum(:sum).round(2)
+    0.upto(tests.size-1).each do |i|
+      messages << "Settlement #{ self.id }: test#{i} failed." if tests[i] == false
+    end
+    return messages
   end
 
 end
