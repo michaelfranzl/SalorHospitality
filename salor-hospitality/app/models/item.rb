@@ -132,13 +132,13 @@ class Item < ActiveRecord::Base
     tax_sum_total = 0
     tax_array.each do |tax|
       if self.vendor.country == 'us'
-        net = (self.sum).round(3)
-        gro = (net * ( 1.0 + (tax.percent / 100.0))).round(3)
+        net = (self.sum).round(2)
+        gro = (net * ( 1.0 + (tax.percent / 100.0))).round(2)
       else
-        gro = (self.sum).round(3)
-        net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(3)
+        gro = (self.sum).round(2)
+        net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
       end
-      tax_sum = (gro - net).round(3)
+      tax_sum = (gro - net).round(2)
       self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
       
       self.save if self.new_record? # we need an id for the next step
@@ -322,9 +322,9 @@ class Item < ActiveRecord::Base
       item_hash_gro += v[:g]
       item_hash_net += v[:n]
     end
-    item_hash_tax = item_hash_tax.round(3)
-    item_hash_gro = item_hash_gro.round(3)
-    item_hash_net = item_hash_net.round(3)
+    item_hash_tax = item_hash_tax.round(2)
+    item_hash_gro = item_hash_gro.round(2)
+    item_hash_net = item_hash_net.round(2)
     
     if self.vendor.country == 'us'
       tests[1] = (self.sum == item_hash_net )
@@ -344,7 +344,7 @@ class Item < ActiveRecord::Base
       tests[6] = self.tax_items.existing.count == self.taxes.keys.count
       
       unless self.refunded
-        tests[7] = self.option_items.sum(:sum).round(3) == (self.sum - self.price * self.count).round(3)
+        tests[7] = self.option_items.sum(:sum).round(2) == (self.sum - self.price * self.count).round(2)
       end
     
       item_tax_sum = 0
@@ -352,7 +352,7 @@ class Item < ActiveRecord::Base
         item_tax_sum += v[:t]
       end
       
-      tests[8] = self.tax_items.existing.sum(:tax).round(3) == item_tax_sum.round(3)
+      tests[8] = self.tax_items.existing.sum(:tax).round(2) == item_tax_sum.round(2)
     end
     
     0.upto(tests.size-1).each do |i|
