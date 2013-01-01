@@ -150,7 +150,8 @@ function toggle_all_option_checkboxes(source) {
 }
 
 function date_as_ymd(date) {
-  return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+  var ret = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+  return ret;
 }
 function get_date(str) {
   return new Date(Date.parse(str));

@@ -70,7 +70,7 @@ window.display_booking_form = (room_id) ->
   from_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['from_date'] = date
+               submit_json.model['from_date'] = date + " 01:00:00"
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -78,7 +78,7 @@ window.display_booking_form = (room_id) ->
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['to_date'] = date
+               submit_json.model['to_date'] = date  + " 01:00:00"
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -267,7 +267,6 @@ regenerate_all_multi_season_booking_items = () ->
         start = new Date(Date.parse(submit_json.model.covered_seasons[0].start))
         end = new Date(Date.parse(submit_json.model.covered_seasons[0].end))
         update_base_price(k)
-        
         set_json 'booking', k, 'duration', duration
         set_json 'booking', k, 'from_date', date_as_ymd(start)
         set_json 'booking', k, 'to_date', date_as_ymd(end)
