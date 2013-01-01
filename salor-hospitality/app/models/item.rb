@@ -327,12 +327,12 @@ class Item < ActiveRecord::Base
     item_hash_net = item_hash_net.round(2)
     
     if self.vendor.country == 'us'
-      tests[1] = (self.sum == item_hash_net )
+      tests[1] = (self.sum.round(2) == item_hash_net )
     else
-      tests[1] = (self.sum == item_hash_gro )
+      tests[1] = (self.sum.round(2) == item_hash_gro )
     end
     
-    tests[2] = (self.tax_sum == item_hash_tax )
+    tests[2] = (self.tax_sum.round(2) == item_hash_tax )
     
     if self.refunded
       #tests[3] = self.sum == 0

@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.32) unstable; urgency=low
+
+  * Bug #1617, Feature #1615
+  * Feature #1618 Change rounding to 2 digits instead of 3 in Restaurant part
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 01 Jan 2013 12:17:03 +0100
+
 salor-hospitality (4.1.2.31) unstable; urgency=low
 
   * Bug #1610, Feature #1609, Bug #1608, Bug #1603, Feature #1587

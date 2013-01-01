@@ -2,7 +2,10 @@
 * B Update all quantities with article.statistic_category_id, FIXED in code
 * C Update tax_items with CostCenter of Order (caused by split_items, FIXED in code by update_associations):
     DB fix:
-    Settlement.all.each { |s| s.tax_items.existing.where(:cost_center_id => nil).each { |ti| ti.update_attribute :cost_center_id, ti.order.cost_center_id }}
+    Settlement.all.each { |s| s.tax_items.where(:cost_center_id => nil).each { |ti| ti.update_attribute :cost_center_id, ti.order.cost_center_id }}
+* C2 Update items with CostCenter of Order (caused by split_items, FIXED in code by update_associations):
+    DB fix:
+    Settlement.all.each { |s| s.items.where(:cost_center_id => nil).each { |ti| ti.update_attribute :cost_center_id, ti.order.cost_center_id }}
 * D Don't allow pressing refund twice, FIXED in code, DB only manually fixable
 * E Update payment_method_items with CostCenter of Order (caused by ???):
     DB fix:
