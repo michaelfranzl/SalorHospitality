@@ -20,12 +20,12 @@ class OptionItem < ActiveRecord::Base
     tests = []
     
     if self.item.refunded
-      test[1] = self.sum.round(2) == 0
+      tests[1] = self.sum.round(2) == 0
     else
-      test[2] = self.sum.round(2) == (self.price * self.count).round(2)
+      tests[2] = self.sum.round(2) == (self.price * self.count).round(2)
     end
     
-    test[3] = self.count == self.item.count
+    tests[3] = self.count == self.item.count
     
     messages = []
     0.upto(tests.size-1).each do |i|

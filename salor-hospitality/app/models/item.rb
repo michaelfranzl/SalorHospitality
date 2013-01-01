@@ -121,6 +121,7 @@ class Item < ActiveRecord::Base
     self.category_id = self.article.category_id
     self.statistic_category_id = self.article.statistic_category_id
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
+    self.option_items.update_all :count => self.count
     self.sum = full_price
     self.calculate_taxes(self.article.taxes)
     self.save

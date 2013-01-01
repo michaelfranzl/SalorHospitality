@@ -73,7 +73,7 @@ class Settlement < ActiveRecord::Base
       end
     end
 
-    payment_method_ids = self.vendor.payment_methods.collect{ |pm| pm.id }
+    payment_method_ids = self.vendor.payment_methods.existing.collect{ |pm| pm.id }
     payment_methods_hash = payment_method_ids.collect do |pmid|
       payment_method = self.vendor.payment_methods.existing.find_by_id(pmid)
       next if payment_method.change
@@ -190,7 +190,7 @@ class Settlement < ActiveRecord::Base
       messages << o.check
     end
     
-    tests[1] = self.sum.round(2) == self.orders.sum(:sum).round(2)
+    tests[1] = self.sum.round(2) == self.orders.existing.sum(:sum).round(2)
     0.upto(tests.size-1).each do |i|
       messages << "Settlement #{ self.id }: test#{i} failed." if tests[i] == false
     end

@@ -707,13 +707,13 @@ class Order < ActiveRecord::Base
       tests[2] = self.tax_sum.round(2) == self.tax_items.where(:refunded => nil).existing.sum(:tax).round(2)
       tests[3] = self.items.where(:refunded => nil).existing.sum(:sum).round(2) == self.sum.round(2)
       tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
+      
+      # order sum must match the PAYMENT METHOD ITEM sum
+      if self.paid
+        tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount)).round(2) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)
+      end
     end
-    
-    # order sum must match the PAYMENT METHOD ITEM sum
-    if self.paid
-      tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount)).round(2) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)
-    end
-  
+
     # cost_center_id may only be nil if there are no CostCenters defined
     tests[8] = self.cost_center_id or (self.cost_center_id.nil? and not self.vendor.cost_centers.existing.any?)
     
