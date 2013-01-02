@@ -12,8 +12,8 @@
   $('#booking_customer').val(submit_json.model['customer_name']);
   $('#booking_from').val('<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>');
   $('#booking_to').val('<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>');
-  submit_json.model.to_date = '<%= @booking.to_date.strftime("%Y-%m-%d") if @booking.to_date %>';
-  submit_json.model.from_date = '<%= @booking.from_date.strftime("%Y-%m-%d") if @booking.from_date %>';
+  submit_json.model.to_date = '<%= @booking.to_date.strftime("%Y-%m-%d 01:00:00") if @booking.to_date %>';
+  submit_json.model.from_date = '<%= @booking.from_date.strftime("%Y-%m-%d 01:00:00") if @booking.from_date %>';
   $('.payment_methods_container').attr('id', 'payment_methods_container_' + <%= @booking.id %>);
   $('.payment_methods_container').attr('model_id', <%= @booking.id %>);     
   $('#booking_duration').val('<%= Integer(@booking.duration) %>');
@@ -50,8 +50,8 @@
   $('.payment_methods_container').attr('model_id', 0);
   $('#booking_from').val('<%= Time.now.strftime("%Y-%m-%d") %>');
   $('#booking_to').val('<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>');
-  submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d") %>';
-  submit_json.model.to_date = '<%= (Time.now + 1.day).strftime("%Y-%m-%d") %>';
+  submit_json.model.from_date = '<%= Time.now.strftime("%Y-%m-%d 01:00:00") %>';
+  submit_json.model.to_date = '<%= (Time.now + 1.day).strftime("%Y-%m-%d 01:00:00") %>';
   $('.booking_form').attr('id', 'model_0');
   $('.booking_change').attr('id', 'change_0');
   $('#booking_totals').append('<%= escape_javascript raw render(:partial => '/bookings/totals_list', :locals => { :booking => Booking.new }) %>');

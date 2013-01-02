@@ -249,7 +249,9 @@ function finish_booking(booking) {
   var booking_widget = $('#booking_' + booking.id);
   booking_widget.addClass('room-booking-finished');
   booking_widget.removeClass('room-booking-active');
-  booking_widget.draggable('disable');
+  if (booking_widget.is(":ui-draggable")) {
+    booking_widget.draggable('disable');
+  }
   booking_widget.find('.name').unbind('click');
   booking_widget.find('.name').on('click', function() { window.location = '/bookings/' + booking.id});
 }

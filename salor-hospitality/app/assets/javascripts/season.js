@@ -108,20 +108,28 @@ Season.splice = function (season1,season2) {
 
 
 
-
-
-function create_season_objects(seasons) {
-  var new_seasons = [];
-  $.each(seasons, function (id,season) {
+function _create_seasons(id,season,append_to) {
+  var i = -1;
+    while (i <=1) {
     var s       = new Season;
     s.start     = new Date(Date.parse(season.f));
     s.end       = new Date(Date.parse(season.t));
+    s.start.setFullYear(s.start.getFullYear() + i);
+    s.end.setFullYear(s.end.getFullYear() + i);
     if (s.end < s.start) {
       s.end.setFullYear(s.start.getFullYear() + 1);
     }
     s.id        = id;
     s.name      = season.n;
-    new_seasons.push(s);
+    append_to.push(s);
+    i++;
+  }
+}
+
+function create_season_objects(seasons) {
+  var new_seasons = [];
+  $.each(seasons, function (id,season) {
+    _create_seasons(id,season,new_seasons);
   });
   new_seasons.sort(function (a,b) {
     if (a.start < b.start) {
@@ -152,5 +160,6 @@ function create_season_objects(seasons) {
   really_new_seasons = [];
   for (key in tmp)
     really_new_seasons.push(tmp[key]);
+
   return really_new_seasons;
 }
