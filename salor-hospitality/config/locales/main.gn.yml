@@ -658,6 +658,7 @@ gn:
       receipt_logo: Beleg Logos
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
       settlement_statistics_taxes: Losungsausdruck Statistik Steuern
+      add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       settlement_statistics_taxes_categories: Losungsausdruck Statistik Steuer mit
         Kategorien
   room_prices:

@@ -1187,7 +1187,7 @@ function permit_select_open(d) {
 }
 
 function clone_item(d) {
-  if (items_json[d].c > 1) {
+  if (items_json[d].c > 1 && permissions.add_option_to_sent_item == false) {
     var clone_d = add_new_item(items_json[d], true, d);
     decrement_item(d);
     d = clone_d;
@@ -1205,7 +1205,8 @@ function add_option_to_item(d, value, cat_id) {
     $('#options_select_' + d).val(''); //needed for mobile phones to be able to choose the same option seveal times
     d = clone_item(d);
     var optionobject = resources.c[cat_id].o[value];
-    var option_uid = items_json[d].i.length + 1;
+    //var option_uid = items_json[d].i.length + 1;
+    var option_uid = (new Date).getTime();
     items_json[d].t[option_uid] = optionobject;
     var stripped_id = value.split('_')[1];
     var list = items_json[d].i;
@@ -1240,6 +1241,13 @@ function number_to_currency(number) {
 
 function render_options(options, d, cat_id) {
   if (options == null) return;
+  if (permissions.add_option_to_sent_item == false) {
+    var clearbutton = create_dom_element('span',{},'&nbsp;✗&nbsp;','#options_div_' + d);
+    clearbutton.addClass('option');
+    clearbutton.on('click', function() {
+      add_option_to_item(d, 0, cat_id);
+    })
+  }
   jQuery.each(options, function(key,object) {
     button = $(document.createElement('span'));
     button.html(object.n);
@@ -1257,14 +1265,12 @@ function render_options(options, d, cat_id) {
 }
 
 function open_options_div(d) {
-  if ( ! items_json[d].hasOwnProperty('id') || (items_json[d].c > items_json[d].sc)) {
-    if (item_changeable(d)) {
-      d = clone_item(d);
-      if (settings.mobile) {
-        $('#options_div_'+d).show();
-      } else {
-        $('#options_div_'+d).slideDown();
-      }
+  if (item_changeable(d) || permissions.add_option_to_sent_item) {
+    d = clone_item(d);
+    if (settings.mobile) {
+      $('#options_div_'+d).show();
+    } else {
+      $('#options_div_'+d).slideDown();
     }
   }
 }
@@ -1295,10 +1301,8 @@ function close_table_div() {
 
 function compose_label(object){
   if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
-    //object_type = 'quantity';
     label = object.pre + ' ' + object.n + ' ' + object.post;
   } else {
-    //object_type = 'article';
     label = object.n;
   }
   return label;

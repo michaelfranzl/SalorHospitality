@@ -656,6 +656,7 @@ en:
       manage_statistics: Statistics
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      add_option_to_sent_item: Add Options to sent Items
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
