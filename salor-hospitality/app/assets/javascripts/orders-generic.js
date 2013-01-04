@@ -67,7 +67,7 @@ function route(target, model_id, action, options) {
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {
-    //---------------------------------------------------------------
+    //---------------------- table_id FALLBACK CODE -----------------------------
     if (action == 'destroy' || action == 'send' || action == 'move') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
         fallback_model_id = $('#table_id').val();
@@ -139,6 +139,7 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
+    //---------------------- table_id FALLBACK CODE -----------------------------
     if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
       fallback_model_id = $('#table_id').val();
       send_email('route to table without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
@@ -156,6 +157,7 @@ function route(target, model_id, action, options) {
         return
       }
     }
+    //---------------------------------------------------------------
     scroll_to($('#container'),20);
     submit_json.target = 'table';
     invoice_update = true;
@@ -237,6 +239,7 @@ function route(target, model_id, action, options) {
   // ========== GO TO INVOICE ===============
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
+    //---------------------- table_id FALLBACK CODE -----------------------------
     if (action == 'send') {
       if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
         fallback_model_id = $('#table_id').val();
@@ -255,6 +258,7 @@ function route(target, model_id, action, options) {
           return
         }
       }
+      //---------------------------------------------------------------
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
       submit_json.model.table_id = model_id;
@@ -564,13 +568,6 @@ function add_category_button(label,options) {
     var styles = [];
     var bgcolor = "background-color: rgb(XXX);";
     var bgimage = "background-image: url('XXX');";
-    //var brdrcolor = "border-color: rgb(top) rgb(right) rgb(bottom) rgb(left);";
-    //var brdrcolors = {
-    //  top: '85,85,85',
-    //  right: '34,34,34',
-    //  bottom: '34,34,34',
-    //  left: '85,85,85'
-    //};
     cat.append(cat_label);
     
     for (var type in options.handlers) {
@@ -586,16 +583,6 @@ function add_category_button(label,options) {
     if (options.bgimage) {
       styles.push(bgimage.replace("XXX",options.bgimage));
     }
-    //if (options.border) {
-    //  for (var pos in options.border) {
-    //    brdrcolor = brdrcolor.replace(pos,options.border[pos]);
-    //  }
-    //}
-    //// Default border colors added later
-    //for (var pos in brdrcolors) {
-    //  brdrcolor = brdrcolor.replace(pos,brdrcolors[pos]);
-    //}
-    //styles.push(brdrcolor);
     cat.attr('style',styles.join(' '));
     $(options.append_to).append(cat);
 }
@@ -849,7 +836,6 @@ function update_order_from_invoice_form(data, button) {
     data: data,
     timeout: 40000
   });
-  //submit_json.split_items_hash.[data.id] = {};
   var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', $(button));
   loader.css('margin', '7px');
   loader.css('position','absolute');
@@ -886,10 +872,9 @@ function rotate_tax_item(id) {
 }
 
 function split_item(id, order_id, sum, partner_item_id, increment) {
-  // in case the user splits the invoice, a pending response from the server should not re-render the invoices and therefore overwrite the users input. this is a global variable and will be checked in orders/render_invoice_form.js.erb
-  invoice_update = false;
+  //invoice_update = false; // in case the user splits the invoice, a pending response from the server should not re-render the invoices and therefore overwrite the users input. this is a global variable and will be checked in orders/render_invoice_form.js.erb
   
-  var partner_mode = $('div.invoice:visible').length == 2; //submit_json.split_items_hash.original != submit_json.split_items_hash.partner;
+  var partner_mode = $('div.invoice:visible').length == 2;
   
   if (order_id == submit_json.split_items_hash.original) {
     var ooid = submit_json.split_items_hash.original;
@@ -983,8 +968,8 @@ function submit_split_items(order_id) {
       data: {jsaction:'split',split_items_hash:submit_json.split_items_hash[order_id],order_id:order_id},
       timeout: 30000
     });
-    //split_items_hash = {};
-    invoice_update = true; // when pressing the split button, always let the server repsonse refresh the invoice view.
+    submit_json.split_items_hash = {}; // prevent from double clicking the button
+    invoice_update = true; // when pressing the split button, let the server repsonse refresh the invoice view. grep for invoice_update = false; where the server should not destroy the DOM.
   }
 }
 
@@ -1205,7 +1190,6 @@ function add_option_to_item(d, value, cat_id) {
     $('#options_select_' + d).val(''); //needed for mobile phones to be able to choose the same option seveal times
     d = clone_item(d);
     var optionobject = resources.c[cat_id].o[value];
-    //var option_uid = items_json[d].i.length + 1;
     var option_uid = (new Date).getTime();
     items_json[d].t[option_uid] = optionobject;
     var stripped_id = value.split('_')[1];
@@ -1400,7 +1384,7 @@ function manage_counters() {
 }
 
 function get_table_show(table_id) {
-  debug('xxx get_table_show_called');
+  //debug('xxx get_table_show_called');
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
@@ -1497,7 +1481,6 @@ function update_item_lists() {
       success: function(data) {
         resources.notifications_vendor = data;
         notification_alerts('vendor');
-        //if (permissions.confirmation_user) render_item_list('interactive', 'vendor', 'confirmation');
         if (permissions.see_item_notifications_vendor_preparation) render_item_list('interactive', 'vendor', 'preparation');
         if (permissions.see_item_notifications_vendor_delivery)    render_item_list('interactive', 'vendor', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
@@ -1516,7 +1499,6 @@ function update_item_lists() {
       success: function(data) {
         resources.notifications_user = data;
         notification_alerts('user');
-        //if (permissions.confirmation_user) render_item_list('interactive', 'user', 'confirmation');
         if (permissions.see_item_notifications_user_preparation) render_item_list('interactive', 'user', 'preparation');
         if (permissions.see_item_notifications_user_delivery)    render_item_list('interactive', 'user', 'delivery');
         if (settings.workstation && permissions.see_item_notifications_static) {
@@ -1532,12 +1514,10 @@ function update_item_lists() {
 
 function notification_alerts(model) {    
   if (model == 'user') {
-    //var confirmation_notification_user_count = Object.keys(resources.notifications_user.confirmation).length;
     var delivery_notification_user_count = Object.keys(resources.notifications_user.delivery).length;
     var prepraration_notification_user_count = Object.keys(resources.notifications_user.preparation).length;
     var total_count = delivery_notification_user_count + prepraration_notification_user_count;
   } else if (model == 'vendor') {
-    //var confirmation_notification_vendor_count = Object.keys(resources.notifications_vendor.confirmation).length;
     var delivery_notification_vendor_count = Object.keys(resources.notifications_vendor.delivery).length;
     var prepraration_notification_vendor_count = Object.keys(resources.notifications_vendor.preparation).length;
     var total_count = delivery_notification_vendor_count + prepraration_notification_vendor_count;
@@ -1573,7 +1553,7 @@ function add_customers_button() {
 }
 
 function highlight_button(element) {
-  //$(element).effect("highlight", {}, 300);
+  //$(element).effect("highlight", {}, 300); // this is CPU intensive for some mobile devices and has been disabled.
 }
 
 function highlight_border(element) {
@@ -1826,6 +1806,8 @@ function item_list_reset(id, scope) {
     }
   })
 }
+
+// In some rare cases, Javascript loses submit_json.model.table_id, probably due to an internal JS bug or garbage collection problem, which is a rather fatal case for our code here. Because of this, we implemented a double fallback security net. The first fallback is a regular hidden input in the DOM. If even this input loses it's value (and this has never happened yet, we provide the user with a dialoge to please select the table again.
 function render_rescue_tables_select(callback) {
   var d = create_dom_element('div', {id:'rescuetablesselect'},'');
   d.html('');
@@ -1841,8 +1823,8 @@ function render_rescue_tables_select(callback) {
     
     var move_table_span = create_dom_element('span', {}, v.n, d);
     
-    // -- Callback goes here, whatever you want it to do
-    _set("table",v,move_table_span);
+    _set("table",v,move_table_span);  // -- Callback goes here, whatever you want it to do
+    
     move_table_span.on('click', callback);
     move_table_span.on('click', function () { d.hide();});
     
@@ -1851,12 +1833,6 @@ function render_rescue_tables_select(callback) {
   });
   d.show();
   $('#main').prepend(d);
-//   d.css({position: 'absolute'});
-//   d.width($('body').width() * 0.60);
-//   var offset = $('body').offset();
-//   offset.top += $('body').height() * 0.5;
-//   offset.left += $('body').width() * 0.2;
-//   d.offset(offset);
   scroll_to($('#rescuetablesselect'),20);
 }
 
@@ -1877,9 +1853,7 @@ function render_tables() {
     })
     move_table_span.addClass('option');
     if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
-    // -------------------------
     
-    // See function above, render_tables_select
     
     // ------------------------
     // render divs for the actual tables
@@ -1958,8 +1932,7 @@ function render_tables() {
         table.on('mousedown', function() {
           var v = _get('table',$(this));
           route('table',v.id);
-          $('#table_id').val(v.id); // fallback table_id
-          //route('table',null); // uncomment this for debugging
+          $('#table_id').val(v.id); // set fallback table_id
         });
       }
     }
