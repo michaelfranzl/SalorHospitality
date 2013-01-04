@@ -152,7 +152,7 @@ class Booking < ActiveRecord::Base
     payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
     
     # create a change payment method item
-    unless self.payment_method_items.where(:change => true).any?
+    unless self.payment_method_items.existing.where(:change => true).any?
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
       PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :booking_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
     end

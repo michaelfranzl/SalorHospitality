@@ -37,22 +37,25 @@ Season.prototype.contains = function (season) {
 Season.prototype.interested = function (start,end) {
   var ts = new Date(start);
   var te = new Date(end);
+  console.log('XXXXXXXXXXXXXXX', this.id);
   while (ts <= te) {
     if ((ts >= this.start && ts <= this.end) || (te <= this.end && te >= this.start)) {
       return true;
     }
+    console.log('narrowing');
     ts = new Date(ts.getFullYear(),ts.getMonth(),ts.getDate() + 1);
     te = new Date(te.getFullYear(),te.getMonth(),te.getDate() - 1);
   }
   return false;
 }
 
+//the result is saved for covered seasons, on item and model level
 Season.applying_seasons = function (seasons,start,end) {
   var applying = [];
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
     if (s.interested(start,end)) {
-      
+      console.log('interested in season', s.id);
       var duration = s.get_days(start,end);
       if (s.start > start) {
         var start_date = s.start;
@@ -110,7 +113,7 @@ Season.splice = function (season1,season2) {
 
 function _create_seasons(id,season,append_to) {
   var i = -1;
-    while (i <=1) {
+  while (i <=1) {
     var s       = new Season;
     s.start     = new Date(Date.parse(season.f));
     s.end       = new Date(Date.parse(season.t));
@@ -160,6 +163,55 @@ function create_season_objects(seasons) {
   really_new_seasons = [];
   for (key in tmp)
     really_new_seasons.push(tmp[key]);
-
+  
   return really_new_seasons;
+}
+
+function render_season_illustration() {
+  var year_seconds = 31536000;
+  var i = -1;
+  
+  while (i <=1) {
+    $.each(resources.sn, function(k,v) {
+      var season_from = new Date(Date.parse(v.f));
+      var season_year = parseInt(season_from.getFullYear()) + i;
+      var year_start = new Date(Date.parse(season_year+"-01-01"));
+      
+      var left_percent = (season_from - year_start) / 1000 / year_seconds * 100;
+      var width_percent = v.d / year_seconds * 100;
+      var season_div = create_dom_element('div',{},v.n);
+      season_div.css('width', width_percent + '%');
+      season_div.css('left', left_percent + '%');
+      var red = parseInt(v.c.substring(1,3), 16);
+      var green = parseInt(v.c.substring(3,5), 16);
+      var blue = parseInt(v.c.substring(5,7), 16);
+      season_div.css('background-color', 'rgba('+red+','+green+','+blue+',0.3)');
+      season_div.addClass('season');
+      
+      $('#nested_seasons').append(season_div);
+    })
+    i++;
+  }
+  
+  var spliced_seasons = create_season_objects(resources.sn);
+  $.each(spliced_seasons, function(i, obj) {
+    console.log(obj);
+    var season_from = obj.start;
+    var season_year = obj.start.getFullYear();
+    var year_start = new Date(Date.parse("2013-01-01"));
+      
+    var left_percent = (obj.start.getTime() - year_start) / 1000 / year_seconds * 100;
+    var season_duration = obj.end - obj.start;
+    var width_percent = season_duration / 1000 / year_seconds * 100;
+    
+    var season_div = create_dom_element('div',{},obj.name + ' | ' +  obj.side +' | ' + season_year);
+    season_div.css('width', width_percent + '%');
+    season_div.css('left', left_percent + '%');
+    var red = parseInt(resources.sn[obj.id].c.substring(1,3), 16);
+    var green = parseInt(resources.sn[obj.id].c.substring(3,5), 16);
+    var blue = parseInt(resources.sn[obj.id].c.substring(5,7), 16);
+    season_div.css('background-color', 'rgba('+red+','+green+','+blue+',0.3)');
+    season_div.addClass('season');
+    $('#spliced_seasons').append(season_div);
+  })
 }

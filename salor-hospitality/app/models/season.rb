@@ -32,11 +32,12 @@ class Season < ActiveRecord::Base
   end
 
   def calculate_duration
-    if (self.from_date.month > self.to_date.month) or (self.from_date.month == self.to_date.month and self.from_date.day > self.to_date.day)
-      duration = - (self.to_date - self.from_date)
+    if self.from_date > self.to_date
+      from_date = self.from_date - 1.year
     else
-      duration = self.to_date - self.from_date
+      from_date = self.from_date
     end
+    duration = self.to_date - from_date
     self.update_attribute :duration, duration
   end
 end
