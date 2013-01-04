@@ -135,6 +135,7 @@ gn:
         hidden: löschen
         name: Name
         to_date: Bis
+        is_master: Meister?
       settlement:
         initial_cash: Startbetrag
         revenue: Endbetrag
