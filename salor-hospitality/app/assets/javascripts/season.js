@@ -37,12 +37,12 @@ Season.prototype.contains = function (season) {
 Season.prototype.interested = function (start,end) {
   var ts = new Date(start);
   var te = new Date(end);
-  console.log('XXXXXXXXXXXXXXX', this.id);
+//   console.log('XXXXXXXXXXXXXXX', this.id);
   while (ts <= te) {
     if ((ts >= this.start && ts <= this.end) || (te <= this.end && te >= this.start)) {
       return true;
     }
-    console.log('narrowing');
+//     console.log('narrowing');
     ts = new Date(ts.getFullYear(),ts.getMonth(),ts.getDate() + 1);
     te = new Date(te.getFullYear(),te.getMonth(),te.getDate() - 1);
   }
@@ -55,7 +55,7 @@ Season.applying_seasons = function (seasons,start,end) {
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
     if (s.interested(start,end)) {
-      console.log('interested in season', s.id);
+//       console.log('interested in season', s.id);
       var duration = s.get_days(start,end);
       if (s.start > start) {
         var start_date = s.start;
@@ -68,6 +68,17 @@ Season.applying_seasons = function (seasons,start,end) {
       var ns = {start: date_as_ymd(start_date), end: date_as_ymd(end_date),name: s.name,id: parseInt(s.id), duration:duration};
       applying.push(ns);
     }
+  }
+  var new_applying = [];
+  // let's make sure they don't overlap completely, as in the same dates
+  if (applying.length == 2) {
+//     console.log("checking for an eqaulity");
+    var s1 = applying[0];
+    var s2 = applying[1];
+    if (s2.start == s1.start && s2.end == s1.end) {
+      applying = [s2];
+    }
+    
   }
   return applying;
 }
@@ -143,6 +154,11 @@ function create_season_objects(seasons) {
       return 1;
     }
   });
+//   console.log("At this point, new seasons are: ");
+  for (var i = 0; i < new_seasons.length; i++) {
+    var s = new_seasons[i];
+//     console.log(s.name, date_as_ymd(s.start), date_as_ymd(s.end));
+  }
   var really_new_seasons = [];
   for (var i = 0; i < new_seasons.length; i++) {
     var s1 = new_seasons[i];
@@ -155,6 +171,11 @@ function create_season_objects(seasons) {
       really_new_seasons.push(s1);
     }
   }
+//   console.log("At this point, really new seasons are: ");
+//   for (var i = 0; i < new_seasons.length; i++) {
+//     var s = really_new_seasons[i];
+//     console.log("(" + s.id + ")" + s.name, date_as_ymd(s.start), date_as_ymd(s.end));
+//   }
   var tmp = {};
   for (i=0;i<really_new_seasons.length; i++) {
     var s = really_new_seasons[i];
@@ -168,6 +189,7 @@ function create_season_objects(seasons) {
 }
 
 function render_season_illustration() {
+  return;
   var year_seconds = 31536000;
   var i = -1;
   
@@ -195,7 +217,6 @@ function render_season_illustration() {
   
   var spliced_seasons = create_season_objects(resources.sn);
   $.each(spliced_seasons, function(i, obj) {
-    console.log(obj);
     var season_from = obj.start;
     var season_year = obj.start.getFullYear();
     var year_start = new Date(Date.parse("2013-01-01"));
