@@ -60,11 +60,11 @@ Season.prototype.interested = function (start,end) {
   //   console.log('XXXXXXXXXXXXXXX', this.id);
   while (ts <= te) {
     if ((ts >= this.start && ts <= this.end)) {
-      //console.log(this.name, date_as_ymd(this.start),date_as_ymd(this.end), "is interested from first case in ", date_as_ymd(ts),date_as_ymd(te));
+      console.log(this.name, date_as_ymd(this.start),date_as_ymd(this.end), "is interested from first case in ", date_as_ymd(ts),date_as_ymd(te));
       return true;
     }
     if ((te <= this.end && te >= this.start)) {
-      //console.log(this.name, this.start,this.end, "is interested from second case in ", ts,te);
+      console.log(this.name, this.start,this.end, "is interested from second case in ", ts,te);
       return true;
     }
     //     console.log('narrowing');
@@ -105,6 +105,17 @@ Season.applying_seasons = function (seasons,start,end) {
     }
   }
   console.log("Applying is",applying);
+  var new_applying = [];
+  // let's make sure they don't overlap completely, as in the same dates
+  if (applying.length == 2) {
+    //     console.log("checking for an eqaulity");
+    var s1 = applying[0];
+    var s2 = applying[1];
+    if (s2.start == s1.start && s2.end == s1.end) {
+      applying = [s2];
+    }
+    
+  }
   return applying;
 }
 Season.prototype.intersects_with = function (season) {
@@ -168,184 +179,86 @@ function _insert_before(needle,haystack,append_this) {
   }
   return new_haystack;
 }
-
-function season_starts_on(date,seasons) {
-  var date_string = date_as_md(date);
-  for (var id in seasons) {
-    var season = seasons[id];
-    var start = date_as_md(new Date(Date.parse(season.f)));
-    if (start == date_string) {
-      season.id = id;
-      return season;
-    }
+function _create_seasons(id,season,append_to) {
+  var i = -1;
+  while (i <=1) {
+    var s = _create_season(id,season,i);
+    append_to.push(s);
+    i++;
   }
-  return false;
-}
-function season_ends_on(date,seasons) {
-  var date_string = date_as_md(date);
-  for (var id in seasons) {
-    var season = seasons[id];
-    var end = date_as_md(new Date(Date.parse(season.t)));
-    if (end == date_string) {
-      season.id = id;
-      return season;
-    }
-  }
-  return false;
-}
-function _last_entry(array) {
-//   console.log("Returning last entry",array[array.length - 1], array);
-  return array[array.length - 1];
-}
-function _create_season(id,season, i) {
-  var current_year = new Date().getFullYear();
-  var s       = new Season;
-  s.start     = new Date(Date.parse(season.f));
-  s.end       = new Date(Date.parse(season.t));
-  s.start.setFullYear(s.end.getFullYear() + i);
-  s.end.setFullYear(s.end.getFullYear() + i);
-  s.is_master = season.is_master;
-  s.id        = id;
-  s.name      = season.n;
-  //season.f = date_as_ymd(s.start);
-  //season.t = date_as_ymd(s.end);
-  s._object = season;
-  s._duration = Season.diff(s.end,s.start);
-  if (Season.diff(s.end,s.start) > 365) {
-    console.log(id,season,i,s);
-    throw "What the fuck?";
-  }
-//   console.log("created season");
-//   s.debug();
-  return s;
-}
-function next_date(current_date,i) {
-  if (!i)
-    i = 1;
-  return new Date(current_date.getTime() + (i * 24 * 3600 * 1000));
-}
-function get_next_season(current_date,seasons) {
-  var current_season = false;
-  var cap = 365;
-  var x = 0;
-  while ( current_season == false ) {
-    x++;
-    if (x == cap) {
-      console.log("get_next_season cap reached");
-      return false;
-    }
-    current_date = next_date(current_date,1);
-    current_season = season_starts_on(current_date,seasons);
-  }
-  if (current_season) {
-    var obj = _create_season(current_season.id,current_season,0);
-    obj.start = current_date;
-    return obj;
-  }
-  return false;
-}
-function normalize_season_objects(seasons) {
-    // for some reason, dates get all wonky
-//     console.log("Normalizing", seasons);
-    var last_season = null;
-    var next_season;
-    for (var i = 0; i < seasons.length; i++) {
-      var current_season = seasons[i];
-      if (!last_season) {
-        last_season = current_season;
-        continue;
-      }
-//       current_season.debug();
-//       last_season.debug();
-      if (current_season.start.getFullYear() > current_season.end.getFullYear()) {
-        // seasons cannot go back in time
-        current_season.end.setFullYear(current_season.start.getFullYear());
-        current_season.duration = Season.diff(current_season.end,current_season.start);
-      }
-      if (current_season.start < last_season.end) {
-      
-      }
-      seasons[i] = current_season;
-      last_season = current_season;
-    }
-  return seasons;
 }
 function create_season_objects(seasons) {
-  
-  var current_date = new Date();
-  current_date = new Date(current_date.getFullYear(),current_date.getMonth(),current_date.getDate() - 1);
   var season_objects = [];
-  // this is a temp/in place function
-  function _find(id) {
-    for (var i = 0; i < season_objects.length; i++) { if (season_objects[i].id == id) { return season_objects[i]; } }
-  }
-  var current_season = false;
-  // first we need to walk back in time and find a season that starts on the current_date
-  var found = false;
-  var cap = 1000;
-  var x = 0;
-  var _last_seasons = [];
-  while (current_season == false) {
-    x++;
-    if (x > cap) {
-      throw "cap reached";
-      break;
-    }
-    current_season = season_starts_on(current_date,seasons);
-    if (current_season && !current_season.is_master) {
-//       console.log("season is not a master", current_season);
-      current_season = false;
-    }
-    if (!current_season) {
-      current_date = next_date(current_date,-1);
-//       console.log("moving backward to",date_as_ymd(current_date));
-    }
-  }
-  current_season_object = _create_season(current_season.id,current_season,0);
-  current_season_object.start = current_date;
-  current_season_object.side = "master";
-  season_objects.push(current_season_object);
-  var last_master = [];
-  last_master.push(current_season);
-  var last_season = null;
-  for (var i = 0; i < 600; i++) {
-    current_date = next_date(current_date,1);
-    current_season = season_starts_on(current_date,seasons);
-    if (current_season) {
-      current_season_object = _create_season(current_season.id,current_season,0);
-      current_season_object.start = current_date;
-      last_season = _last_entry(season_objects);
-      //console.log(last_season);
-      if (last_season.end > current_season_object.start) {
-//         console.log("setting season end for");
-//         last_season.debug();
-        last_season.end = next_date(current_season_object.start,-1);
-        season_objects[season_objects.length -1] = last_season;
-        current_season.side = "center";
-      } else if (last_season) {
-//         console.log(date_as_ymd(last_season.end), " !> ", date_as_ymd(current_season_object.start));
-      }
-      season_objects.push(current_season_object);
-    } else {
-      var tmp_season = season_ends_on(current_date,seasons);
-      if (tmp_season && !tmp_season.is_master) {
-        // so a season ends on this day
-//         console.log("season ends on", date_as_ymd(current_date), _find(tmp_season.id));
-        var tmp_season2 = season_starts_on(next_date(current_date,1),seasons);
-        if (!tmp_season2 && !tmp_season2.is_master ) {
-//           console.log("there is no immediate season after");
-          var tmp_prev = season_objects[season_objects.length -2];
-          var new_tmp = _create_season(tmp_prev._object.id,tmp_prev._object,0);
-          new_tmp.start = next_date(current_date,1);
-          new_tmp.side = "right";
-          season_objects.push(new_tmp);
+  $.each(seasons, function (id,season) {
+    _create_seasons(id,season,season_objects);
+  });
+  // now we need to resize each season so that it doesn't overlap on the right or left side
+  var right_sides = [];
+  for (var i = 0; i < season_objects.length; i++) {
+    var current_season = season_objects[i];
+    var right_season = null;
+    // now we need to descend into the objects and find the overlaps
+    for (var j = 0; j < season_objects.length; j++) {
+      var other_season = season_objects[j];
+      
+      if (current_season.id == other_season.id) {
+        continue;
+      } else {
+      
+        // we need to know IF they over lap
+        if (current_season.intersects_with(other_season)) {
+          // now we need to know the type of the intersection
+          var has_left_overlap = false;
+          var has_right_overlap = false;
+          var new_end_date = false;
+          if (current_season.start < other_season.start) {
+            has_left_overlap = Season.diff(other_season.start,current_season.start);
+          } // end if (current_season.start < other_season.start) 
+          if (current_season.end > other_season.end) {
+            has_right_overlap = Season.diff(current_season.end,other_season.end);
+          } // if (current_season.end > other_season.end)
+          // When we have left side days, we need to shrink
+          if (has_left_overlap && has_left_overlap > 0) {
+            var days_to_sub = has_left_overlap;
+            var new_end_date = new Date(current_season.start.getFullYear(),current_season.start.getMonth(),current_season.start.getDate() + has_left_overlap - 1);
+          }
+          if (has_right_overlap && has_right_overlap > 0) {
+            // in this case, we need to create a new one
+            right_season = _create_season(current_season.id,current_season._object,0);
+            right_season.start = new Date( other_season.end.getFullYear(), other_season.end.getMonth(), other_season.end.getDate() + 1 );
+            right_season.end = new Date(current_season.end.getFullYear(), current_season.end.getMonth(),right_season.start.getDate() + has_right_overlap);
+            right_season.side = "right";
+            
+            console.log("creating right sided");
+            right_sides.push(right_season);
+          }
+          if (has_left_overlap && has_left_overlap > 0) {
+            current_season.end = new_end_date;
+            current_season.side = "left";
+          }
         } else {
-//           console.log(tmp_season2, "starts immediately after");
+  //         console.log("No Intersection");
         }
-      }
-    }
+      
+      } // end if (current_season.id == other_season.id) 
+        
+    } // end for (var j = 0; j < season_objects.length; j++) 
+  } // end  for (var i = 0; i < season_objects.length; i++) 
+  Season.merge(season_objects,right_sides);
+  console.log("Right Sides",right_sides);
+  for (var x = 0; x < right_sides.lenght; x++) {
+    right_sides[x].debug();
   }
   console.log(season_objects);
+  season_objects.sort(function (a,b) {
+    if (a.start < b.start) {
+      return -1;
+    } else if (a.start == b.start) {
+      return 0;
+    } else if (a.start > b.start) {
+      return 1;
+    }
+  });
   return season_objects;
 }
 

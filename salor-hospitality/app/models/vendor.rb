@@ -261,7 +261,7 @@ class Vendor < ActiveRecord::Base
     seasons = Hash.new
     current_season = Season.current(self)
     current_year = Time.now.year
-    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :n => sn.name, :f => "#{current_year}-#{sn.from_date.strftime('%m-%d')}", :t => "#{current_year}-#{sn.to_date.strftime('%m-%d')}", :c => sn == current_season, :d => sn.duration, :c => sn.color } }
+    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :id => sn.id, :is_master => sn.is_master,:n => sn.name, :f => "#{current_year}-#{sn.from_date.strftime('%m-%d')}", :t => "#{current_year}-#{sn.to_date.strftime('%m-%d')}", :c => sn == current_season, :d => sn.duration, :c => sn.color } }
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
