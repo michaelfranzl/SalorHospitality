@@ -122,7 +122,11 @@ class Item < ActiveRecord::Base
       self.category_id ||= self.article.category_id
       self.statistic_category_id ||= self.article.statistic_category_id
     else
-      UserMailer.technician_message(self.company, "Item without Article in item.rb calculate_totals", '').deliver if self.company.technician_email
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "Item without Article in item.rb calculate_totals", '').deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] Item without Article in item.rb calculate_totals"
+      end
     end
 
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil

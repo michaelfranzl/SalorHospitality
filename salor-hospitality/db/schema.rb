@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104075436) do
+ActiveRecord::Schema.define(:version => 20130105123955) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -178,12 +178,11 @@ ActiveRecord::Schema.define(:version => 20130104075436) do
 
   create_table "companies", :force => true do |t|
     t.string  "name"
-    t.string  "mode",             :default => "local"
+    t.string  "mode",      :default => "local"
     t.string  "subdomain"
-    t.boolean "hidden",           :default => false
-    t.boolean "active",           :default => true
+    t.boolean "hidden",    :default => false
+    t.boolean "active",    :default => true
     t.string  "email"
-    t.string  "technician_email"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -1005,6 +1004,8 @@ ActiveRecord::Schema.define(:version => 20130104075436) do
     t.integer  "largest_settlement_number",                       :default => 0
     t.string   "unused_settlement_numbers",   :limit => 1000,     :default => "--- []\n"
     t.boolean  "use_settlement_numbers",                          :default => true
+    t.boolean  "enable_technician_emails",                        :default => false
+    t.string   "technician_email"
   end
 
 end

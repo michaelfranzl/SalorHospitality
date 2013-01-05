@@ -5,17 +5,6 @@ SalorHospitality::Application.configure do
 
   config.action_mailer.delivery_method = :sendmail
   
-  if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true
-    require File.join(Rails.root, 'lib', 'exceptions.rb')
-    sender_address = SalorHospitality::Application::CONFIGURATION[:exception_notification_sender]
-    exception_recipients = SalorHospitality::Application::CONFIGURATION[:exception_notification_receipients]
-    config.middleware.use ExceptionNotifier,
-        :email_prefix => "[SalorHospitalityException] ",
-        :sender_address => sender_address,
-        :exception_recipients => exception_recipients,
-        :sections => %w(salor request session environment backtrace)
-  end
-  
   if SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
     ENV['SCHEMA'] = File.join('/', 'var', 'lib', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID, 'schema.rb')
     

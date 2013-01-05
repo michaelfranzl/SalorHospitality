@@ -184,6 +184,9 @@ en:
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
       vendor:
+        enable_technician_emails: Send technician e-mails
+        technician_email: Technician e-mail
+        email: e-mail
         update_tables_interval: Interval update tables
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database

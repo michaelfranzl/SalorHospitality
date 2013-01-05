@@ -35,15 +35,19 @@ class SessionsController < ApplicationController
       end
       if user
         if ( not user.role.permissions.include?('login_locking') ) or company.mode != 'local' or user.current_ip.nil? or user.current_ip == request.ip
+          vendor = user.vendors.existing.first
           session[:user_id] = user.id
           session[:company_id] = user.company_id
-          session[:vendor_id] = user.vendors.existing.first.id
+          session[:vendor_id] = vendor.id if vendor
           session[:locale] = I18n.locale = user.language
           user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)
-          UserMailer.technician_message(company, "Login to #{ company.name }", '', request).deliver if company.technician_email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+          
+          if vendor and vendor.enable_technician_emails and vendor.technician_email and company.mode == 'demo' and SalorHospitality::Application::SH_DEBIAN_SITEID != 'none'
+            UserMailer.technician_message(vendor, "Login to #{ company.name }", '', request).deliver
+          end
           redirect_to orders_path and return
         else
           flash[:error] = t('messages.user_account_is_currently_locked')
@@ -99,8 +103,12 @@ class SessionsController < ApplicationController
     subject ||= "Test"
     message = params[:m]
     message ||= "Message"
-    company = Company.find_by_id(session[:company_id])
-    UserMailer.technician_message(company, subject, message).deliver if company and company.technician_email
+    vendor = Vendor.find_by_id(session[:vendor_id])
+    if vendor and vendor.technician_email and vendor.enable_technician_emails
+      UserMailer.technician_message(vendor, subject, message).deliver
+    else
+      logger.info "[TECHNICIAN] #{subject} #{message}"
+    end
     render :nothing => true
   end
   
@@ -110,7 +118,12 @@ class SessionsController < ApplicationController
     message = params[:m]
     message ||= "Message"
     company = Company.find_by_id(session[:company_id])
-    UserMailer.technician_message(company, subject, message).deliver if company and company.technician_email
+    vendor = Vendor.find_by_id(session[:vendor_id])
+    if vendor and vendor.technician_email and vendor.enable_technician_emails
+      UserMailer.technician_message(vendor, subject, message).deliver
+    else
+      logger.info "[TECHNICIAN] #{subject} #{message}"
+    end
     redirect_to '/'
   end
 

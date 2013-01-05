@@ -114,7 +114,11 @@ class Order < ActiveRecord::Base
       i.update_attribute :statistic_category_id, i.article.statistic_category_id
     else
       message = "Could not set statistic_category_id for Item. The Item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
-      UserMailer.technician_message(self.company, "Item without Article in order.rb create_new_item", p.inspect).deliver if self.company.technician_email
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "Item without Article in order.rb create_new_item", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
     end
   end
   

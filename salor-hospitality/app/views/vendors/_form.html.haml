@@ -21,6 +21,13 @@
         = vendor_form.text_field :name
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
+        = vendor_form.label :email
+        = vendor_form.text_field :email
+        - if @current_company.mode == 'local' or @current_user.role.weight.zero?
+          %br
+          = vendor_form.label :technician_email
+          = vendor_form.text_field :technician_email
+        %br
         = vendor_form.fields_for :images do |image_form|
           %br
           = vendor_form.label image_form.object.image_type.to_s
@@ -81,6 +88,10 @@
         %span.display_keyboard{ :id => "vendor_invoice_footer_blurb_display_keyboard" }
 
       %td
+        - if @current_company.mode == 'local' or @current_user.role.weight.zero?
+          = vendor_form.check_box :enable_technician_emails
+          = vendor_form.label :enable_technician_emails
+          %br
         = vendor_form.check_box :use_order_numbers
         = vendor_form.label :use_order_numbers
         %br
