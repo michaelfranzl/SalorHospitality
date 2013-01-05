@@ -834,11 +834,22 @@ function update_order_from_invoice_form(data, button) {
     type: 'post',
     url: '/route',
     data: data,
-    timeout: 40000
+    timeout: 60000
   });
-  var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', $(button));
+  var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
   loader.css('margin', '7px');
   loader.css('position','absolute');
+  
+  if (typeof button !== 'undefined') {
+    $(button).append(loader);
+    $(button).css('opacity','0.5');
+  } else {
+    if ( data.jsaction == 'change_cost_center' ) {
+      $('#model_' + data.id + ' a.iconbutton').append(loader);
+      $('#model_' + data.id + ' a.iconbutton').css('opacity','0.5');
+      $('#model_' + data.id + ' a.iconbutton').attr('onclick', ''); // this prevents timing problems with multiple passenger instances when cost center is changed and the order finished within a fraction of a second. the user has to wait until the server re-renders the DOM.
+    }
+  }
   
   if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && data.jsaction != 'change_cost_center') {
     if ($('div.invoice:visible').length == 1) {
@@ -961,6 +972,7 @@ function submit_split_items(order_id) {
     var splitbutton = $('#model_' + order_id + ' a.splitinvoice_button');
     var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '', splitbutton);
     loader.css('margin', '7px');
+    splitbutton.css('opacity','0.5');
 
     $.ajax({
       type: 'put',
