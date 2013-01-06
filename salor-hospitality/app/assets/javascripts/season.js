@@ -2,8 +2,18 @@
 /* Season Object Code */
 var Season = function () {};
 Season.prototype.debug = function (id,msg) {
+  function _name(str) {
+    var num = 10;
+    var new_str = str.substring(0,num);
+    if (new_str.length < num) {
+      while (new_str.length < num) {
+        new_str += ".";
+      }
+    }
+    return new_str;
+  }
   if (!id || id == this.id) {
-    console.log("{ Id: " + this.id + " Name: " + this.name + " Start: " +date_as_ymd(this.start) + " End: " + date_as_ymd(this.end) + " duration: " + Season.diff(this.end,this.start) + " Side: " + this.side + " }",msg);
+    console.log("{ Id:\t" + this.id + "\tName: " + _name(this.name) + "\tStart:\t" +date_as_ymd(this.start) + "\tEnd: " + date_as_ymd(this.end) + "\tDuration: " + Season.diff(this.end,this.start) + "\tSide: " + this.side + " }",msg);
   }
 }
 Season.diff = function (date_1,date_2) {
@@ -104,7 +114,7 @@ Season.applying_seasons = function (seasons,start,end) {
       }
     }
   }
-  console.log("Applying is",applying);
+  //console.log("Applying is",applying);
   return applying;
 }
 Season.prototype.intersects_with = function (season) {
@@ -120,33 +130,6 @@ Season.prototype.intersects_with = function (season) {
 }
 Date.prototype.year = function () {
   return this.getFullYear();
-}
-function _create_season(id,season, i) {
-  var current_year = new Date().getFullYear();
-  var s       = new Season;
-  s.start     = new Date(Date.parse(season.f));
-  s.end       = new Date(Date.parse(season.t));
-  s.start.setFullYear(current_year + i);
-  s.end.setFullYear(s.end.getFullYear() + i);
-
-  if (s.end < s.start) {
-    s.end.setFullYear(s.end.getFullYear() + 1);
-  }
-  if (s.start > s.end) {
-    s.start.setFullYear(s.start.getFullYear() - 1);
-  }
-  s.id        = id;
-  s.name      = season.n;
-  //season.f = date_as_ymd(s.start);
-  //season.t = date_as_ymd(s.end);
-  s._object = season;
-  s._duration = Season.diff(s.end,s.start);
-
-  if (Season.diff(s.end,s.start) > 365) {
-    console.log(id,season,i,s);
-    throw "What the fuck?";
-  }
-  return s;
 }
 function _insert_after(needle,haystack,append_this) {
   var new_haystack = [];
@@ -212,12 +195,21 @@ function _create_season(id,season, i) {
   s._object = season;
   s._duration = Season.diff(s.end,s.start);
   if (Season.diff(s.end,s.start) > 365) {
-    console.log(id,season,i,s);
-    throw "What the fuck?";
+    //console.log(id,season,i,s);
+    throw "create season wtf?";
   }
 //   console.log("created season");
 //   s.debug();
   return s;
+}
+function sort_seasons_func(a,b) {
+  if (a.start < b.start) {
+    return -1;
+  } else if (a.start == b.start) {
+    return 0;
+  } else if (a.start > b.start) {
+    return 1;
+  }
 }
 function next_date(current_date,i) {
   if (!i)
@@ -231,7 +223,7 @@ function get_next_season(current_date,seasons) {
   while ( current_season == false ) {
     x++;
     if (x == cap) {
-      console.log("get_next_season cap reached");
+      //console.log("get_next_season cap reached");
       return false;
     }
     current_date = next_date(current_date,1);
@@ -262,16 +254,29 @@ function normalize_season_objects(seasons) {
         current_season.end.setFullYear(current_season.start.getFullYear());
         current_season.duration = Season.diff(current_season.end,current_season.start);
       }
-      if (current_season.start < last_season.end) {
-      
+      if (current_season.end < current_season.start) {
+        //ends cannot be in the past
+        while (current_season.end < current_season.start) {
+          // we cannot change the month dates, only the years
+          current_season.end.setFullYear(current_season.end.getFullYear() + 1);
+        }
       }
+      if (current_season.start < last_season.end) {
+        //console.log("End is less than start",current_season.name,date_as_ymd(current_season.end),date_as_ymd(current_season.start));
+       // current_season.end.setFullYear(current_season.end.getFullYear() + 1);
+      }
+      current_season.duration = Season.diff(current_season.end,current_season.start);
       seasons[i] = current_season;
       last_season = current_season;
     }
+    seasons.sort(sort_seasons_func);
   return seasons;
 }
 function create_season_objects(seasons) {
-  
+  if (_get("normalized_season_objects")) {
+    //console.log("season objects already generated");
+    return _get("normalized_season_objects");
+  }
   var current_date = new Date();
   current_date = new Date(current_date.getFullYear(),current_date.getMonth(),current_date.getDate() - 1);
   var season_objects = [];
@@ -281,14 +286,12 @@ function create_season_objects(seasons) {
   }
   var current_season = false;
   // first we need to walk back in time and find a season that starts on the current_date
-  var found = false;
   var cap = 1000;
   var x = 0;
-  var _last_seasons = [];
   while (current_season == false) {
     x++;
     if (x > cap) {
-      throw "cap reached";
+      throw "create season objects cap reached";
       break;
     }
     current_season = season_starts_on(current_date,seasons);
@@ -305,8 +308,6 @@ function create_season_objects(seasons) {
   current_season_object.start = current_date;
   current_season_object.side = "master";
   season_objects.push(current_season_object);
-  var last_master = [];
-  last_master.push(current_season);
   var last_season = null;
   for (var i = 0; i < 600; i++) {
     current_date = next_date(current_date,1);
@@ -314,6 +315,18 @@ function create_season_objects(seasons) {
     if (current_season) {
       current_season_object = _create_season(current_season.id,current_season,0);
       current_season_object.start = current_date;
+      if (current_season_object.start.getFullYear() > current_season_object.end.getFullYear()) {
+        // seasons cannot go back in time
+        current_season_object.end.setFullYear(current_season_object.start.getFullYear());
+        current_season_object.duration = Season.diff(current_season_object.end,current_season_object.start);
+      }
+      if (current_season_object.end < current_season_object.start) {
+        //ends cannot be in the past
+        while (current_season_object.end < current_season_object.start) {
+          // we cannot change the month dates, only the years
+          current_season_object.end.setFullYear(current_season_object.end.getFullYear() + 1);
+        }
+      }
       last_season = _last_entry(season_objects);
       //console.log(last_season);
       if (last_season.end > current_season_object.start) {
@@ -345,7 +358,11 @@ function create_season_objects(seasons) {
       }
     }
   }
-  console.log(season_objects);
+  season_objects = normalize_season_objects(season_objects);
+  _set("normalized_season_objects",season_objects);
+//   for (var i = 0; i < season_objects.length; i++) {
+//     season_objects[i].debug();
+//   }
   return season_objects;
 }
 
@@ -406,8 +423,8 @@ var year_seconds = 31536000;
     var year_start = new Date(Date.parse("2013-01-01"));
       
     var left_percent = (obj.start.getTime() - year_start) / 1000 / year_seconds * 100;
-    var season_duration = obj.end - obj.start;
-    var width_percent = season_duration / 1000 / year_seconds * 100;
+    var season_duration = Season.diff(obj.end,obj.start);
+    var width_percent = season_duration * 24 * 3600 / year_seconds * 100;
     
     var season_div = create_dom_element('div',{},obj.name + ' | ' +  obj.side +' | ' + season_year);
     season_div.css('width', width_percent + '%');
