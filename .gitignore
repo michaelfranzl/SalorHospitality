@@ -29,8 +29,8 @@ salor-hospitality/config/database.yml
 *.kate-swp
 sha1-signatures.txt
 *.tar.bz2
-Gemfile
-Gemfile.lock
+salor-hospitality/Gemfile
+salor-hospitality/Gemfile.lock
 debian/salor-hospitality
 debian/files
 *.debhelper
