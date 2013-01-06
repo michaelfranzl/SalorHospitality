@@ -184,6 +184,9 @@ en:
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
       vendor:
+        enable_technician_emails: Send technician e-mails
+        technician_email: Technician e-mail
+        email: e-mail
         update_tables_interval: Interval update tables
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database
@@ -656,6 +659,7 @@ en:
       manage_statistics: Statistics
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      add_option_to_sent_item: Add Options to sent Items
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

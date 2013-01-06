@@ -114,7 +114,11 @@ class Order < ActiveRecord::Base
       i.update_attribute :statistic_category_id, i.article.statistic_category_id
     else
       message = "Could not set statistic_category_id for Item. The Item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
-      UserMailer.technician_message(self.company, "Item without Article", p.inspect).deliver if company.technician_email
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "Item without Article in order.rb create_new_item", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
     end
   end
   
@@ -678,9 +682,9 @@ class Order < ActiveRecord::Base
         options.merge! optioncount => { :id => oi.option_id, :n => oi.name, :p => oi.price }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.optionslist, :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
       else
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => i.optionslist, :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
       end
     end
     return a.to_json

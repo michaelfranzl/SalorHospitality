@@ -185,6 +185,9 @@ gn:
         audio: Akustische Signale
         confirmation_user: Fernbestellungen bestätigen
       vendor:
+        technician_email: Techniker E-mail
+        email: E-Mail
+        enable_technician_emails: E-Mails an Techniker senden
         update_tables_interval: Intervall Aktualisierung Tische
         update_item_lists_interval: Intervall Aktualisierung Benachrichtigungen
         update_resources_interval: Intervall Aktualisierung Offline-Datenbank
@@ -659,6 +662,7 @@ gn:
       receipt_logo: Beleg Logos
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
       settlement_statistics_taxes: Losungsausdruck Statistik Steuern
+      add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       settlement_statistics_taxes_categories: Losungsausdruck Statistik Steuer mit
         Kategorien
   room_prices:
