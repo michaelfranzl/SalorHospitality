@@ -125,6 +125,7 @@ pl:
         hidden: Usuń
         name: Nazwa
         to_date: Do
+        is_master: Master?
       settlement:
         initial_cash: Stan początkowy
         revenue: Stan końcowy
@@ -198,6 +199,9 @@ pl:
         rlogo_footer: Logo stopki
         logo: Logo ekranu
         invoice_logo: Logo faktury
+        enable_technician_emails: Send technician e-mails
+        technician_email: Technician e-mail
+        email: e-mail
       vendor_printer:
         copies: Kopia
         hidden: Usuń
@@ -658,6 +662,7 @@ pl:
       settlement_statistics_taxes: Pokaż statystyki podatkowe
       settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
       manage_cameras: Zarządzanie kamerami
+      add_option_to_sent_item: Add Options to sent Items
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen

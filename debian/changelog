@@ -1,3 +1,33 @@
+salor-hospitality (4.1.2.33ubuntu1) precise; urgency=low
+
+  [ Jason Knight ]
+  * Overlapping seasons when start and ends are the same
+
+  [ Michael Franzl ]
+  * season illustrations
+
+  [ Jason Knight ]
+  * added migration
+  * Added xlation
+  * season bug, die die die
+
+  [ Michael Franzl ]
+  * Feature #1622 Add behaviour and permission add_option_to_sent_item
+  * code cleanup
+  * Bug #1623 Changing the CostCenter and finishing an Order within a fraction of a second causes TaxItems and PaymentMethodItems to have the wrong cost_center_id, probably due to multiple Passenger instances
+  * Bug #1624 Catch and ignore Item without associated Article in item.rb
+  * Feature #1625 Allow the User to enable and disable any debugging/technician emails
+
+  [ Jason Knight ]
+  * More season works, fixing seasons with backwards in time end date
+  * added .gitignore
+  * fine
+
+  [ Michael Franzl ]
+  * debian installation fix, show season diagram only for rooms view
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 09 Jan 2013 10:48:39 +0100
+
 salor-hospitality (4.1.2.33) unstable; urgency=low
 
   [ Jason Knight ]

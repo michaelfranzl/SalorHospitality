@@ -161,6 +161,7 @@ el:
         hidden: διαγραφή
         name: Όνομα
         to_date: Σε
+        is_master: Master?
       surcharge:
         amount: Ποσό
         guest_type_id: Τύπος Πελάτη
@@ -198,6 +199,9 @@ el:
         update_tables_interval: Interval update tables
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database
+        enable_technician_emails: Send technician e-mails
+        technician_email: Technician e-mail
+        email: e-mail
       payment_method_item:
         amount: Ποσό
       booking_item:
@@ -650,6 +654,7 @@ el:
       manage_statistic_categories: Manage Statistic Categories
       allow_exit: Allow Exit
       manage_cameras: Manage cameras
+      add_option_to_sent_item: Add Options to sent Items
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
