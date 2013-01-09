@@ -523,6 +523,7 @@ function show_rooms_interface() {
   $('#tables').hide();
   $('#areas').hide();
   $('#container').hide();
+  $('#spliced_seasons').show();
   $('#rooms').html('');
   var admin_toggle_offset = $('#header').offset();
   $('#rooms').show();

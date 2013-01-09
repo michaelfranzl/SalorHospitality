@@ -405,6 +405,7 @@ var year_seconds = 31536000;
       var season_div = create_dom_element('div',{},v.n);
       season_div.css('width', width_percent + '%');
       season_div.css('left', left_percent + '%');
+      
       var red = parseInt(v.c.substring(1,3), 16);
       var green = parseInt(v.c.substring(3,5), 16);
       var blue = parseInt(v.c.substring(5,7), 16);
@@ -426,7 +427,7 @@ var year_seconds = 31536000;
     var season_duration = Season.diff(obj.end,obj.start);
     var width_percent = season_duration * 24 * 3600 / year_seconds * 100;
     
-    var season_div = create_dom_element('div',{},obj.name + ' | ' +  obj.side +' | ' + season_year);
+    var season_div = create_dom_element('div',{},obj.name);
     season_div.css('width', width_percent + '%');
     season_div.css('left', left_percent + '%');
     var red = parseInt(resources.sn[obj.id].c.substring(1,3), 16);

@@ -135,6 +135,7 @@ en:
         hidden: delete
         name: Name
         to_date: To
+        is_master: Master?
       settlement:
         initial_cash: Initial amount
         revenue: End amount
