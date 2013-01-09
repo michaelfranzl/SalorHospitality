@@ -334,7 +334,7 @@ company_count.times do |c|
     s2 = Season.new :name => 'Autumn', :from_date => Date.parse('2012-09-21'), :to_date => Date.parse('2012-12-20'), :vendor_id => vendor.id, :company_id => company.id, :color => "#8f0303"
     s2.save
     s1.calculate_duration
-    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-20'), :vendor_id => vendor.id, :company_id => company.id, :master => true, :color => "#39c4d4"
+    s3 = Season.new :name => 'Winter', :from_date => Date.parse('2012-12-21'), :to_date => Date.parse('2012-03-20'), :vendor_id => vendor.id, :company_id => company.id, :is_master => true, :color => "#39c4d4"
     s3.save
     s1.calculate_duration
     s4 = Season.new :name => 'Spring', :from_date => Date.parse('2012-03-21'), :to_date => Date.parse('2012-06-20'), :vendor_id => vendor.id, :company_id => company.id, :color => "#39d467"
