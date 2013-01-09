@@ -27,8 +27,9 @@ salor-hospitality (4.1.2.34) unstable; urgency=low
   * debian installation fix, show season diagram only for rooms view
   * build
   * reset fallback table_id when routing to tables
+  * build
 
- -- Michael Franzl <office@michaelfranzl.com>  Wed, 09 Jan 2013 10:52:12 +0100
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 09 Jan 2013 11:05:25 +0100
 
 salor-hospitality (4.1.2.33) unstable; urgency=low
 

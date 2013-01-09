@@ -13,7 +13,7 @@ Season.prototype.debug = function (id,msg) {
     return new_str;
   }
   if (!id || id == this.id) {
-    console.log("{ Id:\t" + this.id + "\tName: " + _name(this.name) + "\tStart:\t" +date_as_ymd(this.start) + "\tEnd: " + date_as_ymd(this.end) + "\tDuration: " + Season.diff(this.end,this.start) + "\tSide: " + this.side + " }",msg);
+    //console.log("{ Id:\t" + this.id + "\tName: " + _name(this.name) + "\tStart:\t" +date_as_ymd(this.start) + "\tEnd: " + date_as_ymd(this.end) + "\tDuration: " + Season.diff(this.end,this.start) + "\tSide: " + this.side + " }",msg);
   }
 }
 Season.diff = function (date_1,date_2) {

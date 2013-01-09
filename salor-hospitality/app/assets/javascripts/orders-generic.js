@@ -98,6 +98,7 @@ function route(target, model_id, action, options) {
     $('#items_notifications_static').show();
     $('#tables').show();
     $('#rooms').hide();
+    $('#spliced_seasons').hide();
     if (settings.mobile) { $('#areas').show(); }
     $('#functions_header_index').show();
     $('#functions_header_order_form').hide();
@@ -269,6 +270,7 @@ function route(target, model_id, action, options) {
     $('#invoices').html('');
     $('#invoices').show();
     $('#items_notifications_interactive').hide();
+    $('#spliced_seasons').hide();
     //$('#items_notifications_static').hide();
     $('#orderform').hide();
     $('#tables').hide();
@@ -330,6 +332,7 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#rooms').hide();
     $('#container').show();
+    $('#spliced_seasons').show();
     $('#functions_header_index').hide();
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
@@ -352,6 +355,8 @@ function route(target, model_id, action, options) {
     $('#container').show();
     $('#orderform').hide();
     $('#invoices').hide();
+    $('#spliced_seasons').show();
+    
     $('#functions_header_index').hide();
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
@@ -1972,6 +1977,7 @@ function switch_to_table() {
   $('#articles').html('');
   $('#quantities').html('');
   $('.target_table').val('');
+  $('#spliced_seasons').hide();
   $('#items_notifications_interactive').hide();
   $('#items_notifications_static').hide();
   $('#functions_header_last_invoices').hide();
