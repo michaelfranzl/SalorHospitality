@@ -136,6 +136,7 @@ function route(target, model_id, action, options) {
       scroll_to($('#container'),20);
     }
     submit_json.currentview = 'tables';
+    $('#table_id').val('');
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
