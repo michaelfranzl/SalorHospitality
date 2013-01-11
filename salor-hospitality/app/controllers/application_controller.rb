@@ -167,7 +167,7 @@ class ApplicationController < ActionController::Base
         case params['jsaction']
           #----------jsaction----------
           when 'send'
-            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly. A timeout would be possible, but oh, well.
+            render :js => "route('rooms', '#{@booking.room_id}', 'update_bookings', #{@booking.to_json })" #this is an "AJAX redirect" since the rooms view has to be re-rendered AFTER all data have been processed. We cannot put this into the static JS route() function since that would render too quickly.
           #----------jsaction----------
           when 'pay'
             @booking.pay

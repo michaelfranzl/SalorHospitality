@@ -20,7 +20,7 @@ class Customer < ActiveRecord::Base
 
   def full_name(simple = false)
     if simple then
-      return "#{ self.last_name } #{ self.first_name }"
+      return "#{ self.last_name },#{ self.first_name }"
     else
       return "#{ self.last_name } #{ self.first_name } #{ self.company_name.empty? ? '' : '(' + self.company_name + ')' }"
     end

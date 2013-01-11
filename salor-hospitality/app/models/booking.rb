@@ -51,11 +51,11 @@ class Booking < ActiveRecord::Base
   end
 
   def customer_name=(name)
-    last,first = name.split(' ')
+    last,first = name.split(',')
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id, :login => "#{last.strip}#{first.strip}")
       self.vendor.update_cache
     end
     self.customer = c
@@ -63,10 +63,11 @@ class Booking < ActiveRecord::Base
   end
   
   def self.create_from_params(params, vendor, user)
-    booking = Booking.new params[:model]
+    booking = Booking.new
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
+    booking.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       booking.create_new_item(item_params)
     end
