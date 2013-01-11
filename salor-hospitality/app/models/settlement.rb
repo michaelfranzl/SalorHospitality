@@ -182,6 +182,15 @@ class Settlement < ActiveRecord::Base
     "\x1DV\x00" # paper cut
   end
   
+  def report_errors_to_technician
+    if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+      errors = self.check.flatten
+      if errors.any?
+        UserMailer.technician_message(self.vendor, "Errors in Settlement #{ self.nr }", errors.to_s).deliver
+      end
+    end
+  end
+  
   def check
     messages = []
     tests = []
@@ -191,6 +200,9 @@ class Settlement < ActiveRecord::Base
     end
     
     tests[1] = self.sum.round(2) == self.orders.existing.sum(:sum).round(2)
+    
+    tests[2] = self.payment_method_items.existing.where(:order_id => nil).any? == false
+    
     0.upto(tests.size-1).each do |i|
       messages << "Settlement #{ self.id }: test#{i} failed." if tests[i] == false
     end

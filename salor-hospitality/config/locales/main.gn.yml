@@ -730,6 +730,7 @@ gn:
       print: Drucken
       start: Starten
       started_at: Gestartet am
+      please_wait: Analysiere Daten. Bitte warten ...
   shared:
     invoice_tax_list:
       list_of_taxes: Liste aller Steuern

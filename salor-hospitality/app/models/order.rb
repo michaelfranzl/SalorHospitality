@@ -713,8 +713,12 @@ class Order < ActiveRecord::Base
       tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
       
       # order sum must match the PAYMENT METHOD ITEM sum
-      if self.paid
+      if self.paid and self.cost_center.no_payment_methods != true
         tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount)).round(2) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)
+      end
+      
+      if self.paid and self.cost_center.no_payment_methods == true
+        tests[6] = self.payment_method_items.any? == false
       end
     end
 

@@ -53,6 +53,7 @@ class SettlementsController < ApplicationController
     @settlement.update_attributes params[:settlement]
     @settlement.finish
     @settlement.print
+    @settlement.report_errors_to_technician
   end
   
   # ajax

@@ -725,6 +725,7 @@ en:
       print: Print
       start: Start
       started_at: Started at
+      please_wait: Analyzing data. Please wait ...
   shared:
     invoice_tax_list:
       list_of_taxes: List of Taxes

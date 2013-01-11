@@ -37,18 +37,19 @@ vendor_printer_labels = ['Bar','Kitchen','Guestroom']
 payment_method_names = ['Cash', 'Card', 'Other','Change']
 superuser_permissions = SalorHospitality::Application::PERMISSIONS
 superuser_permissions.delete('add_option_to_sent_item')
+superuser_permissions.delete('login_locking')
 superuser_permissions.delete('see_debug')
 role_names = {
   'superuser' =>
     {:weight => 0, :permissions => superuser_permissions },
   'owner' =>
-    {:weight => 1, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables','manage_vendors'] },
+    {:weight => 1, :permissions => ['take_orders','reactivate_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','order_notes','split_items','move_tables','assign_order_to_user','refund','assign_cost_center','assign_order_to_booking','move_order','move_order_from_invoice_form','manage_articles','manage_categories','manage_statistic_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','settlement_statistics_taxes','settlement_statistics_taxes_categories','manage_business_invoice','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','manage_cameras','counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery','see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery','see_item_notifications_static','manage_pages','manage_customers','manage_hotel','manage_roles','item_scribe','assign_tables','download_database','remote_support','mobile_show_tools','receipt_logo','manage_statistics','manage_statistics_hotel','statistics_weekday','statistics_hour','statistics_table','statistics_payment_method','statistics_category','statistics_tax','allow_exit'] },
   'host' =>
-    {:weight => 2, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_users','manage_taxes','manage_tables'] },
+    {:weight => 2, :permissions => ['take_orders','reactivate_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','order_notes','split_items','move_tables','assign_order_to_user','refund','assign_cost_center','assign_order_to_booking','move_order','move_order_from_invoice_form','manage_articles','manage_categories','manage_statistic_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','settlement_statistics_taxes','settlement_statistics_taxes_categories','manage_business_invoice','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','manage_cameras','counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery','see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery','see_item_notifications_static','manage_pages','manage_customers','item_scribe','assign_tables','download_database','remote_support','mobile_show_tools','receipt_logo','manage_statistics','manage_statistics_hotel','statistics_weekday','statistics_hour','statistics_table','statistics_payment_method','statistics_category','statistics_tax','allow_exit'] },
   'chief_waiter' =>
-    {:weight => 3, :permissions => ['take_orders','decrement_items','delete_items','cancel_all_items_in_active_order','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_tables'] },
+    {:weight => 3, :permissions => ['take_orders','decrement_items','finish_orders','split_items','move_tables','assign_order_to_user','refund','assign_cost_center','move_order','move_order_from_invoice_form','manage_articles','manage_categories','manage_statistic_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','settlement_statistics_taxes','settlement_statistics_taxes_categories','manage_business_invoice','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery','see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery','see_item_notifications_static','manage_customers','item_scribe','assign_tables','download_database','remote_support','mobile_show_tools','receipt_logo','manage_statistics','manage_statistics_hotel','statistics_weekday','statistics_hour','statistics_table','statistics_payment_method','statistics_category','statistics_tax','allow_exit'] },
   'waiter' =>
-    {:weight => 4, :permissions => ['take_orders','decrement_items','finish_orders','split_items','move_order']},
+    {:weight => 4, :permissions => ['take_orders','finish_orders','split_items','move_tables','refund','move_order','manage_articles','manage_categories','manage_statistic_categories','manage_options','finish_all_settlements','finish_own_settlement','view_all_settlements','settlement_statistics_taxes','settlement_statistics_taxes_categories','manage_business_invoice','manage_users','manage_taxes','manage_cost_centers','manage_payment_methods','manage_tables','manage_vendors','manage_customers','assign_tables']},
   'auxiliary_waiter' =>
     {:weight => 5, :permissions => ['take_orders','finish_orders']},
   'terminal' =>
@@ -258,6 +259,7 @@ company_count.times do |c|
       user.vendors << vendor
       user.tables = table_objects
       user.role = role_objects[i]
+      user.role_weight = role_objects[i].weight
       r = user.save
       user_objects << user
       puts "User #{ user_array.to_a[i][0] } #{ c } #{ v } #{ i } created" if r == true
@@ -311,23 +313,23 @@ company_count.times do |c|
       end
     end
 
-    puts " Creating Hotel Tax #{c} #{v}"
+    puts " Creating Example Hotel Tax #{c} #{v}"
     #local_tax = Tax.create :name => "Local Tax #{c} #{v}", :percent => 1, :vendor_id => vendor.id, :company_id => company.id, :letter => "D"
     room_type_objects = Array.new
     guest_type_objects = Array.new
     4.times do |i|
-      puts " Creating RoomType #{c} #{v} #{i}"
+      puts " Creating Example RoomType #{c} #{v} #{i}"
       rt = RoomType.create :name => "RoomType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
       room_type_objects << rt
-      puts " Creating Room #{c} #{v} #{i}"
+      puts " Creating Example Room #{c} #{v} #{i}"
       Room.create :name => "Room#{i}", :room_type_id => rt.id, :vendor_id => vendor.id, :company_id => company.id
-      puts " Creating GuestType #{c} #{v} #{i}"
+      puts " Creating Example GuestType #{c} #{v} #{i}"
       gt = GuestType.new :name => "GuestType #{c} #{v} #{i}", :vendor_id => vendor.id, :company_id => company.id
       gt.taxes << tax_objects[0]
       gt.save
       guest_type_objects << gt
     end
-    puts " Creating Seasons for #{c} #{v}"
+    puts " Creating Example Seasons for #{c} #{v}"
     s1 = Season.new :name => 'Summer', :from_date => Date.parse('2012-06-21'), :to_date => Date.parse('2012-09-20'), :vendor_id => vendor.id, :company_id => company.id, :color => "#d6c951"
     s1.save
     s1.calculate_duration
@@ -345,7 +347,7 @@ company_count.times do |c|
     4.times do |i|
       4.times do |j|
         4.times do |k|
-          puts " Creating RoomPrice #{c} #{v} #{i} #{j} #{k}"
+          puts " Creating Example RoomPrice #{c} #{v} #{i} #{j} #{k}"
           RoomPrice.create :season_id => season_objects[k].id, :room_type_id => room_type_objects[i].id, :guest_type_id => guest_type_objects[j].id, :base_price => (2 * i + 3 * j + 5 * k) * 10 + 3, :vendor_id => vendor.id, :company_id => company.id
         end
       end
@@ -354,7 +356,7 @@ company_count.times do |c|
     season_objects.size.times do |x|
       guest_type_objects.size.times do |y|
         radio_surcharge_names.size.times do |z|
-          puts " Creating Radio Surcharge #{radio_surcharge_names[z]}"
+          puts " Creating Example Radio Surcharge #{radio_surcharge_names[z]}"
           surcharge = Surcharge.new :name => radio_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id, :radio_select => true
           tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 1 + x + y + z, :tax_id => tax_objects[rand(3)].id
           surcharge.tax_amounts = [tax_amount]
@@ -362,7 +364,7 @@ company_count.times do |c|
           surcharge.calculate_totals
         end
         checkbox_surcharge_names.size.times do |z|
-          puts " Creating Checkbox Surcharge #{checkbox_surcharge_names[z]}"
+          puts " Creating Example Checkbox Surcharge #{checkbox_surcharge_names[z]}"
           surcharge = Surcharge.create :name => checkbox_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => guest_type_objects[y].id
           tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 1 + x + y + z, :tax_id => tax_objects[rand(3)].id
           surcharge.tax_amounts = [tax_amount]
@@ -371,7 +373,7 @@ company_count.times do |c|
         end
       end
       common_surcharge_names.size.times do |z|
-        puts " Creating Common Surcharge #{common_surcharge_names[z]}"
+        puts " Creating Example Common Surcharge #{common_surcharge_names[z]}"
         surcharge = Surcharge.create :name => common_surcharge_names[z], :vendor_id => vendor.id, :company_id => company.id, :season_id => season_objects[x].id, :guest_type_id => nil
         tax_amount = TaxAmount.create :vendor_id => vendor.id, :company_id => company.id, :amount => 3 + x + z, :tax_id => tax_objects[rand(3)].id
         surcharge.tax_amounts = [tax_amount]
