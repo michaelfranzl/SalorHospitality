@@ -672,6 +672,7 @@ es:
       print: Imprimir
       start: Iniciar
       started_at: Iniciado a las
+      please_wait: Analyzing data. Please wait ...
   statistic: Estadística
   statistics:
     index:

@@ -680,6 +680,7 @@ ru:
       print: Печать
       start: Начало
       started_at: Начался в
+      please_wait: Analyzing data. Please wait ...
   split_order: Разбить заказ
   statistic: Статистика
   statistics:

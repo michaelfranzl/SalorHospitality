@@ -713,6 +713,7 @@ fr:
       print: Imprimer
       start: Commencer
       started_at: Commencé à
+      please_wait: Analyzing data. Please wait ...
   shared:
     invoice_tax_list:
       list_of_taxes: Liste de Taxes

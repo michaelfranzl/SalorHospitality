@@ -699,6 +699,7 @@ el:
       print: Εκτυπώστε
       start: Ξεκινήστε
       started_at: Ξεκίνησε στις
+      please_wait: Analyzing data. Please wait ...
   split_order: Μοιράστε την παραγγελία
   statistic: Στατιστικό
   statistics:

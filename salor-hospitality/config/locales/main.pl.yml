@@ -731,6 +731,7 @@ pl:
       print: Drukuj
       start: Początek
       started_at: Rozpoczęte
+      please_wait: Analyzing data. Please wait ...
   shared:
     invoice_tax_list:
       list_of_taxes: Lista podatków

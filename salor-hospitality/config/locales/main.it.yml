@@ -697,6 +697,7 @@ it:
       print: Print
       start: Start
       started_at: Started at
+      please_wait: Analyzing data. Please wait ...
   split_order: Split order
   statistic: Statistic
   statistics:

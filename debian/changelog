@@ -1,3 +1,11 @@
+salor-hospitality (4.1.2.35) unstable; urgency=low
+
+  * fix for seed data
+  * Feature #1635, seed data optimization, order test fix, new settlement test
+  * Closes Bug #1636 Booking Customer is not saving when a new booking is created
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 11 Jan 2013 16:08:46 +0100
+
 salor-hospitality (4.1.2.34) unstable; urgency=low
 
   [ Jason Knight ]

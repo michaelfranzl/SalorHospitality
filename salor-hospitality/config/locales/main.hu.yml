@@ -494,6 +494,7 @@ hu:
       finish: Finish
       print: Print
       started_at: Started at
+      please_wait: Analyzing data. Please wait ...
   items:
     item_tablerow:
       clear: Clear
