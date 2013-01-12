@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105123955) do
+ActiveRecord::Schema.define(:version => 20130112192020) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -611,7 +611,7 @@ ActiveRecord::Schema.define(:version => 20130105123955) do
 
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
-    t.text     "content"
+    t.binary   "content"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "vendor_id"

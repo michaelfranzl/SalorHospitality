@@ -1463,7 +1463,9 @@ function update_resources(mode) {
     success: function() {
       if (mode == 'documentready') {
         update_tables();
-        render_season_illustration();
+        if ( ! $.isEmptyObject(resources.sn) ) {
+          render_season_illustration();
+        }
         //automatically route to views depending on uri parameters
         var uri_attrs = uri_attributes();
         if (uri_attrs.rooms == '1') {
