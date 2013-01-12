@@ -15,4 +15,5 @@ class Receipt < ActiveRecord::Base
   belongs_to :vendor
   belongs_to :company
   belongs_to :vendor_printer
+  belongs_to :settlement
 end

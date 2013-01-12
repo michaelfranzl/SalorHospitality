@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112192020) do
+ActiveRecord::Schema.define(:version => 20130112200433) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -621,6 +621,8 @@ ActiveRecord::Schema.define(:version => 20130112192020) do
     t.integer  "bytes_written"
     t.integer  "order_id"
     t.integer  "order_nr"
+    t.integer  "settlement_id"
+    t.integer  "settlement_nr"
   end
 
   create_table "reservations", :force => true do |t|

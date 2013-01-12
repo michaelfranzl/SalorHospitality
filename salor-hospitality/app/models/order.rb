@@ -372,10 +372,11 @@ class Order < ActiveRecord::Base
       unless self.vendor.categories.existing.all? {|c| c.vendor_printer_id == nil}
         vendor_printers.each do |p|
           contents = self.escpos_tickets(p.id)
-          bytes_written, content_written = print_engine.print(p.id, contents[:text], contents[:raw_insertations])
-          
-          bytes_sent = content_written.length
-          Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written) unless content_written.empty?
+          unless contents[:text].empty?
+            bytes_written, content_sent = print_engine.print(p.id, contents[:text], contents[:raw_insertations])
+            bytes_sent = content_sent.length
+            Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+          end
         end
       end
     end
@@ -383,7 +384,9 @@ class Order < ActiveRecord::Base
     if what.include? 'receipt'
       if vendor_printer
         contents = self.escpos_receipt(options)
-        print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
+        bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
+        bytes_sent = content_sent.length
+        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
         self.update_attribute :printed, true
       end
     end

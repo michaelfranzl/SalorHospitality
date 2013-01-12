@@ -13,6 +13,7 @@ class Settlement < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   belongs_to :user
+  has_many :receipts
   has_many :orders
   has_many :items
   has_many :tax_items
@@ -51,7 +52,9 @@ class Settlement < ActiveRecord::Base
     vendor_printer = self.vendor.vendor_printers.existing.first
     printr = Escper::Printer.new(self.company.mode, vendor_printer, self.company.subdomain)
     printr.open
-    printr.print vendor_printer.id, self.escpos
+    bytes_written, content_sent = printr.print vendor_printer.id, self.escpos
+    bytes_sent = content_sent.length
+    Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :settlement_id => self.id, :settlement_nr => self.nr, :content => self.escpos, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
     printr.close
   end
 
