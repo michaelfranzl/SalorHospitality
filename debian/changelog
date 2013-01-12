@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.36) unstable; urgency=low
+
+  * Closes Bug #1638 Receipt content must be a binary database field
+  * Feature #1639 Store order receipt and settlement receipt in database
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 12 Jan 2013 21:26:35 +0100
+
 salor-hospitality (4.1.2.35) unstable; urgency=low
 
   * fix for seed data
