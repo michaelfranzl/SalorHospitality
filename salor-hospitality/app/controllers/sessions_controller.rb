@@ -106,6 +106,7 @@ class SessionsController < ApplicationController
     vendor = Vendor.find_by_id(session[:vendor_id])
     if vendor and vendor.technician_email and vendor.enable_technician_emails
       UserMailer.technician_message(vendor, subject, message).deliver
+      Email.create :receipient => vendor.technician_email, :subject => subject, :body => message, :vendor_id => vendor.id, :company_id => vendor.company_id, :technician => true
     else
       logger.info "[TECHNICIAN] #{subject} #{message}"
     end

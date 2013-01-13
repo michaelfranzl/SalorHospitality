@@ -63,32 +63,11 @@ $(function(){
 
 
 function route(target, model_id, action, options) {
-  debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
+  //debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
+  
   // ========== GO TO TABLES ===============
-  if ( target == 'tables' ) {
-    //---------------------- table_id FALLBACK CODE -----------------------------
-    if (action == 'destroy' || action == 'send' || action == 'move') {
-      if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-        fallback_model_id = $('#table_id').val();
-        send_email('route to tables without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
-        if ( fallback_model_id != '' ) {
-          model_id = fallback_model_id;
-          submit_json.model.table_id = fallback_model_id;
-        } else {
-          render_rescue_tables_select(function () {
-            var table = _get("table",$(this));
-            submit_json.model.table_id = table.id;
-            $('#table_id').val(table.id);
-            model_id = table.id;
-            route(target, model_id, action, options);
-          });
-          return
-        }
-      }
-    }
-    //---------------------------------------------------------------
-    
+  if ( target == 'tables' ) {    
     submit_json.target = 'tables';
     invoice_update = true;
     get_table_show_retry = false;
@@ -131,7 +110,6 @@ function route(target, model_id, action, options) {
     counter_update_tables = timeout_update_tables;
     update_tables();
     if (settings.mobile && typeof(model_id) != 'undefined') {
-      console.log('scrolling' + model_id);
       scroll_to($('#table' + model_id), 20);
     } else {
       scroll_to($('#container'),20);
@@ -141,25 +119,7 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    //---------------------- table_id FALLBACK CODE -----------------------------
-    if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-      fallback_model_id = $('#table_id').val();
-      send_email('route to table without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
-      if ( fallback_model_id != '' ) {
-        model_id = fallback_model_id;
-        submit_json.model.table_id = fallback_model_id;
-      } else {
-        render_rescue_tables_select(function () {
-          var table = _get("table",$(this));
-          submit_json.model.table_id = table.id;
-          $('#table_id').val(table.id);
-          model_id = table.id;
-          route(target, model_id, action, options);
-        });
-        return
-      }
-    }
-    //---------------------------------------------------------------
+    submit_json = {model:{table_id:model_id}};
     scroll_to($('#container'),20);
     submit_json.target = 'table';
     invoice_update = true;
@@ -171,55 +131,49 @@ function route(target, model_id, action, options) {
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';
-      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
-      submit_json.model.table_id = model_id;
-      //submit_json.model.note = $('#order_note').val();
       alert(i18n.order_will_be_confirmed);
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_finish') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_finish';
-      submit_json.model.table_id = model_id;
       alert(i18n.finish_was_requested);
-      //submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_waiter') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_waiter';
-      submit_json.model.table_id = model_id;
       alert(i18n.waiter_was_requested);
-      //submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
-      submit_json.model.table_id = model_id;
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
       submit_json.model = {table_id:model_id};
       //final rendering will be done in application#route
     } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      $('#order_cancel_button').hide();
-      submit_json = submit_json_queue['table_' + model_id];
-      items_json = items_json_queue['table_' + model_id];
-      delete submit_json_queue['table_' + model_id];
-      delete items_json_queue['table_' + model_id];
-      render_items();
-      var answer = confirm(i18n.table_contains_offline_items);
-      if (answer == true) {
-        send_json('table_' + model_id);
+      if (((new Date).getTime()) - submit_json_queue['table_' + model_id].sent_at > 20000) {
+        // the order could still be processed by the server. do not warn the user about offline items within 20 seconds.
+        $('#order_cancel_button').hide();
+        submit_json = submit_json_queue['table_' + model_id];
+        items_json = items_json_queue['table_' + model_id];
+        delete submit_json_queue['table_' + model_id];
+        delete items_json_queue['table_' + model_id];
+        render_items();
+        var answer = confirm(i18n.table_contains_offline_items);
+        if (answer == true) {
+          send_json('table_' + model_id);
+        }
       }
     } else if (action == 'specific_order') {
-      submit_json.model = {table_id:model_id};
       items_json = {};
       $.ajax({
         type: 'GET',
@@ -232,7 +186,6 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
     } else {
       // regular click on a table from main view
-      submit_json = {model:{table_id:model_id}};
       items_json = {};
       get_table_show(model_id);
     }
@@ -241,29 +194,9 @@ function route(target, model_id, action, options) {
   // ========== GO TO INVOICE ===============
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
-    //---------------------- table_id FALLBACK CODE -----------------------------
     if (action == 'send') {
-      if ( typeof(model_id) == 'undefined' || model_id == null || model_id == '' ) {
-        fallback_model_id = $('#table_id').val();
-        send_email('route to invoice without model_id', 'action is: ' + action + ', fallback_model_id=' + fallback_model_id);
-        if ( fallback_model_id != '' ) {
-          model_id = fallback_model_id;
-          submit_json.model.table_id = fallback_model_id;
-        } else {
-          render_rescue_tables_select(function () {
-            var table = _get("table",$(this));
-            submit_json.model.table_id = table.id;
-            $('#table_id').val(table.id);
-            model_id = table.id;
-            route(target, model_id, action, options);
-          });
-          return
-        }
-      }
-      //---------------------------------------------------------------
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
-      submit_json.model.table_id = model_id;
       send_json('table_' + model_id);
       // invoice form will be rendered by the server as .js.erb template. see application#route
     }
@@ -406,7 +339,6 @@ function route(target, model_id, action, options) {
 /* ======================================================*/
 
 function send_email(subject, message) {
-  console.log('Sending email: ' + subject + ' ' + message);
   $.ajax({
     type: 'post',
     url:'/session/email',
@@ -421,6 +353,9 @@ function send_email(subject, message) {
 function send_json(object_id) {
   // copy main jsons to queue
   submit_json_queue[object_id] = submit_json;
+  if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
+    submit_json_queue[object_id].sent_at = (new Date).getTime();
+  }
   items_json_queue[object_id] = items_json;
   display_queue();
   // reset main jsons
@@ -431,7 +366,8 @@ function send_json(object_id) {
 }
 
 function send_queue(object_id) {
-  debug('SEND QUEUE table ' + object_id);
+  //debug('SEND QUEUE table ' + object_id);
+  
   $.ajax({
     type: 'post',
     url: '/route',
@@ -439,18 +375,21 @@ function send_queue(object_id) {
     timeout: 40000,
     complete: function(data,status) {
       if (status == 'timeout') {
-        debug('send_queue: TIMEOUT');
+        //debug('send_queue: TIMEOUT');
         clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
       } else if (status == 'success') {
-        debug('send_queue: SUCCESS');
-        table_id = submit_json_queue[object_id].model.table_id;
-        if (offline_tables.hasOwnProperty(table_id)) {
-          debug('deleting offline_tables ' + table_id);
-          delete offline_tables[table_id];
-          $('#table' + table_id).css('border', '1px solid gray');
-          clear_queue(object_id);
-          route('table', table_id);
-          alert(i18n.successfully_sent);
+        //debug('send_queue: SUCCESS');
+        if (submit_json_queue[object_id]) {
+          // under high load, submit_json_queue[object_id] may already be cleared.
+          table_id = submit_json_queue[object_id].model.table_id;
+          if (offline_tables.hasOwnProperty(table_id)) {
+            //debug('deleting offline_tables ' + table_id);
+            delete offline_tables[table_id];
+            $('#table' + table_id).css('border', '1px solid gray');
+            clear_queue(object_id);
+            route('table', table_id);
+            alert(i18n.successfully_sent);
+          }
         }
         clear_queue(object_id);
       } else if (status == 'error') {
@@ -466,11 +405,11 @@ function send_queue(object_id) {
             }
             break;
           case 4:
-            debug('send_queue: ' + parse_rails_error_message(data.responseText));
+            //debug('send_queue: ' + parse_rails_error_message(data.responseText));
             break;
         }
       } else if (status == 'parsererror') {
-        debug('send_queue: parser error: ' + data);
+        //debug('send_queue: parser error: ' + data);
         clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
       }
       update_tables();
@@ -481,7 +420,7 @@ function send_queue(object_id) {
 }
 
 function clear_queue(i) {
-  debug('CLEAR QUEUE table ' + i);
+  //debug('CLEAR QUEUE table ' + i);
   delete submit_json_queue[i];
   delete items_json_queue[i];
   $('#queue_'+i).remove();
@@ -688,9 +627,9 @@ function display_articles(cat_id) {
   $('#articles').html('');
   $.each(resources.c[cat_id].a, function(art_id,art_attr) {
     a_object = this;
-    var abutton = $(document.createElement('div'));
+    var abutton = create_dom_element('div',{id:"article"+art_id},art_attr.n,'#articles');
     abutton.addClass('article');
-    abutton.html(art_attr.n);
+    //abutton.html(art_attr.n);
     var qcontainer = $(document.createElement('div'));
     qcontainer.addClass('quantities');
     qcontainer.css('display','none');
@@ -701,7 +640,7 @@ function display_articles(cat_id) {
         highlight_button(element);
       });
     })();
-    $('#articles').append(abutton);
+    //$('#articles').append(abutton);
     if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
       (function() { 
         var element = abutton;
@@ -1409,18 +1348,18 @@ function get_table_show(table_id) {
     timeout: 20000,
     complete: function(data,status) {
       if (status == 'timeout') {
-        debug('get_table_show: TIMEOUT');
+        //debug('get_table_show: TIMEOUT');
         if ( get_table_show_retry ) {
           window.setTimeout(function() {
             get_table_show(table_id)
           }, 1000);
         }
       } else if (status == 'success') {
-        debug('get_table_show: success');
+        //debug('get_table_show: success');
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
+            //debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
             if ( get_table_show_retry ) {
               window.setTimeout(function() {
                 get_table_show(table_id)
@@ -1428,13 +1367,13 @@ function get_table_show(table_id) {
             }
             break;
           case 4:
-            debug('get_table_show: ' + parse_rails_error_message(data.responseText));
+            //debug('get_table_show: ' + parse_rails_error_message(data.responseText));
             break;
         }
       } else if (status == 'parsererror') {
-        debug('get_table_show: parser error: ' + data);
+        //debug('get_table_show: parser error: ' + data);
       } else {
-        debug('get_table_show: unsupported status');
+        //debug('get_table_show: unsupported status');
       }
     }
   }); //the JS response repopulates items_json and renders items_json
@@ -1827,35 +1766,6 @@ function item_list_reset(id, scope) {
   })
 }
 
-// In some rare cases, Javascript loses submit_json.model.table_id, probably due to an internal JS bug or garbage collection problem, which is a rather fatal case for our code here. Because of this, we implemented a double fallback security net. The first fallback is a regular hidden input in the DOM. If even this input loses it's value (and this has never happened yet, we provide the user with a dialoge to please select the table again.
-function render_rescue_tables_select(callback) {
-  var d = create_dom_element('div', {id:'rescuetablesselect'},'');
-  d.html('');
-  d.addClass('comment_for_item');
-  
-  create_dom_element('h3', {},'Bitte erneut Tisch auswählen', d);
-  create_dom_element('hr', {},'', d);
-  
-  $.each(resources.tb, function(k,v) {
-    var bgcolor = null;
-    if (v.auid) { bgcolor = resources.u[v.auid].c;}
-    if (!v.e) { bgcolor = 'black';}
-    
-    var move_table_span = create_dom_element('span', {}, v.n, d);
-    
-    _set("table",v,move_table_span);  // -- Callback goes here, whatever you want it to do
-    
-    move_table_span.on('click', callback);
-    move_table_span.on('click', function () { d.hide();});
-    
-    move_table_span.addClass('option');
-    if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
-  });
-  d.show();
-  $('#main').prepend(d);
-  scroll_to($('#rescuetablesselect'),20);
-}
-
 function render_tables() {
   $('#tables').html('');
   $('#tablesselect_container').html('');
@@ -1952,7 +1862,6 @@ function render_tables() {
         table.on('mousedown', function() {
           var v = _get('table',$(this));
           route('table',v.id);
-          $('#table_id').val(v.id); // set fallback table_id
         });
       }
     }

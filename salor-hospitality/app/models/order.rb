@@ -247,7 +247,7 @@ class Order < ActiveRecord::Base
       self.calculate_totals
       self.hide(-1)
       target_order.regroup
-      target_order.items.existing.each { |i| i.calculate_totals }
+      #target_order.items.existing.each { |i| i.calculate_totals } # this is already called in .regroup
       target_order.calculate_totals
     else
       self.table_id = target_table_id

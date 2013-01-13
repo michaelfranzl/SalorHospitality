@@ -1,5 +1,3 @@
-= hidden_field_tag 'table_id'
-
 %h3
   - if permit('order_notes')
     %span#order_info{ :onclick => '$("#note_for_order").slideDown()'}= t :just_order
@@ -23,7 +21,7 @@
 
 #categories
   - @categories.existing.active.positioned.each do |category|
-    .category{ :class => category.name.delete(' '), :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
+    .category{ :id => "category_#{ category.id }", :class => category.name.delete(' '), :style => "background-color: #{category.color}; background-image: url('#{category.icon_path}')", :onmousedown => "category_onmousedown(#{ category.id }, this)" }
       %div{ :class => "category_label" }
         %span= category.name
 

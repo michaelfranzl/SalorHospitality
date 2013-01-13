@@ -214,11 +214,14 @@ class ApplicationController < ActionController::Base
       else
         if @current_vendor.enable_technician_emails == true and @current_vendor.technician_emails
           UserMailer.technician_message(@current_vendor, "params[:model][:table_id] was not set").deliver
+          Email.create :receipient => @current_vendor.technician_email, :subject => "params[:model][:table_id] was not set", :body => '', :vendor_id => @current_vendor.id, :company_id => @current_company.company_id, :technician => true
         else
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
+        
       end
       if @order
+        params[:model][:table_id] = @order.table_id # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
         @order.update_from_params(params, @current_user, @current_customer)
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
@@ -321,7 +324,7 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome')
+      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('Qt/')
     end
     
     def permit(p)
