@@ -221,7 +221,7 @@ class ApplicationController < ActionController::Base
         
       end
       if @order
-        params[:model][:table_id] = @order.table_id # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
+        params[:model][:table_id] = @order.table_id if params[:model] # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
         @order.update_from_params(params, @current_user, @current_customer)
       else
         @order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)

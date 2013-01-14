@@ -11,6 +11,7 @@
 *.xcf
 *~
 *.deb
+salor-hospitality/tmp/*.txt
 salor-hospitality/tmp/sass-cache
 salor-hospitality/tmp/pids
 salor-hospitality/tmp/cache

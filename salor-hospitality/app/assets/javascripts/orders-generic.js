@@ -30,7 +30,7 @@ var plugin_callbacks_done = [];
 var permissions = {};
 var intervals = {};
 var items_json = {};
-var submit_json = {currentview:'tables'};
+var submit_json = {currentview:'tables',model:{}};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
@@ -101,7 +101,7 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      submit_json = {};
+      submit_json = {currentview:'tables',model:{}};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -119,9 +119,10 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    submit_json = {model:{table_id:model_id}};
+    //submit_json = {model:{table_id:model_id}};
+    submit_json.model.table_id = model_id;
     scroll_to($('#container'),20);
-    submit_json.target = 'table';
+    //submit_json.target = 'table';
     invoice_update = true;
     get_table_show_retry = true;
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
