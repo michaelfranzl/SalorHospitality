@@ -30,7 +30,7 @@ var plugin_callbacks_done = [];
 var permissions = {};
 var intervals = {};
 var items_json = {};
-var submit_json = {currentview:'tables',model:{}};
+var submit_json = {model:{}};
 var items_json_queue = {};
 var submit_json_queue = {};
 var customers_json = {};
@@ -101,7 +101,7 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      submit_json = {currentview:'tables',model:{}};
+      submit_json = {model:{}};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -114,7 +114,7 @@ function route(target, model_id, action, options) {
     } else {
       scroll_to($('#container'),20);
     }
-    submit_json.currentview = 'tables';
+    //submit_json.currentview = 'tables'; // this is never taken into account on the server side, so this has been commented out.
     $('#table_id').val('');
 
   // ========== GO TO TABLE ===============
@@ -1164,10 +1164,10 @@ function add_option_to_item(d, value, cat_id) {
 /* ========================================================*/
 
 function toggle_order_booking () {
-  if (submit_json.currentview == 'tables') {
-    route('rooms');
-  } else {
+  if (submit_json.currentview == 'rooms') {
     route('tables');
+  } else {
+    route('rooms');
   }
 }
 
