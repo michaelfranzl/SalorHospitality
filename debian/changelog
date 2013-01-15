@@ -1,3 +1,12 @@
+salor-hospitality (4.1.2.38) unstable; urgency=low
+
+  * working
+  * froze weird JS problem
+  * more optimizations
+  * more opimizations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 15 Jan 2013 21:49:01 +0100
+
 salor-hospitality (4.1.2.37) unstable; urgency=low
 
   * Closes Testing Software #1644 Run tests with ichabod and fix obscure bugs that have to do with JS timing
