@@ -1,3 +1,12 @@
+salor-hospitality (4.1.2.37) unstable; urgency=low
+
+  * Closes Testing Software #1644 Run tests with ichabod and fix obscure bugs that have to do with JS timing
+  * more optimizations
+  * more high load optimizations
+  * no role editing for owner
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 15 Jan 2013 12:22:00 +0100
+
 salor-hospitality (4.1.2.36) unstable; urgency=low
 
   * Closes Bug #1638 Receipt content must be a binary database field
