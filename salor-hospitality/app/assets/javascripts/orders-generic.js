@@ -62,11 +62,7 @@ $(function(){
 /* ======================================================*/
 
 
-function route(target, model_id, action, options) {
-  console.log("route: called with", target, model_id, action, options);
-  console.log("route: submit_json is ", submit_json); // JASON: This contains table_id of 777 from way down below the code!
-  console.log("route: submit_json.model.table_id is ", submit_json.model.table_id);  // JASON: table_id is correct
-  
+function route(target, model_id, action, options) { 
   //debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   
@@ -99,7 +95,6 @@ function route(target, model_id, action, options) {
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
-      console.log(submit_json);
       send_json('table_' + model_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
@@ -107,7 +102,7 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      //submit_json.model = {};
+      submit_json.model = {};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -120,15 +115,11 @@ function route(target, model_id, action, options) {
     } else {
       scroll_to($('#container'),20);
     }
-    //submit_json.currentview = 'tables'; // this is never taken into account on the server side, so this has been commented out.
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     submit_json = {model:{table_id:model_id}};
-    //submit_json.model = {};
-    //submit_json.model.table_id = model_id;
     scroll_to($('#container'),20);
-    //submit_json.target = 'table';
     invoice_update = true;
     get_table_show_retry = true;
     $('#order_sum').html('0' + i18n.decimal_separator + '00');
@@ -140,36 +131,31 @@ function route(target, model_id, action, options) {
       submit_json.target = 'table_no_invoice_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
       alert(i18n.order_will_be_confirmed);
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_finish') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_finish';
       alert(i18n.finish_was_requested);
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
     } else if (action == 'customer_request_waiter') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_waiter';
       alert(i18n.waiter_was_requested);
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
     } else if (action == 'send_and_print' ) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      submit_json.model = {table_id:model_id};
       //final rendering will be done in application#route
     } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      if (((new Date).getTime()) - submit_json_queue['table_' + model_id].sent_at > 20000) {
-        // the order could still be processed by the server. do not warn the user about offline items within 20 seconds.
-        $('#order_cancel_button').hide();
+      if (((new Date).getTime()) - submit_json_queue['table_' + model_id].sent_at > 10000) {
+        // the order could still be processed by the server. do not warn the user about offline items within a certain time period.
+        //$('#order_cancel_button').hide();
         submit_json = submit_json_queue['table_' + model_id];
         items_json = items_json_queue['table_' + model_id];
         delete submit_json_queue['table_' + model_id];
@@ -181,7 +167,6 @@ function route(target, model_id, action, options) {
         }
       }
     } else if (action == 'specific_order') {
-      items_json = {};
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id + '?order_id=' + options.order_id,
@@ -193,7 +178,6 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
     } else {
       // regular click on a table from main view
-      items_json = {};
       get_table_show(model_id);
     }
     submit_json.currentview = 'table';
@@ -358,49 +342,41 @@ function send_email(subject, message) {
 /* ======================================================*/
 
 function send_json(object_id) {
-  // copy main jsons to queue
-  console.log('send_json called');
-  console.log('submit_json is:', submit_json); //JASON: if you inspect this in the console, you will find a table_id of 777
-  console.log('submit_json.model.table_id is:', submit_json.model.table_id); //JASON: if you inspect this in the console, you will find a correct table_id
-  submit_json_queue[object_id] = submit_json;
+  //submit_json_queue[object_id] = submit_json; // this would be  only  a pointer assignment, which is bad for quick UI operation. We need to do a deep object copy instead:
+  submit_json_queue[object_id] = $.extend(true, {}, submit_json);
   if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
     submit_json_queue[object_id].sent_at = (new Date).getTime();
   }
-  items_json_queue[object_id] = items_json;
+  items_json_queue[object_id] = $.extend(true, {}, items_json);
   display_queue();
-  // reset main jsons
-  submit_json.model = {table_id:777}; // this line seems to be called before all others
+  submit_json.model = {};
   items_json = {};
-  // send the queue
   send_queue(object_id);
 }
 
 function send_queue(object_id) {
-  //debug('SEND QUEUE table ' + object_id);
   $.ajax({
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
     timeout: 40000,
     complete: function(data,status) {
-      if (status == 'timeout') {
-        //debug('send_queue: TIMEOUT');
-        clear_queue(object_id); // this is not critical, since server probably has processed the submission. No resubmission.
+      if (status == 'timeout') {    
+        var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+        alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
+        clear_queue(object_id); // server probably has processed the request, so we are clearing the queue here, with the risk that the taken order may be lost. But this is better than having taken items twice.
+        update_tables();
       } else if (status == 'success') {
-        //debug('send_queue: SUCCESS');
-        if (submit_json_queue[object_id]) {
-          // under high load, submit_json_queue[object_id] may already be cleared.
-          table_id = submit_json_queue[object_id].model.table_id;
-          if (offline_tables.hasOwnProperty(table_id)) {
-            //debug('deleting offline_tables ' + table_id);
-            delete offline_tables[table_id];
-            $('#table' + table_id).css('border', '1px solid gray');
-            clear_queue(object_id);
-            route('table', table_id);
-            alert(i18n.successfully_sent);
-          }
+        table_id = submit_json_queue[object_id].model.table_id;
+        if (offline_tables.hasOwnProperty(table_id)) {
+          delete offline_tables[table_id];
+          $('#table' + table_id).css('border', '1px solid gray');
+          clear_queue(object_id);
+          route('table', table_id);
+          alert(i18n.successfully_sent);
         }
         clear_queue(object_id);
+        update_tables();
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
@@ -414,14 +390,15 @@ function send_queue(object_id) {
             }
             break;
           case 4:
-            //debug('send_queue: ' + parse_rails_error_message(data.responseText));
+            var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+            alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
+            submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
             break;
         }
       } else if (status == 'parsererror') {
-        //debug('send_queue: parser error: ' + data);
+        alert("Oops! Der Server hat die Bestellung erfolgreich verarbeitet, aber mit einem falschen Code geantwortet. Diesen Zwischenfall bitte dem Techniker melden.");
         clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
       }
-      update_tables();
       audio_enabled = false; // skip one beep
       counter_update_item_lists = 2;
     }
@@ -429,7 +406,6 @@ function send_queue(object_id) {
 }
 
 function clear_queue(i) {
-  //debug('CLEAR QUEUE table ' + i);
   delete submit_json_queue[i];
   delete items_json_queue[i];
   $('#queue_'+i).remove();
@@ -932,7 +908,12 @@ function submit_split_items(order_id) {
       type: 'put',
       url: '/items/split',
       data: {jsaction:'split',split_items_hash:submit_json.split_items_hash[order_id],order_id:order_id},
-      timeout: 30000
+      timeout: 90000,
+      complete: function(data,status) {
+        if (status == 'timeout') {
+          alert("Der Server hat nach dem Splitten 90 Sekunden lang nicht geantwortet. Bitte zur Überprüfung auf den Bestellbildschirm wecheln und Rechnungsansicht nochmals aufrufen.");
+        }
+      }
     });
     submit_json.split_items_hash = {}; // prevent from double clicking the button
     invoice_update = true; // when pressing the split button, let the server repsonse refresh the invoice view. grep for invoice_update = false; where the server should not destroy the DOM.
@@ -1350,7 +1331,6 @@ function manage_counters() {
 }
 
 function get_table_show(table_id) {
-  //debug('xxx get_table_show_called');
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
