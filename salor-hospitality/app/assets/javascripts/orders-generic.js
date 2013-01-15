@@ -63,9 +63,10 @@ $(function(){
 
 
 function route(target, model_id, action, options) {
-  console.log("route called with", target, model_id, action, options);
-  console.log("TABLE ID SHOULD BE ", submit_json.model.table_id);
-  console.log(submit_json);
+  console.log("route: called with", target, model_id, action, options);
+  console.log("route: submit_json is ", submit_json); // JASON: This contains table_id of 777 from way down below the code!
+  console.log("route: submit_json.model.table_id is ", submit_json.model.table_id);  // JASON: table_id is correct
+  
   //debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   
@@ -359,7 +360,8 @@ function send_email(subject, message) {
 function send_json(object_id) {
   // copy main jsons to queue
   console.log('send_json called');
-  console.log('submit_json is:', submit_json);
+  console.log('submit_json is:', submit_json); //JASON: if you inspect this in the console, you will find a table_id of 777
+  console.log('submit_json.model.table_id is:', submit_json.model.table_id); //JASON: if you inspect this in the console, you will find a correct table_id
   submit_json_queue[object_id] = submit_json;
   if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
     submit_json_queue[object_id].sent_at = (new Date).getTime();
@@ -367,7 +369,7 @@ function send_json(object_id) {
   items_json_queue[object_id] = items_json;
   display_queue();
   // reset main jsons
-  //submit_json.model = {}; // this line seems to be called before all others
+  submit_json.model = {table_id:777}; // this line seems to be called before all others
   items_json = {};
   // send the queue
   send_queue(object_id);
