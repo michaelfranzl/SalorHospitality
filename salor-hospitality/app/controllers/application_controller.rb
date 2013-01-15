@@ -212,7 +212,7 @@ class ApplicationController < ActionController::Base
         # Reuse the order on table if possible
         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
       else
-        if @current_vendor.enable_technician_emails == true and @current_vendor.technician_emails
+        if @current_vendor.enable_technician_emails == true and @current_vendor.technician_email
           UserMailer.technician_message(@current_vendor, "params[:model][:table_id] was not set").deliver
           Email.create :receipient => @current_vendor.technician_email, :subject => "params[:model][:table_id] was not set", :body => '', :vendor_id => @current_vendor.id, :company_id => @current_company.company_id, :technician => true
         else

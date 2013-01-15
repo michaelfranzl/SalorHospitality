@@ -63,6 +63,9 @@ $(function(){
 
 
 function route(target, model_id, action, options) {
+  console.log("route called with", target, model_id, action, options);
+  console.log("TABLE ID SHOULD BE ", submit_json.model.table_id);
+  console.log(submit_json);
   //debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   
@@ -90,10 +93,12 @@ function route(target, model_id, action, options) {
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
+      
       send_json('table_' + model_id);
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
+      console.log(submit_json);
       send_json('table_' + model_id);
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
@@ -101,7 +106,7 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      submit_json = {model:{}};
+      //submit_json.model = {};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -115,12 +120,12 @@ function route(target, model_id, action, options) {
       scroll_to($('#container'),20);
     }
     //submit_json.currentview = 'tables'; // this is never taken into account on the server side, so this has been commented out.
-    $('#table_id').val('');
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    //submit_json = {model:{table_id:model_id}};
-    submit_json.model.table_id = model_id;
+    submit_json = {model:{table_id:model_id}};
+    //submit_json.model = {};
+    //submit_json.model.table_id = model_id;
     scroll_to($('#container'),20);
     //submit_json.target = 'table';
     invoice_update = true;
@@ -248,7 +253,7 @@ function route(target, model_id, action, options) {
     } else if (action == 'update_bookings') {
       update_booking_for_room(model_id,options);
     } else {
-      submit_json = {};
+      submit_json.model = {};
       items_json = {};
     }
     $('.booking_form').remove();
@@ -353,6 +358,8 @@ function send_email(subject, message) {
 
 function send_json(object_id) {
   // copy main jsons to queue
+  console.log('send_json called');
+  console.log('submit_json is:', submit_json);
   submit_json_queue[object_id] = submit_json;
   if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
     submit_json_queue[object_id].sent_at = (new Date).getTime();
@@ -360,7 +367,7 @@ function send_json(object_id) {
   items_json_queue[object_id] = items_json;
   display_queue();
   // reset main jsons
-  submit_json = {model:{}};
+  //submit_json.model = {}; // this line seems to be called before all others
   items_json = {};
   // send the queue
   send_queue(object_id);
@@ -368,7 +375,6 @@ function send_json(object_id) {
 
 function send_queue(object_id) {
   //debug('SEND QUEUE table ' + object_id);
-  
   $.ajax({
     type: 'post',
     url: '/route',
