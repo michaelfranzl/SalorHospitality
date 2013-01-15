@@ -102,7 +102,7 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      submit_json.model = {};
+      //submit_json.model = {};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -361,19 +361,23 @@ function send_queue(object_id) {
     data: submit_json_queue[object_id],
     timeout: 40000,
     complete: function(data,status) {
-      if (status == 'timeout') {    
-        var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
-        alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
-        clear_queue(object_id); // server probably has processed the request, so we are clearing the queue here, with the risk that the taken order may be lost. But this is better than having taken items twice.
-        update_tables();
+      if (status == 'timeout') {
+        if (submit_json_queue[object_id]) {
+          var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+          alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
+          clear_queue(object_id); // server probably has processed the request, so we are clearing the queue here, with the risk that the taken order may be lost. But this is better than having taken items twice.
+          update_tables();
+        }
       } else if (status == 'success') {
-        table_id = submit_json_queue[object_id].model.table_id;
-        if (offline_tables.hasOwnProperty(table_id)) {
-          delete offline_tables[table_id];
-          $('#table' + table_id).css('border', '1px solid gray');
-          clear_queue(object_id);
-          route('table', table_id);
-          alert(i18n.successfully_sent);
+        if (submit_json_queue[object_id]) {
+          table_id = submit_json_queue[object_id].model.table_id;
+          if (offline_tables.hasOwnProperty(table_id)) {
+            delete offline_tables[table_id];
+            $('#table' + table_id).css('border', '1px solid gray');
+            clear_queue(object_id);
+            route('table', table_id);
+            alert(i18n.successfully_sent);
+          }
         }
         clear_queue(object_id);
         update_tables();
@@ -390,9 +394,11 @@ function send_queue(object_id) {
             }
             break;
           case 4:
-            var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
-            alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
-            submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
+            if (submit_json_queue[object_id]) {
+              var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+              alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
+              submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
+            }
             break;
         }
       } else if (status == 'parsererror') {
