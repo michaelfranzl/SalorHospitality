@@ -332,6 +332,7 @@ function route(target, model_id, action, options) {
 
 function send_email(subject, message) {
   console.log('send_email:', subject, message);
+  message += "\n\n" + navigator["userAgent"];
   $.ajax({
     type: 'post',
     url:'/session/email',
