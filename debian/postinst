@@ -137,7 +137,7 @@ for lInstance in $gInstances; do
       echo "  postinst: creating symlinks"
       ln -sfn $app_root /usr/share/salor-hospitality/${lInstance}
       ln -sfn $rails_var/public/uploads $app_root/public/uploads/${lInstance}
-      rm -rf $app_root/tmp
+      rm -rf $app_root/tmp # remove real directory in case it was created by Rails
       ln -sfn /var/tmp/salor-hospitality/${lInstance} $app_root/tmp
  
       if [ $use_dbconfig = true ]; then
@@ -146,7 +146,7 @@ for lInstance in $gInstances; do
       fi
       
       echo "  postinst: Deleting the asset cache"
-      rm -rf $app_root/tmp/cache
+      rm -rf /var/tmp/salor-hospitality/${lInstance}/cache
       
       if [ -e $app_root/db/schema.rb ]; then
         echo "  postinst: Copying schema.rb to instance directory."
