@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.42) unstable; urgency=low
+
+  * debian fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 16 Jan 2013 09:26:48 +0100
+
 salor-hospitality (4.1.2.41) unstable; urgency=low
 
   * debian fix
