@@ -54,6 +54,7 @@ for lInstance in $gOldInstances; do
   rm -rf /var/log/salor-hospitality/$lInstance
   rm -rf /var/cache/salor-hospitality/$lInstance
   rm -rf /var/lib/salor-hospitality/$lInstance
+  rm -rf /var/tmp/salor-hospitality/$lInstance
 done
 db_set salor-hospitality/old-instances ""
 
@@ -90,12 +91,14 @@ for lInstance in $gInstances; do
       rails_log=/var/log/salor-hospitality/$lInstance
       rails_cache=/var/cache/salor-hospitality/$lInstance
       rails_var=/var/lib/salor-hospitality/$lInstance
+      rails_tmp=/var/tmp/salor-hospitality/$lInstance
       
       echo "  postinst: creating directories"
       mkdir -p $rails_etc
       mkdir -p $rails_log
       mkdir -p $rails_cache
       mkdir -p $rails_var/public/uploads
+      mkdir -p $rails_tmp
       
       use_dbconfig=false
       
@@ -223,9 +226,11 @@ chown -R $app_user:$app_user /etc/salor-hospitality
 chown -R $app_user:$app_user /var/log/salor-hospitality
 chown -R $app_user:$app_user /var/cache/salor-hospitality
 chown -R $app_user:$app_user /var/lib/salor-hospitality
+chown -R $app_user:$app_user /var/tmp/salor-hospitality
 
 echo "  postinst: changing permissions for user $app_user"
 chmod 770 /etc/salor-hospitality
+chmod -R 777 /var/tmp/salor-hospitality
   
 echo "  postinst: restarting Apache ..."
 a2enmod actions

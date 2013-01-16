@@ -153,17 +153,18 @@ function route(target, model_id, action, options) {
       send_json('table_' + model_id);
       //final rendering will be done in application#route
     } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
-      if (((new Date).getTime()) - submit_json_queue['table_' + model_id].sent_at > 10000) {
+      submit_json = $.extend(true, {}, submit_json_queue['table_' + model_id]); // deep copy
+      items_json = $.extend(true, {}, items_json_queue['table_' + model_id]); // deep copy
+      delete submit_json_queue['table_' + model_id];
+      delete items_json_queue['table_' + model_id];
+      render_items();
+      if (((new Date).getTime()) - submit_json.sent_at > 1000) {
         // the order could still be processed by the server. do not warn the user about offline items within a certain time period.
-        //$('#order_cancel_button').hide();
-        submit_json = submit_json_queue['table_' + model_id];
-        items_json = items_json_queue['table_' + model_id];
-        delete submit_json_queue['table_' + model_id];
-        delete items_json_queue['table_' + model_id];
-        render_items();
+        $('#order_cancel_button').hide();
         var answer = confirm(i18n.table_contains_offline_items);
         if (answer == true) {
-          send_json('table_' + model_id);
+          route('tables',model_id,'send'); //send_json('table_' + model_id);
+          return;
         }
       }
     } else if (action == 'specific_order') {
@@ -330,6 +331,7 @@ function route(target, model_id, action, options) {
 /* ======================================================*/
 
 function send_email(subject, message) {
+  console.log('send_email:', subject, message);
   $.ajax({
     type: 'post',
     url:'/session/email',
@@ -362,6 +364,7 @@ function send_queue(object_id) {
     timeout: 40000,
     complete: function(data,status) {
       if (status == 'timeout') {
+        send_email('send_queue: timeout for object_id ' + object_id, '');
         if (submit_json_queue[object_id]) {
           var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
           alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
@@ -378,6 +381,8 @@ function send_queue(object_id) {
             route('table', table_id);
             alert(i18n.successfully_sent);
           }
+        } else {
+          send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'User probably has entered the table in offline mode.');
         }
         clear_queue(object_id);
         update_tables();
@@ -396,14 +401,20 @@ function send_queue(object_id) {
           case 4:
             if (submit_json_queue[object_id]) {
               var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+              send_email('send_queue: Server Error for object_id' + object_id, '');
               alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
               submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
             }
             break;
+          default:
+            send_email('send_queue: unknown ajax error readyState', '');
         }
       } else if (status == 'parsererror') {
+        send_email('send_queue: parsererror');
         alert("Oops! Der Server hat die Bestellung erfolgreich verarbeitet, aber mit einem falschen Code geantwortet. Diesen Zwischenfall bitte dem Techniker melden.");
         clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
+      } else {
+        send_email('send_queue: unknown ajax complete status', '');
       }
       audio_enabled = false; // skip one beep
       counter_update_item_lists = 2;
