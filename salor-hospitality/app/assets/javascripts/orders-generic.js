@@ -158,9 +158,10 @@ function route(target, model_id, action, options) {
       delete submit_json_queue['table_' + model_id];
       delete items_json_queue['table_' + model_id];
       render_items();
-      if (((new Date).getTime()) - submit_json.sent_at > 1000) {
+      if (((new Date).getTime()) - submit_json.sent_at > 40000) {
         // the order could still be processed by the server. do not warn the user about offline items within a certain time period.
         $('#order_cancel_button').hide();
+        send_email('route(): User has been informed about offline items', '');
         var answer = confirm(i18n.table_contains_offline_items);
         if (answer == true) {
           route('tables',model_id,'send'); //send_json('table_' + model_id);
@@ -332,6 +333,7 @@ function route(target, model_id, action, options) {
 
 function send_email(subject, message) {
   console.log('send_email:', subject, message);
+  message += "\n\nuser login: " + user_login;
   message += "\n\n" + navigator["userAgent"];
   $.ajax({
     type: 'post',

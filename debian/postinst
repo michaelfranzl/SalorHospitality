@@ -232,7 +232,7 @@ chown -R $app_user:$app_user /var/tmp/salor-hospitality
 
 echo "  postinst: changing permissions for user $app_user"
 chmod 770 /etc/salor-hospitality
-chmod -R 777 /var/tmp/salor-hospitality
+chown -R $app_user:$app_user /var/tmp/salor-hospitality
   
 echo "  postinst: restarting Apache ..."
 a2enmod actions
