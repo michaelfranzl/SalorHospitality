@@ -1,3 +1,11 @@
+salor-hospitality (4.1.2.39) unstable; urgency=low
+
+  * more optimizations
+  * installation adaptions
+  * more improvements
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 16 Jan 2013 08:24:29 +0100
+
 salor-hospitality (4.1.2.38) unstable; urgency=low
 
   * working
