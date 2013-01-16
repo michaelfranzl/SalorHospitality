@@ -146,7 +146,7 @@ for lInstance in $gInstances; do
       fi
       
       echo "  postinst: Deleting the asset cache"
-      rm -rf /var/tmp/salor-hospitality/${lInstance}/cache
+      rm -rf /var/tmp/salor-hospitality/cache
       
       if [ -e $app_root/db/schema.rb ]; then
         echo "  postinst: Copying schema.rb to instance directory."
