@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.40) unstable; urgency=low
+
+  * debian installation adaption
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 16 Jan 2013 08:30:48 +0100
+
 salor-hospitality (4.1.2.39) unstable; urgency=low
 
   * more optimizations
