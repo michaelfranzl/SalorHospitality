@@ -43,6 +43,7 @@
           = vendor_form.file_field :rlogo_footer
           %br
         - if @current_user.role.weight == 0
+          %br
           = vendor_form.label :country
           %select{ :name => 'vendor[country]' }
             - SalorHospitality::Application::COUNTRIES.each do |key, val|

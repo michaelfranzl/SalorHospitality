@@ -62,7 +62,7 @@ $(function(){
 /* ======================================================*/
 
 
-function route(target, model_id, action, options) { 
+function route(target, model_id, action, options) {
   //debug("route(" + target + ", " + model_id + ", " + action + ", " + options + ")");
   //emit('before.go_to.' + target, {model_id:model_id, action:action, options:options});
   
@@ -102,7 +102,6 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
     } else {
-      //submit_json.model = {};
       items_json = {};
     }
     screenlock_counter = settings.screenlock_timeout;
@@ -118,7 +117,8 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    submit_json = {model:{table_id:model_id}};
+    // submit_json.currentview must be preserved at this point
+    submit_json.model.table_id = model_id;
     scroll_to($('#container'),20);
     invoice_update = true;
     get_table_show_retry = true;
@@ -127,10 +127,14 @@ function route(target, model_id, action, options) {
     screenlock_counter = -1;
     counter_update_tables = -1;
     if (action == 'send') {
+      // finish order
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      // stay on table
+      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
+      //final rendering will be done in application#route
     } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
@@ -147,10 +151,13 @@ function route(target, model_id, action, options) {
       alert(i18n.waiter_was_requested);
       send_json('table_' + model_id);
     } else if (action == 'send_and_print' ) {
+      // finish and print order receipt
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
+      // stay on table
+      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
     } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
       submit_json = $.extend(true, {}, submit_json_queue['table_' + model_id]); // deep copy
@@ -355,6 +362,9 @@ function send_json(object_id) {
   items_json_queue[object_id] = $.extend(true, {}, items_json);
   display_queue();
   submit_json.model = {};
+  delete submit_json.items;
+  // submit_json.currentview should be preserved
+  // submit_json.target should be preserved
   items_json = {};
   send_queue(object_id);
 }
@@ -404,7 +414,7 @@ function send_queue(object_id) {
           case 4:
             if (submit_json_queue[object_id]) {
               var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
-              send_email('send_queue: Server Error for object_id' + object_id, '');
+              send_email('send_queue: Server Error for object_id ' + object_id, '');
               alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
               submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
             }
@@ -903,14 +913,14 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
     // update payment methods
     var payment_method_inputs_original = $('#payment_methods_container_' + ooid + ' td.payment_method_input input');
     var payment_method_input_original = payment_method_inputs_original[payment_method_inputs_original.length - 1];
-    $(payment_method_input_original).val(subtotal_original);
+    $(payment_method_input_original).val(subtotal_original.toFixed(2));
     var pmid = $(payment_method_input_original).attr('pmid');
     payment_method_input_change(payment_method_input_original, pmid, ooid)
     
     if (partner_mode) {
       var payment_method_inputs_partner = $('#payment_methods_container_' + poid + ' td.payment_method_input input');
       var payment_method_input_partner = payment_method_inputs_partner[payment_method_inputs_partner.length - 1];
-      $(payment_method_input_partner).val(subtotal_partner);
+      $(payment_method_input_partner).val(subtotal_partner.toFixed(2));
       var pmid = $(payment_method_input_partner).attr('pmid');
       payment_method_input_change(payment_method_input_partner, pmid, poid)
     }

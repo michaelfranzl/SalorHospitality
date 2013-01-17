@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.float    "price"
     t.boolean  "active",                :default => true
     t.boolean  "waiterpad"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "hidden",                :default => false
     t.integer  "sort"
     t.integer  "position"
@@ -147,14 +147,14 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "icon"
     t.string   "color"
     t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
-    t.integer  "company_id"
     t.boolean  "hidden",              :default => false
+    t.integer  "company_id"
     t.integer  "preparation_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",              :default => true
@@ -172,8 +172,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
   create_table "categories_options", :id => false, :force => true do |t|
     t.integer  "category_id"
     t.integer  "option_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "companies", :force => true do |t|
@@ -188,10 +188,10 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
   create_table "cost_centers", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.integer  "company_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "hidden"
+    t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "no_payment_methods", :default => false
   end
@@ -324,8 +324,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.integer  "sensitivity"
     t.text     "changes_made"
     t.text     "params"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "images", :force => true do |t|
@@ -345,8 +345,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.float    "amount"
     t.integer  "article_id"
     t.integer  "stock_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "hidden"
@@ -359,8 +359,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.integer  "count",                                  :default => 1
     t.integer  "article_id"
     t.integer  "order_id"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position"
     t.integer  "quantity_id"
     t.string   "comment",                                :default => ""
@@ -443,8 +443,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.integer  "option_id"
     t.string   "name"
     t.float    "price",           :default => 0.0
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "hidden",          :default => false
     t.integer  "position"
     t.integer  "company_id"
@@ -466,8 +466,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.float    "sum",                             :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
@@ -475,8 +475,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.integer  "nr"
     t.integer  "tax_id"
     t.float    "refund_sum",                      :default => 0.0
-    t.integer  "company_id"
     t.string   "note"
+    t.integer  "company_id"
     t.integer  "customer_id"
     t.integer  "m_points"
     t.integer  "vendor_id"
@@ -604,8 +604,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.string   "prefix",                :default => ""
     t.float    "price"
     t.integer  "article_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "active",                :default => true
     t.boolean  "hidden",                :default => false
     t.string   "postfix",               :default => ""
@@ -627,8 +627,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
     t.binary   "content"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.integer  "vendor_printer_id"
@@ -665,8 +665,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.string   "name"
     t.text     "description"
     t.string   "permissions", :limit => 10000, :default => "--- []\n"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "active",                       :default => true
@@ -738,8 +738,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
   create_table "settlements", :force => true do |t|
     t.float    "revenue"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "finished"
     t.float    "initial_cash"
     t.integer  "company_id"
@@ -769,8 +769,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.string   "unit"
     t.string   "name"
     t.integer  "group_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "company_id"
     t.integer  "vendor_id"
   end
@@ -829,8 +829,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
 
   create_table "tables", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "left",                  :default => 50
     t.integer  "top",                   :default => 50
     t.integer  "width",                 :default => 70
@@ -842,8 +842,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.boolean  "enabled",               :default => true
     t.boolean  "hidden",                :default => false
     t.boolean  "rotate"
-    t.integer  "company_id"
     t.integer  "active_user_id"
+    t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "active",                :default => true
     t.integer  "position"
@@ -916,8 +916,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
   create_table "taxes", :force => true do |t|
     t.integer  "percent"
     t.string   "name"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "letter"
     t.string   "color"
     t.boolean  "hidden"
@@ -933,8 +933,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.string   "login"
     t.string   "password"
     t.string   "title"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "role_id"
     t.string   "color"
     t.string   "language"
@@ -968,8 +968,8 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
     t.string   "path"
     t.integer  "company_id"
     t.boolean  "hidden"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "copies",                :default => 1
     t.integer  "vendor_id"
     t.string   "print_button_filename"
@@ -980,16 +980,16 @@ ActiveRecord::Schema.define(:version => 20130113095755) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name",                                            :default => "Bill Gastro"
-    t.datetime "created_at",                                                                 :null => false
-    t.datetime "updated_at",                                                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "largest_order_number",                            :default => 0
     t.string   "unused_order_numbers",        :limit => 1000,     :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                     :default => 0
     t.text     "resources_cache",             :limit => 16777215
+    t.boolean  "use_order_numbers",                               :default => true
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                               :default => true
     t.integer  "company_id"
     t.boolean  "active",                                          :default => true
     t.boolean  "hidden"

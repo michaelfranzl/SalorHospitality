@@ -61,7 +61,6 @@ function alert_audio() {
  *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
  */
 function emit(msg,packet) {
-  //console.log(msg,packet);
   $('body').triggerHandler({type: msg, packet:packet});
 }
 
@@ -102,7 +101,6 @@ function scroll_to(element, speed) {
     do_scroll((current_y - target_y)*1.05, speed);
   } else {
     window.scrollTo(0, current_y);
-    console.log(current_y);
   }
 }
 
@@ -191,7 +189,6 @@ function _push(object) {
         if (!payload) {
           payload = {currentview: 'push', model: {}}
           $.each(arguments[i], function (key,value) {
-            //console.log(key,value);
             payload[key] = value;
           });
         } else {
