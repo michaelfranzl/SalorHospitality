@@ -114,11 +114,11 @@ function route(target, model_id, action, options) {
     } else {
       scroll_to($('#container'),20);
     }
+    submit_json = {model:{}};
+    submit_json.currentview = 'tables';
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    // submit_json.currentview must be preserved at this point
-    submit_json.model.table_id = model_id;
     scroll_to($('#container'),20);
     invoice_update = true;
     get_table_show_retry = true;
@@ -189,6 +189,9 @@ function route(target, model_id, action, options) {
       // regular click on a table from main view
       get_table_show(model_id);
     }
+    // clean workspace up
+    submit_json = {model:{}};
+    submit_json.model.table_id = model_id;
     submit_json.currentview = 'table';
 
   // ========== GO TO INVOICE ===============
@@ -218,9 +221,8 @@ function route(target, model_id, action, options) {
     $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
-    submit_json.payment_method_items = {};
-    submit_json.split_items_hash = {};
-    submit_json.totals = {};
+    // clean workspace up
+    submit_json = {model:{},split_items_hash:{},totals:{},payment_method_items:{}};
     submit_json.currentview = 'invoice';
 
   // ========== GO TO ROOMS ===============
@@ -379,10 +381,18 @@ function send_queue(object_id) {
       if (status == 'timeout') {
         send_email('send_queue: timeout for object_id ' + object_id, '');
         if (submit_json_queue[object_id]) {
-          var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+          var tablename = "?";
+          if (submit_json_queue[object_id].model && submit_json_queue[object_id].model.table_id ) {
+            tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
+          } else {
+            send_email('send_queue: extreme load ' + object_id, 'submit_json_queue does contain object_id');
+            // this happens only under extreme load of the JS UI and the server, tested by ichabod.
+          }
           alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
           clear_queue(object_id); // server probably has processed the request, so we are clearing the queue here, with the risk that the taken order may be lost. But this is better than having taken items twice.
           update_tables();
+        } else {
+          send_email('send_queue: extreme load ' + object_id, 'submit_json_queue does not contain object_id');
         }
       } else if (status == 'success') {
         if (submit_json_queue[object_id]) {

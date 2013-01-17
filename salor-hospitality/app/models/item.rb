@@ -11,7 +11,7 @@
 class Item < ActiveRecord::Base
   attr_accessible :position, :comment, :price, :article_id, :quantity_id, :category_id, :count, :printed_count, :usage, :hidden, :customers_ids
   attr_accessible :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
-  attr_accessible :user_id, :confirmation_count, :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe
+  attr_accessible :user_id, :confirmation_count, :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe, :settlement_id, :cost_center_id, :statistic_category_id
   
   include Scope
   belongs_to :order
@@ -70,6 +70,7 @@ class Item < ActiveRecord::Base
     end
     separated_item.calculate_totals
     self.calculate_totals
+    separated_item.tax_items.update_all :cost_center_id => self.cost_center_id, :settlement_id => self.settlement_id
     self.order.calculate_totals
   end
 
@@ -266,12 +267,12 @@ class Item < ActiveRecord::Base
   end
 
   def split(count=1)
-    puts "called split for item #{self.id} with count #{count}"
+    #puts "called split for item #{self.id} with count #{count}"
     parent_order = self.order
     split_order = parent_order.order
     if split_order.nil?
       split_order = Order.new(parent_order.attributes)
-      split_order.nr = self.vendor.get_unique_model_number('order')
+      split_order.update_attribute :nr, self.vendor.get_unique_model_number('order')
       parent_order.order = split_order
       split_order.order = parent_order
     end

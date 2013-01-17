@@ -273,6 +273,9 @@ function normalize_season_objects(seasons) {
   return seasons;
 }
 function create_season_objects(seasons) {
+  if ($.isEmptyObject(seasons)) {
+    return
+  }
   if (_get("normalized_season_objects")) {
     //console.log("season objects already generated");
     return _get("normalized_season_objects");
