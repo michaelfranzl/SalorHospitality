@@ -32,6 +32,10 @@
             %td.number= item.count
             %td.number= number_to_currency o.price
             %td.colsum= number_to_currency item.refunded ? 0 : item.count * o.price
+            
+      - so.payment_method_items.existing.each do |pmi|
+        %tr
+          %td== ► #{ pmi.payment_method.name } #{ number_to_currency pmi.amount }
     %tr
       %td.subtotal{ :colspan => 6 }= number_to_currency so.sum
         
