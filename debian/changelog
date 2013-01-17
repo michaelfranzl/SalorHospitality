@@ -1,3 +1,11 @@
+salor-hospitality (4.1.2.43) unstable; urgency=low
+
+  * more optimizations
+  * more optimizations and bugfixes
+  * Feature #1647 Display payment method items on settlements detailed view
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Jan 2013 21:07:38 +0100
+
 salor-hospitality (4.1.2.42) unstable; urgency=low
 
   * debian fix
