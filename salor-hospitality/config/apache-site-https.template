@@ -11,6 +11,7 @@
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   SetEnv BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
+  PassengerRestartDir /var/tmp/salor-hospitality/INSTANCE_ID
   
   ScriptAlias /cgi-bin/ /usr/share/salor-helper/cgi/
   AddHandler bill-type .bill

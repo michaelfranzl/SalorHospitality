@@ -1,5 +1,5 @@
 - oid = invoice_form.id
-- display_tax_colors = @current_vendor.country == 'cc' or @current_vendor.country == 'de'
+- display_tax_colors = @current_vendor.country == 'cc' || @current_vendor.country == 'de'
 - if display_tax_colors
   - label_onclick_method = 'rotate_tax_item'
   - linktitle = t('.switch_tax_for_this_item')

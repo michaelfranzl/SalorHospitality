@@ -13,4 +13,5 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'rmagick'
 gem 'uglifier'
+# The following are not yet part of Debian Squeeze and cause a dependency to the online API of rubygems.org
 gem 'escper', '1.1.3'

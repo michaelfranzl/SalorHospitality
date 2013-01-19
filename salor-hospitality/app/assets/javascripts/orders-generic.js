@@ -814,14 +814,14 @@ function update_order_from_invoice_form(data, button) {
     $(button).append(loader);
     $(button).css('opacity','0.5');
   } else {
-    if ( data.jsaction == 'change_cost_center' ) {
+    if ( data.jsaction == 'change_cost_center' || data.jsaction == 'mass_assign_tax' ) {
       $('#model_' + data.id + ' a.iconbutton').append(loader);
       $('#model_' + data.id + ' a.iconbutton').css('opacity','0.5');
       $('#model_' + data.id + ' a.iconbutton').attr('onclick', ''); // this prevents timing problems with multiple passenger instances when cost center is changed and the order finished within a fraction of a second. the user has to wait until the server re-renders the DOM.
     }
   }
   
-  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && data.jsaction != 'change_cost_center') {
+  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && ( data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax') ) {
     if ($('div.invoice:visible').length == 1) {
       route('tables');
     } else {
