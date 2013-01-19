@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.44) unstable; urgency=low
+
+  * Administration #1648 Lock rack version to 1.4.1
+  * Bug #1649 Rotate tax broken
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 19 Jan 2013 09:20:40 +0100
+
 salor-hospitality (4.1.2.43) unstable; urgency=low
 
   * more optimizations
