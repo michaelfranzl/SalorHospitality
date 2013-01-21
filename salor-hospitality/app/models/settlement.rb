@@ -50,6 +50,7 @@ class Settlement < ActiveRecord::Base
 
   def print
     vendor_printer = self.vendor.vendor_printers.existing.first
+    return if vendor_printer.nil?
     printr = Escper::Printer.new(self.company.mode, vendor_printer, self.company.subdomain)
     printr.open
     bytes_written, content_sent = printr.print vendor_printer.id, self.escpos

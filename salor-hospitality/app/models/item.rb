@@ -297,7 +297,9 @@ class Item < ActiveRecord::Base
     self.printed_count -= count
     self.hide(-3) if self.count.zero?
     partner_item.save
+    partner_item.option_items.existing.each { |oi| oi.calculate_totals }
     partner_item.calculate_totals
+    self.option_items.existing.each { |oi| oi.calculate_totals }
     self.save
     self.calculate_totals
   end
