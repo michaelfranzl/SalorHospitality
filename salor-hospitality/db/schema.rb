@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127143959) do
+ActiveRecord::Schema.define(:version => 20130127144001) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -228,6 +228,9 @@ ActiveRecord::Schema.define(:version => 20130127143959) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.integer  "vendor_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
   end
 
   add_index "coupons", ["company_id"], :name => "coupons_company_id_index"
@@ -289,6 +292,8 @@ ActiveRecord::Schema.define(:version => 20130127143959) do
     t.integer  "vendor_id"
     t.boolean  "hidden"
     t.boolean  "active",      :default => true
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
   end
 
   add_index "discounts", ["article_id"], :name => "index_discounts_article_id"
@@ -352,6 +357,8 @@ ActiveRecord::Schema.define(:version => 20130127143959) do
     t.boolean  "hidden"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
   end
 
   create_table "images", :force => true do |t|
@@ -709,6 +716,9 @@ ActiveRecord::Schema.define(:version => 20130127143959) do
     t.datetime "updated_at",        :null => false
     t.string   "fb_res_id"
     t.integer  "vendor_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
   end
 
   create_table "roles", :force => true do |t|

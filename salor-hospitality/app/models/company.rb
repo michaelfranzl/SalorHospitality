@@ -11,45 +11,53 @@
 class Company < ActiveRecord::Base
   include Scope
   include ImageMethods
-  has_many :vendors
-  has_many :users
+  
   has_many :articles
+  has_many :booking_items
+  has_many :bookings
+  has_many :cameras
+  has_many :cash_drawers
+  has_many :cash_registers
   has_many :categories
-  has_many :statistic_categories
   has_many :cost_centers
+  has_many :coupons
   has_many :customers
-  has_many :groups
+  has_many :discounts
+  has_many :emails
+  has_many :guest_types
+  has_many :histories
   has_many :images, :as => :imageable
   has_many :ingredients
   has_many :items
+  has_many :option_items
   has_many :options
   has_many :orders
   has_many :pages
   has_many :partials
+  has_many :payment_method_items
+  has_many :payment_methods
   has_many :presentations
   has_many :quantities
+  has_many :receipts
+  has_many :reservations
   has_many :roles
-  has_many :settlements
-  has_many :tables
-  has_many :roles
-  has_many :taxes
-  has_many :vendor_printers
-  has_many :rooms
-  has_many :room_types
-  has_many :guest_types
-  has_many :seasons
-  has_many :surcharges
   has_many :room_prices
-  has_many :bookings
-  has_many :booking_items
-  has_many :payment_methods
-  has_many :payment_method_items
+  has_many :room_types
+  has_many :rooms
+  has_many :seasons
+  has_many :settlements
+  has_many :statistic_categories
+  has_many :stocks
   has_many :surcharge_items
+  has_many :surcharges
+  has_many :tables
   has_many :tax_amounts
   has_many :tax_items
-  has_many :option_items
-  has_many :receipts
-  has_many :cameras
+  has_many :taxes
+  has_many :users
+  has_many :vendor_printers
+  has_many :vendors
+
   
   validates_presence_of :name
   validates_uniqueness_of :subdomain, :scope => :hidden

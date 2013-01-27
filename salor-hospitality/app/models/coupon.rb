@@ -8,30 +8,8 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-class History < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :model, :polymorphic => true
-  before_create :set_fields
+class Coupon < ActiveRecord::Base
+  include Scope
   belongs_to :company
   belongs_to :vendor
-  
-  def set_fields
-    if $User then
-      self.user = $User
-    end
-    self.url = $Request.url if $Request
-    self.params = $Params.to_json if $Params
-    self.ip = $Request.ip if $Request
-  end
-  def self.record(action,object,sen=5)
-    # sensitivity is from 5 (least sensitive) to 1 (most sensitive)
-    h = History.new
-    h.sensitivity = sen
-    h.model = object if object
-    h.action_taken = action
-    if object and object.respond_to? :changes then
-      h.changes_made = object.changes.to_json
-    end
-    h.save
-  end
 end
