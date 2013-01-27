@@ -1,3 +1,10 @@
+salor-hospitality (4.1.2.45) unstable; urgency=low
+
+  * Bug #1650 Splitting items doesn't change count of OptionItem
+  * add hidden flags to all tables, saas improvements
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 27 Jan 2013 15:52:42 +0100
+
 salor-hospitality (4.1.2.44) unstable; urgency=low
 
   * Administration #1648 Lock rack version to 1.4.1
