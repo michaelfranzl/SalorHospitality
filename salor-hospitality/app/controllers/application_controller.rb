@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   #helper :all
   before_filter :fetch_logged_in_user, :set_locale
 
-  helper_method :logged_in?, :mobile?, :mobile_special?, :workstation?, :permit
+  helper_method :mobile?, :mobile_special?, :workstation?, :permit
   
   def route
     #puts "XXXXXXXXXXXXX #{params[:currentview]}"

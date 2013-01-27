@@ -52,6 +52,6 @@ class Company < ActiveRecord::Base
   has_many :cameras
   
   validates_presence_of :name
-  validates_uniqueness_of :subdomain
-  validates_uniqueness_of :name
+  validates_uniqueness_of :subdomain, :scope => :hidden
+  validates_uniqueness_of :name, :scope => :hidden
 end
