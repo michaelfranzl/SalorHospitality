@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.46) unstable; urgency=low
+
+  * add more vendor_id and company_id and hidden fields
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 27 Jan 2013 16:46:44 +0100
+
 salor-hospitality (4.1.2.45) unstable; urgency=low
 
   * Bug #1650 Splitting items doesn't change count of OptionItem
