@@ -152,7 +152,7 @@ class VendorsController < ApplicationController
   end
   
   def test_printers
-    Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, @current_company.subdomain).identify(params[:chartest])
+    Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, @current_company.identifier).identify(params[:chartest])
     render :nothing => true
   end
 end

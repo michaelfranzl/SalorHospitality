@@ -360,9 +360,9 @@ class Order < ActiveRecord::Base
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.subdomain)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
     else
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, self.company.subdomain)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, self.company.identifier)
     end
 
     print_engine.open
@@ -717,7 +717,7 @@ class Order < ActiveRecord::Base
       
       # order sum must match the PAYMENT METHOD ITEM sum
       if self.paid and self.cost_center.no_payment_methods != true
-        tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount)).round(2) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)
+        tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)).round(2)
       end
       
       if self.paid and self.cost_center.no_payment_methods == true
