@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127144001) do
+ActiveRecord::Schema.define(:version => 20130131175846) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -190,13 +190,14 @@ ActiveRecord::Schema.define(:version => 20130127144001) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
-    t.string   "mode",      :default => "local"
+    t.string   "mode",       :default => "local"
     t.string   "subdomain"
-    t.boolean  "hidden",    :default => false
-    t.boolean  "active",    :default => true
+    t.boolean  "hidden",     :default => false
+    t.boolean  "active",     :default => true
     t.string   "email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.string   "identifier"
   end
 
   create_table "cost_centers", :force => true do |t|

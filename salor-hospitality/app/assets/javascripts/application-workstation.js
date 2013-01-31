@@ -54,7 +54,7 @@ function download_printfile(path) {
   for (var first_key in vendor_printers) { break }
   var printer = vendor_printers[first_key];
   var printer_path = printer.p;
-  window.location.href = '/uploads/' + sh_debian_siteid + '/' + subdomain + '/' + printer_path + '.bill';
+  window.location.href = '/uploads/' + sh_debian_siteid + '/' + company_identifier + '/' + printer_path + '.bill';
 }
 
 function is_fullscreen() {
