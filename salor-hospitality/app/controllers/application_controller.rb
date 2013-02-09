@@ -309,7 +309,13 @@ class ApplicationController < ActionController::Base
       elsif @current_customer
         I18n.locale = @locale = session[:locale] = @current_customer.language
       else
-        I18n.locale = @locale = 'en'
+        browser_language = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+        browser_language = 'gn' if browser_language == 'de'
+        if browser_language.nil? or browser_language.empty? or not I18n.available_locales.include?(browser_language.to_sym)
+          I18n.locale = @locale = session[:locale] = 'en'
+        else
+          I18n.locale = @locale = session[:locale] = browser_language
+        end
       end
       
       @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country] if @current_vendor

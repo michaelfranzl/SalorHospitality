@@ -69,7 +69,6 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLES ===============
   if ( target == 'tables' ) {    
     submit_json.target = 'tables';
-    invoice_update = true;
     get_table_show_retry = false;
     $('#orderform').hide();
     $('#invoices').hide();
@@ -197,6 +196,7 @@ function route(target, model_id, action, options) {
   // ========== GO TO INVOICE ===============
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
+    invoice_update = true;
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
@@ -824,13 +824,15 @@ function update_order_from_invoice_form(data, button) {
   if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && ( data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax') ) {
     if ($('div.invoice:visible').length == 1) {
       route('tables');
+      invoice_update = false;
     } else {
       // stay on invoice page but remove the current invoice from DOM
+      invoice_update = true;
       $('#model_' + data.id).hide();
       delete submit_json.split_items_hash[data.id];
     }
   }
-  invoice_update = true; // if any of the print or finish buttons is pressed, always let the server response update the invoices. splitting an item can interrupt this.
+ 
 }
 
 function update_order_from_refund_form(data) {
@@ -852,9 +854,7 @@ function rotate_tax_item(id) {
   });
 }
 
-function split_item(id, order_id, sum, partner_item_id, increment) {
-  //invoice_update = false; // in case the user splits the invoice, a pending response from the server should not re-render the invoices and therefore overwrite the users input. this is a global variable and will be checked in orders/render_invoice_form.js.erb
-  
+function split_item(id, order_id, sum, partner_item_id, increment) {  
   var partner_mode = $('div.invoice:visible').length == 2;
   
   if (order_id == submit_json.split_items_hash.original) {
@@ -956,7 +956,6 @@ function submit_split_items(order_id) {
       }
     });
     submit_json.split_items_hash = {}; // prevent from double clicking the button
-    invoice_update = true; // when pressing the split button, let the server repsonse refresh the invoice view. grep for invoice_update = false; where the server should not destroy the DOM.
   }
 }
 
