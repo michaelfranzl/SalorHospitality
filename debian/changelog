@@ -1,3 +1,11 @@
+salor-hospitality (4.1.2.48) unstable; urgency=low
+
+  * identifier
+  * fixed problem with invoice switching
+  * added comment
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 12 Feb 2013 09:58:52 +0100
+
 salor-hospitality (4.1.2.47) unstable; urgency=low
 
   * more
