@@ -341,6 +341,7 @@ class Item < ActiveRecord::Base
     if self.vendor.country == 'us'
       tests[1] = (self.sum.round(2) == item_hash_net )
     else
+      # TODO: This test only succeeds when there is only 1 tax attached to the item.
       tests[1] = (self.sum.round(2) == item_hash_gro )
     end
     
