@@ -158,22 +158,23 @@ function route(target, model_id, action, options) {
       // stay on table
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
+      
     } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      // there are offline orders in the queue. display them instead of loading from the browser
       submit_json = $.extend(true, {}, submit_json_queue['table_' + model_id]); // deep copy
       items_json = $.extend(true, {}, items_json_queue['table_' + model_id]); // deep copy
       delete submit_json_queue['table_' + model_id];
       delete items_json_queue['table_' + model_id];
       render_items();
-      if (((new Date).getTime()) - submit_json.sent_at > 40000) {
+      $('#order_cancel_button').hide();
+      if (((new Date).getTime()) - submit_json.sent_at > 5000) {
         // the order could still be processed by the server. do not warn the user about offline items within a certain time period.
-        $('#order_cancel_button').hide();
         send_email('route(): User has been informed about offline items', '');
-        var answer = confirm(i18n.table_contains_offline_items);
-        if (answer == true) {
-          route('tables',model_id,'send'); //send_json('table_' + model_id);
-          return;
-        }
+        setTimeout(function() {
+          alert(i18n.table_contains_offline_items);
+        }, 500);
       }
+      
     } else if (action == 'specific_order') {
       $.ajax({
         type: 'GET',
@@ -356,17 +357,19 @@ function send_email(subject, message) {
 /* ======================================================*/
 
 function send_json(object_id) {
-  //submit_json_queue[object_id] = submit_json; // this would be  only  a pointer assignment, which is bad for quick UI operation. We need to do a deep object copy instead:
   submit_json_queue[object_id] = $.extend(true, {}, submit_json);
   if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
     submit_json_queue[object_id].sent_at = (new Date).getTime();
   }
   items_json_queue[object_id] = $.extend(true, {}, items_json);
+  
+  table_id = submit_json_queue[object_id].model.table_id;
+  offline_tables[table_id] = true;
+  $('#table' + table_id).css('border', '3px solid white');
+  
   display_queue();
   submit_json.model = {};
   delete submit_json.items;
-  // submit_json.currentview should be preserved
-  // submit_json.target should be preserved
   items_json = {};
   send_queue(object_id);
 }
@@ -376,69 +379,57 @@ function send_queue(object_id) {
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
-    timeout: 40000,
+    timeout: 60000,
     complete: function(data,status) {
       if (status == 'timeout') {
-        send_email('send_queue: timeout for object_id ' + object_id, '');
-        if (submit_json_queue[object_id]) {
-          var tablename = "?";
-          if (submit_json_queue[object_id].model && submit_json_queue[object_id].model.table_id ) {
-            tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
-          } else {
-            send_email('send_queue: extreme load ' + object_id, 'submit_json_queue does contain object_id');
-            // this happens only under extreme load of the JS UI and the server, tested by ichabod.
-          }
-          alert("Oops! Die Bestellung auf Tisch " + tablename + " wurde abgesendet, aber nach 40 Sekunden immer noch keine Antwort vom Server empfangen. Bitte die Bestellung manuell überprüfen.");
-          clear_queue(object_id); // server probably has processed the request, so we are clearing the queue here, with the risk that the taken order may be lost. But this is better than having taken items twice.
-          update_tables();
-        } else {
-          send_email('send_queue: extreme load ' + object_id, 'submit_json_queue does not contain object_id');
-        }
+        send_email('send_queue: timeout', 'submit_json_queue[' + object_id + '] = ' + JSON.stringify(submit_json_queue[object_id]));
+        
+        alert("Oops! Die letzte Bestellung wurde zwar abgesendet, aber nach 60 Sekunden immer noch keine Bestätigung vom Server empfangen. Bitte manuell überprüfen ob die Bestellung verarbeitet wurde.");
+        clear_queue(object_id); // in most cases, server has processed the request successfully, so we are clearing the queue here.
+        update_tables();
+        
       } else if (status == 'success') {
         if (submit_json_queue[object_id]) {
           table_id = submit_json_queue[object_id].model.table_id;
           if (offline_tables.hasOwnProperty(table_id)) {
             delete offline_tables[table_id];
             $('#table' + table_id).css('border', '1px solid gray');
-            clear_queue(object_id);
-            route('table', table_id);
-            alert(i18n.successfully_sent);
           }
         } else {
-          send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'User probably has entered the table in offline mode.');
+          send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'User has re-entered the same table before Ajax submit_queue response from the server was received. Not critical.');
         }
         clear_queue(object_id);
         update_tables();
+        
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            var answer = confirm(i18n.no_connection_retry);
-            if (answer == true) {
-              send_queue(object_id);
-            } else {
-              var table_id = submit_json_queue[object_id].model.table_id;
-              $('#table' + table_id).css('border', '3px solid white');
-              offline_tables[table_id] = true;
-            }
+            // iPod specific: This happens when a battery powered iPod is switched off immediately after taking an order and the server doesn't respond within 15 seconds after turning off due to high load. In this case the iPod's firmware just re-sends the unmodified the Ajax call when it is turned on again. This is bad however, since the server could have processed the items correctly and the second submission would double all items in the order. Luckily however, the iPods WiFi comes online only about 2 seconds after it was turned on again, which is too late for the second Ajax call to succeed. Therefore, the second Ajax call always fails, which puts it into the current state.
+            send_email('send_queue: No connection error for object_id ' + object_id, 'clearing queue');
+            // when we arrive at this state, in most cases the server has processed the Ajax call successfully, only that it took more than 15 seconds after iPod turn off to respond, we clear the queue.
+            clear_queue(object_id);
             break;
           case 4:
-            if (submit_json_queue[object_id]) {
-              var tablename = resources.tb[submit_json_queue[object_id].model.table_id].n;
-              send_email('send_queue: Server Error for object_id ' + object_id, '');
-              alert("Oops! Bei der Verarbeitung der Bestellung von Tisch " + tablename + " ist ein Fehler auftegreten. Bitte Bestellung manuell überprüfen.");
-              submit_json_queue[object_id].sent_at = (new Date).getTime() - 60000; // allow the user to view offline items immediately
-            }
+            send_email('send_queue: Server Error for object_id ' + object_id, '');
+            var table_id = submit_json_queue[object_id].model.table_id;
+            $('#table' + table_id).css('border', '3px solid white');
+            offline_tables[table_id] = true;
+            alert("Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler aufgetreten. Bitte Bestellung manuell überprüfen.");
+            // here, we don't clear the queue so that an order may not be lost.
             break;
           default:
-            send_email('send_queue: unknown ajax error readyState', '');
+            send_email('send_queue: unknown ajax "readyState" for status "complete".', '');
         }
+        
       } else if (status == 'parsererror') {
         send_email('send_queue: parsererror');
-        alert("Oops! Der Server hat die Bestellung erfolgreich verarbeitet, aber mit einem falschen Code geantwortet. Diesen Zwischenfall bitte dem Techniker melden.");
-        clear_queue(object_id); // server has processed correctly but returned malformed JSON, so no resubmission.
+        alert("Oops! Der Server hat die Bestellung erfolgreich verarbeitet, aber mit einem falsch formatierten Code geantwortet.");
+        clear_queue(object_id); // server has processed correctly but only returned malformed JSON, so we can clear the queue.
+        
       } else {
         send_email('send_queue: unknown ajax complete status', '');
       }
+      
       audio_enabled = false; // skip one beep
       counter_update_item_lists = 2;
     }

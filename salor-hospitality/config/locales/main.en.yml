@@ -773,7 +773,7 @@ en:
   various:
     no_connection_retry: No connection to the Server. Send again? If you cancel, the items will be saved locally.
     successfully_sent: The items were successfully sent.
-    table_contains_offline_items: "This table contains items which haven't been sent yet. Send them now?"
+    table_contains_offline_items: "This order contains items which haven't been confirmed by the server yet. Will display locally saved version of the order only. The server may have an updated version. Please check correctness of the order manually."
     statistics: Statistics
     customer_request_send: Request these items
     customer_request_finish: Request payment

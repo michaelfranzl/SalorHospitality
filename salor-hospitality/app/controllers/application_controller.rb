@@ -109,6 +109,7 @@ class ApplicationController < ActionController::Base
         end
       #===============CURRENTVIEW==================
       when 'table'
+        
         get_order
         case params['jsaction']
           #----------jsaction----------
