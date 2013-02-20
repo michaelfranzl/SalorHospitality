@@ -1,3 +1,19 @@
+salor-hospitality (4.1.2.50) unstable; urgency=low
+
+  [ Michael Franzl ]
+  * timing optimization for iPod
+
+  [ Jack Tang ]
+  * add Chinese locale zh-cn, zh-hk, zh-tw. the main.zh-XX.yaml are not fully completed yet.
+
+  [ Michael Franzl ]
+  * Feature #1656 Add StatisticCategory to statistics page
+  * updated README
+  * fixed translations
+  * updated translations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 20 Feb 2013 10:40:38 +0100
+
 salor-hospitality (4.1.2.49) unstable; urgency=low
 
   * identifier
