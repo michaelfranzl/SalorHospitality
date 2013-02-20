@@ -1,9 +1,26 @@
 SALOR Hospitality
 =================
 
-The innovative Point of Sale Solution serving the Hospitality Industry
+The modern Point of Sale Solution serving the Hospitality Industry
 
 This document was updated on: December 20, 2012
+
+About
+-----
+
+SALOR Hospitality (also known as Bill Gastro) is a professional and universal Point of Sale software for hotels, restaurants, bars and shops.
+
+If you install SALOR Hospitality on a computer (e.g. a mini PC), and connect receipt printers, touch screens and a WiFi Bridge, you will end up with much more than a regular Point of Sale system. Depending on your needs, you can build **your own management system for your hospitality business** which you can access conveniently from any computer or mobile device (e.g. smartphone or tablet) which is connected to your internal network.
+
+Because you can extend the installation to your heart's content, SALOR Hospitality helps you to **improve the communication between staff in your business**, and you will be able to serve your customers much quicker.
+
+SALOR Hospitality sends tickets into your kitchen or bar and makes printing of professional business invoices and accounting reports very easy. This simplifies your accounting work to an extreme degree and you can **dedicate more time for more important things**: the personal contact with your customers.
+
+You also can generate statistics to see during which business hours your store is most profitable and plan the work hours of your staff according to it.
+
+SALOR Hospitality has many more useful features that are described in more detail in the [Feature Catalog](http://billgastro.com/features/).
+
+Read about the extraordinarily good mobile support here: http://billgastro.com/about.html
 
 History
 -------
@@ -11,8 +28,6 @@ History
 This software product has been in continuous development and used in real-world settings since beginning of 2009. Red (E) Tools Ltd. (http://red-e.eu) is pleased to make it finally available publicly under the MIT License. This product was formerly known as BillGastro (http://billgastro.com), but after the addition of features for Hotels and many new improvements in 2012, it was renamed to "SALOR Hospitality" to reflect it's closeness to the hospitality industry as a whole. From launch of concept to full operation, SALOR Hospitality was developed with real-time input from waiters and kitchen personnel in successful, high-pressure environments.
 
 "SALOR Hospitality" is part of the SALOR software family and is aimed at Restaurants, Bars, Hotels, food stores, etc. Its sister, "SALOR Retail" is aimed at Retail stores, supermarkets, industries, etc. It is available at https://github.com/jasonknight/salor-retail
-
-"SALOR Retail" is currently being re-written as a pure Javascript offline application. Its new and unique architectural design -- zero dependency on any web framework -- was inspired by our rather painful real-life experiences of what actually works in the world of web application development, and what doesn't. This project is available at https://github.com/jasonknight/salor .
 
 Overview
 --------
@@ -68,12 +83,6 @@ For a quick demonstration of a small part of the features (the Restaurant part),
 
 http://www.youtube.com/watch?v=SUfm17WYRdA (This video covers restaurant functions only)
 
-Documentation
--------------
-
-Software documentation is work in progress!
-
-http://documentation.red-e.eu
 
 Philosophy of technology
 ------------------------
@@ -91,6 +100,15 @@ Multi-Store, Multi-Company
 --------------------------
 
 SALOR Hospitality has true multi-store (and even multi-company) support built in. That way, you deploy once, and serve many of your stores at once.
+
+
+Try the Demo!
+------------
+
+You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [demo1.sh.red-e.eu](http://demo1.sh.red-e.eu) and log in with the default password 001 (zero-zero-one).
+
+Support for Mozilla Firefox is limited to the Restaurant part. The Hotel part makes use of a browser-internal SQL database, which is not supported in Firefox. We never really tested Microsoft Internet Explorer, so you are on your own if you want to use this browser.
+
 
 Installation
 ------------
@@ -115,12 +133,17 @@ Any Rails developer will not have any problems running SalorHospitality, since i
     
 For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions (Debian Wheezy, Ubuntu 10.04, Ubuntu 10.10, Ubuntu 12.04 LTS, Ubuntu 12.10) that make the installation a breeze! Have a look at the installation instructions at http://documentation.red-e.eu/installation/index.html
 
-Try it live!
-------------
 
-You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [demo1.sh.red-e.eu](http://demo1.sh.red-e.eu) and log in with the default password 000 (zero-zero-zero).
+Documentation
+-------------
 
-Support for Mozilla Firefox is limited to the Restaurant part. The Hotel part makes use of a browser-internal SQL database, which is not supported in Firefox. We never really tested Microsoft Internet Explorer, so you are on your own if you want to use this browser.
+Visit the product website at
+
+http://billgastro.com
+
+Software documentation is work in progress:
+
+http://documentation.red-e.eu/hospitality
 
 
 Get Support!
@@ -136,12 +159,35 @@ If you want to ask questions or get general support, please subscribe to our mai
 
 For other inquiries, please contact us via the contact form on our website: http://red-e.eu ! (contact form will be set up soon)
 
+
+Buy a commercial installation with hardware or an online subscription
+---------------------------------------------------------------------
+
+Visit https://shop.red-e.eu
+
+
+
 Give back!
 ----------
 
-We have spent hundreds, if not thousands of hours in making this product available to you, for free. If you feel that our product has benefited you, you can support further developments by donating to our Open Source projects: http://red-e.eu (donation buttons will be set up soon).
+Red (E) Tools Ltd. is pleased to make its main products available to you, for free. We believe in Open Source in the fullest sense of the word, which is the reason why we have added the very permissive MIT License to our products, allowing you to use them for free -- yes, free as in "free beer".
 
-If you can't give money right now, sign up to Twitter, "follow" us and post about your experience: [http://twitter.com/RedETools](twitter.com/RedETools)
+We invite developers to download SALOR Hospitality, enhance it and publish the enhancements in return. This guarantees that the software will grow and continue to be there for hospitality businesses large and small.
+
+Since 2009, the founders of Red (E) Tools Ltd. have literally spent thousands of hours in front of the computer and with clients to forge SALOR Hospitality into a production-ready, world-class software product.
+
+However, nothing is really for free, so we ask you give something back if you feel that our products have benefited you. Please use one of the donation buttons at http://billgastro.com/opensource.html
+
+If you can't donate money, recommend SALOR Hospitality to your friends and business contacts.
+
+You can help us in the following way:
+
+* Use Twitter, 'follow' our [Twitter profile](https://twitter.com/RedETools) and post about us.
+* Use Facebook, “like” our Facebook pages for [Red E](http://www.facebook.com/pages/Red-E-Tools-Ltd/355936374462066) and [Salor Hospitality](https://plus.google.com/u/0/b/109404068814152227625/109404068814152227625/posts) and share them.
+* Use GooglePlus, and “+1″ our pages for [Red E](https://plus.google.com/b/101223278745291442261/101223278745291442261/posts), [Salor Hospitality](https://plus.google.com/u/0/b/109404068814152227625/109404068814152227625/posts) and share them.
+* Use GitHub and “star”, download or “watch” the sources of [SALOR Hospitality](https://github.com/michaelfranzl/SalorHospitality)
+* Promote our [XING Company Profile](https://www.xing.com/companies/redetools).
+
 
 Contact
 -------
