@@ -648,12 +648,13 @@ gn:
       manage_hotel: Hotel managen
       manage_statistics: Statistiken
       manage_statistics_hotel: Statistiken Hotel ansehen
-      statistics_weekday: Statistik Wochentag
-      statistics_hour: Statistik Stunde
-      statistics_table: Statistik Tisch
-      statistics_payment_method: Statistik Zahlungsmethode
-      statistics_category: Statistik Kategorie
-      statistics_tax: Statistik Steuern
+      statistics_weekday: Statistik zeige Wochentag
+      statistics_hour: Statistik zeige Stunde
+      statistics_table: Statistik zeige Tisch
+      statistics_payment_method: Statistik zeige Zahlungsmethode
+      statistics_category: Statistik zeige Kategorie
+      statistics_tax: Statistik zeige Steuern
+      statistics_statistic_category: Statistik zeige Statistik-Kategorien
       item_scribe: Handschrift aktivieren
       assign_order_to_booking: Bestellungen einer Buchung zuweisen
       assign_tables: Tische an Benutzer zuweisen

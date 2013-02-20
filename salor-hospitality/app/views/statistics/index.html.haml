@@ -109,6 +109,27 @@
           %td
             .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
         - i += 1
+        
+  - if permit('statistics_statistic_category')
+    %table.settlements.statistics
+      %tr
+        %th.bb{ :style => 'width:40px' }= StatisticCategory.model_name.human
+        %th.bb= t :sum
+        %th.bb
+      - sums = []
+      - i = 0
+      - @statistic_categories.each do |cat|
+        - sums[i] = Item.where(:settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @statistic_categories.each do |cat|
+        %tr
+          %td= cat.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+        - i += 1
 
   - if permit('statistics_payment_method')
     %table.settlements.statistics

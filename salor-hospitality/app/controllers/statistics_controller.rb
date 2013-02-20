@@ -22,10 +22,11 @@ class StatisticsController < ApplicationController
     @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
     @cost_centers = @current_vendor.cost_centers.existing
     cost_center_ids = @cost_centers.collect{ |cc| cc.id }
-    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : @current_vendor.cost_centers.existing.first
+    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : nil
     @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
     @tables = @current_vendor.tables.existing.active
     @categories = @current_vendor.categories.existing
+    @statistic_categories = @current_vendor.statistic_categories.existing
     @payment_methods = @current_vendor.payment_methods.existing
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
