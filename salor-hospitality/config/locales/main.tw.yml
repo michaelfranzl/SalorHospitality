@@ -1,13 +1,13 @@
 ---
-zh-cn:
+tw:
   statistic_categories:
     new:
-      edit_statistic_category: 编辑统计类别
-      new_statistic_category: 新统计类别
+      edit_statistic_category: 編輯統計類別
+      new_statistic_category: 新統計類別
   activerecord:
     attributes:
       camera:
-        name: 名称
+        name: 名稱
         description: Description
         host_internal: Internal host
         host_external: External host
@@ -18,9 +18,9 @@ zh-cn:
         hidden: delete
       statistic_category:
         hidden: delete
-        name: 名称
+        name: 名稱
       payment_method:
-        name: 名称
+        name: 名稱
         cash: Cash
         change: Change
       payment_method_item:
@@ -52,152 +52,152 @@ zh-cn:
         hidden: delete
       article:
         statistic_category_id: Statistic-Category
-        active: 活跃
-        category_id: 类别
+        active: 活躍
+        category_id: 類別
         description: 描述
-        hidden: 删除
-        image: 图像
-        name: 名称
-        price: 价格
-        taxes: 税
-        usage: 运用
+        hidden: 刪除
+        image: 圖像
+        name: 名稱
+        price: 價格
+        taxes: 稅
+        usage: 運用
       category:
         color: 色彩
-        custom_icon: 删除
+        custom_icon: 刪除
         food: 食物
-        hidden: 删除
-        icon: 图标
-        name: 名称
+        hidden: 刪除
+        icon: 圖標
+        name: 名稱
         separate_print: 剪票
-        tax_id: 税
-        user_id: 准备用户
-        vendor_printer_id: 打印机
-        image: 图标
+        tax_id: 稅
+        user_id: 準備用戶
+        vendor_printer_id: 打印機
+        image: 圖標
       cost_center:
-        active: 活跃
+        active: 活躍
         description: 描述
-        hidden: 删除
-        name: 名称
+        hidden: 刪除
+        name: 名稱
         no_payment_methods: No Payment Methods
       group:
-        name: 名称
+        name: 名稱
       guest_type:
-        hidden: 删除
-        name: 名称
+        hidden: 刪除
+        name: 名稱
         taxes: Taxes
       option:
-        category_id: 类别
-        hidden: 删除
-        name: 名称
+        category_id: 類別
+        hidden: 刪除
+        name: 名稱
         no_ticket: 不打印票
-        price: 价格
+        price: 價格
         separate_ticket: 剪票
       page:
-        active: 活跃
+        active: 活躍
         color: 色彩
         height: 高度
-        hidden: 删除
-        image: 图像
-        width: 宽度
+        hidden: 刪除
+        image: 圖像
+        width: 寬度
       partial:
-        active: 活跃
-        blurb: 导语
-        hidden: 删除
+        active: 活躍
+        blurb: 導語
+        hidden: 刪除
       presentation:
-        active: 活跃
-        code: Ruby代码
+        active: 活躍
+        code: Ruby代碼
         description: 描述
-        hidden: 删除
-        markup: ERB标记
-        model: 类型
-        name: 名称
+        hidden: 刪除
+        markup: ERB標記
+        model: 類型
+        name: 名稱
       quantity:
-        active: 活跃
+        active: 活躍
         description: 描述
-        hidden: 删除
-        postfix: 後缀
-        prefix: 名称
-        price: 价格
-        usage: 运用
+        hidden: 刪除
+        postfix: 後綴
+        prefix: 名稱
+        price: 價格
+        usage: 運用
       role:
-        name: 名称
+        name: 名稱
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
-        hidden: 删除
+        hidden: 刪除
         room_type_id: Room Type
         season_id: Season
       room_type:
         hidden: delete
-        name: 名称
+        name: 名稱
       season:
         from_date: From
-        hidden: 删除
-        name: 名称
+        hidden: 刪除
+        name: 名稱
         to_date: To
         is_master: Master?
       settlement:
-        initial_cash: 开始数目
+        initial_cash: 開始數目
         revenue: 收入
       surcharge:
         amount: Amount
         guest_type_id: Guest Type
-        hidden: 删除
-        name: 名称
+        hidden: 刪除
+        name: 名稱
         radio_select: Radio Select
         season_id: Season
         selected: Selected by default
         visible: Visible?
       table:
-        abbreviation: 简称
+        abbreviation: 簡稱
         description: 描述
-        enabled: 活跃
+        enabled: 活躍
         height: 高度
-        height_mobile: 高度移动
-        hidden: 删除
-        name: 名称
+        height_mobile: 高度移動
+        hidden: 刪除
+        name: 名稱
         rotate: rotate?
-        width: 宽度
-        width_mobile: 宽度移动
+        width: 寬度
+        width_mobile: 寬度移動
         booking_table: Booking
       tax:
         color: 色彩
-        hidden: 删除
-        letter: 简称
-        name: 名称
-        percent: 税(%)
+        hidden: 刪除
+        letter: 簡稱
+        name: 名稱
+        percent: 稅(%)
         include_in_statistics: In Settlement Statistics
         statistics_by_category: Settlement Statistics by Category
       tax_amount:
         amount: Amount
         tax_id: Tax
       user:
-        active: 活跃
+        active: 活躍
         color: 色彩
-        hidden: 删除
-        language: 语言
-        login: 登录
-        password: 密码
+        hidden: 刪除
+        language: 語言
+        login: 登錄
+        password: 密碼
         role: 角色
-        screenlock_timeout: 屏幕锁超时 (秒)
+        screenlock_timeout: 屏幕鎖超時 (秒)
         tables: 表
-        title: 标题
+        title: 標題
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
       vendor:
-        enable_technician_emails: 给技术人员寄电子邮件
-        technician_email: 技术人员电子邮件
-        email: 电子邮件
+        enable_technician_emails: 給技術人員寄電子郵件
+        technician_email: 技術人員電子郵件
+        email: 電子郵件
         update_tables_interval: Interval update tables
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database
-        remote_orders: 远程订单
+        remote_orders: 遠程訂單
         automatic_printing: Automatic printing
         country: Rules for country
-        hidden: 删除
+        hidden: 刪除
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
-        name: 名称
+        name: 名稱
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         saas: Online variant
@@ -214,61 +214,61 @@ zh-cn:
         invoice_logo: Invoice Logo
       vendor_printer:
         copies: 副本
-        hidden: 删除
-        name: 名称
-        path: 路径
+        hidden: 刪除
+        name: 名稱
+        path: 路徑
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
     models:
       camera:
-        one: 相机
-        other: 相机
+        one: 相機
+        other: 相機
       statistic_category:
-        one: 统计类别
-        other: 统计类别
+        one: 統計類別
+        other: 統計類別
       article:
         one: 物品
         other: 物品
       booking:
-        one: 预订
-        other: 预订
+        one: 預訂
+        other: 預訂
       category:
-        one: 类别
-        other: 类别
+        one: 類別
+        other: 類別
       company:
-        one: 企业
-        other: 企业
+        one: 企業
+        other: 企業
       cost_center:
         one: 付款人
         other: 付款人
       coupon:
-        one: 优惠券
-        other: 优惠券
+        one: 優惠券
+        other: 優惠券
       customer:
-        one: 顾客
-        other: 顾客
+        one: 顧客
+        other: 顧客
       discount:
         one: 折扣
         other: 折扣
       group:
-        one: 库存合组
-        other: 库存合组
+        one: 庫存合組
+        other: 庫存合組
       guest_type:
-        one: 顾客类别
-        other: 顾客类别
+        one: 顧客類別
+        other: 顧客類別
       image:
-        one: 图像
-        other: 图像
+        one: 圖像
+        other: 圖像
       item:
-        one: 订购产品
-        other: 订购产品
+        one: 訂購產品
+        other: 訂購產品
       option:
-        one: 选项
-        other: 选项
+        one: 選項
+        other: 選項
       order:
-        one: 订购
-        other: 订购
+        one: 訂購
+        other: 訂購
       page:
         one: 牌
         other: 牌
@@ -276,8 +276,8 @@ zh-cn:
         one: 局部模板
         other: 局部模板
       payment_method:
-        one: 付费方式
-        other: 付费方式
+        one: 付費方式
+        other: 付費方式
       payment_method_item:
         one: Payment Method
         other: Payment Methods
@@ -285,23 +285,23 @@ zh-cn:
         one: 模板
         other: 模板
       quantity:
-        one: 备选案文
-        other: 备选案文
+        one: 備選案文
+        other: 備選案文
       report:
-        one: 报告
-        other: 报告
+        one: 報告
+        other: 報告
       reservation:
-        one: 预订
-        other: 预订
+        one: 預訂
+        other: 預訂
       role:
         one: 角色
         other: 角色
       room:
-        one: 房间
-        other: 房间
+        one: 房間
+        other: 房間
       room_price:
-        one: 房间价格
-        other: 房间价格
+        one: 房間價格
+        other: 房間價格
       room_type:
         one: Room Type
         other: Room Types
@@ -309,59 +309,59 @@ zh-cn:
         one: Saison
         other: Saisons
       settlement:
-        one: 结算
-        other: 结算
+        one: 結算
+        other: 結算
       stock:
-        one: 货物
-        other: 货物
+        one: 貨物
+        other: 貨物
       surcharge:
-        one: 附加费
-        other: 附加费
+        one: 附加費
+        other: 附加費
       table:
         one: 桌子
         other: 桌子
       tax:
-        one: 税务个人资料
-        other: 税务个人资料
+        one: 稅務個人資料
+        other: 稅務個人資料
       tax_amount:
-        one: 税
-        other: 税
+        one: 稅
+        other: 稅
       user:
-        one: 用户
-        other: 用户
+        one: 用戶
+        other: 用戶
       vendor:
-        one: 餐厅
-        other: 餐厅
+        one: 餐廳
+        other: 餐廳
       vendor_printer:
-        one: 打印机
-        other: 打印机
+        one: 打印機
+        other: 打印機
   admin: 管理
-  are_you_sure: 你确定吗?
+  are_you_sure: 你確定嗎?
   articles:
     create:
-      success: 物品成功地创建了
+      success: 物品成功地創建了
       license_limited: Your License is limited to %{count} articles
     destroy:
-      success: 物品被成功删除了
+      success: 物品被成功刪除了
     find:
       variants:
-        one: 备选案文
-        other: 备选案文
+        one: 備選案文
+        other: 備選案文
     index:
       list_all: 列出所有
-      preview: 预览
-      search_term: 搜索字词
+      preview: 預覽
+      search_term: 搜索字詞
       sort: 排序
       update: 更新!
-      view: 视图
+      view: 視圖
     listall:
       all_articles: 所有物品列表
     new:
-      add_quantity: 添加选项
-      edit_article: 编辑物品
+      add_quantity: 添加選項
+      edit_article: 編輯物品
       new_article: 新物品
       normal: 正常
-      takeaway: 外卖
+      takeaway: 外賣
     sort_index:
       sort: 排序物品
   bar: 吧
@@ -370,14 +370,14 @@ zh-cn:
     index:
       update: 更新
   blank: 空白
-  blue: 蓝
+  blue: 藍
   bookings:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
       search_by_number: Search by number
       go_to_bookings_calendar: Go to bookings calendar view
-  cancel_and_go_back: 取消并返回
+  cancel_and_go_back: 取消並返回
   categories:
     create:
       license_limited: Your License is limited to %{count} categories
@@ -385,279 +385,279 @@ zh-cn:
     destroy:
       success: Category successfully deleted
     new:
-      aperitif: 开胃酒
+      aperitif: 開胃酒
       beer: 啤酒
       blank: 空白
-      childrendish: 儿童的菜
-      cigarette: 烟
+      childrendish: 兒童的菜
+      cigarette: 煙
       coffee: 咖啡
-      dessert: 点心
-      digestif: 消化剂
-      edit_category: 编辑类别
+      dessert: 點心
+      digestif: 消化劑
+      edit_category: 編輯類別
       maindish: 主菜
-      new_category: 新类别
-      nonalcoholics: 无酒精
-      noodles: 面条
-      redwinebottle: 红葡萄酒(瓶)
-      redwineglass: 红葡萄酒(杯)
-      rosewinebottle: 桃红葡萄酒(瓶)
-      rosewineglass: 桃红葡萄酒(杯)
+      new_category: 新類別
+      nonalcoholics: 無酒精
+      noodles: 麵條
+      redwinebottle: 紅葡萄酒(瓶)
+      redwineglass: 紅葡萄酒(杯)
+      rosewinebottle: 桃紅葡萄酒(瓶)
+      rosewineglass: 桃紅葡萄酒(杯)
       sidedish: 小菜
-      soup: 汤
+      soup: 湯
       sparkling: 起泡葡萄酒
       starter: 前菜
       tea: 茶碗
-      teapot: 茶壶
+      teapot: 茶壺
       whitewinebottle: 白葡萄酒(瓶)
       whitewineglass: 白葡萄酒(杯)
-  clear_order_and_go_back: 清除订单并返回
-  copy: 复制
+  clear_order_and_go_back: 清除訂單並返回
+  copy: 複製
   cost_centers:
     create:
       success: 成本中心成功地保存了
     destroy:
-      success: 成本中心成功删除了
+      success: 成本中心成功刪除了
     index:
-      active: 活跃
+      active: 活躍
       inactive: 待用
     new:
-      edit_cost_center: 编辑付款人
+      edit_cost_center: 編輯付款人
       new_cost_center: 新付款人
-  count: 计算
-  create: 创建
+  count: 計算
+  create: 創建
   dateandtime: 日期
-  default: 默认
-  delete: 删除
+  default: 默認
+  delete: 刪除
   display: 食品
-  edit: 编辑
-  exit: 太平门
-  finish: 完毕
+  edit: 編輯
+  exit: 太平門
+  finish: 完畢
   food: Foods
   go_back: 返回
-  green: 绿色
-  gross: 合计
+  green: 綠色
+  gross: 合計
   groups:
     new:
-      edit_group: 编辑组
-      new_group: 新组
+      edit_group: 編輯組
+      new_group: 新組
   guestroom: 客房
   host: 主人
   images:
-    errempty: 无效的文件
-    errsize: 无效的文件大小
-    errtype: 无效的文件类型
-  invoice: 发票
-  invoice_numer_X_at_time: 发票号 %{number} 在 %{datetime}
-  invoices: 发票
-  is_no_number: 不是一个数字
+    errempty: 無效的文件
+    errsize: 無效的文件大小
+    errtype: 無效的文件類型
+  invoice: 發票
+  invoice_numer_X_at_time: 發票號 %{number} 在 %{datetime}
+  invoices: 發票
+  is_no_number: 不是一個數字
   items:
     item_tablerow:
       clear: 清除
       done: 完成
-      no_printing: 没有印刷
-  just_order: 只订购
-  kitchen: 厨房
+      no_printing: 沒有印刷
+  just_order: 只訂購
+  kitchen: 廚房
   layouts:
     application:
       submit_scribe: 好
-  logout: 注销 %{who}
+  logout: 註銷 %{who}
   messages:
     hello_username: 您好 %{name}!
     user_account_is_currently_locked: Account is locked
-  move_order_to_table: 转移订单到不同的桌子
-  must_be_entered_either_for_article_or_for_quantity: 必须输入无论对
-  net: 净
+  move_order_to_table: 轉移訂單到不同的桌子
+  must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對
+  net: 淨
   new: 新
-  no_printing: 没有印刷
+  no_printing: 沒有印刷
   not_found: 找不到
   options:
     create:
-      success: 成功保存选项
+      success: 成功保存選項
     destroy:
-      success: 成功删除选项
+      success: 成功刪除選項
     new:
-      edit_option: 编辑选项
-      hidden: 删除
-      new_option: 新选项
-      select_all: 选择所有
+      edit_option: 編輯選項
+      hidden: 刪除
+      new_option: 新選項
+      select_all: 選擇所有
   orange: 橙
   orders:
     invoice_item_list:
-      unit_price: 单价
-      count: 数量
-      sum: 总数
+      unit_price: 單價
+      count: 數量
+      sum: 總數
     functions_header_index:
       items_notifications: 通知
-      print_now: 打印现在
-      show_last_booking: 显示最近的预订
-      show_last_order: 显示最近订单
-      toggle_between_tables_and_rooms: 切换房间和桌子
+      print_now: 打印現在
+      show_last_booking: 顯示最近的預訂
+      show_last_order: 顯示最近訂單
+      toggle_between_tables_and_rooms: 切換房間和桌子
       exit: Exit
     functions_header_order_form:
-      move_order: 移动订单到不同的桌子
+      move_order: 移動訂單到不同的桌子
     index:
       confirmation_list: Self-order list
-      delivery_list: 发货清单
-      preparation_list: 准备清单
+      delivery_list: 發貨清單
+      preparation_list: 準備清單
     invoice_form:
-      change_money: 改变
-      just_finish: 完毕
-      print_and_finish: 打印并完成此订单
-      set_booking: 设置预订
-      set_cost_center: 设置此订单的成本中心
-      set_tax_for_all: 设置所有订单的成本中心
-      set_taxes: 设置税项
-      split_invoice: 拆分发票
+      change_money: 改變
+      just_finish: 完畢
+      print_and_finish: 打印並完成此訂單
+      set_booking: 設置預訂
+      set_cost_center: 設置此訂單的成本中心
+      set_tax_for_all: 設置所有訂單的成本中心
+      set_taxes: 設置稅項
+      split_invoice: 拆分發票
       split_this_item: Click to split this items one at a time
-      switch_tax_for_this_item: 更改此项目的税
+      switch_tax_for_this_item: 更改此項目的稅
     login_form:
-      email: 你的电子邮件
-      login: 登录
-      password: 密码
-      username: 用户
+      email: 你的電子郵件
+      login: 登錄
+      password: 密碼
+      username: 用戶
     order:
-      new: 新单
-      sum: 总和
+      new: 新單
+      sum: 總和
     served_by: You were served by
     show:
-      cannot_reactivate: 无法激活
+      cannot_reactivate: 無法激活
       reactivate: 激活
       back: 返回
-      count: 计算
-      list_of_taxes: 税项列表
-      next_invoice: 下一张发票
-      previous_invoice: 以前的发票
-      print_business_invoice: 打印商业发票
-      print_invoice: 打印发票
-      search_by_number: 按编号搜索
-      sum: 总和
-      unit_price: 单价
-      add_notes: 加入备忘
+      count: 計算
+      list_of_taxes: 稅項列表
+      next_invoice: 下一張發票
+      previous_invoice: 以前的發票
+      print_business_invoice: 打印商業發票
+      print_invoice: 打印發票
+      search_by_number: 按編號搜索
+      sum: 總和
+      unit_price: 單價
+      add_notes: 加入備忘
     refund_form:
-      do_separate_items: 分开此项
+      do_separate_items: 分開此項
       do_refund: 退款
   pages:
     edit:
-      edit_page: 编辑页面
-      slideshow: 开始幻灯片
-      view: 视图
+      edit_page: 編輯頁面
+      slideshow: 開始幻燈片
+      view: 視圖
     new:
-      new_page: 新页
+      new_page: 新頁
     form:
-      view: 检视
-      slideshow: 幻灯片
+      view: 檢視
+      slideshow: 幻燈片
   partials:
-    default_blurb: 编辑我
-    error_during_evaluation: ! '错误: '
+    default_blurb: 編輯我
+    error_during_evaluation: ! '錯誤: '
     no_presentation_found:
-      no_presentations_found: 这部分没有定义模板
+      no_presentations_found: 這部分沒有定義模板
   pink: Pink
   please_enter_item_comment: 特殊要求
-  please_enter_item_price: 特价
+  please_enter_item_price: 特價
   presentations:
     new:
-      edit_presentation: 编辑模板
+      edit_presentation: 編輯模板
       new_presentation: 新模板
   print: 打印
-  print_and_finish: 完成并打印
-  printing_test: 打印测试
+  print_and_finish: 完成並打印
+  printing_test: 打印測試
   reports:
-    end_date: 结束日期
+    end_date: 結束日期
     index:
-      backup_database: 备份数据库
-      backup_logfile: 备份日志
-      header: 报告
-      connected: 链接
-      disconnected: 断开链接
-      connect_ssh: 远程登入
-      connect_vnc: 萤幕共享
-      password: 密码
-      requesting_connection_status: 请求链接状态中...
+      backup_database: 備份數據庫
+      backup_logfile: 備份日誌
+      header: 報告
+      connected: 鏈接
+      disconnected: 斷開鏈接
+      connect_ssh: 遠程登入
+      connect_vnc: 螢幕共享
+      password: 密碼
+      requesting_connection_status: 請求鏈接狀態中...
       internet_connection_info: To get Remote Support, you must be connected to the
         internet. If you see the Red (E) Logo above, you are connected to the internet.
-      remote_support: 远程协助
-      download_reports: 储存报告
-    save: 储存
-    start_date: 开始日期
-    usb_device: 记忆棒
-    remote_support: 远程协助
-    download_reports: 下载报告
-  restaurant: 餐厅
+      remote_support: 遠程協助
+      download_reports: 儲存報告
+    save: 儲存
+    start_date: 開始日期
+    usb_device: 記憶棒
+    remote_support: 遠程協助
+    download_reports: 下載報告
+  restaurant: 餐廳
   customers:
     new:
-      edit_customer: 编辑顾客
-      new_customer: 新顾客
+      edit_customer: 編輯顧客
+      new_customer: 新顧客
     create:
-      success: 顾客成功储存
+      success: 顧客成功儲存
     destroy:
-      success: 顾客成功删除
+      success: 顧客成功刪除
   roles:
     create:
       success: Role successfully saved
     destroy:
       success: Role successfully deleted
     new:
-      allow_exit: 允许退出
-      reactivate_orders: 激活订单
+      allow_exit: 允許退出
+      reactivate_orders: 激活訂單
       move_order_from_invoice_form: Move order to table from invoice form
       assign_order_to_user: Assign order to user
       assign_cost_center: 分配成本中心
       cancel_all_items_in_active_order: Cancel all items in active order
-      change_waiter: 改变服务员
-      counter_mode: 柜台状态
+      change_waiter: 改變服務員
+      counter_mode: 櫃檯狀態
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
       edit_role: Edit Role
       finish_all_settlements: Finish all settlements
-      finish_orders: 完成订单
+      finish_orders: 完成訂單
       finish_own_settlement: Finish own settlement
-      refund: 退款项目
+      refund: 退款項目
       manage_articles: Manage articles
       manage_categories: Manage categories
       manage_statistic_categories: Manage Statistic Categories
-      manage_options: 管理选项
-      manage_business_invoice: 管理商业清单
-      manage_customers: 管理顾客
-      manage_pages: 管理幻灯片
+      manage_options: 管理選項
+      manage_business_invoice: 管理商業清單
+      manage_customers: 管理顧客
+      manage_pages: 管理幻燈片
       manage_roles: Manage roles
-      manage_taxes: 管理税务
+      manage_taxes: 管理稅務
       manage_cost_centers: Manage Cost Centers
       manage_payment_methods: 管理支付方法
-      manage_users: 管理用户
+      manage_users: 管理用戶
       manage_tables: 管理桌子
       manage_vendors: Manage vendors
-      manage_cameras: 管理相机
-      move_order: 移动订单
-      move_tables: 移动表
+      manage_cameras: 管理相機
+      move_order: 移動訂單
+      move_tables: 移動表
       new_role: New Role
       permissions: Permissions
-      see_debug: 查看调试信息
+      see_debug: 查看調試信息
       see_item_notifications_user_preparation: Item notifications personal preparation
       see_item_notifications_user_delivery: Item notifications personal delivery
       see_item_notifications_vendor_preparation: Item notifications vendor preparation
       see_item_notifications_vendor_delivery: Item notifications vendor delivery
       see_item_notifications_static: Item notifications summary list on main screen
-      split_items: 拆分项目
-      take_orders: 下订单
-      view_all_settlements: 查看所有结算
+      split_items: 拆分項目
+      take_orders: 下訂單
+      view_all_settlements: 查看所有結算
       manage_statistics: View statistics
-      manage_statistics_hotel: 查看酒店统计
+      manage_statistics_hotel: 查看酒店統計
       statistics_weekday: Statistics Weekdays
-      statistics_hour: 统计时数
+      statistics_hour: 統計時數
       statistics_table: Statistics Tables
-      statistics_payment_method: 统计支付方法
-      statistics_category: 统计类别
-      statistics_tax: 统计税
+      statistics_payment_method: 統計支付方法
+      statistics_category: 統計類別
+      statistics_tax: 統計稅
       manage_hotel: Manage hotel
-      item_scribe: 允许手写
+      item_scribe: 允許手寫
       assign_order_to_booking: Assign orders to a booking
       assign_tables: Assign tables to users
-      remote_support: 远程报告
-      download_database: 下载数据
-      receipt_logo: 收据标志
+      remote_support: 遠程報告
+      download_database: 下載數據
+      receipt_logo: 收據標誌
       mobile_show_tools: Show tool button on mobile devices
-      manage_statistics: 查看统计
-      settlement_statistics_taxes: 显示结算税务统计
+      manage_statistics: 查看統計
+      settlement_statistics_taxes: 顯示結算稅務統計
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       add_option_to_sent_item: Add Options to sent Items
   room_prices:
@@ -679,7 +679,7 @@ zh-cn:
     destroy:
       success: Room successfully deleted
   scopes:
-    active: 活跃
+    active: 活躍
     waiterpad: Waiterpad
   scroll_down: 下移
   scroll_to_area: Go to room
@@ -688,54 +688,54 @@ zh-cn:
     new:
       edit_season: Edit Season
       new_season: New Season
-  send_and_go_back: 保存并返回
+  send_and_go_back: 保存並返回
   served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
   server_no_response: The Bill Gastro Server is not responding any more. It is either
     busy or the radio link is interrupted.
   sessions:
     browser_warning:
-      continue: 继续
+      continue: 繼續
       warning: Salor only supports the browsers Google Chrome (Windows), Chromium
         (Linux) or Safari (Apple). Please use one of these browsers and try again.
     new:
-      email: 电子邮件
-      login: 用户名
-      password: 密码
-      username: 用户
+      email: 電子郵件
+      login: 用戶名
+      password: 密碼
+      username: 用戶
     new_customer:
-      email: 你的电子邮件
+      email: 你的電子郵件
       login: 登入
-      password: 密码
-      username: 用户
+      password: 密碼
+      username: 用戶
   settlements:
     detailed_list:
-      count: 计算
+      count: 計算
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       revenue: 收入
-      total: 总计
-      unit_price: 单价
+      total: 總計
+      unit_price: 單價
     index:
       all_cost_centers: 所有
-      end_date: 结束日期
-      start_date: 开始日期
-      sum_total: 总计
+      end_date: 結束日期
+      start_date: 開始日期
+      sum_total: 總計
     settlement:
-      finish: 完毕
+      finish: 完畢
       print: 打印
-      start: 开始
+      start: 開始
       started_at: Started at
-      please_wait: 正在分析数据，请稍候...
+      please_wait: 正在分析數據，請稍候...
   shared:
     invoice_tax_list:
       list_of_taxes: List of Taxes
-  split_order: 拆分订单
+  split_order: 拆分訂單
   statistic: Statistic
   stocks:
     new:
       edit_stock: Edit Stock
       new_stock: New Stock
   refund: 退款
-  sum: 总计
+  sum: 總計
   surcharges:
     new:
       add_tax_amount: Add tax amount
@@ -745,29 +745,29 @@ zh-cn:
   tables:
     create:
       license_limited: Your License is limited to %{count} tables
-      success: 桌子成功创建
+      success: 桌子成功創建
     destroy:
-      success: 桌子成功删除
+      success: 桌子成功刪除
     new:
-      edit_table: 编辑桌子
+      edit_table: 編輯桌子
       new_table: 新桌子
-  tax_amount: 总计
+  tax_amount: 總計
   taxes:
     new:
-      edit_tax: 编辑税
-      new_tax: 新税
+      edit_tax: 編輯稅
+      new_tax: 新稅
   statistics:
     index:
-      hour: 小时
+      hour: 小時
       weekday: 工作日
   users:
     create:
-      success: 用户成功创建
+      success: 用戶成功創建
     destroy:
-      success: 用户成功删除
+      success: 用戶成功刪除
     new:
-      edit_user: 编辑用户
-      new_user: 新用户
+      edit_user: 編輯用戶
+      new_user: 新用戶
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
     no_connection_retry: No connection to the Server. Send again? If you cancel, the items will be saved locally.
@@ -801,11 +801,11 @@ zh-cn:
     restaurant: Restaurant
     hotel: Hotel
     consumations: Consumations
-    report: 报告
-    begin: 开始
-    end: 终结
-    time: 时间
-    delete: 删除
+    report: 報告
+    begin: 開始
+    end: 終結
+    time: 時間
+    delete: 刪除
   vendors:
     index:
       edit: Edit
@@ -823,17 +823,17 @@ zh-cn:
     destroy:
       success: Vendor was successfully deleted
   violet: 紫
-  waiter: 服务员
+  waiter: 服務員
   waiterpad_generic_name: Waiterpad
   white: 白
-  winered: 酒红
-  wrong_password: 错误登入数据
-  yellow: 黄
-  invalid_date: 无效日期
+  winered: 酒紅
+  wrong_password: 錯誤登入數據
+  yellow: 黃
+  invalid_date: 無效日期
   cameras:
     index:
-      show: 显示
+      show: 顯示
     create:
-      success: 相机成功创建
+      success: 相機成功創建
     destroy:
-      success: 相机成功删除
+      success: 相機成功刪除

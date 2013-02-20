@@ -1,0 +1,120 @@
+hk:
+  activerecord:
+    errors:
+      template:
+      header:
+        one:    "%{count} 個錯誤導致 '%{model}' 無法儲存"
+        other:  "%{count} 個錯誤導致 '%{model}' 無法儲存"
+      body: "請檢查以下輸入"
+    messages:
+      inclusion:  "不在列表中"
+      exclusion:  "不應在列表中"
+      invalid:    "是無效的"
+      confirmation: "不匹配"
+      accepted:   "不應被接受"
+      empty:      "不應為空"
+      blank:      "不應為空白"
+      too_long:   "太長 (最多 %{count} 字)/"
+      too_short:  "太短 (最少 %{count} 字)/"
+      wrong_length:   "長度不合規定 (因該是 %{count} 字)/"
+      taken:      "已被占用"
+      not_a_number:   "不是數字"
+      greater_than:   "應大於 %{count}/"
+      greater_than_or_equal_to: "應大於等於 %{count}"
+      equal_to:   "應等於 %{count}"
+      less_than:  "應小於 %{count}"
+      less_than_or_equal_to: "應小於等於 %{count}/"
+      odd:    "必須為奇數"
+      even:   "必須為偶數"
+  datetime:
+    distance_in_words:
+      half_a_minute: "半分鐘"
+      less_than_x_seconds:
+        one:   "短於一秒鐘"
+        other: "短於 %{count} 秒鐘"
+      x_seconds:
+        one:   "一秒鐘"
+        other: "%{count} 秒鐘"
+      less_than_x_minutes:
+        one:   "短於一分鐘"
+        other: "短於 %{count} 分鐘"
+      x_minutes:
+        one:   "一分鐘"
+        other: "%{count} 分鐘"
+      about_x_hours:
+        one:   "大約一小時"
+        other: "大約 %{count} 小時"
+      x_days:
+        one:   "一天"
+        other: "%{count} 天"
+      about_x_months:
+        one:   "大約1個月"
+        other: "大約 %{count} 個月"
+      x_months:
+        one:   "一個月"
+        other: "%{count} 個月"
+      about_x_years:
+        one:   "大約一年"
+        other: "大約 %{count} 年"
+      over_x_years:
+        one:   "超過一年"
+        other: "超過 %{count} 年"
+      almost_x_years:
+        one:   "差不多一年"
+        other: "差不多 %{count} 年"
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "日"
+      hour:   "小時"
+      minute: "分鐘"
+      second: "秒"
+
+  helpers:
+    select:
+      prompt: "請選擇"
+      submit:
+        create: "已創建 %{model}"
+        update: "已更新 %{model}"
+        submit: "已保存 %{model}"
+
+# Used in array.to_sentence.
+  support:
+    array:
+      words_connector:
+        two_words_connector: " 和 "
+        last_word_connector: ", 和 "
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%d. %b"
+      long: "%d. %B  %Y"
+
+  day_names: [星期天, 星期一, 星期二, 星期三, 星期四, 星期五, 星期六]
+  abbr_day_names: [星期天,星期一,星期二, 星期三, 星期四, 星期五, 星期六]
+
+  # Don't forget the nil at the beginning; there's no such thing as a 0th month
+  month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+  abbr_month_names: [~, 一月, 二月, 三月, 四月, 五月, 六月, 七月, 八月, 九月, 十月, 十一月, 十二月]
+  # Used in date_select and datime_select.
+  order:
+    - :year
+    - :month
+    - :day
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      datetime_iso2: "%Y%m%dT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: "上午"
+    pm: "下午"

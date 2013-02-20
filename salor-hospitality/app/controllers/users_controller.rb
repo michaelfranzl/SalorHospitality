@@ -56,6 +56,9 @@ class UsersController < ApplicationController
     redirect_to users_path and return unless @user
     if @user.update_attributes(params[:user])
       flash[:notice] = I18n.t("users.create.success")
+      if @user == @current_user
+        session[:locale] = I18n.locale = @user.language
+      end
       redirect_to(users_path)
     else
       @tables = @current_vendor.tables.existing.where(:enabled => true)

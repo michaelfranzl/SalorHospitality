@@ -18,8 +18,8 @@ company_count = 0
 
 if ENV['SEED_MODE'] == 'full'
   puts "SEED_MODE is 'full'"
-  countries = ['us','at','fr','es','pl','hu','ru','it','tr','cn','el']
-  languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el']
+  countries = ['us','at','fr','es','pl','hu','ru','it','tr','cn','el','hk','tw']
+  languages = ['en','gn','fr','es','pl','hu','ru','it','tr','cn','el','hk','tw']
   company_count = 2
 else
   puts "SEED_MODE is 'minimal'"
@@ -71,48 +71,48 @@ checkbox_surcharge_names = ['Additional Bed']
 common_surcharge_names = ['1 Night', '2 Night']
 surcharge_amounts = [6, 12, 22, -5]
 
-Article.delete_all
-BookingItem.delete_all
-Booking.delete_all
-#CashDrawer.delete_all
-#CashRegister.delete_all
-Category.delete_all
-Company.delete_all
-CostCenter.delete_all
-#Coupon.delete_all
-Customer.delete_all
-#Discount.delete_all
-#Group.delete_all
-GuestType.delete_all
-History.delete_all
-Image.delete_all
-#Ingredient.delete_all
-Item.delete_all
-Option.delete_all
-Order.delete_all
-Page.delete_all
-Partial.delete_all
-PaymentMethod.delete_all
-Presentation.delete_all
-Quantity.delete_all
-#Receipt.delete_all
-#Reservation.delete_all
-Role.delete_all
-RoomPrice.delete_all
-RoomType.delete_all
-Room.delete_all
-Season.delete_all
-Settlement.delete_all
-#Stock.delete_all
-SurchargeItem.delete_all
-Surcharge.delete_all
-Table.delete_all
-TaxAmount.delete_all
-TaxItem.delete_all
-Tax.delete_all
-User.delete_all
-VendorPrinter.delete_all
-Vendor.delete_all
+# Article.delete_all
+# BookingItem.delete_all
+# Booking.delete_all
+# #CashDrawer.delete_all
+# #CashRegister.delete_all
+# Category.delete_all
+# Company.delete_all
+# CostCenter.delete_all
+# #Coupon.delete_all
+# Customer.delete_all
+# #Discount.delete_all
+# #Group.delete_all
+# GuestType.delete_all
+# History.delete_all
+# Image.delete_all
+# #Ingredient.delete_all
+# Item.delete_all
+# Option.delete_all
+# Order.delete_all
+# Page.delete_all
+# Partial.delete_all
+# PaymentMethod.delete_all
+# Presentation.delete_all
+# Quantity.delete_all
+# #Receipt.delete_all
+# #Reservation.delete_all
+# Role.delete_all
+# RoomPrice.delete_all
+# RoomType.delete_all
+# Room.delete_all
+# Season.delete_all
+# Settlement.delete_all
+# #Stock.delete_all
+# SurchargeItem.delete_all
+# Surcharge.delete_all
+# Table.delete_all
+# TaxAmount.delete_all
+# TaxItem.delete_all
+# Tax.delete_all
+# User.delete_all
+# VendorPrinter.delete_all
+# Vendor.delete_all
 
 
 
