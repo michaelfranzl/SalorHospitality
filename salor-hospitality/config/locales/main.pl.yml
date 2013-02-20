@@ -663,6 +663,7 @@ pl:
       settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
       manage_cameras: Zarządzanie kamerami
       add_option_to_sent_item: Add Options to sent Items
+      statistics_statistic_category: Statistics show StatisticCategories
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen

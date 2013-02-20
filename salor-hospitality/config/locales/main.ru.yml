@@ -638,6 +638,7 @@ ru:
       allow_exit: Allow Exit
       manage_cameras: Manage cameras
       add_option_to_sent_item: Add Options to sent Items
+      statistics_statistic_category: Statistics show StatisticCategories
     create:
       success: Роль успешно сохранена
     destroy:
