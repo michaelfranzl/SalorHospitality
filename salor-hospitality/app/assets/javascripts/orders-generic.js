@@ -44,6 +44,8 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = 3;
 var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
+
+var offline_mode = false;
 /* ======================================================*/
 /* ==================== DOCUMENT READY ==================*/
 /* ======================================================*/
@@ -375,7 +377,7 @@ function send_json(object_id) {
 }
 
 function send_queue(object_id) {
-  $.ajax({
+  var xhr = $.ajax({
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
@@ -434,6 +436,9 @@ function send_queue(object_id) {
       counter_update_item_lists = 2;
     }
   });
+  setInterval(function(){
+    console.log(xhr.readyState);
+  }, 200);
 }
 
 function clear_queue(i) {
@@ -1361,37 +1366,46 @@ function manage_counters() {
 }
 
 function get_table_show(table_id) {
+  $('#order_info').html("Verbinde...");
+  offline_mode = true;
+  //$('#order_submit_button'
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
-    timeout: 20000,
+    timeout: 5000,
     complete: function(data,status) {
       if (status == 'timeout') {
         //debug('get_table_show: TIMEOUT');
         if ( get_table_show_retry ) {
+          $('#order_info').html("Versuche erneut...");
           window.setTimeout(function() {
             get_table_show(table_id)
           }, 1000);
         }
       } else if (status == 'success') {
+        offline_mode = false;
         //debug('get_table_show: success');
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
             //debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
+            $('#order_info').html("Keine Verbindung!");
             if ( get_table_show_retry ) {
               window.setTimeout(function() {
                 get_table_show(table_id)
-              }, 5000);
+              }, 1000);
             }
             break;
           case 4:
+            $('#order_info').html("Serverfehler...");
             //debug('get_table_show: ' + parse_rails_error_message(data.responseText));
             break;
         }
       } else if (status == 'parsererror') {
+        $('#order_info').html("Falsche Server Antwort...");
         //debug('get_table_show: parser error: ' + data);
       } else {
+        $('#order_info').html("Unbekannter Zustand...");
         //debug('get_table_show: unsupported status');
       }
     }
