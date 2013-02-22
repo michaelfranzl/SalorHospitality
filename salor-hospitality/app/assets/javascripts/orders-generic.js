@@ -14,6 +14,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 var upper_delivery_time_limit = 45 * 60000;
 
+var send_queue_attempts = 1;
+
 var invoice_update = true;
 var get_table_show_retry = true;
 var offline_tables = {};
@@ -72,61 +74,35 @@ function route(target, model_id, action, options) {
   if ( target == 'tables' ) {    
     submit_json.target = 'tables';
     get_table_show_retry = false;
-    $('#orderform').hide();
-    $('#invoices').hide();
-    $('#items_notifications_interactive').hide();
-    $('#items_notifications_static').show();
-    $('#tables').show();
-    $('#rooms').hide();
-    $('#spliced_seasons').hide();
-    if (settings.mobile) { $('#areas').show(); }
-    $('#functions_header_index').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_invoice_form').hide();
-    $('#functions_footer').hide();
-    $('#functions_header_last_invoices').hide();
-    $('#customer_list').hide();
-    $('#tablesselect').hide();
     
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
+      send_json('table_' + model_id, switch_to_tables);
       
-      send_json('table_' + model_id);
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
-      send_json('table_' + model_id);
+      send_json('table_' + model_id, switch_to_tables);
+
     } else if (action == 'move') {
       $(".tablesselect").slideUp();
       submit_json.jsaction = 'move';
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
+      switch_to_tables();
+
     } else {
       items_json = {};
-    }
-    screenlock_counter = settings.screenlock_timeout;
-    option_position = 0;
-    item_position = 0;
-    counter_update_tables = timeout_update_tables;
-    update_tables();
-    if (settings.mobile && typeof(model_id) != 'undefined') {
-      scroll_to($('#table' + model_id), 20);
-    } else {
-      scroll_to($('#container'),20);
+      switch_to_tables();
     }
     submit_json = {model:{}};
     submit_json.currentview = 'tables';
 
+
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    scroll_to($('#container'),20);
-    invoice_update = true;
-    get_table_show_retry = true;
-    $('#order_sum').html('0' + i18n.decimal_separator + '00');
     switch_to_table();
-    screenlock_counter = -1;
-    counter_update_tables = -1;
     if (action == 'send') {
       // finish order
       submit_json.jsaction = 'send';
@@ -168,13 +144,14 @@ function route(target, model_id, action, options) {
       delete submit_json_queue['table_' + model_id];
       delete items_json_queue['table_' + model_id];
       render_items();
-      $('#order_cancel_button').hide();
+      //$('#order_cancel_button').hide();
       if (((new Date).getTime()) - submit_json.sent_at > 5000) {
         // the order could still be processed by the server. do not warn the user about offline items within a certain time period.
         send_email('route(): User has been informed about offline items', '');
         setTimeout(function() {
           alert(i18n.table_contains_offline_items);
         }, 500);
+        //get_table_show(model_id);
       }
       
     } else if (action == 'specific_order') {
@@ -203,28 +180,12 @@ function route(target, model_id, action, options) {
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
-      send_json('table_' + model_id);
+      send_json('table_' + model_id, switch_to_invoice);
       // invoice form will be rendered by the server as .js.erb template. see application#route
     }
-    $('#invoices').html('');
-    $('#invoices').show();
-    $('#items_notifications_interactive').hide();
-    $('#spliced_seasons').hide();
-    //$('#items_notifications_static').hide();
-    $('#orderform').hide();
-    $('#tables').hide();
-    $('#rooms').hide();
-    $('#areas').hide();
-    //$('#screenwait').hide();
-    //$('#inputfields').html('');
-    $('#itemstable').html('');
-    $('#functions_header_invoice_form').show();
-    $('#functions_header_order_form').hide();
-    $('#functions_header_index').hide();
-    $('#functions_footer').hide();
     counter_update_tables = -1;
     screenlock_counter = -1;
-    // clean workspace up
+    $('#invoices').html('');
     submit_json = {model:{},split_items_hash:{},totals:{},payment_method_items:{}};
     submit_json.currentview = 'invoice';
 
@@ -358,37 +319,115 @@ function send_email(subject, message) {
 /* ============ JSON SENDING AND QUEUEING ===============*/
 /* ======================================================*/
 
-function send_json(object_id) {
+function copy_json_from_submit_queue(object_id) {
+  submit_json = $.extend(true, {}, submit_json_queue[object_id]); // deep copy
+  items_json = $.extend(true, {}, items_json_queue[object_id]); // deep copy
+  delete submit_json_queue[object_id];
+  delete items_json_queue[object_id];
+}
+
+function copy_json_to_submit_queue(object_id) {
   submit_json_queue[object_id] = $.extend(true, {}, submit_json);
   if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
     submit_json_queue[object_id].sent_at = (new Date).getTime();
   }
   items_json_queue[object_id] = $.extend(true, {}, items_json);
-  
-  table_id = submit_json_queue[object_id].model.table_id;
-  offline_tables[table_id] = true;
-  $('#table' + table_id).css('border', '3px solid white');
-  
-  display_queue();
   submit_json.model = {};
   delete submit_json.items;
   items_json = {};
-  send_queue(object_id);
 }
 
-function send_queue(object_id) {
-  var xhr = $.ajax({
+function send_json(object_id, callback) {
+  callback = typeof callback !== 'undefined' ? callback : function(){};
+  
+  copy_json_to_submit_queue(object_id);
+
+    send_queue_after_server_online(object_id, callback);
+}
+
+var send_queue_after_server_online_request = null;
+
+function send_queue_after_server_online(object_id, callback) {
+  $('#order_info').html('Verbinde... ');
+  $('#order_info_bottom').html('Verbinde... ');
+  send_queue_attempts++;
+  get_table_show_retry = false;
+  send_queue_after_server_online_request = $.ajax({
+    url: '/vendors/online_status',
+    timeout: 10000,
+    complete: function(data,status) {
+      if (status == 'timeout') {
+        if (send_queue_attempts < 10) {
+          $('#order_info').html(send_queue_attempts + '. Versuch...');
+          $('#order_info_bottom').html(send_queue_attempts + '. Versuch...');
+          setTimeout(function() {
+            send_queue_after_server_online(object_id, callback);
+          }, 1000);
+        } else {
+          $('#order_info').html('Keine Verbindung. Gebe auf.');
+          $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
+          $.each($('#functions_header_order_form a.iconbutton'), function(i){
+            unloadify($('#functions_header_order_form a.iconbutton')[i]);
+          });
+          $.each($('#functions_footer a.iconbutton'), function(i){
+            unloadify($('#functions_footer a.iconbutton')[i]);
+          });
+          send_queue_attempts = 1;
+          copy_json_from_submit_queue(object_id);
+        }
+      } else if (status == 'success') {
+        $('#order_info').html('Sende ...');
+        $('#order_info_bottom').html('Sende ...');
+        send_queue(object_id, callback)
+      } else if (status == 'error') {
+        if (send_queue_attempts < 10) {
+          $('#order_info').html(send_queue_attempts + '. Versuch...');
+          $('#order_info_bottom').html(send_queue_attempts + '. Versuch...');
+          setTimeout(function() {
+            send_queue_after_server_online(object_id, callback);
+          }, 1000);
+        } else {
+          $('#order_info').html('Keine Verbindung. Gebe auf.');
+          $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
+          $.each($('#functions_header_order_form a.iconbutton'), function(i){
+            unloadify($('#functions_header_order_form a.iconbutton')[i]);
+          });
+          $.each($('#functions_footer a.iconbutton'), function(i){
+            unloadify($('#functions_footer a.iconbutton')[i]);
+          });
+          send_queue_attempts = 1;
+          copy_json_from_submit_queue(object_id);
+        }
+      } else if (status == 'parsererror') {
+      } else {
+      }
+    }
+  });
+}
+
+function send_queue(object_id, callback) {
+  $.ajax({
     type: 'post',
     url: '/route',
     data: submit_json_queue[object_id],
-    timeout: 60000,
+    timeout: 30000,
     complete: function(data,status) {
+      $.each($('#functions_header_order_form a.iconbutton'), function(i){
+        unloadify($('#functions_header_order_form a.iconbutton')[i]);
+      });
+      $.each($('#functions_footer a.iconbutton'), function(i){
+        unloadify($('#functions_footer a.iconbutton')[i]);
+      });
       if (status == 'timeout') {
         send_email('send_queue: timeout', 'submit_json_queue[' + object_id + '] = ' + JSON.stringify(submit_json_queue[object_id]));
+        $('#order_info').html('Bestellung auf Basisstation überprüfen');
+        $('#order_info_bottom').html('Bestellung auf Basisstation überprüfen');
+        alert("Keine Antwort vom Server. Bitte Ausdruck der Bestellung manuell überprüfen, danach nochmal absenden oder abbrechen.");
+        //clear_queue(object_id); // in most cases, server has processed the request successfully, so we are clearing the queue here.
+        //update_tables();
         
-        alert("Oops! Die letzte Bestellung wurde zwar abgesendet, aber nach 60 Sekunden immer noch keine Bestätigung vom Server empfangen. Bitte manuell überprüfen ob die Bestellung verarbeitet wurde.");
-        clear_queue(object_id); // in most cases, server has processed the request successfully, so we are clearing the queue here.
-        update_tables();
+        copy_json_from_submit_queue(object_id);
+        send_queue_attempts = 0;
         
       } else if (status == 'success') {
         if (submit_json_queue[object_id]) {
@@ -402,14 +441,15 @@ function send_queue(object_id) {
         }
         clear_queue(object_id);
         update_tables();
+        callback();
         
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
             // iPod specific: This happens when a battery powered iPod is switched off immediately after taking an order and the server doesn't respond within 15 seconds after turning off due to high load. In this case the iPod's firmware just re-sends the unmodified the Ajax call when it is turned on again. This is bad however, since the server could have processed the items correctly and the second submission would double all items in the order. Luckily however, the iPods WiFi comes online only about 2 seconds after it was turned on again, which is too late for the second Ajax call to succeed. Therefore, the second Ajax call always fails, which puts it into the current state.
-            send_email('send_queue: No connection error for object_id ' + object_id, 'clearing queue');
-            // when we arrive at this state, in most cases the server has processed the Ajax call successfully, only that it took more than 15 seconds after iPod turn off to respond, we clear the queue.
-            clear_queue(object_id);
+            send_email('send_queue: No connection error for object_id ' + object_id, '');
+            copy_json_from_submit_queue(object_id);
+            send_queue_attempts = 0;
             break;
           case 4:
             send_email('send_queue: Server Error for object_id ' + object_id, '');
@@ -417,7 +457,8 @@ function send_queue(object_id) {
             $('#table' + table_id).css('border', '3px solid white');
             offline_tables[table_id] = true;
             alert("Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler aufgetreten. Bitte Bestellung manuell überprüfen.");
-            // here, we don't clear the queue so that an order may not be lost.
+//             copy_json_from_submit_queue(object_id);
+//             send_queue_attempts = 0;
             break;
           default:
             send_email('send_queue: unknown ajax "readyState" for status "complete".', '');
@@ -436,9 +477,6 @@ function send_queue(object_id) {
       counter_update_item_lists = 2;
     }
   });
-  setInterval(function(){
-    console.log(xhr.readyState);
-  }, 200);
 }
 
 function clear_queue(i) {
@@ -1367,29 +1405,32 @@ function manage_counters() {
 
 function get_table_show(table_id) {
   $('#order_info').html("Verbinde...");
+  $('#order_info_bottom').html("Verbinde...");
   offline_mode = true;
-  //$('#order_submit_button'
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
-    timeout: 5000,
+    timeout: 7000,
     complete: function(data,status) {
       if (status == 'timeout') {
         //debug('get_table_show: TIMEOUT');
         if ( get_table_show_retry ) {
-          $('#order_info').html("Versuche erneut...");
+          $('#order_info').html("Keine Verbindung. Versuche erneut...");
+          $('#order_info_bottom').html("Keine Verbindung. Versuche erneut...");
           window.setTimeout(function() {
             get_table_show(table_id)
           }, 1000);
         }
       } else if (status == 'success') {
         offline_mode = false;
+        $('#order_submit_button').html('');
         //debug('get_table_show: success');
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
             //debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
             $('#order_info').html("Keine Verbindung!");
+            $('#order_info_bottom').html("Keine Verbindung!");
             if ( get_table_show_retry ) {
               window.setTimeout(function() {
                 get_table_show(table_id)
@@ -1535,6 +1576,27 @@ function change_item_status(id,status) {
 /* ========================================================*/
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
+
+function loadify(button) {
+  var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
+  loader.css('margin', '7px');
+  loader.css('position','absolute');
+  $(button).append(loader);
+  $(button).css('opacity','0.5');
+  var onclick_code = $(button).attr('onclick');
+  $(button).attr('onclick', '');
+  $(button).attr('onclick_old', onclick_code);
+}
+
+function unloadify(button) {
+  if (typeof $(button).attr('onclick_old') != 'undefined') {
+    $(button).html('');
+    $(button).css('opacity',1);
+    var onclick_code = $(button).attr('onclick_old');
+    $(button).attr('onclick', onclick_code);
+    $(button).removeAttr('onclick_old');
+  }
+}
 
 function add_customers_button() {
   if(_get('customers.button_added')) return
@@ -1913,8 +1975,33 @@ function update_table_coordinates(id) {
   });
 }
 
+function switch_to_invoice() {
+  $('#invoices').show();
+  $('#items_notifications_interactive').hide();
+  $('#spliced_seasons').hide();
+  //$('#items_notifications_static').hide();
+  $('#orderform').hide();
+  $('#tables').hide();
+  $('#rooms').hide();
+  $('#areas').hide();
+  //$('#screenwait').hide();
+  //$('#inputfields').html('');
+  $('#itemstable').html('');
+  $('#functions_header_invoice_form').show();
+  $('#functions_header_order_form').hide();
+  $('#functions_header_index').hide();
+  $('#functions_footer').hide();
+}
+
 function switch_to_table() {
-  $('#order_info').html(i18n.just_order);
+  scroll_to($('#container'),20);
+  invoice_update = true;
+  get_table_show_retry = true;
+  send_queue_attempts = 0;
+  $('#order_sum').html('0' + i18n.decimal_separator + '00');
+  screenlock_counter = -1;
+  counter_update_tables = -1;
+  //$('#order_info').html(i18n.just_order);
   $('#order_note').val('');
   //$('#inputfields').html('');
   $('#itemstable').html('');
@@ -1939,6 +2026,34 @@ function switch_to_table() {
   if (settings.mobile) { $('#functions_footer').show(); }
 }
 
+function switch_to_tables() {
+  $('#orderform').hide();
+  $('#invoices').hide();
+  $('#items_notifications_interactive').hide();
+  $('#items_notifications_static').show();
+  $('#tables').show();
+  $('#rooms').hide();
+  $('#spliced_seasons').hide();
+  if (settings.mobile) { $('#areas').show(); }
+  $('#functions_header_index').show();
+  $('#functions_header_order_form').hide();
+  $('#functions_header_invoice_form').hide();
+  $('#functions_footer').hide();
+  $('#functions_header_last_invoices').hide();
+  $('#customer_list').hide();
+  $('#tablesselect').hide();
+  screenlock_counter = settings.screenlock_timeout;
+  option_position = 0;
+  item_position = 0;
+  counter_update_tables = timeout_update_tables;
+  send_queue_attempts = 100; // stop all reconnecting attempts
+  update_tables();
+  if (settings.mobile && typeof(model_id) != 'undefined') {
+    scroll_to($('#table' + model_id), 20);
+  } else {
+    scroll_to($('#container'),20);
+  }
+}
 
 function parse_rails_error_message(raw_message) {
   var start1 = raw_message.indexOf('<pre>');

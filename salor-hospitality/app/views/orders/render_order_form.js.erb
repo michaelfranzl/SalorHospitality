@@ -3,8 +3,10 @@
   submit_json.id = <%= @order.id %>;
   render_items();
   $('#order_info').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
+  $('#order_info_bottom').html('');
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');
 <% else %>
   $('#order_info').html('<%= escape_javascript t('orders.order.new') %> <%= escape_javascript @table.name %>');
+  $('#order_info_bottom').html('');
 <% end %>

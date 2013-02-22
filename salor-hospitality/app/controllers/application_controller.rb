@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
             if @order.booking
               @order.finish(@current_user)
               @order.booking.calculate_totals
-              render :js => "route('booking',#{@order.booking.id});" # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
+              render :js => "setTimeout(function(){route('booking',#{@order.booking.id})}, 200);" # order was entered into booking view. we can assume that no tickets have to be printed, so return here.
             elsif not @order.hidden
               case params[:target]
                 when 'tables'

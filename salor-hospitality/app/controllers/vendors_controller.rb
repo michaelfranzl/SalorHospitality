@@ -155,4 +155,9 @@ class VendorsController < ApplicationController
     Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, @current_company.identifier).identify(params[:chartest])
     render :nothing => true
   end
+  
+  def online_status
+    #sleep 2
+    render :text => 'online'
+  end
 end

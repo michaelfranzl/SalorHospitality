@@ -198,6 +198,7 @@ SalorHospitality::Application.routes.draw do
   resources :vendors do
     collection do
       get :render_resources
+      get :online_status
     end
   end
 
