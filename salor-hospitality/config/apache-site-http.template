@@ -6,20 +6,20 @@
 # --- 
 
 <VirtualHost *:80>
-  ServerName INSTANCE_ID.sh.red-e.eu
-  #ServerAlias *.sh.red-e.eu
+  ServerName INSTANCE_ID.sh.localhost
+  #ServerAlias *.sh.localhost
   SetEnv SH_DEBIAN_SITEID INSTANCE_ID
   SetEnv BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile
   DocumentRoot /usr/share/salor-hospitality/INSTANCE_ID/public
-  #PassengerPreStart http://INSTANCE_ID.sh.red-e.eu/
+  #PassengerPreStart http://INSTANCE_ID.sh.localhost/
   PassengerRestartDir /var/tmp/salor-hospitality/INSTANCE_ID
   
   ScriptAlias /cgi-bin/ /usr/share/salor-helper/cgi/
   AddHandler bill-type .bill
   Action bill-type /cgi-bin/bill.cgi
   
-  SetEnvIf Host ^.*-b\.sh\.red-e\.eu USE_AUTH
-  SetEnvIf Host ^.*-d\.sh\.red-e\.eu USE_AUTH
+  SetEnvIf Host ^.*-b\.sh\.localhost USE_AUTH
+  SetEnvIf Host ^.*-d\.sh\.localhost USE_AUTH
 
   <Location />
     Order allow,deny
