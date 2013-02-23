@@ -9,19 +9,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function get_table_show(table_id) {
-  $('#order_info').html("Verbinde...");
-  $('#order_info_bottom').html("Verbinde...");
-  offline_mode = true;
+  $('#order_info').html(i18n.connecting);
+  $('#order_info_bottom').html(i18n.connecting);
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
     timeout: 7000,
     complete: function(data,status) {
       if (status == 'timeout') {
-        //debug('get_table_show: TIMEOUT');
         if ( get_table_show_retry ) {
-          $('#order_info').html("Keine Verbindung. Versuche erneut...");
-          $('#order_info_bottom').html("Keine Verbindung. Versuche erneut...");
+          $('#order_info').html(i18n.no_connection_retrying);
+          $('#order_info_bottom').html(i18n.no_connection_retrying);
           window.setTimeout(function() {
             get_table_show(table_id)
           }, 1000);
@@ -29,13 +27,11 @@ function get_table_show(table_id) {
       } else if (status == 'success') {
         offline_mode = false;
         $('#order_submit_button').html('');
-        //debug('get_table_show: success');
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            //debug('get_table_show: No network connection. get_table_show is ' + get_table_show_retry);
-            $('#order_info').html("Keine Verbindung!");
-            $('#order_info_bottom').html("Keine Verbindung!");
+            $('#order_info').html(i18n.no_connection);
+            $('#order_info_bottom').html(i18n.no_connection);
             if ( get_table_show_retry ) {
               window.setTimeout(function() {
                 get_table_show(table_id)
@@ -43,19 +39,16 @@ function get_table_show(table_id) {
             }
             break;
           case 4:
-            $('#order_info').html("Serverfehler...");
-            //debug('get_table_show: ' + parse_rails_error_message(data.responseText));
+            $('#order_info').html(i18n.server_error_short);
             break;
         }
       } else if (status == 'parsererror') {
-        $('#order_info').html("Falsche Server Antwort...");
-        //debug('get_table_show: parser error: ' + data);
+        $('#order_info').html(i18n.server_error_short);
       } else {
-        $('#order_info').html("Unbekannter Zustand...");
-        //debug('get_table_show: unsupported status');
+        $('#order_info').html(i18n.server_error_short);        
       }
     }
-  }); //the JS response repopulates items_json and renders items_json
+  });
 }
 
 function update_tables(){
@@ -117,9 +110,7 @@ function render_tables() {
     table.css('top', top);
     table.css('width', width);
     table.css('height', height);
-    if (offline_tables.hasOwnProperty(v.id)) {
-      table.css('border', '3px solid white');
-    }
+    
     if (typeof(bgcolor) == 'string') table.css('background-color', bgcolor);
 
     if (v.cp) {

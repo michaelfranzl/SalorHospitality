@@ -47,7 +47,17 @@ module OrdersHelper
       :successfully_sent =>
       escape_javascript(I18n.t('various.successfully_sent', :locale => @locale)),
       :table_contains_offline_items =>
-      escape_javascript(I18n.t('various.table_contains_offline_items', :locale => @locale))
+      escape_javascript(I18n.t('various.table_contains_offline_items', :locale => @locale)),
+      :attempt => escape_javascript(I18n.t('various.attempt', :locale => @locale)),
+      :no_connection_giving_up => escape_javascript(I18n.t('various.no_connection_giving_up', :locale => @locale)),
+      :sending => escape_javascript(I18n.t('various.sending', :locale => @locale)),
+      :check_order_on_workstation => escape_javascript(I18n.t('various.check_order_on_workstation', :locale => @locale)),
+      :server_not_responded => escape_javascript(I18n.t('various.server_not_responded', :locale => @locale)),
+      :server_error => escape_javascript(I18n.t('various.server_error', :locale => @locale)),
+      :connecting => escape_javascript(I18n.t('various.connecting', :locale => @locale)),
+      :no_connection_retrying => escape_javascript(I18n.t('various.no_connection_retrying', :locale => @locale)),
+      :no_connection => escape_javascript(I18n.t('various.no_connection', :locale => @locale)),
+      :server_error_short => escape_javascript(I18n.t('various.server_error_short', :locale => @locale))
     }
     return i18n.to_json
   end

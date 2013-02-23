@@ -501,6 +501,7 @@ gn:
       delivery_list: Lieferungen
       preparation_list: Zubereitungen
     invoice_form:
+      move_order: Bestellung auf anderen Tisch verschieben
       change_money: Retour
       just_finish: Rechnung nur abschließen
       print_and_finish: Drucken und Rechnung abschließen
@@ -773,6 +774,16 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    attempt: Versuch
+    no_connection: Keine Verbindung
+    server_error_short: Serverfehler
+    no_connection_giving_up: Keine Verbindung. Gebe auf.
+    no_connection_retrying: Keine Verbindung. Versuche erneut...
+    sending: Sende...
+    connecting: Verbinde...
+    check_order_on_workstation: Bestellung auf anderem Gerät überprüfen
+    server_not_responded: Keine Antwort vom Server. Bitte Ausdruck der Bestellung manuell überprüfen. Danach nochmal absenden oder abbrechen um Änderungen zu verwerfen.
+    server_error: Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler aufgetreten. Bitte Bestellung auf anderem Gerät überprüfen.
     no_connection_retry: Keine Verbindung zum Server. Nochmals absenden? Bei Abbruch
       bleiben die Artikel lokal gespeichert.
     successfully_sent: Die Artikel wurden erfolgreich abgesendet.

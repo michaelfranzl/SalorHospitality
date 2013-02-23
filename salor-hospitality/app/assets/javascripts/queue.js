@@ -1,6 +1,6 @@
 function send_queue_after_server_online(object_id, callback) {
-  $('#order_info').html('Verbinde... ');
-  $('#order_info_bottom').html('Verbinde... ');
+  $('#order_info').html(i18n.connecting);
+  $('#order_info_bottom').html(i18n.connecting);
   send_queue_attempts++;
   get_table_show_retry = false;
   $.ajax({
@@ -9,32 +9,32 @@ function send_queue_after_server_online(object_id, callback) {
     complete: function(data,status) {
       if (status == 'timeout') {
         if (send_queue_attempts < 10) {
-          $('#order_info').html(send_queue_attempts + '. Versuch...');
-          $('#order_info_bottom').html(send_queue_attempts + '. Versuch...');
+          $('#order_info').html(i18n.attempt + ' ' + send_queue_attempts);
+          $('#order_info_bottom').html(i18n.attempt + ' ' + send_queue_attempts);
           setTimeout(function() {
             send_queue_after_server_online(object_id, callback);
           }, 1000);
         } else {
-          $('#order_info').html('Keine Verbindung. Gebe auf.');
-          $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
+          $('#order_info').html(i18n.no_connection_giving_up);
+          $('#order_info_bottom').html(i18n.no_connection_giving_up);
           unloadify_order_buttons();
           send_queue_attempts = 1;
           copy_json_from_submit_queue(object_id);
         }
       } else if (status == 'success') {
-        $('#order_info').html('Sende ...');
-        $('#order_info_bottom').html('Sende ...');
+        $('#order_info').html(i18n.sending);
+        $('#order_info_bottom').html(i18n.sending);
         send_queue(object_id, callback)
       } else if (status == 'error') {
         if (send_queue_attempts < 10) {
-          $('#order_info').html(send_queue_attempts + '. Versuch...');
-          $('#order_info_bottom').html(send_queue_attempts + '. Versuch...');
+          $('#order_info').html(i18n.attempt + ' ' + send_queue_attempts);
+          $('#order_info_bottom').html(i18n.attempt + ' ' + send_queue_attempts);
           setTimeout(function() {
             send_queue_after_server_online(object_id, callback);
           }, 1000);
         } else {
-          $('#order_info').html('Keine Verbindung. Gebe auf.');
-          $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
+          $('#order_info').html(i18n.no_connection_giving_up);
+          $('#order_info_bottom').html(i18n.no_connection_giving_up);
           unloadify_order_buttons();
           send_queue_attempts = 1;
           copy_json_from_submit_queue(object_id);
@@ -56,22 +56,15 @@ function send_queue(object_id, callback) {
       unloadify_order_buttons();
       if (status == 'timeout') {
         send_email('send_queue: timeout', 'submit_json_queue[' + object_id + '] = ' + JSON.stringify(submit_json_queue[object_id]));
-        $('#order_info').html('Bestellung auf Basisstation überprüfen');
-        $('#order_info_bottom').html('Bestellung auf Basisstation überprüfen');
-        alert("Keine Antwort vom Server. Bitte Ausdruck der Bestellung manuell überprüfen, danach nochmal absenden oder abbrechen.");
-        //clear_queue(object_id); // in most cases, server has processed the request successfully, so we are clearing the queue here.
-        //update_tables();
-        
+        $('#order_info').html(i18n.check_order_on_workstation);
+        $('#order_info_bottom').html(i18n.check_order_on_workstation);
+        alert(i18n.server_not_responded);        
         copy_json_from_submit_queue(object_id);
         send_queue_attempts = 0;
         
       } else if (status == 'success') {
         if (submit_json_queue[object_id]) {
-          table_id = submit_json_queue[object_id].model.table_id;
-          if (offline_tables.hasOwnProperty(table_id)) {
-            delete offline_tables[table_id];
-            $('#table' + table_id).css('border', '1px solid gray');
-          }
+          // everything went okay
         } else {
           send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'User has re-entered the same table before Ajax submit_queue response from the server was received. Not critical.');
         }
@@ -89,12 +82,9 @@ function send_queue(object_id, callback) {
             break;
           case 4:
             send_email('send_queue: Server Error for object_id ' + object_id, '');
-            var table_id = submit_json_queue[object_id].model.table_id;
-            $('#table' + table_id).css('border', '3px solid white');
-            offline_tables[table_id] = true;
-            alert("Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler aufgetreten. Bitte Bestellung manuell überprüfen.");
-//             copy_json_from_submit_queue(object_id);
-//             send_queue_attempts = 0;
+            alert(i18n.server_error);
+            copy_json_from_submit_queue(object_id);
+            send_queue_attempts = 0;
             break;
           default:
             send_email('send_queue: unknown ajax "readyState" for status "complete".', '');
@@ -102,7 +92,7 @@ function send_queue(object_id, callback) {
         
       } else if (status == 'parsererror') {
         send_email('send_queue: parsererror');
-        alert("Oops! Der Server hat die Bestellung erfolgreich verarbeitet, aber mit einem falsch formatierten Code geantwortet.");
+        alert(i18n.server_error);
         clear_queue(object_id); // server has processed correctly but only returned malformed JSON, so we can clear the queue.
         
       } else {

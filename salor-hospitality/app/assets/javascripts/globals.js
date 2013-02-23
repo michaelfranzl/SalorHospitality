@@ -26,7 +26,6 @@ var send_queue_attempts = 1;
 
 var invoice_update = true;
 var get_table_show_retry = true;
-var offline_tables = {};
 var last_table_id = null;
 
 var new_order = true;
@@ -54,5 +53,3 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = 3;
 var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
-
-var offline_mode = false;

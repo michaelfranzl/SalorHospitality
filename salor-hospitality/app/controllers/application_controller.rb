@@ -114,7 +114,6 @@ class ApplicationController < ActionController::Base
         case params['jsaction']
           #----------jsaction----------
           when 'send'
-            #sleep 5
             if @order.booking
               @order.finish(@current_user)
               @order.booking.calculate_totals

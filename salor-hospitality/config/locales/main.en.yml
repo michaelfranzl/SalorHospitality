@@ -511,6 +511,7 @@ en:
       split_invoice: Split invoice
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
+      move_order: Move order to different table
     login_form:
       email: Your E-Mail
       login: Login
@@ -771,7 +772,18 @@ en:
       edit_user: Edit User
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
+  clear: clear
   various:
+    attempt: Attempt
+    no_connection: No connection
+    server_error_short: Server error
+    no_connection_giving_up: No connection. Giving up.
+    no_connection_retrying: No connection. Trying again...
+    sending: Sending...
+    connecting: Connecting...
+    check_order_on_workstation: Check order on different device
+    server_not_responded: No response from server. Check submission of order on different device. Then, re-submit oder cancel to delete the changes.
+    server_error: Oops! There was an internal server error. Please check the submission of the order on a different device.
     no_connection_retry: No connection to the Server. Send again? If you cancel, the items will be saved locally.
     successfully_sent: The items were successfully sent.
     table_contains_offline_items: "Just showing offline items. Try to re-submit or press the cancel button to delete the offline items."
