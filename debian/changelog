@@ -1,3 +1,9 @@
+salor-hospitality (4.1.2.52) unstable; urgency=low
+
+  * build
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 Feb 2013 09:06:00 +0100
+
 salor-hospitality (4.1.2.51) unstable; urgency=low
 
   * readme updated
