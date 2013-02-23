@@ -1,5 +1,5 @@
 %h2= t 'various.statistics'
-%a.iconbutton.print2_button{ :onclick => "window.print()" }
+%a.iconbutton.print2_button{ :onclick => "print_statistics()" }
 = form_tag statistics_path, :method => :get do
   = submit_tag t(:display)
   = label 'from', t('settlements.index.start_date'), :class => 'right'
@@ -176,3 +176,12 @@
         
       
 .clear
+
+:javascript
+  function print_statistics() {
+    if (window.location.search == "") {
+      window.location += "?print=1";
+    } else {
+      window.location += "&print=1";
+    }
+  }

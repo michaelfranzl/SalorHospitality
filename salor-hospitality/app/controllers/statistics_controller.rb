@@ -31,6 +31,18 @@ class StatisticsController < ApplicationController
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
     @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
+    
+    if params[:print] == '1'
+      template = File.read("#{Rails.root}/app/views/statistics/print.txt.erb")
+      erb = ERB.new(template, 0, '>')
+      text = erb.result(binding)
+      
+      vendor_printer = @current_vendor.vendor_printers.existing.first
+      print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, @current_company.identifier)
+      print_engine.open
+      print_engine.print(vendor_printer.id, text)
+      print_engine.close
+    end
   end
 
   def tables

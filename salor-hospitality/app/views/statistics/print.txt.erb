@@ -1,0 +1,55 @@
+<%= "\e@" %>
+<% if permit('statistics_weekday') %>
+<%= "\e!\x38" %>
+<%= I18n.t 'statistics.index.weekday' %>
+
+<%= "\e!\x00" %>
+<% i = 0 %>
+<% @days.each do |day| %>
+<% sum = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum) %>
+<%= "%10.10s      %s %6.2f\n" % [day, I18n.t('number.currency.format.friendly_unit', :locale => @region), sum] %>
+<% i += 1 %>
+<% end %>
+<%= "\xc4" * 42 %>
+<% end %>
+
+<% if permit('statistics_weekday') %>
+<%= "\e!\x38" %>
+<%= I18n.t 'statistics.index.hour' %>
+
+<%= "\e!\x00" %>
+<% 8.upto(23).each do |hour| %>
+<% if @weekday %>
+<% sum = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour} AND WEEKDAY(finished_at) = #{@weekday}").sum(:sum) %>
+<% else %>
+<% sum = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum) %>
+<% end %>
+<%= "%10.10s:00   %s %6.2f\n" % [hour, I18n.t('number.currency.format.friendly_unit', :locale => @region), sum] %>
+<% end %>
+<%= "\xc4" * 42 %>
+<% end %>
+
+
+
+<% if permit('statistics_statistic_category') %>
+<%= "\e!\x38" %>
+<%= StatisticCategory.model_name.human %>
+
+<%= "\e!\x00" %>
+<% @statistic_categories.each do |cat| %>
+<% sum = Item.where(:settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum) %>
+<%= "%10.10s      %s %6.2f\n" % [cat.name, I18n.t('number.currency.format.friendly_unit', :locale => @region), sum] %>
+<% end %>
+<% end %>
+
+<%= "\xc4" * 42 + "\n" %>
+
+
+
+
+
+
+
+
+
+<%= "\x1DV\x00\x0C" %>
