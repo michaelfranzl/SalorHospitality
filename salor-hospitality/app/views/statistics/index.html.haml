@@ -1,5 +1,7 @@
 %h2= t 'various.statistics'
-%a.iconbutton.print2_button{ :onclick => "print_statistics()" }
+- if @current_company.mode == 'local' and @current_vendor.vendor_printers.existing.any?
+  %a.iconbutton.print2_button{ :onclick => "print_statistics()" }
+  
 = form_tag statistics_path, :method => :get do
   = submit_tag t(:display)
   = label 'from', t('settlements.index.start_date'), :class => 'right'
