@@ -141,3 +141,14 @@ function submit_drawing() {
   set_json('order', d, 'scribe', scribe_contents);
   $('#scribe_'+d).html('ABC');
 }
+
+
+function scribe_image(object) {
+  var path;
+  if (object.h == true) {
+    path = "<img src='/items/" + object.id + ".svg'>";
+  } else {
+    path = '';
+  }
+  return path;
+}

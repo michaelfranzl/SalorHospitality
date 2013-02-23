@@ -70,3 +70,27 @@ function create_submit_json_record(model, d, object) {
     }
   }
 }
+
+function copy_json_from_submit_queue(object_id) {
+  submit_json = $.extend(true, {}, submit_json_queue[object_id]); // deep copy
+  items_json = $.extend(true, {}, items_json_queue[object_id]); // deep copy
+  delete submit_json_queue[object_id];
+  delete items_json_queue[object_id];
+}
+
+function copy_json_to_submit_queue(object_id) {
+  submit_json_queue[object_id] = $.extend(true, {}, submit_json);
+  if ( typeof submit_json_queue[object_id].sent_at == 'undefined' ) {
+    submit_json_queue[object_id].sent_at = (new Date).getTime();
+  }
+  items_json_queue[object_id] = $.extend(true, {}, items_json);
+  submit_json.model = {};
+  delete submit_json.items;
+  items_json = {};
+}
+
+function send_json(object_id, callback) {
+  callback = typeof callback !== 'undefined' ? callback : function(){};
+  copy_json_to_submit_queue(object_id);
+  send_queue_after_server_online(object_id, callback);
+}

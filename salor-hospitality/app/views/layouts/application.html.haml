@@ -13,9 +13,7 @@
 
     = csrf_meta_tag
     = javascript_include_tag 'application'
-    = javascript_include_tag 'json'
-    = javascript_include_tag 'draw'
-    = javascript_include_tag 'season'
+    
     - if workstation?
       = javascript_include_tag 'application-workstation'
       = javascript_include_tag 'jquery.modcoder.excolor'
@@ -23,21 +21,20 @@
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
       = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
-
-
-    - if mobile?
-      = javascript_include_tag 'application-mobile'
-    - if controller.controller_name == 'orders' and controller.action_name == 'index' and permit('manage_hotel') and workstation? and not mobile_special?
-      = javascript_include_tag 'booking'
-      = javascript_include_tag 'bookings'
-      = javascript_include_tag 'season'
-      = javascript_include_tag 'report'
-    - if controller.controller_name == 'orders' and (controller.action_name == 'index' or controller.action_name == 'refund')
-      = javascript_include_tag 'orders-generic'
-      - if workstation?
+      - if permit('manage_hotel')
+        = javascript_include_tag 'booking'
+        = javascript_include_tag 'bookings'
+        = javascript_include_tag 'season'
+        = javascript_include_tag 'report'
+      - if controller.controller_name == 'orders' and (controller.action_name == 'index' or controller.action_name == 'refund')
+        = javascript_include_tag 'orders-documentready'
         = javascript_include_tag 'orders-workstation'
-      - else
+        
+    - if mobile?
+      - if controller.controller_name == 'orders' and (controller.action_name == 'index' or controller.action_name == 'refund')
+        = javascript_include_tag 'orders-documentready'
         = javascript_include_tag 'orders-mobile'
+
 
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
     = stylesheet_link_tag 'generic', :media => 'screen'

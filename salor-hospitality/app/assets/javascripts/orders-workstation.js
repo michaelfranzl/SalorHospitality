@@ -10,7 +10,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 var screenlock_counter = -1;
 
-// document ready code
 $(function(){
   $('#admin').slideUp();
 
@@ -76,92 +75,21 @@ function display_price_popup_of_item(d) {
 }
 
 function add_comment_to_item(d) {
-	var comment = $('input#comment_for_item_' + d).val();
-	$('#comment_for_item_' + d).slideUp();
+  var comment = $('input#comment_for_item_' + d).val();
+  $('#comment_for_item_' + d).slideUp();
   d = clone_item(d);
   set_json('order', d,'o',comment);
-	$('#comment_' + d).html(comment);
+  $('#comment_' + d).html(comment);
   $('#tablerow_' + d + '_label').addClass('updated');
 }
 
 function add_price_to_item(d) {
-	price = $('input#price_for_item_' + d).val();
-	$('#price_' + d).html(price);
-	price = price.replace(',', '.');
+  price = $('input#price_for_item_' + d).val();
+  $('#price_' + d).html(price);
+  price = price.replace(',', '.');
   set_json('order', d, 'p', price);
-	calculate_sum();
-	$('#price_for_item_' + d).slideUp();
+  calculate_sum();
+  $('#price_for_item_' + d).slideUp();
   $('#tablerow_' + d + '_label').addClass('updated');
 }
 
-function enable_keyboard_for_items(item_designator) {
-  $('input#comment_for_item_' + item_designator).keyboard({
-    openOn: '',
-    visible: function(){
-      $('.ui-keyboard-input').select();
-    }
-  });
-  $('#comment_for_item_' + item_designator + '_display_keyboard').click(function(){
-    $('input#comment_for_item_' + item_designator).getkeyboard().reveal();
-  });
-  $('input#price_for_item_' + item_designator).keyboard({
-    openOn: '',
-    layout: 'num',
-    visible: function(){
-      $('.ui-keyboard-input').select();
-    }
-  });
-  $('#price_for_item_' + item_designator + '_display_keyboard').click(function(){
-    $('input#price_for_item_' + item_designator).getkeyboard().reveal();
-  });
-}
-
-function catch_keypress(d,type) {
-  if (event.keyCode == 27) {
-    // Escape
-  } else if (event.keyCode == 13) {
-    // Enter
-    if (type == 'comment') {
-      add_comment_to_item(d);
-    } else if (type == 'price') {
-      add_price_to_item(d);
-    }
-  }
-}
-
-function display_items_notifications() {
-  $("#items_notifications_interactive").fadeIn();
-  counter_update_item_lists = 1;
-  audio_enabled = false; // skip one beep
-}
-
-function hide_items_notifications() {
-  $("#items_notifications_interactive").fadeOut();
-  counter_update_item_lists = timeout_update_item_lists;
-}
-
-function toggle_admin_interface() {
-  $.ajax({
-    type: 'POST',
-    url:'/orders/toggle_admin_interface',
-    dataType: 'json',
-    success: function(result) {
-      if (result) {
-        $('#admin').slideDown('slow');
-        if (! $('#orderform').is(':visible')) {
-          $('#drag_and_drop_toggle_view_button').show();
-        }
-        $('#items_notifications_static').hide();
-      } else {
-        $('#admin').slideUp('slow');
-        $('#drag_and_drop_toggle_view_button').hide();
-        $('#items_notifications_static').show();
-        settings.mobile_drag_and_drop = false;
-        $('#areas').hide();
-      }
-      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
-      settings.admin_interface = result;
-      render_tables();
-    }
-  });
-}
