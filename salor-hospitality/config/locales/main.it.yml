@@ -513,6 +513,7 @@ it:
       switch_tax_for_this_item: Click to change the tax for this item
       change_money: XXX Change
       set_booking: XXX Assign to Booking
+      move_order: Move order to different table
     login_form:
       email: Your E-Mail
       login: Login
@@ -819,6 +820,18 @@ it:
     successfully_sent: The items were successfully sent.
     table_contains_offline_items: This table contains items which haven't been sent
       yet. Send them now?
+    attempt: Attempt
+    no_connection: No connection
+    server_error_short: Server error
+    no_connection_giving_up: No connection. Giving up.
+    no_connection_retrying: No connection. Trying again...
+    sending: Sending...
+    connecting: Connecting...
+    check_order_on_workstation: Check order on different device
+    server_not_responded: No response from server. Check submission of order on different
+      device. Then, re-submit oder cancel to delete the changes.
+    server_error: Oops! There was an internal server error. Please check the submission
+      of the order on a different device.
   customers:
     new:
       edit_customer: Edit Customer
@@ -841,3 +854,4 @@ it:
       success: Camera was successfully saved
     destroy:
       success: Camera was successfully deleted
+  clear: clear
