@@ -1,3 +1,12 @@
+salor-hospitality (4.1.2.51) unstable; urgency=low
+
+  * readme updated
+  * better table show messages
+  * better handling of server delays
+  * more server delay optimizations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 Feb 2013 08:38:33 +0100
+
 salor-hospitality (4.1.2.50) unstable; urgency=low
 
   [ Michael Franzl ]
