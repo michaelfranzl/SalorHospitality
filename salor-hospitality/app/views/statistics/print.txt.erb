@@ -1,4 +1,6 @@
 <%= "\e@" %>
+
+<%= I18n.l @from, :format => :date_iso %> -> <%= I18n.l @to, :format => :date_iso %>
 <% if permit('statistics_weekday') %>
 <%= "\e!\x38" %>
 <%= I18n.t 'statistics.index.weekday' %>
