@@ -78,11 +78,13 @@ function route(target, model_id, action, options) {
     if (action == 'destroy') {
       submit_json.model.hidden = true;
       submit_json.jsaction = 'send';
+      loadify_order_buttons();
       send_json('table_' + model_id, switch_to_tables);
       
     } else if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
+      loadify_order_buttons();
       send_json('table_' + model_id, switch_to_tables);
 
     } else if (action == 'move') {
@@ -93,6 +95,7 @@ function route(target, model_id, action, options) {
       switch_to_tables();
 
     } else {
+      unloadify_order_buttons();
       items_json = {};
       switch_to_tables();
     }
@@ -102,6 +105,7 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
+    unloadify_order_buttons();
     switch_to_table();
     if (action == 'send') {
       // finish order
@@ -180,8 +184,11 @@ function route(target, model_id, action, options) {
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
+      loadify_order_buttons();
       send_json('table_' + model_id, switch_to_invoice);
       // invoice form will be rendered by the server as .js.erb template. see application#route
+    } else {
+      switch_to_invoice();
     }
     counter_update_tables = -1;
     screenlock_counter = -1;
@@ -345,14 +352,12 @@ function send_json(object_id, callback) {
     send_queue_after_server_online(object_id, callback);
 }
 
-var send_queue_after_server_online_request = null;
-
 function send_queue_after_server_online(object_id, callback) {
   $('#order_info').html('Verbinde... ');
   $('#order_info_bottom').html('Verbinde... ');
   send_queue_attempts++;
   get_table_show_retry = false;
-  send_queue_after_server_online_request = $.ajax({
+  $.ajax({
     url: '/vendors/online_status',
     timeout: 10000,
     complete: function(data,status) {
@@ -366,12 +371,7 @@ function send_queue_after_server_online(object_id, callback) {
         } else {
           $('#order_info').html('Keine Verbindung. Gebe auf.');
           $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
-          $.each($('#functions_header_order_form a.iconbutton'), function(i){
-            unloadify($('#functions_header_order_form a.iconbutton')[i]);
-          });
-          $.each($('#functions_footer a.iconbutton'), function(i){
-            unloadify($('#functions_footer a.iconbutton')[i]);
-          });
+          unloadify_order_buttons();
           send_queue_attempts = 1;
           copy_json_from_submit_queue(object_id);
         }
@@ -389,12 +389,7 @@ function send_queue_after_server_online(object_id, callback) {
         } else {
           $('#order_info').html('Keine Verbindung. Gebe auf.');
           $('#order_info_bottom').html('Keine Verbindung. Gebe auf.');
-          $.each($('#functions_header_order_form a.iconbutton'), function(i){
-            unloadify($('#functions_header_order_form a.iconbutton')[i]);
-          });
-          $.each($('#functions_footer a.iconbutton'), function(i){
-            unloadify($('#functions_footer a.iconbutton')[i]);
-          });
+          unloadify_order_buttons();
           send_queue_attempts = 1;
           copy_json_from_submit_queue(object_id);
         }
@@ -412,12 +407,7 @@ function send_queue(object_id, callback) {
     data: submit_json_queue[object_id],
     timeout: 30000,
     complete: function(data,status) {
-      $.each($('#functions_header_order_form a.iconbutton'), function(i){
-        unloadify($('#functions_header_order_form a.iconbutton')[i]);
-      });
-      $.each($('#functions_footer a.iconbutton'), function(i){
-        unloadify($('#functions_footer a.iconbutton')[i]);
-      });
+      unloadify_order_buttons();
       if (status == 'timeout') {
         send_email('send_queue: timeout', 'submit_json_queue[' + object_id + '] = ' + JSON.stringify(submit_json_queue[object_id]));
         $('#order_info').html('Bestellung auf Basisstation überprüfen');
@@ -1577,25 +1567,41 @@ function change_item_status(id,status) {
 /* =================== USER INTERFACE =====================*/
 /* ========================================================*/
 
-function loadify(button) {
-  var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
-  loader.css('margin', '7px');
-  loader.css('position','absolute');
-  $(button).append(loader);
-  $(button).css('opacity','0.5');
-  var onclick_code = $(button).attr('onclick');
-  $(button).attr('onclick', '');
-  $(button).attr('onclick_old', onclick_code);
+function loadify_order_buttons() {
+  var submit_button = $('.tables_button');
+  var invoice_button = $('.cash_button');
+  var move_to_table_button = $('.move-to-table_button');
+  var clearbutton = $('#order_clear_button');
+  var buttons = [];
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton);
+  $.each(buttons, function(i) {
+    var button = $(buttons[i]);
+    var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
+    loader.css('margin', '7px');
+    loader.css('position','absolute');
+    $(button).append(loader);
+    $(button).css('opacity','0.5');
+    var onclick_code = $(button).attr('onclick');
+    $(button).attr('onclick', '');
+    $(button).attr('onclick_old', onclick_code);
+  });
 }
 
-function unloadify(button) {
-  if (typeof $(button).attr('onclick_old') != 'undefined') {
+function unloadify_order_buttons() {
+  var submit_button = $('.tables_button');
+  var invoice_button = $('.cash_button');
+  var move_to_table_button = $('.move-to-table_button');
+  var clearbutton = $('#order_clear_button');
+  var buttons = [];
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton);
+  $.each(buttons, function(i) {
+    var button = $(buttons[i]);
     $(button).html('');
     $(button).css('opacity',1);
     var onclick_code = $(button).attr('onclick_old');
     $(button).attr('onclick', onclick_code);
     $(button).removeAttr('onclick_old');
-  }
+  });
 }
 
 function add_customers_button() {
