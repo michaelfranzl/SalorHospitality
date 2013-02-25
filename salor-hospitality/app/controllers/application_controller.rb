@@ -16,10 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
   
   def route
-    #puts "XXXXXXXXXXXXX #{params[:currentview]}"
-    #puts "XXXXXXXXXXXXX #{params[:jsaction]}"
     case params[:currentview]
-      #===============CURRENTVIEW==================
       # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'
         if params[:relation]
@@ -27,7 +24,7 @@ class ApplicationController < ActionController::Base
           @model.update_attributes(params[:model])
           render :json => @model
         end
-      #===============CURRENTVIEW==================
+      
       when 'invoice_paper', 'refund'
         case params['jsaction']
           #----------jsaction----------
@@ -41,7 +38,7 @@ class ApplicationController < ActionController::Base
             render 'items/edit' and return # this renders a .js.erb tempate, which in turn renders partial => 'orders/refund_form'
         end
         render :nothing => true
-      #===============CURRENTVIEW==================
+      
       when 'invoice'
         case params['jsaction']
           #----------jsaction----------
@@ -107,9 +104,8 @@ class ApplicationController < ActionController::Base
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
         end
-      #===============CURRENTVIEW==================
+      
       when 'table'
-        
         get_order
         case params['jsaction']
           #----------jsaction----------
@@ -162,7 +158,7 @@ class ApplicationController < ActionController::Base
             @order.move(params[:target_table_id])
             render :nothing => true # routing is done by static javascript to 'tables'
         end
-      #===============CURRENTVIEW==================
+      
       when 'room'
         get_booking
         case params['jsaction']
@@ -219,7 +215,6 @@ class ApplicationController < ActionController::Base
         else
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
-        
       end
       if @order
         params[:model][:table_id] = @order.table_id if params[:model] # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
@@ -310,15 +305,16 @@ class ApplicationController < ActionController::Base
       elsif @current_customer
         I18n.locale = @locale = session[:locale] = @current_customer.language
       else
-        browser_language = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-        browser_language = 'gn' if browser_language == 'de'
+        unless request.env['HTTP_ACCEPT_LANGUAGE'].nil?
+          browser_language = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+          browser_language = 'gn' if browser_language == 'de'
+        end
         if browser_language.nil? or browser_language.empty? or not I18n.available_locales.include?(browser_language.to_sym)
           I18n.locale = @locale = session[:locale] = 'en'
         else
           I18n.locale = @locale = session[:locale] = browser_language
         end
       end
-      
       @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country] if @current_vendor
     end
 
