@@ -133,7 +133,7 @@ class Order < ActiveRecord::Base
   end
   
   def update_payment_method_items(params)
-    if params[:payment_method_items] and self.cost_center.no_payment_methods == false
+    if params[:payment_method_items] and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
       self.payment_method_items.clear
       params['payment_method_items'][params['id']].to_a.each do |pm|
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
