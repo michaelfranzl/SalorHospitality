@@ -157,11 +157,24 @@ function is_booked_now(booking) {
   fdate = parseInt(fdate.getMonth() + '' + fdate.getDate());
   tdate = parseInt(tdate.getMonth() + '' + tdate.getDate());
   now = parseInt(now.getMonth() + '' + now.getDate());
-  //console.log(now,fdate,tdate);
+//   console.log("Is booked now?",now,fdate,tdate);
   if (now >= fdate && now <= tdate) {
+//     console.log("returning true");
     return true
   } else {
+//     console.log("returning false");
     return false;
+  }
+}
+function is_in_booking_frame(booking) {
+  var fdate = get_date(booking.from);
+  var tdate = get_date(booking.to);
+  var frame = get_date($('#show_booking_from').val());
+  frame = new Date(frame.getFullYear(),frame.getMonth(),frame.getDate() + 31);
+  if (fdate > frame && tdate > frame) {
+    return false;
+  } else {
+    return true;
   }
 }
 /* 
@@ -179,9 +192,11 @@ function is_booked (booking,date) {
   var day = date.getDate();
   if (fmonth == date.getMonth() || tmonth == date.getMonth()) {
     if (day >= fday && day <= tday) { 
+      console.log("is_booked returning true");
       return true;
     }
   }
+  console.log("is_booked returning false");
   return false;
 }
 // just a text formatting helper
@@ -269,9 +284,11 @@ function draw_booking(booking) {
   if (!$('#rooms').is(":visible")) {
     return;
   }
-  if (Date.parse(booking.to) < Date.parse($('#show_booking_from').val())) {
-    //console.log("Booking not in this view",booking);
+  if (!is_in_booking_frame(booking)) {
+//     console.log("Booking not in this frame",booking);
     return;
+  } else {
+//     console.log("booking is in this frame",booking);
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the

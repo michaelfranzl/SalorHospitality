@@ -17,14 +17,17 @@ class RoomsController < ApplicationController
     @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
     if params[:from] then
       from_date = params[:from].to_date - 31.days
+      n = params[:from].to_date + 31.days
     else
       from_date = Time.now
+      n = Time.now + 31.days
     end
-    n = Time.now + 31.days
+    
+    
     @rooms.each do |room|
       @rooms_json[:keys] << room.id
       @rooms_json[:rooms][room.id.to_s] = {:room => room, :room_type => room.room_type, :bookings => []}
-      bookings = room.bookings.existing.where(["(from_date between ? and ?) or (to_date > ? and from_date < ?)",from_date,n,Time.now,Time.now])
+      bookings = room.bookings.existing.where(["from_date between ? and ?", from_date,n])
       bookings.each do |booking|
         @rooms_json[:rooms][room.id.to_s][:bookings] << booking.id
         @rooms_json[:bookings][booking.id.to_s] = booking
