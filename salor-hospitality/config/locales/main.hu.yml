@@ -424,9 +424,6 @@ hu:
       edit_stock: Edit Stock
   orders:
     served_by: You were served by
-    order:
-      sum: SUM
-      new: New order
     show:
       print_invoice: Print invoice
       print_business_invoice: Print business invoice
@@ -478,6 +475,9 @@ hu:
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
+    order_form:
+      new: New order
+      sum: SUM
   settlements:
     index:
       start_date: Start date

@@ -4,7 +4,7 @@ cn:
     new:
       edit_statistic_category: 编辑统计类别
       new_statistic_category: 新统计类别
-  activerecord: 
+  activerecord:
     attributes:
       camera:
         name: 名称
@@ -338,10 +338,10 @@ cn:
   admin: 管理
   are_you_sure: 你确定吗?
   articles:
-    create: 
+    create:
       success: 物品成功地创建了
       license_limited: Your License is limited to %{count} articles
-    destroy: 
+    destroy:
       success: 物品被成功删除了
     find:
       variants:
@@ -690,7 +690,8 @@ cn:
       new_season: New Season
   send_and_go_back: 保存并返回
   served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.
+  server_no_response: The Bill Gastro Server is not responding any more. It is either
+    busy or the radio link is interrupted.
   sessions:
     browser_warning:
       continue: 继续
@@ -766,7 +767,7 @@ cn:
     new:
       edit_user: 编辑用户
       new_user: 新用户
-      select_with_ctrl_key: "选择或以[Ctrl]+滑鼠左键取消选择"
+      select_with_ctrl_key: 选择或以[Ctrl]+滑鼠左键取消选择
   various:
     no_connection_retry: 无法连接到服务器。再次寄出？如果取消，该项目将在本地储存。
     successfully_sent: 该项目已成功寄出。
@@ -844,4 +845,3 @@ cn:
     destroy:
       success: 相机成功删除
   clear: 清除
-  

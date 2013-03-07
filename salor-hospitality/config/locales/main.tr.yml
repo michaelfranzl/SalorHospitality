@@ -428,9 +428,6 @@ tr:
       delivery_list: XXXDelivery list
       confirmation_list: Self-order list
     served_by: Size hizmet gösteren
-    order:
-      sum: Toplam
-      new: Yeni Sipariş
     show:
       print_invoice: Fatura basmak
       print_business_invoice: Şirket fatura basmak
@@ -479,6 +476,9 @@ tr:
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
+    order_form:
+      new: New order
+      sum: SUM
   settlements:
     index:
       start_date: Baslangic
