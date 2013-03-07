@@ -4,54 +4,54 @@ hk:
     new:
       edit_statistic_category: 編輯統計類別
       new_statistic_category: 新統計類別
-  activerecord:
+  activerecord: 
     attributes:
       camera:
         name: 名稱
         description: Description
-        host_internal: Internal host
-        host_external: External host
-        port: Port
+        host_internal: 內部主機
+        host_external: 外部主機
+        port: 端口
         url_snapshot: URL Snapshot
         url_stream: URL Stream
         active: active
-        hidden: delete
+        hidden: 刪除
       statistic_category:
-        hidden: delete
+        hidden: 刪除
         name: 名稱
       payment_method:
         name: 名稱
-        cash: Cash
-        change: Change
+        cash: 現金
+        change: 改變
       payment_method_item:
-        amount: Amount
+        amount: 總數
       booking_item:
-        base_price: Price
+        base_price: 價格
         count: Count
-        sum: Sum
-        duration: Days
+        sum: 總和
+        duration: 日數
       order:
-        change_given: Change
-        nr: Number
+        change_given: 改變
+        nr: Number數字
       customer:
-        language: Language
-        table_id: Default Table
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
-        email: email
-        telephone: Telephone
-        cellphone: Cellphone
-        hidden: delete
+        language: 語言
+        table_id: 預設桌子
+        first_name: 名字
+        last_name: 姓氏
+        full_name: 全名
+        company_name: 公司名字
+        address: 地址
+        city: 城市
+        state: 省份
+        postalcode: 郵編
+        m_number: 積分卡號
+        m_points: 積分
+        email: 電子郵件
+        telephone: 電話
+        cellphone: 手機
+        hidden: 刪除
       article:
-        statistic_category_id: Statistic-Category
+        statistic_category_id: 統計類別
         active: 活躍
         category_id: 類別
         description: 描述
@@ -70,7 +70,7 @@ hk:
         name: 名稱
         separate_print: 剪票
         tax_id: 稅
-        user_id: 準備用戶
+        user_id: 准備用戶
         vendor_printer_id: 打印機
         image: 圖標
       cost_center:
@@ -78,13 +78,13 @@ hk:
         description: 描述
         hidden: 刪除
         name: 名稱
-        no_payment_methods: No Payment Methods
+        no_payment_methods: 無支付方法
       group:
         name: 名稱
       guest_type:
         hidden: 刪除
         name: 名稱
-        taxes: Taxes
+        taxes: 稅
       option:
         category_id: 類別
         hidden: 刪除
@@ -105,10 +105,10 @@ hk:
         hidden: 刪除
       presentation:
         active: 活躍
-        code: Ruby代碼
+        code: 代碼
         description: 描述
         hidden: 刪除
-        markup: ERB標記
+        markup: 標記
         model: 類型
         name: 名稱
       quantity:
@@ -122,32 +122,32 @@ hk:
       role:
         name: 名稱
       room_price:
-        base_price: Base Price
-        guest_type_id: Guest Type
+        base_price: 底價
+        guest_type_id: 顧客種類
         hidden: 刪除
-        room_type_id: Room Type
+        room_type_id: 房間種類
         season_id: Season
       room_type:
-        hidden: delete
+        hidden: delete刪除
         name: 名稱
       season:
-        from_date: From
+        from_date: 從
         hidden: 刪除
         name: 名稱
-        to_date: To
+        to_date: 到
         is_master: Master?
       settlement:
         initial_cash: 開始數目
         revenue: 收入
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
+        amount: 總數
+        guest_type_id: 顧客種類
         hidden: 刪除
         name: 名稱
-        radio_select: Radio Select
+        radio_select: 電台選擇
         season_id: Season
         selected: Selected by default
-        visible: Visible?
+        visible: 可視？
       table:
         abbreviation: 簡稱
         description: 描述
@@ -156,21 +156,21 @@ hk:
         height_mobile: 高度移動
         hidden: 刪除
         name: 名稱
-        rotate: rotate?
+        rotate: 旋轉
         width: 寬度
         width_mobile: 寬度移動
-        booking_table: Booking
+        booking_table: 預定
       tax:
         color: 色彩
         hidden: 刪除
         letter: 簡稱
         name: 名稱
         percent: 稅(%)
-        include_in_statistics: In Settlement Statistics
-        statistics_by_category: Settlement Statistics by Category
+        include_in_statistics: 結算統計數據
+        statistics_by_category: 結算統計數據類別
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: 總數
+        tax_id: 稅
       user:
         active: 活躍
         color: 色彩
@@ -183,16 +183,16 @@ hk:
         tables: 表
         title: 標題
         audio: Acoustic signals
-        confirmation_user: Confirm remote orders
+        confirmation_user: 確認遠程訂單
       vendor:
         enable_technician_emails: 給技術人員寄電子郵件
         technician_email: 技術人員電子郵件
         email: 電子郵件
-        update_tables_interval: Interval update tables
-        update_item_lists_interval: Interval update item notifications
-        update_resources_interval: Interval update offline database
+        update_tables_interval: 更新桌子
+        update_item_lists_interval: 更新項目通知
+        update_resources_interval: 更新離線數據庫
         remote_orders: 遠程訂單
-        automatic_printing: Automatic printing
+        automatic_printing: 自動打印
         country: Rules for country
         hidden: 刪除
         invoice_footer_blurb: Invoice footer blurb
@@ -205,13 +205,13 @@ hk:
         ticket_item_separator: Ticket Separation Line
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
+        time_offset: 時間更正（小時）
+        timeout: 時間更正（秒）
         use_order_numbers: Use order numbers
-        rlogo_header: Receipt logo header
-        rlogo_footer: Receipt logo footer
-        logo: Screen logo
-        invoice_logo: Invoice Logo
+        rlogo_header: 收據抬頭標志
+        rlogo_footer: 收據頁腳標志
+        logo: 熒幕標志
+        invoice_logo: 發票標志
       vendor_printer:
         copies: 副本
         hidden: 刪除
@@ -338,10 +338,10 @@ hk:
   admin: 管理
   are_you_sure: 你確定嗎?
   articles:
-    create:
+    create: 
       success: 物品成功地創建了
       license_limited: Your License is limited to %{count} articles
-    destroy:
+    destroy: 
       success: 物品被成功刪除了
     find:
       variants:
@@ -375,15 +375,15 @@ hk:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
-      search_by_number: Search by number
-      go_to_bookings_calendar: Go to bookings calendar view
+      search_by_number: 用數字搜索
+      go_to_bookings_calendar: 到預定日歷視圖
   cancel_and_go_back: 取消並返回
   categories:
     create:
       license_limited: Your License is limited to %{count} categories
       success: 成功了
     destroy:
-      success: Category successfully deleted
+      success: 類別成功刪除
     new:
       aperitif: 開胃酒
       beer: 啤酒
@@ -397,7 +397,7 @@ hk:
       maindish: 主菜
       new_category: 新類別
       nonalcoholics: 無酒精
-      noodles: 麵條
+      noodles: 面條
       redwinebottle: 紅葡萄酒(瓶)
       redwineglass: 紅葡萄酒(杯)
       rosewinebottle: 桃紅葡萄酒(瓶)
@@ -411,7 +411,7 @@ hk:
       whitewinebottle: 白葡萄酒(瓶)
       whitewineglass: 白葡萄酒(杯)
   clear_order_and_go_back: 清除訂單並返回
-  copy: 複製
+  copy: 復制
   cost_centers:
     create:
       success: 成本中心成功地保存了
@@ -432,7 +432,7 @@ hk:
   edit: 編輯
   exit: 太平門
   finish: 完畢
-  food: Foods
+  food: Foods食物
   go_back: 返回
   green: 綠色
   gross: 合計
@@ -455,15 +455,15 @@ hk:
       clear: 清除
       done: 完成
       no_printing: 沒有印刷
-  just_order: 只訂購
+  just_order: 隻訂購
   kitchen: 廚房
   layouts:
     application:
       submit_scribe: 好
-  logout: 註銷 %{who}
+  logout: 注銷 %{who}
   messages:
     hello_username: 您好 %{name}!
-    user_account_is_currently_locked: Account is locked
+    user_account_is_currently_locked: 賬戶已被鎖定
   move_order_to_table: 轉移訂單到不同的桌子
   must_be_entered_either_for_article_or_for_quantity: 必須輸入無論對
   net: 淨
@@ -492,13 +492,13 @@ hk:
       show_last_booking: 顯示最近的預訂
       show_last_order: 顯示最近訂單
       toggle_between_tables_and_rooms: 切換房間和桌子
-      exit: Exit
+      exit: 退出
     functions_header_order_form:
       move_order: 移動訂單到不同的桌子
     index:
       confirmation_list: Self-order list
       delivery_list: 發貨清單
-      preparation_list: 準備清單
+      preparation_list: 准備清單
     invoice_form:
       change_money: 改變
       just_finish: 完畢
@@ -508,8 +508,9 @@ hk:
       set_tax_for_all: 設置所有訂單的成本中心
       set_taxes: 設置稅項
       split_invoice: 拆分發票
-      split_this_item: Click to split this items one at a time
+      split_this_item: 點擊以拆分此項目
       switch_tax_for_this_item: 更改此項目的稅
+      move_order: 將訂單移到其他桌子
     login_form:
       email: 你的電子郵件
       login: 登錄
@@ -551,7 +552,7 @@ hk:
     error_during_evaluation: ! '錯誤: '
     no_presentation_found:
       no_presentations_found: 這部分沒有定義模板
-  pink: Pink
+  pink: 粉紅
   please_enter_item_comment: 特殊要求
   please_enter_item_price: 特價
   presentations:
@@ -565,7 +566,7 @@ hk:
     end_date: 結束日期
     index:
       backup_database: 備份數據庫
-      backup_logfile: 備份日誌
+      backup_logfile: 備份日志
       header: 報告
       connected: 鏈接
       disconnected: 斷開鏈接
@@ -573,8 +574,7 @@ hk:
       connect_vnc: 螢幕共享
       password: 密碼
       requesting_connection_status: 請求鏈接狀態中...
-      internet_connection_info: To get Remote Support, you must be connected to the
-        internet. If you see the Red (E) Logo above, you are connected to the internet.
+      internet_connection_info: 你必須連接到互聯網以取得遠程支援。如果你看到上方紅色的標志，則表示你已連接到互聯網。
       remote_support: 遠程協助
       download_reports: 儲存報告
     save: 儲存
@@ -593,33 +593,33 @@ hk:
       success: 顧客成功刪除
   roles:
     create:
-      success: Role successfully saved
+      success: 角色成功儲存
     destroy:
-      success: Role successfully deleted
+      success: 角色成功刪除
     new:
       allow_exit: 允許退出
       reactivate_orders: 激活訂單
       move_order_from_invoice_form: Move order to table from invoice form
-      assign_order_to_user: Assign order to user
+      assign_order_to_user: 分配訂單到用戶
       assign_cost_center: 分配成本中心
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: 改變服務員
-      counter_mode: 櫃檯狀態
-      decrement_items: Decrement items
+      counter_mode: 櫃台狀態
+      decrement_items: 減量項目
       delete_items: Delete items by decrementing
-      edit_role: Edit Role
-      finish_all_settlements: Finish all settlements
+      edit_role: 編輯角色
+      finish_all_settlements: 完成所有結算
       finish_orders: 完成訂單
-      finish_own_settlement: Finish own settlement
+      finish_own_settlement: 完成自己結算
       refund: 退款項目
       manage_articles: Manage articles
-      manage_categories: Manage categories
-      manage_statistic_categories: Manage Statistic Categories
+      manage_categories: 管理類別
+      manage_statistic_categories: 管理統計類別
       manage_options: 管理選項
       manage_business_invoice: 管理商業清單
       manage_customers: 管理顧客
       manage_pages: 管理幻燈片
-      manage_roles: Manage roles
+      manage_roles: 管理角色
       manage_taxes: 管理稅務
       manage_cost_centers: Manage Cost Centers
       manage_payment_methods: 管理支付方法
@@ -629,8 +629,8 @@ hk:
       manage_cameras: 管理相機
       move_order: 移動訂單
       move_tables: 移動表
-      new_role: New Role
-      permissions: Permissions
+      new_role: 新角色
+      permissions: 許可
       see_debug: 查看調試信息
       see_item_notifications_user_preparation: Item notifications personal preparation
       see_item_notifications_user_delivery: Item notifications personal delivery
@@ -640,49 +640,49 @@ hk:
       split_items: 拆分項目
       take_orders: 下訂單
       view_all_settlements: 查看所有結算
-      manage_statistics: View statistics
+      manage_statistics: 查看統計
       manage_statistics_hotel: 查看酒店統計
-      statistics_weekday: Statistics Weekdays
+      statistics_weekday: 普通日統計數據
       statistics_hour: 統計時數
-      statistics_table: Statistics Tables
+      statistics_table: 統計表格
       statistics_payment_method: 統計支付方法
       statistics_category: 統計類別
       statistics_tax: 統計稅
-      manage_hotel: Manage hotel
+      manage_hotel: Manage hotel 管理酒店
       item_scribe: 允許手寫
       assign_order_to_booking: Assign orders to a booking
-      assign_tables: Assign tables to users
+      assign_tables: 分配桌子到用戶
       remote_support: 遠程報告
       download_database: 下載數據
-      receipt_logo: 收據標誌
-      mobile_show_tools: Show tool button on mobile devices
-      manage_statistics: 查看統計
+      receipt_logo: 收據標志
+      mobile_show_tools: 在移動裝置上顯示工具按鈕
       settlement_statistics_taxes: 顯示結算稅務統計
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       add_option_to_sent_item: Add Options to sent Items
+      statistics_statistic_category: Statistics show StatisticCategories
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: 編輯房間價格
+      new_room_price: 新房間價格
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: 編輯房間種類
+      new_room_type: 新房間種類
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: 編輯房間
+      new_room: 新房間
     create:
-      success: Room successfully saved
+      success: 房間被成功儲存
     destroy:
-      success: Room successfully deleted
+      success: 房間被成功刪除
   scopes:
     active: 活躍
     waiterpad: Waiterpad
   scroll_down: 下移
-  scroll_to_area: Go to room
+  scroll_to_area: 到房間
   scroll_up: 上移
   seasons:
     new:
@@ -690,13 +690,11 @@ hk:
       new_season: New Season
   send_and_go_back: 保存並返回
   served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+  server_no_response: The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.
   sessions:
     browser_warning:
       continue: 繼續
-      warning: Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: 隻支持以下瀏覽器，Google Chrome (Windows), Chromium (Linux) or Safari (Apple)請重新用以下瀏覽器並再試以下。
     new:
       email: 電子郵件
       login: 用戶名
@@ -738,10 +736,10 @@ hk:
   sum: 總計
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
+      add_tax_amount: 增加稅額
+      common_surcharge: 普通附加費
+      edit_surcharge: 編輯附加費
+      new_surcharge: 新附加費
   tables:
     create:
       license_limited: Your License is limited to %{count} tables
@@ -768,55 +766,63 @@ hk:
     new:
       edit_user: 編輯用戶
       new_user: 新用戶
-      select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: "選擇或以[Ctrl]+滑鼠左鍵取消選擇"
   various:
-    no_connection_retry: No connection to the Server. Send again? If you cancel, the items will be saved locally.
-    successfully_sent: The items were successfully sent.
-    table_contains_offline_items: "This order contains items which haven't been confirmed by the server yet. Will display locally saved version of the order only. The server may have an updated version. Please check correctness of the order manually."
-    statistics: Statistics
-    customer_request_send: Request these items
-    customer_request_finish: Request payment
-    customer_request_waiter: Request waiter
-    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    finish_was_requested: You have requested payment. Please have a little patience,
-      we will be there for your shortly.
-    waiter_was_requested: You have requested a waiter. Please have a little patience,
-      we will be there for your shortly.
-    mobile_view: Mobile device view
-    workstation_view: Workstation view
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
+    no_connection_retry: 無法連接到服務器。再次寄出？如果取消，該項目將在本地儲存。
+    successfully_sent: 該項目已成功寄出。
+    table_contains_offline_items: 該訂單含有無法被服務器確認的項目，隻能在本地顯示訂單的儲存版本。該服務器可能有更新的版本。請手動檢查該訂單的正確性。
+    statistics: Statistics統計數據
+    customer_request_send: 要求這些項目
+    customer_request_finish: 請求付款
+    customer_request_waiter: 呼叫服務員
+    order_will_be_confirmed: 我們的服務員將很快確認你的訂單
+    finish_was_requested: 你已請求付款。請稍候，我們將很快過來。
+    waiter_was_requested: 你已呼叫服務員。請稍候，我們將很快過來。
+    mobile_view: 移動裝置視圖
+    workstation_view: 工作站視圖
+    cancel: 取消
+    common_surcharges: 普通附加費
+    home: 回到主目錄
+    pay: 支付
+    save: 儲存
+    subtotal: 小計
     unamed: Unamed
-    tax_amount: Amount
-    tax: Tax
+    tax_amount: 總數
+    tax: 稅
     unit_price_abbreviation: SP
     total_price_abbreviation: TP
     quantity_abbreviation: Qty.
     interim_invoice: Interim Invoice
     invoice: Invoice
-    restaurant: Restaurant
-    hotel: Hotel
+    restaurant: 餐廳
+    hotel: Hotel酒店
     consumations: Consumations
     report: 報告
     begin: 開始
     end: 終結
     time: 時間
     delete: 刪除
+    attempt: 嘗試
+    no_connection: 無法連接
+    server_error_short: 服務器錯誤
+    no_connection_giving_up: 無法連接，放棄。
+    no_connection_retrying: 無法連接，重試。
+    sending: Sending...正在寄出
+    connecting: 正在連接
+    check_order_on_workstation: 在不同的裝置上檢視訂單
+    server_not_responded: 服務器無反應。請以不同裝置檢查訂單的遞交。之后，重新遞交訂單以刪除改變。
+    server_error: 內部服務器錯誤。請以不同裝置檢查訂單的遞交
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: 編輯
+      switch_to: 選擇
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
     form:
-      add_printer: Add printer
+      add_printer: 增加打印機
       identify_printers: Identify Printers
-      test_printers: Test Printers
+      test_printers: 測試打印機
       test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully saved
@@ -837,3 +843,5 @@ hk:
       success: 相機成功創建
     destroy:
       success: 相機成功刪除
+  clear: 清除
+  
