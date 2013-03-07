@@ -517,7 +517,7 @@ en:
       login: Login
       password: Password
       username: Username
-    order:
+    order_form:
       new: New order
       sum: SUM
     served_by: You were served by

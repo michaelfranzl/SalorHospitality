@@ -517,7 +517,7 @@ pl:
       login: Login
       password: Hasło
       username: Użytkownik
-    order:
+    order_form:
       new: Nowe zamówienie
       sum: Suma
     served_by: Zostałeś obsłużony przez

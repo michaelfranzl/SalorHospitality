@@ -516,7 +516,7 @@ tw:
       login: 登錄
       password: 密碼
       username: 用戶
-    order:
+    order_form:
       new: 新單
       sum: 總和
     served_by: You were served by

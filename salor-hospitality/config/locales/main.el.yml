@@ -519,7 +519,7 @@ el:
       login: Συνδεθείτε
       password: Κωδικός Πρόσβασης
       username: Κωδικός Χρήστη
-    order:
+    order_form:
       new: Νέα Παραγγελία
       sum: ΣΥΝΟΛΟ
     served_by: Έχετε εξυπηρετηθεί από

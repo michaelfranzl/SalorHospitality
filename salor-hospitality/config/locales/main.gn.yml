@@ -517,7 +517,7 @@ gn:
       login: Login
       password: Passwort
       username: Benutzer
-    order:
+    order_form:
       new: Neue Bestellung
       sum: SUMME
     served_by: Sie wurden bedient von

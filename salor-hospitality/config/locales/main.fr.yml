@@ -509,7 +509,7 @@ fr:
       login: S'identifier
       password: Mot de passe
       username: Nom d'utilisateur
-    order:
+    order_form:
       new: Nouvelle commande
       sum: SOMME
     served_by: Vous avez été servi par

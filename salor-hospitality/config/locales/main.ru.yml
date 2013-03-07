@@ -502,7 +502,7 @@ ru:
       login: Логин
       password: Пароль
       username: Пользователь
-    order:
+    order_form:
       new: Новый заказ
       sum: СУММА
     served_by: Вас обслуживал(а)

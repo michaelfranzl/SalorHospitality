@@ -516,7 +516,7 @@ cn:
       login: 登录
       password: 密码
       username: 用户
-    order:
+    order_form:
       new: 新单
       sum: 总和
     served_by: You were served by

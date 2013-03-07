@@ -493,7 +493,7 @@ es:
       login: Seudónimo
       password: Clave
       username: Nombre de usuario
-    order:
+    order_form:
       new: Nuevo pedido
       sum: TOTAL
     served_by: Ud. fue atendido por
