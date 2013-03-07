@@ -4,54 +4,54 @@ cn:
     new:
       edit_statistic_category: 编辑统计类别
       new_statistic_category: 新统计类别
-  activerecord:
+  activerecord: 
     attributes:
       camera:
         name: 名称
         description: Description
-        host_internal: Internal host
-        host_external: External host
-        port: Port
+        host_internal: 内部主机
+        host_external: 外部主机
+        port: 端口
         url_snapshot: URL Snapshot
         url_stream: URL Stream
         active: active
-        hidden: delete
+        hidden: 删除
       statistic_category:
-        hidden: delete
+        hidden: 删除
         name: 名称
       payment_method:
         name: 名称
-        cash: Cash
-        change: Change
+        cash: 现金
+        change: 改变
       payment_method_item:
-        amount: Amount
+        amount: 总数
       booking_item:
-        base_price: Price
+        base_price: 价格
         count: Count
-        sum: Sum
-        duration: Days
+        sum: 总和
+        duration: 日数
       order:
-        change_given: Change
-        nr: Number
+        change_given: 改变
+        nr: Number数字
       customer:
-        language: Language
-        table_id: Default Table
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
-        email: email
-        telephone: Telephone
-        cellphone: Cellphone
-        hidden: delete
+        language: 语言
+        table_id: 预设桌子
+        first_name: 名字
+        last_name: 姓氏
+        full_name: 全名
+        company_name: 公司名字
+        address: 地址
+        city: 城市
+        state: 省份
+        postalcode: 邮编
+        m_number: 积分卡号
+        m_points: 积分
+        email: 电子邮件
+        telephone: 电话
+        cellphone: 手机
+        hidden: 删除
       article:
-        statistic_category_id: Statistic-Category
+        statistic_category_id: 统计类别
         active: 活跃
         category_id: 类别
         description: 描述
@@ -78,13 +78,13 @@ cn:
         description: 描述
         hidden: 删除
         name: 名称
-        no_payment_methods: No Payment Methods
+        no_payment_methods: 无支付方法
       group:
         name: 名称
       guest_type:
         hidden: 删除
         name: 名称
-        taxes: Taxes
+        taxes: 税
       option:
         category_id: 类别
         hidden: 删除
@@ -105,10 +105,10 @@ cn:
         hidden: 删除
       presentation:
         active: 活跃
-        code: Ruby代码
+        code: 代码
         description: 描述
         hidden: 删除
-        markup: ERB标记
+        markup: 标记
         model: 类型
         name: 名称
       quantity:
@@ -122,32 +122,32 @@ cn:
       role:
         name: 名称
       room_price:
-        base_price: Base Price
-        guest_type_id: Guest Type
+        base_price: 底价
+        guest_type_id: 顾客种类
         hidden: 删除
-        room_type_id: Room Type
+        room_type_id: 房间种类
         season_id: Season
       room_type:
-        hidden: delete
+        hidden: delete删除
         name: 名称
       season:
-        from_date: From
+        from_date: 从
         hidden: 删除
         name: 名称
-        to_date: To
+        to_date: 到
         is_master: Master?
       settlement:
         initial_cash: 开始数目
         revenue: 收入
       surcharge:
-        amount: Amount
-        guest_type_id: Guest Type
+        amount: 总数
+        guest_type_id: 顾客种类
         hidden: 删除
         name: 名称
-        radio_select: Radio Select
+        radio_select: 电台选择
         season_id: Season
         selected: Selected by default
-        visible: Visible?
+        visible: 可视？
       table:
         abbreviation: 简称
         description: 描述
@@ -156,21 +156,21 @@ cn:
         height_mobile: 高度移动
         hidden: 删除
         name: 名称
-        rotate: rotate?
+        rotate: 旋转
         width: 宽度
         width_mobile: 宽度移动
-        booking_table: Booking
+        booking_table: 预定
       tax:
         color: 色彩
         hidden: 删除
         letter: 简称
         name: 名称
         percent: 税(%)
-        include_in_statistics: In Settlement Statistics
-        statistics_by_category: Settlement Statistics by Category
+        include_in_statistics: 结算统计数据
+        statistics_by_category: 结算统计数据类别
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: 总数
+        tax_id: 税
       user:
         active: 活跃
         color: 色彩
@@ -183,16 +183,16 @@ cn:
         tables: 表
         title: 标题
         audio: Acoustic signals
-        confirmation_user: Confirm remote orders
+        confirmation_user: 确认远程订单
       vendor:
         enable_technician_emails: 给技术人员寄电子邮件
         technician_email: 技术人员电子邮件
         email: 电子邮件
-        update_tables_interval: Interval update tables
-        update_item_lists_interval: Interval update item notifications
-        update_resources_interval: Interval update offline database
+        update_tables_interval: 更新桌子
+        update_item_lists_interval: 更新项目通知
+        update_resources_interval: 更新离线数据库
         remote_orders: 远程订单
-        automatic_printing: Automatic printing
+        automatic_printing: 自动打印
         country: Rules for country
         hidden: 删除
         invoice_footer_blurb: Invoice footer blurb
@@ -205,13 +205,13 @@ cn:
         ticket_item_separator: Ticket Separation Line
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
+        time_offset: 时间更正（小时）
+        timeout: 时间更正（秒）
         use_order_numbers: Use order numbers
-        rlogo_header: Receipt logo header
-        rlogo_footer: Receipt logo footer
-        logo: Screen logo
-        invoice_logo: Invoice Logo
+        rlogo_header: 收据抬头标志
+        rlogo_footer: 收据页脚标志
+        logo: 荧幕标志
+        invoice_logo: 发票标志
       vendor_printer:
         copies: 副本
         hidden: 删除
@@ -338,10 +338,10 @@ cn:
   admin: 管理
   are_you_sure: 你确定吗?
   articles:
-    create:
+    create: 
       success: 物品成功地创建了
       license_limited: Your License is limited to %{count} articles
-    destroy:
+    destroy: 
       success: 物品被成功删除了
     find:
       variants:
@@ -375,15 +375,15 @@ cn:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
-      search_by_number: Search by number
-      go_to_bookings_calendar: Go to bookings calendar view
+      search_by_number: 用数字搜索
+      go_to_bookings_calendar: 到预定日历视图
   cancel_and_go_back: 取消并返回
   categories:
     create:
       license_limited: Your License is limited to %{count} categories
       success: 成功了
     destroy:
-      success: Category successfully deleted
+      success: 类别成功删除
     new:
       aperitif: 开胃酒
       beer: 啤酒
@@ -432,7 +432,7 @@ cn:
   edit: 编辑
   exit: 太平门
   finish: 完毕
-  food: Foods
+  food: Foods食物
   go_back: 返回
   green: 绿色
   gross: 合计
@@ -463,7 +463,7 @@ cn:
   logout: 注销 %{who}
   messages:
     hello_username: 您好 %{name}!
-    user_account_is_currently_locked: Account is locked
+    user_account_is_currently_locked: 账户已被锁定
   move_order_to_table: 转移订单到不同的桌子
   must_be_entered_either_for_article_or_for_quantity: 必须输入无论对
   net: 净
@@ -492,7 +492,7 @@ cn:
       show_last_booking: 显示最近的预订
       show_last_order: 显示最近订单
       toggle_between_tables_and_rooms: 切换房间和桌子
-      exit: Exit
+      exit: 退出
     functions_header_order_form:
       move_order: 移动订单到不同的桌子
     index:
@@ -508,9 +508,9 @@ cn:
       set_tax_for_all: 设置所有订单的成本中心
       set_taxes: 设置税项
       split_invoice: 拆分发票
-      split_this_item: Click to split this items one at a time
+      split_this_item: 点击以拆分此项目
       switch_tax_for_this_item: 更改此项目的税
-      move_order: Move order to different table
+      move_order: 将订单移到其他桌子
     login_form:
       email: 你的电子邮件
       login: 登录
@@ -552,7 +552,7 @@ cn:
     error_during_evaluation: ! '错误: '
     no_presentation_found:
       no_presentations_found: 这部分没有定义模板
-  pink: Pink
+  pink: 粉红
   please_enter_item_comment: 特殊要求
   please_enter_item_price: 特价
   presentations:
@@ -574,8 +574,7 @@ cn:
       connect_vnc: 萤幕共享
       password: 密码
       requesting_connection_status: 请求链接状态中...
-      internet_connection_info: To get Remote Support, you must be connected to the
-        internet. If you see the Red (E) Logo above, you are connected to the internet.
+      internet_connection_info: 你必须连接到互联网以取得远程支援。如果你看到上方红色的标志，则表示你已连接到互联网。
       remote_support: 远程协助
       download_reports: 储存报告
     save: 储存
@@ -594,33 +593,33 @@ cn:
       success: 顾客成功删除
   roles:
     create:
-      success: Role successfully saved
+      success: 角色成功储存
     destroy:
-      success: Role successfully deleted
+      success: 角色成功删除
     new:
       allow_exit: 允许退出
       reactivate_orders: 激活订单
       move_order_from_invoice_form: Move order to table from invoice form
-      assign_order_to_user: Assign order to user
+      assign_order_to_user: 分配订单到用户
       assign_cost_center: 分配成本中心
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: 改变服务员
       counter_mode: 柜台状态
-      decrement_items: Decrement items
+      decrement_items: 减量项目
       delete_items: Delete items by decrementing
-      edit_role: Edit Role
-      finish_all_settlements: Finish all settlements
+      edit_role: 编辑角色
+      finish_all_settlements: 完成所有结算
       finish_orders: 完成订单
-      finish_own_settlement: Finish own settlement
+      finish_own_settlement: 完成自己结算
       refund: 退款项目
       manage_articles: Manage articles
-      manage_categories: Manage categories
-      manage_statistic_categories: Manage Statistic Categories
+      manage_categories: 管理类别
+      manage_statistic_categories: 管理统计类别
       manage_options: 管理选项
       manage_business_invoice: 管理商业清单
       manage_customers: 管理顾客
       manage_pages: 管理幻灯片
-      manage_roles: Manage roles
+      manage_roles: 管理角色
       manage_taxes: 管理税务
       manage_cost_centers: Manage Cost Centers
       manage_payment_methods: 管理支付方法
@@ -630,8 +629,8 @@ cn:
       manage_cameras: 管理相机
       move_order: 移动订单
       move_tables: 移动表
-      new_role: New Role
-      permissions: Permissions
+      new_role: 新角色
+      permissions: 许可
       see_debug: 查看调试信息
       see_item_notifications_user_preparation: Item notifications personal preparation
       see_item_notifications_user_delivery: Item notifications personal delivery
@@ -643,20 +642,20 @@ cn:
       view_all_settlements: 查看所有结算
       manage_statistics: 查看统计
       manage_statistics_hotel: 查看酒店统计
-      statistics_weekday: Statistics Weekdays
+      statistics_weekday: 普通日统计数据
       statistics_hour: 统计时数
-      statistics_table: Statistics Tables
+      statistics_table: 统计表格
       statistics_payment_method: 统计支付方法
       statistics_category: 统计类别
       statistics_tax: 统计税
-      manage_hotel: Manage hotel
+      manage_hotel: Manage hotel 管理酒店
       item_scribe: 允许手写
       assign_order_to_booking: Assign orders to a booking
-      assign_tables: Assign tables to users
+      assign_tables: 分配桌子到用户
       remote_support: 远程报告
       download_database: 下载数据
       receipt_logo: 收据标志
-      mobile_show_tools: Show tool button on mobile devices
+      mobile_show_tools: 在移动装置上显示工具按钮
       settlement_statistics_taxes: 显示结算税务统计
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       add_option_to_sent_item: Add Options to sent Items
@@ -665,25 +664,25 @@ cn:
     index:
       generate_price_skeleton: Generate price skeleton
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: 编辑房间价格
+      new_room_price: 新房间价格
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: 编辑房间种类
+      new_room_type: 新房间种类
   rooms:
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: 编辑房间
+      new_room: 新房间
     create:
-      success: Room successfully saved
+      success: 房间被成功储存
     destroy:
-      success: Room successfully deleted
+      success: 房间被成功删除
   scopes:
     active: 活跃
     waiterpad: Waiterpad
   scroll_down: 下移
-  scroll_to_area: Go to room
+  scroll_to_area: 到房间
   scroll_up: 上移
   seasons:
     new:
@@ -691,13 +690,11 @@ cn:
       new_season: New Season
   send_and_go_back: 保存并返回
   served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+  server_no_response: The Bill Gastro Server is not responding any more. It is either busy or the radio link is interrupted.
   sessions:
     browser_warning:
       continue: 继续
-      warning: Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: 只支持以下浏览器，Google Chrome (Windows), Chromium (Linux) or Safari (Apple)请重新用以下浏览器并再试以下。
     new:
       email: 电子邮件
       login: 用户名
@@ -739,10 +736,10 @@ cn:
   sum: 总计
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
+      add_tax_amount: 增加税额
+      common_surcharge: 普通附加费
+      edit_surcharge: 编辑附加费
+      new_surcharge: 新附加费
   tables:
     create:
       license_limited: Your License is limited to %{count} tables
@@ -769,70 +766,63 @@ cn:
     new:
       edit_user: 编辑用户
       new_user: 新用户
-      select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
+      select_with_ctrl_key: "选择或以[Ctrl]+滑鼠左键取消选择"
   various:
-    no_connection_retry: No connection to the Server. Send again? If you cancel, the
-      items will be saved locally.
-    successfully_sent: The items were successfully sent.
-    table_contains_offline_items: This order contains items which haven't been confirmed
-      by the server yet. Will display locally saved version of the order only. The
-      server may have an updated version. Please check correctness of the order manually.
-    statistics: Statistics
-    customer_request_send: Request these items
-    customer_request_finish: Request payment
-    customer_request_waiter: Request waiter
-    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    finish_was_requested: You have requested payment. Please have a little patience,
-      we will be there for your shortly.
-    waiter_was_requested: You have requested a waiter. Please have a little patience,
-      we will be there for your shortly.
-    mobile_view: Mobile device view
-    workstation_view: Workstation view
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
+    no_connection_retry: 无法连接到服务器。再次寄出？如果取消，该项目将在本地储存。
+    successfully_sent: 该项目已成功寄出。
+    table_contains_offline_items: 该订单含有无法被服务器确认的项目，只能在本地显示订单的储存版本。该服务器可能有更新的版本。请手动检查该订单的正确性。
+    statistics: Statistics统计数据
+    customer_request_send: 要求这些项目
+    customer_request_finish: 请求付款
+    customer_request_waiter: 呼叫服务员
+    order_will_be_confirmed: 我们的服务员将很快确认你的订单
+    finish_was_requested: 你已请求付款。请稍候，我们将很快过来。
+    waiter_was_requested: 你已呼叫服务员。请稍候，我们将很快过来。
+    mobile_view: 移动装置视图
+    workstation_view: 工作站视图
+    cancel: 取消
+    common_surcharges: 普通附加费
+    home: 回到主目录
+    pay: 支付
+    save: 储存
+    subtotal: 小计
     unamed: Unamed
-    tax_amount: Amount
-    tax: Tax
+    tax_amount: 总数
+    tax: 税
     unit_price_abbreviation: SP
     total_price_abbreviation: TP
     quantity_abbreviation: Qty.
     interim_invoice: Interim Invoice
     invoice: Invoice
-    restaurant: Restaurant
-    hotel: Hotel
+    restaurant: 餐厅
+    hotel: Hotel酒店
     consumations: Consumations
     report: 报告
     begin: 开始
     end: 终结
     time: 时间
     delete: 删除
-    attempt: Attempt
-    no_connection: No connection
-    server_error_short: Server error
-    no_connection_giving_up: No connection. Giving up.
-    no_connection_retrying: No connection. Trying again...
-    sending: Sending...
-    connecting: Connecting...
-    check_order_on_workstation: Check order on different device
-    server_not_responded: No response from server. Check submission of order on different
-      device. Then, re-submit oder cancel to delete the changes.
-    server_error: Oops! There was an internal server error. Please check the submission
-      of the order on a different device.
+    attempt: 尝试
+    no_connection: 无法连接
+    server_error_short: 服务器错误
+    no_connection_giving_up: 无法连接，放弃。
+    no_connection_retrying: 无法连接，重试。
+    sending: Sending...正在寄出
+    connecting: 正在连接
+    check_order_on_workstation: 在不同的装置上检视订单
+    server_not_responded: 服务器无反应。请以不同装置检查订单的递交。之后，重新递交订单以删除改变。
+    server_error: 内部服务器错误。请以不同装置检查订单的递交
   vendors:
     index:
-      edit: Edit
-      switch_to: Select
+      edit: 编辑
+      switch_to: 选择
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
     form:
-      add_printer: Add printer
+      add_printer: 增加打印机
       identify_printers: Identify Printers
-      test_printers: Test Printers
+      test_printers: 测试打印机
       test_printers_chartest: Test all characters
     create:
       success: Vendor was successfully saved
@@ -853,4 +843,5 @@ cn:
       success: 相机成功创建
     destroy:
       success: 相机成功删除
-  clear: clear
+  clear: 清除
+  
