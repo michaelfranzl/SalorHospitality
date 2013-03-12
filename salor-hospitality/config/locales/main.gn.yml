@@ -337,6 +337,11 @@ gn:
         other: Drucker
   admin: Administrator
   are_you_sure: Sind Sie sicher?
+  payment_methods:
+    create:
+      success: Zahlungsmethode erfolgreich gespeichert
+    destroy:
+      success: Zahlungsmethode erfolgreich gelöscht
   articles:
     create:
       success: Artikel erfolgreich gespeichert

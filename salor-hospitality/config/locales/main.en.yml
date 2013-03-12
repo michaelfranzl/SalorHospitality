@@ -585,6 +585,11 @@ en:
     remote_support: Remote Support
     download_reports: Download Report
   restaurant: Restaurant
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted
   customers:
     new:
       edit_customer: Edit Customer

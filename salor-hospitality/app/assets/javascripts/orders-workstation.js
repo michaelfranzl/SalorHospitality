@@ -11,8 +11,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 var screenlock_counter = -1;
 
 $(function(){
-  $('#admin').slideUp();
-
   $("#customer_search").keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();

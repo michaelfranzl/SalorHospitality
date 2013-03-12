@@ -39,14 +39,7 @@ $(document).ready(function() {
     $('#exit_button').hide();
   }
   
-  $('#admin').hover(function(){
-    $('#admin').stop(true,true);
-    $('#admin').animate({height:154});
-  },
-  function(){
-    $('#admin').stop(true,true);
-    $('#admin').animate({height:109});
-  })
+  $('#admin').hide();
 })
 
 function download_printfile(path) {

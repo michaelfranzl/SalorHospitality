@@ -82,29 +82,35 @@ function restore_border(element) {
 }
 
 function toggle_admin_interface() {
-  $.ajax({
-    type: 'POST',
-    url:'/orders/toggle_admin_interface',
-    dataType: 'json',
-    success: function(result) {
-      if (result) {
-        $('#admin').slideDown('slow');
-        if (! $('#orderform').is(':visible')) {
-          $('#drag_and_drop_toggle_view_button').show();
+  if ($('#orderform').is(':visible') == false) {
+    if ($('#orderform').length == 1) {
+      $.ajax({
+        type: 'POST',
+        url:'/orders/toggle_admin_interface',
+        dataType: 'json',
+        success: function(result) {
+          if (result) {
+            $('#admin').show();
+            if (! $('#orderform').is(':visible')) {
+              $('#drag_and_drop_toggle_view_button').show();
+            }
+            $('#items_notifications_static').hide();
+          } else {
+            $('#admin').hide();
+            $('#drag_and_drop_toggle_view_button').hide();
+            $('#items_notifications_static').show();
+            settings.mobile_drag_and_drop = false;
+            $('#areas').hide();
+          }
+          $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
+          settings.admin_interface = result;
+          render_tables();
         }
-        $('#items_notifications_static').hide();
-      } else {
-        $('#admin').slideUp('slow');
-        $('#drag_and_drop_toggle_view_button').hide();
-        $('#items_notifications_static').show();
-        settings.mobile_drag_and_drop = false;
-        $('#areas').hide();
-      }
-      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
-      settings.admin_interface = result;
-      render_tables();
+      });
+    } else if (!$('#orderform').is(':visible')) {
+      $('#admin').show();
     }
-  });
+  }
 }
 
 function toggle_all_option_checkboxes(source) {
