@@ -845,3 +845,8 @@ cn:
     destroy:
       success: 相机成功删除
   clear: 清除
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted

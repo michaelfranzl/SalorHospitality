@@ -1,3 +1,13 @@
+salor-hospitality (4.1.3.8) unstable; urgency=low
+
+  [ BretonFin ]
+  * Season and Seasons spelling correction
+
+  [ Michael Franzl ]
+  * admin menu in the middle of screen
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 12 Mar 2013 15:12:15 +0100
+
 salor-hospitality (4.1.3.7) unstable; urgency=low
 
   * build

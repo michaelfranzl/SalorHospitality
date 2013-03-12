@@ -863,3 +863,8 @@ pl:
     destroy:
       success: Kamera została skaowana
   clear: clear
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted

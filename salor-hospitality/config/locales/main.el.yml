@@ -858,3 +858,8 @@ el:
     destroy:
       success: Camera was successfully deleted
   clear: clear
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted
