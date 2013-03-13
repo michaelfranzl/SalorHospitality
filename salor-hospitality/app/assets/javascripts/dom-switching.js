@@ -64,7 +64,9 @@ function switch_to_tables() {
   $('#invoices').hide();
   $('#items_notifications_interactive').hide();
   $('#items_notifications_static').show();
+  $('#main').show();
   $('#tables').show();
+  $('#admin').hide();
   $('#rooms').hide();
   $('#spliced_seasons').hide();
   if (settings.mobile) { $('#areas').show(); }
@@ -74,6 +76,7 @@ function switch_to_tables() {
   $('#functions_footer').hide();
   $('#functions_header_last_invoices').hide();
   $('#customer_list').hide();
+  $('.booking_form').hide();
   $('#tablesselect').hide();
   screenlock_counter = settings.screenlock_timeout;
   option_position = 0;

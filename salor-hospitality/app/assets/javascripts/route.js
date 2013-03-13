@@ -179,7 +179,7 @@ function route(target, model_id, action, options) {
     $('#areas').hide();
     $('#tables').hide();
     $('#rooms').hide();
-    $('#container').show();
+    $('#main').show();
     $('#spliced_seasons').show();
     $('#functions_header_index').hide();
     $('#functions_header_order_form').hide();
@@ -200,7 +200,7 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#rooms').hide();
     //$('.booking_form').remove();
-    $('#container').show();
+    $('#main').show();
     $('#orderform').hide();
     $('#invoices').hide();
     $('#spliced_seasons').show();

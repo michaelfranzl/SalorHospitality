@@ -73,7 +73,7 @@
         .left
           = image_tag "logo-tiny-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :class => 'logo_tiny'
           = SalorHospitality::Application::VERSION
-          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name }
+          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login }
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
