@@ -470,8 +470,8 @@ es:
       items_notifications: Notificaciones
       show_last_booking: Mostrar última reserva
       show_last_order: Mostrar último pedido
-      toggle_between_tables_and_rooms: Alternar entre habitaciones y mesas
       exit: Exit
+      toggle_drag_tables: Drag tables
     index:
       delivery_list: Lista de Reparto
       preparation_list: Lista de preparación
@@ -776,6 +776,8 @@ es:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   messages:
     hello_username: Hello %{name}!
     user_account_is_currently_locked: Account is locked

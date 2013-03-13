@@ -466,6 +466,8 @@ el:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   logout: αποσυνδεθείτε %{who}
   messages:
     hello_username: Γεια χαρά %{name}!
@@ -494,8 +496,8 @@ el:
       print_now: Εκτυπώστε τώρα
       show_last_order: Δείξτε την τελευταία παραγγελία
       show_last_booking: Δείξτε την τελευταία κράτηση
-      toggle_between_tables_and_rooms: Εναλλαγή μεταξύ τραπεζιών και δωματίων
       exit: Exit
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Μετακινήστε την παραγγελία σε άλλο τραπέζι
     index:

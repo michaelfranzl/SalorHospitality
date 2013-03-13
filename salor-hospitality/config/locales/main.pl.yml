@@ -460,6 +460,8 @@ pl:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   logout: Wyloguj %{who}
   messages:
     hello_username: Witaj %{name}!
@@ -492,8 +494,8 @@ pl:
       print_now: Drukuj
       show_last_booking: Pokaż ostatnią rezerwację
       show_last_order: Wcześniejsze zamówienia
-      toggle_between_tables_and_rooms: Przełącz pomiędzy ekranem stołów a pokoi
       exit: Zakończ SalorGastro
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:

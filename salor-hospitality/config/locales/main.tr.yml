@@ -465,8 +465,8 @@ tr:
       print_now: Hemen basin
       items_notifications: XXX Notifications
       show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
       exit: Exit
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: siparişi kaydır
     invoice_item_list:
@@ -725,6 +725,8 @@ tr:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   messages:
     hello_username: Hello %{name}!
     user_account_is_currently_locked: Account is locked

@@ -460,6 +460,8 @@ cn:
   layouts:
     application:
       submit_scribe: 好
+    header:
+      configuration: Configuration
   logout: 注销 %{who}
   messages:
     hello_username: 您好 %{name}!
@@ -491,8 +493,8 @@ cn:
       print_now: 打印现在
       show_last_booking: 显示最近的预订
       show_last_order: 显示最近订单
-      toggle_between_tables_and_rooms: 切换房间和桌子
       exit: 退出
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: 移动订单到不同的桌子
     index:

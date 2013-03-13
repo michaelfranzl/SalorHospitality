@@ -460,8 +460,8 @@ hu:
       print_now: Print now
       items_notifications: XXX Notifications
       show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
       exit: Exit
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Move order to other table
     index:
@@ -734,6 +734,8 @@ hu:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   messages:
     hello_username: Hello %{name}!
     user_account_is_currently_locked: Account is locked

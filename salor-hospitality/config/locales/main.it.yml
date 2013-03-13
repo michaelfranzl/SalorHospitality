@@ -466,6 +466,8 @@ it:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
@@ -494,8 +496,8 @@ it:
       print_now: Print now
       show_last_order: Show last order
       show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
       exit: Exit
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Move order to other table
     index:

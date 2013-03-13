@@ -450,6 +450,8 @@ ru:
   layouts:
     application:
       submit_scribe: OK
+    header:
+      configuration: Configuration
   logout: завершить сеанс %{who}
   messages:
     hello_username: Здравствуйте, %{name}!
@@ -477,8 +479,8 @@ ru:
       print_now: Напечатать сейчас
       show_last_order: Показать последний заказ
       show_last_booking: Показать последнее резервирование
-      toggle_between_tables_and_rooms: Переключиться между комнатами и столами
       exit: Exit
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Переместить заказ на другой стол
     index:
