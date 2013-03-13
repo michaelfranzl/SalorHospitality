@@ -6,9 +6,15 @@
 - unless @current_customer
   #admin.adminlinks
     %span.done{ :onclick => '$("#admin").hide()' }
-    = link_to( t('various.restaurant'), '/orders', :class => 'special')
+    - if controller.controller_name == 'orders'
+      = link_to( t('various.restaurant'), '#', :class => 'special', :onclick => "route('tables')")
+    - else
+      = link_to( t('various.restaurant'), '/orders', :class => 'special')
     - if permit('manage_hotel')
-      = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
+      - if controller.controller_name == 'orders'
+        = link_to( t('various.hotel'), '#', :class => 'special', :onclick => "route('rooms');")
+      - else
+        = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
     - if permit('manage_statistics_hotel')
       - if controller.controller_name == 'orders'
         = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
@@ -34,7 +40,6 @@
       - else
         = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)
     = link_to( t('activerecord.models.customer.other'), main_app.customers_path) if permit('manage_customers')
-    = link_to( t('.more'), '')
     = link_to( t('activerecord.models.page.other'), main_app.pages_path) if permit('manage_pages')
     = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if permit('manage_pages')
     - if permit('manage_hotel')

@@ -12,8 +12,7 @@
 - if permit('see_item_notifications_user_delivery') or permit('see_item_notifications_user_preparation') or permit('see_item_notifications_vendor_delivery') or permit('see_item_notifications_vendor_preparation')
   %a.iconbutton.items_notifications_button{ :onclick => 'display_items_notifications()', :title => t('.items_notifications') }
 
-- if permit('manage_hotel')
-  %a.iconbutton.tables2_button{ :onclick => "toggle_order_booking();", :title => t('.toggle_between_tables_and_rooms') }
+%a.iconbutton.tables2_button{ :onclick => "toggle_drag_tables();", :title => t('.toggle_drag_tables') }
 
 = button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
 

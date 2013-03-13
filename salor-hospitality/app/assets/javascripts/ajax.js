@@ -67,3 +67,25 @@ function rotate_tax_item(id) {
     timeout: 20000
   });
 }
+
+function toggle_drag_tables() {
+  $.ajax({
+    type: 'POST',
+    url:'/orders/toggle_admin_interface',
+    dataType: 'json',
+    success: function(result) {
+      if (result) {
+        $('#drag_and_drop_toggle_view_button').show();
+        $('#items_notifications_static').hide();
+      } else {
+        $('#drag_and_drop_toggle_view_button').hide();
+        $('#items_notifications_static').show();
+        settings.mobile_drag_and_drop = false;
+        $('#areas').hide();
+      }
+      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
+      settings.admin_interface = result;
+      render_tables();
+    }
+  });
+}

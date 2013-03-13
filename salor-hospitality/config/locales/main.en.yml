@@ -492,7 +492,7 @@ en:
       print_now: Print now
       show_last_booking: Show last booking
       show_last_order: Show last order
-      toggle_between_tables_and_rooms: Toggle between rooms and tables
+      toggle_drag_tables: Drag tables
       exit: Exit
     functions_header_order_form:
       move_order: Move order to other table

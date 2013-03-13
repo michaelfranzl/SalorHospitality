@@ -64,7 +64,9 @@ function switch_to_tables() {
   $('#invoices').hide();
   $('#items_notifications_interactive').hide();
   $('#items_notifications_static').show();
+  $('#main').show();
   $('#tables').show();
+  $('#admin').hide();
   $('#rooms').hide();
   $('#spliced_seasons').hide();
   if (settings.mobile) { $('#areas').show(); }
