@@ -519,7 +519,6 @@ cn:
       password: 密码
       username: 用户
     order_form:
-      new: 新单
       sum: 总和
     served_by: You were served by
     show:
@@ -539,6 +538,8 @@ cn:
     refund_form:
       do_separate_items: 分开此项
       do_refund: 退款
+    order:
+      new: New order
   pages:
     edit:
       edit_page: 编辑页面

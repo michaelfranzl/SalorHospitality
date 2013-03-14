@@ -522,7 +522,6 @@ el:
       password: Κωδικός Πρόσβασης
       username: Κωδικός Χρήστη
     order_form:
-      new: Νέα Παραγγελία
       sum: ΣΥΝΟΛΟ
     served_by: Έχετε εξυπηρετηθεί από
     show:
@@ -546,6 +545,8 @@ el:
     refund_form:
       do_separate_items: Ξεχωρίστε αυτό το αντικείμενο
       do_refund: Κάντε επιστροφή
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Επεξεργασία Σελίδας

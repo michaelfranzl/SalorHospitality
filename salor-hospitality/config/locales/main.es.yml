@@ -494,7 +494,6 @@ es:
       password: Clave
       username: Nombre de usuario
     order_form:
-      new: Nuevo pedido
       sum: TOTAL
     served_by: Ud. fue atendido por
     show:
@@ -520,6 +519,8 @@ es:
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Editar página

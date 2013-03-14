@@ -476,8 +476,9 @@ hu:
       do_separate_items: Separate this item
       do_refund: Make refund
     order_form:
-      new: New order
       sum: SUM
+    order:
+      new: New order
   settlements:
     index:
       start_date: Start date

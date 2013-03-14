@@ -520,7 +520,6 @@ pl:
       password: Hasło
       username: Użytkownik
     order_form:
-      new: Nowe zamówienie
       sum: Suma
     served_by: Zostałeś obsłużony przez
     show:
@@ -541,6 +540,8 @@ pl:
     refund_form:
       do_separate_items: Podziel
       do_refund: Zwrot
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Edytuj stronę

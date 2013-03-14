@@ -512,7 +512,6 @@ fr:
       password: Mot de passe
       username: Nom d'utilisateur
     order_form:
-      new: Nouvelle commande
       sum: SOMME
     served_by: Vous avez été servi par
     show:
@@ -536,6 +535,8 @@ fr:
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Modifier Page

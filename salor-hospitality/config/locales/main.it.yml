@@ -522,7 +522,6 @@ it:
       password: Password
       username: Username
     order_form:
-      new: New order
       sum: SUM
     served_by: You were served by
     show:
@@ -546,6 +545,8 @@ it:
     refund_form:
       do_separate_items: Separate this item
       do_refund: Make refund
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Edit Page

@@ -505,7 +505,6 @@ ru:
       password: Пароль
       username: Пользователь
     order_form:
-      new: Новый заказ
       sum: СУММА
     served_by: Вас обслуживал(а)
     show:
@@ -529,6 +528,8 @@ ru:
     refund_form:
       do_separate_items: Отделить эту позицию
       do_refund: Сделать возврат
+    order:
+      new: New order
   pages:
     edit:
       edit_page: Редактирование страницы
