@@ -524,8 +524,9 @@ gn:
       login: Login
       password: Passwort
       username: Benutzer
-    order_form:
+    order:
       new: Neue Bestellung
+    order_form:
       sum: SUMME
     served_by: Sie wurden bedient von
     show:
