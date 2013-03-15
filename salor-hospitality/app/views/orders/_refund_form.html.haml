@@ -8,8 +8,9 @@
     %a{ :onclick => "update_order_from_refund_form({id:#{order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
 
   %h3== #{ t(:invoice) } ##{order.nr}, #{ order.table.name }
-  %p= l order.created_at, :format => :long
-  = select_tag 'payment_method_selector', options_from_collection_for_select(payment_methods, 'id', 'refund_name', selected_payment_method_id)
+  %p= l order.finished_at, :format => :long
+  - if permit('refund')
+    = select_tag 'payment_method_selector', options_from_collection_for_select(payment_methods, 'id', 'refund_name', selected_payment_method_id)
   %table
     - order.items.existing.positioned.each do |item|
       - color = item.refunded ? '#FAA' : 'transparent'
