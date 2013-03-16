@@ -226,10 +226,11 @@ class Item < ActiveRecord::Base
   def hide(by_user_id)
     self.hidden = true
     self.hidden_by = by_user_id
+    self.hidden_at = Time.now
     self.save
     self.unlink
-    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
-    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
   end
 
   def unlink
@@ -314,7 +315,7 @@ class Item < ActiveRecord::Base
     current_tax_id_index = tax_ids.index current_item_tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     next_tax = self.vendor.taxes.find_by_id(next_tax_id)
-    self.tax_items.update_all :hidden => true, :hidden_by => -4
+    self.tax_items.update_all :hidden => true, :hidden_by => -4, :hidden_at => Time.now
     self.calculate_taxes([next_tax])
     self.order.calculate_totals
   end
