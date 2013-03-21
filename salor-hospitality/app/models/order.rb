@@ -720,7 +720,7 @@ class Order < ActiveRecord::Base
         tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)).round(2)
       end
       
-      if self.paid and (self.cost_center.nil? or self.cost_center.no_payment_methods == true)
+      if self.paid and self.cost_center and self.cost_center.no_payment_methods == true
         tests[6] = self.payment_method_items.any? == false
       end
     end
@@ -747,7 +747,7 @@ class Order < ActiveRecord::Base
     
     # finished orders have to have nr set
     if self.finished
-      tests[21] = !self.nr.nil?
+      tests[21] = self.nr.nil? == false
     end
 
     0.upto(tests.size-1).each do |i|
