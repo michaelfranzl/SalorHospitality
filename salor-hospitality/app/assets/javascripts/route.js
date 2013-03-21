@@ -47,8 +47,8 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    unloadify_order_buttons();
     switch_to_table();
+    loadify_order_buttons();
     if (action == 'send') {
       // finish order
       submit_json.jsaction = 'send';
@@ -112,6 +112,7 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id;
     } else {
       // regular click on a table from main view
+      unloadify_order_buttons();
       get_table_show(model_id);
     }
     // clean workspace up
