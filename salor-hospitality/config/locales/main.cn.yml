@@ -663,6 +663,7 @@ cn:
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       add_option_to_sent_item: Add Options to sent Items
       statistics_statistic_category: Statistics show StatisticCategories
+      statistics_sold_quantities: Statistics show sold quantities
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

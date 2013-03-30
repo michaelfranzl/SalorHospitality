@@ -632,6 +632,7 @@ tr:
       manage_cameras: Manage cameras
       add_option_to_sent_item: Add Options to sent Items
       statistics_statistic_category: Statistics show StatisticCategories
+      statistics_sold_quantities: Statistics show sold quantities
     create:
       success: Role successfully saved
     destroy:
