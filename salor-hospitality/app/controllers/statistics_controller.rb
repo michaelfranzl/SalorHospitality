@@ -31,6 +31,8 @@ class StatisticsController < ApplicationController
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
     @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
+    @item_article_ids = Item.connection.execute("SELECT article_id from items where created_at between '#{ @from.strftime("%Y-%m-%d") } 00:00:00' AND '#{ @to.strftime("%Y-%m-%d") } 23:59:59' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+    @item_quantity_ids = Item.connection.execute("SELECT quantity_id from items where created_at between '#{ @from.strftime("%Y-%m-%d") } 00:00:00' AND '#{ @to.strftime("%Y-%m-%d") } 23:59:59' AND hidden IS NULL").to_a.flatten.uniq
     
     if params[:print] == '1'
       template = File.read("#{Rails.root}/app/views/statistics/print.txt.erb")
@@ -42,19 +44,6 @@ class StatisticsController < ApplicationController
       print_engine.open
       print_engine.print(vendor_printer.id, text)
       print_engine.close
-    end
-  end
-
-  def tables
-    @from, @to = assign_from_to(params)
-    @tables = Table.all
-  end
-
-  def weekdays
-    @from, @to = assign_from_to(params)
-    @weekdaysums = []
-    0.upto 6 do |day|
-      @weekdaysums[day] = Order.sum( 'sum', :conditions => "WEEKDAY(created_at)=#{day} AND created_at BETWEEN '#{@from.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{@to.strftime('%Y-%m-%d %H:%M:%S')}'" )
     end
   end
 end

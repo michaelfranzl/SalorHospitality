@@ -658,6 +658,7 @@ gn:
       manage_statistics: Statistiken
       manage_statistics_hotel: Statistiken Hotel ansehen
       statistics_weekday: Statistik zeige Wochentag
+      statistics_sold_quantities: Statistik zeige Verkaufszahlen
       statistics_hour: Statistik zeige Stunde
       statistics_table: Statistik zeige Tisch
       statistics_payment_method: Statistik zeige Zahlungsmethode

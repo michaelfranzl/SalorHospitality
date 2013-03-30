@@ -653,6 +653,7 @@ en:
       manage_statistics: View statistics
       manage_statistics_hotel: View hotel statistics
       statistics_weekday: Statistics show Weekdays
+      statistics_sold_quantities: Statistics show sold quantities
       statistics_hour: Statistics show Hours
       statistics_table: Statistics show Tables
       statistics_payment_method: Statistics show Payment Methods

@@ -173,20 +173,7 @@ SalorHospitality::Application.routes.draw do
     end
   end
 
-  resources :statistics do
-    collection do
-      get 'tables'
-      post 'tables'
-      get 'weekdays'
-      post 'weekdays'
-      get 'users'
-      post 'users'
-      get 'journal'
-      post 'journal'
-      get 'articles'
-      post 'articles'
-    end
-  end
+  resources :statistics
 
   resources :tables do
     resources :orders

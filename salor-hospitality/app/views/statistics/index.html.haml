@@ -175,7 +175,29 @@
             .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
         - i += 1
           
-        
+  - if permit('statistics_sold_quantities')
+    %table.settlements.statistics
+      %tr
+        %th.bb{ :style => 'width:1500px' }= Article.model_name.human
+        %th.bb= t :count
+      - @item_article_ids.each do |aid|
+        - article = Article.find_by_id(aid)
+        - sold_quantity = Item.where(:article_id => aid).sum(:count)
+        %tr
+          %td= article.name
+          %td= sold_quantity
+          
+    %table.settlements.statistics
+      %tr
+        %th.bb{ :style => 'width:1500px' }= Quantity.model_name.human
+        %th.bb= t :count
+      - @item_quantity_ids.each do |qid|
+        - next if qid.nil?
+        - quantity = Quantity.find_by_id(qid)
+        - sold_quantity = Item.where(:quantity_id => qid).sum(:count)
+        %tr
+          %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
+          %td= sold_quantity
       
 .clear
 
