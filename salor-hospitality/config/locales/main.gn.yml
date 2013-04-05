@@ -674,6 +674,7 @@ gn:
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
       settlement_statistics_taxes: Losungsausdruck Statistik Steuern
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
+      settlement_statistics_sold_quantities: Losungsausdruck Statistik Verkaufsmengen
       settlement_statistics_taxes_categories: Losungsausdruck Statistik Steuer mit
         Kategorien
   room_prices:
@@ -783,6 +784,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    sold_quantities: Verkaufsmengen
     attempt: Versuch
     no_connection: Keine Verbindung
     server_error_short: Serverfehler

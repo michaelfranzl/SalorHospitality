@@ -671,6 +671,7 @@ en:
       manage_statistics: Statistics
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      settlement_statistics_sold_quantities: Show settlement statistics about sold quantities
       add_option_to_sent_item: Add Options to sent Items
   room_prices:
     index:
@@ -783,6 +784,7 @@ en:
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   clear: clear
   various:
+    sold_quantities: Sold Quantities
     attempt: Attempt
     no_connection: No connection
     server_error_short: Server error

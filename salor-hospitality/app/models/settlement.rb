@@ -159,6 +159,13 @@ class Settlement < ActiveRecord::Base
       end
       list_of_taxes_categories += "\xc4" * 42 + "\n" unless list_of_taxes_categories.empty?
     end
+    
+    list_of_sold_quantities = ''
+    if permissions.include?('settlement_statistics_sold_quantities')
+      item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE settlement_id = #{ self.id } AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+      item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE settlement_id = #{ self.id } AND hidden IS NULL").to_a.flatten.uniq
+    end
+    
 
     output =
     "\e@"     +  # Initialize Printer

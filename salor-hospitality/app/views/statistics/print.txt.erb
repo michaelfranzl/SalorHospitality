@@ -1,6 +1,7 @@
 <%= "\e@" %>
 
 <%= I18n.l @from, :format => :date_iso %> -> <%= I18n.l @to, :format => :date_iso %>
+
 <% if permit('statistics_weekday') %>
 <%= "\e!\x38" %>
 <%= I18n.t 'statistics.index.weekday' %>
@@ -41,6 +42,24 @@
 <% @statistic_categories.each do |cat| %>
 <% sum = Item.where(:settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum) %>
 <%= "%10.10s      %s %6.2f\n" % [cat.name, I18n.t('number.currency.format.friendly_unit', :locale => @region), sum] %>
+<% end %>
+<%= "\xc4" * 42 %>
+<% end %>
+
+
+<% if permit('statistics_sold_quantities') %>
+<%= "\e!\x38" %>
+<%= I18n.t('various.sold_quantities') %>
+
+<%= "\e!\x00" %>
+<% @articles.each do |article| %>
+<% sold_quantity = Item.where(:article_id => article.id).sum(:count) %>
+<%= "%35.35s %5i\n" % [article.name, sold_quantity] %>
+<% end %>
+
+<% @quantities.each do |quantity| %>
+<% sold_quantity = Item.where(:quantity_id => quantity.id).sum(:count) %>
+<%= "%35.35s %5i\n" % ["#{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }", sold_quantity] %>
 <% end %>
 <% end %>
 

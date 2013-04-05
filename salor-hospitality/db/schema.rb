@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131175846) do
+ActiveRecord::Schema.define(:version => 20130405193335) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -670,6 +670,7 @@ ActiveRecord::Schema.define(:version => 20130131175846) do
     t.integer  "statistic_category_id"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.string   "article_name"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"

@@ -180,9 +180,8 @@
       %tr
         %th.bb{ :style => 'width:1500px' }= Article.model_name.human
         %th.bb= t :count
-      - @item_article_ids.each do |aid|
-        - article = Article.find_by_id(aid)
-        - sold_quantity = Item.where(:article_id => aid).sum(:count)
+      - @articles.each do |article|
+        - sold_quantity = Item.where(:article_id => article.id).sum(:count)
         %tr
           %td= article.name
           %td= sold_quantity
@@ -191,10 +190,8 @@
       %tr
         %th.bb{ :style => 'width:1500px' }= Quantity.model_name.human
         %th.bb= t :count
-      - @item_quantity_ids.each do |qid|
-        - next if qid.nil?
-        - quantity = Quantity.find_by_id(qid)
-        - sold_quantity = Item.where(:quantity_id => qid).sum(:count)
+      - @quantities.each do |quantity|
+        - sold_quantity = Item.where(:quantity_id => quantity.id).sum(:count)
         %tr
           %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
           %td= sold_quantity
