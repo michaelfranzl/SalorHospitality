@@ -75,7 +75,9 @@ class UsersController < ApplicationController
     @user = get_model
     redirect_to users_path and return unless @user
     flash[:notice] = I18n.t("users.destroy.success")
-    @user.update_attribute :hidden, true
+    @user.hidden = true
+    @user.password = "OLD #{ Time.now } #{ @user.password }"
+    @user.save
     redirect_to users_path
   end
   
