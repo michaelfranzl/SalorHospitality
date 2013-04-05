@@ -655,6 +655,8 @@ fr:
       add_option_to_sent_item: Add Options to sent Items
       statistics_statistic_category: Statistics show StatisticCategories
       statistics_sold_quantities: Statistics show sold quantities
+      settlement_statistics_sold_quantities: Show settlement statistics about sold
+        quantities
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -814,6 +816,7 @@ fr:
       device. Then, re-submit oder cancel to delete the changes.
     server_error: Oops! There was an internal server error. Please check the submission
       of the order on a different device.
+    sold_quantities: Sold Quantities
   vendors:
     index:
       edit: Modifier
