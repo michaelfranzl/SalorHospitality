@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.14) unstable; urgency=low
+
+  * test
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 05 Apr 2013 11:21:03 +0200
+
 salor-hospitality (4.1.3.13) unstable; urgency=low
 
   * Feature #1685 Statistics feature: Count of sold articles/variants
