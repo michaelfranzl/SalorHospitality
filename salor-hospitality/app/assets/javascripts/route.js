@@ -83,7 +83,9 @@ function route(target, model_id, action, options) {
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
       
-    } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
+    } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      // no offline items are allowed in the latest version. disabled.
+      
       // there are offline orders in the queue. display them instead of loading from the browser
       submit_json = $.extend(true, {}, submit_json_queue['table_' + model_id]); // deep copy
       items_json = $.extend(true, {}, items_json_queue['table_' + model_id]); // deep copy
@@ -101,20 +103,24 @@ function route(target, model_id, action, options) {
       }
       
     } else if (action == 'specific_order') {
+      unloadify_order_buttons();
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id + '?order_id=' + options.order_id,
         timeout: 15000
       }); //this repopulates items_json and renders items
+      
     } else if (action == 'from_booking') {
       submit_json.jsaction = 'send_and_go_to_table';
       send_json('booking_' + options.booking_id);
       submit_json.model.table_id = model_id;
+      
     } else {
       // regular click on a table from main view
       unloadify_order_buttons();
       get_table_show(model_id);
     }
+    
     // clean workspace up
     submit_json = {model:{}};
     submit_json.model.table_id = model_id;
