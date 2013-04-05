@@ -33,6 +33,10 @@ class UsersController < ApplicationController
     @user.vendors = [@current_vendor]
     @user.company = @current_company
     if @user.save
+      if @user.tables.empty?
+        @user.tables = @current_vendor.tables.existing.where(:enabled => true)
+        @user.save
+      end
       flash[:notice] = I18n.t("users.create.success")
       redirect_to users_path
     else
