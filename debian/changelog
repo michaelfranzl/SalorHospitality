@@ -1,3 +1,10 @@
+salor-hospitality (4.1.3.17) unstable; urgency=low
+
+  * ipad improvements
+  * statistics fix for multi-vendors, print layout improvements
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 06 Apr 2013 18:56:31 +0200
+
 salor-hospitality (4.1.3.16) unstable; urgency=low
 
   * fix in migration
