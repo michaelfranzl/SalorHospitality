@@ -6,12 +6,12 @@
 - unless @current_customer
   #admin.adminlinks
     %span.done{ :onclick => '$("#admin").hide()' }
-    - if controller.controller_name == 'orders'
+    - if controller.controller_name == 'orders' and controller.action_name == 'index'
       = link_to( t('various.restaurant'), '#', :class => 'special', :onclick => "route('tables')")
     - else
       = link_to( t('various.restaurant'), '/orders', :class => 'special')
     - if permit('manage_hotel')
-      - if controller.controller_name == 'orders'
+      - if controller.controller_name == 'orders' and controller.action_name == 'index'
         = link_to( t('various.hotel'), '#', :class => 'special', :onclick => "route('rooms');")
       - else
         = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
