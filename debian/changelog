@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.18) unstable; urgency=low
+
+  * admin links fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 06 Apr 2013 19:17:17 +0200
+
 salor-hospitality (4.1.3.17) unstable; urgency=low
 
   * ipad improvements
