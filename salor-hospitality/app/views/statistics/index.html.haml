@@ -181,7 +181,7 @@
         %th.bb{ :style => 'width:1500px' }= Article.model_name.human
         %th.bb= t :count
       - @articles.each do |article|
-        - sold_quantity = Item.where(:article_id => article.id).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:article_id => article.id, :created_at => @from..@to).sum(:count)
         %tr
           %td= article.name
           %td= sold_quantity
@@ -191,7 +191,7 @@
         %th.bb{ :style => 'width:1500px' }= Quantity.model_name.human
         %th.bb= t :count
       - @quantities.each do |quantity|
-        - sold_quantity = Item.where(:quantity_id => quantity.id).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
         %tr
           %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
           %td= sold_quantity

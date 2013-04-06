@@ -1,6 +1,12 @@
 h6, #login_logout, .metanavi, div#admin, div#buttons, div#copyright, form#search_by_nr, button, div#screenlock, #header, #draw_controls, #header, #messages, #tables, h2.current_user, div#items_notifications
   :display none
   
+body
+  :font-family Ubuntu-R, Arial
+  
+.floatright
+  :float right
+
 div.clear
   :clear both
   
@@ -77,9 +83,11 @@ div.paper_invoice
     input
       :font-size 100%
 
-  table.printed_taxes
+  table.taxes, table.payment_methods
+    :width 50%
     :font-size 55%
-    :border 0.1pt solid black
+    :border-collapse collapse
+    :border 2pt solid black
     td, th
       :border 0.1pt solid black
       :padding 3pt
@@ -101,28 +109,24 @@ div.paper_invoice
 
 div.paper_invoice table,
 table.settlements
-  :display inline
+  :border-collapse collapse
   :border 0.9pt solid black
   :margin 5pt
   :font-size 70%
   :width 100%
+  :border 2pt solid black
   td, th
-    :border 0.9pt solid black
+    :border 0.2pt solid black
     :padding 3pt
   .one
-    :width 30pt
     :text-align center
   .two
-    :width 200pt
     :text-align left
   .three
-    :width 80pt
     :text-align right
   .four
-    :width 30pt
     :text-align center
   .five
-    :width 80pt
     :text-align right
       
 
