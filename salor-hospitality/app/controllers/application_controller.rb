@@ -264,10 +264,10 @@ class ApplicationController < ActionController::Base
 
       session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
 
-      # we need these for the history observer because we don't have control at the time
-      # the activerecord callbacks run, and anyway controller instance variables wouldn't
-      # be in scope...
+      # we need these global variables for the history observer
       $User = @current_user
+      $Vendor = @current_vendor
+      $Company = @current_company
       $Request = request
       $Params = params
 

@@ -12,9 +12,10 @@ class History < ActiveRecord::Base
   include Scope
   belongs_to :user
   belongs_to :model, :polymorphic => true
-  before_create :set_fields
   belongs_to :company
   belongs_to :vendor
+  
+  before_create :set_fields
   
   def set_fields
     if $User then
@@ -25,14 +26,17 @@ class History < ActiveRecord::Base
     self.ip = $Request.ip if $Request
   end
   
-  def self.record(action,object,sen=5)
+  def self.record(action, object)
+    return if $Request.url.include?("route")
     # sensitivity is from 5 (least sensitive) to 1 (most sensitive)
     h = History.new
-    h.sensitivity = sen
-    h.model = object if object
+    #h.sensitivity = sen
+    h.model = object
+    h.vendor_id = $Vendor.id
+    h.company_id = $Company.id
     h.action_taken = action
     if object and object.respond_to? :changes then
-      h.changes_made = object.changes.to_json
+      h.changes_made = object.changes.to_json[0..200]
     end
     h.save
   end

@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
   belongs_to :role
   belongs_to :company
   has_and_belongs_to_many :vendors
-  has_many :histories
   has_many :bookings
   has_many :receipts
   has_and_belongs_to_many :tables

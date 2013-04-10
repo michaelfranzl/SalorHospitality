@@ -9,20 +9,17 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class HistoryObserver < ActiveRecord::Observer
-  #observe :order, :article, :item, :tax, :option, :quantity
+  observe :article, :quantity, :category, :tax, :table, :company, :vendor, :cost_center, :customer, :guest_type, :option, :page, :payment_method, :presentation, :role, :room, :room_price, :room_type, :season, :settlement, :statistic_category, :surcharge, :tax_amount, :vendor_printer, :user
+  
   def after_update(object)
-    sen = 1
-    if [Order,Item,Option].include? object.class then
-      send = 5
-    end
-    object.changes.keys.each do |k|
-     if [:finished, :sum, :refund_sum, :price, :active,:hidden,:percent].include? k.to_sym then
-       History.record("#{object.class.to_s.downcase}_edit",object,sen)
-       return
-     end
-    end
+    History.record("#{object.class.to_s}_updated", object)
   end
+  
+  def after_create(object)
+    History.record("#{object.class.to_s}_created", object)
+  end
+  
   def before_destroy(object)
-    History.record("#{object.class.to_s.downcase}_destroyed",object,5)
+    History.record("#{object.class.to_s}_destroyed", object)
   end
 end
