@@ -351,7 +351,7 @@ class Order < ActiveRecord::Base
     self.taxes = {}
     self.paid_at = nil
     self.save
-    self.payment_method_items.update_all :hidden => true, :hidden_by => user.id, :hidden_at => Time.now
+    self.payment_method_items.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
     used_table.update_color
     return used_table
   end

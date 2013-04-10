@@ -57,9 +57,13 @@ class Article < ActiveRecord::Base
     write_attribute :price, price
   end
 
-  def hide
-    self.update_attributes :hidden => true, :active => false
-    self.quantities.update_all :hidden => true, :active => false
+  def hide(user_id)
+    self.hidden = true
+    self.active = false
+    self.hidden_by = user_id
+    self.hidden_at = Time.now
+    self.save
+    self.quantities.update_all(:hidden => true, :active => false, :hidden_by => user_id, :hidden_at => Time.now)
   end
 
   def name_description

@@ -30,7 +30,7 @@
               - if invoice_form.tax.nil?
                 %option
               = options_from_collection_for_select(@taxes, :id, :name, (invoice_form.tax.id if invoice_form.tax))
-        - if permit('assign_cost_center')
+        - if permit('assign_cost_center') and @current_vendor.cost_centers.existing.any?
           %td
             %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
               = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
@@ -87,7 +87,7 @@
         %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  - if @current_user.role.permissions.include? ('manage_payment_methods') and invoice_form.cost_center and invoice_form.cost_center.no_payment_methods == false
+  - if @current_user.role.permissions.include?('manage_payment_methods') and (invoice_form.cost_center.nil? or invoice_form.cost_center.no_payment_methods == false)
     %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}== + #{ t('activerecord.models.payment_method.other')}
     %div{ :id => "payment_methods_container_#{oid}" }
       %table

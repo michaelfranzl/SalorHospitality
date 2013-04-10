@@ -105,7 +105,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = get_model
     redirect_to roles_path and return unless @article
-    @article.hide
+    @article.hide(@current_user)
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
   end

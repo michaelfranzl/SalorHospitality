@@ -15,4 +15,11 @@ class CostCenter < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   validates_presence_of :name
+  
+  def hide(user_id)
+    self.hidden = true
+    self.hidden_by = user_id
+    self.hidden_at = Time.now
+    self.save
+  end
 end

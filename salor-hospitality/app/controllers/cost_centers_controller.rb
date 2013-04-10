@@ -52,7 +52,7 @@ class CostCentersController < ApplicationController
   def destroy
     @cost_center = get_model
     redirect_to roles_path and return unless @cost_center
-    @cost_center.update_attribute :hidden, true
+    @cost_center.hide(@current_user)
     flash[:notice] = t('cost_centers.destroy.success')
     redirect_to cost_centers_path
   end

@@ -24,6 +24,7 @@ class History < ActiveRecord::Base
     self.params = $Params.to_json if $Params
     self.ip = $Request.ip if $Request
   end
+  
   def self.record(action,object,sen=5)
     # sensitivity is from 5 (least sensitive) to 1 (most sensitive)
     h = History.new
