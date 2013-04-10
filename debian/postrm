@@ -49,20 +49,25 @@ case "$1" in
         ucf --purge /etc/salor-hospitality/$lInstance/config.yml
         ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
         ucf --purge /etc/salor-hospitality/$lInstance/Gemfile
+        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-http
+        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-https
       done
       for lInstance in $gInstances; do
         ucf --purge /etc/salor-hospitality/$lInstance/database.yml
         ucf --purge /etc/salor-hospitality/$lInstance/config.yml
         ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
         ucf --purge /etc/salor-hospitality/$lInstance/Gemfile
+        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-http
+        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-https
       done
     fi
     
     rm -rf /usr/share/salor-hospitality
-    rm -rf /var/log/salor-hospitality/*
-    rm -rf /var/cache/salor-hospitality/*
+    rm -rf /var/log/salor-hospitality
+    #rm -rf /var/cache/salor-hospitality
     rm -rf /etc/salor-hospitality
-    rm -rf /var/lib/salor-hospitality/*
+    rm -rf /var/lib/salor-hospitality
+    rm -rf /var/tmp/salor-hospitality
   ;;
     
   remove)
