@@ -549,7 +549,6 @@ es:
     end_date: Fecha de finalización
     save: Guardar
     start_date: Fecha de inicio
-    usb_device: Dispositivo USB
     index:
       backup_database: Copia de seguridad de base de datos
       backup_logfile: archivo de registro de copia de seguridad
@@ -567,6 +566,8 @@ es:
       download_reports: XXX Save reports
     remote_support: XXX Remote Support
     download_reports: XXX Download Report
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Restaurante
   roles:
     new:
@@ -636,6 +637,7 @@ es:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
     create:
       success: Rol guardado exitosamente
     destroy:

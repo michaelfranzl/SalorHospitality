@@ -587,9 +587,10 @@ pl:
       download_reports: Zapisz raport
     save: Zapisz
     start_date: Data początkowa
-    usb_device: USB
     remote_support: Pomoc zdalna
     download_reports: Pobierz raport
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Restauracja
   customers:
     new:
@@ -671,6 +672,7 @@ pl:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen

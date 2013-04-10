@@ -576,7 +576,6 @@ it:
     end_date: End Date
     save: Save
     start_date: Start Date
-    usb_device: USB Stick
     index:
       backup_database: Backup database
       backup_logfile: Backup logfile
@@ -594,6 +593,8 @@ it:
       download_reports: XXX Save reports
     remote_support: XXX Remote Support
     download_reports: XXX Download Report
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Restaurant
   roles:
     new:
@@ -663,6 +664,7 @@ it:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
     create:
       success: Role successfully saved
     destroy:

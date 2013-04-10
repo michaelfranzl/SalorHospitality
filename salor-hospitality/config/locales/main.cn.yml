@@ -582,9 +582,10 @@ cn:
       download_reports: 储存报告
     save: 储存
     start_date: 开始日期
-    usb_device: 记忆棒
     remote_support: 远程协助
     download_reports: 下载报告
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: 餐厅
   customers:
     new:
@@ -666,6 +667,7 @@ cn:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

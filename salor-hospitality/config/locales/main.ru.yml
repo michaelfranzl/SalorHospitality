@@ -559,7 +559,6 @@ ru:
     end_date: Конечная дата
     save: Сохранить
     start_date: Начальная дата
-    usb_device: Устройство USB
     index:
       backup_database: Резервировать базу данных
       backup_logfile: Резевировать файл журнала
@@ -577,6 +576,8 @@ ru:
       download_reports: Сохранить отчеты
     remote_support: Удаленная поддержка
     download_reports: Скачать отчет
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Ресторан
   roles:
     new:
@@ -646,6 +647,7 @@ ru:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
     create:
       success: Роль успешно сохранена
     destroy:

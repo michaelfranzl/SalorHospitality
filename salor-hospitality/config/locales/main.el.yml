@@ -576,7 +576,6 @@ el:
     end_date: Μέρα Λήξης
     save: Αποθήκευση
     start_date: Μέρα Έναρξης
-    usb_device: Μνήμη USB
     index:
       backup_database: Αντίγραφο Ασφαλείας Βάσης Δεδομένων
       backup_logfile: Αντίγραφο Ασφαλείας Αρχείου Καταγραφής
@@ -594,6 +593,8 @@ el:
       download_reports: Αποθηκεύστε Αναφορές
     remote_support: Εξ’ αποστάσεως Υποστήριξη
     download_reports: Μεταφορτώστε Αναφορά
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Εστιατόριο
   roles:
     new:
@@ -663,6 +664,7 @@ el:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
     create:
       success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:

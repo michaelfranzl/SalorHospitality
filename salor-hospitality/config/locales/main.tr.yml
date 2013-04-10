@@ -547,7 +547,6 @@ tr:
       success: User successfully deleted
   reports:
     save: XXX Save
-    usb_device: XXX USB Stick
     start_date: XXX Start Date
     end_date: XXX End Date
     index:
@@ -567,6 +566,8 @@ tr:
       download_reports: XXX Save reports
     remote_support: XXX Remote Support
     download_reports: XXX Download Report
+    download: Download
+    fisc_report_dump_location: Output Location
   roles:
     new:
       take_orders: XXXTake orders
@@ -635,6 +636,7 @@ tr:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
     create:
       success: Role successfully saved
     destroy:

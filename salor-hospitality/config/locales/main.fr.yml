@@ -581,9 +581,10 @@ fr:
       download_reports: XXX Save reports
     save: Enregistrer
     start_date: Date de début
-    usb_device: Clé USB
     remote_support: XXX Remote Support
     download_reports: XXX Download Report
+    download: Download
+    fisc_report_dump_location: Output Location
   restaurant: Restaurant
   roles:
     create:
@@ -657,6 +658,7 @@ fr:
       statistics_sold_quantities: Statistics show sold quantities
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
+      interim_receipt: Interim Receipt
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
