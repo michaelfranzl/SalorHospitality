@@ -27,7 +27,7 @@ class History < ActiveRecord::Base
   end
   
   def self.record(action, object)
-    return if $Request.url.include?("route")
+    return if $Request and $Request.url.include?("route")
     # sensitivity is from 5 (least sensitive) to 1 (most sensitive)
     h = History.new
     #h.sensitivity = sen

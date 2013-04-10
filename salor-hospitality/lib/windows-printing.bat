@@ -1,1 +1,0 @@
-cscript windows-printing.vbs
