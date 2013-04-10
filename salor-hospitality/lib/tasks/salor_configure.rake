@@ -9,9 +9,10 @@
 desc 'Configures this instance'
 # Call like: rake salor_configure['saas']
 task :salor_configure, [:mode] => :environment do |t, args|
-  Vendor.all.each do |v|
+  Vendor.where(:hidden => nil).each do |v|
     puts "Updating cache of Vendor #{v.id}"
     v.update_cache
+    v.package_upgrade
   end
   
   subdomain = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}.sh" : nil

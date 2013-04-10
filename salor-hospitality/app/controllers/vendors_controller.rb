@@ -157,7 +157,11 @@ class VendorsController < ApplicationController
   end
   
   def online_status
-    #sleep 2
     render :text => 'online'
+  end
+  
+  def generic_print
+    @current_vendor.generic_print(params[:text])
+    render :nothing => true
   end
 end

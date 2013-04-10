@@ -322,4 +322,13 @@ class Vendor < ActiveRecord::Base
     
     return zip_outfile
   end
+  
+  def package_upgrade
+    h = self.histories.new
+    h.company_id = h.company_id
+    h.action_taken = "package_upgrade"
+    new_version = `zcat /usr/share/doc/salor-hospitality/changelog.gz | head -1 | perl -ne '$_=~ /.*\((.*)\).*/; print $1;'`
+    h.changes_made = new_version
+    h.save
+  end
 end
