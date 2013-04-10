@@ -35,7 +35,7 @@ function update_order_from_invoice_form(data, button) {
     }
   }
   
-  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && ( data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax') ) {
+  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) &&  data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax' && data.interim == false) {
     if ($('div.invoice:visible').length == 1) {
       route('tables');
       invoice_update = false;

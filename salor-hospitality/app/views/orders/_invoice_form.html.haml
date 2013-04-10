@@ -9,12 +9,17 @@
   
 %div.invoice{ :id => "model_#{oid}" }
   - @current_vendor.vendor_printers.existing.each do |p|
-    %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id}}, this);", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
+    %a{:onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_print',printer:#{p.id},interim:interim_receipt_enabled}, this);", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t('.print_and_finish') } #{ p.name }"}
 
   - if not invoice_form.finished
-    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print'}, this);", :class => 'iconbutton finish_button', :title => t('.just_finish'), :style => branding_override_style(:buttons, :finish)}
+    %a{ :onclick => "update_order_from_invoice_form({id:#{oid},jsaction:'pay_and_no_print',interim:interim_receipt_enabled}, this);", :class => 'iconbutton finish_button', :title => t('.just_finish'), :style => branding_override_style(:buttons, :finish)}
 
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
+    
+    - if permit('interim_receipt')
+      %a{ :onclick => "toggle_interim_receipt_printing(this)", :class => 'iconbutton invoice_button', :title => t(:edit) }
+    
+
 
     %table
       %tr

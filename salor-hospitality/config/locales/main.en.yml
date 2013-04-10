@@ -608,6 +608,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      interim_receipt: Interim Receipt
       allow_exit: Allow Exit
       reactivate_orders: Reactivate orders
       move_order_from_invoice_form: Move order to table from invoice form

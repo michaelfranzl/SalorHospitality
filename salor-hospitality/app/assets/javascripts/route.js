@@ -79,7 +79,6 @@ function route(target, model_id, action, options) {
       submit_json.target = 'table_do_invoice_print';
       submit_json.model.note = $('#order_note').val();
       send_json('table_' + model_id);
-      // stay on table
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
       
@@ -130,6 +129,7 @@ function route(target, model_id, action, options) {
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
     invoice_update = true;
+    interim_receipt_enabled = false;
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();

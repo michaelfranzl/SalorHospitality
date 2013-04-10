@@ -394,7 +394,11 @@ class Order < ActiveRecord::Base
     if what.include? 'interim_receipt'
       # this is currently not implemented and never called.
       if vendor_printer
-        print_engine.print(vendor_printer.id, self.escpos_interim_receipt)
+        contents = self.escpos_interim_receipt
+        bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
+        bytes_sent = content_sent.length
+        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        self.update_attribute :printed_interim, true
       end
     end
     print_engine.close
@@ -663,7 +667,46 @@ class Order < ActiveRecord::Base
   end
   
   def escpos_interim_receipt
-    return "To be implemented in the future."
+    vendor = self.vendor
+    
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
+
+    header2 = "\n\n" +
+    "\e!\x00" +  # Font A
+    "                 #{I18n.t('activerecord.models.article.one')}   #{I18n.t('various.unit_price_abbreviation')}   #{I18n.t('various.quantity_abbreviation')}    #{I18n.t('various.total_price_abbreviation')}\n" +
+    "\xc4" * 42 + "\n"
+
+    list_of_items = ''
+    self.items.existing.positioned.each do |item|
+      next if item.count == 0
+      list_of_options = ''
+      item.option_items.each do |oi|
+        next if oi.price == 0
+        list_of_options += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
+      end
+
+      label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
+
+      item_sum = item.refunded ? 0 : item.price * item.count
+      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
+      list_of_items += list_of_options
+    end
+
+    #sum_format =
+    #"\e!\x18" + # double tall, bold
+    #"\ea\x02"   # align right
+
+    #sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
+
+    output_text =
+        "\e@" +     # initialize
+        header2 +
+        list_of_items +
+        #sum_format +
+        #sum +
+        "\n\n\n\n\n\n\n\n\n\n\n" +
+        "\x1DV\x00\x0C" # paper cut
+    return output_text
   end
 
   def items_to_json

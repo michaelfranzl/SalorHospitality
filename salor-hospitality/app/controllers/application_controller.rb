@@ -91,11 +91,16 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_print'
             get_order
-            Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
-            @order.pay
-            @order.reload
-            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+            if params[:interim] == 'true'
+              @order.print(['interim_receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+              render_invoice_form(@order.table)
+            else
+              Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
+              @order.pay
+              @order.reload
+              @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+              render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+            end
           #----------jsaction----------
           when 'pay_and_no_print'
             get_order
@@ -137,6 +142,9 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
+                when 'table_interim_receipt_print'
+                  @order.print(['interim_receipt'], @current_vendor.vendor_printers.existing.first)
+                  render :nothing => true
                 when 'table_request_send'
                   @table = @order.table
                   render 'orders/render_order_form'

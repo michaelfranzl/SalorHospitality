@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410142035) do
+ActiveRecord::Schema.define(:version => 20130410155942) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -506,19 +506,19 @@ ActiveRecord::Schema.define(:version => 20130410142035) do
   add_index "options", ["vendor_id"], :name => "index_options_on_vendor_id"
 
   create_table "orders", :force => true do |t|
-    t.boolean  "finished",                        :default => false
+    t.boolean  "finished",                         :default => false
     t.integer  "table_id"
     t.integer  "user_id"
     t.integer  "settlement_id"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
-    t.float    "sum",                             :default => 0.0
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+    t.float    "sum",                              :default => 0.0
     t.integer  "order_id"
     t.integer  "cost_center_id"
     t.string   "printed_from"
     t.integer  "nr"
     t.integer  "tax_id"
-    t.float    "refund_sum",                      :default => 0.0
+    t.float    "refund_sum",                       :default => 0.0
     t.integer  "company_id"
     t.string   "note"
     t.integer  "customer_id"
@@ -528,16 +528,17 @@ ActiveRecord::Schema.define(:version => 20130410142035) do
     t.float    "tax_sum"
     t.integer  "hidden_by"
     t.boolean  "printed"
-    t.boolean  "paid",                            :default => false
+    t.boolean  "paid",                             :default => false
     t.float    "change_given"
     t.integer  "booking_id"
-    t.string   "taxes",          :limit => 10000, :default => "--- {}\n"
+    t.string   "taxes",           :limit => 10000, :default => "--- {}\n"
     t.datetime "finished_at"
     t.datetime "paid_at"
     t.boolean  "reactivated"
     t.integer  "reactivated_by"
     t.datetime "reactivated_at"
     t.datetime "hidden_at"
+    t.boolean  "printed_interim"
   end
 
   add_index "orders", ["booking_id"], :name => "index_orders_on_booking_id"

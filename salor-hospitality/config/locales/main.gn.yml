@@ -612,6 +612,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      interim_receipt: Zwischenabrechnung
       allow_exit: Browser-Fenster schließen
       reactivate_orders: Bestellungen reaktivieren
       move_order_from_invoice_form: Bestellung von Rechnungs-Ansicht verschieben
