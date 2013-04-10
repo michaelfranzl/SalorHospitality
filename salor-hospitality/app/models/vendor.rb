@@ -328,9 +328,13 @@ class Vendor < ActiveRecord::Base
     puts "Currently installed version is #{lines.first}"
     
     last_upgrade_history = self.histories.where(:action_taken => "package_upgrade").last
+    
     if last_upgrade_history
       last_version = last_upgrade_history.changes_made
       puts "Last version was #{ last_version }"
+      
+      match = /\((.*?)\)/.match(lines[0])
+      version = match[1] if match
 
       difflines = []
       lines.each do |l|
@@ -338,20 +342,31 @@ class Vendor < ActiveRecord::Base
         difflines << l
       end
       
-      puts "Printing"
-      output = "\e!\x01" + difflines.join("\n")
-      vendor_printers = self.vendor.vendor_printers.existing
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
-      print_engine.open
-      print_engine.print(vendor_printers.first.id, output)
-      print_engine.close
+      vendor_printers = self.vendor_printers.existing
+      if vendor_printers.any?
+        puts "Printing system change report in accordance to financial regulations"
+        output = "\e@" +      # initialize printer
+            "\e!\x38" +       # big font
+            "UPDATE\n" +
+            I18n.l(Time.now, :format => :datetime_iso2) +
+            "\nVERSION #{ version }\n\n" +
+            "\e!\x01" +            # smallest font
+            difflines.join("\n") + # changelog output
+            "\n\n\n\n\n" +         # space
+            "\x1DV\x00\x0C"        # paper cut
+        print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
+        print_engine.open
+        print_engine.print(vendor_printers.first.id, output)
+        print_engine.close
+        return output
+      end
     end
     
     h = self.histories.new
     h.company_id = h.company_id
     h.action_taken = "package_upgrade"
-    h.changes_made = versionstring
+    h.changes_made = lines.first
     h.save
-    puts "Created History for upgrade"
+    puts "Created History record for package upgrade"
   end
 end

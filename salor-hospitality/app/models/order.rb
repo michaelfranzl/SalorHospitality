@@ -598,7 +598,7 @@ class Order < ActiveRecord::Base
     tax_format =
         "\n\n" +
         "\ea\x01" +  # align center
-        "\e!\x01" # Font A
+        "\e!\x01" # Font B
 
     tax_header = "         #{I18n.t(:net)}  #{I18n.t('various.tax')}   #{I18n.t(:gross)}\n"
 

@@ -13,6 +13,35 @@ class HistoryObserver < ActiveRecord::Observer
   
   def after_update(object)
     History.record("#{object.class.to_s}_updated", object)
+    
+    return unless $Vendor.history_print == true
+    
+    vendor_printers = $Vendor.vendor_printers.existing
+    changes = object.changes
+    keys = changes.keys
+    keys.delete('updated_at')
+    keys.delete('resources_cache')
+    keys.delete('left')
+    keys.delete('top')
+    keys.delete('left_mobile')
+    keys.delete('top_mobile')
+    if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table].include?(object.class)
+      output = "\e@" +
+          "\e!\x38" +       # big font
+          "UPDATE #{ object.class.to_s } ID #{ object.id }\n" +
+          I18n.l(Time.now, :format => :datetime_iso2) +
+          "\e!\x00" +        # normal font
+          "\n\n"
+      keys.each do |k|
+        output += "#{ k }: #{ changes[k] }\n"
+      end
+      output += "\n\n\n\n\n\n\n" +         # space
+            "\x1DV\x00\x0C"            # paper cut
+      print_engine = Escper::Printer.new($Vendor.company.mode, vendor_printers, $Vendor.company.identifier)
+      print_engine.open
+      print_engine.print(vendor_printers.first.id, output)
+      print_engine.close
+    end
   end
   
   def after_create(object)

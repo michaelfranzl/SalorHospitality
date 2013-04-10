@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410155942) do
+ActiveRecord::Schema.define(:version => 20130410203408) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1122,6 +1122,7 @@ ActiveRecord::Schema.define(:version => 20130410155942) do
     t.string   "technician_email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.boolean  "history_print"
   end
 
 end
