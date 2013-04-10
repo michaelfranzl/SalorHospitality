@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405193335) do
+ActiveRecord::Schema.define(:version => 20130410090658) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -433,6 +433,7 @@ ActiveRecord::Schema.define(:version => 20130405193335) do
     t.integer  "confirmation_count"
     t.integer  "statistic_category_id"
     t.datetime "hidden_at"
+    t.integer  "min_count"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"

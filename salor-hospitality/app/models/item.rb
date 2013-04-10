@@ -189,6 +189,7 @@ class Item < ActiveRecord::Base
     c = count.to_i
     write_attribute(:count, c)
     write_attribute(:max_count, c) if c > self.max_count
+    write_attribute(:min_count, c) if self.min_count.nil? or c < self.min_count
   end
 
   def options_price

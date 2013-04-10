@@ -213,10 +213,10 @@ class Order < ActiveRecord::Base
     self.hidden_by = by_user_id
     self.save
     self.unlink
-    self.option_items.update_all :hidden => true, :hidden_by => by_user_id
-    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
-    self.items.update_all :hidden => true, :hidden_by => by_user_id
-    self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.option_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
   end
 
   def unlink
@@ -351,7 +351,7 @@ class Order < ActiveRecord::Base
     self.taxes = {}
     self.paid_at = nil
     self.save
-    self.payment_method_items.update_all :hidden => true, :hidden_by => user.id
+    self.payment_method_items.update_all :hidden => true, :hidden_by => user.id, :hidden_at => Time.now
     used_table.update_color
     return used_table
   end
