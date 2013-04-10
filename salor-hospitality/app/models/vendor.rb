@@ -324,11 +324,34 @@ class Vendor < ActiveRecord::Base
   end
   
   def package_upgrade
+    lines = `zcat /usr/share/doc/salor-hospitality/changelog.gz`.split("\n")
+    puts "Currently installed version is #{lines.first}"
+    
+    last_upgrade_history = self.histories.where(:action_taken => "package_upgrade").last
+    if last_upgrade_history
+      last_version = last_upgrade_history.changes_made
+      puts "Last version was #{ last_version }"
+
+      difflines = []
+      lines.each do |l|
+        break if l == last_version
+        difflines << l
+      end
+      
+      puts "Printing"
+      output = "\e!\x01" + difflines.join("\n")
+      vendor_printers = self.vendor.vendor_printers.existing
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
+      print_engine.open
+      print_engine.print(vendor_printers.first.id, output)
+      print_engine.close
+    end
+    
     h = self.histories.new
     h.company_id = h.company_id
     h.action_taken = "package_upgrade"
-    new_version = `zcat /usr/share/doc/salor-hospitality/changelog.gz | head -1 | perl -ne '$_=~ /.*\((.*)\).*/; print $1;'`
-    h.changes_made = new_version
+    h.changes_made = versionstring
     h.save
+    puts "Created History for upgrade"
   end
 end
