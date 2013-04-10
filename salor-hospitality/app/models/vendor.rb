@@ -50,6 +50,7 @@ class Vendor < ActiveRecord::Base
   has_many :option_items
   has_many :receipts
   has_many :cameras
+  has_many :histories
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
@@ -285,4 +286,40 @@ class Vendor < ActiveRecord::Base
     return vendor_printers
   end
 
+  def fisc_dump(from, to, location)
+    tmppath = SalorHospitality::Application.config.paths['tmp'].first
+    
+    label = "salor-hospitality-fiscal-backup-#{ I18n.l(Time.now, :format => :datetime_iso2) }"
+    dumppath = File.join(tmppath, label)
+    FileUtils.mkdir_p(dumppath)
+      
+    # DUMP DATABASE
+    dbconfig = YAML::load(File.open(SalorHospitality::Application.config.paths['config/database'].first))
+    sqldump_in_tmp = File.join(tmppath, 'database.sql')
+    mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
+    username = dbconfig[mode]['username']
+    password = dbconfig[mode]['password']
+    database = dbconfig[mode]['database']
+    `mysqldump -u #{username} -p#{password} #{database} > #{dumppath}/database.sql`
+
+    
+    # DUMP LOGFILE
+    logfile = SalorHospitality::Application.config.paths['log'].first
+    logfile_basename = File.basename(logfile)
+    logfile_in_tmp = File.join(tmppath, logfile_basename)
+    FileUtils.cp(logfile, dumppath)
+    
+
+    # GENERATE CSV FILES
+    Report.dump_all(from, to, dumppath)
+    
+    # ZIP IT UP
+    zip_outfile = "#{ location }/#{ label }.zip"
+    Dir.chdir(dumppath)
+    `zip -r #{ zip_outfile } .`
+    
+    FileUtils.rm_r dumppath
+    
+    return zip_outfile
+  end
 end

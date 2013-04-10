@@ -583,8 +583,9 @@ en:
       remote_support: Remote Support
       download_reports: Save reports
     save: Save
+    download: Download
     start_date: Start Date
-    usb_device: USB Stick
+    fisc_report_dump_location: Output Location
     remote_support: Remote Support
     download_reports: Download Report
   restaurant: Restaurant

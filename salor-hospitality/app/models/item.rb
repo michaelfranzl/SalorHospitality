@@ -57,7 +57,7 @@ class Item < ActiveRecord::Base
       self.item = separated_item
     end
     self.count -= 1
-    self.hide(0) if self.count == 0
+    self.hide(-6) if self.count == 0
 
     separated_item.count += 1
     separated_item.save

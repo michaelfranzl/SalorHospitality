@@ -118,8 +118,6 @@ SalorHospitality::Application.routes.draw do
 
   resources :reports do
     collection do
-      get :backup_database
-      get :backup_logfile
       get :update_connection_status
       get :connect_remote_service
     end

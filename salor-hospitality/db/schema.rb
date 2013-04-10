@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410090658) do
+ActiveRecord::Schema.define(:version => 20130410142035) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -876,6 +876,8 @@ ActiveRecord::Schema.define(:version => 20130410090658) do
     t.float    "tax_sum"
     t.integer  "booking_id"
     t.datetime "hidden_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "surcharge_items", ["booking_id"], :name => "index_surcharge_items_on_booking_id"

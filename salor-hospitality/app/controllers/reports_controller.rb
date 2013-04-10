@@ -17,29 +17,21 @@ class ReportsController < ApplicationController
   end
   
   def index
+    @locations = Dir['/media/*']
+    @locations << Dir.home
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : DateTime.now.beginning_of_day
     @to = @to ? @to.end_of_day : @from.end_of_day
-    if params[:usb_device] and not params[:usb_device].empty? and File.exists? params[:usb_device] then
-      @report = Report.new
-      @report.dump_all(@from,@to,params[:usb_device])
+    
+    zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
+    
+    if params.has_key?(:save)
+      redirect_to reports_path
       flash[:notice] = "Complete"
+    elsif params.has_key?(:download)
+      send_file zip_outfile
     end
-  end
-
-  def backup_database
-    dbconfig = YAML::load(File.open(SalorHospitality::Application.config.paths['config/database'].first))
-    mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
-    username = dbconfig[mode]['username']
-    password = dbconfig[mode]['password']
-    database = dbconfig[mode]['database']
-    `mysqldump -u #{username} -p#{password} #{database} > tmp/backup.sql`
-    send_file 'tmp/backup.sql', :filename => "salor-hospitality-backup-#{ l Time.now, :format => :datetime_iso2 }.sql"
-  end
-
-  def backup_logfile
-    redirect_to reports_path and return if not File.exists? File.join(Rails.root, 'log', 'production.log')
-    send_file File.join(Rails.root, 'log', 'production.log'), :filename => "billgastro-logfile-#{ l Time.now, :format => :datetime_iso2 }.log"
+    
   end
   
   def update_connection_status

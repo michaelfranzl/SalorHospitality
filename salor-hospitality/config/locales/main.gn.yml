@@ -588,8 +588,9 @@ gn:
       remote_support: Fernwartung
       download_reports: Berichte speichern
     save: Speichern
+    download: Download
     start_date: Von
-    usb_device: Usb Stick
+    fisc_report_dump_location: Speicherort
     remote_support: Fernwartung
     download_reports: Berichte herunterladen
   restaurant: Restaurant
