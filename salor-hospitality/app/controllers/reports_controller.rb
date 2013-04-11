@@ -23,12 +23,12 @@ class ReportsController < ApplicationController
     @from = @from ? @from.beginning_of_day : DateTime.now.beginning_of_day
     @to = @to ? @to.end_of_day : @from.end_of_day
     
-    zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
-    
     if params.has_key?(:save)
+      zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
       redirect_to reports_path
       flash[:notice] = "Complete"
     elsif params.has_key?(:download)
+      zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
       send_file zip_outfile
     end
     
