@@ -822,6 +822,12 @@ cn:
     server_not_responded: 服务器无反应。请以不同装置检查订单的递交。之后，重新递交订单以删除改变。
     server_error: 内部服务器错误。请以不同装置检查订单的递交
     sold_quantities: Sold Quantities
+    exception_page:
+      assistance_text: Please click on the Button "HOME" and try again. If you see
+        the same error twice, please contact our Customer Support.
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
+      oops_an_error_occurred: Oops! An Error occurred
   vendors:
     index:
       edit: 编辑

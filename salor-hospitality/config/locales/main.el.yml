@@ -844,6 +844,12 @@ el:
     server_error: Oops! There was an internal server error. Please check the submission
       of the order on a different device.
     sold_quantities: Sold Quantities
+    exception_page:
+      assistance_text: Please click on the Button "HOME" and try again. If you see
+        the same error twice, please contact our Customer Support.
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
+      oops_an_error_occurred: Oops! An Error occurred
   customers:
     new:
       edit_customer: Επεξεργασία Πελάτη
