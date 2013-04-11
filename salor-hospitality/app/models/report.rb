@@ -137,7 +137,7 @@ class Report
     receipts = $Vendor.receipts.where(:created_at => from..to)
     File.open("#{device}/SalorHospitalityReceipts#{tfrom}-#{tto}.txt","w:ASCII-8BIT") do |f|
       receipts.each do |r|
-        string = "\n\nReceipt id:%i, user_id:%i, vendor_printer_id:%i, order_id:%i, order_nr:%i, created_at:%s\n\n" % [r.id, r.user_id, r.vendor_printer_id, r.order_id, r.order_nr, r.created_at]
+        string = "\n\nReceipt id:%i, user_id:%i, vendor_printer_id:%i, order_id:%i, order_nr:%i, created_at:%s\n\n" % [r.id, r.user_id.to_i, r.vendor_printer_id.to_i, r.order_id.to_i, r.order_nr.to_i, r.created_at]
         f.write string
         f.write r.content.gsub("\e@\e!8\n", "").gsub("\x1DV\x00\ep\x00\x99\x99\f".force_encoding('ASCII-8BIT'), "")
       end
