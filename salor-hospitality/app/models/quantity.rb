@@ -40,7 +40,6 @@ class Quantity < ActiveRecord::Base
   end
   
   def set_article_name
-    self.article_name = self.article.name
-    self.save
+    write_attribute(:article_name, self.article.name)
   end
 end

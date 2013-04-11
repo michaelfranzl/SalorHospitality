@@ -14,7 +14,7 @@ class HistoryObserver < ActiveRecord::Observer
   def after_update(object)
     History.record("#{object.class.to_s}_updated", object)
     
-    return unless $Vendor.history_print == true
+    return unless $Vendor and $Vendor.respond_to?(:history_print) and  $Vendor.history_print == true
     # Printing changes, in accordance to fiscal regulations
     vendor_printers = $Vendor.vendor_printers.existing
     changes = object.changes
