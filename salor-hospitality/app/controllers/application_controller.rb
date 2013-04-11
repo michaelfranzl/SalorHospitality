@@ -272,7 +272,7 @@ class ApplicationController < ActionController::Base
 
       session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
 
-      # we need these global variables for the history observer
+      # we need these global variables for the history observer model
       $User = @current_user
       $Vendor = @current_vendor
       $Company = @current_company

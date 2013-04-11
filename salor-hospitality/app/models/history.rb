@@ -18,19 +18,15 @@ class History < ActiveRecord::Base
   before_create :set_fields
   
   def set_fields
-    if $User then
-      self.user = $User
-    end
+    self.user = $User
     self.url = $Request.url if $Request
     self.params = $Params.to_json if $Params
     self.ip = $Request.ip if $Request
   end
   
   def self.record(action, object)
-    return if $Request and $Request.url.include?("route")
-    # sensitivity is from 5 (least sensitive) to 1 (most sensitive)
+    return if $User.nil? or $Vendor.nil? or $Company.nil? or ($Request and $Request.url.include?("route")) # Do not record anything when nobody is logged in
     h = History.new
-    #h.sensitivity = sen
     h.model = object
     h.vendor_id = $Vendor.id
     h.company_id = $Company.id

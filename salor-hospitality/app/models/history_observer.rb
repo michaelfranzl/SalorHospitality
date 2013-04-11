@@ -15,7 +15,7 @@ class HistoryObserver < ActiveRecord::Observer
     History.record("#{object.class.to_s}_updated", object)
     
     return unless $Vendor.history_print == true
-    
+    # Printing changes, in accordance to fiscal regulations
     vendor_printers = $Vendor.vendor_printers.existing
     changes = object.changes
     keys = changes.keys
@@ -25,6 +25,11 @@ class HistoryObserver < ActiveRecord::Observer
     keys.delete('top')
     keys.delete('left_mobile')
     keys.delete('top_mobile')
+    keys.delete('largest_order_number')
+    keys.delete('active_user_id')
+    keys.delete('request_finish')
+    keys.delete('request_waiter')
+    keys.delete('confirmations_pending')
     if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table].include?(object.class)
       output = "\e@" +
           "\e!\x38" +       # big font

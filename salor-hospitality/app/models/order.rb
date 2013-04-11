@@ -174,7 +174,13 @@ class Order < ActiveRecord::Base
       else
         confirmation_count = i.confirmation_count # do nothing
       end
-      i.update_attributes :user_id => self.user_id, :vendor_id => self.vendor_id, :company_id => self.company_id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => self.user_id, :confirmation_count => confirmation_count
+      i.user_id = self.user_id
+      i.vendor_id = self.vendor_id
+      i.company_id = self.company_id
+      i.preparation_user_id = i.category.preparation_user_id
+      i.delivery_user_id = self.user_id
+      i.confirmation_count = confirmation_count
+      i.save
     end
   end
 
