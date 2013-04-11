@@ -30,6 +30,10 @@ class HistoryObserver < ActiveRecord::Observer
     keys.delete('request_finish')
     keys.delete('request_waiter')
     keys.delete('confirmations_pending')
+    keys.delete('current_ip')
+    keys.delete('last_active_at')
+    keys.delete('last_login_at')
+    keys.delete('last_logout_at')
     if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table].include?(object.class)
       output = "\e@" +
           "\e!\x38" +       # big font

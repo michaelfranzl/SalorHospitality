@@ -786,6 +786,11 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    exception_page:
+      assistance_text: Bitte klicken Sie auf den Button "HOME" und versuchen Sie es nochmals. Falls der Fehler erneut auftritt, rufen Sie den Kundensupport. Wir sind umgehend um Sie bemüht.
+      exception_description: 'Fehlerbeschreibung:'
+      exception_in_files: 'Der Fehler trat in diesen Dateien auf:'
+      oops_an_error_occurred: Oops! Es ist leider ein Fehler aufgetreten
     sold_quantities: Verkaufsmengen
     attempt: Versuch
     no_connection: Keine Verbindung

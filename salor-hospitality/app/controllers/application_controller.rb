@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
   
+  unless SalorHospitality::Application.config.consider_all_requests_local
+    rescue_from Exception, :with => :render_error
+  end 
+  
   def route
     case params[:currentview]
       # this action is for simple writing of any model to the server and getting a Model object back. 
@@ -375,5 +379,20 @@ class ApplicationController < ActionController::Base
       
       return previous_model, next_model
     end
+    
+  protected
+
+  def render_error(exception)
+    #log_error(exception)
+    @exception = exception
+    if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true
+      if notifier = Rails.application.config.middleware.detect { |x| x.klass == ExceptionNotifier }
+        env['exception_notifier.options'] = notifier.args.first || {}                   
+        ExceptionNotifier::Notifier.exception_notification(env, exception).deliver
+        env['exception_notifier.delivered'] = true
+      end
+    end
+    render :template => '/errors/error', :layout => 'login'
+  end
     
 end
