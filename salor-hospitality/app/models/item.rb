@@ -245,9 +245,28 @@ class Item < ActiveRecord::Base
   end
   
   def self.split_items(items, order)
+    first_item_id = items.first[0]
+    first_item = Item.find_by_id(first_item_id)
+    
+    parent_order = first_item.order
+    split_order = parent_order.order
+    
+    # the following should never happen, but since moving items to an already finished order is a very touchy issue, we unlink agian
+    if split_order and split_order.finished
+      split_order.unlink
+      split_order = nil
+    end
+    
+    if split_order.nil?
+      split_order = Order.new(parent_order.attributes)
+      split_order.update_attribute :nr, first_item.vendor.get_unique_model_number('order')
+      parent_order.order = split_order
+      split_order.order = parent_order
+    end
+    
     items.each do |k,v|
       item = Item.find_by_id(k)
-      item.split(v['split_count'].to_i) unless v['split_count'].to_i.zero?
+      item.split(v['split_count'].to_i, parent_order, split_order) unless v['split_count'].to_i.zero?
     end
     
     partner_order = order.order # it seems that at this point, partner_order is still unsaved
@@ -268,16 +287,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def split(count=1)
-    #puts "called split for item #{self.id} with count #{count}"
-    parent_order = self.order
-    split_order = parent_order.order
-    if split_order.nil?
-      split_order = Order.new(parent_order.attributes)
-      split_order.update_attribute :nr, self.vendor.get_unique_model_number('order')
-      parent_order.order = split_order
-      split_order.order = parent_order
-    end
+  def split(count=1, parent_order, split_order)
     partner_item = self.item
     if partner_item.nil?
       partner_item = Item.new(self.attributes) # attention: at this point, partner_item will still have the id of self. below, we call partner_item.save, and only at this point it gets the new id.

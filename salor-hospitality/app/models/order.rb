@@ -290,13 +290,13 @@ class Order < ActiveRecord::Base
   end
 
   def finish(user=nil)
+    self.update_attribute :finished, true # this happens intentionally as soon as possible, since it will be checked in the Item.split_items function.
     self.finished_at = Time.now
     self.user = user if user
-    self.finished = true
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
-    self.set_nr
+    self.set_nr # in theory not neccessary, but just to make sure
     self.table.update_color
     self.items.existing.each do |i|
       i.option_items.existing.each do |oi|
