@@ -32,7 +32,8 @@
               %br
               = image_form.file_field :file_data, :size => '5'
 
-          %p= link_to image_tag('button_small_delete.png', :title => Option.human_attribute_name(:hidden), :alt => Option.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;"), "/options/#{option_form.object.id}", :method => :delete, :confirm => t(:are_you_sure)
+          - unless @option.new_record?
+            %p= link_to image_tag('button_small_delete.png', :title => Option.human_attribute_name(:hidden), :alt => Option.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;"), "/options/#{option_form.object.id}", :method => :delete, :confirm => t(:are_you_sure)
 
         %td
           %input{ :id => "select_all_options", :type => 'checkbox', :onchange => "toggle_all_option_checkboxes(this)"  }

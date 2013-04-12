@@ -474,6 +474,8 @@ en:
   no_printing: No printing
   not_found: Not found
   options:
+    index:
+      no_categories_defined: There are no categories defined. You have to create at least one category in order to create an Option.
     create:
       success: Option successfully saved
     destroy:

@@ -479,6 +479,8 @@ gn:
   no_printing: Kein Druck
   not_found: Nicht gefunden
   options:
+    index:
+      no_categories_defined: Es wurden noch keine Kategorien angelegt. Sie müssen zumindest eine Kategorie anlegen, um eine Option erzeugen zu können.
     create:
       success: Option erfolgreich gespeichert
     destroy:

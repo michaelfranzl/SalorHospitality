@@ -19,6 +19,7 @@ class Option < ActiveRecord::Base
   has_one :option_item
 
   validates_presence_of :name
+  validates_presence_of :categories
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
