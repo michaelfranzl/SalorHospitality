@@ -1,3 +1,13 @@
+salor-hospitality (4.1.3.28) unstable; urgency=low
+
+  * Feature #1187
+  * Bug #1695
+  * Feature #1696
+  * Feature #1697
+  * Feature #1698
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 12 Apr 2013 15:48:37 +0200
+
 salor-hospitality (4.1.3.27) unstable; urgency=low
 
   * installation fixes

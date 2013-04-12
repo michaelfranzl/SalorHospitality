@@ -481,7 +481,8 @@ gn:
   not_found: Nicht gefunden
   options:
     index:
-      no_categories_defined: Es wurden noch keine Kategorien angelegt. Sie müssen zumindest eine Kategorie anlegen, um eine Option erzeugen zu können.
+      no_categories_defined: Es wurden noch keine Kategorien angelegt. Sie müssen
+        zumindest eine Kategorie anlegen, um eine Option erzeugen zu können.
     create:
       success: Option erfolgreich gespeichert
     destroy:
@@ -789,7 +790,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
-    switched_to_vendor: "Betrieb '%{vendorname}'"
+    switched_to_vendor: Betrieb '%{vendorname}'
     cancel: Abbrechen
     exception_page:
       assistance_text: Bitte klicken Sie auf den Button "HOME" und versuchen Sie es
@@ -828,7 +829,6 @@ gn:
       Geduld.
     mobile_view: Ansicht Mobilgeräte
     workstation_view: Ansicht Basisstation
-    cancel: Abbrechen
     common_surcharges: Aufschläge
     home: Start
     pay: Abschließen

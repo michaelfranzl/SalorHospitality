@@ -466,6 +466,7 @@ it:
   layouts:
     application:
       submit_scribe: OK
+      admin_menu_hint: ☚ Click here to open the main menu
     header:
       configuration: Configuration
   logout: log out %{who}
@@ -489,6 +490,9 @@ it:
       success: Option successfully saved
     destroy:
       success: Option successfully deleted
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
   orange: Orange
   orders:
     functions_header_index:
@@ -847,6 +851,7 @@ it:
       exception_description: ! 'Error Description:'
       exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
+    switched_to_vendor: Vendor '%{vendorname}'
   customers:
     new:
       edit_customer: Edit Customer

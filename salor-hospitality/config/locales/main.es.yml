@@ -463,6 +463,9 @@ es:
       success: Opción exitosamente guardada
     destroy:
       success: Opción exitosamente eliminada
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
   orange: Naranja
   orders:
     functions_header_index:
@@ -771,6 +774,7 @@ es:
       exception_description: ! 'Error Description:'
       exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
+    switched_to_vendor: Vendor '%{vendorname}'
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos
@@ -789,6 +793,7 @@ es:
   layouts:
     application:
       submit_scribe: OK
+      admin_menu_hint: ☚ Click here to open the main menu
     header:
       configuration: Configuration
   messages:

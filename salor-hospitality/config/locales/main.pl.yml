@@ -460,6 +460,7 @@ pl:
   layouts:
     application:
       submit_scribe: OK
+      admin_menu_hint: ☚ Click here to open the main menu
     header:
       configuration: Configuration
   logout: Wyloguj %{who}
@@ -483,6 +484,9 @@ pl:
       hidden: Usuń
       new_option: Dodawanie dodatku menu
       select_all: Zaznacz wszystkie
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
   orange: Pomarańczowy
   orders:
     invoice_item_list:
@@ -846,6 +850,7 @@ pl:
       exception_description: ! 'Error Description:'
       exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
+    switched_to_vendor: Vendor '%{vendorname}'
   vendors:
     index:
       edit: Edytuj

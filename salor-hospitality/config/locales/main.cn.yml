@@ -460,6 +460,7 @@ cn:
   layouts:
     application:
       submit_scribe: 好
+      admin_menu_hint: ☚ Click here to open the main menu
     header:
       configuration: Configuration
   logout: 注销 %{who}
@@ -482,6 +483,9 @@ cn:
       hidden: 删除
       new_option: 新选项
       select_all: 选择所有
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
   orange: 橙
   orders:
     invoice_item_list:
@@ -828,6 +832,7 @@ cn:
       exception_description: ! 'Error Description:'
       exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
+    switched_to_vendor: Vendor '%{vendorname}'
   vendors:
     index:
       edit: 编辑
