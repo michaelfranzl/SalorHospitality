@@ -28,6 +28,7 @@ class VendorsController < ApplicationController
     redirect_to vendor_path and return unless vendor
     @current_vendor = vendor
     session[:vendor_id] = params[:id] if @current_vendor
+    flash[:notice] = t('various.switched_to_vendor', :vendorname => vendor.name)
     redirect_to '/'
   end
 

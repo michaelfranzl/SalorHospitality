@@ -11,7 +11,9 @@
 
 .form_fields
   = form_for @user do |user_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), users_path, :class => 'links')
+    .clear
     %table
       %tr
         %td

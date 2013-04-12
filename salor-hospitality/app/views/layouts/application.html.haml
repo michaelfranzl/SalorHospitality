@@ -59,7 +59,9 @@
     #container
       #draw_controls
         %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
-      #header= render 'layouts/header'
+      #header
+        = render 'layouts/header'
+        #admin_menu_hint= t('.admin_menu_hint')
       #flash
         - if flash[:notice]
           #flash_notice= flash[:notice]

@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @statistic_category do |statistic_category_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), statistic_categories_path, :class => 'links')
+    .clear
     %table
       %tr
         %td= statistic_category_form.label 'name'

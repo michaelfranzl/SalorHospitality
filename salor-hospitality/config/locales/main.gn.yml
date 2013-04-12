@@ -464,6 +464,7 @@ gn:
   kitchen: Kueche
   layouts:
     application:
+      admin_menu_hint: ☚ Klicken Sie hier, um das Hauptmenü zu öffnen
       submit_scribe: OK
     header:
       configuration: Konfiguration
@@ -788,6 +789,8 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    switched_to_vendor: "Betrieb '%{vendorname}'"
+    cancel: Abbrechen
     exception_page:
       assistance_text: Bitte klicken Sie auf den Button "HOME" und versuchen Sie es
         nochmals. Falls der Fehler erneut auftritt, rufen Sie den Kundensupport. Wir

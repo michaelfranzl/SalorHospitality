@@ -18,9 +18,13 @@ $(document).ready(function() {
   $('input[safari]:checkbox').checkbox({cls:'jquery-safari-checkbox'});
   $('input:radio').checkbox();
   
+  $('#admin_menu_hint').fadeOut(6000);
+        
   if ($('#flash').children().size() > 0) {
     $('#flash').fadeIn(1000);
-    setTimeout(function(){ $('#flash').fadeOut(1000); }, 5000);
+    setTimeout(function(){
+      $('#flash').fadeOut(2000);
+    }, 6000);
   }
   
   if (typeof(automatic_printing_timeout) == 'undefined') {

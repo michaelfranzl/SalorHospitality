@@ -8,7 +8,9 @@
         %li= msg
 
 = form_for @customer do |f|
-  %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  .floatright= link_to(t('various.cancel'), customers_path, :class => 'links')
+  .clear
   %br
   = f.label :login
   = f.text_field :login

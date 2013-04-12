@@ -7,12 +7,14 @@
 
 
 = form_for nest_image(@vendor), :html => { :multipart => true, :class => 'vendor_form' } do |vendor_form|
+  = submit_tag @vendor.new_record? ? (t :create) : (t :edit)
+  .floatright= link_to(t('various.cancel'), vendors_path, :class => 'links')
+  .clear
   .image
     = vendor_form.label :logo
     %img.asset{ :src => @vendor.image('logo') }
     = vendor_form.label :invoice_logo
     %img.asset{ :src => @vendor.image('invoice_logo') }
-  %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
   %table
     %tr
       %td

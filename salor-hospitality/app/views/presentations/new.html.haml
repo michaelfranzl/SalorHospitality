@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @presentation do |presentation_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), presentations_path, :class => 'links')
+    .clear
     %table
       %tr
         %td= presentation_form.label 'name'

@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @camera do |camera_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), cameras_path, :class => 'links')
+    .clear
     %table
       %tr
         %td= camera_form.label :name

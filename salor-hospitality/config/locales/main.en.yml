@@ -459,6 +459,7 @@ en:
   kitchen: Kitchen
   layouts:
     application:
+      admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
       configuration: Configuration
@@ -788,6 +789,8 @@ en:
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   clear: clear
   various:
+    switched_to_vendor: "Vendor '%{vendorname}'"
+    cancel: Cancel
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see the same error twice, please contact our Customer Support.
       exception_description: 'Error Description:'
