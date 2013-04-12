@@ -35,22 +35,7 @@ $(function(){
       screenlock_counter -= 1;
     }, 1001);
   }
-  
-  $('#drag_and_drop_toggle_view_button').on('click', function() {
-    var newstatus = !settings.mobile_drag_and_drop
-    settings.mobile_drag_and_drop = newstatus;
-    if (newstatus == true) {
-      $('#areas').show();
-      $('#mobile_last_invoices_button').hide();
-      $('#drag_and_drop_toggle_view_button').html(i18n.workstation_view);
-    } else {
-      $('#areas').hide();
-      $('#mobile_last_invoices_button').show();
-      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
-    }
-    update_tables();
-  })
-})
+});
 
 
 

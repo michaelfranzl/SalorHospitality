@@ -42,15 +42,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def toggle_admin_interface
-    if session[:admin_interface]
-      session[:admin_interface] = !session[:admin_interface]
-    else
-      session[:admin_interface] = true
-    end
-    render :json => session[:admin_interface]
-  end
-
   def refund
     @order = get_model
   end

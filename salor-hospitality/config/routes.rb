@@ -71,7 +71,6 @@ SalorHospitality::Application.routes.draw do
 
   resources :orders do
     collection do
-      post :toggle_admin_interface
       post :login
       get :refund
       get :last_invoices

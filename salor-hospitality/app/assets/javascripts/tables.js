@@ -145,7 +145,7 @@ function render_tables() {
       table.css('background-color', 'white');
     }
     
-    if (permissions.move_tables && settings.mobile_drag_and_drop || settings.admin_interface) {
+    if (permissions.move_tables && settings.mobile_drag_and_drop || settings.workstation_drag_and_drop) {
       table.draggable({ stop: function() {
         update_table_coordinates(v.id)}
       })
