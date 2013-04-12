@@ -28,7 +28,7 @@ class VendorsController < ApplicationController
     redirect_to vendor_path and return unless vendor
     @current_vendor = vendor
     session[:vendor_id] = params[:id] if @current_vendor
-    redirect_to vendors_path
+    redirect_to '/'
   end
 
   # Edits the vendor

@@ -152,7 +152,7 @@ class Report
       formatstring = ""
       formats = []
       attrs.each do |a|
-        puts "ATTR #{ klass.to_s}: #{ a }"
+        #puts "ATTR #{ klass.to_s}: #{ a }"
         cls = klass.columns_hash[a].type
         formats << cls
         case cls

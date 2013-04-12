@@ -18,7 +18,8 @@ class ReportsController < ApplicationController
   
   def index
     @locations = Dir['/media/*']
-    @locations << Dir.home
+    @locations << Dir['/home/*']
+    @locations.flatten!
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : DateTime.now.beginning_of_day
     @to = @to ? @to.end_of_day : @from.end_of_day
@@ -28,7 +29,7 @@ class ReportsController < ApplicationController
       redirect_to reports_path
       flash[:notice] = "Complete"
     elsif params.has_key?(:download)
-      zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
+      zip_outfile = @current_vendor.fisc_dump(@from, @to, '/tmp')
       send_file zip_outfile
     end
     
