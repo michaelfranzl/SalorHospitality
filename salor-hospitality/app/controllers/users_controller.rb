@@ -11,7 +11,7 @@
 class UsersController < ApplicationController
 
   before_filter :check_permissions
-  before_filter :check_role_weight, :except => [:index]
+  before_filter :check_role_weight, :only => [:update, :show, :edit, :destroy] # those are only methods that work with an already saved user model
 
   def index
     @users = @current_vendor.users.existing
@@ -32,7 +32,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.vendors = [@current_vendor]
+    @user.default_vendor_id = @current_vendor.id if @user.default_vendor_id.nil? # the responsible form is not displayed when there is only 1 vendor in the company
     @user.company = @current_company
+    @user.role = @current_user.role if @user.role.weight < @current_user.role_weight # prevent RESTful creation of an user with higher privileges than your own.
     if @user.save
       if @user.tables.empty?
         # assign all existing tables in case the tables select field was left empty, since not all users have the permissions to set a table, or it was forgotten to set them.

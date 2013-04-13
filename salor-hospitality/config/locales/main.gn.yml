@@ -184,6 +184,7 @@ gn:
         title: Anrede
         audio: Akustische Signale
         confirmation_user: Fernbestellungen bestätigen
+        default_vendor_id: Einloggen in Betrieb
       vendor:
         technician_email: Techniker E-mail
         email: E-Mail

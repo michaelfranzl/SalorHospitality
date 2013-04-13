@@ -23,11 +23,13 @@ class VendorsController < ApplicationController
     return
   end
   
+  # scope everything by this vendor, saves the vendor id in the session
   def show
     vendor = get_model
     redirect_to vendor_path and return unless vendor
     @current_vendor = vendor
-    session[:vendor_id] = params[:id] if @current_vendor
+    session[:vendor_id] = @current_user.default_vendor_id = params[:id] if vendor
+    @current_user.save
     flash[:notice] = t('various.switched_to_vendor', :vendorname => vendor.name)
     redirect_to '/'
   end

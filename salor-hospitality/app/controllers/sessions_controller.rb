@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
           vendor = user.vendors.existing.first
           session[:user_id] = user.id
           session[:company_id] = user.company_id
-          session[:vendor_id] = vendor.id if vendor
+          session[:vendor_id] = user.default_vendor_id
           session[:locale] = I18n.locale = user.language
           user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
           session[:admin_interface] = false

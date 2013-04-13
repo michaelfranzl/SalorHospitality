@@ -53,6 +53,12 @@
               %td
                 %select#language{ :name => 'user[language]' }
                   = options_for_select(SalorHospitality::Application::LANGUAGES.invert.to_a, user_form.object.language)
+            - if @current_company.vendors.existing.size > 1
+              %tr
+                %td= user_form.label :default_vendor_id
+                %td
+                  %select#default_vendor_id{ :name => 'user[default_vendor_id]' }
+                    = options_from_collection_for_select @current_company.vendors.existing, :id, :name, @user.default_vendor_id
             %tr
               %td= user_form.label :screenlock_timeout
               %td
