@@ -11,6 +11,7 @@
 class UsersController < ApplicationController
 
   before_filter :check_permissions
+  before_filter :check_role_weight, :except => [:index]
 
   def index
     @users = @current_vendor.users.existing
@@ -86,5 +87,12 @@ class UsersController < ApplicationController
     user = get_model
     user.update_attribute :current_ip, nil
     render :nothing => true
+  end
+  
+  private
+  
+  def check_role_weight
+    @user = get_model
+    redirect_to users_path and return if @current_user.role.weight > @user.role.weight
   end
 end
