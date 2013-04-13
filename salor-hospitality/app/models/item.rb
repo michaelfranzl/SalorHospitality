@@ -251,7 +251,7 @@ class Item < ActiveRecord::Base
     parent_order = first_item.order
     split_order = parent_order.order
     
-    # the following should never happen, but since moving items to an already finished order is a very touchy issue, we unlink agian
+    # the following should never happen, but since moving items to an already finished order is a very touchy issue, we unlink again, just as a redundant safety measure.
     if split_order and split_order.finished
       split_order.unlink
       split_order = nil

@@ -14,7 +14,7 @@
     %tr
       - next if u.role.weight.zero? and @current_user.role.weight > 0
       %td
-        - if role.weight > @current_user.role.weight or u == @current_user
+        - if role.weight >= @current_user.role.weight or u == @current_user
           = link_to u.login, edit_user_path(u)
         - else
           = u.login

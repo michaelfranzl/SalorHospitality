@@ -34,6 +34,7 @@ class UsersController < ApplicationController
     @user.company = @current_company
     if @user.save
       if @user.tables.empty?
+        # assign all existing tables in case the tables select field was left empty, since not all users have the permissions to set a table, or it was forgotten to set them.
         @user.tables = @current_vendor.tables.existing.where(:enabled => true)
         @user.save
       end
