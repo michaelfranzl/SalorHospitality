@@ -612,6 +612,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      assign_users_to_vendors: Assign Users to Vendors
       interim_receipt: Interim Receipt
       allow_exit: Allow Exit
       reactivate_orders: Reactivate orders

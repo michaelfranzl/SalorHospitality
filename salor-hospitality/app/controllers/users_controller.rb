@@ -14,14 +14,15 @@ class UsersController < ApplicationController
   before_filter :check_role_weight, :only => [:update, :show, :edit, :destroy] # those are only methods that work with an already saved user model
 
   def index
-    @users = @current_vendor.users.existing
+    @vendors = @current_user.vendors.existing
   end
 
   def new
     redirect_to '/saas/users/new' and return if defined?(ShSaas) == 'constant'
     @user = User.new
-    @roles = @current_vendor.roles.existing.active
+    @roles = @current_company.roles.existing.active
     @tables = @current_vendor.tables.existing.where(:enabled => true)
+    @vendors = @current_company.vendors.existing
   end
 
   def show
@@ -31,21 +32,32 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.vendors = [@current_vendor]
-    @user.default_vendor_id = @current_vendor.id if @user.default_vendor_id.nil? # the responsible form is not displayed when there is only 1 vendor in the company
+    unless params[:vendor_array]
+      @user.vendors = [@current_vendor]
+    end
+    unless @user.default_vendor_id
+      # the responsible form is not displayed when there is only 1 vendor in the company. this must happen before save, since presence will be validated.
+      @user.default_vendor_id = @current_vendor.id
+    end
     @user.company = @current_company
-    @user.role = @current_user.role if @user.role.weight < @current_user.role_weight # prevent RESTful creation of an user with higher privileges than your own.
+    
     if @user.save
+      @user.role_weight = @user.role.weight # initialization
+      if @user.role_weight < @current_user.role_weight
+        # gracefully prevent RESTful creation of an user with higher privileges than the current user, might be a hacking attempt
+        @user.role = @current_user.role
+      end
       if @user.tables.empty?
         # assign all existing tables in case the tables select field was left empty, since not all users have the permissions to set a table, or it was forgotten to set them.
         @user.tables = @current_vendor.tables.existing.where(:enabled => true)
-        @user.save
       end
+      @user.save
       flash[:notice] = I18n.t("users.create.success")
       redirect_to users_path
     else
-      @roles = @current_vendor.roles.existing.active
+      @roles = @current_company.roles.existing.active
       @tables = @current_vendor.tables.existing.where(:enabled => true)
+      @vendors = @current_company.vendors.existing
       render(:new)
     end
   end
@@ -53,24 +65,37 @@ class UsersController < ApplicationController
   def edit
     redirect_to "/saas/users/#{ params[:id] }/edit" and return if defined?(ShSaas) == 'constant'
     @user = get_model
-    redirect_to users_path and return unless @user
-    @roles = @current_vendor.roles.existing.active
+    unless @user
+      flash[:error] = t('not_found')
+      redirect_to users_path and return
+    end
+    @roles = @current_company.roles.existing.active
     @tables = @current_vendor.tables.existing.where(:enabled => true)
+    @vendors = @current_company.vendors.existing
     render :new
   end
 
   def update
     @user = get_model
-    redirect_to users_path and return unless @user
+    unless @user
+      flash[:error] = t('not_found')
+      redirect_to(users_path) and return
+    end
+    
     if @user.update_attributes(params[:user])
-      flash[:notice] = I18n.t("users.create.success")
-      if @user == @current_user
-        session[:locale] = I18n.locale = @user.language
+      @user.role_weight = @user.role.weight # update
+      if @user.role_weight < @current_user.role_weight
+        # gracefully prevent RESTful creation of an user with higher privileges than the current user, might be a hacking attempt
+        @user.role = @current_user.role
       end
+      @user.save
+      flash[:notice] = I18n.t("users.create.success")
       redirect_to(users_path)
     else
       @tables = @current_vendor.tables.existing.where(:enabled => true)
-      @roles = @current_vendor.roles.existing.active
+      @vendors = @current_company.vendors.existing
+      @roles = @current_company.roles.existing.active
+      @vendors = @current_company.vendors.existing
       render(:new)
     end
   end

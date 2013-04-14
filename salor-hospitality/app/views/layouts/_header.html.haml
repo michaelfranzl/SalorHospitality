@@ -37,7 +37,7 @@
     = link_to( t('activerecord.models.camera.other'), main_app.cameras_path) if permit('manage_cameras')
     = link_to( t('activerecord.models.user.other'), main_app.users_path) if permit('manage_users')
     - if permit('manage_vendors')
-      - if @current_company.vendors.existing.count > 1
+      - if @current_user.vendors.existing.count > 1
         = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
       - else
         = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)

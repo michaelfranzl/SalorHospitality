@@ -257,6 +257,7 @@ company_count.times do |c|
       user = User.new :login => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :title => "#{ user_array.to_a[i][0] }", :password => "#{ c }#{ v }#{ i }", :language => languages[v], :color => user_colors[i]
       user.company = company
       user.vendors << vendor
+      user.default_vendor_id = vendor.id
       user.tables = table_objects
       user.role = role_objects[i]
       user.role_weight = role_objects[i].weight

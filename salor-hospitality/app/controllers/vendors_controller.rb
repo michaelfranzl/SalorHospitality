@@ -15,7 +15,7 @@ class VendorsController < ApplicationController
   helper_method :permit
 
   def index
-    @vendors = @current_company.vendors.existing
+    @vendors = @current_user.vendors.existing
     if @vendors.count == 1
       @vendor = @vendors.first
       render :edit
@@ -52,6 +52,7 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
+    @vendor.update_cache
     flash[:notice] = t('vendors.create.success')
     redirect_to vendors_path
   end
@@ -64,6 +65,7 @@ class VendorsController < ApplicationController
     @vendor = Vendor.new params[:vendor]
     @vendor.company = @current_company
     if @vendor.save
+      @vendor.update_cache
       flash[:notice] = t('vendors.create.success')
       redirect_to vendors_path
     else

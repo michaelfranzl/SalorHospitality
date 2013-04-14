@@ -617,6 +617,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      assign_users_to_vendors: Betriebe für Benutzer festlegen
       interim_receipt: Zwischenabrechnung
       allow_exit: Browser-Fenster schließen
       reactivate_orders: Bestellungen reaktivieren
@@ -648,7 +649,7 @@ gn:
       manage_tables: Tische verwalten
       manage_vendors: Betriebe verwalten
       manage_cameras: Kameras verwalten
-      move_order: Bestellung verschieben
+      move_order: Bestellung auf anderen Tisch verschieben
       move_tables: Tische verschieben
       new_role: Neue Rolle
       permissions: Berechtigungen

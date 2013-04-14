@@ -23,12 +23,20 @@ class User < ActiveRecord::Base
   validates_presence_of :password
   validates_presence_of :title
   validates_presence_of :default_vendor_id
+  validates_presence_of :vendors
   validates_uniqueness_of :password, :scope => :company_id unless defined?(ShSaas) == 'constant'
 
   def tables_array=(ids)
     self.tables = []
     ids.each do |id|
-      self.tables << Table.find_by_id(id.to_i)
+      self.tables << self.company.tables.find_by_id(id.to_i)
+    end
+  end
+  
+  def vendors_array=(ids)
+    self.vendors = []
+    ids.each do |id|
+      self.vendors << self.company.vendors.find_by_id(id.to_i)
     end
   end
   
