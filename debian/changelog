@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.32) unstable; urgency=low
+
+  * added trace to rake
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 14 Apr 2013 11:29:21 +0200
+
 salor-hospitality (4.1.3.31) precise; urgency=low
 
   * migration fix
