@@ -349,7 +349,7 @@ class Vendor < ActiveRecord::Base
             "\e!\x38" +       # big font
             "UPDATE\n" +
             I18n.l(Time.now, :format => :datetime_iso2) +
-            "\nVERSION #{ version }\n\n" +
+            "\nVERSION #{ version.to_s }\n\n" +
             "\e!\x01" +            # smallest font
             difflines.join("\n") + # changelog output
             "\n\n\n\n\n" +         # space
