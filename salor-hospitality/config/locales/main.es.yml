@@ -105,6 +105,7 @@ es:
         screenlock_timeout: Tiempo de espera de bloqueo de pantalla? (sec.)
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
+        default_vendor_id: Log in to Vendor
       vendor_printer:
         hidden: borrar
         name: nombre
@@ -641,6 +642,7 @@ es:
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
       interim_receipt: Interim Receipt
+      assign_users_to_vendors: Assign Users to Vendors
     create:
       success: Rol guardado exitosamente
     destroy:
