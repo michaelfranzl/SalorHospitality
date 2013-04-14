@@ -25,6 +25,7 @@ class Company < ActiveRecord::Base
   has_many :discounts
   has_many :emails
   has_many :guest_types
+  has_many :histories
   has_many :images, :as => :imageable
   has_many :ingredients
   has_many :items
