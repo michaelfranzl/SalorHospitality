@@ -735,6 +735,7 @@ en:
       total: Total
       unit_price: Unit Price
     index:
+      one_day_one_row: List days
       all_cost_centers: All
       end_date: End date
       start_date: Start date
