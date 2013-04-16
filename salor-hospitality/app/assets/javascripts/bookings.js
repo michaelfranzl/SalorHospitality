@@ -591,9 +591,6 @@ function draw_rooms_header() {
   }
   var num_rooms = _get("rooms.json").keys.length;
   var new_width = num_rooms * room.outerWidth() + 300;
-  if (new_width < $(window).width() - 5) {
-    new_width = $(window).width() - 5;
-  }
   $('#rooms').css({'width': new_width + 'px', height: 32 * room.outerHeight() + room.outerHeight()})
   width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
   css = {top: offset.top + tpad + 20, left: offset.left + lpad}
