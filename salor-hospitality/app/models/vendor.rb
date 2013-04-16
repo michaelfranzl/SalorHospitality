@@ -339,7 +339,7 @@ class Vendor < ActiveRecord::Base
       difflines = []
       lines.each do |l|
         break if l == last_version
-        difflines << l
+        difflines << l if line.include?('*')
       end
       
       vendor_printers = self.vendor_printers.existing
