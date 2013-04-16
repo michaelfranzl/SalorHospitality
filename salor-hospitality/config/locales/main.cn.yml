@@ -732,6 +732,7 @@ cn:
       end_date: 结束日期
       start_date: 开始日期
       sum_total: 总计
+      one_day_one_row: List days
     settlement:
       finish: 完毕
       print: 打印

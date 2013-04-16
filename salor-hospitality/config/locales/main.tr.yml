@@ -490,6 +490,7 @@ tr:
       end_date: Bitis
       all_cost_centers: Hepsi
       sum_total: Toplam hesap
+      one_day_one_row: List days
     detailed_list:
       order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
       count: Miktar

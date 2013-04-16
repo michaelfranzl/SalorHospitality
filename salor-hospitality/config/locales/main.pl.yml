@@ -742,6 +742,7 @@ pl:
       end_date: Data końcowa
       start_date: Data początkowa
       sum_total: Suma całkowita
+      one_day_one_row: List days
     settlement:
       finish: Koniec
       print: Drukuj

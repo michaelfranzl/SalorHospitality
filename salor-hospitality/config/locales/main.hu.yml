@@ -489,6 +489,7 @@ hu:
       end_date: End date
       all_cost_centers: All
       sum_total: Sum total
+      one_day_one_row: List days
     detailed_list:
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       count: Count

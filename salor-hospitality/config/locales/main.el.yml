@@ -710,6 +710,7 @@ el:
       end_date: Ημερομηνία λήξης
       start_date: Ημερομηνία έναρξης
       sum_total: Ολικό σύνολο
+      one_day_one_row: List days
     settlement:
       finish: Τελειώστε
       print: Εκτυπώστε

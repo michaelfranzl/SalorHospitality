@@ -691,6 +691,7 @@ ru:
       end_date: Конечная дата
       start_date: Начальная дата
       sum_total: Общая сумма
+      one_day_one_row: List days
     settlement:
       finish: Конец
       print: Печать

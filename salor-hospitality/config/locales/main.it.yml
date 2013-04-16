@@ -708,6 +708,7 @@ it:
       end_date: End date
       start_date: Start date
       sum_total: Sum total
+      one_day_one_row: List days
     settlement:
       finish: Finish
       print: Print

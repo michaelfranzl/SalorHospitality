@@ -680,6 +680,7 @@ es:
       end_date: Fecha final
       start_date: Fecha de inicio
       sum_total: Suma total
+      one_day_one_row: List days
     settlement:
       finish: Terminar
       print: Imprimir

@@ -724,6 +724,7 @@ fr:
       end_date: Date de fin
       start_date: Date de début
       sum_total: Montant total
+      one_day_one_row: List days
     settlement:
       finish: Terminer
       print: Imprimer
