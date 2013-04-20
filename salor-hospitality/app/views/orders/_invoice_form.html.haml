@@ -17,7 +17,7 @@
     %a{ :onclick => "route('table', #{invoice_form.table.id}, 'specific_order', {order_id:#{oid}})", :class => 'iconbutton order_button', :title => t(:edit), :onmouseup => 'this.style.border = "2px solid black";' }
     
     - if permit('interim_receipt')
-      %a{ :onclick => "toggle_interim_receipt_printing(this)", :class => 'iconbutton invoice_button', :title => t(:edit) }
+      %a{ :onclick => "toggle_interim_receipt_printing(this)", :class => 'iconbutton invoice_button', :title => t('roles.new.interim_receipt') }
     
 
 

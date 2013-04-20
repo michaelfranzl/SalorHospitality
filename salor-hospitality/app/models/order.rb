@@ -556,14 +556,13 @@ class Order < ActiveRecord::Base
           normal_receipt_content +
           cut
     end
-    
-    vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
-    output += pulse if vendor_printer.pulse == true
-    
+       
     if output == init
       # print nothing
       return {:text => '', :raw_insertations => {}}
     else
+      vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
+      output += pulse if vendor_printer.pulse == true
       return {:text => output, :raw_insertations => raw_insertations }
     end
   end
@@ -728,18 +727,18 @@ class Order < ActiveRecord::Base
       list_of_items += list_of_options
     end
 
-    #sum_format =
-    #"\e!\x18" + # double tall, bold
-    #"\ea\x02"   # align right
+    sum_format =
+    "\e!\x18" + # double tall, bold
+    "\ea\x02"   # align right
 
-    #sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
+    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
 
     output_text =
         "\e@" +     # initialize
         header2 +
         list_of_items +
-        #sum_format +
-        #sum +
+        sum_format +
+        sum +
         "\n\n\n\n\n\n\n\n\n\n\n" +
         "\x1DV\x00\x0C" # paper cut
     return output_text
