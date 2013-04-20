@@ -119,18 +119,8 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
-    if self.article
-      # Todo: This actually should not go here.
-      self.category_id ||= self.article.category_id
-      self.statistic_category_id ||= self.article.statistic_category_id
-    else
-      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
-        UserMailer.technician_message(self.vendor, "Item without Article in item.rb calculate_totals", '').deliver
-      else
-        ActiveRecord::Base.logger.info "[TECHNICIAN] Item without Article in item.rb calculate_totals"
-      end
-    end
-
+    self.category_id ||= self.article.category_id
+    self.statistic_category_id ||= self.article.statistic_category_id
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
     self.option_items.update_all :count => self.count
     self.sum = full_price

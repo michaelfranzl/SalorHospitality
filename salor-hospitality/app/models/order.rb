@@ -105,30 +105,54 @@ class Order < ActiveRecord::Base
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
-    i.save
-    i.create_option_items_from_ids p[1][:i]
-    i.option_items.each { |oi| oi.calculate_totals }
-    i.calculate_totals
-    i.hide(user.id) if i.hidden
-    if i.article
-      i.update_attribute :statistic_category_id, i.article.statistic_category_id
-    else
-      message = "Could not set statistic_category_id for Item. The Item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
+    result = i.save
+    if result == false
+      message = "Could not save item in Order.create_new_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
       if self.vendor.enable_technician_emails == true and self.vendor.technician_email
-        UserMailer.technician_message(self.vendor, "Item without Article in order.rb create_new_item", message).deliver
+        UserMailer.technician_message(self.vendor, "Could not save item in Order.create_new_item", message).deliver
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
     end
+    i.create_option_items_from_ids p[1][:i]
+    i.option_items.each { |oi| oi.calculate_totals }
+    if i.article
+      i.calculate_totals
+    else
+      message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "No article associated with item in Order.create_new_item.", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
+    i.hide(user.id) if i.hidden
   end
   
   def update_item(id, p)
     p[1].delete(:id)
     i = Item.find_by_id(id)
-    i.update_attributes(p[1])
+    result = i.update_attributes(p[1])
+    if result == false
+      message = "Could not update item in Order.update_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "Could not update item in Order.update_item", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
-    i.calculate_totals
+    if i.article
+      i.calculate_totals
+    else
+      message = "No article associated with item in Order.update_item. Item: #{ i.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "No article associated with item in Order.update_item.", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
     i.hide(user.id) if i.hidden
   end
   

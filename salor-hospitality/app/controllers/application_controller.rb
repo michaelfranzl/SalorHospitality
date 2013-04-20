@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
   
   unless SalorHospitality::Application.config.consider_all_requests_local
-    rescue_from Exception, :with => :render_error
+    rescue_from(Exception, :with => :render_error)
   end 
   
   def route
@@ -383,6 +383,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def render_error(exception)
+    raise exception if request.xhr?
     #log_error(exception)
     @exception = exception
     if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true

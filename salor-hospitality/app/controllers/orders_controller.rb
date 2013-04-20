@@ -11,7 +11,6 @@
 class OrdersController < ApplicationController
 
   def index
-    #@tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @categories = @current_vendor.categories.positioned
     @users = @current_vendor.users.existing.active
     session[:admin_interface] = false
