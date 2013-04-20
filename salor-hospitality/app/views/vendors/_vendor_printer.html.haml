@@ -1,29 +1,35 @@
 - id = /vendor\[vendor_printers_attributes\]\[(.*)\]/.match(f.object_name)[1]
-%div{ :id => "vendor_printer_#{ id }" }
-  = f.label :name, :class => 'medium'
+
+.vendor_printer_form{ :id => "vendor_printer_#{ id }" }
+  %h3= f.object.name
+  
+  = f.label :name, :class => 'narrow'
   = f.text_field :name, :size => 9
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_name_display_keyboard" }
   %br
-  = f.label :path, :class => 'medium'
+  = f.label :path, :class => 'narrow'
   = f.text_field :path, :size => 9
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_path_display_keyboard" }
   %br
-  = f.label :print_button_filename, :class => 'medium'
+  = f.label :print_button_filename, :class => 'narrow'
   %select#print_button_filename{ :name => "vendor[vendor_printers_attributes][#{ id }][print_button_filename]" }
     %option
     = options_for_select get_print_button_filename_array, f.object.print_button_filename
   %br
-  = f.label :copies, :class => 'medium'
+  = f.label :copies, :class => 'narrow'
   = f.text_field :copies, :size => 1
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_copies_display_keyboard" }
   %br
-  = f.label :codepage, :class => 'medium'
+  = f.label :codepage, :class => 'narrow'
   = f.text_field :codepage, :size => 1
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_codepage_display_keyboard" }
   %br
-  = f.label :baudrate, :class => 'medium'
+  = f.label :baudrate, :class => 'narrow'
   = f.text_field :baudrate, :size => 5
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_baudrate_display_keyboard" }
+  %br
+  = f.label :pulse, :class => 'narrow'
+  = f.check_box :pulse
   %br
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#vendor_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => VendorPrinter.human_attribute_name(:hidden), :alt => VendorPrinter.human_attribute_name(:hidden))

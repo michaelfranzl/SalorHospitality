@@ -477,8 +477,10 @@ class Order < ActiveRecord::Base
 
     cut =
     "\n\n\n\n\n\n" +
-    "\x1D\x56\x00" +        # paper cut
-    "\x1B\x70\x00\x99\x99\x0C"  # beep
+    "\x1D\x56\x00"
+    
+    pulse =
+    "\x1B\x70\x00\x99\x99\x0C"
 
     header = ''
     
@@ -555,7 +557,11 @@ class Order < ActiveRecord::Base
           cut
     end
     
+    vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
+    output += pulse if vendor_printer.pulse == true
+    
     if output == init
+      # print nothing
       return {:text => '', :raw_insertations => {}}
     else
       return {:text => output, :raw_insertations => raw_insertations }

@@ -128,6 +128,7 @@
           %br
           %span#add_printer
             %span.button= t '.add_printer'
+          %br
           = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
             = render :partial => 'vendor_printer', :locals => { :f => f }
           %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'

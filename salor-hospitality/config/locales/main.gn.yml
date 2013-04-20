@@ -218,6 +218,10 @@ gn:
         hidden: Löschen
         name: Name
         path: Pfad
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden

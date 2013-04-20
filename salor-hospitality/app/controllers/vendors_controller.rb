@@ -54,7 +54,7 @@ class VendorsController < ApplicationController
     end
     @vendor.update_cache
     flash[:notice] = t('vendors.create.success')
-    redirect_to vendors_path
+    redirect_to edit_vendor_path(@vendor)
   end
 
   def new
