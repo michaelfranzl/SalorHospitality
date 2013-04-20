@@ -28,9 +28,13 @@ class User < ActiveRecord::Base
 
   def tables_array=(ids)
     self.tables = []
+    self.save
+    tables = []
     ids.each do |id|
-      self.tables << self.company.tables.find_by_id(id.to_i)
+      tables << self.company.tables.find_by_id(id.to_i)
     end
+    self.tables = tables
+    self.save
   end
   
   def vendors_array=(ids)

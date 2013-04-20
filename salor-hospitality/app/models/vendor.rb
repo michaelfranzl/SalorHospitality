@@ -356,9 +356,10 @@ class Vendor < ActiveRecord::Base
             "\x1DV\x00\x0C"        # paper cut
         print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
         print_engine.open
-        print_engine.print(vendor_printers.first.id, output)
+        bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
+        bytes_sent = content_sent.length
+        Receipt.create(:vendor_id => self.id, :company_id => self.company_id, :vendor_printer_id => vendor_printers.first.id, :content => output, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
         print_engine.close
-        return output
       end
     end
     

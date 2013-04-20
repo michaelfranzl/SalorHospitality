@@ -120,6 +120,7 @@ class Item < ActiveRecord::Base
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
     if self.article
+      # Todo: This actually should not go here.
       self.category_id ||= self.article.category_id
       self.statistic_category_id ||= self.article.statistic_category_id
     else
@@ -197,6 +198,7 @@ class Item < ActiveRecord::Base
   end
 
   def full_price
+    return 0 if self.price.nil? or self.count.nil?
     self.price * self.count + self.option_items.sum(:sum)
   end
 

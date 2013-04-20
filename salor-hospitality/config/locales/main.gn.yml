@@ -741,7 +741,7 @@ gn:
       total: Gesamt
       unit_price: Stück
     index:
-      one_day_one_row: Nach Tagen
+      one_day_one_row: Tagesliste
       all_cost_centers: Alle
       end_date: Bis
       start_date: Von

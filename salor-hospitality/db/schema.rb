@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130413141711) do
+ActiveRecord::Schema.define(:version => 20130417082816) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1063,14 +1063,15 @@ ActiveRecord::Schema.define(:version => 20130413141711) do
     t.string   "path"
     t.integer  "company_id"
     t.boolean  "hidden"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "copies",                :default => 1
     t.integer  "vendor_id"
     t.string   "print_button_filename"
     t.integer  "codepage"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.integer  "baudrate",              :default => 9600
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
