@@ -141,6 +141,7 @@ function route(target, model_id, action, options) {
     }
     counter_update_tables = -1;
     screenlock_counter = -1;
+    advertising_counter = -1;
     $('#invoices').html('');
     submit_json = {model:{},split_items_hash:{},totals:{},payment_method_items:{}};
     submit_json.currentview = 'invoice';
@@ -174,6 +175,7 @@ function route(target, model_id, action, options) {
     }
     $('.booking_form').remove();
     screenlock_counter = settings.screenlock_timeout;
+    advertising_counter = settings.advertising_timeout;
     option_position = 0;
     item_position = 0;
     counter_update_tables = timeout_update_tables;
@@ -192,6 +194,8 @@ function route(target, model_id, action, options) {
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
     $('#items_notifications_static').hide();
+    screenlock_counter = -1;
+    advertising_counter = -1;
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
@@ -216,6 +220,10 @@ function route(target, model_id, action, options) {
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
     $('#items_notifications_static').hide();
+    
+    screenlock_counter = -1;
+    advertising_counter = -1;
+    
     if (typeof(options) == 'undefined') {
       room_id = null;
     } else {

@@ -20,15 +20,15 @@
       %td
         %br
         = vendor_form.label :name
-        = vendor_form.text_field :name
+        = vendor_form.text_field :name, :size => 15
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
         = vendor_form.label :email
-        = vendor_form.text_field :email
+        = vendor_form.text_field :email, :size => 15
         - if @current_company.mode == 'local' or @current_user.role.weight.zero?
           %br
           = vendor_form.label :technician_email
-          = vendor_form.text_field :technician_email
+          = vendor_form.text_field :technician_email, :size => 15
         %br
         = vendor_form.fields_for :images do |image_form|
           %br
@@ -72,7 +72,6 @@
             = vendor_form.label :automatic_printing_interval
             = vendor_form.text_field :automatic_printing_interval, :size => 2
             %span.display_keyboard{ :id => "vendor_automatic_printing_interval_display_keyboard" }
-            %br
         %br
         = vendor_form.label :receipt_header_blurb
         = vendor_form.text_area :receipt_header_blurb
@@ -108,7 +107,7 @@
         = vendor_form.label :ticket_item_separator
         %br
         = vendor_form.check_box :ticket_display_time_order
-        = vendor_form.label :ticket_display_time_order, :class => 'wide'
+        = vendor_form.label :ticket_display_time_order
         %br
         = vendor_form.check_box :history_print
         = vendor_form.label :history_print, :class => 'wide'

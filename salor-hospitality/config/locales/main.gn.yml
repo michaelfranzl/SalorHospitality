@@ -172,6 +172,8 @@ gn:
         amount: Betrag
         tax_id: Steuer
       user:
+        advertising_url: Werbung URL
+        advertising_timeout: Werbung Timeout
         active: aktiv?
         color: Farbe
         hidden: löschen?
@@ -621,6 +623,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      manage_advertising: Werbung einrichten
       assign_users_to_vendors: Betriebe für Benutzer festlegen
       interim_receipt: Zwischenabrechnung
       allow_exit: Browser-Fenster schließen

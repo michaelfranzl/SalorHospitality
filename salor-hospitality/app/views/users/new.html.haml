@@ -24,18 +24,23 @@
             %tr
               %td= user_form.label :login
               %td
-                = user_form.text_field :login
+                = user_form.text_field :login, :size => 15
                 %span#user_login_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :title
               %td
-                = user_form.text_field :title
+                = user_form.text_field :title, :size => 15
                 %span#user_title_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :password
               %td
-                = user_form.text_field :password
+                = user_form.text_field :password, :size => 15
                 %span#user_password_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :advertising_url
+              %td
+                = user_form.text_field :advertising_url, :size => 15
+                %span#user_advertising_url_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :role
               %td
@@ -64,6 +69,12 @@
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
+            - if permit('manage_advertising')
+              %tr
+                %td= user_form.label :advertising_timeout
+                %td
+                  = user_form.text_field :advertising_timeout, :size => 5
+                  %span#user_advertising_timeout_display_keyboard.display_keyboard
             - if @current_company.mode != 'local'
               %tr
                 %td= user_form.label :automatic_printing
@@ -72,7 +83,7 @@
               %tr
                 %td= user_form.label :audio
                 %td= user_form.check_box :audio
-            - if permit('manage_customers')
+            - if @current_vendor.remote_orders == true
               %tr
                 %td= user_form.label :confirmation_user
                 %td= user_form.check_box :confirmation_user
@@ -107,6 +118,11 @@
   $('#user_password').keyboard( {openOn: '' } );
   $('#user_password_display_keyboard').click(function(){
     $('#user_password').getkeyboard().reveal();
+  });
+  
+  $('#user_advertising_url').keyboard( {openOn: '' } );
+  $('#user_advertising_url_display_keyboard').click(function(){
+    $('#user_advertising_url').getkeyboard().reveal();
   });
 
   $('#user_screenlock_timeout').keyboard( {openOn: '', layout: 'num' } );

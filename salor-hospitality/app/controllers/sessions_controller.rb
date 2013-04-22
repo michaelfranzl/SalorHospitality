@@ -90,6 +90,8 @@ class SessionsController < ApplicationController
 
   def destroy
     if @current_user
+      session[:ad_url] = nil
+      session[:ad_url] = @current_user.advertising_url if @current_user.advertising_url and not @current_user.advertising_url.empty?
       @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
     elsif @current_customer
       @current_customer.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil

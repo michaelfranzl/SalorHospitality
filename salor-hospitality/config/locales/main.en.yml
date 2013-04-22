@@ -172,6 +172,8 @@ en:
         amount: Amount
         tax_id: Tax
       user:
+        advertising_url: Advertising URL
+        advertising_timeout: Advertising Timeout
         active: active?
         color: Color
         hidden: delete?
@@ -617,6 +619,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      manage_advertising: Manage Advertising
       assign_users_to_vendors: Assign Users to Vendors
       interim_receipt: Interim Receipt
       allow_exit: Allow Exit

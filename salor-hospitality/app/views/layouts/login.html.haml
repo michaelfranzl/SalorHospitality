@@ -32,6 +32,10 @@
       = stylesheet_link_tag('workstation', :media => 'screen')      
 
   %body
+    - if workstation? and session[:ad_url]
+      #advertising
+        %iframe#adfram{ :src => session[:ad_url] }
+        #adclickcatcher{ :onclick => 'show_login();' }
     #container
       #header
         = image_tag "logo-small-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :id => 'logo'
@@ -54,3 +58,13 @@
     $('#flash').fadeIn(1000);
     setTimeout(function(){ $('#flash').fadeOut(1000); }, 5000);
   }
+  
+  function show_login() {
+    $('input#password').focus();
+    $('#login').css('z-index', 1099);
+  }
+  
+  $(function() {
+    $('input#password').focus();
+    $('#advertising').css('z-index', 1000);
+  })

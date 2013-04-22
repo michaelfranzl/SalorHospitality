@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 var screenlock_counter = -1;
+var advertising_counter = -1;
 
 $(function(){
   
@@ -32,10 +33,21 @@ $(function(){
   screenlock_counter = settings.screenlock_timeout;
   if (typeof(screenlock_interval) == 'undefined') {
     screenlock_interval = window.setInterval(function() {
-      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
+      if (screenlock_counter == 0) { $('#logoutform form').submit(); }
       screenlock_counter -= 1;
     }, 1001);
   }
+  
+  advertising_counter = settings.advertising_timeout;
+  if (typeof(advertising_interval) == 'undefined') {
+    advertising_interval = window.setInterval(function() {
+      if (advertising_counter == 0) {
+        toggle_advertising(true);
+      }
+      advertising_counter -= 1;
+    }, 1002);
+  }
+  
 });
 
 

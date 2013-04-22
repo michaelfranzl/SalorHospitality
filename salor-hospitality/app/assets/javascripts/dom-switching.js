@@ -33,6 +33,7 @@ function switch_to_table() {
   send_queue_attempts = 0;
   $('#order_sum').html('0' + i18n.decimal_separator + '00');
   screenlock_counter = -1;
+  advertising_counter = -1;
   counter_update_tables = -1;
   //$('#order_info').html(i18n.just_order);
   $('#order_note').val('');
@@ -79,6 +80,7 @@ function switch_to_tables() {
   $('.booking_form').hide();
   $('#tablesselect').hide();
   screenlock_counter = settings.screenlock_timeout;
+  advertising_counter = settings.advertising_timeout;
   option_position = 0;
   item_position = 0;
   counter_update_tables = timeout_update_tables;
@@ -90,3 +92,15 @@ function switch_to_tables() {
     scroll_to($('#container'),20);
   }
 }
+
+function toggle_advertising(state) {
+  if (state == true) {
+    $('#advertising').css('z-index', 1000);
+    $('#advertising').fadeIn(8000);
+  } else {
+    $('#advertising').hide();
+    $('#advertising').css('z-index', -1000);
+    advertising_counter = settings.advertising_timeout;
+  }
+}
+

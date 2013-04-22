@@ -53,8 +53,11 @@
       == sh_debian_siteid = '#{ SalorHospitality::Application::SH_DEBIAN_SITEID }';
 
   %body
+    - if workstation? and controller.controller_name == 'orders'
+      #advertising
+        %iframe#adfram{ :src => @current_user.advertising_url, :onload => "$('#advertising').hide();" }
+        #adclickcatcher{ :onclick => 'toggle_advertising(false)' }
     #screenwait
-    = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #rooms_container
     #container
       #draw_controls

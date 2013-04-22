@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420081319) do
+ActiveRecord::Schema.define(:version => 20130422155637) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1047,6 +1047,8 @@ ActiveRecord::Schema.define(:version => 20130420081319) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.integer  "default_vendor_id"
+    t.string   "advertising_url"
+    t.integer  "advertising_timeout",       :default => -1
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
