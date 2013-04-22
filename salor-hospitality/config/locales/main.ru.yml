@@ -843,6 +843,7 @@ ru:
       exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
+    translations: Translations
   vendors:
     index:
       edit: Редактирование

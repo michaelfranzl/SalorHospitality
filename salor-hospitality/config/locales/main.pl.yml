@@ -866,6 +866,7 @@ pl:
     table_contains_offline_items: Just showing offline items. Try to re-submit or
       press the cancel button to delete the offline items.
     statistics: Statistics
+    translations: Translations
   customers:
     new:
       edit_customer: Edycja klienta
