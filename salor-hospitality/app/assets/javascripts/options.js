@@ -24,7 +24,7 @@ function add_option_to_item(d, value, cat_id) {
     var list = items_json[d].i;
     list.push(stripped_id);
     set_json('order', d, 'i', list);
-    $('#optionsnames_' + d).append('<br>' + optionobject.n);
+    $('#optionsnames_' + d).append('<br>' + optionobject.n + ' ' + number_to_currency(optionobject.p));
   }
   calculate_sum();
 }
@@ -76,7 +76,7 @@ function close_options_div(d) {
 function compose_optionnames(object){
   names = '';
   jQuery.each(object.t, function(k,v) {
-    names += (v.n + '<br>')
+    names += (v.n + ' ' + number_to_currency(v.p) + '<br />')
   });
   return names;
 }

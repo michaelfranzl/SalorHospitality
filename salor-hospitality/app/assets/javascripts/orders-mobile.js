@@ -9,10 +9,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 
-$(function(){
- // only needed inside of orders-workstation
-})
-
 function display_comment_popup_of_item(d) {
   $('#item_configuration_' + d).hide();
   if ( item_changeable(d) ) {
