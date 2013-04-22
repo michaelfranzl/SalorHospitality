@@ -21,7 +21,7 @@ function render_translation_inputs(depth, ancestor_keys, tree, el) {
         submit_translation($(this));
       })
       valinput.on('click', function(){
-        $(this).css('border', 'none');
+        $(this).css('background-color', 'white');
       })
 
       li.append(keyspan);
@@ -32,7 +32,7 @@ function render_translation_inputs(depth, ancestor_keys, tree, el) {
 }
 
 function submit_translation(el) {
-  el.css('border', '2px solid green');
+  el.css('background-color', '#99FF99');
   $.ajax({
     type: 'put',
     url: '/translations/set',
