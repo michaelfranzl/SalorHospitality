@@ -204,6 +204,10 @@ tr:
         path: XXXPath
         hidden: XXXDelete
         copies: XXX Copies
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       settlement:
         initial_cash: XXXInitial amount
         revenue: XXXEnd amount

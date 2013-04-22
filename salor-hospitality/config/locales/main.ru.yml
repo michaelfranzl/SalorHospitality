@@ -111,6 +111,10 @@ ru:
         hidden: Удалить
         name: Название
         path: Путь
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       guest_type:
         hidden: удалить
         name: Название

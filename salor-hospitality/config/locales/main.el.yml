@@ -144,6 +144,10 @@ el:
         hidden: Διαγραφή
         name: Όνομα
         path: Πορεία
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       guest_type:
         hidden: διαγραφή
         name: Όνομα

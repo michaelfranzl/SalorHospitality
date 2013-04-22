@@ -170,6 +170,10 @@ fr:
         hidden: Effacer
         name: Nom
         path: Chemin
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       payment_method_item:
         amount: montant
       booking_item:

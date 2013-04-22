@@ -127,6 +127,10 @@ it:
         hidden: Cancella
         name: Nome
         path: Percorso
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       guest_type:
         hidden: cancella
         name: Nome

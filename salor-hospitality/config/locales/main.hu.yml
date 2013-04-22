@@ -204,6 +204,10 @@ hu:
         path: Path
         hidden: Delete
         copies: XXX Copies
+        codepage: Codepage
+        baudrate: Baudrate
+        pulse: Beep
+        print_button_filename: Icon
       settlement:
         initial_cash: Initial amount
         revenue: End amount
