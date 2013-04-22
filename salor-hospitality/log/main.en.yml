@@ -7,7 +7,7 @@ en:
   activerecord:
     attributes:
       camera:
-        name: Name
+        name: Nameddd
         description: Description
         host_internal: Internal host
         host_external: External host
@@ -464,7 +464,7 @@ en:
   kitchen: Kitchen
   layouts:
     application:
-      admin_menu_hint: ☚ Click here to open the main menu
+      admin_menu_hint: ☚ Click hereeee to open the main menu
       submit_scribe: OK
     header:
       configuration: Configuration
@@ -797,7 +797,6 @@ en:
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   clear: clear
   various:
-    translations: Translations
     switched_to_vendor: Vendor '%{vendorname}'
     cancel: Cancel
     exception_page:

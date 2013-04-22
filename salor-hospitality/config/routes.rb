@@ -7,20 +7,6 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 SalorHospitality::Application.routes.draw do
-
-  get "reservations/fetch"
-  get "orders/attach_coupon"
-  get "orders/attach_discount"
-  resources :reservations
-
-  resources :discounts
-
-  get "coupons/coupons_list"
-  resources :coupons
-
-  resources :roles
-  resources :customers
-
   get "templates/index"
   get "templates/show"
   get "templates/edit"
@@ -29,6 +15,7 @@ SalorHospitality::Application.routes.draw do
 
   get "partials/delete"
   get "partials/update"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -96,6 +83,8 @@ SalorHospitality::Application.routes.draw do
   match 'vendors/test_printers' => 'vendors#test_printers'
   match 'users/unlock_ip' => 'users#unlock_ip'
   match 'route' => 'application#route'
+  match 'translations' => 'translations#index'
+  match 'translations/set' => 'translations#set'
   
 
 
@@ -113,6 +102,8 @@ SalorHospitality::Application.routes.draw do
   resources :room_prices
   resources :statistic_categories
   resources :cameras
+  resources :roles
+  resources :customers
 
 
   resources :reports do

@@ -797,6 +797,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    translations: Übersetzungen
     switched_to_vendor: Betrieb '%{vendorname}'
     cancel: Abbrechen
     exception_page:
