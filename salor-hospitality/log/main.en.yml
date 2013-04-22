@@ -3,11 +3,11 @@ en:
   statistic_categories:
     new:
       edit_statistic_category: Edit Statistic-Category
-      new_statistic_category: New Statistic-Category
+      new_statistic_category: New Statistic-Cateddddgordy
   activerecord:
     attributes:
       camera:
-        name: Nameddd
+        name: Nameddddd
         description: Description
         host_internal: Internal host
         host_external: External host
