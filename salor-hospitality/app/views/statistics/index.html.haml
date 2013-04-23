@@ -26,7 +26,7 @@
       - i = 0
       - sums = []
       - @days.each do |day|
-        - sums[i] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
+        - sums[i] = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(finished_at) = #{i}").sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -56,9 +56,9 @@
       - sums = []
       - 8.upto(23).each do |hour|
         - if @weekday
-          - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour} AND WEEKDAY(finished_at) = #{@weekday}").sum(:sum)
+          - sums[hour] =  @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour} AND WEEKDAY(finished_at) = #{@weekday}").sum(:sum)
         - else
-          - sums[hour] = Order.where(:settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum)
+          - sums[hour] = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(finished_at) = #{hour}").sum(:sum)
         - sums[hour] ||= 0
       - stripped_sums = sums.clone
       - stripped_sums.delete(nil)
@@ -79,7 +79,7 @@
       - sums = []
       - i = 0
       - @tables.each do |table|
-        - sums[i] = Order.where(:settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
+        - sums[i] =  @current_vendor.orders.existing.paid.where(:paid => true, :settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -100,7 +100,7 @@
       - sums = []
       - i = 0
       - @categories.each do |cat|
-        - sums[i] = Item.where(:settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum)
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -121,7 +121,7 @@
       - sums = []
       - i = 0
       - @statistic_categories.each do |cat|
-        - sums[i] = Item.where(:settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum)
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -142,7 +142,7 @@
       - sums = []
       - i = 0
       - @payment_methods.each do |pm|
-        - sums[i] = PaymentMethodItem.where(:settlement_id => @settlement_ids, :payment_method_id => pm, :cost_center_id => @scids).sum(:amount)
+        - sums[i] =  @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :payment_method_id => pm, :cost_center_id => @scids).sum(:amount)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -163,7 +163,7 @@
       - sums = []
       - i = 0
       - @taxes.each do |tax|
-        - sums[i] = TaxItem.where(:settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro)
+        - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -181,7 +181,7 @@
         %th.bb{ :style => 'width:1500px' }= Article.model_name.human
         %th.bb= t :count
       - @articles.each do |article|
-        - sold_quantity = @current_vendor.items.existing.where(:article_id => article.id, :created_at => @from..@to).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count)
         %tr
           %td= article.name
           %td= sold_quantity
@@ -191,7 +191,7 @@
         %th.bb{ :style => 'width:1500px' }= Quantity.model_name.human
         %th.bb= t :count
       - @quantities.each do |quantity|
-        - sold_quantity = @current_vendor.items.existing.where(:quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
         %tr
           %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
           %td= sold_quantity

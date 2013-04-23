@@ -41,15 +41,21 @@ class StatisticsController < ApplicationController
       erb = ERB.new(template, 0, '>')
       text = erb.result(binding)
       
-      logger.info "________________________"
-      logger.info text
-      logger.info "________________________"
-      
       vendor_printer = @current_vendor.vendor_printers.existing.first
       print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, @current_company.identifier)
       print_engine.open
-      print_engine.print(vendor_printer.id, text)
+      bytes_written, content_sent = print_engine.print(vendor_printer.id, text)
       print_engine.close
+      
+      r = Receipt.new
+      r.vendor_id = @current_vendor.id
+      r.company_id = @current_company.id
+      r.user_id = @current_user.id
+      r.content = text
+      r.vendor_printer_id = vendor_printer.id
+      r.bytes_written = bytes_written
+      r.bytes_sent = content_sent.length
+      r.save
     end
   end
 end

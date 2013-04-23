@@ -146,7 +146,7 @@ class Settlement < ActiveRecord::Base
         list_of_taxes_categories += "%s:\n" % [tax.name]
         if permissions.include?('manage_statistic_categories')
           self.vendor.statistic_categories.existing.each do |cat|
-            sum = self.tax_items.existing.where(:tax_id => tax.id, :statistic_category_id => cat.id, :refunded => nil).sum(tax_attribute)
+            sum = self.tax_items.existing.where(:refunded => nil, :tax_id => tax.id, :statistic_category_id => cat.id).sum(tax_attribute)
             list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
           end
         else
