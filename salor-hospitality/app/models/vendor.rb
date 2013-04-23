@@ -318,7 +318,7 @@ class Vendor < ActiveRecord::Base
     Dir.chdir(dumppath)
     `zip -r #{ zip_outfile } .`
     
-    FileUtils.rm_r dumppath
+    FileUtils.rm_r dumppath # causes exception
     
     return zip_outfile
   end

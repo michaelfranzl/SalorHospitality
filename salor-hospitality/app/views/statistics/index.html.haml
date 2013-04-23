@@ -79,7 +79,7 @@
       - sums = []
       - i = 0
       - @tables.each do |table|
-        - sums[i] =  @current_vendor.orders.existing.paid.where(:paid => true, :settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
+        - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
