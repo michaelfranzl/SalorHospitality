@@ -14,8 +14,8 @@ class HistoryObserver < ActiveRecord::Observer
   def after_update(object)
     History.record("#{object.class.to_s}_updated", object)
     
-    return unless $Vendor and $Vendor.respond_to?(:history_print) and  $Vendor.history_print == true
     # Printing changes, in accordance to fiscal regulations
+    return unless $Vendor and $Vendor.respond_to?(:history_print) and  $Vendor.history_print == true
     vendor_printers = $Vendor.vendor_printers.existing
     changes = object.changes
     keys = changes.keys
@@ -35,12 +35,14 @@ class HistoryObserver < ActiveRecord::Observer
     keys.delete('last_login_at')
     keys.delete('last_logout_at')
     keys.delete('largest_settlement_number')
-    if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table].include?(object.class)
+    if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table, Article, Quantity].include?(object.class)
       output = "\e@" +
           "\e!\x38" +       # big font
-          "UPDATE #{ object.class.to_s } ID #{ object.id }\n" +
+          "UPDATE\n#{ object.class.to_s } ID #{ object.id }\n" +
           I18n.l(Time.now, :format => :datetime_iso2) +
           "\e!\x00" +        # normal font
+          "\n\n" +
+          "#{ $User.login }@#{ $Request.remote_ip }" +
           "\n\n"
       keys.each do |k|
         output += "#{ k }: #{ changes[k] }\n"
@@ -49,8 +51,17 @@ class HistoryObserver < ActiveRecord::Observer
             "\x1DV\x00\x0C"            # paper cut
       print_engine = Escper::Printer.new($Vendor.company.mode, vendor_printers, $Vendor.company.identifier)
       print_engine.open
-      print_engine.print(vendor_printers.first.id, output)
+      bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
       print_engine.close
+      r = Receipt.new
+      r.user_id = $User.id
+      r.content = output
+      r.vendor_id = $Vendor.id
+      r.company_id = $Company.id
+      r.vendor_printer_id = vendor_printers.first.id
+      r.bytes_sent = content_sent.length
+      r.bytes_written = bytes_written
+      r.save
     end
   end
   

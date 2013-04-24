@@ -82,6 +82,11 @@ class UsersController < ApplicationController
       redirect_to(users_path) and return
     end
     
+    if @user.default_vendor_id.nil?
+      # the responsible form is not displayed when there is only 1 vendor in the company. this must happen before save, since presence will be validated.
+      @user.default_vendor_id = @current_vendor.id
+    end
+    
     if @user.update_attributes(params[:user])
       @user.role_weight = @user.role.weight # update
       if @user.role_weight < @current_user.role_weight

@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
   end 
   
   def route
+    h = History.new
+    h.action_taken = 'route'
+    h.changes_made = params.to_s
+    h.save
     case params[:currentview]
       # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'
@@ -355,7 +359,7 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_special?
-      request.user_agent.include?('iPad')
+      request.user_agent and request.user_agent.include?('iPad')
     end
 
     def neighbour_models(model_name, model_object)

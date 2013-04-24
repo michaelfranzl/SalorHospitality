@@ -19,6 +19,10 @@ class ItemsController < ApplicationController
   end
 
   def split
+    h = History.new
+    h.action_taken = 'ItemsController#split'
+    h.changes_made = params.to_s
+    h.save
     if params['split_items_hash']
       order = @current_vendor.orders.existing.find_by_id(params[:order_id])
       render :nothing => true and return unless order
@@ -37,6 +41,10 @@ class ItemsController < ApplicationController
 
   # We'll use edit for separation of items in the refund form
   def edit
+    h = History.new
+    h.action_taken = 'ItemsController#separate'
+    h.changes_made = params.to_s
+    h.save
     item = get_model
     item.separate
     @order = item.order
