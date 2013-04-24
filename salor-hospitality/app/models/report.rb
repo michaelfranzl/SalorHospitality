@@ -70,7 +70,7 @@ class Report
     end
     
     pmis = $Vendor.payment_method_items.where(:created_at => from..to)
-    File.open("#{device}/SalorHospitalityPaymentMethodItem#{tfrom}-#{tto}.csv","w") do |f|
+    File.open("#{device}/SalorHospitalityPaymentMethodItems#{tfrom}-#{tto}.csv","w") do |f|
       attributes = "id;payment_method_id;order_id;amount;created_at;updated_at;booking_id;refunded;cash;refund_item_id;settlement_id;cost_center_id;change;hidden;hidden_by;hidden_at"
       f.write("#{attributes}\n")
       f.write Report.to_csv(pmis, PaymentMethodItem, attributes)

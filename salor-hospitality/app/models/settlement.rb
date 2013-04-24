@@ -94,11 +94,11 @@ class Settlement < ActiveRecord::Base
     payment_methods_hash.delete(nil)
     
     list_of_orders = ''
-    self.orders.existing.each do |o|
+    self.orders.existing.where(:finished => true).each do |o|
       t = I18n.l(o.created_at, :format => :time_short)
       costcentername = o.cost_center.name if o.cost_center
       nr = o.nr ? o.nr : 0 # failsafe
-      list_of_orders += "\n#%07i %7.7s %10.10s  %5.5s  %6.2f" % [nr, o.table.name, costcentername, t, o.sum]
+      list_of_orders += "\n#%7i %7.7s %10.10s  %5.5s  %6.2f" % [nr, o.table.name, costcentername, t, o.sum]
     end
     
     list_of_payment_methods = ''
@@ -169,13 +169,21 @@ class Settlement < ActiveRecord::Base
 
     output =
     "\e@"     +  # Initialize Printer
+    self.vendor.name +
+    "\n" + 
+    self.vendor.receipt_header_blurb + 
+    "\n" +
     "\ea\x00" +  # align left
     "\e!\x38" +  # doube tall, double wide, bold
     "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.nr }\n#{ self.user.login }\n\n"    +
     "\e!\x00" +  # Font A
-    "%-10.10s %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
-    "%-10.10s %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +
-    "\n#%7.7s %7.7s  %10.10s %5.5s  %5.5s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('activerecord.models.cost_center.one'), I18n.t('various.time'),  I18n.t(:sum)]+
+    "%-15.15s: %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
+    "%-15.15s: %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +
+    "%-15.15s: %i\n" % [I18n.t('activerecord.models.order.other'), self.orders.existing.where(:finished => true).count] +
+    "%-15.15s: %i\n" % [I18n.t('activerecord.models.article.other'), self.items.existing.count] +
+    "\n" +
+    "%7.7s  %7.7s  %10.10s %5.5s  %5.5s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('activerecord.models.cost_center.one'), I18n.t('various.time'),  I18n.t(:sum)] +
+    "\xc4" * 42 +
     list_of_orders +
     "\n" +
     "\e!\x18" +  # double tall, bold
