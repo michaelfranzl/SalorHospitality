@@ -19,7 +19,8 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-app_root=/usr/share/salor-hospitality/source
+installation_root=/usr/share/salor-hospitality
+app_root=${installation_root}/source
 
 echo ""
 echo "POSTINST called with $@"
@@ -224,15 +225,20 @@ done
 db_get salor-hospitality/user || true
 app_user=$RET
 echo "  postinst: changing ownership for user $app_user"
-chown -R $app_user:$app_user $app_root
+chown -R $app_user:$app_user $installation_root
 chown -R $app_user:$app_user /etc/salor-hospitality
-chown -R $app_user:$app_user /var/log/salor-hospitality
 chown -R $app_user:$app_user /var/cache/salor-hospitality
 chown -R $app_user:$app_user /var/lib/salor-hospitality
 chown -R $app_user:$app_user /var/tmp/salor-hospitality
+chown -R $app_user:$app_user /var/log/salor-hospitality
 
 echo "  postinst: changing permissions for user $app_user"
-chmod 770 /etc/salor-hospitality
+chmod -R 700 $installation_root
+chmod -R 700 /etc/salor-hospitality
+chmod -R 700 /var/cache/salor-hospitality
+chmod -R 700 /var/lib/salor-hospitality
+chmod -R 700 /var/tmp/salor-hospitality
+chmod -R 755 /var/log/salor-hospitality
 
 echo "  postinst: restarting Apache ..."
 a2enmod actions
