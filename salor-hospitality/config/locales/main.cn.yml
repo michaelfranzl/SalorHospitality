@@ -185,6 +185,8 @@ cn:
         audio: Acoustic signals
         confirmation_user: 确认远程订单
         default_vendor_id: Log in to Vendor
+        advertising_url: Advertising URL
+        advertising_timeout: Advertising Timeout
       vendor:
         enable_technician_emails: 给技术人员寄电子邮件
         technician_email: 技术人员电子邮件
@@ -678,6 +680,7 @@ cn:
         quantities
       interim_receipt: Interim Receipt
       assign_users_to_vendors: Assign Users to Vendors
+      manage_advertising: Manage Advertising
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

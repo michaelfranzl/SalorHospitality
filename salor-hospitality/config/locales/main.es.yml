@@ -106,6 +106,8 @@ es:
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
         default_vendor_id: Log in to Vendor
+        advertising_url: Advertising URL
+        advertising_timeout: Advertising Timeout
       vendor_printer:
         hidden: borrar
         name: nombre
@@ -647,6 +649,7 @@ es:
         quantities
       interim_receipt: Interim Receipt
       assign_users_to_vendors: Assign Users to Vendors
+      manage_advertising: Manage Advertising
     create:
       success: Rol guardado exitosamente
     destroy:

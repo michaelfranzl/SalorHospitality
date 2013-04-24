@@ -137,6 +137,8 @@ fr:
         audio: Acoustic signals
         confirmation_user: Confirm remote orders
         default_vendor_id: Log in to Vendor
+        advertising_url: Advertising URL
+        advertising_timeout: Advertising Timeout
       vendor:
         automatic_printing: Impression automatique
         country: Règles pour le pays
@@ -669,6 +671,7 @@ fr:
         quantities
       interim_receipt: Interim Receipt
       assign_users_to_vendors: Assign Users to Vendors
+      manage_advertising: Manage Advertising
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix

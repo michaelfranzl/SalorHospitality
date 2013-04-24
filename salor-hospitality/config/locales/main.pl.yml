@@ -122,6 +122,8 @@ pl:
         audio: Sygnał dzwiekowy
         confirmation_user: Potwierdzanie zamówień zdalnych
         default_vendor_id: Log in to Vendor
+        advertising_url: Advertising URL
+        advertising_timeout: Advertising Timeout
       vendor_printer:
         copies: Kopia
         hidden: Usuń
@@ -672,6 +674,7 @@ pl:
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
       add_option_to_sent_item: Add Options to sent Items
+      manage_advertising: Manage Advertising
     create:
       success: Zasada została pomyślnie zapisana!
     destroy:
