@@ -169,9 +169,9 @@ class Settlement < ActiveRecord::Base
 
     output =
     "\e@"     +  # Initialize Printer
-    self.vendor.name +
+    self.vendor.name.to_s +
     "\n" + 
-    self.vendor.receipt_header_blurb + 
+    self.vendor.receipt_header_blurb.to_s + 
     "\n" +
     "\ea\x00" +  # align left
     "\e!\x38" +  # doube tall, double wide, bold

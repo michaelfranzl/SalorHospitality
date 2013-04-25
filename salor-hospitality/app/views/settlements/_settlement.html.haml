@@ -13,28 +13,29 @@
       %p.username== #{ settlement.user.login } (#{ t('activerecord.models.settlement.one') } ##{ settlement.nr })
       %p.username== #{ t '.started_at' } #{ l settlement.created_at, :format => :datetime_iso}
 
-    = settlement_form.label :initial_cash, Settlement.human_attribute_name(:initial_cash)
-    = settlement_form.text_field :initial_cash
-
     - if not orders.empty?
       - if workstation?
         %p.orders= link_to "#{ orders.size } #{ t('activerecord.models.order', :count => orders.size) }", "/settlements/detailed_list?user_id=#{settlement.user.id}"
       - else
         %p.orders== #{ orders.size } #{ t('activerecord.models.order', :count => orders.size) }
       %p.revenue= number_to_currency sum
-    %div{ :id => "finish_#{ settlement.user.id }", :style => "#{ 'display: none' if settlement.new_record? }" }
-      %p
-        = settlement_form.label :revenue, Settlement.human_attribute_name(:revenue)
-        = settlement_form.text_field :revenue
-      = settlement_form.hidden_field :user_id, :value => settlement.user.id
-      %input{ :type => 'hidden', :id => "finished_#{ settlement.user.id }", :name => 'settlement[finished]' }
-      %input{ :type => 'hidden', :id => "print_#{ settlement.user.id }", :name => 'print' }
+
+    - if permit('finish_all_settlements') or permit('finish_own_settlement')
+      = settlement_form.label :initial_cash, Settlement.human_attribute_name(:initial_cash)
+      = settlement_form.text_field :initial_cash
+      %div{ :id => "finish_#{ settlement.user.id }", :style => "#{ 'display: none' if settlement.new_record? }" }
+        %p
+          = settlement_form.label :revenue, Settlement.human_attribute_name(:revenue)
+          = settlement_form.text_field :revenue
+        = settlement_form.hidden_field :user_id, :value => settlement.user.id
+        %input{ :type => 'hidden', :id => "finished_#{ settlement.user.id }", :name => 'settlement[finished]' }
+        %input{ :type => 'hidden', :id => "print_#{ settlement.user.id }", :name => 'print' }
 
 
-    - if settlement.new_record?
-      %p= settlement_form.submit t('.start'), :class => 'submitbutton'
-    - else
-      %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1); $('#print_#{ settlement.user.id }').val(1); $('#loader_#{ settlement.user.id }').show();"
-    %div{ :id => "loader_#{ settlement.user.id }", :style => 'display: none' }
-      = image_tag 'ajax-loader2.gif'
-      = t('.please_wait')
+      - if settlement.new_record?
+        %p= settlement_form.submit t('.start'), :class => 'submitbutton'
+      - else
+        %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1); $('#print_#{ settlement.user.id }').val(1); $('#loader_#{ settlement.user.id }').show();"
+      %div{ :id => "loader_#{ settlement.user.id }", :style => 'display: none' }
+        = image_tag 'ajax-loader2.gif'
+        = t('.please_wait')

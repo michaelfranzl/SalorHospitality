@@ -637,9 +637,9 @@ gn:
       decrement_items: Artikelanzahl reduzieren
       delete_items: Artikel durch reduktion löschen
       edit_role: Rolle bearbeiten
-      finish_all_settlements: Alle Abrechnungen abschließen
+      finish_all_settlements: Alle Losungen abschließen
       finish_orders: Bestellungen abschließen
-      finish_own_settlement: Eigene Abrechnung abschließen
+      finish_own_settlement: Eigene Losung abschließen
       refund: Artikel stornieren
       manage_articles: Artikel verwalten
       manage_categories: Kategorien verwalten
@@ -668,7 +668,8 @@ gn:
       see_item_notifications_static: Benachrichtigungs-Zusammenfassung auf Hauptbildschirm
       split_items: Rechnung splitten
       take_orders: Bestellungen aufnehmen
-      view_all_settlements: Alle Abrechnungen ansehen
+      view_all_settlements: Alle Losungen ansehen
+      view_settlements_table: Losungs-Tabelle anzeigen
       manage_hotel: Hotel managen
       manage_statistics: Statistiken
       manage_statistics_hotel: Statistiken Hotel ansehen

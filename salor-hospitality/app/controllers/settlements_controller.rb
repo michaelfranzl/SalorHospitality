@@ -11,7 +11,7 @@
 class SettlementsController < ApplicationController
 
   def index
-    redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
+    redirect_to '/' and return unless @current_user.role.permissions.include? "view_settlements_table"
     @from, @to = assign_from_to(params)
     @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
     @to = @to ? @to.end_of_day : DateTime.now
@@ -31,8 +31,11 @@ class SettlementsController < ApplicationController
   end
 
   def open
-    redirect_to '/' and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @users = @current_vendor.users.existing.active.where('role_weight > 0')
+    if permit('finish_all_settlements') or permit('view_all_settlements')
+      @users = @current_vendor.users.existing.active.where('role_weight > 0')
+    else
+      @users = [@current_user]
+    end
   end
 
   # ajax

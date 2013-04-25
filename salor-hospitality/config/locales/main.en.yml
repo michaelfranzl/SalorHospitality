@@ -665,6 +665,7 @@ en:
       split_items: Split items
       take_orders: Take orders
       view_all_settlements: View all settlements
+      view_settlements_table: View settlements table
       manage_statistics: Statistics
       manage_statistics_hotel: View hotel statistics
       statistics_weekday: Statistics show Weekdays

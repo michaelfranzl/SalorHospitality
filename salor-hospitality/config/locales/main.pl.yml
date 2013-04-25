@@ -675,6 +675,7 @@ pl:
         quantities
       add_option_to_sent_item: Add Options to sent Items
       manage_advertising: Manage Advertising
+      view_settlements_table: View settlements table
     create:
       success: Zasada została pomyślnie zapisana!
     destroy:

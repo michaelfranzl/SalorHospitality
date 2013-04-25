@@ -661,6 +661,7 @@ ru:
       interim_receipt: Interim Receipt
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
+      view_settlements_table: View settlements table
     create:
       success: Роль успешно сохранена
     destroy:
