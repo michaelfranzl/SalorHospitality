@@ -20,7 +20,7 @@
         %p.orders== #{ orders.size } #{ t('activerecord.models.order', :count => orders.size) }
       %p.revenue= number_to_currency sum
 
-    - if permit('finish_all_settlements') or permit('finish_own_settlement')
+    - if permit('finish_all_settlements') or (permit('finish_own_settlement') and u == @current_user)
       = settlement_form.label :initial_cash, Settlement.human_attribute_name(:initial_cash)
       = settlement_form.text_field :initial_cash
       %div{ :id => "finish_#{ settlement.user.id }", :style => "#{ 'display: none' if settlement.new_record? }" }
