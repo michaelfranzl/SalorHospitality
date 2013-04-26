@@ -20,14 +20,14 @@ task :salor_configure, [:mode] => :environment do |t, args|
     v.package_upgrade
   end
   
-  subdomain = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}.sh" : nil
-  
-  unless Company.where(:subdomain => subdomain).any?
-    # this is only useful for local installations where all models are created from the seed script and the Compay's subdomain will be nil.
-    puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
-    c = Company.where(:subdomain => nil).last
-    c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
-  end
+#   identifier = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}" : nil
+#   
+#   unless Company.where(:identifier => subdomain).any?
+#     # this is only useful for local installations where all models are created from the seed script and the Company's subdomain will be nil.
+#     puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
+#     c = Company.where(:subdomain => nil).last
+#     c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
+#   end
 end
 
 

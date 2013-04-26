@@ -10,7 +10,8 @@
 
 class PagesController < ApplicationController
   
-  before_filter :check_permissions
+  before_filter :check_permissions, :except => [:iframe]
+  before_filter :fetch_vendor
   skip_before_filter :fetch_logged_in_user, :only => [:iframe]
   
   def index
@@ -25,7 +26,7 @@ class PagesController < ApplicationController
   end
 
   def iframe
-    @pages = params[:id] ? @current_vendor.pages.existing.find_all_by_id(params[:id]) : Page.existing.active
+    @pages = params[:id] ? @vendor.pages.existing.find_all_by_id(params[:id]) : @vendor.pages.existing.active
     @partial_htmls_pages = []
     @pages.each do |p|
       @partial_htmls_pages[p.id] = evaluate_partial_htmls p
@@ -109,6 +110,11 @@ class PagesController < ApplicationController
     next_page = pages[idx+1]
     next_page = page if next_page.nil?
     return previous_page, next_page
+  end
+  
+  def fetch_vendor
+    @company = Company.existing.active.where(:mode => 'local').first
+    @vendor = @company.vendors.existing.find_by_id(params[:v])
   end
 
 end

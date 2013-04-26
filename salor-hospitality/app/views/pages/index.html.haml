@@ -1,3 +1,5 @@
+= javascript_include_tag 'pages.js'
+
 - if @current_user
   = link_to (t :new), new_page_path, :class => 'links'
   - @pages.each do |p|
@@ -8,19 +10,7 @@
   - background_image = "background-image: url('#{ p.image }');" if p.image
   .page{ :id => "page_#{ p.id }", :style => "width: #{ p.width }px; height: #{ p.height }px; #{ background_image } background-color: #{ p.color }; position: absolute;" }
     = render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
-
+    
 :javascript
-  var count = #{ @pages.count };
-  var ids = #{ @pages_ids.inspect };
-  
-  if (count == 1) {
-    $('#page_' + ids[0]).fadeIn(1000);
-  } else {
-    slide(ids, count, 0);
-  }
-  
-  function slide(ids, count, current) {
-    $('#page_' + ids[current]).fadeIn(1000).delay(6000).fadeOut(1000);
-    if (current == (count - 1)) { current = 0 } else { current += 1; }
-    setTimeout(function(){ slide(ids, count, current); }, 7000);
-  }
+  var page_count = #{ @pages.count };
+  var page_ids = #{ @pages_ids.to_s };

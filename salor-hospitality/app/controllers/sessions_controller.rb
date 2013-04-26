@@ -26,8 +26,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Simple login
-    company = Company.existing.active.first
+    # Simple local login
+    company = Company.existing.active.where(:mode => 'local').first
     
     if params[:mode] == 'user'
       if company
