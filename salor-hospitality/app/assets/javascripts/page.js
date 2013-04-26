@@ -65,7 +65,7 @@ function render_digital_menucard_header() {
     toggle_digital_menucard(false);
   });
   submitbutton.on('mousedown', function() {
-    route('table', submit_json.model.table_id, 'send');
+    route('table', submit_json.model.table_id, 'customer_request_send');
   });
 }
 
