@@ -131,8 +131,9 @@ it:
         path: Percorso
         codepage: Codepage
         baudrate: Baudrate
-        pulse: Beep
         print_button_filename: Icon
+        pulse_tickets: Beep Tickets
+        pulse_receipt: Beep Receipt
       guest_type:
         hidden: cancella
         name: Nome

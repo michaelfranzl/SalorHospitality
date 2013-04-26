@@ -174,8 +174,9 @@ fr:
         path: Chemin
         codepage: Codepage
         baudrate: Baudrate
-        pulse: Beep
         print_button_filename: Icon
+        pulse_tickets: Beep Tickets
+        pulse_receipt: Beep Receipt
       payment_method_item:
         amount: montant
       booking_item:

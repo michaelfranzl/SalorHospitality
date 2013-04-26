@@ -222,8 +222,9 @@ cn:
         path: 路径
         codepage: Codepage
         baudrate: Baudrate
-        pulse: Beep
         print_button_filename: Icon
+        pulse_tickets: Beep Tickets
+        pulse_receipt: Beep Receipt
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
