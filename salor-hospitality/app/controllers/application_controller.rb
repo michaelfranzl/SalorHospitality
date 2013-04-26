@@ -296,7 +296,7 @@ class ApplicationController < ActionController::Base
       $Request = request
       $Params = params
       
-      if @current_user and not @current_user.advertising_url.empty?
+      if @current_user and not (@current_user.advertising_url.nil? or @current_user.advertising_url.empty?)
         @advertising_url = @current_user.advertising_url
       end
 
