@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
       when 'table'
         get_order
         if @order.finished == true
-          # happens when 2 terminals have the same order opened, but one is faster with finishing. in this case, route to the tabe again.
+          # happens when 2 terminals have the same order opened, but one is faster with finishing. in this case, route to the tabe again. happens also when waiter wants to clear a customer order.
           @table = @order.table
           @order = nil
           render 'orders/render_order_form' and return
