@@ -53,7 +53,9 @@ class Settlement < ActiveRecord::Base
     return if vendor_printer.nil?
     printr = Escper::Printer.new(self.company.mode, vendor_printer, self.company.identifier)
     printr.open
-    bytes_written, content_sent = printr.print vendor_printer.id, self.escpos
+    output = self.escpos
+    #pulse = "\x1B\x70\x00\x99\x99\x0C"
+    bytes_written, content_sent = printr.print vendor_printer.id, output
     bytes_sent = content_sent.length
     Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :settlement_id => self.id, :settlement_nr => self.nr, :content => self.escpos, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
     printr.close
@@ -177,8 +179,8 @@ class Settlement < ActiveRecord::Base
     "\e!\x38" +  # doube tall, double wide, bold
     "#{ I18n.t('activerecord.models.settlement.one') } ##{ self.nr }\n#{ self.user.login }\n\n"    +
     "\e!\x00" +  # Font A
-    "%-15.15s: %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at, :format => :datetime_iso)] +
-    "%-15.15s: %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at, :format => :datetime_iso)] +
+    "%-15.15s: %s\n" % [I18n.t('various.begin'), I18n.l(self.created_at + self.vendor.time_offset.hours, :format => :datetime_iso)] +
+    "%-15.15s: %s\n" % [I18n.t('various.end'), I18n.l(self.updated_at + self.vendor.time_offset.hours, :format => :datetime_iso)] +
     "%-15.15s: %i\n" % [I18n.t('activerecord.models.order.other'), self.orders.existing.where(:finished => true).count] +
     "%-15.15s: %i\n" % [I18n.t('activerecord.models.article.other'), self.items.existing.count] +
     "\n" +

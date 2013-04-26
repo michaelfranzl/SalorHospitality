@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130422155637) do
+ActiveRecord::Schema.define(:version => 20130426125050) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1077,7 +1077,8 @@ ActiveRecord::Schema.define(:version => 20130422155637) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.integer  "baudrate",              :default => 9600
-    t.boolean  "pulse"
+    t.boolean  "pulse_tickets"
+    t.boolean  "pulse_receipt"
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"

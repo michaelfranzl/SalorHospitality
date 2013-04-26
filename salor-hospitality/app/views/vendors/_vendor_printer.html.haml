@@ -28,8 +28,11 @@
   = f.text_field :baudrate, :size => 5
   %span.display_keyboard{ :id => "vendor_vendor_printers_attributes_#{ id }_baudrate_display_keyboard" }
   %br
-  = f.label :pulse, :class => 'narrow'
-  = f.check_box :pulse
+  = f.label :pulse_receipt, :class => 'narrow'
+  = f.check_box :pulse_receipt
+  %br
+  = f.label :pulse_tickets, :class => 'narrow'
+  = f.check_box :pulse_tickets
   %br
   - unless f.object.new_record?
     %span.link{ :onclick => "$('#vendor_vendor_printers_attributes_#{ id }_hidden').val(1); $('#vendor_printer_#{ id }').hide();" }= image_tag('button_small_delete.png', :title => VendorPrinter.human_attribute_name(:hidden), :alt => VendorPrinter.human_attribute_name(:hidden))

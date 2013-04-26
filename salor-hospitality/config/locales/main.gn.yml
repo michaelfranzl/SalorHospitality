@@ -222,7 +222,8 @@ gn:
         path: Pfad
         codepage: Codepage
         baudrate: Baudrate
-        pulse: Beep
+        pulse_tickets: Beep Tickets
+        pulse_receipt: Beep Rechnung
         print_button_filename: Icon
     errors:
       messages:

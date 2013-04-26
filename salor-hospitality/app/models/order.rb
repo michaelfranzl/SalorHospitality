@@ -414,6 +414,8 @@ class Order < ActiveRecord::Base
     if what.include? 'receipt'
       if vendor_printer
         contents = self.escpos_receipt(options)
+        pulse = "\x1B\x70\x00\x99\x99\x0C"
+        contents[:text] = pulse + contents[:text] if vendor_printer.pulse_receipt == true and self.printed.nil?
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         bytes_sent = content_sent.length
         Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
@@ -562,7 +564,7 @@ class Order < ActiveRecord::Base
       return {:text => '', :raw_insertations => {}}
     else
       vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
-      output += pulse if vendor_printer.pulse == true
+      output += pulse if vendor_printer.pulse_tickets == true
       return {:text => output, :raw_insertations => raw_insertations }
     end
   end
@@ -677,9 +679,6 @@ class Order < ActiveRecord::Base
       footerlogo = ''
     end
     
-    pulse =
-    "\x1B\x70\x00\x99\x99\x0C"
-    
     paper_cut = "\x1DV\x00\x0C"
 
     output_text =
@@ -702,7 +701,6 @@ class Order < ActiveRecord::Base
         "\n" +
         footerlogo +
         "\n\n\n\n\n\n" +
-        pulse +
         paper_cut
     
     return { :text => output_text, :raw_insertations => raw_insertations }

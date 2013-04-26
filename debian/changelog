@@ -1,3 +1,18 @@
+salor-hospitality (4.1.3.44) unstable; urgency=low
+
+  * amend Feature #1727
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 26 Apr 2013 15:37:19 +0200
+
+salor-hospitality (4.1.3.43) unstable; urgency=low
+
+  * Feature #1726
+  * fixed slideshows/pages
+  * Feature #1727
+  * updated translations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 26 Apr 2013 15:18:25 +0200
+
 salor-hospitality (4.1.3.42) unstable; urgency=low
 
   * Feature #1725
