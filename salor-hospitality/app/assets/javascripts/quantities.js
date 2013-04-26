@@ -8,32 +8,34 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-function display_quantities(quantities, target, cat_id) {
+function display_quantities(article_id, target) {
   if (settings.workstation) {
     target.html('');
     $('.quantities').hide();
   } else if (target.html() != '') {
+    // toggle open and close submenu
     target.html('');
     return;
   }
   target.html('');
-  jQuery.each(quantities, function(qu_id,qu_attr) {
-    q_object = this;
-    qbutton = $(document.createElement('div'));
+  var quantity_ids = resources.a[article_id].q;
+  for (var i = 0; i < quantity_ids.length; i++) {
+    var q_id = quantity_ids[i];
+    var q_object = resources.q[q_id];
+    var qbutton = $(document.createElement('div'));
     qbutton.addClass('quantity');
-    //qbutton.css('display','none');
-    qbutton.html(qu_attr.pre + qu_attr.post);
+    qbutton.html(q_object.pre + q_object.post);
     (function() {
       var element = qbutton;
-      var quantity = q_object;
+      var quantity_id = q_id;
       qbutton.on('click', function(event) {
-        add_new_item(quantity,false);
+        add_new_item(quantity_id, 'quantity', false);
         highlight_button(element);
         highlight_border(element);
       });
     })();
     target.append(qbutton);
-  })
+  }
   if (settings.workstation) {
     target.slideDown();
   } else {

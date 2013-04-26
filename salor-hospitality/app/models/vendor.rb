@@ -147,8 +147,6 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
-    
-    # the following is speedy, no more nested Ruby/SQL loops
     category_models       = self.categories.existing.active.positioned
     article_models        = self.articles.existing.active.positioned
     quantity_models       = self.quantities.existing.active.positioned
@@ -181,49 +179,38 @@ class Vendor < ActiveRecord::Base
     quantities = {}
     quantity_models.each do |q|
       ai = q.article_id
-      qhash = {"#{q.position}_#{q.id}" => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
-      if quantities.has_key?(ai)
-        quantities[ai].merge! qhash
-      else
-        quantities[ai] = qhash
-      end
+      qhash = {q.id => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
+      quantities.merge! qhash
     end
 
     articles = {}
     article_models.each do |a|
       ci = a.category_id
-      quantities_modified = {}
-      if quantities.has_key?(a.id)
-        quantities[a.id].each_key do |key|
-          quantities[a.id][key][:n] = a.name
-        end
-      end
-      ahash = {"#{a.position}_#{a.id}" => { :ai => a.id, :ci => ci, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities[a.id] }}
-      if articles.has_key?(ci)
-        articles[ci].merge! ahash
-      else
-        articles[ci] = ahash
-      end
+      aid = a.id
+      s = a.position.to_i
+      quantity_ids = a.quantities.existing.active.positioned.collect{|q| q.id}
+      ahash = {a.id => { :ai => aid, :ci => ci, :d => "a#{aid}", :n => a.name, :p => a.price, :q => quantity_ids }}
+      articles.merge! ahash
     end
 
     options = {}
     option_models.each do |o|
       o.categories.each do |oc|
         ci = oc.id
-        s = o.position.nil? ? 0 : o.position
-        ohash = {"#{s}_#{o.id}" => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
-        if options.has_key?(ci)
-          options[ci].merge! ohash
-        else
-          options[ci] = ohash
-        end
+        s = o.position.to_i
+        ohash = {o.id => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
+        options.merge! ohash
       end
     end
 
     categories = {}
     category_models.each do |c|
       cid = c.id
-      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid], :n => c.name }
+      s = c.position.to_i
+      article_ids = c.articles.existing.active.positioned.collect{ |a| a.id }
+      option_ids = c.options.existing.active.positioned.collect{ |o| o.id }
+      chash = {cid => { :id => cid, :a => article_ids, :o => option_ids, :n => c.name }}
+      categories.merge! chash
     end
 
     payment_methods = {}
@@ -271,7 +258,7 @@ class Vendor < ActiveRecord::Base
       :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow'))
     }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
+    resources = { :a => articles, :q => quantities, :o => options, :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
 
     return resources.to_json
   end

@@ -27,6 +27,7 @@ function get_table_show(table_id) {
       } else if (status == 'success') {
         offline_mode = false;
         $('#order_submit_button').html('');
+        render_items();
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
@@ -39,12 +40,15 @@ function get_table_show(table_id) {
             }
             break;
           case 4:
+            send_email('readyState 4 error in get_table_show', table_id);
             $('#order_info').html(i18n.server_error_short);
             break;
         }
       } else if (status == 'parsererror') {
+        send_email('ajax parsererror in get_table_show', table_id);
         $('#order_info').html(i18n.server_error_short);
       } else {
+        send_email('other ajax error in get_table_show', table_id);
         $('#order_info').html(i18n.server_error_short);        
       }
     }
