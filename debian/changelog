@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.46) unstable; urgency=low
+
+  * fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 26 Apr 2013 17:51:28 +0200
+
 salor-hospitality (4.1.3.45) unstable; urgency=low
 
   * changed nested resources object to simple resources object
