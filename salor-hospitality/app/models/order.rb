@@ -72,8 +72,8 @@ class Order < ActiveRecord::Base
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
-    order.hide(user.id) if order.hidden
-    order.hide(user.id) unless order.items.existing.any?
+    hidden_by = user ? user.id : -12
+    order.hide(hidden_by) if order.hidden or not order.items.existing.any?
     order.set_nr
     order.table.update_color
     return order
@@ -95,8 +95,8 @@ class Order < ActiveRecord::Base
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
-    self.hide(user.id) if self.hidden
-    self.hide(user.id) unless self.items.existing.any?
+    hidden_by = user ? user.id : -12
+    self.hide(hidden_by) if self.hidden or not self.items.existing.any?
     self.table.update_color
   end
   

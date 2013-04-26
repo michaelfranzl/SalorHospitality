@@ -50,11 +50,11 @@ function page_resize(display_width, display_height) {
 function render_digital_menucard_header() {
   var m = $('#digital_menucard');
   var header = create_dom_element('div',{id:'dm_header'}, '', m);
-  var forwardbutton = create_dom_element('span',{id:'dmc_forward'},'FORWARD', header);
-  var backbutton = create_dom_element('span',{id:'dmc_backward'},'BACKWARD', header);
-  var submitbutton = create_dom_element('span',{id:'dmc_submit'},'SUBMIT', header);
-  var detailbutton = create_dom_element('span',{id:'dmc_detail'},'DETAILS', header);
-  var sumbutton = create_dom_element('span',{id:'dmc_sum'},'', header);
+  var forwardbutton = create_dom_element('span',{id:'dmc_forward'},'▶', header);
+  var backbutton = create_dom_element('span',{id:'dmc_back'},'◀', header);
+  //var submitbutton = create_dom_element('span',{id:'dmc_submit'},'☑', header);
+  var detailbutton = create_dom_element('span',{id:'dmc_detail'},'☑', header);
+  var sumbutton = create_dom_element('span',{id:'dmc_sum'},number_to_currency(0), header);
   forwardbutton.on('mousedown', function() {
     page_advance(+1);
   });
@@ -64,9 +64,9 @@ function render_digital_menucard_header() {
   detailbutton.on('mousedown', function() {
     toggle_digital_menucard(false);
   });
-  submitbutton.on('mousedown', function() {
-    route('table', submit_json.model.table_id, 'customer_request_send');
-  });
+//   submitbutton.on('mousedown', function() {
+//     route('table', submit_json.model.table_id, 'customer_request_send');
+//   });
 }
 
 function toggle_digital_menucard(state) {
@@ -80,7 +80,6 @@ function toggle_digital_menucard(state) {
     //m.css('height', winheight);
     $('#digital_menucard .page').css('width', m.css('width'));
     $('#digital_menucard .page').css('height', m.css('height'));
-    console.log('toggling');
     page_resize(winwidth, winheight);
     $(first_page).show();
     m.show();
@@ -98,6 +97,8 @@ function page_advance(count) {
   var pages = $('#digital_menucard .page');
   var count_pages = pages.length;
   var visible_page = $(pages[page_idx_current]);
+  if ( (page_idx_current + count) < 0 ) count = -page_idx_current;
+  if ( (page_idx_current + count) > count_pages ) count = count_pages - page_idx_current;
   var next_page = $(pages[page_idx_current + count]);
   visible_page.hide();
   next_page.show();
@@ -105,8 +106,8 @@ function page_advance(count) {
 
 function add_dmenucard_button() {
   if(_get('dmenucard.button_added')) return
-  //if(!permissions.manage_customers) return
-  opts = {id:'dmenucard_category_button', handlers:{'mousedown':function(){toggle_digital_menucard(true)}}, bgcolor:"50,50,50", bgimage:'/assets/category_customer.png', append_to:'#categories'};
-  add_category_button(i18n.customers, opts);
+  if(!permissions.manage_pages) return
+  opts = {id:'dmenucard_category_button', handlers:{'mousedown':function(){toggle_digital_menucard(true)}}, bgcolor:"50,50,50", bgimage:'/assets/category_dmenucard.png', append_to:'#categories'};
+  add_category_button('digital menucard', opts);
   _set('dmenucard.button_added',true);
 }

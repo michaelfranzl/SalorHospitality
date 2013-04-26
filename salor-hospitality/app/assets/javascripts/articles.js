@@ -10,7 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 function display_articles(cat_id) {
   $('#articles').html('');
-  var article_ids = resources.c[cat_id].a;    
+  var article_ids = resources.c[cat_id].a;
+  console.log(article_ids);
   for (var i = 0; i < article_ids.length; i++) {
     var art_id = article_ids[i];
     var a_object = resources.a[art_id];

@@ -94,6 +94,7 @@ class VendorsController < ApplicationController
       :see_item_notifications_user_delivery => permit("see_item_notifications_user_delivery"),
       :manage_payment_methods => permit("manage_payment_methods"),
       :manage_customers => permit("manage_customers"),
+      :manage_pages => permit("manage_pages"),
       :audio => (@current_user.audio unless @current_customer),
       :move_tables => permit("move_tables"),
       :add_option_to_sent_item => permit('add_option_to_sent_item'),
