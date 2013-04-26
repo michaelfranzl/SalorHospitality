@@ -415,7 +415,7 @@ class Order < ActiveRecord::Base
       if vendor_printer
         contents = self.escpos_receipt(options)
         pulse = "\x1B\x70\x00\x99\x99\x0C"
-        contents += pulse if vendor_printer.pulse_receipt == true
+        contents[:text] = pulse + contents[:text] if vendor_printer.pulse_receipt == true and self.printed.nil?
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         bytes_sent = content_sent.length
         Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
