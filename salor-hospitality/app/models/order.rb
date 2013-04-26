@@ -598,7 +598,7 @@ class Order < ActiveRecord::Base
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
     header2 += "\n\n" +
     "\e!\x00" +  # Font A
@@ -676,6 +676,11 @@ class Order < ActiveRecord::Base
     else
       footerlogo = ''
     end
+    
+    pulse =
+    "\x1B\x70\x00\x99\x99\x0C"
+    
+    paper_cut = "\x1DV\x00\x0C"
 
     output_text =
         "\e@" +     # initialize
@@ -697,7 +702,9 @@ class Order < ActiveRecord::Base
         "\n" +
         footerlogo +
         "\n\n\n\n\n\n" +
-        "\x1DV\x00\x0C" # paper cut
+        pulse +
+        paper_cut
+    
     return { :text => output_text, :raw_insertations => raw_insertations }
   end
   

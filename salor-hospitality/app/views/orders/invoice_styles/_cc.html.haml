@@ -31,7 +31,7 @@
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 
-%p.date= l @order.finished_at, :format => :datetime_iso
+%p.date= l(@order.finished_at + @order.vendor.time_offset.hours), :format => :datetime_iso
 
 = render :partial => 'invoice_item_list', :locals => { :order => @order }
 

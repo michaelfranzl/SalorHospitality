@@ -30,7 +30,7 @@
     = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
     = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if permit('view_settlements_table')
     = link_to( t('various.statistics'), main_app.statistics_path) if permit('manage_statistics')
-    = link_to( t('activerecord.models.report.other'), '/reports') if @current_company.mode == 'local'
+    = link_to( t('activerecord.models.report.other'), '/reports') if @current_company.mode == 'local' and (permit('remote_support') or permit('downlaod_database'))
     = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
     = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')
     = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if permit('manage_payment_methods')
