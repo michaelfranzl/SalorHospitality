@@ -13,6 +13,11 @@ class OrdersController < ApplicationController
   def index
     @categories = @current_vendor.categories.positioned
     @users = @current_vendor.users.existing.active
+    @pages = @current_vendor.pages.existing.active
+    @partial_htmls_pages = []
+    @pages.each do |p|
+      @partial_htmls_pages[p.id] = p.evaluate_partial_htmls
+    end
     session[:admin_interface] = false
   end
 

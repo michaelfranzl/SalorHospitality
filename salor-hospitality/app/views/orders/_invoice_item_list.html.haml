@@ -1,4 +1,4 @@
-%p= t :served_by_X_on_table_Y, :waiter => order.user.title, :table => order.table.name
+%p= t :served_by_X_on_table_Y, :waiter => (order.user ? order.user.title : 'customer'), :table => order.table.name
 
 %table
   %tr

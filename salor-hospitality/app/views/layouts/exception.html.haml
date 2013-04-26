@@ -32,10 +32,6 @@
       = stylesheet_link_tag('workstation', :media => 'screen')      
 
   %body
-    - if workstation? and session[:ad_url] and not session[:ad_url].empty?
-      #advertising
-        %iframe#adfram{ :src => session[:ad_url] }
-        #adclickcatcher{ :onclick => 'show_login();' }
     #container
       #header
         = image_tag "logo-small-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :id => 'logo'

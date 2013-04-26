@@ -8,4 +8,8 @@ $(function(){
   if (!_get('customers.button_added')) {
     connect('customers_entry_hook','after.go_to.table',add_customers_button);
   }
+  
+  if (!_get('dmenucard.button_added')) {
+    connect('dmenucard_entry_hook','after.go_to.table',add_dmenucard_button);
+  }
 })

@@ -18,6 +18,12 @@ function calculate_sum() {
       sum += this.p * count;
     });
   });
-  $('#order_sum').html(sum.toFixed(2).replace('.', i18n.decimal_separator));
+  var output = sum.toFixed(2).replace('.', i18n.decimal_separator);
+  $('#order_sum').html(output);
+  
+  if ($('#digital_menucard:visible')) {
+    $('#dmc_sum').html(number_to_currency(sum));
+  }
+  
   return sum;
 }

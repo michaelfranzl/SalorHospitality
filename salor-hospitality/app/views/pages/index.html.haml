@@ -1,15 +1,11 @@
-= javascript_include_tag 'pages.js'
+= javascript_include_tag 'menucard_slideshow.js'
 
 - if @current_user
   = link_to (t :new), new_page_path, :class => 'links'
   - @pages.each do |p|
     = link_to p.id, edit_page_path(p)
     
-- @pages.each do |p|
-  - partial_htmls = @partial_htmls_pages[p.id]
-  - background_image = "background-image: url('#{ p.image }');" if p.image
-  .page{ :id => "page_#{ p.id }", :style => "width: #{ p.width }px; height: #{ p.height }px; #{ background_image } background-color: #{ p.color }; position: absolute;" }
-    = render :partial => 'page', :locals => { :page => p, :partial_htmls => partial_htmls }
+= render :partial => 'pages', :locals => {:pages => @pages, :partial_htmls_pages => @partial_htmls_pages}
     
 :javascript
   var page_count = #{ @pages.count };

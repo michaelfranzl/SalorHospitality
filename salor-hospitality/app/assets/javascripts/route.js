@@ -62,17 +62,23 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
       alert(i18n.order_will_be_confirmed);
-      send_json('table_' + model_id);
+      send_json('table_' + model_id, function() {
+        render_items()
+      });
     } else if (action == 'customer_request_finish') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_finish';
       alert(i18n.finish_was_requested);
-      send_json('table_' + model_id);
+      send_json('table_' + model_id, function() {
+        render_items()
+      });
     } else if (action == 'customer_request_waiter') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_waiter';
       alert(i18n.waiter_was_requested);
-      send_json('table_' + model_id);
+      send_json('table_' + model_id, function() {
+        render_items()
+      });
     } else if (action == 'send_and_print' ) {
       // finish and print order receipt
       submit_json.jsaction = 'send';

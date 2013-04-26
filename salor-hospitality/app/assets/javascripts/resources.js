@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function update_resources(mode) {
+  console.log('here');
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
@@ -19,7 +20,7 @@ function update_resources(mode) {
     success: function() {
       if (mode == 'documentready') {
         update_tables();
-        if ( ! $.isEmptyObject(resources.sn) ) {
+        if ( !$.isEmptyObject(resources.sn) && typeof render_season_illustration != 'undefined' ) {
           render_season_illustration();
         }
         //automatically route to views depending on uri parameters

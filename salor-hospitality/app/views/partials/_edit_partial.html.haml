@@ -2,7 +2,7 @@
   div#partial_#{ partial.id } img { width: #{ partial.image_size }px; }
   div#partial_#{ partial.id } { color: #{ partial.color } }
 
-.partial{:id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px" }
+.partial{:id => "partial_#{ partial.id }", :partial_id => "#{ partial.id }", :model_id => "#{ model_id }", :type => 'partial', :style => "left: #{ partial.left }px; top: #{ partial.top }px", :left_orig => partial.left, :top_orig => partial.top }
   .options
     %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
   .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}

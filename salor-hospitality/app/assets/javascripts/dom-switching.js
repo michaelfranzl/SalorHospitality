@@ -104,3 +104,13 @@ function toggle_advertising(state) {
   }
 }
 
+function switch_to_digital_menucard() {
+  $('#container').hide();
+  $('#digital_menucard').show();
+}
+
+function switch_from_digital_menucard() {
+  $('#container').show();
+  $('#digital_menucard').hide();
+}
+

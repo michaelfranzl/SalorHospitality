@@ -120,6 +120,12 @@ class ApplicationController < ActionController::Base
       
       when 'table'
         get_order
+        if @order.finished == true
+          # happens when 2 terminals have the same order opened, but one is faster with finishing. in this case, route to the tabe again.
+          @table = @order.table
+          @order = nil
+          render 'orders/render_order_form' and return
+        end
         case params['jsaction']
           #----------jsaction----------
           when 'send'
@@ -166,7 +172,8 @@ class ApplicationController < ActionController::Base
                   render 'orders/render_order_form'
               end
             else
-              render :nothing => true
+              render 'orders/render_order_form'
+              #render :nothing => true
             end
           #----------jsaction----------
           when 'move'
@@ -232,7 +239,9 @@ class ApplicationController < ActionController::Base
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
       end
-      if @order
+      if @order and @order.finished == true
+        # neither update nor create
+      elsif @order
         params[:model][:table_id] = @order.table_id if params[:model] # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
         @order.update_from_params(params, @current_user, @current_customer)
       else
@@ -286,6 +295,10 @@ class ApplicationController < ActionController::Base
       $Company = @current_company
       $Request = request
       $Params = params
+      
+      if @current_user and not @current_user.advertising_url.empty?
+        @advertising_url = @current_user.advertising_url
+      end
 
       unless (@current_user or @current_customer) and @current_vendor
         if defined?(ShSaas) == 'constant'
@@ -387,8 +400,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def render_error(exception)
+    logger.info exception.backtrace.join("\n")
     raise exception if request.xhr?
-    #log_error(exception)
     @exception = exception
     if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true
       if notifier = Rails.application.config.middleware.detect { |x| x.klass == ExceptionNotifier }
@@ -397,7 +410,7 @@ class ApplicationController < ActionController::Base
         env['exception_notifier.delivered'] = true
       end
     end
-    render :template => '/errors/error', :layout => 'login'
+    render :template => '/errors/error', :layout => 'exception'
   end
     
 end

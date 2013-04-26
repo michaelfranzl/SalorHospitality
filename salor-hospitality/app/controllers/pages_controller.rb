@@ -18,8 +18,8 @@ class PagesController < ApplicationController
     @pages = @current_vendor.pages.existing.active
     @partial_htmls_pages = []
     @pages.each do |p|
-      @partial_htmls_pages[p.id] = evaluate_partial_htmls p
-    end      
+      @partial_htmls_pages[p.id] = p.evaluate_partial_htmls
+    end
     @pages_ids = @pages.collect{ |p| p.id }
     #@current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
     render :index, :layout => 'iframe' unless @current_user
@@ -29,7 +29,7 @@ class PagesController < ApplicationController
     @pages = params[:id] ? @vendor.pages.existing.find_all_by_id(params[:id]) : @vendor.pages.existing.active
     @partial_htmls_pages = []
     @pages.each do |p|
-      @partial_htmls_pages[p.id] = evaluate_partial_htmls p
+      @partial_htmls_pages[p.id] = p.evaluate_partial_htmls
     end      
     @pages_ids = @pages.collect{ |p| p.id }
     render :index, :layout => 'iframe'
@@ -39,10 +39,10 @@ class PagesController < ApplicationController
     @page = @current_vendor.pages.existing.find_by_id(params[:id])
     unless @page.update_attributes params[:page]
       @page.images.reload
-      @partial_htmls = evaluate_partial_htmls @page
+      @partial_htmls = @page.evaluate_partial_htmls
       render(:edit) and return 
     end    
-    @partial_htmls = evaluate_partial_htmls @page
+    @partial_htmls = @page.evaluate_partial_htmls
     redirect_to edit_page_path @page
   end
   
@@ -52,7 +52,7 @@ class PagesController < ApplicationController
   
   def show
     @page = get_model
-    @partial_htmls = evaluate_partial_htmls @page
+    @partial_htmls = @page.evaluate_partial_htmls
     @previous_page, @next_page = neighbour_pages @page
     #@current_user = @current_vendor.users.existing.active.find(session[:user_id]) if session[:user_id]
     render :show, :layout => 'iframe' unless @current_user
@@ -60,7 +60,7 @@ class PagesController < ApplicationController
 
   def edit
     @page = get_model
-    @partial_htmls = evaluate_partial_htmls @page
+    @partial_htmls = @page.evaluate_partial_htmls
   end
   
   def find
@@ -84,23 +84,7 @@ class PagesController < ApplicationController
   
   private
   
-  def evaluate_partial_htmls(page)
-    # this goes here because binding doesn't seem to work in views
-    partials = page.partials
-    partial_htmls = []
-    partials.each do |partial|
-      # the following 3 class varibles are needed for rendering the _partial partial
-      record = partial.presentation.model.constantize.find_by_id partial.model_id
-      begin
-        eval partial.presentation.secure_expand_code
-        partial_htmls[partial.id] = ERB.new(partial.presentation.secure_expand_markup).result binding
-      rescue Exception => e
-        partial_htmls[partial.id] = t('partials.error_during_evaluation') + e.message
-      end
-      partial_htmls[partial.id].force_encoding('UTF-8')
-    end
-    return partial_htmls
-  end
+
   
   def neighbour_pages(page)
     pages = @current_vendor.pages.existing

@@ -99,7 +99,7 @@ class VendorsController < ApplicationController
       :add_option_to_sent_item => permit('add_option_to_sent_item'),
       :confirmation_user => (@current_user.confirmation_user unless @current_customer)
     }
-    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources }; timeout_update_tables = #{ @current_vendor.update_tables_interval }; timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval }; timeout_update_resources = #{ @current_vendor.update_resources_interval }; automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 }; user_login = '#{ @current_user.login }'; company_identifier = '#{ @current_company.identifier }';"
+    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources }; timeout_update_tables = #{ @current_vendor.update_tables_interval }; timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval }; timeout_update_resources = #{ @current_vendor.update_resources_interval }; automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 }; user_login = '#{ @current_user.login if @current_user }'; company_identifier = '#{ @current_company.identifier }';"
   end
   
   def report

@@ -3,7 +3,7 @@
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     - if mobile? or mobile_special?
-      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
+      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1.5, user-scalable=1" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
       %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png"}
       %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png"}
@@ -53,10 +53,13 @@
       == sh_debian_siteid = '#{ SalorHospitality::Application::SH_DEBIAN_SITEID }';
 
   %body
-    - if workstation? and controller.controller_name == 'orders'
+    - if workstation? and controller.controller_name == 'orders' and @advertising_url
       #advertising
-        %iframe#adfram{ :src => @current_user.advertising_url, :onload => "$('#advertising').hide();" }
+        %iframe#adfram{ :src => @advertising_url, :onload => "$('#advertising').hide();" }
         #adclickcatcher{ :onclick => 'toggle_advertising(false)' }
+    - if @pages and @pages.any?
+      #digital_menucard{ :style => 'display: none'}
+        = render :partial => '/pages/pages', :locals => {:pages => @pages, :partial_htmls_pages => @partial_htmls_pages}
     #screenwait
     #rooms_container
     #container
@@ -78,7 +81,7 @@
         .left
           = image_tag "logo-tiny-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :class => 'logo_tiny'
           = SalorHospitality::Application::VERSION
-          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login }
+          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login if @current_user }
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'

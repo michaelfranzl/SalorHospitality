@@ -69,6 +69,9 @@ function add_new_item(id, model, add_new, anchor_d) {
     render_options(option_ids, d);
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
   }
+  
+  if ($('#digital_menucard:visible')) {
+  }
   calculate_sum();
   return d;
 }

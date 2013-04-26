@@ -28,6 +28,7 @@
 //= require math
 //= require numbers
 //= require options
+//= require page
 //= require payment-methods
 //= require quantities
 //= require queue
