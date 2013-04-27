@@ -34,7 +34,6 @@ function page_resize(display_width, display_height) {
   $(".page").css('height', display_height);
   
   var scalable_elements = $('.partial');
-  //scalable_elements.push($('table'));
   $.each(scalable_elements, function(i, el) {
     el = $(el);
     var el_left = el.attr('left_orig');
@@ -45,6 +44,18 @@ function page_resize(display_width, display_height) {
     el.css('left', scaled_left + 'px');
     el.css('top', scaled_top + 'px');
   })
+  
+  var scalable_buttons = $('span.dmc_button');
+  scalable_buttons.push($('table'));
+  $.each(scalable_buttons, function(i, el) {
+    el = $(el);
+    var width_orig = el.attr('width_orig');
+    var height_orig = el.attr('height_orig');
+    scaled_width = Math.floor(width_orig * factor_width);
+    scaled_height = Math.floor(height_orig * factor_height);
+    el.css('width', scaled_width + 'px');
+    el.css('height', scaled_height + 'px');
+  });
 }
 
 function render_digital_menucard_header() {
