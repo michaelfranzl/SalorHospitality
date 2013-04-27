@@ -68,6 +68,16 @@ class Vendor < ActiveRecord::Base
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
   
+  def utc_offset_hours
+    # The offset of the Rails application
+    Time.zone.now.utc_offset/60/60
+  end
+  
+  def total_utc_offset_hours
+    # The additional offset of the store location
+    utc_offset_hours +  self.time_offset
+  end
+  
   def sanitize_vendor_printer_paths
     self.vendor_printers.existing.update_all :company_id => self.company_id
     self.vendor_printers.existing.each do |vp|

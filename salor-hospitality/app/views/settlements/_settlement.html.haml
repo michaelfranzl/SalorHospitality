@@ -11,7 +11,7 @@
       %p.username== #{ settlement.user.login }
     - else
       %p.username== #{ settlement.user.login } (#{ t('activerecord.models.settlement.one') } ##{ settlement.nr })
-      %p.username== #{ t '.started_at' } #{ l settlement.created_at, :format => :datetime_iso}
+      %p.username== #{ t '.started_at' } #{ l(settlement.created_at + settlement.vendor.time_offset.hours, :format => :datetime_iso) }
 
     - if not orders.empty?
       - if workstation?

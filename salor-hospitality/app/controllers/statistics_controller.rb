@@ -14,8 +14,6 @@ class StatisticsController < ApplicationController
 
   def index
     @from, @to = assign_from_to(params)
-    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
-    @to = @to ? @to.end_of_day : DateTime.now
     @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
     @settlement_ids = @settlements.collect{ |s| s.id }
     @taxes = @current_vendor.taxes.existing
@@ -31,8 +29,8 @@ class StatisticsController < ApplicationController
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
     @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
-    @item_article_ids = Item.connection.execute("SELECT article_id from items where created_at between '#{ @from.strftime("%Y-%m-%d") } 00:00:00' AND '#{ @to.strftime("%Y-%m-%d") } 23:59:59' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-    @item_quantity_ids = Item.connection.execute("SELECT quantity_id from items where created_at between '#{ @from.strftime("%Y-%m-%d") } 00:00:00' AND '#{ @to.strftime("%Y-%m-%d") } 23:59:59' AND hidden IS NULL").to_a.flatten.uniq
+    @item_article_ids = Item.connection.execute("SELECT article_id from items where created_at between '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+    @item_quantity_ids = Item.connection.execute("SELECT quantity_id from items where created_at between '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
     @articles = Article.where(:id => @item_article_ids).order(:name)
     @quantities = Quantity.where(:id => @item_quantity_ids).order(:article_name)
     

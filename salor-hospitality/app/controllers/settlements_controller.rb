@@ -13,8 +13,6 @@ class SettlementsController < ApplicationController
   def index
     redirect_to '/' and return unless @current_user.role.permissions.include? "view_settlements_table"
     @from, @to = assign_from_to(params)
-    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
-    @to = @to ? @to.end_of_day : DateTime.now
     @settlements = @current_vendor.settlements.where(:created_at => @from..@to, :finished => true).existing
     @settlement_ids = @settlements.collect{ |s| s.id }
     @taxes = @current_vendor.taxes.existing

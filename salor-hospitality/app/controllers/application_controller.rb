@@ -261,18 +261,32 @@ class ApplicationController < ActionController::Base
     end
 
     def assign_from_to(p)
-      begin
-        f = Date.civil( p[:from][:year ].to_i,
-                        p[:from][:month].to_i,
-                        p[:from][:day  ].to_i) if p[:from]
-        t = Date.civil( p[:to  ][:year ].to_i,
-                        p[:to  ][:month].to_i,
-                        p[:to  ][:day  ].to_i) if p[:to]
-      rescue
-        flash[:error] = t(:invalid_date)
-        f = Time.now.beginning_of_day
-        t = Time.now.end_of_day
+      tz = sprintf("%+i", @current_vendor.total_utc_offset_hours)
+      if p[:from]
+        fy = p[:from][:year ].to_i
+        fm = p[:from][:month].to_i
+        fd = p[:from][:day  ].to_i
+        begin
+          f = DateTime.new(fy,fm,fd,0,0,0,tz)
+        rescue
+          flash[:error] = t(:invalid_date)
+        end
       end
+      if p[:to]
+        ty = p[:to][:year ].to_i
+        tm = p[:to][:month].to_i
+        td = p[:to][:day  ].to_i
+        begin
+          t = DateTime.new(ty,tm,td,23,59,59,tz)
+        rescue
+          flash[:error] = t(:invalid_date)
+        end
+      end
+      
+      # the database stores UTC times. If we use the time functios of ruby below, the application time zone will already be attached, so it works out of the box.
+      f ||= DateTime.now.beginning_of_day - 1.week
+      t ||= DateTime.now
+      
       return f, t
     end
 

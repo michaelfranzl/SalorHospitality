@@ -20,10 +20,7 @@ class ReportsController < ApplicationController
     @locations = Dir['/media/*']
     @locations << Dir['/home/*']
     @locations.flatten!
-    @from, @to = assign_from_to(params)
-    @from = @from ? @from.beginning_of_day : DateTime.now.beginning_of_day
-    @to = @to ? @to.end_of_day : @from.end_of_day
-    
+    @from, @to = assign_from_to(params)    
     if params.has_key?(:save)
       zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
       redirect_to reports_path
