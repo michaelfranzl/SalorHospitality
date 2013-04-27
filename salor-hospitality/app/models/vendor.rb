@@ -55,6 +55,7 @@ class Vendor < ActiveRecord::Base
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
   serialize :unused_settlement_numbers
+  serialize :branding
 
   validates_presence_of :name
   validates :update_tables_interval, :numericality => { :greater_than => 17 }

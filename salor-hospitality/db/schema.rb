@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426125050) do
+ActiveRecord::Schema.define(:version => 20130427074454) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1132,6 +1132,7 @@ ActiveRecord::Schema.define(:version => 20130426125050) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "history_print"
+    t.string   "branding",                    :limit => 5000,     :default => "--- {}\n"
   end
 
 end

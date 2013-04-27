@@ -43,7 +43,7 @@ module SalorHospitality
       CONFIGURATION = YAML::load(File.open(File.join(Rails.root, 'config', 'config.yml'), 'r').read)
     end
     
-    raise "The setting :branding_codename in config.yml only supports the values 'billgastro' or 'salorhospitality'" unless ['salorhospitality','billgastro'].include?(CONFIGURATION[:branding_codename])
+    #raise "The setting :branding_codename in config.yml only supports the values 'billgastro' or 'salorhospitality'" unless ['salorhospitality','billgastro'].include?(CONFIGURATION[:branding_codename])
 
     LANGUAGES = { 'en' => 'English', 'gn' => 'Deutsch', 'tr' => 'Türkçe', 'fr' => 'Français', 'es' => 'Español', 'pl' => 'Polski', 'hu' => 'Magyar', 'el' => 'Greek', 'ru' => 'Русский', 'it' => 'Italiana', 'cn' => 'Chinese', 'hk' => 'Hongkong', 'tw' => 'Taiwanese'}
     COUNTRIES = { 'cc' => :default, 'de' => 'Deutschland', 'at' => 'Österreich', 'ch' => 'Schweiz', 'tr' => 'Türkiye', 'fr' => 'France', 'es' => 'España', 'pl' => 'Polska', 'hu' => 'Magyarország', 'el' => 'Ελλάδα', 'ru' => 'Россия', :it => 'Italia', 'cn' => 'China', 'hk' => 'Hongkong', 'tw' => 'Taiwan', 'us' => 'USA', 'gb' => 'England' }

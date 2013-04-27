@@ -1,4 +1,4 @@
-= image_tag "logo-small-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :id => 'logo'
+= image_tag "logo-small-#{@current_vendor.branding[:codename]}.png", :id => 'logo'
 - if workstation?
   %div#toggle_admin_interface{ :onclick => "toggle_admin_interface()" }
     = image_tag @current_vendor.logo_image

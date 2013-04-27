@@ -39,9 +39,9 @@ module ApplicationHelper
   
   def branding_override_style(type, name)
     if type == :buttons
-      override_name = SalorHospitality::Application::CONFIGURATION[:branding_override_styles][:buttons][name]
+      override_name = @current_vendor.branding[:override_styles][:buttons][name]
       if override_name
-        return "background-image: url(/assets/button_mobile_#{override_name}.png);"
+        return "background-image: url(/assets/button_mobile_#{override_name});"
       else
         return ''
       end

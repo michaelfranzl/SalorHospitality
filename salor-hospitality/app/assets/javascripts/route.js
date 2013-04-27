@@ -112,8 +112,11 @@ function route(target, model_id, action, options) {
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id + '?order_id=' + options.order_id,
-        timeout: 15000
-      }); //this repopulates items_json and renders items
+        timeout: 15000,
+        success: function() {
+          render_items();
+        }
+      }); //this just fetches items_json and a few other state variables
       
     } else if (action == 'from_booking') {
       submit_json.jsaction = 'send_and_go_to_table';
