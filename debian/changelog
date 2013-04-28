@@ -1,3 +1,10 @@
+salor-hospitality (4.1.3.48) unstable; urgency=low
+
+  * Bug #1731
+  * improved digital menucard
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 28 Apr 2013 17:42:40 +0200
+
 salor-hospitality (4.1.3.47) unstable; urgency=low
 
   * Feature #1730
