@@ -41,7 +41,7 @@ function render_options(option_ids, d) {
     })
   }
   for (var i = 0; i < option_ids.length; i++) {
-    console.log(i);
+    //console.log(i);
     var o_id = option_ids[i];
     var object = resources.o[o_id];
     var button = $(document.createElement('span'));

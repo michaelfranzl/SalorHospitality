@@ -44,9 +44,8 @@ function page_resize(display_width, display_height) {
     el.css('left', scaled_left + 'px');
     el.css('top', scaled_top + 'px');
   })
-  
   var scalable_buttons = $('span.dmc_button');
-  scalable_buttons.push($('table'));
+  scalable_buttons.push($('div.page table'));
   $.each(scalable_buttons, function(i, el) {
     el = $(el);
     var width_orig = el.attr('width_orig');

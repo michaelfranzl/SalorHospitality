@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function update_resources(mode) {
-  console.log('here');
+  //console.log('here');
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',

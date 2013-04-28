@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   skip_before_filter :fetch_logged_in_user, :except => [:destroy, :test_mail]
   
   def show
-    redirect_to new_session_path and return
+    redirect_to '/' and return
   end
 
   def new
@@ -64,11 +64,11 @@ class SessionsController < ApplicationController
         else
           flash[:error] = t('messages.user_account_is_currently_locked')
           flash[:notice] = nil
-          redirect_to new_session_path and return
+          redirect_to '/' and return
         end
       else
         flash[:error] = t :wrong_password
-        redirect_to new_session_path and return
+        redirect_to '/' and return
       end
       
     elsif params[:mode] == 'customer'
@@ -101,7 +101,7 @@ class SessionsController < ApplicationController
       session[:ad_url] = nil
       session[:ad_url] = @current_user.advertising_url if @current_user.advertising_url and not @current_user.advertising_url.empty?
       @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
-      redirect_to new_session_path
+      redirect_to '/'
     elsif @current_customer
       @current_customer.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
       redirect_to new_customer_session_path

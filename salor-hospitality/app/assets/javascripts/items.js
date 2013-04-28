@@ -121,7 +121,9 @@ function compose_label(object) {
     // this is an article object
     label = object.n;
   } else {
-    label = object.pre + ' ' + object.n + ' ' + object.post;
+    // this is an quantity object
+    var articleobj = resources.a[object.ai];
+    label = object.pre + ' ' + articleobj.n + ' ' + object.post;
   }
   return label;
 }
