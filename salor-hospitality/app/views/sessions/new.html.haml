@@ -1,6 +1,6 @@
 #login
   - if mobile?
-    = image_tag "logo-small-#{@vendor.branding[:codename]}.png", :id => 'logo'
+    = image_tag "logo-small-#{@branding_codename}.png", :id => 'logo'
   = form_tag @submit_path do
     %p
       = label_tag 'password', (t '.password')

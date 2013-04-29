@@ -17,19 +17,22 @@ class SessionsController < ApplicationController
   end
 
   def new
-    #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
-    @company = Company.existing.active.where(:mode => 'local').first
-    @vendor = @company.vendors.existing.first
+    company = Company.existing.active.where(:mode => 'local').first
+    vendor = company.vendors.existing.first
     session[:customer_id] = @current_customer = nil
     @submit_path = session_path
+    @branding_codename = vendor.branding[:codename]
+    @branding_title = vendor.branding[:title]
     render :layout => 'login'
   end
   
   def new_customer
-    @company = Company.existing.active.where(:mode => 'local').first
-    @vendor = @company.vendors.existing.first
+    company = Company.existing.active.where(:mode => 'local').first
+    vendor = company.vendors.existing.first
     session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
     @submit_path = session_path
+    @branding_codename = vendor.branding[:codename]
+    @branding_title = vendor.branding[:title]
     render :layout => 'login'
   end
 
