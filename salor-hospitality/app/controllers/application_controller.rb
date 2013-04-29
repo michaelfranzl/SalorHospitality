@@ -316,10 +316,18 @@ class ApplicationController < ActionController::Base
 
       unless (@current_user or @current_customer) and @current_vendor
         if defined?(ShSaas) == 'constant'
-          redirect_to sh_saas.new_session_path
+          redirect_to sh_saas.new_session_path and return
         else
-          redirect_to new_session_path
+          redirect_to new_session_path and return
         end
+      end
+      
+      if @current_vendor.branding != {}
+        @branding_codename = @current_vendor.branding[:codename]
+        @branding_title = @current_vendor.branding[:title]
+      else
+        @branding_codename = 'salorhospitality'
+        @branding_title = 'SALOR Hospitality'
       end
     end
 

@@ -5,11 +5,11 @@
     - if mobile? or mobile_special?
       %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1.5, user-scalable=1" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
-      %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57-#{@current_vendor.branding[:codename]}.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72-#{@current_vendor.branding[:codename]}.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "/apple-touch-icon-114x114-#{@current_vendor.branding[:codename]}.png"}
+      %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57-#{@branding_codename}.png"}
+      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72-#{@branding_codename}.png"}
+      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "/apple-touch-icon-114x114-#{@branding_codename}.png"}
 
-    %title= @current_vendor.branding[:title]
+    %title= @branding_title
 
     = csrf_meta_tag
     = javascript_include_tag 'application'
@@ -79,7 +79,7 @@
       #footer
       #copyright
         .left
-          = image_tag "logo-tiny-#{@current_vendor.branding[:codename]}.png", :class => 'logo_tiny'
+          = image_tag "logo-tiny-#{@branding_codename}.png", :class => 'logo_tiny'
           = SalorHospitality::Application::VERSION
           == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login if @current_user }
         .right

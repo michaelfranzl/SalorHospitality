@@ -38,6 +38,7 @@ module ApplicationHelper
   end
   
   def branding_override_style(type, name)
+    return '' unless @current_vendor.branding and @current_vendor.branding[:override_styles]
     if type == :buttons
       override_name = @current_vendor.branding[:override_styles][:buttons][name]
       if override_name

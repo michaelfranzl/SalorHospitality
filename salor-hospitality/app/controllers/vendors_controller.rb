@@ -66,6 +66,8 @@ class VendorsController < ApplicationController
     @vendor.company = @current_company
     if @vendor.save
       @vendor.update_cache
+      @current_user.vendors << @vendor
+      @current_user.save
       flash[:notice] = t('vendors.create.success')
       redirect_to vendors_path
     else
@@ -76,7 +78,7 @@ class VendorsController < ApplicationController
   def destroy
     @vendor = get_model
     @vendor.hide
-    session[:vendor_id] = @current_company.vendors.existing.first.id
+    #session[:vendor_id] = @current_company.vendors.existing.first.id
     redirect_to vendors_path
   end
 
