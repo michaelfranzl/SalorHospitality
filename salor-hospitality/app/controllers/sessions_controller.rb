@@ -17,17 +17,19 @@ class SessionsController < ApplicationController
   end
 
   def new
-    company = Company.existing.active.where(:mode => 'local').first
+    company = Company.existing.active.first
     vendor = company.vendors.existing.first
     session[:customer_id] = @current_customer = nil
     @submit_path = session_path
     @branding_codename = vendor.branding[:codename]
     @branding_title = vendor.branding[:title]
+    @branding_codename ||= 'salorhospitality'
+    @branding_title ||= 'Salor Hospitality'
     render :layout => 'login'
   end
   
   def new_customer
-    company = Company.existing.active.where(:mode => 'local').first
+    company = Company.existing.active.first
     vendor = company.vendors.existing.first
     session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
     @submit_path = session_path
@@ -38,7 +40,7 @@ class SessionsController < ApplicationController
 
   def create
     # Simple local login
-    company = Company.existing.active.where(:mode => 'local').first
+    company = Company.existing.active.first
     
     if params[:mode] == 'user'
       if company
