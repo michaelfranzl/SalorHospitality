@@ -17,10 +17,11 @@
   AddHandler bill-type .bill
   Action bill-type /cgi-bin/bill.cgi
   
-  SetEnvIf Host ^.*-b\.sh\.localhost USE_AUTH
-  SetEnvIf Host ^.*-d\.sh\.localhost USE_AUTH
-  SetEnvIf Host ^.*-a\.sh\.localhost USE_HTTPS=no
-  SetEnvIf Host ^.*-b\.sh\.localhost USE_HTTPS=no
+  SetEnvIf Host ^.*1\.sh\.localhost USE_HTTPS=no
+  SetEnvIf Host ^.*2\.sh\.localhost USE_HTTPS=no
+  
+  SetEnvIf Host ^.*4\.sh\.localhost USE_AUTH
+  SetEnvIf Host ^.*2\.sh\.localhost USE_AUTH
   
   RewriteEngine on
   RewriteCond %{HTTPS} on
