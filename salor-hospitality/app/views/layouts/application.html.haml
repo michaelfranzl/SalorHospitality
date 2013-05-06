@@ -57,7 +57,7 @@
       #advertising
         %iframe#adfram{ :src => @advertising_url, :onload => "$('#advertising').hide();" }
         #adclickcatcher{ :onclick => 'toggle_advertising(false)' }
-    - if @pages and @pages.any?
+    - if controller.controller_name == 'orders' and @pages and @pages.any?
       #digital_menucard{ :style => 'display: none'}
         = render :partial => '/pages/pages', :locals => {:pages => @pages, :partial_htmls_pages => @partial_htmls_pages}
     #screenwait

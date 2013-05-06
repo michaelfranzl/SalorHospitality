@@ -29,11 +29,11 @@ function page_resize(display_width, display_height) {
   //$('#digital_menucard').css('-webkit-transform', 'scale(2,2)');
   
   var scaled_fontsize = Math.floor(100 * factor_width);
-  $(".page").css("font-size", scaled_fontsize + '%');
-  $(".page").css('width', display_width);
-  $(".page").css('height', display_height);
+  $("#digital_menucard .page").css("font-size", scaled_fontsize + '%');
+  $("#digital_menucard .page").css('width', display_width);
+  $("#digital_menucard .page").css('height', display_height);
   
-  var scalable_elements = $('.partial');
+  var scalable_elements = $('#digital_menucard .partial');
   $.each(scalable_elements, function(i, el) {
     el = $(el);
     var el_left = el.attr('left_orig');
@@ -44,8 +44,8 @@ function page_resize(display_width, display_height) {
     el.css('left', scaled_left + 'px');
     el.css('top', scaled_top + 'px');
   })
-  var scalable_buttons = $('span.dmc_button');
-  scalable_buttons.push($('div.page table'));
+  var scalable_buttons = $('#digital_menucard span.dmc_button');
+  scalable_buttons.push($('#digital_menucard div.page table'));
   $.each(scalable_buttons, function(i, el) {
     el = $(el);
     var width_orig = el.attr('width_orig');
