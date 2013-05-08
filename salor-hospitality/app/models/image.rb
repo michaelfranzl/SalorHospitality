@@ -27,7 +27,7 @@ class Image < ActiveRecord::Base
 	IMAGE_QUALITY = 80
   MAX_IMAGE_UPLOAD_SIZE = 500.kilobytes
   VALID_IMAGE_TYPES = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/bmp']
-
+  
   def image
     large_url
   end
@@ -68,7 +68,9 @@ class Image < ActiveRecord::Base
 	end
 
   def make_path(path)
-    path = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
+    identifier = "unknown"
+    identifier = self.company.identifier if self.company
+    path = File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
     return path
   end
 
@@ -101,6 +103,9 @@ class Image < ActiveRecord::Base
 	end
 
 	def process
+    model = self.imageable_type.constantize.find_by_id(self.imageable_id)
+    company_id = nil
+    self.write_attribute(:company_id, model.company_id) if model
 		if @file_data
       # Delete existing image dirs
       VERSIONS.each { |ver| FileUtils.rm_rf(get_path(ver)) if File.exists?(get_path(ver)) and get_path(ver) != 'original' }
@@ -144,10 +149,12 @@ class Image < ActiveRecord::Base
 	end
 
 	def get_path(type=nil)
+    identifier = "unknown"
+    identifier = self.company.identifier if self.company
 		if type.nil? or type.empty? then
-			File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}")
+			File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}")
 		else
-			File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}", type.to_s)
+			File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}", type.to_s)
 		end
 	end
 
@@ -156,8 +163,10 @@ class Image < ActiveRecord::Base
 	end
 
 	def cleanup
+    identifier = "unknown"
+    identifier = self.company.identifier if self.company
 		unless self.id.nil?
-      ipath = File.join(DIRECTORY, "s#{sub_dir}", "#{self.id}")
+      ipath = File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}")
       FileUtils.rm_rf(ipath) if File.exists?(ipath)
 		end
 	end
