@@ -3,7 +3,8 @@
 - if @current_user
   = link_to (t :new), new_page_path, :class => 'links'
   - @pages.each do |p|
-    = link_to p.id, edit_page_path(p)
+    = link_to edit_page_path(p) do
+      %span.button=p.id
     
 = render :partial => 'pages', :locals => {:pages => @pages, :partial_htmls_pages => @partial_htmls_pages}
     

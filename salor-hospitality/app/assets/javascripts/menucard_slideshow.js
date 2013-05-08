@@ -4,10 +4,11 @@ $(function() {
   if (ran_documentready_menucard_slideshow) return;
   
   if (page_count == 1) {
-    $('#page_' + page_ids[0]).fadeIn(1000);
+    $('#page_' + page_ids[0]);
+    ).fadeIn(1000);
   } else {
     // kick-off self-calling slide function
-    show_page(page_ids[0]);
+    show_page(0, page_count - 1);
   }
   ran_documentready_menucard_slideshow = true;
 })
@@ -20,8 +21,11 @@ function show_page(idx, last_idx) {
   page.css('z-index', 100);
   page.fadeIn(time_fadein, function() {
     var last_page = $('#page_' + page_ids[last_idx]);
-    last_page.hide();
-    page.css('z-index', 99);
+    last_page.fadeOut(time_fadein, function() {
+      page.css('z-index', 99);
+      last_page.hide();
+    });
+    
   });
   
   if (idx == (page_count - 1)) {
