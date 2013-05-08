@@ -2,23 +2,26 @@
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 = form_tag settlements_path, :method => :get do
-  = submit_tag t(:display)
-  = label 'from', t('.start_date'), :class => 'right'
-  = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
-  = label 'to', t('.end_date'), :class => 'right'
-  = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
-  - if @cost_centers.any?
-    = label 'cc', CostCenter.model_name.human, :class => 'right'
-    %select{ :name => 'cost_center_id', :onchange => '$("form").submit()' }
-      %option{ :value => '' }= t ('.all_cost_centers')
-      - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
-      = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
-  = label 'one_day_one_row', t('.one_day_one_row'), :class => 'right'
-  = check_box_tag 'one_day_one_row', 1, params[:one_day_one_row]
+  .limitby
+    = label 'from', t('.start_date'), :class => 'right'
+    = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
+    %br
+    = label 'to', t('.end_date'), :class => 'right'
+    = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
+    %br
+    - if @cost_centers.any?
+      = label 'cc', CostCenter.model_name.human, :class => 'right'
+      %select{ :name => 'cost_center_id', :onchange => '$("form").submit()' }
+        %option{ :value => '' }= t ('.all')
+        - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
+        = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
+    %br
+    = label 'one_day_one_row', t('.one_day_one_row'), :class => 'right'
+    = check_box_tag 'one_day_one_row', 1, params[:one_day_one_row]
+    %hr
+    = submit_tag t(:display)
 
 - if params[:one_day_one_row]
   = render :partial => 'one_day_one_row'
 - else
   = render :partial => 'one_settlement_one_row'
-    
-  

@@ -21,7 +21,6 @@
       %td= link_to '', "/settlements/print/#{ s.id }", :class => 'print1_button_small', :remote => true
       %td
         = l(s.created_at + s.vendor.time_offset.hours, :format => :date_iso)
-        %br
         = l(s.created_at + s.vendor.time_offset.hours, :format => :time_short)
       %td{ :class => 'br' }= s.user.login
       - @taxes.each do |t|

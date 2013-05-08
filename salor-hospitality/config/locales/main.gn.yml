@@ -573,7 +573,7 @@ gn:
     error_during_evaluation: ! 'Fehler: '
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
-  pink: Pink ein.
+  pink: Pink
   please_enter_item_comment: Notiz
   please_enter_item_price: Preis
   presentations:

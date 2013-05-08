@@ -43,7 +43,7 @@
         %td
           = category_form.label :icon
           %br
-          %select#category_icon{ :name => 'category[icon]', :size => 20 }
+          %select#category_icon{ :name => 'category[icon]', :size => 20}
             = options_for_select(get_icon_array, category_form.object.icon)
         %td
           = category_form.label 'color'

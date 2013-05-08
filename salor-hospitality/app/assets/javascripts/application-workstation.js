@@ -44,6 +44,12 @@ $(document).ready(function() {
   }
   
   $('#admin').hide();
+
+  $(function() {
+    $.each($('select'), function(k,v) {
+      make_select_widget($(v));
+    });
+  });
 })
 
 function download_printfile(path) {
