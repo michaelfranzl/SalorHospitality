@@ -69,7 +69,7 @@ class Image < ActiveRecord::Base
 
   def make_path(path)
     identifier = "unknown"
-    identifier = self.company.identifier if self.company
+    identifier = self.company.identifier if self.company and self.company.identifier and not self.company.identifier.empty?
     path = File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
     return path
   end
@@ -93,8 +93,6 @@ class Image < ActiveRecord::Base
 		end unless imgs.nil?
 	end
 
-	private
-
 	def is_valid_upload
 		return true if self.name.blank?
 		errors.add(":", I18n.t(:"images.errempty")) if @file_data.blank?
@@ -102,10 +100,7 @@ class Image < ActiveRecord::Base
     errors.add(":", I18n.t(:"images.errtype")) unless @file_data.original_filename.split('\\').last.split('/').last.split('.').last.match(/jpg|jpeg|gif|png|bmp/i) and VALID_IMAGE_TYPES.include? @file_data.content_type.chomp
 	end
 
-	def process
-    model = self.imageable_type.constantize.find_by_id(self.imageable_id)
-    company_id = nil
-    self.write_attribute(:company_id, model.company_id) if model
+	def process    
 		if @file_data
       # Delete existing image dirs
       VERSIONS.each { |ver| FileUtils.rm_rf(get_path(ver)) if File.exists?(get_path(ver)) and get_path(ver) != 'original' }
@@ -150,7 +145,7 @@ class Image < ActiveRecord::Base
 
 	def get_path(type=nil)
     identifier = "unknown"
-    identifier = self.company.identifier if self.company
+    identifier = self.company.identifier if self.company and self.company.identifier and not self.company.identifier.empty?
 		if type.nil? or type.empty? then
 			File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}")
 		else
@@ -164,7 +159,7 @@ class Image < ActiveRecord::Base
 
 	def cleanup
     identifier = "unknown"
-    identifier = self.company.identifier if self.company
+    identifier = self.company.identifier if self.company and self.company.identifier and not self.company.identifier.empty?
 		unless self.id.nil?
       ipath = File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}")
       FileUtils.rm_rf(ipath) if File.exists?(ipath)

@@ -58,6 +58,7 @@ class ArticlesController < ApplicationController
     @article.vendor = @current_vendor
     if @article.save
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id, :article_name => @article.name
+      @article.images.update_all :company_id => @article.company_id
       redirect_to articles_path
       flash[:notice] = t('articles.create.success')
     else
@@ -86,6 +87,7 @@ class ArticlesController < ApplicationController
     redirect_to roles_path and return unless @article
     if @article.update_attributes params[:article]
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id, :article_name => @article.name
+      @article.images.update_all :company_id => @article.company_id
       flash[:notice] = t('articles.create.success')
       if session[:return_to]
         redirect_to session[:return_to]
