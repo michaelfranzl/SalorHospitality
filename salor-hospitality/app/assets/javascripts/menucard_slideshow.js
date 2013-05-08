@@ -4,8 +4,7 @@ $(function() {
   if (ran_documentready_menucard_slideshow) return;
   
   if (page_count == 1) {
-    $('#page_' + page_ids[0]);
-    ).fadeIn(1000);
+    $('#page_' + page_ids[0]).fadeIn(1000);
   } else {
     // kick-off self-calling slide function
     show_page(0, page_count - 1);
