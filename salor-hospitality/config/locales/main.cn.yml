@@ -683,6 +683,15 @@ cn:
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -737,11 +746,11 @@ cn:
       total: 总计
       unit_price: 单价
     index:
-      all_cost_centers: 所有
       end_date: 结束日期
       start_date: 开始日期
       sum_total: 总计
       one_day_one_row: List days
+      all: All
     settlement:
       finish: 完毕
       print: 打印
@@ -783,6 +792,8 @@ cn:
     index:
       hour: 小时
       weekday: 工作日
+      query: Query
+      limit_by: Limit by
   users:
     create:
       success: 用户成功创建
@@ -846,6 +857,10 @@ cn:
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   vendors:
     index:
       edit: 编辑

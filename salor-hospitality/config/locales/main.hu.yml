@@ -494,9 +494,9 @@ hu:
     index:
       start_date: Start date
       end_date: End date
-      all_cost_centers: All
       sum_total: Sum total
       one_day_one_row: List days
+      all: All
     detailed_list:
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       count: Count
@@ -534,6 +534,8 @@ hu:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   tables:
     new:
       new_table: New Table
@@ -616,6 +618,10 @@ hu:
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   roles:
     new:
       take_orders: Take orders
@@ -688,6 +694,15 @@ hu:
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
     create:
       success: Role successfully saved
     destroy:

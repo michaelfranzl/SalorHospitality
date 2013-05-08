@@ -674,6 +674,15 @@ fr:
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -729,11 +738,11 @@ fr:
       total: Total
       unit_price: Prix unitaire
     index:
-      all_cost_centers: Tout
       end_date: Date de fin
       start_date: Date de début
       sum_total: Montant total
       one_day_one_row: List days
+      all: All
     settlement:
       finish: Terminer
       print: Imprimer
@@ -749,6 +758,8 @@ fr:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   stocks:
     new:
       edit_stock: Modifier le stock
@@ -843,6 +854,10 @@ fr:
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   vendors:
     index:
       edit: Modifier

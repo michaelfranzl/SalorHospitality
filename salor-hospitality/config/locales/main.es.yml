@@ -652,6 +652,15 @@ es:
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
     create:
       success: Rol guardado exitosamente
     destroy:
@@ -685,11 +694,11 @@ es:
       total: Total
       unit_price: Precio unitario
     index:
-      all_cost_centers: Todos
       end_date: Fecha final
       start_date: Fecha de inicio
       sum_total: Suma total
       one_day_one_row: List days
+      all: All
     settlement:
       finish: Terminar
       print: Imprimir
@@ -701,6 +710,8 @@ es:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   stocks:
     new:
       edit_stock: Editar stock
@@ -788,6 +799,10 @@ es:
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   violet: Violeta
   waiter: Camarero
   waiterpad_generic_name: Libreta de pedidos

@@ -663,6 +663,15 @@ ru:
       assign_users_to_vendors: Assign Users to Vendors
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
     create:
       success: Роль успешно сохранена
     destroy:
@@ -696,11 +705,11 @@ ru:
       total: Всего
       unit_price: Цена за единицу
     index:
-      all_cost_centers: Все
       end_date: Конечная дата
       start_date: Начальная дата
       sum_total: Общая сумма
       one_day_one_row: List days
+      all: All
     settlement:
       finish: Конец
       print: Печать
@@ -713,6 +722,8 @@ ru:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   stocks:
     new:
       edit_stock: Редактирование склада
@@ -849,6 +860,10 @@ ru:
       oops_an_error_occurred: Oops! An Error occurred
     switched_to_vendor: Vendor '%{vendorname}'
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   vendors:
     index:
       edit: Редактирование

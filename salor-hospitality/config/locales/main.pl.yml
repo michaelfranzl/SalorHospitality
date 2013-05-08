@@ -677,6 +677,15 @@ pl:
       add_option_to_sent_item: Add Options to sent Items
       manage_advertising: Manage Advertising
       view_settlements_table: View settlements table
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
     create:
       success: Zasada została pomyślnie zapisana!
     destroy:
@@ -712,11 +721,11 @@ pl:
       total: Suma
       unit_price: Cena
     index:
-      all_cost_centers: Wszystkie
       end_date: Data końcowa
       start_date: Data początkowa
       sum_total: Suma całkowita
       one_day_one_row: List days
+      all: All
     settlement:
       finish: Koniec
       print: Drukuj
@@ -729,6 +738,8 @@ pl:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   stocks:
     new:
       edit_stock: Edytcja stanu magazynu
@@ -872,6 +883,10 @@ pl:
       press the cancel button to delete the offline items.
     statistics: Statistics
     translations: Translations
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
   customers:
     new:
       edit_customer: Edycja klienta
