@@ -4,9 +4,11 @@
 <%= I18n.l @from, :format => :date_iso %> -> <%= I18n.l @to, :format => :date_iso %>
 
 
-<%= I18n.t('activerecord.models.cost_center.one') %>: <%= @selected_cost_center ? @selected_cost_center.name : I18n.t('settlements.index.all_cost_centers') %>
+<%= I18n.t('activerecord.models.cost_center.one') %>: <%= @selected_cost_center ? @selected_cost_center.name : I18n.t('settlements.index.all') %>
 
-<% if permit('statistics_weekday') #---------------------------- %>
+<%= I18n.t('activerecord.models.user.one') %>: <%= @selected_user ? @selected_user.login : I18n.t('settlements.index.all') %>
+
+<% if params[:type] == 'statistics_weekday' #---------------------------- %>
 
 
 <%= "\e!\x38" %>
@@ -16,7 +18,7 @@
 <% i = 0 %>
 <% total = 0 %>
 <% @days.each do |day| %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [day, friendly_unit, sum] %>
 <% i += 1 %>
 <% total += sum %>
@@ -25,7 +27,7 @@
 <%= "\xc4" * 42 %>
 <% end %>
 
-<% if permit('statistics_hour') #---------------------------- %>
+<% if params[:type] == 'statistics_hour' #---------------------------- %>
 
 
 <%= "\e!\x38" %>
@@ -35,9 +37,9 @@
 <% total = 0 %>
 <% 0.upto(23).each do |hour| %>
 <% if @weekday %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum) %>
 <% else %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum) %>
 <% end %>
 <%= "%10.10s:00  %s %7.2f\n" % [hour, friendly_unit, sum] %>
 <% total += sum %>
@@ -46,7 +48,7 @@
 <%= "\xc4" * 42 %>
 <% end %>
 
-<% if permit('statistics_statistic_category') #----------------------------  %>
+<% if params[:type] == 'statistics_statistic_category' #----------------------------  %>
 
 
 <%= "\e!\x38" %>
@@ -55,7 +57,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @statistic_categories.each do |cat| %>
-<% sum = @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum) %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [cat.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -63,7 +65,7 @@
 <%= "\xc4" * 42 %>
 <% end %>
 
-<% if permit('statistics_tax') #---------------------------- %>
+<% if params[:type] == 'statistics_tax' #---------------------------- %>
 
 
 <%= "\e!\x38" %>
@@ -72,7 +74,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @taxes.each do |tax| %>
-<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro) %>
+<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @scids).sum(:gro) %>
 <%= "%10.10s     %s %7.2f\n" % [tax.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -80,7 +82,7 @@
 <%= "\xc4" * 42 %>
 <% end %>
 
-<% if permit('statistics_category') #---------------------------- %>
+<% if params[:type] == 'statistics_category' #---------------------------- %>
 
 
 <%= "\e!\x38" %>
@@ -89,7 +91,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @categories.each do |cat| %>
-<% sum = @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum) %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @scids).sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [cat.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -97,7 +99,7 @@
 <%= "\xc4" * 42 %>
 <% end %>
 
-<% if permit('statistics_sold_quantities') #----------------------------  %>
+<% if params[:type] == 'statistics_sold_quantities' #----------------------------  %>
 
 
 <%= "\e!\x38" %>

@@ -1,32 +1,173 @@
 %h2= t 'various.statistics'
-- if @current_company.mode == 'local' and @current_vendor.vendor_printers.existing.any?
-  %a.iconbutton.print2_button{ :onclick => "print_statistics()" }
-  
-= form_tag statistics_path, :method => :get do
-  = submit_tag t(:display)
-  = label 'from', t('settlements.index.start_date'), :class => 'right'
-  = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
-  = label 'to', t('settlements.index.end_date'), :class => 'right'
-  = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
-  - if @cost_centers.any?
-    = label 'cc', CostCenter.model_name.human, :class => 'right'
-    %select{ :name => 'cost_center_id', :onchange => '$("form").submit()' }
-      %option{ :value => '' }= t ('settlements.index.all_cost_centers')
-      - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
-      = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
+= form_tag statistics_path, :method => :get, :id => 'statisticform' do
+  = hidden_field_tag 'print'
+  .limitby
+    = label 'type', t('.query'), :class => 'right'
+    %select{ :id => 'type', :name => 'type' }
+      %option
+      = options_for_select(@permitted_statistics_for_select, params[:type])
+    %br
+    = label 'from', t('settlements.index.start_date'), :class => 'right'
+    = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
+    %br
+    = label 'to', t('settlements.index.end_date'), :class => 'right'
+    = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
+    %br
+    - if @cost_centers.any?
+      = label 'cc', CostCenter.model_name.human, :class => 'right'
+      %select{ :name => 'cost_center_id' }
+        %option{ :value => '' }= t ('settlements.index.all')
+        - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
+        = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
+    %br
+      = label 'user', User.model_name.human, :class => 'right'
+      %select{ :name => 'user_id' }
+        %option{ :value => '' }= t ('settlements.index.all')
+        - selected_id = @selected_user ? @selected_user.id.to_s : ''
+        = options_from_collection_for_select(@users, :id, :login, selected_id)
+        
+    %hr
+    %span.button{ :onclick => 'statistics_submit(false)'}= t('various.display')
+    - if @current_vendor.vendor_printers.existing.any?
+      %span.button{ :onclick => 'statistics_submit(true)' }= t('various.print')
 
-  .clear
-  
-  - if permit('statistics_weekday')
+  - if params[:type] == 'statistics_table'
     %table.settlements.statistics
       %tr
-        %th.bb{ :style => 'width:40px' }= t '.weekday'
+        %th.bb= Table.model_name.human
         %th.bb= t :sum
-        %th.bb
+        %th.bb.bar
+      - sums = []
+      - i = 0
+      - @tables.each do |table|
+        - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :table_id => table, :cost_center_id => @csids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @tables.each do |table|
+        %tr
+          %td= table.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+        - i += 1
+
+  - if params[:type] == 'statistics_category'
+    %table.settlements.statistics
+      %tr
+        %th.bb= Category.model_name.human
+        %th.bb= t :sum
+        %th.bb.bar
+      - sums = []
+      - i = 0
+      - @categories.each do |cat|
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @csids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @categories.each do |cat|
+        %tr
+          %td= cat.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+        - i += 1
+        
+  - if params[:type] == 'statistics_statistic_category'
+    %table.settlements.statistics
+      %tr
+        %th.bb= StatisticCategory.model_name.human
+        %th.bb= t :sum
+        %th.bb.bar
+      - sums = []
+      - i = 0
+      - @statistic_categories.each do |cat|
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @csids).sum(:sum)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @statistic_categories.each do |cat|
+        %tr
+          %td= cat.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+        - i += 1
+
+  - if params[:type] == 'statistics_payment_method'
+    %table.settlements.statistics
+      %tr
+        %th.bb= PaymentMethod.model_name.human
+        %th.bb= t :sum
+        %th.bb.bar
+      - sums = []
+      - i = 0
+      - @payment_methods.each do |pm|
+        - sums[i] =  @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids).sum(:amount)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @payment_methods.each do |pm|
+        %tr
+          %td= pm.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+        - i += 1
+        
+  - if params[:type] == 'statistics_tax'
+    %table.settlements.statistics
+      %tr
+        %th.bb= Tax.model_name.human
+        %th.bb= t :sum
+        %th.bb.bar
+      - sums = []
+      - i = 0
+      - @taxes.each do |tax|
+        - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids).sum(:gro)
+        - i += 1
+      - maximum = sums.sort.last
+      - i = 0
+      - @taxes.each do |tax|
+        %tr
+          %td= tax.name
+          %td= number_to_currency sums[i]
+          %td
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+        - i += 1
+          
+  - if params[:type] == 'statistics_sold_quantities'
+    %table.settlements.statistics
+      %tr
+        %th.bb= Article.model_name.human
+        %th.bb= t :count
+      - @articles.each do |article|
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count)
+        %tr
+          %td= article.name
+          %td= sold_quantity
+          
+    %table.settlements.statistics
+      %tr
+        %th.bb= Quantity.model_name.human
+        %th.bb= t :count
+      - @quantities.each do |quantity|
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
+        %tr
+          %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
+          %td= sold_quantity
+     
+  
+  - if params[:type] == 'statistics_weekday'
+    %table.settlements.statistics
+      %tr
+        %th.bb= t '.weekday'
+        %th.bb= t :sum
+        %th.bb.bar
       - i = 0
       - sums = []
       - @days.each do |day|
-        - sums[i] = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
+        - sums[i] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -35,15 +176,15 @@
           %td= day
           %td= number_to_currency sums[i]
           %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
         - i += 1
 
-  - if permit('statistics_hour')
+  - if params[:type] == 'statistics_hour'
     %table.settlements.statistics
       %tr
-        %th.bb{ :style => 'width:40px' }= t '.hour'
+        %th.bb= t '.hour'
         %th.bb= t :sum
-        %th.bb
+        %th.bb.bar
           %select{ :name => 'weekday', :onchange => '$("form").submit()', :value => @weekday }
             %option
             - i = 0
@@ -56,9 +197,9 @@
       - sums = []
       - 0.upto(23).each do |hour|
         - if @weekday
-          - sums[hour] =  @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum)
+          - sums[hour] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum)
         - else
-          - sums[hour] = @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = '#{hour}'").sum(:sum)
+          - sums[hour] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = '#{hour}'").sum(:sum)
         - sums[hour] ||= 0
       - stripped_sums = sums.clone
       - stripped_sums.delete(nil)
@@ -68,141 +209,16 @@
           %td== #{hour}:00
           %td= number_to_currency sums[hour]
           %td
-            .statistics_bar{ :style => "width:#{2 + sums[hour]*100/maximum}px" }
-
-  - if permit('statistics_table')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:40px' }= Table.model_name.human
-        %th.bb= t :sum
-        %th.bb
-      - sums = []
-      - i = 0
-      - @tables.each do |table|
-        - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :settlement_id => @settlement_ids, :table_id => table, :cost_center_id => @scids).sum(:sum)
-        - i += 1
-      - maximum = sums.sort.last
-      - i = 0
-      - @tables.each do |table|
-        %tr
-          %td= table.name
-          %td= number_to_currency sums[i]
-          %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-        - i += 1
-
-  - if permit('statistics_category')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:40px' }= Category.model_name.human
-        %th.bb= t :sum
-        %th.bb
-      - sums = []
-      - i = 0
-      - @categories.each do |cat|
-        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :category_id => cat, :cost_center_id => @scids).sum(:sum)
-        - i += 1
-      - maximum = sums.sort.last
-      - i = 0
-      - @categories.each do |cat|
-        %tr
-          %td= cat.name
-          %td= number_to_currency sums[i]
-          %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-        - i += 1
-        
-  - if permit('statistics_statistic_category')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:40px' }= StatisticCategory.model_name.human
-        %th.bb= t :sum
-        %th.bb
-      - sums = []
-      - i = 0
-      - @statistic_categories.each do |cat|
-        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum)
-        - i += 1
-      - maximum = sums.sort.last
-      - i = 0
-      - @statistic_categories.each do |cat|
-        %tr
-          %td= cat.name
-          %td= number_to_currency sums[i]
-          %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-        - i += 1
-
-  - if permit('statistics_payment_method')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:40px' }= PaymentMethod.model_name.human
-        %th.bb= t :sum
-        %th.bb
-      - sums = []
-      - i = 0
-      - @payment_methods.each do |pm|
-        - sums[i] =  @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :payment_method_id => pm, :cost_center_id => @scids).sum(:amount)
-        - i += 1
-      - maximum = sums.sort.last
-      - i = 0
-      - @payment_methods.each do |pm|
-        %tr
-          %td= pm.name
-          %td= number_to_currency sums[i]
-          %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-        - i += 1
-        
-  - if permit('statistics_tax')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:40px' }= Tax.model_name.human
-        %th.bb= t :sum
-        %th.bb
-      - sums = []
-      - i = 0
-      - @taxes.each do |tax|
-        - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :settlement_id => @settlement_ids, :tax_id => tax, :cost_center_id => @scids).sum(:gro)
-        - i += 1
-      - maximum = sums.sort.last
-      - i = 0
-      - @taxes.each do |tax|
-        %tr
-          %td= tax.name
-          %td= number_to_currency sums[i]
-          %td
-            .statistics_bar{ :style => "width:#{2 + sums[i]*100/maximum}px" }
-        - i += 1
-          
-  - if permit('statistics_sold_quantities')
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:1500px' }= Article.model_name.human
-        %th.bb= t :count
-      - @articles.each do |article|
-        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count)
-        %tr
-          %td= article.name
-          %td= sold_quantity
-          
-    %table.settlements.statistics
-      %tr
-        %th.bb{ :style => 'width:1500px' }= Quantity.model_name.human
-        %th.bb= t :count
-      - @quantities.each do |quantity|
-        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
-        %tr
-          %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
-          %td= sold_quantity
-      
-.clear
+            .statistics_bar{ :style => "width:#{2 + 200 * sums[hour]/maximum}px" }
 
 :javascript
-  function print_statistics() {
-    if (window.location.search == "") {
-      window.location += "?print=1";
-    } else {
-      window.location += "&print=1";
-    }
+  function statistics_submit(print) {
+    $('#print').val(print);
+    $('#statisticform').submit();
   }
+  
+  $(function() {
+    $.each($('select'), function(k,v) {
+      make_select_widget($(v));
+    });
+  });

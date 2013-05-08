@@ -10,14 +10,16 @@
 
 class User < ActiveRecord::Base
   include Scope
+  has_one :cash_drawer
   has_many :settlements
   has_many :orders
-  has_one :cash_drawer
+  has_many :bookings
+  has_many :receipts
+  has_many :payment_method_items
+  has_many :tax_items
   belongs_to :role
   belongs_to :company
   has_and_belongs_to_many :vendors
-  has_many :bookings
-  has_many :receipts
   has_and_belongs_to_many :tables
   validates_presence_of :login
   validates_presence_of :password

@@ -610,6 +610,8 @@ gn:
     index:
       hour: Stunde
       weekday: Wochentag
+      query: Abfrage
+      limit_by: Einschränken
   customers:
     new:
       edit_customer: Kunde bearbeiten
@@ -694,6 +696,15 @@ gn:
       settlement_statistics_sold_quantities: Losungsausdruck Statistik Verkaufsmengen
       settlement_statistics_taxes_categories: Losungsausdruck Statistik Steuer mit
         Kategorien
+      statistics:
+        statistics_weekday: Wochentage
+        statistics_sold_quantities: Veraufsmengen
+        statistics_hour: Stunden
+        statistics_table: Tische
+        statistics_payment_method: Zahlungsmethoden
+        statistics_category: Kategorien
+        statistics_statistic_category: Statistik-Kategorien
+        statistics_tax: Steuern
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
@@ -751,7 +762,7 @@ gn:
       unit_price: Stück
     index:
       one_day_one_row: Tagesliste
-      all_cost_centers: Alle
+      all: Alle
       end_date: Bis
       start_date: Von
       sum_total: Gesamtsumme
@@ -802,6 +813,10 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    display: Anzeigen
+    download: Download
+    go: Los!
+    print: Drucken
     translations: Übersetzungen
     switched_to_vendor: Betrieb '%{vendorname}'
     cancel: Abbrechen

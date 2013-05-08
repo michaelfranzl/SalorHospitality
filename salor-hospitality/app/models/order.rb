@@ -157,12 +157,15 @@ class Order < ActiveRecord::Base
   end
   
   def update_payment_method_items(params)
+    ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
+    # create payment method items only when 1) there are some, 2) cost center does not forbid creating payment method items
     if params[:payment_method_items] and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
-      self.payment_method_items.clear
+      self.payment_method_items.update_all(:hidden => true, :hidden_by => -7, :hidden_at => Time.now) # we don't re-use previously created payment method items
       params['payment_method_items'][params['id']].to_a.each do |pm|
+        # only create payment method items that are not zero and that have not been removed from the UI
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
           payment_method = self.vendor.payment_methods.existing.find_by_id(pm[1]['id'])
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash, :user_id => self.user_id
         end
       end
     end
@@ -170,12 +173,11 @@ class Order < ActiveRecord::Base
 
   def update_associations(customer=nil)
     self.cost_center = self.vendor.cost_centers.existing.first unless self.cost_center
+    self.save
     
     self.items.update_all :cost_center_id => self.cost_center
-    self.tax_items.update_all :cost_center_id => self.cost_center
-    self.payment_method_items.update_all :cost_center_id => self.cost_center
-
-    self.save
+    self.tax_items.update_all :cost_center_id => self.cost_center, :user_id => self.user_id
+    self.payment_method_items.update_all :cost_center_id => self.cost_center_id, :user_id => self.user_id
     
     table = self.table
     if customer.nil?
@@ -333,22 +335,22 @@ class Order < ActiveRecord::Base
   def pay(user=nil)
     return if self.hidden # this happens when called from application_controller, 'pay_and_no_print' when splitting an item and order is deleted.
     self.finish(user)
-    # create a default cash payment method item if none was set in the UI
+    # create a cash payment method item if none was set in the UI, and if the cost center does not prohibit this
     unless self.payment_method_items.existing.any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first
       if cash_payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum, :user_id => self.user_id
       end
     end
     
-    payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
+    payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point, since an order must be first finished/paid before it can be refunded
     
     # create a change payment method item
     unless self.payment_method_items.existing.where(:change => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
       if change_payment_methods.any?
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id, :user_id => self.user_id
       end
     end
     
@@ -381,7 +383,7 @@ class Order < ActiveRecord::Base
     self.taxes = {}
     self.paid_at = nil
     self.save
-    self.payment_method_items.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
+    self.payment_method_items.existing.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
     used_table.update_color
     return used_table
   end

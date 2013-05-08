@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130428172133) do
+ActiveRecord::Schema.define(:version => 20130508074243) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20130428172133) do
     t.boolean  "https"
     t.boolean  "auth"
     t.string   "domain"
+    t.boolean  "removal_pending"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -627,6 +628,7 @@ ActiveRecord::Schema.define(:version => 20130428172133) do
     t.integer  "cost_center_id"
     t.boolean  "change",            :default => false
     t.datetime "hidden_at"
+    t.integer  "user_id"
   end
 
   create_table "payment_methods", :force => true do |t|
@@ -998,6 +1000,7 @@ ActiveRecord::Schema.define(:version => 20130428172133) do
     t.integer  "category_id"
     t.integer  "statistic_category_id"
     t.datetime "hidden_at"
+    t.integer  "user_id"
   end
 
   add_index "tax_items", ["booking_id"], :name => "index_tax_items_on_booking_id"

@@ -13,28 +13,61 @@ class StatisticsController < ApplicationController
   before_filter :check_permissions
 
   def index
+    params[:type] = "" unless @current_user.role.permissions.include?(params[:type])
     @from, @to = assign_from_to(params)
+    
+    #settlements for scoping, currently not used
     @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
     @settlement_ids = @settlements.collect{ |s| s.id }
+    
+    #taxes
     @taxes = @current_vendor.taxes.existing
-    @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
+    
+    #payment methods
+    @payment_methods = @current_vendor.payment_methods.existing
+    
+    #cost centers
     @cost_centers = @current_vendor.cost_centers.existing
     cost_center_ids = @cost_centers.collect{ |cc| cc.id }
-    @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : nil
-    @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
+    @selected_cost_center = @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) if params[:cost_center_id] and not params[:cost_center_id].empty?
+    @csids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
+    
+    #users
+    @users = @current_vendor.users.existing
+    user_ids = @users.collect{ |u| u.id }
+    @selected_user = @current_vendor.users.existing.find_by_id(params[:user_id]) if params[:user_id] and not params[:user_id].empty?
+    @uids = @selected_user ? @selected_user.id : user_ids
+    
+    #tables
     @tables = @current_vendor.tables.existing.active
+    
+    #categories
     @categories = @current_vendor.categories.existing
+    
+    #statistic categories
     @statistic_categories = @current_vendor.statistic_categories.existing
-    @payment_methods = @current_vendor.payment_methods.existing
+    
+    #days
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
-    @days = I18n.backend.send(:translations)[I18n.locale][:date][:day_names].rotate
+    daynames = I18n.backend.send(:translations)[I18n.locale][:date][:day_names]
+    @days = daynames.rotate if daynames
     @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
-    @item_article_ids = Item.connection.execute("SELECT article_id from items where created_at between '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-    @item_quantity_ids = Item.connection.execute("SELECT quantity_id from items where created_at between '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
+
+    #sales quantities
+    @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+    @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
     @articles = Article.where(:id => @item_article_ids).order(:name)
     @quantities = Quantity.where(:id => @item_quantity_ids).order(:article_name)
     
-    if params[:print] == '1'
+    
+    #permitted statistics
+    permitted_statistics = @current_user.role.permissions.select{ |p| p =~ /^statistics_.*/ }
+    @permitted_statistics_for_select = permitted_statistics.collect do |ps|
+      [I18n.t("roles.new.statistics.#{ ps }"), ps]
+    end
+    
+    
+    if params[:print] == 'true'
       template = File.read("#{Rails.root}/app/views/statistics/print.txt.erb")
       erb = ERB.new(template, 0, '>')
       text = erb.result(binding)

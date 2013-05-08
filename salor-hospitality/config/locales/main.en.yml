@@ -690,6 +690,15 @@ en:
       settlement_statistics_sold_quantities: Show settlement statistics about sold
         quantities
       add_option_to_sent_item: Add Options to sent Items
+      statistics:
+        statistics_weekday: Weekdays
+        statistics_sold_quantities: Sold quantities
+        statistics_hour: Hours
+        statistics_table: Tables
+        statistics_payment_method: Payment Methods
+        statistics_category: Categories
+        statistics_statistic_category: Statistic Categories
+        statistics_tax: Taxes
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -746,7 +755,7 @@ en:
       unit_price: Unit Price
     index:
       one_day_one_row: List days
-      all_cost_centers: All
+      all: All
       end_date: End date
       start_date: Start date
       sum_total: Sum total
@@ -791,6 +800,8 @@ en:
     index:
       hour: Hour
       weekday: Weekday
+      query: Query
+      limit_by: Limit by
   users:
     create:
       success: User successfully saved
@@ -802,6 +813,10 @@ en:
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   clear: clear
   various:
+    display: Display
+    go: Go!
+    download: Download
+    print: Print
     translations: Translations
     switched_to_vendor: Vendor '%{vendorname}'
     cancel: Cancel

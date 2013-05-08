@@ -315,6 +315,7 @@ class Vendor < ActiveRecord::Base
     zip_outfile = "#{ location }/#{ label }.zip"
     Dir.chdir(dumppath)
     `zip -r #{ zip_outfile } .`
+    `chmod 777 #{ zip_outfile }`
     
     FileUtils.rm_r dumppath # causes exception
     
