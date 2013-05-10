@@ -11,6 +11,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'socket'
+require 'pp'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -20,8 +22,12 @@ if defined?(Bundler)
 end
 
 module SalorHospitality
-  class Application < Rails::Application  
   
+  mattr_accessor :tailor
+  @@tailor = nil
+  
+  
+  class Application < Rails::Application  
     if ENV['SH_DEBIAN_SITEID']
       SH_DEBIAN_SITEID = ENV['SH_DEBIAN_SITEID']
     else

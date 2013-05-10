@@ -134,9 +134,9 @@
           
 .clear
 
-- if @current_user.role_weight.zero? and defined? ShSaas
+- if @current_user.role_weight.zero? and @tailor
   %small
-    %code= raw ShSaas.tailor.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
+    %code= raw @tailor.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
     %code= Thread.list
 
 

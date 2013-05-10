@@ -406,6 +406,17 @@ class Order < ActiveRecord::Base
           contents = self.escpos_tickets(p.id)
           unless contents[:text].empty?
             bytes_written, content_sent = print_engine.print(p.id, contents[:text], contents[:raw_insertations])
+            
+            # Push notification
+            if SalorHospitality.tailor
+              printerstring = sprintf("%04i", p.id)
+              begin
+                SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+              rescue Exception => e
+                ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+              end
+            end
+            
             bytes_sent = content_sent.length
             Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
           end
@@ -420,9 +431,14 @@ class Order < ActiveRecord::Base
         contents[:text] = pulse + contents[:text] if vendor_printer.pulse_receipt == true and self.printed.nil?
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         
-        if defined?(ShSaas) == 'constant' and ShSaas.tailor
+        # Push notification
+        if SalorHospitality.tailor
           printerstring = sprintf("%04i", vendor_printer.id)
-          ShSaas.tailor.sendmsg(self.vendor.hash_id, "printer#{ printerstring }")
+          begin
+            SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+          rescue Exception => e
+            ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+          end
         end
         
         bytes_sent = content_sent.length
@@ -436,6 +452,17 @@ class Order < ActiveRecord::Base
       if vendor_printer
         contents = self.escpos_interim_receipt
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
+        
+        # Push notification
+        if SalorHospitality.tailor
+          printerstring = sprintf("%04i", vendor_printer.id)
+          begin
+            SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+          rescue Exception => e
+            ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+          end
+        end
+        
         bytes_sent = content_sent.length
         Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
         self.update_attribute :printed_interim, true

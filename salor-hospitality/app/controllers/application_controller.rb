@@ -11,7 +11,7 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery
   #helper :all
-  before_filter :fetch_logged_in_user, :set_locale
+  before_filter :fetch_logged_in_user, :set_locale, :fetch_tailor
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
 
@@ -204,14 +204,34 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
-    if permit('see_debug')
-      @order.check if @order
-      @booking.check if @booking
-    end
     return
   end
 
   private
+  
+    def fetch_tailor
+      @tailor = SalorHospitality.tailor
+      if @tailor.nil?
+        begin
+          @tailor = TCPSocket.new 'localhost', 2001
+          SalorHospitality.tailor = @tailor
+          return # all went well
+        rescue Errno::ECONNREFUSED
+          logger.info "XXXXXXXXXXXXXX [TAILOR] Connection refused. No tailor.rb server running?"
+          return
+        end
+      end
+      
+      # check if stream is open. if not, create a new one
+      begin
+        addr = @tailor.addr
+      rescue Exception => e
+        logger.info "XXXXXXXXXXXXXX [TAILOR] Error #{ e.inspect }. Creating new socket."
+        @tailor = TCPSocket.new 'localhost', 2001
+        SalorHospitality.tailor = @tailor
+      end
+      logger.info "XXXXXXXXXXXXXX [TAILOR] is #{ @tailor }"
+    end
   
     def get_model(model_id=nil, model=nil)
       id = model_id ? model_id : params[:id]
