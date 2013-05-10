@@ -20,8 +20,8 @@ if defined?(Bundler)
 end
 
 module SalorHospitality
-  class Application < Rails::Application
-    
+  class Application < Rails::Application  
+  
     if ENV['SH_DEBIAN_SITEID']
       SH_DEBIAN_SITEID = ENV['SH_DEBIAN_SITEID']
     else

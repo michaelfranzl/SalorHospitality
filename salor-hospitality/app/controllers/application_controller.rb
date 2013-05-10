@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_logged_in_user, :set_locale
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
-  
+
   unless SalorHospitality::Application.config.consider_all_requests_local
     rescue_from(Exception, :with => :render_error)
   end 

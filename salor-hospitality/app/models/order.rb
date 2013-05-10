@@ -419,6 +419,12 @@ class Order < ActiveRecord::Base
         pulse = "\x1B\x70\x00\x99\x99\x0C"
         contents[:text] = pulse + contents[:text] if vendor_printer.pulse_receipt == true and self.printed.nil?
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
+        
+        if defined?(ShSaas) == 'constant' and ShSaas.tailor
+          printerstring = sprintf("%04i", vendor_printer.id)
+          ShSaas.tailor.sendmsg(self.vendor.hash_id, "printer#{ printerstring }")
+        end
+        
         bytes_sent = content_sent.length
         Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
         self.update_attribute :printed, true

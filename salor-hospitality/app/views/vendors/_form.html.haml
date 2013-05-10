@@ -131,6 +131,13 @@
           = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
             = render :partial => 'vendor_printer', :locals => { :f => f }
           %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
+          
+.clear
+
+- if @current_user.role_weight.zero? and defined? ShSaas
+  %small
+    %code= raw ShSaas.tailor.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
+    %code= Thread.list
 
 
 - if @current_user.onscreen_keyboard_enabled
