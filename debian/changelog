@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.60) unstable; urgency=low
+
+  * print push notifications
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 10 May 2013 11:51:39 +0200
+
 salor-hospitality (4.1.3.59) unstable; urgency=low
 
   * printing push notifications first test
