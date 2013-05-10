@@ -11,7 +11,7 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery
   #helper :all
-  before_filter :fetch_logged_in_user, :set_locale, :fetch_tailor
+  before_filter :fetch_logged_in_user, :set_locale, :set_tailor
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
 
@@ -209,28 +209,41 @@ class ApplicationController < ActionController::Base
 
   private
   
-    def fetch_tailor
-      @tailor = SalorHospitality.tailor
-      if @tailor.nil?
+    def set_tailor
+      return unless SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
+      
+      t = SalorHospitality.tailor
+      # check if stream is open. if not, create a new one
+      if t
+        #logger.info "[TAILOR] Checking if socket #{ t.inspect } is healthy"
         begin
-          @tailor = TCPSocket.new 'localhost', 2001
-          SalorHospitality.tailor = @tailor
-          return # all went well
-        rescue Errno::ECONNREFUSED
-          logger.info "XXXXXXXXXXXXXX [TAILOR] Connection refused. No tailor.rb server running?"
-          return
+          t.puts "PING"
+        rescue Errno::EPIPE
+          logger.info "[TAILOR] Error: Broken pipe for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
+        rescue Errno::ECONNRESET
+          logger.info "[TAILOR] Error: Connection reset by peer for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
+        rescue Exception => e
+          logger.info "[TAILOR] Other Error: #{ e.inspect } for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
         end
       end
       
-      # check if stream is open. if not, create a new one
-      begin
-        addr = @tailor.addr
-      rescue Exception => e
-        logger.info "XXXXXXXXXXXXXX [TAILOR] Error #{ e.inspect }. Creating new socket."
-        @tailor = TCPSocket.new 'localhost', 2001
-        SalorHospitality.tailor = @tailor
+      if t.nil?
+        begin
+          t = TCPSocket.new 'localhost', 2001
+          logger.info "[TAILOR] Info: New TCPSocket #{ t.inspect } #{ t } created"
+        rescue Errno::ECONNREFUSED
+          t = nil
+          logger.info "[TAILOR] Warning: Connection refused. No tailor.rb server running?"
+        end
+        SalorHospitality.tailor = t
       end
-      logger.info "XXXXXXXXXXXXXX [TAILOR] is #{ @tailor }"
+
     end
   
     def get_model(model_id=nil, model=nil)

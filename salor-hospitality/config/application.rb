@@ -23,8 +23,9 @@ end
 
 module SalorHospitality
   
-  mattr_accessor :tailor
+  mattr_accessor :tailor, :old_tailors
   @@tailor = nil
+  @@old_tailors = []
   
   
   class Application < Rails::Application  

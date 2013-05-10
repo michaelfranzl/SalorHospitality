@@ -3,3 +3,4 @@
 :exception_notification_sender: Sender Name <nobody@localhost>
 :exception_notification_receipients: nobody@localhost
 :use_safe_device_path: false
+:tailor: false

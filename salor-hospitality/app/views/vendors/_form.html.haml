@@ -134,10 +134,15 @@
           
 .clear
 
-- if @current_user.role_weight.zero? and @tailor
+- if @current_user.role_weight.zero?
   %small
-    %code= raw @tailor.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
-    %code= Thread.list
+    %code= SalorHospitality.tailor #.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
+    %br
+    %code old:
+    %br
+    - SalorHospitality.old_tailors.each do |t|
+      %code= t
+      %br
 
 
 - if @current_user.onscreen_keyboard_enabled
