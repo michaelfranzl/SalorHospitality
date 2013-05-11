@@ -411,7 +411,7 @@ class Order < ActiveRecord::Base
             if SalorHospitality.tailor
               printerstring = sprintf("%04i", p.id)
               begin
-                SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+                SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
               rescue Exception => e
                 ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
               end
@@ -435,7 +435,7 @@ class Order < ActiveRecord::Base
         if SalorHospitality.tailor
           printerstring = sprintf("%04i", vendor_printer.id)
           begin
-            SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+            SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
           rescue Exception => e
             ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
           end
@@ -457,7 +457,7 @@ class Order < ActiveRecord::Base
         if SalorHospitality.tailor
           printerstring = sprintf("%04i", vendor_printer.id)
           begin
-            SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+            SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
           rescue Exception => e
             ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
           end

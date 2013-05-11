@@ -51,17 +51,19 @@ class Settlement < ActiveRecord::Base
   def print
     vendor_printer = self.vendor.vendor_printers.existing.first
     return if vendor_printer.nil?
+    
+    output = self.escpos
+    
     printr = Escper::Printer.new(self.company.mode, vendor_printer, self.company.identifier)
     printr.open
-    output = self.escpos
-    #pulse = "\x1B\x70\x00\x99\x99\x0C"
     bytes_written, content_sent = printr.print vendor_printer.id, output
+    printr.close
     
     # Push notification
     if SalorHospitality.tailor
       printerstring = sprintf("%04i", vendor_printer.id)
       begin
-        SalorHospitality.tailor.puts "#{self.vendor.hash_id}|printer#{printerstring}"
+        SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
       rescue Exception => e
         ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
       end
@@ -69,7 +71,6 @@ class Settlement < ActiveRecord::Base
     
     bytes_sent = content_sent.length
     Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :settlement_id => self.id, :settlement_nr => self.nr, :content => self.escpos, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
-    printr.close
   end
 
   def escpos

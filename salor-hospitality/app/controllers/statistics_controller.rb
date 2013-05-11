@@ -78,6 +78,16 @@ class StatisticsController < ApplicationController
       bytes_written, content_sent = print_engine.print(vendor_printer.id, text)
       print_engine.close
       
+      # Push notification
+      if SalorHospitality.tailor
+        printerstring = sprintf("%04i", vendor_printer.id)
+        begin
+          SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
+        rescue Exception => e
+          ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+        end
+      end
+      
       r = Receipt.new
       r.vendor_id = @current_vendor.id
       r.company_id = @current_company.id
