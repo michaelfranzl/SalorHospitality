@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.64) unstable; urgency=low
+
+  * work towards better customer login
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 12 May 2013 11:57:25 +0200
+
 salor-hospitality (4.1.3.63) unstable; urgency=low
 
   * add PRINTEVENT to TCP communications
