@@ -160,6 +160,7 @@ en:
         width: Width
         width_mobile: Width mobile
         booking_table: Booking
+        customer_table: Customer
       tax:
         color: Color
         hidden: delete

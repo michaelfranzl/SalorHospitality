@@ -14,10 +14,9 @@ class CustomersController < ApplicationController
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
-    @customers = @current_vendor.customers.existing
     respond_to do |wants|
       wants.html
-      wants.csv  #{ send_data render( :partial => 'list'), :filename => 'customers.csv' }
+      wants.csv
     end
   end
 

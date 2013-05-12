@@ -71,10 +71,13 @@ function render_tables() {
   $('#tables').html('');
   $('#tablesselect_container').html('');
   $.each(resources.tb, function(k,v) {
-    // determine color
     var bgcolor = null;
-    if (v.auid) bgcolor = resources.u[v.auid].c;
-    if (!v.e) bgcolor = 'black';
+    
+    if (v.auid)
+      bgcolor = resources.u[v.auid].c; // auid means active user id
+      
+    if (!v.e)
+      bgcolor = 'black'; // e means enabled
    
     //--------------------------
     // render spans for the move function
@@ -83,7 +86,8 @@ function render_tables() {
       route('tables', submit_json.model.table_id, 'move', {target_table_id:v.id});
     })
     move_table_span.addClass('option');
-    if (typeof(bgcolor) == 'string') move_table_span.css('background-color', bgcolor);
+    if (typeof(bgcolor) == 'string')
+      move_table_span.css('background-color', bgcolor);
     
     
     // ------------------------
@@ -102,7 +106,8 @@ function render_tables() {
     var statusclass = v.auid ? 'occupied' : 'vacant';
     var table = create_dom_element('div',{id:'table'+v.id,ontouchstart:'javascript:enable_audio();'}, v.n, '#tables');
     
-    if (v.crid) {
+    // add labels to table
+    if (v.crid) { // crid means customer id
       create_dom_element('span', {}, resources.customers.all[v.crid].n, table);
     } else if (v.auid) {
       create_dom_element('span', {}, resources.u[v.auid].n, table);
@@ -115,18 +120,21 @@ function render_tables() {
     table.css('width', width);
     table.css('height', height);
     
-    if (typeof(bgcolor) == 'string') table.css('background-color', bgcolor);
-
-    if (v.cp) {
-      // confirmation pending
-      if (permissions.confirmation_user) {
-        table.effect("pulsate", { times:2000 }, 3000);
-      }
+    if (typeof(bgcolor) == 'string')
+      table.css('background-color', bgcolor);
+    
+    if (v.crid != null) {
       table.css('color', 'black');
       table.css('background-color', 'white');
     }
+
+    if (v.cp && permissions.confirmation_user) {
+      table.effect("pulsate", { times:2000 }, 3000);
+      // cp means confirmation pending
+    }
     
     if (v.rf) {
+      // rf means request finish
       var cash_icon = create_dom_element('a',{},'',table);
       cash_icon.addClass('iconbutton');
       cash_icon.addClass('cash_button'); 
@@ -138,7 +146,7 @@ function render_tables() {
     }
     
     if (v.rw) {
-      // requested waiter
+      // rw means requested waiter
       var cash_icon = create_dom_element('a',{},'',table);
       cash_icon.addClass('iconbutton');
       cash_icon.addClass('user_button'); 

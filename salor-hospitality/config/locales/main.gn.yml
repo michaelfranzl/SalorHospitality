@@ -156,6 +156,7 @@ gn:
         rotate: drehen?
         width: Breite
         width_mobile: Breite mobile
+        customer_table: Kunden
       tax:
         color: Farbe
         hidden: löschen

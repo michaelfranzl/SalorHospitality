@@ -210,14 +210,14 @@ class ApplicationController < ActionController::Base
   private
   
     def set_tailor
-      return unless SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
+      return unless @current_vendor and SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
       
       t = SalorHospitality.tailor
       # check if stream is open. if not, create a new one
       if t
         #logger.info "[TAILOR] Checking if socket #{ t.inspect } is healthy"
         begin
-          t.puts "PING"
+          t.puts "PING|#{ @current_vendor.hash_id }|#{ Process.pid }"
         rescue Errno::EPIPE
           logger.info "[TAILOR] Error: Broken pipe for #{ t.inspect } #{ t }"
           SalorHospitality.old_tailors << t

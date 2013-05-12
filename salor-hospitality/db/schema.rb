@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508074243) do
+ActiveRecord::Schema.define(:version => 20130512085550) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -949,6 +949,7 @@ ActiveRecord::Schema.define(:version => 20130508074243) do
     t.boolean  "request_waiter"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.boolean  "customer_table"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"

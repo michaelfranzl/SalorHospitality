@@ -77,10 +77,16 @@ function change_item_status(id,status) {
 }
 
 function render_item_list(type, model, scope) {
+  if (typeof resources.tb == 'undefined')
+    return;  // this happens after update_resources() has erased resources['tb'] and no update_tables() has yet happened. TODO: move the tables hash out of resources.
+    
   if (type == 'interactive') {
     var list_container = $('#list_interactive_' + scope);
     list_container.html('');
     $.each(resources['notifications_' + model][scope], function(k,v) {
+      
+      if (typeof resources.tb[v.tid] == 'undefined')
+        return;
       
       var table_name = resources.tb[v.tid].n;
       var user_id = v[scope + '_uid'];
