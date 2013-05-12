@@ -65,10 +65,8 @@ class TablesController < ApplicationController
     @table.company = @current_company
     if @table.save
       # Make newly created table available to all users of all vendors of this company. This doesn't hurt because users will only see the tables of the vendor which is currently activated. u.tables is like a whitelist.
-      @current_company.vendors.existing.each do |v|
-        v.users.each do |u|
-          u.tables << @table
-        end
+      @current_company.users.each do |u|
+        u.tables << @table
       end
       flash[:notice] = t('tables.create.success')
       redirect_to tables_path

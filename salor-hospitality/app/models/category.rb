@@ -26,7 +26,7 @@ class Category < ActiveRecord::Base
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
   def icon_path
-    return self.images.first.thumb if self.icon == 'custom'
+    return self.images.first.thumb if self.icon == 'custom' and self.images.first
     return "/assets/category_blank.png" if self.icon.nil?
     "/assets/category_#{self.icon}.png"
   end

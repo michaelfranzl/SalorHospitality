@@ -369,4 +369,72 @@ class Vendor < ActiveRecord::Base
     h.save
     puts "Created History record for package upgrade"
   end
+  
+  def self.copy_menucard(v1, v2)
+    # copies taxes, categories, articles, quantities
+    v1.taxes.existing.each do |t1|
+      t2 = Tax.new
+      t2.company_id = t1.company_id
+      t2.vendor_id = v2.id
+      t2.percent = t1.percent
+      t2.name = t1.name
+      t2.letter = t1.letter
+      t2.color = t1.color
+      t2.statistics_by_category = t1.statistics_by_category
+      t2.include_in_statistics = t1.include_in_statistics
+      t2.save
+    end
+      
+    v1.categories.existing.each do |c1|
+      c2 = Category.new
+      c2.vendor_id = v2.id
+      c2.company_id = v1.company_id
+      c2.name = c1.name
+      c2.icon = c1.icon
+      c2.color = c1.color
+      c2.position = c1.position
+      c2.active = c1.active
+      c2.separate_print = c1.separate_print
+      c2.save
+      
+      c1.articles.existing.each do |a1|
+        a2 = Article.new
+        a2.company_id = a1.company_id
+        a2.vendor_id = v2.id
+        a2.name = a1.name
+        a2.description = a1.description
+        a2.category_id = c2.id
+        a2.price = a1.price
+        a2.active = a1.active
+        a2.waiterpad = a1.waiterpad
+        a2.sort = a1.sort
+        a2.position = a1.position
+        a2.statistic_category_id = a1.statistic_category_id
+        a2.save
+        
+        a1.taxes.existing.each do |t1|
+          percent = t1.percent
+          t2 = v2.taxes.find_by_percent(percent)
+          a2.taxes << t2
+        end
+        a2.save
+        
+        a1.quantities.existing.each do |q1|
+          q2 = Quantity.new
+          q2.company_id = q1.company_id
+          q2.vendor_id = v2.id
+          q2.article_id = a2.id
+          q2.prefix = q1.prefix
+          q2.postfix = q1.postfix
+          q2.price = q1.price
+          q2.active = q1.active
+          q2.sort = q1.sort
+          q2.position = q1.position
+          q2.category_id = c2.id
+          q2.article_name = q1.article_name
+          q2.save
+        end # quantities
+      end # articles
+    end #category
+  end
 end
