@@ -172,13 +172,13 @@ class Vendor < ActiveRecord::Base
     x = 0
     self.customers.existing.active.order("m_points DESC").each do |c|
       if x < 15 then
-        cstmers[:regulars] << c.to_hash
+        cstmers[:regulars] << c.to_hash(self)
       end
       c1 = c.last_name[0,1].downcase
       c2 = c.last_name[0,2].downcase
       cstmers[c1] ||= {}
       cstmers[c1][c2] ||= []
-      cstmers[c1][c2] << c.to_hash
+      cstmers[c1][c2] << c.to_hash(self)
       x += 1
     end
     cstmers[:all] = {}
