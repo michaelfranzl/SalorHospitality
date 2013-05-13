@@ -96,15 +96,41 @@ div#main
   :border 3px solid white
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
-  //:background-color #0e1d25
+  :background-color #0e1d25
   :position absolute
+  //:overflow auto
+  :bottom 0px
   :font-size 110%
   :padding 5px
-  :bottom 25px
   :left 25px
   :right 25px
   :top 130px
   :border-bottom none
+  
+div#copyright
+  :vertical-align middle
+  :left 0px
+  :right 30px
+  :bottom 0px
+  :position fixed
+  :background-color #0e1d25
+  //:margin auto
+  //:text-align center
+  .left
+    :vertical-align middle
+    :float left
+  .right
+    :vertical-align middle
+    :right 0px
+    :text-align right
+    :width 300px
+    :float right
+    img.logo_red_e
+      :position fixed
+      :right 0px
+      :bottom 0px
+  p
+    :margin 5px 0px
   
   
 #drag_and_drop_toggle_view_button
@@ -133,30 +159,6 @@ img.logo_tiny
   
 div#areas,
   :display none
-
-div#copyright
-  :vertical-align middle
-  :position absolute
-  :left 25px
-  :right 25px
-  :bottom 0px
-  //:margin auto
-  //:text-align center
-  .left
-    :vertical-align middle
-    :padding 5px 0px 0px 0px
-    :float left
-  .right
-    :vertical-align middle
-    :padding 5px 0px 0px 0px
-    :position relative
-    :right 0px
-    :text-align right
-    :width 300px
-    img.logo_red_e
-      //:float right
-  p
-    :margin 5px 0px
 
 div#messages, div#queue
   :color $billgastrogrey2
@@ -605,7 +607,7 @@ form.category_form
     :width 150px
     
 table.articles
-  :width 102%
+  :width 101%
   :margin-left -10px
   :border-spacing 10px
   td.receiving
