@@ -41,7 +41,7 @@ h2
 
 h3
   :text-transform uppercase
-  :margin-bottom 0px
+  :margin 0px
 a
   :color $link_color
 
@@ -102,12 +102,13 @@ div#main
   :bottom 0px
   :font-size 110%
   :padding 5px
-  :left 25px
-  :right 25px
+  :left 15px
+  :right 15px
   :top 130px
   :border-bottom none
   
 div#copyright
+  :font-size 80%
   :vertical-align middle
   :left 0px
   :right 30px
@@ -123,7 +124,7 @@ div#copyright
     :vertical-align middle
     :right 0px
     :text-align right
-    :width 300px
+    :width 220px
     :float right
     img.logo_red_e
       :position fixed
@@ -141,7 +142,7 @@ div#copyright
 div#orderform,
 div#invoices
   :font-size 90%
-  :padding 15px
+  :padding 0px
 
 div#container
   :margin 0px 15px
@@ -168,7 +169,7 @@ div#messages, div#queue
 div#messages
   :font-size 80%
   :z-index -10
-  :width 700px
+  :width 50%
   :left 170px
   :height 200px
   :top 0px
@@ -199,8 +200,8 @@ div#header
   
 div#functions
   :position fixed
-  :right 43px
-  :top 137px
+  :right 20px
+  :top 124px
   :width 30px
   :margin-right 8px
   a, div
@@ -825,26 +826,27 @@ $articlelistbgcolor: #3a474d
 
 div#categories
   :display inline-block
-  :width 30%
+  :width 37%
   :vertical-align top
 
 div#articles
   :display inline-block
-  :width 30%
+  :width 25%
   :vertical-align top
 
 div.quantities
   :float right
-  :margin-top -30px
-  :width 45%
+  :margin-top -40px
+  :width 60%
   :-moz-box-shadow 0px 0px 8px white
   :-webkit-box-shadow 0px 0px 8px white
+  :overflow hidden
   
 div#items
   :display inline-block
   :float right
-  :width 30%
-  :margin-right 60px
+  :width 32%
+  :margin-right 35px
   :border 1px solid $buttoncolor
   :vertical-align top
 
@@ -889,7 +891,7 @@ td.ordersum_container
 
 
 div.article
-  :width 80%
+  :width 91%
 
 div.category
   :display inline-block
@@ -944,7 +946,7 @@ td.item_label
     :width 110px
 
 td.item_options
-  :width 17%
+  :width 20%
   :text-align center
   a
     :background-image url(button_mobile_check.png)
@@ -1385,7 +1387,6 @@ table.page
 div#items_notifications_static
   :position absolute
   :right 75px
-  :top -20px
   :width 200px
   :z-index 5
   div.item_list
