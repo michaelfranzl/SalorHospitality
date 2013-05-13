@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password
   validates_presence_of :title
   validates_presence_of :default_vendor_id
+  validates_presence_of :role_id
   validates_presence_of :vendors
   validates_uniqueness_of :password, :scope => :company_id unless defined?(ShSaas) == 'constant'
 

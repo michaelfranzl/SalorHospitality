@@ -384,7 +384,8 @@ class Vendor < ActiveRecord::Base
       t2.include_in_statistics = t1.include_in_statistics
       t2.save
     end
-      
+    
+    messages = []
     v1.categories.existing.each do |c1|
       c2 = Category.new
       c2.vendor_id = v2.id
@@ -409,21 +410,18 @@ class Vendor < ActiveRecord::Base
         a2.waiterpad = a1.waiterpad
         a2.sort = a1.sort
         a2.position = a1.position
-        a2.statistic_category_id = a1.statistic_category_id
-        a2.save
-        
+
         a1.taxes.existing.each do |t1|
           percent = t1.percent
           t2 = v2.taxes.find_by_percent(percent)
           a2.taxes << t2
         end
-        a2.save
         
         a1.quantities.existing.each do |q1|
           q2 = Quantity.new
           q2.company_id = q1.company_id
           q2.vendor_id = v2.id
-          q2.article_id = a2.id
+          #q2.article_id = a2.id
           q2.prefix = q1.prefix
           q2.postfix = q1.postfix
           q2.price = q1.price
@@ -433,7 +431,13 @@ class Vendor < ActiveRecord::Base
           q2.category_id = c2.id
           q2.article_name = q1.article_name
           q2.save
+          a2.quantities << q2
         end # quantities
+        
+        result = a2.save
+        if result == false
+          messages << a2.errors
+        end        
       end # articles
     end #category
   end

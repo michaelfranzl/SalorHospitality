@@ -13,6 +13,8 @@ var advertising_counter = -1;
 
 $(function(){
   
+  $('#main').css('bottom', '0px');
+  
   $('#customer_search').keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();
