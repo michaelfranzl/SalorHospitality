@@ -1,3 +1,11 @@
+salor-hospitality (4.1.3.67) unstable; urgency=low
+
+  * new images, settlement fixes, english translation reordered, page fix
+  * table updates off while dragging
+  * style improvements for 800x600
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 13 May 2013 14:21:51 +0200
+
 salor-hospitality (4.1.3.66) unstable; urgency=low
 
   * copy menucard
