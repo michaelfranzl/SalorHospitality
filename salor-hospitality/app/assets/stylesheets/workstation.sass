@@ -96,13 +96,16 @@ div#main
   :border 3px solid white
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
-  :background-color #0e1d25
-  :min-height 560px
-  :margin auto
-  :position relative
+  //:background-color #0e1d25
+  :position absolute
   :font-size 110%
   :padding 5px
-  :overflow auto
+  :bottom 25px
+  :left 25px
+  :right 25px
+  :top 130px
+  :border-bottom none
+  
   
 #drag_and_drop_toggle_view_button
   :position absolute
@@ -123,9 +126,6 @@ img#logo
   :right 14px
   :top 42px
   :z-index -1
-  
-img.logo_red_e
-  :float right
 
 img.logo_tiny
   :float left
@@ -136,8 +136,12 @@ div#areas,
 
 div#copyright
   :vertical-align middle
-  :margin auto
-  :text-align center
+  :position absolute
+  :left 25px
+  :right 25px
+  :bottom 0px
+  //:margin auto
+  //:text-align center
   .left
     :vertical-align middle
     :padding 5px 0px 0px 0px
@@ -145,7 +149,12 @@ div#copyright
   .right
     :vertical-align middle
     :padding 5px 0px 0px 0px
-    :float right
+    :position relative
+    :right 0px
+    :text-align right
+    :width 300px
+    img.logo_red_e
+      //:float right
   p
     :margin 5px 0px
 

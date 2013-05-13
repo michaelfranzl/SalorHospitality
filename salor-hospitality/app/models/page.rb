@@ -29,7 +29,7 @@ class Page < ActiveRecord::Base
         eval partial.presentation.secure_expand_code
         partial_htmls[partial.id] = ERB.new(partial.presentation.secure_expand_markup).result binding
       rescue Exception => e
-        partial_htmls[partial.id] = t('partials.error_during_evaluation') + e.message
+        partial_htmls[partial.id] = I18n.t('partials.error_during_evaluation') + e.message
       end
       partial_htmls[partial.id].force_encoding('UTF-8')
     end

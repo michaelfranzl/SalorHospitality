@@ -269,11 +269,12 @@ namespace :translations do
         t = base_name.gsub('XXX',lang)
         s = base_name.gsub('XXX',langs[0])
         source, sourcelang, sourcefile, translation, translationlang, transfile = open_translation(s,t)
-        source = convert_hash_to_ordered_hash_and_sort(source, true)
-        next if sourcelang == translationlang
+        puts "  Ordering translation for #{ lang }"
         translation = convert_hash_to_ordered_hash_and_sort(translation, true)
-        puts "\n\nEqualizing #{sourcelang} => #{translationlang}"
-        translation = equalize(source,translation)
+        if sourcelang != translationlang
+          puts "\n\nEqualizing #{sourcelang} => #{translationlang}"
+          translation = equalize(source,translation)
+        end
         write_translation(translation, translationlang, transfile)
       end
     end

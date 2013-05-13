@@ -147,6 +147,7 @@ tr:
       table:
         abbreviation: Kısaltma
         booking_table: Booking
+        customer_table: Customer
         description: Tarif
         enabled: aktiv?
         height: Yükseklik

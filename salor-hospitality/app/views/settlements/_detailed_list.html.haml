@@ -13,7 +13,7 @@
       %td.order_begin{ :colspan => 6 }
         = t('.order_number_on_table_on_date', :order => Order.model_name.human, :number => so.nr, :table => so.table.name, :time => l(so.created_at + so.vendor.time_offset.hours, :format => :datetime_iso))
         %br
-        == #{ User.model_name.human }: #{ so.user.title }
+        == #{ User.model_name.human }: #{ so.user.title if so.user }
         %br
         == #{ CostCenter.model_name.human }: #{ so.cost_center.name if so.cost_center }
         %br

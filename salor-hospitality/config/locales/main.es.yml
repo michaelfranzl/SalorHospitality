@@ -147,6 +147,7 @@ es:
       table:
         abbreviation: Abreviación
         booking_table: Booking
+        customer_table: Customer
         description: Descripción
         enabled: activado
         height: Altura

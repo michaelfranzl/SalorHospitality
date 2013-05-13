@@ -147,6 +147,7 @@ gn:
       table:
         abbreviation: Abkürzung
         booking_table: Buchung
+        customer_table: Kunden
         description: Beschreibung
         enabled: aktiv?
         height: Höhe
@@ -156,7 +157,6 @@ gn:
         rotate: drehen?
         width: Breite
         width_mobile: Breite mobile
-        customer_table: Kunden
       tax:
         color: Farbe
         hidden: löschen

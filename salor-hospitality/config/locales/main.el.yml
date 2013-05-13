@@ -147,6 +147,7 @@ el:
       table:
         abbreviation: Συντομογραφία
         booking_table: Booking
+        customer_table: Customer
         description: Περιγραφή
         enabled: ενεργό;
         height: Ύψος

@@ -147,6 +147,7 @@ pl:
       table:
         abbreviation: Skrót
         booking_table: Możliwość rezerwacji
+        customer_table: Customer
         description: Opis
         enabled: Aktywny
         height: Wysokość

@@ -147,6 +147,7 @@ hu:
       table:
         abbreviation: Abbreviation
         booking_table: Booking
+        customer_table: Customer
         description: Description
         enabled: active?
         height: Height

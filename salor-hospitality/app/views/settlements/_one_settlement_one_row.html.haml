@@ -22,7 +22,7 @@
       %td
         = l(s.created_at + s.vendor.time_offset.hours, :format => :date_iso)
         = l(s.created_at + s.vendor.time_offset.hours, :format => :time_short)
-      %td{ :class => 'br' }= s.user.login
+      %td{ :class => 'br' }= s.user.login if s.user
       - @taxes.each do |t|
         %td= number_to_currency s.tax_items.existing.where(:tax_id => t.id, :refunded => nil, :cost_center_id => @scids).sum(:gro)
       %td.link= number_to_currency s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:gro)

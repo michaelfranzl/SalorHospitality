@@ -1,7 +1,7 @@
 - if @settlement.id
-  %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.nr } #{ @settlement.user.login }
+  %h2== #{ t('activerecord.models.settlement.one') } ##{ @settlement.nr } #{ @settlement.user.login if @settlement.user }
 - else
-  %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login }
+  %h2== #{ t('activerecord.models.settlement.one') } #{ @settlement.user.login if @settlement.user }
 
 - if @settlement.id
   = link_to '', "/settlements/print/#{ @settlement.id }", :class => 'iconbutton print2_button', :remote => true

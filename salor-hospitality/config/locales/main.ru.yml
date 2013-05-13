@@ -147,6 +147,7 @@ ru:
       table:
         abbreviation: Сокращение
         booking_table: Booking
+        customer_table: Customer
         description: Описание
         enabled: активен?
         height: Высота

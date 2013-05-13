@@ -29,7 +29,7 @@
       %td= l @current_day, :format => :date_iso
       %td{ :class => 'br' }
         - @current_vendor.settlements.where(:id => @seids).each do |s|
-          = s.user.login
+          = s.user.login if s.user
           %br
       - @taxes.each do |t|
         %td= number_to_currency TaxItem.existing.where(:tax_id => t.id, :refunded => nil, :cost_center_id => @scids, :settlement_id => @seids).sum(:gro)

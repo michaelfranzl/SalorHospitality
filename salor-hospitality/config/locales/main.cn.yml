@@ -147,6 +147,7 @@ cn:
       table:
         abbreviation: 简称
         booking_table: 预定
+        customer_table: Customer
         description: 描述
         enabled: 活跃
         height: 高度
