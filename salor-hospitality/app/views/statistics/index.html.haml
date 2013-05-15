@@ -40,7 +40,7 @@
       - sums = []
       - i = 0
       - @tables.each do |table|
-        - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :table_id => table, :cost_center_id => @csids).sum(:sum)
+        - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :table_id => table, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -61,7 +61,7 @@
       - sums = []
       - i = 0
       - @categories.each do |cat|
-        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @csids).sum(:sum)
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -82,7 +82,7 @@
       - sums = []
       - i = 0
       - @statistic_categories.each do |cat|
-        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @csids).sum(:sum)
+        - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -103,7 +103,7 @@
       - sums = []
       - i = 0
       - @payment_methods.each do |pm|
-        - sums[i] =  @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids).sum(:amount)
+        - sums[i] =  @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids, :created_at => @from..@to).sum(:amount)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -124,7 +124,7 @@
       - sums = []
       - i = 0
       - @taxes.each do |tax|
-        - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids).sum(:gro)
+        - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids, :created_at => @from..@to).sum(:gro)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -142,7 +142,8 @@
         %th.bb= Article.model_name.human
         %th.bb= t :count
       - @articles.each do |article|
-        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to, :user_id => @uids).sum(:count)
+        - next if sold_quantity.zero?
         %tr
           %td= article.name
           %td= sold_quantity
@@ -152,7 +153,8 @@
         %th.bb= Quantity.model_name.human
         %th.bb= t :count
       - @quantities.each do |quantity|
-        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count)
+        - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to, :user_id => @uids).sum(:count)
+        - next if sold_quantity.zero?
         %tr
           %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
           %td= sold_quantity
@@ -167,7 +169,7 @@
       - i = 0
       - sums = []
       - @days.each do |day|
-        - sums[i] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
+        - sums[i] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :created_at => @from..@to).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
         - i += 1
       - maximum = sums.sort.last
       - i = 0
@@ -197,9 +199,9 @@
       - sums = []
       - 0.upto(23).each do |hour|
         - if @weekday
-          - sums[hour] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum)
+          - sums[hour] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :created_at => @from..@to).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum)
         - else
-          - sums[hour] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = '#{hour}'").sum(:sum)
+          - sums[hour] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :created_at => @from..@to).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = '#{hour}'").sum(:sum)
         - sums[hour] ||= 0
       - stripped_sums = sums.clone
       - stripped_sums.delete(nil)

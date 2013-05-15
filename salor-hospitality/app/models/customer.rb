@@ -21,7 +21,7 @@ class Customer < ActiveRecord::Base
       table_id = self.table_id
     else
       # if customer does not have a dedicated table set, which is the case for non-anonymous customers when ordering from their own account, use the first free (customer_id == nil) table with has the 'customer == true' attribute set, of the currently logged in vendor.
-      table_id = vendor.tables.existing.where(:customer_table => true, :customer_id => nil).first # first empty table
+      table_id = vendor.tables.existing.where(:customer_table => true, :customer_id => nil).first.id # first empty table
     end
     return {:id => self.id, :name => self.full_name(true), :table_id => table_id }
   end

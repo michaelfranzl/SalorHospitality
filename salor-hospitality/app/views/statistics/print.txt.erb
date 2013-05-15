@@ -18,7 +18,7 @@
 <% i = 0 %>
 <% total = 0 %>
 <% @days.each do |day| %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids, :created_at => @from..@to).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [day, friendly_unit, sum] %>
 <% i += 1 %>
 <% total += sum %>
@@ -37,9 +37,9 @@
 <% total = 0 %>
 <% 0.upto(23).each do |hour| %>
 <% if @weekday %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids, :created_at => @from..@to).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour} AND WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{@weekday}").sum(:sum) %>
 <% else %>
-<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum) %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @scids, :created_at => @from..@to).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum) %>
 <% end %>
 <%= "%10.10s:00  %s %7.2f\n" % [hour, friendly_unit, sum] %>
 <% total += sum %>
@@ -57,7 +57,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @statistic_categories.each do |cat| %>
-<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @scids).sum(:sum) %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @scids, :created_at => @from..@to).sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [cat.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -74,7 +74,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @taxes.each do |tax| %>
-<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @scids).sum(:gro) %>
+<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @scids, :created_at => @from..@to).sum(:gro) %>
 <%= "%10.10s     %s %7.2f\n" % [tax.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -91,7 +91,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @categories.each do |cat| %>
-<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @scids).sum(:sum) %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @scids, :created_at => @from..@to).sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [cat.name, friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
@@ -108,11 +108,13 @@
 <%= "\e!\x00" %>
 <% @articles.each do |article| %>
 <% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count) %>
+<% next if sold_quantity.zero? %>
 <%= "%35.35s %5i\n" % [article.name, sold_quantity] %>
 <% end %>
 
 <% @quantities.each do |quantity| %>
 <% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count) %>
+<% next if sold_quantity.zero? %>
 <%= "%35.35s %5i\n" % ["#{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }", sold_quantity] %>
 <% end %>
 <%= "\xc4" * 42 %>
