@@ -18,8 +18,8 @@
   = f.label :password
   = f.text_field :password
   %br
-  = f.label :table_id
-  = f.select :table_id, [['','']] + @tables.collect{|t| [t.name,t.id]}
+  = f.label :default_table_id
+  = f.select :default_table_id, [['','']] + @tables.collect{|t| [t.name,t.id]}
   %br
   = f.label :language
   = f.select :language, SalorHospitality::Application::LANGUAGES.invert.to_a

@@ -37,7 +37,8 @@ function update_resources(mode) {
         }
         if (uri_attrs.table_id != undefined) route('table', uri_attrs.table_id);
         if (uri_attrs.report == '1') report.functions.display_popup();
-        if (customer != null) route('table', customer.table_id);
+        if (customer != null)
+          route('table', customer); //the var customer stores the table id as set by the server. it is set in the documentready code in resources.js
       }
     }
   });

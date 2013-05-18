@@ -61,7 +61,7 @@ en:
         m_points: Loyalty Points
         postalcode: Postal Code
         state: State
-        table_id: Default Table
+        default_table_id: Default Table
         telephone: Telephone
       group:
         name: Name

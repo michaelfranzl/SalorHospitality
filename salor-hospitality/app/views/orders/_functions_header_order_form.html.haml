@@ -1,10 +1,13 @@
-- if workstation?
+- if workstation? and not @current_customer
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
 - unless @current_customer
   %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back), :style => branding_override_style(:buttons, :tables) }
-- else
+
+- if @current_customer and @current_customer.default_table_id.nil?
   %a#order_submit_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_send');", :title => t('various.customer_request_send') }
+  
+- if @current_customer and @current_customer.default_table_id
   %a#order_submit_button.iconbutton.cash_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_finish');", :title => t('various.customer_request_finish') }
   %a#order_submit_button.iconbutton.user_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_waiter');", :title => t('various.customer_request_waiter') }
 

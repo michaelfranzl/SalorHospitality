@@ -11,7 +11,7 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery
   #helper :all
-  before_filter :fetch_logged_in_user, :set_locale, :set_tailor
+  before_filter :fetch_logged_in_user, :set_locale, :set_tailor, :set_up, :autologout_customers
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
 
@@ -209,6 +209,38 @@ class ApplicationController < ActionController::Base
 
   private
   
+    def set_up
+      SalorHospitality.requestcount += 1
+      
+      if defined?(ShSaas) == 'constant'
+        @sessionpath = sh_saas.session_path
+      else
+        @sessionpath = session_path
+      end
+      
+      if params[:notice] and not params[:notice].empty?
+        flash[:notice] = params[:notice]
+      end
+      
+      if params[:error] and not params[:error].empty?
+        flash[:error] = params[:error]
+      end
+    end
+    
+    def autologout_customers
+      if SalorHospitality.requestcount % 2 == 0
+        # every 10 requests
+        @from = 100.years.ago
+        @to = 1.minutes.ago
+        Customer.existing.where(:logged_in => true, :last_login_at => @from..@to).each do |c|
+          puts "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
+          c.logged_in = false
+          c.table = nil
+          c.save
+        end
+      end
+    end
+  
     def set_tailor
       return unless @current_vendor and SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
       
@@ -258,6 +290,8 @@ class ApplicationController < ActionController::Base
       return object
     end
   
+    
+    # convenience function for creating or updating an order
     def get_order
       if params[:id]
         @order = get_model(params[:id], Order)
@@ -272,8 +306,13 @@ class ApplicationController < ActionController::Base
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
       end
+      
+      if @current_customer
+        params[:table_id] = @current_customer.table.id # security measure
+      end
+      
       if @order and @order.finished == true
-        # neither update nor create
+        # do nothing, since it is already finished
       elsif @order
         params[:model][:table_id] = @order.table_id if params[:model] # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
         @order.update_from_params(params, @current_user, @current_customer)
@@ -346,21 +385,50 @@ class ApplicationController < ActionController::Base
       if @current_user and not (@current_user.advertising_url.nil? or @current_user.advertising_url.empty?)
         @advertising_url = @current_user.advertising_url
       end
-
-      unless (@current_user or @current_customer) and @current_vendor
-        if defined?(ShSaas) == 'constant'
-          redirect_to sh_saas.new_session_path and return
-        else
-          redirect_to new_session_path and return
-        end
-      end
       
-      if @current_vendor.branding != {}
+      if @current_vendor and @current_vendor.branding != {}
         @branding_codename = @current_vendor.branding[:codename]
         @branding_title = @current_vendor.branding[:title]
       else
         @branding_codename = 'salorhospitality'
         @branding_title = 'SALOR Hospitality'
+      end
+
+    
+      if @current_user.nil? and @current_customer.nil?
+        session[:user_id] = nil
+        if request.xhr?
+          if defined?(ShSaas) == 'constant'
+            render :js => "window.location = '#{sh_saas.new_session_path}';" and return
+          else
+            render :js => "window.location = '#{new_session_path}';" and return
+          end
+        else
+          if defined?(ShSaas) == 'constant'
+            redirect_to sh_saas.new_session_path and return
+          else
+            redirect_to new_session_path and return
+          end
+        end
+      end
+      
+        
+      if @current_customer and @current_customer.logged_in != true
+        session[:customer_id] = nil
+        flash[:error] = "Automatically logged out"
+        if request.xhr?
+          if defined?(ShSaas) == 'constant'
+            render :js => "window.location = '#{sh_saas.new_customer_session_path}';" and return
+          else
+            render :js => "window.location = '#{new_customer_session_path}';" and return
+          end
+        else
+          if defined?(ShSaas) == 'constant'
+            redirect_to sh_saas.new_customer_session_path and return
+          else
+            redirect_to new_customer_session_path and return
+          end
+        end
       end
     end
 

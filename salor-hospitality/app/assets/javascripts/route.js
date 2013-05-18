@@ -47,13 +47,13 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    switch_to_table();
     loadify_order_buttons();
     if (action == 'send') {
       // finish order
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';
       submit_json.model.note = $('#order_note').val();
+      switch_to_table();
       send_json('table_' + model_id);
       // stay on table
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
@@ -61,14 +61,23 @@ function route(target, model_id, action, options) {
     } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
-      alert(i18n.order_will_be_confirmed);
-      send_json('table_' + model_id, function() {
-        render_items()
-      });
+      var answer = confirm("Are you sure that you want to place this order?");
+      switch_to_table();
+      if (answer == true) {
+        //alert(i18n.order_will_be_confirmed);
+        send_json('table_' + model_id, function() {
+          //render_items();
+          logout();
+        });
+      } else {
+        render_items();
+        return
+      }
     } else if (action == 'customer_request_finish') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_finish';
       alert(i18n.finish_was_requested);
+      switch_to_table();
       send_json('table_' + model_id, function() {
         render_items()
       });
@@ -76,6 +85,7 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_waiter';
       alert(i18n.waiter_was_requested);
+      switch_to_table();
       send_json('table_' + model_id, function() {
         render_items()
       });
@@ -84,6 +94,7 @@ function route(target, model_id, action, options) {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_do_invoice_print';
       submit_json.model.note = $('#order_note').val();
+      switch_to_table();
       send_json('table_' + model_id);
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
@@ -108,6 +119,7 @@ function route(target, model_id, action, options) {
       }
       
     } else if (action == 'specific_order') {
+      switch_to_table();
       unloadify_order_buttons();
       $.ajax({
         type: 'GET',
@@ -119,12 +131,14 @@ function route(target, model_id, action, options) {
       }); //this just fetches items_json and a few other state variables
       
     } else if (action == 'from_booking') {
+      switch_to_table();
       submit_json.jsaction = 'send_and_go_to_table';
       send_json('booking_' + options.booking_id);
       submit_json.model.table_id = model_id;
       
     } else {
       // regular click on a table from main view
+      switch_to_table();
       unloadify_order_buttons();
       get_table_show(model_id);
     }

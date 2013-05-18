@@ -116,3 +116,7 @@ function  in_array_of_hashes(array,key,value) {
   }
   return false;
 }
+
+function logout() {
+  $('#logoutform').submit();
+}

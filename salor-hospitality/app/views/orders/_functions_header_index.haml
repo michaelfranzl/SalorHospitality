@@ -15,7 +15,7 @@
 - if permit('move_tables')
   %a.iconbutton.tables2_button{ :onclick => "toggle_drag_tables();", :title => t('.toggle_drag_tables') }
 
-#logoutform= button_to '', session_path, :method => :delete, :title => t(:logout, :who => '')
+%a.iconbutton.logout_button{ :onclick => "logout()" }
 
 - if permit('allow_exit')
   %a#exit_button.iconbutton.exit_button{ :onclick => "window.open('', '_self', ''); window.close();", :title => t('.exit') }

@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def new
+    redirect_to sh_saas.new_session_path and return if defined?(ShSaas) == 'constant'
     company = Company.existing.active.first
     vendor = company.vendors.existing.first
     session[:customer_id] = @current_customer = nil
@@ -29,6 +30,7 @@ class SessionsController < ApplicationController
   end
   
   def new_customer
+    redirect_to sh_saas.new_customer_path and return if defined?(ShSaas) == 'constant'
     company = Company.existing.active.first
     vendor = company.vendors.existing.first
     session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil

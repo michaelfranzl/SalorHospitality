@@ -157,7 +157,7 @@ class Order < ActiveRecord::Base
   end
   
   def update_payment_method_items(params)
-    ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
+    #ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
     # create payment method items only when 1) there are some, 2) cost center does not forbid creating payment method items
     if params[:payment_method_items] and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
       self.payment_method_items.update_all(:hidden => true, :hidden_by => -7, :hidden_at => Time.now) # we don't re-use previously created payment method items
@@ -181,14 +181,14 @@ class Order < ActiveRecord::Base
     
     table = self.table
     if customer.nil?
-      # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order.
+      # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order. The table will no longer be associated with a customer
       table.confirmations_pending = false
       table.request_finish = false
       table.request_waiter = false
+      table.request_order = false
     else
-      table.confirmations_pending = true
+      table.confirmations_pending = self.items.existing.where("confirmation_count IS NULL OR count > confirmation_count").any? # this boolean flag will cause the table to pulsate on the tables screen
     end
-    table.customer = customer # is nil when waiter re-submits the order.
     table.save
     
     # Set item notifications

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130512085550) do
+ActiveRecord::Schema.define(:version => 20130517091304) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -282,9 +282,10 @@ ActiveRecord::Schema.define(:version => 20130512085550) do
     t.datetime "last_active_at"
     t.datetime "last_login_at"
     t.datetime "last_logout_at"
-    t.integer  "table_id"
+    t.integer  "default_table_id"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.boolean  "logged_in"
   end
 
   create_table "discounts", :force => true do |t|
@@ -950,6 +951,7 @@ ActiveRecord::Schema.define(:version => 20130512085550) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "customer_table"
+    t.boolean  "request_order"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"

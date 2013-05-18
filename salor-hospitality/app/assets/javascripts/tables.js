@@ -71,16 +71,12 @@ function render_tables() {
   $('#tables').html('');
   $('#tablesselect_container').html('');
   $.each(resources.tb, function(k,v) {
-    var bgcolor = null;
     
-    if (v.auid)
-      bgcolor = resources.u[v.auid].c; // auid means active user id
-      
-    if (!v.e)
-      bgcolor = 'black'; // e means enabled
+    var bgcolor = null;
+    var fcolor = null;
    
     //--------------------------
-    // render spans for the move function
+    // render spans for the move function. This is a pop-up DIV on the order screen.
     var move_table_span = create_dom_element('span', {}, v.n, '#tablesselect_container');
     move_table_span.on('click', function() {
       route('tables', submit_json.model.table_id, 'move', {target_table_id:v.id});
@@ -88,6 +84,7 @@ function render_tables() {
     move_table_span.addClass('option');
     if (typeof(bgcolor) == 'string')
       move_table_span.css('background-color', bgcolor);
+    //--------------------------
     
     
     // ------------------------
@@ -120,16 +117,28 @@ function render_tables() {
     table.css('width', width);
     table.css('height', height);
     
-    if (typeof(bgcolor) == 'string')
-      table.css('background-color', bgcolor);
     
+    //--------------------------
+    // determine color
+
+    if (!v.e)
+      bgcolor = 'black'; // e means enabled
+      
     if (v.crid != null) {
-      table.css('color', 'black');
-      table.css('background-color', 'white');
+      bgcolor = 'white';
+      fcolor = 'black';
     }
+    
+    if (v.auid) {
+      bgcolor = resources.u[v.auid].c; // auid means active user id
+      fcolor = 'white';
+    }
+
 
     if (v.cp && permissions.confirmation_user) {
       table.effect("pulsate", { times:2000 }, 3000);
+      //bgcolor = 'white';
+      //fcolor = 'black';
       // cp means confirmation pending
     }
     
@@ -141,8 +150,6 @@ function render_tables() {
       if (permissions.confirmation_user) {
         table.effect("pulsate", { times:2000 }, 3000);
       }
-      table.css('color', 'black');
-      table.css('background-color', 'white');
     }
     
     if (v.rw) {
@@ -153,9 +160,11 @@ function render_tables() {
       if (permissions.confirmation_user) {
         table.effect("pulsate", { times:2000 }, 3000);
       }
-      table.css('color', 'black');
-      table.css('background-color', 'white');
     }
+    
+    table.css('background-color', bgcolor);
+    table.css('color', fcolor);
+    //--------------------------
     
     if (permissions.move_tables && settings.mobile_drag_and_drop || settings.workstation_drag_and_drop) {
       table.draggable({ stop: function() {

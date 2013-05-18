@@ -61,7 +61,7 @@ gn:
         m_points: Punkte
         postalcode: PLZ
         state: Land
-        table_id: Standard-Tisch
+        default_table_id: Standard-Tisch
         telephone: Telefon
       group:
         name: Name

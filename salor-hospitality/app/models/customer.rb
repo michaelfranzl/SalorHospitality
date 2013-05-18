@@ -12,18 +12,19 @@ class Customer < ActiveRecord::Base
   belongs_to :company
   has_many :orders
   has_many :bookings
+  has_one :table
   validates_presence_of :login
 
   def to_hash(vendor)
-    table_id = nil
-    if self.table_id
-      # if customer has set a dedicated table, "place" him there. this would be used for "anonymous" customers for self-ordering in a restaurant
-      table_id = self.table_id
-    else
-      # if customer does not have a dedicated table set, which is the case for non-anonymous customers when ordering from their own account, use the first free (customer_id == nil) table with has the 'customer == true' attribute set, of the currently logged in vendor.
-      table_id = vendor.tables.existing.where(:customer_table => true, :customer_id => nil).first.id # first empty table
-    end
-    return {:id => self.id, :name => self.full_name(true), :table_id => table_id }
+#     table_id = nil
+#     if self.table_id
+#       # if customer has set a dedicated table, "place" him there. this would be used for "anonymous" customers for self-ordering in a restaurant
+#       table_id = self.table_id
+#     else
+#       # if customer does not have a dedicated table set, which is the case for non-anonymous customers when ordering from their own account, use the first free (customer_id == nil) table with has the 'customer == true' attribute set, of the currently logged in vendor.
+#       table_id = vendor.tables.existing.where(:customer_table => true, :customer_id => nil).first.id # first empty table
+#     end
+#     return {:id => self.id, :name => self.full_name(true), :table_id => table_id }
   end
 
   def full_name(simple = false)
