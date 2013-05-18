@@ -66,8 +66,7 @@ function route(target, model_id, action, options) {
       if (answer == true) {
         //alert(i18n.order_will_be_confirmed);
         send_json('table_' + model_id, function() {
-          //render_items();
-          logout();
+          // logging out is rendered from application controller
         });
       } else {
         render_items();

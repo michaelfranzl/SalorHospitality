@@ -105,7 +105,6 @@ SalorHospitality::Application.routes.draw do
   resources :roles
   resources :customers
 
-
   resources :reports do
     collection do
       get :update_connection_status

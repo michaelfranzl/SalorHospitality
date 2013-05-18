@@ -249,6 +249,15 @@ class Order < ActiveRecord::Base
     self.tax_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
     self.items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
     self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    
+    # detach customer from table
+    if self.table.customer
+      customer = self.table.customer
+      unless customer.logged_in == true
+        customer.table = nil
+        customer.save
+      end
+    end
   end
 
   def unlink

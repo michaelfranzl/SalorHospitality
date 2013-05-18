@@ -161,7 +161,12 @@ class ApplicationController < ActionController::Base
                   render :nothing => true
                 when 'table_request_send'
                   @table = @order.table
-                  render 'orders/render_order_form'
+                  if @current_customer.default_table_id
+                    render 'orders/render_order_form'
+                  else
+                    render :js => "logout({notice:'Thank you. Your order is being processed.'});"
+                  end
+                  
                 when 'table_request_finish'
                   @table = @order.table
                   @table.set_request_finish
@@ -401,13 +406,13 @@ class ApplicationController < ActionController::Base
         session[:user_id] = nil
         if request.xhr?
           if defined?(ShSaas) == 'constant'
-            render :js => "window.location = '#{sh_saas.new_session_path}';" and return
+            render :js => "window.location = '#{sh_saas.new_session_path}?v=#{@current_vendor.offset}';" and return
           else
             render :js => "window.location = '#{new_session_path}';" and return
           end
         else
           if defined?(ShSaas) == 'constant'
-            redirect_to sh_saas.new_session_path and return
+            redirect_to sh_saas.new_session_path + "?v=#{@current_vendor.offset}" and return
           else
             redirect_to new_session_path and return
           end

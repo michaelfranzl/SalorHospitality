@@ -117,6 +117,10 @@ function  in_array_of_hashes(array,key,value) {
   return false;
 }
 
-function logout() {
+function logout(msg) {
+  var error = typeof msg.error !== 'undefined' ? msg.error : '';
+  var notice = typeof msg.notice !== 'undefined' ? msg.notice : '';
+  $('#logout_error').val(error);
+  $('#logout_notice').val(notice);
   $('#logoutform').submit();
 }
