@@ -228,12 +228,12 @@ class ApplicationController < ActionController::Base
     end
     
     def autologout_customers
-      if SalorHospitality.requestcount % 2 == 0
+      if SalorHospitality.requestcount % 10 == 0
         # every 10 requests
         @from = 100.years.ago
-        @to = 1.minutes.ago
+        @to = 10.minutes.ago
         Customer.existing.where(:logged_in => true, :last_login_at => @from..@to).each do |c|
-          puts "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
+          #logger.info "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
           c.logged_in = false
           c.table = nil
           c.save
@@ -293,6 +293,12 @@ class ApplicationController < ActionController::Base
     
     # convenience function for creating or updating an order
     def get_order
+      
+      if @current_customer
+        params[:model][:table_id] = @current_customer.table.id # security measure
+      end
+      
+      
       if params[:id]
         @order = get_model(params[:id], Order)
       elsif params[:model] and params[:model][:table_id]
@@ -305,10 +311,6 @@ class ApplicationController < ActionController::Base
         else
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
-      end
-      
-      if @current_customer
-        params[:table_id] = @current_customer.table.id # security measure
       end
       
       if @order and @order.finished == true

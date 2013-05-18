@@ -137,8 +137,8 @@ function render_tables() {
 
     if (v.cp && permissions.confirmation_user) {
       table.effect("pulsate", { times:2000 }, 3000);
-      //bgcolor = 'white';
-      //fcolor = 'black';
+      bgcolor = 'white';
+      fcolor = 'black';
       // cp means confirmation pending
     }
     
