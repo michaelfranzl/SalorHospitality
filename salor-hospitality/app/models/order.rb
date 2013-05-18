@@ -324,6 +324,14 @@ class Order < ActiveRecord::Base
     self.unlink
     self.set_nr # in theory not neccessary, but just to make sure
     self.table.update_color
+    
+    # detach customer from this table
+    customer = self.customer
+    if customer
+      customer.table = nil
+      customer.save
+    end
+    
     self.items.existing.each do |i|
       i.option_items.existing.each do |oi|
         oi.hide(-10) if oi.price == 0.0

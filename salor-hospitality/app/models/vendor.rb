@@ -370,6 +370,10 @@ class Vendor < ActiveRecord::Base
     puts "Created History record for package upgrade"
   end
   
+  def offset
+    self.id - self.company.vendors.existing.first.id
+  end
+  
   def self.copy_menucard(v1, v2)
     # copies taxes, categories, articles, quantities
     v1.taxes.existing.each do |t1|
