@@ -118,6 +118,7 @@ function  in_array_of_hashes(array,key,value) {
 }
 
 function logout(msg) {
+  msg = typeof msg !== 'undefined' ? msg : {};
   var error = typeof msg.error !== 'undefined' ? msg.error : '';
   var notice = typeof msg.notice !== 'undefined' ? msg.notice : '';
   $('#logout_error').val(error);
