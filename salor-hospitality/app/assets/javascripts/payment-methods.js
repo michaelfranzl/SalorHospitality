@@ -127,7 +127,7 @@ function payment_method_input_change(element, uid, mid) {
   } else {
     booking_order_total = 0;
   }
-  change = - number_with_precision(submit_json.totals[mid].model + booking_order_total - payment_method_total, 2);
+  change = - (submit_json.totals[mid].model + booking_order_total - payment_method_total);
   $('#change_' + mid).html(number_to_currency(change));
   if (change < 0) {
     $('#change_' + mid).css("color", "red");

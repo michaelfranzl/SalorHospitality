@@ -474,7 +474,7 @@ class ApplicationController < ActionController::Base
           I18n.locale = @locale = session[:locale] = browser_language
         end
       end
-      @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country] if @current_vendor
+      @region = @current_vendor.region if @current_vendor
     end
 
     def update_vendor_cache

@@ -9,6 +9,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Order < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
   include Scope
   belongs_to :company
   belongs_to :vendor
@@ -499,7 +500,7 @@ class Order < ActiveRecord::Base
       comment_format   = " ! %-18.18s\n"
       option_format    = " * %-18.18s\n"
       width = 21
-      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+      item_separator_format = "\xC4" * (width - 11) + " %10.10s\n"
     else
       header_format_time_order = "%-35.35s #%5i\n"
       header_format_user_table = "%-33.33s %8s\n"
@@ -509,7 +510,7 @@ class Order < ActiveRecord::Base
       comment_format     = "   ! %-37.37s\n"
       option_format      = "   * %-37.37s\n"
       width = 42
-      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+      item_separator_format = "\xC4" * (width - 11) + " %10.10s\n"
     end
 
     if vendor.ticket_wide_font and not vendor.ticket_tall_font
@@ -574,7 +575,8 @@ class Order < ActiveRecord::Base
         end
 
         if vendor.ticket_item_separator
-          itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]
+          item_separator_values = number_with_precision((i.price + i.options_price) * (i.count - i.printed_count), :locale => vendor.region)
+          itemstring += item_separator_format % item_separator_values
         end
         
         if i.option_items.find_all_by_separate_ticket(true).any?
@@ -623,6 +625,27 @@ class Order < ActiveRecord::Base
 
 
   def escpos_receipt(options={})
+    if self.vendor.country == 'vi'
+      # very large integers
+      header3_format = "   %-13.13s %10.10s %5.5s"
+      options_format = "%2s %13.13s %10.10s %3u %10.10s\n"
+      items_format = "%2s %13.13s %10.10s %3u %10.10s\n"
+      sum_format = "%s:   %s %s"
+      refundsum_format = "\n%s:   %s %s"
+      tax_header_format = "         %10.10s %10.10s %10.10s\n"
+      tax_format = "%s:  %2i%%  %10.10s  %10.10s  %10.10s\n"
+      payment_method_format = "%22.22s: %10.10s\n"
+    else
+      header3_format = "   %-17.17s %8.8s   %4.4s"
+      options_format = "%2s %17.17s %8.8s %3u %8.8s\n"
+      items_format = "%2s %17.17s %8.8s %3u %8.8s\n"
+      sum_format = "%s:   %s %s"
+      refundsum_format = "\n%s:   %s %s"
+      tax_header_format = "      %8.8s %8.8s %8.8s\n"
+      tax_format = "%s: %2i%% %8.8s %8.8s %8.8s\n"
+      payment_method_format = "%22.22s: %8.8s\n"
+    end
+    
     vendor = self.vendor
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
@@ -654,10 +677,22 @@ class Order < ActiveRecord::Base
 
     header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
-    header2 += "\n\n" +
-    "\e!\x00" +  # Font A
-    "                 #{I18n.t('activerecord.models.article.one')}   #{I18n.t('various.unit_price_abbreviation')}   #{I18n.t('various.quantity_abbreviation')}    #{I18n.t('various.total_price_abbreviation')}\n" +
-    "\xc4" * 42 + "\n"
+    header3 =
+        "\n\n" +
+        "\e!\x00" # Font A
+    
+    header3_values = [
+      I18n.t('activerecord.models.article.one'),
+      I18n.t('various.unit_price_abbreviation'),
+      I18n.t('various.quantity_abbreviation'),
+      I18n.t('various.total_price_abbreviation')
+    ]
+      
+    header3 += header3_format % header3_values
+    header3 +=
+        "\n" +
+        "\xc4" * 42 +
+        "\n"
 
     list_of_items = ''
     self.items.existing.positioned.each do |item|
@@ -665,53 +700,99 @@ class Order < ActiveRecord::Base
       list_of_options = ''
       item.option_items.each do |oi|
         next if oi.price == 0
-        list_of_options += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
+        options_values = [
+          item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
+          "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }",
+          oi.price,
+          number_with_precision(item.count, :locale => vendor.get_region),
+          item.refunded ? 0 : number_with_precision(oi.price * item.count, :locale => vendor.get_region)
+        ]
+        list_of_options += options_format % options_values
       end
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
       item_sum = item.refunded ? 0 : item.price * item.count
-      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
+      items_values = [
+        item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
+        label,
+        number_with_precision(item.price, :locale => vendor.get_region),
+        item.count,
+        number_with_precision(item_sum, :locale => vendor.get_region)
+      ]
+      list_of_items += items_format % items_values
       list_of_items += list_of_options
     end
 
-    sum_format =
-    "                              " + "\xcd" * 12 + "\r\n" +
-    "\e!\x18" + # double tall, bold
-    "\ea\x02"   # align right
+    sum_style =
+        " " * 30 +
+        "\xcd" * 12 +
+        "\r\n" +
+        "\e!\x18" + # double tall, bold
+        "\ea\x02"   # align right
 
-    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
+    sum_values = [
+      I18n.t(:sum).upcase,
+      friendly_unit,
+      number_with_precision(self.sum, :locale => vendor.get_region)
+    ]
+    sum = sum_format % sum_values
 
-    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{friendly_unit} %.2f" % self.refund_sum)
+    if self.refund_sum.zero?
+      refund = ''
+    else
+      refundsum_values = [
+        I18n.t(:refund),
+        friendly_unit,
+        number_with_precision(self.refund_sum, :locale => vendor.get_region)
+      ]
+      refund = refundsum_format % refundsum_values
+    end
 
-    tax_format =
+    tax_style =
         "\n\n" +
         "\ea\x01" +  # align center
-        "\e!\x01" # Font B
+        "\e!\x01"    # Font B
 
-    tax_header = "         #{I18n.t(:net)}  #{I18n.t('various.tax')}   #{I18n.t(:gross)}\n"
+    tax_header_values = [
+      I18n.t(:net),
+      I18n.t('various.tax'),
+      I18n.t(:gross)
+    ]
+    tax_header = tax_header_format % tax_header_values
 
     list_of_taxes = ''
     self.taxes.each do |k,v|
-      list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [v[:l],v[:p],v[:n], v[:t], v[:g]]
+      tax_values = [
+        v[:l],
+        v[:p],
+        number_with_precision(v[:n], :locale => vendor.get_region),
+        number_with_precision(v[:t], :locale => vendor.get_region),
+        number_with_precision(v[:g], :locale => vendor.get_region)
+      ]  
+      list_of_taxes += tax_format % tax_values
     end
     
     list_of_payment_methods = "\n"
     if self.user.role.permissions.include? 'manage_payment_methods'
       self.payment_method_items.each do |pm|
         name = pm.refunded ? "#{ I18n.t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}" : pm.payment_method.name
-        list_of_payment_methods += "%22.22s: %7.2f\n" % [name, pm.amount] unless pm.amount.zero?
+        payment_method_values = [
+          name,
+          number_with_precision(pm.amount, :locale => vendor.get_region)
+        ]
+        list_of_payment_methods += payment_method_format % payment_method_values unless pm.amount.zero?
       end
     end
 
     footer = ''
     if vendor.receipt_footer_blurb
-      footer = 
-      "\ea\x01" +  # align center
-      "\e!\x00" + # font A
-      "\n" +
-      vendor.receipt_footer_blurb +
-      "\n"
+      footer =
+          "\ea\x01" +  # align center
+          "\e!\x00" + # font A
+          "\n" +
+          vendor.receipt_footer_blurb +
+          "\n"
     end
 
     duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
@@ -740,11 +821,12 @@ class Order < ActiveRecord::Base
         header1 +
         lines +
         header2 +
+        header3 +
         list_of_items +
-        sum_format +
+        sum_style +
         sum +
         refund +
-        tax_format +
+        tax_style +
         tax_header +
         list_of_taxes +
         list_of_payment_methods +

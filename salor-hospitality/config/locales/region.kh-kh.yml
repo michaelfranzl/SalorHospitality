@@ -1,4 +1,4 @@
-gn-de:
+kh-kh:
 # ==================================================================================
 # Adaptiert von:
 # /usr/lib/ruby/gems/1.8/gems/actionpack-2.2.1/lib/action_view/locale
@@ -9,9 +9,9 @@ gn-de:
     # These are also the defaults for 'currency', 'percentage', 'precision', and 'human'
     format:
       # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-      separator: ","
+      separator: "."
       # Delimets thousands (e.g. 1,000,000 is a million) (always in groups of three)
-      delimiter: "."
+      delimiter: ","
       # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
       # If set to true, precision will mean the number of significant digits instead
@@ -25,11 +25,11 @@ gn-de:
       format:
         # Where is the currency sign? %u is the currency unit, %n the number (default: $5.00)
         format: "%u %n"
-        unit: "€"
-        friendly_unit: EUR
+        unit: "$"
+        friendly_unit: USD
         # These five are to override number.format and are optional
-        separator: ","
-        delimiter: "."
+        separator: "."
+        delimiter: ","
         precision: 2
         significant: false
         strip_insignificant_zeros: false
@@ -48,8 +48,8 @@ gn-de:
     precision:
       format:
         # These three are to override number.format and are optional
-        separator: ","
-        delimiter: "."
+        separator: "."
+        delimiter: ","
         precision: 2
         # significant: false
         # strip_insignificant_zeros: false

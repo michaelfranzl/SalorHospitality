@@ -90,8 +90,8 @@ class Vendor < ActiveRecord::Base
     self.update_attribute :hidden, true
   end
   
-  def region
-    SalorHospitality::Application::COUNTRIES_REGIONS[self.country]
+  def get_region
+    SalorHospitality::Application::COUNTRIES_REGIONS[self.country].to_sym
   end
 
   def logo_image
@@ -372,6 +372,10 @@ class Vendor < ActiveRecord::Base
   
   def offset
     self.id - self.company.vendors.existing.first.id
+  end
+  
+  def region
+    SalorHospitality::Application::COUNTRIES_REGIONS[self.country]
   end
   
   def self.copy_menucard(v1, v2)

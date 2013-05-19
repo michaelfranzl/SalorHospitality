@@ -9,6 +9,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Settlement < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
   include Scope
   belongs_to :company
   belongs_to :vendor
@@ -75,9 +76,13 @@ class Settlement < ActiveRecord::Base
 
   def escpos
     vendor = self.vendor
-    permissions = self.user.role.permissions
     
-    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
+    order_format = "\n%7i %6.6s %10.10s %5.5s %10.10s"
+    header_format = "%7.7s|%6.6s|%10.10s|%5.5s|%10.10s\n"
+    sum_format = "%-27s %s %10.10s\n"
+    
+    permissions = self.user.role.permissions
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => vendor.region)
     
     costcenter_ids = self.vendor.cost_centers.existing.collect{ |cc| cc.id }
     costcenter_ids << nil
@@ -112,7 +117,14 @@ class Settlement < ActiveRecord::Base
       t = I18n.l(o.created_at, :format => :time_short)
       costcentername = o.cost_center.name if o.cost_center
       nr = o.nr ? o.nr : 0 # failsafe
-      list_of_orders += "\n#%7i %7.7s %10.10s  %5.5s  %6.2f" % [nr, o.table.name, costcentername, t, o.sum]
+      order_values = [
+        nr,
+        o.table.name,
+        costcentername,
+        t,
+        number_with_precision(o.sum, :locale => vendor.region)
+      ]
+      list_of_orders += order_format % order_values
     end
     
     list_of_payment_methods = ''
@@ -120,11 +132,21 @@ class Settlement < ActiveRecord::Base
     if permissions.include?('manage_payment_methods')
       payment_methods_hash.each do |hash|
         unless hash[:sum].zero?
-          list_of_payment_methods += "%-27s  %s %9.2f\n" % [hash[:name], friendly_unit, hash[:sum]]
+          payment_method_values = [
+            hash[:name],
+            friendly_unit,
+            number_with_precision(hash[:sum], :locale => vendor.region)
+          ]
+          list_of_payment_methods += sum_format % payment_method_values
         end
         unless hash[:sum_refund].zero?
           name = I18n.t('refund') + ' ' + hash[:name]
-          list_of_payment_methods_refund += "%-27s  %s %9.2f\n" % [name, friendly_unit, hash[:sum_refund]]
+          payment_method_refund_values = [
+            name,
+            friendly_unit,
+            number_with_precision(hash[:sum_refund], :locale => vendor.region)
+          ]
+          list_of_payment_methods_refund += sum_format % payment_method_refund_values
         end
       end
       list_of_payment_methods += "\xc4" * 42 + "\n" unless list_of_payment_methods.empty?
@@ -134,14 +156,39 @@ class Settlement < ActiveRecord::Base
     list_of_costcenters = ''
     if permissions.include?('manage_cost_centers')
       costcenters_hash.each do |hash|
-        list_of_costcenters += "%-27s  %s %9.2f\n" % [hash[:name], friendly_unit, hash[:sum]] unless hash[:sum].zero?
+        cost_center_values = [
+          hash[:name],
+          friendly_unit,
+          number_with_precision(hash[:sum], :locale => vendor.region)
+        ]
+        list_of_costcenters += sum_format % cost_center_values unless hash[:sum].zero?
       end
       list_of_costcenters += "\xc4" * 42 + "\n" unless list_of_costcenters.empty?
     end
     
-    initial_cash = self.initial_cash ? "%s:  %s %9.2f\n" % [I18n.t('various.begin'), friendly_unit, self.initial_cash] : ''
-    revenue = self.revenue ? "%s:  %s %9.2f\n" % [I18n.t('various.end'), friendly_unit, self.revenue] : ''
-    revenue += "\xc4" * 42 + "\n" unless revenue.empty?
+    if self.initial_cash
+      initial_cash_values = [
+        I18n.t('various.begin'),
+        friendly_unit,
+        number_with_precision(self.initial_cash, :locale => vendor.region)
+      ]
+      initial_cash = sum_format % initial_cash_values
+    else
+      initial_cash = ''
+    end
+    
+    if self.revenue
+      revenue_values = [
+        I18n.t('various.end'),
+        friendly_unit,
+        number_with_precision(self.revenue, :locale => vendor.region)
+      ]
+      revenue = sum_format % revenue_values
+      revenue += "\xc4" * 42 + "\n"
+    else
+      revenue = ''
+    end
+    
     
     tax_attribute = vendor.country == 'us' ? :net : :gro
 
@@ -149,9 +196,14 @@ class Settlement < ActiveRecord::Base
     if permissions.include?('settlement_statistics_taxes')
       self.vendor.taxes.existing.where(:include_in_statistics => true, :statistics_by_category => false).each do |tax|
         sum = self.tax_items.where(:tax_id => tax.id).sum(tax_attribute)
-        list_of_taxes += "%-27s  %s %9.2f\n" % [tax.name, friendly_unit, sum]
+        tax_values = [
+          tax.name,
+          friendly_unit,
+          number_with_precision(sum, :locale => vendor.region)
+        ]
+        list_of_taxes += sum_format % tax_values
       end
-      list_of_taxes += "\xc4" * 42 + "\n" unless list_of_taxes.empty? #permissions.include?('settlement_statistics_taxes_categories')
+      list_of_taxes += "\xc4" * 42 + "\n" unless list_of_taxes.empty?
     end
     
     list_of_taxes_categories = ''
@@ -161,12 +213,22 @@ class Settlement < ActiveRecord::Base
         if permissions.include?('manage_statistic_categories')
           self.vendor.statistic_categories.existing.each do |cat|
             sum = self.tax_items.existing.where(:refunded => nil, :tax_id => tax.id, :statistic_category_id => cat.id).sum(tax_attribute)
-            list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+            taxes_categories_values = [
+              cat.name,
+              friendly_unit,
+              number_with_precision(sum, :locale => vendor.region)
+            ]
+            list_of_taxes_categories += " " + sum_format % taxes_categories_values unless sum.zero?
           end
         else
           self.vendor.categories.existing.each do |cat|
             sum = self.tax_items.existing.where(:tax_id => tax.id, :category_id => cat.id, :refunded => nil).sum(tax_attribute)
-            list_of_taxes_categories += " %-27s %s %9.2f\n" % [cat.name, friendly_unit, sum] unless sum.zero?
+            list_of_categories_values = [
+              cat.name,
+              friendly_unit,
+              number_with_precision(sum, :locale => vendor.region)
+            ]
+            list_of_taxes_categories += " " + sum_format % list_of_categories_values unless sum.zero?
           end
         end
 
@@ -174,12 +236,12 @@ class Settlement < ActiveRecord::Base
       list_of_taxes_categories += "\xc4" * 42 + "\n" unless list_of_taxes_categories.empty?
     end
     
-    list_of_sold_quantities = ''
-    if permissions.include?('settlement_statistics_sold_quantities')
-      item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE settlement_id = #{ self.id } AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-      item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE settlement_id = #{ self.id } AND hidden IS NULL").to_a.flatten.uniq
-    end
-    
+    sum_values = [
+      I18n.t(:sum),
+      friendly_unit,
+      number_with_precision(self.sum, :locale => vendor.region)
+    ]
+    sum_string = sum_format % sum_values
 
     output =
     "\e@"     +  # Initialize Printer
@@ -196,12 +258,12 @@ class Settlement < ActiveRecord::Base
     "%-15.15s: %i\n" % [I18n.t('activerecord.models.order.other'), self.orders.existing.where(:finished => true).count] +
     "%-15.15s: %i\n" % [I18n.t('activerecord.models.article.other'), self.items.existing.count] +
     "\n" +
-    "%7.7s  %7.7s  %10.10s %5.5s  %5.5s\n" % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('activerecord.models.cost_center.one'), I18n.t('various.time'),  I18n.t(:sum)] +
+    header_format % [Order.human_attribute_name(:nr), I18n.t('activerecord.models.table.one'), I18n.t('activerecord.models.cost_center.one'), I18n.t('various.time'),  I18n.t(:sum)] +
     "\xc4" * 42 +
     list_of_orders +
     "\n" +
     "\e!\x18" +  # double tall, bold
-    "%-27s  %s %9.2f\n" % [I18n.t(:sum), friendly_unit, self.sum] +
+    sum_string +
     "\xc4" * 42 + "\n" +
     list_of_costcenters +
     list_of_payment_methods +
