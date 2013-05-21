@@ -12,8 +12,8 @@
   .floatright= link_to(t('various.cancel'), customers_path, :class => 'links')
   .clear
   %br
-  = f.label :login
-  = f.text_field :login
+  = f.label :email
+  = f.text_field :email
   %br
   = f.label :password
   = f.text_field :password
@@ -51,14 +51,14 @@
   = f.label :m_number
   = f.text_field :m_number
   %br
-  = f.label :m_points
-  = f.text_field :m_points
-  %br
-  = f.label :email
-  = f.text_field :email
-  %br
   = f.label :telephone
   = f.text_field :telephone
   %br
   = f.label :cellphone
   = f.text_field :cellphone
+
+:javascript
+  $(function() {
+    if ($('#customer_password').val().length == 0)
+      $('#customer_password').val(generate_password(8));
+  });

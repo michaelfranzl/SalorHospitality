@@ -39,9 +39,9 @@
       #header
         = image_tag "logo-small-#{@branding_codename}.png", :id => 'logo'
       #flash
-        - if flash[:notice]
+        - if flash[:notice] and flash[:notice].empty? == false
           #flash_notice= flash[:notice]
-        - if flash[:error]
+        - if flash[:error] and flash[:error].empty? == false
           #flash_error= flash[:error]
       #main{:style => 'bottom: 0px' }= yield
       #footer

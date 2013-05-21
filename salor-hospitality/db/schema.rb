@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517091304) do
+ActiveRecord::Schema.define(:version => 20130521074931) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -286,6 +286,11 @@ ActiveRecord::Schema.define(:version => 20130517091304) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "logged_in"
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.string   "password_encrypted"
+    t.string   "password_salt"
+    t.string   "id_hash"
   end
 
   create_table "discounts", :force => true do |t|
@@ -1146,6 +1151,15 @@ ActiveRecord::Schema.define(:version => 20130517091304) do
     t.datetime "hidden_at"
     t.boolean  "history_print"
     t.string   "branding",                    :limit => 5000,     :default => "--- {}\n"
+    t.string   "full_subdomain"
+    t.string   "identifier"
+    t.string   "full_url"
+    t.string   "virtualhost_filter"
+    t.integer  "auth_https_mode"
+    t.boolean  "https"
+    t.boolean  "auth"
+    t.string   "domain"
+    t.string   "subdomain"
   end
 
 end

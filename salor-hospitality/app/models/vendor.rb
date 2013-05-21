@@ -58,6 +58,8 @@ class Vendor < ActiveRecord::Base
   serialize :branding
 
   validates_presence_of :name
+  validates_uniqueness_of :name, :scope => :hidden
+  validates_uniqueness_of :identifier, :scope => :hidden
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
   validates :update_item_lists_interval, :numericality => { :greater_than => 29 }
   validates :update_resources_interval, :numericality => { :greater_than => 101 }

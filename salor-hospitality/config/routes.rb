@@ -208,8 +208,6 @@ SalorHospitality::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
 
-  root :to => 'orders#index'
-
 
   # See how all your routes lay out with "rake routes"
 
@@ -217,12 +215,16 @@ SalorHospitality::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  
+  
 
   if defined?(ShSaas) == 'constant'
     mount ShSaas::Engine => "/saas"
-    match '*path' => 'saas/sessions#new'
+    match '*path' => 'sh_saas/sessions#new'
+    root :to => 'sh_saas/pages#iframe'
   else
     match '*path' => 'sessions#new'
+    root :to => 'orders#index'
   end
 
 end

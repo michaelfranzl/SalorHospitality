@@ -223,11 +223,11 @@ class ApplicationController < ActionController::Base
         @sessionpath = session_path
       end
       
-      if params[:notice] and not params[:notice].empty?
+      if params[:notice] and params[:notice].empty? == false
         flash[:notice] = params[:notice]
       end
       
-      if params[:error] and not params[:error].empty?
+      if params[:error] and params[:error].empty? == false
         flash[:error] = params[:error]
       end
     end
@@ -236,9 +236,9 @@ class ApplicationController < ActionController::Base
       if SalorHospitality.requestcount % 10 == 0
         # every 10 requests
         @from = 100.years.ago
-        @to = 10.minutes.ago
+        @to = 20.minutes.ago
         Customer.existing.where(:logged_in => true, :last_login_at => @from..@to).each do |c|
-          #logger.info "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
+          logger.info "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
           c.logged_in = false
           c.table = nil
           c.save
@@ -375,7 +375,7 @@ class ApplicationController < ActionController::Base
 
     def fetch_logged_in_user
       @current_user = User.existing.active.find_by_id session[:user_id] if session[:user_id]
-      @current_customer = Customer.find_by_id session[:customer_id] if session[:customer_id]
+      @current_customer = Customer.find_by_id_hash session[:customer_id_hash] if session[:customer_id_hash]
       
       @current_company = Company.existing.find_by_id session[:company_id] if session[:company_id]
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]

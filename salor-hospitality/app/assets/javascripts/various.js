@@ -125,3 +125,12 @@ function logout(msg) {
   $('#logout_notice').val(notice);
   $('#logoutform').submit();
 }
+
+function generate_password(length) {
+  var charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  var pw = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+    pw += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return pw;
+}

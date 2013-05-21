@@ -10,7 +10,6 @@
       = password_field_tag 'password', '', :size => 9
       = hidden_field_tag 'mode', 'customer'
       = hidden_field_tag 'v', params[:v]
-      %span#password_display_keyboard.display_keyboard
     %p= submit_tag t('.login'), :class => 'submit'
 
 - if workstation?

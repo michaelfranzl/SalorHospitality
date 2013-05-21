@@ -21,12 +21,18 @@ class CustomersController < ApplicationController
   end
 
   def new
+    if defined?(ShSaas) == 'constant'
+      redirect_to sh_saas.new_customer_path and return
+    end
     @customer = Customer.new
     @customer.language = @current_user.language
     @tables = @current_vendor.tables.existing
   end
 
   def edit
+    if defined?(ShSaas) == 'constant'
+      redirect_to sh_saas.edit_customer_path and return
+    end
     @customer = get_model
     @tables = @current_vendor.tables.existing
     redirect_to customers_path and return unless @customer

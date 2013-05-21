@@ -13,7 +13,18 @@ class Customer < ActiveRecord::Base
   has_many :orders
   has_many :bookings
   has_one :table
-  validates_presence_of :login
+  validates_presence_of :email
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+  validates_uniqueness_of :email, :scope => :company_id
+  validates_presence_of :password
+  validate :password_length
+  
+  def password_length
+    if self.password and self.password.length < 6
+      errors.add(:password, I18n.t('activerecord.errors.messages.too_short', :count => 6))
+    end
+  end
 
   def to_hash(vendor)
 #     table_id = nil

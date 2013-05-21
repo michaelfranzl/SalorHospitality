@@ -4,7 +4,7 @@
 - unless @current_customer
   %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back), :style => branding_override_style(:buttons, :tables) }
 
-- if @current_customer and @current_customer.default_table_id.nil?
+- if @current_customer
   %a#order_submit_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_send');", :title => t('various.customer_request_send') }
   
 - if @current_customer and @current_customer.default_table_id
