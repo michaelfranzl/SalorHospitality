@@ -220,8 +220,10 @@ SalorHospitality::Application.routes.draw do
 
   if defined?(ShSaas) == 'constant'
     mount ShSaas::Engine => "/saas"
-    match '*path' => 'sh_saas/sessions#new'
+    match '/login' => 'sh_saas/sessions#new_customer'
+    match '/signin' => 'sh_saas/sessions#new'
     root :to => 'sh_saas/pages#iframe'
+    match '*path' => 'sh_saas/sessions#new'
   else
     match '*path' => 'sessions#new'
     root :to => 'orders#index'

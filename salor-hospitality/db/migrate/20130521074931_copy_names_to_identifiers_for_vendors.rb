@@ -3,9 +3,8 @@ class CopyNamesToIdentifiersForVendors < ActiveRecord::Migration
     i = 0
     Vendor.existing.all.each do |v|
       puts "Setting Identifier #{ v.name }#{ i } for Vendor ID #{ v.id }"
-      v.identifier = "#{ v.name }#{ i }"
+      v.update_attribute :identifier, "#{ v.name }#{ i }"
       i += 1
-      v.save
    end
   end
 

@@ -37,6 +37,8 @@ class SessionsController < ApplicationController
     @submit_path = session_path
     @branding_codename = vendor.branding[:codename]
     @branding_title = vendor.branding[:title]
+    @branding_codename ||= 'salorhospitality'
+    @branding_title ||= 'Salor Hospitality'
     render :layout => 'login'
   end
 
