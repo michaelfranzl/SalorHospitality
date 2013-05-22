@@ -406,13 +406,13 @@ class ApplicationController < ActionController::Base
         session[:user_id] = nil
         if request.xhr?
           if defined?(ShSaas) == 'constant'
-            render :js => "window.location = '#{sh_saas.new_session_path}?v=#{@current_vendor.offset}';" and return
+            render :js => "window.location = '/login';" and return
           else
             render :js => "window.location = '#{new_session_path}';" and return
           end
         else
           if defined?(ShSaas) == 'constant'
-            redirect_to sh_saas.new_session_path + "?v=#{@current_vendor.offset}" and return
+            redirect_to "/login" and return
           else
             redirect_to new_session_path and return
           end
@@ -425,13 +425,13 @@ class ApplicationController < ActionController::Base
         flash[:error] = "Automatically logged out"
         if request.xhr?
           if defined?(ShSaas) == 'constant'
-            render :js => "window.location = '#{sh_saas.new_customer_session_path}';" and return
+            render :js => "window.location = '/login';" and return
           else
             render :js => "window.location = '#{new_customer_session_path}';" and return
           end
         else
           if defined?(ShSaas) == 'constant'
-            redirect_to sh_saas.new_customer_session_path and return
+            redirect_to '/login' and return
           else
             redirect_to new_customer_session_path and return
           end
