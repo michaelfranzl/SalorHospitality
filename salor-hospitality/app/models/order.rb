@@ -127,7 +127,7 @@ class Order < ActiveRecord::Base
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
     end
-    i.hide(user.id) if i.hidden
+    i.hide(self.user_id) if i.hidden
   end
   
   def update_item(id, p)

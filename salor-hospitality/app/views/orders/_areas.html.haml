@@ -6,8 +6,7 @@
     - 1.upto(areas) do |icon|
       - style = icon == area ? "border: 2px solid #{ @current_user.color };" : ''
       %a{ :class => "iconbutton area#{icon}_button", :style => style, :onclick => "scroll_to('#area#{ icon }',10)", :title => "#{t(:scroll_to_area)} #{ icon }" }
-    /%a.iconbutton.reload_button{ :onclick => "update_resources(); update_tables();", :title => t(:update_resources) }
-#logout= button_to '', session_path, :method => :delete, :title => t(:logout, :who => @current_user.login)
+%a.iconbutton.logout_button{ :onclick => "logout()" }
 
 :javascript
   $('#mobile_last_invoices_button').on('mousedown', function() {

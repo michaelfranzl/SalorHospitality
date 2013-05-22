@@ -222,6 +222,7 @@ SalorHospitality::Application.routes.draw do
     mount ShSaas::Engine => "/saas"
     match '/login' => 'sh_saas/sessions#new_customer'
     match '/signin' => 'sh_saas/sessions#new'
+    match '/printers' => 'sh_saas/sessions#printer_info'
     root :to => 'sh_saas/pages#iframe'
     match '*path' => 'sh_saas/sessions#new'
   else
