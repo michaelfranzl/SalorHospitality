@@ -72,7 +72,8 @@ class StatisticsController < ApplicationController
       
       text = ''
       text += render_statistics_escpos('header')
-      text += render_statistics_escpos(params[:statistics_type])     
+      text += render_statistics_escpos(params[:statistics_type])
+      text += render_statistics_escpos('footer')
       
       vendor_printer = @current_vendor.vendor_printers.existing.first
       print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, @current_company.identifier)
