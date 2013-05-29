@@ -277,7 +277,7 @@ company_count.times do |c|
       category = Category.new :name => category_labels[i], :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
       category.company = company
       category.vendor = vendor
-      category.preparation_user_id = user_objects.first.id
+      category.preparation_user_id = user_objects[1].id
       category.vendor_printer = vendor_printer_objects.first
       r = category.save
       puts "Category #{ c } #{ v } #{ i } created" if r == true

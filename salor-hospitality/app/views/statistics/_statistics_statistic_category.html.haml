@@ -1,0 +1,19 @@
+%table.settlements.statistics
+  %tr
+    %th.bb= StatisticCategory.model_name.human
+    %th.bb= t :sum
+    %th.bb.bar
+  - sums = []
+  - i = 0
+  - @statistic_categories.each do |cat|
+    - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum)
+    - i += 1
+  - maximum = sums.sort.last
+  - i = 0
+  - @statistic_categories.each do |cat|
+    %tr
+      %td= cat.name
+      %td= number_to_currency sums[i]
+      %td
+        .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+    - i += 1

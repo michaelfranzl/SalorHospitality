@@ -406,13 +406,13 @@ class ApplicationController < ActionController::Base
         session[:user_id] = nil
         if request.xhr?
           if defined?(ShSaas) == 'constant'
-            render :js => "window.location = '/login';" and return
+            render :js => "window.location = '/signin';" and return
           else
             render :js => "window.location = '#{new_session_path}';" and return
           end
         else
           if defined?(ShSaas) == 'constant'
-            redirect_to "/login" and return
+            redirect_to "/signin" and return
           else
             redirect_to new_session_path and return
           end

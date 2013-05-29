@@ -704,7 +704,7 @@ class Order < ActiveRecord::Base
           item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
           "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }",
           oi.price,
-          number_with_precision(item.count, :locale => vendor.get_region),
+          item.count,
           item.refunded ? 0 : number_with_precision(oi.price * item.count, :locale => vendor.get_region)
         ]
         list_of_options += options_format % options_values
@@ -959,8 +959,8 @@ class Order < ActiveRecord::Base
     if self.hidden
       tests[18] = self.items.collect{ |i| i.hidden == self.hidden }.all?
       tests[19] = self.tax_items.collect{ |i| i.hidden == self.hidden }.all?
-    end
-    tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+      tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+    end    
     
     # finished orders have to have nr set
     if self.finished

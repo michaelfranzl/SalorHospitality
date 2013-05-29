@@ -11,7 +11,7 @@
     %br
     - if @cost_centers.any?
       = label 'cc', CostCenter.model_name.human, :class => 'right'
-      %select{ :name => 'cost_center_id', :onchange => '$("form").submit()' }
+      %select{ :name => 'cost_center_id' }
         %option{ :value => '' }= t ('.all')
         - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
         = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)

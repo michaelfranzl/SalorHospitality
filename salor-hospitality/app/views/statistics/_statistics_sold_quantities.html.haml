@@ -1,0 +1,21 @@
+%table.settlements.statistics
+  %tr
+    %th.bb= Article.model_name.human
+    %th.bb= t :count
+  - @articles.each do |article|
+    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to, :user_id => @uids).sum(:count)
+    - next if sold_quantity.zero?
+    %tr
+      %td= article.name
+      %td= sold_quantity
+      
+%table.settlements.statistics
+  %tr
+    %th.bb= Quantity.model_name.human
+    %th.bb= t :count
+  - @quantities.each do |quantity|
+    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to, :user_id => @uids).sum(:count)
+    - next if sold_quantity.zero?
+    %tr
+      %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
+      %td= sold_quantity

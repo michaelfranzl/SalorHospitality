@@ -1,0 +1,14 @@
+
+
+<%= "\e!\x38" %>
+<%= PaymentMethod.model_name.human %>
+
+<%= "\e!\x00" %>
+<% total = 0 %>
+<% @payment_methods.each do |pm| %>
+<% sum = @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids, :created_at => @from..@to).sum(:amount) %>
+<%= "%10.10s     %s %7.2f\n" % [pm.name, @friendly_unit, sum] %>
+<% total += sum %>
+<% end %>
+<%= "%10.10s     %s %7.2f\n" % [I18n.t(:sum), @friendly_unit, total] %>
+<%= "\xc4" * 42 %>

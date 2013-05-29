@@ -167,7 +167,7 @@ class Vendor < ActiveRecord::Base
     payment_method_models = self.payment_methods.existing
     table_models          = self.tables.existing
     user_models           = self.users.existing
-    customer_models       = self.customers.existing.active
+    customer_models       = self.company.customers.existing.active
     
     cstmers = {}
     cstmers[:regulars] = []

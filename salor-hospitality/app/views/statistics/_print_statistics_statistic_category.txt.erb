@@ -1,0 +1,14 @@
+
+
+<%= "\e!\x38" %>
+<%= StatisticCategory.model_name.human %>
+
+<%= "\e!\x00" %>
+<% total = 0 %>
+<% @statistic_categories.each do |cat| %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :statistic_category_id => cat, :cost_center_id => @scids, :created_at => @from..@to).sum(:sum) %>
+<%= "%10.10s     %s %7.2f\n" % [cat.name, @friendly_unit, sum] %>
+<% total += sum %>
+<% end %>
+<%= "%10.10s     %s %7.2f\n" % [I18n.t(:sum), @friendly_unit, total] %>
+<%= "\xc4" * 42 %>

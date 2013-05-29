@@ -68,9 +68,11 @@ class StatisticsController < ApplicationController
     
     
     if params[:print] == 'true'
-      template = File.read("#{Rails.root}/app/views/statistics/print.txt.erb")
-      erb = ERB.new(template, 0, '>')
-      text = erb.result(binding)
+      @friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => @region)
+      
+      text = ''
+      text += render_statistics_escpos('header')
+      text += render_statistics_escpos(params[:statistics_type])     
       
       vendor_printer = @current_vendor.vendor_printers.existing.first
       print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, @current_company.identifier)
@@ -97,6 +99,19 @@ class StatisticsController < ApplicationController
       r.bytes_written = bytes_written
       r.bytes_sent = content_sent.length
       r.save
+    end
+  end
+  
+  private
+  
+  def render_statistics_escpos(template)
+    filename = "#{Rails.root}/app/views/statistics/_print_#{ template }.txt.erb"
+    if File.exists?(filename)
+      template = File.read(filename)
+      erb = ERB.new(template, 0, '>')
+      return erb.result(binding)
+    else
+      return "Printing of this statistic type is not implemented yet.\n\n\n\n\n"
     end
   end
 end

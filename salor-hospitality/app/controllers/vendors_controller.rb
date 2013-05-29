@@ -31,7 +31,7 @@ class VendorsController < ApplicationController
     session[:vendor_id] = @current_user.default_vendor_id = params[:id] if vendor
     @current_user.save
     flash[:notice] = t('various.switched_to_vendor', :vendorname => vendor.name)
-    redirect_to '/'
+    redirect_to orders_path
   end
 
   # Edits the vendor

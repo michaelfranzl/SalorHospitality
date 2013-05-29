@@ -1,0 +1,6 @@
+<%= "\e@" %>
+<%= I18n.l @from, :format => :date_iso %> -> <%= I18n.l @to, :format => :date_iso %>
+
+<%= I18n.t('activerecord.models.cost_center.one') %>: <%= @selected_cost_center ? @selected_cost_center.name : I18n.t('settlements.index.all') %>
+
+<%= I18n.t('activerecord.models.user.one') %>: <%= @selected_user ? @selected_user.login : I18n.t('settlements.index.all') %>
