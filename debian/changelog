@@ -1,3 +1,9 @@
+salor-hospitality (4.1.3.74) unstable; urgency=low
+
+  * footer for statistic printouts
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 29 May 2013 15:10:15 +0200
+
 salor-hospitality (4.1.3.73) unstable; urgency=low
 
   * split up statistics, redirect path, order test20
