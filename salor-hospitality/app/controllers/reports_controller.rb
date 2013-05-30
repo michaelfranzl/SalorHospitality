@@ -9,30 +9,34 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class ReportsController < ApplicationController
-
-  before_filter :check_permissions
-  
-  def check_permissions
-    redirect_to '/' and return if @current_company.mode != 'local'
-  end
   
   def index
+    redirect_to '/' and return unless permit('download_database') or permit('download_csv') or permit('remote_support')
+    
     @locations = Dir['/media/*']
     @locations << Dir['/home/*']
     @locations.flatten!
-    @from, @to = assign_from_to(params)    
-    if params.has_key?(:save)
+    @from, @to = assign_from_to(params)
+    @models_for_csv = [Item]
+    
+    if params.has_key?(:fisc_save)
+      return unless permit('download_database')
       zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
       redirect_to reports_path
       flash[:notice] = "Complete"
-    elsif params.has_key?(:download)
+    elsif params.has_key?(:fisc_download)
+      return unless permit('download_database')
       zip_outfile = @current_vendor.fisc_dump(@from, @to, '/tmp')
       send_file zip_outfile
+    elsif params.has_key?(:csv_download)
+      return unless permit('download_csv')
+      csv_outfile = @current_vendor.csv_dump(params[:csv_type], @from, @to)
+      send_data csv_outfile if csv_outfile
     end
-    
   end
   
   def update_connection_status
+    redirect_to '/' and return unless permit('remote_support')
     @status_ssh = not(`netstat -pna | grep :26`.empty?)
     @status_vnc = not(`netstat -pna | grep :28`.empty?)
     #@status_ssh = false
@@ -41,6 +45,7 @@ class ReportsController < ApplicationController
   end
 
   def connect_remote_service
+    redirect_to '/' and return unless permit('remote_support')
     if params[:type] == 'ssh'
       @status_ssh = `netstat -pna | grep :26`
       if @status_ssh.empty? # don't create more process than one

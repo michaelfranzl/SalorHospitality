@@ -150,25 +150,27 @@ class Report
   def self.to_csv(objects, klass, attributes)
       attrs = attributes.split(";")
       formatstring = ""
-      formats = []
       attrs.each do |a|
         #puts "ATTR #{ klass.to_s}: #{ a }"
-        cls = klass.columns_hash[a].type
-        formats << cls
+        cls = klass.columns_hash[a].type if klass.columns_hash[a]
         case cls
         when :integer
           formatstring += "%i;"
         when :datetime, :string, :boolean, :text
           formatstring += "%s;"
         when :float
-          formatstring += "%f;"  
+          formatstring += "%.2f;"
+        else
+          formatstring += "%s;"
         end
       end
       lines = []
       objects.each do |item|
         values = []
         attrs.size.times do |j|
-          val = item.send(attrs[j])
+          val = attrs[j].split('.').inject(item) do |klass, method|
+            klass.send(method) unless klass.nil?
+          end
           val = 0 if val.nil?
           values << val
         end

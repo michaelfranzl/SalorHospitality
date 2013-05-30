@@ -1,7 +1,7 @@
-- if @current_company.mode == 'local' and @current_user.role.permissions.include?('download_database')
+- if permit('download_csv') or permit('download_database')
 
-  #download_reports
-    %h3= t '.download_reports'
+  #download_reports.limitby
+    %h2= t '.download_reports'
     = form_tag '/reports', :class => 'no-print', :method => :get do
       = label('from', t('reports.start_date'))
       %br
@@ -11,21 +11,35 @@
       %br
       = select_date(@to, :prefix => 'to')
       %br
+      
+      - if @current_company.mode == 'local'
+        %hr
+        %h3 Fiscal
+        %table
+          %tr
+            %td
+              %select{:name => 'location', :id => 'location_select'}
+                = options_for_select @locations
+              %br
+              = submit_tag t('reports.save'), :onclick => '$("#progress2").show()', :name => 'fisc_save'
+              %br
+            %td
+              = submit_tag t('reports.download'), :onclick => '', :name => 'fisc_download'
+              %br
+              = image_tag 'ajax-loader2.gif', :id => 'progress2', :style => 'display: none;'
+
+              
       %hr
-      = label('location', t("reports.fisc_report_dump_location"))
+      %h3 CSV
+      %select{ :name => 'csv_type' }
+        - @models_for_csv.each do |m|
+          %option{ :value => m.to_s }= m.model_name.human
       %br
-      %select{:name => 'location', :id => 'location_select'}
-        = options_for_select @locations
-      %br
-      = submit_tag t('reports.save'), :onclick => '$("#progress2").show()', :name => 'save'
-      %br
-      %hr
-      = submit_tag t('reports.download'), :onclick => '$("#progress2").show()', :name => 'download'
-      %br
-      = image_tag 'ajax-loader2.gif', :id => 'progress2', :style => 'display: none;'
+      = submit_tag t('reports.download'), :onclick => '', :name => 'csv_download'
+        
 
 
-- if @current_user.role.permissions.include?('remote_support')
+- if @current_company.mode == 'local' and permit('remote_support')
   = javascript_include_tag 'request_service'
   #remote_support
     %h3= t '.remote_support'

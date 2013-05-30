@@ -627,6 +627,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      download_csv: Download CSV
       add_option_to_sent_item: Add Options to sent Items
       allow_exit: Allow Exit
       assign_cost_center: Assign cost center

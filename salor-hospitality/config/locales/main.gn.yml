@@ -627,6 +627,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      download_csv: Download CSV
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
       assign_cost_center: Kostenstelle zuweisen
