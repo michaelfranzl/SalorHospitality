@@ -14,6 +14,11 @@ var advertising_counter = -1;
 $(function(){
   
   $('#main').css('bottom', '0px');
+  $('#main').css('left', '15px');
+  $('#main').css('right', '15px');
+  $('#main').css('top', '130px');
+  $('#main').css('position', 'fixed');
+  
   
   $('#customer_search').keyup(function () {
     if ($(this).val().length > 2) {
