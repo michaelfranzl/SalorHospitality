@@ -28,14 +28,14 @@
               %br
               = image_tag 'ajax-loader2.gif', :id => 'progress2', :style => 'display: none;'
 
-              
-      %hr
-      %h3 CSV
-      %select{ :name => 'csv_type' }
-        - @models_for_csv.each do |m|
-          %option{ :value => m.to_s }= m.model_name.human
-      %br
-      = submit_tag t('reports.download'), :onclick => '', :name => 'csv_download'
+      - if permit('download_csv')
+        %hr
+        %h3 CSV
+        %select{ :name => 'csv_type' }
+          - @models_for_csv.each do |m|
+            %option{ :value => m.to_s }= m.model_name.human
+        %br
+        = submit_tag t('reports.download'), :onclick => '', :name => 'csv_download'
         
 
 
