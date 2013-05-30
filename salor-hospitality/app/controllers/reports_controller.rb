@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
     elsif params.has_key?(:csv_download)
       return unless permit('download_csv')
       csv_outfile = @current_vendor.csv_dump(params[:csv_type], @from, @to)
-      send_data csv_outfile if csv_outfile
+      send_data csv_outfile, :filename => "#{ params[:csv_type] }.csv" if csv_outfile
     end
   end
   

@@ -290,7 +290,7 @@ class Vendor < ActiveRecord::Base
     case model
     when 'Item'
       items = self.items.existing.where(:created_at => from..to)
-      attributes = "order.nr;created_at;order.table_id;order.user.login;article.name;quantity.prefix;quantity.postfix;category.name;count;sum;article.taxes.first.percent"
+      attributes = "order.nr;created_at;order.table.name;order.user.login;label;category.name;count;price_with_options;article.taxes.first.percent"
       output = ''
       output += "#{attributes}\n"
       output += Report.to_csv(items, Item, attributes)

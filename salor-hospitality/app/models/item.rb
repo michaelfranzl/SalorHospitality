@@ -191,6 +191,10 @@ class Item < ActiveRecord::Base
     return 0 if self.price.nil? or self.count.nil?
     self.price * self.count + self.option_items.sum(:sum)
   end
+  
+  def price_with_options
+    self.price + self.option_items.sum(:price)
+  end
 
   def optionslist
     self.option_items.collect{ |oi| oi.option_id }
