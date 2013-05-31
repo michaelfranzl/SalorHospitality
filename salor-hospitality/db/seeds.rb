@@ -234,7 +234,7 @@ company_count.times do |c|
 
     customer_objects = Array.new
     5.times do |i|
-      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}", :table_id => table_objects[i].id
+      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}", :default_table_id => table_objects[i].id
       customer.company = company
       customer.vendor = vendor
       r = customer.save

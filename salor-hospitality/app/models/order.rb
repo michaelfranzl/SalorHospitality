@@ -44,10 +44,10 @@ class Order < ActiveRecord::Base
     last,first = name.split(' ')
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
-    if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
-      self.vendor.update_cache
-    end
+#     if not c then
+#       c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+#       self.vendor.update_cache if self.vendor
+#     end
     self.customer = c
     self.save
   end
