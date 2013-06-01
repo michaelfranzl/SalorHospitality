@@ -669,6 +669,22 @@ class Order < ActiveRecord::Base
       end
     end
     
+    customer_data = ''
+    if self.customer
+      cst = self.customer
+      cst_values = [
+        cst.company_name,
+        cst.first_name,
+        cst.last_name,
+        cst.address,
+        cst.postalcode,
+        cst.city,
+        cst.tax_info
+      ]
+      cst_format = "\n%s\n%s %s\n%s\n %s %s\n%s\n\n"
+      customer_data += cst_format % cst_values
+    end
+    
     header2 = ''
     header2 +=
     "\ea\x00" +  # align left
@@ -820,6 +836,7 @@ class Order < ActiveRecord::Base
         headerlogo +
         header1 +
         lines +
+        customer_data +
         header2 +
         header3 +
         list_of_items +

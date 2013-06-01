@@ -47,6 +47,7 @@ en:
         name: Name
         no_payment_methods: No Payment Methods
       customer:
+        tax_info: Tax Info
         address: Address
         cellphone: Cellphone
         city: City

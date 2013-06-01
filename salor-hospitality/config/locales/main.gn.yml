@@ -47,6 +47,7 @@ gn:
         name: Name
         no_payment_methods: Keine Zahlungsmethoden
       customer:
+        tax_info: Steuernummer
         address: Adresse
         cellphone: Mobil
         city: Ort

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521074931) do
+ActiveRecord::Schema.define(:version => 20130601093000) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(:version => 20130521074931) do
     t.string   "password_encrypted"
     t.string   "password_salt"
     t.string   "id_hash"
+    t.string   "tax_info"
   end
 
   create_table "discounts", :force => true do |t|
