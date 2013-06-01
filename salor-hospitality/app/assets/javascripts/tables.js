@@ -82,8 +82,6 @@ function render_tables() {
       route('tables', submit_json.model.table_id, 'move', {target_table_id:v.id});
     })
     move_table_span.addClass('option');
-    if (typeof(bgcolor) == 'string')
-      move_table_span.css('background-color', bgcolor);
     //--------------------------
     
     
@@ -164,6 +162,8 @@ function render_tables() {
     
     table.css('background-color', bgcolor);
     table.css('color', fcolor);
+    move_table_span.css('background-color', bgcolor);
+    move_table_span.css('color', fcolor);
     //--------------------------
     
     if (permissions.move_tables && settings.mobile_drag_and_drop || settings.workstation_drag_and_drop) {
