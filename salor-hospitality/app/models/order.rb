@@ -160,7 +160,7 @@ class Order < ActiveRecord::Base
   def update_payment_method_items(params)
     #ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
     # create payment method items only when 1) there are some, 2) cost center does not forbid creating payment method items
-    if params[:payment_method_items] and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
+    if params['payment_method_items'] and self.vendor.payment_methods.existing.any? and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
       self.payment_method_items.update_all(:hidden => true, :hidden_by => -7, :hidden_at => Time.now) # we don't re-use previously created payment method items
       params['payment_method_items'][params['id']].to_a.each do |pm|
         # only create payment method items that are not zero and that have not been removed from the UI
