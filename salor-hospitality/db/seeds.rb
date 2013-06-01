@@ -122,8 +122,11 @@ company_count.times do |c|
   puts "Company #{ c } created" if r == true
 
   countries.size.times do |v|
-    vendor = Vendor.new :name => "Vendor #{ c } #{ v }", :country => countries[v]
+    vendor = Vendor.new
+    vendor.name = "Vendor #{ c } #{ v }"
+    vendor.country = countries[v]
     vendor.company = company
+    vendor.identifier = "vendor#{c}#{v}"
     r = vendor.save
     puts "Vendor #{ c } #{ v } created" if r == true
 
