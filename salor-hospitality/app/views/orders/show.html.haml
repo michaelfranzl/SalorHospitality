@@ -11,14 +11,20 @@
     = link_to '', "/orders/refund/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:refund), :style => branding_override_style(:buttons, :refund)
   - if permit('reactivate_orders')
     %a.iconbutton.gear_button{ :href => "/orders/reactivate/#{@order.id}", :title => (t '.reactivate') }
-  %a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice'), :style => 'float:right' }
-  %a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice'), :style => 'float:right' }
+  /%a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice'), :style => 'float:right' }
+  /%a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice'), :style => 'float:right' }
 
 .paper_invoice= render :partial => "orders/invoice_styles/#{SalorHospitality::Application::COUNTRIES_INVOICES[@current_vendor.country]}"
 
 
 :javascript
-  $('#nr').keyboard( {openOn: '', layout:'num', accepted: function(){ $('form#search_by_nr').submit(); } } );
+  $('#nr').keyboard({
+    openOn: '',
+    layout:'num',
+    accepted: function(){
+      $('form#search_by_nr').submit();
+    }
+  });
   $('#nr_display_keyboard').click(function(){
     $('#nr').val('');
     $('#nr').getkeyboard().reveal();
@@ -36,3 +42,7 @@
       timeout: 5000
     });
   }
+  
+  $(function() {
+    $('#nr').select();
+  });

@@ -23,13 +23,13 @@ class OrdersController < ApplicationController
 
   def show
     if params[:id] != 'last'
-      @order = @current_vendor.orders.existing.find(params[:id])
+      @order = @current_vendor.orders.existing.where(:finished => true).find_by_id(params[:id])
     else
-      @order = @current_vendor.orders.existing.find_all_by_paid(true).last
+      @order = @current_vendor.orders.existing.find_all_by_finished(true).last
     end
     redirect_to '/' and return if not @order
     
-    @previous_order, @next_order = neighbour_models('orders',@order)
+    #@previous_order, @next_order = neighbour_models('orders',@order)
     
     respond_to do |wants|
       wants.html
