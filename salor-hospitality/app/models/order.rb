@@ -679,9 +679,10 @@ class Order < ActiveRecord::Base
         cst.address,
         cst.postalcode,
         cst.city,
-        cst.tax_info
+        cst.tax_info,
+        cst.telephone
       ]
-      cst_format = "\n%s\n%s %s\n%s\n %s %s\n%s\n\n"
+      cst_format = "\n%s\n%s %s\n%s\n%s %s\n%s\n%s\n\n"
       customer_data += cst_format % cst_values
     end
     
