@@ -12,6 +12,8 @@ class UsersController < ApplicationController
 
   before_filter :check_permissions
   before_filter :check_role_weight, :only => [:update, :show, :edit, :destroy] # those are only methods that work with an already saved user model
+  
+  after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
     @vendors = @current_user.vendors.existing
