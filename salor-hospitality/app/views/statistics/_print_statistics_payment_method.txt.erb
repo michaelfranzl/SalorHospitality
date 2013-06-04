@@ -6,9 +6,15 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @payment_methods.each do |pm| %>
-<% sum = @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids, :created_at => @from..@to).sum(:amount) %>
-<%= "%10.10s     %s %7.2f\n" % [pm.name, @friendly_unit, sum] %>
+<% next if pm.change == true %>
+<% if pm.cash == true %>
+<% sum = @current_vendor.payment_method_items.existing.where(:user_id => @uids, :cash => true, :cost_center_id => @csids, :created_at => @from..@to, :refunded => nil).sum(:amount) - @current_vendor.payment_method_items.existing.where(:user_id => @uids, :cash => true, :cost_center_id => @csids, :created_at => @from..@to, :refunded => true).sum(:amount) - @current_vendor.payment_method_items.existing.where(:user_id => @uids, :change => true, :cost_center_id => @csids, :created_at => @from..@to).sum(:amount) %>
 <% total += sum %>
+<% elsif pm.change != true %>
+<% sum = @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids, :created_at => @from..@to, :refunded => nil).sum(:amount) - @current_vendor.payment_method_items.existing.where(:user_id => @uids, :payment_method_id => pm, :cost_center_id => @csids, :created_at => @from..@to, :refunded => true).sum(:amount) %>
+<% total += sum %>
+<% end %>
+<%= "%10.10s     %s %7.2f\n" % [pm.name, @friendly_unit, sum] %>
 <% end %>
 <%= "%10.10s     %s %7.2f\n" % [I18n.t(:sum), @friendly_unit, total] %>
 <%= "\xc4" * 42 %>

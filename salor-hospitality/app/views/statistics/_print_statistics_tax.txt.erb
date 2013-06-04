@@ -6,7 +6,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @taxes.each do |tax| %>
-<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @scids, :created_at => @from..@to).sum(:gro) %>
+<% sum = @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids, :created_at => @from..@to).sum(:gro) %>
 <%= "%10.10s     %s %7.2f\n" % [tax.name, @friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
