@@ -757,6 +757,9 @@ en:
       username: User
   settlements:
     detailed_list:
+      warning: Warning
+      reduced_count: Count reduced to %{ maxcount }
+      changed_price: "%{ byuser } changed price"
       count: Count
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
       revenue: Revenue

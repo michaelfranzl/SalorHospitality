@@ -34,7 +34,7 @@ class StatisticsController < ApplicationController
     
     #users
     @users = @current_vendor.users.existing
-    user_ids = @users.collect{ |u| u.id }
+    user_ids = @users.collect{ |u| u.id } << nil
     @selected_user = @current_vendor.users.existing.find_by_id(params[:user_id]) if params[:user_id] and not params[:user_id].empty?
     @uids = @selected_user ? @selected_user.id : user_ids
     

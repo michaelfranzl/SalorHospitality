@@ -175,7 +175,7 @@ class Item < ActiveRecord::Base
     end
     p
   end
-
+  
   def count=(count)
     c = count.to_i
     write_attribute(:count, c)

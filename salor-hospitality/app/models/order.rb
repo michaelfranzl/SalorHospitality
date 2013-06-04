@@ -65,7 +65,7 @@ class Order < ActiveRecord::Base
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
-      order.create_new_item(item_params)
+      order.create_new_item(item_params, user)
     end
     raise "Order could not be saved." unless order.save
     #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
@@ -85,9 +85,9 @@ class Order < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
-        self.update_item(item_id, item_params)
+        self.update_item(item_id, item_params, user)
       else
-        self.create_new_item(item_params)
+        self.create_new_item(item_params, user)
       end
     end
     self.user = user if self.user.nil? or (params[:items] and params[:model][:user_id].nil?)
@@ -101,11 +101,15 @@ class Order < ActiveRecord::Base
     self.table.update_color
   end
   
-  def create_new_item(p)
+  def create_new_item(p, user)
     i = Item.new(p[1])
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
+    if p[1][:p]
+      i.price_changed = true
+      i.price_changed_by = user.id
+    end
     result = i.save
     if result == false
       message = "Could not save item in Order.create_new_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
@@ -130,10 +134,14 @@ class Order < ActiveRecord::Base
     i.hide(self.user_id) if i.hidden
   end
   
-  def update_item(id, p)
+  def update_item(id, p, user)
     p[1].delete(:id)
     i = Item.find_by_id(id)
     result = i.update_attributes(p[1])
+    if p[1][:p]
+      i.update_attribute :price_changed, true
+      i.update_attribute :price_changed_by, user.id
+    end
     if result == false
       message = "Could not update item in Order.update_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
       if self.vendor.enable_technician_emails == true and self.vendor.technician_email

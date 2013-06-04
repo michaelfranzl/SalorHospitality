@@ -758,6 +758,9 @@ gn:
       username: User
   settlements:
     detailed_list:
+      warning: Warnung
+      reduced_count: Anzahl reduziert von %{maxcount} auf %{count}.
+      changed_price: "Preis verändert von %{byuser}."
       count: Anzahl
       order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
       revenue: Umsatz

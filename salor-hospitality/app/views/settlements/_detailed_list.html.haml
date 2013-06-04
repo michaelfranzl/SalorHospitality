@@ -13,7 +13,7 @@
       %td.order_begin{ :colspan => 6 }
         = t('.order_number_on_table_on_date', :order => Order.model_name.human, :number => so.nr, :table => so.table.name, :time => l(so.created_at + so.vendor.time_offset.hours, :format => :datetime_iso))
         %br
-        == #{ User.model_name.human }: #{ so.user.title if so.user }
+        == #{ User.model_name.human }: #{ so.user.login if so.user }
         %br
         == #{ CostCenter.model_name.human }: #{ so.cost_center.name if so.cost_center }
         %br
@@ -25,6 +25,13 @@
           %td.number= item.count
           %td.number= number_to_currency item.price
           %td.colsum= number_to_currency item.refunded ? 0 : item.sum
+          %td.warning
+            - if (item.max_count > item.count) or item.price_changed
+              %i== #{ t('.warning') }:
+              - if (item.max_count > item.count)
+                = t('.reduced_count', :count => item.count, :maxcount => item.max_count)
+              - if item.price_changed
+                = t('.changed_price', :byuser => @current_vendor.users.find_by_id(item.price_changed_by).login)
         - item.option_items.each do |o|
           - next if o.price == 0
           %tr
