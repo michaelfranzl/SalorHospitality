@@ -294,6 +294,7 @@ class Item < ActiveRecord::Base
       end
       partner_item.count = 0
       partner_item.printed_count = 0
+      partner_item.max_count = 0
       self.item = partner_item
       partner_item.item = self
       partner_item.order = split_order 
