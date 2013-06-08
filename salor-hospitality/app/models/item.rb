@@ -303,6 +303,7 @@ class Item < ActiveRecord::Base
     partner_item.printed_count += count
     self.count -= count
     self.printed_count -= count
+    self.max_count = self.count
     self.hide(-3) if self.count.zero?
     partner_item.save
     partner_item.option_items.existing.each { |oi| oi.calculate_totals }

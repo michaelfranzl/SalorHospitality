@@ -444,7 +444,7 @@ class ApplicationController < ActionController::Base
       @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => table.id)
       @cost_centers = @current_vendor.cost_centers.existing
       @taxes = @current_vendor.taxes.existing
-      @tables = @current_vendor.tables.existing
+      @tables = @current_user.tables.existing.where(:vendor_id => @current_vendor.id)
       @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
       if @orders.empty?
         table.update_attribute :user, nil if @orders.empty?
