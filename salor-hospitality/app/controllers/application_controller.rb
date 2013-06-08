@@ -373,7 +373,7 @@ class ApplicationController < ActionController::Base
       false
     end
 
-    def fetch_logged_in_user
+    def fetch_logged_in_user    
       @current_user = User.existing.active.find_by_id session[:user_id] if session[:user_id]
       @current_customer = Customer.find_by_id_hash session[:customer_id_hash] if session[:customer_id_hash]
       
