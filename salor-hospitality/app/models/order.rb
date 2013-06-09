@@ -560,7 +560,7 @@ class Order < ActiveRecord::Base
     separate_receipt_contents = []
     normal_receipt_content = ''
       
-    selected_categories = printer_id.nil? ? self.vendor.categories.existing.active : self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id)
+    selected_categories = printer_id.nil? ? self.vendor.categories.existing.active.positioned : self.vendor.categories.existing.active.positioned.where(:vendor_printer_id => printer_id)
     
     raw_insertations = {}
     selected_categories.each do |c|
