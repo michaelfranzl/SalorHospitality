@@ -17,7 +17,7 @@ class VendorPrinter < ActiveRecord::Base
   
   def sanitize_path
     unless self.company.mode == 'local'
-      self.update_attribute :path, self.path.gsub(/[\s'"\&\^\$\#\!;\*]/,'_').gsub(/[^\w\/\.\-@]/,'')
+      self.update_attribute :path, self.path.gsub(/[\/\s'"\&\^\$\#\!;\*]/,'_').gsub(/[^\w\/\.\-@]/,'')
     end
   end
 
