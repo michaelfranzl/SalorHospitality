@@ -896,6 +896,7 @@ en:
     destroy:
       success: Vendor was successfully deleted
     form:
+      print_via_salorbin_explanation: "If you want to enable printing on thermal printers, copy and paste the following details to the options dialog of the salor-bin browser:"
       add_printer: Add printer
       identify_printers: Identify Printers
       test_printers: Test Printers

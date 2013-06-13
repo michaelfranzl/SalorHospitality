@@ -903,6 +903,7 @@ gn:
       identify_printers: Drucker identifizieren
       test_printers: Drucker testen
       test_printers_chartest: Symboltest
+      print_via_salorbin_explanation: "Wenn Sie auf Thermodruckern drucken wollen, fügen Sie die folgenden Informationen in den Optionsdialog des salor-bin Browsers ein:"
     index:
       edit: bearbeiten
       switch_to: Wechseln zu

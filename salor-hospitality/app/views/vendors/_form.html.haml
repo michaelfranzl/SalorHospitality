@@ -23,6 +23,10 @@
         = vendor_form.text_field :name, :size => 15
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
+        - if @current_company.mode == 'saas'
+          = vendor_form.label :identifier
+          = vendor_form.text_field :identifier, :size => 15
+          %br
         = vendor_form.label :email
         = vendor_form.text_field :email, :size => 15
         - if @current_company.mode == 'local' or @current_user.role.weight.zero?
@@ -117,7 +121,19 @@
           = vendor_form.label :remote_orders
 
         %div#vendor_printers
+          %br
+          %br
           %h3= t('activerecord.models.vendor_printer.other')
+          - if @current_company.mode == 'saas'
+            %p= t('.print_via_salorbin_explanation')
+            %p
+              Printing / URL:
+              %br
+              %input{ :disabled => true, :value => "#{ @current_company.full_url }/printers", :size => 35}
+            %p
+              Printing / Username:
+              %br
+              %input{ :disabled => true, :value => @current_vendor.hash_id, :size => 35 }
           - if @current_company.mode == 'local'
             %span.button#identify_printers= t '.identify_printers'
             %br
