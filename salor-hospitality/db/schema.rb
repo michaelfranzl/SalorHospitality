@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604094132) do
+ActiveRecord::Schema.define(:version => 20130616094751) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1024,7 +1024,7 @@ ActiveRecord::Schema.define(:version => 20130604094132) do
   add_index "tax_items", ["vendor_id"], :name => "index_tax_items_on_vendor_id"
 
   create_table "taxes", :force => true do |t|
-    t.integer  "percent"
+    t.float    "percent"
     t.string   "name"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false

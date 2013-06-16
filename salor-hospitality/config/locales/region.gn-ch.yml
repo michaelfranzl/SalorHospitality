@@ -40,7 +40,7 @@ gn-ch:
         # These three are to override number.format and are optional
         # separator:
         delimiter: ""
-        precision: 0
+        precision: 1
         # significant: false
         # strip_insignificant_zeros: false
 
