@@ -124,6 +124,7 @@
           %br
           %br
           %h3= t('activerecord.models.vendor_printer.other')
+          %hr
           - if @current_company.mode == 'saas'
             %p= t('.print_via_salorbin_explanation')
             %p
@@ -134,13 +135,14 @@
               Printing / Username:
               %br
               %input{ :disabled => true, :value => @current_vendor.hash_id, :size => 35 }
+          %hr
           - if @current_company.mode == 'local'
             %span.button#identify_printers= t '.identify_printers'
             %br
           %span.button#test_printers= t '.test_printers'
           %br
           %span.button#test_printers_chartest= t '.test_printers_chartest'
-          %br
+          %hr
           %span#add_printer
             %span.button= t '.add_printer'
           %br
