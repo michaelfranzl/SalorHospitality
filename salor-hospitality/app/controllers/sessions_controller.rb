@@ -159,4 +159,26 @@ class SessionsController < ApplicationController
   def catcher
     redirect_to 'new'
   end
+  
+  def printer_info
+    output = []
+    vendor = Vendor.find_by_hash_id(params[:id])
+    if vendor
+      vendor_printers = vendor.vendor_printers.existing
+      if vendor_printers.any?
+        vendor_printers.each do |vp|
+          i = sprintf("%04i", vp.id)
+          output << "printerurl#{i}:/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ vendor.company.identifier }/#{ vp.path }.bill"
+          output << "printername#{i}:#{ vp.name }"
+        end
+        output << "interval:#{vendor.automatic_printing_interval}"
+      else
+        output << "Error: No Printers configured"
+      end
+    else
+      output << "Error: Unknown ID"
+    end
+    render :text => output.join("\n")
+  end
+  
 end

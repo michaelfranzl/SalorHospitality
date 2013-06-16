@@ -226,6 +226,7 @@ SalorHospitality::Application.routes.draw do
     root :to => 'sh_saas/pages#iframe'
     match '*path' => 'sh_saas/pages#iframe'
   else
+    match '/printers' => 'sessions#printer_info'
     match '*path' => 'sessions#new'
     root :to => 'orders#index'
   end
