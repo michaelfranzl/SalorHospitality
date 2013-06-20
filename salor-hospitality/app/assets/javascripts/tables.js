@@ -105,7 +105,13 @@ function render_tables() {
     if (v.crid) { // crid means customer id
       create_dom_element('span', {}, resources.customers.all[v.crid].n, table);
     } else if (v.auid) {
-      create_dom_element('span', {}, resources.u[v.auid].n, table);
+      var username = '';
+      if (typeof resources.u[v.auid] != 'undefined' ) {
+        username = resources.u[v.auid].n;
+      } else {
+        username = '?';
+      }
+      create_dom_element('span', {}, username, table);
     }
 
     table.addClass(statusclass);

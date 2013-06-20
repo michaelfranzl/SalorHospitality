@@ -110,6 +110,11 @@ class UsersController < ApplicationController
   def destroy
     @user = get_model
     redirect_to users_path and return unless @user
+    if @current_vendor.tables.existing.active.where(:active_user_id => @user.id).any?
+      flash[:notice] = I18n.t("This user has active orders. Cannot delete.")
+      redirect_to users_path
+      return
+    end
     flash[:notice] = I18n.t("users.destroy.success")
     @user.hidden = true
     @user.password = "OLD #{ Time.now } #{ @user.password }"

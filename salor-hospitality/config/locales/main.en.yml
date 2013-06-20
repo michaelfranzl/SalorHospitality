@@ -703,7 +703,7 @@ en:
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
       statistics_table: Statistics show Tables
-      statistics_tax: Statistics show CategoriesTaxes
+      statistics_tax: Statistics show Taxes
       statistics_weekday: Statistics show Weekdays
       take_orders: Take orders
       view_all_settlements: View all settlements
