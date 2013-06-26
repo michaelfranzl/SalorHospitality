@@ -1,3 +1,19 @@
+salor-hospitality (4.1.3.93) unstable; urgency=low
+
+  [ Michael Franzl ]
+  * prevent deletion of user when active orders
+
+  [ Jason Knight ]
+  * Added SH_DEPLOY
+
+  [ Michael Franzl ]
+  * image path fix
+  * show active customer id
+  * disable refunds for orders that belong to settlements
+  * updated translations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 26 Jun 2013 12:06:39 +0200
+
 salor-hospitality (4.1.3.92) unstable; urgency=low
 
   * print path fix
