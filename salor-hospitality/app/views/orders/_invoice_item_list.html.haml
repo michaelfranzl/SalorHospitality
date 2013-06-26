@@ -8,7 +8,7 @@
     %th.four= t '.count'
     %th.five= t '.sum'
 
-  - order.items.existing.positioned.each do |item|
+  - order.items.existing.order(:position_category).each do |item|
     %tr
       %td.one= item.taxes.collect{ |k,v| v[:l] }.join(',')
       %td.two= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"

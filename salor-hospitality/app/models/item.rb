@@ -119,8 +119,9 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
-    self.category_id ||= self.article.category_id
+    self.category ||= self.article.category
     self.statistic_category_id ||= self.article.statistic_category_id
+    self.position_category ||= self.category.position
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
     self.option_items.update_all :count => self.count
     self.sum = full_price

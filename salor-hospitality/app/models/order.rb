@@ -720,7 +720,7 @@ class Order < ActiveRecord::Base
         "\n"
 
     list_of_items = ''
-    self.items.existing.positioned.each do |item|
+    self.items.existing.order(:position_category).each do |item|
       next if item.count == 0
       list_of_options = ''
       item.option_items.each do |oi|
@@ -877,7 +877,7 @@ class Order < ActiveRecord::Base
     "\xc4" * 42 + "\n"
 
     list_of_items = ''
-    self.items.existing.positioned.each do |item|
+    self.items.existing.order(:position_category).each do |item|
       next if item.count == 0
       list_of_options = ''
       item.option_items.each do |oi|
