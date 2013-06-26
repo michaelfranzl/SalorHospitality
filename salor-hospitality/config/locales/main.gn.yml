@@ -47,11 +47,11 @@ gn:
         name: Name
         no_payment_methods: Keine Zahlungsmethoden
       customer:
-        tax_info: Steuernummer
         address: Adresse
         cellphone: Mobil
         city: Ort
         company_name: Firma
+        default_table_id: Standard-Tisch
         email: E-Mail
         first_name: Vorname
         full_name: Name
@@ -62,7 +62,7 @@ gn:
         m_points: Punkte
         postalcode: PLZ
         state: Land
-        default_table_id: Standard-Tisch
+        tax_info: Steuernummer
         telephone: Telefon
       group:
         name: Name
@@ -628,7 +628,6 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
-      download_csv: Download CSV
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
       assign_cost_center: Kostenstelle zuweisen
@@ -641,6 +640,7 @@ gn:
       counter_mode: Verkaufstisch-Modus
       decrement_items: Artikelanzahl reduzieren
       delete_items: Artikel durch reduktion löschen
+      download_csv: Download CSV
       download_database: Datenbank herunterladen
       edit_role: Rolle bearbeiten
       finish_all_settlements: Alle Losungen abschließen
@@ -758,14 +758,14 @@ gn:
       username: User
   settlements:
     detailed_list:
-      warning: Warnung
-      reduced_count: Anzahl reduziert von %{maxcount} auf %{count}.
-      changed_price: "Preis verändert von %{byuser}."
+      changed_price: Preis verändert von %{byuser}.
       count: Anzahl
       order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
+      reduced_count: Anzahl reduziert von %{maxcount} auf %{count}.
       revenue: Umsatz
       total: Gesamt
       unit_price: Stück
+      warning: Warnung
     index:
       all: Alle
       end_date: Bis
@@ -901,9 +901,11 @@ gn:
     form:
       add_printer: Drucker hinzufügen
       identify_printers: Drucker identifizieren
+      print_via_salorbin_explanation: ! 'Wenn Sie über den Browser salor-bin drucken
+        wollen, fügen Sie die folgenden Informationen in den Optionsdialog des salor-bin
+        Browsers ein:'
       test_printers: Drucker testen
       test_printers_chartest: Symboltest
-      print_via_salorbin_explanation: "Wenn Sie über den Browser salor-bin drucken wollen, fügen Sie die folgenden Informationen in den Optionsdialog des salor-bin Browsers ein:"
     index:
       edit: bearbeiten
       switch_to: Wechseln zu

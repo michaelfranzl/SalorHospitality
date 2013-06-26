@@ -61,8 +61,9 @@ it:
         m_points: Loyalty Points
         postalcode: Codice Postale
         state: Stato
-        table_id: Default Table
         telephone: Telefono
+        default_table_id: Default Table
+        tax_info: Tax Info
       group:
         name: Nome
       guest_type:
@@ -707,6 +708,7 @@ it:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
+      download_csv: Download CSV
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -761,6 +763,9 @@ it:
       revenue: Revenue
       total: Total
       unit_price: Unit Price
+      changed_price: ! '%{byuser} changed price'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
+      warning: Warning
     index:
       all: All
       end_date: End date
@@ -896,6 +901,8 @@ it:
       identify_printers: Identify Printers
       test_printers: Test Printers
       test_printers_chartest: Test all characters
+      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+        copy and paste the following details to the options dialog of salor-bin:'
     index:
       edit: XXX Edita
       switch_to: Seleziona
