@@ -69,6 +69,7 @@ class Image < ActiveRecord::Base
 
   def make_path(path)
     identifier = "unknown"
+    #ActiveRecord::Base.logger.info "Image::make_path: self is #{ self.inspect }, self.company is #{ self.company.inspect }"
     identifier = self.company.identifier if self.company and self.company.identifier and not self.company.identifier.empty?
     path = File.join(DIRECTORY, identifier, "s#{sub_dir}", "#{self.id}","#{path}","#{name}")
     return path
@@ -102,6 +103,13 @@ class Image < ActiveRecord::Base
 
 	def process    
 		if @file_data
+      
+      belongsto_class = self.imageable_type.constantize
+      parent_model = belongsto_class.find_by_id(self.imageable_id) if belongsto_class
+      company = parent_model.company if parent_model
+      write_attribute :company_id, company.id
+      
+      
       # Delete existing image dirs
       VERSIONS.each { |ver| FileUtils.rm_rf(get_path(ver)) if File.exists?(get_path(ver)) and get_path(ver) != 'original' }
 			create_directory('original')

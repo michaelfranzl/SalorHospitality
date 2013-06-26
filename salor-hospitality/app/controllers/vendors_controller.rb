@@ -52,7 +52,7 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
-    @vendor.images.update_all :company_id => @vendor.company_id
+    #@vendor.images.update_all :company_id => @vendor.company_id
     @vendor.update_cache
     flash[:notice] = t('vendors.create.success')
     redirect_to edit_vendor_path(@vendor)
@@ -66,7 +66,7 @@ class VendorsController < ApplicationController
     @vendor = Vendor.new params[:vendor]
     @vendor.company = @current_company
     if @vendor.save
-      @vendor.images.update_all :company_id => @vendor.company_id
+      #@vendor.images.update_all :company_id => @vendor.company_id
       @vendor.update_cache
       @current_user.vendors << @vendor
       @current_user.save

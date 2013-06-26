@@ -36,7 +36,7 @@ class CategoriesController < ApplicationController
     @category.vendor = @current_vendor
     @category.company = @current_company
     if @category.save then
-      @category.images.update_all :company_id => @category.company_id
+      #@category.images.update_all :company_id => @category.company_id
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to(categories_path)
     else
@@ -57,7 +57,7 @@ class CategoriesController < ApplicationController
     @category = get_model
     redirect_to categories_path and return unless @category
     if @category.update_attributes(Category.process_custom_icon(params[:category])) then
-      @category.images.update_all :company_id => @category.company_id
+      #@category.images.update_all :company_id => @category.company_id
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to categories_path
     else
