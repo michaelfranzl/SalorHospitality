@@ -1,36 +1,36 @@
 ---
-en:
+fi:
   activerecord:
     attributes:
       article:
-        active: active
-        category_id: Category
-        description: Description
-        hidden: delete
-        image: Image
-        name: Name
-        price: Price
+        active: aktiivinen
+        category_id: Kategoria
+        description: Kuvaus
+        hidden: poistaa
+        image: Kuva
+        name: Nimi
+        price: Hinta
         statistic_category_id: Statistic-Category
-        taxes: Tax
-        usage: Usage
+        taxes: Vero
+        usage: käyttö
       booking_item:
-        base_price: Price
-        count: Count
-        duration: Days
-        sum: Sum
+        base_price: Hinta
+        count: Laske
+        duration: Päivät
+        sum: Summa
       camera:
-        active: active
-        description: Description
-        hidden: delete
+        active: aktiivinen
+        description: Kuvaus
+        hidden: poistaa
         host_external: External host
         host_internal: Internal host
-        name: Name
-        port: Port
+        name: Nimi
+        port: Portti
         url_snapshot: Parameters Snapshot
         url_stream: Parameters Stream
       category:
-        color: Color
-        custom_icon: My Icon
+        color: Väri
+        custom_icon: Minun Ikoni
         food: Food?
         hidden: delete
         icon: Icon
