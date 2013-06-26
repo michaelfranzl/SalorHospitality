@@ -97,7 +97,7 @@ class Vendor < ActiveRecord::Base
   end
 
   def logo_image
-    return self.image('logo') if Image.where(:imageable_type => 'Vendor', :imageable_id = self.id, :image_type => 'logo').any?
+    return self.image('logo') if Image.where(:imageable_type => 'Vendor', :imageable_id => self.id, :image_type => 'logo').any?
     "/assets/client_logo.png"
   end
 

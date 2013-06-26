@@ -102,8 +102,15 @@ function render_tables() {
     var table = create_dom_element('div',{id:'table'+v.id,ontouchstart:'javascript:enable_audio();'}, v.n, '#tables');
     
     // add labels to table
-    if (v.crid) { // crid means customer id
-      create_dom_element('span', {}, resources.customers.all[v.crid].n, table);
+    if (v.acrid) {
+      // acrid means active customer id
+      var active_customer_name = '';
+      if (typeof resources.customers.all[v.acrid] != 'undefined') {
+        active_customer_name = resources.customers.all[v.acrid].n;
+      } else {
+        active_customer_name = '?';
+      }
+      create_dom_element('span', {}, active_customer_name, table);
     } else if (v.auid) {
       var username = '';
       if (typeof resources.u[v.auid] != 'undefined' ) {
