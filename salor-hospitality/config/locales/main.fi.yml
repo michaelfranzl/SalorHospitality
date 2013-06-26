@@ -31,96 +31,95 @@ fi:
       category:
         color: Väri
         custom_icon: Minun Ikoni
-        food: Food?
-        hidden: delete
-        icon: Icon
-        image: Icon
-        name: Name
-        separate_print: Cut ticket
-        tax_id: Tax
-        user_id: Preparing User
-        vendor_printer_id: Printer
+        food: Ruoka?
+        hidden: poistaa
+        icon: Ikoni
+        image: Ikoni
+        name: Nimi
+        separate_print: Leikkaa lappu
+        tax_id: Vero
+        user_id: Valmistelee käyttäjä
+        vendor_printer_id: Tulostin
       cost_center:
-        active: active?
-        description: Description
-        hidden: delete
-        name: Name
-        no_payment_methods: No Payment Methods
+        active: aktiivinen?
+        description: Kuvaus
+        hidden: poistaa
+        name: Nimi
+        no_payment_methods: Ei maksutavat
       customer:
         address: Address
-        cellphone: Cellphone
-        city: City
-        company_name: Company Name
-        default_table_id: Default Table
-        email: email
-        first_name: First Name
-        full_name: Name
-        hidden: delete
-        language: Language
-        last_name: Last Name
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
-        postalcode: Postal Code
-        state: State
-        tax_info: Tax Info
-        telephone: Telephone
+        cellphone: kännykkä
+        city: Kaupunki
+        company_name: Yrityksen nimi
+        default_table_id: Oletustaulukko
+        email: sähköposti
+        first_name: Etunimi
+        full_name: Nimi
+        hidden: poistaa
+        language: Kieli
+        last_name: Sukunimi
+        m_number: Kanta-asiakaskortti koodi
+        m_points: Kanta-asiakas pisteet
+        postalcode: Postinumero
+        state: Kunta
+        telephone: Puhelin
       group:
-        name: Name
+        name: Nimi
       guest_type:
-        hidden: delete
-        name: Name
-        taxes: Taxes
+        hidden: poistaa
+        name: Nimi
+        taxes: Verot
       option:
-        category_id: Category
-        hidden: Delete
-        name: Name
-        no_ticket: Dont' print ticket
+        category_id: Kategoria
+        hidden: poistaa
+        name: Nimi
+        no_ticket: Älä tulosta lappua
         price: Price
-        separate_ticket: Cut ticket
+        separate_ticket: Leikkaa lappua
       order:
-        change_given: Change
-        nr: Number
+        change_given: Muuttaa
+        nr: Numero
       page:
-        active: active
-        color: Color
-        height: Height
-        hidden: delete
-        image: Image
-        width: Width
+        active: aktiivinen
+        color: Väri
+        height: Korkeus
+        hidden: poistaa
+        image: Kuvaous
+        width: Leveys
       partial:
-        active: aktiv
-        blurb: Blurb
-        hidden: delete
+        active: aktiivinen
+        blurb: Mainos
+        hidden: poistaa
       payment_method:
-        cash: Cash
-        change: Change
-        name: Name
+        cash: käteinen
+        change: Muuttaa
+        name: Nimi
       payment_method_item:
-        amount: Amount
+        amount: Määrä
       presentation:
-        active: active
+        active: aktiivinen
         code: Ruby code
-        description: Description
-        hidden: delete
+        description: Kuvaus
+        hidden: poistaa
         markup: Secure ERB Markup
-        model: Type
-        name: Name
+        model: Tyypi
+        name: Nimi
       quantity:
-        active: aktiv
-        description: Description
-        hidden: delete
-        postfix: Postfix
-        prefix: Name
-        price: Variant Price
-        usage: usage
+        active: aktiivinen
+        description: Kuvaus
+        hidden: poistaa
+        postfix: Jälkimerkintä
+        prefix: Nimi
+        price: variantti hinta
+        usage: käyttö
       role:
-        name: Name
+        name: Nimi
       room_price:
-        base_price: Base Price
-        guest_type_id: Guest Type
-        hidden: delete
-        room_type_id: Room Type
-        season_id: Season
+        base_price: Perushinta
+        guest_type_id: Vieras tyyppi
+        hidden: poistaa
+        room_type_id: Huonetyyppi
+        season_id: Vuodenaika
       room_type:
         hidden: delete
         name: Name
