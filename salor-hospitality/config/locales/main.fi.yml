@@ -121,13 +121,13 @@ fi:
         room_type_id: Huonetyyppi
         season_id: Vuodenaika
       room_type:
-        hidden: delete
-        name: Name
+        hidden: poistaa
+        name: Nimi
       season:
-        from_date: From
-        hidden: delete
+        from_date: Alkaen
+        hidden: poistaa
         is_master: Master?
-        name: Name
+        name: Nimi
         to_date: To
       settlement:
         initial_cash: Initial amount
