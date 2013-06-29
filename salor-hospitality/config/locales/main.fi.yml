@@ -124,14 +124,14 @@ fi:
         hidden: poistaa
         name: Nimi
       season:
-        from_date: Alkaen
+        from_date: Alkamispäivämäära
         hidden: poistaa
         is_master: Master?
         name: Nimi
-        to_date: To
+        to_date: Päättymispäivämäärä
       settlement:
-        initial_cash: Initial amount
-        revenue: End amount
+        initial_cash: alkuperäinen määrää
+        revenue: Loppu määrä
       statistic_category:
         hidden: delete
         name: Name
@@ -152,32 +152,32 @@ fi:
         enabled: active?
         height: Height
         height_mobile: Height mobile
-        hidden: delete
-        name: Name
-        rotate: rotate?
-        width: Width
-        width_mobile: Width mobile
+        hidden: poistaa
+        name: Nimi
+        rotate: Riertää?
+        width: Leveys
+        width_mobile: Leveys mobiili
       tax:
-        color: Color
-        hidden: delete
+        color: Väri
+        hidden: poistaa
         include_in_statistics: In Settlement Statistics
-        letter: Abbreviation
-        name: Name
-        percent: Tax in %
+        letter: Lyhenne
+        name: Nimi
+        percent: Vero %
         statistics_by_category: Settlement Statistics by Category
       tax_amount:
-        amount: Amount
-        tax_id: Tax
+        amount: Määrä
+        tax_id: Vero
       user:
-        active: active?
-        advertising_timeout: Advertising Timeout
-        advertising_url: Advertising URL
-        audio: Acoustic signals
-        color: Color
-        confirmation_user: Confirm remote orders
-        default_vendor_id: Log in to Vendor
-        hidden: delete?
-        language: Language
+        active: aktiivinen?
+        advertising_timeout: Mainonta aikakatkaisu
+        advertising_url: Mainonta URL
+        audio: Äänimerkit
+        color: Väri
+        confirmation_user: Vahvista kauko tilaukset
+        default_vendor_id: Kirjaudu sisään vendorille
+        hidden: poistaa?
+        language: Kieli
         login: Login
         password: Password
         role: Role
