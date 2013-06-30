@@ -140,10 +140,10 @@ fi:
         guest_type_id: Vieras Tyypi
         hidden: poistaa
         name: Nimi
-        radio_select: Radio Select
+        radio_select: Radion valinta 
         season_id: Vuodenaika
-        selected: Selected by default
-        visible: Visible?
+        selected: Oletusarvona
+        visible: Näkyvä?
       table:
         abbreviation: Abbreviation
         booking_table: Booking
