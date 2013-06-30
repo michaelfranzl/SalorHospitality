@@ -133,15 +133,15 @@ fi:
         initial_cash: alkuperäinen määrää
         revenue: Loppu määrä
       statistic_category:
-        hidden: delete
-        name: Name
+        hidden: poistaa
+        name: Nimi
       surcharge:
         amount: Amount
-        guest_type_id: Guest Type
-        hidden: delete
-        name: Name
+        guest_type_id: Vieras Tyypi
+        hidden: poistaa
+        name: Nimi
         radio_select: Radio Select
-        season_id: Season
+        season_id: Vuodenaika
         selected: Selected by default
         visible: Visible?
       table:
@@ -154,7 +154,7 @@ fi:
         height_mobile: Height mobile
         hidden: poistaa
         name: Nimi
-        rotate: Riertää?
+        rotate: Kiertää?
         width: Leveys
         width_mobile: Leveys mobiili
       tax:
