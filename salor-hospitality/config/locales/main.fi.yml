@@ -126,7 +126,7 @@ fi:
       season:
         from_date: Alkamispäivämäära
         hidden: poistaa
-        is_master: Master?
+        is_master: viime vuodenaika?
         name: Nimi
         to_date: Päättymispäivämäärä
       settlement:
@@ -178,50 +178,50 @@ fi:
         default_vendor_id: Kirjaudu sisään vendorille
         hidden: poistaa?
         language: Kieli
-        login: Login
-        password: Password
-        role: Role
-        screenlock_timeout: Screenlock timeout (sec.)
-        tables: Tables
-        title: Title
+        login: Kirjaudu
+        password: Salasana
+        role: Rooli
+        screenlock_timeout: Näytön lukitus aikakatkaisu (sec.)
+        tables: Pöydät
+        title: Otsikko
       vendor:
-        automatic_printing: Automatic printing
-        country: Rules for country
-        email: e-mail
-        enable_technician_emails: Send technician e-mails
-        hidden: delete
-        invoice_footer_blurb: Invoice footer blurb
-        invoice_header_blurb: Invoice header blurb
-        invoice_logo: Invoice Logo
-        logo: Screen logo
-        name: Name
-        receipt_footer_blurb: Receipt footer blurb
-        receipt_header_blurb: Receipt header blurb
-        remote_orders: Remote orders
-        rlogo_footer: Receipt logo footer
-        rlogo_header: Receipt logo header
-        saas: Online variant
-        technician_email: Technician e-mail
-        ticket_display_time_order: Time and invoice number on ticket
-        ticket_item_separator: Ticket Separation Line
-        ticket_tall_font: Ticket tall font
-        ticket_wide_font: Ticket wide font
-        time_offset: Time correction (hours)
-        timeout: Screen lock timeout (seconds)
-        update_item_lists_interval: Interval update item notifications
-        update_resources_interval: Interval update offline database
-        update_tables_interval: Interval update tables
-        use_order_numbers: Use order numbers
+        automatic_printing: Automaattinen tulostus
+        country: Maa säännöt
+        email: sähköposti
+        enable_technician_emails: Lähetä teknikko sähköpostia
+        hidden: poistaa
+        invoice_footer_blurb: Lasku alatunniste mainos
+        invoice_header_blurb: Lasku ylätunniste mainos
+        invoice_logo: Laskun logo
+        logo: Näytön logo
+        name: Nimi
+        receipt_footer_blurb: Receipt alatunniste mainos
+        receipt_header_blurb: Receipt ylätunniste mainos
+        remote_orders: kaukaisia tilauksia
+        rlogo_footer: Kuitti logo alatunniste
+        rlogo_header: Kuitti logo ylätunniste
+        saas: Online variantti
+        technician_email: teknikko sähköposti
+        ticket_display_time_order: Lippun aika ja laskun numero
+        ticket_item_separator: Lippujen Erotinviiva
+        ticket_tall_font: Lippu pitkä fontti
+        ticket_wide_font: Lippu leveä fontti
+        time_offset: Aika korjaus (tuntia)
+        timeout: Näytön lukitus aikakatkaisu (sekuntia)
+        update_item_lists_interval: Intervalli päivityskohde ilmoitukset
+        update_resources_interval: Intervalli päivitys offline-tietokanta
+        update_tables_interval: Intervalli päivitys taulukot
+        use_order_numbers: Käytä tilausnumerot
       vendor_printer:
-        baudrate: Baudrate
-        codepage: Codepage
-        copies: Copies
-        hidden: Delete
-        name: Name
-        path: Path
-        print_button_filename: Icon
-        pulse_receipt: Beep Receipt
-        pulse_tickets: Beep Tickets
+        baudrate: siirtonopeus
+        codepage: koodisivu
+        copies: kopioita
+        hidden: Poistaa
+        name: Nimi
+        path: Reitti
+        print_button_filename: Ikoni
+        pulse_receipt: Piippaus Kuitti
+        pulse_tickets: Piippaus Lippu
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
