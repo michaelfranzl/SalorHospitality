@@ -224,164 +224,164 @@ fi:
         pulse_tickets: Piippaus Lippu
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        prefix_or_postfix_must_be_given: Etuliite tai jälkiliite on annettava
     models:
       article:
-        one: Article
-        other: Articles
+        one: Artikkeli
+        other: Artikkeleita
       booking:
-        one: Booking
-        other: Bookings
+        one: Varaus
+        other: Varaukset
       camera:
-        one: Camera
-        other: Cameras
+        one: Kamera
+        other: Kameroita
       category:
-        one: Category
-        other: Categories
+        one: Kategoria
+        other: Kategoria
       company:
-        one: Company
-        other: Companies
+        one: Yhtiö
+        other: yhtiöt
       cost_center:
-        one: Cost Center
-        other: Cost Centers
+        one: Kustannuspaikka
+        other: Kustannuspaikkoja
       coupon:
-        one: Coupon
-        other: Coupons
+        one: kuponki
+        other: kuponkeja
       customer:
-        one: Customer
-        other: Customers
+        one: Asiakas
+        other: Asiakkaita
       discount:
-        one: Discount
-        other: Discounts
+        one: Alennus
+        other: Alennuksia
       group:
-        one: Stock Group
-        other: Stock Groups
+        one: Varasto Ryhmä
+        other: Varasto Ryhmät
       guest_type:
-        one: Guest Type
-        other: Guest Types
+        one: Vieras Tyypi
+        other: Vieras tyyppejä
       image:
-        one: Image
-        other: Images
+        one: Kuva
+        other: Kuvat
       item:
-        one: Item
-        other: Items
+        one: Tuote
+        other: Tuotetta
       option:
-        one: Option
-        other: Options
+        one: Vaihtoehto
+        other: Vaihtoehtoja
       order:
-        one: Order
-        other: Orders
+        one: Tilaus
+        other: Tilauksia
       page:
-        one: Card
-        other: Cards
+        one: Kortti
+        other: Kortteja
       partial:
-        one: Partial
-        other: Partials
+        one: Elementti
+        other: Elementtejä
       payment_method:
-        one: Payment Method
-        other: Payment Methods
+        one: Maksutapa
+        other: Maksutapoja
       payment_method_item:
-        one: Payment Method
-        other: Payment Methods
+        one: Maksutapa
+        other: Maksutapoja
       presentation:
-        one: Template
-        other: Templates
+          one: Malli
+          other: Malleja
       quantity:
-        one: Variant
-        other: Variants
+        one: Variantti
+        other: variantteja
       report:
-        one: Support
-        other: Support
+        one: Tuki
+        other: Tuki
       reservation:
-        one: Reservation
-        other: Reservations
+        one: Varaus
+        other: Varauksia
       role:
-        one: Role
-        other: Roles
+        one: Rooli
+        other: Rooleja
       room:
-        one: Room
-        other: Rooms
+        one: Huone
+        other: Huoneita
       room_price:
-        one: Room Price
-        other: Room Prices
+        one: Huone Hinta
+        other: Huonehinnat
       room_type:
-        one: Room Type
-        other: Room Types
+        one: Huonetyypi
+        other: Huonetyyppejä
       season:
-        one: Season
-        other: Seasons
+        one: Vuodenaika
+        other: Vuodenajat
       settlement:
-        one: Settlement
-        other: Settlements
+        one: Sovinto
+        other: Sovinnot
       statistic_category:
-        one: Statistic-Category
-        other: Statistic-Categories
+        one: Tilastotieto-Kategoria
+        other: Tilastotieto-Kategoria
       stock:
-        one: Stock
-        other: Stocks
+        one: Varasto
+        other: Varastoja
       surcharge:
-        one: Surcharge
-        other: Surcharges
+        one: Lisämaksu
+        other: Lisämaksuja
       table:
-        one: Table
-        other: Tables
+        one: Pöytä
+        other: pöydät
       tax:
-        one: Tax Class
-        other: Tax Classes
+        one: Veroluokka
+        other: Veroluokkia
       tax_amount:
-        one: Tax amount
-        other: Tax amounts
+        one: Veron määrä
+        other: Veron määriä
       user:
-        one: User
-        other: Users
+        one: Käyttäjä
+        other: Käyttäjiä
       vendor:
-        one: Vendor
-        other: Vendors
+        one: Myyjä
+        other: Myyjiä
       vendor_printer:
-        one: Printer
-        other: Printers
+        one: Tulostin
+        other: Tulostimia
   admin: Admin
-  are_you_sure: Are you sure?
+  are_you_sure: Oletko varma?
   articles:
     create:
-      license_limited: Your License is limited to %{count} articles
-      success: Article was successfully saved
+      license_limited: Lisenssin on rajoitettu% {count} artikkeleita
+      success: Artikkeli on tallennettu
     destroy:
-      success: Article was successfully deleted
+      success: Artikkeli poisto onnistui
     find:
       variants:
-        one: Variant
-        other: Variants
+        one: variantti
+        other: variantteja
     index:
-      list_all: List all
-      preview: Preview
-      search_term: Search term
-      sort: Sort
-      update: Update!
-      view: View
+      list_all: Listaa kaikki
+      preview: Esikatselu
+      search_term: Hakusana
+      sort: Järjestä
+      update: Päivittää!
+      view: Katsella
     listall:
-      all_articles: List of all articles
+      all_articles: luettelee kaikkit artikkelit
     new:
-      add_quantity: Add Variant
-      edit_article: Edit article
-      new_article: New article
-      normal: normal
-      takeaway: take away
+      add_quantity: Lisää Variantti
+      edit_article: Muokkaa artikkeli
+      new_article: Uusi artikkeli
+      normal: normaali
+      takeaway: Noutoannos
     sort_index:
-      sort: Sort articles
-  bar: Bar
-  black: Black
+      sort: Järjestä artikkeleita
+  bar: Baari
+  black: Musta
   blackboard:
     index:
-      update: Update
-  blank: blank
-  blue: Blue
+      update: Päivittää
+  blank: tyhjä
+  blue: Sininien
   bookings:
     invoice_item_list:
-      served_by_X: You were served by %{user}
+      served_by_X: %{user} palveli sinua
     show:
-      go_to_bookings_calendar: Go to bookings calendar view
-      search_by_number: Search by number
+      go_to_bookings_calendar: Siirry varauksia kalenterinäkymään
+      search_by_number: Etsi numerolla
   cameras:
     create:
       success: Camera was successfully saved
