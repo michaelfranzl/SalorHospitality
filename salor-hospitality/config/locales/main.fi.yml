@@ -502,28 +502,28 @@ fi:
     destroy:
       success: Vaihtoehto poistaminen onnistui
     index:
-      no_categories_defined: There are no categories defined. You have to create at
-        least one category in order to create an Option.
+      no_categories_defined: Ei määriteltyjä kategorioita. Sinun pitää luoda
+        ainakin yksi kategoria luomiseksi Vaihtoehto.
     new:
-      edit_option: Edit Option
-      hidden: delete
-      new_option: New Option
-      select_all: select all
-  orange: Orange
+      edit_option: Muokkaa Vaihtoehto
+      hidden: poistaa
+      new_option: Uusi Vaihtoehto
+      select_all: valitse kaikki
+  orange: Oranssi
   orders:
     functions_header_index:
-      exit: Exit
-      items_notifications: Notifications
-      print_now: Print now
-      show_last_booking: Show last booking
-      show_last_order: Show last order
-      toggle_drag_tables: Drag tables
+      exit: Poistu
+      items_notifications: Ilmoitukset
+      print_now: Tulosta nyt
+      show_last_booking: Näytä viimeinen varaus
+      show_last_order: Näytä viimeisin tilauksen
+      toggle_drag_tables: Vedä pöydät
     functions_header_order_form:
-      move_order: Move order to other table
+      move_order: Siirrä tilauksen eri pöydään
     index:
-      confirmation_list: Self-order list
-      delivery_list: Delivery list
-      preparation_list: Preparation list
+      confirmation_list: Itse-tilaus lista
+      delivery_list: Toimitus lista
+      preparation_list: Valmistelu lista
     invoice_form:
       change_money: Change
       just_finish: Just finish order
