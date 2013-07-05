@@ -347,7 +347,7 @@ fi:
       license_limited: Lisenssin on rajoitettu% {count} artikkeleita
       success: Artikkeli on tallennettu
     destroy:
-      success: Artikkeli poisto onnistui
+      success: Artikkeli poistaminen onnistui
     find:
       variants:
         one: variantti
@@ -366,7 +366,7 @@ fi:
       edit_article: Muokkaa artikkeli
       new_article: Uusi artikkeli
       normal: normaali
-      takeaway: Noutoannos
+      takeaway: Take-away
     sort_index:
       sort: Järjestä artikkeleita
   bar: Baari
@@ -384,123 +384,123 @@ fi:
       search_by_number: Etsi numerolla
   cameras:
     create:
-      success: Camera was successfully saved
+      success: Kamera on tallennettu
     destroy:
-      success: Camera was successfully deleted
+      success: Kameran poistaminen onnistui
     index:
       show: Show
-  cancel_and_go_back: Cancel and go back
+  cancel_and_go_back: Peruuta ja palaa
   categories:
     create:
-      license_limited: Your License is limited to %{count} categories
-      success: Category successfully saved
+      license_limited:  Lisenssin on rajoitettu %{count} kategoriaa
+      success: Kategoria tallennettu
     destroy:
-      success: Category successfully deleted
+      success: Kategoria poistaminen onnistui
     new:
-      aperitif: Aperitif
-      beer: Beer
-      blank: Blank
-      childrendish: Childrens Dish
-      cigarette: Tobacco
-      coffee: Coffee
-      dessert: Dessert
-      digestif: Digestif
-      edit_category: Edit Category
-      maindish: Main Dish
-      new_category: New Category
-      nonalcoholics: Alcohol Free
-      noodles: Noodles
-      redwinebottle: Bottle Red
-      redwineglass: Red Wine
-      rosewinebottle: Bottle Rosé
-      rosewineglass: Rosé Wine
-      sidedish: Side Dish
-      soup: Soup
-      sparkling: Sparkling Wine
-      starter: Starter
-      tea: Teacup
-      teapot: Teapot
-      whitewinebottle: Bottle White
-      whitewineglass: White Wine
-  clear: clear
-  clear_order_and_go_back: Clear order and go back
-  copy: Copy
+      aperitif: aperitiivi
+      beer: Olutta
+      blank: Tyhjä
+      childrendish: Lasten ruokaa
+      cigarette: Tupakka
+      coffee: Kahvi
+      dessert: Jälkiruoka
+      digestif: Digestiivi
+      edit_category: Muokkaa kategoriaa
+      maindish: Pääruoka
+      new_category: Uusi kategoria
+      nonalcoholics: Alkoholiton
+      noodles: Nuudelit
+      redwinebottle: Punaviini pullo
+      redwineglass: Punaviini
+      rosewinebottle: Roseeviini pullo
+      rosewineglass: Roseeviini 
+      sidedish: Lisäke
+      soup: Keitto
+      sparkling: Kuohuviini
+      starter: Alkuruoka
+      tea: Teekuppi
+      teapot: Teekannu
+      whitewinebottle: Valkoviini pullo
+      whitewineglass: Valkoviini
+  clear: Tyhjennä
+  clear_order_and_go_back: Tyhjennä tilauksen ja palata
+  copy: Kopio
   cost_centers:
     create:
-      success: Cost Center successfully saved
+      success: Kustannuspaikka tallennettu
     destroy:
-      success: Cost Center successfully deleted
+      success: Kustannuspaikka poistaminen onnistui
     index:
-      active: Active
-      inactive: Inactive
+      active: Aktiivinen
+      inactive: Inaktiivinen
     new:
-      edit_cost_center: Edit Cost Center
-      new_cost_center: New Cost Center
-  count: Count
-  create: Create
+      edit_cost_center: Muokkaa kustannuspaikka
+      new_cost_center: Uusi kustannuspaikka
+  count: Laske
+  create: Luo
   customers:
     create:
-      success: Customer successfully saved
+      success: Asiakas tallennettu
     destroy:
-      success: Customer successfully deleted
+      success: Asiakas poistaminen onnistui
     new:
-      edit_customer: Edit Customer
-      new_customer: New Customer
-  dateandtime: Date
-  default: Default
-  delete: Delete
-  display: Display
-  edit: Edit
-  exit: Exit
-  finish: Just Finish
-  food: Foods
-  go_back: Go back
-  green: Green
-  gross: Gross
+      edit_customer: Muokkaa Asiakas
+      new_customer: Uusi Asiakas
+  dateandtime: päivämäärä
+  default: Oletus
+  delete: Poistaa
+  display: Näyttää
+  edit: Muokkaa
+  exit: Poistu
+  finish: Vain Lopeta
+  food: Ruoat
+  go_back: Mene takaisin
+  green: Vihreä
+  gross: Brutto
   groups:
     new:
-      edit_group: Edit Group
-      new_group: New Group
-  guestroom: Guestroom
-  host: Host
+      edit_group: Muokkaa ryhmää
+      new_group: Uusi ryhmää
+  guestroom: Vierashuone
+  host: Vastaanottavan
   images:
-    errempty: Invalid file
-    errsize: Invalid file size
-    errtype: Invalid file type
-  invalid_date: Invalid date
-  invoice: Invoice
-  invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
-  invoices: Invoices
-  is_no_number: is not a number.
+    errempty: Virheellinen tiedosto
+    errsize: Virheellinen tiedostokoko
+    errtype: Virheellinen tiedostotyyppi
+  invalid_date: Virheellinen päivämäärä
+  invoice: Lasku
+  invoice_numer_X_at_time: Lasku nro %{numero} pvm: %{datetime}
+  invoices: laskuja
+  is_no_number: ei ole numero.
   items:
     item_tablerow:
-      clear: Clear
-      done: Done
-      no_printing: no printing
-  just_order: Just order
-  kitchen: Kitchen
+      clear: Tyhjennä
+      done: Valmis
+      no_printing: ei tulostus 
+  just_order: Vain tilaa
+  kitchen: Keittiö
   layouts:
     application:
-      admin_menu_hint: ☚ Click here to open the main menu
+      admin_menu_hint: ☚ Klikkaa tästä avataksesi päävalikon
       submit_scribe: OK
     header:
-      configuration: Configuration
-  logout: log out %{who}
+      configuration: Konfigurointi
+  logout: kirjaudu ulos %{who}
   messages:
-    hello_username: Hello %{name}!
-    user_account_is_currently_locked: Account is locked
-  move_order_to_table: Move order to different table
-  must_be_entered_either_for_article_or_for_quantity: must be entered either for the
-    Article or for the Variant.
-  net: Net
-  new: New
-  no_printing: No printing
-  not_found: Not found
+    hello_username: Terve %{name}!
+    user_account_is_currently_locked: Tili on lukittu
+  move_order_to_table: Siirrä tilauksen eri pöydään
+  must_be_entered_either_for_article_or_for_quantity: on annettava joko
+    Artikkeli tai Variantti.
+  net: Netto
+  new: Uuusi
+  no_printing: Ei tulostus
+  not_found: Ei löytynyt
   options:
     create:
-      success: Option successfully saved
+      success: Vaihtoehto tallennettu
     destroy:
-      success: Option successfully deleted
+      success: Vaihtoehto poistaminen onnistui
     index:
       no_categories_defined: There are no categories defined. You have to create at
         least one category in order to create an Option.
