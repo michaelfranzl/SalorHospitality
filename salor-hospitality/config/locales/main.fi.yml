@@ -525,15 +525,15 @@ fi:
       delivery_list: Toimitus lista
       preparation_list: Valmistelu lista
     invoice_form:
-      change_money: Change
-      just_finish: Just finish order
-      move_order: Move order to different table
-      print_and_finish: Print and finish this order
-      set_booking: Assign to Booking
-      set_cost_center: Set cost center for this order
-      set_tax_for_all: Set cost center for all items
-      set_taxes: Set cost center
-      split_invoice: Split invoice
+      change_money: Vaihtoraha
+      just_finish: Vain täytää tilauksen
+      move_order: Siirrä tilauksen eri pöydään
+      print_and_finish: Tulosta ja täytää tämän tilauksen
+      set_booking: Määrittää varaukseen
+      set_cost_center: Aseta tämän tilauksen kustannuspaikka
+      set_tax_for_all: Aseta kaikki kohteet kustannuspaikka
+      set_taxes: Aseta kustannuspaikka
+      split_invoice: Halkaista lasku
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
     invoice_item_list:
