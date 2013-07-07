@@ -167,7 +167,7 @@ class Image < ActiveRecord::Base
   def cleanup
     hash_id = "unknown"
     hash_id = self.vendor.hash_id if self.vendor and not self.vendor.hash_id.blank?
-    FileUtils.rm_rf File.join(DIRECTORY, hash_id, "images", "s#{sub_dir}", "#{self.id}")
+    FileUtils.rm_rf File.join(DIRECTORY, hash_id.gsub('#', ''), "images", "s#{sub_dir}", "#{self.id}")
   end
   
   def self.destroy_nulls
