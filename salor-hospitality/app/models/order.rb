@@ -418,9 +418,9 @@ class Order < ActiveRecord::Base
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.vendor.hash_id)
     else
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, self.company.identifier)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, self.vendor.hash_id)
     end
 
     print_engine.open

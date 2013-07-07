@@ -133,6 +133,7 @@ class Image < ActiveRecord::Base
       @file_data = nil
       # Delete temp folder
       FileUtils.rm_rf(plot_dir('original')) if File.exists?(plot_dir('original'))
+      Image.destroy_nulls
     end
   end
 
@@ -167,6 +168,13 @@ class Image < ActiveRecord::Base
     hash_id = "unknown"
     hash_id = self.vendor.hash_id if self.vendor and not self.vendor.hash_id.blank?
     FileUtils.rm_rf File.join(DIRECTORY, hash_id, "images", "s#{sub_dir}", "#{self.id}")
+  end
+  
+  def self.destroy_nulls
+    imgs = Image.find(:all, :conditions => 'name is NULL')
+    imgs.each do |thisimg|
+      thisimg.destroy
+    end unless imgs.nil?
   end
 
 end
