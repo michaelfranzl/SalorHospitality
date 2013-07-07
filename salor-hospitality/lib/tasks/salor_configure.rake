@@ -17,7 +17,7 @@ task :salor_configure, [:mode] => :environment do |t, args|
     $Vendor = v
     $Company = v.company
     v.update_cache
-    v.package_upgrade
+    #v.package_upgrade
   end
   
 #   identifier = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}" : nil
