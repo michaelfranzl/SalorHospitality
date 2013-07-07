@@ -133,8 +133,8 @@ class Image < ActiveRecord::Base
       @file_data = nil
       # Delete temp folder
       FileUtils.rm_rf(plot_dir('original')) if File.exists?(plot_dir('original'))
-      Image.destroy_nulls
     end
+    Image.destroy_nulls
   end
 
   def get_resize_ratio(pic, dimensions)
@@ -171,10 +171,7 @@ class Image < ActiveRecord::Base
   end
   
   def self.destroy_nulls
-    imgs = Image.find(:all, :conditions => 'name is NULL')
-    imgs.each do |thisimg|
-      thisimg.destroy
-    end unless imgs.nil?
+    Image.where(:name => nil).delete_all
   end
 
 end
