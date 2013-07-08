@@ -6,6 +6,8 @@
   .clear
   = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
 .customer_details
+  - if @order.note
+    = @order.note
   - if @order.customer
     = @order.customer.company_name
     %br

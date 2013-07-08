@@ -103,7 +103,7 @@ function render_tables() {
     
     // add labels to table
     if (v.acrid) {
-      // acrid means active customer id
+      // active customer id
       var active_customer_name = '';
       if (typeof resources.customers.all[v.acrid] != 'undefined') {
         active_customer_name = resources.customers.all[v.acrid].n;
@@ -111,7 +111,13 @@ function render_tables() {
         active_customer_name = '?';
       }
       create_dom_element('span', {}, active_customer_name, table);
+      
+    } else if (v.no) {
+      // note
+      create_dom_element('span', {}, v.no, table);
+      
     } else if (v.auid) {
+      // active user id
       var username = '';
       if (typeof resources.u[v.auid] != 'undefined' ) {
         username = resources.u[v.auid].n;

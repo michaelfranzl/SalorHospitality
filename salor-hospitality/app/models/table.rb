@@ -28,10 +28,12 @@ class Table < ActiveRecord::Base
     if lastorder.nil?
       self.active_user_id = nil
       self.active_customer_id = nil
+      self.note = nil
       self.save
     else
       self.active_user_id = lastorder.user_id
       self.active_customer_id = lastorder.customer_id
+      self.note = lastorder.note
       self.save
     end
   end

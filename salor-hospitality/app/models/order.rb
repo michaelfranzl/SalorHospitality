@@ -694,6 +694,11 @@ class Order < ActiveRecord::Base
       customer_data += cst_format % cst_values
     end
     
+    note_line = ''
+    if self.note
+      note_line = "\n\n%s\n\n" % self.note
+    end
+    
     header2 = ''
     header2 +=
     "\ea\x00" +  # align left
@@ -846,6 +851,7 @@ class Order < ActiveRecord::Base
         header1 +
         lines +
         customer_data +
+        note_line +
         header2 +
         header3 +
         list_of_items +

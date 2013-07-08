@@ -98,7 +98,7 @@ for lInstance in $gInstances; do
       mkdir -p $rails_etc
       mkdir -p $rails_log
       mkdir -p $rails_cache
-      mkdir -p $rails_var/public/uploads
+      mkdir -p $rails_var
       mkdir -p $rails_tmp
       
       use_dbconfig=false
@@ -137,6 +137,7 @@ for lInstance in $gInstances; do
 
       echo "  postinst: creating symlinks"
       ln -sfn $app_root /usr/share/salor-hospitality/${lInstance}
+      rm $app_root/public/uploads/${lInstance} # remove symlink, then create a new one
       ln -sfn $rails_var/public/uploads/${lInstance} $app_root/public/uploads/${lInstance}
       rm -rf $app_root/tmp # remove real directory in case it was created by Rails
       ln -sfn /var/tmp/salor-hospitality $app_root/tmp

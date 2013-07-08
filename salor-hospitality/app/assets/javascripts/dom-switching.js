@@ -24,6 +24,7 @@ function switch_to_invoice() {
   $('#functions_header_order_form').hide();
   $('#functions_header_index').hide();
   $('#functions_footer').hide();
+  $('#note_for_order').hide();
 }
 
 function switch_to_table() {
@@ -36,6 +37,7 @@ function switch_to_table() {
   advertising_counter = -1;
   counter_update_tables = -1;
   //$('#order_info').html(i18n.just_order);
+  $('#note_for_order').hide();
   $('#order_note').val('');
   //$('#inputfields').html('');
   $('#itemstable').html('');
@@ -69,6 +71,7 @@ function switch_to_tables() {
   $('#tables').show();
   $('#admin').hide();
   $('#rooms').hide();
+  $('#note_for_order').hide();
   $('#spliced_seasons').hide();
   if (settings.mobile) { $('#areas').show(); }
   $('#functions_header_index').show();

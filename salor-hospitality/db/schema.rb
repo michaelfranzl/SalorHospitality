@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626133943) do
+ActiveRecord::Schema.define(:version => 20130708141806) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -960,6 +960,7 @@ ActiveRecord::Schema.define(:version => 20130626133943) do
     t.boolean  "customer_table"
     t.boolean  "request_order"
     t.integer  "active_customer_id"
+    t.string   "note"
   end
 
   add_index "tables", ["active_user_id"], :name => "index_tables_on_active_user_id"
