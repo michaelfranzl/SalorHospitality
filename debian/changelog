@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.3) unstable; urgency=low
+
+  * print path fix
+  * print path fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 08 Jul 2013 11:32:43 +0200
+
 salor-hospitality (4.1.4.2) unstable; urgency=low
 
   * hash_id and image fix
