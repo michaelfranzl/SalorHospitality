@@ -58,6 +58,8 @@ class Vendor < ActiveRecord::Base
   serialize :branding
 
   validates_presence_of :name
+  validates_presence_of :hash_id
+  validates_uniqueness_of :hash_id
   validates_uniqueness_of :name, :scope => :hidden
   validates_uniqueness_of :identifier, :scope => :hidden
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
@@ -89,7 +91,9 @@ class Vendor < ActiveRecord::Base
   end
 
   def hide
-    self.update_attribute :hidden, true
+    self.hidden = true
+    self.hidden_at = Time.now
+    self.save
   end
   
   def get_region

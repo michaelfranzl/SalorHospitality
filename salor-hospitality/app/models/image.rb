@@ -86,15 +86,12 @@ class Image < ActiveRecord::Base
   end
 
   def sub_dir
-    tsubdir = (self.id/20000).floor
-    tsubdir = 0 if tsubdir < 0
-    return tsubdir
+    (self.id/1000).floor
   end
 
 
   def is_valid_upload
-    return true if self.name.blank?
-    errors.add(":", I18n.t(:"images.errempty")) if @file_data.blank?
+    return true if self.name.blank? or @file_data.blank?
     errors.add(":", I18n.t(:"images.errsize")) if @file_data.size == 0 or @file_data.size > MAX_IMAGE_UPLOAD_SIZE
     errors.add(":", I18n.t(:"images.errtype")) unless @file_data.original_filename.split('\\').last.split('/').last.split('.').last.match(/jpg|jpeg|gif|png|bmp/i) and VALID_IMAGE_TYPES.include? @file_data.content_type.chomp
   end

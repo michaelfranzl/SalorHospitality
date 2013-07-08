@@ -17,7 +17,11 @@ task :salor_configure, [:mode] => :environment do |t, args|
     $Vendor = v
     $Company = v.company
     v.update_cache
-    #v.package_upgrade
+    begin
+      v.package_upgrade
+    rescue
+      puts "package upgrade logging failed."
+    end
   end
   
 #   identifier = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}" : nil
