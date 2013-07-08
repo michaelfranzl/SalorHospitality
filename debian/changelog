@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.2) unstable; urgency=low
+
+  * hash_id and image fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 08 Jul 2013 09:52:34 +0200
+
 salor-hospitality (4.1.4.1) unstable; urgency=low
 
   * 
