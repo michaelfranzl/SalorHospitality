@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.6) unstable; urgency=low
+
+  * postinst fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 08 Jul 2013 16:42:45 +0200
+
 salor-hospitality (4.1.4.5) unstable; urgency=low
 
   * postinst changes, added order notes to invoice and table plan
