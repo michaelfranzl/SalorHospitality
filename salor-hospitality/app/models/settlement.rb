@@ -55,7 +55,7 @@ class Settlement < ActiveRecord::Base
     
     output = self.escpos
     
-    printr = Escper::Printer.new(self.company.mode, vendor_printer, self.vendor.identifier)
+    printr = Escper::Printer.new(self.company.mode, vendor_printer, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.vendor.hash_id))
     printr.open
     bytes_written, content_sent = printr.print vendor_printer.id, output
     printr.close

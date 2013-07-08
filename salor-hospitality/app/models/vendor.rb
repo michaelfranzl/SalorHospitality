@@ -373,7 +373,7 @@ class Vendor < ActiveRecord::Base
             difflines.join("\n") + # changelog output
             "\n\n\n\n\n" +         # space
             "\x1DV\x00\x0C"        # paper cut
-        print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.hash_id)
+        print_engine = Escper::Printer.new(self.company.mode, vendor_printers, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.hash_id))
         print_engine.open
         bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
         bytes_sent = content_sent.length

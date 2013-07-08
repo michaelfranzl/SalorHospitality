@@ -49,7 +49,7 @@ class HistoryObserver < ActiveRecord::Observer
       end
       output += "\n\n\n\n\n\n\n" +         # space
             "\x1DV\x00\x0C"            # paper cut
-      print_engine = Escper::Printer.new($Vendor.company.mode, vendor_printers, $Vendor.hash_id)
+      print_engine = Escper::Printer.new($Vendor.company.mode, vendor_printers, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, $Vendor.hash_id))
       print_engine.open
       bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
       print_engine.close

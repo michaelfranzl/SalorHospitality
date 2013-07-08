@@ -76,7 +76,7 @@ class StatisticsController < ApplicationController
       text += render_statistics_escpos('footer')
       
       vendor_printer = @current_vendor.vendor_printers.existing.first
-      print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, @current_vendor.hash_id)
+      print_engine = Escper::Printer.new(@current_company.mode, vendor_printer, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, @current_vendor.hash_id).hash_id)
       print_engine.open
       bytes_written, content_sent = print_engine.print(vendor_printer.id, text)
       print_engine.close
