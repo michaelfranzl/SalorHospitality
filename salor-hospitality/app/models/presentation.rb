@@ -17,7 +17,15 @@ class Presentation < ActiveRecord::Base
 
   def secure_expand_markup
     allowed_attributes = ['NAME','PRICE','DESCRIPTION','PREFIX','POSTFIX']
-    allowed_iterators = { "Category" => ['articles','options'], "Article" => ['quantities'] }
+    allowed_iterators = {
+      "Category" => [
+                     'articles',
+                     'options'
+                    ],
+      "Article" => [
+                    'quantities'
+                   ]
+    }
     modified_lines = Array.new
     self.markup.split("\n").each do |line|
       line.gsub! /<%.*?%>/, 'No dice!'

@@ -6,7 +6,7 @@
 <%= "\e!\x00" %>
 <% total = 0 %>
 <% @categories.each do |cat| %>
-<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @scids, :created_at => @from..@to).sum(:sum) %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum) %>
 <%= "%10.10s     %s %7.2f\n" % [cat.name, @friendly_unit, sum] %>
 <% total += sum %>
 <% end %>
