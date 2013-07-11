@@ -49,14 +49,6 @@
     
     Satisfy any
   </Location>
-  
-  <Location /uploads>
-    Deny from all
-  </Location>
-  
-  <Location /uploads/INSTANCE_ID>
-    Allow from all
-  </Location>
 
   # Passenger configuration for this VirtualHost
   PassengerMaxRequests 2000

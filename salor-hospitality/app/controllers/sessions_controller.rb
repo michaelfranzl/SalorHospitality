@@ -101,10 +101,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def request_specs_login
-    #create
-  end
-
   def destroy
     if @current_user
       session[:ad_url] = nil

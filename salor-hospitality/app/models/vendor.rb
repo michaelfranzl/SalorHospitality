@@ -58,8 +58,7 @@ class Vendor < ActiveRecord::Base
   serialize :branding
 
   validates_presence_of :name
-  validates_presence_of :hash_id
-  validates_uniqueness_of :hash_id
+  validates_presence_of :identifier
   validates_uniqueness_of :name, :scope => :hidden
   validates_uniqueness_of :identifier, :scope => :hidden
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
@@ -68,6 +67,7 @@ class Vendor < ActiveRecord::Base
   validates :automatic_printing_interval, :numericality => { :greater_than => 20 }
   
   after_commit :sanitize_vendor_printer_paths
+  after_create :set_hash_id
 
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
@@ -468,5 +468,17 @@ class Vendor < ActiveRecord::Base
         end        
       end # articles
     end #category
+  end
+  
+  def set_hash_id
+    self.hash_id = "#{ self.identifier }#{ generate_random_string[0..20] }"
+    self.save
+  end
+  
+  private
+  
+  def generate_random_string
+    collection = [('a'..'z'),('A'..'Z'),('0'..'9')].map{|i| i.to_a}.flatten
+    (0...128).map{ collection[rand(collection.length)] }.join
   end
 end

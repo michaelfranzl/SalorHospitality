@@ -127,7 +127,6 @@ company_count.times do |c|
     vendor.country = countries[v]
     vendor.company = company
     vendor.identifier = "vendor#{c}#{v}"
-    vendor.hash_id = "vendor#{c}#{v}"
     r = vendor.save
     puts "Vendor #{ c } #{ v } created" if r == true
 
