@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.11) unstable; urgency=low
+
+  * vendor identifier and hash_id consolidation
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 17 Jul 2013 08:52:41 +0200
+
 salor-hospitality (4.1.4.10) unstable; urgency=low
 
   * settlement calculation fix and receipt layout improvement
