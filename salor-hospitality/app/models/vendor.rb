@@ -470,7 +470,17 @@ class Vendor < ActiveRecord::Base
     end #category
   end
   
+  def hash_id
+    hid = read_attribute :hash_id
+    hid = "hash_id_unset" if hid.blank?
+    return hid
+  end
+  
   def set_hash_id
+    unless self.hash_id.blank?
+      ActiveRecord::Base.logger.info "hash_id is already set."
+      return
+    end
     self.hash_id = "#{ self.identifier }#{ generate_random_string[0..20] }"
     self.save
   end

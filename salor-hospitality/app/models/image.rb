@@ -79,7 +79,7 @@ class Image < ActiveRecord::Base
   end
 
   def plot_path(size)
-    hash_id = "unknown"
+    hash_id = "hash_id_unset"
     hash_id = self.vendor.hash_id if self.vendor and not self.vendor.hash_id.blank?
     path = File.join(DIRECTORY, hash_id.gsub('#', ''), "images", "s#{sub_dir}", "#{self.id}","#{size}","#{self.name}")
     return path
@@ -162,7 +162,7 @@ class Image < ActiveRecord::Base
   end
 
   def cleanup
-    hash_id = "unknown"
+    hash_id = "hash_id_unset"
     hash_id = self.vendor.hash_id if self.vendor and not self.vendor.hash_id.blank?
     FileUtils.rm_rf File.join(DIRECTORY, hash_id.gsub('#', ''), "images", "s#{sub_dir}", "#{self.id}")
   end
