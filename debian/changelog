@@ -1,8 +1,10 @@
 salor-hospitality (4.1.4.10) unstable; urgency=low
 
   * settlement calculation fix and receipt layout improvement
+  * build
+  * set hash_id for vendors if blank, soft default for hash_id
 
- -- Michael Franzl <office@michaelfranzl.com>  Wed, 17 Jul 2013 06:36:24 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 17 Jul 2013 06:54:08 +0200
 
 salor-hospitality (4.1.4.9) unstable; urgency=low
 
