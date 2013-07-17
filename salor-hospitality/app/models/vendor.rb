@@ -58,7 +58,7 @@ class Vendor < ActiveRecord::Base
   serialize :branding
 
   validates_presence_of :name
-  validates_presence_of :identifier
+  validate :identifer_present_and_ascii
   validates_uniqueness_of :name, :scope => :hidden
   validates_uniqueness_of :identifier, :scope => :hidden
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
@@ -67,11 +67,30 @@ class Vendor < ActiveRecord::Base
   validates :automatic_printing_interval, :numericality => { :greater_than => 20 }
   
   after_commit :sanitize_vendor_printer_paths
-  after_create :set_hash_id
+  
+  before_save :set_hash_id
+  
 
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+  
+  def identifer_present_and_ascii
+    if self.identifier.blank?
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.empty'))
+      return
+    end
+    
+    if self.identifier.length < 8
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.too_short', :count => 8))
+      return
+    end
+    
+    match = /[a-zA-Z0-9_-]*/.match(self.identifier)[0]
+    if match != self.identifier
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.must_be_ascii'))
+    end
+  end
   
   def utc_offset_hours
     # The offset of the Rails application
@@ -470,6 +489,12 @@ class Vendor < ActiveRecord::Base
     end #category
   end
   
+  def identifier
+    ident = read_attribute :identifier
+    hid = "identifier_unset" if ident.blank?
+    return ident
+  end
+  
   def hash_id
     hid = read_attribute :hash_id
     hid = "hash_id_unset" if hid.blank?
@@ -477,12 +502,13 @@ class Vendor < ActiveRecord::Base
   end
   
   def set_hash_id
-    unless self.hash_id.blank?
+    hid = read_attribute :hash_id
+    unless hid.blank?
       ActiveRecord::Base.logger.info "hash_id is already set."
       return
     end
     self.hash_id = "#{ self.identifier }#{ generate_random_string[0..20] }"
-    self.save
+    ActiveRecord::Base.logger.info "Set hash_id to #{ self.hash_id }."
   end
   
   private

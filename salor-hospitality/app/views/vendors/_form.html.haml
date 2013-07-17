@@ -23,10 +23,9 @@
         = vendor_form.text_field :name, :size => 15
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
-        - if @current_company.mode == 'saas'
-          = vendor_form.label :identifier
-          = vendor_form.text_field :identifier, :size => 15
-          %br
+        = vendor_form.label :identifier
+        = vendor_form.text_field :identifier, :size => 15
+        %br
         = vendor_form.label :email
         = vendor_form.text_field :email, :size => 15
         - if @current_company.mode == 'local' or @current_user.role.weight.zero?

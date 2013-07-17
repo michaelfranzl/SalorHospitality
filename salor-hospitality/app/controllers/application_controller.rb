@@ -380,7 +380,11 @@ class ApplicationController < ActionController::Base
       @current_company = Company.existing.find_by_id session[:company_id] if session[:company_id]
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
 
-      session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
+      unless @current_vendor
+        # this happens after a new migration or after a vendor has been deleted
+        session[:vendor_id] = nil and session[:company_id] = nil
+        redirect_to new_session_path and return
+      end
 
       # we need these global variables for the history observer model
       $User = @current_user

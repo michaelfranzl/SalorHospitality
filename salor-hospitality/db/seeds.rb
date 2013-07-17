@@ -117,18 +117,21 @@ surcharge_amounts = [6, 12, 22, -5]
 
 
 company_count.times do |c|
-  company = Company.new :name => "Company #{ c }"
+  company = Company.new
+  company.name = "Company#{ c }"
+  company.identifier = "company#{ c }"
   r = company.save
-  puts "Company #{ c } created" if r == true
+  puts "Company#{ c } created" if r == true
 
   countries.size.times do |v|
     vendor = Vendor.new
     vendor.name = "Vendor #{ c } #{ v }"
     vendor.country = countries[v]
     vendor.company = company
-    vendor.identifier = "vendor#{c}#{v}"
+    vendor.identifier = "identifier#{c}#{v}"
     r = vendor.save
     puts "Vendor #{ c } #{ v } created" if r == true
+    raise "Could not save Vendor: #{ vendor.errors.messages }" if r != true
 
     presentation_objects = Array.new
     presentation1 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Article name #{ c } #{ v }", :description => "just displays name of an article", :markup => "%{{NAME}}", :model => "Article"
@@ -182,6 +185,7 @@ company_count.times do |c|
       r = tax.save
       tax_objects << tax
       puts "Tax #{ taxes[i] } #{ c } #{ v } created" if r == true
+      raise "Could not save Tax" if r != true
     end
 
     cash_register_objects = Array.new
@@ -192,6 +196,7 @@ company_count.times do |c|
       r = cash_register.save
       cash_register_objects << cash_register
       puts "CashRegister #{ c } #{ v } #{ i } created" if r == true
+      raise "Could not save CashRegister" if r != true
     end
 
     vendor_printer_objects = Array.new
@@ -202,6 +207,7 @@ company_count.times do |c|
       r = vendor_printer.save
       vendor_printer_objects << vendor_printer
       puts "VendorPrinter #{ c } #{ v } #{ i } created" if r == true
+      raise "Could not save VendorPrinter" if r != true
     end
 
     role_objects = Array.new
