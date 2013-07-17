@@ -1,8 +1,10 @@
 class PopulateHashIdForVendors2 < ActiveRecord::Migration
   def up
     Vendor.all.each do |v|
-      match = /[a-zA-Z0-9_-]*/.match(v.identifier)[0]
-      if match != v.identifier
+      match = /[a-zA-Z0-9_-]*/.match(v.identifier)
+      next unless match
+      matched = match[0]
+      if matched != v.identifier
         puts "Identifier contains something else than [a-zA-Z0-9_-]. Sorry, I have to reset the identifer."
         Vendor.connection.execute("UPDATE vendors SET identifier = 'vendor#{ v.id }' WHERE id=#{ v.id }")
       end
