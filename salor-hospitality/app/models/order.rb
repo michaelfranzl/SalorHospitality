@@ -695,7 +695,7 @@ class Order < ActiveRecord::Base
     end
     
     note_line = ''
-    if self.note
+    unless self.note.blank?
       note_line = "\n\n%s\n\n" % self.note
     end
     

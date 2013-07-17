@@ -195,7 +195,7 @@ class Settlement < ActiveRecord::Base
     list_of_taxes = ''
     if permissions.include?('settlement_statistics_taxes')
       self.vendor.taxes.existing.where(:include_in_statistics => true, :statistics_by_category => false).each do |tax|
-        sum = self.tax_items.where(:tax_id => tax.id).sum(tax_attribute)
+        sum = self.tax_items.existing.where(:tax_id => tax.id, :refunded => nil).sum(tax_attribute)
         tax_values = [
           tax.name,
           friendly_unit,
