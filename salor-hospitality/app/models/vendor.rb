@@ -81,8 +81,8 @@ class Vendor < ActiveRecord::Base
       return
     end
     
-    if self.identifier.length < 8
-      errors.add(:identifier, I18n.t('activerecord.errors.messages.too_short', :count => 8))
+    if self.identifier.length < 4
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.too_short', :count => 4))
       return
     end
     
