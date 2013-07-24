@@ -2,6 +2,10 @@
 en:
   activerecord:
     attributes:
+      user_login:
+        login: Started
+        logout: Ended
+        duration: Duration
       article:
         active: active
         category_id: Category
@@ -170,6 +174,8 @@ en:
         amount: Amount
         tax_id: Tax
       user:
+        maximum_shift_duration: Shift duration
+        track_time: Track time
         active: active?
         advertising_timeout: Advertising Timeout
         advertising_url: Advertising URL
@@ -628,6 +634,7 @@ en:
     destroy:
       success: Role successfully deleted
     new:
+      manage_user_logins: Manage User Logins
       add_option_to_sent_item: Add Options to sent Items
       allow_exit: Allow Exit
       assign_cost_center: Assign cost center
@@ -818,6 +825,8 @@ en:
       edit_tax: Edit Tax
       new_tax: New Tax
   users:
+    index:
+      on_duty: On duty
     create:
       success: User successfully saved
     destroy:
@@ -827,6 +836,7 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    your_shift_has_ended: Your shift has ended. Please log out.
     attempt: Attempt
     begin: Begin
     cancel: Cancel

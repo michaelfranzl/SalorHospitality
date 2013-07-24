@@ -89,6 +89,7 @@
     = form_tag @sessionpath, :id => 'logoutform', :method => 'delete' do
       = hidden_field_tag 'logout_error'
       = hidden_field_tag 'logout_notice'
+      = hidden_field_tag 'logout_type'
 
 :javascript
   var i18n = #{ get_i18n };

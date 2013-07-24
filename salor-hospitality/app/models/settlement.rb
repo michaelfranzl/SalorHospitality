@@ -33,6 +33,7 @@ class Settlement < ActiveRecord::Base
     
     PaymentMethodItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :settlement_id => nil, :order_id => order_ids).update_all(:settlement_id => self.id)
     
+    self.finished = true
     self.calculate_totals
   end
   

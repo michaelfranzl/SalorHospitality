@@ -121,6 +121,7 @@ function logout(msg) {
   msg = typeof msg !== 'undefined' ? msg : {};
   var error = typeof msg.error !== 'undefined' ? msg.error : '';
   var notice = typeof msg.notice !== 'undefined' ? msg.notice : '';
+  var type = typeof msg.type !== 'undefined' ? msg.type : '';
   $('#logout_error').val(error);
   $('#logout_notice').val(notice);
   $('#logoutform').submit();

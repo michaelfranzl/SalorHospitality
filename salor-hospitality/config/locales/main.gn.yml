@@ -2,6 +2,10 @@
 gn:
   activerecord:
     attributes:
+      user_login:
+        login: Start
+        logout: Ende
+        duration: Dauer
       article:
         active: aktiv?
         category_id: Kategorie
@@ -170,6 +174,8 @@ gn:
         amount: Betrag
         tax_id: Steuer
       user:
+        track_time: Zeitaufzeichnung
+        maximum_shift_duration: Schichtdauer
         active: aktiv?
         advertising_timeout: Werbung Timeout
         advertising_url: Werbung URL
@@ -628,6 +634,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      manage_user_logins: User Logins verwalten
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
       assign_cost_center: Kostenstelle zuweisen
@@ -819,6 +826,8 @@ gn:
       edit_tax: Steuerklasse bearbeiten
       new_tax: Neue Steuerklasse
   users:
+    index:
+      on_duty: Im Dienst
     create:
       success: Benutzer erfolgreich gespeichert
     destroy:
@@ -828,6 +837,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    your_shift_has_ended: Ihre Schicht ist zu Ende. Bitte loggen Sie sich aus.
     attempt: Versuch
     begin: Anfang
     cancel: Abbrechen

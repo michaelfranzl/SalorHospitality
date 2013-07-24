@@ -9,6 +9,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function get_table_show(table_id) {
+  if (user_shift_ended == true) {
+    alert(i18n.your_shift_has_ended);
+  }
   $('#order_info').html(i18n.connecting);
   $('#order_info_bottom').html(i18n.connecting);
   $.ajax({

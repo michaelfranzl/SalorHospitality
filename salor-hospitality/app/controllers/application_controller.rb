@@ -381,7 +381,6 @@ class ApplicationController < ActionController::Base
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
 
       unless @current_vendor
-        # this happens after a new migration or after a vendor has been deleted
         session[:vendor_id] = nil and session[:company_id] = nil
         redirect_to new_session_path and return
       end
@@ -440,6 +439,11 @@ class ApplicationController < ActionController::Base
             redirect_to new_customer_session_path and return
           end
         end
+      end
+      
+      if @current_user
+        @current_user.last_active_at = Time.now
+        @current_user.save
       end
     end
 

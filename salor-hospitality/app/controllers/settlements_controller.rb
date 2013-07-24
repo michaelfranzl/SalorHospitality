@@ -39,23 +39,17 @@ class SettlementsController < ApplicationController
   # ajax
   def create
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @settlement = Settlement.create params[:settlement]
-    @settlement.nr = @current_vendor.get_unique_model_number('settlement')
-    @settlement.calculate_totals
-    @settlement.vendor = @current_vendor
-    @settlement.company = @current_company
-    @settlement.save
+    
+    user = @current_vendor.users.existing.find_by_id(params[:settlement][:user_id])
+    @settlement = user.settlement_start(@current_vendor, @current_user, params[:settlement][:initial_cash])
   end
 
   # ajax
   def update
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @settlement = @current_vendor.settlements.find_by_id params[:id]
-    render :nothing => true and return unless @settlement
-    @settlement.update_attributes params[:settlement]
-    @settlement.finish
-    @settlement.print
-    @settlement.report_errors_to_technician
+    
+    user = @current_vendor.users.existing.find_by_id(params[:settlement][:user_id])
+    @settlement = user.settlement_stop(@current_vendor, @current_user, params[:settlement][:revenue])
   end
   
   # ajax

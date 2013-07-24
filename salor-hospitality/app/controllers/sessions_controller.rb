@@ -51,7 +51,8 @@ class SessionsController < ApplicationController
         user = company.users.existing.active.where(:password => params[:password]).first
       end
       if user
-        if ( not user.role.permissions.include?('login_locking') ) or company.mode != 'local' or user.current_ip.nil? or user.current_ip == request.ip
+        if ( not user.role.permissions.include?('login_locking') ) or user.current_ip.nil? or user.current_ip == request.ip or company.mode != 'local'
+          # login locking is enabled, the current_ip is the same as stored on the mode. company modes other than local override the login_locking feature since IP addresses are usually dynamic
           vendor = user.vendors.existing.first
           session[:user_id] = user.id
           session[:company_id] = user.company_id
@@ -61,7 +62,14 @@ class SessionsController < ApplicationController
             session[:vendor_id] = vendor.id
           end
           session[:locale] = I18n.locale = user.language
-          user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
+          
+          # update timestamps on user model
+          user.current_ip = request.ip
+          user.last_active_at = Time.now
+          user.last_login_at = Time.now
+          user.save
+          user.log_in(vendor, user)
+          
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)
@@ -105,10 +113,19 @@ class SessionsController < ApplicationController
     if @current_user
       session[:ad_url] = nil
       session[:ad_url] = @current_user.advertising_url if @current_user.advertising_url and not @current_user.advertising_url.empty?
-      @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+      
+      @current_user.last_logout_at = Time.now
+      @current_user.last_active_at = Time.now
+      @current_user.current_ip = nil
+      @current_user.save
+      @current_user.log_out(@current_vendor, @current_user, params[:logout_type] == 'auto_logout')
+      
       redirect_to '/'
     elsif @current_customer
-      @current_customer.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+      @current_customer.last_logout_at = Time.now
+      @current_customer.last_active_at = Time.now
+      @current_customer.current_ip = nil
+      @current_customer.save
       redirect_to new_customer_session_path
     end
     @current_user = @current_customer = session[:user_id] = session[:customer_id] = nil

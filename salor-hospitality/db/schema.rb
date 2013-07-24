@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717052619) do
+ActiveRecord::Schema.define(:version => 20130724103633) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -830,8 +830,8 @@ ActiveRecord::Schema.define(:version => 20130717052619) do
   create_table "settlements", :force => true do |t|
     t.float    "revenue"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.boolean  "finished"
     t.float    "initial_cash"
     t.integer  "company_id"
@@ -841,6 +841,8 @@ ActiveRecord::Schema.define(:version => 20130717052619) do
     t.integer  "hidden_by"
     t.integer  "nr"
     t.datetime "hidden_at"
+    t.integer  "start_by_user_id"
+    t.integer  "stop_by_user_id"
   end
 
   add_index "settlements", ["company_id"], :name => "index_settlements_company_id"
@@ -1044,6 +1046,24 @@ ActiveRecord::Schema.define(:version => 20130717052619) do
 
   add_index "taxes", ["company_id"], :name => "index_taxes_company_id"
 
+  create_table "user_logins", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.integer  "user_id"
+    t.datetime "login"
+    t.datetime "logout"
+    t.integer  "duration"
+    t.float    "hourly_rate"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
+    t.string   "ip"
+    t.boolean  "auto_logout"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "log_by_user_id"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "login"
     t.string   "password"
@@ -1074,6 +1094,10 @@ ActiveRecord::Schema.define(:version => 20130717052619) do
     t.integer  "advertising_timeout",       :default => -1
     t.string   "salt"
     t.string   "encrypted_password"
+    t.float    "hourly_rate"
+    t.integer  "maximum_shift_duration"
+    t.integer  "current_settlement_id"
+    t.boolean  "track_time"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"

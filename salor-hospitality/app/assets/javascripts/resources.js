@@ -46,4 +46,7 @@ function update_resources(mode) {
 
 function update_resources_success(data) {
   emit('ajax.update_resources.success', data);
+  if (user_shift_ended == true) {
+    alert(i18n.your_shift_has_ended);
+  }
 }

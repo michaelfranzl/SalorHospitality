@@ -69,6 +69,11 @@
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
+            %tr
+              %td= user_form.label :maximum_shift_duration
+              %td
+                = user_form.text_field :maximum_shift_duration, :size => 5
+                %span#user_maximum_shift_duration_display_keyboard.display_keyboard
             - if permit('manage_advertising')
               %tr
                 %td= user_form.label :advertising_timeout
@@ -79,6 +84,9 @@
               %tr
                 %td= user_form.label :automatic_printing
                 %td= user_form.check_box :automatic_printing
+            %tr
+              %td= user_form.label :track_time
+              %td= user_form.check_box :track_time
             - if permit('see_item_notifications_user_preparation') or permit('see_item_notifications_user_delivery') or permit('see_item_notifications_vendor_preparation') or permit('see_item_notifications_vendor_delivery') or permit('see_item_notifications_static')
               %tr
                 %td= user_form.label :audio
@@ -131,4 +139,13 @@
     $('#user_screenlock_timeout').getkeyboard().reveal();
   });
   
+  $('#user_advertising_timeout').keyboard( {openOn: '', layout: 'num' } );
+  $('#user_advertising_timeout_display_keyboard').click(function(){
+    $('#user_advertising_timeout').getkeyboard().reveal();
+  });
+  
+  $('#user_maximum_shift_duration').keyboard( {openOn: '', layout: 'num' } );
+  $('#user_maximum_shift_duration_display_keyboard').click(function(){
+    $('#user_maximum_shift_duration').getkeyboard().reveal();
+  });
   //$('option:selected').css('backgroundColor', 'red');
