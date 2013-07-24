@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.14) unstable; urgency=low
+
+  * added time tracking for users
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 24 Jul 2013 14:23:19 +0200
+
 salor-hospitality (4.1.4.13) unstable; urgency=low
 
   * statistics hour/day fix
