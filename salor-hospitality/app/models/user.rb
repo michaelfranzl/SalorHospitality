@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
     return unless self.track_time == true
     
     last_ul = self.user_logins.last
-    if last_ul.logout.nil?
+    if last_ul and last_ul.logout.nil?
       # user has missed to log out properly. We create a logout record now since logins and logouts must be alternating in the database.
       ul = UserLogin.new
       ul.company = self.company
@@ -124,22 +124,34 @@ class User < ActiveRecord::Base
     end
     
     self.current_settlement_id = s.id
-    self.save
-    
+    result = self.save
+    if result != true
+      raise "Could not save user because #{ self.errors.messages }"
+    end
     return s
   end
   
   def settlement_stop(vendor, by_user, revenue)
     s = vendor.settlements.existing.find_by_id(self.current_settlement_id)
+    if s.nil?
+      raise "User stopped settlement but no curren_settlement found"
+    end
     s.revenue = revenue
     s.stop_by_user_id = by_user.id
-    s.save
+    result = s.save
+    if result != true
+      raise "Could not save settlement because #{ s.errors.messages }"
+    end
+    
     s.finish
     s.print if s.sum > 0
     s.report_errors_to_technician
     
     self.current_settlement_id = nil
-    self.save
+    result = self.save
+    if result != true
+      raise "Could not save user because #{ self.errors.messages }"
+    end
     return s
   end
   

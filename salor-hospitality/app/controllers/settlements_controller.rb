@@ -50,6 +50,8 @@ class SettlementsController < ApplicationController
     
     user = @current_vendor.users.existing.find_by_id(params[:settlement][:user_id])
     @settlement = user.settlement_stop(@current_vendor, @current_user, params[:settlement][:revenue])
+    @settlement = Settlement.new
+    @settlement.user = user
   end
   
   # ajax
