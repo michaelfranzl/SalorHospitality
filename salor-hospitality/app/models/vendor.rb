@@ -128,6 +128,7 @@ class Vendor < ActiveRecord::Base
     if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_header, nil
     else
+      data.rewind
       write_attribute :rlogo_header, Escper::Img.new(data.read, :blob).to_s 
     end
   end
@@ -136,6 +137,7 @@ class Vendor < ActiveRecord::Base
     if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_footer, nil
     else
+      data.rewind
       write_attribute :rlogo_footer, Escper::Img.new(data.read, :blob).to_s
     end
   end

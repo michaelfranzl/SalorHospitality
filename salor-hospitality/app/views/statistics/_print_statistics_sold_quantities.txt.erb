@@ -5,13 +5,13 @@
 
 <%= "\e!\x00" %>
 <% @articles.each do |article| %>
-<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to).sum(:count) %>
+<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to, :cost_center_id => @csids, :user_id => @uids).sum(:count) %>
 <% next if sold_quantity.zero? %>
 <%= "%35.35s %5i\n" % [article.name, sold_quantity] %>
 <% end %>
 
 <% @quantities.each do |quantity| %>
-<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to).sum(:count) %>
+<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to, :cost_center_id => @csids, :user_id => @uids).sum(:count) %>
 <% next if sold_quantity.zero? %>
 <%= "%35.35s %5i\n" % ["#{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }", sold_quantity] %>
 <% end %>
