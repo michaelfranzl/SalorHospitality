@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.16) unstable; urgency=low
+
+  * upload fix, enabled statistics for user ids and cost center ids
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 30 Jul 2013 08:20:45 +0200
+
 salor-hospitality (4.1.4.15) unstable; urgency=low
 
   * settlement fixes for new feature
