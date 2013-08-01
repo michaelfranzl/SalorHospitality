@@ -1,3 +1,13 @@
+salor-hospitality (4.1.4.17) unstable; urgency=low
+
+  * defaults for user shift duration, disable caching for ajax calls
+  * orders#last, settlement improvements, js timestamps against caching
+  * set layout on user model
+  * updated translations
+  * counter mode buttons for mobile
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 01 Aug 2013 10:14:42 +0200
+
 salor-hospitality (4.1.4.16) unstable; urgency=low
 
   * upload fix, enabled statistics for user ids and cost center ids
