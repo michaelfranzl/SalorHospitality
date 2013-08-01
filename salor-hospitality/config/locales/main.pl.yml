@@ -51,6 +51,7 @@ pl:
         cellphone: Telefon komórkowy
         city: Miasto
         company_name: Nazwa firmy
+        default_table_id: Default Table
         email: e-mail
         first_name: Imię
         full_name: Pełne Imię
@@ -61,9 +62,8 @@ pl:
         m_points: Numer karty punktowej
         postalcode: Kod pocztowy
         state: Województwo
-        telephone: Telefon stacjonarny
-        default_table_id: Default Table
         tax_info: Tax Info
+        telephone: Telefon stacjonarny
       group:
         name: Nazwa
       guest_type:
@@ -80,6 +80,8 @@ pl:
       order:
         change_given: Zmień
         nr: Numer
+        finished_at: Finished at
+        sum: Sum
       page:
         active: Aktywny
         color: Kolor tła
@@ -185,6 +187,12 @@ pl:
         screenlock_timeout: Blokowanie ekranu (w sek.)
         tables: Przypisz stoliki
         title: Tytuł
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
         automatic_printing: Automatyczne drukowanie
         country: Zasady dla kraju
@@ -223,6 +231,10 @@ pl:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -567,6 +579,8 @@ pl:
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Edytuj stronę
@@ -640,6 +654,7 @@ pl:
       counter_mode: Licznik
       decrement_items: Obniżanie pozycji
       delete_items: Usuwanie artykułu poprzez obniżenie ceny do 0zł
+      download_csv: Download CSV
       download_database: Pobieranie bazy danych
       edit_role: Edytowanie zezwoleń
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
@@ -711,7 +726,7 @@ pl:
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
       view_settlements_table: View settlements table
-      download_csv: Download CSV
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
@@ -762,14 +777,14 @@ pl:
       username: Użytkownik
   settlements:
     detailed_list:
+      changed_price: ! '%{byuser} changed price'
       count: Ilość
       order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia
         %{time}'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Suma całkowita
       total: Suma
       unit_price: Cena
-      changed_price: ! '%{byuser} changed price'
-      reduced_count: Count reduced from %{maxcount} to %{count}.
       warning: Warning
     index:
       all: All
@@ -833,6 +848,8 @@ pl:
       new_user: Dodawanie użytkownika
       select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
         myszy
+    index:
+      on_duty: On duty
   various:
     attempt: Attempt
     begin: Początek
@@ -898,6 +915,7 @@ pl:
     waiter_was_requested: Poprosiłeś kelnera do stolika. Twoje powiadomienie zostało
       wysłane, prosimy o cierpliwość.
     workstation_view: Widok dla komputera stacjonarnego
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Restauracja została pomyślnie zapisana!
@@ -906,10 +924,10 @@ pl:
     form:
       add_printer: Dodaj drukarkę
       identify_printers: Wykry drukarkę
-      test_printers: Testuj drukarkę
-      test_printers_chartest: Test all characters
       print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: Testuj drukarkę
+      test_printers_chartest: Test all characters
     index:
       edit: Edytuj
       switch_to: Wybierz

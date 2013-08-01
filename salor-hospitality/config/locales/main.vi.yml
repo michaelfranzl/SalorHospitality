@@ -62,8 +62,8 @@ vi:
         m_points: Loyalty Points
         postalcode: Postal Code
         state: State
-        telephone: Telephone
         tax_info: Tax Info
+        telephone: Telephone
       group:
         name: Name
       guest_type:
@@ -80,6 +80,8 @@ vi:
       order:
         change_given: Change
         nr: Number
+        finished_at: Finished at
+        sum: Sum
       page:
         active: active
         color: Color
@@ -185,6 +187,12 @@ vi:
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
         title: Title
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
         automatic_printing: Automatic printing
         country: Rules for country
@@ -223,6 +231,10 @@ vi:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -568,6 +580,8 @@ vi:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Edit Page
@@ -640,6 +654,7 @@ vi:
       counter_mode: Counter mode
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
+      download_csv: Download CSV
       download_database: Download Database
       edit_role: Edit Role
       finish_all_settlements: Finish all settlements
@@ -707,7 +722,7 @@ vi:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      download_csv: Download CSV
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -757,13 +772,13 @@ vi:
       username: User
   settlements:
     detailed_list:
+      changed_price: ! '%{byuser} changed price'
       count: Count
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Revenue
       total: Total
       unit_price: Unit Price
-      changed_price: ! '%{byuser} changed price'
-      reduced_count: Count reduced from %{maxcount} to %{count}.
       warning: Warning
     index:
       all: All
@@ -826,6 +841,8 @@ vi:
       edit_user: Edit User
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
+    index:
+      on_duty: On duty
   various:
     attempt: Attempt
     begin: Begin
@@ -890,6 +907,7 @@ vi:
     waiter_was_requested: You have requested a waiter. Please have a little patience,
       we will be there for your shortly.
     workstation_view: Workstation view
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Vendor was successfully saved
@@ -898,10 +916,10 @@ vi:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      test_printers: Test Printers
-      test_printers_chartest: Test all characters
       print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: Test Printers
+      test_printers_chartest: Test all characters
     index:
       edit: Edit
       switch_to: Select

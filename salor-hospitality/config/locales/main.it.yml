@@ -51,6 +51,7 @@ it:
         cellphone: Cellulare
         city: Città
         company_name: Nome Azienda
+        default_table_id: Default Table
         email: email
         first_name: Nome
         full_name: Nome Completo
@@ -61,9 +62,8 @@ it:
         m_points: Loyalty Points
         postalcode: Codice Postale
         state: Stato
-        telephone: Telefono
-        default_table_id: Default Table
         tax_info: Tax Info
+        telephone: Telefono
       group:
         name: Nome
       guest_type:
@@ -80,6 +80,8 @@ it:
       order:
         change_given: Cambio
         nr: Number
+        finished_at: Finished at
+        sum: Sum
       page:
         active: attivo
         color: Colore
@@ -185,6 +187,12 @@ it:
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tabelle
         title: Titolo
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
         automatic_printing: Stampa automatica
         country: Ruoli per nazione
@@ -223,6 +231,10 @@ it:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -568,6 +580,8 @@ it:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Edit Page
@@ -641,6 +655,7 @@ it:
       counter_mode: Counter mode
       decrement_items: Decrement items
       delete_items: Delete items by decrementing
+      download_csv: Download CSV
       download_database: XXX Download Database
       edit_role: Edit Role
       finish_all_settlements: Finish all settlements
@@ -708,7 +723,7 @@ it:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      download_csv: Download CSV
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -758,13 +773,13 @@ it:
       username: User
   settlements:
     detailed_list:
+      changed_price: ! '%{byuser} changed price'
       count: Count
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Revenue
       total: Total
       unit_price: Unit Price
-      changed_price: ! '%{byuser} changed price'
-      reduced_count: Count reduced from %{maxcount} to %{count}.
       warning: Warning
     index:
       all: All
@@ -827,6 +842,8 @@ it:
       edit_user: Edit User
       new_user: New User
       select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+    index:
+      on_duty: On duty
   various:
     attempt: Attempt
     begin: Begin
@@ -891,6 +908,7 @@ it:
     waiter_was_requested: You have requested a waiter. Please have a little patience,
       we will be there for your shortly.
     workstation_view: Workstation view
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Vendor was successfully created
@@ -899,10 +917,10 @@ it:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      test_printers: Test Printers
-      test_printers_chartest: Test all characters
       print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: Test Printers
+      test_printers_chartest: Test all characters
     index:
       edit: XXX Edita
       switch_to: Seleziona

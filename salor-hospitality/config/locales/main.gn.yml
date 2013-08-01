@@ -2,10 +2,6 @@
 gn:
   activerecord:
     attributes:
-      user_login:
-        login: Start
-        logout: Ende
-        duration: Dauer
       article:
         active: aktiv?
         category_id: Kategorie
@@ -83,8 +79,8 @@ gn:
         separate_ticket: Bon schneiden
       order:
         change_given: Wechselgeld
-        nr: Nummmer
         finished_at: Abgeschlossen am
+        nr: Nummmer
         sum: Summe
       page:
         active: aktiv
@@ -176,12 +172,6 @@ gn:
         amount: Betrag
         tax_id: Steuer
       user:
-        layouts:
-          auto: Automatisch
-          workstation: Normal
-          mobile: Mobil
-        track_time: Zeitaufzeichnung
-        maximum_shift_duration: Schichtdauer
         active: aktiv?
         advertising_timeout: Werbung Timeout
         advertising_url: Werbung URL
@@ -191,12 +181,22 @@ gn:
         default_vendor_id: Einloggen in Betrieb
         hidden: löschen?
         language: Sprache
+        layouts:
+          auto: Automatisch
+          mobile: Mobil
+          workstation: Normal
         login: Log-in Name
+        maximum_shift_duration: Schichtdauer
         password: Passwort
         role: Rolle
         screenlock_timeout: Zeit Bildschirmsperre (sek.)
         tables: Tische
         title: Anrede
+        track_time: Zeitaufzeichnung
+      user_login:
+        duration: Dauer
+        login: Start
+        logout: Ende
       vendor:
         automatic_printing: Automatisches Drucken
         country: Regeln für Land
@@ -524,8 +524,6 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
-    last:
-      title: Kürzlich abgeschlossene Bestellungen
     functions_header_index:
       exit: Beenden
       items_notifications: Benachrichtigungen
@@ -555,6 +553,8 @@ gn:
       count: Menge
       sum: Summe
       unit_price: Einzelpreis
+    last:
+      title: Kürzlich abgeschlossene Bestellungen
     login_form:
       email: Ihre E-Mail
       login: Login
@@ -642,7 +642,6 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
-      manage_user_logins: User Logins verwalten
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
       assign_cost_center: Kostenstelle zuweisen
@@ -680,6 +679,7 @@ gn:
       manage_statistics_hotel: Statistiken Hotel ansehen
       manage_tables: Tische verwalten
       manage_taxes: Steuerklassen verwalten
+      manage_user_logins: User Logins verwalten
       manage_users: Benutzer verwalten
       manage_vendors: Betriebe verwalten
       mobile_show_tools: Werkzeug-Button auf Mobilgeräten
@@ -834,18 +834,17 @@ gn:
       edit_tax: Steuerklasse bearbeiten
       new_tax: Neue Steuerklasse
   users:
-    index:
-      on_duty: Im Dienst
     create:
       success: Benutzer erfolgreich gespeichert
     destroy:
       success: Benutzer erfolgreich gelöscht
+    index:
+      on_duty: Im Dienst
     new:
       edit_user: Benutzer bearbeiten
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
-    your_shift_has_ended: Ihre Schicht ist zu Ende. Bitte loggen Sie sich aus.
     attempt: Versuch
     begin: Anfang
     cancel: Abbrechen
@@ -911,6 +910,7 @@ gn:
     waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig
       Geduld.
     workstation_view: Ansicht Basisstation
+    your_shift_has_ended: Ihre Schicht ist zu Ende. Bitte loggen Sie sich aus.
   vendors:
     create:
       success: Betrieb wurde erfolgreich gespeichert

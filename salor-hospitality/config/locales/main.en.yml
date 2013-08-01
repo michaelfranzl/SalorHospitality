@@ -2,10 +2,6 @@
 en:
   activerecord:
     attributes:
-      user_login:
-        login: Started
-        logout: Ended
-        duration: Duration
       article:
         active: active
         category_id: Category
@@ -83,8 +79,8 @@ en:
         separate_ticket: Cut ticket
       order:
         change_given: Change
-        nr: Number
         finished_at: Finished at
+        nr: Number
         sum: Sum
       page:
         active: active
@@ -176,12 +172,6 @@ en:
         amount: Amount
         tax_id: Tax
       user:
-        layouts:
-          auto: Autodetect
-          workstation: normal
-          mobile: mobile
-        maximum_shift_duration: Shift duration
-        track_time: Track time
         active: active?
         advertising_timeout: Advertising Timeout
         advertising_url: Advertising URL
@@ -191,12 +181,22 @@ en:
         default_vendor_id: Log in to Vendor
         hidden: delete?
         language: Language
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Login
+        maximum_shift_duration: Shift duration
         password: Password
         role: Role
         screenlock_timeout: Screenlock timeout (sec.)
         tables: Tables
         title: Title
+        track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Automatic printing
         country: Rules for country
@@ -524,8 +524,6 @@ en:
       select_all: select all
   orange: Orange
   orders:
-    last:
-      title: Last finished Orders
     functions_header_index:
       exit: Exit
       items_notifications: Notifications
@@ -555,6 +553,8 @@ en:
       count: Quantity
       sum: Sum
       unit_price: Unit price
+    last:
+      title: Last finished Orders
     login_form:
       email: Your E-Mail
       login: Login
@@ -642,7 +642,6 @@ en:
     destroy:
       success: Role successfully deleted
     new:
-      manage_user_logins: Manage User Logins
       add_option_to_sent_item: Add Options to sent Items
       allow_exit: Allow Exit
       assign_cost_center: Assign cost center
@@ -680,6 +679,7 @@ en:
       manage_statistics_hotel: View hotel statistics
       manage_tables: Manage tables
       manage_taxes: Manage Taxes
+      manage_user_logins: Manage User Logins
       manage_users: Manage users
       manage_vendors: Manage vendors
       mobile_show_tools: Show tool button on mobile devices
@@ -833,18 +833,17 @@ en:
       edit_tax: Edit Tax
       new_tax: New Tax
   users:
-    index:
-      on_duty: On duty
     create:
       success: User successfully saved
     destroy:
       success: User successfully deleted
+    index:
+      on_duty: On duty
     new:
       edit_user: Edit User
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
-    your_shift_has_ended: Your shift has ended. Please log out.
     attempt: Attempt
     begin: Begin
     cancel: Cancel
@@ -908,6 +907,7 @@ en:
     waiter_was_requested: You have requested a waiter. Please have a little patience,
       we will be there for your shortly.
     workstation_view: Workstation view
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Vendor was successfully saved
