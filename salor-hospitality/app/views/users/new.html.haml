@@ -59,6 +59,11 @@
               %td
                 %select#language{ :name => 'user[language]' }
                   = options_for_select(SalorHospitality::Application::LANGUAGES.invert.to_a, user_form.object.language)
+            %tr
+              %td= user_form.label :layout
+              %td
+                %select#layout{ :name => 'user[layout]' }
+                  = options_for_select([[t('user.layouts.auto'),'auto'], [t('user.layouts.workstation'),'workstation'], [t('user.layouts.mobile'),'mobile']], user_form.object.layout)
             - if permit('assign_users_to_vendors') and @current_company.vendors.existing.size > 1
               %tr
                 %td= user_form.label :default_vendor_id

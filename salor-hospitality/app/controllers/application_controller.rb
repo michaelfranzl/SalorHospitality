@@ -494,7 +494,26 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('Qt/')
+      autodetect =
+          request.user_agent.nil? ||
+          request.user_agent.include?('Firefox') ||
+          request.user_agent.include?('MSIE') ||
+          request.user_agent.include?('Macintosh') ||
+          request.user_agent.include?('Chromium') ||
+          request.user_agent.include?('Chrome') ||
+          request.user_agent.include?('Qt/')
+      
+      if (params[:controller] == 'sessions')
+        return autodetect
+      elsif not (params[:controller] == 'orders' and params[:action] == 'index')
+        return true
+      elsif @current_user.nil? or @current_user.layout == 'auto'
+        return autodetect
+      elsif @current_user.layout == 'workstation'
+        return true
+      elsif @current_user.layout == 'mobile'
+        return false
+      end
     end
     
     def permit(p)

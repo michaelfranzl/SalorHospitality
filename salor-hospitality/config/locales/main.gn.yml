@@ -176,6 +176,10 @@ gn:
         amount: Betrag
         tax_id: Steuer
       user:
+        layouts:
+          auto: Automatisch
+          workstation: Normal
+          mobile: Mobil
         track_time: Zeitaufzeichnung
         maximum_shift_duration: Schichtdauer
         active: aktiv?

@@ -176,6 +176,10 @@ en:
         amount: Amount
         tax_id: Tax
       user:
+        layouts:
+          auto: Autodetect
+          workstation: normal
+          mobile: mobile
         maximum_shift_duration: Shift duration
         track_time: Track time
         active: active?
