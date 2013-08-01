@@ -20,16 +20,18 @@ class OrdersController < ApplicationController
     end
     session[:admin_interface] = false
   end
+  
+  def last
+    @orders = @current_vendor.orders.existing.where(:finished => true).order('finished_at DESC').limit(30)
+  end
 
   def show
-    if params[:id] != 'last'
-      @order = @current_vendor.orders.existing.where(:finished => true).find_by_id(params[:id])
-    else
-      @order = @current_vendor.orders.existing.find_all_by_finished(true).last
+    @order = @current_vendor.orders.existing.where(:finished => true).find_by_id(params[:id])
+    if @order.nil?
+      flash[:error] = I18n.t('not_found')
+      redirect_to last_orders_path
+      return
     end
-    redirect_to '/' and return if not @order
-    
-    #@previous_order, @next_order = neighbour_models('orders',@order)
     
     respond_to do |wants|
       wants.html

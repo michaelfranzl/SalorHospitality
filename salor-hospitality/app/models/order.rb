@@ -918,25 +918,67 @@ class Order < ActiveRecord::Base
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|
+      
       if i.quantity_id
         d = "q#{i.quantity_id}"
       else
         d = "a#{i.article_id}"
       end
+
       parent_price = i.quantity ? i.quantity.price : i.article.price
-      if i.option_items.any? or not i.comment.empty? or i.scribe or i.price != parent_price
+      
+      if i.option_items.any? or not i.comment.empty? or i.scribe or i.price != parent_price or not a[d].nil?
+        # item has been modified in a unique way, so we output a unique key
         d = "i#{i.id}"
       end
+      
       options = {}
       optioncount = 0
       i.option_items.existing.each do |oi|
         optioncount += 1
-        options.merge! optioncount => { :id => oi.option_id, :n => oi.name, :p => oi.price }
+        options.merge! optioncount => {
+          :id => oi.option_id,
+          :n => oi.name,
+          :p => oi.price
+        }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => {
+          :id => i.id,
+          :ci => i.category_id,
+          :ai => i.article_id,
+          :qi => i.quantity_id,
+          :d => d,
+          :c => i.count,
+          :sc => i.count,
+          :p => i.price,
+          :o => i.comment,
+          :t => options,
+          :i => [],
+          :pre => i.quantity.prefix,
+          :post => i.quantity.postfix,
+          :n => i.article.name,
+          :s => i.position,
+          :h => !i.scribe.nil?
+        }
       else
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => {
+          :id => i.id,
+          :ci => i.category_id,
+          :ai => i.article_id,
+          :d => d,
+          :c => i.count,
+          :sc => i.count,
+          :p => i.price,
+          :o => i.comment,
+          :t => options,
+          :i => [],
+          :pre => '',
+          :post => '',
+          :n => i.article.name,
+          :s => i.position,
+          :h => !i.scribe.nil?
+        }
       end
     end
     return a.to_json

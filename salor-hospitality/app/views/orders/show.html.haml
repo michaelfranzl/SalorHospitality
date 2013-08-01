@@ -3,7 +3,7 @@
   %span#nr_display_keyboard.display_keyboard
 
 %div#buttons
-  %a.iconbutton.back_button{ :href => '/orders', :title => t(:go_back) }
+  %a.iconbutton.back_button{ :href => '/orders/last', :title => t(:go_back) }
   - @current_vendor.vendor_printers.existing.each do |p|
     %a{ :onclick => "update_order({id:#{@order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }

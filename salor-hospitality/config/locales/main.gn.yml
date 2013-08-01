@@ -84,6 +84,8 @@ gn:
       order:
         change_given: Wechselgeld
         nr: Nummmer
+        finished_at: Abgeschlossen am
+        sum: Summe
       page:
         active: aktiv
         color: Hintergrund
@@ -518,12 +520,14 @@ gn:
       select_all: Alle auswählen
   orange: Orange
   orders:
+    last:
+      title: Kürzlich abgeschlossene Bestellungen
     functions_header_index:
       exit: Beenden
       items_notifications: Benachrichtigungen
       print_now: Sofort drucken
       show_last_booking: Letzte Buchung anzeigen
-      show_last_order: Letzte Bestellung anzeigen
+      show_last_order: Letzte Bestellungen anzeigen
       toggle_drag_tables: Tische platzieren
     functions_header_order_form:
       move_order: Bestellung verschieben

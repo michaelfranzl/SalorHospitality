@@ -84,6 +84,8 @@ en:
       order:
         change_given: Change
         nr: Number
+        finished_at: Finished at
+        sum: Sum
       page:
         active: active
         color: Color
@@ -518,12 +520,14 @@ en:
       select_all: select all
   orange: Orange
   orders:
+    last:
+      title: Last finished Orders
     functions_header_index:
       exit: Exit
       items_notifications: Notifications
       print_now: Print now
       show_last_booking: Show last booking
-      show_last_order: Show last order
+      show_last_order: Show last orders
       toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Move order to other table

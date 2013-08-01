@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
   def settlement_stop(vendor, by_user, revenue)
     s = vendor.settlements.existing.find_by_id(self.current_settlement_id)
     if s.nil?
-      raise "User stopped settlement but no curren_settlement found"
+      raise "User stopped settlement but no current_settlement found"
     end
     s.revenue = revenue
     s.stop_by_user_id = by_user.id
@@ -144,7 +144,7 @@ class User < ActiveRecord::Base
     end
     
     s.finish
-    s.print if s.sum > 0
+    s.print
     s.report_errors_to_technician
     
     self.current_settlement_id = nil

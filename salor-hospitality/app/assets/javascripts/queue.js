@@ -49,9 +49,10 @@ function send_queue_after_server_online(object_id, callback) {
 }
 
 function send_queue(object_id, callback) {
+  var timestamp = new Date().getTime();
   $.ajax({
     type: 'POST',
-    url: '/route',
+    url: '/route?_=' + timestamp,
     data: submit_json_queue[object_id],
     timeout: 30000,
     complete: function(data,status) {

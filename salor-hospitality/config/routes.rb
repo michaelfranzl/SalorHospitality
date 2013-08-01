@@ -63,6 +63,7 @@ SalorHospitality::Application.routes.draw do
       get :last_invoices
       get :logout
       post :by_nr
+      get :last
     end
   end
 

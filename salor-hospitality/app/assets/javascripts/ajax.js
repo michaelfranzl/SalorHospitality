@@ -14,9 +14,10 @@ function update_order_from_invoice_form(data, button) {
   if (! $.isEmptyObject(submit_json.split_items_hash[data.id])) {
     data.split_items_hash = submit_json.split_items_hash[data.id];
   }
+  var timestamp = new Date().getTime();
   $.ajax({
     type: 'POST',
-    url: '/route',
+    url: '/route?_=' + timestamp,
     data: data,
     timeout: 60000
   });
@@ -52,8 +53,9 @@ function update_order_from_invoice_form(data, button) {
 function update_order_from_refund_form(data) {
   data['currentview'] = 'refund';
   $.ajax({
-    type: 'POST',
+    type: 'GET',
     url: '/route',
+    cache: false,
     data: data,
     timeout: 20000
   });

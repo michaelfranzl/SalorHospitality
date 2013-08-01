@@ -36,9 +36,9 @@
 
 
       - if settlement.new_record?
-        %p= settlement_form.submit t('.start'), :class => 'submitbutton'
+        %p= settlement_form.submit t('.start'), :class => 'submitbutton', :onclick => '$(this).hide()'
       - else
-        %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1); $('#print_#{ settlement.user.id }').val(1); $('#loader_#{ settlement.user.id }').show();"
+        %p= settlement_form.submit t('.finish'), :class => 'submitbutton', :onclick => "$('#finished_#{ settlement.user.id }').val(1); $('#print_#{ settlement.user.id }').val(1); $('#loader_#{ settlement.user.id }').show(); $(this).hide();"
 
       %div{ :id => "loader_#{ settlement.user.id }", :style => 'display: none' }
         = image_tag 'ajax-loader2.gif'

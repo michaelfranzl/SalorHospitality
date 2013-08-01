@@ -122,8 +122,10 @@ function route(target, model_id, action, options) {
       unloadify_order_buttons();
       $.ajax({
         type: 'GET',
-        url: '/tables/' + model_id + '?order_id=' + options.order_id,
+        url: '/tables/' + model_id,
+        data: {order_id: options.order_id},
         timeout: 15000,
+        cache: false,
         success: function() {
           render_items();
         }
@@ -222,7 +224,12 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 15000 }); //this repopulates items_json and renders items
+    $.ajax({
+      type: 'GET',
+      url: '/rooms/' + model_id,
+      cache: false,
+      timeout: 15000
+    }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
 
   // ========== EXISTING BOOKING ===============
@@ -255,7 +262,12 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 15000 });
+    $.ajax({
+      type: 'GET',
+      url: '/bookings/' + model_id,
+      cache: false,
+      timeout: 15000
+    });
     window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
@@ -275,9 +287,15 @@ function route(target, model_id, action, options) {
       
     } else if (action == 'invoice_move') {
       $.ajax({
-        type: 'post',
+        type: 'GET',
         url: '/route',
-        data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
+        cache: false,
+        data: {
+          currentview: 'invoice',
+          jsaction: 'move',
+          target_table_id: options.target_table_id,
+          id: model_id
+        },
         timeout: 15000
       })
     }

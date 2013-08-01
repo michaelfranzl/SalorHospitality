@@ -1,0 +1,20 @@
+%h2= t '.title'
+
+%table.settlements
+  %tr
+    %th= Order.human_attribute_name :nr
+    %th= Order.human_attribute_name :finished_at
+    %th= Order.human_attribute_name :sum
+    %th= User.model_name.human
+    %th= Customer.model_name.human
+    %th= t('invoice')
+  - @orders.each do |o|
+    %tr
+      %td= o.nr
+      %td= l o.finished_at, :format => :short
+      %td
+        %b= number_to_currency o.sum
+      %td= o.user.login
+      %td= o.customer.full_name if o.customer
+      %td
+        = link_to '', order_path(o), :class => 'print1_button_small'
