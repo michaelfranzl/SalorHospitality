@@ -37,7 +37,7 @@
   function update_order(data) {
     data['currentview'] = 'invoice_paper';
     $.ajax({
-      type: 'post',
+      type: 'POST',
       url: '/route',
       data: data,
       timeout: 5000

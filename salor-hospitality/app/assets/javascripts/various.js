@@ -3,7 +3,9 @@
  */
 function _fetch(url,callback) {
   $.ajax({
+    type: 'GET',
     url: url,
+    cache: false,
     context: window,
     success: callback
   });
@@ -50,7 +52,7 @@ function _push(object) {
   options = { 
     context: window,
     url: url, 
-    type: 'post', 
+    type: 'POST', 
     data: payload, 
     timeout: 20000, 
     success: callback, 
@@ -95,7 +97,9 @@ function uri_attributes() {
 
 function unlock_user_ip(user_id) {
   $.ajax({
+    type: 'GET',
     url: '/users/unlock_ip',
+    cache: false,
     data: {id:user_id}
   });
 }

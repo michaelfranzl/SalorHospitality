@@ -11,6 +11,8 @@
 :javascript
   $('#mobile_last_invoices_button').on('mousedown', function() {
     $.ajax({
+      type: 'GET',
+      cache: false,
       url: '/orders/last_invoices'
-    })
+    });
   })

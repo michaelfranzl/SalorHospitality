@@ -15,7 +15,7 @@ function update_order_from_invoice_form(data, button) {
     data.split_items_hash = submit_json.split_items_hash[data.id];
   }
   $.ajax({
-    type: 'post',
+    type: 'POST',
     url: '/route',
     data: data,
     timeout: 60000
@@ -52,7 +52,7 @@ function update_order_from_invoice_form(data, button) {
 function update_order_from_refund_form(data) {
   data['currentview'] = 'refund';
   $.ajax({
-    type: 'post',
+    type: 'POST',
     url: '/route',
     data: data,
     timeout: 20000
@@ -61,7 +61,7 @@ function update_order_from_refund_form(data) {
 
 function rotate_tax_item(id) {
   $.ajax({
-    type: 'put',
+    type: 'PUT',
     url: '/items/rotate_tax',
     data: {id:id},
     timeout: 20000

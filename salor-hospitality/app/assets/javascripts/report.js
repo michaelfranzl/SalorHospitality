@@ -3,7 +3,9 @@ report.functions = {
   fetch:function() {
     $('#report_progress').show();
     $.ajax({
+      type: 'GET',
       url: '/vendors/report',
+      cache: false,
       dataType: 'json',
       data: {from:report.variables.report_from, to:report.variables.report_to},
       success: function(data){

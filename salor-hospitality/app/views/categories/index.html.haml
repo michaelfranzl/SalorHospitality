@@ -22,7 +22,7 @@
       scroll: true,
       update: function(){
         $.ajax({
-          type: 'post',
+          type: 'POST',
           data: $('#categories').sortable('serialize'),
           dataType: 'script',
           complete: function(request){

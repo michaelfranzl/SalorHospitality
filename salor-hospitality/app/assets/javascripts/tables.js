@@ -18,6 +18,7 @@ function get_table_show(table_id) {
     type: 'GET',
     url: '/tables/' + table_id,
     timeout: 7000,
+    cache: false,
     complete: function(data,status) {
       if (status == 'timeout') {
         if ( get_table_show_retry ) {
@@ -58,14 +59,34 @@ function get_table_show(table_id) {
   });
 }
 
-function update_tables(){
+function update_tables() {
   $.ajax({
+    type: 'GET',
     url: '/tables',
     dataType: 'json',
     timeout: 15000,
+    cache: false,
     success: function(data) {
       resources.tb = data;
       render_tables();
+    },
+    complete: function(data, status) {
+      if (status == 'timeout' ) {
+        send_email('update_tables(): timeout', '');
+        alert(i18n.server_not_responded);
+      } else if (status == 'error') {
+        switch(data.readyState) {
+          case 0:
+            send_email('update_tables(): No connection error', '');
+            break;
+          case 4:
+            send_email('update_tables(): Server Error', '');
+            alert(i18n.server_error);
+            break;
+          default:
+            send_email('update_tables(): unknown ajax "readyState" for status "complete".', data.readyState);
+        };   
+      }
     }
   });
 }
@@ -211,7 +232,7 @@ function update_table_coordinates(id) {
   var left = table.position().left;
   var top = table.position().top; 
   $.ajax({
-    type: 'put',
+    type: 'PUT',
     url: '/tables/' + id + '/update_coordinates',
     data: {left:left, top:top, mobile_drag_and_drop:settings.mobile_drag_and_drop},
     success: update_tables

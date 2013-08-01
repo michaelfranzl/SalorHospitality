@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724103633) do
+ActiveRecord::Schema.define(:version => 20130801043524) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1095,7 +1095,7 @@ ActiveRecord::Schema.define(:version => 20130724103633) do
     t.string   "salt"
     t.string   "encrypted_password"
     t.float    "hourly_rate"
-    t.integer  "maximum_shift_duration"
+    t.integer  "maximum_shift_duration",    :default => 9999
     t.integer  "current_settlement_id"
     t.boolean  "track_time"
   end

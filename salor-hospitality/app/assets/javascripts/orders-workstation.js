@@ -12,20 +12,10 @@ var screenlock_counter = -1;
 var advertising_counter = -1;
 
 $(function(){
-  
-  //$('#main').css('bottom', '0px');
-  //$('#main').css('left', '15px');
-  //$('#main').css('right', '15px');
-  //$('#main').css('top', '130px');
-  //$('#main').css('position', 'fixed');
-  //$('#main').css('overflow', 'auto');
-  //$('body').css('margin-bottom', '30px');
-  
-  
   $('#customer_search').keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();
-    }            
+    }
   });
   
   $('#customer_search').keyboard( {openOn: '', accepted: function(){ customer_list_update(); } } );
@@ -42,7 +32,7 @@ $(function(){
   screenlock_counter = settings.screenlock_timeout;
   if (typeof(screenlock_interval) == 'undefined') {
     screenlock_interval = window.setInterval(function() {
-      if (screenlock_counter == 0) { $('#logoutform form').submit(); }
+      if (screenlock_counter == 0) { logout(); }
       screenlock_counter -= 1;
     }, 1001);
   }

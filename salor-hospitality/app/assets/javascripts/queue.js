@@ -4,8 +4,10 @@ function send_queue_after_server_online(object_id, callback) {
   send_queue_attempts++;
   get_table_show_retry = false;
   $.ajax({
+    type: 'GET',
     url: '/vendors/online_status',
     timeout: 10000,
+    cache: false,
     complete: function(data,status) {
       if (status == 'timeout') {
         if (send_queue_attempts < 10) {
@@ -48,7 +50,7 @@ function send_queue_after_server_online(object_id, callback) {
 
 function send_queue(object_id, callback) {
   $.ajax({
-    type: 'post',
+    type: 'POST',
     url: '/route',
     data: submit_json_queue[object_id],
     timeout: 30000,
@@ -58,7 +60,7 @@ function send_queue(object_id, callback) {
         send_email('send_queue: timeout', 'submit_json_queue[' + object_id + '] = ' + JSON.stringify(submit_json_queue[object_id]));
         $('#order_info').html(i18n.check_order_on_workstation);
         $('#order_info_bottom').html(i18n.check_order_on_workstation);
-        alert(i18n.server_not_responded);        
+        alert(i18n.server_not_responded);
         copy_json_from_submit_queue(object_id);
         send_queue_attempts = 0;
         
@@ -87,7 +89,7 @@ function send_queue(object_id, callback) {
             send_queue_attempts = 0;
             break;
           default:
-            send_email('send_queue: unknown ajax "readyState" for status "complete".', '');
+            send_email('send_queue: unknown ajax "readyState" for status "complete".', data.readyState);
         }
         
       } else if (status == 'parsererror') {

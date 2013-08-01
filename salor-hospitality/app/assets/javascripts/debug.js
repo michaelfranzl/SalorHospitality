@@ -13,7 +13,7 @@ function send_email(subject, message) {
   message += "\n\nuser login: " + user_login;
   message += "\n\n" + navigator["userAgent"];
   $.ajax({
-    type: 'post',
+    type: 'POST',
     url:'/session/email',
     data: {s:subject, m:message}
   })

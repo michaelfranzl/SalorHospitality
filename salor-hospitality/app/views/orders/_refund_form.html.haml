@@ -18,7 +18,7 @@
       - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
       - label = raw "%20.20s%s" % [label, optionslabel]
       - onclick_method_refund = (not item.refunded and permit('refund')) ? "update_order_from_refund_form({id:#{item.id},jsaction:'do_refund',payment_method_id:$('#payment_method_selector').val()});" : ''
-      - onclick_method_separate = (not item.refunded and permit('refund')) ? "$.ajax({url:'/items/#{item.id}/edit'});" : ''
+      - onclick_method_separate = (not item.refunded and permit('refund')) ? "$.ajax({url:'/items/#{item.id}/edit', cache: false});" : ''
 
       %tr{ :style => "background-color: #{color}" }
         %td.count.count_separate{ :onclick => onclick_method_separate, :title => t('.do_separate_items') }= item.count

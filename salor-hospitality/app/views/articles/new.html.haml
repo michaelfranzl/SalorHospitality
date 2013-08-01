@@ -109,7 +109,7 @@
     scroll: true,
     update: function(){
       $.ajax({
-        type: 'post',
+        type: 'POST',
         data: $('#quantities_new').sortable('serialize'),
         dataType: 'script',
         url: '/quantities/sort'

@@ -11,7 +11,18 @@
 - @categories.each do |c|
   :javascript
     $("#category_#{ c.id }").sortable({
-      dropOnEmpty: false, handle: '.handle', cursor: 'crosshair', items: 'li', opacity: 0.4, scroll: true, update: function(){
-        $.ajax({ type: 'post', data: $('#category_#{ c.id }').sortable('serialize'), dataType: 'script', url: '/articles/sort'})
+      dropOnEmpty: false,
+      handle: '.handle',
+      cursor: 'crosshair',
+      items: 'li',
+      opacity: 0.4,
+      scroll: true,
+      update: function() {
+        $.ajax({
+          type: 'POST',
+          data: $('#category_#{ c.id }').sortable('serialize'),
+          dataType: 'script',
+          url: '/articles/sort'
+        })
       }
     });
