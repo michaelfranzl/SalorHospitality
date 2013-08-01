@@ -36,3 +36,8 @@
   
 - if permit('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)
   %a#order_clear_button.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
+
+- if mobile? and position == 'footer'
+  - if permit('counter_mode')
+    %a#counter_finish_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish), :style => branding_override_style(:buttons, :finish) }
+    %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish), :style => branding_override_style(:buttons, :finish_and_print) }
