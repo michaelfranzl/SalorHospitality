@@ -503,9 +503,10 @@ class ApplicationController < ActionController::Base
           request.user_agent.include?('Chrome') ||
           request.user_agent.include?('Qt/')
       
-      if (params[:controller] == 'sessions')
+      if params[:controller] == 'sessions' or params[:controller] == 'application'
         return autodetect
       elsif not (params[:controller] == 'orders' and params[:action] == 'index')
+        # all other screens except the order screen
         return true
       elsif @current_user.nil? or @current_user.layout == 'auto'
         return autodetect

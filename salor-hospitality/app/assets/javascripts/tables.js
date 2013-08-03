@@ -64,7 +64,7 @@ function update_tables() {
     type: 'GET',
     url: '/tables',
     dataType: 'json',
-    timeout: 15000,
+    timeout: 20000,
     cache: false,
     success: function(data) {
       resources.tb = data;
@@ -73,7 +73,7 @@ function update_tables() {
     complete: function(data, status) {
       if (status == 'timeout' ) {
         send_email('update_tables(): timeout', '');
-        alert(i18n.server_not_responded);
+        //alert(i18n.server_not_responded);
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
