@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.19) unstable; urgency=low
+
+  * search fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 03 Aug 2013 19:13:27 +0200
+
 salor-hospitality (4.1.4.18) unstable; urgency=low
 
   * user assignment fix
