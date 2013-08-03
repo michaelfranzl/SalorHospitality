@@ -1,5 +1,9 @@
 %h2= t '.title'
 
+= form_tag 'by_nr', :id => 'search_by_nr' do
+  = text_field_tag 'nr', t('orders.show.search_by_number')
+  %span#nr_display_keyboard.display_keyboard
+
 %table.settlements
   %tr
     %th= Order.human_attribute_name :nr
@@ -18,3 +22,24 @@
       %td= o.customer.full_name if o.customer
       %td
         = link_to '', order_path(o), :class => 'print1_button_small'
+
+:javascript
+  $(function() {
+    $('#nr').select();
+  });
+  
+  $('#nr').keyboard({
+    openOn: '',
+    layout:'num',
+    accepted: function(){
+      $('form#search_by_nr').submit();
+    }
+  });
+  
+  $('#nr_display_keyboard').click(function(){
+    $('#nr').val('');
+    $('#nr').getkeyboard().reveal();
+  });
+  $('#nr').click(function(){
+    $('#nr').val('');
+  });

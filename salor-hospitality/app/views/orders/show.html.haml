@@ -1,6 +1,4 @@
-= form_tag 'by_nr', :id => 'search_by_nr' do
-  = text_field_tag 'nr', t('.search_by_number')
-  %span#nr_display_keyboard.display_keyboard
+
 
 %div#buttons
   %a.iconbutton.back_button{ :href => '/orders/last', :title => t(:go_back) }
@@ -19,21 +17,6 @@
 
 
 :javascript
-  $('#nr').keyboard({
-    openOn: '',
-    layout:'num',
-    accepted: function(){
-      $('form#search_by_nr').submit();
-    }
-  });
-  $('#nr_display_keyboard').click(function(){
-    $('#nr').val('');
-    $('#nr').getkeyboard().reveal();
-  });
-  $('#nr').click(function(){
-    $('#nr').val('');
-  });
-
   function update_order(data) {
     data['currentview'] = 'invoice_paper';
     $.ajax({
@@ -44,6 +27,4 @@
     });
   }
   
-  $(function() {
-    $('#nr').select();
-  });
+
