@@ -37,7 +37,7 @@
                   %th
                   %th
                   %th= UserLogin.human_attribute_name(:duration)
-                - u.user_logins.each do |ul|
+                - u.user_logins.where(:created_at => Time.now.beginning_of_day..Time.now).each do |ul|
                   %tr{ :class => "#{ 'total' if ul.logout }" }
                     %td.left= ul.login ? "#{ UserLogin.human_attribute_name(:login) } ▶" : "◁ #{ UserLogin.human_attribute_name(:logout) }"
                     %td= l((ul.login ? ul.login: ul.logout), :format => :long)
