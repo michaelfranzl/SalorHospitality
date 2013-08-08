@@ -27,7 +27,7 @@ function manage_counters() {
     counter_update_tables = timeout_update_tables;
   }
   if (counter_refresh_queue == 0) {
-    display_queue();
+    //display_queue();
     counter_refresh_queue = timeout_refresh_queue;
   }
   return 0;

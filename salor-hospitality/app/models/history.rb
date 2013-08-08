@@ -28,12 +28,18 @@ class History < ActiveRecord::Base
   
   def self.record(action, object)
     return if $User.nil? or $Vendor.nil? or $Company.nil? or ($Request and $Request.url.include?("route")) # Do not record anything when nobody is logged in
+    
     h = History.new
     h.model = object
     h.action_taken = action
+    changes = {}
     if object and object.respond_to? :changes then
-      h.changes_made = object.changes.to_json[0..200]
+      changes = object.changes
+      changes.delete('updated_at')
+      changes.delete('created_at')
+      changes.delete('last_active_at')
+      h.changes_made = changes.to_json[0..200]
     end
-    h.save unless h.changes_made == "{}"
+    h.save unless changes == {}
   end
 end

@@ -52,7 +52,7 @@ function send_queue(object_id, callback) {
   var timestamp = new Date().getTime();
   $.ajax({
     type: 'POST',
-    url: '/route?_=' + timestamp,
+    url: '/route?send_queue_timestamp=' + timestamp,
     data: submit_json_queue[object_id],
     timeout: 30000,
     complete: function(data,status) {
@@ -78,7 +78,8 @@ function send_queue(object_id, callback) {
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            // iPod specific: This happens when a battery powered iPod is switched off immediately after taking an order and the server doesn't respond within 15 seconds after turning off due to high load. In this case the iPod's firmware just re-sends the unmodified the Ajax call when it is turned on again. This is bad however, since the server could have processed the items correctly and the second submission would double all items in the order. Luckily however, the iPods WiFi comes online only about 2 seconds after it was turned on again, which is too late for the second Ajax call to succeed. Therefore, the second Ajax call always fails, which puts it into the current state.
+            // iPod specific: This happens when a battery powered iPod is switched off immediately after taking an order and the server doesn't respond within 15 seconds after turning off due to high load. In this case the iPod's firmware just re-sends the unmodified Ajax call when it is turned on again. This is bad however, since the server could have processed the items correctly and the second submission would double all items in the order. Luckily however, the iPods WiFi comes online only about 2 seconds after it was turned on again, which is too late for the second Ajax call to succeed. Therefore, the second Ajax call always fails, which puts it into the current state.
+            alert('send_queue: No connection error. Please re-check order.');
             send_email('send_queue: No connection error for object_id ' + object_id, '');
             copy_json_from_submit_queue(object_id);
             send_queue_attempts = 0;
@@ -90,6 +91,7 @@ function send_queue(object_id, callback) {
             send_queue_attempts = 0;
             break;
           default:
+            alert('send_queue: unknown ajax "readyState" for status "complete".');
             send_email('send_queue: unknown ajax "readyState" for status "complete".', data.readyState);
         }
         
@@ -99,6 +101,7 @@ function send_queue(object_id, callback) {
         clear_queue(object_id); // server has processed correctly but only returned malformed JSON, so we can clear the queue.
         
       } else {
+        alert('send_queue: unknown ajax complete status');
         send_email('send_queue: unknown ajax complete status', '');
       }
       
@@ -114,6 +117,7 @@ function clear_queue(i) {
   $('#queue_'+i).remove();
 }
 
+/*
 function display_queue() {
   $('#queue').html('');
   jQuery.each(submit_json_queue, function(k,v) {
@@ -131,3 +135,4 @@ function display_queue() {
     $('#queue').append(link);
   });
 }
+*/

@@ -16,6 +16,7 @@ class HistoryObserver < ActiveRecord::Observer
     
     # Printing changes, in accordance to fiscal regulations
     return unless $Vendor and $Vendor.respond_to?(:history_print) and  $Vendor.history_print == true
+    
     vendor_printers = $Vendor.vendor_printers.existing
     changes = object.changes
     keys = changes.keys
