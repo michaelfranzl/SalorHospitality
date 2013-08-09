@@ -889,7 +889,7 @@ en:
       of the order on a different device.
     server_error_short: Server error
     server_not_responded: No response from server. Check submission of order on different
-      device. Then, re-submit oder cancel to delete the changes.
+      device. Then, re-submit or cancel to delete the changes.
     sold_quantities: Sold Quantities
     statistics: Statistics
     subtotal: Subtotal

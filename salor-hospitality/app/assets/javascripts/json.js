@@ -60,8 +60,12 @@ function create_submit_json_record(model, d, object) {
     } else if (model == 'booking') {
       submit_json.items[d] = {id:object.id, guest_type_id:object.guest_type_id, duration:object.duration, season_id:object.season_id, parent_id:object.parent_id, from_date:object.from_date, to_date:object.to_date};
     }
-    // remove redundant fields
-    if (items_json[d].hasOwnProperty('id')) {
+    // remove redundant fields to reduce ajax request byte size
+    if (
+      items_json[d].hasOwnProperty('id') &&
+      items_json[d].id != null &&
+      items_json[d].id > 0
+    ) {
       delete submit_json.items[d].ai;
       delete submit_json.items[d].qi;
     }
