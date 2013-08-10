@@ -145,13 +145,13 @@ fi:
         selected: Oletusarvona
         visible: Näkyvä?
       table:
-        abbreviation: Abbreviation
-        booking_table: Booking
-        customer_table: Customer
-        description: Description
-        enabled: active?
-        height: Height
-        height_mobile: Height mobile
+        abbreviation: Lyhenne
+        booking_table: Varaus
+        customer_table: Asiakas
+        description: Kuvaus
+        enabled: aktiivinen?
+        height: Korkeus
+        height_mobile: Korkeus mobiili
         hidden: poistaa
         name: Nimi
         rotate: Kiertää?
