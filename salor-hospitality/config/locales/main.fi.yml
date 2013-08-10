@@ -534,70 +534,70 @@ fi:
       set_tax_for_all: Aseta kaikki kohteet kustannuspaikka
       set_taxes: Aseta kustannuspaikka
       split_invoice: Halkaista lasku
-      split_this_item: Click to split this items one at a time
-      switch_tax_for_this_item: Click to change the tax for this item
+      split_this_item: Klikkaa jakaa näitä kohteita yksi kerrallaan
+      switch_tax_for_this_item: Klikkaa muuttaa vero tälle tuotteelle
     invoice_item_list:
-      count: Quantity
-      sum: Sum
-      unit_price: Unit price
+      count: Määrä
+      sum: Summa
+      unit_price: Yksikköhinta
     login_form:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: Username
+      email: sähköpostiosoitteesi
+      login: Kirjaudu
+      password: Salasana
+      username: Käyttäjätunnus
     order:
-      new: New order
+      new: Uusi tilaus
     order_form:
-      sum: SUM
+      sum: SUMMA
     refund_form:
-      do_refund: Make refund
-      do_separate_items: Separate this item
-    served_by: You were served by
+      do_refund: Tee palautus
+      do_separate_items: Erottaa tämän tuotteen
+    served_by: Tarjoilija
     show:
-      add_notes: Add notes
-      back: Back
-      cannot_reactivate: Reactivation failed. No table is vacant.
-      count: Count
-      list_of_taxes: List of taxes
-      next_invoice: Next invoice
-      previous_invoice: Previous invoice
-      print_business_invoice: Print business invoice
-      print_invoice: Print invoice
-      reactivate: Reactivate
-      search_by_number: Search by number
-      sum: Sum
-      unit_price: Unit price
+      add_notes: Lisää muistiinpanoja
+      back: Takaisin
+      cannot_reactivate: Uudelleenaktivointimaksu epäonnistui. Ei ole pöytä vapaana.
+      count: Laske
+      list_of_taxes: Veron lista
+      next_invoice: Seuraava lasku
+      previous_invoice: Edellinen lasku
+      print_business_invoice: Tulosta liiketoiminnan lasku
+      print_invoice: Tulosta lasku
+      reactivate: Uudelleenaktivoi
+      search_by_number: Etsi numerolla
+      sum: Summa
+      unit_price: Yksikköhinta
   pages:
     edit:
-      edit_page: Edit Page
+      edit_page: Muokkaa sivua
       slideshow: Start Slideshow
-      view: View
+      view: Katsella
     form:
-      slideshow: Slideshow
-      view: View
+      slideshow: Diaesitys
+      view: Katsella
     new:
-      new_page: New Page
+      new_page: Uusi sivu
   partials:
-    default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    default_blurb: muokata minua
+    error_during_evaluation: ! 'Virhe: '
     no_presentation_found:
-      no_presentations_found: No template defined for this partial.
+      no_presentations_found: Ei malli määritelty tälle osittaista.
   payment_methods:
     create:
-      success: Payment Method successfully saved
+      success: Maksutapa tallennettu
     destroy:
-      success: Payment Method successfully deleted
-  pink: Pink
-  please_enter_item_comment: Special Wish
-  please_enter_item_price: Special Price
+      success: Maksutapa poistaminen onnistui
+  pink: Vaaleanpunainen
+  please_enter_item_comment: Erikoistoive
+  please_enter_item_price: Erikoishinta
   presentations:
     new:
-      edit_presentation: Edit Template
-      new_presentation: New Template
-  print: Print
-  print_and_finish: Finish and print
-  printing_test: Printing test
-  refund: Refund
+      edit_presentation: Muokkaa mallia
+      new_presentation: Uusi malli
+  print: Tulosta
+  print_and_finish: Lopettaa ja tulosta
+  printing_test: Tulostuskoe
+  refund: Palautus
   reports:
     download: Download
     download_reports: Download Report
