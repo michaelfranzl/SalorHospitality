@@ -378,7 +378,7 @@ fi:
   blue: Sininien
   bookings:
     invoice_item_list:
-      served_by_X: %{user} palveli sinua
+      served_by_X: Teitä palveli %{user}
     show:
       go_to_bookings_calendar: Siirry varauksia kalenterinäkymään
       search_by_number: Etsi numerolla
@@ -620,19 +620,19 @@ fi:
     remote_support: Kaukotuki
     save: Tallenna
     start_date: Aloituspäivä 
-  restaurant: Restaurant
+  restaurant: Ravintola
   roles:
     create:
-      success: Role successfully saved
+      success: Rooli tallennettu
     destroy:
-      success: Role successfully deleted
+      success: Rooli poistaminen onnistui
     new:
-      add_option_to_sent_item: Add Options to sent Items
-      allow_exit: Allow Exit
-      assign_cost_center: Assign cost center
-      assign_order_to_booking: Assign orders to a booking
-      assign_order_to_user: Assign order to user
-      assign_tables: Assign tables to users
+      add_option_to_sent_item: Lisää vaihtoehdot lähetetyt tuoteisiin
+      allow_exit: Salli uloskäynti
+      assign_cost_center: Määrittää kustannuspaikka
+      assign_order_to_booking: Määritä tilauksia varaukseen
+      assign_order_to_user: Määritä tilauksen käyttäjälle
+      assign_tables: Määritä pöydät käyttäjille
       assign_users_to_vendors: Assign Users to Vendors
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: Change waiter
