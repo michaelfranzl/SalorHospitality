@@ -552,7 +552,7 @@ fi:
     refund_form:
       do_refund: Tee palautus
       do_separate_items: Erottaa tämän tuotteen
-    served_by: Tarjoilija
+    served_by: Teitä palveli
     show:
       add_notes: Lisää muistiinpanoja
       back: Takaisin
@@ -570,7 +570,7 @@ fi:
   pages:
     edit:
       edit_page: Muokkaa sivua
-      slideshow: Start Slideshow
+      slideshow: Käynnistä diaesitys
       view: Katsella
     form:
       slideshow: Diaesitys
@@ -599,27 +599,27 @@ fi:
   printing_test: Tulostuskoe
   refund: Palautus
   reports:
-    download: Download
-    download_reports: Download Report
-    end_date: End Date
-    fisc_report_dump_location: Output Location
+    download: Lataa
+    download_reports: Lataa raportti
+    end_date: Päättymispäivä
+    fisc_report_dump_location: Ulostulo paikka
     index:
-      backup_database: Backup database
-      backup_logfile: Backup logfile
-      connect_ssh: Remote Login
-      connect_vnc: Share Screen
-      connected: Connected
-      disconnected: Disconnected
-      download_reports: Save reports
-      header: Reports
-      internet_connection_info: To get Remote Support, you must be connected to the
-        internet. If you see the Red (E) Logo above, you are connected to the internet.
-      password: Password
-      remote_support: Remote Support
-      requesting_connection_status: Requesting connection status ...
-    remote_support: Remote Support
-    save: Save
-    start_date: Start Date
+      backup_database: Varatietokanta
+      backup_logfile: varalokitiedosto
+      connect_ssh: Etäkirjautuminen
+      connect_vnc: Jaa näytön
+      connected: Kytketty
+      disconnected: Yhteys katkaistu
+      download_reports: Tallenna raportit
+      header: Raportit
+      internet_connection_info: Saadaksesi Remote Support, sinun täytyy olla yhteydessä Internetiin.
+        Jos näet Red (E) Logo edellä, olet yhteydessä Internetiin.
+      password: Salasana
+      remote_support: Kaukotuki
+      requesting_connection_status: Pyytää yhteyden tila ...
+    remote_support: Kaukotuki
+    save: Tallenna
+    start_date: Aloituspäivä 
   restaurant: Restaurant
   roles:
     create:
