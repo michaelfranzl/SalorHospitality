@@ -50,8 +50,10 @@ function loadify_order_buttons() {
   var cancelbutton = $('#order_cancel_button');
   var counter_print_and_finish_button = $('#counter_print_and_finish_button');
   var counter_finish_button = $('#counter_finish_button');
+  var immediate_print_and_finish_button = $('#immediate_print_and_finish_button');
+  var immediate_finish_button = $('#immediate_finish_button');
   var buttons = [];
-  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button);
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button, immediate_print_and_finish_button, immediate_finish_button);
   $.each(buttons, function(i) {
     var button = $(buttons[i]);
     var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
@@ -73,8 +75,10 @@ function unloadify_order_buttons() {
   var cancelbutton = $('#order_cancel_button');
   var counter_print_and_finish_button = $('#counter_print_and_finish_button');
   var counter_finish_button = $('#counter_finish_button');
+  var immediate_print_and_finish_button = $('#immediate_print_and_finish_button');
+  var immediate_finish_button = $('#immediate_finish_button');
   var buttons = [];
-  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button);
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button, immediate_print_and_finish_button, immediate_finish_button);
   $.each(buttons, function(i) {
     var button = $(buttons[i]);
     $(button).html('');

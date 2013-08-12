@@ -17,8 +17,8 @@
     %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t('orders.invoice_form.print_and_finish'), :style => branding_override_style(:buttons, :finish_and_print) }
     
   - if permit('immediate_order_finish')
-    %a#counter_finish_button.iconbutton.finish_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_noinvoice');", :title => t('orders.invoice_form.finish_gototables'), :style => branding_override_style(:buttons, :finish) }
-    %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_invoice');", :title => t('orders.invoice_form.print_and_finish_gototables'), :style => branding_override_style(:buttons, :finish_and_print) }
+    %a#immediate_finish_button.iconbutton.finish_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_noinvoice');", :title => t('orders.invoice_form.finish_gototables'), :style => branding_override_style(:buttons, :finish) }
+    %a#immediate_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_invoice');", :title => t('orders.invoice_form.print_and_finish_gototables'), :style => branding_override_style(:buttons, :finish_and_print) }
 
 - if permit('finish_orders')
   %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order), :style => branding_override_style(:buttons, :cash) }
@@ -45,3 +45,7 @@
   - if permit('counter_mode')
     %a#counter_finish_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish), :style => branding_override_style(:buttons, :finish) }
     %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish), :style => branding_override_style(:buttons, :finish_and_print) }
+    
+  - if permit('immediate_order_finish')
+    %a#immediate_finish_button.iconbutton.finish_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_noinvoice');", :title => t('orders.invoice_form.finish_gototables'), :style => branding_override_style(:buttons, :finish) }
+    %a#immediate_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_invoice');", :title => t('orders.invoice_form.print_and_finish_gototables'), :style => branding_override_style(:buttons, :finish_and_print) }
