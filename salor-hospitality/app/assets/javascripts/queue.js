@@ -59,7 +59,8 @@ function send_queue(object_id, callback) {
 
   if ( idx != -1 ) {
     unloadify_order_buttons();
-    alert('Bestellung wurde mehr als einmal abgesendet. Bitte Ausdruck überprüfen');
+    alert(i18n.double_submission_warning);
+    send_email('Double submission warning', 'User has been informed');
     $('#order_info').html('');
     $('#order_info_bottom').html('');
     copy_json_from_submit_queue(object_id);
@@ -95,8 +96,8 @@ function send_queue(object_id, callback) {
           send_queue_timestamps.splice(idx, 1);
 
         } else {
-          alert('Error Code 100');
-          send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'This should not have happened, since send_queue should only be cleared now.');
+          alert('Error 100');
+          send_email('send_queue: success, but submit_json_queue empty for object_id ' + object_id, 'This should not have happened, since send_queue should only be cleared now. User has been informed about Error 100');
         }
         clear_queue(object_id);
         update_tables();
@@ -123,8 +124,8 @@ function send_queue(object_id, callback) {
           default:
             $('#order_info').html('unknown ajax "readyState"');
             $('#order_info_bottom').html('unknown ajax "readyState"');
-            alert('send_queue: unknown ajax "readyState" for status "complete".');
-            send_email('send_queue: unknown ajax "readyState" for status "complete".', data.readyState);
+            alert('send_queue: unknown readyState for status complete.');
+            send_email('send_queue: unknown readyState for status complete.', data.readyState);
         }
         
       } else if (status == 'parsererror') {

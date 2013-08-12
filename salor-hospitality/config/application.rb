@@ -86,7 +86,7 @@ module SalorHospitality
       'settlement_statistics_taxes_categories','settlement_statistics_sold_quantities',
       'manage_business_invoice','manage_users','manage_taxes','manage_cost_centers',
       'manage_payment_methods','manage_tables','manage_vendors','manage_cameras',
-      'counter_mode','see_item_notifications_user_preparation','see_item_notifications_user_delivery',
+      'counter_mode','immediate_order_finish','see_item_notifications_user_preparation','see_item_notifications_user_delivery',
       'see_item_notifications_vendor_preparation','see_item_notifications_vendor_delivery',
       'see_item_notifications_static','manage_pages','manage_customers','manage_hotel',
       'manage_roles','item_scribe','assign_tables','download_database','download_csv',

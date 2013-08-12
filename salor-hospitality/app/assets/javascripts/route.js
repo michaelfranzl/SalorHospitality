@@ -35,6 +35,18 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
       switch_to_tables();
+      
+    } else if (action == 'send_and_finish_noinvoice') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'tables_no_invoice_print';
+      loadify_order_buttons();
+      send_json('table_' + model_id, switch_to_tables);
+      
+    } else if (action == 'send_and_finish_invoice') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'tables_do_invoice_print';
+      loadify_order_buttons();
+      send_json('table_' + model_id, switch_to_tables);
 
     } else {
       unloadify_order_buttons();
@@ -58,6 +70,17 @@ function route(target, model_id, action, options) {
       // stay on table
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
+      
+    } else if (action == 'send_and_print' ) {
+      // finish and print order receipt
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_do_invoice_print';
+      submit_json.model.note = $('#order_note').val();
+      switch_to_table();
+      send_json('table_' + model_id);
+      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
+      //final rendering will be done in application#route
+      
     } else if (action == 'customer_request_send') {
       submit_json.jsaction = 'send';
       submit_json.target = 'table_request_send';
@@ -88,15 +111,6 @@ function route(target, model_id, action, options) {
       send_json('table_' + model_id, function() {
         render_items()
       });
-    } else if (action == 'send_and_print' ) {
-      // finish and print order receipt
-      submit_json.jsaction = 'send';
-      submit_json.target = 'table_do_invoice_print';
-      submit_json.model.note = $('#order_note').val();
-      switch_to_table();
-      send_json('table_' + model_id);
-      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
-      //final rendering will be done in application#route
       
     } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
       // no offline items are allowed in the latest version. disabled.

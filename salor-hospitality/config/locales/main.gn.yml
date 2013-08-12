@@ -541,7 +541,10 @@ gn:
       change_money: Retour
       just_finish: Rechnung nur abschließen
       move_order: Bestellung auf anderen Tisch verschieben
-      print_and_finish: Drucken und Rechnung abschließen
+      print_and_finish: Drucken und Rechnung abschließen und auf diesem Bildschirm bleiben
+      print_and_finish_gototables: Drucken und Rechnung abschließen und zurück zu dem Tischplan
+      finish: Abschließen und auf diesem Bildschirm bleiben
+      finish_gototables: Abschließen und auf Tischplan zurückkehren
       set_booking: Einer Buchung zuweisen
       set_cost_center: Kostenkreis für diese Bestellung festlegen
       set_tax_for_all: Steuerklasse für alle Posten festlegen
@@ -642,6 +645,7 @@ gn:
     destroy:
       success: Rolle erfolgreich gelöscht
     new:
+      immediate_order_finish: Bestellung vom Bestell-Bildschirm abschließen
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
       assign_cost_center: Kostenstelle zuweisen
@@ -845,6 +849,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    double_submission_warning: "Warnung: Mehrfach-Übermittlung. Bitte informieren Sie das Techniker-Team über diesen Vorfall."
     attempt: Versuch
     begin: Anfang
     cancel: Abbrechen

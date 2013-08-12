@@ -156,6 +156,20 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
+                  
+                when 'tables_no_invoice_print'
+                  @order.pay(@current_user)
+                  @order.print(['tickets'])
+                  @table = @order.table
+                  @order = nil
+                  render :nothing => true
+                when 'tables_do_invoice_print'
+                  @order.pay(@current_user)
+                  @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
+                  @table = @order.table
+                  @order = nil
+                  render :nothing => true
+
                 when 'table_interim_receipt_print'
                   @order.print(['interim_receipt'], @current_vendor.vendor_printers.existing.first)
                   render :nothing => true
@@ -185,6 +199,7 @@ class ApplicationController < ActionController::Base
             @order.print(['tickets'])
             @order.move(params[:target_table_id])
             render :nothing => true # routing is done by static javascript to 'tables'
+
         end
       
       when 'room'
