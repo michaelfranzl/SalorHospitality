@@ -108,8 +108,10 @@ function send_queue(object_id, callback) {
           case 0:
             // this should never happen because send_queue() is only called after the server is online and a successful request is made by send_queue_after_server_online().
             // However, it can happen due to an iPod quirk: When a battery powered iPod is switched off immediately after submitting an order and the server doesn't respond within 15 seconds. In this case the iPod's firmware just re-sends the unmodified Ajax call when it is turned on again. This is bad however, since the server could have processed the items correctly and the second submission would double all items in the order. Luckily however, the iPods WiFi comes online only about 2 seconds after it was turned on again, which is too late for the second Ajax call to succeed. Therefore, the second Ajax call always fails, which puts it into the current state.
-            alert('send_queue: No connection error. Please re-check order.');
+            alert('Lost connection during sending. Please check correct submission of order manually.');
             send_email('send_queue: No connection error for object_id ' + object_id, '');
+            $('#order_info').html('Lost connection during sending');
+            $('#order_info_bottom').html('Lost connection during sending');
             copy_json_from_submit_queue(object_id);
             send_queue_attempts = 0;
             break;
