@@ -1,3 +1,15 @@
+salor-hospitality (4.1.4.20) unstable; urgency=low
+
+  * small fixes
+  * less history, more js debug
+  * more js debug
+  * more JS debugging output, feature: immedate send and return to tables
+  * typo
+  * add new buttons to (un)loadify js functions
+  * better js debug warnings
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 12 Aug 2013 16:33:37 +0200
+
 salor-hospitality (4.1.4.19) unstable; urgency=low
 
   * search fix
