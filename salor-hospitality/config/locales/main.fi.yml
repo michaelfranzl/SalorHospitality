@@ -777,98 +777,98 @@ fi:
       started_at: Aloitettiin
   shared:
     invoice_tax_list:
-      list_of_taxes: List of Taxes
-  split_order: Split order
-  statistic: Statistic
+      list_of_taxes: Verojen lista
+  split_order: Halkaista tilausta
+  statistic: Tilasto
   statistic_categories:
     new:
-      edit_statistic_category: Edit Statistic-Category
-      new_statistic_category: New Statistic-Category
+      edit_statistic_category: Muokkaa Tilasto-kategoria
+      new_statistic_category: Uusi Tilasto-kategoria
   statistics:
     index:
-      hour: Hour
-      limit_by: Limit by
-      query: Query
-      weekday: Weekday
+      hour: Tunti
+      limit_by: Rajoita
+      query: Kysely
+      weekday: Arkipäivä
   stocks:
     new:
-      edit_stock: Edit Stock
-      new_stock: New Stock
-  sum: Sum
+      edit_stock: Muokkaa varasto
+      new_stock: Uusi varasto
+  sum: Summa
   surcharges:
     new:
-      add_tax_amount: Add tax amount
-      common_surcharge: Common Surcharge
-      edit_surcharge: Edit Surcharge
-      new_surcharge: New Surcharge
+      add_tax_amount: Lisää veron määrä
+      common_surcharge: Yleinen lisämaksu
+      edit_surcharge: Muokkaa lisämaksu
+      new_surcharge: Uusi lisämaksu
   tables:
     create:
-      license_limited: Your License is limited to %{count} tables
-      success: Table successfully saved
+      license_limited: Lisenssin on rajoitettu % {count} pöytää
+      success: Pöytä tallennettu
     destroy:
-      success: Table successfully deleted
+      success: Pöytä poistaminen onnistui
     new:
-      edit_table: Edit Table
-      new_table: New Table
-  tax_amount: Amount
+      edit_table: Muokkaa pöytä
+      new_table: Uusi pöytä
+  tax_amount: Määrä
   taxes:
     new:
-      edit_tax: Edit Tax
-      new_tax: New Tax
+      edit_tax: Muokkaa vero
+      new_tax: Uusi vero
   users:
     create:
-      success: User successfully saved
+      success: Käyttäjä tallennettu
     destroy:
-      success: User successfully deleted
+      success: Käyttäjä poistaminen onnistui
     new:
-      edit_user: Edit User
-      new_user: New User
-      select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
+      edit_user: Muokkaa käyttäjää
+      new_user: Uusi käyttäjä
+      select_with_ctrl_key: Valitse tai poista [Ctrl] + hiiren vasen painiken kanssa
   various:
-    attempt: Attempt
-    begin: Begin
-    cancel: Cancel
-    check_order_on_workstation: Check order on different device
-    common_surcharges: Common Surcharges
-    connecting: Connecting...
-    consumations: Consumations
-    customer_request_finish: Request payment
-    customer_request_send: Request these items
-    customer_request_waiter: Request waiter
-    delete: Delete
-    display: Display
-    download: Download
-    end: End
+    attempt: Yrittää
+    begin: Aloita
+    cancel: Peruuttaa
+    check_order_on_workstation: Tarkista tilauksen eri laitteessa
+    common_surcharges: Yleinen lisämaksut
+    connecting: Yhdistäminen..
+    consumations: Kulutustavara
+    customer_request_finish: Pyytää maksua
+    customer_request_send: Pyydä näitä tuotteetta
+    customer_request_waiter: Pyydä tarjoilija
+    delete: Poistaa
+    display: Näyttää
+    download: Lataa
+    end: Loppu
     exception_page:
-      assistance_text: Please click on the Button "HOME" and try again. If you see
-        the same error twice, please contact our Customer Support.
-      exception_description: ! 'Error Description:'
-      exception_in_files: ! 'The Error occurred in the following files:'
-      oops_an_error_occurred: Oops! An Error occurred
-    finish_was_requested: You have requested payment. Please have a little patience,
-      we will be there for your shortly.
-    go: Go!
-    home: Home
-    hotel: Hotel
-    interim_invoice: Interim Invoice
-    invoice: Invoice
-    mobile_view: Mobile device view
-    no_connection: No connection
-    no_connection_giving_up: No connection. Giving up.
-    no_connection_retry: No connection to the Server. Send again? If you cancel, the
-      items will be saved locally.
-    no_connection_retrying: No connection. Trying again...
-    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    pay: Pay
-    print: Print
-    quantity_abbreviation: Qty.
-    report: Report
-    restaurant: Restaurant
-    save: Save
-    sending: Sending...
-    server_error: Oops! There was an internal server error. Please check the submission
-      of the order on a different device.
-    server_error_short: Server error
+      assistance_text: Klikkaa painiketta "HOME" ja yritä uudelleen. Jos näet
+        sama virhe kahdesti, ota yhteyttä asiakaspalveluumme.
+      exception_description: ! 'Virhe kuvaus:'
+      exception_in_files: ! 'Virhe tapahtui seuraavia tiedostoja:'
+      oops_an_error_occurred: Hups! Virhe on tapahtunut
+    finish_was_requested: Olet pyytänyt maksua. Ole hyvä ja ole kärsivällinen hetkeksi ja me
+      palvelemme sinua pian.
+    go: Mennä!
+    home: Koti
+    hotel: Hotelli
+    interim_invoice: Väliaikainen lasku
+    invoice: Lasku
+    mobile_view: Mobile laitenäkymää
+    no_connection: Ei yhteyttä
+    no_connection_giving_up: Ei yhteyttä. Luopumaan.
+    no_connection_retry: Ei yhteyttä serveriin. Lähetä uudelleen? Jos peruuttaa,
+      kohteet tallennetaan paikallisesti.
+    no_connection_retrying: Ei yhteyttä. Yritetään uudelleen..
+    order_will_be_confirmed: Tilauksesi vahvistetaan tarjoilijana pian
+    pay: Maksaa
+    print: Tulosta
+    quantity_abbreviation: Määrä
+    report: Raportti
+    restaurant: Ravintola
+    save: Tallenna
+    sending: Lähetetään...
+    server_error: Hups! Sisäinen serveri virhe. Tarkista tilauksen jättämistä
+      eri laitteella.
+    server_error_short: Serveri virhe
     server_not_responded: No response from server. Check submission of order on different
       device. Then, re-submit oder cancel to delete the changes.
     sold_quantities: Sold Quantities
