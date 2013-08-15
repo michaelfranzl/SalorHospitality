@@ -10,7 +10,7 @@ fi:
         image: Kuva
         name: Nimi
         price: Hinta
-        statistic_category_id: Statistic-Category
+        statistic_category_id: Tilasto-kategoria
         taxes: Vero
         usage: käyttö
       booking_item:
