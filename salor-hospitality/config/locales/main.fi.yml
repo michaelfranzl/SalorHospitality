@@ -633,149 +633,148 @@ fi:
       assign_order_to_booking: Määritä tilauksia varaukseen
       assign_order_to_user: Määritä tilauksen käyttäjälle
       assign_tables: Määritä pöydät käyttäjille
-      assign_users_to_vendors: Assign Users to Vendors
-      cancel_all_items_in_active_order: Cancel all items in active order
-      change_waiter: Change waiter
-      counter_mode: Counter mode
-      decrement_items: Decrement items
-      delete_items: Delete items by decrementing
-      download_csv: Download CSV
-      download_database: Download Database
-      edit_role: Edit Role
-      finish_all_settlements: Finish all settlements
-      finish_orders: Finish orders
-      finish_own_settlement: Finish own settlement
-      interim_receipt: Interim Receipt
-      item_scribe: Enable handwriting
-      manage_advertising: Manage Advertising
-      manage_articles: Manage articles
-      manage_business_invoice: Manage business invoice
-      manage_cameras: Manage cameras
-      manage_categories: Manage categories
-      manage_cost_centers: Manage Cost Centers
-      manage_customers: Manage Customers
-      manage_hotel: Manage hotel
-      manage_options: Manage options
-      manage_pages: Manage slideshow
-      manage_payment_methods: Manage Payment Methods
-      manage_roles: Manage roles
-      manage_statistic_categories: Manage Statistic Categories
-      manage_statistics: Statistics
-      manage_statistics_hotel: View hotel statistics
-      manage_tables: Manage tables
-      manage_taxes: Manage Taxes
-      manage_users: Manage users
-      manage_vendors: Manage vendors
-      mobile_show_tools: Show tool button on mobile devices
-      move_order: Move order
-      move_order_from_invoice_form: Move order to table from invoice form
-      move_tables: Move tables
-      new_role: New Role
-      permissions: Permissions
-      reactivate_orders: Reactivate orders
-      receipt_logo: Receipt Logos
-      refund: Refund items
-      remote_support: Remote Support
-      see_debug: See debug messages
-      see_item_notifications_static: Item notifications summary list on main screen
-      see_item_notifications_user_delivery: Item notifications personal delivery
-      see_item_notifications_user_preparation: Item notifications personal preparation
-      see_item_notifications_vendor_delivery: Item notifications vendor delivery
-      see_item_notifications_vendor_preparation: Item notifications vendor preparation
-      settlement_statistics_sold_quantities: Show settlement statistics about sold
-        quantities
-      settlement_statistics_taxes: Show settlement tax statistics
-      settlement_statistics_taxes_categories: Show settlement tax statistics by category
-      split_items: Split items
+      assign_users_to_vendors: Määritä myyjät käyttäjät
+      cancel_all_items_in_active_order: Peruuta kaikki tuotteet aktiivisessa tilauksessa
+      change_waiter: Vaihda tarjoilija
+      counter_mode: Laskuritila
+      decrement_items: Vähennä tuotetta
+      delete_items: Poista kohteita vähentävää
+      download_csv: Lataa CSV
+      download_database: Lataa tietokanta
+      edit_role: Muokkaa rooli
+      finish_all_settlements: Täyttää kaikki selvitykset
+      finish_orders: Tayttää tilauksia
+      finish_own_settlement: Tayttää oma selvitys
+      interim_receipt: Väliaikainen kuitti
+      item_scribe: Salli käsiala
+      manage_advertising: Hallitse mainonta
+      manage_articles: Hallitse artikkelit
+      manage_business_invoice: Hallitse yrityksen lasku
+      manage_cameras: Hallitse kamerat
+      manage_categories: Hallitse kategoriat
+      manage_cost_centers: Hallitse kustannuspaikkat
+      manage_customers: Hallitse asiakkaat
+      manage_hotel: Hallitse hotelli
+      manage_options: Hallitse vaihtoehdot
+      manage_pages: Hallitse diaesitys
+      manage_payment_methods: Hallitse maksutavat
+      manage_roles: Hallitse roolit
+      manage_statistic_categories: Hallitse Tilaston Kategoriat
+      manage_statistics: Tilasto
+      manage_statistics_hotel: Katso hotellitilastossa
+      manage_tables: Hallitse pöydät
+      manage_taxes: Hallitse verot
+      manage_users: Hallitse käyttäjät
+      manage_vendors: Hallitse myyjät
+      mobile_show_tools: Näytä työkalu painiketta mobiililaitteissa
+      move_order: Siirrä tilauksen
+      move_order_from_invoice_form: Siirrä tilauksen pöytään laskulomakelta
+      move_tables: Siirrä pöydät
+      new_role: Uusi rooli
+      permissions: Käyttöoikeudet
+      reactivate_orders: Uudelleenaktivointi tilauksia
+      receipt_logo: Kuitti logot
+      refund: Palauttaa tuotetta
+      remote_support: Kaukotuki
+      see_debug: Katso debug viestejä
+      see_item_notifications_static: Tuote ilmoituksia yhteenvetoluettelo päänäyttöllä
+      see_item_notifications_user_delivery: Tuote ilmoituksia henkilökohtainen toimitus
+      see_item_notifications_user_preparation: Tuote ilmoituksia henkilökohtainen valmistautuminen
+      see_item_notifications_vendor_delivery: Tuote ilmoituksia myyjä toimitus
+      see_item_notifications_vendor_preparation: Tuote ilmoituksia myyjän valmistautuminen
+      settlement_statistics_sold_quantities: Näytä selvityksen tilastoja myydään määriä
+      settlement_statistics_taxes: Näytä selvitysksen verotilastoja
+      settlement_statistics_taxes_categories: Näytä selvitys verotilastoja kategorian mukana
+      split_items: Halkaista tuotetta
       statistics:
-        statistics_category: Categories
-        statistics_hour: Hours
-        statistics_payment_method: Payment Methods
-        statistics_sold_quantities: Sold quantities
-        statistics_statistic_category: Statistic Categories
-        statistics_table: Tables
-        statistics_tax: Taxes
-        statistics_weekday: Weekdays
-      statistics_category: Statistics show Categories
-      statistics_hour: Statistics show Hours
-      statistics_payment_method: Statistics show Payment Methods
-      statistics_sold_quantities: Statistics show sold quantities
-      statistics_statistic_category: Statistics show StatisticCategories
-      statistics_table: Statistics show Tables
-      statistics_tax: Statistics show Taxes
-      statistics_weekday: Statistics show Weekdays
-      take_orders: Take orders
-      view_all_settlements: View all settlements
-      view_settlements_table: View settlements table
+        statistics_category: Kategoriat
+        statistics_hour: Tuntia
+        statistics_payment_method: Maksutavat
+        statistics_sold_quantities: Myyty määrä
+        statistics_statistic_category: Tilaston kategoriat
+        statistics_table: Pöydät
+        statistics_tax: Verot
+        statistics_weekday: Arkisin
+      statistics_category: Tilastot osoittavat kategoriat
+      statistics_hour: Tilastot osoittavat tuntia
+      statistics_payment_method: Tilastot osoittavat maksutavat
+      statistics_sold_quantities: Tilastot osoittavat, myyty määriä
+      statistics_statistic_category: Tilastot osoittavat Tilaston Kategoriat
+      statistics_table: Tilastot osoittavat pöydät
+      statistics_tax: Tilastot osoittavat verot
+      statistics_weekday: Tilastot osoittavat arkisin
+      take_orders: tehdä tilauksia
+      view_all_settlements: Näytä kaikki selvityksiä
+      view_settlements_table: Näytä selvityksia taulukko
   room_prices:
     index:
-      generate_price_skeleton: Generate price skeleton
+      generate_price_skeleton: Luo hinnan luuranko
     new:
-      edit_room_price: Edit room price
-      new_room_price: New room price
+      edit_room_price: Muokkaa huoneen hinnaan
+      new_room_price: Uusi huoneen hinnan
   room_types:
     new:
-      edit_room_type: Edit room type
-      new_room_type: New room type
+      edit_room_type: Muokkaa huonetyyppiin
+      new_room_type: Uusi huonetyyppiin
   rooms:
     create:
-      success: Room successfully saved
+      success: Huone tallennettu
     destroy:
-      success: Room successfully deleted
+      success: Huoneen poistaminen onnistui
     new:
-      edit_room: Edit Room
-      new_room: New Room
+      edit_room: Muokkaa huone
+      new_room: Uusi huone
   scopes:
-    active: Active
-    waiterpad: Waiterpad
-  scroll_down: Scroll down
-  scroll_to_area: Go to room
-  scroll_up: Scroll up
+    active: Aktiivinen
+    waiterpad: Tarjoilija tabletti
+  scroll_down: Vieritä alaspäin
+  scroll_to_area: Mene huoneen
+  scroll_up: vierittää ylös
   seasons:
     new:
-      edit_season: Edit Season
-      new_season: New Season
-  send_and_go_back: Save and go back
-  served_by_X_on_table_Y: You were served by %{waiter} on table %{table}
-  server_no_response: The Bill Gastro Server is not responding any more. It is either
-    busy or the radio link is interrupted.
+      edit_season: Muokkaa kausi
+      new_season: Uusi kausi
+  send_and_go_back: Tallenna ja palata
+  served_by_X_on_table_Y: Teitä palveli %{waiter} pöydan %{table}
+  server_no_response: Bill Gastro palvelin ei vastaa enää. Se on joko
+    varattu tai radioyhteys keskeytyy
   sessions:
     browser_warning:
-      continue: Continue
-      warning: Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      continue: Jatkaa
+      warning: Salor tukee vain selaimia Google Chrome (Windows), Chromium
+        (Linux) tai Safari (Apple). Käytä jotakin näistä selaimista ja yritä uudelleen.
     new:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
+      email: Sähköpostiosoitteesi
+      login: Kirjaudu
+      password: Salasana
+      username: Käyttäjä
     new_customer:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
+      email: Sähköpostiosoitteesi
+      login: Käyttäjä
+      password: Salasana
+      username: Käyttäjä
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} changed price'
-      count: Count
-      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
-      reduced_count: Count reduced from %{maxcount} to %{count}.
-      revenue: Revenue
-      total: Total
-      unit_price: Unit Price
-      warning: Warning
+      changed_price: ! '%{byuser} muuttunut hinta'
+      count: Laske
+      order_number_on_table_on_date: ! '%{order} numero %{number} %{table}:ssä, klo: %{time}'
+      reduced_count: Laske vähennetty %{maxcount} :sta %{count}:lle.
+      revenue: Tulot
+      total: Loppusumma
+      unit_price: Yksikköhinta
+      warning: Varoitus
     index:
-      all: All
-      end_date: End date
-      one_day_one_row: List days
-      start_date: Start date
-      sum_total: Sum total
+      all: Kaikki
+      end_date: Päättymispäivä
+      one_day_one_row: Listaa päivät
+      start_date: Alkamispäivä
+      sum_total: Loppusumma
     settlement:
-      finish: Finish
-      please_wait: Analyzing data. Please wait ...
-      print: Print
-      start: Start
-      started_at: Started at
+      finish: Lopettaa
+      please_wait: Analysoidaan tietoja. Odota ...
+      print: Tulosta
+      start: Aloita
+      started_at: Aloitettiin
   shared:
     invoice_tax_list:
       list_of_taxes: List of Taxes
