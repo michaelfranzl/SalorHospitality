@@ -869,47 +869,47 @@ fi:
     server_error: Hups! Sisäinen serveri virhe. Tarkista tilauksen jättämistä
       eri laitteella.
     server_error_short: Serveri virhe
-    server_not_responded: No response from server. Check submission of order on different
-      device. Then, re-submit oder cancel to delete the changes.
-    sold_quantities: Sold Quantities
-    statistics: Statistics
-    subtotal: Subtotal
-    successfully_sent: The items were successfully sent.
-    switched_to_vendor: Vendor '%{vendorname}'
-    table_contains_offline_items: Just showing offline items. Try to re-submit or
-      press the cancel button to delete the offline items.
-    tax: Tax
-    tax_amount: Amount
-    time: Time
-    total_price_abbreviation: TP
-    translations: Translations
-    unamed: Unamed
-    unit_price_abbreviation: SP
-    waiter_was_requested: You have requested a waiter. Please have a little patience,
-      we will be there for your shortly.
-    workstation_view: Workstation view
+    server_not_responded: Ei vastausta serveriltä. Tarkista jättämisen tilauksen eri
+      laitteessa. Sitten lähetä uudelleen voidaan poistaa muutokset.
+    sold_quantities: Myyty määriä
+    statistics: Tilasto
+    subtotal: Välisumma
+    successfully_sent: Tuotteiden lähetäminen onnistui.
+    switched_to_vendor: Myyjä '%{vendorname}'
+    table_contains_offline_items: Vain osoittaa offline kohteita. Yritä uudelleen esittää tai
+      paina Peruuta-painiketta poistaaksesi offline kohteita.
+    tax: Vero
+    tax_amount: Määrä
+    time: Aika
+    total_price_abbreviation: KH
+    translations: Käännökset
+    unamed: Nimetön
+    unit_price_abbreviation: YH
+    waiter_was_requested: Olet pyytänyt tarjoilijana. Ole hyvä ja ole kärsivällinen hetkeksi
+      ja me palvelemme sinua pian
+    workstation_view: Työasema näkymä
   vendors:
     create:
-      success: Vendor was successfully saved
+      success: Myyjä tallennettu
     destroy:
-      success: Vendor was successfully deleted
+      success: Myyjä poistaminen onnistui
     form:
-      add_printer: Add printer
-      identify_printers: Identify Printers
-      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
-        copy and paste the following details to the options dialog of salor-bin:'
-      test_printers: Test Printers
-      test_printers_chartest: Test all characters
+      add_printer: Lisää tulostin
+      identify_printers: Tunnista tulostimet
+      print_via_salorbin_explanation: ! 'Jos haluat tulostaa Salor-bin selaimen kautta,
+        kopioi ja liitä seuraava yksityiskohtia Salor-bin:n vaihtoehtojen dialogiin.'
+      test_printers: Testaa tulostimet
+      test_printers_chartest: Testaa kaikki kirjainmerkit
     index:
-      edit: Edit
-      switch_to: Select
+      edit: Muokkaa
+      switch_to: Valita
     new:
-      edit_vendor: Edit Vendor
-      new_vendor: New Vendor
-  violet: Violet
-  waiter: Waiter
-  waiterpad_generic_name: Waiterpad
-  white: White
-  winered: Wine Red
-  wrong_password: Wrong login data
-  yellow: Yellow
+      edit_vendor: Muokkaa myyjä
+      new_vendor: Uusi myyjä
+  violet: Violetti
+  waiter: Tarjoilija
+  waiterpad_generic_name: Tarjoilija tabletti
+  white: Valkoinen
+  winered: Viini punainen
+  wrong_password: Väärin kirjautuminen tiedot
+  yellow: Keltainen
