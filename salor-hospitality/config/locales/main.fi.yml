@@ -47,8 +47,8 @@ fi:
         name: Nimi
         no_payment_methods: Ei maksutavat
       customer:
-        address: Address
-        cellphone: kännykkä
+        address: Osoite
+        cellphone: Kännykkä
         city: Kaupunki
         company_name: Yrityksen nimi
         default_table_id: Oletustaulukko
