@@ -22,8 +22,8 @@ fi:
         active: aktiivinen
         description: Kuvaus
         hidden: poistaa
-        host_external: External host
-        host_internal: Internal host
+        host_external: Ulkoinen vastaanottavan
+        host_internal: Sisäinen vastaanottavan
         name: Nimi
         port: Portti
         url_snapshot: Parameters Snapshot
@@ -84,7 +84,7 @@ fi:
         color: Väri
         height: Korkeus
         hidden: poistaa
-        image: Kuvaous
+        image: Kuvaus
         width: Leveys
       partial:
         active: aktiivinen
