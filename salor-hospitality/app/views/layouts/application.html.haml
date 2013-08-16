@@ -21,6 +21,8 @@
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
       = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
+      %script
+        == $.keyboard.defaultOptions.layout = "#{ @locale }";
       - if permit('manage_hotel')
         = javascript_include_tag 'booking'
         = javascript_include_tag 'bookings'

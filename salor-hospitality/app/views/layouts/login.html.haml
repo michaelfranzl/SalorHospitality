@@ -14,12 +14,15 @@
       
 
     %title== #{ @branding_title } Login
+      
     = javascript_include_tag 'jquery'
     = javascript_include_tag 'jquery-ui'
     = stylesheet_link_tag('generic', :media => 'screen')
     - if workstation?
       = javascript_include_tag 'jquery.keyboard.js'
       = javascript_include_tag 'jquery.keyboard.config.js'
+      %script
+        == $.keyboard.defaultOptions.layout = "#{ @locale }";
     
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
 
@@ -66,4 +69,4 @@
   $(function() {
     $('input#password').focus();
     $('#advertising').css('z-index', 1000);
-  })
+  });
