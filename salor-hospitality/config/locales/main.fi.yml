@@ -22,8 +22,8 @@ fi:
         active: aktiivinen
         description: Kuvaus
         hidden: poistaa
-        host_external: Ulkoinen vastaanottavan
-        host_internal: Sisäinen vastaanottavan
+        host_external: External Host
+        host_internal: Internal Host
         name: Nimi
         port: Portti
         url_snapshot: Parameters Snapshot
@@ -51,7 +51,7 @@ fi:
         cellphone: Kännykkä
         city: Kaupunki
         company_name: Yrityksen nimi
-        default_table_id: Oletustaulukko
+        default_table_id: Oletuspöytä
         email: sähköposti
         first_name: Etunimi
         full_name: Nimi
@@ -61,7 +61,7 @@ fi:
         m_number: Kanta-asiakaskortti koodi
         m_points: Kanta-asiakas pisteet
         postalcode: Postinumero
-        state: Kunta
+        state: State
         telephone: Puhelin
       group:
         name: Nimi
@@ -136,7 +136,7 @@ fi:
         hidden: poistaa
         name: Nimi
       surcharge:
-        amount: Amount
+        amount: Määrä
         guest_type_id: Vieras Tyypi
         hidden: poistaa
         name: Nimi
@@ -175,7 +175,7 @@ fi:
         audio: Äänimerkit
         color: Väri
         confirmation_user: Vahvista kauko tilaukset
-        default_vendor_id: Kirjaudu sisään vendorille
+        default_vendor_id: Kirjaudu sisään myyjälle
         hidden: poistaa?
         language: Kieli
         login: Kirjaudu
@@ -183,7 +183,7 @@ fi:
         role: Rooli
         screenlock_timeout: Näytön lukitus aikakatkaisu (sec.)
         tables: Pöydät
-        title: Otsikko
+        title: Titteli
       vendor:
         automatic_printing: Automaattinen tulostus
         country: Maa säännöt
