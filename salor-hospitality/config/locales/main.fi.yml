@@ -240,13 +240,13 @@ fi:
         other: Kategoria
       company:
         one: Yhtiö
-        other: yhtiöt
+        other: Yhtiöt
       cost_center:
         one: Kustannuspaikka
         other: Kustannuspaikkoja
       coupon:
-        one: kuponki
-        other: kuponkeja
+        one: Kuponki
+        other: Kuponkeja
       customer:
         one: Asiakas
         other: Asiakkaita
@@ -258,7 +258,7 @@ fi:
         other: Varasto Ryhmät
       guest_type:
         one: Vieras Tyypi
-        other: Vieras tyyppejä
+        other: Vieras Tyyppejä
       image:
         one: Kuva
         other: Kuvat
@@ -311,8 +311,8 @@ fi:
         one: Vuodenaika
         other: Vuodenajat
       settlement:
-        one: Sovinto
-        other: Sovinnot
+        one: Selvitys
+        other: Selvityksia
       statistic_category:
         one: Tilastotieto-Kategoria
         other: Tilastotieto-Kategoria
@@ -324,7 +324,7 @@ fi:
         other: Lisämaksuja
       table:
         one: Pöytä
-        other: pöydät
+        other: Pöydät
       tax:
         one: Veroluokka
         other: Veroluokkia
@@ -350,8 +350,8 @@ fi:
       success: Artikkeli poistaminen onnistui
     find:
       variants:
-        one: variantti
-        other: variantteja
+        one: Variantti
+        other: Variantteja
     index:
       list_all: Listaa kaikki
       preview: Esikatselu
@@ -360,7 +360,7 @@ fi:
       update: Päivittää!
       view: Katsella
     listall:
-      all_articles: luettelee kaikkit artikkelit
+      all_articles: Luettelee kaikkit artikkelit
     new:
       add_quantity: Lisää Variantti
       edit_article: Muokkaa artikkeli
@@ -388,7 +388,7 @@ fi:
     destroy:
       success: Kameran poistaminen onnistui
     index:
-      show: Show
+      show: Näyttää
   cancel_and_go_back: Peruuta ja palaa
   categories:
     create:
@@ -397,7 +397,7 @@ fi:
     destroy:
       success: Kategoria poistaminen onnistui
     new:
-      aperitif: aperitiivi
+      aperitif: Aperitiivi
       beer: Olutta
       blank: Tyhjä
       childrendish: Lasten ruokaa
@@ -470,7 +470,7 @@ fi:
   invalid_date: Virheellinen päivämäärä
   invoice: Lasku
   invoice_numer_X_at_time: Lasku nro %{numero} pvm: %{datetime}
-  invoices: laskuja
+  invoices: Laskuja
   is_no_number: ei ole numero.
   items:
     item_tablerow:
@@ -493,7 +493,7 @@ fi:
   must_be_entered_either_for_article_or_for_quantity: on annettava joko
     Artikkeli tai Variantti.
   net: Netto
-  new: Uuusi
+  new: Uusi
   no_printing: Ei tulostus
   not_found: Ei löytynyt
   options:
