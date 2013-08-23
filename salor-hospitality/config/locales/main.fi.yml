@@ -6,7 +6,7 @@ fi:
         active: aktiivinen
         category_id: Kategoria
         description: Kuvaus
-        hidden: poistaa
+        hidden: poista
         image: Kuva
         name: Nimi
         price: Hinta
