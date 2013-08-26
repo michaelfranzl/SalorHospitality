@@ -6,9 +6,9 @@ fi:
     errors:
       template:
         header:
-          one: "%{count} error prevented the form '%{model}' from being saved."
-          other: "%{count} errors prevented the form '%{model}' from being saved."
-        body: "Please check the following inputs:"
+          one: "%{count} virhe esti lomakeen '%{model}' from being saved."
+          other: "%{count} virhettä esti lomakeen '%{model}' tallentamisen."
+        body: "Tarkista seuravat syötöt:"
 
       messages:
         inclusion: "is not in the list"
