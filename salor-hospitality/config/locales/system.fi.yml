@@ -11,88 +11,88 @@ fi:
         body: "Tarkista seuravat syötöt:"
 
       messages:
-        inclusion: "is not in the list"
-        exclusion: "should not be in the list"
-        invalid: "is invalid"
-        confirmation: "does not match"
-        accepted: "must be accepted"
-        empty: "must not be empty"
-        blank: "must not be blank"
-        too_long: "is too long (maximum %{count} characters)"
-        too_short: "is too short (minimum %{count} characters)"
-        wrong_length: "is the wrong length (should be %{count} characters)"
-        taken: "is already taken"
-        not_a_number: "is not a number"
-        greater_than: "must be greater than %{count}"
-        greater_than_or_equal_to: "must be greater than or equal to %{count}"
-        equal_to: "must be equal to %{count}"
-        less_than: "must be less than %{count}"
-        less_than_or_equal_to: "must be less than or equal to %{count}"
-        odd: "must be odd"
-        even: "must be even"
+        inclusion: "ei ole listassa"
+        exclusion: "ei pitaisi olla listassa"
+        invalid: "on virheellinen"
+        confirmation: "ei yhteensopiva"
+        accepted: "on hyväksyttävä"
+        empty: "ei saa olla tyhjä"
+        blank: "ei saa olla täyttämättä"
+        too_long: "on liian pitkä (enitään %{count} kirjainmerkkiä)"
+        too_short: "on liian lyhyt (vähintään %{count} kirjainmerkkiä)"
+        wrong_length: "on vääränpituinen (pitää olla %{count} kirjainmerkkiä)"
+        taken: "on jo ottetu"
+        not_a_number: "ei ole numero"
+        greater_than: "on oltava suurempi kuin %{count}"
+        greater_than_or_equal_to: "on oltava suurempi tai yhtä suuri kuin %{count}"
+        equal_to: "on oltava yhtä suuri kuin %{count}"
+        less_than: "on oltava vähemmin kuin %{count}"
+        less_than_or_equal_to: "on oltava vähemmin tai yhtä suuri kuin %{count}"
+        odd: "on oltava pariton"
+        even: "on oltava parillinen"
 
   # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
   datetime:
     distance_in_words:
-      half_a_minute: "half a minute"
+      half_a_minute: "puoli minuuttia"
       less_than_x_seconds:
-        one: "less than 1 second"
-        other: "less than %{count} seconds"
+        one: "alle 1 sekuntia"
+        other: "alle %{count} sekuntia"
       x_seconds:
-        one: "1 second"
+        one: "1 sekunti"
         other: "%{count} seconds"
       less_than_x_minutes:
-        one: "less than a minute"
-        other: "less than %{count} minutes"
+        one: "alle minuutin"
+        other: "alle %{count} minuuttia"
       x_minutes:
-        one: "1 minute"
-        other: "%{count} minutes"
+        one: "1 minuutti"
+        other: "%{count} minuuttia"
       about_x_hours:
-        one: "about 1 hour"
-        other: "about %{count} hours"
+        one: "noin 1 tunti"
+        other: "noin %{count} tuntia"
       x_days:
-        one: "1 day"
-        other: "%{count} days"
+        one: "1 päivä"
+        other: "%{count} päivää"
       about_x_months:
-        one: "about 1 month"
-        other: "about %{count} months"
+        one: "noin 1 kuukausi"
+        other: "noin %{count} kuukautta"
       x_months:
-        one: "1 month"
-        other: "%{count} months"
+        one: "1 kuukausi"
+        other: "%{count} kuukautta"
       about_x_years:
-        one: "about 1 year"
-        other: "about %{count} years"
+        one: "melkein 1 vuosi"
+        other: "melkein %{count} vuotta"
       over_x_years:
-        one: "over 1 year"
-        other: "over %{count} years"
+        one: "yli 1 vuosi"
+        other: "yli %{count} vuotta"
       almost_x_years:
-        one: "almost 1 year"
-        other: "almost %{count} years"
+        one: "melkein 1 vuosi"
+        other: "melkein %{count} vuotta"
     prompts:
-      year: "Year"
-      month: "Month"
-      day: "Day"
-      hour: "Hour"
-      minute: "Minute"
-      second: "Seconds"
+      year: "vuosi"
+      month: "kuukausi"
+      day: "päivä"
+      hour: "tunti"
+      minute: "minuutti"
+      second: "sekunti"
 
   helpers:
     select:
       # Default value for :prompt => true in FormOptionsHelper
-      prompt: "Please select"
+      prompt: "Valitse"
 
     # Default translation keys for submit FormHelper
     submit:
-      create: 'Create %{model}'
-      update: 'Update %{model}'
-      submit: 'Save %{model}'
+      create: 'Luo  %{model}'
+      update: 'Päivitä %{model}'
+      submit: 'Tallenna %{model}'
 
 # Used in array.to_sentence.
   support:
     array:
      words_connector:
-      two_words_connector: " and "
-      last_word_connector: ", and "
+      two_words_connector: " ja "
+      last_word_connector: ", ja "
       
 # ==================================================================================
 # Adaptiert von:
@@ -107,8 +107,8 @@ fi:
       short: "%d. %b"
       long: "%d. %B %Y"
 
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    day_names: [sunnuntai, maanantai, tiistai, keskiviiko, torstai, perjantai, lauantai]
+    abbr_day_names: [su, ma, ti, ke, to, pe, la]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
