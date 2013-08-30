@@ -64,6 +64,7 @@ SalorHospitality::Application.routes.draw do
       get :logout
       post :by_nr
       get :last
+      post :last
     end
   end
 

@@ -80,7 +80,7 @@ gn:
       order:
         change_given: Wechselgeld
         finished_at: Abgeschlossen am
-        nr: Nummmer
+        nr: Nummer
         sum: Summe
       page:
         active: aktiv

@@ -1,6 +1,6 @@
 %h2= t '.title'
 
-= form_tag 'by_nr', :id => 'search_by_nr' do
+= form_tag 'last', :id => 'search_by_nr' do
   = text_field_tag 'nr', t('orders.show.search_by_number')
   %span#nr_display_keyboard.display_keyboard
 
@@ -11,15 +11,20 @@
     %th= Order.human_attribute_name :sum
     %th= User.model_name.human
     %th= Customer.model_name.human
+    %th= Settlement.model_name.human
     %th= t('invoice')
   - @orders.each do |o|
     %tr
-      %td= o.nr
+      %td
+        %span.button= link_to("#{ o.nr }", order_path(o))
       %td= l o.finished_at, :format => :short
       %td
         %b= number_to_currency o.sum
       %td= o.user.login
       %td= o.customer.full_name if o.customer
+      %td
+        - if o.settlement
+          %span.button= link_to("#{ Settlement.model_name.human } #{ o.settlement.nr }", "/settlements/detailed_list?settlement_id=#{o.settlement.id}") 
       %td
         = link_to '', order_path(o), :class => 'print1_button_small'
 

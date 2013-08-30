@@ -22,7 +22,15 @@ class OrdersController < ApplicationController
   end
   
   def last
-    @orders = @current_vendor.orders.existing.where(:finished => true).order('finished_at DESC').limit(30)
+    nr = params[:nr]
+    if nr.blank?
+      @orders = @current_vendor.orders.existing.where(:finished => true).order('nr DESC').limit(30)
+    else
+      order = @current_vendor.orders.existing.find_by_nr(nr)
+      from = order.finished_at
+      to = from + 1.day
+      @orders = @current_vendor.orders.existing.where(:finished => true, :finished_at => from..to).order('nr ASC')
+    end
   end
 
   def show
