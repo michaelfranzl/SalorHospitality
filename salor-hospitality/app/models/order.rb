@@ -282,14 +282,21 @@ class Order < ActiveRecord::Base
   end
 
   def move(target_table_id)
+    ActiveRecord::Base.logger.info "order.rb move: called on self #{ self.inspect }"
     return if self.table_id == target_table_id.to_i
     target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
+    ActiveRecord::Base.logger.info "order.rb move: target_order is #{ target_order.inspect }"
+    ActiveRecord::Base.logger.info "order.rb move: unlinking self"
     self.unlink
+    ActiveRecord::Base.logger.info "order.rb move: reloading self"
     self.reload
     origin_table = self.table
+    ActiveRecord::Base.logger.info "order.rb move: origin_table = #{ origin_table.inspect }"
     target_table = Table.find_by_id target_table_id
+    ActiveRecord::Base.logger.info "order.rb move: target_table = #{ target_table.inspect }"
 
     if target_order
+      ActiveRecord::Base.logger.info "order.rb move: updating item/option_item/tax_item ids = #{ self.items.collect{ |i| i.id }.inspect } with order_id #{ target_order.id }"
       self.items.update_all :order_id => target_order.id
       self.option_items.update_all :order_id => target_order.id
       self.tax_items.update_all :order_id => target_order.id
@@ -300,8 +307,12 @@ class Order < ActiveRecord::Base
       #target_order.items.existing.each { |i| i.calculate_totals } # this is already called in .regroup
       target_order.calculate_totals
     else
+      ActiveRecord::Base.logger.info "order.rb move: setting target_table_id #{ target_table_id } for self"
       self.table_id = target_table_id
-      self.save
+      result = self.save
+      if result != true
+        ActiveRecord::Base.logger.info "order.rb move: ERROR: could not save self because #{ self.errors.messages }"
+      end
     end
     origin_table.update_color
     target_table.update_color
