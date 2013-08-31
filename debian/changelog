@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.23) unstable; urgency=low
+
+  * debug output for move
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 31 Aug 2013 09:06:25 +0200
+
 salor-hospitality (4.1.4.22) unstable; urgency=low
 
   * better list of last orders
