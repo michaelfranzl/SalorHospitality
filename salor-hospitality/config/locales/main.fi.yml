@@ -469,7 +469,7 @@ fi:
     errtype: Virheellinen tiedostotyyppi
   invalid_date: Virheellinen päivämäärä
   invoice: Lasku
-  invoice_numer_X_at_time: Lasku nro %{numero} pvm: %{datetime}
+  invoice_numer_X_at_time: Lasku nro %{numero} pvm %{datetime}
   invoices: Laskut
   is_no_number: ei ole numeroa.
   items:
@@ -741,7 +741,7 @@ fi:
   sessions:
     browser_warning:
       continue: Jatka
-      warning: Salor tukee vain selaimia: Google Chrome (Windows), Chromium
+      warning: Salor tukee vain selaimia Google Chrome (Windows), Chromium
         (Linux) tai Safari (Apple). Käytä jotakin näistä selaimista ja yritä uudelleen.
     new:
       email: Sähköpostiosoitteesi
