@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :receipts
   has_many :payment_method_items
   has_many :tax_items
+  has_many :histories
   belongs_to :role
   belongs_to :company
   has_and_belongs_to_many :vendors

@@ -11,6 +11,7 @@
 class Table < ActiveRecord::Base
   include Scope
   has_many :orders
+  has_many :histories, :as => 'model'
   belongs_to :user
   belongs_to :company
   belongs_to :vendor

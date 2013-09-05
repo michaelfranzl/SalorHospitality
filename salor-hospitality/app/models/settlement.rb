@@ -115,7 +115,7 @@ class Settlement < ActiveRecord::Base
     
     list_of_orders = ''
     self.orders.existing.where(:finished => true).each do |o|
-      t = I18n.l(o.created_at, :format => :time_short)
+      t = I18n.l(o.finished_at, :format => :time_short)
       costcentername = o.cost_center.name if o.cost_center
       nr = o.nr ? o.nr : 0 # failsafe
       order_values = [

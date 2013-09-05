@@ -17,13 +17,30 @@ class ApplicationController < ActionController::Base
 
   unless SalorHospitality::Application.config.consider_all_requests_local
     rescue_from(Exception, :with => :render_error)
-  end 
+  end
+  
+  def create_history_for_route
+    # the following is for better history querying
+    h = History.new
+    if params.has_key?('model')
+      h.model_type = 'Table'
+      h.model_id = params[:model][:table_id]
+      if params['jsaction'] == 'send'
+        if params['model'].has_key?('user_id')
+          h.changes_made = 'send_change_user'
+        else
+          h.changes_made = "send_goto_#{ params['target'] }_from_#{ params['currentview'] }"
+        end
+      elsif params['jsaction'] == 'move'
+        h.changes_made = "move_from_#{ params[:model][:table_id] }_to_#{ params['target_table_id'] }"
+      end
+    end
+    h.action_taken = 'route'
+    h.save
+  end
   
   def route
-    h = History.new
-    h.action_taken = 'route'
-    h.changes_made = params.to_s
-    h.save
+    create_history_for_route
     case params[:currentview]
       # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'

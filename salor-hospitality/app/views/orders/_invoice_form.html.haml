@@ -45,7 +45,10 @@
               %option
               = options_from_collection_for_select(@bookings, :id, :info_for_order_assignment, (invoice_form.booking.id if invoice_form.booking))
 
-  %h3== #{ t('activerecord.models.order.one')} ##{invoice_form.nr}, #{ invoice_form.table.name }, #{ invoice_form.user.login }
+  %h3
+    == #{ t('activerecord.models.order.one')}
+    == ##{invoice_form.nr}, #{ invoice_form.table.name },
+    %span{ :id => "invoice_username_#{ oid }" }== #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
   %table.invoice
     - invoice_form.items.existing.positioned.each do |item|
@@ -104,3 +107,8 @@
   if (permissions.manage_payment_methods) {
     add_payment_method(#{oid}, null, submit_json.totals[#{oid}].model);
   }
+  
+- if invoice_form.user_id != @current_user.id
+  :javascript
+    $("#invoice_username_#{ oid }").toggle('pulsate', { times:300 }, 900);
+    $("#invoice_username_#{ oid }").css('color', 'red');

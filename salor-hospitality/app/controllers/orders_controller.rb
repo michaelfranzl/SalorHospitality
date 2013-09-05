@@ -72,7 +72,7 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)
+    @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).order('finished_at DESC').limit(7)
     if permit('finish_all_settlements') or permit('view_all_settlements')
       @permitted_users = @current_vendor.users.existing.active.where('role_weight > 0')
     else
