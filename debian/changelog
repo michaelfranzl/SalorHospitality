@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.24) unstable; urgency=low
+
+  * sort recent orders by finished_at, display finished_at for settlement printout, highlight username for invoice form
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 05 Sep 2013 18:31:02 +0200
+
 salor-hospitality (4.1.4.23) unstable; urgency=low
 
   * debug output for move
