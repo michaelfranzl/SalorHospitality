@@ -74,3 +74,47 @@ function add_menu_button(elem,button,callback) {
   menu.append(button);
   button.on('click',callback);
 }
+
+
+
+function make_select_widget(elem) {
+  if (elem.attr("no_select_widget") == 1)
+    return;
+  elem.hide();
+  var button = create_dom_element('span', {id:'select_widget_button_for_' + elem.attr("id")});
+  button.addClass("button select-widget-button");
+  button.html(elem.find("option:selected").text());
+  if (button.html() == "")
+    button.html("☟");
+  button.insertAfter(elem);
+  if (elem.children("option").length > 0) {
+    button.on('click', function () {
+      if ($('#select_widget_container_'+ elem.attr("id")).length > 0)
+        return;
+      var mdiv = create_dom_element('div', {id:'select_widget_container_'+ elem.attr("id")}, '');
+      mdiv.addClass('select-widget-display');
+      $.each(elem.children("option"), function (k,v) {
+        var text = $(v).text();
+        if (text == "")
+          text = "&nbsp;";
+        var o = create_dom_element('span', {value:$(v).val()}, text);
+        o.addClass('button select-widget-entry');
+        if (elem.val() == $(v).val()) {
+          o.addClass('select-widget-entry-selected');
+        }
+        o.on('click', function () {
+          elem.find("option:selected").removeAttr("selected"); 
+          elem.find("option[value='"+$(this).val()+"']").attr("selected","selected");
+          elem.change();
+          button.html(o.html());
+          mdiv.remove();
+        });
+        mdiv.append(o);
+      });
+      mdiv.css({position: 'absolute'});
+      $('body').append(mdiv);
+      mdiv.offset({left: button.offset().left - 50, top: button.offset().top - 50});
+      mdiv.show();
+    });
+  }
+}

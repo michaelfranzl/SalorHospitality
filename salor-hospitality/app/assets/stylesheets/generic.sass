@@ -92,9 +92,10 @@ td.item_configuration
 a.iconbutton
   :width 50px
   :height 54px
-  :margin 0px 0px 0px -1px
+  :margin 0px 0px 0px -3px
   :cursor pointer
   :display inline-block
+  :background-size 100%
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
 
@@ -146,10 +147,9 @@ a.cancel_button
 #functions_header_order_form a,
 #functions_header_last_invoices a,
 #functions_footer a
-  :margin 0px 6px 0px -1px
+  :margin 0px 7px 0px -1px
   
 #functions_footer a#order_clear_button
-  :margin 0px 0px 0px 25px
 
 a.edit_button
   :background-image url(button_mobile_edit.png)
@@ -256,28 +256,15 @@ a.cash_button
 
 a.finish_button
   :background-image url(button_mobile_finish.png)
+  
+a.logout_button
+  :background-image url(button_mobile_fingerprint.png)
 
 a.move-to-table_button
   :background-image url(button_mobile_move-to-table.png)
 
 a#exit_button.exit_button
   :background-image url(button_mobile_exit.png)
-  
-div#functions,
-div#logout
-  input
-    :width 50px
-    :height 54px
-    :background none
-    :background-repeat no-repeat
-    :border none
-    :color none
-    :background-image url(button_mobile_fingerprint.png)
-    :margin 20px 4px 0px 0px
-    :cursor pointer
-    :display inline-block
-    :-moz-border-radius 5px
-    :-webkit-border-radius 5px
 
 div.invoice
   :background-color white
@@ -429,7 +416,6 @@ tr.item td.updated
 
 div#draw_controls
   :display none
-  :text-align center
   span#submit_drawing
     :display inline-block
     :background-color $billgastroblue1
@@ -626,13 +612,18 @@ div.item_list
 span.button
   :background-color white
   :display inline-block
-  :padding 5px
+  :padding 5px 7px
   :color black
   :border 1px solid #666
   :-webkit-border-radius 3px
   :-moz-border-radius 3px
   :cursor pointer
   :text-transform uppercase
+  :font-size 110%
+  :margin 3px 0px 5px 0px
+  a
+    color: black
+    text-decoration: none
 
 span.button.bg_green
   :background-color #AFA
@@ -676,3 +667,150 @@ div.invoice_item
     :width 99%
     :border 3px solid white
     :overflow hidden
+
+    
+// ============== PAGES ============
+
+table.page
+  div.page
+    :position relative
+    :margin 0px
+    
+
+div.page
+  :width 800px
+  :height 480px
+  :background-color white
+  :position absolute
+  :margin 50px 0px 0px 10px
+  :display none
+  :color black
+  :background-repeat no-repeat
+  :background-size 100%
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 10px
+
+    
+div.partial
+  :position absolute
+  textarea
+    :display none
+    :border none
+    :background-color transparent
+    :position absolute
+    :top 39px
+  div.options
+    :text-align right
+    :left -20px
+    :position absolute
+    :opacity 0.4
+  div.options:hover
+    :opacity 0.8
+  img
+    :-moz-box-shadow 0px 0px 8px black
+    :-moz-border-radius 10px
+    :-webkit-box-shadow 0px 0px 8px black
+    :-webkit-border-radius 10px
+  
+
+
+  
+div.previous_page_button,
+div.next_page_button
+  :float left
+  :height 400px
+  :width 50px
+  :margin 0 10px
+  
+div.previous_page_button a,
+div.next_page_button a
+  :color black
+  :display block
+  :height 400px
+  :width 50px
+  :background-repeat no-repeat
+  :background-position center center
+  
+div.next_page_button a
+  :background-image url('arrow_page_right.png')
+  
+div.previous_page_button a
+  :background-image url('arrow_page_left.png')
+  
+select.presentation_for_partial
+  :display none
+  :position absolute
+  :top 5px
+
+img.asset
+  :width 200px
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 10px
+  
+  
+#digital_menucard
+  :height 100%
+  :width 100%
+  div.page
+    :position fixed
+    :left 0px
+    :top 0%
+    :height 100%
+    :width 100%
+    :margin 0px
+  
+#digital_menucard,
+.page
+  :position fixed
+  :left 0px
+  :top 0%
+  span.dmc_button
+    :display inline-block
+    :padding 10px
+    :background-color rgba(255, 255, 255, 0.5)
+    :background-position center
+    :background-repeat no-repeat
+    :color black
+    :cursor pointer
+  span.dmc_addcartbutton
+    :width 100px
+    :height 70px
+    :padding 0px
+    :background-image url(addtocart.svg)
+    :background-size 100%
+  #dm_header
+    :position fixed
+    :left 0px
+    :top 0px
+    :width 100%
+    :font-size 200%
+    :text-align center
+    span
+      :display inline-block
+      :padding 10px
+      :background-color rgba(255, 255, 255, 0.5)
+      :color black
+      :cursor pointer
+    span#dmc_forward
+      :position fixed
+      :right 0px
+      :bottom 0px
+    span#dmc_back
+      :position fixed
+      :left 0px
+      :bottom 0px
+    span#dmc_sum
+      :position fixed
+      :left 0px
+      :top 0px
+    span#dmc_detail
+      :position fixed
+      :right 0px
+      :top 0px
+  
+.center
+  :text-align center

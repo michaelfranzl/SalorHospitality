@@ -27,6 +27,8 @@ class Quantity < ActiveRecord::Base
       record.errors.add(attr_name, I18n.t('activerecord.errors.messages.empty')) if record.not_hidden? and value.empty? and record.prefix.empty?
     end
   end
+  
+  after_commit :set_article_name
 
   # so that a deleted dynamic nested quantity in articles#new don't add validation errors
   def not_hidden?
@@ -35,5 +37,9 @@ class Quantity < ActiveRecord::Base
 
   def price=(price)
     write_attribute(:price, price.to_s.gsub(',', '.'))
+  end
+  
+  def set_article_name
+    write_attribute(:article_name, self.article.name)
   end
 end

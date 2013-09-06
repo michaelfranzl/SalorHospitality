@@ -1,0 +1,16 @@
+.error_page
+  %h1= I18n.t('various.exception_page.oops_an_error_occurred')
+  %br
+  %br
+  %b= t('various.exception_page.assistance_text')
+  %br
+  %br
+  %a.links{ :href => '/' } HOME
+  %br
+  %br
+  %br
+  .errordescription
+    %h2= t('various.exception_page.exception_description')
+    %p= @exception.message
+    %h2= t('various.exception_page.exception_in_files')
+    %small= raw @exception.backtrace[0..3].join('<br />')

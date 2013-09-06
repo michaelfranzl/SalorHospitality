@@ -11,11 +11,36 @@
 class ApplicationController < ActionController::Base
   # protect_from_forgery
   #helper :all
-  before_filter :fetch_logged_in_user, :set_locale
+  before_filter :fetch_logged_in_user, :set_locale, :set_tailor, :set_up, :autologout_customers
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
+
+  unless SalorHospitality::Application.config.consider_all_requests_local
+    rescue_from(Exception, :with => :render_error)
+  end
+  
+  def create_history_for_route
+    # the following is for better history querying
+    h = History.new
+    if params.has_key?('model')
+      h.model_type = 'Table'
+      h.model_id = params[:model][:table_id]
+      if params['jsaction'] == 'send'
+        if params['model'].has_key?('user_id')
+          h.changes_made = 'send_change_user'
+        else
+          h.changes_made = "send_goto_#{ params['target'] }_from_#{ params['currentview'] }"
+        end
+      elsif params['jsaction'] == 'move'
+        h.changes_made = "move_from_#{ params[:model][:table_id] }_to_#{ params['target_table_id'] }"
+      end
+    end
+    h.action_taken = 'route'
+    h.save
+  end
   
   def route
+    create_history_for_route
     case params[:currentview]
       # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'
@@ -91,15 +116,20 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_print'
             get_order
-            Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
-            @order.pay
-            @order.reload
-            @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
-            render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+            if params[:interim] == 'true'
+              @order.print(['interim_receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+              render_invoice_form(@order.table)
+            else
+              #Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
+              @order.pay
+              @order.reload
+              @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer])) if params[:printer]
+              render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
+            end
           #----------jsaction----------
           when 'pay_and_no_print'
             get_order
-            Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
+            #Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
             @order.pay
             @order.reload
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
@@ -107,6 +137,12 @@ class ApplicationController < ActionController::Base
       
       when 'table'
         get_order
+        if @order.finished == true
+          # happens when 2 terminals have the same order opened, but one is faster with finishing. in this case, route to the tabe again. happens also when waiter wants to clear a customer order.
+          @table = @order.table
+          @order = nil
+          render 'orders/render_order_form' and return
+        end
         case params['jsaction']
           #----------jsaction----------
           when 'send'
@@ -137,9 +173,31 @@ class ApplicationController < ActionController::Base
                   @table = @order.table
                   @order = nil
                   render 'orders/render_order_form'
+                  
+                when 'tables_no_invoice_print'
+                  @order.pay(@current_user)
+                  @order.print(['tickets'])
+                  @table = @order.table
+                  @order = nil
+                  render :nothing => true
+                when 'tables_do_invoice_print'
+                  @order.pay(@current_user)
+                  @order.print(['tickets','receipt'], @current_vendor.vendor_printers.existing.first)
+                  @table = @order.table
+                  @order = nil
+                  render :nothing => true
+
+                when 'table_interim_receipt_print'
+                  @order.print(['interim_receipt'], @current_vendor.vendor_printers.existing.first)
+                  render :nothing => true
                 when 'table_request_send'
                   @table = @order.table
-                  render 'orders/render_order_form'
+                  if @current_customer.default_table_id
+                    render 'orders/render_order_form'
+                  else
+                    render :js => "logout({notice:'Thank you. Your order is being processed.'});"
+                  end
+                  
                 when 'table_request_finish'
                   @table = @order.table
                   @table.set_request_finish
@@ -150,13 +208,15 @@ class ApplicationController < ActionController::Base
                   render 'orders/render_order_form'
               end
             else
-              render :nothing => true
+              render 'orders/render_order_form'
+              #render :nothing => true
             end
           #----------jsaction----------
           when 'move'
             @order.print(['tickets'])
             @order.move(params[:target_table_id])
             render :nothing => true # routing is done by static javascript to 'tables'
+
         end
       
       when 'room'
@@ -181,14 +241,79 @@ class ApplicationController < ActionController::Base
             render :js => "window.location = '/bookings/#{ @booking.id }';"
         end
     end
-    if permit('see_debug')
-      @order.check if @order
-      @booking.check if @booking
-    end
     return
   end
 
   private
+  
+    def set_up
+      SalorHospitality.requestcount += 1
+      
+      if defined?(ShSaas) == 'constant'
+        @sessionpath = sh_saas.session_path
+      else
+        @sessionpath = session_path
+      end
+      
+      if params[:notice] and params[:notice].empty? == false
+        flash[:notice] = params[:notice]
+      end
+      
+      if params[:error] and params[:error].empty? == false
+        flash[:error] = params[:error]
+      end
+    end
+    
+    def autologout_customers
+      if SalorHospitality.requestcount % 10 == 0
+        # every 10 requests
+        @from = 100.years.ago
+        @to = 20.minutes.ago
+        Customer.existing.where(:logged_in => true, :last_login_at => @from..@to).each do |c|
+          logger.info "AUTO LOGGING OUT CUSTOMER #{ c.inspect }"
+          c.logged_in = false
+          c.table = nil
+          c.save
+        end
+      end
+    end
+  
+    def set_tailor
+      return unless @current_vendor and SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
+      
+      t = SalorHospitality.tailor
+      # check if stream is open. if not, create a new one
+      if t
+        #logger.info "[TAILOR] Checking if socket #{ t.inspect } is healthy"
+        begin
+          t.puts "PING|#{ @current_vendor.hash_id }|#{ Process.pid }"
+        rescue Errno::EPIPE
+          logger.info "[TAILOR] Error: Broken pipe for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
+        rescue Errno::ECONNRESET
+          logger.info "[TAILOR] Error: Connection reset by peer for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
+        rescue Exception => e
+          logger.info "[TAILOR] Other Error: #{ e.inspect } for #{ t.inspect } #{ t }"
+          SalorHospitality.old_tailors << t
+          t = nil
+        end
+      end
+      
+      if t.nil?
+        begin
+          t = TCPSocket.new 'localhost', 2001
+          logger.info "[TAILOR] Info: New TCPSocket #{ t.inspect } #{ t } created"
+        rescue Errno::ECONNREFUSED
+          t = nil
+          logger.info "[TAILOR] Warning: Connection refused. No tailor.rb server running?"
+        end
+        SalorHospitality.tailor = t
+      end
+
+    end
   
     def get_model(model_id=nil, model=nil)
       id = model_id ? model_id : params[:id]
@@ -202,7 +327,15 @@ class ApplicationController < ActionController::Base
       return object
     end
   
+    
+    # convenience function for creating or updating an order
     def get_order
+      
+      if @current_customer
+        params[:model][:table_id] = @current_customer.table.id # security measure
+      end
+      
+      
       if params[:id]
         @order = get_model(params[:id], Order)
       elsif params[:model] and params[:model][:table_id]
@@ -216,7 +349,10 @@ class ApplicationController < ActionController::Base
           ActiveRecord::Base.logger.info "[TECHNICIAN] params[:model][:table_id] was not set"
         end
       end
-      if @order
+      
+      if @order and @order.finished == true
+        # do nothing, since it is already finished
+      elsif @order
         params[:model][:table_id] = @order.table_id if params[:model] # under high load, table_id may be wrong. We simply do not allow to change the table_id of the order.
         @order.update_from_params(params, @current_user, @current_customer)
       else
@@ -236,18 +372,32 @@ class ApplicationController < ActionController::Base
     end
 
     def assign_from_to(p)
-      begin
-        f = Date.civil( p[:from][:year ].to_i,
-                        p[:from][:month].to_i,
-                        p[:from][:day  ].to_i) if p[:from]
-        t = Date.civil( p[:to  ][:year ].to_i,
-                        p[:to  ][:month].to_i,
-                        p[:to  ][:day  ].to_i) if p[:to]
-      rescue
-        flash[:error] = t(:invalid_date)
-        f = Time.now.beginning_of_day
-        t = Time.now.end_of_day
+      tz = sprintf("%+i", @current_vendor.total_utc_offset_hours)
+      if p[:from]
+        fy = p[:from][:year ].to_i
+        fm = p[:from][:month].to_i
+        fd = p[:from][:day  ].to_i
+        begin
+          f = DateTime.new(fy,fm,fd,0,0,0,tz)
+        rescue
+          flash[:error] = t(:invalid_date)
+        end
       end
+      if p[:to]
+        ty = p[:to][:year ].to_i
+        tm = p[:to][:month].to_i
+        td = p[:to][:day  ].to_i
+        begin
+          t = DateTime.new(ty,tm,td,23,59,59,tz)
+        rescue
+          flash[:error] = t(:invalid_date)
+        end
+      end
+      
+      # the database stores UTC times. If we use the time functios of ruby below, the application time zone will already be attached, so it works out of the box.
+      f ||= DateTime.now.beginning_of_day - 1.week
+      t ||= DateTime.now
+      
       return f, t
     end
 
@@ -255,28 +405,77 @@ class ApplicationController < ActionController::Base
       false
     end
 
-    def fetch_logged_in_user
+    def fetch_logged_in_user    
       @current_user = User.existing.active.find_by_id session[:user_id] if session[:user_id]
-      @current_customer = Customer.find_by_id session[:customer_id] if session[:customer_id]
+      @current_customer = Customer.find_by_id_hash session[:customer_id_hash] if session[:customer_id_hash]
       
       @current_company = Company.existing.find_by_id session[:company_id] if session[:company_id]
       @current_vendor = Vendor.existing.find_by_id session[:vendor_id] if session[:vendor_id]
 
-      session[:vendor_id] = nil and session[:company_id] = nil unless @current_vendor
+      unless @current_vendor
+        session[:vendor_id] = nil and session[:company_id] = nil
+        redirect_to new_session_path and return
+      end
 
-      # we need these for the history observer because we don't have control at the time
-      # the activerecord callbacks run, and anyway controller instance variables wouldn't
-      # be in scope...
+      # we need these global variables for the history observer model
       $User = @current_user
+      $Vendor = @current_vendor
+      $Company = @current_company
       $Request = request
       $Params = params
+      
+      if @current_user and not (@current_user.advertising_url.nil? or @current_user.advertising_url.empty?)
+        @advertising_url = @current_user.advertising_url
+      end
+      
+      if @current_vendor and @current_vendor.branding != {}
+        @branding_codename = @current_vendor.branding[:codename]
+        @branding_title = @current_vendor.branding[:title]
+      else
+        @branding_codename = 'salorhospitality'
+        @branding_title = 'SALOR Hospitality'
+      end
 
-      unless (@current_user or @current_customer) and @current_vendor
-        if defined?(ShSaas) == 'constant'
-          redirect_to sh_saas.new_session_path
+    
+      if @current_user.nil? and @current_customer.nil?
+        session[:user_id] = nil
+        if request.xhr?
+          if defined?(ShSaas) == 'constant'
+            render :js => "window.location = '/signin';" and return
+          else
+            render :js => "window.location = '#{new_session_path}';" and return
+          end
         else
-          redirect_to new_session_path
+          if defined?(ShSaas) == 'constant'
+            redirect_to "/signin" and return
+          else
+            redirect_to new_session_path and return
+          end
         end
+      end
+      
+        
+      if @current_customer and @current_customer.logged_in != true
+        session[:customer_id] = nil
+        flash[:error] = "Automatically logged out"
+        if request.xhr?
+          if defined?(ShSaas) == 'constant'
+            render :js => "window.location = '/login';" and return
+          else
+            render :js => "window.location = '#{new_customer_session_path}';" and return
+          end
+        else
+          if defined?(ShSaas) == 'constant'
+            redirect_to '/login' and return
+          else
+            redirect_to new_customer_session_path and return
+          end
+        end
+      end
+      
+      if @current_user
+        @current_user.last_active_at = Time.now
+        @current_user.save
       end
     end
 
@@ -285,7 +484,7 @@ class ApplicationController < ActionController::Base
       @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => table.id)
       @cost_centers = @current_vendor.cost_centers.existing
       @taxes = @current_vendor.taxes.existing
-      @tables = @current_vendor.tables.existing
+      @tables = @current_user.tables.existing.where(:vendor_id => @current_vendor.id)
       @bookings = @current_vendor.bookings.existing.where("`paid` = FALSE AND `from_date` < ? AND `to_date` > ?", Time.now, Time.now)
       if @orders.empty?
         table.update_attribute :user, nil if @orders.empty?
@@ -315,7 +514,7 @@ class ApplicationController < ActionController::Base
           I18n.locale = @locale = session[:locale] = browser_language
         end
       end
-      @region = SalorHospitality::Application::COUNTRIES_REGIONS[@current_vendor.country] if @current_vendor
+      @region = @current_vendor.region if @current_vendor
     end
 
     def update_vendor_cache
@@ -327,7 +526,27 @@ class ApplicationController < ActionController::Base
     end
 
     def workstation?
-      request.user_agent.nil? or request.user_agent.include?('Firefox') or request.user_agent.include?('MSIE') or request.user_agent.include?('Macintosh') or request.user_agent.include?('Chromium') or request.user_agent.include?('Chrome') or request.user_agent.include?('Qt/')
+      autodetect =
+          request.user_agent.nil? ||
+          request.user_agent.include?('Firefox') ||
+          request.user_agent.include?('MSIE') ||
+          request.user_agent.include?('Macintosh') ||
+          request.user_agent.include?('Chromium') ||
+          request.user_agent.include?('Chrome') ||
+          request.user_agent.include?('Qt/')
+      
+      if params[:controller] == 'sessions' or params[:controller] == 'application'
+        return autodetect
+      elsif not (params[:controller] == 'orders' and params[:action] == 'index')
+        # all other screens except the order screen
+        return true
+      elsif @current_user.nil? or @current_user.layout == 'auto'
+        return autodetect
+      elsif @current_user.layout == 'workstation'
+        return true
+      elsif @current_user.layout == 'mobile'
+        return false
+      end
     end
     
     def permit(p)
@@ -343,7 +562,7 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_special?
-      request.user_agent.include?('iPad')
+      request.user_agent and request.user_agent.include?('iPad')
     end
 
     def neighbour_models(model_name, model_object)
@@ -367,5 +586,21 @@ class ApplicationController < ActionController::Base
       
       return previous_model, next_model
     end
+    
+  protected
+
+  def render_error(exception)
+    logger.info exception.backtrace.join("\n")
+    raise exception if request.xhr?
+    @exception = exception
+    if SalorHospitality::Application::CONFIGURATION[:exception_notification] == true
+      if notifier = Rails.application.config.middleware.detect { |x| x.klass == ExceptionNotifier }
+        env['exception_notifier.options'] = notifier.args.first || {}                   
+        ExceptionNotifier::Notifier.exception_notification(env, exception).deliver
+        env['exception_notifier.delivered'] = true
+      end
+    end
+    render :template => '/errors/error', :layout => 'exception'
+  end
     
 end

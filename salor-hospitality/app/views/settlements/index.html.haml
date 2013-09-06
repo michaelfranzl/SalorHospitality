@@ -2,69 +2,28 @@
 %h2== #{ t 'activerecord.models.settlement.other' } #{ cost_center_header_text }
 
 = form_tag settlements_path, :method => :get do
-  = submit_tag t(:display)
-  = label 'from', t('.start_date'), :class => 'right'
-  = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
-  = label 'to', t('.end_date'), :class => 'right'
-  = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
-  - if @cost_centers.any?
-    = label 'cc', CostCenter.model_name.human, :class => 'right'
-    %select{ :name => 'cost_center_id', :onchange => '$("form").submit()' }
-      %option{ :value => '' }= t ('.all_cost_centers')
-      - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
-      = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
+  .limitby
+    = label 'from', t('.start_date'), :class => 'right'
+    = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
+    %br
+    = label 'to', t('.end_date'), :class => 'right'
+    = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
+    %br
+    - if @cost_centers.any?
+      = label 'cc', CostCenter.model_name.human, :class => 'right'
+      %select{ :name => 'cost_center_id' }
+        %option{ :value => '' }= t ('.all')
+        - selected_id = @selected_cost_center ? @selected_cost_center.id.to_s : ''
+        = options_from_collection_for_select(@cost_centers, :id, :name, selected_id)
+    %br
+    = label 'one_day_one_row', t('.one_day_one_row'), :class => 'right'
+    = check_box_tag 'one_day_one_row', 1, params[:one_day_one_row]
+    %hr
+    = submit_tag t(:display)
 
-%table{ :class => 'settlements' }
-  %tr
-    %th{ :class => 'bb', :style => 'width:40px' }
-    %th{ :class => 'bb', :style => 'width:40px' }
-    %th{ :class => 'bb' }= t :dateandtime
-    %th{ :class => 'br bb' }= User.model_name.human
-    - @taxes.each do |t|
-      %th{ :class => 'br bb' }== #{ t.name } #{ t(:gross) }
-    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t(:sum) } #{ t(:gross) }
-    - @taxes.each do |t|
-      %th{ :class => 'br bb' }== #{ t.name } #{ t(:net) }
-    %th{ :class => 'br bb colsum', :style => 'width:100px' }== #{ t(:sum) } #{ t(:net) }
-    - if permit('manage_payment_methods')
-      - @payment_methods.each do |pm|
-        %th{ :class => 'bb' }= pm.name
-      %th{ :class => 'br bb colsum', :style => 'width:100px' }= t :sum
+.clear
 
-  - if @settlements.any?
-    - @settlements.reverse.each do |s|
-      - #next if s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:gro).zero? and @selected_cost_center
-      %tr
-        %td.link= link_to "##{s.nr}", "settlements/detailed_list?settlement_id=#{ s.id }"
-        %td= link_to '', "/settlements/print/#{ s.id }", :class => 'print1_button_small', :remote => true
-        %td= l s.created_at, :format => :date_iso
-        %td{ :class => 'br' }= s.user.login
-        - @taxes.each do |t|
-          %td= number_to_currency s.tax_items.existing.where(:tax_id => t.id, :refunded => nil, :cost_center_id => @scids).sum(:gro)
-        %td.link= number_to_currency s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:gro)
-        - @taxes.each do |t|
-          %td= number_to_currency s.tax_items.existing.where(:tax_id => t.id, :refunded => nil, :cost_center_id => @scids).sum(:net)
-        %td.link= number_to_currency s.tax_items.existing.where(:refunded => nil, :cost_center_id => @scids).sum(:net)
-        - if permit('manage_payment_methods')
-          - @payment_methods.each do |pm|
-            - if pm.cash == true # substract refunded and change from cash
-              %td= number_to_currency s.payment_method_items.existing.where(:cost_center_id => @scids, :cash => true, :refunded => nil).sum(:amount) - s.payment_method_items.existing.where(:cost_center_id => @scids, :cash => true, :refunded => true).sum(:amount) - s.payment_method_items.existing.where(:cost_center_id => @scids, :change => true).sum(:amount)
-            - else
-              %td= number_to_currency s.payment_method_items.existing.where(:payment_method_id => pm.id, :cost_center_id => @scids, :refunded => nil).sum(:amount) - s.payment_method_items.existing.where(:payment_method_id => pm.id, :cost_center_id => @scids, :refunded => true).sum(:amount)
-          %th{ :class => 'br sum' }= number_to_currency s.payment_method_items.existing.where(:cost_center_id => @scids, :refunded => nil, :change => false).sum(:amount) - s.payment_method_items.existing.where(:cost_center_id => @scids, :change => true).sum(:amount) - s.payment_method_items.existing.where(:cost_center_id => @scids, :refunded => true).sum(:amount)
-        
-    %tr
-      %th{ :colspan => 4 }= t('.sum_total')
-      - @taxes.each do |t|
-        %th{ :class => 'br sum' }= number_to_currency @current_vendor.tax_items.existing.where(:settlement_id => @settlement_ids, :tax_id => t.id, :refunded => nil, :cost_center_id => @scids).sum :gro
-      %th{ :class => 'br sum' }= number_to_currency @current_vendor.tax_items.existing.where(:settlement_id => @settlement_ids, :refunded => nil, :cost_center_id => @scids).sum :gro
-      - @taxes.each do |t|
-        %th{ :class => 'br sum' }= number_to_currency @current_vendor.tax_items.existing.where(:settlement_id => @settlement_ids, :tax_id => t.id, :refunded => nil, :cost_center_id => @scids).sum :net
-      %th{ :class => 'br sum' }= number_to_currency @current_vendor.tax_items.existing.where(:settlement_id => @settlement_ids, :refunded => nil, :cost_center_id => @scids).sum :net
-      - if permit('manage_payment_methods')
-        - @payment_methods.each do |pm|
-          - if pm.cash == true # substract refunded and change from cash
-            %th= number_to_currency @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :cash => true, :refunded => nil).sum(:amount) - @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :cash => true, :refunded => true).sum(:amount) - @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :change => true).sum(:amount)
-          - else
-            %th= number_to_currency @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :payment_method_id => pm.id, :cost_center_id => @scids, :refunded => nil).sum(:amount) - @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :payment_method_id => pm.id, :cost_center_id => @scids, :refunded => true).sum(:amount)
-        %th{ :class => 'br sum' }= number_to_currency @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :refunded => nil, :change => false).sum(:amount) - @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :change => true).sum(:amount) - @current_vendor.payment_method_items.existing.where(:settlement_id => @settlement_ids, :cost_center_id => @scids, :refunded => true).sum(:amount)
+- if params[:one_day_one_row]
+  = render :partial => 'one_day_one_row'
+- else
+  = render :partial => 'one_settlement_one_row'

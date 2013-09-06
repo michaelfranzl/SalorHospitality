@@ -98,10 +98,15 @@ function submit_split_items(order_id) {
     loader.css('margin', '7px');
     splitbutton.css('opacity','0.5');
 
+    var timestamp = new Date().getTime();
     $.ajax({
-      type: 'put',
-      url: '/items/split',
-      data: {jsaction:'split',split_items_hash:submit_json.split_items_hash[order_id],order_id:order_id},
+      type: 'PUT',
+      url: '/items/split?_=' + timestamp,
+      data: {
+        jsaction: 'split',
+        split_items_hash: submit_json.split_items_hash[order_id],
+        order_id: order_id
+      },
       timeout: 90000,
       complete: function(data,status) {
         if (status == 'timeout') {

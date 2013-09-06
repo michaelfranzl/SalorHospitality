@@ -35,6 +35,18 @@ function route(target, model_id, action, options) {
       submit_json.target_table_id = options.target_table_id;
       send_json('table_' + model_id);
       switch_to_tables();
+      
+    } else if (action == 'send_and_finish_noinvoice') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'tables_no_invoice_print';
+      loadify_order_buttons();
+      send_json('table_' + model_id, switch_to_tables);
+      
+    } else if (action == 'send_and_finish_invoice') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'tables_do_invoice_print';
+      loadify_order_buttons();
+      send_json('table_' + model_id, switch_to_tables);
 
     } else {
       unloadify_order_buttons();
@@ -47,43 +59,62 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
-    unloadify_order_buttons();
-    switch_to_table();
+    loadify_order_buttons();
     if (action == 'send') {
       // finish order
       submit_json.jsaction = 'send';
       submit_json.target = 'table_no_invoice_print';
       submit_json.model.note = $('#order_note').val();
-      send_json('table_' + model_id);
-      // stay on table
-      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
-      //final rendering will be done in application#route
-    } else if (action == 'customer_request_send') {
-      submit_json.jsaction = 'send';
-      submit_json.target = 'table_request_send';
-      alert(i18n.order_will_be_confirmed);
-      send_json('table_' + model_id);
-    } else if (action == 'customer_request_finish') {
-      submit_json.jsaction = 'send';
-      submit_json.target = 'table_request_finish';
-      alert(i18n.finish_was_requested);
-      send_json('table_' + model_id);
-    } else if (action == 'customer_request_waiter') {
-      submit_json.jsaction = 'send';
-      submit_json.target = 'table_request_waiter';
-      alert(i18n.waiter_was_requested);
-      send_json('table_' + model_id);
-    } else if (action == 'send_and_print' ) {
-      // finish and print order receipt
-      submit_json.jsaction = 'send';
-      submit_json.target = 'table_do_invoice_print';
-      submit_json.model.note = $('#order_note').val();
+      switch_to_table();
       send_json('table_' + model_id);
       // stay on table
       submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
       //final rendering will be done in application#route
       
-    } else if (submit_json_queue.hasOwnProperty('table_' + model_id)) {
+    } else if (action == 'send_and_print' ) {
+      // finish and print order receipt
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_do_invoice_print';
+      submit_json.model.note = $('#order_note').val();
+      switch_to_table();
+      send_json('table_' + model_id);
+      submit_json.model.table_id = model_id; // this is neccessary because send_json will clear the submit_json.model. since we stay on the table, we need to re-set the table_id.
+      //final rendering will be done in application#route
+      
+    } else if (action == 'customer_request_send') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_send';
+      var answer = confirm("Are you sure that you want to place this order?");
+      switch_to_table();
+      if (answer == true) {
+        //alert(i18n.order_will_be_confirmed);
+        send_json('table_' + model_id, function() {
+          // logging out is rendered from application controller
+        });
+      } else {
+        render_items();
+        return
+      }
+    } else if (action == 'customer_request_finish') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_finish';
+      alert(i18n.finish_was_requested);
+      switch_to_table();
+      send_json('table_' + model_id, function() {
+        render_items()
+      });
+    } else if (action == 'customer_request_waiter') {
+      submit_json.jsaction = 'send';
+      submit_json.target = 'table_request_waiter';
+      alert(i18n.waiter_was_requested);
+      switch_to_table();
+      send_json('table_' + model_id, function() {
+        render_items()
+      });
+      
+    } else if (false && submit_json_queue.hasOwnProperty('table_' + model_id)) {
+      // no offline items are allowed in the latest version. disabled.
+      
       // there are offline orders in the queue. display them instead of loading from the browser
       submit_json = $.extend(true, {}, submit_json_queue['table_' + model_id]); // deep copy
       items_json = $.extend(true, {}, items_json_queue['table_' + model_id]); // deep copy
@@ -101,19 +132,32 @@ function route(target, model_id, action, options) {
       }
       
     } else if (action == 'specific_order') {
+      switch_to_table();
+      unloadify_order_buttons();
       $.ajax({
         type: 'GET',
-        url: '/tables/' + model_id + '?order_id=' + options.order_id,
-        timeout: 15000
-      }); //this repopulates items_json and renders items
+        url: '/tables/' + model_id,
+        data: {order_id: options.order_id},
+        timeout: 15000,
+        cache: false,
+        success: function() {
+          render_items();
+        }
+      }); //this just fetches items_json and a few other state variables
+      
     } else if (action == 'from_booking') {
+      switch_to_table();
       submit_json.jsaction = 'send_and_go_to_table';
       send_json('booking_' + options.booking_id);
       submit_json.model.table_id = model_id;
+      
     } else {
       // regular click on a table from main view
+      switch_to_table();
+      unloadify_order_buttons();
       get_table_show(model_id);
     }
+    
     // clean workspace up
     submit_json = {model:{}};
     submit_json.model.table_id = model_id;
@@ -123,6 +167,7 @@ function route(target, model_id, action, options) {
   } else if ( target == 'invoice') {
     submit_json.target = 'invoice';
     invoice_update = true;
+    interim_receipt_enabled = false;
     if (action == 'send') {
       submit_json.jsaction = 'send';
       submit_json.model.note = $('#order_note').val();
@@ -134,6 +179,7 @@ function route(target, model_id, action, options) {
     }
     counter_update_tables = -1;
     screenlock_counter = -1;
+    advertising_counter = -1;
     $('#invoices').html('');
     submit_json = {model:{},split_items_hash:{},totals:{},payment_method_items:{}};
     submit_json.currentview = 'invoice';
@@ -167,6 +213,7 @@ function route(target, model_id, action, options) {
     }
     $('.booking_form').remove();
     screenlock_counter = settings.screenlock_timeout;
+    advertising_counter = settings.advertising_timeout;
     option_position = 0;
     item_position = 0;
     counter_update_tables = timeout_update_tables;
@@ -179,17 +226,24 @@ function route(target, model_id, action, options) {
     $('#areas').hide();
     $('#tables').hide();
     $('#rooms').hide();
-    $('#container').show();
+    $('#main').show();
     $('#spliced_seasons').show();
     $('#functions_header_index').hide();
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
     $('#items_notifications_static').hide();
+    screenlock_counter = -1;
+    advertising_counter = -1;
     submit_json = {currentview:'room', model:{room_id:model_id, room_type_id:null, duration:1}, items:{}};
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/rooms/' + model_id, timeout: 15000 }); //this repopulates items_json and renders items
+    $.ajax({
+      type: 'GET',
+      url: '/rooms/' + model_id,
+      cache: false,
+      timeout: 15000
+    }); //this repopulates items_json and renders items
     window.display_booking_form(model_id);
 
   // ========== EXISTING BOOKING ===============
@@ -200,7 +254,7 @@ function route(target, model_id, action, options) {
     $('#tables').hide();
     $('#rooms').hide();
     //$('.booking_form').remove();
-    $('#container').show();
+    $('#main').show();
     $('#orderform').hide();
     $('#invoices').hide();
     $('#spliced_seasons').show();
@@ -209,6 +263,10 @@ function route(target, model_id, action, options) {
     $('#functions_header_order_form').hide();
     //$('#items_notifications_interactive').hide();
     $('#items_notifications_static').hide();
+    
+    screenlock_counter = -1;
+    advertising_counter = -1;
+    
     if (typeof(options) == 'undefined') {
       room_id = null;
     } else {
@@ -218,7 +276,12 @@ function route(target, model_id, action, options) {
     surcharge_headers = {guest_type_set:[], guest_type_null:[]};
     _set('surcharge_headers', surcharge_headers);
     items_json = {};
-    $.ajax({ type: 'GET', url: '/bookings/' + model_id, timeout: 15000 });
+    $.ajax({
+      type: 'GET',
+      url: '/bookings/' + model_id,
+      cache: false,
+      timeout: 15000
+    });
     window.display_booking_form(room_id);
     
   // ========== REDIRECT ===============
@@ -238,9 +301,15 @@ function route(target, model_id, action, options) {
       
     } else if (action == 'invoice_move') {
       $.ajax({
-        type: 'post',
+        type: 'GET',
         url: '/route',
-        data: {currentview:'invoice', jsaction:'move', target_table_id:options.target_table_id, id:model_id},
+        cache: false,
+        data: {
+          currentview: 'invoice',
+          jsaction: 'move',
+          target_table_id: options.target_table_id,
+          id: model_id
+        },
         timeout: 15000
       })
     }

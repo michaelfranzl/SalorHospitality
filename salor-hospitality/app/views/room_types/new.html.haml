@@ -9,6 +9,8 @@
 
 .form_fields
   = form_for @room_type do |room_type_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), room_types_path, :class => 'links')
+    .clear
     = room_type_form.label :name
     = room_type_form.text_field :name, :size => '20'

@@ -2,24 +2,48 @@
 
 %p= link_to((t :new), new_user_path, :class => 'links')
 
-%table
-  %tr
-    %th{ :style => 'width:180px' }
-    %th{ :style => 'width:150px' }= User.human_attribute_name(:title)
-    %th{ :style => 'width:150px' }= User.human_attribute_name(:role)
-    %th{ :style => 'width:100px' }= User.human_attribute_name(:color)
-    %th{ :style => 'width:100px' }= User.human_attribute_name(:language)
-  - @users.each do |u|
-    - role = u.role
+- @vendors.each do |v|
+  - next unless v.users.existing.any?
+  %h3= v.name
+  %table
     %tr
-      - next if u.role.weight.zero? and @current_user.role.weight > 0
-      %td
-        - if role.weight > @current_user.role.weight or u == @current_user
-          = link_to u.login, edit_user_path(u)
-        - else
-          = u.login
-      %td= u.title
-      %td= u.role.name
-      %td= get_colors[u.color]
-      %td= SalorHospitality::Application::LANGUAGES[u.language]
-      %td= link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)
+      %th{ :style => 'width:180px' }
+      %th{ :style => 'width:150px' }= User.human_attribute_name(:title)
+      %th{ :style => 'width:150px' }= User.human_attribute_name(:role)
+      %th{ :style => 'width:100px' }= User.human_attribute_name(:color)
+      %th{ :style => 'width:100px' }= User.human_attribute_name(:language)
+    - v.users.existing.order(:role_weight).each do |u|
+      - role = u.role
+      %tr
+        - next if u.role.weight.zero? and @current_user.role.weight > 0
+        %td
+          - if role.weight >= @current_user.role.weight or u == @current_user
+            = link_to u.login, edit_user_path(u)
+          - else
+            = u.login
+        %td= u.title
+        %td= u.role.name
+        %td= get_colors[u.color]
+        %td= SalorHospitality::Application::LANGUAGES[u.language]
+        %td= link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)
+      - user_logins = u.user_logins.where(:created_at => (Time.now - 1.day)..(Time.now))
+      
+      - if u.track_time and user_logins.any?
+        %tr
+          %td{ :colspan => 6}
+            #user_logins
+              %table
+                %tr
+                  %th
+                  %th
+                  %th= UserLogin.human_attribute_name(:duration)
+                - u.user_logins.where(:created_at => Time.now.beginning_of_day..Time.now).each do |ul|
+                  %tr{ :class => "#{ 'total' if ul.logout }" }
+                    %td.left= ul.login ? "#{ UserLogin.human_attribute_name(:login) } ▶" : "◁ #{ UserLogin.human_attribute_name(:logout) }"
+                    %td= l((ul.login ? ul.login: ul.logout), :format => :long)
+                    %td= UserLogin.duration_formatted(ul.duration.to_i) if ul.logout
+                  - if ul == u.user_logins.last and ul.logout.nil?
+                    %tr.total{ :style => 'color:green' }
+                      %td
+                      %td== #{  t '.on_duty' }...
+                      %td= UserLogin.duration_formatted((Time.now - ul.login).to_i / 60)

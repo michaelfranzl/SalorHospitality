@@ -6,6 +6,8 @@
   .clear
   = raw Kramdown::Document.new(@order.vendor.invoice_header_blurb).to_html if @order.vendor.invoice_header_blurb
 .customer_details
+  - if @order.note
+    = @order.note
   - if @order.customer
     = @order.customer.company_name
     %br
@@ -14,6 +16,10 @@
     = @order.customer.address
     %br
     == #{ @order.customer.postalcode } #{ @order.customer.city }
+    %br
+    = @order.customer.tax_info
+    %br
+    = @order.customer.telephone
   %p.show_paper_invoice_notes{:onclick => "$('#paper_invoice_notes').slideDown();"}== #{ t('.add_notes') } ∇
   %div#paper_invoice_notes{:style => "display:none;"}
     %input
@@ -31,7 +37,7 @@
 
 %h1== #{ t 'invoice' } ##{ @order.nr }
 
-%p.date= l @order.finished_at, :format => :datetime_iso
+%p.date= l(@order.finished_at + @order.vendor.time_offset.hours, :format => :datetime_iso)
 
 = render :partial => 'invoice_item_list', :locals => { :order => @order }
 

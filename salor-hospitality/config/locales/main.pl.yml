@@ -1,74 +1,69 @@
 ---
 pl:
-  statistic_categories:
-    new:
-      edit_statistic_category: Edytowanie kategorii statystycznej
-      new_statistic_category: Dodawanie kategorii statystycznej
   activerecord:
     attributes:
-      statistic_category:
-        hidden: Usuń
-        name: Nazwa
-      payment_method:
-        name: Nazwa
-        cash: Gotówka
-        change: Reszta
-      payment_method_item:
-        amount: Ilość
-      booking_item:
-        base_price: Cena
-        count: Rozliczenie
-        sum: Suma
-        duration: Dni
-      order:
-        change_given: Zmień
-        nr: Numer
-      customer:
-        language: Język
-        table_id: Stolik
-        first_name: Imię
-        last_name: Nazwisko
-        full_name: Pełne Imię
-        company_name: Nazwa firmy
-        address: Adres
-        city: Miasto
-        state: Województwo
-        postalcode: Kod pocztowy
-        m_number: Numer karty lojalnościowej
-        m_points: Numer karty punktowej
-        email: e-mail
-        telephone: Telefon stacjonarny
-        cellphone: Telefon komórkowy
-        hidden: Usuń
       article:
-        active: Włącz
+        active: Aktywny
         category_id: Kategoria
-        statistic_category_id: Kategoria statystyczna
         description: Opis
         hidden: Usuń
         image: Obraz
         name: Nazwa
         price: Cena
-        usage: Zużycie
+        statistic_category_id: Statistic-Category
         taxes: Tax
+        usage: Zużycie
+      booking_item:
+        base_price: Cena
+        count: Rozliczenie
+        duration: Dni
+        sum: Suma
+      camera:
+        active: active
+        description: Description
+        hidden: delete
+        host_external: External host
+        host_internal: Internal host
+        name: Name
+        port: Port
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
       category:
         color: Kolor
         custom_icon: Ikona własna
         food: Potrawa?
         hidden: Usuń
         icon: Ikona
+        image: Icon
         name: Nazwa
-        separate_print: Oddzielny paragon
+        separate_print: Oddzielny paragon?
         tax_id: Podatek
         user_id: Użytkownik
         vendor_printer_id: Bonownik
-        image: Obraz
       cost_center:
-        active: Włącz
+        active: Aktywny
         description: Opis
         hidden: Usuń
         name: Nazwa
-        no_payment_methods: Nie wybrano metody płatności.
+        no_payment_methods: Nie wybrano rodzaju płatności.
+      customer:
+        address: Adres
+        cellphone: Telefon komórkowy
+        city: Miasto
+        company_name: Nazwa firmy
+        default_table_id: Default Table
+        email: e-mail
+        first_name: Imię
+        full_name: Pełne Imię
+        hidden: Usuń
+        language: Language
+        last_name: Nazwisko
+        m_number: Numer karty lojalnościowej
+        m_points: Numer karty punktowej
+        postalcode: Kod pocztowy
+        state: Województwo
+        tax_info: Tax Info
+        telephone: Telefon stacjonarny
       group:
         name: Nazwa
       guest_type:
@@ -79,22 +74,33 @@ pl:
         category_id: Kategorie
         hidden: Usuń
         name: Nazwa
-        no_ticket: Bez paragonu
+        no_ticket: Nie drukuj paragonu
         price: Cena
         separate_ticket: Oddzielny paragon
+      order:
+        change_given: Zmień
+        nr: Numer
+        finished_at: Finished at
+        sum: Sum
       page:
-        active: Włącz
+        active: Aktywny
         color: Kolor tła
         height: Wysokość
         hidden: Usuń
         image: Obraz
         width: Szerokość
       partial:
-        active: Włącz
+        active: Aktywny
         blurb: Notka
         hidden: Usuń
+      payment_method:
+        cash: Gotówka
+        change: Zamiana
+        name: Nazwa
+      payment_method_item:
+        amount: Ilość
       presentation:
-        active: Włącz
+        active: Aktywny
         code: Kod Ruby
         description: Opis
         hidden: Usuń
@@ -102,7 +108,7 @@ pl:
         model: Typ
         name: Nazwa
       quantity:
-        active: Włącz
+        active: Aktywny
         description: Opis
         hidden: Usuń
         postfix: Postfix
@@ -123,12 +129,15 @@ pl:
       season:
         from_date: Od
         hidden: Usuń
+        is_master: Master?
         name: Nazwa
         to_date: Do
-        is_master: Master?
       settlement:
         initial_cash: Stan początkowy
         revenue: Stan końcowy
+      statistic_category:
+        hidden: delete
+        name: Name
       surcharge:
         amount: Ilość
         guest_type_id: Typ klienta
@@ -140,96 +149,105 @@ pl:
         visible: Widoczne?
       table:
         abbreviation: Skrót
+        booking_table: Możliwość rezerwacji
+        customer_table: Customer
         description: Opis
-        enabled: Włącz
+        enabled: Aktywny
         height: Wysokość
         height_mobile: Wysokość na urządzeniach mobilnych
         hidden: Usuń
         name: Nazwa/Numer stolika
-        rotate: Obróć o 90o
+        rotate: Obróć o 90º
         width: Szerokość
         width_mobile: Szerokość na urządzeniach mobilnych
-        booking_table: Możliwość rezerwacji
       tax:
         color: Kolor
         hidden: Usuń
+        include_in_statistics: In Settlement Statistics
         letter: Skrót
         name: Nazwa podatku
         percent: Wysokość podatku w %
-        include_in_statistics: Włącz w statystykach rozliczeń
-        statistics_by_category: Statystyki rozliczeń wg. kategorii
+        statistics_by_category: Settlement Statistics by Category
       tax_amount:
         amount: Ilość
         tax_id: Podatek
       user:
-        active: Włącz
+        active: Aktywny
+        advertising_timeout: Advertising Timeout
+        advertising_url: Advertising URL
+        audio: Sygnał dzwiekowy
         color: Kolor
+        confirmation_user: Potwierdzanie zamówień zdalnych
+        default_vendor_id: Log in to Vendor
         hidden: Usuń
         language: Język
-        login: Użytkownik
+        login: Login
         password: Hasło
-        role: Uprawnienia
+        role: Poziom dostępu
         screenlock_timeout: Blokowanie ekranu (w sek.)
         tables: Przypisz stoliki
         title: Tytuł
-        audio: Sygnał dzwiekowy
-        confirmation_user: Potwierdzanie zamówień zdalnych
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
-        update_tables_interval: Czas odświeżania stolików
-        update_item_lists_interval: Czas odświeżania powiadomień
-        update_resources_interval: Czas odświeżania bazy danych
-        remote_orders: Zamówienia zdalne
         automatic_printing: Automatyczne drukowanie
         country: Zasady dla kraju
+        email: e-mail
+        enable_technician_emails: Send technician e-mails
         hidden: Usuń
-        invoice_footer_blurb: Stopka faktury
-        invoice_header_blurb: Nagłówek faktury
+        invoice_footer_blurb: Notka stopki faktury
+        invoice_header_blurb: Notka nagłówka faktury
+        invoice_logo: Logo faktury
+        logo: Logo ekranu
         name: Nazwa
-        receipt_footer_blurb: Stopka paragonu
-        receipt_header_blurb: Nagłówek paragonu
+        receipt_footer_blurb: Notka stopki rachunku
+        receipt_header_blurb: Notka nagłówka rachunku
+        remote_orders: Zamówienia zdalne
+        rlogo_footer: Logo stopki
+        rlogo_header: Logo nagłówka
         saas: SaaS
+        technician_email: Technician e-mail
         ticket_display_time_order: Czas i numer rachunku na paragonie
         ticket_item_separator: Separuj linią
         ticket_tall_font: Wyskokość czcionki
         ticket_wide_font: Szerokość czcionki
         time_offset: Korekta czasu (w godzinach)
-        timeout: Czas zablokowania ekranu (w sek.)
+        timeout: Czas zablokowania ekranu (w sekundach)
+        update_item_lists_interval: Interval update item notifications
+        update_resources_interval: Interval update offline database
+        update_tables_interval: Interval update tables
         use_order_numbers: Użyj liczby zamówień
-        rlogo_header: Logo nagłówka
-        rlogo_footer: Logo stopki
-        logo: Logo ekranu
-        invoice_logo: Logo faktury
-        enable_technician_emails: Send technician e-mails
-        technician_email: Technician e-mail
-        email: e-mail
       vendor_printer:
+        baudrate: Baudrate
+        codepage: Codepage
         copies: Kopia
         hidden: Usuń
         name: Nazwa
         path: Skrót
-      camera:
-        name: Kamera
-        description: Opis
-        host_internal: Host wewnętrzny
-        host_external: Host zewnętrzny
-        port: Port
-        active: Włącz
-        hidden: Usuń
-        url_snapshot: URL Snapshot
-        url_stream: URL Stream
+        print_button_filename: Icon
+        pulse_receipt: Beep Receipt
+        pulse_tickets: Beep Tickets
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
     models:
-      statistic_category:
-        one: Kategoria statystyczna
-        other: Kategorie statystyczne
       article:
         one: Pozycja Menu
         other: Pozycje Menu
       booking:
         one: Rezerwacja
         other: Rezerwacje
+      camera:
+        one: Camera
+        other: Cameras
       category:
         one: Kategoria Menu
         other: Kategorie Menu
@@ -237,8 +255,8 @@ pl:
         one: Firma
         other: Firmy
       cost_center:
-        one: Centrum kosztów
-        other: Centrum kosztów
+        one: Dodatkowy koszt
+        other: Dodatkowe koszta
       coupon:
         one: Kupon
         other: Kupony
@@ -267,17 +285,17 @@ pl:
         one: Zamówienie
         other: Zamówienia
       page:
-        one: Prezentacja
-        other: Prezentacje
+        one: Pokaz slajdów
+        other: Pokaz slajdów
       partial:
-        one: Częściowy
-        other: Częściowe
+        one: Ulubione
+        other: Ulubione
       payment_method:
-        one: Metoda płatności
-        other: Metody płatności
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       payment_method_item:
-        one: Metoda płatności
-        other: Metody płatności
+        one: Rodzaj płatności
+        other: Rodzaje płatności
       presentation:
         one: Szablon ERB
         other: Szablony ERB
@@ -285,29 +303,32 @@ pl:
         one: Wariant
         other: Warianty
       report:
-        one: Pomoc
-        other: Pomoc
+        one: Raport
+        other: Raporty
       reservation:
         one: Rezerwacja
         other: Rezerwacje
       role:
-        one: Uprawnienie
-        other: Uprawnienia
+        one: Zezwolenie
+        other: Zezwolenia
       room:
         one: Pokój H.
         other: Pokoje H.
       room_price:
         one: Cena pokoju H.
-        other: Ceny pokoi H.
+        other: Ceny pokojów H.
       room_type:
         one: Rodzaj pokoju H.
-        other: Rodzaje pokoi H.
+        other: Rodzaje pokojów H.
       season:
         one: Sezon H.
         other: Sezony H.
       settlement:
         one: Rozlicz
         other: Rozliczenia
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
       stock:
         one: Towar
         other: Towary
@@ -327,22 +348,19 @@ pl:
         one: Użytkownik
         other: Użytkownicy
       vendor:
-        one: Restaurtacja
+        one: Restauracja
         other: Restauracje
       vendor_printer:
         one: Bonownik
         other: Bonowniki
-      camera:
-        one: Kamera
-        other: Kamery
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
     create:
-      success: Zapisano zmiany w pozycji menu
       license_limited: Twoja licencja ma limit do %{count} pozycji menu.
+      success: Pozycja menu została pomyślnie zapisana!
     destroy:
-      success: Usunięto pozycję z menu
+      success: Pozycja menu została pomyślnie skasowana.
     find:
       variants:
         one: Wariant
@@ -355,11 +373,11 @@ pl:
       update: Aktualizuj!
       view: Podgląd
     listall:
-      all_articles: Lista wszystkich artykułów
+      all_articles: Lista wszystkich pozycji
     new:
-      add_quantity: Dodaj wariant
-      edit_article: Edytowanie pozycji menu
-      new_article: Dodawanie pozycji menu
+      add_quantity: Dodaj pozycję
+      edit_article: Edytowanie artykułu
+      new_article: Dodawanie artykułu
       normal: Na miejscu
       takeaway: Na wynos
     sort_index:
@@ -369,25 +387,32 @@ pl:
   blackboard:
     index:
       update: Aktualizuj
-  blank: Bez koloru
+  blank: Puste
   blue: Niebieski
   bookings:
     invoice_item_list:
       served_by_X: Byłeś obsługiwany przez %{user}
     show:
-      search_by_number: Szukaj wg liczby
       go_to_bookings_calendar: Sprawdź kalendarz rezerwacji
-  cancel_and_go_back: Anuluj
+      search_by_number: Szukaj wg liczby
+  cameras:
+    create:
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted
+    index:
+      show: Show
+  cancel_and_go_back: Anuluj i wróć
   categories:
     create:
       license_limited: Twoja licencja ma limit do %{count} kategorii menu.
-      success: Zapisano zmiany w kategoriach menu
+      success: Kategoria menu została pomyślnie zapisana!
     destroy:
-      success: Usunięto kategorię menu
+      success: Kategoria menu została pomyślnie skasowana.
     new:
       aperitif: Aperitif
       beer: Piwo
-      blank: Bez ikony
+      blank: Puste
       childrendish: Danie dziecięce
       cigarette: Papierosy
       coffee: Kawa
@@ -410,21 +435,30 @@ pl:
       teapot: Filiżanka herbaty
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
-  clear_order_and_go_back: Wyczyść zamówienie
+  clear: clear
+  clear_order_and_go_back: Wyczyść zamówienie i wróć
   copy: Kopiuj
   cost_centers:
     create:
-      success: Zapisano zmiany w centrum kosztowym
+      success: Dodatkowe koszta zostały pomyślnie zapisane!
     destroy:
-      success: Usunięto centrum kosztowe
+      success: Dodatkowe koszta zostały pomyślnie skasowane.
     index:
-      active: Włączony
-      inactive: Wyłączony
+      active: Aktywny
+      inactive: Nieaktywny
     new:
-      edit_cost_center: Edytowanie centrów kosztowych
-      new_cost_center: Dodawanie centrów kosztowych
+      edit_cost_center: Edytowanie dodatkowych kosztów
+      new_cost_center: Dodawanie dodatkowych kosztów
   count: Podlicz
   create: Dodaj
+  customers:
+    create:
+      success: Dane o kliencie zostały pomyślnie zapisane!
+    destroy:
+      success: Dane o kliencie zostały pomyślnie skasowane.
+    new:
+      edit_customer: Edycja klienta
+      new_customer: Nowy klient
   dateandtime: Data
   default: Podstawowy
   delete: Usuń
@@ -438,256 +472,284 @@ pl:
   gross: Brutto
   groups:
     new:
-      edit_group: Edytowanie kategorii menu
-      new_group: Dodawanie kategorii menu
+      edit_group: Edytuj grupę
+      new_group: Dodaj grupę
   guestroom: Sala
   host: Host
   images:
     errempty: Nieprawidłowy plik
     errsize: Nieprawidłowy rozmiar pliku
     errtype: Nieprawidłowy typ pliku
-  invoice: Faktura VAT
-  invoice_numer_X_at_time: Paragon numer %{number} dnia %{datetime}
-  invoices: Paragony
+  invalid_date: Nieprawidłowa data
+  invoice: Rachunek
+  invoice_numer_X_at_time: Rachunek numer %{number} dnia %{datetime}
+  invoices: Rachunki
   is_no_number: nie jest liczbą
   items:
     item_tablerow:
       clear: Wyczyść
-      done: Zatwierdź
-      no_printing: Bez paragonu
+      done: Zrobione
+      no_printing: Nie drukuj
   just_order: Tylko zamówienie
   kitchen: Kuchnia
   layouts:
     application:
+      admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
+    header:
+      configuration: Configuration
   logout: Wyloguj %{who}
   messages:
     hello_username: Witaj %{name}!
-    user_account_is_currently_locked: To konto jest zablokowane!
+    user_account_is_currently_locked: Twoje konto zostało zablokowane!
   move_order_to_table: Przenieś zamówienie na inny stolik
-  must_be_entered_either_for_article_or_for_quantity: musi zostać wpisana dla artykułu
-    lub wariantu.
+  must_be_entered_either_for_article_or_for_quantity: nie została wpisana
   net: Netto
   new: Dodaj
   no_printing: Nie drukuj
   not_found: Nie znaleziono
   options:
     create:
-      success: Zapisano zmiany w dodatakch menu
+      success: Opcja została pomyślnie zapisana!
     destroy:
-      success: Dodatek menu został usunięty.
+      success: Opcja została pomyślnie skasowana.
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
     new:
-      edit_option: Edytowanie dodatku menu
+      edit_option: Edytowanie dodatków
       hidden: Usuń
-      new_option: Dodawanie dodatku menu
+      new_option: Dodawanie dodatków
       select_all: Zaznacz wszystkie
   orange: Pomarańczowy
   orders:
-    invoice_item_list:
-      unit_price: Cena artykułu
-      count: Ilość
-      sum: Suma
     functions_header_index:
+      exit: Exit
       items_notifications: Powiadomienia
-      print_now: Drukuj
+      print_now: Drukuj teraz
       show_last_booking: Pokaż ostatnią rezerwację
-      show_last_order: Wcześniejsze zamówienia
-      toggle_between_tables_and_rooms: Przełącz pomiędzy ekranem stołów a pokoi
-      exit: Zakończ SalorGastro
+      show_last_order: Pokaż ostatnie zamówienie
+      toggle_drag_tables: Drag tables
     functions_header_order_form:
       move_order: Przenieś zamówienie na inny stolik
     index:
-      confirmation_list: Lista osobistych zamówień
+      confirmation_list: Zamówienia do potwierdzenia
       delivery_list: Lista gotowych zamówień
       preparation_list: Lista przyjętych zamówień
     invoice_form:
-      change_money: Reszta
-      just_finish: Po prostu zakończ
-      print_and_finish: Zakończ i drukuj
-      set_booking: Przydziel do rezerwacji
-      set_cost_center: Ustaw centrum kosztów dla tego zamówienia
-      set_tax_for_all: Ustaw centrum kosztów dla wszystkich zamówień
-      set_taxes: Ustaw centrum kosztów
-      split_invoice: Podziel paragon
-      split_this_item: Kliknij na ilość aby podzielić paragon
-      switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
+      change_money: Zmień
+      just_finish: Po prostu zakończ zamówienie
       move_order: Move order to different table
+      print_and_finish: Zakończ zamówienie i drukuj
+      set_booking: Przydziel do rezerwacji
+      set_cost_center: Ustaw dodatkowe koszty dla tego zamówienia
+      set_tax_for_all: Ustaw podatek dla wszystkich pozycji
+      set_taxes: Ustaw podatki
+      split_invoice: Podziel rachunek
+      split_this_item: Kliknij pozycję aby podzielić paragon
+      switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
+    invoice_item_list:
+      count: Ilość
+      sum: Suma
+      unit_price: Cena artykułu
     login_form:
       email: Twój e-mail
       login: Login
       password: Hasło
       username: Użytkownik
-    order_form:
+    order:
       new: Nowe zamówienie
-      sum: Suma
+    order_form:
+      sum: SUM
+    refund_form:
+      do_refund: Dodaj zwrot
+      do_separate_items: Oddziel artykuły
     served_by: Zostałeś obsłużony przez
     show:
-      cannot_reactivate: Błąd podczas przywracania zamówienia. Wszystkie stoły są
-        zajęte.
-      reactivate: Przywróć zamówienie
+      add_notes: Dodaj notatkę
       back: Powrót
+      cannot_reactivate: Reactivation failed. No table is vacant.
       count: Podlicz
       list_of_taxes: Lista podatków
-      next_invoice: Następny paragon
-      previous_invoice: Poprzedni paragon
+      next_invoice: Następny rachunek
+      previous_invoice: Poprzedni rachunek
       print_business_invoice: Drukuj fakturę
-      print_invoice: Drukuj paragon
+      print_invoice: Drukuj rachunek
+      reactivate: Reactivate
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
-      add_notes: Nabywca
-    refund_form:
-      do_separate_items: Podziel
-      do_refund: Zwrot
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Edytuj stronę
+      slideshow: Rozpocznij prezentację
       view: Podgląd
-      slideshow: Prezentacja
-    new:
-      new_page: Nowy slajd
     form:
-      view: Podgląd
-      slideshow: Prezentacja
+      slideshow: Slideshow
+      view: View
+    new:
+      new_page: Nowa strona
   partials:
-    default_blurb: Nabywaca
+    default_blurb: Edytuj notatkę
     error_during_evaluation: ! 'Błąd: '
     no_presentation_found:
       no_presentations_found: Nie wybrano szablonu dla tej części.
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted
   pink: Różowy
   please_enter_item_comment: Specjalne życzenia
   please_enter_item_price: Cena specjalna
   presentations:
     new:
-      edit_presentation: Edytowanie szablonu
-      new_presentation: Dodawanie szablonu
+      edit_presentation: Edytuj szablon
+      new_presentation: Dodaj szablon
   print: Drukuj
   print_and_finish: Zakończ i drukuj
   printing_test: Test drukarki
+  refund: Zwrot
   reports:
+    download: Download
+    download_reports: Pobierz raport
     end_date: Data końcowa
+    fisc_report_dump_location: Output Location
     index:
       backup_database: Stwórz kopię bazy danych
       backup_logfile: Stwórz kopię logu
-      header: Raporty
-      connected: Połączono
-      disconnected: Rozłączono
       connect_ssh: Login zdalny
       connect_vnc: Dziel obraz
-      password: Hasło
-      requesting_connection_status: Oczekiwanie na połączenie ...
-      internet_connection_info: ! 'Aby pozwolić na połączenie zdalne musisz być podłączony
-
-        do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie
-        z internetem.'
-      remote_support: Pomoc zdalna
+      connected: Połączono
+      disconnected: Rozłączono
       download_reports: Zapisz raport
+      header: Raporty
+      internet_connection_info: Aby pozwolić na połączenie zdalne musisz być podłączony
+        do internetu. Jeżeli widzisz powyżej logo Red (E) to oznacza że masz połączenie
+        z internetem.
+      password: Hasło
+      remote_support: Pomoc zdalna
+      requesting_connection_status: Oczekiwanie na połączenie ...
+    remote_support: Pomoc zdalna
     save: Zapisz
     start_date: Data początkowa
-    usb_device: USB
-    remote_support: Pomoc zdalna
-    download_reports: Pobierz raport
   restaurant: Restauracja
-  customers:
-    new:
-      edit_customer: Edycja klienta
-      new_customer: Nowy klient
-    create:
-      success: Zapisano zmiany w danych o kliencie
-    destroy:
-      success: Dane o kliencie zostały usunięte
   roles:
     create:
-      success: Zapisano zmiany w zezwoleniach
+      success: Zasada została pomyślnie zapisana!
     destroy:
-      success: Zezwolenia zostały usunięte
+      success: Zasada została pomyślnie skasowana.
     new:
-      allow_exit: Prawo do zamykania programu
-      reactivate_orders: Odnawianie zamówień
-      move_order_from_invoice_form: Przenoszenie zamówienia z paragonu
-      assign_order_to_user: Wyznaczanie użytkownika do danego zamówienia
-      assign_cost_center: Ustawienia centrum kosztów
-      cancel_all_items_in_active_order: Kasowanie pozycji z bieżących zamówień
+      add_option_to_sent_item: Add Options to sent Items
+      allow_exit: Allow Exit
+      assign_cost_center: Ustawienia dla centrum kosztów
+      assign_order_to_booking: Przydzielanie zamówienia do rezerwacji
+      assign_order_to_user: Wyznaczanie użytkownika do zamówienia
+      assign_tables: Przypisywanie stołu do klienta
+      assign_users_to_vendors: Assign Users to Vendors
+      cancel_all_items_in_active_order: Kasowanie pozycji z bierzących zamówień
       change_waiter: Zmiana kelenera
-      counter_mode: Ikony zakończ/drukuj na interfejsie użytkownika
+      counter_mode: Licznik
       decrement_items: Obniżanie pozycji
-      delete_items: Usuwanie artykułu poprzez obniżenie ilości
+      delete_items: Usuwanie artykułu poprzez obniżenie ceny do 0zł
+      download_csv: Download CSV
+      download_database: Pobieranie bazy danych
       edit_role: Edytowanie zezwoleń
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
       finish_orders: Możliwość finalizowania wszystkich zamówień
       finish_own_settlement: Możliwość własnego rozliczania
-      refund: Możliwość zwrotów
+      interim_receipt: Interim Receipt
+      item_scribe: Możliwość pisania ręcznego
+      manage_advertising: Manage Advertising
       manage_articles: Zarządzanie artykułami, kategoriami oraz dodatkami
-      manage_categories: Zarządzanie kategoriami
-      manage_statistic_categories: Zarządzanie kategoriami statystycznymi
-      manage_options: Zarządzanie dodatkami
       manage_business_invoice: Zarządzanie fakturami
-      manage_customers: Zarządzanie listą klientów
-      manage_pages: Zarządzanie prezentacjami
-      manage_roles: Zarządzanie poziomami dostępu
-      manage_taxes: Zarządzanie podatkami
+      manage_cameras: Manage cameras
+      manage_categories: Zarządzanie kategoriami
       manage_cost_centers: Zarządzanie dodatkowymi kosztami
+      manage_customers: Zarządzanie listą klientów
+      manage_hotel: Zarządzanie hotelami
+      manage_options: Zarządzanie dodatkami
+      manage_pages: Zarządzanie pokazem slajdów
       manage_payment_methods: Zarządzanie rodzajami płatności
-      manage_users: Zarządzanie użytkownikami
+      manage_roles: Zarządzanie poziomami dostępu
+      manage_statistic_categories: Manage Statistic Categories
+      manage_statistics: Przeglądanie statystyk
+      manage_statistics_hotel: View hotel statistics
       manage_tables: Zarządzanie stołami
+      manage_taxes: Zarządzanie podatkami
+      manage_users: Zarządzanie użytkownikami
       manage_vendors: Zarządzanie restauracjami
+      mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
       move_order: Możliwość przenoszenia zamówień
+      move_order_from_invoice_form: Przenoszenie zamówienia z paragonu
       move_tables: Możliwość przenoszenia stolików
       new_role: Dodawanie zezwoleń
       permissions: Dostęp do zezwoleń
+      reactivate_orders: Reactivate orders
+      receipt_logo: Ustawianie logo na rachunku
+      refund: Możliwość zwrotów
+      remote_support: Aktywacja pomocy zdalnej
       see_debug: Dostęp do logów systemu
-      see_item_notifications_user_preparation: Osobista lista przyjętych zamówień
-      see_item_notifications_user_delivery: Osobista lista gotowych zamówień
-      see_item_notifications_vendor_preparation: Ogólna lista przyjętych zamówień
-      see_item_notifications_vendor_delivery: Ogólna lista gotowych zmówień
-      see_item_notifications_static: Wyświetlanie powiadomień na głównym ekranie
+      see_item_notifications_static: Lista powiadomień na głównym ekranie
+      see_item_notifications_user_delivery: Osobista lista powiadomień o pozycjach
+        do dostarczenia
+      see_item_notifications_user_preparation: Osobista lista powiadomień o zamawianych
+        pozycjach
+      see_item_notifications_vendor_delivery: Ogólna lista powiadomień o pozycjach
+        do dostarczenia
+      see_item_notifications_vendor_preparation: Ogólna lista powiadomień o zamawianych
+        pozycjach
+      settlement_statistics_sold_quantities: Show settlement statistics about sold
+        quantities
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
       split_items: Łączenie pozycji
+      statistics:
+        statistics_category: Categories
+        statistics_hour: Hours
+        statistics_payment_method: Payment Methods
+        statistics_sold_quantities: Sold quantities
+        statistics_statistic_category: Statistic Categories
+        statistics_table: Tables
+        statistics_tax: Taxes
+        statistics_weekday: Weekdays
+      statistics_category: Statistics show Categories
+      statistics_hour: Statistics show Hours
+      statistics_payment_method: Statistics show Payment Methods
+      statistics_sold_quantities: Statistics show sold quantities
+      statistics_statistic_category: Statistics show StatisticCategories
+      statistics_table: Statistics show Tables
+      statistics_tax: Statistics show CategoriesTaxes
+      statistics_weekday: Statistics show Weekdays
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
-      manage_statistics: Statystyki
-      manage_statistics_hotel: Pokaż statystyki hotelowe
-      statistics_weekday: Statystyki dzienne
-      statistics_hour: Statystyki godzinne
-      statistics_table: Statystyki stołów
-      statistics_payment_method: Statystyki metod płatności
-      statistics_category: Statystyki kategorii
-      statistics_tax: Statystyki podatków
-      manage_hotel: Zarządzanie hotelami
-      item_scribe: Możliwość pisania ręcznego
-      assign_order_to_booking: Przydzielanie zamówienia do rezerwacji
-      assign_tables: Przypisywanie stołu do klienta
-      remote_support: Aktywacja pomocy zdalnej
-      download_database: Pobieranie bazy danych
-      receipt_logo: Ustawianie logo na rachunku
-      mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
-      settlement_statistics_taxes: Pokaż statystyki podatkowe
-      settlement_statistics_taxes_categories: Pokaż statystyki podatkowe wg kategorii
-      manage_cameras: Zarządzanie kamerami
-      add_option_to_sent_item: Add Options to sent Items
-      statistics_statistic_category: Statistics show StatisticCategories
+      view_settlements_table: View settlements table
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
     new:
-      edit_room_price: Edytowanie ceny pokoju
-      new_room_price: Dodawanie ceny pokoju
+      edit_room_price: Edytuj cenę pokoju
+      new_room_price: Nowa cena pokoju
   room_types:
     new:
-      edit_room_type: Edytowanie typu pokoju
-      new_room_type: Dodawanie typu pokoju
+      edit_room_type: Edytuj typ pokoju
+      new_room_type: Dodaj typ pokoju
   rooms:
+    create:
+      success: Pokój został pomyślnie zapisany!
+    destroy:
+      success: Pokój został pomyśłnie skasowany.
     new:
       edit_room: Edytuj pokój
       new_room: Dodaj pokój
-    create:
-      success: Zapisano zmiany w pokoju hotelowym
-    destroy:
-      success: Pokój hotelowy został skasowany
   scopes:
-    active: Aktywne
-    waiterpad: Oczekujące
+    active: Aktywuj
+    waiterpad: Notes kelnerski
   scroll_down: Przewiń w dół
-  scroll_to_area: Idź do sali
+  scroll_to_area: Go to room
   scroll_up: Przewiń w górę
   seasons:
     new:
@@ -695,16 +757,14 @@ pl:
       new_season: Nowy sezon
   send_and_go_back: Zapisz i wróć
   served_by_X_on_table_Y: Obsługiwał Cię %{waiter} przy stoliku %{table}
-  server_no_response: ! 'Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie
-
-    serwera lub zerwane połączenie.'
+  server_no_response: Serwer Bill Gastro nie odpowiada. Problemem może być przeciążenie
+    serwera lub zerwane połączenie.
   sessions:
     browser_warning:
       continue: Kontynuuj
-      warning: ! 'Salor najlepiej współpracuje z Google Chrome (Windows), Chromium
-        (Linux)
-
-        lub Safari (Apple). Proszę użyć jednej z tych przeglądarek i spróbować ponownie.'
+      warning: Salor wspiera przeglądarki Google Chrome (Windows), Chromium (Linux)
+        lub Safari (Apple). Proszę użyć jednej z powyższych przeglądarek i spróbować
+        ponownie.
     new:
       email: Twój e-mail
       login: Login
@@ -717,46 +777,59 @@ pl:
       username: Użytkownik
   settlements:
     detailed_list:
+      changed_price: ! '%{byuser} changed price'
       count: Ilość
       order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia
         %{time}'
-      revenue: Przychód
+      reduced_count: Count reduced from %{maxcount} to %{count}.
+      revenue: Suma całkowita
       total: Suma
       unit_price: Cena
+      warning: Warning
     index:
-      all_cost_centers: Wszystkie
+      all: All
       end_date: Data końcowa
+      one_day_one_row: List days
       start_date: Data początkowa
       sum_total: Suma całkowita
     settlement:
       finish: Koniec
+      please_wait: Analyzing data. Please wait ...
       print: Drukuj
       start: Początek
       started_at: Rozpoczęte
-      please_wait: Analyzing data. Please wait ...
   shared:
     invoice_tax_list:
       list_of_taxes: Lista podatków
   split_order: Podziel zamówienie
   statistic: Statystyki
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category
+  statistics:
+    index:
+      hour: Hour
+      limit_by: Limit by
+      query: Query
+      weekday: Weekday
   stocks:
     new:
-      edit_stock: Edytowanie stanu magazynu
+      edit_stock: Edytcja stanu magazynu
       new_stock: Dodawanie stanu magazynu
-  refund: Zwrot
   sum: Suma
   surcharges:
     new:
       add_tax_amount: Dodaj kwotę podatku
-      common_surcharge: Łącznie dopłaty
+      common_surcharge: Łączne dopłaty
       edit_surcharge: Edytuj dopłaty
       new_surcharge: Nowa dopłata
   tables:
     create:
       license_limited: Twoja licencja ma limit do %{count} stołów
-      success: Zapisano zmiany w stoliku
+      success: Stolik został pomyślnie zapisany!
     destroy:
-      success: Stolik został skasowany
+      success: Stolik został pomyślnie skasowany.
     new:
       edit_table: Edytowanie stolika
       new_table: Dodawanie stolika
@@ -765,101 +838,106 @@ pl:
     new:
       edit_tax: Edytowanie podatku
       new_tax: Dodawanie podatku
-  statistics:
-    index:
-      hour: Godzina
-      weekday: Dzień
   users:
     create:
-      success: Zapisano zmiany w użytkowniku
+      success: Użytkownik został pomyślnie zapisany!
     destroy:
-      success: Użytkownik został skasowany
+      success: Użytkownik został pomyślnie skasowany.
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
       select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
         myszy
+    index:
+      on_duty: On duty
   various:
-    no_connection_retry: Brak połączenia z serwerem. Wysłać ponownie? Jeżeli anulujesz
-      to dane zostaną zapisane lokalnie.
-    successfully_sent: Artykuł został pomyślnie wysłany.
-    table_contains_offline_items: Zamówienie z tego stołu nie zostało jeszcze wysłane.
-      Czy wysłać je teraz?
-    statistics: Statystyki
-    customer_request_send: Wyślij zamówienie
+    attempt: Attempt
+    begin: Początek
+    cancel: Anuluj
+    check_order_on_workstation: Check order on different device
+    common_surcharges: Wszystkie dopłaty
+    connecting: Connecting...
+    consumations: Zakończenie
     customer_request_finish: Poproś o rachunek
+    customer_request_send: Wyślij zamówienie
     customer_request_waiter: Poproś kelnera
+    delete: Usuń
+    display: Display
+    download: Download
+    end: Koniec
+    exception_page:
+      assistance_text: Please click on the Button "HOME" and try again. If you see
+        the same error twice, please contact our Customer Support.
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
+      oops_an_error_occurred: Oops! An Error occurred
+    finish_was_requested: Poprosiłeś kelnera o rachunek. Twoje powiadomienie zostało
+      wysłane, prosimy o cierpliwość.
+    go: Go!
+    home: Powrót
+    hotel: Hotel
+    interim_invoice: Pre-Faktura
+    invoice: Faktura
+    mobile_view: Widok dla urządzeń mobilnych
+    no_connection: No connection
+    no_connection_giving_up: No connection. Giving up.
+    no_connection_retry: No connection to the Server. Send again? If you cancel, the
+      items will be saved locally.
+    no_connection_retrying: No connection. Trying again...
     order_will_be_confirmed: Twoje zamówienie musi zostać potwierdzone przez kelnera,
       prosimy o cierpliwość.
-    finish_was_requested: Twoje powiadomienie zostało wysłane. Za chwilę otrzymasz
-      rachunek.
-    waiter_was_requested: Twoje powiadomienie zostało wysłane. Za chwilę kelner podejdzie
-      do Twojego stolika.
-    mobile_view: Widok dla urządzeń mobilnych
-    workstation_view: Widok dla komputerów stacjonarnych
-    cancel: Anuluj
-    common_surcharges: Łącznie dopłaty
-    home: Powrót
     pay: Zapłać
-    save: Zapisz
-    subtotal: Razem
-    unamed: Bez nazwy
-    tax_amount: Podatek
-    tax: Podatek
-    unit_price_abbreviation: Cena za sztukę
-    total_price_abbreviation: Cena końcowa
+    print: Print
     quantity_abbreviation: Ilość
-    interim_invoice: Pre-Faktura
-    invoice: Faktura VAT
-    restaurant: Gastro
-    hotel: Hotel
-    consumations: Zakończenie
     report: Raport
-    begin: Początek
-    end: Koniec
-    time: Czas
-    delete: Usuń
-    attempt: Attempt
-    no_connection: No connection
-    server_error_short: Server error
-    no_connection_giving_up: No connection. Giving up.
-    no_connection_retrying: No connection. Trying again...
+    restaurant: Restauracja
+    save: Zapisz
     sending: Sending...
-    connecting: Connecting...
-    check_order_on_workstation: Check order on different device
-    server_not_responded: No response from server. Check submission of order on different
-      device. Then, re-submit oder cancel to delete the changes.
     server_error: Oops! There was an internal server error. Please check the submission
       of the order on a different device.
+    server_error_short: Server error
+    server_not_responded: No response from server. Check submission of order on different
+      device. Then, re-submit oder cancel to delete the changes.
+    sold_quantities: Sold Quantities
+    statistics: Statistics
+    subtotal: Razem
+    successfully_sent: The items were successfully sent.
+    switched_to_vendor: Vendor '%{vendorname}'
+    table_contains_offline_items: Just showing offline items. Try to re-submit or
+      press the cancel button to delete the offline items.
+    tax: Podatek
+    tax_amount: Podatek
+    time: Czas
+    total_price_abbreviation: Cena końcowa
+    translations: Translations
+    unamed: Bez nazwy
+    unit_price_abbreviation: Cena za sztukę
+    waiter_was_requested: Poprosiłeś kelnera do stolika. Twoje powiadomienie zostało
+      wysłane, prosimy o cierpliwość.
+    workstation_view: Widok dla komputera stacjonarnego
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
+    create:
+      success: Restauracja została pomyślnie zapisana!
+    destroy:
+      success: Restauracja została pomyślnie skasowana.
+    form:
+      add_printer: Dodaj drukarkę
+      identify_printers: Wykry drukarkę
+      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+        copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: Testuj drukarkę
+      test_printers_chartest: Test all characters
     index:
       edit: Edytuj
       switch_to: Wybierz
     new:
       edit_vendor: Edytuj restaurację
       new_vendor: Dodaj restaurację
-    form:
-      add_printer: Dodaj drukarkę
-      identify_printers: Wykryj drukarkę
-      test_printers: Testuj drukarkę
-      test_printers_chartest: Testuj wszystkie znaki drukarki
-    create:
-      success: Zapisano zmiany w restauracji
-    destroy:
-      success: Restauracja została skasowana
   violet: Fioletowy
   waiter: Kelner
-  waiterpad_generic_name: Lista oczekujących
+  waiterpad_generic_name: Lista kelnerów(-)
   white: Biały
   winered: Winny
   wrong_password: Błędne dane do logowania!
   yellow: Żółty
-  invalid_date: Nieprawidłowa data
-  cameras:
-    index:
-      show: Podgląd
-    create:
-      success: Zapisano zmiany w kamerze
-    destroy:
-      success: Kamera została skaowana
-  clear: clear

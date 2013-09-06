@@ -9,14 +9,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 var screenlock_counter = -1;
+var advertising_counter = -1;
 
 $(function(){
-  $('#admin').slideUp();
-
-  $("#customer_search").keyup(function () {
+  $('#customer_search').keyup(function () {
     if ($(this).val().length > 2) {
       customer_list_update();
-    }            
+    }
   });
   
   $('#customer_search').keyboard( {openOn: '', accepted: function(){ customer_list_update(); } } );
@@ -33,26 +32,22 @@ $(function(){
   screenlock_counter = settings.screenlock_timeout;
   if (typeof(screenlock_interval) == 'undefined') {
     screenlock_interval = window.setInterval(function() {
-      if (screenlock_counter == 0) { $('#screenlock form').submit(); }
+      if (screenlock_counter == 0) { logout(); }
       screenlock_counter -= 1;
     }, 1001);
   }
   
-  $('#drag_and_drop_toggle_view_button').on('click', function() {
-    var newstatus = !settings.mobile_drag_and_drop
-    settings.mobile_drag_and_drop = newstatus;
-    if (newstatus == true) {
-      $('#areas').show();
-      $('#mobile_last_invoices_button').hide();
-      $('#drag_and_drop_toggle_view_button').html(i18n.workstation_view);
-    } else {
-      $('#areas').hide();
-      $('#mobile_last_invoices_button').show();
-      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
-    }
-    update_tables();
-  })
-})
+  advertising_counter = settings.advertising_timeout;
+  if (typeof(advertising_interval) == 'undefined') {
+    advertising_interval = window.setInterval(function() {
+      if (advertising_counter == 0) {
+        toggle_advertising(true);
+      }
+      advertising_counter -= 1;
+    }, 1002);
+  }
+  
+});
 
 
 

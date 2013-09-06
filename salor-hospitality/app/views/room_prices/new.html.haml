@@ -9,6 +9,8 @@
 
 .form_fields
   = form_for @room_price do |room_price_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), room_prices_path, :class => 'links')
+    .clear
     = room_price_form.label :base_price
     = room_price_form.text_field :base_price, :size => 5

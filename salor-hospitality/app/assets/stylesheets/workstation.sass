@@ -23,7 +23,7 @@ body
   :font-family Ubuntu-R, Arial
   :color #CCC
   :padding 0px
-  :margin 0px
+  :margin 0px 0px 30px 0px
   :font-size 85%
   :background-color #0e1d25
   :background-image url(body_bg.png)
@@ -41,7 +41,7 @@ h2
 
 h3
   :text-transform uppercase
-  :margin-bottom 0px
+  :margin 0px
 a
   :color $link_color
 
@@ -94,23 +94,50 @@ th
 
 div#main
   :border 3px solid white
-  :-moz-border-radius 5px
-  :-webkit-border-radius 5px
+  :border-radius 5px
   :background-color #0e1d25
-  :min-height 560px
-  :margin auto
+  :min-height 580px
+  :margin 0px auto 20px auto
   :position relative
   :font-size 110%
   :padding 5px
   
+div#copyright
+  :font-size 80%
+  :vertical-align middle
+  :left 0px
+  :right 30px
+  :bottom 0px
+  :position fixed
+  :background-color #0e1d25
+  //:margin auto
+  //:text-align center
+  .left
+    :vertical-align middle
+    :float left
+  .right
+    :vertical-align middle
+    :right 0px
+    :text-align right
+    :width 220px
+    :float right
+    img.logo_red_e
+      :position fixed
+      :right 0px
+      :bottom 0px
+  p
+    :margin 5px 0px
+  
+  
 #drag_and_drop_toggle_view_button
   :position absolute
   :left 50%
+  :top 10%
 
 div#orderform,
 div#invoices
   :font-size 90%
-  :padding 15px
+  :padding 0px
 
 div#container
   :margin 0px 15px
@@ -121,9 +148,6 @@ img#logo
   :right 14px
   :top 42px
   :z-index -1
-  
-img.logo_red_e
-  :float right
 
 img.logo_tiny
   :float left
@@ -131,21 +155,6 @@ img.logo_tiny
   
 div#areas,
   :display none
-
-div#copyright
-  :vertical-align middle
-  :margin auto
-  :text-align center
-  .left
-    :vertical-align middle
-    :padding 5px 0px 0px 0px
-    :float left
-  .right
-    :vertical-align middle
-    :padding 5px 0px 0px 0px
-    :float right
-  p
-    :margin 5px 0px
 
 div#messages, div#queue
   :color $billgastrogrey2
@@ -155,7 +164,7 @@ div#messages, div#queue
 div#messages
   :font-size 80%
   :z-index -10
-  :width 700px
+  :width 50%
   :left 170px
   :height 200px
   :top 0px
@@ -177,22 +186,17 @@ div.metaelements
 div#header
   :height 130px
   :margin auto
-  
-div#admin
-  :border 3px solid white
-  :border-top none
-  :margin 0px 15px 0px 150px
-  :-moz-border-radius 5px
-  :-webkit-border-radius 5px
-  :position absolute
-  :z-index 100
-  :height 109px
-  :overflow hidden
+  #admin_menu_hint
+    :position absolute
+    :font-style italic
+    :color #BBBBFF
+    :margin 50px 0px 0px 150px
+
   
 div#functions
   :position fixed
-  :right 43px
-  :top 137px
+  :right 20px
+  :top 124px
   :width 30px
   :margin-right 8px
   a, div
@@ -214,35 +218,37 @@ div#footer a
   :margin-right 0px
   :cursor pointer
 
-div#login
-  :font-size 160%
-  :margin auto
-  :width 370px
-  :margin-top 130px
-  label
-    :display inline-block
-    :margin-bottom -10px
-    :font-weight bold
-    :width 130px
-  select, input
-    :font-size 100%
-    :width 150px
-  input.submit
-    :margin-left 140px
-  p
-    :margin 0px
-    :padding 10px 0px
+
 
  
 //normal style definitions =============================
 
-
 div.errors
   :color red
+  
+div#admin
+  :display inline-block
+  :position absolute
+  :top 50%
+  :left 50%
+  :width 600px
+  :margin-left -370px
+  :margin-top -220px
+  :border 3px solid white
+  :text-align center
+  :-moz-border-radius 5px
+  :-webkit-border-radius 5px
+  :position absolute
+  :z-index 1000
+  :overflow hidden
+  :-moz-box-shadow 0px 0px 50px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 50px black
+  :-webkit-border-radius 10px
       
 div.adminlinks
-  :padding 10px 50px 10px 10px
-  :background-color #0E1D25
+  :padding 80px 70px
+  :background-color rgba(8, 12, 14, 0.9)
   form, div
     :display inline
   input
@@ -260,8 +266,19 @@ div.adminlinks
   input:hover
     :background-color $background
     :color white
+  span.done
+    :cursor pointer
+    :vertical-align middle
+    :display inline-block
+    :position absolute
+    :right 10px
+    :top 10px
+    :background-image url(button_mobile_cancel-small.png)
+    :width 38px
+    :height 38px
+    :background-repeat no-repeat
+    :background-position center center
     
-
 div.adminlinks a, a.links
   :display inline-block
   :margin-left 1px
@@ -273,7 +290,7 @@ div.adminlinks a, a.links
   :text-decoration none
   :text-transform uppercase
   :font-size 100%
-  :padding 8px
+  :padding 10px 8px
   :border 1px solid #666
   
 div.adminlinks
@@ -292,22 +309,24 @@ a.logout
   :font-size 120%
   :text-transform none
 
+div#user_logins table,
 table.settlements
   :font-size 80%
-  :width 98%
-  :margin 10px
+  :margin 0px 0px 0px 10px
   :border-collapse collapse
   :border 1px solid $darkgray
   td.highlighted
     :background-color $billgastrogrey1
   td
-    :padding 7px 5px
+    :padding 3px 5px
     :text-align right
     :border-top 1px solid $billgastrogrey2
   td.link
     :background-color $billgastrogrey1
   td.link a
     :padding 5px 10px
+  td.left
+    :text-align left
   .subtotal
     :font
       :weight bold
@@ -325,9 +344,27 @@ table.settlements
     :text-align right
     :padding 10px 5px
     
-table.statistics
-  :width 250px
+div#user_logins
+  :width 100%
+  :padding 10px
+  table
+    :width 60%
+    
+    
+div.limitby
+  :background-color rgba(255, 255, 255, 0.5)
+  :display inline-block
+  :width 400px
+  :padding 10px
+  :border-radius 10px
   :float left
+  :margin 0px 0px 10px 10px
+    
+form#statisticform
+  table.statistics
+    :float left
+    th.bar
+      :width 200px
   
 div.statistics_bar
   :height 10px
@@ -443,8 +480,8 @@ div.clear
 div#flash
   :font-size 200%
   :position absolute
-  :right 20px
-  :top 150px
+  :right 50%
+  :top 8%
   :z-index 100
   :padding 10px
   :background-color rgba(255,255,255,0.5)
@@ -521,6 +558,10 @@ table.detailed_list
     :text-align right
     :color white
     :border none
+  td.warning
+    :font-size small
+    :color $error_text
+    :width 250px
   td.total
     :font-size 150%
     :color white
@@ -546,10 +587,19 @@ form.vendor_form
     :height 100px
   label
     :display inline-block
-    :width 180px
+    :width 160px
   table
     td
       :vertical-align top
+  #vendor_printers
+    :clear both
+    .vendor_printer_form
+      :margin 3px
+      :padding 3px
+      :border 1px solid grey
+      :display inline-block
+      label
+        :width 80px
       
 label.wide
   :width 350px
@@ -566,7 +616,7 @@ form.category_form
     :width 150px
     
 table.articles
-  :width 102%
+  :width 101%
   :margin-left -10px
   :border-spacing 10px
   td.receiving
@@ -688,7 +738,7 @@ span.label_width
 
 ul#quantities_new
   :margin 0px 0px 20px 0px
-  :padding 5px 0px 5px 5px
+  :padding 5px 0px 20px 5px
   :min-height 50px
   :background-color #243239
   :border 1px solid #7e868a
@@ -784,26 +834,27 @@ $articlelistbgcolor: #3a474d
 
 div#categories
   :display inline-block
-  :width 30%
+  :width 37%
   :vertical-align top
 
 div#articles
   :display inline-block
-  :width 30%
+  :width 25%
   :vertical-align top
 
 div.quantities
   :float right
-  :margin-top -30px
-  :width 45%
+  :margin-top -10px
+  :width 60%
   :-moz-box-shadow 0px 0px 8px white
   :-webkit-box-shadow 0px 0px 8px white
+  :overflow hidden
   
 div#items
   :display inline-block
   :float right
-  :width 30%
-  :margin-right 60px
+  :width 32%
+  :margin-right 35px
   :border 1px solid $buttoncolor
   :vertical-align top
 
@@ -848,7 +899,7 @@ td.ordersum_container
 
 
 div.article
-  :width 80%
+  :width 91%
 
 div.category
   :display inline-block
@@ -903,7 +954,7 @@ td.item_label
     :width 110px
 
 td.item_options
-  :width 17%
+  :width 20%
   :text-align center
   a
     :background-image url(button_mobile_check.png)
@@ -942,8 +993,8 @@ div#note_for_order
   :z-index 100
   :background-color rgba(0, 0, 0, 0.8)
   :position absolute
-  :margin-top -80px
-  :right 70px
+  :margin-top -130px
+  :right 0px
   :font-size 25px
   :padding 5px 10px 10px 10px
   :-moz-border-radius 5px
@@ -968,7 +1019,7 @@ div#note_for_order
     :display inline-block
     :position absolute
     :right 20px
-    :top 20px
+    :top 5px
     :background-image url(button_mobile_cancel-small.png)
     :width 38px
     :height 38px
@@ -1020,6 +1071,9 @@ div.price_for_item
     :width 50px
     
 
+input#order_note
+  :margin-top 50px
+  :width 100%
   
   
 select#order_user_id
@@ -1337,86 +1391,13 @@ table.page
     :background-color #243239
   td#remove.hover
     :background-color #304345
-  .page
-    :position relative
-
-div.page
-  :width 800px
-  :height 480px
-  :float left
-  :background-color white
-  :display none
-  :color black
-  :background-repeat no-repeat
-  :background-size 100%
-  :-moz-box-shadow 0px 0px 8px black
-  :-moz-border-radius 10px
-  :-webkit-box-shadow 0px 0px 8px black
-  :-webkit-border-radius 10px
-    
-div.partial
-  :position absolute
-  textarea
-    :display none
-    :border none
-    :background-color transparent
-    :position absolute
-    :top 39px
-  div.options
-    :text-align right
-    :left -20px
-    :position absolute
-    :opacity 0.4
-  div.options:hover
-    :opacity 0.8
-  img
-    :-moz-box-shadow 0px 0px 8px black
-    :-moz-border-radius 10px
-    :-webkit-box-shadow 0px 0px 8px black
-    :-webkit-border-radius 10px
-  
 
 
-  
-div.previous_page_button,
-div.next_page_button
-  :float left
-  :height 400px
-  :width 50px
-  :margin 0 10px
-  
-div.previous_page_button a,
-div.next_page_button a
-  :color black
-  :display block
-  :height 400px
-  :width 50px
-  :background-repeat no-repeat
-  :background-position center center
-  
-div.next_page_button a
-  :background-image url('arrow_page_right.png')
-  
-div.previous_page_button a
-  :background-image url('arrow_page_left.png')
-  
-select.presentation_for_partial
-  :display none
-  :position absolute
-  :top 5px
-
-img.asset
-  :width 200px
-  :-moz-box-shadow 0px 0px 8px black
-  :-moz-border-radius 10px
-  :-webkit-box-shadow 0px 0px 8px black
-  :-webkit-border-radius 10px
 
 
 div#items_notifications_static
   :position absolute
   :right 75px
-  :top -20px
   :width 200px
   :z-index 5
   div.item_list
@@ -1430,10 +1411,9 @@ div#items_notifications_static
 
 div#items_notifications_interactive
   :display none
-  :width 100%
-  :height 200%
-  :top -60px
-  :left -20px
+  :height 120%
+  :top 0px
+  :left 0px
   :vertical-align top
   #list_interactive_confirmation,
   #list_interactive_preparation,
@@ -1620,9 +1600,10 @@ div.booking_form
 div#rooms_container
   :z-index 900
   :position absolute
-  :top 0
 
 div#rooms
+  :top 120px
+  :left 0px
   :position absolute
   div#header
     :padding-left 15px 
@@ -1750,8 +1731,8 @@ select#season_to_date_1i
   :display none
 
 table.hotel
-  :float left
   :margin 10px
+  :display inline-block
 
 div#remote_support
   :float right
@@ -1831,3 +1812,94 @@ div.camera
 img.stream
   :width 320px
   :height 240px
+  
+div.error_page
+  .errordescription
+    .exception_message
+    .backtrace
+    
+select#user_tables_array,
+select#user_vendors_array,
+  :font-size 120%
+  :height 300px
+  :background-color #0e1d25
+  :color white
+  :padding 5px
+  
+  
+div#login
+  :font-size 160%
+  :position fixed
+  :padding 10px
+  :width 370px
+  :height 200px
+  :top 40%
+  :left 36%
+  :z-index 0
+  :background-color rgba(255, 255, 255, 0.8)
+  :-moz-box-shadow 0px 0px 50px black
+  :-moz-border-radius 10px
+  :-webkit-box-shadow 0px 0px 50px black
+  :-webkit-border-radius 10px
+  :color black
+  label
+    :display inline-block
+    :margin-bottom -10px
+    :font-weight bold
+    :width 130px
+  select, input
+    :font-size 100%
+    :width 150px
+  input.submit
+    :margin-left 140px
+  p
+    :margin 0px
+    :padding 10px 0px
+  
+#advertising
+  :position fixed
+  :z-index -1000
+  :width 100%
+  :height 100%
+  :left 0px
+  :top 0px
+  #adclickcatcher
+    :position fixed
+    :width 10%
+    :height 10%
+    :left 0px
+    :top 0px
+    :opacity 0.5
+    :background-color grey
+  iframe#adfram
+    :width 100%
+    :height 100%
+    
+    
+    
+// selects
+
+form select
+  :font-size 140%
+  
+span.select-widget-button
+  :padding 6px 20px
+  :text-transform none
+  :font-weight bold
+  
+div.select-widget-display
+  :font-size 150%
+  :background-color rgba(255,255,255,0.4)
+  :border-radius 5px
+  :padding 10px
+  :border 2px solid white
+  span.select-widget-entry
+    :padding 5px 10px
+    :margin 3px 3px
+    :text-transform none
+  span.select-widget-entry-selected
+    :background-color black
+    :color white
+    :text-transform none
+  
+  

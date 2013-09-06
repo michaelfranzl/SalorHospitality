@@ -117,15 +117,21 @@ surcharge_amounts = [6, 12, 22, -5]
 
 
 company_count.times do |c|
-  company = Company.new :name => "Company #{ c }"
+  company = Company.new
+  company.name = "Company#{ c }"
+  company.identifier = "company#{ c }"
   r = company.save
-  puts "Company #{ c } created" if r == true
+  puts "Company#{ c } created" if r == true
 
   countries.size.times do |v|
-    vendor = Vendor.new :name => "Vendor #{ c } #{ v }", :country => countries[v]
+    vendor = Vendor.new
+    vendor.name = "Vendor #{ c } #{ v }"
+    vendor.country = countries[v]
     vendor.company = company
+    vendor.identifier = "identifier#{c}#{v}"
     r = vendor.save
     puts "Vendor #{ c } #{ v } created" if r == true
+    raise "Could not save Vendor: #{ vendor.errors.messages }" if r != true
 
     presentation_objects = Array.new
     presentation1 = Presentation.create :vendor_id => vendor.id, :company_id => company.id, :name => "Article name #{ c } #{ v }", :description => "just displays name of an article", :markup => "%{{NAME}}", :model => "Article"
@@ -179,6 +185,7 @@ company_count.times do |c|
       r = tax.save
       tax_objects << tax
       puts "Tax #{ taxes[i] } #{ c } #{ v } created" if r == true
+      raise "Could not save Tax" if r != true
     end
 
     cash_register_objects = Array.new
@@ -189,6 +196,7 @@ company_count.times do |c|
       r = cash_register.save
       cash_register_objects << cash_register
       puts "CashRegister #{ c } #{ v } #{ i } created" if r == true
+      raise "Could not save CashRegister" if r != true
     end
 
     vendor_printer_objects = Array.new
@@ -199,6 +207,7 @@ company_count.times do |c|
       r = vendor_printer.save
       vendor_printer_objects << vendor_printer
       puts "VendorPrinter #{ c } #{ v } #{ i } created" if r == true
+      raise "Could not save VendorPrinter" if r != true
     end
 
     role_objects = Array.new
@@ -234,7 +243,7 @@ company_count.times do |c|
 
     customer_objects = Array.new
     5.times do |i|
-      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}", :table_id => table_objects[i].id
+      customer = Customer.new :first_name => "Bob#{c}#{v}#{i}", :last_name => "Doe#{c}#{v}#{i}", :company_name => "Company#{c}#{v}#{i}", :address => "Address#{c}#{v}#{i}", :m_points => 100-i, :login => "customer#{c}#{v}#{i}", :password => "customer#{c}#{v}#{i}", :default_table_id => table_objects[i].id
       customer.company = company
       customer.vendor = vendor
       r = customer.save
@@ -257,6 +266,7 @@ company_count.times do |c|
       user = User.new :login => "#{ user_array.to_a[i][0] } #{ c } #{ v } #{ i }", :title => "#{ user_array.to_a[i][0] }", :password => "#{ c }#{ v }#{ i }", :language => languages[v], :color => user_colors[i]
       user.company = company
       user.vendors << vendor
+      user.default_vendor_id = vendor.id
       user.tables = table_objects
       user.role = role_objects[i]
       user.role_weight = role_objects[i].weight
@@ -276,7 +286,7 @@ company_count.times do |c|
       category = Category.new :name => category_labels[i], :icon => category_icons[i], :color => category_colors[rand(category_colors.size)]
       category.company = company
       category.vendor = vendor
-      category.preparation_user_id = user_objects.first.id
+      category.preparation_user_id = user_objects[1].id
       category.vendor_printer = vendor_printer_objects.first
       r = category.save
       puts "Category #{ c } #{ v } #{ i } created" if r == true

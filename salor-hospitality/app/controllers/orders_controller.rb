@@ -11,21 +11,35 @@
 class OrdersController < ApplicationController
 
   def index
-    #@tables = @current_user.tables.where(:vendor_id => @current_vendor).existing
     @categories = @current_vendor.categories.positioned
     @users = @current_vendor.users.existing.active
+    @pages = @current_vendor.pages.existing.active
+    @partial_htmls_pages = []
+    @pages.each do |p|
+      @partial_htmls_pages[p.id] = p.evaluate_partial_htmls
+    end
     session[:admin_interface] = false
+  end
+  
+  def last
+    nr = params[:nr]
+    if nr.blank?
+      @orders = @current_vendor.orders.existing.where(:finished => true).order('nr DESC').limit(30)
+    else
+      order = @current_vendor.orders.existing.find_by_nr(nr)
+      from = order.finished_at
+      to = from + 1.day
+      @orders = @current_vendor.orders.existing.where(:finished => true, :finished_at => from..to).order('nr ASC')
+    end
   end
 
   def show
-    if params[:id] != 'last'
-      @order = @current_vendor.orders.existing.find(params[:id])
-    else
-      @order = @current_vendor.orders.existing.find_all_by_paid(true).last
+    @order = @current_vendor.orders.existing.where(:finished => true).find_by_id(params[:id])
+    if @order.nil?
+      flash[:error] = I18n.t('not_found')
+      redirect_to last_orders_path
+      return
     end
-    redirect_to '/' and return if not @order
-    
-    @previous_order, @next_order = neighbour_models('orders',@order)
     
     respond_to do |wants|
       wants.html
@@ -40,15 +54,6 @@ class OrdersController < ApplicationController
     else
       redirect_to order_path(@current_vendor.orders.existing.last)
     end
-  end
-
-  def toggle_admin_interface
-    if session[:admin_interface]
-      session[:admin_interface] = !session[:admin_interface]
-    else
-      session[:admin_interface] = true
-    end
-    render :json => session[:admin_interface]
   end
 
   def refund
@@ -67,13 +72,11 @@ class OrdersController < ApplicationController
   end
 
   def last_invoices
-    @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).limit(5)
-    if @current_user.role.permissions.include? 'finish_all_settlements'
-      @permitted_users = @current_vendor.users.existing.active
-    elsif @current_user.role.permissions.include? 'finish_own_settlement'
-      @permitted_users = [@current_user]
+    @recent_unsettled_orders = @current_vendor.orders.existing.where(:settlement_id => nil, :finished => true, :user_id => @current_user.id).order('finished_at DESC').limit(7)
+    if permit('finish_all_settlements') or permit('view_all_settlements')
+      @permitted_users = @current_vendor.users.existing.active.where('role_weight > 0')
     else
-      @permitted_users = []
+      @permitted_users = [@current_user]
     end
   end
 end

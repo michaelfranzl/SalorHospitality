@@ -338,10 +338,10 @@ function draw_booking(booking) {
     d = get_date(booking.from);
     if (y == 1) {
       negative_offset += 10;
-      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + 20, left: offset.left + (owidth * x) + lpad + 10};
       widget_height += 15;
     } else {
-      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+      var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + 20, left: offset.left + (owidth * x) + lpad + 10};
     }
     $('#booking_' + booking.id + ' > div.inner-div > span.name').html(booking.customer_name);
     booking_widget.offset(new_offset);
@@ -352,10 +352,10 @@ function draw_booking(booking) {
   // the it's top aligned, probably starts before the current view, so we just move it to the very top
   if (y == 1) {
     negative_offset += 10;
-    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight(), left: offset.left + (owidth * x) + lpad + 10};
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset, left: offset.left + (owidth * x) + lpad + 10};
     widget_height += 30; // when we remove the top offset, we have to extend the height of the widget to compensate
   } else {
-    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + $('#header').outerHeight() + 20, left: offset.left + (owidth * x) + lpad + 10};
+    var new_offset = {top: offset.top + ((y * oheight) + (oheight * 1)) - negative_offset + 20, left: offset.left + (owidth * x) + lpad + 10};
   }
   
   //_log('using','salor_hotel.booking.odd'+ x, booking.customer_name, booking.id, booking.room_id);
@@ -480,6 +480,7 @@ function get_coord_key_from_element(elem,axis) {
     return elem.offset().left + '-' + (elem.offset().left + elem.outerWidth());
   }
 }
+
 function render_booking_lines () {
   var num_rooms = _get("rooms.json").keys.length;
   var now = new Date(Date.parse($('#show_booking_from').val()))
@@ -494,7 +495,7 @@ function render_booking_lines () {
   var existed = false;
   while (i < 32) {
     x = 1
-    css = {top: offset.top + (i * oheight) + $('#header').outerHeight() + 20, left: offset.left + lpad};
+    css = {top: offset.top + (i * oheight) + 20, left: offset.left + lpad};
     var d = new Date(now.getFullYear(),now.getMonth(), now.getDate() + i - 1);
     
     if ($('#booking_date_' + i).length > 0 ) {
@@ -534,29 +535,28 @@ function render_booking_lines () {
   }
   draw_bookings();
 }
+
 function show_rooms_interface() {
   $('#booking_form').hide();
   $('#functions_header_index').show();
   $('#tables').hide();
   $('#areas').hide();
-  $('#container').hide();
+  $('#main').hide();
+  $('#admin').hide();
+  $('#footer').hide();
+  $('#copyright').hide();
   $('#spliced_seasons').show();
   $('#rooms').html('');
   var admin_toggle_offset = $('#header').offset();
   $('#rooms').show();
-  $('#rooms').offset({top: 0, left: 0});
-  var new_header = $('#header').clone();
-  new_header.addClass('rooms-container-header');
-  new_header.find('').on('click',function () {
-    hide_rooms_interface();
-  });
-  $('#rooms').prepend(new_header);
 }
+
 function hide_rooms_interface() {
   $('#rooms').hide();
   $('#container').show();
   route('tables');
 }
+
 function draw_element(elem,offset,type,css) {
   if (!type) {
     type = 'offset';
@@ -571,6 +571,7 @@ function draw_element(elem,offset,type,css) {
     elem.css(css);
   }
 }
+
 function draw_rooms_header() {
   var offset = $('#rooms').offset();
   var tpad = _get("salor_hotel.tpad");
@@ -590,12 +591,9 @@ function draw_rooms_header() {
   }
   var num_rooms = _get("rooms.json").keys.length;
   var new_width = num_rooms * room.outerWidth() + 300;
-  if (new_width < $(window).width() - 5) {
-    new_width = $(window).width() - 5;
-  }
   $('#rooms').css({'width': new_width + 'px', height: 32 * room.outerHeight() + room.outerHeight()})
   width = (parseInt($('#rooms').parent().width()) / (num_rooms + 2)) + 'px';
-  css = {top: offset.top + tpad + $('#header').outerHeight() + 20, left: offset.left + lpad}
+  css = {top: offset.top + tpad + 20, left: offset.left + lpad}
   room.offset(css);
   
   _set("salor_hotel.outerWidth", room.outerWidth());
@@ -624,9 +622,9 @@ function draw_rooms_header() {
 }
 // updates the visual room buttons. Hooked into update_resources of the main app.
 window.render_rooms = function (event) {
-  if (!$('#rooms').is(":visible")) {
+  //if (!$('#rooms').is(":visible")) {
     show_rooms_interface();
-  }
+  //}
   //if (!_get("salor_hotel.from_input")) {
      var d = new Date();
      d.setDate(d.getDate() - 2);

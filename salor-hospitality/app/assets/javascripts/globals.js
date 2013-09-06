@@ -24,6 +24,10 @@ var upper_delivery_time_limit = 45 * 60000;
 
 var send_queue_attempts = 1;
 
+var toggle_drag_tables_state = 0;
+
+var interim_receipt_enabled = false;
+
 var invoice_update = true;
 var get_table_show_retry = true;
 var last_table_id = null;

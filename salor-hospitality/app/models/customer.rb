@@ -12,10 +12,30 @@ class Customer < ActiveRecord::Base
   belongs_to :company
   has_many :orders
   has_many :bookings
-  validates_presence_of :login
+  has_one :table
+  validates_presence_of :email
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+  validates_uniqueness_of :email, :scope => :company_id
+  validates_presence_of :password
+  validate :password_length
+  
+  def password_length
+    if self.password and self.password.length < 6
+      errors.add(:password, I18n.t('activerecord.errors.messages.too_short', :count => 6))
+    end
+  end
 
-  def to_hash
-    {:id => self.id, :name => self.full_name(true), :table_id => self.table_id }
+  def to_hash(vendor)
+#     table_id = nil
+#     if self.table_id
+#       # if customer has set a dedicated table, "place" him there. this would be used for "anonymous" customers for self-ordering in a restaurant
+#       table_id = self.table_id
+#     else
+#       # if customer does not have a dedicated table set, which is the case for non-anonymous customers when ordering from their own account, use the first free (customer_id == nil) table with has the 'customer == true' attribute set, of the currently logged in vendor.
+#       table_id = vendor.tables.existing.where(:customer_table => true, :customer_id => nil).first.id # first empty table
+#     end
+    return {:id => self.id, :name => self.full_name(true) }
   end
 
   def full_name(simple = false)

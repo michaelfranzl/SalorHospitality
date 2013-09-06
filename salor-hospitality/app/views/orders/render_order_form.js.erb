@@ -1,8 +1,8 @@
+//views/render_order_form.js.erb
 <% if @order %>
   items_json = <%= raw @order.items_to_json %>;
   submit_json.id = <%= @order.id %>;
-  render_items();
-  $('#order_info').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
+  $('#order_info').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @order.table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
   $('#order_info_bottom').html('');
   $('#order_note').val('<%= escape_javascript @order.note %>');
   $('#order_sum').val('<%= number_with_precision(@order.sum, :precision => 2) %>');

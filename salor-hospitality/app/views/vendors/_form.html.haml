@@ -7,26 +7,31 @@
 
 
 = form_for nest_image(@vendor), :html => { :multipart => true, :class => 'vendor_form' } do |vendor_form|
+  = submit_tag @vendor.new_record? ? (t :create) : (t :edit)
+  .floatright= link_to(t('various.cancel'), vendors_path, :class => 'links')
+  .clear
   .image
     = vendor_form.label :logo
     %img.asset{ :src => @vendor.image('logo') }
     = vendor_form.label :invoice_logo
     %img.asset{ :src => @vendor.image('invoice_logo') }
-  %p= submit_tag @vendor.new_record? ? (t :create) : (t :edit)
   %table
     %tr
       %td
         %br
         = vendor_form.label :name
-        = vendor_form.text_field :name
+        = vendor_form.text_field :name, :size => 15
         %span.display_keyboard{ :id => "vendor_name_display_keyboard" }
         %br
+        = vendor_form.label :identifier
+        = vendor_form.text_field :identifier, :size => 15
+        %br
         = vendor_form.label :email
-        = vendor_form.text_field :email
+        = vendor_form.text_field :email, :size => 15
         - if @current_company.mode == 'local' or @current_user.role.weight.zero?
           %br
           = vendor_form.label :technician_email
-          = vendor_form.text_field :technician_email
+          = vendor_form.text_field :technician_email, :size => 15
         %br
         = vendor_form.fields_for :images do |image_form|
           %br
@@ -70,7 +75,6 @@
             = vendor_form.label :automatic_printing_interval
             = vendor_form.text_field :automatic_printing_interval, :size => 2
             %span.display_keyboard{ :id => "vendor_automatic_printing_interval_display_keyboard" }
-            %br
         %br
         = vendor_form.label :receipt_header_blurb
         = vendor_form.text_area :receipt_header_blurb
@@ -106,26 +110,59 @@
         = vendor_form.label :ticket_item_separator
         %br
         = vendor_form.check_box :ticket_display_time_order
-        = vendor_form.label :ticket_display_time_order, :class => 'wide'
+        = vendor_form.label :ticket_display_time_order
+        %br
+        = vendor_form.check_box :history_print
+        = vendor_form.label :history_print, :class => 'wide'
         - if @current_user.role.weight == 0
           %br
           = vendor_form.check_box :remote_orders
           = vendor_form.label :remote_orders
 
         %div#vendor_printers
+          %br
+          %br
           %h3= t('activerecord.models.vendor_printer.other')
-          - if @current_company.mode == 'local'
-            %span.button#identify_printers= t '.identify_printers'
+          %hr
+          %p= t('.print_via_salorbin_explanation')
+          %p
+            Printing / URL:
             %br
+            - if @current_company.mode == 'saas'
+              %input{ :disabled => true, :value => "#{ @current_company.full_url }/printers", :size => 35 }
+            - else
+              - match = /(.*\/\/.*?\/).*/.match(request.url)
+              - url = match[1] if match
+              %input{ :disabled => true, :value => "#{ url }printers", :size => 35 }
+          %p
+            Printing / Username:
+            %br
+            %input{ :disabled => true, :value => vendor_form.object.hash_id, :size => 35 }
+          %hr
+          %span.button#identify_printers= t '.identify_printers'
+          %br
           %span.button#test_printers= t '.test_printers'
           %br
           %span.button#test_printers_chartest= t '.test_printers_chartest'
-          %br
+          %hr
           %span#add_printer
             %span.button= t '.add_printer'
+          %br
           = vendor_form.fields_for :vendor_printers, vendor_form.object.vendor_printers.existing do |f|
             = render :partial => 'vendor_printer', :locals => { :f => f }
           %script== var printer_template = '#{ generate_template(vendor_form, :vendor_printers) }'
+          
+.clear
+
+- if @current_user.role_weight.zero?
+  %small
+    %code= SalorHospitality.tailor #.pretty_inspect.gsub("<", "&lt;").gsub("\n", "<br/>").gsub(" ", "&nbsp;")
+    %br
+    %code old:
+    %br
+    - SalorHospitality.old_tailors.each do |t|
+      %code= t
+      %br
 
 
 - if @current_user.onscreen_keyboard_enabled

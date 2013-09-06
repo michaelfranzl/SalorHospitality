@@ -1,0 +1,19 @@
+%table.settlements.statistics
+  %tr
+    %th.bb= t '.weekday'
+    %th.bb= t :sum
+    %th.bb.bar
+  - i = 0
+  - sums = []
+  - @days.each do |day|
+    - sums[i] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :created_at => @from..@to).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
+    - i += 1
+  - maximum = sums.sort.last
+  - i = 0
+  - @days.each do |day|
+    %tr
+      %td= day
+      %td= number_to_currency sums[i]
+      %td
+        .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+    - i += 1

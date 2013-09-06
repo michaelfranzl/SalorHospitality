@@ -10,11 +10,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 function display_articles(cat_id) {
   $('#articles').html('');
-  $.each(resources.c[cat_id].a, function(art_id,art_attr) {
-    a_object = this;
-    var abutton = create_dom_element('div',{id:"article"+art_id},art_attr.n,'#articles');
+  var article_ids = resources.c[cat_id].a;
+  for (var i = 0; i < article_ids.length; i++) {
+    var art_id = article_ids[i];
+    var a_object = resources.a[art_id];
+    var qu_ids = a_object.q;
+    var abutton = create_dom_element('div',{id:"article"+art_id},a_object.n,'#articles');
     abutton.addClass('article');
-    //abutton.html(art_attr.n);
     var qcontainer = $(document.createElement('div'));
     qcontainer.addClass('quantities');
     qcontainer.css('display','none');
@@ -25,11 +27,11 @@ function display_articles(cat_id) {
         highlight_button(element);
       });
     })();
-    //$('#articles').append(abutton);
-    if (jQuery.isEmptyObject(resources.c[cat_id].a[art_id].q)) {
+    if (qu_ids.length == 0) {
+      // no submenu for quantities
       (function() { 
         var element = abutton;
-        var object = a_object;
+        var article_id = art_id;
         abutton.on('click', function() {
           highlight_border(element);
           if (settings.workstation) {
@@ -37,24 +39,23 @@ function display_articles(cat_id) {
           } else {
             $('.quantities').html('');
           }
-          add_new_item(object, false);
+          add_new_item(article_id, 'article', false);
         });
       })();
     } else {
-      // quantity
+      // render submenu for variants/quantities
       arrow = $(document.createElement('img'));
       arrow.addClass('more');
       arrow.attr('src','/assets/more.png');
       abutton.append(arrow);
       (function() {
+        var article_id = art_id;
+        var target = qcontainer;
         abutton.on('click', function(event) {
-          var quantities = resources.c[cat_id].a[art_id].q;
-          var target = qcontainer;
-          var catid = cat_id;
-          display_quantities(quantities, target, catid);
+          display_quantities(article_id, target);
         });
       })();
       qcontainer.insertAfter(abutton);
     }
-  });
+  }
 }

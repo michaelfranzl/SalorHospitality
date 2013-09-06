@@ -15,7 +15,7 @@ class VendorsController < ApplicationController
   helper_method :permit
 
   def index
-    @vendors = @current_company.vendors.existing
+    @vendors = @current_user.vendors.existing
     if @vendors.count == 1
       @vendor = @vendors.first
       render :edit
@@ -23,12 +23,15 @@ class VendorsController < ApplicationController
     return
   end
   
+  # scope everything by this vendor, saves the vendor id in the session
   def show
     vendor = get_model
     redirect_to vendor_path and return unless vendor
     @current_vendor = vendor
-    session[:vendor_id] = params[:id] if @current_vendor
-    redirect_to vendors_path
+    session[:vendor_id] = @current_user.default_vendor_id = params[:id] if vendor
+    @current_user.save
+    flash[:notice] = t('various.switched_to_vendor', :vendorname => vendor.name)
+    redirect_to orders_path
   end
 
   # Edits the vendor
@@ -49,8 +52,10 @@ class VendorsController < ApplicationController
       @vendor.images.reload
       render(:edit) and return 
     end
+    #@vendor.images.update_all :company_id => @vendor.company_id
+    @vendor.update_cache
     flash[:notice] = t('vendors.create.success')
-    redirect_to vendors_path
+    redirect_to edit_vendor_path(@vendor)
   end
 
   def new
@@ -61,6 +66,10 @@ class VendorsController < ApplicationController
     @vendor = Vendor.new params[:vendor]
     @vendor.company = @current_company
     if @vendor.save
+      #@vendor.images.update_all :company_id => @vendor.company_id
+      @vendor.update_cache
+      @current_user.vendors << @vendor
+      @current_user.save
       flash[:notice] = t('vendors.create.success')
       redirect_to vendors_path
     else
@@ -71,7 +80,7 @@ class VendorsController < ApplicationController
   def destroy
     @vendor = get_model
     @vendor.hide
-    session[:vendor_id] = @current_company.vendors.existing.first.id
+    #session[:vendor_id] = @current_company.vendors.existing.first.id
     redirect_to vendors_path
   end
 
@@ -89,12 +98,25 @@ class VendorsController < ApplicationController
       :see_item_notifications_user_delivery => permit("see_item_notifications_user_delivery"),
       :manage_payment_methods => permit("manage_payment_methods"),
       :manage_customers => permit("manage_customers"),
+      :manage_pages => permit("manage_pages"),
       :audio => (@current_user.audio unless @current_customer),
       :move_tables => permit("move_tables"),
       :add_option_to_sent_item => permit('add_option_to_sent_item'),
       :confirmation_user => (@current_user.confirmation_user unless @current_customer)
     }
-    render :js => "permissions = #{ permissions.to_json }; resources = #{ resources }; timeout_update_tables = #{ @current_vendor.update_tables_interval }; timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval }; timeout_update_resources = #{ @current_vendor.update_resources_interval }; automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 }; user_login = '#{ @current_user.login }'; company_identifier = '#{ @current_company.identifier }';"
+    
+    render :js => "
+      permissions = #{ permissions.to_json };
+      resources = #{ resources };
+      timeout_update_tables = #{ @current_vendor.update_tables_interval }; 
+      timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval };
+      timeout_update_resources = #{ @current_vendor.update_resources_interval };
+      automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 };
+      user_login = '#{ @current_user.login if @current_user }';
+      user_shift_ended = #{ @current_user.shift_ended };
+      user_shift_duration = #{ @current_user.current_shift_duration };
+      company_identifier = '#{ @current_company.identifier }';
+    "
   end
   
   def report
@@ -152,12 +174,16 @@ class VendorsController < ApplicationController
   end
   
   def test_printers
-    Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, @current_company.identifier).identify(params[:chartest])
+    Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, @current_vendor.hash_id)).identify(params[:chartest])
     render :nothing => true
   end
   
   def online_status
-    #sleep 2
     render :text => 'online'
+  end
+  
+  def generic_print
+    @current_vendor.generic_print(params[:text])
+    render :nothing => true
   end
 end

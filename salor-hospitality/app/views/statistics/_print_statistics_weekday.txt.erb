@@ -1,0 +1,16 @@
+
+
+<%= "\e!\x38" %>
+<%= I18n.t 'statistics.index.weekday' %>
+
+<%= "\e!\x00" %>
+<% i = 0 %>
+<% total = 0 %>
+<% @days.each do |day| %>
+<% sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :created_at => @from..@to).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum) %>
+<%= "%10.10s     %s %7.2f\n" % [day, @friendly_unit, sum] %>
+<% i += 1 %>
+<% total += sum %>
+<% end %>
+<%= "%10.10s     %s %7.2f\n" % [I18n.t(:sum), @friendly_unit, total] %>
+<%= "\xc4" * 42 %>

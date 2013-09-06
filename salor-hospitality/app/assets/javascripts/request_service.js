@@ -15,7 +15,9 @@ $(function(){
 
 function update_connection_status(){
   $.ajax({
+    type: 'GET',
     url: "/reports/update_connection_status",
+    cache: false,
     dataType: 'script'
   });
   ssh_connected = connection_status.ssh;

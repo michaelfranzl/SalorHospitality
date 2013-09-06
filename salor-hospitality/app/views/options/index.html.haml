@@ -1,6 +1,9 @@
 %h2= t('activerecord.models.option.other')
 
-= link_to (t :new), new_option_path, :class => 'links'
+- if @current_vendor.categories.existing.any?
+  = link_to (t :new), new_option_path, :class => 'links'
+- else
+  = t('.no_categories_defined')
 
 - @categories.each do |c|
   - if c.options.existing.any?

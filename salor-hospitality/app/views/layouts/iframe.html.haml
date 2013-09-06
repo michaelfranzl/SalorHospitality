@@ -10,9 +10,12 @@
     %title BillGastro
     
     = javascript_include_tag 'jquery.js'
+    = javascript_include_tag 'page.js'
+    = javascript_include_tag 'menucard_iframe.js'
+    
     %style= render :file => 'app/views/layouts/_fonts.css.erb', :content_type => 'text/css' 
     
     = stylesheet_link_tag('iframe', :media => 'screen')
 
   %body
-    = yield
+    #digital_menucard= yield

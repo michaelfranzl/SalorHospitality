@@ -13,16 +13,28 @@ module ActionView
       alias_method :orig_number_with_precision, :number_with_precision
       alias_method :orig_number_to_percentage, :number_to_percentage
       
-      def number_to_currency(args)
-        orig_number_to_currency(args, :locale => @region)
+      def number_to_currency(arg1, arg2={})
+        if @region
+          # when called from views
+          arg2.merge! :locale => @region
+        end
+        orig_number_to_currency(arg1, arg2)
       end
       
-      def number_with_precision(arg1, arg2)
+      def number_with_precision(arg1, arg2={})
+        if @region
+          # when called from views
+          arg2.merge! :locale => @region
+        end          
         orig_number_with_precision(arg1, arg2)
       end
       
-      def number_to_percentage(args)
-        orig_number_to_percentage(args, :precision => 0, :locale => @region)
+      def number_to_percentage(arg1, arg2={})
+        if @region
+          # when called from views
+          arg2.merge! :locale => @region
+        end
+        orig_number_to_percentage(arg1, arg2)
       end
     end
   end

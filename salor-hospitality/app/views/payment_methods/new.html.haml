@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @payment_method do |payment_method_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), payment_methods_path, :class => 'links')
+    .clear
     = payment_method_form.label :name
     = payment_method_form.text_field :name, :size => '10'
     %br

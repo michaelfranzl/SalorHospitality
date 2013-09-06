@@ -1,17 +1,24 @@
-- if workstation?
+- if workstation? and not @current_customer
   %a.iconbutton.scrollup_button{ :onclick => 'scroll_to($("#header"),20)', :title => t(:scroll_up) }
 
 - unless @current_customer
   %a#order_submit_button.iconbutton.tables_button{ :onclick => "route('tables', submit_json.model.table_id, 'send');", :title => t(:send_and_go_back), :style => branding_override_style(:buttons, :tables) }
-- else
+
+- if @current_customer
   %a#order_submit_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_send');", :title => t('various.customer_request_send') }
+  
+- if @current_customer and @current_customer.default_table_id
   %a#order_submit_button.iconbutton.cash_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_finish');", :title => t('various.customer_request_finish') }
   %a#order_submit_button.iconbutton.user_button{ :onclick => "route('table', submit_json.model.table_id, 'customer_request_waiter');", :title => t('various.customer_request_waiter') }
 
 - if workstation?
   - if permit('counter_mode')
-    %a.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish), :style => branding_override_style(:buttons, :finish) }
-    %a.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish), :style => branding_override_style(:buttons, :finish_and_print) }
+    %a#counter_finish_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t('orders.invoice_form.finish'), :style => branding_override_style(:buttons, :finish) }
+    %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t('orders.invoice_form.print_and_finish'), :style => branding_override_style(:buttons, :finish_and_print) }
+    
+  - if permit('immediate_order_finish')
+    %a#immediate_finish_button.iconbutton.finish_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_noinvoice');", :title => t('orders.invoice_form.finish_gototables'), :style => branding_override_style(:buttons, :finish) }
+    %a#immediate_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_invoice');", :title => t('orders.invoice_form.print_and_finish_gototables'), :style => branding_override_style(:buttons, :finish_and_print) }
 
 - if permit('finish_orders')
   %a#order_invoice_button.iconbutton.cash_button{ :onclick => "route('invoice', submit_json.model.table_id, 'send');", :title => t(:split_order), :style => branding_override_style(:buttons, :cash) }
@@ -33,3 +40,12 @@
   
 - if permit('cancel_all_items_in_active_order') and (( position == 'footer' and mobile?) or workstation?)
   %a#order_clear_button.iconbutton.clear_button{ :onclick => "route('tables', submit_json.model.table_id, 'destroy');", :title => t(:clear_order_and_go_back) }
+
+- if mobile? and position == 'footer'
+  - if permit('counter_mode')
+    %a#counter_finish_button.iconbutton.finish_button{ :onclick => "route('table', submit_json.model.table_id, 'send');", :title => t(:finish), :style => branding_override_style(:buttons, :finish) }
+    %a#counter_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('table', submit_json.model.table_id, 'send_and_print');", :title => t(:print_and_finish), :style => branding_override_style(:buttons, :finish_and_print) }
+    
+  - if permit('immediate_order_finish')
+    %a#immediate_finish_button.iconbutton.finish_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_noinvoice');", :title => t('orders.invoice_form.finish_gototables'), :style => branding_override_style(:buttons, :finish) }
+    %a#immediate_print_and_finish_button.iconbutton.print3_button{ :onclick => "route('tables', submit_json.model.table_id, 'send_and_finish_invoice');", :title => t('orders.invoice_form.print_and_finish_gototables'), :style => branding_override_style(:buttons, :finish_and_print) }

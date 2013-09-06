@@ -23,6 +23,7 @@ SALOR Hospitality has many more useful features that are described in more detai
 
 Read about the extraordinarily good mobile support here: http://billgastro.com/about.html
 
+
 History
 -------
 

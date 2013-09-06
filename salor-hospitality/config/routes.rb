@@ -7,20 +7,6 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 SalorHospitality::Application.routes.draw do
-
-  get "reservations/fetch"
-  get "orders/attach_coupon"
-  get "orders/attach_discount"
-  resources :reservations
-
-  resources :discounts
-
-  get "coupons/coupons_list"
-  resources :coupons
-
-  resources :roles
-  resources :customers
-
   get "templates/index"
   get "templates/show"
   get "templates/edit"
@@ -29,6 +15,7 @@ SalorHospitality::Application.routes.draw do
 
   get "partials/delete"
   get "partials/update"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -71,12 +58,13 @@ SalorHospitality::Application.routes.draw do
 
   resources :orders do
     collection do
-      post :toggle_admin_interface
       post :login
       get :refund
       get :last_invoices
       get :logout
       post :by_nr
+      get :last
+      post :last
     end
   end
 
@@ -97,12 +85,9 @@ SalorHospitality::Application.routes.draw do
   match 'vendors/test_printers' => 'vendors#test_printers'
   match 'users/unlock_ip' => 'users#unlock_ip'
   match 'route' => 'application#route'
+  match 'translations' => 'translations#index'
+  match 'translations/set' => 'translations#set'
   
-
-
-  if Rails.env.test?
-    match 'session/request_specs_login' => 'sessions#request_specs_login'
-  end
 
   resources :cost_centers, :taxes, :roles, :presentations, :payment_methods
   resources :users
@@ -114,12 +99,11 @@ SalorHospitality::Application.routes.draw do
   resources :room_prices
   resources :statistic_categories
   resources :cameras
-
+  resources :roles
+  resources :customers
 
   resources :reports do
     collection do
-      get :backup_database
-      get :backup_logfile
       get :update_connection_status
       get :connect_remote_service
     end
@@ -173,20 +157,7 @@ SalorHospitality::Application.routes.draw do
     end
   end
 
-  resources :statistics do
-    collection do
-      get 'tables'
-      post 'tables'
-      get 'weekdays'
-      post 'weekdays'
-      get 'users'
-      post 'users'
-      get 'journal'
-      post 'journal'
-      get 'articles'
-      post 'articles'
-    end
-  end
+  resources :statistics
 
   resources :tables do
     resources :orders
@@ -234,8 +205,6 @@ SalorHospitality::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
 
-  root :to => 'orders#index'
-
 
   # See how all your routes lay out with "rake routes"
 
@@ -243,12 +212,20 @@ SalorHospitality::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  
+  
 
   if defined?(ShSaas) == 'constant'
     mount ShSaas::Engine => "/saas"
-    match '*path' => 'saas/sessions#new'
+    match '/login' => 'sh_saas/sessions#new_customer'
+    match '/signin' => 'sh_saas/sessions#new'
+    match '/printers' => 'sh_saas/sessions#printer_info'
+    root :to => 'sh_saas/pages#iframe'
+    match '*path' => 'sh_saas/pages#iframe'
   else
+    match '/printers' => 'sessions#printer_info'
     match '*path' => 'sessions#new'
+    root :to => 'orders#index'
   end
 
 end

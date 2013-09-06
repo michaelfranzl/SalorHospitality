@@ -41,3 +41,4 @@ debian/files
 *.salor_saas.rb
 bar
 *.salor
+log/*.yml

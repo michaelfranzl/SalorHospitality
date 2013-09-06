@@ -9,9 +9,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function render_items() {
+  // we will read all items attributes from the variable items_json, rendered by the server.
   jQuery.each(items_json, function(k,object) {
-    catid = object.ci;
-    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, compose_label(object)).replace(/OPTIONSNAMES/g, compose_optionnames(object)).replace(/SCRIBE/g, scribe_image(object)).replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit);
+    var catid = object.ci;
+    var label = compose_label(object)
+    var optionnames = compose_optionnames(object);
+    var scribeimage = scribe_image(object);
+    tablerow = resources.templates.item.replace(/DESIGNATOR/g, object.d).replace(/COUNT/g, object.c).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, object.o).replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, optionnames).replace(/SCRIBE/g, scribeimage).replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit);
     $('#itemstable').append(tablerow);
     if (object.changed == true) {
       $('td#tablerow_' + object.d + '_count').addClass('updated');
@@ -21,7 +25,7 @@ function render_items() {
     }
     $('#options_select_' + object.d).attr('disabled',true); // option selection is only allowed when count > start count, see increment
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
-    render_options(resources.c[catid].o, object.d, catid);
+    render_options(resources.c[catid].o, object.d);
   });
   calculate_sum();
 }
@@ -32,9 +36,15 @@ function render_items() {
 // object {hash} contains the attributes of the item that should be created.
 // anchor_d {string} is the item designator before which the newly generated item will be inserted.
 // add_new {boolean} causes always a new item to be created. no incrementation is done.
-function add_new_item(object, add_new, anchor_d) {
-  d = object.d;
-  catid = object.ci;
+function add_new_item(id, model, add_new, anchor_d) {
+  var object = {};
+  if (model == 'article') {
+    object = resources.a[id];
+  } else if (model == 'quantity' ) {
+    object = resources.q[id];
+  }
+  var d = object.d;
+  var catid = object.ci;
   if (items_json.hasOwnProperty(d) &&
       !add_new &&
       items_json[d].p == object.p &&
@@ -47,19 +57,23 @@ function add_new_item(object, add_new, anchor_d) {
   } else {
     // an item with identical paramters is not yet in the list, or add_new is true, so create a new item
     d = create_json_record('order', object);
-    label = compose_label(object);
-    new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit));
+    var label = compose_label(object);
+    var new_item = $(resources.templates.item.replace(/DESIGNATOR/g, d).replace(/COUNT/g, 1).replace(/ARTICLEID/g, object.aid).replace(/QUANTITYID/g, object.qid).replace(/COMMENT/g, '').replace(/PRICE/g, object.p).replace(/LABEL/g, label).replace(/OPTIONSNAMES/g, '').replace(/SCRIBE/g, '').replace(/CATID/g, catid).replace(/CURRENCY/g, i18n.currency_unit));
     if (anchor_d) {
       $(new_item).insertBefore($('#item_'+anchor_d));
     } else {
       $('#itemstable').prepend(new_item);
     }
     $('#tablerow_' + d + '_count').addClass('updated');
-    render_options(resources.c[catid].o, d, catid);
+    var option_ids = resources.c[catid].o;
+    render_options(option_ids, d);
     if (settings.workstation) { enable_keyboard_for_items(object.d); }
   }
+  
+  if ($('#digital_menucard:visible')) {
+  }
   calculate_sum();
-  return d
+  return d;
 }
 
 function display_configuration_of_item(d) {
@@ -101,22 +115,37 @@ function display_configuration_of_item(d) {
   }
 }
 
-function compose_label(object){
-  if ( object.hasOwnProperty('qid') || object.hasOwnProperty('qi')) {
-    label = object.pre + ' ' + object.n + ' ' + object.post;
-  } else {
+function compose_label(object) {
+  var label = null;
+  if (typeof object.qi == 'undefined') {
+    // this is an article object
     label = object.n;
+  } else {
+    // this is an quantity object
+    var articleobj = resources.a[object.ai];
+    label = object.pre + ' ' + articleobj.n + ' ' + object.post;
   }
   return label;
 }
 
 function clone_item(d) {
-  if (items_json[d].c > 1 && permissions.add_option_to_sent_item == false) {
-    var clone_d = add_new_item(items_json[d], true, d);
+  var object = items_json[d];
+  var id = null;
+  var model = null;
+  if (object.c > 1 && permissions.add_option_to_sent_item == false) {
+    if (typeof object.qi == 'undefined') {
+      //this is an article object
+      id = object.ai;
+      model = 'article';
+    } else {
+      //this is an quantity object
+      id = object.qi;
+      model = 'quantity';
+    }
     decrement_item(d);
-    d = clone_d;
+    var d = add_new_item(id, model, true, d);
   }
-  return d
+  return d;
 }
 
 function item_changeable(d) {

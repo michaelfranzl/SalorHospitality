@@ -30,6 +30,7 @@ gn:
         less_than_or_equal_to: "must be less than or equal to %{count}"
         odd: "must be odd"
         even: "must be even"
+        must_be_ascii: "darf nur A-Z, a-z oder 0-9 enthalten"
 
 
 

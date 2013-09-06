@@ -1,0 +1,5 @@
+- pages.each do |p|
+  - partial_htmls = partial_htmls_pages[p.id]
+  - background_image = "background-image: url('#{ p.image }');" if p.image
+  .page{ :id => "page_#{ p.id }", :style => "width: #{ p.width }px; height: #{ p.height }px; #{ background_image } background-color: #{ p.color };"}
+    = render :partial => '/pages/page', :locals => { :page => p, :partial_htmls => partial_htmls }

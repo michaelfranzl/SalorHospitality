@@ -11,11 +11,13 @@
 class Table < ActiveRecord::Base
   include Scope
   has_many :orders
+  has_many :histories, :as => 'model'
   belongs_to :user
   belongs_to :company
   belongs_to :vendor
   belongs_to :customer
   belongs_to :user, :class_name => 'User', :foreign_key => 'active_user_id'
+  belongs_to :active_customer, :class_name => 'Customer', :foreign_key => 'active_customer_id'
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :vendor_id
@@ -23,10 +25,17 @@ class Table < ActiveRecord::Base
   
   def update_color
     orders = self.vendor.orders.existing.where(:finished => false, :table_id => self.id)
-    if orders.empty?
-      self.update_attribute :active_user_id, nil 
+    lastorder = orders.last
+    if lastorder.nil?
+      self.active_user_id = nil
+      self.active_customer_id = nil
+      self.note = nil
+      self.save
     else
-      self.update_attribute :active_user_id, orders.last.user_id
+      self.active_user_id = lastorder.user_id
+      self.active_customer_id = lastorder.customer_id
+      self.note = lastorder.note
+      self.save
     end
   end
   

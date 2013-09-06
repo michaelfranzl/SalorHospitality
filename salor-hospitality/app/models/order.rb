@@ -9,6 +9,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Order < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
   include Scope
   belongs_to :company
   belongs_to :vendor
@@ -43,10 +44,10 @@ class Order < ActiveRecord::Base
     last,first = name.split(' ')
     return if not last or not first
     c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
-    if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
-      self.vendor.update_cache
-    end
+#     if not c then
+#       c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id)
+#       self.vendor.update_cache if self.vendor
+#     end
     self.customer = c
     self.save
   end
@@ -64,7 +65,7 @@ class Order < ActiveRecord::Base
     order.vendor = vendor
     order.company = vendor.company
     params[:items].to_a.each do |item_params|
-      order.create_new_item(item_params)
+      order.create_new_item(item_params, user)
     end
     raise "Order could not be saved." unless order.save
     #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
@@ -72,8 +73,8 @@ class Order < ActiveRecord::Base
     order.regroup
     order.calculate_totals
     order.update_payment_method_items(params)
-    order.hide(user.id) if order.hidden
-    order.hide(user.id) unless order.items.existing.any?
+    hidden_by = user ? user.id : -12
+    order.hide(hidden_by) if order.hidden or not order.items.existing.any?
     order.set_nr
     order.table.update_color
     return order
@@ -84,9 +85,9 @@ class Order < ActiveRecord::Base
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
-        self.update_item(item_id, item_params)
+        self.update_item(item_id, item_params, user)
       else
-        self.create_new_item(item_params)
+        self.create_new_item(item_params, user)
       end
     end
     self.user = user if self.user.nil? or (params[:items] and params[:model][:user_id].nil?)
@@ -95,50 +96,85 @@ class Order < ActiveRecord::Base
     self.regroup
     self.calculate_totals
     self.update_payment_method_items(params)
-    self.hide(user.id) if self.hidden
-    self.hide(user.id) unless self.items.existing.any?
+    hidden_by = user ? user.id : -12
+    self.hide(hidden_by) if self.hidden or not self.items.existing.any?
     self.table.update_color
   end
   
-  def create_new_item(p)
+  def create_new_item(p, user)
     i = Item.new(p[1])
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
-    i.save
-    i.create_option_items_from_ids p[1][:i]
-    i.option_items.each { |oi| oi.calculate_totals }
-    i.calculate_totals
-    i.hide(user.id) if i.hidden
-    if i.article
-      i.update_attribute :statistic_category_id, i.article.statistic_category_id
-    else
-      message = "Could not set statistic_category_id for Item. The Item with params\n\n#{p.inspect}\n\ndid not have an Article associated with it. In rare cases, this occurs to some obscure JS issue."
+    if p[1][:p]
+      i.price_changed = true
+      i.price_changed_by = user.id
+    end
+    result = i.save
+    if result == false
+      message = "Could not save item in Order.create_new_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
       if self.vendor.enable_technician_emails == true and self.vendor.technician_email
-        UserMailer.technician_message(self.vendor, "Item without Article in order.rb create_new_item", message).deliver
+        UserMailer.technician_message(self.vendor, "Could not save item in Order.create_new_item", message).deliver
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
     end
-  end
-  
-  def update_item(id, p)
-    p[1].delete(:id)
-    i = Item.find_by_id(id)
-    i.update_attributes(p[1])
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
-    i.calculate_totals
+    if i.article
+      i.calculate_totals
+    else
+      message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "No article associated with item in Order.create_new_item.", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
+    i.hide(self.user_id) if i.hidden
+  end
+  
+  def update_item(id, p, user)
+    p[1].delete(:id)
+    i = Item.find_by_id(id)
+    result = i.update_attributes(p[1])
+    if p[1][:p]
+      i.update_attribute :price_changed, true
+      i.update_attribute :price_changed_by, user.id
+    end
+    if result == false
+      message = "Could not update item in Order.update_item. Item: #{ i.inspect }, Errors: #{ i.errors.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "Could not update item in Order.update_item", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
+    i.create_option_items_from_ids p[1][:i]
+    i.option_items.each { |oi| oi.calculate_totals }
+    if i.article
+      i.calculate_totals
+    else
+      message = "No article associated with item in Order.update_item. Item: #{ i.inspect }, Params: #{p.inspect}."
+      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
+        UserMailer.technician_message(self.vendor, "No article associated with item in Order.update_item.", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
     i.hide(user.id) if i.hidden
   end
   
   def update_payment_method_items(params)
-    if params[:payment_method_items] and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
-      self.payment_method_items.clear
+    #ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
+    # create payment method items only when 1) there are some, 2) cost center does not forbid creating payment method items
+    if params['payment_method_items'] and self.vendor.payment_methods.existing.any? and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
+      self.payment_method_items.update_all(:hidden => true, :hidden_by => -7, :hidden_at => Time.now) # we don't re-use previously created payment method items
       params['payment_method_items'][params['id']].to_a.each do |pm|
+        # only create payment method items that are not zero and that have not been removed from the UI
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
           payment_method = self.vendor.payment_methods.existing.find_by_id(pm[1]['id'])
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash
+          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash, :user_id => self.user_id
         end
       end
     end
@@ -146,23 +182,22 @@ class Order < ActiveRecord::Base
 
   def update_associations(customer=nil)
     self.cost_center = self.vendor.cost_centers.existing.first unless self.cost_center
+    self.save
     
     self.items.update_all :cost_center_id => self.cost_center
-    self.tax_items.update_all :cost_center_id => self.cost_center
-    self.payment_method_items.update_all :cost_center_id => self.cost_center
-
-    self.save
+    self.tax_items.update_all :cost_center_id => self.cost_center, :user_id => self.user_id
+    self.payment_method_items.update_all :cost_center_id => self.cost_center_id, :user_id => self.user_id
     
     table = self.table
     if customer.nil?
-      # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order.
+      # when a waiter re-submits an order, @current_customer is nil. the waiter confirms all notifications by virtue of re-submitting the order. The table will no longer be associated with a customer
       table.confirmations_pending = false
       table.request_finish = false
       table.request_waiter = false
+      table.request_order = false
     else
-      table.confirmations_pending = true
+      table.confirmations_pending = self.items.existing.where("confirmation_count IS NULL OR count > confirmation_count").any? # this boolean flag will cause the table to pulsate on the tables screen
     end
-    table.customer = customer # is nil when waiter re-submits the order.
     table.save
     
     # Set item notifications
@@ -174,7 +209,13 @@ class Order < ActiveRecord::Base
       else
         confirmation_count = i.confirmation_count # do nothing
       end
-      i.update_attributes :user_id => self.user_id, :vendor_id => self.vendor_id, :company_id => self.company_id, :preparation_user_id => i.category.preparation_user_id, :delivery_user_id => self.user_id, :confirmation_count => confirmation_count
+      i.user_id = self.user_id
+      i.vendor_id = self.vendor_id
+      i.company_id = self.company_id
+      i.preparation_user_id = i.category.preparation_user_id
+      i.delivery_user_id = self.user_id
+      i.confirmation_count = confirmation_count
+      i.save
     end
   end
 
@@ -213,10 +254,19 @@ class Order < ActiveRecord::Base
     self.hidden_by = by_user_id
     self.save
     self.unlink
-    self.option_items.update_all :hidden => true, :hidden_by => by_user_id
-    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id
-    self.items.update_all :hidden => true, :hidden_by => by_user_id
-    self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id
+    self.option_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.tax_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.payment_method_items.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    
+    # detach customer from table
+    if self.table.customer
+      customer = self.table.customer
+      unless customer.logged_in == true
+        customer.table = nil
+        customer.save
+      end
+    end
   end
 
   def unlink
@@ -232,14 +282,21 @@ class Order < ActiveRecord::Base
   end
 
   def move(target_table_id)
+    ActiveRecord::Base.logger.info "order.rb move: called on self #{ self.inspect }"
     return if self.table_id == target_table_id.to_i
     target_order = Order.existing.where(:table_id => target_table_id, :finished => false).first
+    ActiveRecord::Base.logger.info "order.rb move: target_order is #{ target_order.inspect }"
+    ActiveRecord::Base.logger.info "order.rb move: unlinking self"
     self.unlink
+    ActiveRecord::Base.logger.info "order.rb move: reloading self"
     self.reload
     origin_table = self.table
+    ActiveRecord::Base.logger.info "order.rb move: origin_table = #{ origin_table.inspect }"
     target_table = Table.find_by_id target_table_id
+    ActiveRecord::Base.logger.info "order.rb move: target_table = #{ target_table.inspect }"
 
     if target_order
+      ActiveRecord::Base.logger.info "order.rb move: updating item/option_item/tax_item ids = #{ self.items.collect{ |i| i.id }.inspect } with order_id #{ target_order.id }"
       self.items.update_all :order_id => target_order.id
       self.option_items.update_all :order_id => target_order.id
       self.tax_items.update_all :order_id => target_order.id
@@ -250,8 +307,12 @@ class Order < ActiveRecord::Base
       #target_order.items.existing.each { |i| i.calculate_totals } # this is already called in .regroup
       target_order.calculate_totals
     else
+      ActiveRecord::Base.logger.info "order.rb move: setting target_table_id #{ target_table_id } for self"
       self.table_id = target_table_id
-      self.save
+      result = self.save
+      if result != true
+        ActiveRecord::Base.logger.info "order.rb move: ERROR: could not save self because #{ self.errors.messages }"
+      end
     end
     origin_table.update_color
     target_table.update_color
@@ -284,14 +345,22 @@ class Order < ActiveRecord::Base
   end
 
   def finish(user=nil)
+    self.update_attribute :finished, true # this happens intentionally as soon as possible, since it will be checked in the Item.split_items function.
     self.finished_at = Time.now
     self.user = user if user
-    self.finished = true
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
-    self.set_nr
+    self.set_nr # in theory not neccessary, but just to make sure
     self.table.update_color
+    
+    # detach customer from this table
+    customer = self.customer
+    if customer
+      customer.table = nil
+      customer.save
+    end
+    
     self.items.existing.each do |i|
       i.option_items.existing.each do |oi|
         oi.hide(-10) if oi.price == 0.0
@@ -303,22 +372,22 @@ class Order < ActiveRecord::Base
   def pay(user=nil)
     return if self.hidden # this happens when called from application_controller, 'pay_and_no_print' when splitting an item and order is deleted.
     self.finish(user)
-    # create a default cash payment method item if none was set in the UI
+    # create a cash payment method item if none was set in the UI, and if the cost center does not prohibit this
     unless self.payment_method_items.existing.any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first
       if cash_payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum, :user_id => self.user_id
       end
     end
     
-    payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
+    payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point, since an order must be first finished/paid before it can be refunded
     
     # create a change payment method item
     unless self.payment_method_items.existing.where(:change => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
       if change_payment_methods.any?
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id, :user_id => self.user_id
       end
     end
     
@@ -351,7 +420,7 @@ class Order < ActiveRecord::Base
     self.taxes = {}
     self.paid_at = nil
     self.save
-    self.payment_method_items.update_all :hidden => true, :hidden_by => user.id
+    self.payment_method_items.existing.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
     used_table.update_color
     return used_table
   end
@@ -360,9 +429,9 @@ class Order < ActiveRecord::Base
     # The print location of a receipt is always chosen from the UI and controlled here by the parameter vendor_printer. The print location of tickets are only determined by the Category.vendor_printer_id setting.
     if what.include? 'tickets'
       vendor_printers = self.vendor.vendor_printers.existing
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, self.company.identifier)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printers, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.vendor.hash_id))
     else
-      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, self.company.identifier)
+      print_engine = Escper::Printer.new(self.company.mode, vendor_printer, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.vendor.hash_id))
     end
 
     print_engine.open
@@ -374,6 +443,17 @@ class Order < ActiveRecord::Base
           contents = self.escpos_tickets(p.id)
           unless contents[:text].empty?
             bytes_written, content_sent = print_engine.print(p.id, contents[:text], contents[:raw_insertations])
+            
+            # Push notification
+            if SalorHospitality.tailor
+              printerstring = sprintf("%04i", p.id)
+              begin
+                SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
+              rescue Exception => e
+                ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+              end
+            end
+            
             bytes_sent = content_sent.length
             Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
           end
@@ -384,7 +464,20 @@ class Order < ActiveRecord::Base
     if what.include? 'receipt'
       if vendor_printer
         contents = self.escpos_receipt(options)
+        pulse = "\x1B\x70\x00\x99\x99\x0C"
+        contents[:text] = pulse + contents[:text] if vendor_printer.pulse_receipt == true and self.printed.nil?
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
+        
+        # Push notification
+        if SalorHospitality.tailor
+          printerstring = sprintf("%04i", vendor_printer.id)
+          begin
+            SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
+          rescue Exception => e
+            ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+          end
+        end
+        
         bytes_sent = content_sent.length
         Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
         self.update_attribute :printed, true
@@ -394,7 +487,22 @@ class Order < ActiveRecord::Base
     if what.include? 'interim_receipt'
       # this is currently not implemented and never called.
       if vendor_printer
-        print_engine.print(vendor_printer.id, self.escpos_interim_receipt)
+        contents = self.escpos_interim_receipt
+        bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
+        
+        # Push notification
+        if SalorHospitality.tailor
+          printerstring = sprintf("%04i", vendor_printer.id)
+          begin
+            SalorHospitality.tailor.puts "PRINTEVENT|#{self.vendor.hash_id}|printer#{printerstring}"
+          rescue Exception => e
+            ActiveRecord::Base.logger.info "[TAILOR] Exception #{ e } during printing."
+          end
+        end
+        
+        bytes_sent = content_sent.length
+        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        self.update_attribute :printed_interim, true
       end
     end
     print_engine.close
@@ -411,7 +519,7 @@ class Order < ActiveRecord::Base
       comment_format   = " ! %-18.18s\n"
       option_format    = " * %-18.18s\n"
       width = 21
-      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+      item_separator_format = "\xC4" * (width - 11) + " %10.10s\n"
     else
       header_format_time_order = "%-35.35s #%5i\n"
       header_format_user_table = "%-33.33s %8s\n"
@@ -421,7 +529,7 @@ class Order < ActiveRecord::Base
       comment_format     = "   ! %-37.37s\n"
       option_format      = "   * %-37.37s\n"
       width = 42
-      item_separator_format = "\xC4" * (width - 7) + " %6.2f\n"
+      item_separator_format = "\xC4" * (width - 11) + " %10.10s\n"
     end
 
     if vendor.ticket_wide_font and not vendor.ticket_tall_font
@@ -443,8 +551,10 @@ class Order < ActiveRecord::Base
 
     cut =
     "\n\n\n\n\n\n" +
-    "\x1D\x56\x00" +        # paper cut
-    "\x1B\x70\x00\x99\x99\x0C"  # beep
+    "\x1D\x56\x00"
+    
+    pulse =
+    "\x1B\x70\x00\x99\x99\x0C"
 
     header = ''
     
@@ -461,7 +571,7 @@ class Order < ActiveRecord::Base
     separate_receipt_contents = []
     normal_receipt_content = ''
       
-    selected_categories = printer_id.nil? ? self.vendor.categories.existing.active : self.vendor.categories.existing.active.where(:vendor_printer_id => printer_id)
+    selected_categories = printer_id.nil? ? self.vendor.categories.existing.active.positioned : self.vendor.categories.existing.active.positioned.where(:vendor_printer_id => printer_id)
     
     raw_insertations = {}
     selected_categories.each do |c|
@@ -484,7 +594,8 @@ class Order < ActiveRecord::Base
         end
 
         if vendor.ticket_item_separator
-          itemstring += item_separator_format % [(i.price + i.options_price) * (i.count - i.printed_count)]
+          item_separator_values = number_with_precision((i.price + i.options_price) * (i.count - i.printed_count), :locale => vendor.region)
+          itemstring += item_separator_format % item_separator_values
         end
         
         if i.option_items.find_all_by_separate_ticket(true).any?
@@ -520,16 +631,40 @@ class Order < ActiveRecord::Base
           normal_receipt_content +
           cut
     end
-    
+       
     if output == init
+      # print nothing
       return {:text => '', :raw_insertations => {}}
     else
+      vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
+      output += pulse if vendor_printer.pulse_tickets == true
       return {:text => output, :raw_insertations => raw_insertations }
     end
   end
 
 
   def escpos_receipt(options={})
+    if self.vendor.country == 'vi'
+      # very large integers
+      header3_format = "   %-13.13s %10.10s %5.5s"
+      options_format = "%2s %13.13s %10.10s %3u %10.10s\n"
+      items_format = "%2s %13.13s %10.10s %3u %10.10s\n"
+      sum_format = "%s:   %s %s"
+      refundsum_format = "\n%s:   %s %s"
+      tax_header_format = "         %10.10s %10.10s %10.10s\n"
+      tax_format = "%s:  %2i%%  %10.10s  %10.10s  %10.10s\n"
+      payment_method_format = "%22.22s: %10.10s\n"
+    else
+      header3_format = "   %-17.17s %8.8s   %4.4s"
+      options_format = "%2s %17.17s %8.8s %3u %8.8s\n"
+      items_format = "%2s %17.17s %8.8s %3u %8.8s\n"
+      sum_format = "%s:   %s %s"
+      refundsum_format = "\n%s:   %s %s"
+      tax_header_format = "      %8.8s %8.8s %8.8s\n"
+      tax_format = "%s: %2i%% %8.8s %8.8s %8.8s\n"
+      payment_method_format = "%22.22s: %8.8s\n"
+    end
+    
     vendor = self.vendor
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
@@ -553,72 +688,152 @@ class Order < ActiveRecord::Base
       end
     end
     
+    customer_data = ''
+    if self.customer
+      cst = self.customer
+      cst_values = [
+        cst.company_name,
+        cst.first_name,
+        cst.last_name,
+        cst.address,
+        cst.postalcode,
+        cst.city,
+        cst.tax_info,
+        cst.telephone
+      ]
+      cst_format = "\n%s\n%s %s\n%s\n%s %s\n%s\n%s\n\n"
+      customer_data += cst_format % cst_values
+    end
+    
+    note_line = ''
+    unless self.note.blank?
+      note_line = "\n\n%s\n\n" % self.note
+    end
+    
     header2 = ''
     header2 +=
     "\ea\x00" +  # align left
     "\e!\x01" +  # Font B
     I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.created_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
 
-    header2 += "\n\n" +
-    "\e!\x00" +  # Font A
-    "                 #{I18n.t('activerecord.models.article.one')}   #{I18n.t('various.unit_price_abbreviation')}   #{I18n.t('various.quantity_abbreviation')}    #{I18n.t('various.total_price_abbreviation')}\n" +
-    "\xc4" * 42 + "\n"
+    header3 =
+        "\n\n" +
+        "\e!\x00" # Font A
+    
+    header3_values = [
+      I18n.t('activerecord.models.article.one'),
+      I18n.t('various.unit_price_abbreviation'),
+      I18n.t('various.quantity_abbreviation'),
+      I18n.t('various.total_price_abbreviation')
+    ]
+      
+    header3 += header3_format % header3_values
+    header3 +=
+        "\n" +
+        "\xc4" * 42 +
+        "\n"
 
     list_of_items = ''
-    self.items.existing.positioned.each do |item|
+    self.items.existing.order(:position_category).each do |item|
       next if item.count == 0
       list_of_options = ''
       item.option_items.each do |oi|
         next if oi.price == 0
-        list_of_options += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
+        options_values = [
+          item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
+          "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }",
+          oi.price,
+          item.count,
+          item.refunded ? 0 : number_with_precision(oi.price * item.count, :locale => vendor.get_region)
+        ]
+        list_of_options += options_format % options_values
       end
 
       label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
 
       item_sum = item.refunded ? 0 : item.price * item.count
-      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
+      items_values = [
+        item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
+        label,
+        number_with_precision(item.price, :locale => vendor.get_region),
+        item.count,
+        number_with_precision(item_sum, :locale => vendor.get_region)
+      ]
+      list_of_items += items_format % items_values
       list_of_items += list_of_options
     end
 
-    sum_format =
-    "                              " + "\xcd" * 12 + "\r\n" +
-    "\e!\x18" + # double tall, bold
-    "\ea\x02"   # align right
+    sum_style =
+        " " * 30 +
+        "\xcd" * 12 +
+        "\r\n" +
+        "\e!\x18" + # double tall, bold
+        "\ea\x02"   # align right
 
-    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
+    sum_values = [
+      I18n.t(:sum).upcase,
+      friendly_unit,
+      number_with_precision(self.sum, :locale => vendor.get_region)
+    ]
+    sum = sum_format % sum_values
 
-    refund = self.refund_sum.zero? ? '' : ("\n#{I18n.t(:refund)}:  #{friendly_unit} %.2f" % self.refund_sum)
+    if self.refund_sum.zero?
+      refund = ''
+    else
+      refundsum_values = [
+        I18n.t(:refund),
+        friendly_unit,
+        number_with_precision(self.refund_sum, :locale => vendor.get_region)
+      ]
+      refund = refundsum_format % refundsum_values
+    end
 
-    tax_format =
+    tax_style =
         "\n\n" +
         "\ea\x01" +  # align center
-        "\e!\x01" # Font A
+        "\e!\x01"    # Font B
 
-    tax_header = "         #{I18n.t(:net)}  #{I18n.t('various.tax')}   #{I18n.t(:gross)}\n"
+    tax_header_values = [
+      I18n.t(:net),
+      I18n.t('various.tax'),
+      I18n.t(:gross)
+    ]
+    tax_header = tax_header_format % tax_header_values
 
     list_of_taxes = ''
     self.taxes.each do |k,v|
-      list_of_taxes += "%s: %2i%% %7.2f %7.2f %8.2f\n" % [v[:l],v[:p],v[:n], v[:t], v[:g]]
+      tax_values = [
+        v[:l],
+        v[:p],
+        number_with_precision(v[:n], :locale => vendor.get_region),
+        number_with_precision(v[:t], :locale => vendor.get_region),
+        number_with_precision(v[:g], :locale => vendor.get_region)
+      ]  
+      list_of_taxes += tax_format % tax_values
     end
     
     list_of_payment_methods = "\n"
     if self.user.role.permissions.include? 'manage_payment_methods'
       self.payment_method_items.each do |pm|
         name = pm.refunded ? "#{ I18n.t(:refund) } #{ pm.refund_item.article.name } #{pm.payment_method.name}" : pm.payment_method.name
-        list_of_payment_methods += "%22.22s: %7.2f\n" % [name, pm.amount] unless pm.amount.zero?
+        payment_method_values = [
+          name,
+          number_with_precision(pm.amount, :locale => vendor.get_region)
+        ]
+        list_of_payment_methods += payment_method_format % payment_method_values unless pm.amount.zero?
       end
     end
 
     footer = ''
     if vendor.receipt_footer_blurb
-      footer = 
-      "\ea\x01" +  # align center
-      "\e!\x00" + # font A
-      "\n" +
-      vendor.receipt_footer_blurb +
-      "\n"
+      footer =
+          "\ea\x01" +  # align center
+          "\e!\x00" + # font A
+          "\n" +
+          vendor.receipt_footer_blurb +
+          "\n"
     end
 
     duplicate = self.printed ? " *** DUPLICATE/COPY/REPRINT *** " : ''
@@ -637,6 +852,8 @@ class Order < ActiveRecord::Base
     else
       footerlogo = ''
     end
+    
+    paper_cut = "\x1DV\x00\x0C"
 
     output_text =
         "\e@" +     # initialize
@@ -644,12 +861,15 @@ class Order < ActiveRecord::Base
         headerlogo +
         header1 +
         lines +
+        customer_data +
+        note_line +
         header2 +
+        header3 +
         list_of_items +
-        sum_format +
+        sum_style +
         sum +
         refund +
-        tax_format +
+        tax_style +
         tax_header +
         list_of_taxes +
         list_of_payment_methods +
@@ -658,36 +878,118 @@ class Order < ActiveRecord::Base
         "\n" +
         footerlogo +
         "\n\n\n\n\n\n" +
-        "\x1DV\x00\x0C" # paper cut
+        paper_cut
+    
     return { :text => output_text, :raw_insertations => raw_insertations }
   end
   
   def escpos_interim_receipt
-    return "To be implemented in the future."
+    vendor = self.vendor
+    
+    friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
+
+    header2 = "\n\n" +
+    "\e!\x00" +  # Font A
+    "                 #{I18n.t('activerecord.models.article.one')}   #{I18n.t('various.unit_price_abbreviation')}   #{I18n.t('various.quantity_abbreviation')}    #{I18n.t('various.total_price_abbreviation')}\n" +
+    "\xc4" * 42 + "\n"
+
+    list_of_items = ''
+    self.items.existing.order(:position_category).each do |item|
+      next if item.count == 0
+      list_of_options = ''
+      item.option_items.each do |oi|
+        next if oi.price == 0
+        list_of_options += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }", oi.price, item.count, item.refunded ? 0 : (oi.price * item.count)]
+      end
+
+      label = item.quantity ? "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name }#{ ' ' unless item.quantity.postfix.empty? }#{ item.quantity.postfix }" : "#{ I18n.t(:refund) + ' ' if item.refunded }#{ item.article.name }"
+
+      item_sum = item.refunded ? 0 : item.price * item.count
+      list_of_items += "%2s %21.21s %6.2f %3u %6.2f\n" % [item.taxes.collect{|k,v| v[:l]}[0..1].join(''), label, item.price, item.count, item_sum]
+      list_of_items += list_of_options
+    end
+
+    sum_format =
+    "\e!\x18" + # double tall, bold
+    "\ea\x02"   # align right
+
+    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
+
+    output_text =
+        "\e@" +     # initialize
+        header2 +
+        list_of_items +
+        sum_format +
+        sum +
+        "\n\n\n\n\n\n\n\n\n\n\n" +
+        "\x1DV\x00\x0C" # paper cut
+    return output_text
   end
 
   def items_to_json
     a = {}
     self.items.existing.positioned.reverse.each do |i|
+      
       if i.quantity_id
         d = "q#{i.quantity_id}"
       else
         d = "a#{i.article_id}"
       end
+
       parent_price = i.quantity ? i.quantity.price : i.article.price
-      if i.option_items.any? or not i.comment.empty? or i.scribe or i.price != parent_price
+      
+      if i.option_items.any? or not i.comment.empty? or i.scribe or i.price != parent_price or not a[d].nil?
+        # item has been modified in a unique way, so we output a unique key
         d = "i#{i.id}"
       end
+      
       options = {}
       optioncount = 0
       i.option_items.existing.each do |oi|
         optioncount += 1
-        options.merge! optioncount => { :id => oi.option_id, :n => oi.name, :p => oi.price }
+        options.merge! optioncount => {
+          :id => oi.option_id,
+          :n => oi.name,
+          :p => oi.price
+        }
       end
       if i.quantity_id
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :qi => i.quantity_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => i.quantity.prefix, :post => i.quantity.postfix, :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => {
+          :id => i.id,
+          :ci => i.category_id,
+          :ai => i.article_id,
+          :qi => i.quantity_id,
+          :d => d,
+          :c => i.count,
+          :sc => i.count,
+          :p => i.price,
+          :o => i.comment,
+          :t => options,
+          :i => [],
+          :pre => i.quantity.prefix,
+          :post => i.quantity.postfix,
+          :n => i.article.name,
+          :s => i.position,
+          :h => !i.scribe.nil?
+        }
       else
-        a.merge! d => { :id => i.id, :ci => i.category_id, :ai => i.article_id, :d => d, :c => i.count, :sc => i.count, :p => i.price, :o => i.comment, :t => options, :i => [], :pre => '', :post => '', :n => i.article.name, :s => i.position, :h => !i.scribe.nil? }
+        a.merge! d => {
+          :id => i.id,
+          :ci => i.category_id,
+          :ai => i.article_id,
+          :d => d,
+          :c => i.count,
+          :sc => i.count,
+          :p => i.price,
+          :o => i.comment,
+          :t => options,
+          :i => [],
+          :pre => '',
+          :post => '',
+          :n => i.article.name,
+          :s => i.position,
+          :h => !i.scribe.nil?
+        }
       end
     end
     return a.to_json
@@ -716,11 +1018,11 @@ class Order < ActiveRecord::Base
       tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
       
       # order sum must match the PAYMENT METHOD ITEM sum
-      if self.paid and self.cost_center.no_payment_methods != true
+      if self.paid and (self.cost_center.nil? or self.cost_center.no_payment_methods != true) and self.vendor.payment_method_items.existing.any?
         tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)).round(2)
       end
       
-      if self.paid and self.cost_center.no_payment_methods == true
+      if self.paid and self.cost_center and self.cost_center.no_payment_methods == true
         tests[6] = self.payment_method_items.any? == false
       end
     end
@@ -742,12 +1044,12 @@ class Order < ActiveRecord::Base
     if self.hidden
       tests[18] = self.items.collect{ |i| i.hidden == self.hidden }.all?
       tests[19] = self.tax_items.collect{ |i| i.hidden == self.hidden }.all?
-    end
-    tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+      tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
+    end    
     
     # finished orders have to have nr set
     if self.finished
-      tests[21] = !self.nr.nil?
+      tests[21] = self.nr.nil? == false
     end
 
     0.upto(tests.size-1).each do |i|

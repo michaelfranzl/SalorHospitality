@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
+    - if mobile? or mobile_special?
+      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
+      %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
+      
+    %title== OOPS
+    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'jquery-ui'
+    = stylesheet_link_tag('generic', :media => 'screen')
+    - if workstation?
+      = javascript_include_tag 'jquery.keyboard.js'
+      = javascript_include_tag 'jquery.keyboard.config.js'
+    
+    %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
+
+    = csrf_meta_tag
+
+    - if mobile?
+      = stylesheet_link_tag('mobile', :media => 'screen')
+    - elsif workstation?
+      = stylesheet_link_tag('workstation', :media => 'screen')      
+
+  %body
+    #container
+      #header
+      #flash
+        - if flash[:notice]
+          #flash_notice= flash[:notice]
+        - if flash[:error]
+          #flash_error= flash[:error]
+      #main= yield
+      #footer
+      #copyright
+        .left
+          Salor Hospitality
+          = SalorHospitality::Application::VERSION
+        .right
+          &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
+          = image_tag 'red-e-tiny.png', :class => 'logo_red_e'

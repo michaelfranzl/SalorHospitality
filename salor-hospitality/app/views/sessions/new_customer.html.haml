@@ -3,23 +3,15 @@
     = image_tag 'logo-small.png', :id => 'logo'
   = form_tag @submit_path do
     %p
+      = label_tag 'email', Customer.human_attribute_name(:login)
+      = text_field_tag 'email', '', :size => 9
+      %br
       = label_tag 'password', (t '.password')
-      = password_field_tag 'password', '', :size => 9, :class => 'qwerty ui-keyboard-input'
+      = password_field_tag 'password', '', :size => 9
       = hidden_field_tag 'mode', 'customer'
-      %span#password_display_keyboard.display_keyboard
+      = hidden_field_tag 'v', params[:v]
     %p= submit_tag t('.login'), :class => 'submit'
 
 - if workstation?
   :javascript
-    $('#password').keyboard({
-      openOn: '',
-      position: { at: 'center bottom' },
-      accepted: function(){
-        if ( $('.ui-keyboard-input').val() != "" ) {
-          $('#login form').submit();
-        }
-      }
-    });
-    $('#password_display_keyboard').click(function() {
-      $('#password').getkeyboard().reveal();
-    });
+    $('#password').focus();

@@ -24,7 +24,27 @@ class TablesController < ApplicationController
         tables = {}
         @tables.each do |t|
           tid = t.id
-          tables[tid] = { :id => tid, :n => t.name, :l => t.left, :t => t.top, :w => t.width, :h => t.height, :lm => t.left_mobile, :tm => t.top_mobile, :wm => t.width_mobile, :hm => t.height_mobile, :r => t.rotate, :auid => t.active_user_id , :e => t.enabled, :cp => t.confirmations_pending, :crid => t.customer_id, :rf => t.request_finish, :rw => t.request_waiter  }
+          tables[tid] = {
+                         :id => tid,
+                         :n => t.name,
+                         :l => t.left,
+                         :t => t.top,
+                         :w => t.width,
+                         :h => t.height,
+                         :lm => t.left_mobile,
+                         :tm => t.top_mobile,
+                         :wm => t.width_mobile,
+                         :hm => t.height_mobile,
+                         :r => t.rotate,
+                         :auid => t.active_user_id ,
+                         :e => t.enabled,
+                         :cp => t.confirmations_pending,
+                         :crid => t.customer_id,
+                         :acrid => t.active_customer_id,
+                         :rf => t.request_finish,
+                         :rw => t.request_waiter,
+                         :no => t.note
+                        }
         end
         render :json => tables
       }
@@ -33,11 +53,11 @@ class TablesController < ApplicationController
 
   def show
     @table = get_model
-    redirect_to roles_path and return unless @table # TODO
+    render :nothing => true and return unless @table
     @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])
     if params[:order_id] and not params[:order_id].empty?
-      # route directly to the order form, even when there are 2 open orders. this is called from the room view.
-      @order = @current_vendor.orders.find_by_id(params[:order_id])
+      # route directly to the order form, even when there are 2 open orders. this is called from the room view, or from the invoice view when going back to the table view
+      @order = @current_vendor.orders.existing.where(:finished => false).find_by_id(params[:order_id])
       render 'orders/render_order_form' and return
     else
       if @orders.size > 1
@@ -64,7 +84,8 @@ class TablesController < ApplicationController
     @table.vendor = @current_vendor
     @table.company = @current_company
     if @table.save
-      @current_vendor.users.each do |u|
+      # Make newly created table available to all users of all vendors of this company. This doesn't hurt because users will only see the tables of the vendor which is currently activated. u.tables is like a whitelist.
+      @current_company.users.each do |u|
         u.tables << @table
       end
       flash[:notice] = t('tables.create.success')

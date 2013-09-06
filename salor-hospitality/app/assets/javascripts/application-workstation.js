@@ -13,14 +13,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 var automatic_printing_interval = 60000;
 
 $(document).ready(function() {
+  
   // ":not([safari])" is desirable but not necessary selector
   $('input:checkbox:not([safari])').checkbox();
   $('input[safari]:checkbox').checkbox({cls:'jquery-safari-checkbox'});
   $('input:radio').checkbox();
   
+  $('#admin_menu_hint').fadeOut(6000);
+        
   if ($('#flash').children().size() > 0) {
     $('#flash').fadeIn(1000);
-    setTimeout(function(){ $('#flash').fadeOut(1000); }, 5000);
+    setTimeout(function(){
+      $('#flash').fadeOut(2000);
+    }, 6000);
   }
   
   if (typeof(automatic_printing_timeout) == 'undefined') {
@@ -39,14 +44,13 @@ $(document).ready(function() {
     $('#exit_button').hide();
   }
   
-  $('#admin').hover(function(){
-    $('#admin').stop(true,true);
-    $('#admin').animate({height:154});
-  },
-  function(){
-    $('#admin').stop(true,true);
-    $('#admin').animate({height:109});
-  })
+  $('#admin').hide();
+
+  $(function() {
+    $.each($('select'), function(k,v) {
+      make_select_widget($(v));
+    });
+  });
 })
 
 function download_printfile(path) {

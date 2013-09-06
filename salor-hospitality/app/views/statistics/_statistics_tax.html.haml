@@ -1,0 +1,26 @@
+%table.settlements.statistics
+  %tr
+    %th.bb= Tax.model_name.human
+    %th.bb= t :sum
+    %th.bb.bar
+  - sums = []
+  - total = 0
+  - i = 0
+  - @taxes.each do |tax|
+    - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids, :created_at => @from..@to).sum(:gro)
+    - total += sums[i]
+    - i += 1
+    
+  - maximum = sums.sort.last
+  - i = 0
+  - @taxes.each do |tax|
+    %tr
+      %td= tax.name
+      %td= number_to_currency sums[i]
+      %td
+        .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+    - i += 1
+  %tr
+    %td= t(:sum)
+    %td= number_to_currency total
+    %td

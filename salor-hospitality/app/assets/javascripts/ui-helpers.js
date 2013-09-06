@@ -8,11 +8,21 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-function toggle_order_booking () {
+function toggle_order_booking() {
   if (submit_json.currentview == 'rooms') {
     route('tables');
   } else {
     route('rooms');
+  }
+}
+
+function toggle_interim_receipt_printing(button) {
+  if (interim_receipt_enabled == false) {
+    button.style.border = "2px solid black";
+    interim_receipt_enabled = true;
+  } else {
+    button.style.border = "none";
+    interim_receipt_enabled = false;
   }
 }
 
@@ -37,8 +47,13 @@ function loadify_order_buttons() {
   var invoice_button = $('.cash_button');
   var move_to_table_button = $('.move-to-table_button');
   var clearbutton = $('#order_clear_button');
+  var cancelbutton = $('#order_cancel_button');
+  var counter_print_and_finish_button = $('#counter_print_and_finish_button');
+  var counter_finish_button = $('#counter_finish_button');
+  var immediate_print_and_finish_button = $('#immediate_print_and_finish_button');
+  var immediate_finish_button = $('#immediate_finish_button');
   var buttons = [];
-  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton);
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button, immediate_print_and_finish_button, immediate_finish_button);
   $.each(buttons, function(i) {
     var button = $(buttons[i]);
     var loader = create_dom_element('img', {src:'/images/ajax-loader2.gif'}, '');
@@ -57,8 +72,13 @@ function unloadify_order_buttons() {
   var invoice_button = $('.cash_button');
   var move_to_table_button = $('.move-to-table_button');
   var clearbutton = $('#order_clear_button');
+  var cancelbutton = $('#order_cancel_button');
+  var counter_print_and_finish_button = $('#counter_print_and_finish_button');
+  var counter_finish_button = $('#counter_finish_button');
+  var immediate_print_and_finish_button = $('#immediate_print_and_finish_button');
+  var immediate_finish_button = $('#immediate_finish_button');
   var buttons = [];
-  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton);
+  buttons = buttons.concat(submit_button, invoice_button, move_to_table_button, clearbutton, cancelbutton, counter_print_and_finish_button, counter_finish_button, immediate_print_and_finish_button, immediate_finish_button);
   $.each(buttons, function(i) {
     var button = $(buttons[i]);
     $(button).html('');
@@ -81,30 +101,12 @@ function restore_border(element) {
   $(element).css({ borderColor: '#555555 #222222 #222222 #555555' });
 }
 
+
+
 function toggle_admin_interface() {
-  $.ajax({
-    type: 'POST',
-    url:'/orders/toggle_admin_interface',
-    dataType: 'json',
-    success: function(result) {
-      if (result) {
-        $('#admin').slideDown('slow');
-        if (! $('#orderform').is(':visible')) {
-          $('#drag_and_drop_toggle_view_button').show();
-        }
-        $('#items_notifications_static').hide();
-      } else {
-        $('#admin').slideUp('slow');
-        $('#drag_and_drop_toggle_view_button').hide();
-        $('#items_notifications_static').show();
-        settings.mobile_drag_and_drop = false;
-        $('#areas').hide();
-      }
-      $('#drag_and_drop_toggle_view_button').html(i18n.mobile_view);
-      settings.admin_interface = result;
-      render_tables();
-    }
-  });
+  if ($('#orderform').is(':visible') == false) {
+    $('#admin').toggle();
+  }
 }
 
 function toggle_all_option_checkboxes(source) {

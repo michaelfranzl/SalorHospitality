@@ -57,7 +57,9 @@ module OrdersHelper
       :connecting => escape_javascript(I18n.t('various.connecting', :locale => @locale)),
       :no_connection_retrying => escape_javascript(I18n.t('various.no_connection_retrying', :locale => @locale)),
       :no_connection => escape_javascript(I18n.t('various.no_connection', :locale => @locale)),
-      :server_error_short => escape_javascript(I18n.t('various.server_error_short', :locale => @locale))
+      :server_error_short => escape_javascript(I18n.t('various.server_error_short', :locale => @locale)),
+      :your_shift_has_ended => escape_javascript(I18n.t('various.your_shift_has_ended', :locale => @locale)),
+      :double_submission_warning => escape_javascript(I18n.t('various.double_submission_warning'))
     }
     return i18n.to_json
   end
@@ -68,6 +70,7 @@ module OrdersHelper
       :workstation => workstation?,
       :mobile_special => mobile_special?,
       :screenlock_timeout => (@current_user.screenlock_timeout if @current_user),
+      :advertising_timeout => (@current_user.advertising_timeout if @current_user),
       :mobile_drag_and_drop => false
     }
     return settings.to_json

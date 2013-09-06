@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @guest_type do |guest_type_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), guest_types_path, :class => 'links')
+    .clear
     = guest_type_form.label :name
     = guest_type_form.text_field :name, :size => '20'
     %br

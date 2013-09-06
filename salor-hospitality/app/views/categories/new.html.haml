@@ -11,7 +11,9 @@
 
 .form_fields
   = form_for nest_image(@category), :html => { :multipart => true, :class => 'category_form' } do |category_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), categories_path, :class => 'links')
+    .clear
     %table
       %tr
         %td
@@ -41,7 +43,7 @@
         %td
           = category_form.label :icon
           %br
-          %select#category_icon{ :name => 'category[icon]', :size => 20 }
+          %select#category_icon{ :name => 'category[icon]', :size => 20}
             = options_for_select(get_icon_array, category_form.object.icon)
         %td
           = category_form.label 'color'

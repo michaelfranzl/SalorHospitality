@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @surcharge do |surcharge_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), surcharges_path, :class => 'links')
+    .clear
     %br
     = surcharge_form.label :name
     = surcharge_form.text_field :name, :size => 9

@@ -1,30 +1,45 @@
-#download_reports
-  %h3= t '.download_reports'
-  = form_tag '/reports', :class => 'no-print', :method => :get do
-    = label('from', t('reports.start_date'))
-    %br
-    = select_date(@from, :prefix => 'from')
-    %br
-    = label('to', t('reports.end_date'))
-    %br
-    = select_date(@to, :prefix => 'to')
-    %br
-    = label('usb_device',t("reports.usb_device"))
-    %br
-    %select{:name => 'usb_device', :id => 'usb_device_select'}
-      - Dir.entries("/media").each do |d|
-        - if not d == '.' and not d == '..'
-          %option{ :value => "/media/" + d }= d
-      %option{ :value => "#{ Dir['/home/*'].first }/Desktop" } Desktop
-    %br
-    %br
-    = submit_tag t('reports.save'), :onclick => '$("#progress").show()'
-    
-  - if @current_company.mode == 'local' and @current_user.role.permissions.include?('download_database')
-    %p#backup_database= link_to t('.backup_database'), backup_database_reports_path
-    %p#backup_logfile= link_to t('.backup_logfile'), backup_logfile_reports_path
+- if permit('download_csv') or permit('download_database')
 
-- if @current_user.role.permissions.include?('remote_support')
+  #download_reports.limitby
+    %h2= t '.download_reports'
+    = form_tag '/reports', :class => 'no-print', :method => :get do
+      = label('from', t('reports.start_date'))
+      %br
+      = select_date(@from, :prefix => 'from')
+      %br
+      = label('to', t('reports.end_date'))
+      %br
+      = select_date(@to, :prefix => 'to')
+      %br
+      
+      - if @current_company.mode == 'local'
+        %hr
+        %h3 Fiscal
+        %table
+          %tr
+            %td
+              %select{:name => 'location', :id => 'location_select'}
+                = options_for_select @locations
+              %br
+              = submit_tag t('reports.save'), :onclick => '$("#progress2").show()', :name => 'fisc_save'
+              %br
+            %td
+              = submit_tag t('reports.download'), :onclick => '', :name => 'fisc_download'
+              %br
+              = image_tag 'ajax-loader2.gif', :id => 'progress2', :style => 'display: none;'
+
+      - if permit('download_csv')
+        %hr
+        %h3 CSV
+        %select{ :name => 'csv_type' }
+          - @models_for_csv.each do |m|
+            %option{ :value => m.to_s }= m.model_name.human
+        %br
+        = submit_tag t('reports.download'), :onclick => '', :name => 'csv_download'
+        
+
+
+- if @current_company.mode == 'local' and permit('remote_support')
   = javascript_include_tag 'request_service'
   #remote_support
     %h3= t '.remote_support'
@@ -32,11 +47,11 @@
     %br
     %small= t '.internet_connection_info'
     %br
-    = text_field_tag 'service_connect_host', 'red-e.eu'
+    = text_field_tag 'service_connect_host', ''
     %br
-    = text_field_tag 'service_connect_user', 'service'
+    = text_field_tag 'service_connect_user', ''
     %br
-    = text_field_tag 'service_connect_password', 'password'
+    = text_field_tag 'service_connect_password', ''
     %br
     .connect_service_button_container.button#connect_service_ssh{ :onclick => 'connect_service("ssh");' }= t('.connect_ssh')
     .connect_service_button_container.button#connect_service_vnc{ :onclick => 'connect_service("vnc");' }= t('.connect_vnc')

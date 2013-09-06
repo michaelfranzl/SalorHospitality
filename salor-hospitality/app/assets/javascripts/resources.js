@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 function update_resources(mode) {
+  //console.log('here');
   $.ajax({
     url: '/vendors/render_resources',
     dataType: 'script',
@@ -19,7 +20,7 @@ function update_resources(mode) {
     success: function() {
       if (mode == 'documentready') {
         update_tables();
-        if ( ! $.isEmptyObject(resources.sn) ) {
+        if ( !$.isEmptyObject(resources.sn) && typeof render_season_illustration != 'undefined' ) {
           render_season_illustration();
         }
         //automatically route to views depending on uri parameters
@@ -36,7 +37,8 @@ function update_resources(mode) {
         }
         if (uri_attrs.table_id != undefined) route('table', uri_attrs.table_id);
         if (uri_attrs.report == '1') report.functions.display_popup();
-        if (customer != null) route('table', customer.table_id);
+        if (customer != null)
+          route('table', customer); //the var customer stores the table id as set by the server. it is set in the documentready code in resources.js
       }
     }
   });
@@ -44,4 +46,7 @@ function update_resources(mode) {
 
 function update_resources_success(data) {
   emit('ajax.update_resources.success', data);
+  if (user_shift_ended == true) {
+    alert(i18n.your_shift_has_ended);
+  }
 }

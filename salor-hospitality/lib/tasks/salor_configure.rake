@@ -9,18 +9,29 @@
 desc 'Configures this instance'
 # Call like: rake salor_configure['saas']
 task :salor_configure, [:mode] => :environment do |t, args|
-  Vendor.all.each do |v|
+  
+  do_nothing_with_that_variable = History.all # this is the most insane trial-and-error method to patch and fix Rails, which cost me 3 precious hours of my life. I wanna weep. If you remove that line, you'll get  the error message "Expected vendor.rb to define Vendor" when you load this Rake task.
+  
+  Vendor.existing.each do |v|
     puts "Updating cache of Vendor #{v.id}"
+    $Vendor = v
+    $Company = v.company
     v.update_cache
+    begin
+      v.package_upgrade
+    rescue
+      puts "package upgrade logging failed."
+    end
   end
   
-  subdomain = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}.sh" : nil
-  
-  unless Company.where(:subdomain => subdomain).any?
-    puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
-    c = Company.where(:subdomain => nil).last
-    c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
-  end
+#   identifier = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}" : nil
+#   
+#   unless Company.where(:identifier => subdomain).any?
+#     # this is only useful for local installations where all models are created from the seed script and the Company's subdomain will be nil.
+#     puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
+#     c = Company.where(:subdomain => nil).last
+#     c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
+#   end
 end
 
 

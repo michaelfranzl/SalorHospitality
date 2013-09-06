@@ -8,7 +8,9 @@
         %li= msg
 
 = form_for nest_image(@article), :html => { :multipart => true } do |article_form|
-  %div= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+  .floatright= link_to(t('various.cancel'), articles_path, :class => 'links')
+  .clear
   %div.article_new
     .image{:style=>'text-align: center'}
       %img.asset{ :src => @article.image }
@@ -107,7 +109,7 @@
     scroll: true,
     update: function(){
       $.ajax({
-        type: 'post',
+        type: 'POST',
         data: $('#quantities_new').sortable('serialize'),
         dataType: 'script',
         url: '/quantities/sort'

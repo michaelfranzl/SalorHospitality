@@ -50,22 +50,57 @@ class Vendor < ActiveRecord::Base
   has_many :option_items
   has_many :receipts
   has_many :cameras
+  has_many :histories
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
   serialize :unused_settlement_numbers
+  serialize :branding
 
   validates_presence_of :name
+  validate :identifer_present_and_ascii
+  validates_uniqueness_of :name, :scope => :hidden
+  validates_uniqueness_of :identifier, :scope => :hidden
   validates :update_tables_interval, :numericality => { :greater_than => 17 }
   validates :update_item_lists_interval, :numericality => { :greater_than => 29 }
   validates :update_resources_interval, :numericality => { :greater_than => 101 }
   validates :automatic_printing_interval, :numericality => { :greater_than => 20 }
   
   after_commit :sanitize_vendor_printer_paths
+  
+  before_save :set_hash_id
+  
 
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+  
+  def identifer_present_and_ascii
+    if self.identifier.blank?
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.empty'))
+      return
+    end
+    
+    if self.identifier.length < 4
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.too_short', :count => 4))
+      return
+    end
+    
+    match = /[a-zA-Z0-9_-]*/.match(self.identifier)[0]
+    if match != self.identifier
+      errors.add(:identifier, I18n.t('activerecord.errors.messages.must_be_ascii'))
+    end
+  end
+  
+  def utc_offset_hours
+    # The offset of the Rails application
+    Time.zone.now.utc_offset/60/60
+  end
+  
+  def total_utc_offset_hours
+    # The additional offset of the store location
+    utc_offset_hours +  self.time_offset
+  end
   
   def sanitize_vendor_printer_paths
     self.vendor_printers.existing.update_all :company_id => self.company_id
@@ -75,15 +110,17 @@ class Vendor < ActiveRecord::Base
   end
 
   def hide
-    self.update_attribute :hidden, true
+    self.hidden = true
+    self.hidden_at = Time.now
+    self.save
   end
   
-  def region
-    SalorHospitality::Application::COUNTRIES_REGIONS[self.country]
+  def get_region
+    SalorHospitality::Application::COUNTRIES_REGIONS[self.country].to_sym
   end
 
   def logo_image
-    return self.image('logo') unless Image.count(:conditions => "imageable_id = #{self.id}") == 0 or self.images.first.nil?
+    return self.image('logo') if Image.where(:imageable_type => 'Vendor', :imageable_id => self.id, :image_type => 'logo').any?
     "/assets/client_logo.png"
   end
 
@@ -91,6 +128,7 @@ class Vendor < ActiveRecord::Base
     if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_header, nil
     else
+      data.rewind
       write_attribute :rlogo_header, Escper::Img.new(data.read, :blob).to_s 
     end
   end
@@ -99,6 +137,7 @@ class Vendor < ActiveRecord::Base
     if data.nil? or data.original_filename.include?('delete')
       write_attribute :rlogo_footer, nil
     else
+      data.rewind
       write_attribute :rlogo_footer, Escper::Img.new(data.read, :blob).to_s
     end
   end
@@ -146,29 +185,27 @@ class Vendor < ActiveRecord::Base
   end
 
   def resources
-    
-    # the following is speedy, no more nested Ruby/SQL loops
     category_models       = self.categories.existing.active.positioned
     article_models        = self.articles.existing.active.positioned
     quantity_models       = self.quantities.existing.active.positioned
     option_models         = self.options.existing.positioned
     payment_method_models = self.payment_methods.existing
     table_models          = self.tables.existing
-    user_models           = self.users.existing
-    customer_models       = self.customers.existing.active
+    user_models           = self.company.users.existing
+    customer_models       = self.company.customers.existing.active
     
     cstmers = {}
     cstmers[:regulars] = []
     x = 0
     self.customers.existing.active.order("m_points DESC").each do |c|
       if x < 15 then
-        cstmers[:regulars] << c.to_hash
+        cstmers[:regulars] << c.to_hash(self)
       end
       c1 = c.last_name[0,1].downcase
       c2 = c.last_name[0,2].downcase
       cstmers[c1] ||= {}
       cstmers[c1][c2] ||= []
-      cstmers[c1][c2] << c.to_hash
+      cstmers[c1][c2] << c.to_hash(self)
       x += 1
     end
     cstmers[:all] = {}
@@ -180,49 +217,38 @@ class Vendor < ActiveRecord::Base
     quantities = {}
     quantity_models.each do |q|
       ai = q.article_id
-      qhash = {"#{q.position}_#{q.id}" => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
-      if quantities.has_key?(ai)
-        quantities[ai].merge! qhash
-      else
-        quantities[ai] = qhash
-      end
+      qhash = {q.id => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
+      quantities.merge! qhash
     end
 
     articles = {}
     article_models.each do |a|
       ci = a.category_id
-      quantities_modified = {}
-      if quantities.has_key?(a.id)
-        quantities[a.id].each_key do |key|
-          quantities[a.id][key][:n] = a.name
-        end
-      end
-      ahash = {"#{a.position}_#{a.id}" => { :ai => a.id, :ci => ci, :d => "a#{a.id}", :n => a.name, :p => a.price, :q => quantities[a.id] }}
-      if articles.has_key?(ci)
-        articles[ci].merge! ahash
-      else
-        articles[ci] = ahash
-      end
+      aid = a.id
+      s = a.position.to_i
+      quantity_ids = a.quantities.existing.active.positioned.collect{|q| q.id}
+      ahash = {a.id => { :ai => aid, :ci => ci, :d => "a#{aid}", :n => a.name, :p => a.price, :q => quantity_ids }}
+      articles.merge! ahash
     end
 
     options = {}
     option_models.each do |o|
       o.categories.each do |oc|
         ci = oc.id
-        s = o.position.nil? ? 0 : o.position
-        ohash = {"#{s}_#{o.id}" => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
-        if options.has_key?(ci)
-          options[ci].merge! ohash
-        else
-          options[ci] = ohash
-        end
+        s = o.position.to_i
+        ohash = {o.id => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
+        options.merge! ohash
       end
     end
 
     categories = {}
     category_models.each do |c|
       cid = c.id
-      categories[cid] = { :id => cid, :a => articles[cid], :o => options[cid], :n => c.name }
+      s = c.position.to_i
+      article_ids = c.articles.existing.active.positioned.collect{ |a| a.id }
+      option_ids = c.options.existing.active.positioned.collect{ |o| o.id }
+      chash = {cid => { :id => cid, :a => article_ids, :o => option_ids, :n => c.name }}
+      categories.merge! chash
     end
 
     payment_methods = {}
@@ -270,7 +296,7 @@ class Vendor < ActiveRecord::Base
       :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow'))
     }
 
-    resources = { :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
+    resources = { :a => articles, :q => quantities, :o => options, :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
 
     return resources.to_json
   end
@@ -284,5 +310,213 @@ class Vendor < ActiveRecord::Base
     end
     return vendor_printers
   end
+  
+  def csv_dump(model, from, to)
+    case model
+    when 'Item'
+      items = self.items.existing.where(:created_at => from..to)
+      attributes = "order.nr;created_at;order.table.name;order.user.login;label;category.name;count;price_with_options;article.taxes.first.percent"
+      output = ''
+      output += "#{attributes}\n"
+      output += Report.to_csv(items, Item, attributes)
+    else
+      output = nil
+    end
+    return output
+  end
 
+  def fisc_dump(from, to, location)
+    tmppath = SalorHospitality::Application.config.paths['tmp'].first
+    
+    label = "salor-hospitality-fiscal-backup-#{ I18n.l(Time.now, :format => :datetime_iso2) }"
+    dumppath = File.join(tmppath, label)
+    FileUtils.mkdir_p(dumppath)
+      
+    # DUMP DATABASE
+    dbconfig = YAML::load(File.open(SalorHospitality::Application.config.paths['config/database'].first))
+    sqldump_in_tmp = File.join(tmppath, 'database.sql')
+    mode = ENV['RAILS_ENV'] ? ENV['RAILS_ENV'] : 'development'
+    username = dbconfig[mode]['username']
+    password = dbconfig[mode]['password']
+    database = dbconfig[mode]['database']
+    `mysqldump -u #{username} -p#{password} #{database} > #{dumppath}/database.sql`
+
+    
+    # DUMP LOGFILE
+    logfile = SalorHospitality::Application.config.paths['log'].first
+    logfile_basename = File.basename(logfile)
+    logfile_in_tmp = File.join(tmppath, logfile_basename)
+    FileUtils.cp(logfile, dumppath)
+    
+
+    # GENERATE CSV FILES
+    Report.dump_all(from, to, dumppath)
+    
+    # ZIP IT UP
+    zip_outfile = "#{ location }/#{ label }.zip"
+    Dir.chdir(dumppath)
+    `zip -r #{ zip_outfile } .`
+    `chmod 777 #{ zip_outfile }`
+    
+    FileUtils.rm_r dumppath # causes exception
+    
+    return zip_outfile
+  end
+  
+  def package_upgrade
+    lines = `zcat /usr/share/doc/salor-hospitality/changelog.gz`.split("\n")
+    puts "Currently installed version is #{lines.first}"
+    
+    last_upgrade_history = self.histories.where(:action_taken => "package_upgrade").last
+    
+    if last_upgrade_history
+      last_version = last_upgrade_history.changes_made
+      puts "Last version was #{ last_version }"
+      
+      match = /\((.*?)\)/.match(lines[0])
+      version = match[1] if match
+
+      difflines = []
+      lines.each do |l|
+        break if l == last_version
+        difflines << l if l.include?('*')
+      end
+      
+      vendor_printers = self.vendor_printers.existing
+      if vendor_printers.any?
+        puts "Printing system change report in accordance to financial regulations"
+        output = "\e@" +      # initialize printer
+            "\e!\x38" +       # big font
+            "UPDATE\n" +
+            I18n.l(Time.now, :format => :datetime_iso2) +
+            "\nVERSION #{ version.to_s }\n\n" +
+            "\e!\x01" +            # smallest font
+            difflines.join("\n") + # changelog output
+            "\n\n\n\n\n" +         # space
+            "\x1DV\x00\x0C"        # paper cut
+        print_engine = Escper::Printer.new(self.company.mode, vendor_printers, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.hash_id))
+        print_engine.open
+        bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
+        bytes_sent = content_sent.length
+        Receipt.create(:vendor_id => self.id, :company_id => self.company_id, :vendor_printer_id => vendor_printers.first.id, :content => output, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        print_engine.close
+      end
+    end
+    
+    h = self.histories.new
+    h.company_id = h.company_id
+    h.action_taken = "package_upgrade"
+    h.changes_made = lines.first
+    h.save
+    puts "Created History record for package upgrade"
+  end
+  
+  def offset
+    self.id - self.company.vendors.existing.first.id
+  end
+  
+  def region
+    SalorHospitality::Application::COUNTRIES_REGIONS[self.country]
+  end
+  
+  def self.copy_menucard(v1, v2)
+    # copies taxes, categories, articles, quantities
+    v1.taxes.existing.each do |t1|
+      t2 = Tax.new
+      t2.company_id = t1.company_id
+      t2.vendor_id = v2.id
+      t2.percent = t1.percent
+      t2.name = t1.name
+      t2.letter = t1.letter
+      t2.color = t1.color
+      t2.statistics_by_category = t1.statistics_by_category
+      t2.include_in_statistics = t1.include_in_statistics
+      t2.save
+    end
+    
+    messages = []
+    v1.categories.existing.each do |c1|
+      c2 = Category.new
+      c2.vendor_id = v2.id
+      c2.company_id = v1.company_id
+      c2.name = c1.name
+      c2.icon = c1.icon
+      c2.color = c1.color
+      c2.position = c1.position
+      c2.active = c1.active
+      c2.separate_print = c1.separate_print
+      c2.save
+      
+      c1.articles.existing.each do |a1|
+        a2 = Article.new
+        a2.company_id = a1.company_id
+        a2.vendor_id = v2.id
+        a2.name = a1.name
+        a2.description = a1.description
+        a2.category_id = c2.id
+        a2.price = a1.price
+        a2.active = a1.active
+        a2.waiterpad = a1.waiterpad
+        a2.sort = a1.sort
+        a2.position = a1.position
+
+        a1.taxes.existing.each do |t1|
+          percent = t1.percent
+          t2 = v2.taxes.find_by_percent(percent)
+          a2.taxes << t2
+        end
+        
+        a1.quantities.existing.each do |q1|
+          q2 = Quantity.new
+          q2.company_id = q1.company_id
+          q2.vendor_id = v2.id
+          #q2.article_id = a2.id
+          q2.prefix = q1.prefix
+          q2.postfix = q1.postfix
+          q2.price = q1.price
+          q2.active = q1.active
+          q2.sort = q1.sort
+          q2.position = q1.position
+          q2.category_id = c2.id
+          q2.article_name = q1.article_name
+          q2.save
+          a2.quantities << q2
+        end # quantities
+        
+        result = a2.save
+        if result == false
+          messages << a2.errors
+        end        
+      end # articles
+    end #category
+  end
+  
+  def identifier
+    ident = read_attribute :identifier
+    hid = "identifier_unset" if ident.blank?
+    return ident
+  end
+  
+  def hash_id
+    hid = read_attribute :hash_id
+    hid = "hash_id_unset" if hid.blank?
+    return hid
+  end
+  
+  def set_hash_id
+    hid = read_attribute :hash_id
+    unless hid.blank?
+      ActiveRecord::Base.logger.info "hash_id is already set."
+      return
+    end
+    self.hash_id = "#{ self.identifier }#{ generate_random_string[0..20] }"
+    ActiveRecord::Base.logger.info "Set hash_id to #{ self.hash_id }."
+  end
+  
+  private
+  
+  def generate_random_string
+    collection = [('a'..'z'),('A'..'Z'),('0'..'9')].map{|i| i.to_a}.flatten
+    (0...128).map{ collection[rand(collection.length)] }.join
+  end
 end

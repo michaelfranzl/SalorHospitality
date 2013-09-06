@@ -11,22 +11,39 @@
 class SessionsController < ApplicationController
 
   skip_before_filter :fetch_logged_in_user, :except => [:destroy, :test_mail]
+  
+  def show
+    redirect_to '/' and return
+  end
 
   def new
-    #session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
+    redirect_to sh_saas.new_session_path and return if defined?(ShSaas) == 'constant'
+    company = Company.existing.active.first
+    vendor = company.vendors.existing.first
     session[:customer_id] = @current_customer = nil
     @submit_path = session_path
+    @branding_codename = vendor.branding[:codename]
+    @branding_title = vendor.branding[:title]
+    @branding_codename ||= 'salorhospitality'
+    @branding_title ||= 'Salor Hospitality'
     render :layout => 'login'
   end
   
   def new_customer
+    redirect_to sh_saas.new_customer_path and return if defined?(ShSaas) == 'constant'
+    company = Company.existing.active.first
+    vendor = company.vendors.existing.first
     session[:user_id] = session[:customer_id] = @current_user = @current_customer = nil
     @submit_path = session_path
+    @branding_codename = vendor.branding[:codename]
+    @branding_title = vendor.branding[:title]
+    @branding_codename ||= 'salorhospitality'
+    @branding_title ||= 'Salor Hospitality'
     render :layout => 'login'
   end
 
   def create
-    # Simple login
+    # Simple local login
     company = Company.existing.active.first
     
     if params[:mode] == 'user'
@@ -34,13 +51,25 @@ class SessionsController < ApplicationController
         user = company.users.existing.active.where(:password => params[:password]).first
       end
       if user
-        if ( not user.role.permissions.include?('login_locking') ) or company.mode != 'local' or user.current_ip.nil? or user.current_ip == request.ip
+        if ( not user.role.permissions.include?('login_locking') ) or user.current_ip.nil? or user.current_ip == request.ip or company.mode != 'local'
+          # login locking is enabled, the current_ip is the same as stored on the mode. company modes other than local override the login_locking feature since IP addresses are usually dynamic
           vendor = user.vendors.existing.first
           session[:user_id] = user.id
           session[:company_id] = user.company_id
-          session[:vendor_id] = vendor.id if vendor
+          if user.default_vendor_id
+            session[:vendor_id] = user.default_vendor_id
+          else
+            session[:vendor_id] = vendor.id
+          end
           session[:locale] = I18n.locale = user.language
-          user.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
+          
+          # update timestamps on user model
+          user.current_ip = request.ip
+          user.last_active_at = Time.now
+          user.last_login_at = Time.now
+          user.save
+          user.log_in(vendor, user)
+          
           session[:admin_interface] = false
           flash[:error] = nil
           flash[:notice] = t('messages.hello_username', :name => user.login)
@@ -52,11 +81,11 @@ class SessionsController < ApplicationController
         else
           flash[:error] = t('messages.user_account_is_currently_locked')
           flash[:notice] = nil
-          render :new, :layout => 'login' and return
+          redirect_to '/' and return
         end
       else
         flash[:error] = t :wrong_password
-        render :new, :layout => 'login' and return
+        redirect_to '/' and return
       end
       
     elsif params[:mode] == 'customer'
@@ -75,23 +104,31 @@ class SessionsController < ApplicationController
         redirect_to orders_path and return
       else
         flash[:error] = t :wrong_password
-        render :new_customer, :layout => 'login' and return
+        redirect_to new_customer_session_path and return
       end
     end
   end
 
-  def request_specs_login
-    #create
-  end
-
   def destroy
     if @current_user
-      @current_user.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+      session[:ad_url] = nil
+      session[:ad_url] = @current_user.advertising_url if @current_user.advertising_url and not @current_user.advertising_url.empty?
+      
+      @current_user.last_logout_at = Time.now
+      @current_user.last_active_at = Time.now
+      @current_user.current_ip = nil
+      @current_user.save
+      @current_user.log_out(@current_vendor, @current_user, params[:logout_type] == 'auto_logout')
+      
+      redirect_to '/'
     elsif @current_customer
-      @current_customer.update_attributes :last_logout_at => Time.now, :last_active_at => Time.now, :current_ip => nil
+      @current_customer.last_logout_at = Time.now
+      @current_customer.last_active_at = Time.now
+      @current_customer.current_ip = nil
+      @current_customer.save
+      redirect_to new_customer_session_path
     end
     @current_user = @current_customer = session[:user_id] = session[:customer_id] = nil
-    redirect_to '/'
   end
 
   def test_exception
@@ -106,7 +143,14 @@ class SessionsController < ApplicationController
     vendor = Vendor.find_by_id(session[:vendor_id])
     if vendor and vendor.technician_email and vendor.enable_technician_emails
       UserMailer.technician_message(vendor, subject, message).deliver
-      Email.create :receipient => vendor.technician_email, :subject => subject, :body => message, :vendor_id => vendor.id, :company_id => vendor.company_id, :technician => true
+      em = Email.new
+      em.receipient = vendor.technician_email
+      em.subject = subject
+      em.body = message
+      em.vendor_id = vendor.id
+      em.company_id = vendor.company_id
+      em.technician = true
+      em.save!
     else
       logger.info "[TECHNICIAN] #{subject} #{message}"
     end
@@ -135,4 +179,26 @@ class SessionsController < ApplicationController
   def catcher
     redirect_to 'new'
   end
+  
+  def printer_info
+    output = []
+    vendor = Vendor.find_by_hash_id(params[:id])
+    if vendor
+      vendor_printers = vendor.vendor_printers.existing
+      if vendor_printers.any?
+        vendor_printers.each do |vp|
+          i = sprintf("%04i", vp.id)
+          output << "printerurl#{i}:/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ vendor.company.identifier }/#{ File.basename(vp.path) }"
+          output << "printername#{i}:#{ vp.name }"
+        end
+        output << "interval:#{vendor.automatic_printing_interval}"
+      else
+        output << "Error: No Printers configured"
+      end
+    else
+      output << "Error: Unknown ID"
+    end
+    render :text => output.join("\n")
+  end
+  
 end

@@ -7,6 +7,7 @@ class Camera < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :url_stream
   validates_presence_of :url_snapshot
+  validates_presence_of :host_internal
   validates_presence_of :port
   
   def resource(ip, mode='stream')

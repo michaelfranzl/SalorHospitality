@@ -3,7 +3,9 @@
  */
 function _fetch(url,callback) {
   $.ajax({
+    type: 'GET',
     url: url,
+    cache: false,
     context: window,
     success: callback
   });
@@ -50,7 +52,7 @@ function _push(object) {
   options = { 
     context: window,
     url: url, 
-    type: 'post', 
+    type: 'POST', 
     data: payload, 
     timeout: 20000, 
     success: callback, 
@@ -95,7 +97,9 @@ function uri_attributes() {
 
 function unlock_user_ip(user_id) {
   $.ajax({
+    type: 'GET',
     url: '/users/unlock_ip',
+    cache: false,
     data: {id:user_id}
   });
 }
@@ -115,4 +119,23 @@ function  in_array_of_hashes(array,key,value) {
     }
   }
   return false;
+}
+
+function logout(msg) {
+  msg = typeof msg !== 'undefined' ? msg : {};
+  var error = typeof msg.error !== 'undefined' ? msg.error : '';
+  var notice = typeof msg.notice !== 'undefined' ? msg.notice : '';
+  var type = typeof msg.type !== 'undefined' ? msg.type : '';
+  $('#logout_error').val(error);
+  $('#logout_notice').val(notice);
+  $('#logoutform').submit();
+}
+
+function generate_password(length) {
+  var charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  var pw = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+    pw += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return pw;
 }

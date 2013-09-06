@@ -1,234 +1,122 @@
 ---
 tr:
   activerecord:
-    models:
-      customer:
-        one: XXXCustomer
-        other: XXXCustomers
-      table:
-        one: Masa
-        other: Masalar
-      user:
-        one: Kullanıcı
-        other: Kullanıcılar
-      company:
-        one: Şirket
-        other: Şirketler
-      vendor:
-        one: XXXRestaurant
-        other: XXXRestaurants
-      tax:
-        one: Vergi derecesi
-        other: vergi dereceleri
-      cost_center:
-        one: Maliyet merkezi
-        other: Maliyet merkezleri
-      article:
-        one: Ürün
-        other: Ürünler
-      option:
-        one: Seçenek
-        other: Seçenekler
-      quantity:
-        one: Varyant
-        other: Varyantlar
-      category:
-        one: Kategori
-        other: Kategoriler
-      item:
-        one: Pozisyon
-        other: Pozisyonlar
-      image:
-        one: Görüntü
-        other: Görüntüler
-      settlement:
-        one: Hesaplaşma
-        other: Hesaplaşmalar
-      order:
-        one: Sipariş
-        other: Siparişler
-      stock:
-        one: Depo stoku
-        other: Depo stoklar
-      group:
-        one: XXXStock Group
-        other: XXXStock Groups
-      role:
-        one: XXXRole
-        other: XXXRoles
-      vendor_printer:
-        one: XXXPrinter
-        other: XXXPrinters
-      coupon:
-        one: XXXCoupon
-        other: XXXCoupons
-      discount:
-        one: XXXDiscount
-        other: XXXDiscounts
-      page:
-        one: XXXCard
-        other: XXXCards
-      partial:
-        one: XXXPartial
-        other: XXXPartials
-      reservation:
-        one: XXXReservation
-        other: XXXReservations
-      presentation:
-        one: XXXTemplate
-        other: XXXTemplates
-      report:
-        one: XXXReport
-        other: XXXReports
-      booking:
-        one: Booking
-        other: Bookings
-      guest_type:
-        one: Guest Type
-        other: Guest Types
-      payment_method:
-        one: Payment Method
-        other: Payment Methods
-      payment_method_item:
-        one: Payment Method
-        other: Payment Methods
-      room:
-        one: Room
-        other: Rooms
-      room_price:
-        one: Room Price
-        other: Room Prices
-      room_type:
-        one: Room Type
-        other: Room Types
-      season:
-        one: Saison
-        other: Saisons
-      surcharge:
-        one: Surcharge
-        other: Surcharges
-      tax_amount:
-        one: Tax amount
-        other: Tax amounts
-      statistic_category:
-        one: Statistic-Category
-        other: Statistic-Categories
-      camera:
-        one: Camera
-        other: Cameras
     attributes:
       article:
-        price: Fiyat
-        name: Isim
-        hidden: Silmek
-        description: Ürün tarifi
-        category_id: Kategori
-        usage: Kullanım
         active: XXX active
+        category_id: Kategori
+        description: Ürün tarifi
+        hidden: Silmek
         image: XXX Image
+        name: Isim
+        price: Fiyat
         statistic_category_id: Statistic-Category
         taxes: Tax
-      option:
-        price: Fiyat
-        category_id: Kategori
-        name: Isim
-        hidden: XXXDelete
-        no_ticket: XXX Dont' print ticket
-        separate_ticket: XXX Cut ticket
-      quantity:
-        prefix: Isim
-        postfix: Ek miktar
-        price: Varyant fiyatı
-        description: Tarif
-        active: Aktif
-        hidden: Silmek
         usage: Kullanım
-      tax:
-        percent: Vergi yüzedesi %
-        name: Isim
-        letter: harf
-        color: renk
-        hidden: XXXdelete
-        include_in_statistics: In Settlement Statistics
-        statistics_by_category: Settlement Statistics by Category
-      table:
-        name: Isim
-        abbreviation: Kısaltma
-        description: Tarif
-        width: Genişlik
-        height: Yükseklik
-        width_mobile: Genişlik mobile
-        height_mobile: Yükseklik mobile
-        enabled: aktiv?
-        hidden: löschen?
-        rotate: XXX rotate?
-        booking_table: Booking
+      booking_item:
+        base_price: Preis
+        count: Anzahl
+        duration: XXX Days
+        sum: Summe
+      camera:
+        active: active
+        description: Description
+        hidden: delete
+        host_external: External host
+        host_internal: Internal host
+        name: Name
+        port: Port
+        url_snapshot: URL Snapshot
+        url_stream: URL Stream
       category:
-        name: Isim
-        tax_id: Vergi derecesi
-        icon: Sembol
-        custom_icon: Benim Sembol
         color: Renk
+        custom_icon: Benim Sembol
         food: Yemek?
-        vendor_printer_id: XXXPrinter
         hidden: XXXdelete
-        separate_print: XXX Cut ticket
-        user_id: XXX Preparing User
+        icon: Sembol
         image: Icon
-      cost_center:
         name: Isim
-        description: Tarif
+        separate_print: XXX Cut ticket
+        tax_id: Vergi derecesi
+        user_id: XXX Preparing User
+        vendor_printer_id: XXXPrinter
+      cost_center:
         active: aktif?
+        description: Tarif
         hidden: XXXdelete
+        name: Isim
         no_payment_methods: No Payment Methods
+      customer:
+        address: Address
+        cellphone: Cellphone
+        city: City
+        company_name: Company Name
+        default_table_id: Default Table
+        email: email
+        first_name: First Name
+        full_name: Name
+        hidden: delete
+        language: Language
+        last_name: Last Name
+        m_number: Loyalty Card Code
+        m_points: Loyalty Points
+        postalcode: Postal Code
+        state: State
+        tax_info: Tax Info
+        telephone: Telephone
       group:
         name: Isim
-      user:
-        login: Giris yap
-        password: Sifre
-        role: Görev
-        title: Hitap
-        color: Renk
-        language: Dil
-        tables: XXXTables
-        active: XXXactive?
-        hidden: XXXdelete?
-        screenlock_timeout: XXX Screenlock timeout (sec.)
-        audio: Acoustic signals
-        confirmation_user: Confirm remote orders
-      role:
-        name: XXXName
-      vendor_printer:
-        name: XXXName
-        path: XXXPath
-        hidden: XXXDelete
-        copies: XXX Copies
-      settlement:
-        initial_cash: XXXInitial amount
-        revenue: XXXEnd amount
-      presentation:
-        name: XXXName
-        description: XXXDescription
-        markup: XXXERB Markup
-        code: XXXRuby code
-        model: XXXType
-        active: XXXactive
-        hidden: XXXdelete
-      page:
-        active: XXXactive
-        hidden: XXXdelete
-        color: XXX Color
-        height: XXX Height
-        image: XXX Image
-        width: XXX Width
-      partial:
-        blurb: XXXBlurb
-        active: XXXaktiv
-        hidden: XXXdelete
       guest_type:
         hidden: delete
         name: Name
         taxes: Taxes
+      option:
+        category_id: Kategori
+        hidden: XXXDelete
+        name: Isim
+        no_ticket: XXX Dont' print ticket
+        price: Fiyat
+        separate_ticket: XXX Cut ticket
+      order:
+        change_given: Change
+        nr: Number
+        finished_at: Finished at
+        sum: Sum
+      page:
+        active: XXXactive
+        color: XXX Color
+        height: XXX Height
+        hidden: XXXdelete
+        image: XXX Image
+        width: XXX Width
+      partial:
+        active: XXXaktiv
+        blurb: XXXBlurb
+        hidden: XXXdelete
+      payment_method:
+        cash: Cash
+        change: Change
+        name: Name
+      payment_method_item:
+        amount: Amount
+      presentation:
+        active: XXXactive
+        code: XXXRuby code
+        description: XXXDescription
+        hidden: XXXdelete
+        markup: XXXERB Markup
+        model: XXXType
+        name: XXXName
+      quantity:
+        active: Aktif
+        description: Tarif
+        hidden: Silmek
+        postfix: Ek miktar
+        prefix: Isim
+        price: Varyant fiyatı
+        usage: Kullanım
+      role:
+        name: XXXName
       room_price:
         base_price: Base Price
         guest_type_id: Gast-Typ
@@ -241,9 +129,15 @@ tr:
       season:
         from_date: From
         hidden: delete
+        is_master: Master?
         name: Name
         to_date: To
-        is_master: Master?
+      settlement:
+        initial_cash: XXXInitial amount
+        revenue: XXXEnd amount
+      statistic_category:
+        hidden: löschen
+        name: Name
       surcharge:
         amount: Amount
         guest_type_id: Guest Type
@@ -253,482 +147,584 @@ tr:
         season_id: Season
         selected: XXX Selected by default
         visible: XXX Visible?
+      table:
+        abbreviation: Kısaltma
+        booking_table: Booking
+        customer_table: Customer
+        description: Tarif
+        enabled: aktiv?
+        height: Yükseklik
+        height_mobile: Yükseklik mobile
+        hidden: löschen?
+        name: Isim
+        rotate: XXX rotate?
+        width: Genişlik
+        width_mobile: Genişlik mobile
+      tax:
+        color: renk
+        hidden: XXXdelete
+        include_in_statistics: In Settlement Statistics
+        letter: harf
+        name: Isim
+        percent: Vergi yüzedesi %
+        statistics_by_category: Settlement Statistics by Category
       tax_amount:
         amount: Amount
         tax_id: Tax
+      user:
+        active: XXXactive?
+        advertising_timeout: Advertising Timeout
+        advertising_url: Advertising URL
+        audio: Acoustic signals
+        color: Renk
+        confirmation_user: Confirm remote orders
+        default_vendor_id: Log in to Vendor
+        hidden: XXXdelete?
+        language: Dil
+        login: Giris yap
+        password: Sifre
+        role: Görev
+        screenlock_timeout: XXX Screenlock timeout (sec.)
+        tables: XXXTables
+        title: Hitap
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
         automatic_printing: Automatic printing
         country: Rules for country
+        email: e-mail
+        enable_technician_emails: Send technician e-mails
         hidden: delete
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
+        invoice_logo: XXX Invoice Logo
+        logo: XXX Screen logo
         name: Name
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
+        remote_orders: Remote orders
+        rlogo_footer: XXX Receipt logo footer
+        rlogo_header: XXX Receipt logo header
         saas: Online variant
+        technician_email: Technician e-mail
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
         time_offset: Time correction (hours)
         timeout: Screen lock timeout (seconds)
-        use_order_numbers: Use order numbers
-        rlogo_header: XXX Receipt logo header
-        rlogo_footer: XXX Receipt logo footer
-        logo: XXX Screen logo
-        invoice_logo: XXX Invoice Logo
-        remote_orders: Remote orders
-        update_tables_interval: Interval update tables
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database
-        enable_technician_emails: Send technician e-mails
-        technician_email: Technician e-mail
-        email: e-mail
-      payment_method_item:
-        amount: Amount
-      booking_item:
-        base_price: Preis
-        count: Anzahl
-        sum: Summe
-        duration: XXX Days
-      order:
-        change_given: Change
-        nr: Number
-      customer:
-        first_name: First Name
-        last_name: Last Name
-        full_name: Name
-        company_name: Company Name
-        address: Address
-        city: City
-        state: State
-        postalcode: Postal Code
-        m_number: Loyalty Card Code
-        m_points: Loyalty Points
-        email: email
-        telephone: Telephone
-        cellphone: Cellphone
-        hidden: delete
-        table_id: Default Table
-        language: Language
-      payment_method:
-        name: Name
-        cash: Cash
-        change: Change
-      statistic_category:
-        hidden: löschen
-        name: Name
-      camera:
-        name: Name
-        description: Description
-        host_internal: Internal host
-        host_external: External host
-        port: Port
-        active: active
-        hidden: delete
-        url_snapshot: URL Snapshot
-        url_stream: URL Stream
+        update_tables_interval: Interval update tables
+        use_order_numbers: Use order numbers
+      vendor_printer:
+        baudrate: Baudrate
+        codepage: Codepage
+        copies: XXX Copies
+        hidden: XXXDelete
+        name: XXXName
+        path: XXXPath
+        print_button_filename: Icon
+        pulse_receipt: Beep Receipt
+        pulse_tickets: Beep Tickets
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+    models:
+      article:
+        one: Ürün
+        other: Ürünler
+      booking:
+        one: Booking
+        other: Bookings
+      camera:
+        one: Camera
+        other: Cameras
+      category:
+        one: Kategori
+        other: Kategoriler
+      company:
+        one: Şirket
+        other: Şirketler
+      cost_center:
+        one: Maliyet merkezi
+        other: Maliyet merkezleri
+      coupon:
+        one: XXXCoupon
+        other: XXXCoupons
+      customer:
+        one: XXXCustomer
+        other: XXXCustomers
+      discount:
+        one: XXXDiscount
+        other: XXXDiscounts
+      group:
+        one: XXXStock Group
+        other: XXXStock Groups
+      guest_type:
+        one: Guest Type
+        other: Guest Types
+      image:
+        one: Görüntü
+        other: Görüntüler
+      item:
+        one: Pozisyon
+        other: Pozisyonlar
+      option:
+        one: Seçenek
+        other: Seçenekler
+      order:
+        one: Sipariş
+        other: Siparişler
+      page:
+        one: XXXCard
+        other: XXXCards
+      partial:
+        one: XXXPartial
+        other: XXXPartials
+      payment_method:
+        one: Payment Method
+        other: Payment Methods
+      payment_method_item:
+        one: Payment Method
+        other: Payment Methods
+      presentation:
+        one: XXXTemplate
+        other: XXXTemplates
+      quantity:
+        one: Varyant
+        other: Varyantlar
+      report:
+        one: XXXReport
+        other: XXXReports
+      reservation:
+        one: XXXReservation
+        other: XXXReservations
+      role:
+        one: XXXRole
+        other: XXXRoles
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Saison
+        other: Saisons
+      settlement:
+        one: Hesaplaşma
+        other: Hesaplaşmalar
+      statistic_category:
+        one: Statistic-Category
+        other: Statistic-Categories
+      stock:
+        one: Depo stoku
+        other: Depo stoklar
+      surcharge:
+        one: Surcharge
+        other: Surcharges
+      table:
+        one: Masa
+        other: Masalar
+      tax:
+        one: Vergi derecesi
+        other: vergi dereceleri
+      tax_amount:
+        one: Tax amount
+        other: Tax amounts
+      user:
+        one: Kullanıcı
+        other: Kullanıcılar
+      vendor:
+        one: XXXRestaurant
+        other: XXXRestaurants
+      vendor_printer:
+        one: XXXPrinter
+        other: XXXPrinters
+  admin: Admin
+  are_you_sure: Emin misiniz?
   articles:
-    index:
-      list_all: Herseyi göster
-      search_term: Arama kelimesi
-      preview: Öngörüs
-      sort: XXXSort
-      update: XXXUpdate!
-      view: XXX View
-    new:
-      new_article: Yeni ürün
-      edit_article: Ürün islemek
-      add_quantity: Varyant eklemek
-      normal: normal
-      takeaway: götürmek için
-    listall:
-      all_articles: Bütün ürünlerin listesi
+    create:
+      license_limited: XXX Your License is limited to %{count} articles
+      success: Article was successfully created
+    destroy:
+      success: Article was successfully deleted
     find:
       variants:
         one: Varyant
         other: Varyant
+    index:
+      list_all: Herseyi göster
+      preview: Öngörüs
+      search_term: Arama kelimesi
+      sort: XXXSort
+      update: XXXUpdate!
+      view: XXX View
+    listall:
+      all_articles: Bütün ürünlerin listesi
+    new:
+      add_quantity: Varyant eklemek
+      edit_article: Ürün islemek
+      new_article: Yeni ürün
+      normal: normal
+      takeaway: götürmek için
     sort_index:
       sort: Sort articles
-    create:
-      success: Article was successfully created
-      license_limited: XXX Your License is limited to %{count} articles
-    destroy:
-      success: Article was successfully deleted
-  options:
-    new:
-      new_option: Yeni secenekler
-      edit_option: Seçeneğini islemek
-      hidden: XXXdelete
-      select_all: XXX select all
-    create:
-      success: Option successfully saved
-    destroy:
-      success: Option successfully deleted
+  bar: Bar
+  black: XXXBlack
   blackboard:
     index:
       update: Güncelleme
-  categories:
-    new:
-      new_category: Yeni Kategori üretmek
-      edit_category: Kategori islemek
-      aperitif: Aperitif
-      sidedish: Ilave
-      starter: Ön yemekler
-      maindish: Ana yemek
-      childrendish: Cocuklar
-      dessert: Tatlilar
-      digestif: Digestif
-      beer: Bira
-      nonalcoholics: Alkoholsüz
-      cigarette: Sigara
-      rosewineglass: Gülrengi sarap
-      redwineglass: Kirmizi sarap
-      whitewineglass: Beyaz sarap
-      rosewinebottle: Sise Acikkirmizi sarap
-      redwinebottle: Sise kirmizi sarap
-      whitewinebottle: Sise beyaz sarap
-      sparkling: Köpüklü sarap
-      coffee: Kahve
-      teapot: Caydanlık
-      tea: Cay bardagı
-      blank: bos
-      noodles: XXX Noodles
-      soup: XXX Soup
+  blank: Bos
+  blue: Mavi
+  bookings:
+    invoice_item_list:
+      served_by_X: You were served by %{user}
+    show:
+      go_to_bookings_calendar: XXX Go to bookings calendar view
+      search_by_number: Search by number
+  cameras:
     create:
-      success: Category successfully saved
+      success: Camera was successfully saved
+    destroy:
+      success: Camera was successfully deleted
+    index:
+      show: Show
+  cancel_and_go_back: Iptal et ve geriye cik
+  categories:
+    create:
       license_limited: XXX Your License is limited to %{count} categories
+      success: Category successfully saved
     destroy:
       success: Category successfully deleted
-  cost_centers:
-    index:
-      active: aktif
-      inactive: aktif degil
     new:
-      new_cost_center: Yeni maliyet merkezi
-      edit_cost_center: Maliyet merkezi islemek
+      aperitif: Aperitif
+      beer: Bira
+      blank: bos
+      childrendish: Cocuklar
+      cigarette: Sigara
+      coffee: Kahve
+      dessert: Tatlilar
+      digestif: Digestif
+      edit_category: Kategori islemek
+      maindish: Ana yemek
+      new_category: Yeni Kategori üretmek
+      nonalcoholics: Alkoholsüz
+      noodles: XXX Noodles
+      redwinebottle: Sise kirmizi sarap
+      redwineglass: Kirmizi sarap
+      rosewinebottle: Sise Acikkirmizi sarap
+      rosewineglass: Gülrengi sarap
+      sidedish: Ilave
+      soup: XXX Soup
+      sparkling: Köpüklü sarap
+      starter: Ön yemekler
+      tea: Cay bardagı
+      teapot: Caydanlık
+      whitewinebottle: Sise beyaz sarap
+      whitewineglass: Beyaz sarap
+  clear: clear
+  clear_order_and_go_back: XXXClear order and go back
+  copy: XXXCopy
+  cost_centers:
     create:
       success: Cost Center successfully saved
     destroy:
       success: Cost Center successfully deleted
+    index:
+      active: aktif
+      inactive: aktif degil
+    new:
+      edit_cost_center: Maliyet merkezi islemek
+      new_cost_center: Yeni maliyet merkezi
+  count: Miktar
+  create: Üretmek
+  customers:
+    create:
+      success: Customer successfully saved
+    destroy:
+      success: Customer successfully deleted
+    new:
+      edit_customer: Edit Customer
+      new_customer: New Customer
+  dateandtime: Tarih
+  default: XXXDefault
+  delete: Silmek
+  display: Göstermek
+  edit: Islemek
+  exit: XXXExit
+  finish: XXX Just Finish
+  food: Yemekler
+  go_back: Geri
+  green: esil
+  gross: Brüt
   groups:
     new:
-      new_group: Yeni depo grubu
       edit_group: Depo grubu islemek
-  stocks:
-    new:
-      new_stock: Yeni depo ürünü
-      edit_stock: Depo ürünü islemek
-  orders:
-    index:
-      preparation_list: XXXPreparation list
-      delivery_list: XXXDelivery list
-      confirmation_list: Self-order list
-    served_by: Size hizmet gösteren
-    show:
-      print_invoice: Fatura basmak
-      print_business_invoice: Şirket fatura basmak
-      back: geri
-      previous_invoice: Önceki Fatura
-      next_invoice: Sonraki Fatura
-      unit_price: Tane
-      count: Miktar
-      sum: Toplam
-      list_of_taxes: Vergi listesi
-      search_by_number: XXXSearch by number
-      add_notes: Add notes
-      cannot_reactivate: Reactivation failed. No table is vacant.
-      reactivate: Reactivate
-    invoice_form:
-      set_cost_center: Sipariş icin maliyet merkezini ayarla
-      print_and_finish: Fişi bas ve siparişi sonucla
-      just_finish: Fişi sonucla
-      set_taxes: Vergi derecesini kararlaştır
-      split_invoice: Faturayi paylasmak/bölmek
-      set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
-      split_this_item: Posizyonları
-      switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin
-        tiklayin
-      change_money: XXX Change
-      set_booking: XXX Assign to Booking
-      move_order: Move order to different table
-    login_form:
-      username: Kullanıcı
-      login: Giris yap
-      password: Sifre
-      email: Sizin E-mailiniz
-    functions_header_index:
-      show_last_order: Son siparişi göster
-      print_now: Hemen basin
-      items_notifications: XXX Notifications
-      show_last_booking: XXX Show last booking
-      toggle_between_tables_and_rooms: XXX Toggle between rooms and tables
-      exit: Exit
-    functions_header_order_form:
-      move_order: siparişi kaydır
-    invoice_item_list:
-      unit_price: Unit price
-      count: Quantity
-      sum: Sum
-    refund_form:
-      do_separate_items: Separate this item
-      do_refund: Make refund
-    order_form:
-      new: New order
-      sum: SUM
-  settlements:
-    index:
-      start_date: Baslangic
-      end_date: Bitis
-      all_cost_centers: Hepsi
-      sum_total: Toplam hesap
-    detailed_list:
-      order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
-      count: Miktar
-      unit_price: Tane
-      total: Hepsi
-      revenue: Ciro
-    settlement:
-      start: XXXStart
-      finish: XXXFinish
-      print: XXXPrint
-      started_at: XXXStarted at
-      please_wait: Analyzing data. Please wait ...
+      new_group: Yeni depo grubu
+  guestroom: Müşteri odası
+  host: Host
+  images:
+    errempty: Geçersiz dosya
+    errsize: Geçersiz dosya boyutu
+    errtype: Geçersiz dosya türü
+  invalid_date: XXX Invalid date
+  invoice: Fatura
+  invoice_numer_X_at_time: Fatura No. %{number},  %{datetime}
+  invoices: Faturalar
+  is_no_number: Rakam degil
   items:
     item_tablerow:
       clear: XXXClear
       done: XXXDone
       no_printing: XXXNo printing
-  sessions:
-    browser_warning:
-      continue: Devam
-      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
-        (Linux) or Safari (Apple). Please use one of these browsers and try again.
-    new:
-      username: Kullanici
-      login: Giris Yap
-      password: Sifre
-      email: Sizin E-Mailiniz
-    new_customer:
-      email: Your E-Mail
-      login: Login
-      password: Password
-      username: User
-  statistic: Istatistik
-  statistics:
+  just_order: XXXJust order
+  kitchen: Mutfak
+  layouts:
+    application:
+      admin_menu_hint: ☚ Click here to open the main menu
+      submit_scribe: OK
+    header:
+      configuration: Configuration
+  logout: ! '%{who} cikis yapmak'
+  messages:
+    hello_username: Hello %{name}!
+    user_account_is_currently_locked: Account is locked
+  move_order_to_table: XXXMove order to different table
+  must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde
+    islemek gerikiyor.
+  net: Net
+  new: Yeni
+  no_printing: XXXNo printing
+  not_found: XXX Not found
+  options:
+    create:
+      success: Option successfully saved
+    destroy:
+      success: Option successfully deleted
     index:
-      hour: Hour
-      weekday: Weekday
-  tables:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
     new:
-      new_table: Yeni masa
-      edit_table: Masa islemek
+      edit_option: Seçeneğini islemek
+      hidden: XXXdelete
+      new_option: Yeni secenekler
+      select_all: XXX select all
+  orange: Portakal
+  orders:
+    functions_header_index:
+      exit: Exit
+      items_notifications: XXX Notifications
+      print_now: Hemen basin
+      show_last_booking: XXX Show last booking
+      show_last_order: Son siparişi göster
+      toggle_drag_tables: Drag tables
+    functions_header_order_form:
+      move_order: siparişi kaydır
+    index:
+      confirmation_list: Self-order list
+      delivery_list: XXXDelivery list
+      preparation_list: XXXPreparation list
+    invoice_form:
+      change_money: XXX Change
+      just_finish: Fişi sonucla
+      move_order: Move order to different table
+      print_and_finish: Fişi bas ve siparişi sonucla
+      set_booking: XXX Assign to Booking
+      set_cost_center: Sipariş icin maliyet merkezini ayarla
+      set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
+      set_taxes: Vergi derecesini kararlaştır
+      split_invoice: Faturayi paylasmak/bölmek
+      split_this_item: Posizyonları
+      switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin
+        tiklayin
+    invoice_item_list:
+      count: Quantity
+      sum: Sum
+      unit_price: Unit price
+    login_form:
+      email: Sizin E-mailiniz
+      login: Giris yap
+      password: Sifre
+      username: Kullanıcı
+    order:
+      new: New order
+    order_form:
+      sum: SUM
+    refund_form:
+      do_refund: Make refund
+      do_separate_items: Separate this item
+    served_by: Size hizmet gösteren
+    show:
+      add_notes: Add notes
+      back: geri
+      cannot_reactivate: Reactivation failed. No table is vacant.
+      count: Miktar
+      list_of_taxes: Vergi listesi
+      next_invoice: Sonraki Fatura
+      previous_invoice: Önceki Fatura
+      print_business_invoice: Şirket fatura basmak
+      print_invoice: Fatura basmak
+      reactivate: Reactivate
+      search_by_number: XXXSearch by number
+      sum: Toplam
+      unit_price: Tane
+    last:
+      title: Last finished Orders
+  pages:
+    edit:
+      edit_page: XXXEdit Page
+      slideshow: XXX Start Slideshow
+      view: XXXView
+    form:
+      slideshow: Slideshow
+      view: View
+    new:
+      new_page: New Page
+  partials:
+    default_blurb: XXXDefault Text
+    error_during_evaluation: ! 'XXXError: '
+    no_presentation_found:
+      no_presentations_found: XXXNo template defined for this partial.
+  payment_methods:
     create:
-      success: Table successfully saved
-      license_limited: XXX Your License is limited to %{count} tables
+      success: Payment Method successfully saved
     destroy:
-      success: Table successfully deleted
-  taxes:
+      success: Payment Method successfully deleted
+  pink: Pembe
+  please_enter_item_comment: Özel istek
+  please_enter_item_price: Fiyet
+  presentations:
     new:
-      new_tax: Yeni vergi derecesi
-      edit_tax: Vergi derecesini islemek
-  users:
-    new:
-      new_user: Yeni kullanici
-      edit_user: Kullanici islemek
-      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
-    create:
-      success: User successfully saved
-    destroy:
-      success: User successfully deleted
+      edit_presentation: XXXEdit Template
+      new_presentation: XXXNew Template
+  print: Basmak
+  print_and_finish: XXX Finish and print
+  printing_test: XXXPrinting test
+  refund: XXX Refund
   reports:
-    save: XXX Save
-    usb_device: XXX USB Stick
-    start_date: XXX Start Date
+    download: Download
+    download_reports: XXX Download Report
     end_date: XXX End Date
+    fisc_report_dump_location: Output Location
     index:
       backup_database: Backup database
       backup_logfile: Backup logfile
-      header: Reports
-      connected: XXX Connected
-      disconnected: XXX Disconnected
       connect_ssh: XXX Remote Login
       connect_vnc: XXX Share Screen
-      password: XXX Password
-      requesting_connection_status: XXX Requesting connection status ...
+      connected: XXX Connected
+      disconnected: XXX Disconnected
+      download_reports: XXX Save reports
+      header: Reports
       internet_connection_info: XXX To get Remote Support, you must be connected to
         the internet. If you see the Red (E) Logo above, you are connected to the
         internet.
+      password: XXX Password
       remote_support: XXX Remote Support
-      download_reports: XXX Save reports
+      requesting_connection_status: XXX Requesting connection status ...
     remote_support: XXX Remote Support
-    download_reports: XXX Download Report
+    save: XXX Save
+    start_date: XXX Start Date
+  restaurant: Restaurant
   roles:
-    new:
-      take_orders: XXXTake orders
-      decrement_items: XXXDecrement items
-      finish_orders: XXXFinish orders
-      split_items: XXXSplit items
-      move_tables: XXXMove tables
-      delete_items: XXXDelete items by decrementing
-      cancel_all_items_in_active_order: XXXCancel all items in active order
-      assign_cost_center: XXXAssign cost center
-      move_order: XXXMove order
-      change_waiter: XXXChange waiter
-      finish_all_settlements: XXXFinish all settlements
-      finish_own_settlement: XXXFinish own settlement
-      view_all_settlements: XXXView all settlements
-      manage_business_invoice: XXXManage business invoice
-      manage_users: XXXManage users
-      counter_mode: XXX Counter mode
-      edit_role: XXX Edit Role
-      manage_customers: XXX Manage Customers
-      manage_pages: XXX Manage Slideshow
-      new_role: XXX New Role
-      permissions: XXX Permissions
-      see_debug: XXX See debug messages
-      refund: XXX Refund items
-      manage_articles: XXX Manage articles, categories and options
-      manage_categories: XXX Manage categories
-      manage_options: XXX Manage options
-      manage_roles: XXX Manage roles
-      manage_taxes: XXX Manage Taxes
-      manage_cost_centers: XXX Manage Cost Centers
-      manage_payment_methods: XXX Manage Payment Methods
-      manage_tables: XXX Manage tables
-      manage_vendors: XXX Manage vendors
-      manage_statistics: XXX View statistics
-      manage_hotel: XXX Manage hotel
-      item_scribe: XXX Enable handwriting
-      assign_order_to_booking: XXX Assign orders to a booking
-      assign_tables: XXX Assign tables to users
-      remote_support: XXX Remote Support
-      download_database: XXX Download Database
-      move_order_from_invoice_form: Move order to table from invoice form
-      assign_order_to_user: Assign order to user
-      see_item_notifications_user_preparation: Item notifications personal preparation
-      see_item_notifications_user_delivery: Item notifications personal delivery
-      see_item_notifications_vendor_preparation: Item notifications vendor preparation
-      see_item_notifications_vendor_delivery: Item notifications vendor delivery
-      see_item_notifications_static: Item notifications summary list on main screen
-      receipt_logo: Receipt Logos
-      mobile_show_tools: Show tool button on mobile devices
-      reactivate_orders: Reactivate orders
-      manage_statistics_hotel: View hotel statistics
-      statistics_weekday: Statistics Weekday
-      statistics_hour: Statistics Hour
-      statistics_table: Statistics Tisch
-      statistics_payment_method: Statistics Payment Methods
-      statistics_category: Statistics Category
-      statistics_tax: Statistics Tax
-      settlement_statistics_taxes: Show settlement tax statistics
-      settlement_statistics_taxes_categories: Show settlement tax statistics by category
-      manage_statistic_categories: Manage Statistic Categories
-      allow_exit: Allow Exit
-      manage_cameras: Manage cameras
-      add_option_to_sent_item: Add Options to sent Items
-      statistics_statistic_category: Statistics show StatisticCategories
     create:
       success: Role successfully saved
     destroy:
       success: Role successfully deleted
-  partials:
-    error_during_evaluation: ! 'XXXError: '
-    default_blurb: XXXDefault Text
-    no_presentation_found:
-      no_presentations_found: XXXNo template defined for this partial.
-  presentations:
     new:
-      new_presentation: XXXNew Template
-      edit_presentation: XXXEdit Template
-  pages:
-    edit:
-      edit_page: XXXEdit Page
-      view: XXXView
-      slideshow: XXX Start Slideshow
-    new:
-      new_page: New Page
-    form:
-      view: View
-      slideshow: Slideshow
-  images:
-    errempty: Geçersiz dosya
-    errsize: Geçersiz dosya boyutu
-    errtype: Geçersiz dosya türü
-  delete: Silmek
-  are_you_sure: Emin misiniz?
-  edit: Islemek
-  create: Üretmek
-  new: Yeni
-  print: Basmak
-  display: Göstermek
-  logout: ! '%{who} cikis yapmak'
-  waiterpad_generic_name: Siparis listesi
-  scroll_down: Asayi in
-  scroll_up: Yukari cik
-  send_and_go_back: Kayit et ve geriye cik
-  go_back: Geri
-  cancel_and_go_back: Iptal et ve geriye cik
-  clear_order_and_go_back: XXXClear order and go back
-  move_order_to_table: XXXMove order to different table
-  invoice: Fatura
-  invoices: Faturalar
-  dateandtime: Tarih
-  sum: Toplam
-  count: Miktar
-  net: Net
-  gross: Brüt
-  violet: Mor
-  orange: Portakal
-  pink: Pembe
-  green: esil
-  blue: Mavi
-  blank: Bos
-  white: XXXWhite
-  black: XXXBlack
-  yellow: XXXYellow
-  winered: XXXWine Red
-  food: Yemekler
-  guestroom: Müşteri odası
-  kitchen: Mutfak
-  bar: Bar
-  restaurant: Restaurant
-  waiter: Waiter
-  host: Host
-  admin: Admin
-  must_be_entered_either_for_article_or_for_quantity: Ya üründe veya varyant icinde
-    islemek gerikiyor.
-  is_no_number: Rakam degil
-  wrong_password: Yanlis sifre.
-  served_by_X_on_table_Y: Size %{table} %{waiter} hizmet etti.
-  invoice_numer_X_at_time: Fatura No. %{number},  %{datetime}
-  default: XXXDefault
-  not_found: XXX Not found
-  please_enter_item_comment: Özel istek
-  please_enter_item_price: Fiyet
-  server_no_response: Server bağlantısı kesildi
-  just_order: XXXJust order
-  no_printing: XXXNo printing
-  copy: XXXCopy
-  exit: XXXExit
-  printing_test: XXXPrinting test
-  bookings:
-    invoice_item_list:
-      served_by_X: You were served by %{user}
-    show:
-      search_by_number: Search by number
-      go_to_bookings_calendar: XXX Go to bookings calendar view
-  finish: XXX Just Finish
-  layouts:
-    application:
-      submit_scribe: OK
-  messages:
-    hello_username: Hello %{name}!
-    user_account_is_currently_locked: Account is locked
-  print_and_finish: XXX Finish and print
+      add_option_to_sent_item: Add Options to sent Items
+      allow_exit: Allow Exit
+      assign_cost_center: XXXAssign cost center
+      assign_order_to_booking: XXX Assign orders to a booking
+      assign_order_to_user: Assign order to user
+      assign_tables: XXX Assign tables to users
+      assign_users_to_vendors: Assign Users to Vendors
+      cancel_all_items_in_active_order: XXXCancel all items in active order
+      change_waiter: XXXChange waiter
+      counter_mode: XXX Counter mode
+      decrement_items: XXXDecrement items
+      delete_items: XXXDelete items by decrementing
+      download_csv: Download CSV
+      download_database: XXX Download Database
+      edit_role: XXX Edit Role
+      finish_all_settlements: XXXFinish all settlements
+      finish_orders: XXXFinish orders
+      finish_own_settlement: XXXFinish own settlement
+      interim_receipt: Interim Receipt
+      item_scribe: XXX Enable handwriting
+      manage_advertising: Manage Advertising
+      manage_articles: XXX Manage articles, categories and options
+      manage_business_invoice: XXXManage business invoice
+      manage_cameras: Manage cameras
+      manage_categories: XXX Manage categories
+      manage_cost_centers: XXX Manage Cost Centers
+      manage_customers: XXX Manage Customers
+      manage_hotel: XXX Manage hotel
+      manage_options: XXX Manage options
+      manage_pages: XXX Manage Slideshow
+      manage_payment_methods: XXX Manage Payment Methods
+      manage_roles: XXX Manage roles
+      manage_statistic_categories: Manage Statistic Categories
+      manage_statistics: XXX View statistics
+      manage_statistics_hotel: View hotel statistics
+      manage_tables: XXX Manage tables
+      manage_taxes: XXX Manage Taxes
+      manage_users: XXXManage users
+      manage_vendors: XXX Manage vendors
+      mobile_show_tools: Show tool button on mobile devices
+      move_order: XXXMove order
+      move_order_from_invoice_form: Move order to table from invoice form
+      move_tables: XXXMove tables
+      new_role: XXX New Role
+      permissions: XXX Permissions
+      reactivate_orders: Reactivate orders
+      receipt_logo: Receipt Logos
+      refund: XXX Refund items
+      remote_support: XXX Remote Support
+      see_debug: XXX See debug messages
+      see_item_notifications_static: Item notifications summary list on main screen
+      see_item_notifications_user_delivery: Item notifications personal delivery
+      see_item_notifications_user_preparation: Item notifications personal preparation
+      see_item_notifications_vendor_delivery: Item notifications vendor delivery
+      see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      settlement_statistics_sold_quantities: Show settlement statistics about sold
+        quantities
+      settlement_statistics_taxes: Show settlement tax statistics
+      settlement_statistics_taxes_categories: Show settlement tax statistics by category
+      split_items: XXXSplit items
+      statistics:
+        statistics_category: Categories
+        statistics_hour: Hours
+        statistics_payment_method: Payment Methods
+        statistics_sold_quantities: Sold quantities
+        statistics_statistic_category: Statistic Categories
+        statistics_table: Tables
+        statistics_tax: Taxes
+        statistics_weekday: Weekdays
+      statistics_category: Statistics Category
+      statistics_hour: Statistics Hour
+      statistics_payment_method: Statistics Payment Methods
+      statistics_sold_quantities: Statistics show sold quantities
+      statistics_statistic_category: Statistics show StatisticCategories
+      statistics_table: Statistics Tisch
+      statistics_tax: Statistics Tax
+      statistics_weekday: Statistics Weekday
+      take_orders: XXXTake orders
+      view_all_settlements: XXXView all settlements
+      view_settlements_table: View settlements table
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -740,118 +736,201 @@ tr:
       edit_room_type: Edit room type
       new_room_type: New room type
   rooms:
-    new:
-      edit_room: Edit Room
-      new_room: New Room
     create:
       success: Room successfully saved
     destroy:
       success: Room successfully deleted
+    new:
+      edit_room: Edit Room
+      new_room: New Room
   scopes:
     active: Active
     waiterpad: Waiterpad
+  scroll_down: Asayi in
+  scroll_to_area: Go to room
+  scroll_up: Yukari cik
   seasons:
     new:
       edit_season: Edit Season
       new_season: New Season
+  send_and_go_back: Kayit et ve geriye cik
+  served_by_X_on_table_Y: Size %{table} %{waiter} hizmet etti.
+  server_no_response: Server bağlantısı kesildi
+  sessions:
+    browser_warning:
+      continue: Devam
+      warning: XXX Salor only supports the browsers Google Chrome (Windows), Chromium
+        (Linux) or Safari (Apple). Please use one of these browsers and try again.
+    new:
+      email: Sizin E-Mailiniz
+      login: Giris Yap
+      password: Sifre
+      username: Kullanici
+    new_customer:
+      email: Your E-Mail
+      login: Login
+      password: Password
+      username: User
+  settlements:
+    detailed_list:
+      changed_price: ! '%{byuser} changed price'
+      count: Miktar
+      order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
+      revenue: Ciro
+      total: Hepsi
+      unit_price: Tane
+      warning: Warning
+    index:
+      all: All
+      end_date: Bitis
+      one_day_one_row: List days
+      start_date: Baslangic
+      sum_total: Toplam hesap
+    settlement:
+      finish: XXXFinish
+      please_wait: Analyzing data. Please wait ...
+      print: XXXPrint
+      start: XXXStart
+      started_at: XXXStarted at
   shared:
     invoice_tax_list:
       list_of_taxes: List of Taxes
   split_order: XXX Split order
+  statistic: Istatistik
+  statistic_categories:
+    new:
+      edit_statistic_category: Edit Statistic-Category
+      new_statistic_category: New Statistic-Category
+  statistics:
+    index:
+      hour: Hour
+      limit_by: Limit by
+      query: Query
+      weekday: Weekday
+  stocks:
+    new:
+      edit_stock: Depo ürünü islemek
+      new_stock: Yeni depo ürünü
+  sum: Toplam
   surcharges:
     new:
       add_tax_amount: Add tax amount
       common_surcharge: Common Surcharge
       edit_surcharge: Edit Surcharge
       new_surcharge: New Surcharge
+  tables:
+    create:
+      license_limited: XXX Your License is limited to %{count} tables
+      success: Table successfully saved
+    destroy:
+      success: Table successfully deleted
+    new:
+      edit_table: Masa islemek
+      new_table: Yeni masa
   tax_amount: XXX Amount
+  taxes:
+    new:
+      edit_tax: Vergi derecesini islemek
+      new_tax: Yeni vergi derecesi
+  users:
+    create:
+      success: User successfully saved
+    destroy:
+      success: User successfully deleted
+    new:
+      edit_user: Kullanici islemek
+      new_user: Yeni kullanici
+      select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
+    index:
+      on_duty: On duty
   various:
-    cancel: Cancel
-    common_surcharges: Common Surcharges
-    home: Home
-    pay: Pay
-    save: Save
-    subtotal: Subtotal
-    unamed: Unamed
-    tax_amount: XXX Amount
-    tax: XXX Tax
-    unit_price_abbreviation: XXX SP
-    total_price_abbreviation: XXX TP
-    quantity_abbreviation: XXX Qty.
-    interim_invoice: XXX Interim Invoice
-    invoice: XXX Invoice
-    restaurant: XXX Restaurant
-    hotel: XXX Hotel
-    consumations: XXX Consumations
-    report: Report
+    attempt: Attempt
     begin: Begin
-    end: End
-    time: Time
-    delete: Delete
-    customer_request_send: Request these items
+    cancel: Cancel
+    check_order_on_workstation: Check order on different device
+    common_surcharges: Common Surcharges
+    connecting: Connecting...
+    consumations: XXX Consumations
     customer_request_finish: Request payment
+    customer_request_send: Request these items
     customer_request_waiter: Request waiter
-    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    delete: Delete
+    display: Display
+    download: Download
+    end: End
+    exception_page:
+      assistance_text: Please click on the Button "HOME" and try again. If you see
+        the same error twice, please contact our Customer Support.
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
+      oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
-    waiter_was_requested: You have requested a waiter. Please have a little patience,
-      we will be there for your shortly.
+    go: Go!
+    home: Home
+    hotel: XXX Hotel
+    interim_invoice: XXX Interim Invoice
+    invoice: XXX Invoice
     mobile_view: Mobile device view
-    workstation_view: Workstation view
-    statistics: Statistics
+    no_connection: No connection
+    no_connection_giving_up: No connection. Giving up.
     no_connection_retry: No connection to the Server. Send again? If you cancel, the
       items will be saved locally.
-    successfully_sent: The items were successfully sent.
-    table_contains_offline_items: This table contains items which haven't been sent
-      yet. Send them now?
-    attempt: Attempt
-    no_connection: No connection
-    server_error_short: Server error
-    no_connection_giving_up: No connection. Giving up.
     no_connection_retrying: No connection. Trying again...
+    order_will_be_confirmed: Your order will be confirmed by a waiter shortly
+    pay: Pay
+    print: Print
+    quantity_abbreviation: XXX Qty.
+    report: Report
+    restaurant: XXX Restaurant
+    save: Save
     sending: Sending...
-    connecting: Connecting...
-    check_order_on_workstation: Check order on different device
-    server_not_responded: No response from server. Check submission of order on different
-      device. Then, re-submit oder cancel to delete the changes.
     server_error: Oops! There was an internal server error. Please check the submission
       of the order on a different device.
+    server_error_short: Server error
+    server_not_responded: No response from server. Check submission of order on different
+      device. Then, re-submit oder cancel to delete the changes.
+    sold_quantities: Sold Quantities
+    statistics: Statistics
+    subtotal: Subtotal
+    successfully_sent: The items were successfully sent.
+    switched_to_vendor: Vendor '%{vendorname}'
+    table_contains_offline_items: This table contains items which haven't been sent
+      yet. Send them now?
+    tax: XXX Tax
+    tax_amount: XXX Amount
+    time: Time
+    total_price_abbreviation: XXX TP
+    translations: Translations
+    unamed: Unamed
+    unit_price_abbreviation: XXX SP
+    waiter_was_requested: You have requested a waiter. Please have a little patience,
+      we will be there for your shortly.
+    workstation_view: Workstation view
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
+    create:
+      success: Vendor was successfully created
+    destroy:
+      success: Vendor was successfully deleted
+    form:
+      add_printer: Add printer
+      identify_printers: Identify Printers
+      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+        copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: Test Printers
+      test_printers_chartest: Test all characters
     index:
       edit: Edit
       switch_to: Select
     new:
       edit_vendor: Edit Vendor
       new_vendor: New Vendor
-    form:
-      add_printer: Add printer
-      identify_printers: Identify Printers
-      test_printers: Test Printers
-      test_printers_chartest: Test all characters
-    create:
-      success: Vendor was successfully created
-    destroy:
-      success: Vendor was successfully deleted
-  customers:
-    new:
-      edit_customer: Edit Customer
-      new_customer: New Customer
-    create:
-      success: Customer successfully saved
-    destroy:
-      success: Customer successfully deleted
-  refund: XXX Refund
-  invalid_date: XXX Invalid date
-  scroll_to_area: Go to room
-  statistic_categories:
-    new:
-      edit_statistic_category: Edit Statistic-Category
-      new_statistic_category: New Statistic-Category
-  cameras:
-    index:
-      show: Show
-    create:
-      success: Camera was successfully saved
-    destroy:
-      success: Camera was successfully deleted
-  clear: clear
+  violet: Mor
+  waiter: Waiter
+  waiterpad_generic_name: Siparis listesi
+  white: XXXWhite
+  winered: XXXWine Red
+  wrong_password: Yanlis sifre.
+  yellow: XXXYellow

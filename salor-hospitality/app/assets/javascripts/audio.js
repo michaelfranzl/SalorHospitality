@@ -2,9 +2,15 @@ var audio_enabled_count = 0;
 
 function enable_audio() {
   if (audio_enabled_count < 2) {
-  document.getElementById('audio').load();
-  debug('enable_audio called ' + audio_enabled_count);
-  audio_enabled_count += 1;
+    try {
+      document.getElementById('audio').load();
+    }
+    
+    catch (err) {
+      // not supported by salor-bin
+    }
+    debug('enable_audio called ' + audio_enabled_count);
+    audio_enabled_count += 1;
   }
 }
 
@@ -36,5 +42,11 @@ $(function(){
 })
 
 function alert_audio() {
-  document.getElementById('audio').play();
+  try {
+    document.getElementById('audio').play();
+  }
+  
+  catch(err) {
+    // not supported by salor-bin
+  }
 }

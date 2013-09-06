@@ -54,39 +54,39 @@ module CategoriesHelper
 
   def generate_item_style
     "
-      option[value='aperitif']:before { content:url('/images/category_aperitif.png'); }
-      option[value='sidedish']:before { content:url('/images/category_sidedish.png'); }
-      option[value='starter']:before { content:url('/images/category_starter.png'); }
-      option[value='soup']:before { content:url('/images/category_soup.png'); }
-      option[value='maindish']:before { content:url('/images/category_maindish.png'); }
-      option[value='fish']:before { content:url('/images/category_fish.png'); }
-      option[value='pizza']:before { content:url('/images/category_pizza.png'); }
-      option[value='noodles']:before { content:url('/images/category_noodles.png'); }
-      option[value='salad']:before { content:url('/images/category_salad.png'); }
-      option[value='childrendish']:before { content:url('/images/category_childrendish.png'); }
-      option[value='dessert']:before { content:url('/images/category_dessert.png'); }
-      option[value='digestif']:before { content:url('/images/category_digestif.png'); }
-      option[value='beer']:before { content:url('/images/category_beer.png'); }
-      option[value='nonalcoholics']:before { content:url('/images/category_nonalcoholics.png'); }
-      option[value='cigarette']:before { content:url('/images/category_cigarette.png'); }
-      option[value='rosewineglass']:before { content:url('/images/category_rosewineglass.png'); }
-      option[value='redwineglass']:before { content:url('/images/category_redwineglass.png'); }
-      option[value='whitewineglass']:before { content:url('/images/category_whitewineglass.png'); }
-      option[value='rosewinebottle']:before { content:url('/images/category_rosewinebottle.png'); }
-      option[value='redwinebottle']:before { content:url('/images/category_redwinebottle.png'); }
-      option[value='whitewinebottle']:before { content:url('/images/category_whitewinebottle.png'); }
-      option[value='sparkling']:before { content:url('/images/category_sparkling.png'); }
-      option[value='coffee']:before { content:url('/images/category_coffee.png'); }
-      option[value='teapot']:before { content:url('/images/category_teapot.png'); }
-      option[value='tea']:before { content:url('/images/category_tea.png'); }
-      option[value='blank']:before { content:url('/images/category_blank.png'); }
+      option[value='aperitif']:before { content:url('/assets/category_aperitif.png'); }
+      option[value='sidedish']:before { content:url('/assets/category_sidedish.png'); }
+      option[value='starter']:before { content:url('/assets/category_starter.png'); }
+      option[value='soup']:before { content:url('/assets/category_soup.png'); }
+      option[value='maindish']:before { content:url('/assets/category_maindish.png'); }
+      option[value='fish']:before { content:url('/assets/category_fish.png'); }
+      option[value='pizza']:before { content:url('/assets/category_pizza.png'); }
+      option[value='noodles']:before { content:url('/assets/category_noodles.png'); }
+      option[value='salad']:before { content:url('/assets/category_salad.png'); }
+      option[value='childrendish']:before { content:url('/assets/category_childrendish.png'); }
+      option[value='dessert']:before { content:url('/assets/category_dessert.png'); }
+      option[value='digestif']:before { content:url('/assets/category_digestif.png'); }
+      option[value='beer']:before { content:url('/assets/category_beer.png'); }
+      option[value='nonalcoholics']:before { content:url('/assets/category_nonalcoholics.png'); }
+      option[value='cigarette']:before { content:url('/assets/category_cigarette.png'); }
+      option[value='rosewineglass']:before { content:url('/assets/category_rosewineglass.png'); }
+      option[value='redwineglass']:before { content:url('/assets/category_redwineglass.png'); }
+      option[value='whitewineglass']:before { content:url('/assets/category_whitewineglass.png'); }
+      option[value='rosewinebottle']:before { content:url('/assets/category_rosewinebottle.png'); }
+      option[value='redwinebottle']:before { content:url('/assets/category_redwinebottle.png'); }
+      option[value='whitewinebottle']:before { content:url('/assets/category_whitewinebottle.png'); }
+      option[value='sparkling']:before { content:url('/assets/category_sparkling.png'); }
+      option[value='coffee']:before { content:url('/assets/category_coffee.png'); }
+      option[value='teapot']:before { content:url('/assets/category_teapot.png'); }
+      option[value='tea']:before { content:url('/assets/category_tea.png'); }
+      option[value='blank']:before { content:url('/assets/category_blank.png'); }
       
-      option[value='#80477d']:before { content:url('/images/color_violet.png'); }
-      option[value='#ed8b00']:before { content:url('/images/color_orange.png'); }
-      option[value='#cd0052']:before { content:url('/images/color_pink.png'); }
-      option[value='#75b10d']:before { content:url('/images/color_green.png'); }
-      option[value='#136880']:before { content:url('/images/color_blue.png'); }
-      option[value='#27343b']:before { content:url('/images/color_blank.png'); }
+      option[value='#80477d']:before { content:url('/assets/color_violet.png'); }
+      option[value='#ed8b00']:before { content:url('/assets/color_orange.png'); }
+      option[value='#cd0052']:before { content:url('/assets/color_pink.png'); }
+      option[value='#75b10d']:before { content:url('/assets/color_green.png'); }
+      option[value='#136880']:before { content:url('/assets/color_blue.png'); }
+      option[value='#27343b']:before { content:url('/assets/color_blank.png'); }
     "
   end
 

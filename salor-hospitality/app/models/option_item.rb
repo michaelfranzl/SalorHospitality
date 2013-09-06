@@ -37,6 +37,7 @@ class OptionItem < ActiveRecord::Base
   def hide(by_user)
     self.hidden = true
     self.hidden_by = by_user
+    self.hidden_at = Time.now
     self.save
   end
   

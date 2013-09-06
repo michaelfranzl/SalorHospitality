@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
 
   def index
     @rooms_json = {:keys => [], :rooms => {}, :bookings => {}}
-    @rooms = Room.where(:vendor_id => @current_vendor.id).existing.includes(:bookings,:room_type)
+    @rooms = @current_vendor.rooms.existing.includes(:bookings,:room_type)
     if params[:from] then
       from_date = params[:from].to_date - 31.days
       n = params[:from].to_date + 31.days

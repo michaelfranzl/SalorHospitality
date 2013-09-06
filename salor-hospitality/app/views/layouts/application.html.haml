@@ -3,13 +3,13 @@
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     - if mobile? or mobile_special?
-      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
+      %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1.5, user-scalable=1" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
-      %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png"}
-      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "/apple-touch-icon-114x114-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png"}
+      %link{ :rel => "apple-touch-icon", :href => "/apple-touch-icon-57x57-#{@branding_codename}.png"}
+      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => "/apple-touch-icon-72x72-#{@branding_codename}.png"}
+      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => "/apple-touch-icon-114x114-#{@branding_codename}.png"}
 
-    %title= SalorHospitality::Application::CONFIGURATION[:branding_title]
+    %title= @branding_title
 
     = csrf_meta_tag
     = javascript_include_tag 'application'
@@ -21,6 +21,8 @@
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
       = javascript_include_tag "jquery.ui.datepicker-#{ I18n.locale }"
+      %script
+        == $.keyboard.defaultOptions.layout = "#{ @locale }";
       - if permit('manage_hotel')
         = javascript_include_tag 'booking'
         = javascript_include_tag 'bookings'
@@ -49,21 +51,29 @@
     %script
       == automatic_printing = #{ (@current_customer.nil? and @current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
       == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
-      == customer = #{ @current_customer ? raw(@current_customer.to_hash.to_json) : 'null'};
+      == customer = #{ @current_customer ? @current_customer.table.id : 'null'};
       == sh_debian_siteid = '#{ SalorHospitality::Application::SH_DEBIAN_SITEID }';
 
   %body
+    - if workstation? and controller.controller_name == 'orders' and @advertising_url
+      #advertising
+        %iframe#adfram{ :src => @advertising_url, :onload => "$('#advertising').hide();" }
+        #adclickcatcher{ :onclick => 'toggle_advertising(false)' }
+    - if controller.controller_name == 'orders' and @pages and @pages.any?
+      #digital_menucard{ :style => 'display: none'}
+        = render :partial => '/pages/pages', :locals => {:pages => @pages, :partial_htmls_pages => @partial_htmls_pages}
     #screenwait
-    = render 'sessions/screenlock' if workstation? and controller.controller_name == 'orders'
     #rooms_container
     #container
       #draw_controls
         %span#submit_drawing{ :onclick => "submit_drawing();" }= t('.submit_scribe')
-      #header= render 'layouts/header'
+      #header
+        = render 'layouts/header'
+        #admin_menu_hint= t('.admin_menu_hint')
       #flash
-        - if flash[:notice]
+        - if flash[:notice] and flash[:notice].empty? == false
           #flash_notice= flash[:notice]
-        - if flash[:error]
+        - if flash[:error] and flash[:error].empty? == false
           #flash_error= flash[:error]
       - if permit('see_debug')
         #messages messages
@@ -71,13 +81,17 @@
       #footer
       #copyright
         .left
-          = image_tag "logo-tiny-#{SalorHospitality::Application::CONFIGURATION[:branding_codename]}.png", :class => 'logo_tiny'
+          = image_tag "logo-tiny-#{@branding_codename}.png", :class => 'logo_tiny'
           = SalorHospitality::Application::VERSION
-          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name }
+          == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login if @current_user }
         .right
           &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
           = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
     %audio#audio{ :src=>"/alert.wav" }
+    = form_tag @sessionpath, :id => 'logoutform', :method => 'delete' do
+      = hidden_field_tag 'logout_error'
+      = hidden_field_tag 'logout_notice'
+      = hidden_field_tag 'logout_type'
 
 :javascript
   var i18n = #{ get_i18n };

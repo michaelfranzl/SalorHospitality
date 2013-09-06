@@ -29,6 +29,7 @@ class OptionsController < ApplicationController
     @option.vendor = @current_vendor
     @option.company = @current_company
     if @option.save
+      @option.images.update_all :company_id => @option.company_id
       flash[:notice] = I18n.t("options.create.success")
       redirect_to options_path
     else
@@ -48,6 +49,7 @@ class OptionsController < ApplicationController
     @option = get_model
     redirect_to roles_path and return unless @option
     if @option.update_attributes(params[:option])
+      @option.images.update_all :company_id => @option.company_id
       flash[:notice] = I18n.t("options.create.success")
       redirect_to options_path
     else

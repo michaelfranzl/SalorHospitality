@@ -3,14 +3,4 @@
 :exception_notification_sender: Sender Name <nobody@localhost>
 :exception_notification_receipients: nobody@localhost
 :use_safe_device_path: false
-:branding_codename: salorhospitality
-:branding_title: SalorHospitality
-:branding_override_styles:
-  :buttons:
-    :cash: cash
-    :finish: finish
-    :finish_and_print: finish-and-print
-    :user: user-arrow
-    :tables: tables
-    :refund: refund
-    :last_invoice: last-invoice
+:tailor: false

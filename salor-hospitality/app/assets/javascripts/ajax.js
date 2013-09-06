@@ -14,9 +14,10 @@ function update_order_from_invoice_form(data, button) {
   if (! $.isEmptyObject(submit_json.split_items_hash[data.id])) {
     data.split_items_hash = submit_json.split_items_hash[data.id];
   }
+  var timestamp = new Date().getTime();
   $.ajax({
-    type: 'post',
-    url: '/route',
+    type: 'POST',
+    url: '/route?_=' + timestamp,
     data: data,
     timeout: 60000
   });
@@ -35,7 +36,7 @@ function update_order_from_invoice_form(data, button) {
     }
   }
   
-  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) && ( data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax') ) {
+  if ($.isEmptyObject(submit_json.split_items_hash[data.id]) &&  data.jsaction != 'change_cost_center' && data.jsaction != 'mass_assign_tax' && data.interim == false) {
     if ($('div.invoice:visible').length == 1) {
       route('tables');
       invoice_update = false;
@@ -52,8 +53,9 @@ function update_order_from_invoice_form(data, button) {
 function update_order_from_refund_form(data) {
   data['currentview'] = 'refund';
   $.ajax({
-    type: 'post',
+    type: 'GET',
     url: '/route',
+    cache: false,
     data: data,
     timeout: 20000
   });
@@ -61,9 +63,41 @@ function update_order_from_refund_form(data) {
 
 function rotate_tax_item(id) {
   $.ajax({
-    type: 'put',
+    type: 'PUT',
     url: '/items/rotate_tax',
     data: {id:id},
     timeout: 20000
   });
+}
+
+function toggle_drag_tables() {
+  switch(toggle_drag_tables_state) {
+    case 0:
+      // dragging is off
+      // turn dragging on
+      counter_update_tables = -1;
+      settings.workstation_drag_and_drop = true;
+      toggle_drag_tables_state++;
+      break;
+    case 1:
+      // dragging is on for workstation table positions
+      // switch to mobile table positions
+      $('#areas').show();
+      $('#mobile_last_invoices_button').hide();
+      settings.workstation_drag_and_drop = false;
+      settings.mobile_drag_and_drop = true;
+      toggle_drag_tables_state++;
+      break;
+    case 2:
+      // dragging is on for mobile table positions
+      // switch to workstation table positions and turn dragging off
+      counter_update_tables = timeout_update_tables;
+      $('#areas').hide();
+      $('#mobile_last_invoices_button').show();
+      settings.workstation_drag_and_drop = false;
+      settings.mobile_drag_and_drop = false;
+      toggle_drag_tables_state = 0;
+      break;
+  }
+  render_tables();
 }

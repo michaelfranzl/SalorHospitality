@@ -13,7 +13,7 @@ class RolesController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @roles = @current_vendor.roles.existing
+    @roles = @current_company.roles.existing
   end
 
   def new
@@ -42,6 +42,7 @@ class RolesController < ApplicationController
     @role = get_model
     redirect_to roles_path and return unless @role
     if @role.update_attributes params[:role]
+      @current_company.users.where(:role_id => @role.id).update_all :role_weight => @role.weight
       flash[:notice] = t('roles.create.success')
       redirect_to roles_path
     else

@@ -11,7 +11,9 @@
 
 .form_fields
   = form_for @user do |user_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), users_path, :class => 'links')
+    .clear
     %table
       %tr
         %td
@@ -22,18 +24,24 @@
             %tr
               %td= user_form.label :login
               %td
-                = user_form.text_field :login
+                = user_form.text_field :login, :size => 15
                 %span#user_login_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :title
               %td
-                = user_form.text_field :title
+                = user_form.text_field :title, :size => 15
                 %span#user_title_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :password
               %td
-                = user_form.text_field :password
+                = user_form.text_field :password, :size => 15
                 %span#user_password_display_keyboard.display_keyboard
+            - if permit('manage_advertising')
+              %tr
+                %td= user_form.label :advertising_url
+                %td
+                  = user_form.text_field :advertising_url, :size => 15
+                  %span#user_advertising_url_display_keyboard.display_keyboard
             %tr
               %td= user_form.label :role
               %td
@@ -52,30 +60,66 @@
                 %select#language{ :name => 'user[language]' }
                   = options_for_select(SalorHospitality::Application::LANGUAGES.invert.to_a, user_form.object.language)
             %tr
+              %td= user_form.label :layout
+              %td
+                %select#layout{ :name => 'user[layout]' }
+                  = options_for_select([[t('user.layouts.auto'),'auto'], [t('user.layouts.workstation'),'workstation'], [t('user.layouts.mobile'),'mobile']], user_form.object.layout)
+            - if permit('assign_users_to_vendors') and @current_company.vendors.existing.size > 1
+              %tr
+                %td= user_form.label :default_vendor_id
+                %td
+                  %select#default_vendor_id{ :name => 'user[default_vendor_id]' }
+                    = options_from_collection_for_select @current_company.vendors.existing, :id, :name, @user.default_vendor_id
+            %tr
               %td= user_form.label :screenlock_timeout
               %td
                 = user_form.text_field :screenlock_timeout, :size => 5
                 %span#user_screenlock_timeout_display_keyboard.display_keyboard
+            - if permit('manage_user_logins')
+              %tr
+                %td= user_form.label :maximum_shift_duration
+                %td
+                  = user_form.text_field :maximum_shift_duration, :size => 5
+                  %span#user_maximum_shift_duration_display_keyboard.display_keyboard
+            - if permit('manage_advertising')
+              %tr
+                %td= user_form.label :advertising_timeout
+                %td
+                  = user_form.text_field :advertising_timeout, :size => 5
+                  %span#user_advertising_timeout_display_keyboard.display_keyboard
             - if @current_company.mode != 'local'
               %tr
                 %td= user_form.label :automatic_printing
                 %td= user_form.check_box :automatic_printing
+            - if permit('manage_user_logins')
+              %tr
+                %td= user_form.label :track_time
+                %td= user_form.check_box :track_time
             - if permit('see_item_notifications_user_preparation') or permit('see_item_notifications_user_delivery') or permit('see_item_notifications_vendor_preparation') or permit('see_item_notifications_vendor_delivery') or permit('see_item_notifications_static')
               %tr
                 %td= user_form.label :audio
                 %td= user_form.check_box :audio
-            - if permit('manage_customers')
+            - if @current_vendor.remote_orders == true
               %tr
                 %td= user_form.label :confirmation_user
                 %td= user_form.check_box :confirmation_user
+
+        - unless user_form.object.new_record?
+          - if permit('assign_tables')
+            %td
+              = user_form.label :tables
+              %br
+              %small= t '.select_with_ctrl_key'
+              %br
+              = select_tag 'user[tables_array][]', option_groups_from_collection_for_select(@vendors, :'tables.existing', :name, :id, :name, user_form.object.tables.existing.collect{ |t| t.id }),  :multiple => true, :size => 20, :id => 'user_tables_array', :no_select_widget => 1
               
-        - if @current_user.role.permissions.include?('assign_tables')
-          %td
-            = user_form.label :tables
-            %br
-            %small= t '.select_with_ctrl_key'
-            %br
-            = select_tag 'user[tables_array][]', options_from_collection_for_select(@tables, 'id', 'name', user_form.object.tables.collect{ |t| t.id }),  :multiple => true, :size => 20
+          - if permit('assign_users_to_vendors') and @vendors.size > 1
+            %td
+              = user_form.label :vendors
+              %br
+              %small= t '.select_with_ctrl_key'
+              %br
+              = select_tag 'user[vendors_array][]', options_from_collection_for_select(@vendors, 'id', 'name', user_form.object.vendors.existing.collect{ |v| v.id }),  :multiple => true, :size => 20, :id => 'user_vendors_array', :no_select_widget => 1
 
 :javascript
   $('#user_login').keyboard( {openOn: '' } );
@@ -92,8 +136,24 @@
   $('#user_password_display_keyboard').click(function(){
     $('#user_password').getkeyboard().reveal();
   });
+  
+  $('#user_advertising_url').keyboard( {openOn: '' } );
+  $('#user_advertising_url_display_keyboard').click(function(){
+    $('#user_advertising_url').getkeyboard().reveal();
+  });
 
   $('#user_screenlock_timeout').keyboard( {openOn: '', layout: 'num' } );
   $('#user_screenlock_timeout_display_keyboard').click(function(){
     $('#user_screenlock_timeout').getkeyboard().reveal();
   });
+  
+  $('#user_advertising_timeout').keyboard( {openOn: '', layout: 'num' } );
+  $('#user_advertising_timeout_display_keyboard').click(function(){
+    $('#user_advertising_timeout').getkeyboard().reveal();
+  });
+  
+  $('#user_maximum_shift_duration').keyboard( {openOn: '', layout: 'num' } );
+  $('#user_maximum_shift_duration_display_keyboard').click(function(){
+    $('#user_maximum_shift_duration').getkeyboard().reveal();
+  });
+  //$('option:selected').css('backgroundColor', 'red');

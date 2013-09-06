@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @table do |table_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), tables_path, :class => 'links')
+    .clear
     %table
       %tr
         %td= table_form.label :name, Table.human_attribute_name(:name)
@@ -39,9 +41,14 @@
       %tr
         %td= table_form.label :rotate, Table.human_attribute_name(:rotate)
         %td= table_form.check_box :rotate
-      %tr
-        %td= table_form.label :booking_table, Table.human_attribute_name(:booking_table)
-        %td= table_form.check_box :booking_table
+      - if permit('manage_hotel')
+        %tr
+          %td= table_form.label :booking_table, Table.human_attribute_name(:booking_table)
+          %td= table_form.check_box :booking_table
+      - if permit('manage_customers')
+        %tr
+          %td= table_form.label :customer_table, Table.human_attribute_name(:customer_table)
+          %td= table_form.check_box :customer_table
       %tr
         %td= table_form.label :enabled, Table.human_attribute_name(:enabled)
         %td= table_form.check_box :enabled

@@ -9,7 +9,9 @@
 
 .form_fields
   = form_for @cost_center do |cost_center_form|
-    %p= submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), cost_centers_path, :class => 'links')
+    .clear
     %table
       %tr
         %td= cost_center_form.label 'name'

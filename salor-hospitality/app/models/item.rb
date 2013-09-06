@@ -57,7 +57,7 @@ class Item < ActiveRecord::Base
       self.item = separated_item
     end
     self.count -= 1
-    self.hide(0) if self.count == 0
+    self.hide(-6) if self.count == 0
 
     separated_item.count += 1
     separated_item.save
@@ -102,7 +102,7 @@ class Item < ActiveRecord::Base
     unless self.cost_center and self.cost_center.no_payment_methods == true
       payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
       if payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id
+        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id, :user_id => by_user
       end
     end
     
@@ -119,17 +119,9 @@ class Item < ActiveRecord::Base
 
   def calculate_totals
     self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
-    if self.article
-      self.category_id ||= self.article.category_id
-      self.statistic_category_id ||= self.article.statistic_category_id
-    else
-      if self.vendor.enable_technician_emails == true and self.vendor.technician_email
-        UserMailer.technician_message(self.vendor, "Item without Article in item.rb calculate_totals", '').deliver
-      else
-        ActiveRecord::Base.logger.info "[TECHNICIAN] Item without Article in item.rb calculate_totals"
-      end
-    end
-
+    self.category ||= self.article.category
+    self.statistic_category_id ||= self.article.statistic_category_id
+    self.position_category ||= self.category.position
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
     self.option_items.update_all :count => self.count
     self.sum = full_price
@@ -184,11 +176,12 @@ class Item < ActiveRecord::Base
     end
     p
   end
-
+  
   def count=(count)
     c = count.to_i
     write_attribute(:count, c)
     write_attribute(:max_count, c) if c > self.max_count
+    write_attribute(:min_count, c) if self.min_count.nil? or c < self.min_count
   end
 
   def options_price
@@ -196,7 +189,12 @@ class Item < ActiveRecord::Base
   end
 
   def full_price
+    return 0 if self.price.nil? or self.count.nil?
     self.price * self.count + self.option_items.sum(:sum)
+  end
+  
+  def price_with_options
+    self.price + self.option_items.sum(:price)
   end
 
   def optionslist
@@ -226,10 +224,11 @@ class Item < ActiveRecord::Base
   def hide(by_user_id)
     self.hidden = true
     self.hidden_by = by_user_id
+    self.hidden_at = Time.now
     self.save
     self.unlink
-    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
-    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id
+    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
   end
 
   def unlink
@@ -243,9 +242,28 @@ class Item < ActiveRecord::Base
   end
   
   def self.split_items(items, order)
+    first_item_id = items.first[0]
+    first_item = Item.find_by_id(first_item_id)
+    
+    parent_order = first_item.order
+    split_order = parent_order.order
+    
+    # the following should never happen, but since moving items to an already finished order is a very touchy issue, we unlink again, just as a redundant safety measure.
+    if split_order and split_order.finished
+      split_order.unlink
+      split_order = nil
+    end
+    
+    if split_order.nil?
+      split_order = Order.new(parent_order.attributes)
+      split_order.update_attribute :nr, first_item.vendor.get_unique_model_number('order')
+      parent_order.order = split_order
+      split_order.order = parent_order
+    end
+    
     items.each do |k,v|
       item = Item.find_by_id(k)
-      item.split(v['split_count'].to_i) unless v['split_count'].to_i.zero?
+      item.split(v['split_count'].to_i, parent_order, split_order) unless v['split_count'].to_i.zero?
     end
     
     partner_order = order.order # it seems that at this point, partner_order is still unsaved
@@ -266,16 +284,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def split(count=1)
-    #puts "called split for item #{self.id} with count #{count}"
-    parent_order = self.order
-    split_order = parent_order.order
-    if split_order.nil?
-      split_order = Order.new(parent_order.attributes)
-      split_order.update_attribute :nr, self.vendor.get_unique_model_number('order')
-      parent_order.order = split_order
-      split_order.order = parent_order
-    end
+  def split(count=1, parent_order, split_order)
     partner_item = self.item
     if partner_item.nil?
       partner_item = Item.new(self.attributes) # attention: at this point, partner_item will still have the id of self. below, we call partner_item.save, and only at this point it gets the new id.
@@ -286,6 +295,7 @@ class Item < ActiveRecord::Base
       end
       partner_item.count = 0
       partner_item.printed_count = 0
+      partner_item.max_count = 0
       self.item = partner_item
       partner_item.item = self
       partner_item.order = split_order 
@@ -295,6 +305,7 @@ class Item < ActiveRecord::Base
     partner_item.printed_count += count
     self.count -= count
     self.printed_count -= count
+    self.max_count = self.count
     self.hide(-3) if self.count.zero?
     partner_item.save
     partner_item.option_items.existing.each { |oi| oi.calculate_totals }
@@ -314,7 +325,7 @@ class Item < ActiveRecord::Base
     current_tax_id_index = tax_ids.index current_item_tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     next_tax = self.vendor.taxes.find_by_id(next_tax_id)
-    self.tax_items.update_all :hidden => true, :hidden_by => -4
+    self.tax_items.update_all :hidden => true, :hidden_by => -4, :hidden_at => Time.now
     self.calculate_taxes([next_tax])
     self.order.calculate_totals
   end

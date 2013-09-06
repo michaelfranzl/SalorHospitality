@@ -18,8 +18,8 @@
   AddHandler bill-type .bill
   Action bill-type /cgi-bin/bill.cgi
   
-  SetEnvIf Host ^.*-b\.sh\.localhost USE_AUTH
-  SetEnvIf Host ^.*-d\.sh\.localhost USE_AUTH
+  SetEnvIf Host ^.*2\.sh\.localhost USE_AUTH
+  SetEnvIf Host ^.*4\.sh\.localhost USE_AUTH
 
   <Location />
     Order allow,deny
@@ -37,14 +37,6 @@
     #AUTH: Require group INSTANCE_ID.sh
     
     Satisfy any
-  </Location>
-  
-  <Location /uploads>
-    Deny from all
-  </Location>
-  
-  <Location /uploads/INSTANCE_ID>
-    Allow from all
   </Location>
   
   # Passenger configuration for this VirtualHost

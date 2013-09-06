@@ -11,11 +11,9 @@
 class SettlementsController < ApplicationController
 
   def index
-    redirect_to '/' and return unless @current_user.role.permissions.include? "view_all_settlements"
+    redirect_to '/' and return unless @current_user.role.permissions.include? "view_settlements_table"
     @from, @to = assign_from_to(params)
-    @from = @from ? @from.beginning_of_day : 1.week.ago.beginning_of_day
-    @to = @to ? @to.end_of_day : DateTime.now
-    @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
+    @settlements = @current_vendor.settlements.where(:created_at => @from..@to, :finished => true).existing
     @settlement_ids = @settlements.collect{ |s| s.id }
     @taxes = @current_vendor.taxes.existing
     @payment_methods = @current_vendor.payment_methods.existing.where(:change => false)
@@ -23,6 +21,7 @@ class SettlementsController < ApplicationController
     cost_center_ids = @cost_centers.collect{ |cc| cc.id }
     @selected_cost_center = params[:cost_center_id] ? @current_vendor.cost_centers.existing.find_by_id(params[:cost_center_id]) : nil
     @scids = @selected_cost_center ? @selected_cost_center.id : ([cost_center_ids] + [nil]).flatten
+    @current_day = @from
   end
   
   def show
@@ -30,30 +29,29 @@ class SettlementsController < ApplicationController
   end
 
   def open
-    redirect_to '/' and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @users = @current_vendor.users.existing.active.where('role_weight > 0')
+    if permit('finish_all_settlements') or permit('view_all_settlements')
+      @users = @current_vendor.users.existing.active.where('role_weight > 0')
+    else
+      @users = [@current_user]
+    end
   end
 
   # ajax
   def create
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @settlement = Settlement.create params[:settlement]
-    @settlement.nr = @current_vendor.get_unique_model_number('settlement')
-    @settlement.calculate_totals
-    @settlement.vendor = @current_vendor
-    @settlement.company = @current_company
-    @settlement.save
+    
+    user = @current_vendor.users.existing.find_by_id(params[:settlement][:user_id])
+    @settlement = user.settlement_start(@current_vendor, @current_user, params[:settlement][:initial_cash])
   end
 
   # ajax
   def update
     render :nothing => true and return unless @current_user.role.permissions.include?("finish_own_settlement") or @current_user.role.permissions.include?("finish_all_settlements")
-    @settlement = @current_vendor.settlements.find_by_id params[:id]
-    render :nothing => true and return unless @settlement
-    @settlement.update_attributes params[:settlement]
-    @settlement.finish
-    @settlement.print
-    @settlement.report_errors_to_technician
+    
+    user = @current_vendor.users.existing.find_by_id(params[:settlement][:user_id])
+    @settlement = user.settlement_stop(@current_vendor, @current_user, params[:settlement][:revenue])
+    @settlement = Settlement.new
+    @settlement.user = user
   end
   
   # ajax
