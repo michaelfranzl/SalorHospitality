@@ -79,8 +79,8 @@ pl:
         separate_ticket: Oddzielny paragon
       order:
         change_given: Zmień
-        nr: Numer
         finished_at: Finished at
+        nr: Numer
         sum: Sum
       page:
         active: Aktywny
@@ -181,18 +181,22 @@ pl:
         default_vendor_id: Log in to Vendor
         hidden: Usuń
         language: Język
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Login
+        maximum_shift_duration: Shift duration
         password: Hasło
         role: Poziom dostępu
         screenlock_timeout: Blokowanie ekranu (w sek.)
         tables: Przypisz stoliki
         title: Tytuł
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Automatyczne drukowanie
         country: Zasady dla kraju
@@ -231,10 +235,6 @@ pl:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -548,10 +548,16 @@ pl:
       split_invoice: Podziel rachunek
       split_this_item: Kliknij pozycję aby podzielić paragon
       switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
     invoice_item_list:
       count: Ilość
       sum: Suma
       unit_price: Cena artykułu
+    last:
+      title: Last finished Orders
     login_form:
       email: Twój e-mail
       login: Login
@@ -579,8 +585,6 @@ pl:
       search_by_number: Szukaj wg numeru
       sum: Suma
       unit_price: Jednostka płatności
-    last:
-      title: Last finished Orders
   pages:
     edit:
       edit_page: Edytuj stronę
@@ -679,6 +683,7 @@ pl:
       manage_statistics_hotel: View hotel statistics
       manage_tables: Zarządzanie stołami
       manage_taxes: Zarządzanie podatkami
+      manage_user_logins: Manage User Logins
       manage_users: Zarządzanie użytkownikami
       manage_vendors: Zarządzanie restauracjami
       mobile_show_tools: Pokaż przycisk "narzędzia" na telefonie komórkowym
@@ -726,7 +731,7 @@ pl:
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
       view_settlements_table: View settlements table
-      manage_user_logins: Manage User Logins
+      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
@@ -843,13 +848,13 @@ pl:
       success: Użytkownik został pomyślnie zapisany!
     destroy:
       success: Użytkownik został pomyślnie skasowany.
+    index:
+      on_duty: On duty
     new:
       edit_user: Edytowanie użytkownika
       new_user: Dodawanie użytkownika
       select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
         myszy
-    index:
-      on_duty: On duty
   various:
     attempt: Attempt
     begin: Początek
@@ -916,6 +921,8 @@ pl:
       wysłane, prosimy o cierpliwość.
     workstation_view: Widok dla komputera stacjonarnego
     your_shift_has_ended: Your shift has ended. Please log out.
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
   vendors:
     create:
       success: Restauracja została pomyślnie zapisana!

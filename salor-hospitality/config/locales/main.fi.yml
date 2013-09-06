@@ -63,6 +63,7 @@ fi:
         postalcode: Postinumero
         state: State
         telephone: Puhelin
+        tax_info: Verotiedot
       group:
         name: Nimi
       guest_type:
@@ -74,11 +75,13 @@ fi:
         hidden: poista
         name: Nimi
         no_ticket: Älä tulosta lappua
-        price: Price
+        price: Hinta
         separate_ticket: Leikkaa lappu
       order:
         change_given: Muuta
         nr: Numero
+        finished_at: Päättyi
+        sum: Summa
       page:
         active: aktiivinen
         color: Väri
@@ -184,6 +187,12 @@ fi:
         screenlock_timeout: Näytön lukitus ajan katkaisu (sek.)
         tables: Pöydät
         title: Virkanimike
+        layouts:
+          auto: Auto-havaitseminen 
+          mobile: mobiili
+          workstation: normaali
+        maximum_shift_duration: Työvuoron kesto
+        track_time: Seuraa aikaa
       vendor:
         automatic_printing: Automaattinen tulostus
         country: Maan säännöt
@@ -222,6 +231,10 @@ fi:
         print_button_filename: Ikoni
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
+      user_login:
+        duration: Kesto
+        login: Aloitti
+        logout: Päättyi
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
@@ -284,8 +297,8 @@ fi:
         one: Maksutapa
         other: Maksutavat
       presentation:
-          one: Malli
-          other: Mallit
+        one: Malli
+        other: Mallit
       quantity:
         one: Variantti
         other: Variantit
@@ -392,7 +405,7 @@ fi:
   cancel_and_go_back: Peruuta ja palaa
   categories:
     create:
-      license_limited:  Lisenssirajoitus %{count} kategoriaa
+      license_limited: Lisenssirajoitus %{count} kategoriaa
       success: Kategoria tallennettu
     destroy:
       success: Kategoria poistaminen onnistui
@@ -413,7 +426,7 @@ fi:
       redwinebottle: Punaviini pullo
       redwineglass: Punaviini
       rosewinebottle: Roseeviini pullo
-      rosewineglass: Roseeviini 
+      rosewineglass: Roseeviini
       sidedish: Lisäke
       soup: Keitto
       sparkling: Kuohuviini
@@ -476,7 +489,7 @@ fi:
     item_tablerow:
       clear: Tyhjennä
       done: Valmis
-      no_printing: ei tulostusta 
+      no_printing: ei tulostusta
   just_order: Tee tilaus
   kitchen: Keittiö
   layouts:
@@ -490,8 +503,8 @@ fi:
     hello_username: Terve %{name}!
     user_account_is_currently_locked: Tili on lukittu
   move_order_to_table: Siirrä tilaus toiseen pöytään
-  must_be_entered_either_for_article_or_for_quantity: on syötettävä joko
-    Artikkeli tai Variantti.
+  must_be_entered_either_for_article_or_for_quantity: on syötettävä joko Artikkeli
+    tai Variantti.
   net: Netto
   new: Uusi
   no_printing: Ei tulostusta
@@ -502,8 +515,8 @@ fi:
     destroy:
       success: Vaihtoehdon poistaminen onnistui
     index:
-      no_categories_defined: Ei määriteltyjä kategorioita. Sinun pitää luoda
-        ainakin yksi kategoria vaihtoehdon luomiseksi.
+      no_categories_defined: Ei määriteltyjä kategorioita. Sinun pitää luoda ainakin
+        yksi kategoria vaihtoehdon luomiseksi.
     new:
       edit_option: Muokkaa Vaihtoehto
       hidden: poista
@@ -536,6 +549,9 @@ fi:
       split_invoice: Erittele lasku
       split_this_item: Klikkaa ja erittele nimikkeet yksi kerrallaan
       switch_tax_for_this_item: Klikkaa muuttaaksesi nimikkeen veroa
+      finish: Suorita ja pysyä tässä näytössä
+      finish_gototables: Suorita ja palata pöytien suunitelu
+      print_and_finish_gototables: Tulosta ja täytää tämän tilauksen ja palata pöytien suunitelu
     invoice_item_list:
       count: Määrä
       sum: Summa
@@ -567,6 +583,8 @@ fi:
       search_by_number: Etsi numerolla
       sum: Summa
       unit_price: Yksikköhinta
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Muokkaa sivua
@@ -612,14 +630,14 @@ fi:
       disconnected: Yhteys katkaistu
       download_reports: Tallenna raportit
       header: Raportit
-      internet_connection_info: Saadaksesi etätukea, sinun täytyy olla yhteydessä Internetiin.
-        Jos näet Red (E) Logon ylhäällä, olet yhteydessä Internetiin.
+      internet_connection_info: Saadaksesi etätukea, sinun täytyy olla yhteydessä
+        Internetiin. Jos näet Red (E) Logon ylhäällä, olet yhteydessä Internetiin.
       password: Salasana
       remote_support: Etätuki
       requesting_connection_status: Pyydä yhteydentilanne ...
     remote_support: Etätuki
     save: Tallenna
-    start_date: Aloituspäivä 
+    start_date: Aloituspäivä
   restaurant: Ravintola
   roles:
     create:
@@ -677,12 +695,15 @@ fi:
       refund: Palauta nimikkeitä
       remote_support: Etätuki
       see_debug: Katso vianetsintäviestit
-      see_item_notifications_static: Yhteenvetoluettelo nimikkeiden tiedonannoista päänäyttöllä
+      see_item_notifications_static: Yhteenvetoluettelo nimikkeiden tiedonannoista
+        päänäyttöllä
       see_item_notifications_user_delivery: Nimiketiedon annot, henkilökohtainen toimitus
-      see_item_notifications_user_preparation: Nimiketiedon annot, henkilökohtainen valmistaminen
+      see_item_notifications_user_preparation: Nimiketiedon annot, henkilökohtainen
+        valmistaminen
       see_item_notifications_vendor_delivery: Nimiketiedon annot, myyntipistetoimitus
-      see_item_notifications_vendor_preparation: Nimiketiedon annot, myyntipisteen valmistaminen
-      settlement_statistics_sold_quantities: Näytä myytyjen määrien tilitysten tilasto 
+      see_item_notifications_vendor_preparation: Nimiketiedon annot, myyntipisteen
+        valmistaminen
+      settlement_statistics_sold_quantities: Näytä myytyjen määrien tilitysten tilasto
       settlement_statistics_taxes: Näytä suoritukset, verotilasto
       settlement_statistics_taxes_categories: Näytä suoritukset, verotilasto kategorioittain
       split_items: Erittele nimikkeet
@@ -706,6 +727,8 @@ fi:
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
+      immediate_order_finish: Suorita tilauksen tilausnäytöltä
+      manage_user_logins: Hallitse käyttäjän kirjautumiset
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu
@@ -736,13 +759,13 @@ fi:
       new_season: Uusi sesonki
   send_and_go_back: Tallenna ja palaa
   served_by_X_on_table_Y: Teitä palveli %{waiter} pöydässä %{table}
-  server_no_response: Bill Gastron palvelin ei vastaa enää. Se on joko
-    varattu tai radioyhteys on keskeytynyt
+  server_no_response: Bill Gastron palvelin ei vastaa enää. Se on joko varattu tai
+    radioyhteys on keskeytynyt
   sessions:
     browser_warning:
       continue: Jatka
-      warning: Salor tukee vain selaimia Google Chrome (Windows), Chromium
-        (Linux) tai Safari (Apple). Käytä jotakin näistä selaimista ja yritä uudelleen.
+      warning: Salor tukee vain selaimia Google Chrome (Windows), Chromium (Linux)
+        tai Safari (Apple). Käytä jotakin näistä selaimista ja yritä uudelleen.
     new:
       email: Sähköpostiosoitteesi
       login: Kirjaudu
@@ -757,7 +780,8 @@ fi:
     detailed_list:
       changed_price: ! '%{byuser} muutti hintaa'
       count: Laske
-      order_number_on_table_on_date: ! '%{order} numero %{number} %{table}:ssä, klo: %{time}'
+      order_number_on_table_on_date: ! '%{order} numero %{number} %{table}:ssä, klo:
+        %{time}'
       reduced_count: Laske vähennetty %{maxcount} :sta %{count}:lle.
       revenue: Tulot
       total: Yhteensä
@@ -824,6 +848,8 @@ fi:
       edit_user: Muokkaa käyttäjää
       new_user: Uusi käyttäjä
       select_with_ctrl_key: Valitse tai poista [Ctrl] + hiiren vasen painike kanssa
+    index:
+      on_duty: On duty
   various:
     attempt: Yrittää
     begin: Aloita
@@ -840,13 +866,13 @@ fi:
     download: Lataa
     end: Loppu
     exception_page:
-      assistance_text: Klikkaa painiketta "HOME" ja yritä uudelleen. Jos näet
-        saman virheen kahdesti, ota yhteyttä asiakaspalveluumme.
+      assistance_text: Klikkaa painiketta "HOME" ja yritä uudelleen. Jos näet saman
+        virheen kahdesti, ota yhteyttä asiakaspalveluumme.
       exception_description: ! 'Virhekuvaus:'
       exception_in_files: ! 'Virhe tapahtui seuraavissa tiedostoissa:'
       oops_an_error_occurred: Hups! Virhe on tapahtunut
-    finish_was_requested: Olet pyytänyt maksua. Ole hyvä ja odota hetki,
-      palvelemme sinua pian.
+    finish_was_requested: Olet pyytänyt maksua. Ole hyvä ja odota hetki, palvelemme
+      sinua pian.
     go: Mene!
     home: Koti
     hotel: Hotelli
@@ -855,8 +881,8 @@ fi:
     mobile_view: Näytä mobiililaitteessa
     no_connection: Ei yhteyttä
     no_connection_giving_up: Ei yhteyttä. Lopttaa yrityksen.
-    no_connection_retry: Ei yhteyttä serveriin. Lähetä uudelleen? Jos peruutat,
-      nimikkeet tallennetaan paikallisesti.
+    no_connection_retry: Ei yhteyttä serveriin. Lähetä uudelleen? Jos peruutat, nimikkeet
+      tallennetaan paikallisesti.
     no_connection_retrying: Ei yhteyttä. Yritetään uudelleen..
     order_will_be_confirmed: Tarjoilija vahvistaa tilauksesi pain.
     pay: Maksa
@@ -866,8 +892,7 @@ fi:
     restaurant: Ravintola
     save: Tallenna
     sending: Lähetetään...
-    server_error: Hups! Sisäinen serverivirhe. Tarkista tilauksen jättäminen
-      eri laitteella.
+    server_error: Hups! Sisäinen serverivirhe. Tarkista tilauksen jättäminen eri laitteella.
     server_error_short: Serverivirhe
     server_not_responded: Ei vastausta serveriltä. Tarkista jättäminen tilauksen eri
       laitteessa. Sitten lähetä uudelleen poistaaksesi muutokset.
@@ -876,8 +901,8 @@ fi:
     subtotal: Välisumma
     successfully_sent: Nimikkeiden lähettäminen onnistui.
     switched_to_vendor: Myyntipiste '%{vendorname}'
-    table_contains_offline_items: Näytää vain offline-nimikkeet. Yritä suorittaa uudelleen tai
-      paina peruuta-painiketta poistaaksesi offline-kohteita.
+    table_contains_offline_items: Näytää vain offline-nimikkeet. Yritä suorittaa uudelleen
+      tai paina peruuta-painiketta poistaaksesi offline-kohteita.
     tax: Vero
     tax_amount: Määrä
     time: Aika
@@ -885,9 +910,11 @@ fi:
     translations: Käännökset
     unamed: Nimetön
     unit_price_abbreviation: YH
-    waiter_was_requested: Olet pyytänyt tarjoilijaa. Ole hyvä ja odota hetki,
-      palvelemme sinua pian
+    waiter_was_requested: Olet pyytänyt tarjoilijaa. Ole hyvä ja odota hetki, palvelemme
+      sinua pian
     workstation_view: Työasemanäkymä
+    double_submission_warning: ! 'Varoitus: Kahden jättämisestä. Ilmoita asiasta tekninen apulle.'
+    your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
   vendors:
     create:
       success: Myyntipiste tallennettu
@@ -896,8 +923,8 @@ fi:
     form:
       add_printer: Lisää tulostin
       identify_printers: Tunnista tulostimet
-      print_via_salorbin_explanation: ! 'Jos haluat tulostaa Salor-bin selaimen kautta,
-        kopioi ja liitä seuraava yksityiskohtia Salor-binin kenttävaihtoehtoihin.'
+      print_via_salorbin_explanation: Jos haluat tulostaa Salor-bin selaimen kautta,
+        kopioi ja liitä seuraava yksityiskohtia Salor-binin kenttävaihtoehtoihin.
       test_printers: Testaa tulostimet
       test_printers_chartest: Testaa kaikki kirjainmerkit
     index:

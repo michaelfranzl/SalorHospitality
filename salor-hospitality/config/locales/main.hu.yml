@@ -79,8 +79,8 @@ hu:
         separate_ticket: XXX Cut ticket
       order:
         change_given: Change
-        nr: Number
         finished_at: Finished at
+        nr: Number
         sum: Sum
       page:
         active: active
@@ -181,18 +181,22 @@ hu:
         default_vendor_id: Log in to Vendor
         hidden: delete?
         language: Language
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Login
+        maximum_shift_duration: Shift duration
         password: Password
         role: Role
         screenlock_timeout: XXX Screenlock timeout (sec.)
         tables: Tables
         title: Title
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Automatic printing
         country: Rules for country
@@ -231,10 +235,6 @@ hu:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -549,10 +549,16 @@ hu:
       split_invoice: Split invoice
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
     invoice_item_list:
       count: Quantity
       sum: Sum
       unit_price: Unit price
+    last:
+      title: Last finished Orders
     login_form:
       email: Your E-Mail
       login: Login
@@ -580,8 +586,6 @@ hu:
       search_by_number: Search by number
       sum: Sum
       unit_price: Unit price
-    last:
-      title: Last finished Orders
   pages:
     edit:
       edit_page: Edit Page
@@ -680,6 +684,7 @@ hu:
       manage_statistics_hotel: View hotel statistics
       manage_tables: XXX Manage tables
       manage_taxes: XXX Manage Taxes
+      manage_user_logins: Manage User Logins
       manage_users: Manage users
       manage_vendors: XXX Manage vendors
       mobile_show_tools: Show tool button on mobile devices
@@ -723,7 +728,7 @@ hu:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      manage_user_logins: Manage User Logins
+      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -838,12 +843,12 @@ hu:
       success: User successfully saved
     destroy:
       success: User successfully deleted
+    index:
+      on_duty: On duty
     new:
       edit_user: Edit User
       new_user: New User
       select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
-    index:
-      on_duty: On duty
   various:
     attempt: Attempt
     begin: Begin
@@ -909,6 +914,8 @@ hu:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
   vendors:
     create:
       success: Vendor was successfully created
