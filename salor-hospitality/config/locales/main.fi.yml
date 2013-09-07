@@ -188,7 +188,7 @@ fi:
         tables: Pöydät
         title: Virkanimike
         layouts:
-          auto: Auto-havaitseminen 
+          auto: Automaattinen tunnistus 
           mobile: mobiili
           workstation: normaali
         maximum_shift_duration: Työvuoron kesto
@@ -233,7 +233,7 @@ fi:
         pulse_tickets: Piippaus lapusta
       user_login:
         duration: Kesto
-        login: Aloitti
+        login: Aloitettu
         logout: Päättyi
     errors:
       messages:
@@ -549,9 +549,9 @@ fi:
       split_invoice: Erittele lasku
       split_this_item: Klikkaa ja erittele nimikkeet yksi kerrallaan
       switch_tax_for_this_item: Klikkaa muuttaaksesi nimikkeen veroa
-      finish: Suorita ja pysyä tässä näytössä
-      finish_gototables: Suorita ja palata pöytien suunitelu
-      print_and_finish_gototables: Tulosta ja täytää tämän tilauksen ja palata pöytien suunitelu
+      finish: Suorita ja pysy tässä näytössä
+      finish_gototables: Suorita ja palaa pöytien suunnitteluun
+      print_and_finish_gototables: Tulosta, päätä tilaus ja palaa pöytien suunnitteluun
     invoice_item_list:
       count: Määrä
       sum: Summa
@@ -727,8 +727,8 @@ fi:
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
-      immediate_order_finish: Suorita tilauksen tilausnäytöltä
-      manage_user_logins: Hallitse käyttäjän kirjautumiset
+      immediate_order_finish: Suorita tilaus loppuun tilausnäytöltä
+      manage_user_logins: Käsittele käyttäjän kirjautumiset
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu
@@ -913,7 +913,7 @@ fi:
     waiter_was_requested: Olet pyytänyt tarjoilijaa. Ole hyvä ja odota hetki, palvelemme
       sinua pian
     workstation_view: Työasemanäkymä
-    double_submission_warning: ! 'Varoitus: Kahden jättämisestä. Ilmoita asiasta tekninen apulle.'
+    double_submission_warning: ! 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta tekniselle tuelle.'
     your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
   vendors:
     create:
