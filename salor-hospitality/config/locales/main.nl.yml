@@ -1,0 +1,915 @@
+---
+en:
+  activerecord:
+    attributes:
+      article:
+        active: actief
+        category_id: Categorie
+        description: Omschrijving
+        hidden: verwijderen
+        image: Afbeelding
+        name: Naam
+        price: Prijs
+        statistic_category_id: Statistiek-Categorie
+        taxes: Belasting
+        usage: Gebruik
+      booking_item:
+        base_price: Prijs
+        count: Tellen
+        duration: Dagen
+        sum: Som
+      camera:
+        active: actief
+        description: Omschrijving
+        hidden: verwijderen
+        host_external: Externe host
+        host_internal: Interne host
+        name: Naam
+        port: Poort
+        url_snapshot: Parameters Snapshot
+        url_stream: Parameters Stroom
+      category:
+        color: Kleur
+        custom_icon: Mijn Icoon
+        food: Eten?
+        hidden: verwijderen
+        icon: Icoon
+        image: Icoon
+        name: Naam
+        separate_print: Bon knippen
+        tax_id: Belasting
+        user_id: Gebruiker voorbereiden
+        vendor_printer_id: Printer
+      cost_center:
+        active: actief?
+        description: Omschrijving
+        hidden: verwijderen
+        name: Naam
+        no_payment_methods: Geen betalingsmethoden
+      customer:
+        address: Adres
+        cellphone: Mobiel
+        city: Plaats
+        company_name: Bedrijfsnaam
+        default_table_id: Standaard tafel
+        email: email
+        first_name: Voornaam
+        full_name: Naam
+        hidden: verwijderen
+        language: Taal
+        last_name: Achternaam
+        m_number: Klantenkaart Code
+        m_points: Klantenkaart Punten 
+        postalcode: Postcode
+        state: Staat
+        tax_info: Belastingsinformatie
+        telephone: Telefoon
+      group:
+        name: Naam
+      guest_type:
+        hidden: verwijderen
+        name: Naam
+        taxes: Belastingen
+      option:
+        category_id: Categorie
+        hidden: verwijderen
+        name: Naam
+        no_ticket: Print bon niet uit
+        price: Prijs
+        separate_ticket: Bon knippen
+      order:
+        change_given: Verander
+        nr: Nummer
+      page:
+        active: actief
+        color: Kleur
+        height: Hoogte
+        hidden: verwijder
+        image: Afbeelding
+        width: Breedte
+      partial:
+        active: aktief
+        blurb: Blurb
+        hidden: verwijdren
+      payment_method:
+        cash: Contant
+        change: Wisselgeld
+        name: Naam
+      payment_method_item:
+        amount: Bedrag
+      presentation:
+        active: actief
+        code: Ruby code
+        description: Omschrijving
+        hidden: verwijderen
+        markup: Veilige ERB Markup
+        model: Type
+        name: Naam
+      quantity:
+        active: aktief
+        description: Omschrijving
+        hidden: verwijderen
+        postfix: Postfix
+        prefix: Prefix
+        price: Prijs
+        usage: gebruik
+      role:
+        name: Naam
+      room_price:
+        base_price: Basis Prijs
+        guest_type_id: Gast Type
+        hidden: verwijderen
+        room_type_id: Kamer Type
+        season_id: Seizoen
+        hidden: verwijderen
+        name: Naam
+      season:
+        from_date: Van
+        hidden: verwijderen
+        is_master: Master?
+        name: Naam
+        to_date: Aan
+      settlement:
+        initial_cash: Oorspronkelijk bedrag
+        revenue: Eind bedrag
+      statistic_category:
+        hidden: verwijderen
+        name: Naam
+      surcharge:
+        amount: Hoeveelheid
+        guest_type_id: Gast Type
+        hidden: verwijderen
+        name: Naam
+        radio_select: Keuzerondje
+        season_id: Seizoen
+        selected: Standaard geselecteerd
+        visible: Zichtbaar?
+      table:
+        abbreviation: Afkorting
+        booking_table: Boeking
+        customer_table: Klant
+        description: Omschrijving
+        enabled: actief?
+        height: Hoogte
+        height_mobile: Hoogte mobiel
+        hidden: verwijderen
+        name: Naam
+        rotate: roteren?
+        width: Breedte
+        width_mobile: Breedte mobiel
+      tax:
+        color: Kleur
+        hidden: verwijderen
+        include_in_statistics: Oplossing statistieken
+        letter: Afkorting
+        name: Naam
+        percent: Belasting in %
+        statistics_by_category: Oplossingen statistieken per categorie
+      tax_amount:
+        amount: Bedrag
+        tax_id: Belasting
+      user:
+        active: actief?
+        advertising_timeout: Reclame timeout
+        advertising_url: Reclame URL
+        audio: Geluidssignaal
+        color: Kleur
+        confirmation_user: Bevestig externe bestelling
+        default_vendor_id: Meldt U aan als verkoper
+        hidden: verwijderen?
+        language: Taal
+        login: Login
+        password: Wachtwoord
+        role: Rol
+        screenlock_timeout: Schermslot timeout (sec.)
+        tables: Tabellen
+        title: Titel
+      vendor:
+        automatic_printing: Automatisch afdrukken
+        country: Regels voor het land
+        email: e-mail
+        enable_technician_emails: Stuur technicus e-mails
+        hidden: verwijderen
+        invoice_footer_blurb: kwitantie logo voet
+        invoice_header_blurb: Promotionele informatie in de kop van de factuur
+        invoice_logo: logo papieren factuur 
+        logo: Scherm logo
+        name: Naam
+        receipt_footer_blurb: Promotionele informatie in de voet van de kwitantie
+        receipt_header_blurb: Promotionele informatie in de kop van de kwitantie
+        remote_orders: Externe bestellingen
+        rlogo_footer: rekening logo voet
+        rlogo_header: rekening logo kop
+        saas: Online variatie
+        technician_email: e-mail Technicus
+        ticket_display_time_order: Tijd en factuurnummer op bon
+        ticket_item_separator: Bon scheidingslijn
+        ticket_tall_font: Bon lang letertype
+        ticket_wide_font: Bon breed lettertype
+        time_offset: Tijd correctie (uren)
+        timeout: Schermbeveiliging timeout (seconden)
+        update_item_lists_interval: Interval bijwerken artikel notificaties
+        update_resources_interval: Interval bijwerken offline database
+        update_tables_interval: Interval bijwerken tabellen
+        use_order_numbers: Gebruik volgnummers
+      vendor_printer:
+        baudrate: Baudrate
+        codepage: Code pagina
+        copies: Kopieen
+        hidden: Verwijder
+        name: Naam
+        path: Pad
+        print_button_filename: Icoon
+        pulse_receipt: Ontvangstbewijs signaal
+        pulse_tickets: Bon signaal
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Voorvoegsel toevoegsel moet worden gegevens
+    models:
+      article:
+        one: Artikel
+        other: Artikelen
+      booking:
+        one: Reservering
+        other: Reserveringen
+      camera:
+        one: Camera
+        other: Cameras
+      category:
+        one: Categorie
+        other: Categorieën
+      company:
+        one: Berdijf
+        other: Bedrijven
+      cost_center:
+        one: Kostenplaats
+        other: Kostenplaatsen
+      coupon:
+        one: Kortingsbon
+        other: Kortingsbonnen
+      customer:
+        one: Klant
+        other: Klanten
+      discount:
+        one: Korting
+        other: Kortingen
+      group:
+        one: Voorraad groep
+        other: Voorraad groepen
+      guest_type:
+        one: Gast Type
+        other: Gast Typen
+      image:
+        one: Afbeelding
+        other: Afbeeldingen
+      item:
+        one: Artikel
+        other: Artikelen
+      option:
+        one: Keuze
+        other: Keuzes
+      order:
+        one: Bestelling
+        other: Bestellingen
+      page:
+        one: Kaart
+        other: Kaarten
+      partial:
+        one: Deel
+        other: Delen
+      payment_method:
+        one: Betalings Methode
+        other: Betalings Methoden
+      payment_method_item:
+        one: Betalings Methode
+        other: Betalings Methoden
+      presentation:
+        one: Sjabloon
+        other: Sjablonen
+      quantity:
+        one: Variatie
+        other: Variaties
+      report:
+        one: Ondersteuning
+        other: Ondersteuningen
+      reservation:
+        one: Reservation
+        other: Reservations
+      role:
+        one: Role
+        other: Roles
+      room:
+        one: Room
+        other: Rooms
+      room_price:
+        one: Room Price
+        other: Room Prices
+      room_type:
+        one: Room Type
+        other: Room Types
+      season:
+        one: Season
+        other: Seasons
+      settlement:
+        one: Settlement
+        other: Settlements
+      statistic_category:
+        one: Statistic-Categorie
+        other: Statistic-Categories
+      stock:
+        one: Voorraad
+        other: Voorraden
+      surcharge:
+        one: Toeslag
+        other: Toeslagen
+      table:
+        one: Tabel
+        other: Tabellen
+      tax:
+        one: BTW-tariefgroep
+        other: BTW-tariefgroepen
+      tax_amount:
+        one:belastingbedrag
+        other: belastingbedragen
+      user:
+        one: Gebruiker
+        other: Gebruikers
+      vendor:
+        one: Verkoper
+        other: Verkopers
+      vendor_printer:
+        one: Printer
+        other: Printers
+  admin: Admin
+  are_you_sure: Weet je het zeker?
+  articles:
+    create:
+      license_limited: Uw licentie is beperkt tot %{count} artikelen
+      success: Artikel is succesvol opgeslagen
+    destroy:
+      success:Artikel is succesvol verwijderd
+    find:
+      variants:
+        one: Variant
+        other: Varianten
+    index:
+      list_all: Laat alles zien
+      preview: Voorvertoning
+      search_term: Zoekterm
+      sort: Sorteren
+      update: Bijwerken!
+      view: bekijken
+    listall:
+      all_articles: Lijst van alle artikelen
+    new:
+      add_quantity: Voej Variant toe
+      edit_article: Bewerk artikel
+      new_article: Nieuw artikel
+      normal: normala
+      takeaway: wegnemen
+    sort_index:
+      sort: Sorteer artikelen
+  bar: Bar
+  black: Zwart
+  blackboard:
+    index:
+      update: Bijwerken
+  blank: blanco
+  blue: Blauw
+  bookings:
+    invoice_item_list:
+      served_by_X: U werd geholpen door %{user}
+    show:
+      go_to_bookings_calendar: Ga naar boekingen kalenderweergave
+      search_by_number: Zoeken op nummer
+  cameras:
+    create:
+      success: Camera werd succesvol opgeslagen
+    destroy:
+      success: Camera werd succesvol verwijderd
+    index:
+      show: Toon
+  cancel_and_go_back: Annuleren en ga terug
+  categories:
+    create:
+      license_limited: Uw licentie is beperkt tot %{count} categorieën
+      success: Categorie succesvol opgeslagen
+    destroy:
+      success: Categorie succesvol verwijderd
+    new:
+      aperitif: Aperitief
+      beer: Bier
+      blank: Blanco
+      childrendish: Kinder menu
+      cigarette: Tabak
+      coffee: Koffie
+      dessert: Dessert
+      digestif: Aperatief
+      edit_category: Bewerk Categorie
+      maindish: Hoofdgerecht
+      new_category: Nieuwe Categorie
+      nonalcoholics: Alcohol vrij
+      noodles: Pasta
+      redwinebottle: Fles Rood
+      redwineglass: Rode Wijn
+      rosewinebottle: Fles Rosé
+      rosewineglass: Rosé Wijn
+      sidedish: bijgerecht
+      soup: Soep
+      sparkling: mousserende wijn
+      starter: Starter
+      tea: theekopje
+      teapot: Theepot
+      whitewinebottle: Fles Wit
+      whitewineglass: Witte Wijn
+  clear: Wissen
+  clear_order_and_go_back: Wis bestelling en ga terug
+  copy: Kopieer
+  cost_centers:
+    create:
+      success: Kostenplaats succesvol opgeslagen
+    destroy:
+      success: Kostenplaats succesvol verwijderd
+    index:
+      active: Actief
+      inactive: Inactief
+    new:
+      edit_cost_center: Bewerk kostenplaats
+      new_cost_center: Nieuw kostenplaats
+  count: Tellen
+  create: Creëren
+  customers:
+    create:
+      success: Klant succesvol opgeslagen
+    destroy:
+      success: Klant succesvol  verwijderd
+    new:
+      edit_customer: Bewerk klant
+      new_customer: Nieuww klant
+  dateandtime: Datum
+  default: Standaard
+  delete: Verwijderen
+  display: Toon
+  edit: Bewerk
+  exit: Uitgang
+  finish: Gewoon voltooien
+  food: voedingsmiddelen
+  go_back: Ga terug
+  green: Groen
+  gross: Bruto
+  groups:
+    new:
+      edit_group: Bewerk Groep
+      new_group: Nieuwe Groep
+  guestroom: Gastenkamer
+  host: Gastheer
+  images:
+    errempty: Ongeldig bestand
+    errsize: Ongeldig bestandsgrootte
+    errtype: Ongeldig bestandstype
+  invalid_date: Ongeldig datum
+  invoice: Factuur
+  invoice_numer_X_at_time: Factuur Nr. %{number} at %{datetime}
+  invoices: Facturen
+  is_no_number: is geen getal.
+  items:
+    item_tablerow:
+      clear: Wissen
+      done: Gedaan
+      no_printing: geen afdrukken
+  just_order: Gewoon bestellen
+  kitchen: Keuken
+  layouts:
+    application:
+      admin_menu_hint: ☚ Klik hier om het hoofdmenu te openen
+      submit_scribe: OK
+    header:
+      configuration: Configuratie
+  logout: uitloggen %{who}
+  messages:
+    hello_username: Hallo %{name}!
+    user_account_is_currently_locked: Account is geblokkeerd
+  move_order_to_table: Verplaats bestelling naar een andere tafel
+  must_be_entered_either_for_article_or_for_quantity: moeten ofwel worden ingevoerd voor het
+       Artikel of voor de Variant.
+  net: Netto
+  new: Nieuw
+  no_printing:  geen afdrukken
+  not_found: Niet gevonden
+  options:
+    create:
+      success: Optie succesvol opgeslagen
+    destroy:
+      success: Optie succesvol verwijderd
+    index:
+      no_categories_defined: Er zijn geen categorieën gedefinieerd. Je moet tenminste een 
+      categorie aanmaken oom een optie te creëren..
+    new:
+      edit_option: Bewerk Optie
+      hidden: verwijderen
+      new_option: Nieuw Optie
+      select_all: selecteer alles
+  orange: Oranje
+  orders:
+    functions_header_index:
+      exit: Uitgang
+      items_notifications: Kennisgevingen
+      print_now: Nu printen
+      show_last_booking: Toon laatste boeking
+      show_last_order: Toon laatste bestelling
+      toggle_drag_tables: Sleep tafels
+    functions_header_order_form:
+      move_order: Verplaats bestelling naar een andere tafel
+    index:
+      confirmation_list: Zlef bestel lijst
+      delivery_list: Bezorg lijst
+      preparation_list: Voorbereidings lijst
+    invoice_form:
+      change_money: Verander
+      just_finish: De bestelling afronden
+      move_order:Verplaats bestelling naar een andere tafel
+      print_and_finish: Printen en de bestelling afronden
+      set_booking: Toewijzen aan reservering
+      set_cost_center: Stel kostenplaats voor deze bestelling
+      set_tax_for_all: Stel kostenplaats voor alle artikelen
+      set_taxes: instellen kostenplaats
+      split_invoice: Deel rekening
+      split_this_item: Klik om de artikelen te splitsen in een artikel per keer
+      switch_tax_for_this_item: Klik om de btw voor dit artikel te wijzigen
+    invoice_item_list:
+      count: Hoeveelheid
+      sum: Bedrag
+      unit_price: eenheidsprijs
+    login_form:
+      email: Uw E-Mail
+      login: Login
+      password: Wachtwoord
+      username: Gebruikersnaam
+    order:
+      new: Nieuwe bestelling
+    order_form:
+      sum: BERDAG
+    refund_form:
+      do_refund: Maak een terugbetaling
+      do_separate_items: Scheidt dit artikel
+    served_by: U werd geholpen door
+    show:
+      add_notes: Notities toevoegen
+      back: Terug
+      cannot_reactivate: Activering mislukt. Er is geen tafel vrij.
+      count: Tellen
+      list_of_taxes: Lijst van belastingen
+      next_invoice: volgende factuur
+      previous_invoice: vorige factuur
+      print_business_invoice: Print zakelijke factuur
+      print_invoice: Print factuur
+      reactivate: Reactiveren
+      search_by_number: Zoeken op nummer
+      sum: Bedrag
+      unit_price: eenheidsprijs
+  pages:
+    edit:
+      edit_page: Pagina bewerken
+      slideshow: Start Slideshow
+      view: Bekijken
+    form:
+      slideshow: Slideshow
+      view: Bekijken
+    new:
+      new_page: Nieuwe Pagina
+  partials:
+    default_blurb:Bewerk me
+    error_during_evaluation: ! 'Fout: '
+    no_presentation_found:
+      no_presentations_found: Geen sjabloon gedefinieerd voor deze partial.
+  payment_methods:
+    create:
+      success: Betalingsmethode succesvol opgeslagen
+    destroy:
+      success: Betalingsmethode succesvol verwijderd
+  pink: Roze
+  please_enter_item_comment: Speciale Wens
+  please_enter_item_price: Speciale Prijs
+  presentations:
+    new:
+      edit_presentation: Template bewerken
+      new_presentation:NieuweTemplate
+  print: Afdrukken
+  print_and_finish: Voltooien en afdrukken
+  printing_test: Test afdruk
+  refund: Terugbetalen
+  reports:
+    download: Download
+    download_reports: Download Rapport
+    end_date: Eind Datum
+    fisc_report_dump_location: Afleveringslocatie
+    index:
+      backup_database: Reservekopie database
+      backup_logfile: Reservekopie logfile
+      connect_ssh: externe aanmelding
+      connect_vnc: Deel scherm
+      connected: Verbonden
+      disconnected: Losgekoppeld
+      download_reports: Bewaar rapporten
+      header: Rapporten
+      internet_connection_info: Om Remote Support te krijgen, moet u verbonden zijn met het
+               internet. Als u het rode (E) Logo ziet hierboven, bent u met het internet verbonden.
+      password: Wachtwoord
+      remote_support: Ondersteuning op afstand
+      requesting_connection_status: Status van de verbinding aanvragen..
+    remote_support: Ondersteuning op afstand
+    save: Bewaren
+    start_date: Start Datum
+  restaurant: Restaurant
+  roles:
+    create:
+      success: Rol succesvol opgeslagen
+    destroy:
+      success: Rol succesvol verwijderd
+    new:
+      add_option_to_sent_item:  Voeg opties toe aan verzonden Items
+      allow_exit: Sta afsluiten toe
+      assign_cost_center: Toewijzen kostenplaats
+      assign_order_to_booking: Toewijzen order aan een reservering
+      assign_order_to_user: Toewijzen order aan een een gebruiker
+      assign_tables: Toewijzen tafels aan gebruikers
+      assign_users_to_vendors: Toewijzen gebruikers aan verkopers
+      cancel_all_items_in_active_order: Annuleer alle artikelen in de actieve bestelling
+      change_waiter: Verander kelner
+      counter_mode: Balie modus
+      decrement_items: Verminder artikelen
+      delete_items: Verwijder artikelen door verminderen
+      download_csv: Download CSV
+      download_database: Download Database
+      edit_role: Bewerk Rol
+      finish_all_settlements: Beeindig alle overeenstemmingen
+      finish_orders: Beeindig bestellingen
+      finish_own_settlement: Beeindig eigen overeenkomst
+      interim_receipt: Tussentijdse ontvangst
+      item_scribe: Aanzetten handschrift
+      manage_advertising: Beheer Advertenties
+      manage_articles: Beheer artikelen
+      manage_business_invoice: Beheer zakelijke factuur
+      manage_cameras: Beheer camera's
+      manage_categories: Beheer categorieën
+      manage_cost_centers: Beheer kostenplaatsen
+      manage_customers: Beheer Klanten
+      manage_hotel: Beheer hotel
+      manage_options: Beheer opties
+      manage_pages: Beheer slideshow
+      manage_payment_methods: Beheer Betalingsmethoden
+      manage_roles: Beheer rollen
+      manage_statistic_categories: Beheer Statistiek Categorieën
+      manage_statistics: Statistieken
+      manage_statistics_hotel: Bekijk hotel statistieken
+      manage_tables: Beheer tabellen
+      manage_taxes: Beheer Belastingen
+      manage_users: Beheer gebruikers
+      manage_vendors: Beheer verkopers
+      mobile_show_tools: Laat bewerken knop op mobiele apparaten zien
+      move_order: Verplaats bestelling
+      move_order_from_invoice_form:  Verplaats bestelling naar tafel naar factuurformulier
+      move_tables:Verplaats tafels
+      new_role: Nieuwe Rol
+      permissions: Toestemmingen
+      reactivate_orders: Reactiveer bestellingen
+      receipt_logo: Ontvangbewijs logo's
+      refund: Terugbetaling artikelen
+      remote_support: Ondersteuning op afstand
+      see_debug: Zie debug berichten
+      see_item_notifications_static: Artikel notificaties verzamellijst op hoofd scherm
+      see_item_notifications_user_delivery: Artikel notificaties persoonlijke aflevering
+      see_item_notifications_user_preparation: Artikel notificaties persoonlijke voorbereiding
+      see_item_notifications_vendor_delivery: Artikel notificatie verkoper aflevering
+      see_item_notifications_vendor_preparation: Artikel notificatie verkoper voorbereiding
+      settlement_statistics_sold_quantities: Toon schikking statistieken over verkoop
+        aantallen
+      settlement_statistics_taxes: Toon schikking fiscale statistieken
+      settlement_statistics_taxes_categories: Toon schikking fiscale statistieken per categorie
+      split_items: Verdeel artikelen
+      statistics:
+        statistics_category: Categorieën
+        statistics_hour: Uren
+        statistics_payment_method: Betalingsmethoden
+        statistics_sold_quantities: Verkochte hoeveelheden
+        statistics_statistic_category: Statistiek Categorieën
+        statistics_table: Tabellen
+        statistics_tax: Belastingen
+        statistics_weekday: Weekdagen
+      statistics_category: Statistieken toon Categorieën
+      statistics_hour: Statistieken toon Uren
+      statistics_payment_method: Statistieken toon Betalingsmethoden
+      statistics_sold_quantities: Statistieken toon verkochte hoeveelheden
+      statistics_statistic_category: Statistieken toon statistiek categorieën
+      statistics_table: Statistieken toon Tabellen
+      statistics_tax: Statistieken toon belastingen
+      statistics_weekday: Statistieken toon Weekdagen
+      take_orders: Neem bestelloing op
+      view_all_settlements: Bekijk alle akkoorden
+      view_settlements_table: Bekijk akkoorden tabel
+  room_prices:
+    index:
+      generate_price_skeleton: Maak een prijsstructuur
+    new:
+      edit_room_price: Bewerk kamerprijs
+      new_room_price: Nieuwe kamerprijs
+  room_types:
+    new:
+      edit_room_type:  Bewerk kamer type
+      new_room_type: Nieuwe kamer type
+  rooms:
+    create:
+      success: Kamer succesvol bewaard
+    destroy:
+      success: Kamer succesvol verwijderd
+    new:
+      edit_room:  Bewerk Kamer
+      new_room: Nieuwe kamer
+  scopes:
+    active: Actief
+    waiterpad: Kelner notitieblok
+  scroll_down: scroll naar beneden
+  scroll_to_area: Ga naar kamer
+  scroll_up: scroll naar boven
+  seasons:
+    new:
+      edit_season:  Bewerk Seizoen
+      new_season: Nieuw Seizoen
+  send_and_go_back: Bewaar en ga terug
+  served_by_X_on_table_Y: U werd geholpen door %{waiter} aann tafel %{table}
+  server_no_response: The Bill Gastro Server reageert niet meer. De server is overbelast
+       of de draadloze verbinding wordt afgebroken.
+  sessions:
+    browser_warning:
+      continue: Ga verder
+      warning: Salor ondersteunt alleen de Google Chrome-browser (Windows), Chromium
+               (Linux) of Safari (Apple). Installeert a.u.b. een van deze browsers en
+               probeer het opnieuw.
+    new:
+      email: Uw E-Mail
+      login: Login
+      password: Wachtwoord
+      username: Gebruiker
+    new_customer:
+      email: Uw E-Mail
+      login: Login
+      password: Wachtwoord
+      username: Gebruiker
+  settlements:
+    detailed_list:
+      changed_price: ! '%{byuser} heeft prijs veranderd'
+      count: Count
+      order_number_on_table_on_date: ! '%{order} nummer %{number} aan %{table} om %{time}'
+      reduced_count: Aantal verminderd %{maxcount} naar %{count}.
+      revenue: inkomsten
+      total: Totaal
+      unit_price: Prijs per stuk
+      warning: Waarschuwing
+    index:
+      all: Allen
+      end_date: Eind datum
+      one_day_one_row: Toon dagen
+      start_date: Start datum
+      sum_total: Totaal
+    settlement:
+      finish: Afsluiten
+      please_wait: Analyseren van gegevens. even geduld aub ...
+      print: Printen
+      start: Beginnen
+      started_at: Begonnen om
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Lijst van alle belastingen
+  split_order: Bestelling splitsen
+  statistic: Statistic
+  statistic_categories:
+    new:
+      edit_statistic_category:  Bewerk Statistic-Categorie
+      new_statistic_category: Nieuw Statistic-Categorie
+  statistics:
+    index:
+      hour: Uur
+      limit_by: Beperken
+      query: Vraag
+      weekday: Weekdag
+  stocks:
+    new:
+      edit_stock:  Bewerk voorraad
+      new_stock: Nieuwe voorraad
+  sum: Sum
+  surcharges:
+    new:
+      add_tax_amount: BTW toevoegen
+      common_surcharge: gemeenschappelijke toeslag
+      edit_surcharge:  Bewerk toeslag
+      new_surcharge: Nieuwe toeslag
+  tables:
+    create:
+      license_limited: Uw licentie is beperkt tot %{count} tafels
+      success: Tafel succesvol opgeslagen
+    destroy:
+      success: Tafel succesvol verwijderd
+    new:
+      edit_table:  Bewerk Tafel
+      new_table: Nieuwe Tafel
+  tax_amount: Belastingbedrag
+  taxes:
+    new:
+      edit_tax:  Bewerk BTW-tariefgroep
+      new_tax: Nieuww BTW-tariefgroep
+  users:
+    create:
+      success: Gebruiker succesvol opgeslagen
+    destroy:
+      success: Gebruiker succesvol verwijderd
+    new:
+      edit_user:  Bewerk Gebruiker
+      new_user: Nieuwe Gebruiker
+      select_with_ctrl_key: Selecteer of deselecteer met [Ctrl] + linker muisknop
+  various:
+    attempt: Poging
+    begin: Begin
+    cancel: Annuleren
+    check_order_on_workstation: Controleer bestelling op een ander toestel
+    common_surcharges: Gemeenschappelijke toeslagen
+    connecting: Verbinden...
+    consumations: Consumpties
+    customer_request_finish: Betalingsverzoek
+    customer_request_send: Vraag deze artikelen aan
+    customer_request_waiter: Vraag om een kelner
+    delete: Verwijderen
+    display: Tonen
+    download: Downloaden
+    end: End
+    exception_page:
+      assistance_text: Klik dan op de "HOME" knop en probeer het opnieuw.Als de fout weer optreedt, neem dan a.u.b. contact op met Customer Support..
+        exception_description: ! 'Fout Omschrijving:'
+        exception_in_files: ! 'De fout is opgetreden in de volgende bestanden:'
+        oops_an_error_occurred: Oeps! Er is een fout opgetreden
+        finish_was_requested: Je hebt betaling aangevraagd. Even geduld a.u.b,
+     we zullen er binnenkort voor je zijn ..
+    go: Ga!
+    home: Thuis
+    hotel: Hotel
+    interim_invoice: Factuur voorbeeld
+    invoice: Factuur
+    mobile_view: Weergave mobile apparaat
+    no_connection: Geen verbinding
+    no_connection_giving_up: Geen verbinding. Opgegeven.
+    no_connection_retry: Geen verbinding met de server. Opnieuw te verzenden? Indien u annuleert, worden de
+           artikelen lokaal opgeslagen.
+    no_connection_retrying: Geen verbinding. Wordt opnieuw geprobeerd
+    order_will_be_confirmed: Uw bestelling zal worden bevestigd door een ober
+    pay: Betalen
+    print: Printen
+    quantity_abbreviation: Stk.
+    report: Rapport
+    restaurant: Restaurant
+    save: Bewaren
+    sending: Versturen...
+    server_error: Oeps! Er is een interne serverfout. Controleer uw bestelling op een ander apparaat..
+    server_error_short: Server fout
+    server_not_responded: Geen reactie van de server. Controleer uw bestelling op een ander apparaat. 
+                            Daarna, opniuew versturen of annuleren om de wijzigingen te verwijderen.
+    sold_quantities: Verkochte hoeveelheden
+    statistics: Statistieken
+    subtotal: Subtotaal
+    successfully_sent: De items werden succesvol verzonden.
+    switched_to_vendor: Verkoper '%{vendorname}'
+    table_contains_offline_items: Deze tabel bevat artikelen die nog niet zijn verzonden
+           waren. Stuur nu?
+    tax: Belasting
+    tax_amount: Bedrag
+    time: Tijd
+    total_price_abbreviation: TB
+    translations: Vertaling
+    unamed: Naamloos
+    unit_price_abbreviation: SB
+    waiter_was_requested: U heeft een ober aangevraagd. Even geduld a.u.b,
+           we zullen er zo voor U zijn.
+    workstation_view: Workstation uizicht
+  vendors:
+    create:
+      success: Verkoper is successvol bewaard
+    destroy:
+      success: Verkoper is successvol verwijderd
+    form:
+      add_printer: Voeg printer toe
+      identify_printers: Identificeer Printers
+      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser,
+       Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
+      test_printers: Test Printers
+      test_printers_chartest: Test alle karakters
+    index:
+      edit:  Bewerk
+      switch_to: Selecteer
+    new:
+      edit_vendor:  Bewerk Verkoper
+      new_vendor: Nieuwe Verkoper
+  violet: Violet
+  waiter: Ober
+  waiterpad_generic_name: Kelner notitieblok
+  white: Wit
+  winered: Wijn rood
+  wrong_password: Verkeerde login gegevens
+  yellow: Geel

@@ -1,0 +1,136 @@
+nl:
+# ==================================================================================
+# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
+# ==================================================================================
+  activerecord:
+    errors:
+      template:
+        header:
+          one:  "%{count} fout voorkomt dat het formulier '%{model}' wordt bewaard."
+          other:  "%{count} fouten voorkomen dat het formulier '%{model}' wordt bewaard."
+        body: "Gelieve de volgende gegevens controleren:"
+
+      messages:
+        inclusion: "is niet in de lijst"
+        exclusion: "moet niet in de lijst"
+        invalid: "is ongeldig"
+        confirmation: "komt niet overeen"
+        accepted: "moet worden aanvaard 
+        empty: "mag niet leeg zijn"
+        blank: "moet worden ingevuld"
+        too_long: "is te lang (maximum %{count} karakters)"
+        too_short: "is te kort (minimum %{count} karakters)"
+        wrong_length: "is de verkeerde lengte (moet zijn %{count} karakters)"
+        taken: "is al in gebruik"
+        not_a_number: "is geen getal"
+        greater_than: "moet groter zijn dan %{count}"
+        greater_than_or_equal_to: "moet groter zijn dan of gelijk aan %{count}"
+        equal_to: "moet gelijk zijn als %{count}"
+        less_than: "moet minder zijn dan %{count}"
+        less_than_or_equal_to: "moet minder zijn dan of gelijk aan %{count}"
+        odd: "moet oneven zijn"
+        even: "moet even zijn"
+        must_be_ascii: "mag alleen letters bevatten A-Z, a-z of 0-9."
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    distance_in_words:
+      half_a_minute: "halve minutt"
+      less_than_x_seconds:
+        one:   "minder dan 1 seconde"
+        other: "minder dan %{count} seconden"
+      x_seconds:
+        one:   "1 seconde"
+        other: "%{count} seconden"
+      less_than_x_minutes:
+        one:   "minder dan eenminuut"
+        other: "minder dan %{count} minuten"
+      x_minutes:
+        one:   "1 minuut"
+        other: "%{count} minuten"
+      about_x_hours:
+        one:   "ongeveer 1 uur"
+        other: "ongeveer %{count} uur"
+      x_days:
+        one:   "1 dag"
+        other: "%{count} dagen"
+      about_x_months:
+        one:   "ongeveer 1 maand"
+        other: "ongeveer %{count} moaanden"
+      x_months:
+        one:   "1 moaand"
+        other: "%{count} maanden"
+      about_x_years:
+        one:   "about 1 jaar"
+        other: "about %{count} jaren"
+      over_x_years:
+        one:   "over 1 jaar"
+        other: "over %{count} jaren"
+      almost_x_years:
+        one:   "bijna 1 jaar"
+        other: "bijna %{count}jaren"
+    prompts:
+      year:   "Jaar"
+      month:  "Maand"
+      day:    "Dag"
+      hour:   "Uur"
+      minute: "Minuut"
+      second: "Seconde"
+
+  helpers:
+    select:
+      # Default value for :prompt => true in FormOptionsHelper
+      prompt: "Selecteer aub"
+
+    # Default translation keys for submit FormHelper
+    submit:
+      create: 'Maak %{model}'
+      update: 'Bijwerken %{model}'
+      submit: 'Bewaar %{model}'
+
+# Used in array.to_sentence.
+  support:
+    array:
+     words_connector:
+      two_words_connector: " en "
+      last_word_connector: ", en "
+      
+# ==================================================================================
+# Adaptiert von:
+# /usr/lib/ruby/gems/1.8/gems/activesupport-2.2.1/lib/active_support/locale/en-US.yml
+# ==================================================================================
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%d. %b"
+      long: "%d. %B  %Y"
+
+    day_names: [Zondag, Maandag, Dinsdag, Woensdag, Donderdag, Vrijdag, Zaterdag]
+    abbr_day_names: [Zo, Ma, Di, Woe, Do, Vr, Za]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Januari, Februari, Maart, April, Mei, Juni, Juli, Augustus, September, Oktober, November, December]
+    abbr_month_names: [~, Jan, Feb, Mrt, Apr, Mei, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
+    # Used in date_select and datime_select.
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      datetime_iso2: "%Y%m%dT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: ""
+    pm: ""
