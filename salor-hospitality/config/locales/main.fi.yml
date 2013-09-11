@@ -895,7 +895,7 @@ fi:
     server_error: Hups! Sisäinen serverivirhe. Tarkista tilauksen jättäminen eri laitteella.
     server_error_short: Serverivirhe
     server_not_responded: Ei vastausta serveriltä. Tarkista jättäminen tilauksen eri
-      laitteessa. Sitten lähetä uudelleen poistaaksesi muutokset.
+      laitteessa. Sitten lähetä uudelleen tai peruuta poistaaksesi muutokset.
     sold_quantities: Myydyt määrät
     statistics: Tilasto
     subtotal: Välisumma
