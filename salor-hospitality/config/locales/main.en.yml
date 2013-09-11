@@ -74,7 +74,7 @@ en:
         category_id: Category
         hidden: Delete
         name: Name
-        no_ticket: Dont' print ticket
+        no_ticket: Don't print ticket
         price: Price
         separate_ticket: Cut ticket
       order:
@@ -909,7 +909,7 @@ en:
     time: Time
     total_price_abbreviation: TP
     translations: Translations
-    unamed: Unamed
+    unamed: Unnamed
     unit_price_abbreviation: SP
     waiter_was_requested: You have requested a waiter. Please have a little patience,
       we will be there for your shortly.
