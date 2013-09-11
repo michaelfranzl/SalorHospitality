@@ -111,8 +111,8 @@ fi:
     abbr_day_names: [su, ma, ti, ke, to, pe, la]
 
     # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names: [~, tammikuu, helmikuu, maaliskuu, huhtikuu, toukokuu, kesäkuu, heinakuu, elokuu, syyskuu, lokakuu, marraskuu, joulukuu]
+    abbr_month_names: [~, tam, hel, maa, huh, tou, kes, hei, elo, syy, lok, mar, jou]
     # Used in date_select and datime_select.
     order:
       - :year

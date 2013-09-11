@@ -584,7 +584,7 @@ fi:
       sum: Summa
       unit_price: Yksikköhinta
     last:
-      title: Last finished Orders
+      title: Viimeiset suoritetut tilaukset
   pages:
     edit:
       edit_page: Muokkaa sivua
