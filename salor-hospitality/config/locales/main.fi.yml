@@ -1,0 +1,942 @@
+---
+fi:
+  activerecord:
+    attributes:
+      article:
+        active: aktiivinen
+        category_id: Kategoria
+        description: Kuvaus
+        hidden: poista
+        image: Kuva
+        name: Nimi
+        price: Hinta
+        statistic_category_id: Tilastointiluokitus
+        taxes: Vero
+        usage: käyttö
+      booking_item:
+        base_price: Hinta
+        count: Laske
+        duration: Päivät
+        sum: Summa
+      camera:
+        active: aktiivinen
+        description: Kuvaus
+        hidden: poista
+        host_external: External Host
+        host_internal: Internal Host
+        name: Nimi
+        port: Portti
+        url_snapshot: Parameters Snapshot
+        url_stream: Parameters Stream
+      category:
+        color: Väri
+        custom_icon: Oma Ikoni
+        food: Ruoka?
+        hidden: poista
+        icon: Ikoni
+        image: Ikoni
+        name: Nimi
+        separate_print: Leikkaa lappu
+        tax_id: Vero
+        user_id: Vastaanottava käyttäjä
+        vendor_printer_id: Tulostin
+      cost_center:
+        active: aktiivinen?
+        description: Kuvaus
+        hidden: poista
+        name: Nimi
+        no_payment_methods: Ei maksutapa
+      customer:
+        address: Osoite
+        cellphone: Kännykkä
+        city: Kaupunki
+        company_name: Yrityksen nimi
+        default_table_id: Oletuspöytä
+        email: sähköposti
+        first_name: Etunimi
+        full_name: Nimi
+        hidden: poista
+        language: Kieli
+        last_name: Sukunimi
+        m_number: Kanta-asiakaskortin koodi
+        m_points: Kanta-asiakaan pisteet
+        postalcode: Postinumero
+        state: State
+        telephone: Puhelin
+        tax_info: Verotiedot
+      group:
+        name: Nimi
+      guest_type:
+        hidden: poista
+        name: Nimi
+        taxes: Vero
+      option:
+        category_id: Kategoria
+        hidden: poista
+        name: Nimi
+        no_ticket: Älä tulosta lappua
+        price: Hinta
+        separate_ticket: Leikkaa lappu
+      order:
+        change_given: Muuta
+        nr: Numero
+        finished_at: Päättyi
+        sum: Summa
+      page:
+        active: aktiivinen
+        color: Väri
+        height: Korkeus
+        hidden: poista
+        image: Kuvaus
+        width: Leveys
+      partial:
+        active: aktiivinen
+        blurb: Mainos
+        hidden: poista
+      payment_method:
+        cash: käteinen
+        change: Muuttaa
+        name: Nimi
+      payment_method_item:
+        amount: Määrä
+      presentation:
+        active: aktiivinen
+        code: Ruby code
+        description: Kuvaus
+        hidden: poista
+        markup: Secure ERB Markup
+        model: Tyypi
+        name: Nimi
+      quantity:
+        active: aktiivinen
+        description: Kuvaus
+        hidden: poista
+        postfix: Jälkiliite
+        prefix: Nimi
+        price: variantti hinta
+        usage: käyttö
+      role:
+        name: Nimi
+      room_price:
+        base_price: Perushinta
+        guest_type_id: Vierasluokka
+        hidden: poista
+        room_type_id: Huoneluokka
+        season_id: Sesonki
+      room_type:
+        hidden: poista
+        name: Nimi
+      season:
+        from_date: pvm alku
+        hidden: poista
+        is_master: vuoden loppu sesonki?
+        name: Nimi
+        to_date: pvm loppu
+      settlement:
+        initial_cash: Alkusumma
+        revenue: Loppusumma
+      statistic_category:
+        hidden: poista
+        name: Nimi
+      surcharge:
+        amount: Summa
+        guest_type_id: Vierasluokka
+        hidden: poista
+        name: Nimi
+        radio_select: Valintanappi
+        season_id: Sesonki
+        selected: Oletusvalinta
+        visible: Näkyvä?
+      table:
+        abbreviation: Lyhenne
+        booking_table: Varaus
+        customer_table: Asiakas
+        description: Kuvaus
+        enabled: aktiivinen?
+        height: Korkeus
+        height_mobile: Korkeus mobiilissa
+        hidden: poista
+        name: Nimi
+        rotate: Kiertää?
+        width: Leveys
+        width_mobile: Leveys mobiilissa
+      tax:
+        color: Väri
+        hidden: poista
+        include_in_statistics: Tilitys tilastossa
+        letter: Lyhenne
+        name: Nimi
+        percent: Vero %
+        statistics_by_category: Tilitys tilasto kategorioittain
+      tax_amount:
+        amount: Summa
+        tax_id: Vero
+      user:
+        active: aktiivinen?
+        advertising_timeout: Mainosajan katkaisu
+        advertising_url: Mainonta URL
+        audio: Äänimerkit
+        color: Väri
+        confirmation_user: Vahvista kaukotilaukset
+        default_vendor_id: Kirjaudu myyntipisteen sivuille
+        hidden: poista?
+        language: Kieli
+        login: Kirjaudu
+        password: Salasana
+        role: Asema
+        screenlock_timeout: Näytön lukitus ajan katkaisu (sek.)
+        tables: Pöydät
+        title: Virkanimike
+        layouts:
+          auto: Automaattinen tunnistus 
+          mobile: mobiili
+          workstation: normaali
+        maximum_shift_duration: Työvuoron kesto
+        track_time: Seuraa aikaa
+      vendor:
+        automatic_printing: Automaattinen tulostus
+        country: Maan säännöt
+        email: Sähköposti
+        enable_technician_emails: Lähetä tekninen apu sähköpostia
+        hidden: poista
+        invoice_footer_blurb: Laskun alatunniste
+        invoice_header_blurb: Laskun ylätunniste
+        invoice_logo: Laskun logo
+        logo: Näytön logo
+        name: Nimi
+        receipt_footer_blurb: Kuitin alatunniste
+        receipt_header_blurb: Kuitin ylätunniste
+        remote_orders: kaukotilaukset
+        rlogo_footer: Kuitin logo alatunniste
+        rlogo_header: Kuitin logo ylätunniste
+        saas: Online variantti
+        technician_email: Teknikko sähköposti
+        ticket_display_time_order: Lisää aika ja laskun nro lappuun
+        ticket_item_separator: Lappun erittelyviiva
+        ticket_tall_font: Lappu pitkä fontti
+        ticket_wide_font: Lappu leveä fontti
+        time_offset: Aikakorjaus (tuntia)
+        timeout: Näytön lukitus ajankatkaisu (sekuntia)
+        update_item_lists_interval: Ilmoitusnimikeiden päivitysintervalli
+        update_resources_interval: Offline-tietokannan päivitysintervalli
+        update_tables_interval: Pöytien päivitysintervalli
+        use_order_numbers: Käytä tilausnumeroita
+      vendor_printer:
+        baudrate: baudrate
+        codepage: codepage
+        copies: kopioita
+        hidden: poista
+        name: Nimi
+        path: polku
+        print_button_filename: Ikoni
+        pulse_receipt: Piippaus kuittista
+        pulse_tickets: Piippaus lapusta
+      user_login:
+        duration: Kesto
+        login: Aloitettu
+        logout: Päättyi
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
+    models:
+      article:
+        one: Artikkeli
+        other: Artikkeleita
+      booking:
+        one: Varaus
+        other: Varaukset
+      camera:
+        one: Kamera
+        other: Kamerat
+      category:
+        one: Kategoria
+        other: Kategoriat
+      company:
+        one: Yhtiö
+        other: Yhtiöt
+      cost_center:
+        one: Kustannuspaikka
+        other: Kustannuspaikkat
+      coupon:
+        one: Kuponki
+        other: Kupongit
+      customer:
+        one: Asiakas
+        other: Asiakkaat
+      discount:
+        one: Alennus
+        other: Alennukset
+      group:
+        one: Varastoryhmä
+        other: Varastoryhmät
+      guest_type:
+        one: Vieras Tyypi
+        other: Vieras Tyyppejä
+      image:
+        one: Kuva
+        other: Kuvat
+      item:
+        one: Nimike
+        other: Nimikkeet
+      option:
+        one: Vaihtoehto
+        other: Vaihtoehdot
+      order:
+        one: Tilaus
+        other: Tilaukset
+      page:
+        one: Kortti
+        other: Kortit
+      partial:
+        one: Elementti
+        other: Elementit
+      payment_method:
+        one: Maksutapa
+        other: Maksutapoja
+      payment_method_item:
+        one: Maksutapa
+        other: Maksutavat
+      presentation:
+        one: Malli
+        other: Mallit
+      quantity:
+        one: Variantti
+        other: Variantit
+      report:
+        one: Tuki
+        other: Tuet
+      reservation:
+        one: Varaus
+        other: Varaukset
+      role:
+        one: Asema
+        other: Asemat
+      room:
+        one: Huone
+        other: Huoneet
+      room_price:
+        one: Huonehinta
+        other: Huonehinnat
+      room_type:
+        one: Huoneluokka
+        other: Huoneluokat
+      season:
+        one: Sesonki
+        other: Sesongit
+      settlement:
+        one: Tilitys
+        other: Tilitykset
+      statistic_category:
+        one: Tilasto-kategoria
+        other: Tilasto-kategoriat
+      stock:
+        one: Varasto
+        other: Varastot
+      surcharge:
+        one: Lisämaksu
+        other: Lisämaksut
+      table:
+        one: Pöytä
+        other: Pöydät
+      tax:
+        one: Veroluokka
+        other: Veroluokat
+      tax_amount:
+        one: Veron määrä
+        other: Veron määrät
+      user:
+        one: Käyttäjä
+        other: Käyttäjät
+      vendor:
+        one: Myyntipiste
+        other: Myyntipsteet
+      vendor_printer:
+        one: Tulostin
+        other: Tulostimet
+  admin: Hallinto
+  are_you_sure: Oletko varma?
+  articles:
+    create:
+      license_limited: Lisenssirajoitus % {count} artikkelia
+      success: Artikkeli on tallennettu
+    destroy:
+      success: Artikkelin poistaminen onnistui
+    find:
+      variants:
+        one: Variantti
+        other: Variantit
+    index:
+      list_all: Listaa kaikki
+      preview: Esikatselu
+      search_term: Hakusana
+      sort: Järjestä
+      update: Päivitä!
+      view: Katsele
+    listall:
+      all_articles: Luettelo kaikista artikkeleista
+    new:
+      add_quantity: Lisää variantti
+      edit_article: Muokkaa artikkeli
+      new_article: Uusi artikkeli
+      normal: normaali
+      takeaway: Take-away
+    sort_index:
+      sort: Järjestä artikkelit
+  bar: Baari
+  black: Musta
+  blackboard:
+    index:
+      update: Päivitä
+  blank: tyhjä
+  blue: Sininien
+  bookings:
+    invoice_item_list:
+      served_by_X: Teitä palveli %{user}
+    show:
+      go_to_bookings_calendar: Siirry varausten kalenterinäkymään
+      search_by_number: Etsi numerolla
+  cameras:
+    create:
+      success: Kamera on tallennettu
+    destroy:
+      success: Kameran poistaminen onnistui
+    index:
+      show: Näytä
+  cancel_and_go_back: Peruuta ja palaa
+  categories:
+    create:
+      license_limited: Lisenssirajoitus %{count} kategoriaa
+      success: Kategoria tallennettu
+    destroy:
+      success: Kategoria poistaminen onnistui
+    new:
+      aperitif: Aperitiivi
+      beer: Olut
+      blank: Tyhjä
+      childrendish: Lasten ruoka
+      cigarette: Tupakka
+      coffee: Kahvi
+      dessert: Jälkiruoka
+      digestif: Digestiivi
+      edit_category: Muokkaa kategoriaa
+      maindish: Pääruoka
+      new_category: Uusi kategoria
+      nonalcoholics: Alkoholiton
+      noodles: Nuudelit
+      redwinebottle: Punaviini pullo
+      redwineglass: Punaviini
+      rosewinebottle: Roseeviini pullo
+      rosewineglass: Roseeviini
+      sidedish: Lisäke
+      soup: Keitto
+      sparkling: Kuohuviini
+      starter: Alkuruoka
+      tea: Teekuppi
+      teapot: Teekannu
+      whitewinebottle: Valkoviini pullo
+      whitewineglass: Valkoviini
+  clear: Tyhjennä
+  clear_order_and_go_back: Tyhjennä tilaus ja palaa
+  copy: Kopio
+  cost_centers:
+    create:
+      success: Kustannuspaikka tallennettu
+    destroy:
+      success: Kustannuspaikan poistaminen onnistui
+    index:
+      active: Aktiivinen
+      inactive: Inaktiivinen
+    new:
+      edit_cost_center: Muokkaa kustannuspaikkaa
+      new_cost_center: Uusi kustannuspaikka
+  count: Laske
+  create: Luo
+  customers:
+    create:
+      success: Asiakas tallennettu
+    destroy:
+      success: Asiakkaan poistaminen onnistui
+    new:
+      edit_customer: Muokkaa asiakas
+      new_customer: Uusi asiakas
+  dateandtime: päivämäärä
+  default: Oletus
+  delete: Poista
+  display: Näyttää
+  edit: Muokkaa
+  exit: Poistu
+  finish: Suorita loppuun
+  food: Ruoat
+  go_back: Palaa
+  green: Vihreä
+  gross: Brutto
+  groups:
+    new:
+      edit_group: Muokkaa ryhmää
+      new_group: Uusi ryhmä
+  guestroom: Vierashuone
+  host: Vastaanottavan
+  images:
+    errempty: Virheellinen tiedosto
+    errsize: Virheellinen tiedostokoko
+    errtype: Virheellinen tiedostotyyppi
+  invalid_date: Virheellinen päivämäärä
+  invoice: Lasku
+  invoice_numer_X_at_time: Lasku nro %{numero} pvm %{datetime}
+  invoices: Laskut
+  is_no_number: ei ole numeroa.
+  items:
+    item_tablerow:
+      clear: Tyhjennä
+      done: Valmis
+      no_printing: ei tulostusta
+  just_order: Tee tilaus
+  kitchen: Keittiö
+  layouts:
+    application:
+      admin_menu_hint: ☚ Klikkaa tästä avataksesi päävalikon
+      submit_scribe: OK
+    header:
+      configuration: Konfigurointi
+  logout: kirjaudu ulos %{who}
+  messages:
+    hello_username: Terve %{name}!
+    user_account_is_currently_locked: Tili on lukittu
+  move_order_to_table: Siirrä tilaus toiseen pöytään
+  must_be_entered_either_for_article_or_for_quantity: on syötettävä joko Artikkeli
+    tai Variantti.
+  net: Netto
+  new: Uusi
+  no_printing: Ei tulostusta
+  not_found: Ei löytynyt
+  options:
+    create:
+      success: Vaihtoehto tallennettu
+    destroy:
+      success: Vaihtoehdon poistaminen onnistui
+    index:
+      no_categories_defined: Ei määriteltyjä kategorioita. Sinun pitää luoda ainakin
+        yksi kategoria vaihtoehdon luomiseksi.
+    new:
+      edit_option: Muokkaa Vaihtoehto
+      hidden: poista
+      new_option: Uusi Vaihtoehto
+      select_all: valitse kaikki
+  orange: Oranssi
+  orders:
+    functions_header_index:
+      exit: Poistu
+      items_notifications: Ilmoitukset
+      print_now: Tulosta nyt
+      show_last_booking: Näytä viimeinen varaus
+      show_last_order: Näytä viimeisin tilaus
+      toggle_drag_tables: Vedä pöydät
+    functions_header_order_form:
+      move_order: Siirrä tilaus toiseen pöytään
+    index:
+      confirmation_list: Itsetilauslista
+      delivery_list: Toimituslista
+      preparation_list: Valmistelulista
+    invoice_form:
+      change_money: Vaihtoraha
+      just_finish: Suorita vain tilaus
+      move_order: Siirrä tilauksen eri pöydään
+      print_and_finish: Tulosta ja suorita tilaus
+      set_booking: Määritä varaus
+      set_cost_center: Anna tilauksen kustannuspaikka
+      set_tax_for_all: Anna kaikkien nimikkeiden kustannuspaikat
+      set_taxes: Anna kustannuspaikka
+      split_invoice: Erittele lasku
+      split_this_item: Klikkaa ja erittele nimikkeet yksi kerrallaan
+      switch_tax_for_this_item: Klikkaa muuttaaksesi nimikkeen veroa
+      finish: Suorita ja pysy tässä näytössä
+      finish_gototables: Suorita ja palaa pöytien suunnitteluun
+      print_and_finish_gototables: Tulosta, päätä tilaus ja palaa pöytien suunnitteluun
+    invoice_item_list:
+      count: Määrä
+      sum: Summa
+      unit_price: Yksikköhinta
+    login_form:
+      email: sähköpostiosoitteesi
+      login: Kirjaudu
+      password: Salasana
+      username: Käyttäjätunnus
+    order:
+      new: Uusi tilaus
+    order_form:
+      sum: SUMMA
+    refund_form:
+      do_refund: Tee palautus
+      do_separate_items: Erota nimke
+    served_by: Teitä palveli
+    show:
+      add_notes: Lisää muistiinpanoja
+      back: Takaisin
+      cannot_reactivate: Uudelleenaktivointi epäonnistui. Ei vapaata pöytää.
+      count: Laske
+      list_of_taxes: Verolista
+      next_invoice: Seuraava lasku
+      previous_invoice: Edellinen lasku
+      print_business_invoice: Tulosta yrityslasku
+      print_invoice: Tulosta lasku
+      reactivate: Uudelleenaktivoi
+      search_by_number: Etsi numerolla
+      sum: Summa
+      unit_price: Yksikköhinta
+    last:
+      title: Viimeiset suoritetut tilaukset
+  pages:
+    edit:
+      edit_page: Muokkaa sivua
+      slideshow: Käynnistä kuvaesitys
+      view: Katsele
+    form:
+      slideshow: kuvaesitys
+      view: Katsele
+    new:
+      new_page: Uusi sivu
+  partials:
+    default_blurb: muokkaa minua
+    error_during_evaluation: ! 'Virhe: '
+    no_presentation_found:
+      no_presentations_found: Mallia ei löydy tähän elementtiin.
+  payment_methods:
+    create:
+      success: Maksutapa tallennettu
+    destroy:
+      success: Maksutavan poistaminen onnistui
+  pink: Vaaleanpunainen
+  please_enter_item_comment: Erikoistoive
+  please_enter_item_price: Erikoishinta
+  presentations:
+    new:
+      edit_presentation: Muokkaa mallia
+      new_presentation: Uusi malli
+  print: Tulosta
+  print_and_finish: Lopeta ja tulosta
+  printing_test: Tulostuskoe
+  refund: Palautus
+  reports:
+    download: Lataa
+    download_reports: Lataa raportti
+    end_date: Päättymispäivä
+    fisc_report_dump_location: Tulostuspaikka
+    index:
+      backup_database: Varmuuskopio tietokanta
+      backup_logfile: varmuuskopio lokitiedosto
+      connect_ssh: Etäkirjautuminen
+      connect_vnc: Jaa näyttö
+      connected: Kytketty
+      disconnected: Yhteys katkaistu
+      download_reports: Tallenna raportit
+      header: Raportit
+      internet_connection_info: Saadaksesi etätukea, sinun täytyy olla yhteydessä
+        Internetiin. Jos näet Red (E) Logon ylhäällä, olet yhteydessä Internetiin.
+      password: Salasana
+      remote_support: Etätuki
+      requesting_connection_status: Pyydä yhteydentilanne ...
+    remote_support: Etätuki
+    save: Tallenna
+    start_date: Aloituspäivä
+  restaurant: Ravintola
+  roles:
+    create:
+      success: Asema tallennettu
+    destroy:
+      success: Aseman poistaminen onnistui
+    new:
+      add_option_to_sent_item: Lisää vaihtoehtoja lähetettyihin nimikkeisiin
+      allow_exit: Salli poistuminen
+      assign_cost_center: Määritä kustannuspaikka
+      assign_order_to_booking: Määritä tilauksia varaukseen
+      assign_order_to_user: Määritä tilaus käyttäjälle
+      assign_tables: Määritä pöytiä käyttäjille
+      assign_users_to_vendors: Määritä käyttäjät myyntipisteisiin
+      cancel_all_items_in_active_order: Peruuta kaikki aktiivisen tilauksen nimikkeet
+      change_waiter: Vaihda tarjoilija
+      counter_mode: Laskuritila
+      decrement_items: Vähennä nimikkeitä
+      delete_items: Poista nimikkeitä vähentämällä
+      download_csv: Lataa CSV
+      download_database: Lataa tietokanta
+      edit_role: Muokkaa asema
+      finish_all_settlements: Suorita loppuun kaikki tilitykset
+      finish_orders: Suorita loppuun tilaukset
+      finish_own_settlement: Suoria loppuun oma tilitys
+      interim_receipt: Väliaikaiskuitti
+      item_scribe: Salli käsin kirjoitus
+      manage_advertising: Käsittele mainonta
+      manage_articles: Käsittele artikkelit
+      manage_business_invoice: Käsittele liike lasku
+      manage_cameras: Käsittele kamerat
+      manage_categories: Käsittele kategoriat
+      manage_cost_centers: Käsittele kustannuspaikat
+      manage_customers: Käsittele asiakkaat
+      manage_hotel: Käsittele hotelli
+      manage_options: Käsittele vaihtoehdot
+      manage_pages: Käsittele kuvaesitys
+      manage_payment_methods: Käsittele maksutavat
+      manage_roles: Käsittele asemat
+      manage_statistic_categories: Käsittele tilastointiluokitus
+      manage_statistics: Tilasto
+      manage_statistics_hotel: Katsele hotellitilastot
+      manage_tables: Käsittele pöydät
+      manage_taxes: Käsittele verot
+      manage_users: Käsittele käyttäjät
+      manage_vendors: Käsittele myyntipisteet
+      mobile_show_tools: Näytä työkalupainiketta mobiililaitteissa
+      move_order: Siirrä tilaus
+      move_order_from_invoice_form: Siirrä tilaus laskulomakkeelta pöytään
+      move_tables: Siirrä pöydät
+      new_role: Uusi asema
+      permissions: Käyttöluvat
+      reactivate_orders: Uudelleenaktivoi tilaus
+      receipt_logo: Kuittilogot
+      refund: Palauta nimikkeitä
+      remote_support: Etätuki
+      see_debug: Katso vianetsintäviestit
+      see_item_notifications_static: Yhteenvetoluettelo nimikkeiden tiedonannoista
+        päänäyttöllä
+      see_item_notifications_user_delivery: Nimiketiedon annot, henkilökohtainen toimitus
+      see_item_notifications_user_preparation: Nimiketiedon annot, henkilökohtainen
+        valmistaminen
+      see_item_notifications_vendor_delivery: Nimiketiedon annot, myyntipistetoimitus
+      see_item_notifications_vendor_preparation: Nimiketiedon annot, myyntipisteen
+        valmistaminen
+      settlement_statistics_sold_quantities: Näytä myytyjen määrien tilitysten tilasto
+      settlement_statistics_taxes: Näytä suoritukset, verotilasto
+      settlement_statistics_taxes_categories: Näytä suoritukset, verotilasto kategorioittain
+      split_items: Erittele nimikkeet
+      statistics:
+        statistics_category: Kategoriat
+        statistics_hour: Tunnit
+        statistics_payment_method: Maksutavat
+        statistics_sold_quantities: Myydyt määrät
+        statistics_statistic_category: Tilaston kategoriat
+        statistics_table: Pöydät
+        statistics_tax: Verot
+        statistics_weekday: Arkisin
+      statistics_category: Kategoriat mukana tilastossa
+      statistics_hour: Tunnit mukana tilastossa
+      statistics_payment_method: Maksutavat mukana tilastossa
+      statistics_sold_quantities: Myydyt määrät mukana tilastossa
+      statistics_statistic_category: Tilaston Kategoriat mukana tilastossa
+      statistics_table: Pöydät mukana tilastossa
+      statistics_tax: Verot mukana tilastossa
+      statistics_weekday: Arkisin mukana tilastossa
+      take_orders: Ota tilauksia
+      view_all_settlements: Näytä kaikki tilitykset
+      view_settlements_table: Näytä tilitystaulukko
+      immediate_order_finish: Suorita tilaus loppuun tilausnäytöltä
+      manage_user_logins: Käsittele käyttäjän kirjautumiset
+  room_prices:
+    index:
+      generate_price_skeleton: Luo hinnoittelu
+    new:
+      edit_room_price: Muokkaa huonehintaa
+      new_room_price: Uusi huonehinta
+  room_types:
+    new:
+      edit_room_type: Muokkaa huoneluokkaa
+      new_room_type: Uusi huoneluokka
+  rooms:
+    create:
+      success: Huone tallennettu
+    destroy:
+      success: Huoneen poistaminen onnistui
+    new:
+      edit_room: Muokkaa huoneen teitoja
+      new_room: Uusi huone
+  scopes:
+    active: Aktiivinen
+    waiterpad: Tarjoilijan lehtiö
+  scroll_down: Vieritä alaspäin
+  scroll_to_area: Siirry huoneen tietoihin
+  scroll_up: Vierittää ylöspain
+  seasons:
+    new:
+      edit_season: Muokkaa sesonkia
+      new_season: Uusi sesonki
+  send_and_go_back: Tallenna ja palaa
+  served_by_X_on_table_Y: Teitä palveli %{waiter} pöydässä %{table}
+  server_no_response: Bill Gastron palvelin ei vastaa enää. Se on joko varattu tai
+    radioyhteys on keskeytynyt
+  sessions:
+    browser_warning:
+      continue: Jatka
+      warning: Salor tukee vain selaimia Google Chrome (Windows), Chromium (Linux)
+        tai Safari (Apple). Käytä jotakin näistä selaimista ja yritä uudelleen.
+    new:
+      email: Sähköpostiosoitteesi
+      login: Kirjaudu
+      password: Salasana
+      username: Käyttäjä
+    new_customer:
+      email: Sähköpostiosoitteesi
+      login: Kirjaudu
+      password: Salasana
+      username: Käyttäjä
+  settlements:
+    detailed_list:
+      changed_price: ! '%{byuser} muutti hintaa'
+      count: Laske
+      order_number_on_table_on_date: ! '%{order} numero %{number} %{table}:ssä, klo:
+        %{time}'
+      reduced_count: Laske vähennetty %{maxcount} :sta %{count}:lle.
+      revenue: Tulot
+      total: Yhteensä
+      unit_price: Yksikköhinta
+      warning: Varoitus
+    index:
+      all: Kaikki
+      end_date: Päättymispäivä
+      one_day_one_row: Listaa päivät
+      start_date: Alkamispäivä
+      sum_total: Loppusumma
+    settlement:
+      finish: Lopeta
+      please_wait: Tietoja analysoidaan tietoja. Odota ...
+      print: Tulosta
+      start: Aloita
+      started_at: Aloitettu
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Verolista
+  split_order: Eritele tilaus
+  statistic: Tilasto
+  statistic_categories:
+    new:
+      edit_statistic_category: Muokkaa tilastointiluokka
+      new_statistic_category: Uusi tilastointiluokka
+  statistics:
+    index:
+      hour: Tunti
+      limit_by: Rajoita
+      query: Kysely
+      weekday: Arkipäivä
+  stocks:
+    new:
+      edit_stock: Muokkaa varasto
+      new_stock: Uusi varasto
+  sum: Summa
+  surcharges:
+    new:
+      add_tax_amount: Lisää veron määrä
+      common_surcharge: Yleinen lisämaksu
+      edit_surcharge: Muokkaa lisämaksua
+      new_surcharge: Uusi lisämaksu
+  tables:
+    create:
+      license_limited: Lisenssi on rajoitettu % {count} pöytään
+      success: Pöytä tallennettu
+    destroy:
+      success: Pöydän poistaminen onnistui
+    new:
+      edit_table: Muokkaa pöytä
+      new_table: Uusi pöytä
+  tax_amount: Määrä
+  taxes:
+    new:
+      edit_tax: Muokkaa veroa
+      new_tax: Uusi vero
+  users:
+    create:
+      success: Käyttäjä tallennettu
+    destroy:
+      success: Käyttäjän poistaminen onnistui
+    new:
+      edit_user: Muokkaa käyttäjää
+      new_user: Uusi käyttäjä
+      select_with_ctrl_key: Valitse tai poista [Ctrl] + hiiren vasen painike kanssa
+    index:
+      on_duty: On duty
+  various:
+    attempt: Yrittää
+    begin: Aloita
+    cancel: Peruuta
+    check_order_on_workstation: Tarkista tilaus eri laitteessa
+    common_surcharges: Yleiset lisämaksut
+    connecting: Yhdistää...
+    consumations: Kulutustavarat
+    customer_request_finish: Pyydä maksua
+    customer_request_send: Pyydä näitä nimikkeitä
+    customer_request_waiter: Pyydä tarjoilija
+    delete: Poista
+    display: Näyttä
+    download: Lataa
+    end: Loppu
+    exception_page:
+      assistance_text: Klikkaa painiketta "HOME" ja yritä uudelleen. Jos näet saman
+        virheen kahdesti, ota yhteyttä asiakaspalveluumme.
+      exception_description: ! 'Virhekuvaus:'
+      exception_in_files: ! 'Virhe tapahtui seuraavissa tiedostoissa:'
+      oops_an_error_occurred: Hups! Virhe on tapahtunut
+    finish_was_requested: Olet pyytänyt maksua. Ole hyvä ja odota hetki, palvelemme
+      sinua pian.
+    go: Mene!
+    home: Koti
+    hotel: Hotelli
+    interim_invoice: Välilasku
+    invoice: Lasku
+    mobile_view: Näytä mobiililaitteessa
+    no_connection: Ei yhteyttä
+    no_connection_giving_up: Ei yhteyttä. Lopttaa yrityksen.
+    no_connection_retry: Ei yhteyttä serveriin. Lähetä uudelleen? Jos peruutat, nimikkeet
+      tallennetaan paikallisesti.
+    no_connection_retrying: Ei yhteyttä. Yritetään uudelleen..
+    order_will_be_confirmed: Tarjoilija vahvistaa tilauksesi pain.
+    pay: Maksa
+    print: Tulosta
+    quantity_abbreviation: Määrä
+    report: Raportti
+    restaurant: Ravintola
+    save: Tallenna
+    sending: Lähetetään...
+    server_error: Hups! Sisäinen serverivirhe. Tarkista tilauksen jättäminen eri laitteella.
+    server_error_short: Serverivirhe
+    server_not_responded: Ei vastausta serveriltä. Tarkista jättäminen tilauksen eri
+      laitteessa. Sitten lähetä uudelleen tai peruuta poistaaksesi muutokset.
+    sold_quantities: Myydyt määrät
+    statistics: Tilasto
+    subtotal: Välisumma
+    successfully_sent: Nimikkeiden lähettäminen onnistui.
+    switched_to_vendor: Myyntipiste '%{vendorname}'
+    table_contains_offline_items: Näytää vain offline-nimikkeet. Yritä suorittaa uudelleen
+      tai paina peruuta-painiketta poistaaksesi offline-kohteita.
+    tax: Vero
+    tax_amount: Määrä
+    time: Aika
+    total_price_abbreviation: YHT
+    translations: Käännökset
+    unamed: Nimetön
+    unit_price_abbreviation: YH
+    waiter_was_requested: Olet pyytänyt tarjoilijaa. Ole hyvä ja odota hetki, palvelemme
+      sinua pian
+    workstation_view: Työasemanäkymä
+    double_submission_warning: ! 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta tekniselle tuelle.'
+    your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
+  vendors:
+    create:
+      success: Myyntipiste tallennettu
+    destroy:
+      success: Myyntipisteen poistaminen onnistui
+    form:
+      add_printer: Lisää tulostin
+      identify_printers: Tunnista tulostimet
+      print_via_salorbin_explanation: Jos haluat tulostaa Salor-bin selaimen kautta,
+        kopioi ja liitä seuraava yksityiskohtia Salor-binin kenttävaihtoehtoihin.
+      test_printers: Testaa tulostimet
+      test_printers_chartest: Testaa kaikki kirjainmerkit
+    index:
+      edit: Muokkaa
+      switch_to: Valitse
+    new:
+      edit_vendor: Muokkaa myyntipistettä
+      new_vendor: Uusi myyntipiste
+  violet: Violetti
+  waiter: Tarjoilija
+  waiterpad_generic_name: Tarjoilijalehtiö
+  white: Valkoinen
+  winered: Viininpunainen
+  wrong_password: Väärä kirjautumistieto
+  yellow: Keltainen

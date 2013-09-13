@@ -125,6 +125,11 @@ Any Rails developer will not have any problems running SalorHospitality, since i
 
     git clone git://github.com/michaelfranzl/SalorHospitality.git
     cd SalorHospitality/salor-hospitality
+    cp Gemfile.production Gemfile
+    {{ or use Gemfile.development if appropriate }}
+    cd config
+    cp database.yml.template database.yml
+    cd ..
     bundle install
     {{ edit config/database.yml for your MySQL installation }}
     rake db:create
@@ -132,6 +137,13 @@ Any Rails developer will not have any problems running SalorHospitality, since i
     rake db:seed
     rails s
     {{ browse to localhost:3000 and enter 000 as password }}
+
+If you want to re-seed the database do the following:
+
+    rake db:drop
+    rake db:create
+    rake db:migrate
+    rake db:seed
     
 For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions. Have a look at the installation instructions at http://documentation.red-e.eu/hospitality/installation.html
 

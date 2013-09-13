@@ -79,8 +79,8 @@ fr:
         separate_ticket: Reçu séparé
       order:
         change_given: Monnaie rendue
-        nr: Number
         finished_at: Finished at
+        nr: Number
         sum: Sum
       page:
         active: Actif
@@ -181,18 +181,22 @@ fr:
         default_vendor_id: Log in to Vendor
         hidden: Effacer ?
         language: Langue
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Nom d'utilisateur
+        maximum_shift_duration: Shift duration
         password: Mot de passe
         role: Rôle
         screenlock_timeout: Expiration du verrouillage de l'écran (sec.)
         tables: Tables
         title: Titre
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Impression automatique
         country: Règles pour le pays
@@ -231,10 +235,6 @@ fr:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
@@ -549,10 +549,16 @@ fr:
       split_invoice: Scinder facture
       split_this_item: Cliquer pour scinder ces articles un par un
       switch_tax_for_this_item: Cliquer pour modifier la taxe pour cet article
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
     invoice_item_list:
       count: Compter
       sum: Somme
       unit_price: Prix unitaire
+    last:
+      title: Last finished Orders
     login_form:
       email: Votre E-Mail
       login: S'identifier
@@ -580,8 +586,6 @@ fr:
       search_by_number: Chercher par numéro
       sum: Somme
       unit_price: Prix unitaire
-    last:
-      title: Last finished Orders
   pages:
     edit:
       edit_page: Modifier Page
@@ -680,6 +684,7 @@ fr:
       manage_statistics_hotel: View hotel statistics
       manage_tables: XXX Manage tables
       manage_taxes: XXX Manage Taxes
+      manage_user_logins: Manage User Logins
       manage_users: Gérer les utilisateurs
       manage_vendors: XXX Manage vendors
       mobile_show_tools: Show tool button on mobile devices
@@ -723,7 +728,7 @@ fr:
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
       view_settlements_table: View settlements table
-      manage_user_logins: Manage User Logins
+      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix
@@ -839,12 +844,12 @@ fr:
       success: Utilisateur enregistré avec succès
     destroy:
       success: Utilisateur supprimé avec succès
+    index:
+      on_duty: On duty
     new:
       edit_user: Modifier utilisateur
       new_user: Nouvel utilisateur
       select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
-    index:
-      on_duty: On duty
   various:
     attempt: Attempt
     begin: Begin
@@ -910,6 +915,8 @@ fr:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
   vendors:
     create:
       success: Vendor was successfully created

@@ -79,8 +79,8 @@ cn:
         separate_ticket: 剪票
       order:
         change_given: 改变
-        nr: Number数字
         finished_at: Finished at
+        nr: Number数字
         sum: Sum
       page:
         active: 活跃
@@ -181,18 +181,22 @@ cn:
         default_vendor_id: Log in to Vendor
         hidden: 删除
         language: 语言
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: 登录
+        maximum_shift_duration: Shift duration
         password: 密码
         role: 角色
         screenlock_timeout: 屏幕锁超时 (秒)
         tables: 表
         title: 标题
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: 自动打印
         country: Rules for country
@@ -231,10 +235,6 @@ cn:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -548,10 +548,16 @@ cn:
       split_invoice: 拆分发票
       split_this_item: 点击以拆分此项目
       switch_tax_for_this_item: 更改此项目的税
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
     invoice_item_list:
       count: 数量
       sum: 总数
       unit_price: 单价
+    last:
+      title: Last finished Orders
     login_form:
       email: 你的电子邮件
       login: 登录
@@ -579,8 +585,6 @@ cn:
       search_by_number: 按编号搜索
       sum: 总和
       unit_price: 单价
-    last:
-      title: Last finished Orders
   pages:
     edit:
       edit_page: 编辑页面
@@ -677,6 +681,7 @@ cn:
       manage_statistics_hotel: 查看酒店统计
       manage_tables: 管理桌子
       manage_taxes: 管理税务
+      manage_user_logins: Manage User Logins
       manage_users: 管理用户
       manage_vendors: Manage vendors
       mobile_show_tools: 在移动装置上显示工具按钮
@@ -720,7 +725,7 @@ cn:
       take_orders: 下订单
       view_all_settlements: 查看所有结算
       view_settlements_table: View settlements table
-      manage_user_logins: Manage User Logins
+      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -834,12 +839,12 @@ cn:
       success: 用户成功创建
     destroy:
       success: 用户成功删除
+    index:
+      on_duty: On duty
     new:
       edit_user: 编辑用户
       new_user: 新用户
       select_with_ctrl_key: 选择或以[Ctrl]+滑鼠左键取消选择
-    index:
-      on_duty: On duty
   various:
     attempt: 尝试
     begin: 开始
@@ -899,6 +904,8 @@ cn:
     waiter_was_requested: 你已呼叫服务员。请稍候，我们将很快过来。
     workstation_view: 工作站视图
     your_shift_has_ended: Your shift has ended. Please log out.
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
   vendors:
     create:
       success: Vendor was successfully saved
