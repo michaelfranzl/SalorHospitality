@@ -1,3 +1,27 @@
+salor-hospitality (4.1.4.25) UNRELEASED; urgency=low
+
+  * Create main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+
+ -- BretonFin <brett_sw_eng@yahoo.ca>  Sun, 15 Sep 2013 17:19:04 +0200
+
 salor-hospitality (4.1.4.24) unstable; urgency=low
 
   * sort recent orders by finished_at, display finished_at for settlement printout, highlight username for invoice form
