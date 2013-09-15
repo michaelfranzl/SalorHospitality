@@ -42,3 +42,6 @@ debian/files
 bar
 *.salor
 log/*.yml
+salor-hospitality/.DS_Store
+salor-hospitality/config/.DS_Store
+.DS_Store
