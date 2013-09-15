@@ -61,7 +61,7 @@ Overview
   The software multifunctional, allowing you to monitor, export and print customized accounts, statistics and tax reports, update your wholesalers' price lists, easily split receipts, generate professional invoices, and much more.
   
 **International:**
-  SALOR Hospitality has been translated into 8 languages so far (2012): English, German, French, Spanish, Greek, Russian, Polish, Chinese. Additional languages are currently in the process of translation.
+  SALOR Hospitality has been translated into 11 languages so far (2013): English, German, French, Spanish, Greek, Russian, Polish, Chinese, Dutch, Finnish, Croatian. Additional languages are currently in the process of translation.
 
 **Compatibility:**
   "SALOR Hospitality" will run in the browser of any computer and mobile device like Smartphones, so you needn't buy any special devices. However, Red (E) Ltd. can suggest and source hardware optimized for SalorHospitality -- touchscreens, thermal printers, handhelds or tablets.
