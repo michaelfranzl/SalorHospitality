@@ -1,5 +1,6 @@
-salor-hospitality (4.1.4.25) UNRELEASED; urgency=low
+salor-hospitality (4.1.4.25) unstable; urgency=low
 
+  [ BretonFin ]
   * Create main.fi.yml
   * Update main.fi.yml
   * Update main.fi.yml
@@ -7,20 +8,59 @@ salor-hospitality (4.1.4.25) UNRELEASED; urgency=low
   * Update main.fi.yml
   * Update main.fi.yml
   * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
-  * Update main.fi.yml
 
- -- BretonFin <brett_sw_eng@yahoo.ca>  Sun, 15 Sep 2013 17:19:04 +0200
+  [ majarasic ]
+  * translation to croatian
+
+  [ BretonFin ]
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * Create region.fi-fi.yml
+  * Create system.fi.yml
+  * Update main.fi.yml
+  * Update main.fi.yml
+  * update system for Finnish
+  * Completed updates to system file for Finnish
+  * Final corrections to Finnish translations
+  * Delete x.txt
+  * correct some errors, add Finnish to be selectable
+  * the application.rb possibly needs merging
+  * the application.rb has been updated to get rid of the merge tags and the lines properly merged for the languages
+  * Add missing translations for Finnish
+  * correct recent Finnish translations
+
+  [ EeeCeeGee ]
+  * Dutch localizartion files for SalorHospitality
+  * Dutch localizartion for SH
+
+  [ BretonFin ]
+  * Update Finnish, and Readme.md
+  * Fixed finnish prompt server_not_responded
+  * Fix redmine bug 1739 for no_ticket, and fix spelling unnamed
+
+  [ Michael Franzl ]
+  * build
+  * more translations
+  * updated translations
+  * translation fixes
+  * build
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 15 Sep 2013 18:13:35 +0200
 
 salor-hospitality (4.1.4.24) unstable; urgency=low
 
