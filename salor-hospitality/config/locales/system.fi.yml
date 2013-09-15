@@ -1,0 +1,135 @@
+fi:
+# ==================================================================================
+# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
+# ==================================================================================
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "%{count} virhe esti lomakeen '%{model}' from being saved."
+          other: "%{count} virhettä esti lomakeen '%{model}' tallentamisen."
+        body: "Tarkista seuravat syötöt:"
+
+      messages:
+        inclusion: "ei ole listassa"
+        exclusion: "ei pitaisi olla listassa"
+        invalid: "on virheellinen"
+        confirmation: "ei yhteensopiva"
+        accepted: "on hyväksyttävä"
+        empty: "ei saa olla tyhjä"
+        blank: "ei saa olla täyttämättä"
+        too_long: "on liian pitkä (enitään %{count} kirjainmerkkiä)"
+        too_short: "on liian lyhyt (vähintään %{count} kirjainmerkkiä)"
+        wrong_length: "on vääränpituinen (pitää olla %{count} kirjainmerkkiä)"
+        taken: "on jo ottetu"
+        not_a_number: "ei ole numero"
+        greater_than: "on oltava suurempi kuin %{count}"
+        greater_than_or_equal_to: "on oltava suurempi tai yhtä suuri kuin %{count}"
+        equal_to: "on oltava yhtä suuri kuin %{count}"
+        less_than: "on oltava vähemmin kuin %{count}"
+        less_than_or_equal_to: "on oltava vähemmin tai yhtä suuri kuin %{count}"
+        odd: "on oltava pariton"
+        even: "on oltava parillinen"
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    distance_in_words:
+      half_a_minute: "puoli minuuttia"
+      less_than_x_seconds:
+        one: "alle 1 sekuntia"
+        other: "alle %{count} sekuntia"
+      x_seconds:
+        one: "1 sekunti"
+        other: "%{count} seconds"
+      less_than_x_minutes:
+        one: "alle minuutin"
+        other: "alle %{count} minuuttia"
+      x_minutes:
+        one: "1 minuutti"
+        other: "%{count} minuuttia"
+      about_x_hours:
+        one: "noin 1 tunti"
+        other: "noin %{count} tuntia"
+      x_days:
+        one: "1 päivä"
+        other: "%{count} päivää"
+      about_x_months:
+        one: "noin 1 kuukausi"
+        other: "noin %{count} kuukautta"
+      x_months:
+        one: "1 kuukausi"
+        other: "%{count} kuukautta"
+      about_x_years:
+        one: "melkein 1 vuosi"
+        other: "melkein %{count} vuotta"
+      over_x_years:
+        one: "yli 1 vuosi"
+        other: "yli %{count} vuotta"
+      almost_x_years:
+        one: "melkein 1 vuosi"
+        other: "melkein %{count} vuotta"
+    prompts:
+      year: "vuosi"
+      month: "kuukausi"
+      day: "päivä"
+      hour: "tunti"
+      minute: "minuutti"
+      second: "sekunti"
+
+  helpers:
+    select:
+      # Default value for :prompt => true in FormOptionsHelper
+      prompt: "Valitse"
+
+    # Default translation keys for submit FormHelper
+    submit:
+      create: 'Luo  %{model}'
+      update: 'Päivitä %{model}'
+      submit: 'Tallenna %{model}'
+
+# Used in array.to_sentence.
+  support:
+    array:
+     words_connector:
+      two_words_connector: " ja "
+      last_word_connector: ", ja "
+      
+# ==================================================================================
+# Adaptiert von:
+# /usr/lib/ruby/gems/1.8/gems/activesupport-2.2.1/lib/active_support/locale/en-US.yml
+# ==================================================================================
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%Y-%m-%d"
+      short: "%d. %b"
+      long: "%d. %B %Y"
+
+    day_names: [sunnuntai, maanantai, tiistai, keskiviiko, torstai, perjantai, lauantai]
+    abbr_day_names: [su, ma, ti, ke, to, pe, la]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, tammikuu, helmikuu, maaliskuu, huhtikuu, toukokuu, kesäkuu, heinakuu, elokuu, syyskuu, lokakuu, marraskuu, joulukuu]
+    abbr_month_names: [~, tam, hel, maa, huh, tou, kes, hei, elo, syy, lok, mar, jou]
+    # Used in date_select and datime_select.
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%Y-%m-%d %H:%M:%S"
+      datetime_iso2: "%Y%m%dT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: ""
+    pm: ""
