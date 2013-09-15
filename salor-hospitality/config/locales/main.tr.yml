@@ -539,9 +539,13 @@ tr:
       preparation_list: XXXPreparation list
     invoice_form:
       change_money: XXX Change
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: Fişi sonucla
       move_order: Move order to different table
       print_and_finish: Fişi bas ve siparişi sonucla
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: XXX Assign to Booking
       set_cost_center: Sipariş icin maliyet merkezini ayarla
       set_tax_for_all: Vergi derecesini bütün posizyonlar icin kararlaştır
@@ -550,10 +554,6 @@ tr:
       split_this_item: Posizyonları
       switch_tax_for_this_item: Vergi derecesini bu posizyon icin degistirmek icin
         tiklayin
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: Quantity
       sum: Sum
@@ -666,6 +666,7 @@ tr:
       finish_all_settlements: XXXFinish all settlements
       finish_orders: XXXFinish orders
       finish_own_settlement: XXXFinish own settlement
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
       item_scribe: XXX Enable handwriting
       manage_advertising: Manage Advertising
@@ -729,7 +730,6 @@ tr:
       take_orders: XXXTake orders
       view_all_settlements: XXXView all settlements
       view_settlements_table: View settlements table
-      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -862,6 +862,8 @@ tr:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Download
     end: End
     exception_page:
@@ -914,8 +916,6 @@ tr:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
   vendors:
     create:
       success: Vendor was successfully created

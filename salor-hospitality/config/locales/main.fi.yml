@@ -62,8 +62,8 @@ fi:
         m_points: Kanta-asiakaan pisteet
         postalcode: Postinumero
         state: State
-        telephone: Puhelin
         tax_info: Verotiedot
+        telephone: Puhelin
       group:
         name: Nimi
       guest_type:
@@ -79,8 +79,8 @@ fi:
         separate_ticket: Leikkaa lappu
       order:
         change_given: Muuta
-        nr: Numero
         finished_at: Päättyi
+        nr: Numero
         sum: Summa
       page:
         active: aktiivinen
@@ -181,18 +181,22 @@ fi:
         default_vendor_id: Kirjaudu myyntipisteen sivuille
         hidden: poista?
         language: Kieli
+        layouts:
+          auto: Automaattinen tunnistus
+          mobile: mobiili
+          workstation: normaali
         login: Kirjaudu
+        maximum_shift_duration: Työvuoron kesto
         password: Salasana
         role: Asema
         screenlock_timeout: Näytön lukitus ajan katkaisu (sek.)
         tables: Pöydät
         title: Virkanimike
-        layouts:
-          auto: Automaattinen tunnistus 
-          mobile: mobiili
-          workstation: normaali
-        maximum_shift_duration: Työvuoron kesto
         track_time: Seuraa aikaa
+      user_login:
+        duration: Kesto
+        login: Aloitettu
+        logout: Päättyi
       vendor:
         automatic_printing: Automaattinen tulostus
         country: Maan säännöt
@@ -231,10 +235,6 @@ fi:
         print_button_filename: Ikoni
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
-      user_login:
-        duration: Kesto
-        login: Aloitettu
-        logout: Päättyi
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
@@ -539,9 +539,12 @@ fi:
       preparation_list: Valmistelulista
     invoice_form:
       change_money: Vaihtoraha
+      finish: Suorita ja pysy tässä näytössä
+      finish_gototables: Suorita ja palaa pöytien suunnitteluun
       just_finish: Suorita vain tilaus
       move_order: Siirrä tilauksen eri pöydään
       print_and_finish: Tulosta ja suorita tilaus
+      print_and_finish_gototables: Tulosta, päätä tilaus ja palaa pöytien suunnitteluun
       set_booking: Määritä varaus
       set_cost_center: Anna tilauksen kustannuspaikka
       set_tax_for_all: Anna kaikkien nimikkeiden kustannuspaikat
@@ -549,13 +552,12 @@ fi:
       split_invoice: Erittele lasku
       split_this_item: Klikkaa ja erittele nimikkeet yksi kerrallaan
       switch_tax_for_this_item: Klikkaa muuttaaksesi nimikkeen veroa
-      finish: Suorita ja pysy tässä näytössä
-      finish_gototables: Suorita ja palaa pöytien suunnitteluun
-      print_and_finish_gototables: Tulosta, päätä tilaus ja palaa pöytien suunnitteluun
     invoice_item_list:
       count: Määrä
       sum: Summa
       unit_price: Yksikköhinta
+    last:
+      title: Viimeiset suoritetut tilaukset
     login_form:
       email: sähköpostiosoitteesi
       login: Kirjaudu
@@ -583,8 +585,6 @@ fi:
       search_by_number: Etsi numerolla
       sum: Summa
       unit_price: Yksikköhinta
-    last:
-      title: Viimeiset suoritetut tilaukset
   pages:
     edit:
       edit_page: Muokkaa sivua
@@ -663,6 +663,7 @@ fi:
       finish_all_settlements: Suorita loppuun kaikki tilitykset
       finish_orders: Suorita loppuun tilaukset
       finish_own_settlement: Suoria loppuun oma tilitys
+      immediate_order_finish: Suorita tilaus loppuun tilausnäytöltä
       interim_receipt: Väliaikaiskuitti
       item_scribe: Salli käsin kirjoitus
       manage_advertising: Käsittele mainonta
@@ -682,6 +683,7 @@ fi:
       manage_statistics_hotel: Katsele hotellitilastot
       manage_tables: Käsittele pöydät
       manage_taxes: Käsittele verot
+      manage_user_logins: Käsittele käyttäjän kirjautumiset
       manage_users: Käsittele käyttäjät
       manage_vendors: Käsittele myyntipisteet
       mobile_show_tools: Näytä työkalupainiketta mobiililaitteissa
@@ -727,8 +729,6 @@ fi:
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
-      immediate_order_finish: Suorita tilaus loppuun tilausnäytöltä
-      manage_user_logins: Käsittele käyttäjän kirjautumiset
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu
@@ -844,12 +844,12 @@ fi:
       success: Käyttäjä tallennettu
     destroy:
       success: Käyttäjän poistaminen onnistui
+    index:
+      on_duty: On duty
     new:
       edit_user: Muokkaa käyttäjää
       new_user: Uusi käyttäjä
       select_with_ctrl_key: Valitse tai poista [Ctrl] + hiiren vasen painike kanssa
-    index:
-      on_duty: On duty
   various:
     attempt: Yrittää
     begin: Aloita
@@ -863,6 +863,8 @@ fi:
     customer_request_waiter: Pyydä tarjoilija
     delete: Poista
     display: Näyttä
+    double_submission_warning: ! 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta
+      tekniselle tuelle.'
     download: Lataa
     end: Loppu
     exception_page:
@@ -913,7 +915,6 @@ fi:
     waiter_was_requested: Olet pyytänyt tarjoilijaa. Ole hyvä ja odota hetki, palvelemme
       sinua pian
     workstation_view: Työasemanäkymä
-    double_submission_warning: ! 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta tekniselle tuelle.'
     your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
   vendors:
     create:

@@ -79,7 +79,9 @@ hr:
         separate_ticket: Izreži kartu narudžbe
       order:
         change_given: Promijeni
+        finished_at: Finished at
         nr: Broj
+        sum: Sum
       page:
         active: aktivan
         color: Boja
@@ -179,12 +181,22 @@ hr:
         default_vendor_id: Prijavite se prodavaču
         hidden: obriši?
         language: Jezik
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Prijava
+        maximum_shift_duration: Shift duration
         password: Lozinka
         role: Uloga
         screenlock_timeout: Vremensko ograničenje zaključavanja ekrana (sek.)
         tables: Stolovi
         title: Naslov
+        track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Automatsko ispisivanje
         country: Pravila za zemlju
@@ -491,8 +503,8 @@ hr:
     hello_username: Pozdrav %{name}!
     user_account_is_currently_locked: Korisnički račun je zaključan
   move_order_to_table: Makni narudžbu na drugi stol
-  must_be_entered_either_for_article_or_for_quantity: Mora biti upisano ili za
-    artikl ili za varijantu.
+  must_be_entered_either_for_article_or_for_quantity: Mora biti upisano ili za artikl
+    ili za varijantu.
   net: Net
   new: Novo
   no_printing: Nema ispisa
@@ -503,8 +515,8 @@ hr:
     destroy:
       success: Opcija uspješno obrisana
     index:
-      no_categories_defined: Nema definiranih kategorija. Morate kreirati
-        barem jednu kategoriju kako biste mogli kreirati opciju.
+      no_categories_defined: Nema definiranih kategorija. Morate kreirati barem jednu
+        kategoriju kako biste mogli kreirati opciju.
     new:
       edit_option: Uredi opciju
       hidden: obriši
@@ -527,9 +539,13 @@ hr:
       preparation_list: Popis pripreme
     invoice_form:
       change_money: Promijeni
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: Samo završi narudžbu
       move_order: Makni narudžbu na drugi stol
       print_and_finish: Ispiši i završi ovu narudžbu
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: Dodijeli rezervaciji
       set_cost_center: Postavi troškovni centar za ovu narudžbu
       set_tax_for_all: Postavi troškovni centar za sve artikle
@@ -541,6 +557,8 @@ hr:
       count: Količina
       sum: Ukupno
       unit_price: Jedinična cijena
+    last:
+      title: Last finished Orders
     login_form:
       email: Vaš E-Mail
       login: Prijava
@@ -613,7 +631,8 @@ hr:
       disconnected: Odspojen
       download_reports: Spremi izvješća
       header: Izvješća
-      internet_connection_info: Da biste dobili daljinsku podršku, morate biti spojeni na internet. Ako vidite Red (E) Logo iznad, spojeni ste na internet.
+      internet_connection_info: Da biste dobili daljinsku podršku, morate biti spojeni
+        na internet. Ako vidite Red (E) Logo iznad, spojeni ste na internet.
       password: Lozinka
       remote_support: Daljinska podrška
       requesting_connection_status: Zahtjevanje statusa veze ...
@@ -645,6 +664,7 @@ hr:
       finish_all_settlements: Završi sve obračune
       finish_orders: Završi narudžbe
       finish_own_settlement: Završi vlastiti obračun
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Privremeni račun
       item_scribe: Omogući rukopis
       manage_advertising: Upravljaj oglašavanjem
@@ -664,6 +684,7 @@ hr:
       manage_statistics_hotel: Pogledaj statistike hotela
       manage_tables: Upravljaj stolovima
       manage_taxes: Upravljaj porezima
+      manage_user_logins: Manage User Logins
       manage_users: Upravljaj korisnicima
       manage_vendors: Upravljaj prodavačima
       mobile_show_tools: Pokaži gumb alata na mobilnim uređajima
@@ -677,7 +698,8 @@ hr:
       refund: Povrat novca za artikle
       remote_support: Daljinska podrška
       see_debug: Vidi debug poruke
-      see_item_notifications_static: Sažeti popis obavijesti o artiklima na glavnom zaslonu
+      see_item_notifications_static: Sažeti popis obavijesti o artiklima na glavnom
+        zaslonu
       see_item_notifications_user_delivery: Osobna dostava obavijesti o artiklima
       see_item_notifications_user_preparation: Osobna priprema obavijesti o artiklima
       see_item_notifications_vendor_delivery: Dostava obavijesti o artiklima prodavaču
@@ -685,7 +707,8 @@ hr:
       settlement_statistics_sold_quantities: Pokaži obračunske statistike o prodanim
         količinama
       settlement_statistics_taxes: Pokaži statistike obračunskog poreza
-      settlement_statistics_taxes_categories: Pokaži statistike obračunskog poreza prema kategoriji
+      settlement_statistics_taxes_categories: Pokaži statistike obračunskog poreza
+        prema kategoriji
       split_items: Podijeli artikle
       statistics:
         statistics_category: Kategorije
@@ -737,13 +760,14 @@ hr:
       new_season: Novo godišnje doba
   send_and_go_back: Spremi i odi natrag
   served_by_X_on_table_Y: Poslužio Vas je %{waiter} na stolu %{table}
-  server_no_response: Bill Gastro Server više ne reagira. Ili je zauzet
-    ili je radio link prekinut.
+  server_no_response: Bill Gastro Server više ne reagira. Ili je zauzet ili je radio
+    link prekinut.
   sessions:
     browser_warning:
       continue: Nastavi
       warning: Salor jedino podržava preglednike Google Chrome (Windows), Chromium
-        (Linux) ili Safari (Apple). Molimo Vas koristite jedan od ovih preglednika te pokušajte ponovno.
+        (Linux) ili Safari (Apple). Molimo Vas koristite jedan od ovih preglednika
+        te pokušajte ponovno.
     new:
       email: Vaš E-Mail
       login: Prijava
@@ -821,10 +845,13 @@ hr:
       success: Korisnik je uspješno spremljen
     destroy:
       success: Korisnik je uspješno obrisan
+    index:
+      on_duty: On duty
     new:
       edit_user: Uredi korisnika
       new_user: Novi korisnik
-      select_with_ctrl_key: Označite ili ukinite označenost [Ctrl] + Lijeva tipka miša
+      select_with_ctrl_key: Označite ili ukinite označenost [Ctrl] + Lijeva tipka
+        miša
   various:
     attempt: Pokušaj
     begin: Počni
@@ -838,11 +865,13 @@ hr:
     customer_request_waiter: Zatraži konobara
     delete: Obriši
     display: Prikaži
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Preuzmi
     end: Kraj
     exception_page:
-      assistance_text: Molimo Vas kliknite na gumb "POČETNA" i pokušajte ponovno. Ako vidite
-        istu grešku dvaput, molimo Vas kontaktirajte našu korisničku podršku.
+      assistance_text: Molimo Vas kliknite na gumb "POČETNA" i pokušajte ponovno.
+        Ako vidite istu grešku dvaput, molimo Vas kontaktirajte našu korisničku podršku.
       exception_description: ! 'Opis pogreške:'
       exception_in_files: ! 'Došlo je do pogreške u sljedećim datotekama:'
       oops_an_error_occurred: Ups! Došlo je do pogreške
@@ -867,18 +896,19 @@ hr:
     restaurant: Restoran
     save: Spremi
     sending: Šaljem...
-    server_error: Ups! Došlo je do interne serverske pogreške. Molimo Vas provjerite podnošenje
-      narudžbe na drugom uređaju.
+    server_error: Ups! Došlo je do interne serverske pogreške. Molimo Vas provjerite
+      podnošenje narudžbe na drugom uređaju.
     server_error_short: Serverska pogreška
-    server_not_responded: Nema odgovora od servera. Provjerite podnošenje narudžbe na drugom
-      uređaju. Nakon toga, ponovno podnešenu narudžbu prekinite kako biste obrisali promjene.
+    server_not_responded: Nema odgovora od servera. Provjerite podnošenje narudžbe
+      na drugom uređaju. Nakon toga, ponovno podnešenu narudžbu prekinite kako biste
+      obrisali promjene.
     sold_quantities: Prodane količine
     statistics: Statistike
     subtotal: Suma stavke
     successfully_sent: Artikli su uspješno poslani.
     switched_to_vendor: Prodavač '%{vendorname}'
-    table_contains_offline_items: Prikazujem samo offline artikle. Pokušajte ponoviti predaju ili
-      pritisnite gumb odustani za brisanje offline artikala.
+    table_contains_offline_items: Prikazujem samo offline artikle. Pokušajte ponoviti
+      predaju ili pritisnite gumb odustani za brisanje offline artikala.
     tax: Porez
     tax_amount: Iznos
     time: Vrijeme
@@ -889,6 +919,7 @@ hr:
     waiter_was_requested: Zatražili ste konobara. Molimo Vas imajte malo strpljenja,
       uskoro ćemo biti tamo za Vas.
     workstation_view: Pogled radne stanice
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Prodavač je uspješno spremljen

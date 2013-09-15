@@ -538,9 +538,13 @@ cn:
       preparation_list: 准备清单
     invoice_form:
       change_money: 改变
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: 完毕
       move_order: 将订单移到其他桌子
       print_and_finish: 打印并完成此订单
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: 设置预订
       set_cost_center: 设置此订单的成本中心
       set_tax_for_all: 设置所有订单的成本中心
@@ -548,10 +552,6 @@ cn:
       split_invoice: 拆分发票
       split_this_item: 点击以拆分此项目
       switch_tax_for_this_item: 更改此项目的税
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: 数量
       sum: 总数
@@ -662,6 +662,7 @@ cn:
       finish_all_settlements: 完成所有结算
       finish_orders: 完成订单
       finish_own_settlement: 完成自己结算
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
       item_scribe: 允许手写
       manage_advertising: Manage Advertising
@@ -725,7 +726,6 @@ cn:
       take_orders: 下订单
       view_all_settlements: 查看所有结算
       view_settlements_table: View settlements table
-      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -858,6 +858,8 @@ cn:
     customer_request_waiter: 呼叫服务员
     delete: 删除
     display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Download
     end: 终结
     exception_page:
@@ -904,8 +906,6 @@ cn:
     waiter_was_requested: 你已呼叫服务员。请稍候，我们将很快过来。
     workstation_view: 工作站视图
     your_shift_has_ended: Your shift has ended. Please log out.
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
   vendors:
     create:
       success: Vendor was successfully saved

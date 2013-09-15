@@ -59,7 +59,7 @@ nl:
         language: Taal
         last_name: Achternaam
         m_number: Klantenkaart Code
-        m_points: Klantenkaart Punten 
+        m_points: Klantenkaart Punten
         postalcode: Postcode
         state: Staat
         tax_info: Belastingsinformatie
@@ -80,6 +80,8 @@ nl:
       order:
         change_given: Verander
         nr: Nummer
+        finished_at: Finished at
+        sum: Sum
       page:
         active: actief
         color: Kleur
@@ -121,8 +123,6 @@ nl:
         hidden: verwijderen
         room_type_id: Kamer Type
         season_id: Seizoen
-        hidden: verwijderen
-        name: Naam
       season:
         from_date: Van
         hidden: verwijderen
@@ -184,6 +184,12 @@ nl:
         screenlock_timeout: Schermslot timeout (sec.)
         tables: Tabellen
         title: Titel
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
+        maximum_shift_duration: Shift duration
+        track_time: Track time
       vendor:
         automatic_printing: Automatisch afdrukken
         country: Regels voor het land
@@ -192,7 +198,7 @@ nl:
         hidden: verwijderen
         invoice_footer_blurb: kwitantie logo voet
         invoice_header_blurb: Promotionele informatie in de kop van de factuur
-        invoice_logo: logo papieren factuur 
+        invoice_logo: logo papieren factuur
         logo: Scherm logo
         name: Naam
         receipt_footer_blurb: Promotionele informatie in de voet van de kwitantie
@@ -222,6 +228,13 @@ nl:
         print_button_filename: Icoon
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
+      room_type:
+        hidden: delete
+        name: Name
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Voorvoegsel toevoegsel moet worden gegevens
@@ -329,7 +342,7 @@ nl:
         one: BTW-tariefgroep
         other: BTW-tariefgroepen
       tax_amount:
-        one:belastingbedrag
+        one: belastingbedrag
         other: belastingbedragen
       user:
         one: Gebruiker
@@ -347,7 +360,7 @@ nl:
       license_limited: Uw licentie is beperkt tot %{count} artikelen
       success: Artikel is succesvol opgeslagen
     destroy:
-      success:Artikel is succesvol verwijderd
+      success: Artikel is succesvol verwijderd
     find:
       variants:
         one: Variant
@@ -490,11 +503,11 @@ nl:
     hello_username: Hallo %{name}!
     user_account_is_currently_locked: Account is geblokkeerd
   move_order_to_table: Verplaats bestelling naar een andere tafel
-  must_be_entered_either_for_article_or_for_quantity: moeten ofwel worden ingevoerd voor het
-       Artikel of voor de Variant.
+  must_be_entered_either_for_article_or_for_quantity: moeten ofwel worden ingevoerd
+    voor het Artikel of voor de Variant.
   net: Netto
   new: Nieuw
-  no_printing:  geen afdrukken
+  no_printing: geen afdrukken
   not_found: Niet gevonden
   options:
     create:
@@ -502,8 +515,8 @@ nl:
     destroy:
       success: Optie succesvol verwijderd
     index:
-      no_categories_defined: Er zijn geen categorieën gedefinieerd. Je moet tenminste een 
-      categorie aanmaken oom een optie te creëren..
+      no_categories_defined: Er zijn geen categorieën gedefinieerd. Je moet tenminste
+        een categorie aanmaken oom een optie te creëren.
     new:
       edit_option: Bewerk Optie
       hidden: verwijderen
@@ -527,7 +540,7 @@ nl:
     invoice_form:
       change_money: Verander
       just_finish: De bestelling afronden
-      move_order:Verplaats bestelling naar een andere tafel
+      move_order: Verplaats bestelling naar een andere tafel
       print_and_finish: Printen en de bestelling afronden
       set_booking: Toewijzen aan reservering
       set_cost_center: Stel kostenplaats voor deze bestelling
@@ -536,6 +549,10 @@ nl:
       split_invoice: Deel rekening
       split_this_item: Klik om de artikelen te splitsen in een artikel per keer
       switch_tax_for_this_item: Klik om de btw voor dit artikel te wijzigen
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
     invoice_item_list:
       count: Hoeveelheid
       sum: Bedrag
@@ -567,6 +584,8 @@ nl:
       search_by_number: Zoeken op nummer
       sum: Bedrag
       unit_price: eenheidsprijs
+    last:
+      title: Last finished Orders
   pages:
     edit:
       edit_page: Pagina bewerken
@@ -578,7 +597,7 @@ nl:
     new:
       new_page: Nieuwe Pagina
   partials:
-    default_blurb:Bewerk me
+    default_blurb: Bewerk me
     error_during_evaluation: ! 'Fout: '
     no_presentation_found:
       no_presentations_found: Geen sjabloon gedefinieerd voor deze partial.
@@ -593,7 +612,7 @@ nl:
   presentations:
     new:
       edit_presentation: Template bewerken
-      new_presentation:NieuweTemplate
+      new_presentation: NieuweTemplate
   print: Afdrukken
   print_and_finish: Voltooien en afdrukken
   printing_test: Test afdruk
@@ -612,8 +631,9 @@ nl:
       disconnected: Losgekoppeld
       download_reports: Bewaar rapporten
       header: Rapporten
-      internet_connection_info: Om Remote Support te krijgen, moet u verbonden zijn met het
-               internet. Als u het rode (E) Logo ziet hierboven, bent u met het internet verbonden.
+      internet_connection_info: Om Remote Support te krijgen, moet u verbonden zijn
+        met het internet. Als u het rode (E) Logo ziet hierboven, bent u met het internet
+        verbonden.
       password: Wachtwoord
       remote_support: Ondersteuning op afstand
       requesting_connection_status: Status van de verbinding aanvragen..
@@ -627,7 +647,7 @@ nl:
     destroy:
       success: Rol succesvol verwijderd
     new:
-      add_option_to_sent_item:  Voeg opties toe aan verzonden Items
+      add_option_to_sent_item: Voeg opties toe aan verzonden Items
       allow_exit: Sta afsluiten toe
       assign_cost_center: Toewijzen kostenplaats
       assign_order_to_booking: Toewijzen order aan een reservering
@@ -668,8 +688,8 @@ nl:
       manage_vendors: Beheer verkopers
       mobile_show_tools: Laat bewerken knop op mobiele apparaten zien
       move_order: Verplaats bestelling
-      move_order_from_invoice_form:  Verplaats bestelling naar tafel naar factuurformulier
-      move_tables:Verplaats tafels
+      move_order_from_invoice_form: Verplaats bestelling naar tafel naar factuurformulier
+      move_tables: Verplaats tafels
       new_role: Nieuwe Rol
       permissions: Toestemmingen
       reactivate_orders: Reactiveer bestellingen
@@ -685,7 +705,8 @@ nl:
       settlement_statistics_sold_quantities: Toon schikking statistieken over verkoop
         aantallen
       settlement_statistics_taxes: Toon schikking fiscale statistieken
-      settlement_statistics_taxes_categories: Toon schikking fiscale statistieken per categorie
+      settlement_statistics_taxes_categories: Toon schikking fiscale statistieken
+        per categorie
       split_items: Verdeel artikelen
       statistics:
         statistics_category: Categorieën
@@ -707,6 +728,8 @@ nl:
       take_orders: Neem bestelloing op
       view_all_settlements: Bekijk alle akkoorden
       view_settlements_table: Bekijk akkoorden tabel
+      immediate_order_finish: Finish order from order screen
+      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Maak een prijsstructuur
@@ -715,7 +738,7 @@ nl:
       new_room_price: Nieuwe kamerprijs
   room_types:
     new:
-      edit_room_type:  Bewerk kamer type
+      edit_room_type: Bewerk kamer type
       new_room_type: Nieuwe kamer type
   rooms:
     create:
@@ -723,7 +746,7 @@ nl:
     destroy:
       success: Kamer succesvol verwijderd
     new:
-      edit_room:  Bewerk Kamer
+      edit_room: Bewerk Kamer
       new_room: Nieuwe kamer
   scopes:
     active: Actief
@@ -733,18 +756,18 @@ nl:
   scroll_up: scroll naar boven
   seasons:
     new:
-      edit_season:  Bewerk Seizoen
+      edit_season: Bewerk Seizoen
       new_season: Nieuw Seizoen
   send_and_go_back: Bewaar en ga terug
   served_by_X_on_table_Y: U werd geholpen door %{waiter} aann tafel %{table}
   server_no_response: The Bill Gastro Server reageert niet meer. De server is overbelast
-       of de draadloze verbinding wordt afgebroken.
+    of de draadloze verbinding wordt afgebroken.
   sessions:
     browser_warning:
       continue: Ga verder
       warning: Salor ondersteunt alleen de Google Chrome-browser (Windows), Chromium
-               (Linux) of Safari (Apple). Installeert a.u.b. een van deze browsers en
-               probeer het opnieuw.
+        (Linux) of Safari (Apple). Installeert a.u.b. een van deze browsers en probeer
+        het opnieuw.
     new:
       email: Uw E-Mail
       login: Login
@@ -759,7 +782,8 @@ nl:
     detailed_list:
       changed_price: ! '%{byuser} heeft prijs veranderd'
       count: Count
-      order_number_on_table_on_date: ! '%{order} nummer %{number} aan %{table} om %{time}'
+      order_number_on_table_on_date: ! '%{order} nummer %{number} aan %{table} om
+        %{time}'
       reduced_count: Aantal verminderd %{maxcount} naar %{count}.
       revenue: inkomsten
       total: Totaal
@@ -784,7 +808,7 @@ nl:
   statistic: Statistic
   statistic_categories:
     new:
-      edit_statistic_category:  Bewerk Statistic-Categorie
+      edit_statistic_category: Bewerk Statistic-Categorie
       new_statistic_category: Nieuw Statistic-Categorie
   statistics:
     index:
@@ -794,14 +818,14 @@ nl:
       weekday: Weekdag
   stocks:
     new:
-      edit_stock:  Bewerk voorraad
+      edit_stock: Bewerk voorraad
       new_stock: Nieuwe voorraad
   sum: Sum
   surcharges:
     new:
       add_tax_amount: BTW toevoegen
       common_surcharge: gemeenschappelijke toeslag
-      edit_surcharge:  Bewerk toeslag
+      edit_surcharge: Bewerk toeslag
       new_surcharge: Nieuwe toeslag
   tables:
     create:
@@ -810,12 +834,12 @@ nl:
     destroy:
       success: Tafel succesvol verwijderd
     new:
-      edit_table:  Bewerk Tafel
+      edit_table: Bewerk Tafel
       new_table: Nieuwe Tafel
   tax_amount: Belastingbedrag
   taxes:
     new:
-      edit_tax:  Bewerk BTW-tariefgroep
+      edit_tax: Bewerk BTW-tariefgroep
       new_tax: Nieuww BTW-tariefgroep
   users:
     create:
@@ -823,9 +847,11 @@ nl:
     destroy:
       success: Gebruiker succesvol verwijderd
     new:
-      edit_user:  Bewerk Gebruiker
+      edit_user: Bewerk Gebruiker
       new_user: Nieuwe Gebruiker
       select_with_ctrl_key: Selecteer of deselecteer met [Ctrl] + linker muisknop
+    index:
+      on_duty: On duty
   various:
     attempt: Poging
     begin: Begin
@@ -842,12 +868,11 @@ nl:
     download: Downloaden
     end: End
     exception_page:
-      assistance_text: Klik dan op de "HOME" knop en probeer het opnieuw.Als de fout weer optreedt, neem dan a.u.b. contact op met Customer Support..
-        exception_description: ! 'Fout Omschrijving:'
-        exception_in_files: ! 'De fout is opgetreden in de volgende bestanden:'
-        oops_an_error_occurred: Oeps! Er is een fout opgetreden
-        finish_was_requested: Je hebt betaling aangevraagd. Even geduld a.u.b,
-     we zullen er binnenkort voor je zijn ..
+      assistance_text: Klik dan op de "HOME" knop en probeer het opnieuw.Als de fout
+        weer optreedt, neem dan a.u.b. contact op met Customer Support..
+      exception_description: ! 'Fout Omschrijving:'
+      exception_in_files: ! 'De fout is opgetreden in de volgende bestanden:'
+      oops_an_error_occurred: Oeps! Er is een fout opgetreden
     go: Ga!
     home: Thuis
     hotel: Hotel
@@ -856,8 +881,8 @@ nl:
     mobile_view: Weergave mobile apparaat
     no_connection: Geen verbinding
     no_connection_giving_up: Geen verbinding. Opgegeven.
-    no_connection_retry: Geen verbinding met de server. Opnieuw te verzenden? Indien u annuleert, worden de
-           artikelen lokaal opgeslagen.
+    no_connection_retry: Geen verbinding met de server. Opnieuw te verzenden? Indien
+      u annuleert, worden de artikelen lokaal opgeslagen.
     no_connection_retrying: Geen verbinding. Wordt opnieuw geprobeerd
     order_will_be_confirmed: Uw bestelling zal worden bevestigd door een ober
     pay: Betalen
@@ -867,17 +892,19 @@ nl:
     restaurant: Restaurant
     save: Bewaren
     sending: Versturen...
-    server_error: Oeps! Er is een interne serverfout. Controleer uw bestelling op een ander apparaat..
+    server_error: Oeps! Er is een interne serverfout. Controleer uw bestelling op
+      een ander apparaat..
     server_error_short: Server fout
-    server_not_responded: Geen reactie van de server. Controleer uw bestelling op een ander apparaat. 
-                            Daarna, opniuew versturen of annuleren om de wijzigingen te verwijderen.
+    server_not_responded: Geen reactie van de server. Controleer uw bestelling op
+      een ander apparaat. Daarna, opniuew versturen of annuleren om de wijzigingen
+      te verwijderen.
     sold_quantities: Verkochte hoeveelheden
     statistics: Statistieken
     subtotal: Subtotaal
     successfully_sent: De items werden succesvol verzonden.
     switched_to_vendor: Verkoper '%{vendorname}'
     table_contains_offline_items: Deze tabel bevat artikelen die nog niet zijn verzonden
-           waren. Stuur nu?
+      waren. Stuur nu?
     tax: Belasting
     tax_amount: Bedrag
     time: Tijd
@@ -885,9 +912,14 @@ nl:
     translations: Vertaling
     unamed: Naamloos
     unit_price_abbreviation: SB
-    waiter_was_requested: U heeft een ober aangevraagd. Even geduld a.u.b,
-           we zullen er zo voor U zijn.
+    waiter_was_requested: U heeft een ober aangevraagd. Even geduld a.u.b, we zullen
+      er zo voor U zijn.
     workstation_view: Workstation uizicht
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
+    your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
       success: Verkoper is successvol bewaard
@@ -897,14 +929,14 @@ nl:
       add_printer: Voeg printer toe
       identify_printers: Identificeer Printers
       print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser,
-       Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
+        Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test alle karakters
     index:
-      edit:  Bewerk
+      edit: Bewerk
       switch_to: Selecteer
     new:
-      edit_vendor:  Bewerk Verkoper
+      edit_vendor: Bewerk Verkoper
       new_vendor: Nieuwe Verkoper
   violet: Violet
   waiter: Ober
