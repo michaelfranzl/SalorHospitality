@@ -15,7 +15,7 @@ nl:
         exclusion: "moet niet in de lijst"
         invalid: "is ongeldig"
         confirmation: "komt niet overeen"
-        accepted: "moet worden aanvaard 
+        accepted: "moet worden aanvaard "
         empty: "mag niet leeg zijn"
         blank: "moet worden ingevuld"
         too_long: "is te lang (maximum %{count} karakters)"

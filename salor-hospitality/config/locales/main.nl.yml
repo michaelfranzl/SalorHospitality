@@ -79,8 +79,8 @@ nl:
         separate_ticket: Bon knippen
       order:
         change_given: Verander
-        nr: Nummer
         finished_at: Finished at
+        nr: Nummer
         sum: Sum
       page:
         active: actief
@@ -123,6 +123,9 @@ nl:
         hidden: verwijderen
         room_type_id: Kamer Type
         season_id: Seizoen
+      room_type:
+        hidden: delete
+        name: Name
       season:
         from_date: Van
         hidden: verwijderen
@@ -163,7 +166,7 @@ nl:
         include_in_statistics: Oplossing statistieken
         letter: Afkorting
         name: Naam
-        percent: Belasting in %
+        percent: 'Belasting in %'
         statistics_by_category: Oplossingen statistieken per categorie
       tax_amount:
         amount: Bedrag
@@ -178,18 +181,22 @@ nl:
         default_vendor_id: Meldt U aan als verkoper
         hidden: verwijderen?
         language: Taal
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: Login
+        maximum_shift_duration: Shift duration
         password: Wachtwoord
         role: Rol
         screenlock_timeout: Schermslot timeout (sec.)
         tables: Tabellen
         title: Titel
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: Automatisch afdrukken
         country: Regels voor het land
@@ -228,13 +235,6 @@ nl:
         print_button_filename: Icoon
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
-      room_type:
-        hidden: delete
-        name: Name
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
     errors:
       messages:
         prefix_or_postfix_must_be_given: Voorvoegsel toevoegsel moet worden gegevens
@@ -539,9 +539,13 @@ nl:
       preparation_list: Voorbereidings lijst
     invoice_form:
       change_money: Verander
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: De bestelling afronden
       move_order: Verplaats bestelling naar een andere tafel
       print_and_finish: Printen en de bestelling afronden
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: Toewijzen aan reservering
       set_cost_center: Stel kostenplaats voor deze bestelling
       set_tax_for_all: Stel kostenplaats voor alle artikelen
@@ -549,14 +553,12 @@ nl:
       split_invoice: Deel rekening
       split_this_item: Klik om de artikelen te splitsen in een artikel per keer
       switch_tax_for_this_item: Klik om de btw voor dit artikel te wijzigen
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: Hoeveelheid
       sum: Bedrag
       unit_price: eenheidsprijs
+    last:
+      title: Last finished Orders
     login_form:
       email: Uw E-Mail
       login: Login
@@ -584,8 +586,6 @@ nl:
       search_by_number: Zoeken op nummer
       sum: Bedrag
       unit_price: eenheidsprijs
-    last:
-      title: Last finished Orders
   pages:
     edit:
       edit_page: Pagina bewerken
@@ -665,6 +665,7 @@ nl:
       finish_all_settlements: Beeindig alle overeenstemmingen
       finish_orders: Beeindig bestellingen
       finish_own_settlement: Beeindig eigen overeenkomst
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Tussentijdse ontvangst
       item_scribe: Aanzetten handschrift
       manage_advertising: Beheer Advertenties
@@ -684,6 +685,7 @@ nl:
       manage_statistics_hotel: Bekijk hotel statistieken
       manage_tables: Beheer tabellen
       manage_taxes: Beheer Belastingen
+      manage_user_logins: Manage User Logins
       manage_users: Beheer gebruikers
       manage_vendors: Beheer verkopers
       mobile_show_tools: Laat bewerken knop op mobiele apparaten zien
@@ -728,8 +730,6 @@ nl:
       take_orders: Neem bestelloing op
       view_all_settlements: Bekijk alle akkoorden
       view_settlements_table: Bekijk akkoorden tabel
-      immediate_order_finish: Finish order from order screen
-      manage_user_logins: Manage User Logins
   room_prices:
     index:
       generate_price_skeleton: Maak een prijsstructuur
@@ -846,12 +846,12 @@ nl:
       success: Gebruiker succesvol opgeslagen
     destroy:
       success: Gebruiker succesvol verwijderd
+    index:
+      on_duty: On duty
     new:
       edit_user: Bewerk Gebruiker
       new_user: Nieuwe Gebruiker
       select_with_ctrl_key: Selecteer of deselecteer met [Ctrl] + linker muisknop
-    index:
-      on_duty: On duty
   various:
     attempt: Poging
     begin: Begin
@@ -865,6 +865,8 @@ nl:
     customer_request_waiter: Vraag om een kelner
     delete: Verwijderen
     display: Tonen
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Downloaden
     end: End
     exception_page:
@@ -873,6 +875,8 @@ nl:
       exception_description: ! 'Fout Omschrijving:'
       exception_in_files: ! 'De fout is opgetreden in de volgende bestanden:'
       oops_an_error_occurred: Oeps! Er is een fout opgetreden
+    finish_was_requested: You have requested payment. Please have a little patience,
+      we will be there for your shortly.
     go: Ga!
     home: Thuis
     hotel: Hotel
@@ -915,10 +919,6 @@ nl:
     waiter_was_requested: U heeft een ober aangevraagd. Even geduld a.u.b, we zullen
       er zo voor U zijn.
     workstation_view: Workstation uizicht
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
-    finish_was_requested: You have requested payment. Please have a little patience,
-      we will be there for your shortly.
     your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
@@ -928,8 +928,7 @@ nl:
     form:
       add_printer: Voeg printer toe
       identify_printers: Identificeer Printers
-      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser,
-        Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
+      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser, Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test alle karakters
     index:
