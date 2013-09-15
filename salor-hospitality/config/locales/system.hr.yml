@@ -1,0 +1,135 @@
+hr:
+# ==================================================================================
+# /usr/lib/ruby/gems/1.8/gems/activerecord-2.2.1/lib/active_record/locale/en-US.yml
+# ==================================================================================
+  activerecord:
+    errors:
+      template:
+        header:
+          one:  "%{count} pogreška je spriječila obrazac '%{model}' od spremanja."
+          other:  "%{count} pogreške su spriječile obrazac '%{model}' od spremanja."
+        body: "Molimo Vas provjerite sljedeće unose:"
+
+      messages:
+        inclusion: "nije na popisu"
+        exclusion: "ne bi trebao biti na popisu"
+        invalid: "je neispravan"
+        confirmation: "ne odgovara"
+        accepted: "mora biti prihvaćeno"
+        empty: "ne smije biti prazan"
+        blank: "ne smije biti praznina"
+        too_long: "predugačko je (maksimalno %{count} znakova)"
+        too_short: "prekratko je (minimalno %{count} znakova)"
+        wrong_length: "kriva je duljina (trebalo bi biti %{count} znakova)"
+        taken: "već je zauzeto"
+        not_a_number: "nije broj"
+        greater_than: "mora biti veće od %{count}"
+        greater_than_or_equal_to: "mora biti veće od ili jednako %{count}"
+        equal_to: "mora biti jednako %{count}"
+        less_than: "mora biti manje od %{count}"
+        less_than_or_equal_to: "mora biti manje od ili jednako %{count}"
+        odd: "mora biti neparan"
+        even: "mora biti paran"
+
+  # Used in distance_of_time_in_words(), distance_of_time_in_words_to_now(), time_ago_in_words()
+  datetime:
+    distance_in_words:
+      half_a_minute: "pola minute"
+      less_than_x_seconds:
+        one:   "manje od 1 sekunde"
+        other: "manje od %{count} sekundi"
+      x_seconds:
+        one:   "1 sekunda"
+        other: "%{count} sekundi"
+      less_than_x_minutes:
+        one:   "manje od minute"
+        other: "manje od %{count} minuta"
+      x_minutes:
+        one:   "1 minuta"
+        other: "%{count} minuta"
+      about_x_hours:
+        one:   "otprilike 1 sat"
+        other: "otprilike %{count} sati"
+      x_days:
+        one:   "1 dan"
+        other: "%{count} dana"
+      about_x_months:
+        one:   "otprilike 1 mjesec"
+        other: "otprilike %{count} mjeseci"
+      x_months:
+        one:   "1 mjesec"
+        other: "%{count} mjeseci"
+      about_x_years:
+        one:   "otprilike 1 godina"
+        other: "otprilike %{count} godina"
+      over_x_years:
+        one:   "više od 1 godine"
+        other: "više od %{count} godina"
+      almost_x_years:
+        one:   "skoro 1 godina"
+        other: "skoro %{count} godina"
+    prompts:
+      year:   "Godina"
+      month:  "Mjesec"
+      day:    "Dan"
+      hour:   "Sat"
+      minute: "Minuta"
+      second: "Sekunde"
+
+  helpers:
+    select:
+      # Default value for :prompt => true in FormOptionsHelper
+      prompt: "Molimo Vas odaberite"
+
+    # Default translation keys for submit FormHelper
+    submit:
+      create: 'Kreiraj %{model}'
+      update: 'Ažuriraj %{model}'
+      submit: 'Spremi %{model}'
+
+# Used in array.to_sentence.
+  support:
+    array:
+     words_connector:
+      two_words_connector: " i "
+      last_word_connector: ", i "
+      
+# ==================================================================================
+# Adaptiert von:
+# /usr/lib/ruby/gems/1.8/gems/activesupport-2.2.1/lib/active_support/locale/en-US.yml
+# ==================================================================================
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      # When no format has been given, it uses default.
+      # You can provide other formats here if you like!
+      default: "%d-%m-%Y"
+      short: "%d. %b"
+      long: "%d. %B  %Y"
+
+    day_names: [Nedjelja, Ponedjeljak, Utorak, Srijeda, Četvrtak, Petak, Subota]
+    abbr_day_names: [Ne, Po, Ut, Sr, Če, Pe, Su]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Siječanj, Veljača, Ožujak, Travanj, Svibanj, Lipanj, Srpanj, Kolovoz, Rujan, Listopad, Studeni, Prosinac]
+    abbr_month_names: [~, Sij, Velj, Ožu, Tra, Svi, Lip, Srp, Kol, Ruj, Lis, Stu, Pro]
+    # Used in date_select and datime_select.
+    order:
+      - :dan
+      - :mjesec
+      - :godina
+
+  time:
+    formats:
+      default: "%a, %d. %b. %Y, %H:%M:%S %z"
+      short: "%d. %b. %y  %y %H:%M"
+      long: "%d. %B %Y %H:%M:%S"
+      datetime_iso: "%d-%m%Y %H:%M:%S"
+      datetime_iso2: "%d%m%YT%H%M%S"
+      date_normal: "%d. %B %Y"
+      date_short: "%d. %b %y"
+      date_iso: "%Y-%m-%d"
+      time_short: "%H:%M"
+      month_and_day: "%d. %B"
+    am: ""
+    pm: ""
