@@ -1,0 +1,916 @@
+---
+hr:
+  activerecord:
+    attributes:
+      article:
+        active: aktivan
+        category_id: Kategorija
+        description: Opis
+        hidden: obriši
+        image: Slika
+        name: Ime
+        price: Cijena
+        statistic_category_id: Statistička-Kategorija
+        taxes: Porez
+        usage: Uporaba
+      booking_item:
+        base_price: Cijena
+        count: Broji
+        duration: Dani
+        sum: Ukupno
+      camera:
+        active: aktivan
+        description: Opis
+        hidden: obriši
+        host_external: Vanjski host
+        host_internal: Unutarnji host
+        name: Ime
+        port: Port
+        url_snapshot: Parametri snimke
+        url_stream: Parametri toka
+      category:
+        color: Boja
+        custom_icon: Moja ikona
+        food: Hrana?
+        hidden: obriši
+        icon: Ikona
+        image: Ikona
+        name: Ime
+        separate_print: Izreži kartu narudžbe
+        tax_id: Porez
+        user_id: Pripremanje korisnika
+        vendor_printer_id: Pisač
+      cost_center:
+        active: aktivan?
+        description: Opis
+        hidden: obriši
+        name: Ime
+        no_payment_methods: Nema načina plaćanja
+      customer:
+        address: Adresa
+        cellphone: Broj mobitela
+        city: Grad
+        company_name: Ime tvrtke
+        default_table_id: Standardni stol
+        email: email
+        first_name: Ime
+        full_name: Ime
+        hidden: obriši
+        language: Jezik
+        last_name: Prezime
+        m_number: Kod kartice vjernosti
+        m_points: Bodovi vjernosti
+        postalcode: Poštanski broj
+        state: Država
+        tax_info: Info o porezu
+        telephone: Telefon
+      group:
+        name: Ime
+      guest_type:
+        hidden: obriši
+        name: Ime
+        taxes: Porezi
+      option:
+        category_id: Kategorija
+        hidden: Obriši
+        name: Ime
+        no_ticket: Nemoj ispisati kartu narudžbe
+        price: Cijena
+        separate_ticket: Izreži kartu narudžbe
+      order:
+        change_given: Promijeni
+        nr: Broj
+      page:
+        active: aktivan
+        color: Boja
+        height: Visina
+        hidden: obriši
+        image: Slika
+        width: Širina
+      partial:
+        active: aktivan
+        blurb: Promotivna obavijest
+        hidden: obriši
+      payment_method:
+        cash: Gotovina
+        change: Promijeni
+        name: Ime
+      payment_method_item:
+        amount: Količina
+      presentation:
+        active: aktivan
+        code: Ruby kod
+        description: Opis
+        hidden: obriši
+        markup: Secure ERB Markup
+        model: Vrsta
+        name: Ime
+      quantity:
+        active: aktivan
+        description: Opis
+        hidden: obriši
+        postfix: Postfiks
+        prefix: Ime
+        price: Varijanta cijene
+        usage: uporaba
+      role:
+        name: Ime
+      room_price:
+        base_price: Osnovna cijena
+        guest_type_id: Vrsta gosta
+        hidden: obriši
+        room_type_id: Vrsta sobe
+        season_id: Godišnje doba
+      room_type:
+        hidden: obriši
+        name: Ime
+      season:
+        from_date: Od
+        hidden: obriši
+        is_master: Glavno?
+        name: Ime
+        to_date: Do
+      settlement:
+        initial_cash: Inicijalni iznos
+        revenue: Konačni iznos
+      statistic_category:
+        hidden: obriši
+        name: Ime
+      surcharge:
+        amount: Iznos
+        guest_type_id: Vrsta gosta
+        hidden: obriši
+        name: Ime
+        radio_select: Radio odabir
+        season_id: Godišnje doba
+        selected: Odabrano prema standardu
+        visible: Vidljivo?
+      table:
+        abbreviation: Skraćenica
+        booking_table: Rezervacija
+        customer_table: Kupac
+        description: Opis
+        enabled: aktivan?
+        height: Visina
+        height_mobile: Visina mobilno
+        hidden: obriši
+        name: Ime
+        rotate: rotiraj?
+        width: Širina
+        width_mobile: Širina mobilno
+      tax:
+        color: Boja
+        hidden: obriši
+        include_in_statistics: U obračunskoj statistici
+        letter: Skraćenica
+        name: Ime
+        percent: Porez u %
+        statistics_by_category: Obračunske statistike prema kategoriji
+      tax_amount:
+        amount: Iznos
+        tax_id: Porez
+      user:
+        active: aktivan?
+        advertising_timeout: Vremensko ograničenje promidžbe
+        advertising_url: Promidžbeni URL
+        audio: Zvučni signali
+        color: Boja
+        confirmation_user: Potvrdi daljinske narudžbe
+        default_vendor_id: Prijavite se prodavaču
+        hidden: obriši?
+        language: Jezik
+        login: Prijava
+        password: Lozinka
+        role: Uloga
+        screenlock_timeout: Vremensko ograničenje zaključavanja ekrana (sek.)
+        tables: Stolovi
+        title: Naslov
+      vendor:
+        automatic_printing: Automatsko ispisivanje
+        country: Pravila za zemlju
+        email: e-mail
+        enable_technician_emails: Šaljite tehničaru e-mailove
+        hidden: obriši
+        invoice_footer_blurb: Promotivna obavijest u podnožju fakture
+        invoice_header_blurb: Promotivna obavijest u zaglavlju fakture
+        invoice_logo: Logo fakture
+        logo: Logo zaslona
+        name: Ime
+        receipt_footer_blurb: Promotivna obavijest u podnožju računa
+        receipt_header_blurb: Promotivna obavijest u zaglavlju računa
+        remote_orders: Daljinske narudžbe
+        rlogo_footer: Logo u podnožju računa
+        rlogo_header: Logo u zaglavlju računa
+        saas: Online varijanta
+        technician_email: E-mail tehničara
+        ticket_display_time_order: Vrijeme i broj fakture na karti narudžbe
+        ticket_item_separator: Separacijska linija karte narudžbe
+        ticket_tall_font: Visok font karte narudžbe
+        ticket_wide_font: Širok font karte narudžbe
+        time_offset: Korekcija vremena (sati)
+        timeout: Vremensko ograničenje zaključavanja ekrana (sekunde)
+        update_item_lists_interval: Interval ažuriranja obavijesti o artiklu
+        update_resources_interval: Interval ažuriranja offline baze podataka
+        update_tables_interval: Interval ažuriranja stolova
+        use_order_numbers: Koristi brojeve narudžbe
+      vendor_printer:
+        baudrate: Brzina prijenosa
+        codepage: Kodna stranica
+        copies: Kopije
+        hidden: Obriši
+        name: Ime
+        path: Putanja
+        print_button_filename: Ikona
+        pulse_receipt: Zvučni signal primitka
+        pulse_tickets: Zvučni signal karta narudžbi
+    errors:
+      messages:
+        prefix_or_postfix_must_be_given: Mora se dati prefiks ili postfiks
+    models:
+      article:
+        one: Artikl
+        other: Artikli
+      booking:
+        one: Rezervacija
+        other: Rezervacije
+      camera:
+        one: Kamera
+        other: Kamere
+      category:
+        one: Kategorija
+        other: Kategorije
+      company:
+        one: Tvrtka
+        other: Tvrtke
+      cost_center:
+        one: Troškovni centar
+        other: Troškovni centar
+      coupon:
+        one: Kupon
+        other: Kuponi
+      customer:
+        one: Kupac
+        other: Kupci
+      discount:
+        one: Popust
+        other: Popusti
+      group:
+        one: Grupa zaliha
+        other: Grupe zaliha
+      guest_type:
+        one: Vrsta gosta
+        other: Vrste gostiju
+      image:
+        one: Slika
+        other: Slike
+      item:
+        one: Predmet
+        other: Predmeti
+      option:
+        one: Opcija
+        other: Opcije
+      order:
+        one: Narudžba
+        other: Narudžbe
+      page:
+        one: Kartica
+        other: Kartice
+      partial:
+        one: Parcijala
+        other: Parcijale
+      payment_method:
+        one: Način plaćanja
+        other: Načini plaćanja
+      payment_method_item:
+        one: Način plaćanja
+        other: Načini plaćanja
+      presentation:
+        one: Predložak
+        other: Predlošci
+      quantity:
+        one: Varijanta
+        other: Varijante
+      report:
+        one: Podrška
+        other: Podrška
+      reservation:
+        one: Rezervacija
+        other: Rezervacije
+      role:
+        one: Uloga
+        other: Uloge
+      room:
+        one: Soba
+        other: Sobe
+      room_price:
+        one: Cijena sobe
+        other: Cijene soba
+      room_type:
+        one: Vrsta sobe
+        other: Vrste soba
+      season:
+        one: Godišnje doba
+        other: Godišnja doba
+      settlement:
+        one: Obračun
+        other: Obračuni
+      statistic_category:
+        one: Statistička-Kategorija
+        other: Statističke-Kategorije
+      stock:
+        one: Zaliha
+        other: Zalihe
+      surcharge:
+        one: Dodatna naknada
+        other: Dodatne naknade
+      table:
+        one: Stol
+        other: Stolovi
+      tax:
+        one: Klasa poreza
+        other: Klase poreza
+      tax_amount:
+        one: Iznos poreza
+        other: Iznosi poreza
+      user:
+        one: Korisnik
+        other: Korisnici
+      vendor:
+        one: Prodavač
+        other: Prodavači
+      vendor_printer:
+        one: Pisač
+        other: Pisači
+  admin: Admin
+  are_you_sure: Jeste li sigurni?
+  articles:
+    create:
+      license_limited: Vaša licenca je ograničena na %{count} artikala
+      success: Artikl je uspješno spremljen
+    destroy:
+      success: Artikl je uspješno obrisan
+    find:
+      variants:
+        one: Varijanta
+        other: Varijante
+    index:
+      list_all: Izlistaj sve
+      preview: Pregled
+      search_term: Traži pojam
+      sort: Sortiraj
+      update: Ažuriraj!
+      view: Pogledaj
+    listall:
+      all_articles: Popis svih artikala
+    new:
+      add_quantity: Dodaj varijantu
+      edit_article: Uredi artikl
+      new_article: Novi artikl
+      normal: normalno
+      takeaway: oduzmi
+    sort_index:
+      sort: Sortiraj artikle
+  bar: Bar
+  black: Crna
+  blackboard:
+    index:
+      update: Ažuriraj
+  blank: prazno
+  blue: Plava
+  bookings:
+    invoice_item_list:
+      served_by_X: Poslužio Vas je %{user}
+    show:
+      go_to_bookings_calendar: Odi na pregled kalendara rezervacija
+      search_by_number: Pretraži prema broju
+  cameras:
+    create:
+      success: Kamera je uspješno spremljena
+    destroy:
+      success: Kamera je uspješno obrisana
+    index:
+      show: Prikaži
+  cancel_and_go_back: Odustani i odi natrag
+  categories:
+    create:
+      license_limited: Vaša licenca je ograničena na %{count} kategorija
+      success: Kategorija je uspješno spremljena
+    destroy:
+      success: Kategorija je uspješno obrisana
+    new:
+      aperitif: Aperitiv
+      beer: Pivo
+      blank: Prazno
+      childrendish: Dječje jelo
+      cigarette: Duhan
+      coffee: Kava
+      dessert: Desert
+      digestif: Digestiv
+      edit_category: Uredi kategoriju
+      maindish: Glavno jelo
+      new_category: Nova kategorija
+      nonalcoholics: Bezalkoholno
+      noodles: Rezanci
+      redwinebottle: Butelja crvenog
+      redwineglass: Crveno vino
+      rosewinebottle: Butelja Rosé
+      rosewineglass: Rosé vino
+      sidedish: Prilog
+      soup: Juha
+      sparkling: Pjenušavo vino
+      starter: Starter
+      tea: Šalica za čaj
+      teapot: Čajnik
+      whitewinebottle: Butelja bijelo
+      whitewineglass: Bijelo vino
+  clear: očisti
+  clear_order_and_go_back: Očisti narudžbu i odi natrag
+  copy: Kopiraj
+  cost_centers:
+    create:
+      success: Troškovni centar je uspješno spremljen
+    destroy:
+      success: Troškovni centar je uspješno obrisan
+    index:
+      active: Aktivan
+      inactive: Neaktivan
+    new:
+      edit_cost_center: Uredi troškovni centar
+      new_cost_center: Novi troškovni centar
+  count: Broji
+  create: Napravi
+  customers:
+    create:
+      success: Kupac je uspješno spremljen
+    destroy:
+      success: Kupac je uspješno obrisan
+    new:
+      edit_customer: Uredi kupca
+      new_customer: Novi kupac
+  dateandtime: Datum
+  default: Standardno
+  delete: Obriši
+  display: Prikaži
+  edit: Uredi
+  exit: Izlaz
+  finish: Samo završi
+  food: Hrana
+  go_back: Idi natrag
+  green: Zelena
+  gross: Ukupan iznos
+  groups:
+    new:
+      edit_group: Uredi grupu
+      new_group: Nova grupa
+  guestroom: Soba za goste
+  host: Host
+  images:
+    errempty: Neispravna datoteka
+    errsize: Neispravna veličina datoteke
+    errtype: Neispravna vrsta datoteke
+  invalid_date: Neispravan datum
+  invoice: Faktura
+  invoice_numer_X_at_time: Faktura Br. %{number} u %{datetime}
+  invoices: Fakture
+  is_no_number: nije broj.
+  items:
+    item_tablerow:
+      clear: Očisti
+      done: Gotovo
+      no_printing: nema ispisa
+  just_order: Samo narudžba
+  kitchen: Kuhinja
+  layouts:
+    application:
+      admin_menu_hint: ☚ Kliknite ovdje za otvaranje glavnog izbornika
+      submit_scribe: OK
+    header:
+      configuration: Konfiguracija
+  logout: odjavi se %{who}
+  messages:
+    hello_username: Pozdrav %{name}!
+    user_account_is_currently_locked: Korisnički račun je zaključan
+  move_order_to_table: Makni narudžbu na drugi stol
+  must_be_entered_either_for_article_or_for_quantity: Mora biti upisano ili za
+    artikl ili za varijantu.
+  net: Net
+  new: Novo
+  no_printing: Nema ispisa
+  not_found: Nije pronađeno
+  options:
+    create:
+      success: Opcija uspješno spremljena
+    destroy:
+      success: Opcija uspješno obrisana
+    index:
+      no_categories_defined: Nema definiranih kategorija. Morate kreirati
+        barem jednu kategoriju kako biste mogli kreirati opciju.
+    new:
+      edit_option: Uredi opciju
+      hidden: obriši
+      new_option: Nova opcija
+      select_all: odaberi sve
+  orange: Narančasta
+  orders:
+    functions_header_index:
+      exit: Izlaz
+      items_notifications: Obavijesti
+      print_now: Ispiši sada
+      show_last_booking: Pokaži zadnju rezervaciju
+      show_last_order: Pokaži zadnju narudžbu
+      toggle_drag_tables: Povuci stolove
+    functions_header_order_form:
+      move_order: Makni narudžbu na drugi stol
+    index:
+      confirmation_list: Popis samostalnog naručivanja
+      delivery_list: Popis dostave
+      preparation_list: Popis pripreme
+    invoice_form:
+      change_money: Promijeni
+      just_finish: Samo završi narudžbu
+      move_order: Makni narudžbu na drugi stol
+      print_and_finish: Ispiši i završi ovu narudžbu
+      set_booking: Dodijeli rezervaciji
+      set_cost_center: Postavi troškovni centar za ovu narudžbu
+      set_tax_for_all: Postavi troškovni centar za sve artikle
+      set_taxes: Postavi troškovni centar
+      split_invoice: Podijeli račun
+      split_this_item: Kliknite kako biste podijelili ove artikle jedan po jedan
+      switch_tax_for_this_item: Kliknite kako biste promijenili porez za ovaj artikl
+    invoice_item_list:
+      count: Količina
+      sum: Ukupno
+      unit_price: Jedinična cijena
+    login_form:
+      email: Vaš E-Mail
+      login: Prijava
+      password: Lozinka
+      username: Korisničko ime
+    order:
+      new: Nova narudžba
+    order_form:
+      sum: UKUPNO
+    refund_form:
+      do_refund: Napravi povrat novaca
+      do_separate_items: Odvoji ovaj artikl
+    served_by: Poslužio Vas je
+    show:
+      add_notes: Dodaj bilješke
+      back: Natrag
+      cannot_reactivate: Reaktivacija nije uspjela. Nema praznih stolova.
+      count: Broji
+      list_of_taxes: Popis poreza
+      next_invoice: Sljedeća faktura
+      previous_invoice: Prethodna faktura
+      print_business_invoice: Ispiši poslovnu fakturu
+      print_invoice: Ispiši fakturu
+      reactivate: Reaktiviraj
+      search_by_number: Pretraži prema broju
+      sum: Ukupno
+      unit_price: Jedinična cijena
+  pages:
+    edit:
+      edit_page: Uredi stranicu
+      slideshow: Pokreni Slideshow
+      view: Pogledaj
+    form:
+      slideshow: Slideshow
+      view: Pogledaj
+    new:
+      new_page: Nova stranica
+  partials:
+    default_blurb: uredi me
+    error_during_evaluation: ! 'Greška: '
+    no_presentation_found:
+      no_presentations_found: Nema definiranog predloška za ovu parcijalu.
+  payment_methods:
+    create:
+      success: Način plaćanja je uspješno spremljen
+    destroy:
+      success: Način plaćanja je uspješno obrisan
+  pink: Roza
+  please_enter_item_comment: Posebna želja
+  please_enter_item_price: Posebna cijena
+  presentations:
+    new:
+      edit_presentation: Uredi predložak
+      new_presentation: Novi predložak
+  print: Ispiši
+  print_and_finish: Završi i ispiši
+  printing_test: Testiranje ispisa
+  refund: Vrati novac
+  reports:
+    download: Preuzmi
+    download_reports: Preuzmi izvješće
+    end_date: Datum završetka
+    fisc_report_dump_location: Izlazna lokacija
+    index:
+      backup_database: Backup baze podataka
+      backup_logfile: Backup log datoteke
+      connect_ssh: Daljinska prijava
+      connect_vnc: Podijeli zaslon
+      connected: Spojen
+      disconnected: Odspojen
+      download_reports: Spremi izvješća
+      header: Izvješća
+      internet_connection_info: Da biste dobili daljinsku podršku, morate biti spojeni na internet. Ako vidite Red (E) Logo iznad, spojeni ste na internet.
+      password: Lozinka
+      remote_support: Daljinska podrška
+      requesting_connection_status: Zahtjevanje statusa veze ...
+    remote_support: Daljinska podrška
+    save: Spremi
+    start_date: Datum početka
+  restaurant: Restoran
+  roles:
+    create:
+      success: Uloga je uspješno spremljena
+    destroy:
+      success: Uloga je uspješno obrisana
+    new:
+      add_option_to_sent_item: Dodaj opcije za slanje artikala
+      allow_exit: Dozvoli izlaz
+      assign_cost_center: Dodijeli troškovni centar
+      assign_order_to_booking: Dodijeli narudžbe rezervaciji
+      assign_order_to_user: Dodijeli narudžbu korisniku
+      assign_tables: Dodijeli stolove korisnicima
+      assign_users_to_vendors: Dodijeli korisnike prodavačima
+      cancel_all_items_in_active_order: Odbaci sve artikle u aktivnoj narudžbi
+      change_waiter: Promijeni konobara
+      counter_mode: Metoda brojanja
+      decrement_items: Smanji artikle
+      delete_items: Obriši artikle smanjivanjem
+      download_csv: Preuzmi CSV
+      download_database: Preuzmi bazu podataka
+      edit_role: Uredi ulogu
+      finish_all_settlements: Završi sve obračune
+      finish_orders: Završi narudžbe
+      finish_own_settlement: Završi vlastiti obračun
+      interim_receipt: Privremeni račun
+      item_scribe: Omogući rukopis
+      manage_advertising: Upravljaj oglašavanjem
+      manage_articles: Upravljaj artiklima
+      manage_business_invoice: Upravljaj poslovnim fakturama
+      manage_cameras: Upravljaj kamerama
+      manage_categories: Upravljaj kategorijama
+      manage_cost_centers: Upravljaj troškovnim centrima
+      manage_customers: Upravljaj kupcima
+      manage_hotel: Upravljaj hotelom
+      manage_options: Upravljaj opcijama
+      manage_pages: Upravljaj slideshowom
+      manage_payment_methods: Upravljaj načinima plaćanja
+      manage_roles: Upravljaj ulogama
+      manage_statistic_categories: Upravljaj statističkim kategorijama
+      manage_statistics: Statistika
+      manage_statistics_hotel: Pogledaj statistike hotela
+      manage_tables: Upravljaj stolovima
+      manage_taxes: Upravljaj porezima
+      manage_users: Upravljaj korisnicima
+      manage_vendors: Upravljaj prodavačima
+      mobile_show_tools: Pokaži gumb alata na mobilnim uređajima
+      move_order: Makni narudžbu
+      move_order_from_invoice_form: Makni narudžbu iz računskog obrasca u tablicu
+      move_tables: Makni stolove
+      new_role: Nova uloga
+      permissions: Dozvole
+      reactivate_orders: Reaktiviraj narudžbe
+      receipt_logo: Logo računa
+      refund: Povrat novca za artikle
+      remote_support: Daljinska podrška
+      see_debug: Vidi debug poruke
+      see_item_notifications_static: Sažeti popis obavijesti o artiklima na glavnom zaslonu
+      see_item_notifications_user_delivery: Osobna dostava obavijesti o artiklima
+      see_item_notifications_user_preparation: Osobna priprema obavijesti o artiklima
+      see_item_notifications_vendor_delivery: Dostava obavijesti o artiklima prodavaču
+      see_item_notifications_vendor_preparation: Priprema obavijesti o artiklima prodavaču
+      settlement_statistics_sold_quantities: Pokaži obračunske statistike o prodanim
+        količinama
+      settlement_statistics_taxes: Pokaži statistike obračunskog poreza
+      settlement_statistics_taxes_categories: Pokaži statistike obračunskog poreza prema kategoriji
+      split_items: Podijeli artikle
+      statistics:
+        statistics_category: Kategorije
+        statistics_hour: Sati
+        statistics_payment_method: Načini plaćanja
+        statistics_sold_quantities: Prodane količine
+        statistics_statistic_category: Statističke kategorije
+        statistics_table: Stolovi
+        statistics_tax: Porezi
+        statistics_weekday: Radni dani
+      statistics_category: Statistika pokaži kategorije
+      statistics_hour: Statistika pokaži sate
+      statistics_payment_method: Statistika pokaži načine plaćanja
+      statistics_sold_quantities: Statistika pokaži prodane količine
+      statistics_statistic_category: Statistika pokaži Statističke kategorije
+      statistics_table: Statistika pokaži stolove
+      statistics_tax: Statistika pokaži poreze
+      statistics_weekday: Statistika pokaži radne dane
+      take_orders: Primi narudžbe
+      view_all_settlements: Pogledaj sve obračune
+      view_settlements_table: Pogledaj obračunsku tablicu
+  room_prices:
+    index:
+      generate_price_skeleton: Generiraj kostur cijene
+    new:
+      edit_room_price: Uredi cijenu sobe
+      new_room_price: Nova cijena sobe
+  room_types:
+    new:
+      edit_room_type: Uredi vrstu sobe
+      new_room_type: Nova vrsta sobe
+  rooms:
+    create:
+      success: Soba je uspješno spremljena
+    destroy:
+      success: Soba je uspješno obrisana
+    new:
+      edit_room: Uredi sobu
+      new_room: Nova soba
+  scopes:
+    active: Aktivan
+    waiterpad: Konobarev blok
+  scroll_down: Pomakni prema dolje
+  scroll_to_area: Odi u sobu
+  scroll_up: Pomakni prema gore
+  seasons:
+    new:
+      edit_season: Uredi godišnje doba
+      new_season: Novo godišnje doba
+  send_and_go_back: Spremi i odi natrag
+  served_by_X_on_table_Y: Poslužio Vas je %{waiter} na stolu %{table}
+  server_no_response: Bill Gastro Server više ne reagira. Ili je zauzet
+    ili je radio link prekinut.
+  sessions:
+    browser_warning:
+      continue: Nastavi
+      warning: Salor jedino podržava preglednike Google Chrome (Windows), Chromium
+        (Linux) ili Safari (Apple). Molimo Vas koristite jedan od ovih preglednika te pokušajte ponovno.
+    new:
+      email: Vaš E-Mail
+      login: Prijava
+      password: Lozinka
+      username: Korisnik
+    new_customer:
+      email: Vaš E-Mail
+      login: Prijava
+      password: Lozinka
+      username: Korisnik
+  settlements:
+    detailed_list:
+      changed_price: ! '%{byuser} je promijenio cijenu'
+      count: Brojanje
+      order_number_on_table_on_date: ! '%{order} broj %{number} na %{table} u %{time}'
+      reduced_count: Brojanje je smanjeno sa %{maxcount} na %{count}.
+      revenue: Prihod
+      total: Ukupno
+      unit_price: Jedinična cijena
+      warning: Upozorenje
+    index:
+      all: Sve
+      end_date: Datum završetka
+      one_day_one_row: Izlistaj dane
+      start_date: Datum početka
+      sum_total: Ukupan iznos
+    settlement:
+      finish: Kraj
+      please_wait: Analiziram podatke. Molim Vas pričekajte ...
+      print: Ispiši
+      start: Početak
+      started_at: Počni od
+  shared:
+    invoice_tax_list:
+      list_of_taxes: Popis poreza
+  split_order: Podijeli narudžbu
+  statistic: Statistika
+  statistic_categories:
+    new:
+      edit_statistic_category: Uredi Statističku-Kategoriju
+      new_statistic_category: Nova Statistička-Kategorija
+  statistics:
+    index:
+      hour: Sat
+      limit_by: Ograniči prema
+      query: Upit
+      weekday: Radni dan
+  stocks:
+    new:
+      edit_stock: Uredi zalihu
+      new_stock: Nova zaliha
+  sum: Ukupno
+  surcharges:
+    new:
+      add_tax_amount: Dodaj iznos poreza
+      common_surcharge: Opća nadoplata
+      edit_surcharge: Uredi nadoplatu
+      new_surcharge: Nova nadoplata
+  tables:
+    create:
+      license_limited: Vaša licenca je ograničena na %{count} stolova
+      success: Stol je uspješno spremljen
+    destroy:
+      success: Stol je uspješno obrisan
+    new:
+      edit_table: Uredi stol
+      new_table: Novi stol
+  tax_amount: Iznos
+  taxes:
+    new:
+      edit_tax: Uredi porez
+      new_tax: Novi porez
+  users:
+    create:
+      success: Korisnik je uspješno spremljen
+    destroy:
+      success: Korisnik je uspješno obrisan
+    new:
+      edit_user: Uredi korisnika
+      new_user: Novi korisnik
+      select_with_ctrl_key: Označite ili ukinite označenost [Ctrl] + Lijeva tipka miša
+  various:
+    attempt: Pokušaj
+    begin: Počni
+    cancel: Odustani
+    check_order_on_workstation: Provjeri narudžbu na drugom uređaju
+    common_surcharges: Opće nadoplate
+    connecting: Spajam...
+    consumations: Konzumacije
+    customer_request_finish: Zatraži plaćanje
+    customer_request_send: Zatraži ove artikle
+    customer_request_waiter: Zatraži konobara
+    delete: Obriši
+    display: Prikaži
+    download: Preuzmi
+    end: Kraj
+    exception_page:
+      assistance_text: Molimo Vas kliknite na gumb "POČETNA" i pokušajte ponovno. Ako vidite
+        istu grešku dvaput, molimo Vas kontaktirajte našu korisničku podršku.
+      exception_description: ! 'Opis pogreške:'
+      exception_in_files: ! 'Došlo je do pogreške u sljedećim datotekama:'
+      oops_an_error_occurred: Ups! Došlo je do pogreške
+    finish_was_requested: Zatražili ste plaćanje. Molimo Vas imajte malo strpljenja,
+      uskoro ćemo biti tamo za Vas.
+    go: Kreni!
+    home: Početna
+    hotel: Hotel
+    interim_invoice: Privremeni račun
+    invoice: Račun
+    mobile_view: Pogled mobilnog uređaja
+    no_connection: Nema povezanosti
+    no_connection_giving_up: Nema povezanosti. Odustajanje.
+    no_connection_retry: Nema povezanosti sa serverom. Šalji ponovno? Ako odustanete,
+      artikli će biti spremljeni lokalno.
+    no_connection_retrying: Nema povezanosti. Pokušavam ponovno...
+    order_will_be_confirmed: Vašu narudžbu će konobar uskoro potvrditi
+    pay: Plati
+    print: Ispiši
+    quantity_abbreviation: Kol.
+    report: Izvješće
+    restaurant: Restoran
+    save: Spremi
+    sending: Šaljem...
+    server_error: Ups! Došlo je do interne serverske pogreške. Molimo Vas provjerite podnošenje
+      narudžbe na drugom uređaju.
+    server_error_short: Serverska pogreška
+    server_not_responded: Nema odgovora od servera. Provjerite podnošenje narudžbe na drugom
+      uređaju. Nakon toga, ponovno podnešenu narudžbu prekinite kako biste obrisali promjene.
+    sold_quantities: Prodane količine
+    statistics: Statistike
+    subtotal: Suma stavke
+    successfully_sent: Artikli su uspješno poslani.
+    switched_to_vendor: Prodavač '%{vendorname}'
+    table_contains_offline_items: Prikazujem samo offline artikle. Pokušajte ponoviti predaju ili
+      pritisnite gumb odustani za brisanje offline artikala.
+    tax: Porez
+    tax_amount: Iznos
+    time: Vrijeme
+    total_price_abbreviation: UC
+    translations: Prijevodi
+    unamed: Neimenovan
+    unit_price_abbreviation: JC
+    waiter_was_requested: Zatražili ste konobara. Molimo Vas imajte malo strpljenja,
+      uskoro ćemo biti tamo za Vas.
+    workstation_view: Pogled radne stanice
+  vendors:
+    create:
+      success: Prodavač je uspješno spremljen
+    destroy:
+      success: Prodavač je uspješno obrisan
+    form:
+      add_printer: Dodaj pisač
+      identify_printers: Identificiraj pisače
+      print_via_salorbin_explanation: ! 'Ako želite ispis preko salor-bin preglednika,
+        kopirajte i zalijepite sljedeće detalje u dijalog opcija salor-bina:'
+      test_printers: Testiraj pisače
+      test_printers_chartest: Testiraj sve znakove
+    index:
+      edit: Uredi
+      switch_to: Odaberi
+    new:
+      edit_vendor: Uredi prodavača
+      new_vendor: Novi prodavač
+  violet: Ljubičasta
+  waiter: Konobar
+  waiterpad_generic_name: Konobarev blok
+  white: Bijela
+  winered: Vino crveno
+  wrong_password: Krivi podaci za prijavu
+  yellow: Žuta
