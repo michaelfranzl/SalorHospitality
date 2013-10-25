@@ -70,7 +70,7 @@ Season.prototype.interested = function (start,end) {
   //   console.log('XXXXXXXXXXXXXXX', this.id);
   while (ts <= te) {
     if ((ts >= this.start && ts <= this.end)) {
-      //console.log(this.name, date_as_ymd(this.start),date_as_ymd(this.end), "is interested from first case in ", date_as_ymd(ts),date_as_ymd(te));
+      console.log("INTERESTED", start, end, this.name, date_as_ymd(this.start), date_as_ymd(this.end), "is interested from first case in ", date_as_ymd(ts),date_as_ymd(te));
       return true;
     }
     if ((te <= this.end && te >= this.start)) {
@@ -94,9 +94,9 @@ Season.applying_seasons = function (seasons,start,end) {
   var applying = [];
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
-    s.debug(6);
+    //s.debug(6);
+    
     if (s.interested(start,end)) {
-      //       console.log('interested in season', s.id);
       var duration = s.get_days(start,end);
       if (s.start > start) {
         var start_date = s.start;
@@ -106,13 +106,17 @@ Season.applying_seasons = function (seasons,start,end) {
       
       var end_date = (s.end < end) ? s.end : end;
       
-      var ns = {start: date_as_ymd(start_date), end: date_as_ymd(end_date),name: s.name,id: parseInt(s.id), duration:duration};
-      var already_in_array = false;
-      
-      if (already_in_array == false) {
-        applying.push(ns);
-      }
+      var ns = {
+        start: date_as_ymd(start_date),
+        end: date_as_ymd(end_date),
+        name: s.name,
+        id: parseInt(s.id),
+        duration:duration
+      };
+
+      applying.push(ns);
     }
+    
   }
   //console.log("Applying is",applying);
   return applying;
@@ -272,14 +276,16 @@ function normalize_season_objects(seasons) {
     seasons.sort(sort_seasons_func);
   return seasons;
 }
+
+// this is for _get("possible_seasons") BUGGY!
 function create_season_objects(seasons) {
   if ($.isEmptyObject(seasons)) {
     return
   }
-  if (_get("normalized_season_objects")) {
+  //if (_get("normalized_season_objects")) {
     //console.log("season objects already generated");
-    return _get("normalized_season_objects");
-  }
+    //return _get("normalized_season_objects");
+  //}
   var current_date = new Date();
   current_date = new Date(current_date.getFullYear(),current_date.getMonth(),current_date.getDate() - 1);
   var season_objects = [];

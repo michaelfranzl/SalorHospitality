@@ -190,14 +190,23 @@ ActiveRecord::Schema.define(:version => 20130831073417) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
-    t.string   "mode",       :default => "local"
+    t.string   "mode",               :default => "local"
     t.string   "subdomain"
-    t.boolean  "hidden",     :default => false
-    t.boolean  "active",     :default => true
+    t.boolean  "hidden",             :default => false
+    t.boolean  "active",             :default => true
     t.string   "email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "identifier"
+    t.string   "auth_user"
+    t.string   "full_subdomain"
+    t.string   "full_url"
+    t.string   "virtualhost_filter"
+    t.integer  "auth_https_mode"
+    t.boolean  "https"
+    t.boolean  "auth"
+    t.string   "domain"
+    t.boolean  "removal_pending"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -277,6 +286,9 @@ ActiveRecord::Schema.define(:version => 20130831073417) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "logged_in"
+    t.string   "password_encrypted"
+    t.string   "password_salt"
+    t.string   "id_hash"
     t.string   "tax_info"
   end
 
@@ -1097,6 +1109,8 @@ ActiveRecord::Schema.define(:version => 20130831073417) do
     t.integer  "default_vendor_id"
     t.string   "advertising_url"
     t.integer  "advertising_timeout",       :default => -1
+    t.string   "salt"
+    t.string   "encrypted_password"
     t.float    "hourly_rate"
     t.integer  "maximum_shift_duration",    :default => 9999
     t.integer  "current_settlement_id"
@@ -1183,7 +1197,15 @@ ActiveRecord::Schema.define(:version => 20130831073417) do
     t.datetime "hidden_at"
     t.boolean  "history_print"
     t.string   "branding",                    :limit => 5000,     :default => "--- {}\n"
+    t.string   "full_subdomain"
     t.string   "identifier"
+    t.string   "full_url"
+    t.string   "virtualhost_filter"
+    t.integer  "auth_https_mode"
+    t.boolean  "https"
+    t.boolean  "auth"
+    t.string   "domain"
+    t.string   "subdomain"
   end
 
 end

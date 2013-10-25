@@ -24,11 +24,11 @@ class Season < ActiveRecord::Base
   end
 
   def from_date=(from)
-    write_attribute :from_date, Time.parse("2012-" + from.strftime("%m-%d")).beginning_of_day
+    write_attribute :from_date, Time.parse("#{ Time.now.year.to_s }-" + from.strftime("%m-%d")).beginning_of_day
   end
 
   def to_date=(to)
-    write_attribute :to_date, Time.parse("2012-" + to.strftime("%m-%d")).end_of_day
+    write_attribute :to_date, Time.parse("#{ Time.now.year.to_s }-"  + to.strftime("%m-%d")).end_of_day
   end
 
   def calculate_duration
