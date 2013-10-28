@@ -9,7 +9,11 @@ function date_as_md(date) {
 }
 
 function get_date(str) {
-  return new Date(Date.parse(str));
+	// This for some reason was not working,
+	// so I rewrote it...hope it doesn't break anything
+	var parts = str.split('-');
+	var d = new Date(parts[0],parseInt(parts[1]) - 1,parts[2]);
+	return d;
 }
 
 function days_between_dates(from, to) {

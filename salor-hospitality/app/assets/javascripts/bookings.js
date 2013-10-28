@@ -19,7 +19,11 @@ $(function () {
      dragging, and we don't want to be redrawing at these points, so we can set salor_hotel.pause_redraw.
   */
   setInterval(function () {
-    if ($('#rooms').is(":visible") && !_get("salor_hotel.pause_redraw") && _get("salor_hotel.bookings.dirty") == true) {
+    if (
+      $('#rooms').is(":visible") && 
+      !_get("salor_hotel.pause_redraw") && 
+      _get("salor_hotel.bookings.dirty") == true
+    ) {
       clear_bookings();
       render_booking_lines();
       _set("salor_hotel.bookings.dirty",false);
@@ -34,7 +38,7 @@ $(function () {
 
 });
 /* 
- * Here we get the dayte from the y coordinate, the x is actually not used in this function.
+ * Here we get the date from the y coordinate, the x is actually not used in this function.
  * You can pass _mouse.x, _mouse.y, or you can pass $(selector).offset()
  */
 function get_date_from_xy(x,y) {
@@ -169,12 +173,17 @@ function is_booked_now(booking) {
 function is_in_booking_frame(booking) {
   var fdate = get_date(booking.from);
   var tdate = get_date(booking.to);
-  var frame = get_date($('#show_booking_from').val());
-  frame = new Date(frame.getFullYear(),frame.getMonth(),frame.getDate() + 31);
-  if (fdate > frame && tdate > frame) {
-    return false;
-  } else {
+  var frame1 = get_date($('#show_booking_from').val());
+  var frame2 = get_date($('#show_booking_from').val());
+  frame2 = new Date(frame2.getFullYear(),frame2.getMonth(),frame2.getDate() + 31);
+  //console.log("is_in_booking_frame dates: ", fdate,tdate,frame1,frame2);
+  if (
+    (fdate >= frame1 && fdate <= frame2) ||
+    (tdate >= frame1 && tdate <= frame2) 
+  ) {
     return true;
+  } else {
+    return false;
   }
 }
 /* 
@@ -192,11 +201,11 @@ function is_booked (booking,date) {
   var day = date.getDate();
   if (fmonth == date.getMonth() || tmonth == date.getMonth()) {
     if (day >= fday && day <= tday) { 
-      console.log("is_booked returning true");
+      //console.log("is_booked returning true");
       return true;
     }
   }
-  console.log("is_booked returning false");
+  //console.log("is_booked returning false");
   return false;
 }
 // just a text formatting helper
@@ -285,10 +294,10 @@ function draw_booking(booking) {
     return;
   }
   if (!is_in_booking_frame(booking)) {
-//     console.log("Booking not in this frame",booking);
+     //console.log("Booking not in this frame",booking);
     return;
   } else {
-//     console.log("booking is in this frame",booking);
+    //console.log("booking is in this frame",booking);
   }
   // keys is an array where the index of the value matches the index of rooms, because a room_id could be 1, or 1000,
   // this way we can fast looking the room. In the below case, the index of rooms also happens to correlate with the
