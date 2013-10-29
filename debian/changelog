@@ -1,3 +1,16 @@
+salor-hospitality (4.1.4.26) unstable; urgency=low
+
+  [ Michael Franzl ]
+  * hotel season bug
+
+  [ Jason Knight ]
+  * Fixing booking display and create_seasons JS method
+
+  [ Michael Franzl ]
+  * booking screen update fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 29 Oct 2013 21:42:46 +0100
+
 salor-hospitality (4.1.4.25) unstable; urgency=low
 
   [ BretonFin ]
