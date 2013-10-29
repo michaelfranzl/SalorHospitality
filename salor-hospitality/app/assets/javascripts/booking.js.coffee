@@ -245,6 +245,7 @@ add_json_booking_item = (booking_item_id, guest_type_id, season_index, parent_ke
         visible = record.visible == 'true'
         selected = (record.selected == 'true') && (record.amount != 0)
         items_json[booking_item_id].surcharges[record.name] = {id:record.id, amount:record.amount, radio_select:radio_select, selected:selected, visible:visible}
+        update_submit_json_surchageslist(booking_item_id)
       if season_index == 0
         # a new booking item has been added for the first covered season. Now delete + create (regenerate) all booking_items for the rest of the covered seasons.
         regenerate_multi_season_booking_items(booking_item_id)
