@@ -945,3 +945,6 @@ gn:
   winered: Weinrot
   wrong_password: Falsche Logindaten.
   yellow: Gelb
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type

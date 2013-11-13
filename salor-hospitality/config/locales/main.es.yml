@@ -539,9 +539,13 @@ es:
       preparation_list: Lista de preparación
     invoice_form:
       change_money: Cambio
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: Sólo finalizar pedido
       move_order: Move order to different table
       print_and_finish: Imprimir y finalizar este pedido
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: Asignar reserva
       set_cost_center: Determinar centro de coste para este pedido
       set_tax_for_all: Determinar centro de coste para todos los items
@@ -549,10 +553,6 @@ es:
       split_invoice: Dividir factura
       split_this_item: Haga clic para dividir estos items uno por uno
       switch_tax_for_this_item: Haga clic para cambiar el % de impuesto
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: Quantity
       sum: Sum
@@ -665,6 +665,7 @@ es:
       finish_all_settlements: Cerrar todos los balances
       finish_orders: Finalizar pedidos
       finish_own_settlement: Cerrar balance propio
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
       item_scribe: XXX Enable handwriting
       manage_advertising: Manage Advertising
@@ -728,7 +729,6 @@ es:
       take_orders: Tomar pedidos
       view_all_settlements: Ver todos los balances
       view_settlements_table: View settlements table
-      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -862,6 +862,8 @@ es:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Download
     end: End
     exception_page:
@@ -914,8 +916,6 @@ es:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
   vendors:
     create:
       success: Vendor was successfully created
@@ -941,3 +941,6 @@ es:
   winered: Rojo Vino
   wrong_password: datos de conexión incorrectos
   yellow: amarillo
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type

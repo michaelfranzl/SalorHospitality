@@ -474,6 +474,9 @@ en:
     new:
       edit_group: Edit Group
       new_group: New Group
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Guestroom
   host: Host
   images:

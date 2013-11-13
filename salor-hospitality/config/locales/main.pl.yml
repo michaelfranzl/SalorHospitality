@@ -538,9 +538,13 @@ pl:
       preparation_list: Lista przyjętych zamówień
     invoice_form:
       change_money: Zmień
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: Po prostu zakończ zamówienie
       move_order: Move order to different table
       print_and_finish: Zakończ zamówienie i drukuj
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: Przydziel do rezerwacji
       set_cost_center: Ustaw dodatkowe koszty dla tego zamówienia
       set_tax_for_all: Ustaw podatek dla wszystkich pozycji
@@ -548,10 +552,6 @@ pl:
       split_invoice: Podziel rachunek
       split_this_item: Kliknij pozycję aby podzielić paragon
       switch_tax_for_this_item: Kliknij aby zmienić podatek dla tej pozycji
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: Ilość
       sum: Suma
@@ -664,6 +664,7 @@ pl:
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
       finish_orders: Możliwość finalizowania wszystkich zamówień
       finish_own_settlement: Możliwość własnego rozliczania
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
       item_scribe: Możliwość pisania ręcznego
       manage_advertising: Manage Advertising
@@ -731,7 +732,6 @@ pl:
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
       view_settlements_table: View settlements table
-      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen
@@ -868,6 +868,8 @@ pl:
     customer_request_waiter: Poproś kelnera
     delete: Usuń
     display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Download
     end: Koniec
     exception_page:
@@ -921,8 +923,6 @@ pl:
       wysłane, prosimy o cierpliwość.
     workstation_view: Widok dla komputera stacjonarnego
     your_shift_has_ended: Your shift has ended. Please log out.
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
   vendors:
     create:
       success: Restauracja została pomyślnie zapisana!
@@ -948,3 +948,6 @@ pl:
   winered: Winny
   wrong_password: Błędne dane do logowania!
   yellow: Żółty
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type

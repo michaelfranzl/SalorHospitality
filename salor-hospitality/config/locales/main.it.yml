@@ -539,9 +539,13 @@ it:
       preparation_list: Preparation list
     invoice_form:
       change_money: XXX Change
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: Just finish order
       move_order: Move order to different table
       print_and_finish: Print and finish this order
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: XXX Assign to Booking
       set_cost_center: Set cost center for this order
       set_tax_for_all: Set cost center for all items
@@ -549,10 +553,6 @@ it:
       split_invoice: Split invoice
       split_this_item: Click to split this items one at a time
       switch_tax_for_this_item: Click to change the tax for this item
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: Quantity
       sum: Sum
@@ -665,6 +665,7 @@ it:
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
+      immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
       item_scribe: XXX Enable handwriting
       manage_advertising: Manage Advertising
@@ -728,7 +729,6 @@ it:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      immediate_order_finish: Finish order from order screen
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
@@ -862,6 +862,8 @@ it:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
     download: Download
     end: End
     exception_page:
@@ -914,8 +916,6 @@ it:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
   vendors:
     create:
       success: Vendor was successfully created
@@ -941,3 +941,6 @@ it:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
