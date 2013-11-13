@@ -821,6 +821,8 @@ fr:
       weekday: Weekday
     statistics_hour:
       hour: Hour
+    statistics_weekday:
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Modifier le stock

@@ -821,6 +821,8 @@ fi:
       weekday: Arkipäivä
     statistics_hour:
       hour: Tunti
+    statistics_weekday:
+      weekday: Arkipäivä
   stocks:
     new:
       edit_stock: Muokkaa varasto
