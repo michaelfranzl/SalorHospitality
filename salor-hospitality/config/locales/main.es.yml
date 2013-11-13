@@ -474,6 +474,9 @@ es:
     new:
       edit_group: Editar grupo
       new_group: Nuevo grupo
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Sala principal
   host: huésped
   images:
@@ -596,6 +599,8 @@ es:
       view: View
     new:
       new_page: Nueva página
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: Texto predeterminado
     error_during_evaluation: Error
@@ -941,6 +946,3 @@ es:
   winered: Rojo Vino
   wrong_password: datos de conexión incorrectos
   yellow: amarillo
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

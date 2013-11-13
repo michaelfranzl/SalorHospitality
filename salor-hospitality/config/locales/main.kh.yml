@@ -474,6 +474,9 @@ kh:
     new:
       edit_group: Edit Group
       new_group: New Group
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Guestroom
   host: Host
   images:
@@ -596,6 +599,8 @@ kh:
       view: View
     new:
       new_page: New Page
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: edit me
     error_during_evaluation: ! 'Error: '
@@ -940,6 +945,3 @@ kh:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

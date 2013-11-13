@@ -474,6 +474,9 @@ fr:
     new:
       edit_group: Modifier Groupe
       new_group: Nouveau Groupe
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Chambre d'amis
   host: Hôte
   images:
@@ -596,6 +599,8 @@ fr:
       view: View
     new:
       new_page: Nouvelle Page
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: Modifiez-moi
     error_during_evaluation: ! 'Erreur : '
@@ -942,6 +947,3 @@ fr:
   winered: Vin rouge
   wrong_password: Données de connexion erronées
   yellow: Jaune
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

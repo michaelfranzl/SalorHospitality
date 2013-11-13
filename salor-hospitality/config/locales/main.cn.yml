@@ -474,6 +474,9 @@ cn:
     new:
       edit_group: 编辑组
       new_group: 新组
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: 客房
   host: 主人
   images:
@@ -595,6 +598,8 @@ cn:
       view: 检视
     new:
       new_page: 新页
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: 编辑我
     error_during_evaluation: ! '错误: '
@@ -931,6 +936,3 @@ cn:
   winered: 酒红
   wrong_password: 错误登入数据
   yellow: 黄
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

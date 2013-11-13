@@ -474,6 +474,9 @@ pl:
     new:
       edit_group: Edytuj grupę
       new_group: Dodaj grupę
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Sala
   host: Host
   images:
@@ -595,6 +598,8 @@ pl:
       view: View
     new:
       new_page: Nowa strona
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: Edytuj notatkę
     error_during_evaluation: ! 'Błąd: '
@@ -948,6 +953,3 @@ pl:
   winered: Winny
   wrong_password: Błędne dane do logowania!
   yellow: Żółty
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

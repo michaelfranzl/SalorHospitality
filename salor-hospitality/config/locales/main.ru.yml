@@ -474,6 +474,9 @@ ru:
     new:
       edit_group: Редактирование группы
       new_group: Новая группа
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Комната для гостей
   host: Сервер
   images:
@@ -595,6 +598,8 @@ ru:
       view: View
     new:
       new_page: Новая страница
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: отредактируй меня!
     error_during_evaluation: ! 'Ошибка: '
@@ -941,6 +946,3 @@ ru:
   winered: Бардовый
   wrong_password: Неверный пароль
   yellow: Желтый
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

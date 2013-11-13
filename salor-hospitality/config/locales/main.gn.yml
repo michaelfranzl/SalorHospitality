@@ -474,6 +474,9 @@ gn:
     new:
       edit_group: Lagergruppe bearbeiten
       new_group: Neue Lagergruppe
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Gastraum
   host: Wirt
   images:
@@ -597,6 +600,8 @@ gn:
       view: Anzeigen
     new:
       new_page: Neue Karte
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: Text
     error_during_evaluation: ! 'Fehler: '
@@ -945,6 +950,3 @@ gn:
   winered: Weinrot
   wrong_password: Falsche Logindaten.
   yellow: Gelb
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

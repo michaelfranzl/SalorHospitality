@@ -474,6 +474,9 @@ fi:
     new:
       edit_group: Muokkaa ryhmää
       new_group: Uusi ryhmä
+  guest_types:
+    new:
+      edit_guest_type: Muokkaa vieras tyypi
   guestroom: Vierashuone
   host: Vastaanottavan
   images:
@@ -595,6 +598,8 @@ fi:
       view: Katsele
     new:
       new_page: Uusi sivu
+    show:
+      slideshow: Kuvaesitys
   partials:
     default_blurb: muokkaa minua
     error_during_evaluation: ! 'Virhe: '
@@ -941,6 +946,3 @@ fi:
   winered: Viininpunainen
   wrong_password: Väärä kirjautumistieto
   yellow: Keltainen
-  guest_types:
-    new:
-      edit_guest_type: Muokkaa vieras tyypi

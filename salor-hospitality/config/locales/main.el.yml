@@ -474,6 +474,9 @@ el:
     new:
       edit_group: Επεξεργαστείτε Ομάδα
       new_group: Νέα Ομάδα
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Ξενώνας
   host: Οικοδεσπότης
   images:
@@ -596,6 +599,8 @@ el:
       view: View
     new:
       new_page: Νέα σελίδα
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: Επεξεργαστείτε με
     error_during_evaluation: ! 'Πρόβλημα: '
@@ -944,6 +949,3 @@ el:
   winered: Κρασί Ερυθρό
   wrong_password: Λάθος στοιχεία σύνδεσης
   yellow: Κίτρινο
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type

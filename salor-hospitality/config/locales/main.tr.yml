@@ -474,6 +474,9 @@ tr:
     new:
       edit_group: Depo grubu islemek
       new_group: Yeni depo grubu
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: Müşteri odası
   host: Host
   images:
@@ -597,6 +600,8 @@ tr:
       view: View
     new:
       new_page: New Page
+    show:
+      slideshow: SlideShow
   partials:
     default_blurb: XXXDefault Text
     error_during_evaluation: ! 'XXXError: '
@@ -941,6 +946,3 @@ tr:
   winered: XXXWine Red
   wrong_password: Yanlis sifre.
   yellow: XXXYellow
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type
