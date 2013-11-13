@@ -814,6 +814,8 @@ cn:
       limit_by: Limit by
       query: Query
       weekday: 工作日
+    statistics_hour:
+      hour: Hour
   stocks:
     new:
       edit_stock: Edit Stock

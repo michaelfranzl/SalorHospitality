@@ -819,6 +819,8 @@ gn:
       limit_by: Einschränken
       query: Abfrage
       weekday: Wochentag
+    statistics_hour:
+      hour: Hour
   stocks:
     new:
       edit_stock: Lagerartikel bearbeiten

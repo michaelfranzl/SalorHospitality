@@ -819,6 +819,8 @@ fi:
       limit_by: Rajoita
       query: Kysely
       weekday: Arkipäivä
+    statistics_hour:
+      hour: Tunti
   stocks:
     new:
       edit_stock: Muokkaa varasto

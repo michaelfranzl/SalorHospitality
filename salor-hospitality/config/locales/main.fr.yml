@@ -819,6 +819,8 @@ fr:
       limit_by: Limit by
       query: Query
       weekday: Weekday
+    statistics_hour:
+      hour: Hour
   stocks:
     new:
       edit_stock: Modifier le stock
