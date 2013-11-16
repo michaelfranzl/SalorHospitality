@@ -235,6 +235,9 @@ fi:
         print_button_filename: Ikoni
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
+      room:
+        name: Nimi
+        room_type_id: Huoneluokka
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava

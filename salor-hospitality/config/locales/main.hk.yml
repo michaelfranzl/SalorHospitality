@@ -51,6 +51,7 @@ hk:
         cellphone: 手機
         city: 城市
         company_name: 公司名字
+        default_table_id: Default Table
         email: 電子郵件
         first_name: 名字
         full_name: 全名
@@ -61,9 +62,8 @@ hk:
         m_points: 積分
         postalcode: 郵編
         state: 省份
-        telephone: 電話
-        default_table_id: Default Table
         tax_info: Tax Info
+        telephone: 電話
       group:
         name: 名稱
       guest_type:
@@ -79,8 +79,8 @@ hk:
         separate_ticket: 剪票
       order:
         change_given: 改變
-        nr: Number數字
         finished_at: Finished at
+        nr: Number數字
         sum: Sum
       page:
         active: 活躍
@@ -150,6 +150,7 @@ hk:
       table:
         abbreviation: 簡稱
         booking_table: 預定
+        customer_table: Customer
         description: 描述
         enabled: 活躍
         height: 高度
@@ -159,7 +160,6 @@ hk:
         rotate: 旋轉
         width: 寬度
         width_mobile: 寬度移動
-        customer_table: Customer
       tax:
         color: 色彩
         hidden: 刪除
@@ -173,26 +173,30 @@ hk:
         tax_id: 稅
       user:
         active: 活躍
+        advertising_timeout: Advertising Timeout
+        advertising_url: Advertising URL
         audio: Acoustic signals
         color: 色彩
         confirmation_user: 確認遠程訂單
+        default_vendor_id: Log in to Vendor
         hidden: 刪除
         language: 語言
+        layouts:
+          auto: Autodetect
+          mobile: mobile
+          workstation: normal
         login: 登錄
+        maximum_shift_duration: Shift duration
         password: 密碼
         role: 角色
         screenlock_timeout: 屏幕鎖超時 (秒)
         tables: 表
         title: 標題
-        advertising_timeout: Advertising Timeout
-        advertising_url: Advertising URL
-        default_vendor_id: Log in to Vendor
-        layouts:
-          auto: Autodetect
-          mobile: mobile
-          workstation: normal
-        maximum_shift_duration: Shift duration
         track_time: Track time
+      user_login:
+        duration: Duration
+        login: Started
+        logout: Ended
       vendor:
         automatic_printing: 自動打印
         country: Rules for country
@@ -222,19 +226,18 @@ hk:
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
       vendor_printer:
+        baudrate: Baudrate
+        codepage: Codepage
         copies: 副本
         hidden: 刪除
         name: 名稱
         path: 路徑
-        baudrate: Baudrate
-        codepage: Codepage
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      user_login:
-        duration: Duration
-        login: Started
-        logout: Ended
+      room:
+        name: Namex
+        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -474,6 +477,9 @@ hk:
     new:
       edit_group: 編輯組
       new_group: 新組
+  guest_types:
+    new:
+      edit_guest_type: Edit Guest Type
   guestroom: 客房
   host: 主人
   images:
@@ -494,8 +500,8 @@ hk:
   kitchen: 廚房
   layouts:
     application:
-      submit_scribe: 好
       admin_menu_hint: ☚ Click here to open the main menu
+      submit_scribe: 好
     header:
       configuration: Configuration
   logout: 注銷 %{who}
@@ -513,14 +519,14 @@ hk:
       success: 成功保存選項
     destroy:
       success: 成功刪除選項
+    index:
+      no_categories_defined: There are no categories defined. You have to create at
+        least one category in order to create an Option.
     new:
       edit_option: 編輯選項
       hidden: 刪除
       new_option: 新選項
       select_all: 選擇所有
-    index:
-      no_categories_defined: There are no categories defined. You have to create at
-        least one category in order to create an Option.
   orange: 橙
   orders:
     functions_header_index:
@@ -538,9 +544,13 @@ hk:
       preparation_list: 准備清單
     invoice_form:
       change_money: 改變
+      finish: Finish and stay on this screen
+      finish_gototables: Finish and return to the tables plan
       just_finish: 完畢
       move_order: 將訂單移到其他桌子
       print_and_finish: 打印並完成此訂單
+      print_and_finish_gototables: Print and finish this order and return to the tables
+        plan
       set_booking: 設置預訂
       set_cost_center: 設置此訂單的成本中心
       set_tax_for_all: 設置所有訂單的成本中心
@@ -548,19 +558,19 @@ hk:
       split_invoice: 拆分發票
       split_this_item: 點擊以拆分此項目
       switch_tax_for_this_item: 更改此項目的稅
-      finish: Finish and stay on this screen
-      finish_gototables: Finish and return to the tables plan
-      print_and_finish_gototables: Print and finish this order and return to the tables
-        plan
     invoice_item_list:
       count: 數量
       sum: 總數
       unit_price: 單價
+    last:
+      title: Last finished Orders
     login_form:
       email: 你的電子郵件
       login: 登錄
       password: 密碼
       username: 用戶
+    order:
+      new: New order
     order_form:
       sum: 總和
     refund_form:
@@ -581,10 +591,6 @@ hk:
       search_by_number: 按編號搜索
       sum: 總和
       unit_price: 單價
-    last:
-      title: Last finished Orders
-    order:
-      new: New order
   pages:
     edit:
       edit_page: 編輯頁面
@@ -602,6 +608,11 @@ hk:
     error_during_evaluation: ! '錯誤: '
     no_presentation_found:
       no_presentations_found: 這部分沒有定義模板
+  payment_methods:
+    create:
+      success: Payment Method successfully saved
+    destroy:
+      success: Payment Method successfully deleted
   pink: 粉紅
   please_enter_item_comment: 特殊要求
   please_enter_item_price: 特價
@@ -614,8 +625,10 @@ hk:
   printing_test: 打印測試
   refund: 退款
   reports:
+    download: Download
     download_reports: 下載報告
     end_date: 結束日期
+    fisc_report_dump_location: Output Location
     index:
       backup_database: 備份數據庫
       backup_logfile: 備份日志
@@ -632,8 +645,6 @@ hk:
     remote_support: 遠程協助
     save: 儲存
     start_date: 開始日期
-    download: Download
-    fisc_report_dump_location: Output Location
   restaurant: 餐廳
   roles:
     create:
@@ -647,17 +658,22 @@ hk:
       assign_order_to_booking: Assign orders to a booking
       assign_order_to_user: 分配訂單到用戶
       assign_tables: 分配桌子到用戶
+      assign_users_to_vendors: Assign Users to Vendors
       cancel_all_items_in_active_order: Cancel all items in active order
       change_waiter: 改變服務員
       counter_mode: 櫃台狀態
       decrement_items: 減量項目
       delete_items: Delete items by decrementing
+      download_csv: Download CSV
       download_database: 下載數據
       edit_role: 編輯角色
       finish_all_settlements: 完成所有結算
       finish_orders: 完成訂單
       finish_own_settlement: 完成自己結算
+      immediate_order_finish: Finish order from order screen
+      interim_receipt: Interim Receipt
       item_scribe: 允許手寫
+      manage_advertising: Manage Advertising
       manage_articles: Manage articles
       manage_business_invoice: 管理商業清單
       manage_cameras: 管理相機
@@ -674,6 +690,7 @@ hk:
       manage_statistics_hotel: 查看酒店統計
       manage_tables: 管理桌子
       manage_taxes: 管理稅務
+      manage_user_logins: Manage User Logins
       manage_users: 管理用戶
       manage_vendors: Manage vendors
       mobile_show_tools: 在移動裝置上顯示工具按鈕
@@ -692,26 +709,11 @@ hk:
       see_item_notifications_user_preparation: Item notifications personal preparation
       see_item_notifications_vendor_delivery: Item notifications vendor delivery
       see_item_notifications_vendor_preparation: Item notifications vendor preparation
+      settlement_statistics_sold_quantities: Show settlement statistics about sold
+        quantities
       settlement_statistics_taxes: 顯示結算稅務統計
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
       split_items: 拆分項目
-      statistics_category: 統計類別
-      statistics_hour: 統計時數
-      statistics_payment_method: 統計支付方法
-      statistics_statistic_category: Statistics show StatisticCategories
-      statistics_table: 統計表格
-      statistics_tax: 統計稅
-      statistics_weekday: 普通日統計數據
-      take_orders: 下訂單
-      view_all_settlements: 查看所有結算
-      assign_users_to_vendors: Assign Users to Vendors
-      download_csv: Download CSV
-      immediate_order_finish: Finish order from order screen
-      interim_receipt: Interim Receipt
-      manage_advertising: Manage Advertising
-      manage_user_logins: Manage User Logins
-      settlement_statistics_sold_quantities: Show settlement statistics about sold
-        quantities
       statistics:
         statistics_category: Categories
         statistics_hour: Hours
@@ -721,7 +723,16 @@ hk:
         statistics_table: Tables
         statistics_tax: Taxes
         statistics_weekday: Weekdays
+      statistics_category: 統計類別
+      statistics_hour: 統計時數
+      statistics_payment_method: 統計支付方法
       statistics_sold_quantities: Statistics show sold quantities
+      statistics_statistic_category: Statistics show StatisticCategories
+      statistics_table: 統計表格
+      statistics_tax: 統計稅
+      statistics_weekday: 普通日統計數據
+      take_orders: 下訂單
+      view_all_settlements: 查看所有結算
       view_settlements_table: View settlements table
   room_prices:
     index:
@@ -771,20 +782,20 @@ hk:
       username: 用戶
   settlements:
     detailed_list:
+      changed_price: ! '%{byuser} changed price'
       count: 計算
       order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
+      reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: 收入
       total: 總計
       unit_price: 單價
-      changed_price: ! '%{byuser} changed price'
-      reduced_count: Count reduced from %{maxcount} to %{count}.
       warning: Warning
     index:
+      all: All
       end_date: 結束日期
+      one_day_one_row: List days
       start_date: 開始日期
       sum_total: 總計
-      all: All
-      one_day_one_row: List days
     settlement:
       finish: 完畢
       please_wait: 正在分析數據，請稍候...
@@ -803,9 +814,9 @@ hk:
   statistics:
     index:
       hour: 小時
-      weekday: 工作日
       limit_by: Limit by
       query: Query
+      weekday: 工作日
     statistics_hour:
       hour: Hour
     statistics_weekday:
@@ -840,12 +851,12 @@ hk:
       success: 用戶成功創建
     destroy:
       success: 用戶成功刪除
+    index:
+      on_duty: On duty
     new:
       edit_user: 編輯用戶
       new_user: 新用戶
       select_with_ctrl_key: 選擇或以[Ctrl]+滑鼠左鍵取消選擇
-    index:
-      on_duty: On duty
   various:
     attempt: 嘗試
     begin: 開始
@@ -858,8 +869,19 @@ hk:
     customer_request_send: 要求這些項目
     customer_request_waiter: 呼叫服務員
     delete: 刪除
+    display: Display
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+      about this.'
+    download: Download
     end: 終結
+    exception_page:
+      assistance_text: Please click on the Button "HOME" and try again. If you see
+        the same error twice, please contact our Customer Support.
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
+      oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: 你已請求付款。請稍候，我們將很快過來。
+    go: Go!
     home: 回到主目錄
     hotel: Hotel酒店
     interim_invoice: Interim Invoice
@@ -871,6 +893,7 @@ hk:
     no_connection_retrying: 無法連接，重試。
     order_will_be_confirmed: 我們的服務員將很快確認你的訂單
     pay: 支付
+    print: Print
     quantity_abbreviation: Qty.
     report: 報告
     restaurant: 餐廳
@@ -879,33 +902,21 @@ hk:
     server_error: 內部服務器錯誤。請以不同裝置檢查訂單的遞交
     server_error_short: 服務器錯誤
     server_not_responded: 服務器無反應。請以不同裝置檢查訂單的遞交。之后，重新遞交訂單以刪除改變。
+    sold_quantities: Sold Quantities
     statistics: Statistics統計數據
     subtotal: 小計
     successfully_sent: 該項目已成功寄出。
+    switched_to_vendor: Vendor '%{vendorname}'
     table_contains_offline_items: 該訂單含有無法被服務器確認的項目，隻能在本地顯示訂單的儲存版本。該服務器可能有更新的版本。請手動檢查該訂單的正確性。
     tax: 稅
     tax_amount: 總數
     time: 時間
     total_price_abbreviation: TP
+    translations: Translations
     unamed: Unamed
     unit_price_abbreviation: SP
     waiter_was_requested: 你已呼叫服務員。請稍候，我們將很快過來。
     workstation_view: 工作站視圖
-    display: Display
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
-      about this.'
-    download: Download
-    exception_page:
-      assistance_text: Please click on the Button "HOME" and try again. If you see
-        the same error twice, please contact our Customer Support.
-      exception_description: ! 'Error Description:'
-      exception_in_files: ! 'The Error occurred in the following files:'
-      oops_an_error_occurred: Oops! An Error occurred
-    go: Go!
-    print: Print
-    sold_quantities: Sold Quantities
-    switched_to_vendor: Vendor '%{vendorname}'
-    translations: Translations
     your_shift_has_ended: Your shift has ended. Please log out.
   vendors:
     create:
@@ -915,10 +926,10 @@ hk:
     form:
       add_printer: 增加打印機
       identify_printers: Identify Printers
-      test_printers: 測試打印機
-      test_printers_chartest: Test all characters
       print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
+      test_printers: 測試打印機
+      test_printers_chartest: Test all characters
     index:
       edit: 編輯
       switch_to: 選擇
@@ -932,11 +943,3 @@ hk:
   winered: 酒紅
   wrong_password: 錯誤登入數據
   yellow: 黃
-  guest_types:
-    new:
-      edit_guest_type: Edit Guest Type
-  payment_methods:
-    create:
-      success: Payment Method successfully saved
-    destroy:
-      success: Payment Method successfully deleted

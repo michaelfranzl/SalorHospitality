@@ -235,6 +235,9 @@ gn:
         print_button_filename: Icon
         pulse_receipt: Beep Rechnung
         pulse_tickets: Beep Tickets
+      room:
+        name: Namex
+        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden

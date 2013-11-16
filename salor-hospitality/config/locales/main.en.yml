@@ -117,6 +117,9 @@ en:
         usage: usage
       role:
         name: Name
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
