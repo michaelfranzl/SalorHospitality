@@ -6,7 +6,7 @@ fi:
     errors:
       template:
         header:
-          one: "%{count} virhe esti lomakeen '%{model}' from being saved."
+          one: "%{count} virhe esti lomakeen '%{model}' tallentamisen."
           other: "%{count} virhettä esti lomakeen '%{model}' tallentamisen."
         body: "Tarkista seuravat syötöt:"
 

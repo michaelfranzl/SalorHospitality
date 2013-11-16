@@ -10,7 +10,7 @@ fi:
         image: Kuva
         name: Nimi
         price: Hinta
-        statistic_category_id: Tilastointiluokitus
+        statistic_category_id: Tilastointi- luokitus
         taxes: Vero
         usage: käyttö
       booking_item:
@@ -59,7 +59,7 @@ fi:
         language: Kieli
         last_name: Sukunimi
         m_number: Kanta-asiakaskortin koodi
-        m_points: Kanta-asiakaan pisteet
+        m_points: Kanta-asiakkaan pisteet
         postalcode: Postinumero
         state: State
         tax_info: Verotiedot
@@ -111,7 +111,7 @@ fi:
         active: aktiivinen
         description: Kuvaus
         hidden: poista
-        postfix: Jälkiliite
+        postfix: Jälki- liite
         prefix: Nimi
         price: variantti hinta
         usage: käyttö
@@ -122,7 +122,7 @@ fi:
         room_type_id: Huoneluokka
       room_price:
         base_price: Perushinta
-        guest_type_id: Vieras tyypi
+        guest_type_id: Vierasluokka
         hidden: poista
         room_type_id: Huoneluokka
         season_id: Sesonki
@@ -143,7 +143,7 @@ fi:
         name: Nimi
       surcharge:
         amount: Summa
-        guest_type_id: Vieras tyypi
+        guest_type_id: Vierasluokka
         hidden: poista
         name: Nimi
         radio_select: Valintanappi
@@ -204,7 +204,7 @@ fi:
         automatic_printing: Automaattinen tulostus
         country: Maan säännöt
         email: Sähköposti
-        enable_technician_emails: Lähetä tekninen apu sähköpostia
+        enable_technician_emails: Lähetä sähköposti tekniseen apuun
         hidden: poista
         invoice_footer_blurb: Laskun alatunniste
         invoice_header_blurb: Laskun ylätunniste
@@ -273,8 +273,8 @@ fi:
         one: Varastoryhmä
         other: Varastoryhmät
       guest_type:
-        one: Vieras Tyypi
-        other: Vieras Tyyppejä
+        one: Vierasluokka
+        other: Vieraskuokkia
       image:
         one: Kuva
         other: Kuvat
@@ -481,7 +481,7 @@ fi:
       new_group: Uusi ryhmä
   guest_types:
     new:
-      edit_guest_type: Muokkaa vieras tyypi
+      edit_guest_type: Muokkaa vierasluokka
   guestroom: Vierashuone
   host: Vastaanottavan
   images:
@@ -632,8 +632,8 @@ fi:
     end_date: Päättymispäivä
     fisc_report_dump_location: Tulostuspaikka
     index:
-      backup_database: Varmuuskopio tietokanta
-      backup_logfile: varmuuskopio lokitiedosto
+      backup_database: varmuuskopioi tietokanta
+      backup_logfile: varmuuskopioi lokitiedosto
       connect_ssh: Etäkirjautuminen
       connect_vnc: Jaa näyttö
       connected: Kytketty
@@ -644,7 +644,7 @@ fi:
         Internetiin. Jos näet Red (E) Logon ylhäällä, olet yhteydessä Internetiin.
       password: Salasana
       remote_support: Etätuki
-      requesting_connection_status: Pyydä yhteydentilanne ...
+      requesting_connection_status: Pyytää yhteystilannetta ...
     remote_support: Etätuki
     save: Tallenna
     start_date: Aloituspäivä
