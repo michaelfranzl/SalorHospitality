@@ -117,6 +117,9 @@ gn:
         usage: Verwendung
       role:
         name: Name
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Grundpreis
         guest_type_id: Guest Type
@@ -235,9 +238,6 @@ gn:
         print_button_filename: Icon
         pulse_receipt: Beep Rechnung
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
@@ -438,6 +438,8 @@ gn:
       teapot: Teekanne
       whitewinebottle: Flasche Weiß
       whitewineglass: Weißwein
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Bestellung löschen und zurück
   copy: Kopie

@@ -117,6 +117,9 @@ pl:
         usage: Zużycie
       role:
         name: Nazwa
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Cena podstawowa
         guest_type_id: Typ klienta
@@ -235,9 +238,6 @@ pl:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
@@ -438,6 +438,8 @@ pl:
       teapot: Filiżanka herbaty
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Wyczyść zamówienie i wróć
   copy: Kopiuj

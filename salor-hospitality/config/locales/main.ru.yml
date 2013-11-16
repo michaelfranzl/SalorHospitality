@@ -117,6 +117,9 @@ ru:
         usage: использование
       role:
         name: Название
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Базовая цена
         guest_type_id: Тип гостя
@@ -235,9 +238,6 @@ ru:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
@@ -438,6 +438,8 @@ ru:
       teapot: Чай в чайнике
       whitewinebottle: Бутылка белого вина
       whitewineglass: Бокал белого вина
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Очистить заказ и вернуться
   copy: Копия

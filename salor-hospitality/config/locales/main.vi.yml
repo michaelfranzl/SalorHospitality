@@ -117,6 +117,9 @@ vi:
         usage: usage
       role:
         name: Name
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
@@ -235,9 +238,6 @@ vi:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -438,6 +438,8 @@ vi:
       teapot: Teapot
       whitewinebottle: Bottle White
       whitewineglass: White Wine
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Clear order and go back
   copy: Copy

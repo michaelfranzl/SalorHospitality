@@ -117,6 +117,9 @@ cn:
         usage: 运用
       role:
         name: 名称
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: 底价
         guest_type_id: 顾客种类
@@ -235,9 +238,6 @@ cn:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
@@ -438,6 +438,8 @@ cn:
       teapot: 茶壶
       whitewinebottle: 白葡萄酒(瓶)
       whitewineglass: 白葡萄酒(杯)
+      fish: Fish
+      salad: Salad
   clear: 清除
   clear_order_and_go_back: 清除订单并返回
   copy: 复制

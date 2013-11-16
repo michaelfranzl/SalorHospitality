@@ -117,6 +117,9 @@ es:
         usage: uso
       role:
         name: Nombre
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Precio base
         guest_type_id: Tipo-Invitado
@@ -235,9 +238,6 @@ es:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
@@ -438,6 +438,8 @@ es:
       teapot: Tetera
       whitewinebottle: Botella blanco
       whitewineglass: copa vino blanco
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Borrar orden y volver
   copy: copiar

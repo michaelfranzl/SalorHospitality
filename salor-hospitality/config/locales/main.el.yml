@@ -117,6 +117,9 @@ el:
         usage: χρήση
       role:
         name: Όνομα
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Βασική Τιμή
         guest_type_id: Τύπος Πελάτη
@@ -235,9 +238,6 @@ el:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα
@@ -438,6 +438,8 @@ el:
       teapot: Τσαγέρα
       whitewinebottle: Μπουκάλι Λευκό
       whitewineglass: Λευκό Κρασί
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Σβήστε την παραγγελία και επιστρέψτε
   copy: Αντίγραφο

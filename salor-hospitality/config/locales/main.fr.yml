@@ -117,6 +117,9 @@ fr:
         usage: Utilisation
       role:
         name: Nom
+      room:
+        name: Namex
+        room_type_id: Room typeX
       room_price:
         base_price: Prix de base
         guest_type_id: Gast-Typ
@@ -235,9 +238,6 @@ fr:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
-      room:
-        name: Namex
-        room_type_id: Room typeX
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix ou Postfix doivent être mentionnés
@@ -438,6 +438,8 @@ fr:
       teapot: Théière
       whitewinebottle: Bouteille blanc
       whitewineglass: Vin blanc
+      fish: Fish
+      salad: Salad
   clear: clear
   clear_order_and_go_back: Effacer commande et revenir à la page précédente
   copy: Copier
