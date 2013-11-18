@@ -206,6 +206,7 @@ tw:
         email: 電子郵件
         enable_technician_emails: 給技術人員寄電子郵件
         hidden: 刪除
+        history_print: History Print
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
         invoice_logo: 發票標志
@@ -228,6 +229,8 @@ tw:
         update_resources_interval: 更新離線數據庫
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ tw:
       dessert: 點心
       digestif: 消化劑
       edit_category: 編輯類別
+      fish: Fish
       maindish: 主菜
       new_category: 新類別
       nonalcoholics: 無酒精
@@ -430,6 +434,7 @@ tw:
       redwineglass: 紅葡萄酒(杯)
       rosewinebottle: 桃紅葡萄酒(瓶)
       rosewineglass: 桃紅葡萄酒(杯)
+      salad: Salad
       sidedish: 小菜
       soup: 湯
       sparkling: 起泡葡萄酒
@@ -438,8 +443,6 @@ tw:
       teapot: 茶壺
       whitewinebottle: 白葡萄酒(瓶)
       whitewineglass: 白葡萄酒(杯)
-      fish: Fish
-      salad: Salad
   clear: 清除
   clear_order_and_go_back: 清除訂單並返回
   copy: 復制

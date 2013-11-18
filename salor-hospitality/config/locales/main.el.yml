@@ -206,6 +206,7 @@ el:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: διαγραφή
+        history_print: History Print
         invoice_footer_blurb: Συνοπτική περιγραφή υποσέλιδου τιμολογίου
         invoice_header_blurb: Συνοπτική περιγραφή κεφαλίδας τιμολογίου
         invoice_logo: Λογότυπο τιμολογίου
@@ -228,6 +229,8 @@ el:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ el:
       dessert: Επιδόρπιο
       digestif: Χωνευτικό
       edit_category: Επεξεργασία Κατηγορίας
+      fish: Fish
       maindish: Κυρίως Πιάτο
       new_category: Νέα Κατηγορία
       nonalcoholics: Χωρίς Αλκοόλ
@@ -430,6 +434,7 @@ el:
       redwineglass: Ερυθρό Κρασί
       rosewinebottle: Μπουκάλι Ροζέ
       rosewineglass: Ροζέ Κρασί
+      salad: Salad
       sidedish: Συνοδευτικό Πιάτο
       soup: Σούπα
       sparkling: Αφρώδες Κρασί
@@ -438,8 +443,6 @@ el:
       teapot: Τσαγέρα
       whitewinebottle: Μπουκάλι Λευκό
       whitewineglass: Λευκό Κρασί
-      fish: Fish
-      salad: Salad
   clear: clear
   clear_order_and_go_back: Σβήστε την παραγγελία και επιστρέψτε
   copy: Αντίγραφο

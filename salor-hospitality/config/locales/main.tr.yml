@@ -206,6 +206,7 @@ tr:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: delete
+        history_print: History Print
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
         invoice_logo: XXX Invoice Logo
@@ -228,6 +229,8 @@ tr:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Use order numbers
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ tr:
       dessert: Tatlilar
       digestif: Digestif
       edit_category: Kategori islemek
+      fish: Fish
       maindish: Ana yemek
       new_category: Yeni Kategori üretmek
       nonalcoholics: Alkoholsüz
@@ -430,6 +434,7 @@ tr:
       redwineglass: Kirmizi sarap
       rosewinebottle: Sise Acikkirmizi sarap
       rosewineglass: Gülrengi sarap
+      salad: Salad
       sidedish: Ilave
       soup: XXX Soup
       sparkling: Köpüklü sarap
@@ -438,8 +443,6 @@ tr:
       teapot: Caydanlık
       whitewinebottle: Sise beyaz sarap
       whitewineglass: Beyaz sarap
-      fish: Fish
-      salad: Salad
   clear: clear
   clear_order_and_go_back: XXXClear order and go back
   copy: XXXCopy

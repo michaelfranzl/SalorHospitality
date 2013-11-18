@@ -206,6 +206,7 @@ cn:
         email: 电子邮件
         enable_technician_emails: 给技术人员寄电子邮件
         hidden: 删除
+        history_print: History Print
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
         invoice_logo: 发票标志
@@ -228,6 +229,8 @@ cn:
         update_resources_interval: 更新离线数据库
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ cn:
       dessert: 点心
       digestif: 消化剂
       edit_category: 编辑类别
+      fish: Fish
       maindish: 主菜
       new_category: 新类别
       nonalcoholics: 无酒精
@@ -430,6 +434,7 @@ cn:
       redwineglass: 红葡萄酒(杯)
       rosewinebottle: 桃红葡萄酒(瓶)
       rosewineglass: 桃红葡萄酒(杯)
+      salad: Salad
       sidedish: 小菜
       soup: 汤
       sparkling: 起泡葡萄酒
@@ -438,8 +443,6 @@ cn:
       teapot: 茶壶
       whitewinebottle: 白葡萄酒(瓶)
       whitewineglass: 白葡萄酒(杯)
-      fish: Fish
-      salad: Salad
   clear: 清除
   clear_order_and_go_back: 清除订单并返回
   copy: 复制

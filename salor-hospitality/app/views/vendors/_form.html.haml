@@ -126,8 +126,8 @@
           %hr
           %p= t('.print_via_salorbin_explanation')
           %p
-            Printing / URL:
-            %br
+          = vendor_form.label :printing_url
+          %br
             - if @current_company.mode == 'saas'
               %input{ :disabled => true, :value => "#{ @current_company.full_url }/printers", :size => 35 }
             - else
@@ -135,8 +135,8 @@
               - url = match[1] if match
               %input{ :disabled => true, :value => "#{ url }printers", :size => 35 }
           %p
-            Printing / Username:
-            %br
+          = vendor_form.label :printing_username
+          %br
             %input{ :disabled => true, :value => vendor_form.object.hash_id, :size => 35 }
           %hr
           %span.button#identify_printers= t '.identify_printers'

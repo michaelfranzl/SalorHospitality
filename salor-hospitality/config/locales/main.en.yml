@@ -206,11 +206,14 @@ en:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: delete
+        history_print: History Print
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
         invoice_logo: Invoice Logo
         logo: Screen logo
         name: Name
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         remote_orders: Remote orders

@@ -206,6 +206,7 @@ fi:
         email: Sähköposti
         enable_technician_emails: Lähetä sähköposti tekniseen apuun
         hidden: poista
+        history_print: Historia tulostus
         invoice_footer_blurb: Laskun alatunniste
         invoice_header_blurb: Laskun ylätunniste
         invoice_logo: Laskun logo
@@ -228,6 +229,8 @@ fi:
         update_resources_interval: Offline-tietokannan päivitysintervalli
         update_tables_interval: Pöytien päivitysintervalli
         use_order_numbers: Käytä tilausnumeroita
+        printing_url: ! 'Tulostaminen / URL:'
+        printing_username: ! 'Tulostaminen / käyttäjätunnus:'
       vendor_printer:
         baudrate: baudrate
         codepage: codepage
@@ -422,6 +425,7 @@ fi:
       dessert: Jälkiruoka
       digestif: Digestiivi
       edit_category: Muokkaa kategoriaa
+      fish: Kala
       maindish: Pääruoka
       new_category: Uusi kategoria
       nonalcoholics: Alkoholiton
@@ -430,6 +434,7 @@ fi:
       redwineglass: Punaviini
       rosewinebottle: Roseeviini pullo
       rosewineglass: Roseeviini
+      salad: Salaatti
       sidedish: Lisäke
       soup: Keitto
       sparkling: Kuohuviini
@@ -438,8 +443,6 @@ fi:
       teapot: Teekannu
       whitewinebottle: Valkoviini pullo
       whitewineglass: Valkoviini
-      fish: Kala
-      salad: Salaatti
   clear: Tyhjennä
   clear_order_and_go_back: Tyhjennä tilaus ja palaa
   copy: Kopio
@@ -780,12 +783,12 @@ fi:
       email: Sähköpostiosoitteesi
       login: Kirjaudu
       password: Salasana
-      username: Käyttäjä
+      username: Käyttäjätunnus
     new_customer:
       email: Sähköpostiosoitteesi
       login: Kirjaudu
       password: Salasana
-      username: Käyttäjä
+      username: Käyttäjätunnus
   settlements:
     detailed_list:
       changed_price: ! '%{byuser} muutti hintaa'

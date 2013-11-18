@@ -206,6 +206,7 @@ vi:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: delete
+        history_print: History Print
         invoice_footer_blurb: Invoice footer blurb
         invoice_header_blurb: Invoice header blurb
         invoice_logo: Invoice Logo
@@ -228,6 +229,8 @@ vi:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Use order numbers
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ vi:
       dessert: Dessert
       digestif: Digestif
       edit_category: Edit Category
+      fish: Fish
       maindish: Main Dish
       new_category: New Category
       nonalcoholics: Alcohol Free
@@ -430,6 +434,7 @@ vi:
       redwineglass: Red Wine
       rosewinebottle: Bottle Rosé
       rosewineglass: Rosé Wine
+      salad: Salad
       sidedish: Side Dish
       soup: Soup
       sparkling: Sparkling Wine
@@ -438,8 +443,6 @@ vi:
       teapot: Teapot
       whitewinebottle: Bottle White
       whitewineglass: White Wine
-      fish: Fish
-      salad: Salad
   clear: clear
   clear_order_and_go_back: Clear order and go back
   copy: Copy

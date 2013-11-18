@@ -206,6 +206,7 @@ ru:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: удалить
+        history_print: History Print
         invoice_footer_blurb: Текст снизу счета
         invoice_header_blurb: Текст вверху счета
         invoice_logo: XXX Invoice Logo
@@ -228,6 +229,8 @@ ru:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Использовать номера заказов
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ ru:
       dessert: Десерт
       digestif: Дижестив
       edit_category: Редактирование категории
+      fish: Fish
       maindish: Главные блюда
       new_category: Новая категория
       nonalcoholics: Безалкогольные напитки
@@ -430,6 +434,7 @@ ru:
       redwineglass: Бокал красного вина
       rosewinebottle: Бутылка розового вина
       rosewineglass: Бокал розового вина
+      salad: Salad
       sidedish: Гарнир
       soup: Супы
       sparkling: Шампанское
@@ -438,8 +443,6 @@ ru:
       teapot: Чай в чайнике
       whitewinebottle: Бутылка белого вина
       whitewineglass: Бокал белого вина
-      fish: Fish
-      salad: Salad
   clear: clear
   clear_order_and_go_back: Очистить заказ и вернуться
   copy: Копия

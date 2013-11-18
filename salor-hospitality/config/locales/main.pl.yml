@@ -206,6 +206,7 @@ pl:
         email: e-mail
         enable_technician_emails: Send technician e-mails
         hidden: Usuń
+        history_print: History Print
         invoice_footer_blurb: Notka stopki faktury
         invoice_header_blurb: Notka nagłówka faktury
         invoice_logo: Logo faktury
@@ -228,6 +229,8 @@ pl:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Użyj liczby zamówień
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -422,6 +425,7 @@ pl:
       dessert: Deser
       digestif: Digestif
       edit_category: Edytuj kategorię
+      fish: Fish
       maindish: Danie główne
       new_category: Dodaj kategorię
       nonalcoholics: Napoje bezalkoholowe
@@ -430,6 +434,7 @@ pl:
       redwineglass: Czerwone wino
       rosewinebottle: Butelka różowego wina
       rosewineglass: Różowe wino
+      salad: Salad
       sidedish: Przystawka
       soup: Zupa
       sparkling: Wino musujące
@@ -438,8 +443,6 @@ pl:
       teapot: Filiżanka herbaty
       whitewinebottle: Butelka białego wina
       whitewineglass: Białe wino
-      fish: Fish
-      salad: Salad
   clear: clear
   clear_order_and_go_back: Wyczyść zamówienie i wróć
   copy: Kopiuj
