@@ -117,9 +117,6 @@ ru:
         usage: использование
       role:
         name: Название
-      room:
-        name: Namex
-        room_type_id: Room typeX
       room_price:
         base_price: Базовая цена
         guest_type_id: Тип гостя
@@ -212,6 +209,8 @@ ru:
         invoice_logo: XXX Invoice Logo
         logo: XXX Screen logo
         name: Название
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
         receipt_footer_blurb: Текст снизу квитанции
         receipt_header_blurb: Текст вверху квитанции
         remote_orders: Remote orders
@@ -229,8 +228,6 @@ ru:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Использовать номера заказов
-        printing_url: ! 'Printing / URL:'
-        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -241,6 +238,9 @@ ru:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      room:
+        name: Name
+        room_type_id: Room type
     errors:
       messages:
         prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс

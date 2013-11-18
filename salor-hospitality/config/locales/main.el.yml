@@ -117,9 +117,6 @@ el:
         usage: χρήση
       role:
         name: Όνομα
-      room:
-        name: Namex
-        room_type_id: Room typeX
       room_price:
         base_price: Βασική Τιμή
         guest_type_id: Τύπος Πελάτη
@@ -212,6 +209,8 @@ el:
         invoice_logo: Λογότυπο τιμολογίου
         logo: Λογότυπο οθόνης
         name: Name
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
         receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
         receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
         remote_orders: Remote orders
@@ -229,8 +228,6 @@ el:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
-        printing_url: ! 'Printing / URL:'
-        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -241,6 +238,9 @@ el:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      room:
+        name: Name
+        room_type_id: Room type
     errors:
       messages:
         prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα

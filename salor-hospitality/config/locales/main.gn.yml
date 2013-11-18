@@ -117,9 +117,6 @@ gn:
         usage: Verwendung
       role:
         name: Name
-      room:
-        name: Namex
-        room_type_id: Room typeX
       room_price:
         base_price: Grundpreis
         guest_type_id: Guest Type
@@ -212,6 +209,8 @@ gn:
         invoice_logo: Rechnungslogo
         logo: Bildschirm-Logo
         name: Firmenname
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
         receipt_footer_blurb: Beleg Fußzeile
         receipt_header_blurb: Beleg Kopfzeile
         remote_orders: Fernbestellungen
@@ -229,8 +228,6 @@ gn:
         update_resources_interval: Intervall Aktualisierung Offline-Datenbank
         update_tables_interval: Intervall Aktualisierung Tische
         use_order_numbers: Bestellnummern
-        printing_url: ! 'Printing / URL:'
-        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -241,6 +238,9 @@ gn:
         print_button_filename: Icon
         pulse_receipt: Beep Rechnung
         pulse_tickets: Beep Tickets
+      room:
+        name: Name
+        room_type_id: Room type
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden

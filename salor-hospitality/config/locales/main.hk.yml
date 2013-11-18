@@ -117,9 +117,6 @@ hk:
         usage: 運用
       role:
         name: 名稱
-      room:
-        name: Namex
-        room_type_id: Room typeX
       room_price:
         base_price: 底價
         guest_type_id: 顧客種類
@@ -212,6 +209,8 @@ hk:
         invoice_logo: 發票標志
         logo: 熒幕標志
         name: 名稱
+        printing_url: ! 'Printing / URL:'
+        printing_username: ! 'Printing / Username:'
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         remote_orders: 遠程訂單
@@ -229,8 +228,6 @@ hk:
         update_resources_interval: 更新離線數據庫
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
-        printing_url: ! 'Printing / URL:'
-        printing_username: ! 'Printing / Username:'
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -241,6 +238,9 @@ hk:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+      room:
+        name: Name
+        room_type_id: Room type
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given

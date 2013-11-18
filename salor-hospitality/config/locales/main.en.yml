@@ -118,8 +118,8 @@ en:
       role:
         name: Name
       room:
-        name: Namex
-        room_type_id: Room typeX
+        name: Name
+        room_type_id: Room type
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type

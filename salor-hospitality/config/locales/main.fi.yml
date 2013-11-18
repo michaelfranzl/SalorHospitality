@@ -117,9 +117,6 @@ fi:
         usage: käyttö
       role:
         name: Nimi
-      room:
-        name: Nimi
-        room_type_id: Huoneluokka
       room_price:
         base_price: Perushinta
         guest_type_id: Vierasluokka
@@ -212,6 +209,8 @@ fi:
         invoice_logo: Laskun logo
         logo: Näytön logo
         name: Nimi
+        printing_url: ! 'Tulostaminen / URL:'
+        printing_username: ! 'Tulostaminen / käyttäjätunnus:'
         receipt_footer_blurb: Kuitin alatunniste
         receipt_header_blurb: Kuitin ylätunniste
         remote_orders: kaukotilaukset
@@ -229,8 +228,6 @@ fi:
         update_resources_interval: Offline-tietokannan päivitysintervalli
         update_tables_interval: Pöytien päivitysintervalli
         use_order_numbers: Käytä tilausnumeroita
-        printing_url: ! 'Tulostaminen / URL:'
-        printing_username: ! 'Tulostaminen / käyttäjätunnus:'
       vendor_printer:
         baudrate: baudrate
         codepage: codepage
@@ -241,6 +238,9 @@ fi:
         print_button_filename: Ikoni
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
+      room:
+        name: Nimi
+        room_type_id: Huoneluokka
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
