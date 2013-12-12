@@ -166,7 +166,7 @@ nl:
         include_in_statistics: Oplossing statistieken
         letter: Afkorting
         name: Naam
-        percent: 'Belasting in %'
+        percent: Belasting in %
         statistics_by_category: Oplossingen statistieken per categorie
       tax_amount:
         amount: Bedrag
@@ -928,7 +928,8 @@ nl:
     form:
       add_printer: Voeg printer toe
       identify_printers: Identificeer Printers
-      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser, Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
+      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser,
+        Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test alle karakters
     index:

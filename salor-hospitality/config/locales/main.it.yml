@@ -140,7 +140,7 @@ it:
         name: Nome
       surcharge:
         amount: Importo
-        guest_type_id: Tipo Ospite 
+        guest_type_id: Tipo Ospite
         hidden: cancella
         name: Nome
         radio_select: Selezione Radio
@@ -173,7 +173,7 @@ it:
         tax_id: Tassa
       user:
         active: attivo
-        advertising_timeout: Scadenza pubblicità 
+        advertising_timeout: Scadenza pubblicità
         advertising_url: URL pubblciità
         audio: Segnali acustici
         color: Colore
@@ -186,13 +186,13 @@ it:
           mobile: mobile
           workstation: workstation
         login: Login
-        maximum_shift_duration: Massima durata turno 
+        maximum_shift_duration: Massima durata turno
         password: Password
         role: Ruolo
         screenlock_timeout: Timeout salvaschermo (sec.)
         tables: Tavoli
         title: Titolo
-        track_time: Tempo di Traccia # track_time ?
+        track_time: Tempo di Traccia
       user_login:
         duration: Durata
         login: Iniziato
@@ -211,17 +211,17 @@ it:
         receipt_footer_blurb: Intestazione ricevuta piè di pagina
         receipt_header_blurb: Intestazione ricevuta inizio pagina
         remote_orders: Ordini remoti
-        rlogo_footer: Logo ricevuta piè di pagina 
+        rlogo_footer: Logo ricevuta piè di pagina
         rlogo_header: Logo ricevuta in intestazione
         saas: Versione online
         technician_email: e-mail tecnico
-        ticket_display_time_order: Ora e numero fattura nello scontrino # Time and invoice number on ticket
-        ticket_item_separator: Linea di Separazione scontrino # Ticket Separation Line
-        ticket_tall_font: Altezza font scontrino 
+        ticket_display_time_order: Ora e numero fattura nello scontrino
+        ticket_item_separator: Linea di Separazione scontrino
+        ticket_tall_font: Altezza font scontrino
         ticket_wide_font: Larghezza font scontrino
         time_offset: Correzione dell'ora (ore)
         timeout: Timeout salvaschermo (secondi)
-        update_item_lists_interval: Intervallo Aggiornamento Notifiche articolo 
+        update_item_lists_interval: Intervallo Aggiornamento Notifiche articolo
         update_resources_interval: Intervallo Aggiornamento Database Offline
         update_tables_interval: Intervallo Aggiornamento Tavoli
         use_order_numbers: Usa Numeri Ordine
@@ -336,7 +336,7 @@ it:
         one: Sovraprezzo
         other: Sovraprezzi
       table:
-        one: Tavolo 
+        one: Tavolo
         other: Tavoli
       tax:
         one: Classe tassa
@@ -348,7 +348,7 @@ it:
         one: Utente
         other: Utenti
       vendor:
-        one: Ristorante 
+        one: Ristorante
         other: Ristoranti
       vendor_printer:
         one: Stampante
@@ -387,7 +387,7 @@ it:
   blackboard:
     index:
       update: Aggiorna
-  blank: Spazio 
+  blank: Spazio
   blue: Blu
   bookings:
     invoice_item_list:
@@ -422,14 +422,14 @@ it:
       maindish: Primo Piatto
       new_category: Nuova categoria
       nonalcoholics: Senza alcolici
-      noodles: fettuccine # Noodles
+      noodles: fettuccine
       redwinebottle: Bottiglia di vino rosso
       redwineglass: Bicchiere di vino rosso
       rosewinebottle: Bottiglia di vino rosé
       rosewineglass: Bicchiere di vino rosé
       sidedish: Secondo Piatto
       soup: Zuppa
-      sparkling: Vino Frizzante # Sparkling Wine
+      sparkling: Vino Frizzante
       starter: Antipasto
       tea: Tazza di The
       teapot: Teiera
@@ -453,7 +453,7 @@ it:
   create: Crea
   customers:
     create:
-      success: Cliente salvato con successo 
+      success: Cliente salvato con successo
     destroy:
       success: Cliente cancellato con successo
     new:
@@ -465,7 +465,7 @@ it:
   display: Display
   edit: Edita
   exit: Esci
-  finish: Finisci #Just Finish
+  finish: Finisci
   food: Cibo
   go_back: Torna Indietro
   green: Verde
@@ -477,11 +477,11 @@ it:
   guestroom: Sala di Attesa
   host: Ospite
   images:
-    errempty: File non valido 
+    errempty: File non valido
     errsize: Dimensione File non valida
     errtype: Tipo File non valido
   invalid_date: Data non valida
-  invoice: Fattura 
+  invoice: Fattura
   invoice_numer_X_at_time: Fattura No. %{number} alle %{datetime}
   invoices: Fatture
   is_no_number: Non è un numero.
@@ -503,10 +503,11 @@ it:
     hello_username: Ciao %{name}!
     user_account_is_currently_locked: Account bloccato
   move_order_to_table: Sposta Ordine in Altro Tavolo
-  must_be_entered_either_for_article_or_for_quantity: Deve essere immesso o per l'articolo o per la variante
+  must_be_entered_either_for_article_or_for_quantity: Deve essere immesso o per l'articolo
+    o per la variante
   net: Rete
   new: Nuovo
-  no_printing: Non stampante #No printing
+  no_printing: Non stampante
   not_found: Non Trovato
   options:
     create:
@@ -514,7 +515,8 @@ it:
     destroy:
       success: Opzione cancellata con successo
     index:
-      no_categories_defined: Non sono state definite le categorie. Devi creare almeno una categoria per creare una Opzione. 
+      no_categories_defined: Non sono state definite le categorie. Devi creare almeno
+        una categoria per creare una Opzione.
     new:
       edit_option: Edita opzione
       hidden: Cancella
@@ -527,19 +529,19 @@ it:
       items_notifications: Notifiche
       print_now: Stampa subito
       show_last_booking: Visualizza ultima prenotazione
-     show_last_order: Visualizza ultimo ordine
-      toggle_drag_tables: Sposta Tavoli # Drag tables
+      show_last_order: Visualizza ultimo ordine
+      toggle_drag_tables: Sposta Tavoli
     functions_header_order_form:
       move_order: Sposta Ordine in Altro Tavolo
     index:
-      confirmation_list: Lista conferma # Self-order list
+      confirmation_list: Lista conferma
       delivery_list: Lista consegna
       preparation_list: Lista preparazione
     invoice_form:
       change_money: Cambio moneta
       finish: Finisci e rimani in questo schermo
       finish_gototables: Finisci e torna ai tavoli
-      just_finish: Finisci l'ordine #Just finish order
+      just_finish: Finisci l'ordine
       move_order: Sposta l'ordine su altro tavolo
       print_and_finish: Stampa e finisci quest'ordine
       print_and_finish_gototables: Stampa e finisci l'ordine e torna ai tavoli
@@ -597,15 +599,15 @@ it:
     default_blurb: Editami
     error_during_evaluation: ! 'Errore: '
     no_presentation_found:
-      no_presentations_found: Nessun template definito per questo partial. #No template defined for this partial.
+      no_presentations_found: Nessun template definito per questo partial.
   payment_methods:
     create:
       success: Metodo di pagamento salvato con successo
     destroy:
       success: Metodo di pagamento cancellato con successo
   pink: Rosa
-  please_enter_item_comment: Immetti Commento articolo (richiesta extra) #Special Wish
-  please_enter_item_price: Immetti Prezzo articolo (prezzo speciale) #Special Price
+  please_enter_item_comment: Immetti Commento articolo (richiesta extra)
+  please_enter_item_price: Immetti Prezzo articolo (prezzo speciale)
   presentations:
     new:
       edit_presentation: Edita template
@@ -616,7 +618,7 @@ it:
   refund: Rimborso
   reports:
     download: Download
-    download_reports: Download report 
+    download_reports: Download report
     end_date: Data Fine
     fisc_report_dump_location: Output Location
     index:
@@ -627,8 +629,9 @@ it:
       connected: Comnnesso
       disconnected: Disconnesso
       download_reports: Download Reports
-      header: Intestazione # Reports
-      internet_connection_info: Per avere supporto remoto, devi essere connesso a Intenet. Se vedi un Logo rosso (E) sopra, sei connesso ad internet.
+      header: Intestazione
+      internet_connection_info: Per avere supporto remoto, devi essere connesso a
+        Intenet. Se vedi un Logo rosso (E) sopra, sei connesso ad internet.
       password: Password
       remote_support: Supporto remoto
       requesting_connection_status: connessione in corso ...
@@ -657,15 +660,15 @@ it:
       download_csv: Download CSV
       download_database: Download database
       edit_role: Edita ruolo
-      finish_all_settlements: Finisci tutti i saldi # Finish all settlements
+      finish_all_settlements: Finisci tutti i saldi
       finish_orders: Finisci Ordini
-      finish_own_settlement:  Finisci proprio saldo # Finish own settlement
+      finish_own_settlement: Finisci proprio saldo
       immediate_order_finish: Finisci ordine dalla schermata ordini
-      interim_receipt: Ricevuta provvisoria # Interim Receipt
+      interim_receipt: Ricevuta provvisoria
       item_scribe: Abilita scrittura a mano
       manage_advertising: Gestisci pubblicità
       manage_articles: Gestisci articoli, categorie ed opzioni
-      manage_business_invoice: Gestisci ricevuta fiscale # Manage business invoice
+      manage_business_invoice: Gestisci ricevuta fiscale
       manage_cameras: Gestisci camere
       manage_categories: Gestisci categorie
       manage_cost_centers: Gestisci centri di costo
@@ -694,14 +697,15 @@ it:
       refund: Rimborso items
       remote_support: Suporto remoto
       see_debug: Vedi messaggi debug
-      see_item_notifications_static: Elenco sommario notifiche articolo nello schermo principale
-      see_item_notifications_user_delivery: Notifiche articolo consegna personale #Item notifications personal delivery
-      see_item_notifications_user_preparation: Notifiche articolo preparazione personale #Item notifications personal preparation
-      see_item_notifications_vendor_delivery: Notifiche articolo consegna venditore #Item notifications vendor delivery
+      see_item_notifications_static: Elenco sommario notifiche articolo nello schermo
+        principale
+      see_item_notifications_user_delivery: Notifiche articolo consegna personale
+      see_item_notifications_user_preparation: Notifiche articolo preparazione personale
+      see_item_notifications_vendor_delivery: Notifiche articolo consegna venditore
       see_item_notifications_vendor_preparation: Notifiche articolo preparazione venditore
-      settlement_statistics_sold_quantities: Mostra saldo statistiche quantità vendute # Show settlement statistics about sold quantities
-      settlement_statistics_taxes: Mostra statistiche tasse # Show settlement tax statistics 
-      settlement_statistics_taxes_categories: Mostra saldo statistiche per categoria # Show settlement tax statistics by category 
+      settlement_statistics_sold_quantities: Mostra saldo statistiche quantità vendute
+      settlement_statistics_taxes: Mostra statistiche tasse
+      settlement_statistics_taxes_categories: Mostra saldo statistiche per categoria
       split_items: Separa articoli
       statistics:
         statistics_category: Categorie
@@ -716,8 +720,8 @@ it:
       statistics_hour: Statistiche Ora
       statistics_payment_method: Statistiche metodi pagamento
       statistics_sold_quantities: Statistiche quantità vendute
-      statistics_statistic_category: Statistiche categoria 
-      statistics_table: Statistiche tavolo # Statistics Tisch
+      statistics_statistic_category: Statistiche categoria
+      statistics_table: Statistiche tavolo
       statistics_tax: Statistiche tassa
       statistics_weekday: Statistiche giorni lavorativi
       take_orders: Prendi ordini
@@ -725,7 +729,7 @@ it:
       view_settlements_table: Visualizza saldi tavolo
   room_prices:
     index:
-      generate_price_skeleton: Genera prezzo indicativo # Generate price skeleton
+      generate_price_skeleton: Genera prezzo indicativo
     new:
       edit_room_price: Edita prezzo camera
       new_room_price: Nuovo prezzo camera
@@ -753,11 +757,13 @@ it:
       new_season: Nuova stagione
   send_and_go_back: Salva e vai indietro
   served_by_X_on_table_Y: Sarai servito da %{waiter} al tavolo %{table}
-  server_no_response: IL server Bill Gastro no stà rispondendo. E' o occupato o la comunicazione radio è interrotta.
+  server_no_response: IL server Bill Gastro no stà rispondendo. E' o occupato o la
+    comunicazione radio è interrotta.
   sessions:
     browser_warning:
       continue: Continua
-      warning: Salor supporta i browser Google Chrome (Windows), Chromium (Linux) o Safari (Apple). Usa uno di questi browser e riprova.
+      warning: Salor supporta i browser Google Chrome (Windows), Chromium (Linux)
+        o Safari (Apple). Usa uno di questi browser e riprova.
     new:
       email: Tua E-Mail
       login: Login
@@ -772,7 +778,8 @@ it:
     detailed_list:
       changed_price: ! '%{byuser} prezzo cambiato'
       count: Conto
-      order_number_on_table_on_date: ! '%{order} numero %{number} al tavolo %{table} alle %{time}'
+      order_number_on_table_on_date: ! '%{order} numero %{number} al tavolo %{table}
+        alle %{time}'
       reduced_count: Conto scontato da %{maxcount} a %{count}.
       revenue: Ricavo
       total: Totale
@@ -781,7 +788,7 @@ it:
     index:
       all: Tutto
       end_date: Data fine
-      one_day_one_row: Elenco giorni #List days
+      one_day_one_row: Elenco giorni
       start_date: Data inizio
       sum_total: Somma totale
     settlement:
@@ -789,7 +796,7 @@ it:
       please_wait: Analisi dati, attendere prego ...
       print: Stampa
       start: Inizio
-      started_at: Iniziato il #Started at
+      started_at: Iniziato il
   shared:
     invoice_tax_list:
       list_of_taxes: Lista delle Tasse
@@ -802,20 +809,20 @@ it:
   statistics:
     index:
       hour: Ora
-      limit_by: Limite per #Limit by
-      query: Interrogazione # Query
+      limit_by: Limite per
+      query: Interrogazione
       weekday: Giorno lavorativo
   stocks:
     new:
       edit_stock: Edita magazzino
-      new_stock:  Nuovo magazzino
+      new_stock: Nuovo magazzino
   sum: Somma
   surcharges:
     new:
-      add_tax_amount: Aggiungi importo Tassa #tax amount
-      common_surcharge: Sovraprezzo Standard #Common Surcharge
-      edit_surcharge: Edita Sovraprezzo # Surcharge
-      new_surcharge: Nuovo Sovraprezzo #New Surcharge
+      add_tax_amount: Aggiungi importo Tassa
+      common_surcharge: Sovraprezzo Standard
+      edit_surcharge: Edita Sovraprezzo
+      new_surcharge: Nuovo Sovraprezzo
   tables:
     create:
       license_limited: La tua licenza è limitata a  %{count} tavoli
@@ -840,7 +847,8 @@ it:
     new:
       edit_user: Edita utente
       new_user: Nuovo utente
-      select_with_ctrl_key: Seleziona o deseleziona con [Ctrl] + Tasto Sinistro del mouse
+      select_with_ctrl_key: Seleziona o deseleziona con [Ctrl] + Tasto Sinistro del
+        mouse
   various:
     attempt: Tentativo
     begin: Inizio
@@ -853,25 +861,29 @@ it:
     customer_request_send: Richiesta di questi articoli
     customer_request_waiter: Richiesta cameriere
     delete: Cancella
-    display: Schermo #Display
-    double_submission_warning: ! 'Attenzione: Doppia immissione. Comunicalo al supporto tecnico.'
+    display: Schermo
+    double_submission_warning: ! 'Attenzione: Doppia immissione. Comunicalo al supporto
+      tecnico.'
     download: Download
     end: Fine
     exception_page:
-      assistance_text: Fai click sul bottone "HOME" e prova di nuovo. Se si ripresenta ancora lo stesso errore,  contatta il Supporto Clienti.
+      assistance_text: Fai click sul bottone 'HOME' e prova di nuovo. Se si ripresenta
+        ancora lo stesso errore, contatta il Supporto Clienti.
       exception_description: ! 'Descrizione Errore:'
-      exception_in_files: ! 'L'Errore è avvenuto nei seguenti files:'
+      exception_in_files: ! 'L''Errore è avvenuto nei seguenti files:'
       oops_an_error_occurred: Oops! C'è stato un errore'
-    finish_was_requested: Hai richiesto il pagamento. Abbi pazienza, arriviamo al più presto.
+    finish_was_requested: Hai richiesto il pagamento. Abbi pazienza, arriviamo al
+      più presto.
     go: Vai!
     home: Home
     hotel: Hotel
-    interim_invoice: Scontrino provvisorio # Interim Invoice 
+    interim_invoice: Scontrino provvisorio
     invoice: Scontrino
     mobile_view: Vista dispositivo mobile
     no_connection: Connessione non riuscita
-    no_connection_giving_up: Connessione non riuscita. Si rinuncia. # ???
-    no_connection_retry: Connessione al server non riuscita. Invio ancora ? Se annulli,  gli items  saranno salvati  localmente.
+    no_connection_giving_up: Connessione non riuscita. Si rinuncia.
+    no_connection_retry: Connessione al server non riuscita. Invio ancora ? Se annulli,  gli
+      items  saranno salvati  localmente.
     no_connection_retrying: Connessione non riuscita. Provo ancora...
     order_will_be_confirmed: Il tuo ordine sarà confermato da un cameriere a breve
     pay: Paga
@@ -881,15 +893,19 @@ it:
     restaurant: Ristorante
     save: Salva
     sending: Invio...
-    server_error: Oops! C'è stato un errore interno al server. Controlla la immissione dell'Ordine su un dispositivo differente.  
+    server_error: Oops! C'è stato un errore interno al server. Controlla la immissione
+      dell'Ordine su un dispositivo differente.
     server_error_short: Errore server
-    server_not_responded: Nessuna risposta dal server. Controlla la immissione dell'Ordine su un dispositivo differente. Quindi immetti di nuovo l'ordine, o annulla per cancellare i cambiamenti.
+    server_not_responded: Nessuna risposta dal server. Controlla la immissione dell'Ordine
+      su un dispositivo differente. Quindi immetti di nuovo l'ordine, o annulla per
+      cancellare i cambiamenti.
     sold_quantities: Quantità vendute
     statistics: Statistiche
     subtotal: Subtotale
     successfully_sent: Articoli inviati con successo
     switched_to_vendor: Venditore '%{vendorname}'
-    table_contains_offline_items: Questo tavolo contiene items che non sono stati ancora inviati. Li invio ora?
+    table_contains_offline_items: Questo tavolo contiene items che non sono stati
+      ancora inviati. Li invio ora?
     tax: Tassa
     tax_amount: Ammmontare Tassa
     time: Tempo
@@ -897,9 +913,10 @@ it:
     translations: Traduzioni
     unamed: Senza Nome
     unit_price_abbreviation: P.U.
-    waiter_was_requested: Hai chiesto un cameriere. Abbi pazienza, arriviamo al più presto.
+    waiter_was_requested: Hai chiesto un cameriere. Abbi pazienza, arriviamo al più
+      presto.
     workstation_view: Vista workstation
-    your_shift_has_ended: Il tuo Turno è finito. Per cortesia fai log out. 
+    your_shift_has_ended: Il tuo Turno è finito. Per cortesia fai log out.
   vendors:
     create:
       success: Venditore è stato creato con successo
@@ -908,7 +925,9 @@ it:
     form:
       add_printer: Aggiungi stampante
       identify_printers: Identifica stampanti
-      print_via_salorbin_explanation: ! 'Se vuoi stampare attraverso il browser salor-bin, copia (tasti [CTRl]-C) i seguenti dettagli ed incolla (tasti [Ctrl]-V) nel dialogo opzioni di salor-bin:'
+      print_via_salorbin_explanation: ! 'Se vuoi stampare attraverso il browser salor-bin,
+        copia (tasti [CTRl]-C) i seguenti dettagli ed incolla (tasti [Ctrl]-V) nel
+        dialogo opzioni di salor-bin:'
       test_printers: Test stampanti
       test_printers_chartest: Test del set charatteri
     index:
