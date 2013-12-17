@@ -1,3 +1,19 @@
+salor-hospitality (4.1.4.27) unstable; urgency=low
+
+  [ Giorgio Robino ]
+  * Update main.it.yml
+
+  [ Michael Franzl ]
+  * fixed syntax errors in italian translation file
+
+  [ Jason Knight ]
+  * Copied forward 1 year for season bug reported by hotel
+
+  [ Michael Franzl ]
+  * fixed spliced season bug
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 18 Dec 2013 00:10:41 +0100
+
 salor-hospitality (4.1.4.26) unstable; urgency=low
 
   [ Michael Franzl ]
