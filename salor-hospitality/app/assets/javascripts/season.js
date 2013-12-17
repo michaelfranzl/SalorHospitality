@@ -415,6 +415,20 @@ function create_season_objects(seasons) {
     s.previous_year = true;
     season_objects.push(s);
   });
+  // Now we need to copy the list to the next year.
+  $.each(season_objects, function (i, season_object) {
+    var s       = new Season;
+    s.start     = new Date(season_object.start);
+    s.start.setFullYear( season_object.start.getFullYear() + 1);
+    s.end       = new Date(season_object.end);
+    s.end.setFullYear( season_object.end.getFullYear() + 1);
+    s.name      = season_object.name;
+    s.is_master = season_object.is_master;
+    s._object = season_object._object;
+    s.id = season_object.id;
+    s.previous_year = true;
+    season_objects.push(s);
+  });
   season_objects.sort(sort_seasons_func);
   // At this point, the seasons are copied to the previous year,
   // and are ordered. We now need to find seasons that contain other
