@@ -70,7 +70,7 @@ window.display_booking_form = (room_id) ->
   from_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['from_date'] = date + " 01:00:00"
+               submit_json.model.from_date = date + " 01:00:00"
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -78,7 +78,7 @@ window.display_booking_form = (room_id) ->
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model['to_date'] = date  + " 01:00:00"
+               submit_json.model.to_date = date  + " 01:00:00"
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -95,7 +95,6 @@ window.display_booking_form = (room_id) ->
     if $(this).val() == 'i18n_customer'
       $(this).val("")
   auto_completable customer_input, resources.customers, {map:true, field: 'name'}, (result) ->
-    #console.log result
     $(this).val result.name
     submit_json.model['customer_name'] = result.name
   customer_input.on 'keyup', ->
@@ -139,9 +138,11 @@ window.display_booking_form = (room_id) ->
 window.booking_dates_changed = ->
   from = new Date(Date.parse(submit_json.model.from_date))
   to = new Date(Date.parse(submit_json.model.to_date))
-  if to < from
-    $('#booking_to').val date_as_ymd(from)
-    to = from
+  if (to - from) < 86400000
+    to = new Date(from.getTime() + 86400000)
+    $('#booking_to').val date_as_ymd(to)
+    submit_json.model.to_date = date_as_ymd(to) + " 01:00:00"
+    
   duration = Math.floor((to.getTime() - from.getTime()) / 86400000)
   $('#booking_duration').val duration
   submit_json.model.duration = duration
@@ -363,8 +364,10 @@ render_booking_item = (booking_item_id) ->
     surcharge_headers = surcharge_headers.guest_type_set
   if items_json[booking_item_id].parent_key != null
     add_class = 'semitransparent'
+    
+  label = guest_type_name + " <small>(" + resources.sn[items_json[booking_item_id].season_id].n + ")</small>"
   booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
-  create_dom_element 'div', {class:'surcharge_col'}, guest_type_name, booking_item_row
+  create_dom_element 'div', {class:'surcharge_col'}, label, booking_item_row
   render_booking_item_count booking_item_id
   
   from_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_from_date_col',booking_item_id:booking_item_id}, '',booking_item_row
@@ -454,9 +457,10 @@ change_date_for_booking_item = (booking_item_id) ->
     else
       from = new Date(Date.parse(v.from_date))
       to = new Date(Date.parse(v.to_date))
-      if from > to
-        to = from
-        return
+      if (to - from) < 86400000
+        to = new Date(from.getTime() + 86400000)
+        set_json 'booking', booking_item_id, 'to_date', date_as_ymd(to)
+        $("#booking_item_" + booking_item_id + "_to_date").val date_as_ymd(to)
       items_json[k].covered_seasons = Season.applying_seasons(_get('possible_seasons'),from,to)
       set_json 'booking', k, 'duration', items_json[k].covered_seasons[0].duration
   render_booking_items_from_json()

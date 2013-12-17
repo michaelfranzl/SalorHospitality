@@ -21,7 +21,8 @@ function update_resources(mode) {
       if (mode == 'documentready') {
         update_tables();
         if ( !$.isEmptyObject(resources.sn) && typeof render_season_illustration != 'undefined' ) {
-          render_season_illustration();
+          //render_season_illustration();
+          create_season_objects(resources.sn);
         }
         //automatically route to views depending on uri parameters
         var uri_attrs = uri_attributes();
