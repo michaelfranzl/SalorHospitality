@@ -6,7 +6,7 @@
   - sums = []
   - i = 0
   - @tables.each do |table|
-    - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :table_id => table, :cost_center_id => @csids, :created_at => @from..@to).sum(:sum)
+    - sums[i] =  @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :table_id => table, :cost_center_id => @csids, :settlement_id => @sids).sum(:sum)
     - i += 1
   - maximum = sums.sort.last
   - i = 0

@@ -7,7 +7,7 @@
   - total = 0
   - i = 0
   - @taxes.each do |tax|
-    - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids, :created_at => @from..@to).sum(:gro)
+    - sums[i] =  @current_vendor.tax_items.existing.where(:refunded => nil, :user_id => @uids, :tax_id => tax, :cost_center_id => @csids, :settlement_id => @sids).sum(:gro)
     - total += sums[i]
     - i += 1
     

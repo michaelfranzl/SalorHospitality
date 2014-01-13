@@ -18,7 +18,7 @@ class StatisticsController < ApplicationController
     
     #settlements for scoping, currently not used
     @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
-    @settlement_ids = @settlements.collect{ |s| s.id }
+    @sids = @settlements.collect{ |s| s.id }
     
     #taxes
     @taxes = @current_vendor.taxes.existing

@@ -3,7 +3,7 @@
     %th.bb= Article.model_name.human
     %th.bb= t :count
   - @articles.each do |article|
-    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :created_at => @from..@to, :user_id => @uids, :cost_center_id => @csids).sum(:count)
+    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:count)
     - next if sold_quantity.zero?
     %tr
       %td= article.name
@@ -14,7 +14,7 @@
     %th.bb= Quantity.model_name.human
     %th.bb= t :count
   - @quantities.each do |quantity|
-    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :created_at => @from..@to, :user_id => @uids, :cost_center_id => @csids).sum(:count)
+    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:count)
     - next if sold_quantity.zero?
     %tr
       %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
