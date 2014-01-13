@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.28) unstable; urgency=low
+
+  * statistics now selected by settlement instead of created_at
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 13 Jan 2014 11:04:58 +0100
+
 salor-hospitality (4.1.4.27) unstable; urgency=low
 
   [ Giorgio Robino ]
