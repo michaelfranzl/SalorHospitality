@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.34) wheezy; urgency=low
+
+  * haml version fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 15 Jan 2014 13:06:14 +0100
+
 salor-hospitality (4.1.4.33) wheezy; urgency=low
 
   * haml version fix
