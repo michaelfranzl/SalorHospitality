@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.33) wheezy; urgency=low
+
+  * haml version fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 15 Jan 2014 12:53:36 +0100
+
 salor-hospitality (4.1.4.32) wheezy; urgency=low
 
   * added Gemfile and Gemfile lock for best-practice with Bundler
