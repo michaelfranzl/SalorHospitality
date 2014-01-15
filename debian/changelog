@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.30) wheezy; urgency=low
+
+  * testcommit
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 15 Jan 2014 12:26:47 +0100
+
 salor-hospitality (4.1.4.29) unstable; urgency=low
 
   * deployment now for Nginx or Apache
