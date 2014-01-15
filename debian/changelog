@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.29) unstable; urgency=low
+
+  * deployment now for Nginx or Apache
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 15 Jan 2014 12:10:50 +0100
+
 salor-hospitality (4.1.4.28) unstable; urgency=low
 
   * statistics now selected by settlement instead of created_at
