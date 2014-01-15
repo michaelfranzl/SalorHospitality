@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.31) wheezy; urgency=low
+
+  * postinst fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 15 Jan 2014 12:30:47 +0100
+
 salor-hospitality (4.1.4.30) wheezy; urgency=low
 
   * testcommit
