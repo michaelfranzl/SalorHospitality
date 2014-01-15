@@ -49,16 +49,22 @@ case "$1" in
         ucf --purge /etc/salor-hospitality/$lInstance/config.yml
         ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
         ucf --purge /etc/salor-hospitality/$lInstance/Gemfile
-        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-http
-        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-https
+        ucf --purge /etc/salor-hospitality/$lInstance/Gemfile.lock
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-http
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-https
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-http
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-https
       done
       for lInstance in $gInstances; do
         ucf --purge /etc/salor-hospitality/$lInstance/database.yml
         ucf --purge /etc/salor-hospitality/$lInstance/config.yml
         ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
         ucf --purge /etc/salor-hospitality/$lInstance/Gemfile
-        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-http
-        ucf --purge /etc/apache2/sites-available/sh-${lInstance}-https
+        ucf --purge /etc/salor-hospitality/$lInstance/Gemfile.lock
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-http
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-https
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-http
+        ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-https
       done
     fi
     
