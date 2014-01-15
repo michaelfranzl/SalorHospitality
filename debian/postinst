@@ -211,6 +211,7 @@ for lInstance in $gInstances; do
         rm -rf $apache_site_maintainer_config.maintainer
         rm -rf $nginx_site_maintainer_config.maintainer
       done
+
       
       echo "  postinst: Adding salor-hospitality to /etc/hosts if not yet there..."
       result=`cat /etc/hosts | grep "${lInstance}.sh.localhost" | wc -l`
