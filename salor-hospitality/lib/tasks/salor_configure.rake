@@ -10,7 +10,7 @@ desc 'Configures this instance'
 # Call like: rake salor_configure['saas']
 task :salor_configure, [:mode] => :environment do |t, args|
   
-  do_nothing_with_that_variable = History.all # this is the most insane trial-and-error method to patch and fix Rails, which cost me 3 precious hours of my life. I wanna weep. If you remove that line, you'll get  the error message "Expected vendor.rb to define Vendor" when you load this Rake task.
+  #do_nothing_with_that_variable = History.all # If you remove that line, you'll get  the error message "Expected vendor.rb to define Vendor" when you load this Rake task.
   
   Vendor.existing.each do |v|
     puts "Updating cache of Vendor #{v.id}"

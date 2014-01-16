@@ -51,7 +51,8 @@ GEM
       serialport
     execjs (1.4.0)
       multi_json (~> 1.0)
-    haml (3.1.6)
+    haml (4.0.0)
+      tilt
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
@@ -126,7 +127,7 @@ DEPENDENCIES
   coffee-rails
   debugger
   escper (= 1.2.1)
-  haml (= 3.1.6)
+  haml (= 4.0.0)
   jquery-rails (= 2.0.2)
   kramdown (= 0.13.7)
   mysql2

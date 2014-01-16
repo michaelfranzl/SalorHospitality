@@ -51,11 +51,24 @@ class Booking < ActiveRecord::Base
   end
 
   def customer_name=(name)
+    if name.blank?
+      self.customer = nil
+      self.save!
+      return
+    end
     last,first = name.split(',')
     return if not last or not first
-    c = Customer.where(:first_name => first.strip, :last_name => last.strip).first
+    c = self.company.customers.where(:first_name => first.strip, :last_name => last.strip).first
     if not c then
-      c = Customer.create(:first_name => first.strip,:last_name => last.strip, :vendor_id => self.vendor_id, :company_id => self.company_id, :login => "#{last.strip}#{first.strip}")
+      c = Customer.new
+      c.first_name = first.strip
+      c.last_name = last.strip
+      c.vendor_id = self.vendor_id
+      c.company_id = self.company_id
+      c.login = "#{last.strip}#{first.strip}"
+      c.password = Time.now.strftime("%Y%m%d%H%M%S")
+      c.email = Time.now.strftime("%Y%m%d%H%M%S")
+      c.save!
       self.vendor.update_cache
     end
     self.customer = c
