@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.37) wheezy; urgency=low
+
+  * fix for rake task
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 16 Jan 2014 17:42:25 +0100
+
 salor-hospitality (4.1.4.36) wheezy; urgency=low
 
   * booking customer assignment fix
