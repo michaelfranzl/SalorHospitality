@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.36) wheezy; urgency=low
+
+  * booking customer assignment fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 16 Jan 2014 17:33:10 +0100
+
 salor-hospitality (4.1.4.35) wheezy; urgency=low
 
   * deb uninstallation fixes
