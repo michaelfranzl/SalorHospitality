@@ -235,6 +235,7 @@ fi:
         print_button_filename: Ikoni
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
+        ticket_ad: Ticket Ad.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava

@@ -235,6 +235,7 @@ it:
         print_button_filename: Icona
         pulse_receipt: Beep Ricevuta
         pulse_tickets: Beep Tickets
+        ticket_ad: Ticket Ad.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Devono essere impostati Prefisso e Postfisso

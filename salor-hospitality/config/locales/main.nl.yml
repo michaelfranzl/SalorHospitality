@@ -235,6 +235,7 @@ nl:
         print_button_filename: Icoon
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
+        ticket_ad: Ticket Ad.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Voorvoegsel toevoegsel moet worden gegevens

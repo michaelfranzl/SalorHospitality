@@ -235,6 +235,7 @@ hr:
         print_button_filename: Ikona
         pulse_receipt: Zvučni signal primitka
         pulse_tickets: Zvučni signal karta narudžbi
+        ticket_ad: Ticket Ad.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Mora se dati prefiks ili postfiks
