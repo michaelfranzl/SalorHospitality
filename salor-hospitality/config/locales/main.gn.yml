@@ -235,6 +235,7 @@ gn:
         print_button_filename: Icon
         pulse_receipt: Beep Rechnung
         pulse_tickets: Beep Tickets
+        ticket_ad: Ticket Werb.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden

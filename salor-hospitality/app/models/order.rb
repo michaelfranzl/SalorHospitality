@@ -510,6 +510,8 @@ class Order < ActiveRecord::Base
 
   def escpos_tickets(printer_id)
     vendor = self.vendor
+    vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
+    
     if vendor.ticket_wide_font
       header_format_time_order = "%-14.14s #%5i\n"
       header_format_user_table = "%-12.12s %8s\n"
@@ -566,7 +568,12 @@ class Order < ActiveRecord::Base
     header += header_format_user_table % [self.user.login, self.table.name]
 
     header += header_note_format % [self.note] if self.note and not self.note.empty?
-    header += "\xDF" * width + "\n"
+    
+    if vendor_printer.ticket_ad.blank?
+      header += "—" * width + "\n"
+    else
+      header += vendor_printer.ticket_ad + "\n"
+    end
 
     separate_receipt_contents = []
     normal_receipt_content = ''
@@ -636,7 +643,6 @@ class Order < ActiveRecord::Base
       # print nothing
       return {:text => '', :raw_insertations => {}}
     else
-      vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
       output += pulse if vendor_printer.pulse_tickets == true
       return {:text => output, :raw_insertations => raw_insertations }
     end

@@ -235,6 +235,7 @@ en:
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
+        ticket_ad: Ticket Ad.
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given

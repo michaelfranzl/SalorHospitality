@@ -11,7 +11,7 @@
     %tr
       %td{ :colspan => 3 }
         %h3= v.name
-    - v.customers.existing.each do |c|
+    - v.customers.existing.reverse.each do |c|
       %tr
         %td= link_to c.full_name, edit_customer_path(c)
         %td= c.city
