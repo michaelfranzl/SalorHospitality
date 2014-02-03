@@ -130,9 +130,12 @@ class TablesController < ApplicationController
   def destroy
     @table = get_model
     redirect_to tables_path and return unless @table
-    @table.hidden = true
-    @table.name = "DEL#{(rand(99999) + 10000).to_s[0..4]}#{@table.name}"
-    @table.update_attribute :hidden, true
+    if @table.active_user_id
+      flash[:error] = "This table has an open order. Cannot delete."
+      redirect_to tables_path
+      return
+    end
+    @table.hide(@current_user.id)
     flash[:notice] = t('tables.destroy.success')
     redirect_to tables_path
   end

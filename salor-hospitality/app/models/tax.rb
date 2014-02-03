@@ -30,5 +30,12 @@ class Tax < ActiveRecord::Base
     percent = percent.gsub(',', '.') if percent.class == String
     write_attribute(:percent, percent)
   end
+  
+  def hide(by_user_id)
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.hidden_at = Time.now
+    self.save
+  end
 
 end

@@ -47,7 +47,12 @@ class TaxesController < ApplicationController
   def destroy
     @tax = get_model
     redirect_to taxes_path and return unless @tax
-    @tax.update_attribute :hidden, true
+    if @tax.articles.existing.any?
+      flash[:error] = "Cannot delete this tax because Articles use it."
+      redirect_to taxes_path
+      return
+    end
+    @tax.hide(@current_user.id)
     redirect_to taxes_path
   end
 

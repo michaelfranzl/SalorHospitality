@@ -27,7 +27,7 @@ class History < ActiveRecord::Base
   end
   
   def self.record(action, object)
-    return if $User.nil? or $Vendor.nil? or $Company.nil? or ($Request and $Request.url.include?("route")) # Do not record anything when nobody is logged in
+    return if $User.nil? or $Vendor.nil? or $Company.nil? or ($Request and $Request.url.include?("route")) # Do not record anything when nobody is logged in. History for the route action is done manually in Application Controller.
     
     h = History.new
     h.model = object
@@ -35,9 +35,11 @@ class History < ActiveRecord::Base
     changes = {}
     if object and object.respond_to? :changes then
       changes = object.changes
+      # do not record the following attributes
       changes.delete('updated_at')
       changes.delete('created_at')
       changes.delete('last_active_at')
+      changes.delete('resources_cache')
       h.changes_made = changes.to_json[0..200]
     end
     h.save unless changes == {}

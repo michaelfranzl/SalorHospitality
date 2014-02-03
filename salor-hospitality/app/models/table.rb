@@ -54,4 +54,12 @@ class Table < ActiveRecord::Base
     self.request_waiter = true
     self.save
   end
+  
+  def hide(by_user_id)
+    self.name = "DEL#{(rand(99999) + 10000).to_s[0..4]}#{self.name}"
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.hidden_at = Time.now
+    self.save
+  end
 end

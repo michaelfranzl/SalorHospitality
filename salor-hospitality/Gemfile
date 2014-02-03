@@ -21,5 +21,6 @@ gem 'escper', '1.2.1'
 
 
 group :development do
+  gem 'require_reloader'
   gem 'debugger'
 end

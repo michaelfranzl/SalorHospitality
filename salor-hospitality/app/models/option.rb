@@ -38,5 +38,11 @@ class Option < ActiveRecord::Base
     end
     self.save
   end
-
+  
+  def hide(by_user_id)
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.hidden_at = Time.now
+    self.save
+  end
 end

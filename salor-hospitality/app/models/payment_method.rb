@@ -24,4 +24,11 @@ class PaymentMethod < ActiveRecord::Base
   def refund_name
     I18n.t(:refund) + ': ' + self.name
   end
+  
+  def hide(by_user_id)
+    self.hidden = true
+    self.hidden_by = by_user_id
+    self.hidden_at = Time.now
+    self.save
+  end
 end

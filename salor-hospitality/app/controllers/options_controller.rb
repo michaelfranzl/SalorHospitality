@@ -60,7 +60,7 @@ class OptionsController < ApplicationController
   def destroy
     @option = get_model
     redirect_to roles_path and return unless @option
-    @option.update_attribute :hidden, true
+    @option.hide(@current_user.id)
     flash[:notice] = I18n.t("options.destroy.success")
     redirect_to options_path
   end

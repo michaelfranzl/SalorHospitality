@@ -53,7 +53,7 @@ class PaymentMethodsController < ApplicationController
   def destroy
     @payment_method = get_model
     redirect_to roles_path and return unless @payment_method
-    @payment_method.update_attribute :hidden, true
+    @payment_method.hide(@current_user.id)
     flash[:notice] = t('payment_methods.destroy.success')
     redirect_to payment_methods_path
   end
