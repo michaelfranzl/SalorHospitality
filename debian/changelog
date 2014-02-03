@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.39) wheezy; urgency=low
+
+  * history and trackable hiding improvements
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 03 Feb 2014 08:51:39 +0100
+
 salor-hospitality (4.1.4.38) wheezy; urgency=low
 
   * new codeset, ticket ads
