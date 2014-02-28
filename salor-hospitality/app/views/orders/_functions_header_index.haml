@@ -6,9 +6,6 @@
 - if mobile_special?
   = link_to '', '/orders/last_invoices', :remote => true, :class => 'iconbutton invoice_button'
 
-- if @current_company.mode != 'local'
-  %a.iconbutton.print1_button{ :onclick => "download_printfile(1);", :title => t('.print_now') }
-
 - if permit('see_item_notifications_user_delivery') or permit('see_item_notifications_user_preparation') or permit('see_item_notifications_vendor_delivery') or permit('see_item_notifications_vendor_preparation')
   %a.iconbutton.items_notifications_button{ :onclick => 'display_items_notifications()', :title => t('.items_notifications') }
 
