@@ -314,8 +314,9 @@ class Vendor < ActiveRecord::Base
   def csv_dump(model, from, to)
     case model
     when 'Item'
-      items = self.items.existing.where(:created_at => from..to)
-      attributes = "order.nr;created_at;order.table.name;order.user.login;label;category.name;count;price_with_options;article.taxes.first.percent"
+      items = self.items.where(:created_at => from..to)
+      #attributes = "id;count;article_id;quantity_id;order_id;order_nr;created_at;updated_at;price;max_count;min_count;user_id;hidden;hidden_at;hidden_by;category_id;tax_sum;refunded;refund_sum;refunded_by;settlement_id;cost_center_id;taxes"
+      attributes = "id;hidden;hidden_at;hidden_by;order.nr;created_at;updated_at;order.table.name;order.user.login;order.nr;label;category.name;count;max_count;min_count;price_with_options;article.taxes.first.percent;tax_sum;refunded;refund_sum;refunded_by;settlement.nr;cost_center_id;"
       output = ''
       output += "#{attributes}\n"
       output += Report.to_csv(items, Item, attributes)
