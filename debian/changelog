@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.41) wheezy; urgency=low
+
+  * order info also at bottom
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 26 Mar 2014 18:06:35 +0100
+
 salor-hospitality (4.1.4.40) wheezy; urgency=low
 
   * total in addition to sold_quantities statistics
