@@ -46,7 +46,7 @@ GEM
       debugger-ruby_core_source (>= 1.1.1)
     debugger-ruby_core_source (1.1.5)
     erubis (2.7.0)
-    escper (1.2.1)
+    escper (1.2.2)
       rmagick
       serialport
     execjs (1.4.0)
@@ -127,7 +127,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails
   debugger
-  escper (= 1.2.1)
+  escper (= 1.2.2)
   haml (= 4.0.0)
   jquery-rails (= 2.0.2)
   kramdown (= 0.13.7)
