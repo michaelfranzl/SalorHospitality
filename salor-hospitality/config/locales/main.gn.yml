@@ -855,7 +855,7 @@ gn:
     attempt: Versuch
     begin: Anfang
     cancel: Abbrechen
-    check_order_on_workstation: Bestellung auf anderem Gerät überprüfen
+    check_order_on_workstation: Bestellung auf Basisstation überprüfen
     common_surcharges: Aufschläge
     connecting: Verbinde...
     consumations: Konsumationen
@@ -899,9 +899,7 @@ gn:
     server_error: Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler
       aufgetreten. Bitte Bestellung auf anderem Gerät überprüfen.
     server_error_short: Serverfehler
-    server_not_responded: Keine Antwort vom Server. Bitte Ausdruck der Bestellung
-      manuell überprüfen. Danach nochmal absenden oder abbrechen um Änderungen zu
-      verwerfen.
+    server_not_responded: Keine Antwort vom Server. Bitte Ausdruck der Bestellung manuell überprüfen.
     sold_quantities: Verkaufsmengen
     statistics: Statistik
     subtotal: Gesamt

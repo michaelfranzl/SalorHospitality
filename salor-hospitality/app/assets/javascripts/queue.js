@@ -51,7 +51,7 @@ function send_queue_after_server_online(object_id, callback) {
 var send_queue_timestamps = [];
 
 function send_queue(object_id, callback) {
-  var timestamp = new Date().getTime();
+  var no_cache_timestamp = new Date().getTime();
   
   // in rare cases, due to iPod quirks (e.g. when it is switched off during a running ajax request), send_queue can be called twice for the same object_id. Check if that has happened, and if yes, warn the user.
   var sent_at = submit_json_queue[object_id].sent_at;
@@ -64,7 +64,7 @@ function send_queue(object_id, callback) {
     $('#order_info').html('');
     $('#order_info_bottom').html('');
     copy_json_from_submit_queue(object_id);
-    // clearing timestamp from send_queue_timestamps
+    // clearing sent_at from send_queue_timestamps
     var idx = send_queue_timestamps.indexOf(sent_at);
     send_queue_timestamps.splice(idx, 1);
     return;
@@ -74,9 +74,9 @@ function send_queue(object_id, callback) {
   
   $.ajax({
     type: 'POST',
-    url: '/route?send_queue_timestamp=' + timestamp,
+    url: '/route?send_queue_timestamp=' + no_cache_timestamp,
     data: submit_json_queue[object_id],
-    timeout: 30000,
+    timeout: 60000,
     complete: function(data,status) {
       unloadify_order_buttons();
       
@@ -85,8 +85,11 @@ function send_queue(object_id, callback) {
         $('#order_info').html(i18n.check_order_on_workstation);
         $('#order_info_bottom').html(i18n.check_order_on_workstation);
         alert(i18n.server_not_responded);
-        copy_json_from_submit_queue(object_id);
-        send_queue_attempts = 0;
+        //copy_json_from_submit_queue(object_id);
+        //send_queue_attempts = 0;
+        clear_queue(object_id);
+        update_tables();
+        callback();
         
       } else if (status == 'success') {
         if (submit_json_queue[object_id]) {

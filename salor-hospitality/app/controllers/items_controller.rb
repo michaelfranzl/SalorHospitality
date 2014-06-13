@@ -28,9 +28,11 @@ class ItemsController < ApplicationController
       render :nothing => true and return unless order
       Item.split_items(params['split_items_hash'], order)
       table = order.table
-      render_invoice_form(table) and return
+      render_invoice_form(table)
+      return
     end
-    render :nothing => true and return
+    render :nothing => true
+    return
   end
   
   def rotate_tax
@@ -69,6 +71,12 @@ class ItemsController < ApplicationController
     else
       items[:confirmation] = []
     end
+    
+    #Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = 1 and vendor_id = 1 AND (confirmation_count > preparation_count OR (preparation_count IS NULL AND confirmation_count > 0))").count
+    
+    #Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = 1 and vendor_id = 1 AND (preparation_count > delivery_count OR (delivery_count IS NULL AND preparation_count > 0))").count
+    
+    #Item.connection.execute("update items set preparation_count = count, delivery_count = count, confirmation_count = count")
       
     if (params[:type] == 'vendor')
       items[:preparation] = Item.where("(hidden = FALSE OR hidden IS NULL) AND company_id = #{ @current_company.id } and vendor_id = #{ @current_vendor.id } AND (confirmation_count > preparation_count OR (preparation_count IS NULL AND confirmation_count > 0))")

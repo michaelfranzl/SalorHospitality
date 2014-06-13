@@ -84,10 +84,11 @@ class Order < ActiveRecord::Base
     self.update_attributes params[:model]
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
-      if item_id
-        self.update_item(item_id, item_params, user)
-      else
+      item_id ||= item_params[1]["id"] # security measure, seen Ruby/Rails misbehave
+      if item_id.nil?
         self.create_new_item(item_params, user)
+      else
+        self.update_item(item_id, item_params, user)
       end
     end
     self.user = user if self.user.nil? or (params[:items] and params[:model][:user_id].nil?)
@@ -124,7 +125,7 @@ class Order < ActiveRecord::Base
     if i.article
       i.calculate_totals
     else
-      message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}."
+      message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}, save result: #{ result }"
       if self.vendor.enable_technician_emails == true and self.vendor.technician_email
         UserMailer.technician_message(self.vendor, "No article associated with item in Order.create_new_item.", message).deliver
       else

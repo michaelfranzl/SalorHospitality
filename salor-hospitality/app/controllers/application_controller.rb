@@ -335,7 +335,6 @@ class ApplicationController < ActionController::Base
         params[:model][:table_id] = @current_customer.table.id # security measure
       end
       
-      
       if params[:id]
         @order = get_model(params[:id], Order)
       elsif params[:model] and params[:model][:table_id]
