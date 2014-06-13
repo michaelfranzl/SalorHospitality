@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.43) wheezy; urgency=low
+
+  * disabled send_queue timeouts
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 13 Jun 2014 22:29:38 +0200
+
 salor-hospitality (4.1.4.42) wheezy; urgency=low
 
   * new escper verion, TCP/IP printers supported
