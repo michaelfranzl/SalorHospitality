@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.44) wheezy; urgency=low
+
+  * fixed salor-bin printing on local installations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 20 Jun 2014 12:48:32 +0200
+
 salor-hospitality (4.1.4.43) wheezy; urgency=low
 
   * disabled send_queue timeouts
