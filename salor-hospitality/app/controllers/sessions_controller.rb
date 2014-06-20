@@ -188,7 +188,7 @@ class SessionsController < ApplicationController
       if vendor_printers.any?
         vendor_printers.each do |vp|
           i = sprintf("%04i", vp.id)
-          output << "printerurl#{i}:/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ vendor.company.identifier }/#{ File.basename(vp.path) }"
+          output << "printerurl#{i}:/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ vendor.hash_id }/escpos/#{ vp.path }.bill"
           output << "printername#{i}:#{ vp.name }"
         end
         output << "interval:#{vendor.automatic_printing_interval}"
