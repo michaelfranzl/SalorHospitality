@@ -310,8 +310,8 @@ class Item < ActiveRecord::Base
     partner_item.save
     partner_item.option_items.existing.each { |oi| oi.calculate_totals }
     partner_item.calculate_totals
-    self.option_items.existing.each { |oi| oi.calculate_totals }
     self.save
+    self.option_items.existing.each { |oi| oi.calculate_totals }
     self.calculate_totals
   end
   
