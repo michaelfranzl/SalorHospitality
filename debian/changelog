@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.46) wheezy; urgency=low
+
+  * german translation fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 24 Jun 2014 17:33:05 +0200
+
 salor-hospitality (4.1.4.45) wheezy; urgency=low
 
   * fix for splitting with option items, permissions for log dir
