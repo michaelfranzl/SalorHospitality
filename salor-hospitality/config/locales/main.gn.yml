@@ -759,7 +759,7 @@ gn:
       edit_season: Saison bearbeiten
       new_season: Neue Saison
   send_and_go_back: Senden und zurück
-  served_by_X_on_table_Y: Es bediente Sie %{waiter} auf Tisch %{table}
+  served_by_X_on_table_Y: Es bediente Sie %{waiter} an Tisch %{table}
   server_no_response: Der Server antwortet nicht mehr. Der Server ist entweder überlastet
     oder die Funkverbindung ist abgerissen.
   sessions:

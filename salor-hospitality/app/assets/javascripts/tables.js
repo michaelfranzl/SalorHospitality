@@ -72,12 +72,12 @@ function update_tables() {
     },
     complete: function(data, status) {
       if (status == 'timeout' ) {
-        send_email('update_tables(): timeout', '');
+        //send_email('update_tables(): timeout', '');
         //alert(i18n.server_not_responded);
       } else if (status == 'error') {
         switch(data.readyState) {
           case 0:
-            send_email('update_tables(): No connection error', '');
+            //send_email('update_tables(): No connection error', '');
             break;
           case 4:
             send_email('update_tables(): Server Error', '');
