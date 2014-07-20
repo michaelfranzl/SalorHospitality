@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.47) wheezy; urgency=low
+
+  * fix onclick event for mobile tool button
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 20 Jul 2014 19:47:41 +0200
+
 salor-hospitality (4.1.4.46) wheezy; urgency=low
 
   * german translation fix
