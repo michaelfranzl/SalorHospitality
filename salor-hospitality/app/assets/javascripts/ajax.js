@@ -83,7 +83,7 @@ function toggle_drag_tables() {
       // dragging is on for workstation table positions
       // switch to mobile table positions
       $('#areas').show();
-      $('#mobile_last_invoices_button').hide();
+      $('.mobile_last_invoices_button').hide();
       settings.workstation_drag_and_drop = false;
       settings.mobile_drag_and_drop = true;
       toggle_drag_tables_state++;
@@ -93,7 +93,7 @@ function toggle_drag_tables() {
       // switch to workstation table positions and turn dragging off
       counter_update_tables = timeout_update_tables;
       $('#areas').hide();
-      $('#mobile_last_invoices_button').show();
+      $('.mobile_last_invoices_button').show();
       settings.workstation_drag_and_drop = false;
       settings.mobile_drag_and_drop = false;
       toggle_drag_tables_state = 0;

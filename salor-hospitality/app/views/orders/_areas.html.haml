@@ -2,14 +2,14 @@
 - 1.upto(areas) do |area|
   %div.area{ :id => "area#{ area }" }
     - if permit('mobile_show_tools')
-      %a#mobile_last_invoices_button.iconbutton.previous_button
+      %a.mobile_last_invoices_button.iconbutton.previous_button
     - 1.upto(areas) do |icon|
       - style = icon == area ? "border: 2px solid #{ @current_user.color };" : ''
       %a{ :class => "iconbutton area#{icon}_button", :style => style, :onclick => "scroll_to('#area#{ icon }',10)", :title => "#{t(:scroll_to_area)} #{ icon }" }
 %a.iconbutton.logout_button{ :onclick => "logout()" }
 
 :javascript
-  $('#mobile_last_invoices_button').on('mousedown', function() {
+  $('.mobile_last_invoices_button').on('mousedown', function() {
     $.ajax({
       type: 'GET',
       cache: false,
