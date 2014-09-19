@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
  
   # tested
   def index
-    @scopes = ['active','waiterpad']
+    @scopes = ['active']
     @articleshash = build_articleshash(@scopes)
     @categories = @current_vendor.categories.existing.active.positioned
     @statistic_categories = @current_vendor.statistic_categories.existing
