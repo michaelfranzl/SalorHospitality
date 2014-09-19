@@ -95,7 +95,7 @@
         %span.subtotal= t '.change_money'
         %span.subtotal{:id => "change_#{ oid }" }= number_to_currency 0
 
-  - if @current_user.role.permissions.include?('manage_payment_methods') and (invoice_form.cost_center.nil? or invoice_form.cost_center.no_payment_methods == false)
+  - if @current_user.role.permissions.include?('enter_payment_methods') and (invoice_form.cost_center.nil? or invoice_form.cost_center.no_payment_methods == false)
     %div.add_payment_method{:onclick => "add_payment_method(#{oid});"}== + #{ t('activerecord.models.payment_method.other')}
     %div{ :id => "payment_methods_container_#{oid}" }
       %table
@@ -104,7 +104,7 @@
   submit_json.payment_method_items[#{ oid }] = {};
   submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, model_original:#{ invoice_form.sum }, payment_method_items:0 };
   submit_json.split_items_hash[#{ oid }] = {};
-  if (permissions.manage_payment_methods) {
+  if (permissions.enter_payment_methods) {
     add_payment_method(#{oid}, null, submit_json.totals[#{oid}].model);
   }
   
