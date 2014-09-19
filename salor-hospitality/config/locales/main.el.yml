@@ -730,6 +730,7 @@ el:
       take_orders: Πάρτε παραγγελίες
       view_all_settlements: Δείτε όλους τους διακανονισμούς
       view_settlements_table: View settlements table
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Δημιουργήστε σκελετό τιμών

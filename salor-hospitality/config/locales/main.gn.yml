@@ -730,6 +730,7 @@ gn:
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Losungen ansehen
       view_settlements_table: Losungs-Tabelle anzeigen
+      enter_payment_methods: Zahlungsmethoden eingeben
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen
@@ -899,7 +900,8 @@ gn:
     server_error: Oops! Bei der Verarbeitung der Bestellung ist ein interner Serverfehler
       aufgetreten. Bitte Bestellung auf anderem Gerät überprüfen.
     server_error_short: Serverfehler
-    server_not_responded: Keine Antwort vom Server. Bitte Ausdruck der Bestellung manuell überprüfen.
+    server_not_responded: Keine Antwort vom Server. Bitte Ausdruck der Bestellung
+      manuell überprüfen.
     sold_quantities: Verkaufsmengen
     statistics: Statistik
     subtotal: Gesamt

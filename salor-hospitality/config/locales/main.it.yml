@@ -728,6 +728,7 @@ it:
       take_orders: Prendi ordini
       view_all_settlements: Visualizza tutti i saldi
       view_settlements_table: Visualizza saldi tavolo
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Genera prezzo indicativo

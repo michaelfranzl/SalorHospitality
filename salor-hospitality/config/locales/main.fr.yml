@@ -730,6 +730,7 @@ fr:
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
       view_settlements_table: View settlements table
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix

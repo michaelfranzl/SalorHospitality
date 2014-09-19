@@ -731,6 +731,7 @@ hr:
       take_orders: Primi narudžbe
       view_all_settlements: Pogledaj sve obračune
       view_settlements_table: Pogledaj obračunsku tablicu
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generiraj kostur cijene

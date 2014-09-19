@@ -729,6 +729,7 @@ ru:
       take_orders: Берет заказы
       view_all_settlements: Видит все расчеты
       view_settlements_table: View settlements table
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Сгенерировать скелет цены

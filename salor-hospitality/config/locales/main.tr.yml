@@ -731,6 +731,7 @@ tr:
       take_orders: XXXTake orders
       view_all_settlements: XXXView all settlements
       view_settlements_table: View settlements table
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

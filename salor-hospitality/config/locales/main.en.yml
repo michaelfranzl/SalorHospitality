@@ -662,6 +662,7 @@ en:
       download_csv: Download CSV
       download_database: Download Database
       edit_role: Edit Role
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
@@ -679,7 +680,6 @@ en:
       manage_options: Manage options
       manage_pages: Manage slideshow
       manage_payment_methods: Manage Payment Methods
-      enter_payment_methods: Enter Payment Methods
       manage_roles: Manage roles
       manage_statistic_categories: Manage Statistic Categories
       manage_statistics: Statistics

@@ -727,6 +727,7 @@ cn:
       take_orders: 下订单
       view_all_settlements: 查看所有结算
       view_settlements_table: View settlements table
+      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
