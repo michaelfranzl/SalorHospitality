@@ -1,3 +1,12 @@
+salor-hospitality (4.1.4.48) wheezy; urgency=low
+
+  * handle for articles#index
+  * removed waiterpad since unused feature
+  * added permission to enter payment methods
+  * update translations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 19 Sep 2014 10:32:54 +0200
+
 salor-hospitality (4.1.4.47) wheezy; urgency=low
 
   * fix onclick event for mobile tool button
