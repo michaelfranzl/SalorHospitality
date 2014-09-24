@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.49) wheezy; urgency=low
+
+  * symlink problem during installation fix
+  * fix image upload errors due to dangling symlink
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 24 Sep 2014 08:36:38 +0200
+
 salor-hospitality (4.1.4.48) wheezy; urgency=low
 
   * handle for articles#index
