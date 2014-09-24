@@ -37,6 +37,7 @@ class HistoryObserver < ActiveRecord::Observer
     keys.delete('last_logout_at')
     keys.delete('last_active_at')
     keys.delete('largest_settlement_number')
+    keys.delete('current_settlement_id')
     if vendor_printers.any? and keys.any? and [User, Vendor, Tax, CostCenter, PaymentMethod, Table, Article, Quantity].include?(object.class)
       output = "\e@" +
           "\e!\x38" +       # big font
