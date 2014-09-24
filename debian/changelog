@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.50) wheezy; urgency=low
+
+  * fix for failed login when time tracking is enabled
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 24 Sep 2014 09:40:10 +0200
+
 salor-hospitality (4.1.4.49) wheezy; urgency=low
 
   * symlink problem during installation fix
