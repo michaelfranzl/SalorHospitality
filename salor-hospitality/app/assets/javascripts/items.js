@@ -67,7 +67,7 @@ function add_new_item(id, model, add_new, anchor_d) {
     $('#tablerow_' + d + '_count').addClass('updated');
     var option_ids = resources.c[catid].o;
     render_options(option_ids, d);
-    if (settings.workstation) { enable_keyboard_for_items(object.d); }
+    if (settings.workstation) { enable_keyboard_for_items(d); }
   }
   
   if ($('#digital_menucard:visible')) {
