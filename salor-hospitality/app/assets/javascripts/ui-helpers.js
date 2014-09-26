@@ -90,7 +90,7 @@ function unloadify_order_buttons() {
 }
 
 function highlight_button(element) {
-  //$(element).effect("highlight", {}, 300); // this is CPU intensive for some mobile devices and has been disabled.
+  $(element).effect("highlight", {}, 500); // this is CPU intensive for some mobile devices
 }
 
 function highlight_border(element) {
