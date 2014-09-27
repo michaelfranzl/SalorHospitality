@@ -12,7 +12,10 @@ class SurchargesController < ApplicationController
   after_filter :update_vendor_cache, :only => ['create','update','destroy']
 
   def index
-    @surcharges = @current_vendor.surcharges.existing
+    season_ids = @current_vendor.seasons.existing.collect { |s| s.id }
+    guest_type_ids = @current_vendor.guest_types.collect{ |gt| gt.id }
+    
+    @surcharges = @current_vendor.surcharges.existing.where(:season_id => season_ids, :guest_type_id => guest_type_ids)
     @surcharge_names = @surcharges.collect{ |s| s.name }.uniq
     @surcharge_names << nil
     @seasons = @current_vendor.seasons.existing
