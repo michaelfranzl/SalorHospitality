@@ -70,7 +70,7 @@ window.display_booking_form = (room_id) ->
   from_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model.from_date = date + " 01:00:00"
+               submit_json.model.from_date = date
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -78,7 +78,7 @@ window.display_booking_form = (room_id) ->
   to_input.datepicker {
     onSelect:(date, inst) ->
                id = submit_json.id
-               submit_json.model.to_date = date  + " 01:00:00"
+               submit_json.model.to_date = date
                window.booking_dates_changed()
                regenerate_all_multi_season_booking_items()
   }
@@ -141,7 +141,7 @@ window.booking_dates_changed = ->
   if (to - from) < 86400000
     to = new Date(from.getTime() + 86400000)
     $('#booking_to').val date_as_ymd(to)
-    submit_json.model.to_date = date_as_ymd(to) + " 01:00:00"
+    submit_json.model.to_date = date_as_ymd(to)
     
   duration = Math.floor((to.getTime() - from.getTime()) / 86400000)
   $('#booking_duration').val duration

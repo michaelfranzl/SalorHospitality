@@ -42,7 +42,7 @@ Season.prototype.get_days = function (start,end) {
     days++;
     cdate = new Date(cdate.getFullYear(),cdate.getMonth(),cdate.getDate() + 1);
   }
-  return days;
+  return days - 1;
 }
 
 
@@ -71,6 +71,8 @@ Season.prototype.interested = function (start,end) {
 
 // the result is saved for covered seasons, on item and model level
 Season.applying_seasons = function (seasons,start,end) {
+  start.setHours(0);
+  end.setHours(0);
   var applying = [];
   for (var i = 0; i < seasons.length; i++) {
     var s = seasons[i];
