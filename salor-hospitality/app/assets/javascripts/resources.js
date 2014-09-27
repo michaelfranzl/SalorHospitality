@@ -29,12 +29,12 @@ function update_resources(mode) {
         if (uri_attrs.rooms == '1') {
           setTimeout(function(){
             route('rooms')
-          }, 2000);
+          }, 100);
         }
         if (uri_attrs.booking_id != undefined) {
           setTimeout(function(){
             route('booking', uri_attrs.booking_id);
-          }, 2000);
+          }, 100);
         }
         if (uri_attrs.table_id != undefined) route('table', uri_attrs.table_id);
         if (uri_attrs.report == '1') report.functions.display_popup();
