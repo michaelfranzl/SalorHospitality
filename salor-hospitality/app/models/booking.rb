@@ -164,8 +164,7 @@ class Booking < ActiveRecord::Base
     
     # create a default cash payment method item if none was set in the UI
     unless self.payment_method_items.existing.any?
-      cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
-      cash_payment_method = cash_payment_methods.first
+      cash_payment_method = self.vendor.payment_methods.existing.where(:cash => true).first
       if cash_payment_method
         PaymentMethodItem.create(
           :company_id => self.company_id,
@@ -181,15 +180,15 @@ class Booking < ActiveRecord::Base
     payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point
     
     # create a change payment method item
-    unless self.payment_method_items.existing.where(:change => true).any?
-      change_payment_methods = self.vendor.payment_methods.where(:change => true)
+    change_payment_method = self.vendor.payment_methods.existing.where(:change => true).first
+    if change_payment_method
       PaymentMethodItem.create(
         :company_id => self.company_id,
         :vendor_id => self.vendor_id,
         :booking_id => self.id,
         :change => true,
         :amount => (payment_method_sum - self.sum).round(2),
-        :payment_method_id => change_payment_methods.first.id
+        :payment_method_id => change_payment_method.id
       )
     end
     
