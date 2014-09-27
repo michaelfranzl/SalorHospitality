@@ -1,3 +1,17 @@
+salor-hospitality (4.1.4.52) wheezy; urgency=low
+
+  * list roles only for current vendor
+  * removed blurb serverd by waiter X on table Y from paper invoice
+  * fix for booking duration, css improvement for booking line item text
+  * do not show surcharges which have deleted seasons or guest type ids, code formatting
+  * improved code formatting
+  * improved code formatting
+  * fixed query of hidden payment method
+  * translations update
+  * reduced delay when going from and to hotel screens
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 27 Sep 2014 12:35:35 +0200
+
 salor-hospitality (4.1.4.51) wheezy; urgency=low
 
   * fixed missing onscreen keyboards for item options
