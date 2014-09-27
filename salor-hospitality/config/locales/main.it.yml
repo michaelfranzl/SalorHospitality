@@ -396,6 +396,9 @@ it:
     show:
       go_to_bookings_calendar: Vai al calendario prenotazioni
       search_by_number: Cerca per numero
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera salvata con successo
@@ -661,6 +664,7 @@ it:
       download_csv: Download CSV
       download_database: Download database
       edit_role: Edita ruolo
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Finisci tutti i saldi
       finish_orders: Finisci Ordini
       finish_own_settlement: Finisci proprio saldo
@@ -728,7 +732,6 @@ it:
       take_orders: Prendi ordini
       view_all_settlements: Visualizza tutti i saldi
       view_settlements_table: Visualizza saldi tavolo
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Genera prezzo indicativo

@@ -396,6 +396,9 @@ fi:
     show:
       go_to_bookings_calendar: Siirry varausten kalenterinäkymään
       search_by_number: Etsi numerolla
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Kamera on tallennettu
@@ -661,6 +664,7 @@ fi:
       download_csv: Lataa CSV
       download_database: Lataa tietokanta
       edit_role: Muokkaa asema
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Suorita loppuun kaikki tilitykset
       finish_orders: Suorita loppuun tilaukset
       finish_own_settlement: Suoria loppuun oma tilitys
@@ -730,7 +734,6 @@ fi:
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu

@@ -396,6 +396,9 @@ pl:
     show:
       go_to_bookings_calendar: Sprawdź kalendarz rezerwacji
       search_by_number: Szukaj wg liczby
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera was successfully saved
@@ -662,6 +665,7 @@ pl:
       download_csv: Download CSV
       download_database: Pobieranie bazy danych
       edit_role: Edytowanie zezwoleń
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Możliwość kończenia wszystkich rozliczeń
       finish_orders: Możliwość finalizowania wszystkich zamówień
       finish_own_settlement: Możliwość własnego rozliczania
@@ -733,7 +737,6 @@ pl:
       take_orders: Przyjmowanie zamówień
       view_all_settlements: Wyświetlanie wszystkich rozliczeń
       view_settlements_table: View settlements table
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generuj tabelę cen

@@ -396,6 +396,9 @@ gn:
     show:
       go_to_bookings_calendar: Zum Buchungs-Kalender gehen
       search_by_number: Suche nach Nummer
+      count: Anzahl
+      sum: Summe
+      unit_price: Preis
   cameras:
     create:
       success: Kamera erfolgreich gespeichert
@@ -663,6 +666,7 @@ gn:
       download_csv: Download CSV
       download_database: Datenbank herunterladen
       edit_role: Rolle bearbeiten
+      enter_payment_methods: Zahlungsmethoden eingeben
       finish_all_settlements: Alle Losungen abschließen
       finish_orders: Bestellungen abschließen
       finish_own_settlement: Eigene Losung abschließen
@@ -730,7 +734,6 @@ gn:
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Losungen ansehen
       view_settlements_table: Losungs-Tabelle anzeigen
-      enter_payment_methods: Zahlungsmethoden eingeben
   room_prices:
     index:
       generate_price_skeleton: Preisgerüst erstellen

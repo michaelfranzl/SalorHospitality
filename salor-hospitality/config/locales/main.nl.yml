@@ -396,6 +396,9 @@ nl:
     show:
       go_to_bookings_calendar: Ga naar boekingen kalenderweergave
       search_by_number: Zoeken op nummer
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera werd succesvol opgeslagen
@@ -663,6 +666,7 @@ nl:
       download_csv: Download CSV
       download_database: Download Database
       edit_role: Bewerk Rol
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Beeindig alle overeenstemmingen
       finish_orders: Beeindig bestellingen
       finish_own_settlement: Beeindig eigen overeenkomst
@@ -731,7 +735,6 @@ nl:
       take_orders: Neem bestelloing op
       view_all_settlements: Bekijk alle akkoorden
       view_settlements_table: Bekijk akkoorden tabel
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Maak een prijsstructuur

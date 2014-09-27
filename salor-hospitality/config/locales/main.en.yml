@@ -394,8 +394,11 @@ en:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Go to bookings calendar view
       search_by_number: Search by number
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera was successfully saved

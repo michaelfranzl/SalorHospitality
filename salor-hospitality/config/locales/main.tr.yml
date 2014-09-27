@@ -396,6 +396,9 @@ tr:
     show:
       go_to_bookings_calendar: XXX Go to bookings calendar view
       search_by_number: Search by number
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera was successfully saved
@@ -664,6 +667,7 @@ tr:
       download_csv: Download CSV
       download_database: XXX Download Database
       edit_role: XXX Edit Role
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: XXXFinish all settlements
       finish_orders: XXXFinish orders
       finish_own_settlement: XXXFinish own settlement
@@ -731,7 +735,6 @@ tr:
       take_orders: XXXTake orders
       view_all_settlements: XXXView all settlements
       view_settlements_table: View settlements table
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

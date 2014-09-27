@@ -396,6 +396,9 @@ cn:
     show:
       go_to_bookings_calendar: 到预定日历视图
       search_by_number: 用数字搜索
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: 相机成功创建
@@ -660,6 +663,7 @@ cn:
       download_csv: Download CSV
       download_database: 下载数据
       edit_role: 编辑角色
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: 完成所有结算
       finish_orders: 完成订单
       finish_own_settlement: 完成自己结算
@@ -727,7 +731,6 @@ cn:
       take_orders: 下订单
       view_all_settlements: 查看所有结算
       view_settlements_table: View settlements table
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

@@ -396,6 +396,9 @@ hr:
     show:
       go_to_bookings_calendar: Odi na pregled kalendara rezervacija
       search_by_number: Pretraži prema broju
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Kamera je uspješno spremljena
@@ -662,6 +665,7 @@ hr:
       download_csv: Preuzmi CSV
       download_database: Preuzmi bazu podataka
       edit_role: Uredi ulogu
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Završi sve obračune
       finish_orders: Završi narudžbe
       finish_own_settlement: Završi vlastiti obračun
@@ -731,7 +735,6 @@ hr:
       take_orders: Primi narudžbe
       view_all_settlements: Pogledaj sve obračune
       view_settlements_table: Pogledaj obračunsku tablicu
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generiraj kostur cijene

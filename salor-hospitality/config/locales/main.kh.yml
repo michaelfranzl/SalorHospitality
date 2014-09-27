@@ -396,6 +396,9 @@ kh:
     show:
       go_to_bookings_calendar: Go to bookings calendar view
       search_by_number: Search by number
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera was successfully saved
@@ -662,6 +665,7 @@ kh:
       download_csv: Download CSV
       download_database: Download Database
       edit_role: Edit Role
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Finish all settlements
       finish_orders: Finish orders
       finish_own_settlement: Finish own settlement
@@ -729,7 +733,6 @@ kh:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

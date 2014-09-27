@@ -396,6 +396,9 @@ ru:
     show:
       go_to_bookings_calendar: Перейти к календарю резервирования
       search_by_number: Искать по номеру
+      count: Count
+      sum: Sum
+      unit_price: Unit price
   cameras:
     create:
       success: Camera was successfully saved
@@ -662,6 +665,7 @@ ru:
       download_csv: Download CSV
       download_database: Резервирует базу данных
       edit_role: Редактирование роли
+      enter_payment_methods: Enter Payment Methods
       finish_all_settlements: Завершает все расчеты
       finish_orders: Завершает заказы
       finish_own_settlement: Завершает свой расчет
@@ -729,7 +733,6 @@ ru:
       take_orders: Берет заказы
       view_all_settlements: Видит все расчеты
       view_settlements_table: View settlements table
-      enter_payment_methods: Enter Payment Methods
   room_prices:
     index:
       generate_price_skeleton: Сгенерировать скелет цены
