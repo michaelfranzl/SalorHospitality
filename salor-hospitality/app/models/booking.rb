@@ -146,7 +146,14 @@ class Booking < ActiveRecord::Base
       params['payment_method_items'][params['id']].to_a.each do |pm|
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
           payment_method = self.vendor.payment_methods.existing.find_by_id(pm[1]['id'])
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :booking_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash
+          PaymentMethodItem.create(
+            :payment_method_id => pm[1]['id'],
+            :amount => pm[1]['amount'],
+            :booking_id => self.id,
+            :vendor_id => self.vendor_id,
+            :company_id => self.company_id,
+            :cash => payment_method.cash
+          )
         end
       end
     end
@@ -160,7 +167,14 @@ class Booking < ActiveRecord::Base
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first
       if cash_payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :booking_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum
+        PaymentMethodItem.create(
+          :company_id => self.company_id,
+          :vendor_id => self.vendor_id,
+          :booking_id => self.id,
+          :payment_method_id => cash_payment_method.id,
+          :cash => true,
+          :amount => self.sum
+        )
       end
     end
     
@@ -169,7 +183,14 @@ class Booking < ActiveRecord::Base
     # create a change payment method item
     unless self.payment_method_items.existing.where(:change => true).any?
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
-      PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :booking_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id
+      PaymentMethodItem.create(
+        :company_id => self.company_id,
+        :vendor_id => self.vendor_id,
+        :booking_id => self.id,
+        :change => true,
+        :amount => (payment_method_sum - self.sum).round(2),
+        :payment_method_id => change_payment_methods.first.id
+      )
     end
     
     self.change_given = (payment_method_sum - self.sum).round(2)
@@ -195,14 +216,34 @@ class Booking < ActiveRecord::Base
     self.booking_items.existing.each do |i|
       d = i.booking_item_id ? "x#{i.id}" : "i#{i.id}"
       parent_key = i.booking_item_id ? "i#{i.booking_item_id}" : nil
-      surcharges = self.vendor.surcharges.where(:season_id => i.season_id, :guest_type_id => i.guest_type_id)
+      surcharges = self.vendor.surcharges.where(
+        :season_id => i.season_id,
+        :guest_type_id => i.guest_type_id
+      )
       surcharges_hash = {}
       surcharges.each do |s|
         booking_item_surcharges = i.surcharge_items.existing.collect { |si| si.surcharge }
         selected = booking_item_surcharges.include?(s) and s.amount > 0
-        surcharges_hash.merge! s.name => { :id => s.id, :amount => s.amount, :radio_select => s.radio_select, :selected => selected }
+        surcharges_hash.merge! s.name => {
+          :id => s.id,
+          :amount => s.amount,
+          :radio_select => s.radio_select,
+          :selected => selected
+        }
       end
-      booking_items_hash.merge! d => { :id => i.id, :base_price => i.base_price, :count => i.count, :guest_type_id => i.guest_type_id, :from_date => i.from_date.strftime('%Y-%m-%d'), :to_date => i.to_date.strftime('%Y-%m-%d'), :date_locked => i.date_locked, :duration => i.duration, :season_id => i.season_id, :parent_key => parent_key, :surcharges => surcharges_hash }
+      booking_items_hash.merge! d => {
+        :id => i.id,
+        :base_price => i.base_price,
+        :count => i.count,
+        :guest_type_id => i.guest_type_id,
+        :from_date => i.from_date.strftime('%Y-%m-%d'),
+        :to_date => i.to_date.strftime('%Y-%m-%d'),
+        :date_locked => i.date_locked,
+        :duration => i.duration,
+        :season_id => i.season_id,
+        :parent_key => parent_key,
+        :surcharges => surcharges_hash
+      }
     end
     return booking_items_hash.to_json
   end
