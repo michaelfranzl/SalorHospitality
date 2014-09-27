@@ -6,48 +6,89 @@
 - unless @current_customer
   #admin.adminlinks
     %span.done{ :onclick => '$("#admin").hide()' }
+    
     - if controller.controller_name == 'orders' and controller.action_name == 'index'
-      = link_to( t('various.restaurant'), '#', :class => 'special', :onclick => "route('tables')")
+      = link_to "#", :class => 'special', :onclick => "route('tables')" do
+        = image_tag 'icons/restaurant.svg'
+        %br
+        = t "various.restaurant"
     - else
-      = link_to( t('various.restaurant'), '/orders', :class => 'special')
+      = link_to '/orders', :class => 'special' do
+        = image_tag 'icons/restaurant.svg'
+        %br
+        = t "various.restaurant"
+      
     - if permit('manage_hotel')
       - if controller.controller_name == 'orders' and controller.action_name == 'index'
-        = link_to( t('various.hotel'), '#', :class => 'special', :onclick => "route('rooms');")
+        = link_to '#', :onclick => "route('rooms');", :class => "special" do
+          = image_tag 'icons/hotel2.svg'
+          %br
+          = t "various.hotel"
       - else
-        = link_to( t('various.hotel'), '/orders?rooms=1', :class => 'special')
-    - if permit('manage_statistics_hotel')
-      - if controller.controller_name == 'orders'
-        = link_to( t('various.report'), '#', :onclick => 'report.functions.display_popup()')
-      - else
-        = link_to( t('various.report'), '/orders?report=1')
+        = link_to '/orders?rooms=1', :class => 'special' do
+          = image_tag 'icons/hotel2.svg'
+          %br
+          = t "various.hotel"
     
-    %h2= t('.configuration')
-    = link_to( t('activerecord.models.table.other'), main_app.tables_path) if permit('manage_tables')
-    = link_to( t('activerecord.models.category.other'), main_app.categories_path) if permit('manage_categories')
-    = link_to( t('activerecord.models.statistic_category.other'), main_app.statistic_categories_path) if permit('manage_statistic_categories')
-    = link_to( t('activerecord.models.article.other'), main_app.articles_path) if permit('manage_articles')
-    = link_to( t('activerecord.models.option.other'), main_app.options_path) if permit('manage_options')
-    = link_to( t('activerecord.models.settlement.one'), '/settlements/open')
-    = link_to( t('activerecord.models.settlement.other'), main_app.settlements_path) if permit('view_settlements_table')
-    = link_to( t('various.statistics'), main_app.statistics_path) if permit('manage_statistics')
-    = link_to( t('activerecord.models.report.other'), '/reports') if (permit('remote_support') or permit('download_database') or permit('download_csv'))
-    = link_to( t('activerecord.models.tax.other'), main_app.taxes_path) if permit('manage_taxes')
-    = link_to( t('activerecord.models.cost_center.other'), main_app.cost_centers_path) if permit('manage_cost_centers')
-    = link_to( t('activerecord.models.payment_method.other'), main_app.payment_methods_path) if permit('manage_payment_methods')
-    = link_to( t('activerecord.models.camera.other'), main_app.cameras_path) if permit('manage_cameras')
-    = link_to( t('activerecord.models.user.other'), main_app.users_path) if permit('manage_users')
-    - if permit('manage_vendors')
-      - if @current_user.vendors.existing.count > 1
-        = link_to( t('activerecord.models.vendor.other'), main_app.vendors_path)
-      - else
-        = link_to( t('activerecord.models.vendor.one'), main_app.vendors_path)
-    = link_to( t('activerecord.models.customer.other'), main_app.customers_path) if permit('manage_customers')
-    = link_to( t('activerecord.models.page.other'), main_app.pages_path) if permit('manage_pages')
-    = link_to( t('activerecord.models.presentation.other'), main_app.presentations_path) if permit('manage_pages')
+    
+    %hr
+    %h2= t '.settings_common'
+    = mainmenu_entry(main_app.vendors_path, "activerecord.models.vendor.one", "wrench")
+    
+    = mainmenu_entry(main_app.users_path, "activerecord.models.user.other", "user") if permit('manage_users')
+    
+    = mainmenu_entry("/reports", "activerecord.models.report.other", "help") if (permit('remote_support') or permit('download_database') or permit('download_csv'))
+    
+    = mainmenu_entry(main_app.payment_methods_path, "activerecord.models.payment_method.other", "payment_method") if permit('manage_payment_methods')
+    
+    = mainmenu_entry(main_app.customers_path, "activerecord.models.customer.other", "customer") if permit('manage_customers')
+    
+    = mainmenu_entry(main_app.taxes_path, "activerecord.models.tax.other", "tax") if permit('manage_taxes')
+    
+    %hr
+    %h2= t '.settings_restaurant'
+    
+    = mainmenu_entry(main_app.articles_path, "activerecord.models.article.other", "article") if permit('manage_articles')
+    
+    = mainmenu_entry(main_app.options_path, "activerecord.models.option.other", "option") if permit('manage_options')
+    
+    = mainmenu_entry(main_app.categories_path, "activerecord.models.category.other", "category") if permit('manage_categories')
+    
+    = mainmenu_entry(main_app.tables_path, "activerecord.models.table.other", "table") if permit('manage_tables')
+    
+    = mainmenu_entry("/settlements/open", "activerecord.models.settlement.one", "wallet")
+    
+    = mainmenu_entry(main_app.settlements_path, "activerecord.models.settlement.other", "bill") if permit('view_settlements_table')
+
+    = mainmenu_entry(main_app.statistic_categories_path, "activerecord.models.statistic_category.other", "statistic_category") if permit('manage_statistic_categories')
+    
+    = mainmenu_entry(main_app.statistics_path, "various.statistics", "statistic") if permit('manage_statistics')
+    
+    = mainmenu_entry(main_app.cost_centers_path, "activerecord.models.cost_center.other", "cost_center") if permit('manage_cost_centers')
+    
+    = mainmenu_entry(main_app.users_path, "activerecord.models.camera.other", "camera") if permit('manage_cameras')
+      
+    = mainmenu_entry(main_app.pages_path, "activerecord.models.page.other", "page") if permit('manage_pages')
+    
+    = mainmenu_entry(main_app.presentations_path, "activerecord.models.presentation.other", "presentation") if permit('manage_pages')
+    
     - if permit('manage_hotel')
-      = link_to( t('activerecord.models.room.other'), main_app.rooms_path)
-      = link_to( t('activerecord.models.room_type.other'), main_app.room_types_path)
-      = link_to( t('activerecord.models.room_price.other'), main_app.room_prices_path)
-      = link_to( t('activerecord.models.guest_type.other'), main_app.guest_types_path)
-      = link_to( t('activerecord.models.surcharge.other'), main_app.surcharges_path)
-      = link_to( t('activerecord.models.season.other'), main_app.seasons_path)
+      %hr
+      %h2= t '.settings_hotel'
+      = mainmenu_entry(main_app.rooms_path, "activerecord.models.room.other", "room")
+      = mainmenu_entry(main_app.room_types_path, "activerecord.models.room_type.other", "room_type")
+      = mainmenu_entry(main_app.room_prices_path, "activerecord.models.room_price.other", "room_price")
+      = mainmenu_entry(main_app.guest_types_path, "activerecord.models.guest_type.other", "guest_type")
+      = mainmenu_entry(main_app.surcharges_path, "activerecord.models.surcharge.other", "surcharge")
+      = mainmenu_entry(main_app.seasons_path, "activerecord.models.season.other", "season")
+      - if permit('manage_statistics_hotel')
+        - if controller.controller_name == 'orders'
+          = link_to '#', :onclick => 'report.functions.display_popup()' do
+            = image_tag "icons/report.svg"
+            %br
+            = t "various.report"
+        - else
+          = link_to '/orders?report=1' do
+            = image_tag "icons/report.svg"
+            %br
+            = t "various.report"

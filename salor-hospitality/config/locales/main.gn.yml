@@ -256,8 +256,8 @@ gn:
         one: Firma
         other: Firmen
       cost_center:
-        one: Kostenstelle
-        other: Kostenstellen
+        one: Kostenkreis
+        other: Kostenkreise
       coupon:
         one: Gutschein
         other: Gutscheine
@@ -444,15 +444,15 @@ gn:
   copy: Kopie
   cost_centers:
     create:
-      success: Kostenstelle erfolgreich gespeichert
+      success: Kostenkreis erfolgreich gespeichert
     destroy:
-      success: Kostenstelle erfolgreich gelöscht
+      success: Kostenkreis erfolgreich gelöscht
     index:
       active: aktiv
       inactive: inaktiv
     new:
-      edit_cost_center: Kostenstelle bearbeiten
-      new_cost_center: Neue Kostenstelle
+      edit_cost_center: Kostenkreis bearbeiten
+      new_cost_center: Neuer Kostenkreis
   count: Anzahl
   create: Anlegen
   customers:
@@ -501,7 +501,9 @@ gn:
       admin_menu_hint: ☚ Klicken Sie hier, um das Hauptmenü zu öffnen
       submit_scribe: OK
     header:
-      configuration: Konfiguration
+      settings_common: Allgemein
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: abmelden
   messages:
     hello_username: Hallo %{name}
@@ -653,7 +655,7 @@ gn:
     new:
       add_option_to_sent_item: Optionen zu abgesendeten Artikeln hinzufügen
       allow_exit: Browser-Fenster schließen
-      assign_cost_center: Kostenstelle zuweisen
+      assign_cost_center: Kostenkreis zuweisen
       assign_order_to_booking: Bestellungen einer Buchung zuweisen
       assign_order_to_user: Benutzer der Bestellung zuweisen
       assign_tables: Tische an Benutzer zuweisen
@@ -678,7 +680,7 @@ gn:
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_cameras: Kameras verwalten
       manage_categories: Kategorien verwalten
-      manage_cost_centers: Kostenstellen verwalten
+      manage_cost_centers: Kostenkreise verwalten
       manage_customers: Kundendatenbank verwalten
       manage_hotel: Hotel managen
       manage_options: Optionen verwalten

@@ -501,7 +501,9 @@ en:
       admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
-      configuration: Configuration
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!

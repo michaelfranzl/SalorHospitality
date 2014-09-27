@@ -53,4 +53,10 @@ module ApplicationHelper
       return ''
     end
   end
+  
+  def mainmenu_entry(path, i18n_path, icon)
+    link_to path do
+      raw "<img src=\"/assets/icons/#{ icon }.svg\" /><br /><span>#{ t i18n_path }</span>"
+    end
+  end
 end
