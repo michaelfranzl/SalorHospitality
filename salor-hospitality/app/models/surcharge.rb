@@ -37,12 +37,14 @@ class Surcharge < ActiveRecord::Base
     surcharge = nil
     seasons.each do |s|
       if params['common_surcharge'] == '1'
+        # this matches one single surcharge
         surcharge = vendor.surcharges.where(
           :season_id => s.id,
           :guest_type_id => nil,
           :name => params[:surcharge][:name],
           :hidden => nil).first
         unless surcharge
+          # create if not yet existing
           surcharge = Surcharge.create(
             :season_id => s.id,
             :guest_type_id => nil,
@@ -54,12 +56,14 @@ class Surcharge < ActiveRecord::Base
       else
         guest_types.each do |gt|
           gt_id = params[:common_surcharge] ? nil : gt.id 
+          # this matches one single surcharge
           surcharge = vendor.surcharges.where(
             :season_id => s.id,
             :guest_type_id => gt_id,
             :name => params[:surcharge][:name],
             :hidden => nil).first
           unless surcharge
+            # create if not yet existing
             surcharge = Surcharge.create(
               :season_id => s.id,
               :guest_type_id => gt_id,

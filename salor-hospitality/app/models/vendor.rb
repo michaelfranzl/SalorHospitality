@@ -211,13 +211,26 @@ class Vendor < ActiveRecord::Base
     cstmers[:all] = {}
     customer_models.each do |c|
       cuid = c.id
-      cstmers[:all][cuid] = { :id => cuid, :n => c.full_name(true) }
+      cstmers[:all][cuid] = {
+        :id => cuid,
+        :n => c.full_name(true)
+      }
     end
     
     quantities = {}
     quantity_models.each do |q|
       ai = q.article_id
-      qhash = {q.id => { :ai => ai, :qi => q.id, :ci => q.category_id, :d => "q#{q.id}", :pre => q.prefix, :post => q.postfix, :p => q.price }}
+      qhash = {
+        q.id => {
+                 :ai => ai,
+                 :qi => q.id,
+                 :ci => q.category_id,
+                 :d => "q#{q.id}",
+                 :pre => q.prefix,
+                 :post => q.postfix,
+                 :p => q.price
+                }
+      }
       quantities.merge! qhash
     end
 
@@ -227,7 +240,16 @@ class Vendor < ActiveRecord::Base
       aid = a.id
       s = a.position.to_i
       quantity_ids = a.quantities.existing.active.positioned.collect{|q| q.id}
-      ahash = {a.id => { :ai => aid, :ci => ci, :d => "a#{aid}", :n => a.name, :p => a.price, :q => quantity_ids }}
+      ahash = {
+        a.id => {
+                 :ai => aid,
+                 :ci => ci,
+                 :d => "a#{aid}",
+                 :n => a.name,
+                 :p => a.price,
+                 :q => quantity_ids
+                }
+      }
       articles.merge! ahash
     end
 
@@ -236,7 +258,14 @@ class Vendor < ActiveRecord::Base
       o.categories.each do |oc|
         ci = oc.id
         s = o.position.to_i
-        ohash = {o.id => { :id => o.id, :n => o.name, :p => o.price, :s => s }}
+        ohash = {
+          o.id => {
+                   :id => o.id,
+                   :n => o.name,
+                   :p => o.price,
+                   :s => s
+                  }
+        }
         options.merge! ohash
       end
     end
@@ -247,47 +276,111 @@ class Vendor < ActiveRecord::Base
       s = c.position.to_i
       article_ids = c.articles.existing.active.positioned.collect{ |a| a.id }
       option_ids = c.options.existing.active.positioned.collect{ |o| o.id }
-      chash = {cid => { :id => cid, :a => article_ids, :o => option_ids, :n => c.name }}
+      chash = {
+        cid => {
+                :id => cid,
+                :a => article_ids,
+                :o => option_ids,
+                :n => c.name
+               }
+      }
       categories.merge! chash
     end
 
     payment_methods = {}
     payment_method_models.each do |pm|
       pmid = pm.id
-      payment_methods[pm.id] = { :id => pmid, :n => pm.name, :chg => pm.change }
+      payment_methods[pm.id] = {
+        :id => pmid,
+        :n => pm.name,
+        :chg => pm.change
+      }
     end
     
     tables = {}
     table_models.each do |t|
       tid = t.id
-      tables[tid] = { :id => tid, :n => t.name }
+      tables[tid] = {
+        :id => tid,
+        :n => t.name
+      }
     end
     
     users = {}
     user_models.each do |u|
       uid = u.id
-      users[uid] = { :id => uid, :n => u.login, :c => u.color }
+      users[uid] = {
+        :id => uid,
+        :n => u.login,
+        :c => u.color
+      }
     end
 
     rooms = Hash.new
-    self.rooms.existing.active.each { |r| rooms[r.id] = { :n => r.name, :rt => r.room_type_id, :bks => r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) {|ar,b| ar.push({:f => b.from_date, :t => b.to_date, :cid => b.customer_id, :d => b.duration } ) } } }
+    self.rooms.existing.active.each do |r|
+      bookings = r.bookings.existing.where(:finished => nil, :paid => nil).each.inject([]) do |ar,b|
+        ar.push({
+                 :f => b.from_date,
+                 :t => b.to_date,
+                 :cid => b.customer_id,
+                 :d => b.duration
+                })
+      end
+      rooms[r.id] = {
+        :n => r.name,
+        :rt => r.room_type_id,
+        :bks => bookings
+      }
+    end
 
     room_types = Hash.new
     self.room_types.existing.active.each { |rt| room_types[rt.id] = { :n => rt.name } }
 
     room_prices = Hash.new
-    self.room_prices.existing.active.each { |rp| room_prices[rp.id] = { :rt => rp.room_type_id, :gt => rp.guest_type_id, :p => rp.base_price, :sn => rp.season_id } }
+    self.room_prices.existing.active.each do |rp|
+      room_prices[rp.id] = { 
+        :rt => rp.room_type_id,
+        :gt => rp.guest_type_id,
+        :p => rp.base_price,
+        :sn => rp.season_id
+      }
+    end
 
     guest_types = Hash.new
-    self.guest_types.existing.active.each { |gt| guest_types[gt.id] = { :n => gt.name, :t => gt.taxes.collect{ |t| t.id } }}
+    self.guest_types.existing.active.each do |gt|
+      guest_types[gt.id] = {
+        :n => gt.name,
+        :t => gt.taxes.collect { |t| t.id }
+      }
+    end
 
     surcharges = Hash.new
-    self.surcharges.existing.active.each { |sc| surcharges[sc.id] = { :n => sc.name, :a => sc.amount, :sn => sc.season_id, :gt => sc.guest_type_id, :r => sc.radio_select, :v => sc.visible, :s => sc.selected } }
+    self.surcharges.existing.active.each do |sc|
+      surcharges[sc.id] = {
+        :n => sc.name,
+        :a => sc.amount,
+        :sn => sc.season_id,
+        :gt => sc.guest_type_id,
+        :r => sc.radio_select,
+        :v => sc.visible,
+        :s => sc.selected }
+    end
 
     seasons = Hash.new
     current_season = Season.current(self)
     current_year = Time.now.year
-    self.seasons.existing.active.each { |sn| seasons[sn.id] = { :id => sn.id, :is_master => sn.is_master,:n => sn.name, :f => "#{current_year}-#{sn.from_date.strftime('%m-%d')}", :t => "#{current_year}-#{sn.to_date.strftime('%m-%d')}", :c => sn == current_season, :d => sn.duration, :c => sn.color } }
+    self.seasons.existing.active.each do |sn|
+      seasons[sn.id] = {
+        :id => sn.id,
+        :is_master => sn.is_master,
+        :n => sn.name,
+        :f => "#{current_year}-#{sn.from_date.strftime('%m-%d')}",
+        :t => "#{current_year}-#{sn.to_date.strftime('%m-%d')}",
+        :c => sn == current_season,
+        :d => sn.duration,
+        :c => sn.color
+      }
+    end
 
     taxes = Hash.new
     self.taxes.existing.each { |t| taxes[t.id] = { :n => t.name, :p => t.percent } }
@@ -296,7 +389,25 @@ class Vendor < ActiveRecord::Base
       :item => raw(ActionView::Base.new(File.join(Rails.root,'app','views')).render(:partial => 'items/item_tablerow'))
     }
 
-    resources = { :a => articles, :q => quantities, :o => options, :c => categories, :templates => templates, :customers => cstmers, :r => rooms, :rt => room_types, :rp => room_prices, :gt => guest_types, :sc => surcharges, :sn => seasons, :t => taxes, :pm => payment_methods, :u => users, :tb => tables, :vp => self.vendor_printers_hash }
+    resources = {
+      :a => articles,
+      :q => quantities,
+      :o => options,
+      :c => categories,
+      :templates => templates,
+      :customers => cstmers,
+      :r => rooms,
+      :rt => room_types,
+      :rp => room_prices,
+      :gt => guest_types,
+      :sc => surcharges,
+      :sn => seasons,
+      :t => taxes,
+      :pm => payment_methods,
+      :u => users,
+      :tb => tables,
+      :vp => self.vendor_printers_hash
+    }
 
     return resources.to_json
   end
