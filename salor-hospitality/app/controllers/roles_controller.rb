@@ -13,7 +13,7 @@ class RolesController < ApplicationController
   before_filter :check_permissions
 
   def index
-    @roles = @current_company.roles.existing
+    @roles = @current_vendor.roles.existing
   end
 
   def new
