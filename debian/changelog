@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.53) wheezy; urgency=low
+
+  * new main menu
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 28 Sep 2014 15:23:32 +0200
+
 salor-hospitality (4.1.4.52) wheezy; urgency=low
 
   * list roles only for current vendor
