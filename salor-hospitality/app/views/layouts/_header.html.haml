@@ -66,7 +66,7 @@
     
     = mainmenu_entry(main_app.cost_centers_path, "activerecord.models.cost_center.other", "cost_center") if permit('manage_cost_centers')
     
-    = mainmenu_entry(main_app.users_path, "activerecord.models.camera.other", "camera") if permit('manage_cameras')
+    = mainmenu_entry(main_app.cameras_path, "activerecord.models.camera.other", "camera") if permit('manage_cameras')
       
     = mainmenu_entry(main_app.pages_path, "activerecord.models.page.other", "page") if permit('manage_pages')
     

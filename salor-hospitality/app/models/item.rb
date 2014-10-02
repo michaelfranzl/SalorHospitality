@@ -141,16 +141,50 @@ class Item < ActiveRecord::Base
         net = (gro / ( 1.0 + ( tax.percent / 100.0 ))).round(2)
       end
       tax_sum = (gro - net).round(2)
-      self.taxes[tax.id] = {:t => tax_sum, :g => gro, :n => net, :l => tax.letter, :e => tax.name, :p => tax.percent}
+      self.taxes[tax.id] = {
+        :t => tax_sum,
+        :g => gro,
+        :n => net,
+        :l => tax.letter,
+        :e => tax.name,
+        :p => tax.percent
+      }
       
-      self.save if self.new_record? # we need an id for the next step
-      tax_item = TaxItem.where(:vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id).first
+      self.save! if self.new_record? # we need an id for the next step
+      tax_item = TaxItem.where(
+        :vendor_id => self.vendor_id,
+        :company_id => self.company_id,
+        :item_id => self.id,
+        :tax_id => tax.id,
+        :order_id => self.order_id).first
       
       # TaxItem creation
       if tax_item
-        tax_item.update_attributes :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent
+        tax_item.update_attributes(
+          :gro => gro,
+          :net => net,
+          :tax => tax_sum,
+          :letter => tax.letter,
+          :name => tax.name,
+          :percent => tax.percent
+        )
       else
-        TaxItem.create :vendor_id => self.vendor_id, :company_id => self.company_id, :item_id => self.id, :tax_id => tax.id, :order_id => self.order_id, :gro => gro, :net => net, :tax => tax_sum, :letter => tax.letter, :name => tax.name, :percent => tax.percent, :category_id => self.category_id, :statistic_category_id => self.statistic_category_id
+        TaxItem.create(
+          :vendor_id => self.vendor_id,
+          :company_id => self.company_id,
+          :item_id => self.id,
+          :tax_id => tax.id,
+          :order_id => self.order_id,
+          :gro => gro,
+          :net => net,
+          :tax => tax_sum,
+          :letter => tax.letter,
+          :name => tax.name,
+          :percent => tax.percent,
+          :category_id => self.category_id,
+          :statistic_category_id => self.statistic_category_id,
+          :cost_center_id => self.order.cost_center_id,
+        )
       end
       tax_sum_total += tax_sum
     end
@@ -164,7 +198,21 @@ class Item < ActiveRecord::Base
     ids.delete '0' # 0 is sent by JS always, otherwise surchargeslist is not sent by ajax call
     ids.each do |i|
       o = Option.find_by_id(i.to_i)
-      option_item = OptionItem.create :vendor_id => o.vendor_id, :company_id => o.company_id, :option_id => o.id, :item_id => self.id, :order_id => self.order_id, :price => o.price, :name => o.name, :count => self.count, :sum => self.count * o.price, :hidden => self.hidden, :hidden_by => self.hidden_by, :no_ticket => o.no_ticket, :separate_ticket => o.separate_ticket
+      option_item = OptionItem.create(
+        :vendor_id => o.vendor_id,
+        :company_id => o.company_id,
+        :option_id => o.id,
+        :item_id => self.id,
+        :order_id => self.order_id,
+        :price => o.price,
+        :name => o.name,
+        :count => self.count,
+        :sum => self.count * o.price,
+        :hidden => self.hidden,
+        :hidden_by => self.hidden_by,
+        :no_ticket => o.no_ticket,
+        :separate_ticket => o.separate_ticket
+      )
     end
   end
 
