@@ -151,7 +151,7 @@ class Item < ActiveRecord::Base
       }
       
       self.save! if self.new_record? # we need an id for the next step
-      tax_item = TaxItem.where(
+      tax_item = TaxItem.existing.where(
         :vendor_id => self.vendor_id,
         :company_id => self.company_id,
         :item_id => self.id,
