@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.54) wheezy; urgency=low
+
+  * improved code formatting
+  * fix for TaxItem calculation when rotating taxes
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 02 Oct 2014 19:31:43 +0200
+
 salor-hospitality (4.1.4.53) wheezy; urgency=low
 
   * new main menu
