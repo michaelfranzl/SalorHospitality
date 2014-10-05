@@ -64,4 +64,7 @@
   $(function() {
     if ($('#customer_password').val().length == 0)
       $('#customer_password').val(generate_password(8));
+      
+      if ($('#customer_email').val().length == 0)
+      $('#customer_email').val(generate_password(8));
   });
