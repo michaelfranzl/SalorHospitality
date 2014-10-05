@@ -51,7 +51,7 @@
     %span{ :id => "invoice_username_#{ oid }" }== #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
   %table.invoice
-    - invoice_form.items.existing.positioned.each do |item|
+    - invoice_form.items.existing.order(:position_category).each do |item|
       - article_label = item.article.name[0..13]
       - prefix_label = item.quantity.prefix[0..9] if item.quantity and item.quantity.prefix
       - postfix_label = item.quantity.postfix[0..9] if item.quantity and item.quantity.postfix
