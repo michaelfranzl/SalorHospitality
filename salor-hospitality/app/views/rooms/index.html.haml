@@ -5,10 +5,10 @@
 %table
   %tr
     %th{ :style => 'width:120px' }= Room.human_attribute_name(:name)
-    %th{ :style => 'width:100px' }= Room.human_attribute_name(:class)
+    %th{ :style => 'width:150px' }= Room.human_attribute_name(:class)
     %th{ :style => 'width:50px' }
   - @rooms.each do |r|
     %tr
-      %td= link_to r.name, edit_room_path(r)
+      %td= link_to r.name, edit_room_path(r), :class => "list_item"
       %td= r.room_type.name
       %td= link_to image_tag('button_small_delete.png', :title => Room.human_attribute_name(:hidden), :alt => Room.human_attribute_name(:hidden)), room_path(r), :method => :delete, :confirm => t(:are_you_sure)

@@ -9,7 +9,7 @@
     %th{ :style => 'width:200px' }= Presentation.human_attribute_name(:description)
   - @presentations.each do |p|
     %tr
-      %td= link_to p.name, edit_presentation_path(p)
+      %td= link_to p.name, edit_presentation_path(p), :class => "list_item"
       %td= p.model
       %td= p.description
       %td= link_to image_tag('button_small_delete.png', :title => Presentation.human_attribute_name(:hidden), :alt => Presentation.human_attribute_name(:hidden)), presentation_path(p), :method => :delete, :confirm => t(:are_you_sure)

@@ -13,6 +13,6 @@
         %h3= v.name
     - v.customers.existing.reverse.each do |c|
       %tr
-        %td= link_to c.full_name, edit_customer_path(c)
+        %td= link_to c.full_name, edit_customer_path(c), :class => "list_item"
         %td= c.city
         %td= link_to image_tag('button_small_delete.png', :title => Customer.human_attribute_name(:hidden), :alt => Customer.human_attribute_name(:hidden)), customer_path(c), :method => :delete, :confirm => t(:are_you_sure)

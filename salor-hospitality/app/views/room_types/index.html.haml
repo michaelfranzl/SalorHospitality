@@ -8,5 +8,5 @@
     %th{ :style => 'width:50px' }
   - @room_types.each do |t|
     %tr
-      %td= link_to t.name, edit_room_type_path(t)
+      %td= link_to t.name, edit_room_type_path(t), :class => "list_item"
       %td= link_to image_tag('button_small_delete.png', :title => RoomType.human_attribute_name(:hidden), :alt => RoomType.human_attribute_name(:hidden)), room_type_path(t), :method => :delete, :confirm => t(:are_you_sure)

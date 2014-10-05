@@ -8,6 +8,6 @@
     %th{ :style => 'width:200px' }
   - @cost_centers.each do |cc|
     %tr
-      %td= link_to cc.name, edit_cost_center_path(cc)
+      %td= link_to cc.name, edit_cost_center_path(cc), :class => "list_item"
       %td= cc.description
       %td= link_to image_tag('button_small_delete.png', :title => CostCenter.human_attribute_name(:hidden), :alt => CostCenter.human_attribute_name(:hidden)), cost_center_path(cc), :method => :delete, :confirm => t(:are_you_sure)

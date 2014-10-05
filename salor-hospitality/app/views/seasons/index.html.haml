@@ -10,7 +10,7 @@
     %th{ :style => 'width:50px' }
   - @seasons.each do |g|
     %tr
-      %td= link_to g.name, edit_season_path(g)
+      %td= link_to g.name, edit_season_path(g), :class => "list_item"
       %td= l g.from_date, :format => :month_and_day
       %td= l g.to_date, :format => :month_and_day
       %td= link_to image_tag('button_small_delete.png', :title => Season.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), season_path(g), :method => :delete, :confirm => t(:are_you_sure)

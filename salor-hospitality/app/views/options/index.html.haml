@@ -12,7 +12,7 @@
     - c.options.existing.active.positioned.each do |o|
       %li{ :id => "option_#{ o.id }" }
         %span.handle
-        = link_to o.name, edit_option_path(o)
+        = link_to o.name, edit_option_path(o), :class => "list_item"
 
 - @categories.each do |c|
   :javascript

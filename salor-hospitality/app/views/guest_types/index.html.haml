@@ -4,11 +4,11 @@
 
 %table
   %tr
-    %th{ :style => 'width:120px' }= GuestType.human_attribute_name(:name)
+    %th{ :style => 'width:180px' }= GuestType.human_attribute_name(:name)
     %th{ :style => 'width:220px' }= GuestType.human_attribute_name(:taxes)
     %th{ :style => 'width:50px' }
   - @guest_types.each do |g|
     %tr
-      %td= link_to g.name, edit_guest_type_path(g)
+      %td= link_to g.name, edit_guest_type_path(g), :class => "list_item"
       %td= g.taxes.collect{ |tax| "#{tax.name} (#{tax.percent}%)" }.join(', ')
       %td= link_to image_tag('button_small_delete.png', :title => GuestType.human_attribute_name(:hidden), :alt => GuestType.human_attribute_name(:hidden)), guest_type_path(g), :method => :delete, :confirm => t(:are_you_sure)

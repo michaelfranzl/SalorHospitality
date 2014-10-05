@@ -9,5 +9,5 @@
     %th{ :style => 'width:200px' }
   - @payment_methods.each do |pm|
     %tr
-      %td= link_to pm.name, edit_payment_method_path(pm)
+      %td= link_to pm.name, edit_payment_method_path(pm), :class => "list_item"
       %td= link_to image_tag('button_small_delete.png', :title => PaymentMethod.human_attribute_name(:hidden), :alt => PaymentMethod.human_attribute_name(:hidden)), payment_method_path(pm), :method => :delete, :confirm => t(:are_you_sure)

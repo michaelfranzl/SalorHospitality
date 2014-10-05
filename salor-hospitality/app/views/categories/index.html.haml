@@ -6,7 +6,7 @@
   - @categories.each do |ca|
     %li{ :id => "category_#{ ca.id }" }
       %span.handle
-      %span.inline= link_to ca.name, edit_category_path(ca)
+      %span.inline= link_to ca.name, edit_category_path(ca), :class => "list_item"
       %span.inline== #{ t('activerecord.models.vendor_printer.one') }: #{ ca.vendor_printer ? ca.vendor_printer.name : '-' }
       %span.inline= link_to image_tag('button_small_delete.png', :title => Category.human_attribute_name(:hidden), :alt => Category.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;"), category_path(ca), :method => :delete, :confirm => t(:are_you_sure)
 
