@@ -1,3 +1,12 @@
+salor-hospitality (4.1.4.55) wheezy; urgency=low
+
+  * fixed typo, invoice view is sorted by category order
+  * back button on paper invoice redirects to table view
+  * set a random pseudo email address for new customers to fulfill the requirement for emails
+  * button links for better click-ability
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 05 Oct 2014 22:25:40 +0200
+
 salor-hospitality (4.1.4.54) wheezy; urgency=low
 
   * improved code formatting
