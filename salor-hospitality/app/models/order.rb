@@ -722,6 +722,7 @@ class Order < ActiveRecord::Base
     "\ea\x00" +  # align left
     "\e!\x01"  # Font B
     
+    header2 += "#{ Table.model_name.human } #{ self.table.name } / #{ self.user ? self.user.title : 'customer' }\n"
     #I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
     header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers

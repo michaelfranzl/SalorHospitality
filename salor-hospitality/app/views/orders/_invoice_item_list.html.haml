@@ -1,3 +1,5 @@
+%p== #{ Table.model_name.human } #{ order.table.name } / #{ order.user ? order.user.title : 'customer' }
+
 %table
   %tr
     %th.one= Tax.model_name.human
