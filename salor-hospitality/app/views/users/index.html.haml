@@ -12,6 +12,7 @@
       %th{ :style => 'width:150px' }= User.human_attribute_name(:role)
       %th{ :style => 'width:100px' }= User.human_attribute_name(:color)
       %th{ :style => 'width:100px' }= User.human_attribute_name(:language)
+      %th
     - v.users.existing.order(:role_weight).each do |u|
       - role = u.role
       %tr

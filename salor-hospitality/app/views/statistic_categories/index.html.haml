@@ -5,6 +5,7 @@
 %table
   %tr
     %th{ :style => 'width:150px' }
+    %th{ :style => 'width:50px' }
   - @statistic_categories.each do |c|
     %tr
       %td= link_to c.name, edit_statistic_category_path(c), :class => "list_item"

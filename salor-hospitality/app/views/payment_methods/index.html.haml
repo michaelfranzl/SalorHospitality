@@ -5,8 +5,7 @@
 %table
   %tr
     %th{ :style => 'width:150px' }
-    %th{ :style => 'width:100px' }
-    %th{ :style => 'width:200px' }
+    %th{ :style => 'width:50px' }
   - @payment_methods.each do |pm|
     %tr
       %td= link_to pm.name, edit_payment_method_path(pm), :class => "list_item"

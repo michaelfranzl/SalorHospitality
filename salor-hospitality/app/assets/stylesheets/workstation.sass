@@ -223,6 +223,13 @@ div#footer a
  
 //normal style definitions =============================
 
+table
+  :border-collapse collapse
+  tr
+    :border-bottom 1px solid $darkgray
+  th
+    :font-style italic
+
 a.links
   :display inline-block
   :margin-left 1px
@@ -243,6 +250,9 @@ a.links
 a.list_item
   :padding 5px 10px 5px 5px
   :background-color rgba(255, 255, 255, 0.1)
+  :-moz-border-radius 3px
+  :-webkit-border-radius 3px
+  :text-decoration none
 
 div.errors
   :color red
@@ -421,9 +431,7 @@ table.waiterpad
   tr.sum
     :height 40pt
 
-table.articles td
-  :padding-right 30px
-  :width 190px
+
 
 div.settlements
   :border 1px solid black
@@ -641,9 +649,11 @@ form.category_form
     :width 150px
     
 table.articles
-  :width 101%
-  :margin-left -10px
+  :width 90%
   :border-spacing 10px
+  td
+    :padding-right 30px
+    :width 190px
   td.receiving
     :background-color #304345
   td#remove

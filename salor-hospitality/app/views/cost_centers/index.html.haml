@@ -6,6 +6,7 @@
   %tr
     %th{ :style => 'width:150px' }
     %th{ :style => 'width:200px' }
+    %th{ :style => 'width:50px' }
   - @cost_centers.each do |cc|
     %tr
       %td= link_to cc.name, edit_cost_center_path(cc), :class => "list_item"
