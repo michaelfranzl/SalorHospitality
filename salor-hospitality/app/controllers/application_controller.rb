@@ -404,7 +404,7 @@ class ApplicationController < ActionController::Base
       false
     end
 
-    def fetch_logged_in_user    
+    def fetch_logged_in_user
       @current_user = User.existing.active.find_by_id session[:user_id] if session[:user_id]
       @current_customer = Customer.find_by_id_hash session[:customer_id_hash] if session[:customer_id_hash]
       
@@ -413,6 +413,7 @@ class ApplicationController < ActionController::Base
 
       unless @current_vendor
         session[:vendor_id] = nil and session[:company_id] = nil
+        flash[:notice] = "Invalid Vendor"
         redirect_to new_session_path and return
       end
 

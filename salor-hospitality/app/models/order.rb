@@ -326,7 +326,7 @@ class Order < ActiveRecord::Base
       (i+1).upto(n) do |j|
         if (items[i].article_id  == items[j].article_id    and
             items[i].quantity_id == items[j].quantity_id   and
-            items[i].option_items.existing.collect{|oi| oi.option.id}.uniq.sort == items[j].option_items.existing.collect{|oi| oi.option.id}.uniq  and
+            items[i].option_items.existing.collect{|oi| oi.option.id}.sort == items[j].option_items.existing.collect{|oi| oi.option.id}.sort  and
             items[i].price       == items[j].price         and
             items[i].comment     == items[j].comment       and
             items[i].scribe      == items[j].scribe        and

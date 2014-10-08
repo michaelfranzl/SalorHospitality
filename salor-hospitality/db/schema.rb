@@ -163,8 +163,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.string   "color"
     t.integer  "vendor_printer_id",   :default => 0
     t.integer  "position"
-    t.boolean  "hidden",              :default => false
     t.integer  "company_id"
+    t.boolean  "hidden",              :default => false
     t.integer  "preparation_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",              :default => true
@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
   create_table "categories_options", :id => false, :force => true do |t|
     t.integer  "category_id"
     t.integer  "option_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "companies", :force => true do |t|
@@ -214,8 +214,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden"
     t.integer  "company_id"
+    t.boolean  "hidden"
     t.integer  "vendor_id"
     t.boolean  "no_payment_methods", :default => false
     t.integer  "hidden_by"
@@ -367,8 +367,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.integer  "sensitivity"
     t.text     "changes_made"
     t.text     "params"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.boolean  "hidden"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
@@ -536,8 +536,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.integer  "nr"
     t.integer  "tax_id"
     t.float    "refund_sum",                       :default => 0.0
-    t.string   "note"
     t.integer  "company_id"
+    t.string   "note"
     t.integer  "customer_id"
     t.integer  "m_points"
     t.integer  "vendor_id"
@@ -703,8 +703,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
   create_table "receipts", :force => true do |t|
     t.integer  "user_id"
     t.binary   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "vendor_id"
     t.integer  "company_id"
     t.integer  "vendor_printer_id"
@@ -747,8 +747,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.string   "name"
     t.text     "description"
     t.string   "permissions", :limit => 10000, :default => "--- []\n"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.integer  "company_id"
     t.integer  "vendor_id"
     t.boolean  "active",                       :default => true
@@ -947,8 +947,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.boolean  "enabled",               :default => true
     t.boolean  "hidden",                :default => false
     t.boolean  "rotate"
-    t.integer  "active_user_id"
     t.integer  "company_id"
+    t.integer  "active_user_id"
     t.integer  "vendor_id"
     t.boolean  "active",                :default => true
     t.integer  "position"
@@ -1132,8 +1132,8 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.string   "path"
     t.integer  "company_id"
     t.boolean  "hidden"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "copies",                :default => 1
     t.integer  "vendor_id"
     t.string   "print_button_filename"
@@ -1150,16 +1150,16 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
 
   create_table "vendors", :force => true do |t|
     t.string   "name",                                            :default => "Bill Gastro"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                                 :null => false
+    t.datetime "updated_at",                                                                 :null => false
     t.integer  "largest_order_number",                            :default => 0
     t.string   "unused_order_numbers",        :limit => 1000,     :default => "--- []\n"
     t.string   "country"
     t.integer  "time_offset",                                     :default => 0
     t.text     "resources_cache",             :limit => 16777215
-    t.boolean  "use_order_numbers",                               :default => true
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
+    t.boolean  "use_order_numbers",                               :default => true
     t.integer  "company_id"
     t.boolean  "active",                                          :default => true
     t.boolean  "hidden"
