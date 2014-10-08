@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.57) wheezy; urgency=low
+
+  * fixed flash for wrong login data
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 08 Oct 2014 15:26:37 +0200
+
 salor-hospitality (4.1.4.56) wheezy; urgency=low
 
   * re-added table name and user name to invoices
