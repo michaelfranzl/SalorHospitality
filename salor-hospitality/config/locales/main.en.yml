@@ -117,6 +117,8 @@ en:
         usage: usage
       role:
         name: Name
+        weight: Level
+        hidden: delete
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
@@ -650,7 +652,7 @@ en:
     create:
       success: Role successfully saved
     destroy:
-      success: Role successfully deleted
+      success: Roles successfully deleted
     new:
       add_option_to_sent_item: Add Options to sent Items
       allow_exit: Allow Exit

@@ -37,6 +37,8 @@
     
     = mainmenu_entry(main_app.users_path, "activerecord.models.user.other", "user") if permit('manage_users')
     
+    = mainmenu_entry(main_app.roles_path, "activerecord.models.role.other", "role") if permit('manage_roles')
+    
     = mainmenu_entry("/reports", "activerecord.models.report.other", "help") if (permit('remote_support') or permit('download_database') or permit('download_csv'))
     
     = mainmenu_entry(main_app.payment_methods_path, "activerecord.models.payment_method.other", "payment_method") if permit('manage_payment_methods')
