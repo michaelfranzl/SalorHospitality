@@ -59,9 +59,9 @@ function notification_alerts(model) {
     var prepraration_notification_vendor_count = Object.keys(resources.notifications_vendor.preparation).length;
     var total_count = delivery_notification_vendor_count + prepraration_notification_vendor_count;
   }
+  $('.items_notifications_button').html(total_count);
+  $('.mobile_last_invoices_button').html(total_count);
   if (total_count > 0) {
-    $('.items_notifications_button').html(total_count);
-    $('.mobile_last_invoices_button').html(total_count);
     if (permissions.audio && audio_enabled) {
       alert_audio();
     }
