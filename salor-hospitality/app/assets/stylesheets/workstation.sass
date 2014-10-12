@@ -237,6 +237,7 @@ a.links
   :background-color white
   :-moz-border-radius 3px
   :-webkit-border-radius 3px
+  :border-radius 3px
   :color black
   :text-decoration none
   :text-transform uppercase
@@ -252,6 +253,7 @@ a.list_item
   :background-color rgba(255, 255, 255, 0.1)
   :-moz-border-radius 3px
   :-webkit-border-radius 3px
+  :border-radius 3px
   :text-decoration none
 
 div.errors
@@ -264,6 +266,7 @@ div#admin
   :text-align center
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
+  :border-radius 5px
   :position absolute
   :z-index 1000
   :overflow hidden
@@ -271,6 +274,8 @@ div#admin
   :-moz-border-radius 10px
   :-webkit-box-shadow 0px 0px 50px black
   :-webkit-border-radius 10px
+  :box-shadow 0px 0px 50px black
+  :border-radius 10px
   :top 5%
   :left 10%
   :right 10%
@@ -286,6 +291,7 @@ div.adminlinks
     :text-transform uppercase
     :-moz-border-radius 3px
     :-webkit-border-radius 3px
+    :border-radius 3px
     :margin-left 1px
     :margin-bottom 5px
     :padding 8px
@@ -315,6 +321,7 @@ div.adminlinks
     :background-color white
     :-moz-border-radius 3px
     :-webkit-border-radius 3px
+    :border-radius 3px
     :color black
     :text-decoration none
     :text-transform uppercase
@@ -445,6 +452,10 @@ div.table
   :margin 0px
   :cursor pointer
   :text-align center
+  :-moz-box-shadow 0px 0px 8px black
+  :-moz-border-radius 6px
+  :-webkit-box-shadow 0px 0px 8px black
+  :-webkit-border-radius 6px
   :box-shadow 0px 0px 8px black
   :border-radius 6px
   :z-index 10
@@ -457,6 +468,7 @@ span.orderid
 div.occupied
   :-moz-box-shadow 0px 0px 8px #35586a
   :-webkit-box-shadow 0px 0px 8px #35586a
+  :box-shadow 0px 0px 8px #35586a
   
 div.vacant
   :background-color #0d161a
@@ -521,6 +533,7 @@ div#flash
   :background-color rgba(255,255,255,0.5)
   :-moz-border-radius 9px
   :-webkit-border-radius 9px
+  :border-radius 9px
   :display none
 
 
@@ -884,6 +897,7 @@ div.quantities
   :width 60%
   :-moz-box-shadow 0px 0px 8px white
   :-webkit-box-shadow 0px 0px 8px white
+  :box-shadow 0px 0px 8px white
   :overflow hidden
   
 div#items
@@ -1035,6 +1049,7 @@ div#note_for_order
   :padding 5px 10px 10px 10px
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
+  :border-radius 5px
   :border 1px solid #777
   :text-align left
   span.option
@@ -1044,6 +1059,7 @@ div#note_for_order
     :background-color black
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+    :border-radius 5px
     :border 1px solid #777
     :padding 4px 10px
     :margin 5px 0px
@@ -1130,13 +1146,13 @@ div.waiter
 
 div.button
   :background-color white
-  :-moz-border-radius 2px
   :width 120px
   :height 26px
   :cursor pointer
   :display inline-block
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
+  :border-radius 5px
   a
     :color black
     :text-transform uppercase
@@ -1161,6 +1177,7 @@ div.unsettled_orders
   :float left
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
+  :border-radius 5px
   input
     :width 140px
     :font-size 150%
@@ -1196,6 +1213,7 @@ div.paper_invoice
   :margin 20px auto
   :-moz-box-shadow 0px 0px 15px black
   :-webkit-box-shadow 0px 0px 15px black
+  :box-shadow 0px 0px 15px black
   
   #paper_invoice_notes
     :display none
@@ -1289,6 +1307,7 @@ div.ui-keyboard
   :border 1px solid #777
   :-moz-border-radius 5px
   :-webkit-border-radius 5px
+  :border-radius 5px
   :background-repeat repeat-x
   :padding 10px
   input.ui-keyboard-input
@@ -1310,6 +1329,7 @@ div.ui-keyboard
     :border none
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+    :border-radius 5px
   input.ui-keyboard-accept, input.ui-keyboard-cancel
     :background-color rgba(99,127,142,0.8)
   input:hover
@@ -1444,6 +1464,7 @@ div#items_notifications_static
     :padding 1px 1px
     :-moz-border-radius 3px
     :-webkit-border-radius 3px
+    :border-radius 3px
 
 div#items_notifications_interactive
   :display none
@@ -1472,6 +1493,7 @@ div#items_notifications_interactive
       :min-height 30px
       :-moz-border-radius 5px
       :-webkit-border-radius 5px
+      :border-radius 5px
       :padding 3px
       .increment, .reference_count, .update
         :cursor pointer
@@ -1564,6 +1586,8 @@ div.booking_form
     :-moz-border-radius 5px
     :-webkit-box-shadow 0px 0px 8px white
     :-webkit-border-radius 5px
+    :box-shadow 0px 0px 8px white
+    :border-radius 5px
     input
       :border none
       :background-color #3A474D
@@ -1682,12 +1706,16 @@ div.room-date-column
   :z-index 1000
   :-moz-border-radius 4px
   :-webkit-border-radius 4px
+  :border-radius 4px
   :-webkit-border-bottom-left-radius 0px
   :-webkit-border-top-left-radius 0px
+  :border-bottom-left-radius 0px
+  :border-top-left-radius 0px
   span
     :opacity 0.5
 div.room-date-column-last
   :-webkit-border-bottom-left-radius 4px
+  :border-bottom-left-radius 4px
     
 div.room-booking
   :padding 5px
@@ -1706,6 +1734,8 @@ div.room-booking
   :-moz-border-radius 6px
   :-webkit-box-shadow 0px 0px 8px black
   :-webkit-border-radius 6px
+  :box-shadow 0px 0px 8px black
+  :border-radius 6px
   div.inner-div
     div.name
       :background-color rgba(0,0,0, 0.5)
@@ -1792,6 +1822,7 @@ div#remote_support
     :padding 20px
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+    :border-radius 5px
 
 div#table_index
   a
@@ -1805,6 +1836,7 @@ div#table_index
     :padding 10px
     :-moz-border-radius 5px
     :-webkit-border-radius 5px
+    :border-radius 5px
 
 div#message
   :font-size 200%
@@ -1879,6 +1911,8 @@ div#login
   :-moz-border-radius 10px
   :-webkit-box-shadow 0px 0px 50px black
   :-webkit-border-radius 10px
+  :box-shadow 0px 0px 50px black
+  :border-radius 10px
   :color black
   label
     :display inline-block
