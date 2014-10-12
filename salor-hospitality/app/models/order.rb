@@ -64,10 +64,37 @@ class Order < ActiveRecord::Base
     order.customer = customer if customer
     order.vendor = vendor
     order.company = vendor.company
+    
+    errors = false
     params[:items].to_a.each do |item_params|
-      order.create_new_item(item_params, user)
+      success = order.create_new_item(item_params, user)
+      if success != true
+        errors = true
+      end
     end
-    raise "Order could not be saved." unless order.save
+    
+    if errors == true
+      message = "Errors in create_new_item called from Order.create_from_params.\n vendor=#{ vendor.inspect }\nuser=#{ user.inspect }\nparams=#{ params.inspect }"
+      
+      if vendor.enable_technician_emails == true and vendor.technician_email
+        UserMailer.technician_message(vendor, "Errors in create_new_item called from Order.create_from_params", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
+    
+    result = order.save
+    if result != true
+      message = "Order could not be saved in Order.create_from_params.\n vendor=#{ vendor.inspect }\nuser=#{ user.inspect }\nparams=#{ params.inspect }"
+      
+      if vendor.enable_technician_emails == true and vendor.technician_email
+        UserMailer.technician_message(vendor, "Order could not be saved in Order.create_from_params", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+      raise "Order could not be saved."
+    end
+    
     #new_user = (params[:items] or self.user.nil?) ? user : nil # only change user if items were changed.
     order.update_associations(customer)
     order.regroup
@@ -82,15 +109,21 @@ class Order < ActiveRecord::Base
 
   def update_from_params(params, user, customer)
     self.update_attributes params[:model]
+    
+    errors = false
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
-      item_id ||= item_params[1]["id"] # security measure, seen Ruby/Rails misbehave
+      item_id ||= item_params[1]["id"] # redundancy measure, seen Ruby/Rails misbehave
       if item_id.nil?
-        self.create_new_item(item_params, user)
+        success = self.create_new_item(item_params, user)
+        if success != true
+          errors = true
+        end
       else
         self.update_item(item_id, item_params, user)
       end
     end
+    
     self.user = user if self.user.nil? or (params[:items] and params[:model][:user_id].nil?)
     self.save
     self.update_associations(customer)
@@ -100,9 +133,20 @@ class Order < ActiveRecord::Base
     hidden_by = user ? user.id : -12
     self.hide(hidden_by) if self.hidden or not self.items.existing.any?
     self.table.update_color
+    
+    if errors == true
+      message = "Errors in create_new_item called from Order.update_from_params.\n vendor=#{ self.vendor.inspect }\nuser=#{ self.user.inspect }\nparams=#{ params.inspect }"
+      
+      if vendor.enable_technician_emails == true and vendor.technician_email
+        UserMailer.technician_message(vendor, "Errors in create_new_item called from Order.update_from_params", message).deliver
+      else
+        ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
+      end
+    end
   end
   
   def create_new_item(p, user)
+    success = true
     i = Item.new(p[1])
     i.order = self
     i.vendor = vendor
@@ -119,6 +163,8 @@ class Order < ActiveRecord::Base
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
+      raise "Could not save item in Order.create_new_item"
+      success = false
     end
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
@@ -131,8 +177,11 @@ class Order < ActiveRecord::Base
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
+      raise "Could not save item in Order.create_new_item"
+      success = false
     end
     i.hide(self.user_id) if i.hidden
+    return success
   end
   
   def update_item(id, p, user)

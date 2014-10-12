@@ -332,14 +332,16 @@ class ApplicationController < ActionController::Base
     def get_order
       
       if @current_customer
-        params[:model][:table_id] = @current_customer.table.id # security measure
+        params[:model][:table_id] = @current_customer.table.id # security measure for js manipulation
       end
       
       if params[:id]
         @order = get_model(params[:id], Order)
-      elsif params[:model] and params[:model][:table_id]
-        # Reuse the order on table if possible
-        @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
+#       elsif params[:model] and params[:model][:table_id]
+#         
+#         # Reuse the order on table if possible
+#         @order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).first
+#         raise "here" if @order.nil?
       else
         if @current_vendor.enable_technician_emails == true and @current_vendor.technician_email
           UserMailer.technician_message(@current_vendor, "params[:model][:table_id] was not set").deliver
