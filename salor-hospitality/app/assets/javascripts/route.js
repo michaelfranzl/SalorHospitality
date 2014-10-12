@@ -186,9 +186,13 @@ function route(target, model_id, action, options) {
 
   // ========== GO TO ROOMS ===============
   } else if ( target == 'rooms' ) {
-    if ((navigator.userAgent.indexOf('Chrom') == -1 && navigator.userAgent.indexOf('WebKit') == -1) && typeof(i18n) != 'undefined') {
-      $('#main').html('');
-      create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
+    if ((navigator.userAgent.indexOf('Chrom') == -1 &&
+      navigator.userAgent.indexOf('WebKit') == -1) &&
+      typeof(i18n) != 'undefined') {
+      //$('#main').html('');
+      //create_dom_element('div',{id:'message'}, i18n.browser_warning, '#main');
+      alert(i18n.browser_warning);
+      route("tables");
       return;
     }
     scroll_to($('#container'),20);

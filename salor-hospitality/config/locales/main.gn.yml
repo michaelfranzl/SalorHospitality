@@ -771,9 +771,7 @@ gn:
   sessions:
     browser_warning:
       continue: weiter
-      warning: Salor unterstützt nur die Browser Google Chrome (Windows), Chromium
-        (Linux) oder Safari (Apple). Bitte installieren Sie einen dieser Browser und
-        versuchen Sie es erneut.
+      warning: Die Hotelfunktion wird nur von den Browsern Google Chrome (Windows), Chromium (Linux) oder Safari (Apple) unterstützt. Bitte verwenden Sie einen dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login
