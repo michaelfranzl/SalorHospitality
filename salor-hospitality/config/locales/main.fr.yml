@@ -117,6 +117,8 @@ fr:
         usage: Utilisation
       role:
         name: Nom
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Prix de base
         guest_type_id: Gast-Typ
@@ -394,9 +396,9 @@ fr:
     invoice_item_list:
       served_by_X: Vous avez été servi par %{user}
     show:
+      count: Count
       go_to_bookings_calendar: XXX Go to bookings calendar view
       search_by_number: Chercher par numéro
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ fr:
       admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
-      configuration: Configuration
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: Déconnecter %{who}
   messages:
     hello_username: Bonjour %{name}!
@@ -922,6 +926,7 @@ fr:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully created

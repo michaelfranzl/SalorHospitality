@@ -117,6 +117,8 @@ ru:
         usage: использование
       role:
         name: Название
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Базовая цена
         guest_type_id: Тип гостя
@@ -394,9 +396,9 @@ ru:
     invoice_item_list:
       served_by_X: Вас обслуживал(а) %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Перейти к календарю резервирования
       search_by_number: Искать по номеру
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ ru:
       admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
-      configuration: Configuration
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: завершить сеанс %{who}
   messages:
     hello_username: Здравствуйте, %{name}!
@@ -921,6 +925,7 @@ ru:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully created

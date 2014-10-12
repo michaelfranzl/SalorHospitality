@@ -117,6 +117,8 @@ cn:
         usage: 运用
       role:
         name: 名称
+        hidden: delete
+        weight: Level
       room_price:
         base_price: 底价
         guest_type_id: 顾客种类
@@ -394,9 +396,9 @@ cn:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
+      count: Count
       go_to_bookings_calendar: 到预定日历视图
       search_by_number: 用数字搜索
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ cn:
       admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: 好
     header:
-      configuration: Configuration
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: 注销 %{who}
   messages:
     hello_username: 您好 %{name}!
@@ -911,6 +915,7 @@ cn:
     waiter_was_requested: 你已呼叫服务员。请稍候，我们将很快过来。
     workstation_view: 工作站视图
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully saved

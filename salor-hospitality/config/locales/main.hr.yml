@@ -117,6 +117,8 @@ hr:
         usage: uporaba
       role:
         name: Ime
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Osnovna cijena
         guest_type_id: Vrsta gosta
@@ -394,9 +396,9 @@ hr:
     invoice_item_list:
       served_by_X: Poslužio Vas je %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Odi na pregled kalendara rezervacija
       search_by_number: Pretraži prema broju
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ hr:
       admin_menu_hint: ☚ Kliknite ovdje za otvaranje glavnog izbornika
       submit_scribe: OK
     header:
-      configuration: Konfiguracija
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: odjavi se %{who}
   messages:
     hello_username: Pozdrav %{name}!
@@ -925,6 +929,7 @@ hr:
       uskoro ćemo biti tamo za Vas.
     workstation_view: Pogled radne stanice
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Prodavač je uspješno spremljen

@@ -117,6 +117,8 @@ gn:
         usage: Verwendung
       role:
         name: Name
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Grundpreis
         guest_type_id: Guest Type
@@ -394,9 +396,9 @@ gn:
     invoice_item_list:
       served_by_X: Sie wurden bedient von %{user}
     show:
+      count: Anzahl
       go_to_bookings_calendar: Zum Buchungs-Kalender gehen
       search_by_number: Suche nach Nummer
-      count: Anzahl
       sum: Summe
       unit_price: Preis
   cameras:
@@ -771,7 +773,9 @@ gn:
   sessions:
     browser_warning:
       continue: weiter
-      warning: Die Hotelfunktion wird nur von den Browsern Google Chrome (Windows), Chromium (Linux) oder Safari (Apple) unterstützt. Bitte verwenden Sie einen dieser Browser und versuchen Sie es erneut.
+      warning: Die Hotelfunktion wird nur von den Browsern Google Chrome (Windows),
+        Chromium (Linux) oder Safari (Apple) unterstützt. Bitte verwenden Sie einen
+        dieser Browser und versuchen Sie es erneut.
     new:
       email: Ihre E-Mail
       login: Login

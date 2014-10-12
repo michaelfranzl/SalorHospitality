@@ -117,6 +117,8 @@ nl:
         usage: gebruik
       role:
         name: Naam
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Basis Prijs
         guest_type_id: Gast Type
@@ -394,9 +396,9 @@ nl:
     invoice_item_list:
       served_by_X: U werd geholpen door %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Ga naar boekingen kalenderweergave
       search_by_number: Zoeken op nummer
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ nl:
       admin_menu_hint: ☚ Klik hier om het hoofdmenu te openen
       submit_scribe: OK
     header:
-      configuration: Configuratie
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: uitloggen %{who}
   messages:
     hello_username: Hallo %{name}!
@@ -925,6 +929,7 @@ nl:
       er zo voor U zijn.
     workstation_view: Workstation uizicht
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Verkoper is successvol bewaard

@@ -116,9 +116,9 @@ en:
         price: Variant Price
         usage: usage
       role:
+        hidden: delete
         name: Name
         weight: Level
-        hidden: delete
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
@@ -772,7 +772,9 @@ en:
   sessions:
     browser_warning:
       continue: Continue
-      warning: The Hotel feature is supported only by the browsers Google Chrome (Windows), Chromium (Linux) or Safari (Apple). Please use one of these browsers and try again.
+      warning: The Hotel feature is supported only by the browsers Google Chrome (Windows),
+        Chromium (Linux) or Safari (Apple). Please use one of these browsers and try
+        again.
     new:
       email: Your E-Mail
       login: Login

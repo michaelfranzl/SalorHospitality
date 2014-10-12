@@ -117,6 +117,8 @@ fi:
         usage: käyttö
       role:
         name: Nimi
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Perushinta
         guest_type_id: Vierasluokka
@@ -394,9 +396,9 @@ fi:
     invoice_item_list:
       served_by_X: Teitä palveli %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Siirry varausten kalenterinäkymään
       search_by_number: Etsi numerolla
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ fi:
       admin_menu_hint: ☚ Klikkaa tästä avataksesi päävalikon
       submit_scribe: OK
     header:
-      configuration: Konfigurointi
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: kirjaudu ulos %{who}
   messages:
     hello_username: Terve %{name}!
@@ -921,6 +925,7 @@ fi:
       sinua pian
     workstation_view: Työasemanäkymä
     your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Myyntipiste tallennettu

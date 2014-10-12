@@ -117,6 +117,8 @@ kh:
         usage: usage
       role:
         name: Name
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Base Price
         guest_type_id: Guest Type
@@ -394,9 +396,9 @@ kh:
     invoice_item_list:
       served_by_X: You were served by %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Go to bookings calendar view
       search_by_number: Search by number
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ kh:
       admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
-      configuration: Configuration
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: log out %{who}
   messages:
     hello_username: Hello %{name}!
@@ -920,6 +924,7 @@ kh:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully saved

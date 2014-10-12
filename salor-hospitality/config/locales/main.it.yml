@@ -117,6 +117,8 @@ it:
         usage: Utilizzo
       role:
         name: Nome
+        hidden: delete
+        weight: Level
       room_price:
         base_price: Prezzo Base
         guest_type_id: Tipo Ospite
@@ -394,9 +396,9 @@ it:
     invoice_item_list:
       served_by_X: Sarai servito da %{user}
     show:
+      count: Count
       go_to_bookings_calendar: Vai al calendario prenotazioni
       search_by_number: Cerca per numero
-      count: Count
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -501,7 +503,9 @@ it:
       admin_menu_hint: ☚ Click qui per aprire il menu principale
       submit_scribe: OK
     header:
-      configuration: Configurazione
+      settings_common: General
+      settings_hotel: Hotel
+      settings_restaurant: Restaurant
   logout: log out %{who}
   messages:
     hello_username: Ciao %{name}!
@@ -922,6 +926,7 @@ it:
       presto.
     workstation_view: Vista workstation
     your_shift_has_ended: Il tuo Turno è finito. Per cortesia fai log out.
+    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Venditore è stato creato con successo
