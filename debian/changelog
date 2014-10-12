@@ -1,3 +1,13 @@
+salor-hospitality (4.1.4.59) wheezy; urgency=low
+
+  * better browser warning for hotel feature, admin menu centered, css fix for firefox
+  * to css stable migration
+  * JS warning when order is already finished, reuse order when 2 devices start new order on same table
+  * update notification count on button fix
+  * warnings when an order has already been completed by someone else
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 12 Oct 2014 13:49:11 +0200
+
 salor-hospitality (4.1.4.58) wheezy; urgency=low
 
   * added roles as main menu entry
