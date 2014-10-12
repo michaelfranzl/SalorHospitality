@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.58) wheezy; urgency=low
+
+  * added roles as main menu entry
+  * better error reporting to find a rare submission bug
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 12 Oct 2014 11:10:33 +0200
+
 salor-hospitality (4.1.4.57) wheezy; urgency=low
 
   * fixed flash for wrong login data
