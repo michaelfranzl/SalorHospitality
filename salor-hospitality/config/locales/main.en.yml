@@ -857,6 +857,7 @@ en:
       new_user: New User
       select_with_ctrl_key: Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Begin
     cancel: Cancel

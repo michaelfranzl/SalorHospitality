@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
           when 'just_print'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer]), {:with_customer_lines => true}) if params[:printer]
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
           when 'move'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             former_table = @order.table
@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
           when 'display_tax_colors'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             if session[:display_tax_colors]
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
           when 'mass_assign_tax'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             tax = @current_vendor.taxes.find_by_id(params[:tax_id])
@@ -112,7 +112,7 @@ class ApplicationController < ActionController::Base
             params[:payment_method_items] = nil # we want to create them when user is done with the invoice form.
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             @order.update_attribute :cost_center_id, cid 
@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
           when 'assign_to_booking'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             @booking = @current_vendor.bookings.find_by_id(params[:booking_id])
@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
           when 'pay_and_print'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             if params[:interim] == 'true'
@@ -158,7 +158,7 @@ class ApplicationController < ActionController::Base
           when 'pay_and_no_print'
             @order = get_order
             if @order.nil?
-              render :js => "alert('This order is already finished');"
+              render :js => "order_already_finished();"
               return
             end
             #Item.split_items(params[:split_items_hash], @order) if params[:split_items_hash]
@@ -170,7 +170,7 @@ class ApplicationController < ActionController::Base
       when 'table'
         @order = get_order
         if @order.nil?
-          render :js => "alert('This order is already finished');"
+          render :js => "order_already_finished();"
           return
         end
         case params['jsaction']

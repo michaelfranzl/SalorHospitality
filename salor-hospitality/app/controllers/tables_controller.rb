@@ -54,12 +54,18 @@ class TablesController < ApplicationController
   def show
     @table = get_model
     render :nothing => true and return unless @table
-    @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])
+
     if params[:order_id] and not params[:order_id].empty?
       # route directly to the order form, even when there are 2 open orders. this is called from the room view, or from the invoice view when going back to the table view
-      @order = @current_vendor.orders.existing.where(:finished => false).find_by_id(params[:order_id])
-      render 'orders/render_order_form' and return
+      @order = @current_vendor.orders.existing.find_by_id(params[:order_id])
+      if @order.finished == true
+        render :js => "order_already_finished();"
+      else
+        render 'orders/render_order_form' and return
+      end
+      
     else
+      @orders = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:id])
       if @orders.size > 1
         render_invoice_form(@table) and return
       else

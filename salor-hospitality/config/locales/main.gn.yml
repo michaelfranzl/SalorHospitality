@@ -856,6 +856,7 @@ gn:
       new_user: Neuer Benutzer
       select_with_ctrl_key: Wählen oder abwählen mit [Strg] + linke Maustaste
   various:
+    already_finished_warning: Diese Bestellung wurde bereits von jemand anderem abgeschlossen.
     attempt: Versuch
     begin: Anfang
     cancel: Abbrechen

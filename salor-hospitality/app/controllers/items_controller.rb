@@ -26,6 +26,12 @@ class ItemsController < ApplicationController
     if params['split_items_hash']
       order = @current_vendor.orders.existing.find_by_id(params[:order_id])
       render :nothing => true and return unless order
+      
+      if order.finished == true
+        render :js => "order_already_finished();"
+        return
+      end
+      
       Item.split_items(params['split_items_hash'], order)
       table = order.table
       render_invoice_form(table)

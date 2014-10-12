@@ -67,7 +67,10 @@ function _push(object) {
 }
 
 
-
+function order_already_finished() {
+  alert(i18n.already_finished_warning);
+  route("tables");
+}
 
 
 

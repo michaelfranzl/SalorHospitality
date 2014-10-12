@@ -59,7 +59,8 @@ module OrdersHelper
       :no_connection => escape_javascript(I18n.t('various.no_connection', :locale => @locale)),
       :server_error_short => escape_javascript(I18n.t('various.server_error_short', :locale => @locale)),
       :your_shift_has_ended => escape_javascript(I18n.t('various.your_shift_has_ended', :locale => @locale)),
-      :double_submission_warning => escape_javascript(I18n.t('various.double_submission_warning'))
+      :double_submission_warning => escape_javascript(I18n.t('various.double_submission_warning')),
+      :already_finished_warning => escape_javascript(I18n.t('various.already_finished_warning')),
     }
     return i18n.to_json
   end
