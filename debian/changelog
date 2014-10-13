@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.61) wheezy; urgency=low
+
+  * fix for mass_assign_tax
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 13 Oct 2014 13:10:56 +0200
+
 salor-hospitality (4.1.4.60) wheezy; urgency=low
 
   * updated translations
