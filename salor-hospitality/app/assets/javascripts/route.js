@@ -133,7 +133,6 @@ function route(target, model_id, action, options) {
       
     } else if (action == 'specific_order') {
       switch_to_table();
-      unloadify_order_buttons();
       $.ajax({
         type: 'GET',
         url: '/tables/' + model_id,
@@ -141,6 +140,7 @@ function route(target, model_id, action, options) {
         timeout: 15000,
         cache: false,
         success: function() {
+          unloadify_order_buttons();
           render_items();
         }
       }); //this just fetches items_json and a few other state variables
@@ -154,7 +154,6 @@ function route(target, model_id, action, options) {
     } else {
       // regular click on a table from main view
       switch_to_table();
-      unloadify_order_buttons();
       get_table_show(model_id);
     }
     

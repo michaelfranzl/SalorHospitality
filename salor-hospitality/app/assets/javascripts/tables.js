@@ -20,6 +20,7 @@ function get_table_show(table_id) {
     timeout: 7000,
     cache: false,
     complete: function(data,status) {
+      unloadify_order_buttons();
       if (status == 'timeout') {
         if ( get_table_show_retry ) {
           $('#order_info').html(i18n.no_connection_retrying);
