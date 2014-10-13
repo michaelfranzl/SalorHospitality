@@ -163,7 +163,6 @@ class Order < ActiveRecord::Base
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
-      raise "Could not save item in Order.create_new_item"
       success = false
     end
     i.create_option_items_from_ids p[1][:i]
@@ -177,7 +176,6 @@ class Order < ActiveRecord::Base
       else
         ActiveRecord::Base.logger.info "[TECHNICIAN] #{ message }"
       end
-      raise "Could not save item in Order.create_new_item"
       success = false
     end
     i.hide(self.user_id) if i.hidden
