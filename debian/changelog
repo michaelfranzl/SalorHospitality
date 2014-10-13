@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.63) wheezy; urgency=low
+
+  * loadify order buttons when visiting tables to prevent race conditions
+  * increase get_table_show timeout to 15 seconds
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 13 Oct 2014 20:57:38 +0200
+
 salor-hospitality (4.1.4.62) wheezy; urgency=low
 
   * removed raise statements
