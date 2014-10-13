@@ -151,12 +151,16 @@ class Item < ActiveRecord::Base
       }
       
       self.save! if self.new_record? # we need an id for the next step
-      tax_item = TaxItem.existing.where(
+      
+      self.tax_items.update_all :hidden => true, :hidden_at => Time.now, :hidden_by => -8
+      
+      # see if we can re-use a TaxItem
+      tax_item = TaxItem.where(
         :vendor_id => self.vendor_id,
         :company_id => self.company_id,
         :item_id => self.id,
         :tax_id => tax.id,
-        :order_id => self.order_id).first
+        :order_id => self.order_id).last
       
       # TaxItem creation
       if tax_item
@@ -166,7 +170,10 @@ class Item < ActiveRecord::Base
           :tax => tax_sum,
           :letter => tax.letter,
           :name => tax.name,
-          :percent => tax.percent
+          :percent => tax.percent,
+          :hidden => nil,
+          :hidden_at => nil,
+          :hidden_by => nil,
         )
       else
         TaxItem.create(

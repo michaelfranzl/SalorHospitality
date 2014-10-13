@@ -104,7 +104,7 @@ class ApplicationController < ActionController::Base
             @order.items.existing.each do |item|
               item.calculate_taxes([tax])
             end
-            #@order.calculate_totals
+            @order.calculate_totals
             render_invoice_form(@order.table) # called from outside the static route() function, so the server has to render dynamically via .js.erb depending on the models.
           #----------jsaction----------
           when 'change_cost_center'
