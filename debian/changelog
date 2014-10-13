@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.64) wheezy; urgency=low
+
+  * made empty lines on top of tickets configurable, default is 5 the old value
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 13 Oct 2014 21:29:57 +0200
+
 salor-hospitality (4.1.4.63) wheezy; urgency=low
 
   * loadify order buttons when visiting tables to prevent race conditions
