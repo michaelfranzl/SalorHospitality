@@ -116,8 +116,8 @@ cn:
         price: 价格
         usage: 运用
       role:
-        name: 名称
         hidden: delete
+        name: 名称
         weight: Level
       room_price:
         base_price: 底价
@@ -227,6 +227,7 @@ cn:
         update_resources_interval: 更新离线数据库
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -855,6 +856,7 @@ cn:
       new_user: 新用户
       select_with_ctrl_key: 选择或以[Ctrl]+滑鼠左键取消选择
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: 尝试
     begin: 开始
     cancel: 取消
@@ -915,7 +917,6 @@ cn:
     waiter_was_requested: 你已呼叫服务员。请稍候，我们将很快过来。
     workstation_view: 工作站视图
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully saved

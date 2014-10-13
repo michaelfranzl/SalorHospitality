@@ -58,6 +58,9 @@
           = vendor_form.text_field :time_offset, :size => 2
           %span.display_keyboard{ :id => "vendor_time_offset_display_keyboard" }
           %br
+          = vendor_form.label :ticket_space_top
+          = vendor_form.text_field :ticket_space_top, :size => 2
+          %br
           - if @current_company.mode == 'local'
             = vendor_form.label :update_tables_interval
             = vendor_form.text_field :update_tables_interval, :size => 2
@@ -95,25 +98,25 @@
       %td
         - if @current_company.mode == 'local' or @current_user.role.weight.zero?
           = vendor_form.check_box :enable_technician_emails
-          = vendor_form.label :enable_technician_emails
+          = vendor_form.label :enable_technician_emails, :style => "width: 350px"
           %br
         = vendor_form.check_box :use_order_numbers
-        = vendor_form.label :use_order_numbers
+        = vendor_form.label :use_order_numbers, :style => "width: 350px"
         %br
         = vendor_form.check_box :ticket_wide_font
-        = vendor_form.label :ticket_wide_font
+        = vendor_form.label :ticket_wide_font, :style => "width: 350px"
         %br
         = vendor_form.check_box :ticket_tall_font
-        = vendor_form.label :ticket_tall_font
+        = vendor_form.label :ticket_tall_font, :style => "width: 350px"
         %br
         = vendor_form.check_box :ticket_item_separator
-        = vendor_form.label :ticket_item_separator
+        = vendor_form.label :ticket_item_separator, :style => "width: 350px"
         %br
         = vendor_form.check_box :ticket_display_time_order
-        = vendor_form.label :ticket_display_time_order
+        = vendor_form.label :ticket_display_time_order, :style => "width: 350px"
         %br
         = vendor_form.check_box :history_print
-        = vendor_form.label :history_print, :class => 'wide'
+        = vendor_form.label :history_print, :style => "width: 350px"
         - if @current_user.role.weight == 0
           %br
           = vendor_form.check_box :remote_orders

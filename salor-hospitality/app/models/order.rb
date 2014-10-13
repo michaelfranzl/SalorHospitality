@@ -597,7 +597,7 @@ class Order < ActiveRecord::Base
     "\e@" +  # Initialize Printer
     "\e!" +
     fontstyle.chr +
-    "\n\n\n\n\n"
+    "\n" * vendor.ticket_space_top
 
     cut =
     "\n\n\n\n\n\n" +

@@ -116,8 +116,8 @@ hr:
         price: Varijanta cijene
         usage: uporaba
       role:
-        name: Ime
         hidden: delete
+        name: Ime
         weight: Level
       room_price:
         base_price: Osnovna cijena
@@ -227,6 +227,7 @@ hr:
         update_resources_interval: Interval ažuriranja offline baze podataka
         update_tables_interval: Interval ažuriranja stolova
         use_order_numbers: Koristi brojeve narudžbe
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Brzina prijenosa
         codepage: Kodna stranica
@@ -862,6 +863,7 @@ hr:
       select_with_ctrl_key: Označite ili ukinite označenost [Ctrl] + Lijeva tipka
         miša
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Pokušaj
     begin: Počni
     cancel: Odustani
@@ -929,7 +931,6 @@ hr:
       uskoro ćemo biti tamo za Vas.
     workstation_view: Pogled radne stanice
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Prodavač je uspješno spremljen

@@ -219,6 +219,7 @@ en:
         technician_email: Technician e-mail
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
+        ticket_space_top: Tickets space top
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
         time_offset: Time correction (hours)

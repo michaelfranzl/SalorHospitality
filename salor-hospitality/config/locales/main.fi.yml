@@ -116,8 +116,8 @@ fi:
         price: variantti hinta
         usage: käyttö
       role:
-        name: Nimi
         hidden: delete
+        name: Nimi
         weight: Level
       room_price:
         base_price: Perushinta
@@ -227,6 +227,7 @@ fi:
         update_resources_interval: Offline-tietokannan päivitysintervalli
         update_tables_interval: Pöytien päivitysintervalli
         use_order_numbers: Käytä tilausnumeroita
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: baudrate
         codepage: codepage
@@ -860,6 +861,7 @@ fi:
       new_user: Uusi käyttäjä
       select_with_ctrl_key: Valitse tai poista [Ctrl] + hiiren vasen painike kanssa
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Yrittää
     begin: Aloita
     cancel: Peruuta
@@ -925,7 +927,6 @@ fi:
       sinua pian
     workstation_view: Työasemanäkymä
     your_shift_has_ended: Työvuorosi on päättynyt. Ole hyvä ja kirjaudu ulos.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Myyntipiste tallennettu

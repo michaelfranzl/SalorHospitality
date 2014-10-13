@@ -116,8 +116,8 @@ gn:
         price: Preis
         usage: Verwendung
       role:
-        name: Name
         hidden: delete
+        name: Name
         weight: Level
       room_price:
         base_price: Grundpreis
@@ -219,6 +219,7 @@ gn:
         technician_email: Techniker E-mail
         ticket_display_time_order: Uhrzeit und Verkaufsnummer auf Ticket
         ticket_item_separator: Ticket Trennlinie
+        ticket_space_top: Tickets Leerzeilen oben
         ticket_tall_font: Ticket hohe Schrift
         ticket_wide_font: Ticket breite Schrift
         time_offset: Zeitkorrektur (Stunden)

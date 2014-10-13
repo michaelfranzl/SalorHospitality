@@ -116,8 +116,8 @@ ru:
         price: Цена варианта
         usage: использование
       role:
-        name: Название
         hidden: delete
+        name: Название
         weight: Level
       room_price:
         base_price: Базовая цена
@@ -227,6 +227,7 @@ ru:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Использовать номера заказов
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -859,6 +860,7 @@ ru:
       select_with_ctrl_key: Используйте клавишу [Ctrl] + левая кнопка мыши для выбора
         и снятия выбора
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Begin
     cancel: Отмена
@@ -925,7 +927,6 @@ ru:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully created

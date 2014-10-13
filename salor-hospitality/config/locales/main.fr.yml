@@ -116,8 +116,8 @@ fr:
         price: Prix variante
         usage: Utilisation
       role:
-        name: Nom
         hidden: delete
+        name: Nom
         weight: Level
       room_price:
         base_price: Prix de base
@@ -227,6 +227,7 @@ fr:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Utiliser numéros de commande
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -860,6 +861,7 @@ fr:
       new_user: Nouvel utilisateur
       select_with_ctrl_key: XXX Select or deselect with [Ctrl] + Left Mouse Button
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Begin
     cancel: Annuler
@@ -926,7 +928,6 @@ fr:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully created

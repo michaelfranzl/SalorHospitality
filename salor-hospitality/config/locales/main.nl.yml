@@ -116,8 +116,8 @@ nl:
         price: Prijs
         usage: gebruik
       role:
-        name: Naam
         hidden: delete
+        name: Naam
         weight: Level
       room_price:
         base_price: Basis Prijs
@@ -227,6 +227,7 @@ nl:
         update_resources_interval: Interval bijwerken offline database
         update_tables_interval: Interval bijwerken tabellen
         use_order_numbers: Gebruik volgnummers
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Code pagina
@@ -862,6 +863,7 @@ nl:
       new_user: Nieuwe Gebruiker
       select_with_ctrl_key: Selecteer of deselecteer met [Ctrl] + linker muisknop
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Poging
     begin: Begin
     cancel: Annuleren
@@ -929,7 +931,6 @@ nl:
       er zo voor U zijn.
     workstation_view: Workstation uizicht
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Verkoper is successvol bewaard

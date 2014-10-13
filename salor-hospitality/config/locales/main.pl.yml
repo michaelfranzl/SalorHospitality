@@ -116,8 +116,8 @@ pl:
         price: Cena
         usage: Zużycie
       role:
-        name: Nazwa
         hidden: delete
+        name: Nazwa
         weight: Level
       room_price:
         base_price: Cena podstawowa
@@ -227,6 +227,7 @@ pl:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Użyj liczby zamówień
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -865,6 +866,7 @@ pl:
       select_with_ctrl_key: Zaznacz lub odznacz przytrzymując [Ctrl] + Lewy klawisz
         myszy
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Początek
     cancel: Anuluj
@@ -932,7 +934,6 @@ pl:
       wysłane, prosimy o cierpliwość.
     workstation_view: Widok dla komputera stacjonarnego
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Restauracja została pomyślnie zapisana!

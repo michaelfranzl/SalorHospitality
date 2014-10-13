@@ -116,8 +116,8 @@ el:
         price: Μεταβλητή Τιμής
         usage: χρήση
       role:
-        name: Όνομα
         hidden: delete
+        name: Όνομα
         weight: Level
       room_price:
         base_price: Βασική Τιμή
@@ -227,6 +227,7 @@ el:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -862,6 +863,7 @@ el:
       select_with_ctrl_key: Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί
         του ποντικιού
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Begin
     cancel: Ακύρωση
@@ -928,7 +930,6 @@ el:
       we will be there for your shortly.
     workstation_view: Workstation view
     your_shift_has_ended: Your shift has ended. Please log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Vendor was successfully created

@@ -116,8 +116,8 @@ it:
         price: Prezzo
         usage: Utilizzo
       role:
-        name: Nome
         hidden: delete
+        name: Nome
         weight: Level
       room_price:
         base_price: Prezzo Base
@@ -227,6 +227,7 @@ it:
         update_resources_interval: Intervallo Aggiornamento Database Offline
         update_tables_interval: Intervallo Aggiornamento Tavoli
         use_order_numbers: Usa Numeri Ordine
+        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -859,6 +860,7 @@ it:
       select_with_ctrl_key: Seleziona o deseleziona con [Ctrl] + Tasto Sinistro del
         mouse
   various:
+    already_finished_warning: This order has already been completed by someone else.
     attempt: Tentativo
     begin: Inizio
     cancel: Annulla
@@ -926,7 +928,6 @@ it:
       presto.
     workstation_view: Vista workstation
     your_shift_has_ended: Il tuo Turno è finito. Per cortesia fai log out.
-    already_finished_warning: This order has already been completed by someone else.
   vendors:
     create:
       success: Venditore è stato creato con successo

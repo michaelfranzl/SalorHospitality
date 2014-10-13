@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123124508) do
+ActiveRecord::Schema.define(:version => 20141013192334) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1207,6 +1207,7 @@ ActiveRecord::Schema.define(:version => 20140123124508) do
     t.boolean  "auth"
     t.string   "domain"
     t.string   "subdomain"
+    t.integer  "ticket_space_top",                                :default => 5
   end
 
 end
