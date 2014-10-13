@@ -17,7 +17,7 @@ function get_table_show(table_id) {
   $.ajax({
     type: 'GET',
     url: '/tables/' + table_id,
-    timeout: 7000,
+    timeout: 15000,
     cache: false,
     complete: function(data,status) {
       unloadify_order_buttons();
