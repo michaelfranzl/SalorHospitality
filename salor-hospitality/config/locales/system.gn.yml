@@ -239,7 +239,7 @@ gn:
   time:
     formats:
       default: "%a, %d. %b. %Y, %H:%M:%S %z"
-      short: "%d. %b. %y  %y %H:%M"
+      short: "%d. %b. %y  %H:%M"
       long: "%d. %B %Y %H:%M:%S"
       datetime_iso: "%Y-%m-%d %H:%M:%S"
       datetime_iso2: "%Y%m%dT%H%M%S"
