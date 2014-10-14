@@ -17,7 +17,7 @@
     %tr
       %td
         %span.button= link_to("#{ o.nr }", order_path(o))
-      %td= l o.finished_at, :format => :short
+      %td= l o.finished_at, :format => :datetime_iso
       %td
         %b= number_to_currency o.sum
       %td= o.user.login
