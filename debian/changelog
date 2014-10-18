@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.65) wheezy; urgency=medium
+
+  * iso timestamp for last orders list
+  * fixed short time formatting
+
+ -- Michael Franzl <michael@michael-debian>  Sat, 18 Oct 2014 12:37:16 +0200
+
 salor-hospitality (4.1.4.64) wheezy; urgency=low
 
   * made empty lines on top of tickets configurable, default is 5 the old value
