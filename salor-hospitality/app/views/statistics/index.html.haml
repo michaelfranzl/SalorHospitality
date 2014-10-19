@@ -27,15 +27,19 @@
         = options_from_collection_for_select(@users, :id, :login, selected_id)
         
     %hr
-    %span.button{ :onclick => 'statistics_submit(false)'}= t('various.display')
+    = image_tag 'ajax-loader2.gif', :id => 'progress', :style => "display: none"
+    %span.button#stat_displaybutton{ :onclick => 'statistics_submit(false)'}= t('various.display')
     - if @current_vendor.vendor_printers.existing.any?
-      %span.button{ :onclick => 'statistics_submit(true)' }= t('various.print')
+      %span.button#stat_printbutton{ :onclick => 'statistics_submit(true)' }= t('various.print')
 
   - unless params[:statistics_type].nil? or params[:statistics_type].empty?
     = render :partial => params[:statistics_type] 
 
 :javascript
   function statistics_submit(print) {
+    $("#stat_displaybutton").hide();
+    $("#stat_printbutton").hide();
+    $("#progress").show();
     $('#print').val(print);
     $('#statisticform').submit();
   }
