@@ -108,6 +108,7 @@ class StatisticsController < ApplicationController
         @data[a.id] = {
           :article_name => a.name,
           :quantity_name => "",
+          :full_name => a.name,
           :tax => a.taxes.first.name,
           :category => a.category.name,
           :count => items.sum(:count).round(2),
@@ -127,12 +128,14 @@ class StatisticsController < ApplicationController
         @data[a.id] = {
           :article_name => a.name,
           :quantity_name => "#{ q.prefix } #{ q.postfix }",
+          :full_name => "#{ q.prefix } #{ a.name } #{ q.postfix }",
           :tax => a.taxes.first.name,
           :category => a.category.name,
           :count => items.sum(:count).round(2),
           :sum => items.sum(:sum).round(2)
         }
       end
+      params[:sortby] ||= "article_name"
       @data = @data.sort_by do |id, data|
         data[params[:sortby].to_sym]
       end

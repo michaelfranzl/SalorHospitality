@@ -1,12 +1,8 @@
 %label.wide{ :for => "sortby" }= t ".sort_by"
 %br
-%select#sortby{ :name => "sortby", :onchange => "statistics_submit();" }
-  %option{ :value => "article_name" }= t ".article_name"
-  %option{ :value => "quantity_name" }= t ".quantity_name"
-  %option{ :value => "tax" }= t ".tax"
-  %option{ :value => "category" }= t ".category"
-  %option{ :value => "count" }= t ".count"
-  %option{ :value => "sum" }= t ".sum"
+
+= select_tag "sortby", options_for_select([[t(".article_name"), "article_name"], [t(".quantity_name"), "quantity_name"], [t(".tax"), "tax"], [t(".category"), "category"], [t(".count"), "count"], [t(".sum"), "sum"]], params[:sortby]), :onchange => "statistics_submit();"
+
 
 %table.settlements.statistics
   %tr

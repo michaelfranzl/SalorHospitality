@@ -4,18 +4,9 @@
 <%= I18n.t('various.sold_quantities') %>
 
 <%= "\e!\x00" %>
-<% @articles.each do |article| %>
-<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :settlement_id => @sids, :cost_center_id => @csids, :user_id => @uids).sum(:count) %>
-<% total = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :settlement_id => @sids, :cost_center_id => @csids, :user_id => @uids).sum(:sum) %>
-<% next if sold_quantity.zero? %>
-<%= "%23.23s %s %7.2f %5i\n" % [article.name, @friendly_unit, total, sold_quantity] %>
+<% @data.each do |id, data| %>
+<% next if data[:count].zero? %>
+<%= "%23.23s %s %7.2f %5i\n" % [data[:full_name], @friendly_unit, data[:sum], data[:count]] %>
 <% end %>
 
-<% @quantities.each do |quantity| %>
-<% sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :settlement_id => @sids, :cost_center_id => @csids, :user_id => @uids).sum(:count) %>
-<% next if sold_quantity.zero? %>
-<% total = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :settlement_id => @sids, :cost_center_id => @csids, :user_id => @uids).sum(:sum) %>
-<% next if sold_quantity.zero? %>
-<%= "%23.23s %s %7.2f %5i\n" % ["#{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }", @friendly_unit, total, sold_quantity] %>
-<% end %>
 <%= "\xc4" * 42 %>
