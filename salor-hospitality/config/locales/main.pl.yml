@@ -219,6 +219,7 @@ pl:
         technician_email: Technician e-mail
         ticket_display_time_order: Czas i numer rachunku na paragonie
         ticket_item_separator: Separuj linią
+        ticket_space_top: Tickets space top
         ticket_tall_font: Wyskokość czcionki
         ticket_wide_font: Szerokość czcionki
         time_offset: Korekta czasu (w godzinach)
@@ -227,7 +228,6 @@ pl:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Użyj liczby zamówień
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ pl:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Trzeba podać Prefix oraz Postfix
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Pozycja Menu
@@ -724,7 +725,6 @@ pl:
       split_items: Łączenie pozycji
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -732,7 +732,6 @@ pl:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: Statistics show Categories
-      statistics_hour: Statistics show Hours
       statistics_payment_method: Statistics show Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
@@ -827,6 +826,9 @@ pl:
       hour: Hour
       limit_by: Limit by
       query: Query
+      weekday: Weekday
+    statistics_weekday:
+      public_holidays: Public holidays
       weekday: Weekday
   stocks:
     new:

@@ -219,6 +219,7 @@ vi:
         technician_email: Technician e-mail
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
+        ticket_space_top: Tickets space top
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
         time_offset: Time correction (hours)
@@ -227,7 +228,6 @@ vi:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Use order numbers
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ vi:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Article
@@ -720,7 +721,6 @@ vi:
       split_items: Split items
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -728,7 +728,6 @@ vi:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: Statistics show Categories
-      statistics_hour: Statistics show Hours
       statistics_payment_method: Statistics show Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
@@ -821,6 +820,9 @@ vi:
       hour: Hour
       limit_by: Limit by
       query: Query
+      weekday: Weekday
+    statistics_weekday:
+      public_holidays: Public holidays
       weekday: Weekday
   stocks:
     new:

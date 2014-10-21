@@ -219,6 +219,7 @@ cn:
         technician_email: 技术人员电子邮件
         ticket_display_time_order: Time and invoice number on ticket
         ticket_item_separator: Ticket Separation Line
+        ticket_space_top: Tickets space top
         ticket_tall_font: Ticket tall font
         ticket_wide_font: Ticket wide font
         time_offset: 时间更正（小时）
@@ -227,7 +228,6 @@ cn:
         update_resources_interval: 更新离线数据库
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ cn:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: 物品
@@ -718,7 +719,6 @@ cn:
       split_items: 拆分项目
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -726,7 +726,6 @@ cn:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: 统计类别
-      statistics_hour: 统计时数
       statistics_payment_method: 统计支付方法
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
@@ -819,6 +818,9 @@ cn:
       limit_by: Limit by
       query: Query
       weekday: 工作日
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edit Stock

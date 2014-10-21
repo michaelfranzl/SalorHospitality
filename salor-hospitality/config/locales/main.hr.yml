@@ -219,6 +219,7 @@ hr:
         technician_email: E-mail tehničara
         ticket_display_time_order: Vrijeme i broj fakture na karti narudžbe
         ticket_item_separator: Separacijska linija karte narudžbe
+        ticket_space_top: Tickets space top
         ticket_tall_font: Visok font karte narudžbe
         ticket_wide_font: Širok font karte narudžbe
         time_offset: Korekcija vremena (sati)
@@ -227,7 +228,6 @@ hr:
         update_resources_interval: Interval ažuriranja offline baze podataka
         update_tables_interval: Interval ažuriranja stolova
         use_order_numbers: Koristi brojeve narudžbe
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Brzina prijenosa
         codepage: Kodna stranica
@@ -242,6 +242,7 @@ hr:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Mora se dati prefiks ili postfiks
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Artikl
@@ -722,7 +723,6 @@ hr:
       split_items: Podijeli artikle
       statistics:
         statistics_category: Kategorije
-        statistics_hour: Sati
         statistics_payment_method: Načini plaćanja
         statistics_sold_quantities: Prodane količine
         statistics_statistic_category: Statističke kategorije
@@ -730,7 +730,6 @@ hr:
         statistics_tax: Porezi
         statistics_weekday: Radni dani
       statistics_category: Statistika pokaži kategorije
-      statistics_hour: Statistika pokaži sate
       statistics_payment_method: Statistika pokaži načine plaćanja
       statistics_sold_quantities: Statistika pokaži prodane količine
       statistics_statistic_category: Statistika pokaži Statističke kategorije
@@ -825,6 +824,9 @@ hr:
       limit_by: Ograniči prema
       query: Upit
       weekday: Radni dan
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Uredi zalihu

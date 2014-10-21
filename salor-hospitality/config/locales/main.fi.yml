@@ -219,6 +219,7 @@ fi:
         technician_email: Teknikko sähköposti
         ticket_display_time_order: Lisää aika ja laskun nro lappuun
         ticket_item_separator: Lappun erittelyviiva
+        ticket_space_top: Tickets space top
         ticket_tall_font: Lappu pitkä fontti
         ticket_wide_font: Lappu leveä fontti
         time_offset: Aikakorjaus (tuntia)
@@ -227,7 +228,6 @@ fi:
         update_resources_interval: Offline-tietokannan päivitysintervalli
         update_tables_interval: Pöytien päivitysintervalli
         use_order_numbers: Käytä tilausnumeroita
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: baudrate
         codepage: codepage
@@ -242,6 +242,7 @@ fi:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Artikkeli
@@ -721,7 +722,6 @@ fi:
       split_items: Erittele nimikkeet
       statistics:
         statistics_category: Kategoriat
-        statistics_hour: Tunnit
         statistics_payment_method: Maksutavat
         statistics_sold_quantities: Myydyt määrät
         statistics_statistic_category: Tilaston kategoriat
@@ -729,7 +729,6 @@ fi:
         statistics_tax: Verot
         statistics_weekday: Arkisin
       statistics_category: Kategoriat mukana tilastossa
-      statistics_hour: Tunnit mukana tilastossa
       statistics_payment_method: Maksutavat mukana tilastossa
       statistics_sold_quantities: Myydyt määrät mukana tilastossa
       statistics_statistic_category: Tilaston Kategoriat mukana tilastossa
@@ -824,6 +823,9 @@ fi:
       limit_by: Rajoita
       query: Kysely
       weekday: Arkipäivä
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Muokkaa varasto

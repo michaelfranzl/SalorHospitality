@@ -241,8 +241,8 @@ gn:
         ticket_ad: Ticket Werb.
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
         invalid_iso_date_formatting: Datum muss im Format YYYY-MM-DD eingegeben werden
+        prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
       article:
         one: Artikel
@@ -722,7 +722,6 @@ gn:
       split_items: Rechnung splitten
       statistics:
         statistics_category: Kategorien
-        statistics_hour: Stunden
         statistics_payment_method: Zahlungsmethoden
         statistics_sold_quantities: Verkaufsmengen
         statistics_statistic_category: Statistik-Kategorien
@@ -730,7 +729,6 @@ gn:
         statistics_tax: Steuern
         statistics_weekday: Wochentage
       statistics_category: Statistik zeige Kategorie
-      statistics_hour: Statistik zeige Stunde
       statistics_payment_method: Statistik zeige Zahlungsmethode
       statistics_sold_quantities: Statistik zeige Verkaufszahlen
       statistics_statistic_category: Statistik zeige Statistik-Kategorien
@@ -820,14 +818,14 @@ gn:
       edit_statistic_category: Statistik-Kategorie bearbeiten
       new_statistic_category: Neue Statistik-Kategorie
   statistics:
-    statistics_weekday:
-      weekday: Tag
-      public_holidays: Feiertage
     index:
       hour: Stunde
       limit_by: Einschränken
       query: Abfrage
       weekday: Wochentag
+    statistics_weekday:
+      public_holidays: Feiertage
+      weekday: Tag
   stocks:
     new:
       edit_stock: Lagerartikel bearbeiten

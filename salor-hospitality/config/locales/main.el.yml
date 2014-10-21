@@ -219,6 +219,7 @@ el:
         technician_email: Technician e-mail
         ticket_display_time_order: Χρόνος και αριθμός τιμολογίου στο απόκομμα
         ticket_item_separator: Διαχωριστική γραμμή αποκόμματος
+        ticket_space_top: Tickets space top
         ticket_tall_font: Ψηλή γραμματοσειρά αποκόμματος
         ticket_wide_font: Φαρδιά γραμματοσειρά αποκόμματος
         time_offset: Διόρθωση χρόνου (hours)
@@ -227,7 +228,6 @@ el:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ el:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Αντικείμενο
@@ -721,7 +722,6 @@ el:
       split_items: Μοιράστε αντικείμενα
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -729,7 +729,6 @@ el:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: Statistics Category
-      statistics_hour: Statistics Hour
       statistics_payment_method: Statistics Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
@@ -824,6 +823,9 @@ el:
       hour: Hour
       limit_by: Limit by
       query: Query
+      weekday: Weekday
+    statistics_weekday:
+      public_holidays: Public holidays
       weekday: Weekday
   stocks:
     new:

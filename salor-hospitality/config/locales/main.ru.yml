@@ -219,6 +219,7 @@ ru:
         technician_email: Technician e-mail
         ticket_display_time_order: Время и номер счета на заказ-наряде
         ticket_item_separator: Линия разделения заказ-наряда
+        ticket_space_top: Tickets space top
         ticket_tall_font: Высокий шрифт для заказ-наряда
         ticket_wide_font: Широкий шрифт для заказ-наряда
         time_offset: Коррекция времени (часы)
@@ -227,7 +228,6 @@ ru:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Использовать номера заказов
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ ru:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Нужно указать префикс или постфикс
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Блюдо
@@ -720,7 +721,6 @@ ru:
       split_items: Разбивает позиции
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -728,7 +728,6 @@ ru:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: Statistics Category
-      statistics_hour: Statistics Hour
       statistics_payment_method: Statistics Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
@@ -821,6 +820,9 @@ ru:
       hour: Hour
       limit_by: Limit by
       query: Query
+      weekday: Weekday
+    statistics_weekday:
+      public_holidays: Public holidays
       weekday: Weekday
   stocks:
     new:

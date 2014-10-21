@@ -219,6 +219,7 @@ it:
         technician_email: e-mail tecnico
         ticket_display_time_order: Ora e numero fattura nello scontrino
         ticket_item_separator: Linea di Separazione scontrino
+        ticket_space_top: Tickets space top
         ticket_tall_font: Altezza font scontrino
         ticket_wide_font: Larghezza font scontrino
         time_offset: Correzione dell'ora (ore)
@@ -227,7 +228,6 @@ it:
         update_resources_interval: Intervallo Aggiornamento Database Offline
         update_tables_interval: Intervallo Aggiornamento Tavoli
         use_order_numbers: Usa Numeri Ordine
-        ticket_space_top: Tickets space top
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -242,6 +242,7 @@ it:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Devono essere impostati Prefisso e Postfisso
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Articolo
@@ -719,7 +720,6 @@ it:
       split_items: Separa articoli
       statistics:
         statistics_category: Categorie
-        statistics_hour: Ore
         statistics_payment_method: Metodi di pagamento
         statistics_sold_quantities: Quantità vendute
         statistics_statistic_category: Statistica categorie
@@ -727,7 +727,6 @@ it:
         statistics_tax: Tasse
         statistics_weekday: Giorni lavorativi
       statistics_category: Statistiche categoria
-      statistics_hour: Statistiche Ora
       statistics_payment_method: Statistiche metodi pagamento
       statistics_sold_quantities: Statistiche quantità vendute
       statistics_statistic_category: Statistiche categoria
@@ -822,6 +821,9 @@ it:
       limit_by: Limite per
       query: Interrogazione
       weekday: Giorno lavorativo
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edita magazzino
