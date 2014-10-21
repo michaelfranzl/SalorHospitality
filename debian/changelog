@@ -1,3 +1,16 @@
+salor-hospitality (4.1.4.66) wheezy; urgency=medium
+
+  * loader animation for statistics display
+  * onclick instead of mouseup for selecting articles and highlighting buttons
+  * weekdays statistics now also shows hours, and lists public holidays as a separate day
+  * removed statistics for hours since now included in weekday statistics; code formatting improvement;
+  * updated translations
+  * statistics for sold quantities are now sortable
+  * don't show sales statistcs with count of zero; only consider public holidays within selected time window; print statistics bars
+  * maximum width of items table on mobile devices 640px
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 21 Oct 2014 13:47:56 +0200
+
 salor-hospitality (4.1.4.65) wheezy; urgency=medium
 
   * iso timestamp for last orders list
