@@ -55,14 +55,6 @@ class StatisticsController < ApplicationController
     daynames = I18n.backend.send(:translations)[I18n.locale][:date][:day_names]
     @daynames = daynames.rotate if daynames
     #@weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
-
-    #sales quantities
-    if params[:statistics_type] == "statistics_sold_quantities"
-      @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-      @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
-      @articles = Article.where(:id => @item_article_ids).order(:name)
-      @quantities = Quantity.joins(:article).where(:id => @item_quantity_ids).order("articles.tax_id")
-    end
     
 
     @current_vendor.public_holidays = params[:public_holidays] if params[:public_holidays]
@@ -95,6 +87,53 @@ class StatisticsController < ApplicationController
       @sids -= @sids_public_holidays
     end
     
+    # data gathering for sales quantities
+    if params[:statistics_type] == "statistics_sold_quantities"
+      @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+      @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
+      @articles = Article.where(:id => @item_article_ids).order(:name)
+      @quantities = Quantity.joins(:article).where(:id => @item_quantity_ids).order("articles.tax_id ASC")
+      @data = {}
+      @articles.each do |a|
+        items = @current_vendor.items.existing.where(
+          :refunded => nil,
+          :article_id => a.id,
+          :settlement_id => @sids,
+          :user_id => @uids,
+          :cost_center_id => @csids
+        )
+        @data[a.id] = {
+          :article_name => a.name,
+          :quantity_name => "",
+          :tax => a.taxes.first.name,
+          :category => a.category.name,
+          :count => items.sum(:count).round(2),
+          :sum => items.sum(:sum).round(2)
+        }
+      end
+      
+      @quantities.each do |q|
+        a = q.article
+        items = @current_vendor.items.existing.where(
+          :refunded => nil,
+          :quantity_id => q.id,
+          :settlement_id => @sids,
+          :user_id => @uids,
+          :cost_center_id => @csids
+        )
+        @data[a.id] = {
+          :article_name => a.name,
+          :quantity_name => "#{ q.prefix } #{ q.postfix }",
+          :tax => a.taxes.first.name,
+          :category => a.category.name,
+          :count => items.sum(:count).round(2),
+          :sum => items.sum(:sum).round(2)
+        }
+      end
+      @data = @data.sort_by do |id, data|
+        data[params[:sortby].to_sym]
+      end
+    end
   
     
     if params[:print] == 'true'

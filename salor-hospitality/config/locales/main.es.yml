@@ -241,8 +241,8 @@ es:
         ticket_ad: Ticket Ad.
     errors:
       messages:
-        prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
+        prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
     models:
       article:
         one: Artículo
@@ -825,6 +825,14 @@ es:
     statistics_weekday:
       public_holidays: Public holidays
       weekday: Weekday
+    statistics_sold_quantities:
+      article_name: Article name
+      category: Category
+      count: Sales count
+      quantity_name: Quantity name
+      sort_by: Sort by
+      sum: Revenue
+      tax: Tax
   stocks:
     new:
       edit_stock: Editar stock

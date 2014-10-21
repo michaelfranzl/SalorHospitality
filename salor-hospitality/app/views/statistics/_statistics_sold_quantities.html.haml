@@ -1,31 +1,27 @@
+%label.wide{ :for => "sortby" }= t ".sort_by"
+%br
+%select#sortby{ :name => "sortby", :onchange => "statistics_submit();" }
+  %option{ :value => "article_name" }= t ".article_name"
+  %option{ :value => "quantity_name" }= t ".quantity_name"
+  %option{ :value => "tax" }= t ".tax"
+  %option{ :value => "category" }= t ".category"
+  %option{ :value => "count" }= t ".count"
+  %option{ :value => "sum" }= t ".sum"
+
 %table.settlements.statistics
   %tr
-    %th.bb= Article.model_name.human
-    %th.bb= t :tax
-    %th.bb= t :count
-    %th.bb= t :sum
-  - @articles.each do |article|
-    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:count)
-    - total = @current_vendor.items.existing.where(:refunded => nil, :article_id => article.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:sum)
-    - next if sold_quantity.zero?
+    %th.bb
+      %a= t :article_name
+    %th.bb= t ".quantity_name"
+    %th.bb= t ".tax"
+    %th.bb= t ".category"
+    %th.bb= t ".count"
+    %th.bb= t ".sum"
+  - @data.each do |id, data|
     %tr
-      %td= article.name
-      %td= article.taxes.first.name
-      %td= sold_quantity
-      %td= number_to_currency total
-      
-%table.settlements.statistics
-  %tr
-    %th.bb= Quantity.model_name.human
-    %th.bb= t :tax
-    %th.bb= t :count
-    %th.bb= t :sum
-  - @quantities.each do |quantity|
-    - sold_quantity = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:count)
-    - total = @current_vendor.items.existing.where(:refunded => nil, :quantity_id => quantity.id, :settlement_id => @sids, :user_id => @uids, :cost_center_id => @csids).sum(:sum)
-    - next if sold_quantity.zero?
-    %tr
-      %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
-      %td= quantity.article.taxes.first.name
-      %td= sold_quantity
-      %td= number_to_currency total
+      %td= data[:article_name]
+      %td= data[:quantity_name]
+      %td= data[:tax]
+      %td= data[:category]
+      %td= data[:count]
+      %td= data[:sum]

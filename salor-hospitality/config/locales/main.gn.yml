@@ -823,6 +823,14 @@ gn:
       limit_by: Einschränken
       query: Abfrage
       weekday: Wochentag
+    statistics_sold_quantities:
+      article_name: Name Artikel
+      category: Kategorie
+      count: Verkaufsmenge
+      quantity_name: Name Variante
+      sort_by: Sortieren nach
+      sum: Umsatz
+      tax: Steuerklasse
     statistics_weekday:
       public_holidays: Feiertage
       weekday: Tag

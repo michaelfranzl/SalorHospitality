@@ -42,4 +42,8 @@ class Quantity < ActiveRecord::Base
   def set_article_name
     write_attribute(:article_name, self.article.name)
   end
+  
+  def full_name
+    "#{ self.prefix } #{ self.article.name } #{ self.postfix }"
+  end
 end

@@ -822,6 +822,14 @@ en:
       limit_by: Limit by
       query: Query
       weekday: Weekday
+    statistics_sold_quantities:
+      article_name: Article name
+      category: Category
+      count: Sales count
+      quantity_name: Quantity name
+      sort_by: Sort by
+      sum: Revenue
+      tax: Tax
     statistics_weekday:
       public_holidays: Public holidays
       weekday: Weekday
