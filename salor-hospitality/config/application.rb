@@ -221,7 +221,6 @@ module SalorHospitality
       'manage_statistics',
       'manage_statistics_hotel',
       'statistics_weekday',
-      'statistics_hour',
       'statistics_table',
       'statistics_payment_method',
       'statistics_category',

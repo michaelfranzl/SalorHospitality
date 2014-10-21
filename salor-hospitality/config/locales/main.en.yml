@@ -721,7 +721,6 @@ en:
       split_items: Split items
       statistics:
         statistics_category: Categories
-        statistics_hour: Hours
         statistics_payment_method: Payment Methods
         statistics_sold_quantities: Sold quantities
         statistics_statistic_category: Statistic Categories
@@ -729,7 +728,6 @@ en:
         statistics_tax: Taxes
         statistics_weekday: Weekdays
       statistics_category: Statistics show Categories
-      statistics_hour: Statistics show Hours
       statistics_payment_method: Statistics show Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories

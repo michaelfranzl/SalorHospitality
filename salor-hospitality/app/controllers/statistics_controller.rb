@@ -21,7 +21,7 @@ class StatisticsController < ApplicationController
       [I18n.t("roles.new.statistics.#{ ps }"), ps]
     end
     
-     @from, @to = assign_from_to(params)
+    @from, @to = assign_from_to(params)
     
     #taxes
     @taxes = @current_vendor.taxes.existing
