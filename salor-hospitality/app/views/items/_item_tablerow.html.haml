@@ -1,7 +1,7 @@
 %tr{ :id => "item_DESIGNATOR", :designator => 'DESIGNATOR', :class => "item" }
-  %td{ :id => "tablerow_DESIGNATOR_count", :class => 'item_count', :onclick => "increment_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' } COUNT
+  %td{ :id => "tablerow_DESIGNATOR_count", :class => 'item_count', :onclick => "increment_item('DESIGNATOR'); highlight_button(this);" } COUNT
 
-  %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "display_configuration_of_item('DESIGNATOR');", :onmousedown => 'highlight_button(this)' }
+  %td{ :id => "tablerow_DESIGNATOR_label", :class => "item_label", :onclick => "display_configuration_of_item('DESIGNATOR'); highlight_button(this);" }
     %span LABEL
     %small
       %br
@@ -11,10 +11,10 @@
       %div{ :id => "scribe_DESIGNATOR" } SCRIBE
       %div{ :id => "optionsnames_DESIGNATOR" } OPTIONSNAMES
 
-  %td{ :id => "tablerow_DESIGNATOR_minus", :class => 'item_minus', :onclick => "decrement_item('DESIGNATOR')", :onmousedown => 'highlight_button(this)' }
+  %td{ :id => "tablerow_DESIGNATOR_minus", :class => 'item_minus', :onclick => "decrement_item('DESIGNATOR'); highlight_button(this);" }
 
   %td{ :id => "tablerow_DESIGNATOR_options", :class => 'item_options' }
-    %a{ :onmouseup => "open_options_div('DESIGNATOR');" }
+    %a{ :onclick => "open_options_div('DESIGNATOR');" }
     %div.optionsselect{ :id => "options_div_DESIGNATOR" }
       %h3= t 'activerecord.models.option.other'
       %span.done{ :onclick => "close_options_div('DESIGNATOR');", :title => "#{t('.done')}" }

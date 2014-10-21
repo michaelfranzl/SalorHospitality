@@ -219,7 +219,7 @@ function render_tables() {
       if (v.e && !(!permissions.confirmation_user && (v.cp || v.rf || v.rw))) {
         // when confirmation_user is false, this user cannot view the order if any customer requests are pending
         _set('table',v,table);
-        table.on('mousedown', function() {
+        table.on('click', function() {
           var v = _get('table',$(this));
           route('table',v.id);
         });

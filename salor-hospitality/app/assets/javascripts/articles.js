@@ -23,7 +23,7 @@ function display_articles(cat_id) {
     qcontainer.attr('id','article_' + art_id + '_quantities');
     (function() {
       var element = abutton;
-      abutton.on('mouseup', function(){
+      abutton.on('click', function(){
         highlight_button(element);
       });
     })();
