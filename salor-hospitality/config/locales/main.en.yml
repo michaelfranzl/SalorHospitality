@@ -242,6 +242,7 @@ en:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
     models:
       article:
         one: Article
@@ -818,6 +819,9 @@ en:
       edit_statistic_category: Edit Statistic-Category
       new_statistic_category: New Statistic-Category
   statistics:
+    statistics_weekday:
+      weekday: Weekday
+      public_holidays: Public holidays
     index:
       hour: Hour
       limit_by: Limit by

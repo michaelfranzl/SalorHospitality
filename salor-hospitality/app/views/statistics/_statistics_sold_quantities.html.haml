@@ -1,6 +1,7 @@
 %table.settlements.statistics
   %tr
     %th.bb= Article.model_name.human
+    %th.bb= t :tax
     %th.bb= t :count
     %th.bb= t :sum
   - @articles.each do |article|
@@ -9,12 +10,14 @@
     - next if sold_quantity.zero?
     %tr
       %td= article.name
+      %td= article.taxes.first.name
       %td= sold_quantity
       %td= number_to_currency total
       
 %table.settlements.statistics
   %tr
     %th.bb= Quantity.model_name.human
+    %th.bb= t :tax
     %th.bb= t :count
     %th.bb= t :sum
   - @quantities.each do |quantity|
@@ -23,5 +26,6 @@
     - next if sold_quantity.zero?
     %tr
       %td== #{ quantity.prefix } #{ quantity.article.name } #{ quantity.postfix }
+      %td= quantity.article.taxes.first.name
       %td= sold_quantity
       %td= number_to_currency total

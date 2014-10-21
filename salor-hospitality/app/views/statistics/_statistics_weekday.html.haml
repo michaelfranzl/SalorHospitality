@@ -1,19 +1,48 @@
+%label{ :for => "public_holidays" }= t ('.public_holidays')
+%br
+- if flash[:public_holidays_error]
+  %small.color_red= t("activerecord.errors.messages.invalid_iso_date_formatting")
+  %br
+= text_area_tag "public_holidays", @public_holidays
+
 %table.settlements.statistics
   %tr
     %th.bb= t '.weekday'
+    - 0.upto(23).each do |hour|
+      %th== #{ hour }h
     %th.bb= t :sum
     %th.bb.bar
-  - i = 0
+
+  - maximum_allhours = 0
+  - maximum_alldays = 0
   - sums = []
-  - @days.each do |day|
-    - sums[i] = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :settlement_id => @sids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
-    - i += 1
-  - maximum = sums.sort.last
-  - i = 0
-  - @days.each do |day|
+  - 0.upto(7).each do |day_id|
+    - sums[day_id] = []     #@current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :settlement_id => @sids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{i}").sum(:sum)
+    - 0.upto(23).each do |hour|
+      - if day_id == 7
+        - sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :settlement_id => @sids_public_holidays).where("HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum)
+      - else
+        - sum = @current_vendor.orders.existing.where(:paid => true, :user_id => @uids, :cost_center_id => @csids, :settlement_id => @sids).where("WEEKDAY(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{day_id} AND HOUR(DATE_ADD(finished_at, INTERVAL '#{ @current_vendor.total_utc_offset_hours }' HOUR)) = #{hour}").sum(:sum)
+      - maximum_allhours = sum if sum > maximum_allhours
+      - sums[day_id][hour] = sum.round(2)
+    - maximum_alldays = sums[day_id].sum if sums[day_id].sum > maximum_alldays
+      
+
+  - 0.upto(7).each do |day_id|
+  - next if day_id == 7 and @sids_public_holidays.blank?
     %tr
-      %td= day
-      %td= number_to_currency sums[i]
       %td
-        .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
-    - i += 1
+        - if day_id == 7 and not @sids_public_holidays.blank?
+          = t ".public_holidays"
+        - else
+          = @daynames[day_id]
+      - 0.upto(23).each do |hour|
+        - transparency = sums[day_id][hour] / maximum_allhours
+        - fontcolor = transparency > 0.6 ? "black" : "white"
+        %td{ :style => "background-color: rgba(255, 255, 255, #{ transparency }); color: #{ fontcolor }" }
+          - unless sums[day_id][hour].zero?
+            = number_with_precision sums[day_id][hour], :precision => 2
+      %td
+        %b= number_with_precision sums[day_id].sum, :precision => 2
+      %td
+        .statistics_bar{ :style => "width:#{2 + 200 * sums[day_id].sum / maximum_alldays }px" }

@@ -65,6 +65,7 @@ class Vendor < ActiveRecord::Base
   validates :update_item_lists_interval, :numericality => { :greater_than => 29 }
   validates :update_resources_interval, :numericality => { :greater_than => 101 }
   validates :automatic_printing_interval, :numericality => { :greater_than => 20 }
+  validate :public_holidays_formatting_valid
   
   after_commit :sanitize_vendor_printer_paths
   
@@ -74,6 +75,21 @@ class Vendor < ActiveRecord::Base
   accepts_nested_attributes_for :vendor_printers, :allow_destroy => true, :reject_if => proc { |attrs| attrs['name'] == '' }
 
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
+  
+    
+  def public_holidays_formatting_valid
+    return if self.public_holidays.blank?
+    
+    lines = self.public_holidays.split("\n")
+    lines.each do |l|
+      stripped_line = l.strip
+      next if l.blank?
+      if /^\d\d\d\d-\d\d-\d\d$/.match(stripped_line).nil?
+        errors.add :public_holidays, I18n.t("activerecord.errors.messages.invalid_iso_date_formatting")
+        return
+      end
+    end
+  end
   
   def identifer_present_and_ascii
     if self.identifier.blank?
@@ -142,6 +158,16 @@ class Vendor < ActiveRecord::Base
     end
   end
 
+  def public_holidays_array
+    return nil if self.public_holidays.blank?
+    array = self.public_holidays.split("\n").collect do |l|
+      l.strip
+    end
+    array.delete("")
+    array.delete(nil)
+    return array
+  end
+  
   def get_unique_model_number(model_name_singular)
     model_name_plural = model_name_singular + 's'
     return 0 if not self.send("use_#{model_name_singular}_numbers")

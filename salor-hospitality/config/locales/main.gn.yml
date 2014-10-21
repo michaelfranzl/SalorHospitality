@@ -242,6 +242,7 @@ gn:
     errors:
       messages:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
+        invalid_iso_date_formatting: Datum muss im Format YYYY-MM-DD eingegeben werden
     models:
       article:
         one: Artikel
@@ -819,6 +820,9 @@ gn:
       edit_statistic_category: Statistik-Kategorie bearbeiten
       new_statistic_category: Neue Statistik-Kategorie
   statistics:
+    statistics_weekday:
+      weekday: Tag
+      public_holidays: Feiertage
     index:
       hour: Stunde
       limit_by: Einschränken

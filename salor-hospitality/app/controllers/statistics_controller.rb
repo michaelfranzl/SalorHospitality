@@ -14,11 +14,14 @@ class StatisticsController < ApplicationController
 
   def index
     params[:type] = "" unless @current_user.role.permissions.include?(params[:type])
-    @from, @to = assign_from_to(params)
     
-    #settlements for scoping, currently not used
-    @settlements = Settlement.where(:created_at => @from..@to, :finished => true).existing
-    @sids = @settlements.collect{ |s| s.id }
+    #permitted statistics
+    permitted_statistics = @current_user.role.permissions.select{ |p| p =~ /^statistics_.*/ }
+    @permitted_statistics_for_select = permitted_statistics.collect do |ps|
+      [I18n.t("roles.new.statistics.#{ ps }"), ps]
+    end
+    
+     @from, @to = assign_from_to(params)
     
     #taxes
     @taxes = @current_vendor.taxes.existing
@@ -50,22 +53,49 @@ class StatisticsController < ApplicationController
     #days
     test = I18n.t :test # this is needed for production, otherwise the translations hash below will be empty and uninitialized
     daynames = I18n.backend.send(:translations)[I18n.locale][:date][:day_names]
-    @days = daynames.rotate if daynames
-    @weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
+    @daynames = daynames.rotate if daynames
+    #@weekday = params[:weekday].to_i if params[:weekday] and not params[:weekday].empty?
 
     #sales quantities
-    @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-    @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
-    @articles = Article.where(:id => @item_article_ids).order(:name)
-    @quantities = Quantity.where(:id => @item_quantity_ids).order(:article_name)
-    
-    
-    #permitted statistics
-    permitted_statistics = @current_user.role.permissions.select{ |p| p =~ /^statistics_.*/ }
-    @permitted_statistics_for_select = permitted_statistics.collect do |ps|
-      [I18n.t("roles.new.statistics.#{ ps }"), ps]
+    if params[:statistics_type] == "statistics_sold_quantities"
+      @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
+      @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
+      @articles = Article.where(:id => @item_article_ids).order(:name)
+      @quantities = Quantity.joins(:article).where(:id => @item_quantity_ids).order("articles.tax_id")
     end
     
+
+    @current_vendor.public_holidays = params[:public_holidays] if params[:public_holidays]
+    @current_vendor.save
+    if @current_vendor.errors.any?
+      # this will show a warning message in the view
+      flash[:public_holidays_error] = true
+      @public_holidays = params[:public_holidays]
+      return
+    end
+    @public_holidays = @current_vendor.public_holidays
+    @public_holidays ||= "#{ Time.now.year }-12-25\n#{ Time.now.year }-12-26" # example for users
+    
+    @settlements = @current_vendor.settlements.existing.where(
+      :created_at => @from..@to,
+      :finished => true
+    )
+    @sids = @settlements.collect{ |s| s.id }
+    
+    if params[:statistics_type] == "statistics_weekday" and @current_vendor.public_holidays_array
+      @sids_public_holidays = []
+      @current_vendor.public_holidays_array.each do |holiday_date|
+         settlements = @current_vendor.settlements.existing.where(
+           :created_at => Date.parse(holiday_date).beginning_of_day..Date.parse(holiday_date).end_of_day,
+           :finished => true
+         )
+         settlement_ids = settlements.collect{ |s| s.id }
+         @sids_public_holidays += settlement_ids
+      end
+      @sids -= @sids_public_holidays
+    end
+    
+  
     
     if params[:print] == 'true'
       @friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => @region)

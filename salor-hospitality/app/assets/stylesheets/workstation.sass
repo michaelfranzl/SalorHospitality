@@ -101,6 +101,7 @@ div#main
   :position relative
   :font-size 110%
   :padding 5px
+  :overflow auto
   
 div#copyright
   :font-size 80%
@@ -387,7 +388,7 @@ table.settlements
     :background-color $billgastrogrey1
     :border 1px solid $billgastrogrey2
     :text-align right
-    :padding 10px 5px
+    :padding 5px 3px
     
 div#user_logins
   :width 100%
@@ -403,11 +404,10 @@ div.limitby
   :padding 10px
   :border-radius 10px
   :float left
-  :margin 0px 0px 10px 10px
+  :margin 0px 30px 10px 10px
     
 form#statisticform
   table.statistics
-    :float left
     th.bar
       :width 200px
   
@@ -1974,4 +1974,6 @@ div.select-widget-display
     :color white
     :text-transform none
   
-  
+textarea#public_holidays
+  :width 100px
+  :height 200px

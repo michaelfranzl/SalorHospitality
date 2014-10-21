@@ -434,6 +434,8 @@ class Item < ActiveRecord::Base
       tests[8] = self.tax_items.existing.sum(:tax).round(2) == item_tax_sum.round(2)
     end
     
+    # TODO: test identity of self.tax_items attributes
+    
     0.upto(tests.size-1).each do |i|
       messages << "Item #{ self.id }: test #{i} failed." if tests[i] == false
     end
