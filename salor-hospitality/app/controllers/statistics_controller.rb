@@ -77,16 +77,19 @@ class StatisticsController < ApplicationController
     if params[:statistics_type] == "statistics_weekday" and @current_vendor.public_holidays_array
       @sids_public_holidays = []
       @current_vendor.public_holidays_array.each do |holiday_date|
-         settlements = @current_vendor.settlements.existing.where(
-           :created_at => Date.parse(holiday_date).beginning_of_day..Date.parse(holiday_date).end_of_day,
-           :finished => true
-         )
-         settlement_ids = settlements.collect{ |s| s.id }
-         @sids_public_holidays += settlement_ids
+        holiday_from = Date.parse(holiday_date).beginning_of_day
+        holiday_to = Date.parse(holiday_date).end_of_day
+        next if holiday_from < @from or holiday_from > @to # ignore holidays which are outside of the selected time window
+        settlements = @current_vendor.settlements.existing.where(
+          :created_at => holiday_from..holiday_to,
+          :finished => true
+        )
+        settlement_ids = settlements.collect{ |s| s.id }
+        @sids_public_holidays += settlement_ids
       end
       @sids -= @sids_public_holidays
     end
-    
+
     # data gathering for sales quantities
     if params[:statistics_type] == "statistics_sold_quantities"
       @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq

@@ -165,7 +165,7 @@ class Vendor < ActiveRecord::Base
     end
     array.delete("")
     array.delete(nil)
-    return array
+    return array.sort
   end
   
   def get_unique_model_number(model_name_singular)

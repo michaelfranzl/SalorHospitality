@@ -18,6 +18,7 @@
     %th.bb= t ".count"
     %th.bb= t ".sum"
   - @data.each do |id, data|
+    - next if data[:count].zero?
     %tr
       %td= data[:article_name]
       %td= data[:quantity_name]
