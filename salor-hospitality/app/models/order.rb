@@ -1119,4 +1119,11 @@ class Order < ActiveRecord::Base
       return self.customer.login if self.customer
     end
   end
+  
+  def get_history
+    string = "\n\n----------\n"
+    string += History.where(:model_type => "Table", :model_id => self.table_id, :created_at => self.created_at..(self.created_at + 2.hour)).collect{ |h| [h.created_at, h.params] }.join("\n---------------------\n")
+    string += "\n---------\n\n"
+    return string
+  end
 end
