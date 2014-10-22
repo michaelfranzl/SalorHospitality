@@ -1067,7 +1067,7 @@ class Order < ActiveRecord::Base
     tests[1] = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
 
     unless self.hidden
-      tests[2] = self.tax_sum.round(2) == self.tax_items.where(:refunded => nil).existing.sum(:tax).round(2)
+      tests[2] = self.tax_items.where(:refunded => nil).existing.sum(:tax).round(2) == self.tax_sum.round(2)
       tests[3] = self.items.where(:refunded => nil).existing.sum(:sum).round(2) == self.sum.round(2)
       tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
       
