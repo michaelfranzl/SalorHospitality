@@ -4,7 +4,7 @@
     %th{ :style => 'width:70px' }= t '.count'
     %th{ :style => 'width:50px' }= t '.unit_price'
     %th{ :style => 'width:50px' }= t '.total'
-    %th{ :style => 'width:80px' }= t '.revenue'
+    %th{ :style => 'width:80px; text-align: right;' }= t '.revenue'
   - total = 0
   - @orders.each do |so|
     - total += so.sum
@@ -19,12 +19,12 @@
         %br
         = link_to t(:invoice), order_path(so)
 
-      - so.items.existing.positioned.each do |item|
+      - so.items.existing.order(:position_category).each do |item|
         %tr
           %td= item.quantity ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
           %td.number= item.count
           %td.number= number_to_currency item.price
-          %td.colsum= number_to_currency item.refunded ? 0 : item.sum
+          %td.colsum= number_to_currency item.refunded ? 0 : item.count * item.price
           %td.warning
             - if (item.max_count > item.count) or item.price_changed
               %i== #{ t('.warning') }:
