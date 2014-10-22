@@ -1,3 +1,13 @@
+salor-hospitality (4.1.4.70) wheezy; urgency=medium
+
+  * fixed recently introduced bug with finished order checkign
+  * show item prices without options in settlements detailed view
+  * do not regroup items in order.finish, led to wrong TaxItem calculation
+  * clearer code
+  * added history debugging function to Order
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 22 Oct 2014 12:58:39 +0200
+
 salor-hospitality (4.1.4.69) wheezy; urgency=medium
 
   * fixed css for cut-off popups
