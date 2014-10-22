@@ -352,7 +352,6 @@ class Order < ActiveRecord::Base
       self.calculate_totals
       self.hide(-1)
       target_order.regroup
-      #target_order.items.existing.each { |i| i.calculate_totals } # this is already called in .regroup
       target_order.calculate_totals
     else
       ActiveRecord::Base.logger.info "order.rb move: setting target_table_id #{ target_table_id } for self"
@@ -414,7 +413,6 @@ class Order < ActiveRecord::Base
         oi.hide(-10) if oi.price == 0.0
       end
     end
-    self.regroup
   end
 
   def pay(user=nil)
