@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.69) wheezy; urgency=medium
+
+  * fixed css for cut-off popups
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 22 Oct 2014 10:56:32 +0200
+
 salor-hospitality (4.1.4.68) wheezy; urgency=medium
 
   * printing for sales statistics
