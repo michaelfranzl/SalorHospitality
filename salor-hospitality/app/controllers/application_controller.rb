@@ -55,10 +55,6 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'just_print'
             @order = get_order
-            if @order.nil?
-              render :js => "order_already_finished();"
-              return
-            end
             @order.print(['receipt'], @current_vendor.vendor_printers.find_by_id(params[:printer]), {:with_customer_lines => true}) if params[:printer]
           when 'do_refund'
             item = get_model(params[:id], Item)
@@ -73,7 +69,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'move'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -83,7 +79,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'display_tax_colors'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -96,7 +92,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'mass_assign_tax'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -111,7 +107,7 @@ class ApplicationController < ActionController::Base
             cid = params[:cost_center_id]
             params[:payment_method_items] = nil # we want to create them when user is done with the invoice form.
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -123,7 +119,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'assign_to_booking'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -140,7 +136,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_print'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -157,7 +153,7 @@ class ApplicationController < ActionController::Base
           #----------jsaction----------
           when 'pay_and_no_print'
             @order = get_order
-            if @order.nil?
+            if @order.finished == true
               render :js => "order_already_finished();"
               return
             end
@@ -169,7 +165,7 @@ class ApplicationController < ActionController::Base
       
       when 'table'
         @order = get_order
-        if @order.nil?
+        if @order.finished == true
           render :js => "order_already_finished();"
           return
         end
@@ -374,8 +370,8 @@ class ApplicationController < ActionController::Base
       end
       
       if order and order.finished == true
-        # returning nil will trigger a JS warning in the calling method
-        return nil
+        # do not update or create the order, simply return it
+        return order
       elsif order
         order.update_from_params(params, @current_user, @current_customer)
       else
