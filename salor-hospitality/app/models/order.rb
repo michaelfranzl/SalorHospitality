@@ -1054,62 +1054,146 @@ class Order < ActiveRecord::Base
   end
   
   def check
-    messages = []
-    tests = []
-    self.items.each do |i|
-      messages << i.check
+    @found = nil
+    @tests = {
+      self.id => {
+                 :tests => [],
+                 :items => [],
+                 :payment_method_items => [],
+                 }
+    }
+    
+    self.items.existing.each do |i|
+      item_result, @found = i.check
+      @tests[self.id][:items] << item_result if @found
     end
     
+    order_hash_gro_sum = 0
+    order_hash_net_sum = 0
     order_hash_tax_sum = 0
     self.taxes.each do |k,v|
       order_hash_tax_sum += v[:t]
+      order_hash_gro_sum += v[:g]
+      order_hash_net_sum += v[:n]
     end
-    tests[1] = order_hash_tax_sum.round(2) == self.tax_sum.round(2)
-
-    unless self.hidden
-      tests[2] = self.tax_items.where(:refunded => nil).existing.sum(:tax).round(2) == self.tax_sum.round(2)
-      tests[3] = self.items.where(:refunded => nil).existing.sum(:sum).round(2) == self.sum.round(2)
-      tests[4] = self.items.where(:refunded => nil).existing.sum(:tax_sum).round(2) == self.tax_sum.round(2)
-      
-      # order sum must match the PAYMENT METHOD ITEM sum
-      if self.paid and (self.cost_center.nil? or self.cost_center.no_payment_methods != true) and self.vendor.payment_method_items.existing.any?
-        tests[5] = self.sum.round(2) == (self.payment_method_items.existing.where(:refunded => nil, :change => false).sum(:amount) - self.payment_method_items.existing.where(:refunded => nil, :change => true).sum(:amount) - self.payment_method_items.existing.where(:refunded => true).sum(:amount)).round(2)
-      end
-      
-      if self.paid and self.cost_center and self.cost_center.no_payment_methods == true
-        tests[6] = self.payment_method_items.any? == false
-      end
+    order_hash_gro_sum = order_hash_gro_sum.round(2)
+    order_hash_net_sum = order_hash_net_sum.round(2)
+    order_hash_tax_sum = order_hash_tax_sum.round(2)
+    
+    perform_test({
+              :should => self.items.existing.collect{|i| i.taxes.collect{|k,v| v[:g] }}.flatten.sum.round(2),
+              :actual => order_hash_gro_sum,
+              :msg => "Hashed gross amount should match all hashed gross amounts of items",
+              :type => :orderHashGrossMatchesItemsHash,
+              })
+    
+    perform_test({
+              :should => self.items.existing.collect{|i| i.taxes.collect{|k,v| v[:n] }}.flatten.sum.round(2),
+              :actual => order_hash_net_sum,
+              :msg => "Hashed net amount should match all hashed net amounts of items",
+              :type => :orderHashNetMatchesItemsHash,
+              })
+    
+    perform_test({
+              :should => self.items.existing.collect{|i| i.taxes.collect{|k,v| v[:t] }}.flatten.sum.round(2),
+              :actual => order_hash_tax_sum,
+              :msg => "Hashed tax amount should match all hashed tax amounts of items",
+              :type => :orderHashTaxMatchesItemsHash,
+              })
+    
+    # At this point, hashed gross, net and tax are correct
+    
+    perform_test({
+              :should => order_hash_tax_sum,
+              :actual => self.tax_sum,
+              :msg => "Cached tax_sum should match hashed taxes",
+              :type => :orderTaxSumMatchesOrdersHash,
+              })
+    
+    if self.vendor.country == 'us'
+      perform_test({
+                :should => order_hash_net_sum,
+                :actual => self.sum,
+                :msg => "Cached sum should match hashed net",
+                :type => :orderSumMatchesOrdersHash,
+                })
+    else
+      perform_test({
+                :should => order_hash_gro_sum,
+                :actual => self.sum,
+                :msg => "Cached sum should match hashed gro",
+                :type => :orderSumMatchesOrdersHash,
+                })
     end
-
-    # cost_center_id may only be nil if there are no CostCenters defined
-    tests[8] = self.cost_center_id or (self.cost_center_id.nil? and not self.vendor.cost_centers.existing.any?)
     
-    # all associations must have the same COST CENTER
-    tests[12] = self.items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
-    tests[13] = self.tax_items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
-    tests[14] = self.payment_method_items.collect{ |i| i.cost_center_id == self.cost_center_id }.all?
+    # compare cached sums with sum of items
     
-    # all associations must have the same SETTLEMENT
-    tests[15] = self.items.collect{ |i| i.settlement_id == self.settlement_id }.all?
-    tests[16] = self.tax_items.collect{ |i| i.settlement_id == self.settlement_id }.all?
-    tests[17] = self.payment_method_items.collect{ |i| i.settlement_id == self.settlement_id }.all?
+    perform_test({
+          :should => self.items.existing.sum(:sum).round(2),
+          :actual => self.sum,
+          :msg => "Cached sum should match sums of items",
+          :type => :orderSumMatchesItemsSums,
+          })
     
-    # all associations must be HIDDEN
-    if self.hidden
-      tests[18] = self.items.collect{ |i| i.hidden == self.hidden }.all?
-      tests[19] = self.tax_items.collect{ |i| i.hidden == self.hidden }.all?
-      tests[20] = self.payment_method_items.collect{ |i| i.hidden == self.hidden }.all?
-    end    
+    perform_test({
+          :should => self.items.existing.sum(:tax_sum).round(2),
+          :actual => self.tax_sum,
+          :msg => "Cached tax_sum should match tax_sums of items",
+          :type => :orderSumMatchesItemsTaxSums,
+          })
     
-    # finished orders have to have nr set
-    if self.finished
-      tests[21] = self.nr.nil? == false
+    # compare cached sums with sum of TaxItems
+    
+    perform_test({
+          :should => self.tax_items.existing.sum(:tax).round(2),
+          :actual => self.tax_sum,
+          :msg => "Cached tax_sum should match tax sum of TaxItems",
+          :type => :orderTaxSumMatchesTaxItemsTaxSum,
+          })
+    
+    if self.vendor.country == 'us'
+      perform_test({
+            :should => self.tax_items.existing.sum(:net).round(2),
+            :actual => self.sum,
+            :msg => "Cached sum should match net sum of TaxItems",
+            :type => :orderSumMatchesTaxItemsNetSum,
+            })
+     
+    else
+      perform_test({
+            :should => self.tax_items.existing.sum(:gro).round(2),
+            :actual => self.sum,
+            :msg => "Cached sum should match gro sum of TaxItems",
+            :type => :orderSumMatchesTaxItemsGroSum,
+            })
     end
-
-    0.upto(tests.size-1).each do |i|
-      messages << "Order #{ self.id }: test#{i} failed." if tests[i] == false
+    
+    # TODO: Expand this for multiple taxes
+    perform_test({
+          :should => self.tax_items.existing.count,
+          :actual => self.items.existing.count,
+          :msg => "Same number of TaxItem and Item",
+          :type => :orderSameNumberTaxItemAndItem,
+          })
+    
+    if self.vendor.country == 'us'
+      perform_test({
+            :should => self.payment_method_items.existing.sum(:amount).round(2),
+            :actual => self.tax_items.existing.sum(:gro).round(2),
+            :msg => "PaymentMethodItem sum matches gro sum of TaxItems",
+            :type => :orderPaymentMethodItemsCorrect,
+            })
+    else
+      perform_test({
+            :should => self.payment_method_items.existing.sum(:amount).round(2),
+            :actual => self.sum,
+            :msg => "PaymentMethodItem sum matches cached sum",
+            :type => :orderPaymentMethodItemsCorrect,
+            })
     end
-    return messages
+    
+    puts "\n *** WARNING: Order is deleted, tests are irrelevant! *** \n" if self.hidden
+    return @tests, @found
   end
   
   def user_login
@@ -1125,5 +1209,23 @@ class Order < ActiveRecord::Base
     string += History.where(:model_type => "Table", :model_id => self.table_id, :created_at => self.created_at..(self.created_at + 2.hour)).collect{ |h| [h.created_at, h.params] }.join("\n---------------------\n")
     string += "\n---------\n\n"
     return string
+  end
+  
+  private
+  
+  def perform_test(options)
+    should = options[:should]
+    actual = options[:actual]
+    pass = should == actual
+    type = options[:type]
+    msg = options[:msg]
+    @tests[self.id][:tests] << {
+      :type => type,
+      :msg => msg,
+      :should => should,
+      :actual => actual
+    } if pass == false
+    
+    @found = true if pass == false
   end
 end

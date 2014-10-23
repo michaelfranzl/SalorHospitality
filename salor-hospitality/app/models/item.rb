@@ -154,7 +154,7 @@ class Item < ActiveRecord::Base
       
       self.tax_items.update_all :hidden => true, :hidden_at => Time.now, :hidden_by => -8
       
-      # see if we can re-use a TaxItem
+      # see if we can re-use a previously hidden TaxItem
       tax_item = TaxItem.where(
         :vendor_id => self.vendor_id,
         :company_id => self.company_id,
@@ -386,60 +386,156 @@ class Item < ActiveRecord::Base
   end
   
   def check
-    messages = []
-    tests = []
+    @found = nil
+    @tests = {
+      self.id => {
+                :id => self.id,
+                :tests => [],
+                :option_items => [],
+                :tax_items => [],
+                }
+    }
+    
     self.option_items.existing.each do |oi|
-      messages << oi.check
+      option_item_result, @found = oi.check
+      @tests[self.id][:option_items] << option_item_result if @found
     end
     
-    item_hash_gro = 0
-    item_hash_net = 0
-    item_hash_tax = 0
+    # calculate sums from the serialized tax hash of the item, to be used later
+    item_hash_gro_sum = 0
+    item_hash_net_sum = 0
+    item_hash_tax_sum = 0
     self.taxes.each do |k,v|
-      item_hash_tax += v[:t]
-      item_hash_gro += v[:g]
-      item_hash_net += v[:n]
+      item_hash_tax_sum += v[:t]
+      item_hash_gro_sum += v[:g]
+      item_hash_net_sum += v[:n]
     end
-    item_hash_tax = item_hash_tax.round(2)
-    item_hash_gro = item_hash_gro.round(2)
-    item_hash_net = item_hash_net.round(2)
-    
-    if self.vendor.country == 'us'
-      tests[1] = (self.sum.round(2) == item_hash_net )
-    else
-      # TODO: This test only succeeds when there is only 1 tax attached to the item.
-      tests[1] = (self.sum.round(2) == item_hash_gro )
-    end
-    
-    tests[2] = (self.tax_sum.round(2) == item_hash_tax )
+    item_hash_gro_sum = item_hash_gro_sum.round(2)
+    item_hash_net_sum = item_hash_net_sum.round(2)
+    item_hash_tax_sum = item_hash_tax_sum.round(2)
     
     if self.refunded
-      #tests[3] = self.sum == 0
-      tests[4] = self.tax_items.existing.where(:refunded => nil).sum(:tax) == 0
-      tests[5] =  self.option_items.sum(:sum) == 0
+      perform_test({
+                :should => 0,
+                :actual => self.sum,
+                :msg => "A refunded Item should have the price of zero",
+                :type => :itemRefundZero,
+                })
+    else
+      perform_test({
+                :should => (self.price * self.count + self.option_items.existing.sum(:sum)).round(2),
+                :actual => self.sum,
+                :msg => "An Item should have the correct sum",
+                :type => :itemSumCorrect,
+                })
     end
     
-    unless self.hidden
-      tests[6] = self.tax_items.existing.count == self.taxes.keys.count
-      
-      unless self.refunded
-        tests[7] = self.option_items.sum(:sum).round(2) == (self.sum - self.price * self.count).round(2)
-      end
+    # at this point, self.sum is correct, and can be used in checking TaxItems
     
-      item_tax_sum = 0
-      self.taxes.each do |k,v|
-        item_tax_sum += v[:t]
-      end
-      
-      tests[8] = self.tax_items.existing.sum(:tax).round(2) == item_tax_sum.round(2)
+    self.tax_items.existing.each do |ti|
+      tax_item_result, found = ti.check
+      @tests[self.id][:tax_items] << tax_item_result if found
     end
     
-    # TODO: test identity of self.tax_items attributes
+    # at this point, gro, net and tax of TaxItems are correct, and can be used to validate the hash keys here
     
-    0.upto(tests.size-1).each do |i|
-      messages << "Item #{ self.id }: test #{i} failed." if tests[i] == false
+    perform_test({
+              :should => self.tax_items.existing.sum(:tax).round(2),
+              :actual => item_hash_tax_sum,
+              :msg => "The hashed tax attribute should be the sum of all existing TaxItem tax attributes",
+              :type => :itemHashTaxIsSumOfTaxItems,
+              })
+    
+    perform_test({
+              :should => self.tax_items.existing.sum(:gro).round(2),
+              :actual => item_hash_gro_sum,
+              :msg => "The hashed gro attribute should be the sum of all existing TaxItem gro attributes",
+              :type => :itemHashGroIsSumOfTaxItems,
+              })
+    
+    perform_test({
+              :should => self.tax_items.existing.sum(:net).round(2),
+              :actual => item_hash_net_sum,
+              :msg => "The hashed net attribute should be the sum of all existing TaxItem net attributes",
+              :type => :itemHashNetIsSumOfTaxItems,
+              })
+    
+    perform_test({
+              :should => (item_hash_gro_sum - item_hash_net_sum).round(2),
+              :actual => item_hash_tax_sum,
+              :msg => "The hashed tax attribute should be hashed gro minus hashed net #{ item_hash_gro_sum } - #{ item_hash_net_sum }",
+              :type => :itemHashTaxIsHashGroMinusHashNet,
+              })
+    
+    # at this point, the hashed values gro, net and tax are validated with TaxItems, hashed tax is even double checked
+    
+    # check the cached Item attributes sum and tax_sum with the valid hash sums
+    
+    perform_test({
+              :should => item_hash_tax_sum,
+              :actual => self.tax_sum,
+              :msg => "The tax_sum attribute should match the hashed tax attribute",
+              :type => :itemTaxSumMatchesHashedTax,
+              })
+    
+    if self.vendor.country == 'us'
+      # this is redundant testing, because we already know that self.sum is correct. we do it anyway.
+      perform_test({
+                :should => item_hash_net_sum,
+                :actual => self.sum,
+                :msg => "The sum attribute should match the hashed net attribute",
+                :type => :itemSumMatchesHashedNet,
+                })
+
+    else
+      perform_test({
+                :should => item_hash_gro_sum,
+                :actual => self.sum,
+                :msg => "The sum attribute should match the hashed gro attribute",
+                :type => :itemSumMatchesHashedGro,
+                })
     end
-    return messages
+    
+    perform_test({
+          :should => self.tax_items.existing.count,
+          :actual => self.taxes.keys.count,
+          :msg => "An Item should have the same number of TaxItems as there are keys in the taxes attribute",
+          :type => :itemTaxItemsCountCorrect,
+          })
+    
+    perform_test({
+          :should => [self.order.id, self.order.cost_center_id, self.order.settlement_id],
+          :actual => [self.order_id, self.cost_center_id, self.settlement_id],
+          :msg => "An Item should have the same belongs_to attributes as the Order",
+          :type => :itemBelongsToCorrect,
+          })
+    
+    perform_test({
+          :should => [self.order.hidden, self.order.hidden_at, self.order.hidden_by],
+          :actual => [self.hidden, self.hidden_at, self.hidden_by],
+          :msg => "An Item should have the same hidden attributes as the Order",
+          :type => :itemHiddenCorrect,
+          })
+   
+    puts "\n *** WARNING: Item is deleted, tests are irrelevant! *** \n" if self.hidden
+    return @tests, @found
   end
   
+  private
+  
+  def perform_test(options)
+    should = options[:should]
+    actual = options[:actual]
+    pass = should == actual
+    type = options[:type]
+    msg = options[:msg]
+    @tests[self.id][:tests] << {
+      :type => type,
+      :msg => msg,
+      :should => should,
+      :actual => actual
+    } if pass == false
+    @found = true if pass == false
+  end
+
 end

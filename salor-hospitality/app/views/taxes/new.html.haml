@@ -1,6 +1,8 @@
 %style= generate_tax_color_style
 %h2= @tax.new_record? ? (t '.new_tax') : (t '.edit_tax')
 
+- disabled = @tax.articles.existing.any?
+
 - if @tax.errors.any?
   .errors
     %h3= t 'activerecord.errors.template.header', :count => @tax.errors.size, :model => Tax.model_name.human
@@ -19,7 +21,7 @@
         %td= tax_form.text_field :name, :size => '20'
       %tr
         %td= tax_form.label :percent
-        %td= tax_form.text_field :percent, :size => '10'
+        %td= tax_form.text_field :percent, :size => '10', :disabled => disabled
       %tr
         %td= tax_form.label :letter
         %td= tax_form.text_field :letter, :size => '10'

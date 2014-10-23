@@ -280,29 +280,60 @@ class Settlement < ActiveRecord::Base
   
   def report_errors_to_technician
     if self.vendor.enable_technician_emails == true and self.vendor.technician_email
-      errors = self.check.flatten
-      if errors.any?
-        UserMailer.technician_message(self.vendor, "Errors in Settlement #{ self.nr }", errors.to_s).deliver
+      report_string = ""
+      
+      begin
+      report, found = self.check
+        PP.pp report, report_string
+      rescue
+        report_string = "Error during call to Settlement.check"
+      end
+      
+      if found
+        UserMailer.technician_message(self.vendor, "Problems in Settlement #{ self.nr }", report_string).deliver
       end
     end
   end
   
   def check
-    messages = []
-    tests = []
+    @found = nil
+    @tests = {
+      self.id => {
+                      :tests => [],
+                      :orders => [],
+                     }
+    }
     
-    self.orders.each do |o|
-      messages << o.check
+    self.orders.existing.each do |o|
+      order_result, @found = o.check
+      @tests[self.id][:orders] << order_result if @found
     end
     
-    tests[1] = self.sum.round(2) == self.orders.existing.sum(:sum).round(2)
+    perform_test({
+              :should => self.orders.existing.sum(:sum).round(2),
+              :actual => self.sum,
+              :msg => "The cached sum attribute should match order sums",
+              :type => :settlementSumMatchesOrderSums,
+              })
     
-    tests[2] = self.payment_method_items.existing.where(:order_id => nil).any? == false
-    
-    0.upto(tests.size-1).each do |i|
-      messages << "Settlement #{ self.id }: test#{i} failed." if tests[i] == false
-    end
-    return messages
+    return @tests, @found
+  end
+  
+private
+  
+  def perform_test(options)
+    should = options[:should]
+    actual = options[:actual]
+    pass = should == actual
+    type = options[:type]
+    msg = options[:msg]
+    @tests[self.id][:tests] << {
+      :type => type,
+      :msg => msg,
+      :should => should,
+      :actual => actual
+    } if pass == false
+    @found = true if pass == false
   end
 
 end
