@@ -154,7 +154,7 @@ class Item < ActiveRecord::Base
       
       self.tax_items.update_all :hidden => true, :hidden_at => Time.now, :hidden_by => -8
       
-      # see if we can re-use a previously hidden TaxItem
+      # see if we can re-use a previously hidden TaxItem in this order
       tax_item = TaxItem.where(
         :vendor_id => self.vendor_id,
         :company_id => self.company_id,
@@ -282,8 +282,8 @@ class Item < ActiveRecord::Base
     self.hidden_at = Time.now
     self.save
     self.unlink
-    self.tax_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
-    self.option_items.where(:hidden => nil).update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.tax_items.existing.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.option_items.existing.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
   end
 
   def unlink
@@ -366,8 +366,10 @@ class Item < ActiveRecord::Base
     partner_item.option_items.existing.each { |oi| oi.calculate_totals }
     partner_item.calculate_totals
     self.save
-    self.option_items.existing.each { |oi| oi.calculate_totals }
-    self.calculate_totals
+    unless self.hidden
+      self.option_items.existing.each { |oi| oi.calculate_totals }
+      self.calculate_totals
+    end
   end
   
   def compose_option_names_without_price

@@ -1172,24 +1172,26 @@ class Order < ActiveRecord::Base
     perform_test({
           :should => self.tax_items.existing.count,
           :actual => self.items.existing.count,
-          :msg => "Same number of TaxItem and Item",
-          :type => :orderSameNumberTaxItemAndItem,
+          :msg => "Item count should match TaxItem count",
+          :type => :orderItemCountMatchesTaxItemCount,
           })
     
-    if self.vendor.country == 'us'
-      perform_test({
-            :should => self.payment_method_items.existing.sum(:amount).round(2),
-            :actual => self.tax_items.existing.sum(:gro).round(2),
-            :msg => "PaymentMethodItem sum matches gro sum of TaxItems",
-            :type => :orderPaymentMethodItemsCorrect,
-            })
-    else
-      perform_test({
-            :should => self.payment_method_items.existing.sum(:amount).round(2),
-            :actual => self.sum,
-            :msg => "PaymentMethodItem sum matches cached sum",
-            :type => :orderPaymentMethodItemsCorrect,
-            })
+    if self.paid == true
+      if self.vendor.country == 'us'
+        perform_test({
+              :should => self.payment_method_items.existing.sum(:amount).round(2),
+              :actual => self.tax_items.existing.sum(:gro).round(2),
+              :msg => "PaymentMethodItem sum matches gro sum of TaxItems",
+              :type => :orderPaymentMethodItemsCorrect,
+              })
+      else
+        perform_test({
+              :should => self.payment_method_items.existing.sum(:amount).round(2),
+              :actual => self.sum,
+              :msg => "PaymentMethodItem sum matches cached sum",
+              :type => :orderPaymentMethodItemsCorrect,
+              })
+      end
     end
     
     puts "\n *** WARNING: Order is deleted, tests are irrelevant! *** \n" if self.hidden
