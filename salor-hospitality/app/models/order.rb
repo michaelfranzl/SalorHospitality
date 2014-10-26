@@ -216,13 +216,26 @@ class Order < ActiveRecord::Base
   def update_payment_method_items(params)
     #ActiveRecord::Base.logger.info "XXXX #{ self.user_id }"
     # create payment method items only when 1) there are some, 2) cost center does not forbid creating payment method items
-    if params['payment_method_items'] and self.vendor.payment_methods.existing.any? and ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
-      self.payment_method_items.update_all(:hidden => true, :hidden_by => -7, :hidden_at => Time.now) # we don't re-use previously created payment method items
+    if params['payment_method_items'] and
+        self.vendor.payment_methods.existing.any? and
+        ( self.cost_center.nil? or (self.cost_center and self.cost_center.no_payment_methods == false))
+      self.payment_method_items.update_all(
+        :hidden => true,
+        :hidden_by => -7,
+        :hidden_at => Time.now) # we don't re-use previously created payment method items
       params['payment_method_items'][params['id']].to_a.each do |pm|
         # only create payment method items that are not zero and that have not been removed from the UI
         if pm[1]['amount'].to_f > 0 and pm[1]['_delete'].to_s == 'false'
           payment_method = self.vendor.payment_methods.existing.find_by_id(pm[1]['id'])
-          PaymentMethodItem.create :payment_method_id => pm[1]['id'], :amount => pm[1]['amount'], :order_id => self.id, :vendor_id => self.vendor_id, :company_id => self.company_id, :cash => payment_method.cash, :user_id => self.user_id
+          pmi = PaymentMethodItem.new
+          pmi.payment_method_id = pm[1]['id']
+          pmi.amount = pm[1]['amount']
+          pmi.order_id = self.id
+          pmi.vendor_id = self.vendor_id
+          pmi.company_id = self.company_id
+          pmi.cash = payment_method.cash
+          pmi.user_id = self.user_id
+          pmi.save
         end
       end
     end
@@ -316,6 +329,7 @@ class Order < ActiveRecord::Base
       end
     end
   end
+  
 
   def unlink
     split_order = self.order
@@ -430,10 +444,19 @@ class Order < ActiveRecord::Base
     payment_method_sum = self.payment_method_items.existing.sum(:amount) # refunded is never true at this point, since an order must be first finished/paid before it can be refunded
     
     # create a change payment method item
-    unless self.payment_method_items.existing.where(:change => true).any? or (self.cost_center and self.cost_center.no_payment_methods == true)
+    unless self.payment_method_items.existing.where(:change => true).any? or
+        (self.cost_center and self.cost_center.no_payment_methods == true)
       change_payment_methods = self.vendor.payment_methods.where(:change => true)
       if change_payment_methods.any?
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :change => true, :amount => (payment_method_sum - self.sum).round(2), :payment_method_id => change_payment_methods.first.id, :user_id => self.user_id
+        pmi = PaymentMethodItem.new
+        pmi.company_id = self.company_id
+        pmi.vendor_id = self.vendor_id
+        pmi.order_id = self.id
+        pmi.change = true
+        pmi.amount = (payment_method_sum - self.gross).round(2)
+        pmi.payment_method_id = change_payment_methods.first.id
+        pmi.user_id = self.user_id
+        pmi.save
       end
     end
     
@@ -1053,6 +1076,14 @@ class Order < ActiveRecord::Base
     # to be implemented
   end
   
+  def gross
+    if self.vendor.country == "us"
+      self.sum + self.tax_sum
+    else
+      self.sum
+    end
+  end
+  
   def check
     @found = nil
     @tests = {
@@ -1177,16 +1208,16 @@ class Order < ActiveRecord::Base
           })
     
     if self.paid == true
-      if self.vendor.country == 'us'
+      if self.vendor.country == "us"
         perform_test({
-              :should => self.payment_method_items.existing.sum(:amount).round(2),
+              :should => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
               :actual => self.tax_items.existing.sum(:gro).round(2),
               :msg => "PaymentMethodItem sum matches gro sum of TaxItems",
               :type => :orderPaymentMethodItemsCorrect,
               })
       else
         perform_test({
-              :should => self.payment_method_items.existing.sum(:amount).round(2),
+              :should => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
               :actual => self.sum,
               :msg => "PaymentMethodItem sum matches cached sum",
               :type => :orderPaymentMethodItemsCorrect,

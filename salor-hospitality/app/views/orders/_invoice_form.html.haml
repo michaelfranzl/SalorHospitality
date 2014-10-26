@@ -87,7 +87,7 @@
       %td{ :colspan => '2' }
         %a{ :onclick => "submit_split_items(#{oid});", :class => 'iconbutton splitinvoice_button', :title => t('.split_invoice')}
       %td{ :colspan => '2', :style => 'text-align:right'}
-        %span.subtotal{:id => "subtotal_#{ oid }"}= number_to_currency invoice_form.sum
+        %span.subtotal{:id => "subtotal_#{ oid }"}= number_to_currency invoice_form.gross
         %br
         %span.subtotal.split{:id => "subtotal_split_#{ oid }"}= number_to_currency 0
     %tr
@@ -102,7 +102,7 @@
 
 :javascript
   submit_json.payment_method_items[#{ oid }] = {};
-  submit_json.totals[#{ oid }] = {model:#{ invoice_form.sum }, model_original:#{ invoice_form.sum }, payment_method_items:0 };
+  submit_json.totals[#{ oid }] = {model:#{ invoice_form.gross }, model_original:#{ invoice_form.gross }, payment_method_items:0 };
   submit_json.split_items_hash[#{ oid }] = {};
   if (permissions.enter_payment_methods) {
     add_payment_method(#{oid}, null, submit_json.totals[#{oid}].model);
