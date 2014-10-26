@@ -2,41 +2,42 @@
 SALOR Hospitality
 =================
 
-The modern Point of Sale Solution serving the Hospitality Industry
+The modern, enterprise-class Point of Sale Solution serving the Hospitality Industry
 
-This document was updated on: December 20, 2012
+This document was updated on: October 26, 2014
 
 About
 -----
 
-SALOR Hospitality (also known as Bill Gastro) is a professional and universal Point of Sale software for hotels, restaurants, bars and shops.
+SALOR Hospitality (also known as Bill Gastro) is a professional, universal, complete, enterprise-class Point of Sale software for single hotels, hotel chains, single restaurants, restaurant chains, bars and snack shops.
 
-If you install SALOR Hospitality on a computer (e.g. a mini PC), and connect receipt printers, touch screens and a WiFi Bridge, you will end up with much more than a regular Point of Sale system. Depending on your needs, you can build **your own management system for your hospitality business** which you can access conveniently from any computer or mobile device (e.g. smartphone or tablet) which is connected to your internal network.
+If you install SALOR Hospitality on a computer (e.g. a regular mini PC), and connect thermal receipt printers, touch screens and a wireless Bridge, you will end up with much more than a regular Point of Sale system. Depending on your needs, you can expand it to have **your own management system for your hospitality business** which you can access conveniently from any computer or mobile device (e.g. smartphone or tablet) which is connected to the internal ethernet/wireless network of your company.
 
 Because you can extend the installation to your heart's content, SALOR Hospitality helps you to **improve the communication between staff in your business**, and you will be able to serve your customers much quicker.
 
-SALOR Hospitality sends tickets into your kitchen or bar and makes printing of professional business invoices and accounting reports very easy. This simplifies your accounting work to an extreme degree and you can **dedicate more time for more important things**: the personal contact with your customers.
+SALOR Hospitality sends tickets to the thermal printers installed in your kitchen or bar and makes printing of professional business invoices and the generation of financial and statistics reports very easy. This simplifies your accounting work to an extreme degree and you can **dedicate more time for more important things**: the personal contact with your customers.
 
-You also can generate statistics to see during which business hours your store is most profitable and plan the work hours of your staff according to it.
+SALOR Hospitality has many more useful features that are not yet documented in writing (we're working on that!), but it is better nevertheless if you test the software yourself immediately with our public demo ([see this page for details][http://billgastro.com/test.html]).
 
-SALOR Hospitality has many more useful features that are described in more detail in the [Feature Catalog](http://billgastro.com/features/).
-
-Read about the extraordinarily good mobile support here: http://billgastro.com/about.html
+Read about the extraordinarily good mobile support [here](http://billgastro.com/about.html).
 
 
 History
 -------
 
-This software product has been in continuous development and used in real-world settings since beginning of 2009. Red (E) Tools Ltd. (http://red-e.eu) is pleased to make it finally available publicly under the MIT License. This product was formerly known as BillGastro (http://billgastro.com), but after the addition of features for Hotels and many new improvements in 2012, it was renamed to "SALOR Hospitality" to reflect it's closeness to the hospitality industry as a whole. From launch of concept to full operation, SALOR Hospitality was developed with real-time input from waiters and kitchen personnel in successful, high-pressure environments.
+This software product has been in continuous development and used in real-world settings since beginning of 2009. Red (E) Tools Ltd. (http://thebigrede.net) is pleased to make it finally available publicly under the very permissive MIT License. This product was formerly known as "Bill Gastro" (http://billgastro.com), but after the addition of features for Hotels and many new improvements in 2012, it was renamed to "SALOR Hospitality" to reflect it's closeness to the hospitality industry as a whole. From launch of concept to full operation, SALOR Hospitality was developed with real-time input from waiters, kitchen personnel and store owners in successful, high-pressure environments.
 
-"SALOR Hospitality" is part of the SALOR software family and is aimed at Restaurants, Bars, Hotels, food stores, etc. Its sister, "SALOR Retail" is aimed at Retail stores, supermarkets, industries, etc. It is available at https://github.com/jasonknight/salor-retail
+"SALOR Hospitality" is part of the SALOR software family and is aimed at Restaurants, Bars, Hotels, food stores, etc. Its sister, "SALOR Retail" is aimed at retail stores, supermarkets, industries, etc. Have a look at https://github.com/jasonknight/salor-retail
 
 Overview
 --------
 
-"SALOR Hospitality" revolutionizes the day to day operation of the Hospitality Industry, bringing businesses large and small into the 21st century. We believe the time has come to integrate smart technology with customer service, taking both to a new level. "SALOR Hospitality" provides insight into every aspect of your daily operations and business across multiple metrics, allowing you to plan performance improvements.
+"SALOR Hospitality" revolutionizes the day to day operations of the Hospitality Industry, bringing businesses large and small into the 21st century. We believe the time has come to integrate smart technology with customer service, taking both to a new level. "SALOR Hospitality" provides insight into every aspect of your daily operations and business across multiple metrics, allowing you to plan performance improvements.
 
-**Cutting edge design:**
+**Essential features:**
+  You won't miss any essential feature that other, similar Point of Sale software has!
+
+**Cutting-edge design:**
   Appealing design with clean lines and colour schemes for table and staff differentiation, product categories, etc. SalorHospitality looks great on any system!
 
 **Flexibility:**
@@ -69,12 +70,11 @@ Overview
 Many more interestig features:
 
 * Dynamic search function for product database
-* Tickets for kitchen and bar
-* Instant messaging between all staff
-* Immediate updates between all terminals in use
+* Prints tickets on thermal printers for kitchen and bar
+* Immediate status updates between all terminals in use -- no synchronization needed!
 * Enter special customer requests directly at the table -- also in handwriting!
 * Compatible with tax schemes in several countries
-* Multiple thermal printers
+* Multiple thermal printers with different interfaces: USB, RS232, TCP/IP (Ethernet and Wireless)
 * and much more
 
 
@@ -84,6 +84,8 @@ Features
 For a quick demonstration of a small part of the features (the Restaurant part), watch the screencasts that are available on Youtube:
 
 http://www.youtube.com/watch?v=SUfm17WYRdA (This video covers restaurant functions only)
+
+More videos are planned, but haven't been made yet.
 
 
 Philosophy of technology
@@ -107,15 +109,15 @@ SALOR Hospitality has true multi-store (and even multi-company) support built in
 Try the Demo!
 ------------
 
-You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), browse to [demo1.sh.red-e.eu](http://demo1.sh.red-e.eu) and log in with the default password 001 (zero-zero-one).
+You can try SALOR Hospitality immediately. Install Google Chrome, Chromium or Safari (or any browser based on Webkit), then ([see this page for details about how to access the public demo][http://billgastro.com/test.html]).
 
-Support for Mozilla Firefox is limited to the Restaurant part. The Hotel part makes use of a browser-internal SQL database, which is not supported in Firefox. We never really tested Microsoft Internet Explorer, so you are on your own if you want to use this browser.
+Support for Mozilla Firefox is limited to the restaurant part. The hotel part makes use of a browser-internal SQL database, which is not supported in Firefox. Microsoft Internet Explorer is not supported.
 
 
 Installation
 ------------
 
-You need a few packages so that native extensions of ruby gems will compile successfully:
+You need a few packages so that native extensions of ruby gems will compile successfully (these instructions are based on Debian Wheezy):
 
     apt-get install mysql-server mysql-client libmysqlclient-dev imagemagick libmagick-dev libmagickwand-dev
 
@@ -145,7 +147,7 @@ If you want to re-seed the database do the following:
     rake db:migrate
     rake db:seed
     
-For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions. Have a look at the installation instructions at http://documentation.red-e.eu/hospitality/installation.html
+For installation on a production system, Red (E) Tools Ltd. also provides pre-compiled Debian packages for several Linux distributions. Have a look at the installation instructions at http://documentation.thebigrede.net/hospitality/installation.html
 
 
 Documentation
@@ -157,27 +159,27 @@ http://billgastro.com
 
 Software documentation is work in progress:
 
-http://documentation.red-e.eu/hospitality
+http://documentation.thebigrede.net/hospitality
+
+In-depth information can be found in our support forum:
+
+http://forum.thebigrede.net
 
 
 Get Support!
 ------------
 
-Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. It's software products all are in production stage since years. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be!
+Our company Red (E) Tools Ltd. has a large and growing network of satisfied customers. Our software products all are in production stage since several years, and are used around the globe, continuously around the clock. We provide excellent customer support and consulting for all of our products. We will visit your premises and help you set up your infrastructure. We don't just want you to use our products, we want you to become part of the growing network and share our vision of how awesome the future of your business can be!
 
-If you find Bugs or want to request new features, please subscribe and use our Redmine bugtracking system: 
+If you find bugs or want to request new features, please use the issue tracker of the github repository at https://github.com/michaelfranzl/SalorHospitality
 
-http://redmine.red-e.eu
-
-If you want to ask questions or get general support, please subscribe to our mailing list: [salor-hospitality-users@googlegroups.com](https://groups.google.com/forum/?fromgroups#!forum/salor-hospitality-users)
-
-For other inquiries, please contact us via the contact form on our website: http://red-e.eu ! (contact form will be set up soon)
+If you want to ask questions or get general support, please use our forum http://forum.thebigrede.net. We will reply to you personally reliably.
 
 
-Buy a commercial installation with hardware or an online subscription
----------------------------------------------------------------------
+Buy a monthly subscription for your managed, personal online account
+--------------------------------------------------------------------
 
-Visit https://shop.red-e.eu
+Visit http://shop.thebigrede.net/cart/products/1
 
 
 
@@ -190,9 +192,7 @@ We invite developers to download SALOR Hospitality, enhance it and publish the e
 
 Since 2009, the founders of Red (E) Tools Ltd. have literally spent thousands of hours in front of the computer and with clients to forge SALOR Hospitality into a production-ready, world-class software product.
 
-However, nothing is really for free, so we ask you give something back if you feel that our products have benefited you. Please use one of the donation buttons at http://billgastro.com/opensource.html
-
-If you can't donate money, recommend SALOR Hospitality to your friends and business contacts.
+However, nothing is really for free, so we ask you give something back if you feel that our products have benefited you. Recommend SALOR Hospitality to your friends and business contacts!
 
 You can help us in the following way:
 
@@ -212,4 +212,4 @@ Jason Knight (https://github.com/jasonknight)
 
 Red (E) Tools Ltd.
 
-office@red-e.eu
+office@thebigrede.net
