@@ -27,9 +27,13 @@ class OrdersController < ApplicationController
       @orders = @current_vendor.orders.existing.where(:finished => true).order('nr DESC').limit(30)
     else
       order = @current_vendor.orders.existing.find_by_nr(nr)
-      from = order.finished_at
-      to = from + 1.day
-      @orders = @current_vendor.orders.existing.where(:finished => true, :finished_at => from..to).order('nr ASC')
+      if order
+        from = order.finished_at
+        to = from + 1.day
+        @orders = @current_vendor.orders.existing.where(:finished => true, :finished_at => from..to).order('nr ASC')
+      else
+        @orders = []
+      end
     end
   end
 
