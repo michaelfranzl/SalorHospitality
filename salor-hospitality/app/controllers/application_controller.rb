@@ -433,7 +433,7 @@ class ApplicationController < ActionController::Base
 
       unless @current_vendor
         session[:vendor_id] = nil and session[:company_id] = nil
-        flash[:notice] = "Invalid Vendor"
+        #flash[:notice] = "Invalid Vendor"
         redirect_to new_session_path and return
       end
 
