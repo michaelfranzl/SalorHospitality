@@ -1217,8 +1217,8 @@ class Order < ActiveRecord::Base
               })
       else
         perform_test({
-              :should => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
-              :actual => self.sum,
+              :should => self.sum,
+              :actual => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
               :msg => "PaymentMethodItem sum matches cached sum",
               :type => :orderPaymentMethodItemsCorrect,
               })
