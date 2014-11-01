@@ -1,3 +1,12 @@
+salor-hospitality (4.1.4.74) wheezy; urgency=medium
+
+  * updated README
+  * pressing accept on onscreen keyboard adds comment and price immediately
+  * no warning about invalid vendor
+  * reversed should/actual in order test
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 01 Nov 2014 19:17:58 +0100
+
 salor-hospitality (4.1.4.73) wheezy; urgency=medium
 
   * fixed payment method item tests and for USA net prices
