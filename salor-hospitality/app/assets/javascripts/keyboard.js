@@ -3,6 +3,9 @@ function enable_keyboard_for_items(item_designator) {
     openOn: '',
     visible: function(){
       $('.ui-keyboard-input').select();
+    },
+    accepted: function() {
+      add_comment_to_item(item_designator);
     }
   });
   $('#comment_for_item_' + item_designator + '_display_keyboard').click(function(){
@@ -13,6 +16,9 @@ function enable_keyboard_for_items(item_designator) {
     layout: 'num',
     visible: function(){
       $('.ui-keyboard-input').select();
+    },
+    accepted: function() {
+      add_price_to_item(item_designator);
     }
   });
   $('#price_for_item_' + item_designator + '_display_keyboard').click(function(){
