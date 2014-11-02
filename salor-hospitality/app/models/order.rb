@@ -1207,22 +1207,33 @@ class Order < ActiveRecord::Base
           :type => :orderItemCountMatchesTaxItemCount,
           })
     
-    if self.paid == true
+    payment_method_item_sum = (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2)
+    
+    if self.paid == true and self.cost_center.no_payment_methods == false
       if self.vendor.country == "us"
         perform_test({
-              :should => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
-              :actual => self.tax_items.existing.sum(:gro).round(2),
-              :msg => "PaymentMethodItem sum matches gro sum of TaxItems",
+              :should => self.tax_items.existing.sum(:gro).round(2),
+              :actual => payment_method_item_sum,
+              :msg => "PaymentMethodItem sum should match gro sum of TaxItems",
               :type => :orderPaymentMethodItemsCorrect,
               })
       else
         perform_test({
               :should => self.sum,
-              :actual => (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2),
-              :msg => "PaymentMethodItem sum matches cached sum",
+              :actual => payment_method_item_sum,
+              :msg => "PaymentMethodItem sum should match cached sum",
               :type => :orderPaymentMethodItemsCorrect,
               })
       end
+    end
+    
+    if self.paid == true and self.cost_center.no_payment_methods == true
+      perform_test({
+            :should => 0,
+            :actual => payment_method_item_sum,
+            :msg => "PaymentMethodItem sum should be zero",
+            :type => :orderPaymentMethodItemsZero,
+            })
     end
     
     puts "\n *** WARNING: Order is deleted, tests are irrelevant! *** \n" if self.hidden
