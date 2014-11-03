@@ -282,8 +282,12 @@ class Item < ActiveRecord::Base
     self.hidden_at = Time.now
     self.save
     self.unlink
-    self.tax_items.existing.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
-    self.option_items.existing.update_all :hidden => true, :hidden_by => by_user_id, :hidden_at => Time.now
+    self.tax_items.each do |ti|
+      ti.hide(by_user_id)
+    end
+    self.option_items.each do |oi|
+      oi.hide(by_user_id)
+    end
   end
 
   def unlink

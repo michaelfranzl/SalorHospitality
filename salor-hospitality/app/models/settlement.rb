@@ -285,8 +285,8 @@ class Settlement < ActiveRecord::Base
       begin
       report, found = self.check
         PP.pp report, report_string
-      rescue
-        report_string = "Error during call to Settlement.check"
+      rescue Exception => e
+        report_string = "Error during call to Settlement.check\n\n#{ e.message  }\n\n#{ e.backtrace.inspect }"
       end
       
       if found
