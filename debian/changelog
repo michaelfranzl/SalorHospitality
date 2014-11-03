@@ -1,3 +1,10 @@
+salor-hospitality (4.1.4.75) wheezy; urgency=medium
+
+  * fixed order test to consider CostCenter with no_payment_methods flag
+  * Report errors via email to technician when errors during checking. explicit hiding of item associations
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 03 Nov 2014 15:22:03 +0100
+
 salor-hospitality (4.1.4.74) wheezy; urgency=medium
 
   * updated README
