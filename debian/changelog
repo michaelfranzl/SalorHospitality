@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.76) wheezy; urgency=medium
+
+  * fix order_id for split OptionItems
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 04 Nov 2014 08:43:04 +0100
+
 salor-hospitality (4.1.4.75) wheezy; urgency=medium
 
   * fixed order test to consider CostCenter with no_payment_methods flag
