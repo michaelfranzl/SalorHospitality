@@ -350,6 +350,7 @@ class Item < ActiveRecord::Base
       partner_item.option_items = []
       self.option_items.existing.each do |o|
         partner_option_item = OptionItem.create o.attributes # warning: at this point, the OptionItem still has the wrong count. calling OptionItem.calculate_totals below will fix that.
+        partner_option_item.order = split_order
         partner_item.option_items << partner_option_item
       end
       partner_item.count = 0
