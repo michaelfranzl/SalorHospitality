@@ -1,3 +1,11 @@
+salor-hospitality (4.1.4.78) wheezy; urgency=medium
+
+  * improved customer listing style
+  * improved vendors listing style
+  * method for copying taxes, categories, articles, quantities and options from one vendor to another
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 05 Nov 2014 11:44:08 +0100
+
 salor-hospitality (4.1.4.77) wheezy; urgency=medium
 
   * fix for sales count statistics
