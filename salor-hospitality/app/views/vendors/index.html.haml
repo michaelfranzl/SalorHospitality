@@ -2,12 +2,12 @@
 
 %table
   %tr
-    %th{ :width => '150px' }
+    %th{ :width => '250px' }
     %th{ :width => '150px' }
     %th{ :width => '50px' }
   - @vendors.each do |v|
     %tr
-      %td= link_to v.name, vendor_path(v), :title => t('.switch_to')
-      %td= link_to t('.edit'), edit_vendor_path(v)
+      %td= link_to v.name, edit_vendor_path(v), :class => "list_item"
+      %td= link_to "", vendor_path(v), :title => t('.switch_to'), :class => "iconbutton exit_button"
       - if @current_vendor != v and @current_company.users.existing.where(:default_vendor_id => v.id).empty? and v.users.existing == [@current_user]
         %td= link_to image_tag('button_small_delete.png', :title => Vendor.human_attribute_name(:hidden), :alt => Vendor.human_attribute_name(:hidden)), vendor_path(v), :method => :delete, :confirm => t(:are_you_sure) if @current_company.vendors.existing.count > 1
