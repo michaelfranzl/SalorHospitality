@@ -5,7 +5,7 @@
 
 %table
   %tr
-    %th{ :style => 'width:150px' }= Customer.human_attribute_name :full_name
+    %th{ :style => 'width:300px' }= Customer.human_attribute_name :full_name
     %th{ :style => 'width:200px' }= Customer.human_attribute_name :city
   - @current_company.vendors.existing.each do |v|
     %tr
