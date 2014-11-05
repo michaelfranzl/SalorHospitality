@@ -62,4 +62,60 @@ class Company < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :identifier, :scope => :hidden
   validates_uniqueness_of :name, :scope => :hidden
+  
+  def copy_vendor(from_vendor_id, to_vendor_id)
+    vendor1 = self.vendors.where(:id => from_vendor_id).first
+    vendor2 = self.vendors.where(:id => to_vendor_id).first
+    raise "Vendor ID #{ from_vendor_id } is not part of this company" if vendor1.nil?
+    raise "Vendor ID #{ to_vendor_id } is not part of this company" if vendor2.nil?
+    
+    vendor1.taxes.existing.each do |t1|
+      t2 = t1.dup
+      t2.vendor = vendor2
+      t2.save!
+    end
+    
+    vendor1.categories.existing.each do |c1|
+      c2 = c1.dup
+      c2.vendor = vendor2
+      c2.vendor_printer_id = nil
+      c2.preparation_user_id = nil
+      c2.save!
+      
+      c1.articles.existing.each do |a1|
+        a2 = a1.dup
+        a2.vendor = vendor2
+        a2.category = c2
+        a2.statistic_category_id = nil
+        a2.taxes = []
+        a1.taxes.each do |t1|
+          t2 = vendor2.taxes.find_by_percent(t1.percent)
+          a2.taxes << t2
+        end
+        a2.price ||= 0
+        a2.save!
+        
+        a1.quantities.existing.each do |q1|
+          q2 = q1.dup
+          q2.vendor = vendor2
+          q2.article = a2
+          q2.category = c2
+          q2.statistic_category_id = nil
+          q2.save!
+        end
+      end
+    end
+    
+    vendor1.options.existing.each do |o1|
+      o2 = o1.dup
+      o2.vendor = vendor2
+      o2.categories = []
+      o1.categories.each do |c1|
+        c2 = vendor2.categories.find_by_name(c1.name)
+        o2.categories << c2
+      end
+      o2.save!
+    end
+    
+  end
 end
