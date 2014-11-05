@@ -92,8 +92,12 @@ class StatisticsController < ApplicationController
 
     # data gathering for sales quantities
     if params[:statistics_type] == "statistics_sold_quantities"
-      @item_article_ids = Item.connection.execute("SELECT article_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL AND quantity_id IS NULL").to_a.flatten.uniq
-      @item_quantity_ids = Item.connection.execute("SELECT quantity_id FROM items WHERE vendor_id = #{ @current_vendor.id } AND created_at BETWEEN '#{ @from.strftime("%Y-%m-%d %H:%M:%S") }' AND '#{ @to.strftime("%Y-%m-%d %H:%M:%S") }' AND hidden IS NULL").to_a.flatten.uniq
+      @item_article_ids = @current_vendor.items.existing.where(:settlement_id => @sids).collect{|i| i.article_id}.sort.uniq
+      @item_quantity_ids = @current_vendor.items.existing.where(:settlement_id => @sids).collect{|i| i.quantity_id}
+      @item_quantity_ids.delete(nil)
+      @item_quantity_ids.sort!
+      @item_quantity_ids.uniq!
+      
       @articles = Article.where(:id => @item_article_ids).order(:name)
       @quantities = Quantity.joins(:article).where(:id => @item_quantity_ids).order("articles.tax_id ASC")
       @data = {}
@@ -101,11 +105,12 @@ class StatisticsController < ApplicationController
         items = @current_vendor.items.existing.where(
           :refunded => nil,
           :article_id => a.id,
+          :quantity_id => nil,
           :settlement_id => @sids,
           :user_id => @uids,
           :cost_center_id => @csids
         )
-        @data[a.id] = {
+        @data["article_#{ a.id }"] = {
           :article_name => a.name,
           :quantity_name => "",
           :full_name => a.name,
@@ -125,7 +130,7 @@ class StatisticsController < ApplicationController
           :user_id => @uids,
           :cost_center_id => @csids
         )
-        @data[a.id] = {
+        @data["quantity_#{ q.id }"] = {
           :article_name => a.name,
           :quantity_name => "#{ q.prefix } #{ q.postfix }",
           :full_name => "#{ q.prefix } #{ a.name } #{ q.postfix }",
