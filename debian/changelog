@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.77) wheezy; urgency=medium
+
+  * fix for sales count statistics
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 05 Nov 2014 09:19:27 +0100
+
 salor-hospitality (4.1.4.76) wheezy; urgency=medium
 
   * fix order_id for split OptionItems
