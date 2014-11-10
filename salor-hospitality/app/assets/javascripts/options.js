@@ -62,6 +62,7 @@ function render_options(option_ids, d) {
 function open_options_div(d) {
   if (item_changeable(d) || permissions.add_option_to_sent_item) {
     d = clone_item(d);
+    $(".optionsselect").hide();
     if (settings.mobile) {
       $('#options_div_'+d).show();
     } else {
