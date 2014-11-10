@@ -960,6 +960,12 @@ class Order < ActiveRecord::Base
     vendor = self.vendor
     
     friendly_unit = I18n.t('number.currency.format.friendly_unit', :locale => SalorHospitality::Application::COUNTRIES_REGIONS[vendor.country])
+    
+    header1 = ''
+    header1 +=
+    "\e!\x01" +  # Font B
+    "\ea\x01" +  # center
+    "\n" + I18n.l(DateTime.now + vendor.time_offset.hours, :format => :long) + ", " + self.table.name + ", " + self.user.title
 
     header2 = "\n\n" +
     "\e!\x00" +  # Font A
@@ -990,6 +996,7 @@ class Order < ActiveRecord::Base
 
     output_text =
         "\e@" +     # initialize
+        header1 +
         header2 +
         list_of_items +
         sum_format +
