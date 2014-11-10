@@ -82,6 +82,7 @@ nl:
         finished_at: Finished at
         nr: Nummer
         sum: Sum
+        tax_sum: Taxes
       page:
         active: actief
         color: Kleur
@@ -825,9 +826,6 @@ nl:
       limit_by: Beperken
       query: Vraag
       weekday: Weekdag
-    statistics_weekday:
-      public_holidays: Public holidays
-      weekday: Weekday
     statistics_sold_quantities:
       article_name: Article name
       category: Category
@@ -836,6 +834,9 @@ nl:
       sort_by: Sort by
       sum: Revenue
       tax: Tax
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Bewerk voorraad

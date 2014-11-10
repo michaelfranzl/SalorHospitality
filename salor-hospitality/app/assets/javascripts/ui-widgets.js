@@ -81,6 +81,7 @@ function make_select_widget(elem) {
   if (elem.attr("no_select_widget") == 1)
     return;
   elem.hide();
+  elem.attr("no_select_widget", 1);
   var button = create_dom_element('span', {id:'select_widget_button_for_' + elem.attr("id")});
   button.addClass("button select-widget-button");
   button.html(elem.find("option:selected").text());

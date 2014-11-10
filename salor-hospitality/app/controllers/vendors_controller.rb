@@ -122,12 +122,6 @@ class VendorsController < ApplicationController
   def report
     from = Time.parse(params[:from]).beginning_of_day
     to = Time.parse(params[:to]).end_of_day
-    #sql = ActiveRecord::Base.connection
-    #x = %q[SELECT CONCAT("[", GROUP_CONCAT(  CONCAT('{"r":', IF(refund_sum, refund_sum,'null'), ',"y":', category_id, ',"t":"', REPLACE(taxes,"\n","\\\n"), '"'),   '}'), ']') FROM items]
-    #x += ";"
-    #result = sql.execute x
-    #render :json => result.to_a[0][0]
-    #settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
     
     #------------------------ START WITH PARENT MODELS
     settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }

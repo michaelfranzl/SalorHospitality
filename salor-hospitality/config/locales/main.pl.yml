@@ -82,6 +82,7 @@ pl:
         finished_at: Finished at
         nr: Numer
         sum: Sum
+        tax_sum: Taxes
       page:
         active: Aktywny
         color: Kolor tła
@@ -827,9 +828,6 @@ pl:
       limit_by: Limit by
       query: Query
       weekday: Weekday
-    statistics_weekday:
-      public_holidays: Public holidays
-      weekday: Weekday
     statistics_sold_quantities:
       article_name: Article name
       category: Category
@@ -838,6 +836,9 @@ pl:
       sort_by: Sort by
       sum: Revenue
       tax: Tax
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edytcja stanu magazynu

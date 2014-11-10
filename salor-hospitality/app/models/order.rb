@@ -437,7 +437,15 @@ class Order < ActiveRecord::Base
       cash_payment_methods = self.vendor.payment_methods.existing.where(:cash => true)
       cash_payment_method = cash_payment_methods.first
       if cash_payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.id, :payment_method_id => cash_payment_method.id , :cash => true, :amount => self.sum, :user_id => self.user_id
+        pmi = PaymentMethodItem.new
+        pmi.company_id = self.company_id
+        pmi.vendor_id = self.vendor_id
+        pmi.order_id = self.id
+        pmi.payment_method_id = cash_payment_method.id
+        pmi.cash = true
+        pmi.amount = self.gross
+        pmi.user_id = self.user_id
+        pmi.save
       end
     end
     
@@ -856,17 +864,6 @@ class Order < ActiveRecord::Base
     ]
     sum = sum_format % sum_values
 
-    if self.refund_sum.zero?
-      refund = ''
-    else
-      refundsum_values = [
-        I18n.t(:refund),
-        friendly_unit,
-        number_with_precision(self.refund_sum, :locale => vendor.get_region)
-      ]
-      refund = refundsum_format % refundsum_values
-    end
-
     tax_style =
         "\n\n" +
         "\ea\x01" +  # align center
@@ -945,7 +942,6 @@ class Order < ActiveRecord::Base
         list_of_items +
         sum_style +
         sum +
-        refund +
         tax_style +
         tax_header +
         list_of_taxes +
@@ -1098,6 +1094,8 @@ class Order < ActiveRecord::Base
       item_result, @found = i.check
       @tests[self.id][:items] << item_result if @found
     end
+    
+    # TODO: Add tests for refunds
     
     order_hash_gro_sum = 0
     order_hash_net_sum = 0

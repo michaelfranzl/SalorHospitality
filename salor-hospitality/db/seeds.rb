@@ -23,7 +23,7 @@ if ENV['SEED_MODE'] == 'full'
   company_count = 2
 else
   puts "SEED_MODE is 'minimal'"
-  countries = ['us', 'gn']
+  countries = ['us', 'de']
   languages = ['en', 'gn']
   company_count = 1
 end

@@ -82,6 +82,7 @@ hr:
         finished_at: Finished at
         nr: Broj
         sum: Sum
+        tax_sum: Taxes
       page:
         active: aktivan
         color: Boja
@@ -824,9 +825,6 @@ hr:
       limit_by: Ograniči prema
       query: Upit
       weekday: Radni dan
-    statistics_weekday:
-      public_holidays: Public holidays
-      weekday: Weekday
     statistics_sold_quantities:
       article_name: Article name
       category: Category
@@ -835,6 +833,9 @@ hr:
       sort_by: Sort by
       sum: Revenue
       tax: Tax
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Uredi zalihu

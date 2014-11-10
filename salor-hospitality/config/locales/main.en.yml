@@ -82,6 +82,7 @@ en:
         finished_at: Finished at
         nr: Number
         sum: Sum
+        tax_sum: Taxes
       page:
         active: active
         color: Color

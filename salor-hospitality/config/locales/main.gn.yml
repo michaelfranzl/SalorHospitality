@@ -82,6 +82,7 @@ gn:
         finished_at: Abgeschlossen am
         nr: Nummer
         sum: Summe
+        tax_sum: Steuern
       page:
         active: aktiv
         color: Hintergrund

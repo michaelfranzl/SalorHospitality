@@ -12,7 +12,7 @@
   - if permit('refund')
     = select_tag 'payment_method_selector', options_from_collection_for_select(payment_methods, 'id', 'refund_name', selected_payment_method_id)
   %table
-    - order.items.existing.positioned.each do |item|
+    - order.items.existing.order("quantity_id, article_id, position_category ASC").each do |item|
       - color = item.refunded ? '#FAA' : 'transparent'
       - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
       - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
@@ -26,12 +26,14 @@
         %td.total{ :style => 'text-align:right' }= number_to_currency item.sum
 
     %tr
-      %td{ :colspan => '2'}= t :sum
+      %td{ :colspan => '2'}= Order.human_attribute_name :sum
       %td{ :style => 'text-align:right'}
-        %b= number_to_currency order.sum
-
-    - unless order.refund_sum.zero?
-      %tr
-        %td{ :colspan => '2'}= t :refund
-        %td{ :style => 'text-align:right'}
-          %b= number_to_currency order.refund_sum
+        %b= number_to_currency order.gross
+        
+    %tr
+      %td{ :colspan => '2'}= Order.human_attribute_name :tax_sum
+      %td{ :style => 'text-align:right'}
+        %b= number_to_currency order.tax_sum
+          
+:javascript
+  make_select_widget($("#payment_method_selector"));

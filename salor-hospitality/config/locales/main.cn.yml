@@ -82,6 +82,7 @@ cn:
         finished_at: Finished at
         nr: Number数字
         sum: Sum
+        tax_sum: Taxes
       page:
         active: 活跃
         color: 色彩
@@ -818,9 +819,6 @@ cn:
       limit_by: Limit by
       query: Query
       weekday: 工作日
-    statistics_weekday:
-      public_holidays: Public holidays
-      weekday: Weekday
     statistics_sold_quantities:
       article_name: Article name
       category: Category
@@ -829,6 +827,9 @@ cn:
       sort_by: Sort by
       sum: Revenue
       tax: Tax
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edit Stock

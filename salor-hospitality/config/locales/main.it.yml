@@ -82,6 +82,7 @@ it:
         finished_at: Finito il
         nr: Numero
         sum: Somma
+        tax_sum: Taxes
       page:
         active: Attivo
         color: Colore
@@ -821,9 +822,6 @@ it:
       limit_by: Limite per
       query: Interrogazione
       weekday: Giorno lavorativo
-    statistics_weekday:
-      public_holidays: Public holidays
-      weekday: Weekday
     statistics_sold_quantities:
       article_name: Article name
       category: Category
@@ -832,6 +830,9 @@ it:
       sort_by: Sort by
       sum: Revenue
       tax: Tax
+    statistics_weekday:
+      public_holidays: Public holidays
+      weekday: Weekday
   stocks:
     new:
       edit_stock: Edita magazzino

@@ -96,19 +96,42 @@ class Item < ActiveRecord::Base
     write_attribute :scribe, scribe
     write_attribute :scribe_escpos, Escper::Img.new(self.scribe_bitmap,:obj).to_s
   end
+  
+  def gross
+    if self.vendor.country == "us"
+      self.sum + self.tax_sum
+    else
+      self.sum
+    end
+  end
 
   def refund(by_user, payment_method_id)
     return if self.refunded
     unless self.cost_center and self.cost_center.no_payment_methods == true
-      payment_method = PaymentMethod.where(:company_id => self.company_id, :vendor_id => self.vendor_id).find_by_id(payment_method_id)
+      payment_method = PaymentMethod.where(
+        :company_id => self.company_id,
+        :vendor_id => self.vendor_id
+      ).find_by_id(payment_method_id)
       if payment_method
-        PaymentMethodItem.create :company_id => self.company_id, :vendor_id => self.vendor_id, :order_id => self.order_id, :payment_method_id => payment_method_id, :cash => payment_method.cash, :amount => self.sum, :refunded => true, :refund_item_id => self.id, :settlement_id => self.settlement_id, :cost_center_id => self.cost_center_id, :user_id => by_user
+        pmi = PaymentMethodItem.new
+        pmi.company_id = self.company_id
+        pmi.vendor_id = self.vendor_id
+        pmi.order_id = self.order_id
+        pmi.payment_method_id = payment_method_id
+        pmi.cash = payment_method.cash
+        pmi.amount = self.gross
+        pmi.refunded = true
+        pmi.refund_item_id = self.id
+        pmi.settlement_id = self.settlement_id
+        pmi.cost_center_id = self.cost_center_id
+        pmi.user_id = by_user
+        pmi.save
       end
     end
     
     self.refunded = true
     self.refunded_by = by_user.id
-    self.refund_sum = self.sum
+    self.refund_sum = self.full_price # is net for USA, is gross for all other countries
     self.tax_items.existing.update_all :refunded => true
     self.calculate_totals
     self.order.calculate_totals
@@ -118,13 +141,13 @@ class Item < ActiveRecord::Base
   end
 
   def calculate_totals
-    self.price = price # the JS UI doesn't send the price by default, so we get it from article or quantity
+    self.price = self.price # assign the setter the getter value. The JS UI doesn't send the price by default, so we get it from article or quantity
     self.category ||= self.article.category
     self.statistic_category_id ||= self.article.statistic_category_id
     self.position_category ||= self.category.position
     self.cost_center_id = self.order.cost_center_id # for the split items function, self.order.cost_center_id is still nil
     self.option_items.update_all :count => self.count
-    self.sum = full_price
+    self.sum = self.full_price
     self.calculate_taxes(self.article.taxes)
     self.save
   end
@@ -245,7 +268,8 @@ class Item < ActiveRecord::Base
 
   def full_price
     return 0 if self.price.nil? or self.count.nil?
-    self.price * self.count + self.option_items.sum(:sum)
+    return self.price * self.count + self.option_items.sum(:sum)
+    # returns net for USA, gross for every other country
   end
   
   def price_with_options
