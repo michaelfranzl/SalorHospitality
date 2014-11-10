@@ -29,6 +29,7 @@ function display_quantities(article_id, target) {
       var element = qbutton;
       var quantity_id = q_id;
       qbutton.on('click', function(event) {
+        $(".optionsselect").hide();
         add_new_item(quantity_id, 'quantity', false);
         highlight_button(element);
         highlight_border(element);

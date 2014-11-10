@@ -27,6 +27,7 @@ function display_articles(cat_id) {
         var element = abutton;
         var article_id = art_id;
         abutton.on('click', function() {
+          $(".optionsselect").hide();
           highlight_button(element);
           highlight_border(element);
           if (settings.workstation) {
@@ -47,6 +48,7 @@ function display_articles(cat_id) {
         var article_id = art_id;
         var target = qcontainer;
         abutton.on('click', function(event) {
+          $(".optionsselect").hide();
           if ($("#article_" + article_id + "_quantities").html() != "") {
             // this quantities menu is shown
             $('.quantities').html('');
