@@ -21,18 +21,13 @@ function display_articles(cat_id) {
     qcontainer.addClass('quantities');
     qcontainer.css('display','none');
     qcontainer.attr('id','article_' + art_id + '_quantities');
-    (function() {
-      var element = abutton;
-      abutton.on('click', function(){
-        highlight_button(element);
-      });
-    })();
     if (qu_ids.length == 0) {
       // no submenu for quantities
       (function() { 
         var element = abutton;
         var article_id = art_id;
         abutton.on('click', function() {
+          highlight_button(element);
           highlight_border(element);
           if (settings.workstation) {
             $('.quantities').slideUp();
@@ -52,7 +47,14 @@ function display_articles(cat_id) {
         var article_id = art_id;
         var target = qcontainer;
         abutton.on('click', function(event) {
-          display_quantities(article_id, target);
+          if ($("#article_" + article_id + "_quantities").html() != "") {
+            // this quantities menu is shown
+            $('.quantities').html('');
+          } else {
+            $('.quantities').html('');
+            display_quantities(article_id, target);
+          }
+          
         });
       })();
       qcontainer.insertAfter(abutton);
