@@ -1,3 +1,14 @@
+salor-hospitality (4.1.4.79) wheezy; urgency=medium
+
+  * dont clutter POS view with opened quantities submenus
+  * max 1 open options div to prevent cluttering
+  * max 1 open options div to prevent cluttering
+  * fixed USA change and refund calculation, refund form: better sorting and payment method selection
+  * reduce Item printed_count together with count
+  * interim receipt now has date, time, table and user info
+
+ -- Michael Franzl <office@michaelfranzl.com>  Mon, 10 Nov 2014 22:34:29 +0100
+
 salor-hospitality (4.1.4.78) wheezy; urgency=medium
 
   * improved customer listing style
