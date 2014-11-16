@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.80) wheezy; urgency=medium
+
+  * fix for printed_count when item splitting
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 16 Nov 2014 21:46:18 +0100
+
 salor-hospitality (4.1.4.79) wheezy; urgency=medium
 
   * dont clutter POS view with opened quantities submenus
