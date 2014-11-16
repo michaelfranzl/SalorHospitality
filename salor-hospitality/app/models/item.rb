@@ -387,9 +387,9 @@ class Item < ActiveRecord::Base
     end
     count = self.count if count > self.count # do not decrement into negative numbers
     partner_item.count += count
-    partner_item.printed_count += count
+    partner_item.printed_count = partner_item.count
     self.count -= count
-    self.printed_count -= count
+    self.printed_count = self.count
     self.max_count = self.count
     self.hide(-3) if self.count.zero?
     partner_item.save
