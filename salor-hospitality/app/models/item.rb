@@ -310,6 +310,16 @@ class Item < ActiveRecord::Base
     self.tax_items.each do |ti|
       ti.hide(by_user_id)
     end
+    
+    # ---
+    # Temporary attempt to fix missing hidden flags for TaxItems
+    TaxItem.where(:vendor_id => self.vendor.id, :item_id => self.id).update_all(
+      :hidden => true,
+      :hidden_at => Time.now,
+      :hidden_by => by_user_id
+    )
+    # ---
+
     self.option_items.each do |oi|
       oi.hide(by_user_id)
     end
