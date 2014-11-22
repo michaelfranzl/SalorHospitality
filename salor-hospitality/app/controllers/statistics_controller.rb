@@ -194,7 +194,7 @@ class StatisticsController < ApplicationController
       erb = ERB.new(template, 0, '>')
       return erb.result(binding)
     else
-      return "Printing of this statistic type is not implemented yet.\n\n\n\n\n"
+      return "\n\nPrinting of this statistic type (#{ template }) is not implemented yet.\n\n\n\n\n"
     end
   end
 end
