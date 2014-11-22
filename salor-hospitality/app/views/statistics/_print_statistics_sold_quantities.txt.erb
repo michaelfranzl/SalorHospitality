@@ -6,7 +6,7 @@
 <%= "\e!\x00" %>
 <% @data.each do |id, data| %>
 <% next if data[:count].zero? %>
-<%= "%23.23s %s %7.2f %5i\n" % [data[:full_name], @friendly_unit, data[:sum], data[:count]] %>
+<%= "%s %21.21s %s %7.2f %5i\n" % [data[:tax_letter], data[:full_name], @friendly_unit, data[:sum], data[:count]] %>
 <% end %>
 
 <%= "\xc4" * 42 %>

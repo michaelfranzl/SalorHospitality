@@ -115,6 +115,7 @@ class StatisticsController < ApplicationController
           :quantity_name => "",
           :full_name => a.name,
           :tax => a.taxes.first.name,
+          :tax_letter => a.taxes.first.letter,
           :category => a.category.name,
           :count => items.sum(:count).round(2),
           :sum => items.sum(:sum).round(2)
@@ -135,6 +136,7 @@ class StatisticsController < ApplicationController
           :quantity_name => "#{ q.prefix } #{ q.postfix }",
           :full_name => "#{ q.prefix } #{ a.name } #{ q.postfix }",
           :tax => a.taxes.first.name,
+          :tax_letter => a.taxes.first.letter,
           :category => a.category.name,
           :count => items.sum(:count).round(2),
           :sum => items.sum(:sum).round(2)
