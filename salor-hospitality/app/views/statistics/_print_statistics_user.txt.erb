@@ -1,0 +1,16 @@
+
+
+<%= "\e!\x38" %>
+<%= User.model_name.human %>
+
+<%= "\e!\x00" %>
+<% total = 0 %>
+<% [@uids].flatten.each do |uid| %>
+<% next if uid.nil? %>
+<% sum = @current_vendor.items.existing.where(:refunded => nil, :user_id => uid, :cost_center_id => @csids, :settlement_id => @sids).sum(:sum) %>
+<% user = @current_vendor.users.find_by_id(uid) %>
+<%= "%10.10s     %s %7.2f\n" % [user.login, @friendly_unit, sum] %>
+<% total += sum %>
+<% end %>
+<%= "%10.10s     %s %7.2f\n" % [I18n.t(:sum), @friendly_unit, total] %>
+<%= "\xc4" * 42 %>

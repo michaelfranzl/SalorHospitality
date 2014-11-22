@@ -227,6 +227,7 @@ module SalorHospitality
       'statistics_statistic_category',
       'statistics_tax',
       'statistics_sold_quantities',
+      'statistics_user',
       'allow_exit',
       'assign_users_to_vendors',
       'manage_advertising',

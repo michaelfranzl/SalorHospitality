@@ -1,0 +1,27 @@
+%table.settlements.statistics
+  %tr
+    %th.bb= User.model_name.human
+    %th.bb= t :sum
+    %th.bb.bar
+  - sums = []
+  - i = 0
+  - [@uids].flatten.each do |uid|
+    - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => uid, :cost_center_id => @csids, :settlement_id => @sids).sum(:sum)
+    - i += 1
+  - maximum = sums.sort.last
+  - i = 0
+  - [@uids].flatten.each do |uid|
+    - next if uid.nil?
+    - user = @current_vendor.users.find_by_id(uid)
+    %tr
+      %td= user.login
+      %td= number_to_currency sums[i]
+      %td
+        .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
+    - i += 1
+  %tr
+    %td
+      %b= t :sum
+    %td
+      %b= number_to_currency sums.sum
+    %td

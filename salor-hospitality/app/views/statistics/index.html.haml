@@ -33,6 +33,9 @@
       %span.button#stat_printbutton{ :onclick => 'statistics_submit(true)' }= t('various.print')
 
   - unless params[:statistics_type].nil? or params[:statistics_type].empty?
+    %p
+      %b== #{ t ("activerecord.models.settlement.other") }:
+      = @sids.collect { |sid| Settlement.find_by_id(sid).nr }.join(", ")
     = render :partial => params[:statistics_type] 
 
 :javascript

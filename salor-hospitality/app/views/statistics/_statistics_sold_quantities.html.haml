@@ -1,7 +1,3 @@
-%p
-  %b== #{ t ("activerecord.models.settlement.other") }:
-  = @sids.collect { |sid| Settlement.find_by_id(sid).nr }.join(", ")
-
 %label.wide{ :for => "sortby" }= t ".sort_by"
 %br
 
