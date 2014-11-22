@@ -728,16 +728,16 @@ gn:
         statistics_statistic_category: Statistik-Kategorien
         statistics_table: Tische
         statistics_tax: Steuern
-        statistics_weekday: Wochentage
         statistics_user: Benutzer
+        statistics_weekday: Wochentage
       statistics_category: Statistik zeige Kategorie
       statistics_payment_method: Statistik zeige Zahlungsmethode
       statistics_sold_quantities: Statistik zeige Verkaufszahlen
       statistics_statistic_category: Statistik zeige Statistik-Kategorien
       statistics_table: Statistik zeige Tisch
       statistics_tax: Statistik zeige Steuern
-      statistics_weekday: Statistik zeige Wochentag
       statistics_user: Statistik zeige Benutzer
+      statistics_weekday: Statistik zeige Wochentag
       take_orders: Bestellungen aufnehmen
       view_all_settlements: Alle Losungen ansehen
       view_settlements_table: Losungs-Tabelle anzeigen

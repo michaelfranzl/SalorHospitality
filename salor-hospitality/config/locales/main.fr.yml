@@ -729,6 +729,7 @@ fr:
         statistics_table: Tables
         statistics_tax: Taxes
         statistics_weekday: Weekdays
+        statistics_user: Users
       statistics_category: Statistics Category
       statistics_payment_method: Statistics Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
@@ -739,6 +740,7 @@ fr:
       take_orders: Prendre les commandes
       view_all_settlements: Voir tous les settlements
       view_settlements_table: View settlements table
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Créer tableau de prix

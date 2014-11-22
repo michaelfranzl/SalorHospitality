@@ -730,6 +730,7 @@ nl:
         statistics_table: Tabellen
         statistics_tax: Belastingen
         statistics_weekday: Weekdagen
+        statistics_user: Users
       statistics_category: Statistieken toon Categorieën
       statistics_payment_method: Statistieken toon Betalingsmethoden
       statistics_sold_quantities: Statistieken toon verkochte hoeveelheden
@@ -740,6 +741,7 @@ nl:
       take_orders: Neem bestelloing op
       view_all_settlements: Bekijk alle akkoorden
       view_settlements_table: Bekijk akkoorden tabel
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Maak een prijsstructuur

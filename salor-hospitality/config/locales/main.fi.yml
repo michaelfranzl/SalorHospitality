@@ -729,6 +729,7 @@ fi:
         statistics_table: Pöydät
         statistics_tax: Verot
         statistics_weekday: Arkisin
+        statistics_user: Users
       statistics_category: Kategoriat mukana tilastossa
       statistics_payment_method: Maksutavat mukana tilastossa
       statistics_sold_quantities: Myydyt määrät mukana tilastossa
@@ -739,6 +740,7 @@ fi:
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu

@@ -730,6 +730,7 @@ hr:
         statistics_table: Stolovi
         statistics_tax: Porezi
         statistics_weekday: Radni dani
+        statistics_user: Users
       statistics_category: Statistika pokaži kategorije
       statistics_payment_method: Statistika pokaži načine plaćanja
       statistics_sold_quantities: Statistika pokaži prodane količine
@@ -740,6 +741,7 @@ hr:
       take_orders: Primi narudžbe
       view_all_settlements: Pogledaj sve obračune
       view_settlements_table: Pogledaj obračunsku tablicu
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generiraj kostur cijene

@@ -727,6 +727,7 @@ it:
         statistics_table: Tavoli
         statistics_tax: Tasse
         statistics_weekday: Giorni lavorativi
+        statistics_user: Users
       statistics_category: Statistiche categoria
       statistics_payment_method: Statistiche metodi pagamento
       statistics_sold_quantities: Statistiche quantità vendute
@@ -737,6 +738,7 @@ it:
       take_orders: Prendi ordini
       view_all_settlements: Visualizza tutti i saldi
       view_settlements_table: Visualizza saldi tavolo
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Genera prezzo indicativo

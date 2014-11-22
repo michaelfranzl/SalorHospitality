@@ -728,6 +728,7 @@ kh:
         statistics_table: Tables
         statistics_tax: Taxes
         statistics_weekday: Weekdays
+        statistics_user: Users
       statistics_category: Statistics show Categories
       statistics_payment_method: Statistics show Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
@@ -738,6 +739,7 @@ kh:
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

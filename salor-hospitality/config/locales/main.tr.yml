@@ -730,6 +730,7 @@ tr:
         statistics_table: Tables
         statistics_tax: Taxes
         statistics_weekday: Weekdays
+        statistics_user: Users
       statistics_category: Statistics Category
       statistics_payment_method: Statistics Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
@@ -740,6 +741,7 @@ tr:
       take_orders: XXXTake orders
       view_all_settlements: XXXView all settlements
       view_settlements_table: View settlements table
+      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
