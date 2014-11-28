@@ -1,3 +1,14 @@
+salor-hospitality (4.1.4.82) wheezy; urgency=medium
+
+  * printing: added tax letter for sales quantity statistics
+  * added statistic type: user
+  * updated translations
+  * fix for unsupported statistic type message
+  * added tax filter for statistic sold quantities
+  * added tax filter for statistic sold quantities
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 28 Nov 2014 10:30:32 +0100
+
 salor-hospitality (4.1.4.81) wheezy; urgency=medium
 
   * added additional alternative setting of hidden flags for TaxItems
