@@ -6,8 +6,7 @@
 
 %label{ :for => "filter_tax" }= Tax.model_name.human
 
-
-= select_tag "filter_tax_id", options_from_collection_for_select(@taxes, :id, :name, params[:filter_tax_id]), :onchange => "statistics_submit();"
+= select_tag "filter_tax_id", options_from_collection_for_select(@taxes, :id, :name, params[:filter_tax_id]), :include_blank => true, :onchange => "statistics_submit();"
 
 
 %table.settlements.statistics
