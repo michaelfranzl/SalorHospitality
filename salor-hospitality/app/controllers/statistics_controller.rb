@@ -102,6 +102,7 @@ class StatisticsController < ApplicationController
       @quantities = Quantity.joins(:article).where(:id => @item_quantity_ids).order("articles.tax_id ASC")
       @data = {}
       @articles.each do |a|
+        next if not params[:filter_tax_id].blank? and a.taxes.first.id != params[:filter_tax_id].to_i
         items = @current_vendor.items.existing.where(
           :refunded => nil,
           :article_id => a.id,
@@ -124,6 +125,7 @@ class StatisticsController < ApplicationController
       
       @quantities.each do |q|
         a = q.article
+        next if not params[:filter_tax_id].blank? and a.taxes.first.id != params[:filter_tax_id].to_i
         items = @current_vendor.items.existing.where(
           :refunded => nil,
           :quantity_id => q.id,
