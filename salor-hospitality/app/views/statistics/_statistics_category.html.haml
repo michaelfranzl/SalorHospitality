@@ -6,7 +6,7 @@
   - sums = []
   - i = 0
   - @categories.each do |cat|
-    - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat, :cost_center_id => @csids, :settlement_id => @sids).sum(:sum)
+    - sums[i] =  @current_vendor.items.existing.where(:refunded => nil, :user_id => @uids, :category_id => cat.id, :cost_center_id => @csids, :settlement_id => @sids).sum(:sum)
     - i += 1
   - maximum = sums.sort.last
   - i = 0
@@ -17,3 +17,9 @@
       %td
         .statistics_bar{ :style => "width:#{2 + 200 * sums[i]/maximum}px" }
     - i += 1
+  %tfoot
+    %tr
+      %td
+      %td
+        %b= number_to_currency sums.sum
+      %td

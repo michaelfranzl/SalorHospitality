@@ -172,54 +172,38 @@ class Item < ActiveRecord::Base
         :e => tax.name,
         :p => tax.percent
       }
-      
-      self.save! if self.new_record? # we need an id for the next step
-      
-      self.tax_items.update_all :hidden => true, :hidden_at => Time.now, :hidden_by => -8
-      
-      # see if we can re-use a previously hidden TaxItem in this order
-      tax_item = TaxItem.where(
-        :vendor_id => self.vendor_id,
-        :company_id => self.company_id,
-        :item_id => self.id,
-        :tax_id => tax.id,
-        :order_id => self.order_id).last
-      
-      # TaxItem creation
-      if tax_item
-        tax_item.update_attributes(
-          :gro => gro,
-          :net => net,
-          :tax => tax_sum,
-          :letter => tax.letter,
-          :name => tax.name,
-          :percent => tax.percent,
-          :hidden => nil,
-          :hidden_at => nil,
-          :hidden_by => nil,
-        )
-      else
-        TaxItem.create(
-          :vendor_id => self.vendor_id,
-          :company_id => self.company_id,
-          :item_id => self.id,
-          :tax_id => tax.id,
-          :order_id => self.order_id,
-          :gro => gro,
-          :net => net,
-          :tax => tax_sum,
-          :letter => tax.letter,
-          :name => tax.name,
-          :percent => tax.percent,
-          :category_id => self.category_id,
-          :statistic_category_id => self.statistic_category_id,
-          :cost_center_id => self.order.cost_center_id,
-        )
-      end
       tax_sum_total += tax_sum
     end
     self.tax_sum = tax_sum_total
     self.save
+  end
+  
+  def create_tax_items
+    self.taxes.each do |tax_id, val|
+      gro = val[:g]
+      net = val[:n]
+      tax = val[:t]
+      letter = val[:l]
+      percent = val[:p]
+      name = val[:e]
+      
+      ti = TaxItem.new
+      ti.vendor_id = self.vendor_id
+      ti.company_id = self.company_id
+      ti.item_id = self.id
+      ti.tax_id = tax_id
+      ti.order_id = self.order_id
+      ti.gro = gro
+      ti.net = net
+      ti.tax = tax
+      ti.letter = letter
+      ti.name = name
+      ti.percent = percent
+      ti.category_id = self.category_id
+      ti.statistic_category_id = self.statistic_category_id
+      ti.cost_center_id = self.order.cost_center_id
+      ti.save!
+    end
   end
   
 
@@ -310,15 +294,6 @@ class Item < ActiveRecord::Base
     self.tax_items.each do |ti|
       ti.hide(by_user_id)
     end
-    
-    # ---
-    # Temporary attempt to fix missing hidden flags for TaxItems
-    TaxItem.where(:vendor_id => self.vendor.id, :item_id => self.id).update_all(
-      :hidden => true,
-      :hidden_at => Time.now,
-      :hidden_by => by_user_id
-    )
-    # ---
 
     self.option_items.each do |oi|
       oi.hide(by_user_id)
@@ -422,7 +397,6 @@ class Item < ActiveRecord::Base
     current_tax_id_index = tax_ids.index current_item_tax.id
     next_tax_id = tax_ids.rotate[current_tax_id_index]
     next_tax = self.vendor.taxes.find_by_id(next_tax_id)
-    self.tax_items.update_all :hidden => true, :hidden_by => -4, :hidden_at => Time.now
     self.calculate_taxes([next_tax])
     self.order.calculate_totals
   end

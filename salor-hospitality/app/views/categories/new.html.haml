@@ -21,7 +21,7 @@
             = category_form.fields_for :images do |image_form|
               %span.label_width= image_form.label Category.human_attribute_name(:image)
               %br
-              - if @category.icon == 'custom'
+              - if @category.icon == 'custom' and not @category.images.first.id.nil?
                 %div.category{:style => "background-color: #{@category.color}; background-image: url('#{@category.icon_path}');"}
                 %br
               %span.input_fields
