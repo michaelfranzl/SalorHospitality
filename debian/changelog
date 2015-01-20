@@ -1,3 +1,11 @@
+salor-hospitality (4.1.4.83) wheezy; urgency=medium
+
+  * speed increase and fix for "non-hidden TaxItem Bug": create TaxItems only once when order is finished
+  * removed old refund method. from now on, refunds have to be entered as negative items/orders. this is much better for accounting, and much simpler
+  * include superuser in settlements
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 20 Jan 2015 10:34:49 +0100
+
 salor-hospitality (4.1.4.82) wheezy; urgency=medium
 
   * printing: added tax letter for sales quantity statistics
