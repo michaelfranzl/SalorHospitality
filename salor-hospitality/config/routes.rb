@@ -59,7 +59,6 @@ SalorHospitality::Application.routes.draw do
   resources :orders do
     collection do
       post :login
-      get :refund
       get :last_invoices
       get :logout
       post :by_nr
@@ -74,7 +73,6 @@ SalorHospitality::Application.routes.draw do
     end
   end
 
-  match 'orders/refund/:id' => 'orders#refund'
   match 'orders/reactivate/:id' => 'orders#reactivate'
   match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   match 'settlements/print/:id' => 'settlements#print'

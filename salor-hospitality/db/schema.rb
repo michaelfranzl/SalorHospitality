@@ -286,10 +286,10 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "logged_in"
-    t.string   "tax_info"
     t.string   "password_encrypted"
     t.string   "password_salt"
     t.string   "id_hash"
+    t.string   "tax_info"
   end
 
   create_table "discounts", :force => true do |t|
@@ -810,24 +810,6 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
   add_index "rooms", ["hidden"], :name => "index_rooms_on_hidden"
   add_index "rooms", ["vendor_id"], :name => "index_rooms_on_vendor_id"
 
-  create_table "salor_saas_subscription_users", :force => true do |t|
-    t.string   "ip"
-    t.string   "subdomain"
-    t.boolean  "https"
-    t.boolean  "httpauth"
-    t.string   "email"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.string   "salt"
-    t.boolean  "confirmation_email_sent"
-    t.boolean  "confirmation_link_clicked"
-    t.boolean  "completed"
-    t.string   "payment_provider"
-    t.datetime "last_paid_at"
-    t.integer  "last_paid_amount"
-    t.integer  "payment_interval"
-  end
-
   create_table "seasons", :force => true do |t|
     t.string   "name"
     t.datetime "from_date"
@@ -1127,13 +1109,13 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.integer  "default_vendor_id"
     t.string   "advertising_url"
     t.integer  "advertising_timeout",       :default => -1
+    t.string   "salt"
+    t.string   "encrypted_password"
     t.float    "hourly_rate"
     t.integer  "maximum_shift_duration",    :default => 9999
     t.integer  "current_settlement_id"
     t.boolean  "track_time"
     t.string   "layout",                    :default => "auto"
-    t.string   "salt"
-    t.string   "encrypted_password"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
@@ -1216,9 +1198,8 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.datetime "hidden_at"
     t.boolean  "history_print"
     t.string   "branding",                    :limit => 5000,     :default => "--- {}\n"
-    t.string   "identifier"
-    t.integer  "ticket_space_top",                                :default => 5
     t.string   "full_subdomain"
+    t.string   "identifier"
     t.string   "full_url"
     t.string   "virtualhost_filter"
     t.integer  "auth_https_mode"
@@ -1226,6 +1207,7 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.boolean  "auth"
     t.string   "domain"
     t.string   "subdomain"
+    t.integer  "ticket_space_top",                                :default => 5
     t.text     "public_holidays"
   end
 

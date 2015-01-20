@@ -105,41 +105,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def refund(by_user, payment_method_id)
-    return if self.refunded
-    unless self.cost_center and self.cost_center.no_payment_methods == true
-      payment_method = PaymentMethod.where(
-        :company_id => self.company_id,
-        :vendor_id => self.vendor_id
-      ).find_by_id(payment_method_id)
-      if payment_method
-        pmi = PaymentMethodItem.new
-        pmi.company_id = self.company_id
-        pmi.vendor_id = self.vendor_id
-        pmi.order_id = self.order_id
-        pmi.payment_method_id = payment_method_id
-        pmi.cash = payment_method.cash
-        pmi.amount = self.gross
-        pmi.refunded = true
-        pmi.refund_item_id = self.id
-        pmi.settlement_id = self.settlement_id
-        pmi.cost_center_id = self.cost_center_id
-        pmi.user_id = by_user
-        pmi.save
-      end
-    end
-    
-    self.refunded = true
-    self.refunded_by = by_user.id
-    self.refund_sum = self.full_price # is net for USA, is gross for all other countries
-    self.tax_items.existing.update_all :refunded => true
-    self.calculate_totals
-    self.order.calculate_totals
-    
-    self.settlement.calculate_totals if self.settlement
-    self.unlink
-  end
-
   def calculate_totals
     self.price = self.price # assign the setter the getter value. The JS UI doesn't send the price by default, so we get it from article or quantity
     self.category ||= self.article.category

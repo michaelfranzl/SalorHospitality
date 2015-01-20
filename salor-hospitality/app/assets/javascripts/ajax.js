@@ -50,17 +50,6 @@ function update_order_from_invoice_form(data, button) {
  
 }
 
-function update_order_from_refund_form(data) {
-  data['currentview'] = 'refund';
-  $.ajax({
-    type: 'GET',
-    url: '/route',
-    cache: false,
-    data: data,
-    timeout: 20000
-  });
-}
-
 function rotate_tax_item(id) {
   $.ajax({
     type: 'PUT',

@@ -1,6 +1,0 @@
-//TODO: Timers are still triggered here leading to JS Error.
-%a.iconbutton.scrolldown_button{ :onclick => 'scroll_to("#footer",10)', :title => t(:scroll_down) }
-%a.iconbutton.tables_button{ :href => "#{orders_path}", :title => t(:go_back) }
-%h2= t :refund
-%div#invoices= render :partial => 'orders/refund_form', :locals => { :order => @order }
-%a.iconbutton.scrollup_button{ :onclick => 'scroll_to("#header",10)', :title => t(:scroll_up) }

@@ -5,8 +5,6 @@
   - @current_vendor.vendor_printers.existing.each do |p|
     %a{ :onclick => "update_order({id:#{@order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
   %a.iconbutton.print2_button{ :onclick => "window.print()", :title => (t '.print_business_invoice') }
-  - unless @order.booking_id or @order.settlement_id
-    = link_to '', "/orders/refund/#{@order.id}", :class => 'iconbutton refund_button', :title => t(:refund), :style => branding_override_style(:buttons, :refund)
     
   - if permit('reactivate_orders')
     %a.iconbutton.gear_button{ :href => "/orders/reactivate/#{@order.id}", :title => (t '.reactivate') }
