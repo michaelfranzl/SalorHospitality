@@ -30,7 +30,7 @@ class SettlementsController < ApplicationController
 
   def open
     if permit('finish_all_settlements') or permit('view_all_settlements')
-      @users = @current_vendor.users.existing.active.where('role_weight > 0')
+      @users = @current_vendor.users.existing.active
     else
       @users = [@current_user]
     end
