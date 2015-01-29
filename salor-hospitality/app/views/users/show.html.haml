@@ -1,10 +1,21 @@
 %h2= @user.login
 
-%p== Rolle: #{ @user.role }
+%a.iconbutton.back_button{ :href => '/users', :title => t(:go_back) }
 
-%table{ :class => 'settlements' }
-  - sum = 0
-  - @user.settlements.each do |s|
-    %tr
-      %td{ :style => 'width:220px' }= l s.created_at, :format => :datetime_iso
-      %td{ :style => 'width:120px' }= link_to("#{ Settlement.model_name.human } ##{s.id}", user_settlement_path(@user,s))
+%br
+%br     
+
+%h3= t("activerecord.models.user_login.other")
+
+= form_tag user_path(@user), :method => :get, :id => 'statisticform' do
+  .limitby
+    = label 'from', t('settlements.index.start_date'), :class => 'right'
+    = select_date(@from, :prefix => 'from', :order => [:year, :month, :day])
+    %br
+    = label 'to', t('settlements.index.end_date'), :class => 'right'
+    = select_date(@to, :prefix => 'to', :order => [:year, :month, :day])
+    %br
+    %span.button{ :onclick => "$('form#statisticform').submit()"}= t('various.display')
+  
+.clear
+= render :partial => "logins_table", :locals => { :user_logins => @user_logins, :user => @user, :last_login => @user.user_logins.last }

@@ -1,0 +1,24 @@
+#user_logins
+  %table
+    %tr
+      %th
+      %th
+      %th= UserLogin.human_attribute_name(:duration)
+    - duration_sum = 0
+    - user_logins.each do |ul|
+      - duration_sum += ul.duration if ul.logout
+      %tr{ :class => "#{ 'total' if ul.logout }" }
+        %td.left= ul.login ? "#{ UserLogin.human_attribute_name(:login) } ▶" : "◁ #{ UserLogin.human_attribute_name(:logout) }"
+        %td= l((ul.login ? ul.login: ul.logout), :format => :long)
+        %td= UserLogin.duration_formatted(ul.duration.to_i) if ul.logout
+      - if ul == last_login and ul.logout.nil?
+        %tr.total{ :style => 'color:green' }
+          %td
+          %td== #{  t '.on_duty' }...
+          - on_duty_mins = (Time.now - ul.login).to_i / 60
+          - duration_sum += on_duty_mins
+          %td= UserLogin.duration_formatted(on_duty_mins)
+    %tr
+      %td
+      %td
+      %td{ :style => "font-size: 150%" }= UserLogin.duration_formatted(duration_sum)

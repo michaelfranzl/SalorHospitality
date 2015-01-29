@@ -27,6 +27,9 @@
         %td= SalorHospitality::Application::LANGUAGES[u.language]
         %td
           - if role.weight >= @current_user.role.weight
+            = link_to t("activerecord.models.user_login.other"), user_path(u), :class => "list_item"
+        %td
+          - if role.weight >= @current_user.role.weight
             = link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)
 
 %br
@@ -43,19 +46,5 @@
     - user_logins = u.user_logins.where(:created_at => Time.now.beginning_of_day..Time.now)
     - if u.track_time and user_logins.any?
       %h4= u.login
-      #user_logins
-        %table
-          %tr
-            %th
-            %th
-            %th= UserLogin.human_attribute_name(:duration)
-          - user_logins.each do |ul|
-            %tr{ :class => "#{ 'total' if ul.logout }" }
-              %td.left= ul.login ? "#{ UserLogin.human_attribute_name(:login) } ▶" : "◁ #{ UserLogin.human_attribute_name(:logout) }"
-              %td= l((ul.login ? ul.login: ul.logout), :format => :long)
-              %td= UserLogin.duration_formatted(ul.duration.to_i) if ul.logout
-            - if ul == u.user_logins.last and ul.logout.nil?
-              %tr.total{ :style => 'color:green' }
-                %td
-                %td== #{  t '.on_duty' }...
-                %td= UserLogin.duration_formatted((Time.now - ul.login).to_i / 60)
+      = render :partial => "logins_table", :locals => { :user_logins => user_logins, :user => u, :last_login => u.user_logins.last }
+     

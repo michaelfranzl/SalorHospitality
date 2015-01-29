@@ -29,6 +29,8 @@ class UsersController < ApplicationController
 
   def show
     @user = get_model
+    @from, @to = assign_from_to(params)
+    @user_logins = @user.user_logins.where(:created_at => @from..@to)
     redirect_to users_path and return unless @user
   end
 
