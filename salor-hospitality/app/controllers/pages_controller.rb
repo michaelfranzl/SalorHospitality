@@ -100,7 +100,7 @@ class PagesController < ApplicationController
   end
   
   def fetch_vendor
-    @company = Company.existing.active.where(:mode => 'local').first
+    @company = Company.existing.active.first
     @vendor = @company.vendors.existing.find_by_id(params[:v])
   end
 
