@@ -359,6 +359,9 @@ it:
       vendor_printer:
         one: Stampante
         other: Stampanti
+      user_login:
+        one: Work time
+        other: Work times
   admin: Admin
   are_you_sure: Sei sicuro?
   articles:
@@ -726,19 +729,19 @@ it:
         statistics_statistic_category: Statistica categorie
         statistics_table: Tavoli
         statistics_tax: Tasse
-        statistics_weekday: Giorni lavorativi
         statistics_user: Users
+        statistics_weekday: Giorni lavorativi
       statistics_category: Statistiche categoria
       statistics_payment_method: Statistiche metodi pagamento
       statistics_sold_quantities: Statistiche quantità vendute
       statistics_statistic_category: Statistiche categoria
       statistics_table: Statistiche tavolo
       statistics_tax: Statistiche tassa
+      statistics_user: Statistics show Users
       statistics_weekday: Statistiche giorni lavorativi
       take_orders: Prendi ordini
       view_all_settlements: Visualizza tutti i saldi
       view_settlements_table: Visualizza saldi tavolo
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Genera prezzo indicativo

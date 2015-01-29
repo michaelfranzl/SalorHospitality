@@ -359,6 +359,9 @@ nl:
       vendor_printer:
         one: Printer
         other: Printers
+      user_login:
+        one: Work time
+        other: Work times
   admin: Admin
   are_you_sure: Weet je het zeker?
   articles:
@@ -729,19 +732,19 @@ nl:
         statistics_statistic_category: Statistiek Categorieën
         statistics_table: Tabellen
         statistics_tax: Belastingen
-        statistics_weekday: Weekdagen
         statistics_user: Users
+        statistics_weekday: Weekdagen
       statistics_category: Statistieken toon Categorieën
       statistics_payment_method: Statistieken toon Betalingsmethoden
       statistics_sold_quantities: Statistieken toon verkochte hoeveelheden
       statistics_statistic_category: Statistieken toon statistiek categorieën
       statistics_table: Statistieken toon Tabellen
       statistics_tax: Statistieken toon belastingen
+      statistics_user: Statistics show Users
       statistics_weekday: Statistieken toon Weekdagen
       take_orders: Neem bestelloing op
       view_all_settlements: Bekijk alle akkoorden
       view_settlements_table: Bekijk akkoorden tabel
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Maak een prijsstructuur

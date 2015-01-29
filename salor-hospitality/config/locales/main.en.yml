@@ -245,9 +245,6 @@ en:
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
     models:
-      user_login:
-        one: Work time
-        other: Work times
       article:
         one: Article
         other: Articles
@@ -356,6 +353,9 @@ en:
       user:
         one: User
         other: Users
+      user_login:
+        one: Work time
+        other: Work times
       vendor:
         one: Vendor
         other: Vendors

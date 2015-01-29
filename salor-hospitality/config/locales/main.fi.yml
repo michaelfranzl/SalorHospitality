@@ -359,6 +359,9 @@ fi:
       vendor_printer:
         one: Tulostin
         other: Tulostimet
+      user_login:
+        one: Work time
+        other: Work times
   admin: Hallinto
   are_you_sure: Oletko varma?
   articles:
@@ -728,19 +731,19 @@ fi:
         statistics_statistic_category: Tilaston kategoriat
         statistics_table: Pöydät
         statistics_tax: Verot
-        statistics_weekday: Arkisin
         statistics_user: Users
+        statistics_weekday: Arkisin
       statistics_category: Kategoriat mukana tilastossa
       statistics_payment_method: Maksutavat mukana tilastossa
       statistics_sold_quantities: Myydyt määrät mukana tilastossa
       statistics_statistic_category: Tilaston Kategoriat mukana tilastossa
       statistics_table: Pöydät mukana tilastossa
       statistics_tax: Verot mukana tilastossa
+      statistics_user: Statistics show Users
       statistics_weekday: Arkisin mukana tilastossa
       take_orders: Ota tilauksia
       view_all_settlements: Näytä kaikki tilitykset
       view_settlements_table: Näytä tilitystaulukko
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Luo hinnoittelu

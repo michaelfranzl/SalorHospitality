@@ -359,6 +359,9 @@ hr:
       vendor_printer:
         one: Pisač
         other: Pisači
+      user_login:
+        one: Work time
+        other: Work times
   admin: Admin
   are_you_sure: Jeste li sigurni?
   articles:
@@ -729,19 +732,19 @@ hr:
         statistics_statistic_category: Statističke kategorije
         statistics_table: Stolovi
         statistics_tax: Porezi
-        statistics_weekday: Radni dani
         statistics_user: Users
+        statistics_weekday: Radni dani
       statistics_category: Statistika pokaži kategorije
       statistics_payment_method: Statistika pokaži načine plaćanja
       statistics_sold_quantities: Statistika pokaži prodane količine
       statistics_statistic_category: Statistika pokaži Statističke kategorije
       statistics_table: Statistika pokaži stolove
       statistics_tax: Statistika pokaži poreze
+      statistics_user: Statistics show Users
       statistics_weekday: Statistika pokaži radne dane
       take_orders: Primi narudžbe
       view_all_settlements: Pogledaj sve obračune
       view_settlements_table: Pogledaj obračunsku tablicu
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generiraj kostur cijene

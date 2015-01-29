@@ -245,9 +245,6 @@ gn:
         invalid_iso_date_formatting: Datum muss im Format YYYY-MM-DD eingegeben werden
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
     models:
-      user_login:
-        one: Arbeitszeit
-        other: Arbeitszeiten
       article:
         one: Artikel
         other: Artikel
@@ -356,6 +353,9 @@ gn:
       user:
         one: Benutzer
         other: Benutzer
+      user_login:
+        one: Arbeitszeit
+        other: Arbeitszeiten
       vendor:
         one: Betrieb
         other: Betriebe

@@ -359,6 +359,9 @@ kh:
       vendor_printer:
         one: Printer
         other: Printers
+      user_login:
+        one: Work time
+        other: Work times
   admin: Admin
   are_you_sure: Are you sure?
   articles:
@@ -727,19 +730,19 @@ kh:
         statistics_statistic_category: Statistic Categories
         statistics_table: Tables
         statistics_tax: Taxes
-        statistics_weekday: Weekdays
         statistics_user: Users
+        statistics_weekday: Weekdays
       statistics_category: Statistics show Categories
       statistics_payment_method: Statistics show Payment Methods
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
       statistics_table: Statistics show Tables
       statistics_tax: Statistics show CategoriesTaxes
+      statistics_user: Statistics show Users
       statistics_weekday: Statistics show Weekdays
       take_orders: Take orders
       view_all_settlements: View all settlements
       view_settlements_table: View settlements table
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton

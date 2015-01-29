@@ -359,6 +359,9 @@ cn:
       vendor_printer:
         one: 打印机
         other: 打印机
+      user_login:
+        one: Work time
+        other: Work times
   admin: 管理
   are_you_sure: 你确定吗?
   articles:
@@ -725,19 +728,19 @@ cn:
         statistics_statistic_category: Statistic Categories
         statistics_table: Tables
         statistics_tax: Taxes
-        statistics_weekday: Weekdays
         statistics_user: Users
+        statistics_weekday: Weekdays
       statistics_category: 统计类别
       statistics_payment_method: 统计支付方法
       statistics_sold_quantities: Statistics show sold quantities
       statistics_statistic_category: Statistics show StatisticCategories
       statistics_table: 统计表格
       statistics_tax: 统计税
+      statistics_user: Statistics show Users
       statistics_weekday: 普通日统计数据
       take_orders: 下订单
       view_all_settlements: 查看所有结算
       view_settlements_table: View settlements table
-      statistics_user: Statistics show Users
   room_prices:
     index:
       generate_price_skeleton: Generate price skeleton
