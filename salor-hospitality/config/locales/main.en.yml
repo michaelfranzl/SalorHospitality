@@ -246,8 +246,8 @@ en:
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
     models:
       user_login:
-        one: Shift
-        other: Shifts
+        one: Work time
+        other: Work times
       article:
         one: Article
         other: Articles

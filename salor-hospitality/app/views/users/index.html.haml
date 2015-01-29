@@ -17,7 +17,7 @@
       - role = u.role
       %tr
         %td
-          - if role.weight >= @current_user.role.weight or u == @current_user
+          - if role.weight >= @current_user.role.weight
             = link_to u.login, edit_user_path(u), :class => "list_item"
           - else
             = u.login
@@ -25,7 +25,9 @@
         %td= u.role.name
         %td= get_colors[u.color]
         %td= SalorHospitality::Application::LANGUAGES[u.language]
-        %td= link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)
+        %td
+          - if role.weight >= @current_user.role.weight
+            = link_to image_tag('button_small_delete.png', :title => User.human_attribute_name(:hidden), :alt => User.human_attribute_name(:hidden)), user_path(u), :method => :delete, :confirm => t(:are_you_sure)
 
 %br
 %br
