@@ -1,0 +1,32 @@
+- order = order_summary if order_summary
+- payment_methods = order.vendor.payment_methods.existing.where(:change => false)
+- cash_payment_method = order.vendor.payment_methods.existing.where(:cash => true).first
+- selected_payment_method_id = cash_payment_method.id.to_s if cash_payment_method
+
+%div.invoice{ :id => "invoice_#{order.id}" }
+  - @current_vendor.vendor_printers.existing.each do |p|
+    %a{ :onclick => "update_order_from_summary({id:#{order.id},jsaction:'just_print',printer:#{p.id}});", :class => "iconbutton print_#{ p.print_button_filename }_button", :title => "#{ t(:print) } #{ p.name }" }
+
+  %h3== #{ t(:invoice) } ##{order.nr}, #{ order.table.name }
+  %p= l order.finished_at, :format => :long
+  
+  %table
+    - order.items.existing.order("quantity_id, article_id, position_category ASC").each do |item|
+      - label = item.quantity ? "#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ item.article.name } #{ item.comment }"
+      - optionslabel = item.option_items.collect { |o| "<br>#{ o.name }" unless o.price.zero? }.join
+      - label = raw "%20.20s%s" % [label, optionslabel]
+
+      %tr
+        %td= item.count
+        %td.label{ :id => "item#{item.id}" }= label
+        %td.total{ :style => 'text-align:right' }= number_to_currency item.sum
+
+    %tr
+      %td{ :colspan => '2'}= Order.human_attribute_name :sum
+      %td{ :style => 'text-align:right'}
+        %b= number_to_currency order.gross
+        
+    %tr
+      %td{ :colspan => '2'}= Order.human_attribute_name :tax_sum
+      %td{ :style => 'text-align:right'}
+        %b= number_to_currency order.tax_sum

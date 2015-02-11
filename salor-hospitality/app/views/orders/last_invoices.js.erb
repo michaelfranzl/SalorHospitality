@@ -7,7 +7,7 @@ $('#invoices').html('');
   $('#invoices').append("<%= escape_javascript render(:partial => 'settlements/settlement', :locals => { :u => u } ) %>");
 <% end %>
 
-$('#invoices').append('<%= escape_javascript render(:partial => 'refund_form', :collection => @recent_unsettled_orders) %>');
+$('#invoices').append('<%= escape_javascript render(:partial => 'order_summary', :collection => @recent_unsettled_orders) %>');
 
 $('#orderform').hide();
 $('#tables').hide();

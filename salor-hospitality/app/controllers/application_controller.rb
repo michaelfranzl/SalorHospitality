@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
           render :json => @model
         end
       
-      when 'invoice_paper'
+      when 'invoice_paper', 'order_summary'
         case params['jsaction']
           #----------jsaction----------
           when 'just_print'
