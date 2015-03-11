@@ -14,8 +14,11 @@
    height="35.433071"
    id="svg4861"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="salor-hospitality-icon.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="salor-hospitality-icon.svg"
+   inkscape:export-filename="/home/michael/Public/debian/salor-hospitality/salor-hospitality/app/assets/images/salor-hospitality-icon.png"
+   inkscape:export-xdpi="660.40002"
+   inkscape:export-ydpi="660.40002">
   <defs
      id="defs4863">
     <linearGradient
@@ -130,16 +133,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.2"
-     inkscape:cx="18.296408"
-     inkscape:cy="19.079406"
+     inkscape:zoom="15.839192"
+     inkscape:cx="25.302536"
+     inkscape:cy="20.238182"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="893"
-     inkscape:window-height="743"
-     inkscape:window-x="475"
-     inkscape:window-y="71"
+     inkscape:window-width="1111"
+     inkscape:window-height="879"
+     inkscape:window-x="198"
+     inkscape:window-y="103"
      inkscape:window-maximized="0"
      units="mm" />
   <metadata
@@ -150,7 +153,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

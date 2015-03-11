@@ -5,12 +5,8 @@
     - if mobile? or mobile_special?
       %meta{ 'name' => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" }
       %meta{ 'name' => "apple-mobile-web-app-capable", :content => "yes" }
-      - icon57 = "/apple-touch-icon-57x57-#{@branding_codename}.png"
-      - icon72 = "/apple-touch-icon-72x72-#{@branding_codename}.png"
-      - icon114 = "/apple-touch-icon-114x114-#{@branding_codename}.png"
-      %link{ :rel => "apple-touch-icon", :href => icon57 }
-      %link{ :rel => "apple-touch-icon", :sizes => "72x72", :href => icon72 }
-      %link{ :rel => "apple-touch-icon", :sizes => "114x114", :href => icon114}
+      
+    = render :partial => "layouts/favicons"
       
 
     %title== #{ @branding_title } Login
