@@ -244,6 +244,8 @@ gn:
       messages:
         invalid_iso_date_formatting: Datum muss im Format YYYY-MM-DD eingegeben werden
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
+        dont_use_weird_skus: darf nur A-Z, a-z und Zahlen 0-9 enthalten
+        sku_already_taken: wird bereits verwendet
     models:
       article:
         one: Artikel

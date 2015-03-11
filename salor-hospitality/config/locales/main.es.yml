@@ -244,6 +244,9 @@ es:
       messages:
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
         prefix_or_postfix_must_be_given: Se debe especificar Prefijo o Sufijo
+        dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
+          0-9
+        sku_already_taken: has already been taken
     models:
       article:
         one: Artículo
@@ -353,15 +356,15 @@ es:
       user:
         one: Usuario
         other: Usuarios
+      user_login:
+        one: Work time
+        other: Work times
       vendor:
         one: Restaurante
         other: Restaurantes
       vendor_printer:
         one: Impresora
         other: Impresoras
-      user_login:
-        one: Work time
-        other: Work times
   admin: Administrador
   are_you_sure: ¿Está seguro?
   articles:

@@ -244,6 +244,9 @@ cn:
       messages:
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
+          0-9
+        sku_already_taken: has already been taken
     models:
       article:
         one: 物品
@@ -353,15 +356,15 @@ cn:
       user:
         one: 用户
         other: 用户
+      user_login:
+        one: Work time
+        other: Work times
       vendor:
         one: 餐厅
         other: 餐厅
       vendor_printer:
         one: 打印机
         other: 打印机
-      user_login:
-        one: Work time
-        other: Work times
   admin: 管理
   are_you_sure: 你确定吗?
   articles:

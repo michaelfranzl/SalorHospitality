@@ -244,6 +244,9 @@ hu:
       messages:
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
         prefix_or_postfix_must_be_given: Prefix or Postfix must be given
+        dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
+          0-9
+        sku_already_taken: has already been taken
     models:
       article:
         one: Article
@@ -353,15 +356,15 @@ hu:
       user:
         one: User
         other: Users
+      user_login:
+        one: Work time
+        other: Work times
       vendor:
         one: Restaurant
         other: Restaurants
       vendor_printer:
         one: Printer
         other: Printers
-      user_login:
-        one: Work time
-        other: Work times
   admin: Admin
   are_you_sure: Are you sure?
   articles:
