@@ -60,7 +60,7 @@ function route(target, model_id, action, options) {
   // ========== GO TO TABLE ===============
   } else if ( target == 'table') {
     loadify_order_buttons();
-    $("#sku_input").val("");
+    
     if (action == 'send') {
       // finish order
       submit_json.jsaction = 'send';
@@ -156,6 +156,7 @@ function route(target, model_id, action, options) {
       // regular click on a table from main view
       switch_to_table();
       get_table_show(model_id);
+      $("#sku_input").focus();
     }
     
     // clean workspace up

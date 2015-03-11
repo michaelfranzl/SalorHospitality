@@ -16,6 +16,8 @@ $(function(){
   $("#sku_input").on("keypress", function(e) {
     if(e.which == 13) {
       add_item_by_sku($(this).val());
+      $("#sku_input").val("");
+      $("#sku_input").focus();
     }
   });
   
