@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.88) wheezy; urgency=medium
+
+  * added various favicons for many different platforms
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 11 Mar 2015 16:43:52 +0100
+
 salor-hospitality (4.1.4.87) wheezy; urgency=medium
 
   * fix for sku onscreen keyboard and auto-focussing
