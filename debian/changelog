@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.87) wheezy; urgency=medium
+
+  * fix for sku onscreen keyboard and auto-focussing
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 11 Mar 2015 16:19:22 +0100
+
 salor-hospitality (4.1.4.86) wheezy; urgency=medium
 
   * added SKU support, dont show hidden users at roles#index screen
