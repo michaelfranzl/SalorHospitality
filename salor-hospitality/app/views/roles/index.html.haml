@@ -13,7 +13,7 @@
     %tr
       %td= link_to r.name, edit_role_path(r), :class => "list_item"
       %td{:style => "text-align: center" }= r.weight
-      %td= r.users.collect { |u| u.login }.join(", ")
+      %td= r.users.existing.collect { |u| u.login }.join(", ")
       %td
         - if @current_company.users.existing.where(:role_id => r.id).any?
           = image_tag 'button_small_delete.png'

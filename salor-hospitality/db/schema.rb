@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141021100019) do
+ActiveRecord::Schema.define(:version => 20150311143953) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.integer  "statistic_category_id"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.string   "sku"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -691,6 +692,7 @@ ActiveRecord::Schema.define(:version => 20141021100019) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "article_name"
+    t.string   "sku"
   end
 
   add_index "quantities", ["article_id"], :name => "index_quantities_on_article_id"

@@ -28,9 +28,12 @@
 #articles
 
 #items
+  %span{ :style => "vertical-align: middle" } SKU
+  %input#sku_input
   .ordersum_container
     %span== #{ t '.sum' } #{ t 'number.currency.format.unit', :locale => @region }
     %span#order_sum
+  
   %table#itemstable
 
 %h3

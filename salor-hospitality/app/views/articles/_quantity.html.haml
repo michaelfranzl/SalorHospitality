@@ -3,18 +3,27 @@
 %li{ :id => "quantity_#{ id }" }
   %span.handle
   %span.input_fields.checkbox= f.check_box :active if not f.object.new_record?
+  
   %span.label= f.label :prefix
   %span.input_fields
     = f.text_field :prefix, :class => 'prefix'
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_prefix_display_keyboard" }
+    
   %span.label= f.label :postfix
   %span.input_fields
     = f.text_field :postfix, :class => 'postfix'
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_postfix_display_keyboard" }
-  %span.label= f.label :price
+    
+  %span.label= f.label :price, :class => "price"
   %span.input_fields
     = f.text_field(:price, :class => 'price')
     %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_price_display_keyboard" }
+
+  %span.label= f.label :sku, :class => "sku"
+  %span.input_fields
+    = f.text_field(:sku, :class => 'sku')
+    %span.display_keyboard{ :id => "article_quantities_attributes_#{ index }_sku_display_keyboard" }
+    
   %span.link{ :onclick => "$('#article_quantities_attributes_#{ index }_hidden').val(1); $('#quantity_#{ id }').slideUp();" }= image_tag('button_small_delete.png', :title => Quantity.human_attribute_name(:hidden), :alt => Quantity.human_attribute_name(:hidden), :style => "vertical-align:bottom;padding-top:5px;")
   = f.hidden_field :hidden
 
@@ -22,7 +31,12 @@
   :javascript
     $('#article_quantities_attributes_#{ index }_prefix').keyboard( {openOn: '' } );
     $('#article_quantities_attributes_#{ index }_prefix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_prefix').getkeyboard().reveal(); });
+    
     $('#article_quantities_attributes_#{ index }_postfix').keyboard( {openOn: '' } );
     $('#article_quantities_attributes_#{ index }_postfix_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_postfix').getkeyboard().reveal(); });
+    
     $('#article_quantities_attributes_#{ index }_price').keyboard( {openOn: '', layout: 'num' } );
     $('#article_quantities_attributes_#{ index }_price_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_price').getkeyboard().reveal(); });
+    
+    $('#article_quantities_attributes_#{ index }_sku').keyboard( {openOn: '' } );
+    $('#article_quantities_attributes_#{ index }_sku_display_keyboard').click(function(){ $('#article_quantities_attributes_#{ index }_sku').getkeyboard().reveal(); });

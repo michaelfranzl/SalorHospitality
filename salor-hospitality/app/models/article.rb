@@ -27,6 +27,7 @@ class Article < ActiveRecord::Base
 
   # Validations 
   validates_presence_of :name, :category_id, :taxes
+  validate :sku_unique_in_existing, :if => :sku_is_not_weird
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden
     existing_quantities = false
@@ -51,6 +52,26 @@ class Article < ActiveRecord::Base
 
 
   # Methods
+  
+  def sku_is_not_weird
+    if not self.sku == self.sku.gsub(/[^0-9a-zA-Z]/, "") then
+      errors.add(:sku, I18n.t("activerecord.errors.messages.dont_use_weird_skus"))
+      return false
+    end
+    return true
+  end
+  
+  def sku_unique_in_existing
+    if self.new_record?
+      error = self.vendor.articles.existing.where(:sku => self.sku).count > 0
+    else
+      error = self.vendor.articles.existing.where("sku = '#{self.sku}' AND NOT id = #{ self.id }").count > 0
+    end
+    if error == true
+      errors.add(:sku, I18n.t("activerecord.errors.messages.sku_already_taken"))
+      return
+    end
+  end
 
   def price=(price)
     price = price.gsub(',', '.') if price.class == String

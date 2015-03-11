@@ -252,6 +252,7 @@ class Vendor < ActiveRecord::Base
                  :qi => q.id,
                  :ci => q.category_id,
                  :d => "q#{q.id}",
+                 :sku => q.sku,
                  :pre => q.prefix,
                  :post => q.postfix,
                  :p => q.price
@@ -269,6 +270,7 @@ class Vendor < ActiveRecord::Base
       ahash = {
         a.id => {
                  :ai => aid,
+                 :sku => a.sku,
                  :ci => ci,
                  :d => "a#{aid}",
                  :n => a.name,

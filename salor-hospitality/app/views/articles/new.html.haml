@@ -26,6 +26,12 @@
           %span.spinner
             = image_tag 'ajax-loader.gif', :id => 'spinner', :style => 'display:none;'
       %div
+        %span= article_form.label 'SKU'
+        %span.input_fields
+          = article_form.text_field :sku
+          %span#article_name_display_keyboard.display_keyboard
+          %span.spinner
+      %div
         %span= article_form.label :taxes
         %span.input_fields= select_tag 'article[taxes_array][]', options_for_select(@taxes.collect{|t| ["#{t.name} (#{t.percent}%)",t.id]}, @selected_taxes), :multiple => true
       %div
