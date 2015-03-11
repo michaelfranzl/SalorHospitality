@@ -62,6 +62,7 @@ class Article < ActiveRecord::Base
   end
   
   def sku_unique_in_existing
+    return if self.sku.blank?
     if self.new_record?
       error = self.vendor.articles.existing.where(:sku => self.sku).count > 0
     else

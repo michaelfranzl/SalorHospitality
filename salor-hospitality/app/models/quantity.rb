@@ -40,8 +40,9 @@ class Quantity < ActiveRecord::Base
   end
   
   def sku_unique_in_existing
+    return if self.sku.blank?
     if self.new_record?
-      error = self.vendor.quantities.existing.where(:sku => self.sku).count > 0
+      error = self.article.vendor.quantities.existing.where(:sku => self.sku).count > 0
     else
       error = self.vendor.quantities.existing.where("sku = '#{self.sku}' AND NOT id = #{ self.id }").count > 0
     end

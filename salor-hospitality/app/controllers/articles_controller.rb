@@ -53,9 +53,10 @@ class ArticlesController < ApplicationController
       flash[:notice] = t('articles.create.license_limited', :count => @current_vendor.max_articles)
       redirect_to articles_path and return
     end
-    @article = Article.new(params[:article])
+    @article = Article.new
     @article.company = @current_company
     @article.vendor = @current_vendor
+    @article.attributes = params[:article]
     if @article.save
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id, :article_name => @article.name
       #@article.images.update_all :company_id => @article.company_id
