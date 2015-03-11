@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.89) wheezy; urgency=medium
+
+  * fixes for sku validation
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 11 Mar 2015 20:10:54 +0100
+
 salor-hospitality (4.1.4.88) wheezy; urgency=medium
 
   * added various favicons for many different platforms
