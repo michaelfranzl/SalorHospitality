@@ -500,6 +500,7 @@ class Order < ActiveRecord::Base
     self.paid_at = nil
     self.save
     self.payment_method_items.existing.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
+    self.tax_items.existing.update_all :hidden => true, :hidden_by => -5, :hidden_at => Time.now
     used_table.update_color
     return used_table
   end
