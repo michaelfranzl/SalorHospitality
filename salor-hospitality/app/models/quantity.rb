@@ -32,7 +32,7 @@ class Quantity < ActiveRecord::Base
   after_commit :set_article_name
   
   def sku_is_not_weird
-    if not self.sku == self.sku.gsub(/[^0-9a-zA-Z]/, "") then
+    if sku and not self.sku == self.sku.gsub(/[^0-9a-zA-Z]/, "") then
       errors.add(:sku, I18n.t("activerecord.errors.messages.dont_use_weird_skus"))
       return false
     end

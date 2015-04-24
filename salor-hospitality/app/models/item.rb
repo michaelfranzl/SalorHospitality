@@ -167,6 +167,7 @@ class Item < ActiveRecord::Base
       ti.category_id = self.category_id
       ti.statistic_category_id = self.statistic_category_id
       ti.cost_center_id = self.order.cost_center_id
+      ti.settlement_id = self.settlement_id
       ti.save!
     end
   end
