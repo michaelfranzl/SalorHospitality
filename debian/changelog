@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.91) wheezy; urgency=medium
+
+  * fix nil problem for db seeding
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 24 Apr 2015 09:48:42 +0200
+
 salor-hospitality (4.1.4.90) wheezy; urgency=medium
 
   * tax fix for reactivated orders
