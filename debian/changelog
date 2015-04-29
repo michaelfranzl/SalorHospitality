@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.92) wheezy; urgency=medium
+
+  * increase safe scrolling width on orders screen for mobile devices, add inactive field for articles#index
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 29 Apr 2015 21:15:35 +0200
+
 salor-hospitality (4.1.4.91) wheezy; urgency=medium
 
   * fix nil problem for db seeding
