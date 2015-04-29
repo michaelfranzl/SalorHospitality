@@ -242,10 +242,10 @@ fi:
         ticket_ad: Ticket Ad.
     errors:
       messages:
-        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
-        prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
           0-9
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
+        prefix_or_postfix_must_be_given: Etu- tai jälkiliite on annettava
         sku_already_taken: has already been taken
     models:
       article:
@@ -768,6 +768,7 @@ fi:
   scopes:
     active: Aktiivinen
     waiterpad: Tarjoilijan lehtiö
+    inactive: Inactive
   scroll_down: Vieritä alaspäin
   scroll_to_area: Siirry huoneen tietoihin
   scroll_up: Vierittää ylöspain

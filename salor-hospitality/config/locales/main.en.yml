@@ -766,6 +766,7 @@ en:
       new_room: New Room
   scopes:
     active: Active
+    inactive: Inactive
     waiterpad: Waiterpad
   scroll_down: Scroll down
   scroll_to_area: Go to room

@@ -14,7 +14,7 @@ class ArticlesController < ApplicationController
  
   # tested
   def index
-    @scopes = ['active']
+    @scopes = ['active', 'inactive']
     @articleshash = build_articleshash(@scopes)
     @categories = @current_vendor.categories.existing.active.positioned
     @statistic_categories = @current_vendor.statistic_categories.existing
@@ -165,9 +165,9 @@ class ArticlesController < ApplicationController
     articleshash = {}
     scopes.each do |s|
       articleshash.merge! s => {}
-      @current_vendor.categories.existing.active.each do |c|
+      @current_vendor.categories.existing.each do |c|
         articleshash[s][c.id] = [] if c.articles.any?
-        c.articles.existing.active.positioned.each do |a|
+        c.articles.existing.positioned.each do |a|
           next unless a.respond_to?(s.to_sym) and a.send(s.to_sym)
           articleshash[s][c.id] << a
         end

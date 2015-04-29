@@ -78,6 +78,10 @@ class Article < ActiveRecord::Base
     price = price.gsub(',', '.') if price.class == String
     write_attribute :price, price
   end
+  
+  def inactive
+    return self.active != true
+  end
 
   def hide(user_id)
     self.hidden = true

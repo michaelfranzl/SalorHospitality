@@ -242,10 +242,10 @@ vi:
         ticket_ad: Ticket Ad.
     errors:
       messages:
-        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
-        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
           0-9
+        invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
+        prefix_or_postfix_must_be_given: Prefix or Postfix must be given
         sku_already_taken: has already been taken
     models:
       article:
@@ -767,6 +767,7 @@ vi:
   scopes:
     active: Active
     waiterpad: Waiterpad
+    inactive: Inactive
   scroll_down: Scroll down
   scroll_to_area: Go to room
   scroll_up: Scroll up
