@@ -642,7 +642,7 @@ class Order < ActiveRecord::Base
     
     nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
     if vendor.ticket_display_time_order
-      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), (vendor.use_order_numbers ? nr : 0)]
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), nr]
     end
 
     header += header_format_user_table % [self.user.login, self.table.name]
@@ -804,7 +804,7 @@ class Order < ActiveRecord::Base
     header2 += "#{ Table.model_name.human } #{ self.table.name } / #{ self.user ? self.user.title : 'customer' }\n"
     #I18n.t('served_by_X_on_table_Y', :waiter => self.user.title, :table => self.table.name) + "\n"
 
-    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long)) if vendor.use_order_numbers
+    header2 += I18n.t('invoice_numer_X_at_time', :number => self.nr, :datetime => I18n.l(self.finished_at + vendor.time_offset.hours, :format => :long))
 
     header3 =
         "\n\n" +
