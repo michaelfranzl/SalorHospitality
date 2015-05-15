@@ -1,5 +1,5 @@
-SALOR Hospitality
-=================
+SALOR Hospitality (aka. Bill Gastro)
+====================================
 
 The modern, enterprise-class Point of Sale (POS) Solution serving the Hospitality Industry: Hotels, Restaurants, Inns, Bars and Shops.
 
