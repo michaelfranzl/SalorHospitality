@@ -14,7 +14,7 @@ The following instructions are based on plain Debian Wheezy, and will use its Ru
 
 You need a few system packages so that native extensions of ruby gems will compile successfully:
 
-    apt-get install mysql-server mysql-client libmysqlclient-dev imagemagick libmagick-dev libmagickwand-dev
+    apt-get install mysql-server mysql-client libmysqlclient-dev imagemagick libmagick-dev libmagickwand-dev libmagickcore-dev bundler
 
 Any Rails developer will not have any problems running Salor Hospitality, since it is just a plain, standalone Rails application without any special magic going on.
 
