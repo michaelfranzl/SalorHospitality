@@ -18,5 +18,4 @@ gem 'coffee-rails', '4.0.1'
  # jessies's version rmagick 2.13.2 seems to be broken
 
 gem 'rmagick', '2.15.0'
-gem 'therubyracer', :require => 'v8'
 gem 'escper', '1.2.2'
