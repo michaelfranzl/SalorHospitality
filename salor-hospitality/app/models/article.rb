@@ -17,13 +17,13 @@ class Article < ActiveRecord::Base
   belongs_to :company
   has_many :ingredients
   has_many :quantities
-  has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
+  has_many :existing_quantities, -> { where processed: false }, :class_name => Quantity
   has_many :items
   has_many :partials
   has_many :images, :as => :imageable
   has_and_belongs_to_many :taxes
 
-  scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
+  # scope :waiterpad, -> where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
   validates_presence_of :name, :category_id, :taxes

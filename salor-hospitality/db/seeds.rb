@@ -8,7 +8,7 @@
 
 if User.any?
   puts "Database is already seeded. Not running seed script again."
-  Process.exit 0
+  #Process.exit 0
 end
 
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
@@ -464,6 +464,7 @@ company_count.times do |c|
 
       2.times do |o|
         option = Option.new :name => "Option#{ c }#{ v }#{ i }#{ o }", :price => (rand(3) + 1).to_f
+        option.categories << category
         category.options << option
         option.company = company
         option.vendor = vendor

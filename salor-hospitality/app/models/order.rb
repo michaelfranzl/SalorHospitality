@@ -59,7 +59,8 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user, customer)
-    order = Order.new params[:model]
+    permitted = params.require(:model).permit(:table_id, :note)
+    order = Order.new permitted
     order.user = user unless order.user
     order.customer = customer if customer
     order.vendor = vendor
@@ -108,7 +109,8 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params, user, customer)
-    self.update_attributes params[:model]
+    permitted = params.require(:model).permit(:table_id, :note)
+    self.update_attributes permitted
     
     errors = false
     params[:items].to_a.each do |item_params|
@@ -665,7 +667,7 @@ class Order < ActiveRecord::Base
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
-        next if i.option_items.find_all_by_no_ticket(true).any?
+        next if i.option_items.where(:no_ticket => true).any?
         itemstring = ''
         itemstring += article_format % [ i.count - i.printed_count, i.article.name]
         itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
@@ -685,7 +687,7 @@ class Order < ActiveRecord::Base
           itemstring += item_separator_format % item_separator_values
         end
         
-        if i.option_items.find_all_by_separate_ticket(true).any?
+        if i.option_items.where(:separate_ticket => true).any?
           separate_receipt_contents << itemstring
         else
           catstring += itemstring

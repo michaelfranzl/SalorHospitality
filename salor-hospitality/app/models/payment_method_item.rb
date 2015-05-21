@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class PaymentMethodItem < ActiveRecord::Base
-  attr_accessible :amount, :company_id, :payment_method_id, :vendor_id, :order_id, :booking_id, :refunded, :cash, :refund_item_id, :settlement_id, :refunded, :cost_center_id, :change, :user_id
+  #attr_accessible :amount, :company_id, :payment_method_id, :vendor_id, :order_id, :booking_id, :refunded, :cash, :refund_item_id, :settlement_id, :refunded, :cost_center_id, :change, :user_id
   include Scope
   belongs_to :payment_method
   belongs_to :order

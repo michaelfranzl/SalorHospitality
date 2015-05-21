@@ -7,7 +7,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Booking < ActiveRecord::Base
-  attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given, :from_date, :to_date, :duration, :tax_sum
+  #attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given, :from_date, :to_date, :duration, :tax_sum
   include Scope
   has_many :booking_items
   has_many :payment_method_items
@@ -21,7 +21,7 @@ class Booking < ActiveRecord::Base
   belongs_to :customer
 
   serialize :taxes
-  attr_accessible :customer_name
+  #attr_accessible :customer_name
   
   def as_json(options={})
     return {

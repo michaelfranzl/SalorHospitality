@@ -73,18 +73,18 @@ SalorHospitality::Application.routes.draw do
     end
   end
 
-  match 'orders/reactivate/:id' => 'orders#reactivate'
-  match 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
-  match 'settlements/print/:id' => 'settlements#print'
-  match 'room_prices/generate' => 'room_prices#generate'
-  match 'tables/:id/update_coordinates' => 'tables#update_coordinates'
-  match 'vendors/report' => 'vendors#report'
-  match 'vendors/identify_printers' => 'vendors#identify_printers'
-  match 'vendors/test_printers' => 'vendors#test_printers'
-  match 'users/unlock_ip' => 'users#unlock_ip'
-  match 'route' => 'application#route'
-  match 'translations' => 'translations#index'
-  match 'translations/set' => 'translations#set'
+  get 'orders/reactivate/:id' => 'orders#reactivate'
+  get 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
+  get 'settlements/print/:id' => 'settlements#print'
+  get 'room_prices/generate' => 'room_prices#generate'
+  get 'tables/:id/update_coordinates' => 'tables#update_coordinates'
+  get 'vendors/report' => 'vendors#report'
+  get 'vendors/identify_printers' => 'vendors#identify_printers'
+  get 'vendors/test_printers' => 'vendors#test_printers'
+  get 'users/unlock_ip' => 'users#unlock_ip'
+  post 'route' => 'application#route'
+  get 'translations' => 'translations#index'
+  get 'translations/set' => 'translations#set'
   
 
   resources :cost_centers, :taxes, :roles, :presentations, :payment_methods
@@ -215,14 +215,14 @@ SalorHospitality::Application.routes.draw do
 
   if defined?(ShSaas) == 'constant'
     mount ShSaas::Engine => "/saas"
-    match '/login' => 'sh_saas/sessions#new_customer'
-    match '/signin' => 'sh_saas/sessions#new'
-    match '/printers' => 'sh_saas/sessions#printer_info'
+    get '/login' => 'sh_saas/sessions#new_customer'
+    get '/signin' => 'sh_saas/sessions#new'
+    get '/printers' => 'sh_saas/sessions#printer_info'
     root :to => 'sh_saas/pages#iframe'
-    match '*path' => 'sh_saas/pages#iframe'
+    get '*path' => 'sh_saas/pages#iframe'
   else
-    match '/printers' => 'sessions#printer_info'
-    match '*path' => 'sessions#new'
+    get '/printers' => 'sessions#printer_info'
+    get '*path' => 'sessions#new'
     root :to => 'orders#index'
   end
 
