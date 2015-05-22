@@ -24,17 +24,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  # tested
-  def active
-    @categories = @current_vendor.categories.existing.active.positioned
-  end
-
-  # tested
-  def waiterpad
-    @categories = @current_vendor.categories.existing.active.positioned
-  end
-
-  # tested
   def listall
     @articles = @current_vendor.articles.existing.active.order('name, description, price')
   end
@@ -90,14 +79,14 @@ class ArticlesController < ApplicationController
     @taxes = @current_vendor.taxes.existing
     session[:return_to] = /.*?\/\/.*?(\/.*)/.match(request.referer)[1] if request.referer
     @article = get_model
-    redirect_to roles_path and return unless @article
+    redirect_to articles_path and return unless @article
     @selected_taxes = @article.taxes.collect{ |tax| tax.id }
     @article ? render(:new) : redirect_to(articles_path)
   end
 
   def update
     @article = get_model
-    redirect_to roles_path and return unless @article
+    redirect_to articles_path and return unless @article
     
     permitted = params.require(:article).permit :active,
         :name,
@@ -116,8 +105,6 @@ class ArticlesController < ApplicationController
           :active,
           :hidden
           ]
-    
-    #byebug
     
     if @article.update_attributes permitted
       @article.quantities.update_all :vendor_id => @current_vendor,
@@ -144,7 +131,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = get_model
-    redirect_to roles_path and return unless @article
+    redirect_to articles_path and return unless @article
     @article.hide(@current_user)
     flash[:notice] = t('articles.destroy.success')
     redirect_to articles_path
@@ -162,19 +149,19 @@ class ArticlesController < ApplicationController
 
   def change_scope
     @article = get_model
-    redirect_to roles_path and return unless @article
+    redirect_to articles_path and return unless @article
     @source = params[:source]
     @target = params[:target]
     if @target == 'searchresults' and @source != 'searchresults'
       @article.update_attribute @source.to_sym, false
-      @articleshash = build_articleshash([@source])
-      @target = nil
+      @articleshash = build_articleshash([@source, @target])
+      #@target = nil
     elsif @target == @source
       render :nothing => true
     else
       @article.update_attribute @target.to_sym, true
-      @articleshash = build_articleshash([@target])
-      @source = nil
+      @articleshash = build_articleshash([@target, @source])
+      #@source = nil
     end
     @categories = @current_vendor.categories.existing.active.positioned
   end

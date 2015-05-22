@@ -79,6 +79,11 @@ class Article < ActiveRecord::Base
     write_attribute :price, price
   end
   
+  def inactive=(val)
+    self.active = !val
+    self.save!
+  end
+  
   def inactive
     return self.active != true
   end

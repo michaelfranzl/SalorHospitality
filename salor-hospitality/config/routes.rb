@@ -51,8 +51,6 @@ SalorHospitality::Application.routes.draw do
       get  :sort_index
       get  :update_cache
       post :change_scope
-      get  :active
-      get  :waiterpad
     end
   end
 

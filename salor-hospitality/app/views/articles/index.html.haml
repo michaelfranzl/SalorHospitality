@@ -17,7 +17,6 @@
       %td{ :id => "add_to_#{ scope }" }
         %script== $('#add_to_#{ scope }').droppable({ hoverClass: 'receiving', tolerance: 'pointer', drop: function(event,ui){ $.ajax({ type: 'POST', url: 'articles/change_scope', data: 'target=#{ scope }&id=' + ui.draggable.attr('model_id') + '&source=' + ui.draggable.attr('source') }) } });
         %span.scope_title= t "scopes.#{scope}".to_sym
-        = link_to t('.view'), "/articles/#{ scope }", :class => 'scopelink'
         %div.scope_list{ :id => "#{scope}_list" }= render :partial => 'scope_list', :locals => { :scope => scope }
 
 :javascript
@@ -26,6 +25,7 @@
   $('#remove').droppable({
     hoverClass: 'receiving',
     drop: function(event,ui){
+      return;
       if (ui.draggable.attr('source') != 'searchresults') {
         ui.draggable.remove();
       }
