@@ -49,6 +49,9 @@ class ArticlesController < ApplicationController
         :category_id,
         :statistic_category_id,
         :taxes_array => [],
+        :images_attributes => [
+          :file_data
+        ],
         :quantities_attributes => [
           :id,
           :price,
@@ -58,6 +61,8 @@ class ArticlesController < ApplicationController
           :active,
           :hidden
         ]
+    
+    
     
     @article.attributes = permitted
     if @article.save
@@ -96,6 +101,9 @@ class ArticlesController < ApplicationController
         :category_id,
         :statistic_category_id,
         :taxes_array => [],
+        :images_attributes => [
+          :file_data
+        ],
         :quantities_attributes => [
           :id,
           :price,
