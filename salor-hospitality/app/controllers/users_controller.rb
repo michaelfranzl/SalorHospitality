@@ -35,7 +35,26 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    permitted = params.require(:user).permit :active,
+        :login,
+        :title,
+        :password,
+        :advertising_url,
+        :role_id,
+        :color,
+        :language,
+        :layout,
+        :default_vendor_id,
+        :screenlock_timeout,
+        :maximum_shift_duration,
+        :advertising_timeout,
+        :track_time,
+        :audio,
+        :tables_array => [],
+        :vendors_array => []
+
+        
+    @user = User.new permitted
     unless params[:vendor_array]
       @user.vendors = [@current_vendor]
     end
@@ -91,7 +110,25 @@ class UsersController < ApplicationController
       @user.default_vendor_id = @current_vendor.id
     end
     
-    if @user.update_attributes(params[:user])
+    permitted = params.require(:user).permit :active,
+        :login,
+        :title,
+        :password,
+        :advertising_url,
+        :role_id,
+        :color,
+        :language,
+        :layout,
+        :default_vendor_id,
+        :screenlock_timeout,
+        :maximum_shift_duration,
+        :advertising_timeout,
+        :track_time,
+        :audio,
+        :tables_array => [],
+        :vendors_array => []
+    
+    if @user.update_attributes permitted
       @user.role_weight = @user.role.weight # update
       if @user.role_weight < @current_user.role_weight
         # gracefully prevent RESTful creation of an user with higher privileges than the current user, might be a hacking attempt

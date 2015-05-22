@@ -111,7 +111,7 @@
               %br
               %small= t '.select_with_ctrl_key'
               %br
-              = select_tag 'user[tables_array][]', option_groups_from_collection_for_select(@vendors, :'tables.existing', :name, :id, :name, user_form.object.tables.existing.collect{ |t| t.id }),  :multiple => true, :size => 20, :id => 'user_tables_array', :no_select_widget => 1
+              = select_tag 'user[tables_array][]', option_groups_from_collection_for_select(@vendors, :existing_tables, :name, :id, :name, user_form.object.tables.existing.collect{ |t| t.id }),  :multiple => true, :size => 20, :id => 'user_tables_array', :no_select_widget => 1
               
           - if permit('assign_users_to_vendors') and @vendors.size > 1
             %td
