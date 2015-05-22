@@ -3,6 +3,9 @@ SalorHospitality::Application.configure do
   
   config.eager_load = false
   
+  ActionController::Parameters.permit_all_parameters = true
+  ActionController::Parameters.action_on_unpermitted_parameters = :raise
+  
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -12,7 +15,7 @@ SalorHospitality::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send

@@ -26,7 +26,7 @@ class WaiterpadController < ApplicationController
     end
 
     @selected = []
-    @current_vendor.articles.exisiting.find_all_by_waiterpad(true).each do |article|
+    @current_vendor.articles.exisiting.where(:waiterpad => true).each do |article|
       @selected << article.id
     end
   end

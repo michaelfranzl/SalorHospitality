@@ -29,7 +29,7 @@ class PagesController < ApplicationController
     if defined?(ShSaas) == 'constant'
       redirect_to sh_saas.root_path and return
     end
-    @pages = params[:id] ? @vendor.pages.existing.find_all_by_id(params[:id]) : @vendor.pages.existing.active
+    @pages = params[:id] ? @vendor.pages.existing.where(:id => params[:id]) : @vendor.pages.existing.active
     @partial_htmls_pages = []
     @pages.each do |p|
       @partial_htmls_pages[p.id] = p.evaluate_partial_htmls

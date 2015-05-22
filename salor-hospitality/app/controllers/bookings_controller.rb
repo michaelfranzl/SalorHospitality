@@ -18,7 +18,7 @@ class BookingsController < ApplicationController
         if params[:id] != 'last'
           @booking = @current_vendor.bookings.existing.find_by_id(params[:id])
         else
-          @booking = @current_vendor.bookings.existing.find_all_by_finished(true).last
+          @booking = @current_vendor.bookings.existing.where(:finished => true).last
         end
         redirect_to '/' and return if not @booking
         if @booking.finished

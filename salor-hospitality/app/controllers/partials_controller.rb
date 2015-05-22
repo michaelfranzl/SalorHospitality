@@ -17,7 +17,7 @@ class PartialsController < ApplicationController
   end
 
   def create
-    @presentations = @current_vendor.presentations.existing.find_all_by_model params[:model]
+    @presentations = @current_vendor.presentations.existing.where(:model => params[:model])
     render :no_presentation_found and return if @presentations.empty?
     @partial = Partial.new params[:partial]
     @partial.company = @current_company
@@ -38,7 +38,7 @@ class PartialsController < ApplicationController
     @partial = get_model
     @partial.update_attributes params[:partial]
     @partial_html = evaluate_partial_html @partial
-    @presentations = @current_vendor.presentations.existing.find_all_by_model @partial.presentation.model
+    @presentations = @current_vendor.presentations.existing.where(:model => @partial.presentation.model)
   end
   
   private

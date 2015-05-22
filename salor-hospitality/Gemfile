@@ -19,3 +19,7 @@ gem 'coffee-rails', '4.0.1'
 
 gem 'rmagick', '2.15.0'
 gem 'escper', '1.2.2'
+
+group :development do
+  gem 'byebug'
+end
