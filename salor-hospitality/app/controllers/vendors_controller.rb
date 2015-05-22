@@ -48,7 +48,47 @@ class VendorsController < ApplicationController
     unless @vendor
       redirect_to vendors_path and return
     end
-    unless @vendor.update_attributes params[:vendor]
+    
+    permitted = params.require(:vendor).permit :name,
+        :identifier,
+        :email,
+        :technician_email,
+        :country,
+        :time_offset,
+        :ticket_space_top,
+        :update_tables_interval,
+        :update_item_lists_interval,
+        :update_resources_interval,
+        :receipt_header_blurb,
+        :receipt_footer_blurb,
+        :invoice_header_blurb,
+        :invoice_footer_blurb,
+        :enable_technician_emails,
+        :ticket_wide_font,
+        :ticket_tall_font,
+        :ticket_item_separator,
+        :ticket_display_time_order,
+        :history_print,
+        :remote_orders,
+        :images_attributes => [
+          :file_data,
+          :image_type
+        ],
+        :vendor_printers_attributes => [
+          :id,
+          :name,
+          :path,
+          :print_button_filename,
+          :copies,
+          :codepage,
+          :baudrate,
+          :ticket_ad,
+          :pulse_receipt,
+          :pulse_tickets,
+          :hidden
+        ]
+    
+      unless @vendor.update_attributes permitted
       @vendor.images.reload
       render(:edit) and return 
     end
@@ -63,7 +103,46 @@ class VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new params[:vendor]
+    permitted = params.require(:vendor).permit :name,
+        :identifier,
+        :email,
+        :technician_email,
+        :country,
+        :time_offset,
+        :ticket_space_top,
+        :update_tables_interval,
+        :update_item_lists_interval,
+        :update_resources_interval,
+        :receipt_header_blurb,
+        :receipt_footer_blurb,
+        :invoice_header_blurb,
+        :invoice_footer_blurb,
+        :enable_technician_emails,
+        :ticket_wide_font,
+        :ticket_tall_font,
+        :ticket_item_separator,
+        :ticket_display_time_order,
+        :history_print,
+        :remote_orders,
+        :images_attributes => [
+          :file_data,
+          :image_type
+        ],
+        :vendor_printers_attributes => [
+          :id,
+          :name,
+          :path,
+          :print_button_filename,
+          :copies,
+          :codepage,
+          :baudrate,
+          :ticket_ad,
+          :pulse_receipt,
+          :pulse_tickets,
+          :hidden
+        ]
+    
+    @vendor = Vendor.new permitted
     @vendor.company = @current_company
     if @vendor.save
       #@vendor.images.update_all :company_id => @vendor.company_id
