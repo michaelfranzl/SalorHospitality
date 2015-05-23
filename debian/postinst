@@ -184,23 +184,15 @@ for lInstance in $gInstances; do
       gemfile_lock_target=$rails_etc/Gemfile.lock
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
-      hasPack=$(dpkg -l | grep salor-virtual | wc -l)
-      if [ "$hasPack" = "0" ]; then
-        echo "  postinst: All required gems are available as Debian packages. Nothing to be done."
-      else
-        echo "  postinst: Some of the required gems are not available as Debian packages. We have to run bundle install to download gems from rubygems.org."
-        salor-installgems h ${lInstance}
-      fi
-      
       if [ -e $rails_etc/database.yml ]; then     
         echo "  postinst: this instance has a configured database."
         cd $app_root        
         echo "  postinst: migrating the database. this may take a while."
-        rake1.9.1 --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
+        rake --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
         echo "  postinst: running db:seed ..."
-        rake1.9.1 --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        rake --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
         echo "  postinst: updating vendors cache ..."
-        rake1.9.1 --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        rake --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
       else
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi
