@@ -25,7 +25,16 @@ class OptionsController < ApplicationController
 
   def create
     @categories = @current_vendor.categories.active.existing
-    @option = Option.new(params[:option])
+    permitted = params.require(:option).permit :name,
+      :price,
+      :separate_ticket,
+      :no_ticket,
+      :set_categories => [],
+      :images_attributes => [
+        :file_data
+      ]
+        
+    @option = Option.new permitted
     @option.vendor = @current_vendor
     @option.company = @current_company
     if @option.save
@@ -48,7 +57,17 @@ class OptionsController < ApplicationController
     @categories = @current_vendor.categories.active.existing
     @option = get_model
     redirect_to roles_path and return unless @option
-    if @option.update_attributes(params[:option])
+    
+    permitted = params.require(:option).permit :name,
+      :price,
+      :separate_ticket,
+      :no_ticket,
+      :set_categories => [],
+      :images_attributes => [
+        :file_data
+      ]
+    
+    if @option.update_attributes permitted
       @option.images.update_all :company_id => @option.company_id
       flash[:notice] = I18n.t("options.create.success")
       redirect_to options_path
