@@ -1,3 +1,9 @@
+salor-hospitality (5.0.9) jessie; urgency=medium
+
+  * fix for options
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 21:10:45 +0200
+
 salor-hospitality (5.0.8) jessie; urgency=medium
 
   * run seed only once
