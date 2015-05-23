@@ -81,7 +81,15 @@ class Booking < ActiveRecord::Base
     booking.user = user
     booking.vendor = vendor
     booking.company = vendor.company
-    booking.update_attributes params[:model]
+    
+    permitted = params.require(:model).permit :room_id,
+       :duration,
+       :from_date,
+       :to_date,
+       :id,
+       :hidden
+    
+    booking.update_attributes permitted
     params[:items].to_a.each do |item_params|
       booking.create_new_item(item_params)
     end
@@ -96,7 +104,14 @@ class Booking < ActiveRecord::Base
   end
 
   def update_from_params(params, user)
-    self.update_attributes params[:model]
+    permitted = params.require(:model).permit :room_id,
+       :duration,
+       :from_date,
+       :to_date,
+       :id,
+       :hidden
+    
+    self.update_attributes permitted
     params[:items].to_a.each do |item_params|
       item_id = item_params[1][:id]
       if item_id
@@ -114,13 +129,25 @@ class Booking < ActiveRecord::Base
   end
   
   def create_new_item(p)
-    i = BookingItem.new(p[1])
-    i.ui_id = p[0]
+    key = p[0]
+    params = ActionController::Parameters.new(p[1])
+    i = BookingItem.new
+    permitted = params.permit :count,
+        :guest_type_id,
+        :duration,
+        :season_id,
+        :from_date,
+        :to_date,
+        :base_price,
+        :count,
+        :hidden
+    i.update_attributes permitted
+    i.ui_id = key
     i.room_id = self.room_id
     i.booking = self
     i.vendor = vendor
     i.company = vendor.company
-    i.save
+    i.save!
     i.update_surcharge_items_from_ids p[1][:surchargeslist]
     i.surcharge_items.each do |si|
       si.calculate_totals
@@ -130,10 +157,20 @@ class Booking < ActiveRecord::Base
   end
   
   def update_item(id, p)
-    p[1].delete(:id)
+    key = p[0]
+    params = ActionController::Parameters.new(p[1])
     i = BookingItem.find_by_id(id)
-    i.update_attributes(p[1])
-    i.update_attribute :ui_id, p[0]
+    permitted = params.permit :count,
+        :guest_type_id,
+        :duration,
+        :season_id,
+        :from_date,
+        :to_date,
+        :base_price,
+        :count,
+        :hidden
+    i.update_attributes permitted
+    i.update_attribute :ui_id, key
     i.update_surcharge_items_from_ids p[1][:surchargeslist]
     i.surcharge_items.existing.each { |si| si.calculate_totals }
     i.calculate_totals

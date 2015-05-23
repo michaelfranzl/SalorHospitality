@@ -59,7 +59,10 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user, customer)
-    permitted = params.require(:model).permit(:table_id, :note)
+    permitted = params.require(:model).permit :table_id,
+        :booking_id,
+        :note,
+        :hidden
     order = Order.new permitted
     order.user = user unless order.user
     order.customer = customer if customer
@@ -109,7 +112,11 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params, user, customer)
-    permitted = params.require(:model).permit(:table_id, :note)
+    permitted = params.require(:model).permit :table_id,
+        :booking_id,
+        :note,
+        :hidden
+    
     self.update_attributes permitted
     
     errors = false
