@@ -8,7 +8,7 @@
 
 if User.any?
   puts "Database is already seeded. Not running seed script again."
-  #Process.exit 0
+  Process.exit
 end
 
 category_labels = ['Starters','Main Dish','Desserts','Rose Wine','Red Wine','Digestiv'] #,'Alcohol','Coffee','Tea','Tobacco','Beer','Aperitiv','White Wine','Side Dish','Divers']
