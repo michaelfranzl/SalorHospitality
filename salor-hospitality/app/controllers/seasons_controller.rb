@@ -20,7 +20,15 @@ class SeasonsController < ApplicationController
   end
 
   def create
-    @season = Season.new(params[:season])
+    permitted = params.require(:season).permit :name,
+      :'from_date(1i)',
+      :'from_date(2i)',
+      :'from_date(3i)',
+      :'to_date(1i)',
+      :'to_date(2i)',
+      :'to_date(3i)',
+      :color
+    @season = Season.new permitted
     @season.vendor = @current_vendor
     @season.company = @current_company
     if @season.save
@@ -39,7 +47,15 @@ class SeasonsController < ApplicationController
   def update
     @season = Season.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to seasons_path and return unless @season
-    if @season.update_attributes(params[:season])
+    permitted = params.require(:season).permit :name,
+      :'from_date(1i)',
+      :'from_date(2i)',
+      :'from_date(3i)',
+      :'to_date(1i)',
+      :'to_date(2i)',
+      :'to_date(3i)',
+      :color
+    if @season.update_attributes permitted
       @season.calculate_duration
       redirect_to(seasons_path)
     else
