@@ -1,3 +1,17 @@
+salor-hospitality (5.0.0) jessie; urgency=medium
+
+  * ported to rails 4.1.8, sending orders works
+  * added single migration file
+  * nodejs instead of therubyracer
+  * strong parameters for articles
+  * cleaned up article scopes
+  * permit article image upload
+  * strong attributes for vendor
+  * strong parameters for users
+  * updated changelog
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 12:19:06 +0200
+
 salor-hospitality (4.1.4.93) wheezy; urgency=medium
 
   * always print order numbers on receipts for conformity with legal regulations
