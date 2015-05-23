@@ -21,7 +21,10 @@ class CostCentersController < ApplicationController
   end
 
   def create
-    @cost_center = CostCenter.new(params[:cost_center])
+    permitted = params.require(:cost_center).permit :name,
+      :description,
+      :no_payment_methods
+    @cost_center = CostCenter.new permitted
     @cost_center.vendor = @current_vendor
     @cost_center.company = @current_company
     if @cost_center.save
@@ -41,7 +44,10 @@ class CostCentersController < ApplicationController
   def update
     @cost_center = get_model
     redirect_to roles_path and return unless @cost_center
-    if @cost_center.update_attributes(params[:cost_center])
+    permitted = params.require(:cost_center).permit :name,
+      :description,
+      :no_payment_methods
+    if @cost_center.update_attributes permitted
       flash[:notice] = t('cost_centers.create.success')
       redirect_to(cost_centers_path)
     else
