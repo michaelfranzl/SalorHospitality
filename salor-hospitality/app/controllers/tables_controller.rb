@@ -81,12 +81,21 @@ class TablesController < ApplicationController
   end
 
   def create
-    if @current_vendor.max_tables and @current_vendor.max_tables < @current_vendor.tables.existing.count
-      flash[:notice] = t('tables.create.license_limited', :count => @current_vendor.max_tables)
-      redirect_to tables_path and return
-    end
     @current_vendor.tables.update_all :booking_table => nil if params[:table][:booking_table] == '1'
-    @table = Table.new(params[:table])
+    
+    permitted = params.require(:table).permit :name,
+        :width,
+        :height,
+        :width_mobile,
+        :height_mobile,
+        :rotate,
+        :booking_table,
+        :customer_table,
+        :enabled,
+        :top,
+        :left
+        
+    @table = Table.new permitted
     @table.vendor = @current_vendor
     @table.company = @current_company
     if @table.save
@@ -111,7 +120,20 @@ class TablesController < ApplicationController
     @table = get_model
     redirect_to tables_path and return unless @table
     @current_vendor.tables.update_all :booking_table => nil if params[:table][:booking_table] == '1'
-    success = @table.update_attributes(params[:table])
+    
+    permitted = params.require(:table).permit :name,
+        :width,
+        :height,
+        :width_mobile,
+        :height_mobile,
+        :rotate,
+        :booking_table,
+        :customer_table,
+        :enabled,
+        :top,
+        :left
+    
+    success = @table.update_attributes permitted
     if success
       flash[:notice] = t('tables.create.success')
       redirect_to tables_path
