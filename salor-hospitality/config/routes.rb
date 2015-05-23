@@ -75,7 +75,7 @@ SalorHospitality::Application.routes.draw do
   get 'orders/toggle_tax_colors/:id' => 'orders#toggle_tax_colors'
   get 'settlements/print/:id' => 'settlements#print'
   get 'room_prices/generate' => 'room_prices#generate'
-  get 'tables/:id/update_coordinates' => 'tables#update_coordinates'
+  put 'tables/:id/update_coordinates' => 'tables#update_coordinates'
   get 'vendors/report' => 'vendors#report'
   get 'vendors/identify_printers' => 'vendors#identify_printers'
   get 'vendors/test_printers' => 'vendors#test_printers'

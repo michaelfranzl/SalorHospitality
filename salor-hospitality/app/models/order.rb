@@ -155,8 +155,11 @@ class Order < ActiveRecord::Base
   end
   
   def create_new_item(p, user)
+    params = ActionController::Parameters.new(p[1])
+    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
+    
     success = true
-    i = Item.new(p[1])
+    i = Item.new permitted
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
@@ -192,9 +195,10 @@ class Order < ActiveRecord::Base
   end
   
   def update_item(id, p, user)
-    p[1].delete(:id)
+    params = ActionController::Parameters.new(p[1])
+    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
     i = Item.find_by_id(id)
-    result = i.update_attributes(p[1])
+    result = i.update_attributes permitted
     if p[1][:p]
       i.update_attribute :price_changed, true
       i.update_attribute :price_changed_by, user.id
