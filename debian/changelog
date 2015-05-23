@@ -1,3 +1,10 @@
+salor-hospitality (5.0.1) jessie; urgency=medium
+
+  * 775 permissions for all files for better rvm development
+  * integrated escper code for less dependencies on the online API of rubygems.org
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:02:26 +0200
+
 salor-hospitality (5.0.0) jessie; urgency=medium
 
   * ported to rails 4.1.8, sending orders works
