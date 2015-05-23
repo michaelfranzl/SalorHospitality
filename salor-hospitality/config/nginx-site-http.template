@@ -3,6 +3,6 @@ server {
   server_name INSTANCE_ID.sh.localhost;
   root /usr/share/salor-hospitality/INSTANCE_ID/public;
   passenger_enabled on;
-  passenger_set_cgi_param SH_DEBIAN_SITEID INSTANCE_ID;
-  passenger_set_cgi_param BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile;
+  passenger_env_var SH_DEBIAN_SITEID INSTANCE_ID;
+  passenger_env_var BUNDLE_GEMFILE /etc/salor-hospitality/INSTANCE_ID/Gemfile;
 }
