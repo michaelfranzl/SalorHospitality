@@ -40,7 +40,23 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(params[:customer])
+    permitted = params.require(:customer).permit :email,
+        :password,
+        :default_table_id,
+        :language,
+        :first_name,
+        :last_name,
+        :company_name,
+        :address,
+        :city,
+        :state,
+        :country,
+        :postalcode,
+        :m_number,
+        :telephone,
+        :cellphone,
+        :tax_info
+    @customer = Customer.new permitted
     @customer.company = @current_company
     @customer.vendor = @current_vendor
     if @customer.save
@@ -55,7 +71,24 @@ class CustomersController < ApplicationController
   def update
     @customer = get_model
     redirect_to customers_path and return unless @customer
-    if @customer.update_attributes params[:customer]
+    permitted = params.require(:customer).permit :email,
+        :password,
+        :default_table_id,
+        :language,
+        :first_name,
+        :last_name,
+        :company_name,
+        :address,
+        :city,
+        :state,
+        :country,
+        :postalcode,
+        :m_number,
+        :telephone,
+        :cellphone,
+        :tax_info
+    
+    if @customer.update_attributes permitted
       flash[:notice] = t('customers.create.success')
       redirect_to customers_path
     else
