@@ -1,3 +1,11 @@
+salor-hospitality (4.1.4.93) wheezy; urgency=medium
+
+  * always print order numbers on receipts for conformity with legal regulations
+  * updated README
+  * updated README
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 11:59:16 +0200
+
 salor-hospitality (4.1.4.92) wheezy; urgency=medium
 
   * increase safe scrolling width on orders screen for mobile devices, add inactive field for articles#index
