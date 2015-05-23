@@ -1,3 +1,25 @@
+salor-hospitality (5.0.6) jessie; urgency=medium
+
+  * gemfile update
+  * strong paramters for bookings working
+  * fixed js error for new jquery
+  * strong paramters for roles
+  * strong paramters for payment methods
+  * strong paramters for customers
+  * strong paramters for tax classes
+  * strong paramters for options
+  * strong paramters for categories
+  * strong paramters for tables
+  * strong paramters for statistic categories
+  * JS fix for statistics
+  * strong paramters for cost centers
+  * strong paramters for cameras
+  * more strong paramters
+  * fix for surcharge display
+  * strong paramters for seasons
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 20:32:59 +0200
+
 salor-hospitality (5.0.5) jessie; urgency=medium
 
   * sprockets gem version fix
