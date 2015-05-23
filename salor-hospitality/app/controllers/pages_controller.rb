@@ -40,7 +40,15 @@ class PagesController < ApplicationController
   
   def update
     @page = @current_vendor.pages.existing.find_by_id(params[:id])
-    unless @page.update_attributes params[:page]
+    
+    permitted = params.require(:page).permit :width,
+      :height,
+      :color,
+      :images_attributes => [
+        :file_data
+      ]
+        
+    unless @page.update_attributes permitted
       @page.images.reload
       @partial_htmls = @page.evaluate_partial_htmls
       render(:edit) and return 
@@ -67,13 +75,16 @@ class PagesController < ApplicationController
   end
   
   def find
-    if params['search_text'].strip.length > 2
-      search_terms = params['search_text'].split.collect { |word| "%#{ word.downcase }%" }
-      conditions = (["(LOWER(name) LIKE ?)"] * search_terms.size).join(' AND ')
-      @found_articles = @current_vendor.articles.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
-      @found_options = @current_vendor.options.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
-      @found_categories = @current_vendor.categories.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
-      @found_presentations = @current_vendor.presentations.existing.active.find( :all, :conditions => [ conditions, *search_terms.flatten ], :order => 'name', :limit => 2 )
+    str = params['search_text'].strip
+    if str.length > 2
+      
+      @found_articles = @current_vendor.articles.existing.active.where("name LIKE '%#{ str}%' ").order(:name).limit(2)
+      
+      @found_options = @current_vendor.options.existing.active.where("name LIKE '%#{ str}%' ").order(:name).limit(2)
+      
+      @found_categories = @current_vendor.categories.existing.active.where("name LIKE '%#{ str}%' ").order(:name).limit(2)
+      
+      @found_presentations = @current_vendor.presentations.existing.active.where("name LIKE '%#{ str}%' ").order(:name).limit(2)
     else
       render :nothing => true
     end
