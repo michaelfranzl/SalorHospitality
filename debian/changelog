@@ -1,3 +1,9 @@
+salor-hospitality (5.0.4) jessie; urgency=medium
+
+  * updated changelog
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:54:20 +0200
+
 salor-hospitality (5.0.3) jessie; urgency=medium
 
   * bundle install during installation
