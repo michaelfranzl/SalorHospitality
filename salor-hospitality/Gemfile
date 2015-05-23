@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-# The following gems are already part of Debian Wheezy and do NOT cause a dependency to the online API of rubygems.org
 gem 'rails', '4.1.8'
 gem 'rake', '10.3.2'
 gem 'rack', '1.5.2'
@@ -13,8 +12,4 @@ gem 'serialport', '1.3.0'
 gem 'haml', '4.0.5'
 gem 'mysql2', '0.3.16'
 gem 'coffee-rails', '4.0.1'
-gem 'rmagick'
-
-group :development do
-  gem 'byebug'
-end
+gem 'rmagick', '2.15.0'

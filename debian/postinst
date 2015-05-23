@@ -184,7 +184,10 @@ for lInstance in $gInstances; do
       gemfile_lock_target=$rails_etc/Gemfile.lock
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
-      if [ -e $rails_etc/database.yml ]; then     
+      cd $app_root
+      bundle install --without development BUNDLE_GEMFILE="${gemfile_target}"
+      
+      if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
         cd $app_root        
         echo "  postinst: migrating the database. this may take a while."
