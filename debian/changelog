@@ -1,3 +1,9 @@
+salor-hospitality (5.0.5) jessie; urgency=medium
+
+  * sprockets gem version fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 14:37:40 +0200
+
 salor-hospitality (5.0.4) jessie; urgency=medium
 
   * updated changelog
