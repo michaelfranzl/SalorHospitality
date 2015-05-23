@@ -1,3 +1,9 @@
+salor-hospitality (5.0.2) jessie; urgency=medium
+
+  * fix postinst file for Debian jessie
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:11:40 +0200
+
 salor-hospitality (5.0.1) jessie; urgency=medium
 
   * 775 permissions for all files for better rvm development
