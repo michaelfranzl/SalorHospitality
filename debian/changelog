@@ -1,3 +1,9 @@
+salor-hospitality (5.0.8) jessie; urgency=medium
+
+  * run seed only once
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 20:43:15 +0200
+
 salor-hospitality (5.0.7) jessie; urgency=medium
 
   * removed byebug from deployment Gemfile
