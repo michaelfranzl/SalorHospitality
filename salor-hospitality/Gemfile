@@ -13,12 +13,7 @@ gem 'serialport', '1.3.0'
 gem 'haml', '4.0.5'
 gem 'mysql2', '0.3.16'
 gem 'coffee-rails', '4.0.1'
-
-# The following gems are not part of Debian Jessie and DO cause a dependency to the online API of rubygems.org
- # jessies's version rmagick 2.13.2 seems to be broken
-
-gem 'rmagick', '2.15.0'
-gem 'escper', '1.2.2'
+gem 'rmagick'
 
 group :development do
   gem 'byebug'
