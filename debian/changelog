@@ -1,3 +1,9 @@
+salor-hospitality (5.0.3) jessie; urgency=medium
+
+  * bundle install during installation
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:51:27 +0200
+
 salor-hospitality (5.0.2) jessie; urgency=medium
 
   * fix postinst file for Debian jessie
