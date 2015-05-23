@@ -22,7 +22,10 @@ class PaymentMethodsController < ApplicationController
   end
 
   def create
-    @payment_method = PaymentMethod.new(params[:payment_method])
+    permitted = params.require(:payment_method).permit :name,
+        :cash,
+        :change
+    @payment_method = PaymentMethod.new permitted
     @payment_method.vendor = @current_vendor
     @payment_method.company = @current_company
     if @payment_method.save
@@ -42,7 +45,10 @@ class PaymentMethodsController < ApplicationController
   def update
     @payment_method = get_model
     redirect_to roles_path and return unless @payment_method
-    if @payment_method.update_attributes(params[:payment_method])
+    permitted = params.require(:payment_method).permit :name,
+        :cash,
+        :change
+    if @payment_method.update_attributes permitted
       flash[:notice] = t('payment_methods.create.success')
       redirect_to(payment_methods_path)
     else
