@@ -27,7 +27,10 @@ class RolesController < ApplicationController
   end
 
   def create
-    @role = Role.new(params[:role])
+    permitted = params.require(:role).permit :name,
+        :weight,
+        :permissions => []
+    @role = Role.new permitted
     @role.company = @current_company
     @role.vendor = @current_vendor
     if @role.save
@@ -41,7 +44,10 @@ class RolesController < ApplicationController
   def update
     @role = get_model
     redirect_to roles_path and return unless @role
-    if @role.update_attributes params[:role]
+    permitted = params.require(:role).permit :name,
+        :weight,
+        :permissions => []
+    if @role.update_attributes permitted
       @current_company.users.where(:role_id => @role.id).update_all :role_weight => @role.weight
       flash[:notice] = t('roles.create.success')
       redirect_to roles_path
