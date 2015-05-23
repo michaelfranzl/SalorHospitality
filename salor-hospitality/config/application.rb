@@ -14,6 +14,9 @@ require 'rails/all'
 require 'socket'
 require 'pp'
 
+$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../lib")
+require 'escper/escper'
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
