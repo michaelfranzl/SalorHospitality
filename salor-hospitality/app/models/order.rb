@@ -161,7 +161,7 @@ class Order < ActiveRecord::Base
   
   def create_new_item(p, user)
     params = ActionController::Parameters.new(p[1])
-    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
+    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids, :scribe
     
     success = true
     i = Item.new permitted

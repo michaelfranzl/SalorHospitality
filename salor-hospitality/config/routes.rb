@@ -111,7 +111,7 @@ SalorHospitality::Application.routes.draw do
       get :list
       put :split
       put :rotate_tax
-      get :set_attribute
+      post :set_attribute
     end
   end
   
