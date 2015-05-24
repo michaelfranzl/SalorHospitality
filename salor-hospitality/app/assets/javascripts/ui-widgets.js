@@ -104,8 +104,8 @@ function make_select_widget(elem) {
           o.addClass('select-widget-entry-selected');
         }
         o.on('click', function () {
-          elem.find("option:selected").removeAttr("selected"); 
-          elem.find("option[value='"+$(this).val()+"']").attr("selected","selected");
+          elem.find("option:selected").removeAttr("selected");
+          elem.find("option[value='" + $(this).attr("value") + "']").attr("selected","selected");
           elem.change();
           button.html(o.html());
           mdiv.remove();

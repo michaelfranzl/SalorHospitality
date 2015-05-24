@@ -25,7 +25,16 @@ class CamerasController < ApplicationController
   end
 
   def create
-    @camera = Camera.new(params[:camera])
+    permitted = params.require(:camera).permit :name,
+      :description,
+      :host_internal,
+      :host_external,
+      :port,
+      :url_snapshot,
+      :url_stream,
+      :active
+        
+    @camera = Camera.new permitted
     @camera.vendor = @current_vendor
     @camera.company = @current_company
     if @camera.save
@@ -45,7 +54,17 @@ class CamerasController < ApplicationController
   def update
     @camera = get_model
     redirect_to roles_path and return unless @camera
-    if @camera.update_attributes(params[:camera])
+    
+    permitted = params.require(:camera).permit :name,
+      :description,
+      :host_internal,
+      :host_external,
+      :port,
+      :url_snapshot,
+      :url_stream,
+      :active
+    
+    if @camera.update_attributes permitted
       flash[:notice] = t('cameras.create.success')
       redirect_to(cameras_path)
     else

@@ -1,10 +1,169 @@
+salor-hospitality (5.0.19) jessie; urgency=medium
+
+  * postinst fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 12:52:00 +0200
+
+salor-hospitality (5.0.18) jessie; urgency=medium
+
+  * updated readme and postinst fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 12:40:09 +0200
+
+salor-hospitality (5.0.17) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 12:24:06 +0200
+
+salor-hospitality (5.0.16) jessie; urgency=medium
+
+  * deployment test
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 10:33:53 +0200
+
+salor-hospitality (5.0.15) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:54:58 +0200
+
+salor-hospitality (5.0.14) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:54:03 +0200
+
+salor-hospitality (5.0.13) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:47:49 +0200
+
+salor-hospitality (5.0.12) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:41:55 +0200
+
+salor-hospitality (5.0.11) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:40:28 +0200
+
+salor-hospitality (5.0.10) jessie; urgency=medium
+
+  * fixed and faster order splitting
+  * fixed assigning user id
+  * javascript fixes
+  * fixed payment methods for orders
+  * removed debugging logs
+  * fix for hand scribe
+  * fixes for slideshow
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:20:35 +0200
+
+salor-hospitality (5.0.9) jessie; urgency=medium
+
+  * fix for options
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 21:10:45 +0200
+
+salor-hospitality (5.0.8) jessie; urgency=medium
+
+  * run seed only once
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 20:43:15 +0200
+
+salor-hospitality (5.0.7) jessie; urgency=medium
+
+  * removed byebug from deployment Gemfile
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 20:39:16 +0200
+
+salor-hospitality (5.0.6) jessie; urgency=medium
+
+  * gemfile update
+  * strong paramters for bookings working
+  * fixed js error for new jquery
+  * strong paramters for roles
+  * strong paramters for payment methods
+  * strong paramters for customers
+  * strong paramters for tax classes
+  * strong paramters for options
+  * strong paramters for categories
+  * strong paramters for tables
+  * strong paramters for statistic categories
+  * JS fix for statistics
+  * strong paramters for cost centers
+  * strong paramters for cameras
+  * more strong paramters
+  * fix for surcharge display
+  * strong paramters for seasons
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 20:32:59 +0200
+
+salor-hospitality (5.0.5) jessie; urgency=medium
+
+  * sprockets gem version fix
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 14:37:40 +0200
+
+salor-hospitality (5.0.4) jessie; urgency=medium
+
+  * updated changelog
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:54:20 +0200
+
+salor-hospitality (5.0.3) jessie; urgency=medium
+
+  * bundle install during installation
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:53:56 +0200
+
+salor-hospitality (5.0.2) jessie; urgency=medium
+
+  * fix postinst file for Debian jessie
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:11:40 +0200
+
+salor-hospitality (5.0.1) jessie; urgency=medium
+
+  * 775 permissions for all files for better rvm development
+  * integrated escper code for less dependencies on the online API of rubygems.org
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 13:02:26 +0200
+
+salor-hospitality (5.0.0) jessie; urgency=medium
+
+  * ported to rails 4.1.8, sending orders works
+  * added single migration file
+  * nodejs instead of therubyracer
+  * strong parameters for articles
+  * cleaned up article scopes
+  * permit article image upload
+  * strong attributes for vendor
+  * strong parameters for users
+  * updated changelog
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 12:19:06 +0200
+
 salor-hospitality (4.1.4.93) wheezy; urgency=medium
 
   * always print order numbers on receipts for conformity with legal regulations
   * updated README
   * updated README
+  * ported to rails 4.1.8, sending orders works
+  * added single migration file
+  * nodejs instead of therubyracer
+  * strong parameters for articles
+  * cleaned up article scopes
+  * permit article image upload
+  * strong attributes for vendor
+  * strong parameters for users
 
- -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 11:59:16 +0200
+ -- Michael Franzl <office@michaelfranzl.com>  Sat, 23 May 2015 12:16:23 +0200
 
 salor-hospitality (4.1.4.92) wheezy; urgency=medium
 

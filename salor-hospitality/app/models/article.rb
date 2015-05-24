@@ -17,13 +17,13 @@ class Article < ActiveRecord::Base
   belongs_to :company
   has_many :ingredients
   has_many :quantities
-  has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
+  has_many :existing_quantities, -> { where processed: false }, :class_name => Quantity
   has_many :items
   has_many :partials
   has_many :images, :as => :imageable
   has_and_belongs_to_many :taxes
 
-  scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
+  # scope :waiterpad, -> where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
   validates_presence_of :name, :category_id, :taxes
@@ -47,7 +47,7 @@ class Article < ActiveRecord::Base
  
   # Nested attributes
   accepts_nested_attributes_for :ingredients, :allow_destroy => true, :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
-  accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| (attrs['prefix'] == '' && attrs['postfix'] == '' && attrs['price'] == '') || attrs['hidden'] == 1 }
+  accepts_nested_attributes_for :quantities, :allow_destroy => true, :reject_if => proc { |attrs| (attrs['prefix'].blank? && attrs['postfix'].blank? && attrs['price'].blank?) || attrs['hidden'] == 1 }
   accepts_nested_attributes_for :images, :allow_destroy => true, :reject_if => :all_blank
 
 
@@ -77,6 +77,11 @@ class Article < ActiveRecord::Base
   def price=(price)
     price = price.gsub(',', '.') if price.class == String
     write_attribute :price, price
+  end
+  
+  def inactive=(val)
+    self.active = !val
+    self.save!
   end
   
   def inactive

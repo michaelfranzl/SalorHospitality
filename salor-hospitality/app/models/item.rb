@@ -9,9 +9,9 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Item < ActiveRecord::Base
-  attr_accessible :position, :comment, :price, :article_id, :quantity_id, :category_id, :count, :printed_count, :usage, :hidden, :customers_ids
-  attr_accessible :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
-  attr_accessible :user_id, :confirmation_count, :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe, :settlement_id, :cost_center_id, :statistic_category_id
+  #attr_accessible :position, :comment, :price, :article_id, :quantity_id, :category_id, :count, :printed_count, :usage, :hidden, :customers_ids
+  #attr_accessible :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
+  #attr_accessible :user_id, :confirmation_count, :preparation_user_id, :delivery_user_id, :vendor_id, :company_id, :hidden_by, :price, :order_id, :scribe, :settlement_id, :cost_center_id, :statistic_category_id
   
   include Scope
   belongs_to :order
@@ -276,7 +276,7 @@ class Item < ActiveRecord::Base
     self.save
   end
   
-  def self.split_items(items, order)
+  def self.split_items(items)
     first_item_id = items.first[0]
     first_item = Item.find_by_id(first_item_id)
     
@@ -290,8 +290,12 @@ class Item < ActiveRecord::Base
     end
     
     if split_order.nil?
-      split_order = Order.new(parent_order.attributes)
-      split_order.update_attribute :nr, first_item.vendor.get_unique_model_number('order')
+      split_order = Order.new
+      split_order.table_id = parent_order.table_id
+      split_order.user_id = parent_order.user_id
+      split_order.company_id = parent_order.company_id
+      split_order.vendor_id = parent_order.vendor_id
+      split_order.nr = parent_order.vendor.get_unique_model_number('order')
       parent_order.order = split_order
       split_order.order = parent_order
     end
@@ -301,31 +305,43 @@ class Item < ActiveRecord::Base
       item.split(v['split_count'].to_i, parent_order, split_order) unless v['split_count'].to_i.zero?
     end
     
-    partner_order = order.order # it seems that at this point, partner_order is still unsaved
-    if order.items.existing.any?
-      order.calculate_totals
-      order.update_associations
+    if parent_order.items.existing.any?
+      parent_order.calculate_totals
     else
-      order.hide(-3) 
+      parent_order.hide(-3) 
     end
     
-    if partner_order
-      if partner_order.items.existing.any?
-        partner_order.calculate_totals
-        partner_order.update_associations
-      elsif partner_order
-        partner_order.hide(-3) 
-      end
-    end
+    split_order.calculate_totals
   end
 
   def split(count=1, parent_order, split_order)
     partner_item = self.item
     if partner_item.nil?
-      partner_item = Item.new(self.attributes) # attention: at this point, partner_item will still have the id of self. below, we call partner_item.save, and only at this point it gets the new id.
+      partner_item = Item.new
+      partner_item.count = self.count
+      partner_item.article_id = self.article_id
+      partner_item.quantity_id = self.quantity_id
+      partner_item.price = self.price
+      partner_item.printed_count = self.printed_count
+      partner_item.company_id = self.company_id
+      partner_item.vendor_id = self.vendor_id
+      partner_item.category_id = self.category_id
+      partner_item.tax_percent = self.tax_percent
+      partner_item.statistic_category_id = self.statistic_category_id
+      partner_item.price_changed = self.price_changed
+      partner_item.price_changed_by = self.price_changed_by
+      partner_item.position_category = self.position_category
       partner_item.option_items = []
       self.option_items.existing.each do |o|
-        partner_option_item = OptionItem.create o.attributes # warning: at this point, the OptionItem still has the wrong count. calling OptionItem.calculate_totals below will fix that.
+        partner_option_item = OptionItem.new
+        partner_option_item.option_id = o.option_id
+        partner_option_item.vendor_id = o.vendor_id
+        partner_option_item.company_id = o.company_id
+        partner_option_item.price = o.price
+        partner_option_item.name = o.name
+        partner_option_item.count = o.count
+        partner_option_item.no_ticket = o.no_ticket
+        partner_option_item.separate_ticket = o.separate_ticket
         partner_option_item.order = split_order
         partner_item.option_items << partner_option_item
       end

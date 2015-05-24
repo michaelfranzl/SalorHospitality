@@ -42,16 +42,6 @@ class RoomsController < ApplicationController
   def show
     @room = get_model
     redirect_to rooms_path and return unless @room
-    #if params[:from] then
-    #  from_date = params[:from].to_date - 31.days
-    #else
-    #  from_date = Time.now
-    #end
-    #n = Time.now + 31.days
-    #@bookings = @room.bookings.existing.where(["from_date between ? and ?",from_date,n])
-    #if params[:booking_id] then
-    #  @booking = Booking.where(:vendor_id => @current_vendor.id).find_by_id(params[:booking_id])
-    #end
     render 'bookings/go_to_booking_form'
   end
 
@@ -62,7 +52,8 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new(params[:room])
+    permitted = params.require(:room).permit :name, :room_type_id
+    @room = Room.new permitted
     @room.vendor = @current_vendor
     @room.company = @current_company
     if @room.save
@@ -84,7 +75,10 @@ class RoomsController < ApplicationController
   def update
     @room = Room.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to user_path and return unless @room
-    if @room.update_attributes(params[:room])
+    
+    permitted = params.require(:room).permit :name, :room_type_id
+    
+    if @room.update_attributes permitted
       flash[:notice] = I18n.t("rooms.create.success")
       redirect_to(rooms_path)
     else

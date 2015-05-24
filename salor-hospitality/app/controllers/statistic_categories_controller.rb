@@ -21,7 +21,9 @@ class StatisticCategoriesController < ApplicationController
   end
 
   def create
-    @statistic_category = StatisticCategory.new(params[:statistic_category])
+    permitted = params.require(:statistic_category).permit :name
+        
+    @statistic_category = StatisticCategory.new permitted
     @statistic_category.vendor = @current_vendor
     @statistic_category.company = @current_company
     if @statistic_category.save
@@ -41,7 +43,9 @@ class StatisticCategoriesController < ApplicationController
   def update
     @statistic_category = get_model
     redirect_to roles_path and return unless @statistic_category
-    if @statistic_category.update_attributes(params[:statistic_category]) 
+    
+    permitted = params.require(:statistic_category).permit :name
+    if @statistic_category.update_attributes permitted
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to statistic_categories_path
     else

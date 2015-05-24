@@ -73,7 +73,8 @@ function add_payment_method(model_id,id,amount) {
     pm_input.val(number_with_precision(submit_json.totals[model_id].model + booking_order_total - submit_json.totals[model_id].payment_method_items, 2));
   }
   submit_json.payment_method_items[model_id][payment_method_uid]._delete = false;
-  payment_method_input_change(pm_input, payment_method_uid, model_id)
+  
+  payment_method_input_change(pm_input, payment_method_uid, model_id);
   if (settings.workstation) {
     (function(){
       var uid = payment_method_uid;

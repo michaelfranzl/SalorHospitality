@@ -48,8 +48,8 @@ for lInstance in $gOldInstances; do
     ucf --purge /etc/salor-hospitality/$lInstance/codepages.yml
     ucf --purge /etc/salor-hospitality/$lInstance/Gemfile
     ucf --purge /etc/salor-hospitality/$lInstance/Gemfile.lock
-    ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-http
-    ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache-https
+    ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache2-http
+    ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-apache2-https
     ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-http
     ucf --purge /etc/salor-hospitality/$lInstance/sh-$lInstance-nginx-https
   fi
@@ -173,6 +173,11 @@ for lInstance in $gInstances; do
         ucf --debconf-ok $app_root/config/codepages.yml $rails_etc/codepages.yml
         chmod 660 $rails_etc/codepages.yml
       fi
+      if [ -d $app_root/vendor/cache ]; then
+        echo "  postinst: Linking Gem cache directory ..."
+        mkdir -p $rails_etc/vendor
+        ln -sf $app_root/vendor/cache $rails_etc/vendor/cache
+      fi
       
       echo "  postinst: Installing Gemfile as configuration file ..."
       gemfile_source=$app_root/Gemfile
@@ -184,23 +189,18 @@ for lInstance in $gInstances; do
       gemfile_lock_target=$rails_etc/Gemfile.lock
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
-      hasPack=$(dpkg -l | grep salor-virtual | wc -l)
-      if [ "$hasPack" = "0" ]; then
-        echo "  postinst: All required gems are available as Debian packages. Nothing to be done."
-      else
-        echo "  postinst: Some of the required gems are not available as Debian packages. We have to run bundle install to download gems from rubygems.org."
-        salor-installgems h ${lInstance}
-      fi
+      cd $app_root
+      bundle install --deployment --local --gemfile=${gemfile_target}
       
-      if [ -e $rails_etc/database.yml ]; then     
+      if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
-        cd $app_root        
+        cd $app_root
         echo "  postinst: migrating the database. this may take a while."
-        rake1.9.1 --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
-        echo "  postinst: running db:seed ..."
-        rake1.9.1 --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        /usr/bin/rake --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
+        echo "  postinst: conditionally seeding the database ..."
+        /usr/bin/rake --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
         echo "  postinst: updating vendors cache ..."
-        rake1.9.1 --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        /usr/bin/rake --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
       else
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi

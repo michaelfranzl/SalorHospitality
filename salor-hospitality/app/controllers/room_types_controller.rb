@@ -20,7 +20,8 @@ class RoomTypesController < ApplicationController
   end
 
   def create
-    @room_type = RoomType.new(params[:room_type])
+    permitted = params.require(:room_type).permit :name
+    @room_type = RoomType.new permitted
     @room_type.vendor = @current_vendor
     @room_type.company = @current_company
     if @room_type.save
@@ -38,7 +39,12 @@ class RoomTypesController < ApplicationController
   def update
     @room_type = RoomType.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to room_types_path and return unless @room_type
-    @room_type.update_attributes(params[:room_type]) ? redirect_to(room_types_path) : render(:new)
+    permitted = params.require(:room_type).permit :name
+    if @room_type.update_attributes permitted
+      redirect_to(room_types_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy

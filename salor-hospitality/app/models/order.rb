@@ -59,7 +59,12 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_params(params, vendor, user, customer)
-    order = Order.new params[:model]
+    permitted = params.require(:model).permit :table_id,
+        :booking_id,
+        :user_id,
+        :note,
+        :hidden
+    order = Order.new permitted
     order.user = user unless order.user
     order.customer = customer if customer
     order.vendor = vendor
@@ -108,7 +113,16 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params, user, customer)
-    self.update_attributes params[:model]
+    if params[:model]
+      permitted = params[:model].permit :table_id,
+          :booking_id,
+          :user_id,
+          :note,
+          :cost_center_id,
+          :hidden
+      
+      self.update_attributes permitted
+    end
     
     errors = false
     params[:items].to_a.each do |item_params|
@@ -146,8 +160,11 @@ class Order < ActiveRecord::Base
   end
   
   def create_new_item(p, user)
+    params = ActionController::Parameters.new(p[1])
+    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids, :scribe
+    
     success = true
-    i = Item.new(p[1])
+    i = Item.new permitted
     i.order = self
     i.vendor = vendor
     i.company = vendor.company
@@ -183,9 +200,10 @@ class Order < ActiveRecord::Base
   end
   
   def update_item(id, p, user)
-    p[1].delete(:id)
+    params = ActionController::Parameters.new(p[1])
+    permitted = params.permit :s, :o, :p, :ai, :qi, :ci, :c, :pc, :u, :x, :cids
     i = Item.find_by_id(id)
-    result = i.update_attributes(p[1])
+    result = i.update_attributes permitted
     if p[1][:p]
       i.update_attribute :price_changed, true
       i.update_attribute :price_changed_by, user.id
@@ -665,7 +683,7 @@ class Order < ActiveRecord::Base
       items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
       catstring = ''
       items.each do |i|
-        next if i.option_items.find_all_by_no_ticket(true).any?
+        next if i.option_items.where(:no_ticket => true).any?
         itemstring = ''
         itemstring += article_format % [ i.count - i.printed_count, i.article.name]
         itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
@@ -685,7 +703,7 @@ class Order < ActiveRecord::Base
           itemstring += item_separator_format % item_separator_values
         end
         
-        if i.option_items.find_all_by_separate_ticket(true).any?
+        if i.option_items.where(:separate_ticket => true).any?
           separate_receipt_contents << itemstring
         else
           catstring += itemstring

@@ -196,8 +196,8 @@
     
 :javascript
   $('#add_printer').click(function(){
-    var new_printer_id = new Date().getTime();
-    $('#vendor_printers').append(printer_template.replace(/NEW_RECORD/g, 'new_' + new_printer_id));
+    var new_printer_id = - new Date().getTime();
+    $('#vendor_printers').append(printer_template.replace(/NEW_RECORD/g, new_printer_id));
     $
   });
 

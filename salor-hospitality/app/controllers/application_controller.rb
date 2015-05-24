@@ -360,10 +360,10 @@ class ApplicationController < ActionController::Base
         # get a specific order
         order = get_model(params[:id], Order)
       elsif params[:model] and params[:model][:table_id]
-        # Reuse the order on table if possible. happens when 2 devices are taking a new order at the same time, and both haven't ID set.
+        # Reuse the order on table if possible. Happens when 2 devices are entering a table without order at the same time, and one of the users submits first.
         order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).last
       end
-      
+
       if order and order.finished == true
         # do not update or create the order, simply return it
         return order

@@ -118,6 +118,10 @@ class Vendor < ActiveRecord::Base
     utc_offset_hours +  self.time_offset
   end
   
+  def existing_tables
+    self.tables.existing
+  end
+  
   def sanitize_vendor_printer_paths
     self.vendor_printers.existing.update_all :company_id => self.company_id
     self.vendor_printers.existing.each do |vp|

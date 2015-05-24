@@ -30,11 +30,6 @@ class Category < ActiveRecord::Base
     return "/assets/category_blank.png" if self.icon.nil?
     "/assets/category_#{self.icon}.png"
   end
-
-  def self.process_custom_icon(params)
-    params[:icon] = 'custom' if (params[:images_attributes] and params[:images_attributes]['0'][:file_data])
-    params
-  end
   
   def self.sort(categories,type)
     type.map! {|t| t.to_i}

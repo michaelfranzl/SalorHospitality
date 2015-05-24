@@ -101,8 +101,8 @@
   , 2000);
 
   $('#add_quantity').click(function(){
-    var new_quantity_id = new Date().getTime();
-    $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, 'new_' + new_quantity_id));
+    var new_quantity_id = - new Date().getTime();
+    $('#quantities_new').append(quantity_template.replace(/NEW_RECORD/g, new_quantity_id));
     $('#quantity_new_' + new_quantity_id).slideDown();
   });
 

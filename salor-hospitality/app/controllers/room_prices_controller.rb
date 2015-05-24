@@ -47,7 +47,12 @@ class RoomPricesController < ApplicationController
   def update
     @room_price = RoomPrice.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to room_prices_path and return unless @room_price
-    @room_price.update_attributes(params[:room_price]) ? redirect_to(room_prices_path) : render(:new)
+    permitted = params.require(:room_price).permit :base_price
+    if @room_price.update_attributes permitted
+      redirect_to(room_prices_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy

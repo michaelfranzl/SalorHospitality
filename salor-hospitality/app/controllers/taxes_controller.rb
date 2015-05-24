@@ -23,7 +23,13 @@ class TaxesController < ApplicationController
   end
 
   def create
-    @tax = Tax.new(params[:tax])
+    permitted = params.require(:tax).permit :name,
+        :letter,
+        :color,
+        :include_in_statistics,
+        :statistics_in_category
+        
+    @tax = Tax.new permitted
     @tax.vendor = @current_vendor
     @tax.company = @current_company
     if @tax.save
@@ -41,7 +47,17 @@ class TaxesController < ApplicationController
   def update
     @tax = get_model
     redirect_to taxes_path and return unless @tax
-    @tax.update_attributes(params[:tax]) ? redirect_to(taxes_path) : render(:new)
+    permitted = params.require(:tax).permit :name,
+        :letter,
+        :color,
+        :include_in_statistics,
+        :statistics_in_category
+    
+    if @tax.update_attributes permitted
+      redirect_to(taxes_path)
+    else
+      render(:new)
+    end
   end
 
   def destroy

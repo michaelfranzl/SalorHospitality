@@ -41,6 +41,6 @@
 
 :javascript
   $('#add_tax_amount').click(function(){
-    var new_tax_amount_id = new Date().getTime();
-    $('#tax_amounts').append(tax_amount_template.replace(/NEW_RECORD/g, 'new_' + new_tax_amount_id));
+    var new_tax_amount_id = - new Date().getTime();
+    $('#tax_amounts').append(tax_amount_template.replace(/NEW_RECORD/g, new_tax_amount_id));
   });

@@ -29,7 +29,20 @@ class CategoriesController < ApplicationController
       flash[:notice] = t('categories.create.license_limited', :count => @current_vendor.max_categories)
       redirect_to categories_path and return
     end
-    @category = Category.new(Category.process_custom_icon(params[:category]))
+    
+    
+    params[:category][:icon] = 'custom' if (params[:category][:images_attributes] and params[:category][:images_attributes]['0'][:file_data])
+    permitted = params.require(:category).permit :name,
+      :preparation_user_id,
+      :vendor_printer_id,
+      :separate_print,
+      :icon,
+      :color,
+      :images_attributes => [
+        :file_data
+      ]
+        
+    @category = Category.new permitted
     @taxes = @current_vendor.taxes.existing
     @users = @current_vendor.users.existing.active.where('role_weight > 0')
     @printers = @current_vendor.vendor_printers.existing
@@ -56,7 +69,19 @@ class CategoriesController < ApplicationController
   def update
     @category = get_model
     redirect_to categories_path and return unless @category
-    if @category.update_attributes(Category.process_custom_icon(params[:category])) then
+    
+    params[:category][:icon] = 'custom' if (params[:category][:images_attributes] and params[:category][:images_attributes]['0'][:file_data])
+    permitted = params.require(:category).permit :name,
+      :preparation_user_id,
+      :vendor_printer_id,
+      :separate_print,
+      :icon,
+      :color,
+    :images_attributes => [
+      :file_data
+    ]
+    
+    if @category.update_attributes permitted
       #@category.images.update_all :company_id => @category.company_id
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to categories_path

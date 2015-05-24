@@ -14,6 +14,7 @@ class SurchargesController < ApplicationController
   def index
     season_ids = @current_vendor.seasons.existing.collect { |s| s.id }
     guest_type_ids = @current_vendor.guest_types.collect{ |gt| gt.id }
+    guest_type_ids << nil
     
     @surcharges = @current_vendor.surcharges.existing.where(:season_id => season_ids, :guest_type_id => guest_type_ids)
     @surcharge_names = @surcharges.collect{ |s| s.name }.uniq
@@ -47,7 +48,18 @@ class SurchargesController < ApplicationController
     @surcharge = get_model
     redirect_to surcharges_path and return unless @surcharge
     old_name = @surcharge.name
-    success = @surcharge.update_attributes(params[:surcharge])
+    permitted = params.require(:surcharge).permit :name,
+      :radio_select,
+      :selected,
+      :visible,
+      :tax_amounts_attributes => [
+        :amount,
+        :tax_id,
+        :hidden,
+        :id
+      ]
+    
+    success = @surcharge.update_attributes permitted
     if success and not @surcharge.tax_amounts.where(:tax_id => nil).any?
       @surcharge.update_all_relations params, old_name
       @surcharge.calculate_totals

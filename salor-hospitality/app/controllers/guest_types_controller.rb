@@ -21,7 +21,8 @@ class GuestTypesController < ApplicationController
   end
 
   def create
-    @guest_type = GuestType.new(params[:guest_type])
+    permitted = params.require(:guest_type).permit :name, :taxes_array => []
+    @guest_type = GuestType.new permitted
     @guest_type.vendor = @current_vendor
     @guest_type.company = @current_company
     if @guest_type.save
@@ -42,7 +43,8 @@ class GuestTypesController < ApplicationController
   def update
     @guest_type = GuestType.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to guest_types_path and return unless @guest_type
-    if @guest_type.update_attributes(params[:guest_type])
+    permitted = params.require(:guest_type).permit :name, :taxes_array => []
+    if @guest_type.update_attributes permitted
       redirect_to(guest_types_path)
     else
       @taxes = @current_vendor.taxes.existing

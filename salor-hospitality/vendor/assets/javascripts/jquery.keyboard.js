@@ -103,8 +103,8 @@ $.keyboard = function(el, options){
 		base.rows = ['ui-keyboard-keyset-default', 'ui-keyboard-keyset-shift', 'ui-keyboard-keyset-alt', 'ui-keyboard-keyset-alt-shift' ];
 		base.acceptedKeys = [];
 		base.mappedKeys = {}; // for remapping manually typed in keys
-		base.msie = $.browser.msie; // IE flag, used for caret positioning
-		base.opera = $.browser.opera; // opera flag, also for caret positioning
+		base.msie = false;//$.browser.msie; // IE flag, used for caret positioning
+		base.opera = false;//$.browser.opera; // opera flag, also for caret positioning
 		base.inPlaceholder = base.$el.attr('placeholder') || '';
 		base.watermark = (typeof(document.createElement('input').placeholder) !== 'undefined' && base.inPlaceholder !== ''); // html 5 placeholder/watermark
 		base.regex = $.keyboard.comboRegex; // save default regex (in case loading another layout changes it)

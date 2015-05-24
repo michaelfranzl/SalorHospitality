@@ -26,7 +26,10 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
   var original_count = item_count_td.html() == '' ? 0 : parseInt(item_count_td.html());
   var split_count = item_count_split_td.html() == '' ? 0 : parseInt(item_count_split_td.html());
 
-  if (((increment == 1) && (original_count > 0) || (increment == -1) && (split_count > 0))) {
+  if (
+    (increment == 1) && (original_count > 0) || (increment == -1) &&
+    (split_count > 0)
+  ) {
     if (submit_json.split_items_hash[ooid].hasOwnProperty(oiid)) {
       submit_json.split_items_hash[ooid][oiid].split_count += increment;
       submit_json.split_items_hash[ooid][oiid].sum = submit_json.split_items_hash[ooid][oiid].split_count * sum;
@@ -76,16 +79,28 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
     
     // update payment methods
     var payment_method_inputs_original = $('#payment_methods_container_' + ooid + ' td.payment_method_input input');
+    
+    if (payment_method_inputs_original.length == 0) {
+      return;
+    }
+    
     var payment_method_input_original = payment_method_inputs_original[payment_method_inputs_original.length - 1];
+    
     $(payment_method_input_original).val(subtotal_original.toFixed(2));
+    
     var pmid = $(payment_method_input_original).attr('pmid');
+    
     payment_method_input_change(payment_method_input_original, pmid, ooid)
     
     if (partner_mode) {
       var payment_method_inputs_partner = $('#payment_methods_container_' + poid + ' td.payment_method_input input');
+      
       var payment_method_input_partner = payment_method_inputs_partner[payment_method_inputs_partner.length - 1];
+      
       $(payment_method_input_partner).val(subtotal_partner.toFixed(2));
+      
       var pmid = $(payment_method_input_partner).attr('pmid');
+
       payment_method_input_change(payment_method_input_partner, pmid, poid)
     }
   }

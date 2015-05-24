@@ -45,11 +45,11 @@
         url: "/partials/#{ partial.id }",
         data: "partial[color]=" + $("#color_for_partial_#{ partial.id }").val()
       });
-   }
+    }
   });
 
   $('#partial_#{ partial.id }').draggable({
-    handle: 'handle_for_partial_#{ partial.id }',
+    handle: '#handle_for_partial_#{ partial.id }',
     revert: false
   });
 

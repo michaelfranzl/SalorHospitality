@@ -18,6 +18,8 @@ SalorHospitality::Application.configure do
     config.cache_store = :file_store, File.join('/', 'var', 'cache', 'salor-hospitality', SalorHospitality::Application::SH_DEBIAN_SITEID)
   end
   
+  config.eager_load = true
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 
