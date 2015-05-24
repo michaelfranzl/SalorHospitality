@@ -173,6 +173,11 @@ for lInstance in $gInstances; do
         ucf --debconf-ok $app_root/config/codepages.yml $rails_etc/codepages.yml
         chmod 660 $rails_etc/codepages.yml
       fi
+      if [ -d $app_root/vendor/cache ]; then
+        echo "  postinst: Linking Gem cache directory ..."
+        mkdir -p $rails_etc/vendor
+        ln -sf $app_root/vendor/cache $rails_etc/vendor/cache
+      fi
       
       echo "  postinst: Installing Gemfile as configuration file ..."
       gemfile_source=$app_root/Gemfile
@@ -185,11 +190,11 @@ for lInstance in $gInstances; do
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
       cd $app_root
-      bundle install --without development --deployment --gemfile=${gemfile_target}
+      bundle install --deployment --local --gemfile=${gemfile_target}
       
       if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
-        cd $app_root        
+        cd $app_root
         echo "  postinst: migrating the database. this may take a while."
         rake --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
         echo "  postinst: running db:seed ..."

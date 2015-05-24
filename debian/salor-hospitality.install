@@ -8,6 +8,7 @@ salor-hospitality/public/fonts    /usr/share/salor-hospitality/source/public
 salor-hospitality/public/images   /usr/share/salor-hospitality/source/public
 
 salor-hospitality/vendor/assets   /usr/share/salor-hospitality/source/vendor
+salor-hospitality/vendor/cache    /usr/share/salor-hospitality/source/vendor
 
 salor-hospitality/Gemfile         /usr/share/salor-hospitality/source
 salor-hospitality/Gemfile.lock    /usr/share/salor-hospitality/source

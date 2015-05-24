@@ -1,6 +1,12 @@
 class CreateAll < ActiveRecord::Migration
+  
+  
 
   def change
+    if ActiveRecord::Base.connection.table_exists? 'articles'
+      return
+    end
+    
     create_table "articles", :force => true do |t|
       t.string   "name"
       t.string   "description"
