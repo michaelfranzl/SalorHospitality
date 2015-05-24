@@ -10,13 +10,13 @@ Product webpage with all information: [http://billgastro.com](http://billgastro.
 Development Installation
 ------------------------
 
-The following instructions are based on plain Debian Wheezy, and will use its Ruby interpreter 1.9.3.
+The following instructions are based on plain Debian Jessie, and will use its own Ruby interpreter 2.1.5.
 
 You need a few system packages so that native extensions of ruby gems will compile successfully:
 
-    apt-get install mysql-server mysql-client libmysqlclient-dev imagemagick libmagick-dev libmagickwand-dev libmagickcore-dev nodejs bundler
+    apt-get install ruby libruby ruby-dev rake mysql-server libmysqld-dev libmysqlclient-dev libmagickwand-dev libmagickcore-dev libxslt1-dev nodejs bundler
 
-Any Rails developer will not have any problems running Salor Hospitality, since it is just a plain, standalone Rails application without any special magic going on.
+Any Rails developer will not have any problems running Salor Hospitality, since it is just a plain, standalone Rails 4.1.8 application without any special magic going on.
 
     git clone git://github.com/michaelfranzl/SalorHospitality.git
     cd SalorHospitality/salor-hospitality
@@ -40,3 +40,7 @@ If you want to re-seed the database do the following:
     rake db:create
     rake db:migrate
     rake db:seed
+    
+Or shorter:
+
+    rake db:reset

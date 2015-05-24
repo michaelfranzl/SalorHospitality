@@ -196,11 +196,11 @@ for lInstance in $gInstances; do
         echo "  postinst: this instance has a configured database."
         cd $app_root
         echo "  postinst: migrating the database. this may take a while."
-        rake --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
-        echo "  postinst: running db:seed ..."
-        rake --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        /usr/bin/rake --trace db:migrate RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}"   #> /dev/null
+        echo "  postinst: conditionally seeding the database ..."
+        /usr/bin/rake --trace db:seed SEED_MODE=minimal RAILS_ENV=production SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
         echo "  postinst: updating vendors cache ..."
-        rake --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
+        /usr/bin/rake --trace salor_configure['local'] RAILS_ENV=production  SH_DEBIAN_SITEID="${lInstance}" BUNDLE_GEMFILE="${gemfile_target}" #> /dev/null
       else
         echo "  postinst: $rails_etc/database.yml does not exist. Instance \"${lInstance}\" database must be configured manually."
       fi
