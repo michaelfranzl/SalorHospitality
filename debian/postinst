@@ -185,7 +185,7 @@ for lInstance in $gInstances; do
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
       cd $app_root
-      bundle install --without development --local BUNDLE_GEMFILE="${gemfile_target}"
+      BUNDLE_GEMFILE="${gemfile_target}" bundle install --without development --local
       
       if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
