@@ -1,3 +1,9 @@
+salor-hospitality (5.0.16) jessie; urgency=medium
+
+  * deployment test
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 10:33:53 +0200
+
 salor-hospitality (5.0.15) jessie; urgency=medium
 
   * test to cache gems in debian package
