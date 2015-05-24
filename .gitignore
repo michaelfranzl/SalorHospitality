@@ -20,6 +20,7 @@ salor-hospitality/tmp/sockets
 salor-hospitality/public/uploads/*
 salor-hospitality/vendor/bundle
 salor-hospitality/vendor/plugins
+salor-hospitality/vendor/cache
 salor-hospitality/.bundle
 salor-hospitality/config/database.yml
 *.log
