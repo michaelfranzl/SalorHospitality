@@ -1,3 +1,9 @@
+salor-hospitality (5.0.11) jessie; urgency=medium
+
+  * test to cache gems in debian package
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:40:28 +0200
+
 salor-hospitality (5.0.10) jessie; urgency=medium
 
   * fixed and faster order splitting
