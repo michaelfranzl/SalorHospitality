@@ -367,9 +367,9 @@ class ApplicationController < ActionController::Base
       if order and order.finished == true
         # do not update or create the order, simply return it
         return order
-      elsif order and params[:model]
+      elsif order
         order.update_from_params(params, @current_user, @current_customer)
-      elsif params[:model]
+      else
         order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
       end
       return order

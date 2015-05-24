@@ -113,14 +113,16 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params, user, customer)
-    permitted = params[:model].permit :table_id,
-        :booking_id,
-        :user_id,
-        :note,
-        :cost_center_id,
-        :hidden
-    
-    self.update_attributes permitted
+    if params[:model]
+      permitted = params[:model].permit :table_id,
+          :booking_id,
+          :user_id,
+          :note,
+          :cost_center_id,
+          :hidden
+      
+      self.update_attributes permitted
+    end
     
     errors = false
     params[:items].to_a.each do |item_params|
