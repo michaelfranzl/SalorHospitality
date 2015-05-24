@@ -85,17 +85,22 @@ function split_item(id, order_id, sum, partner_item_id, increment) {
     }
     
     var payment_method_input_original = payment_method_inputs_original[payment_method_inputs_original.length - 1];
+    
     $(payment_method_input_original).val(subtotal_original.toFixed(2));
+    
     var pmid = $(payment_method_input_original).attr('pmid');
-    console.log("split1", ooid);
+    
     payment_method_input_change(payment_method_input_original, pmid, ooid)
     
     if (partner_mode) {
       var payment_method_inputs_partner = $('#payment_methods_container_' + poid + ' td.payment_method_input input');
+      
       var payment_method_input_partner = payment_method_inputs_partner[payment_method_inputs_partner.length - 1];
+      
       $(payment_method_input_partner).val(subtotal_partner.toFixed(2));
+      
       var pmid = $(payment_method_input_partner).attr('pmid');
-      console.log("split2");
+
       payment_method_input_change(payment_method_input_partner, pmid, poid)
     }
   }
