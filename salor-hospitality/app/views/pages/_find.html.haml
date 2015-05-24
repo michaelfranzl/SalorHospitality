@@ -2,28 +2,28 @@
   %li{ :id => "article_#{ar.id}", :model => 'Article', :model_id => "#{ar.id}", :type => 'search_result' }
     = image_tag 'drag_handle.png', :class => 'handle', :id => "handle_for_article_#{ar.id}", :style => 'cursor:true;'
     = link_to ar.name, edit_article_path(ar)
-    %script== $('#article_#{ar.id}').draggable({ handle: 'handle_for_article_#{ar.id}', revert: true });
+    %script== $('#article_#{ar.id}').draggable({ handle: '#handle_for_article_#{ar.id}', revert: true });
     %ul
     - ar.quantities.each do |qu|
       %li{ :id => "quantity_#{qu.id}", :model => 'Quantity', :model_id => "#{qu.id}", :type => 'search_result' }
         = image_tag 'drag_handle.png', :id => "handle_for_quantity_#{ar.id}", :style => 'cursor:move;'
         = link_to qu.prefix, edit_article_path(qu)
-        %script== $('#quantity_#{qu.id}').draggable({ handle: 'handle_for_quantity_#{qu.id}', revert: true });
+        %script== $('#quantity_#{qu.id}').draggable({ handle: '#handle_for_quantity_#{qu.id}', revert: true });
     
 - @found_options.each do |opt|
   %li{ :id => "option_#{opt.id}", :model => 'Option', :model_id => "#{opt.id}", :type => 'search_result' }
     = image_tag 'drag_handle.png', :class => 'handle', :id => "handle_for_option_#{opt.id}", :style => 'cursor:true;'
     = link_to opt.name, edit_option_path(opt)
-    %script== $('#option_#{opt.id}').draggable({ handle: 'handle_for_option_#{opt.id}', revert: true });
+    %script== $('#option_#{opt.id}').draggable({ handle: '#handle_for_option_#{opt.id}', revert: true });
     
 - @found_categories.each do |cat|
   %li{ :id => "category_#{cat.id}", :model => 'Category', :model_id => "#{cat.id}", :type => 'search_result' }
     = image_tag 'drag_handle.png', :class => 'handle', :id => "handle_for_category_#{cat.id}", :style => 'cursor:true;'
     = link_to cat.name, edit_category_path(cat)
-    %script== $('#category_#{cat.id}').draggable({ handle: 'handle_for_category_#{cat.id}', revert: true });
+    %script== $('#category_#{cat.id}').draggable({ handle: '#handle_for_category_#{cat.id}', revert: true });
     
 - @found_presentations.each do |pre|
   %li{ :id => "presentation_#{pre.id}", :model => 'Presentation', :model_id => "#{pre.id}", :type => 'search_result' }
     = image_tag 'drag_handle.png', :class => 'handle', :id => "handle_for_presentation_#{pre.id}", :style => 'cursor:true;'
     = link_to pre.name, edit_presentation_path(pre)
-    %script== $('#presentation_#{pre.id}').draggable({ handle: 'handle_for_presentation_#{pre.id}', revert: true });
+    %script== $('#presentation_#{pre.id}').draggable({ handle: '#handle_for_presentation_#{pre.id}', revert: true });

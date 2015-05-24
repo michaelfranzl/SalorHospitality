@@ -46,6 +46,7 @@
   $("#page_#{ @page.id }").droppable({
     hoverClass: 'hover',
     drop: function(event,ui){
+    console.log("Here");
       if (ui.draggable.attr('type') == 'partial') {
         $.ajax({
           type: 'PUT',
