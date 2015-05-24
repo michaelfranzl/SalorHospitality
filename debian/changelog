@@ -1,3 +1,15 @@
+salor-hospitality (5.0.10) jessie; urgency=medium
+
+  * fixed and faster order splitting
+  * fixed assigning user id
+  * javascript fixes
+  * fixed payment methods for orders
+  * removed debugging logs
+  * fix for hand scribe
+  * fixes for slideshow
+
+ -- Michael Franzl <office@michaelfranzl.com>  Sun, 24 May 2015 09:20:35 +0200
+
 salor-hospitality (5.0.9) jessie; urgency=medium
 
   * fix for options
