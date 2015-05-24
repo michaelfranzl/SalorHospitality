@@ -61,6 +61,7 @@ class Order < ActiveRecord::Base
   def self.create_from_params(params, vendor, user, customer)
     permitted = params.require(:model).permit :table_id,
         :booking_id,
+        :user_id,
         :note,
         :hidden
     order = Order.new permitted
@@ -114,6 +115,7 @@ class Order < ActiveRecord::Base
   def update_from_params(params, user, customer)
     permitted = params[:model].permit :table_id,
         :booking_id,
+        :user_id,
         :note,
         :cost_center_id,
         :hidden
