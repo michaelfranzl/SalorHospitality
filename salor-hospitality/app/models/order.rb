@@ -112,9 +112,10 @@ class Order < ActiveRecord::Base
   end
 
   def update_from_params(params, user, customer)
-    permitted = params.require(:model).permit :table_id,
+    permitted = params[:model].permit :table_id,
         :booking_id,
         :note,
+        :cost_center_id,
         :hidden
     
     self.update_attributes permitted

@@ -363,13 +363,13 @@ class ApplicationController < ActionController::Base
         # Reuse the order on table if possible. happens when 2 devices are taking a new order at the same time, and both haven't ID set.
         order = @current_vendor.orders.existing.where(:finished => false, :table_id => params[:model][:table_id]).last
       end
-      
+
       if order and order.finished == true
         # do not update or create the order, simply return it
         return order
-      elsif order
+      elsif order and params[:model]
         order.update_from_params(params, @current_user, @current_customer)
-      else
+      elsif params[:model]
         order = Order.create_from_params(params, @current_vendor, @current_user, @current_customer)
       end
       return order

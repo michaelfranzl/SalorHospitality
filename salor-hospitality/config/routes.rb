@@ -81,6 +81,7 @@ SalorHospitality::Application.routes.draw do
   get 'vendors/test_printers' => 'vendors#test_printers'
   get 'users/unlock_ip' => 'users#unlock_ip'
   post 'route' => 'application#route'
+  get 'route' => 'application#route'
   get 'translations' => 'translations#index'
   get 'translations/set' => 'translations#set'
   

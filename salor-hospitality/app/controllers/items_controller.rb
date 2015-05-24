@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
         return
       end
       
-      Item.split_items(params['split_items_hash'], order)
+      Item.split_items(params['split_items_hash'])
       table = order.table
       render_invoice_form(table)
       return

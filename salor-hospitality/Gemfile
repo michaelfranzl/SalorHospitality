@@ -14,3 +14,7 @@ gem 'haml', '4.0.5'
 gem 'mysql2', '0.3.16'
 gem 'coffee-rails', '4.0.1'
 gem 'rmagick', '2.15.0'
+
+group :development do
+  gem 'byebug'
+end
