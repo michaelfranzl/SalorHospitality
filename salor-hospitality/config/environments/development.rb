@@ -3,7 +3,7 @@ SalorHospitality::Application.configure do
   
   config.eager_load = false
   
-  ActionController::Parameters.permit_all_parameters = true
+  ActionController::Parameters.permit_all_parameters = false
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
   
   # In the development environment your application's code is reloaded on

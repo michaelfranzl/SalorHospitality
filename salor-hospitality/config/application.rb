@@ -68,8 +68,6 @@ module SalorHospitality
     else
       CONFIGURATION = YAML::load(File.open(File.join(Rails.root, 'config', 'config.yml'), 'r').read)
     end
-    
-    #raise "The setting :branding_codename in config.yml only supports the values 'billgastro' or 'salorhospitality'" unless ['salorhospitality','billgastro'].include?(CONFIGURATION[:branding_codename])
 
     LANGUAGES = {
       'en' => 'English',
@@ -258,10 +256,6 @@ module SalorHospitality
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-    # Activate observers that should always be running.
-    # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-    # config.active_record.observers = :history_observer
     
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
