@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
   
   def create_history_for_route
-    # the following is for better history querying
+    return if SalorHospitality::Application::CONFIGURATION[:history] == false
     h = History.new
     if params.has_key?('model')
       h.model_type = 'Table'
@@ -486,11 +486,6 @@ class ApplicationController < ActionController::Base
             redirect_to new_customer_session_path and return
           end
         end
-      end
-      
-      if @current_user
-        @current_user.last_active_at = Time.now
-        @current_user.save
       end
     end
 

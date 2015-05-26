@@ -175,5 +175,25 @@ class User < ActiveRecord::Base
     end
     return current_shift_duration >= self.maximum_shift_duration
   end
+  
+#   def record_history(changes, action, user, vendor, ip)
+#     return if SalorHospitality::Application::CONFIGURATION[:history] != true
+#     return if changes.empty?
+#     
+#     changes.delete("created_at")
+#     changes.delete("updated_at")
+#     changes.delete("last_active_at")
+# 
+#     h = History.new
+#     h.company = self.company
+#     h.vendor = vendor
+#     h.user = user
+#     h.model = self
+#     h.ip = ip
+#     h.action_taken = action
+#     h.changes_made = changes
+#     h.save
+#     h.print
+#   end
 
 end

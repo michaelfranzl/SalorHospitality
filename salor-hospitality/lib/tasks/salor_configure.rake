@@ -10,8 +10,6 @@ desc 'Configures this instance'
 # Call like: rake salor_configure['saas']
 task :salor_configure, [:mode] => :environment do |t, args|
   
-  do_nothing_with_that_variable = History.all # If you remove that line, you'll get  the error message "Expected vendor.rb to define Vendor" when you load this Rake task.
-  
   Vendor.existing.each do |v|
     puts "Updating cache of Vendor #{v.id}"
     $Vendor = v
@@ -23,15 +21,6 @@ task :salor_configure, [:mode] => :environment do |t, args|
       puts "package upgrade logging failed."
     end
   end
-  
-#   identifier = ENV['SH_DEBIAN_SITEID'] ? "#{ENV['SH_DEBIAN_SITEID']}" : nil
-#   
-#   unless Company.where(:identifier => subdomain).any?
-#     # this is only useful for local installations where all models are created from the seed script and the Company's subdomain will be nil.
-#     puts "No company with subdomain #{subdomain} found. Updating last company that has a subdomain of nil."
-#     c = Company.where(:subdomain => nil).last
-#     c.update_attributes(:mode => args[:mode], :subdomain => subdomain) if c
-#   end
 end
 
 

@@ -461,7 +461,7 @@ class Vendor < ActiveRecord::Base
       attributes = "id;hidden;hidden_at;hidden_by;order.nr;created_at;updated_at;order.table.name;order.user.login;order.nr;label;category.name;count;max_count;min_count;price_with_options;article.taxes.first.percent;tax_sum;refunded;refund_sum;refunded_by;settlement.nr;cost_center_id;"
       output = ''
       output += "#{attributes}\n"
-      output += Report.to_csv(items, Item, attributes)
+      output += Vendor.to_csv(items, Item, attributes)
     else
       output = nil
     end
@@ -493,7 +493,7 @@ class Vendor < ActiveRecord::Base
     
 
     # GENERATE CSV FILES
-    Report.dump_all(from, to, dumppath)
+    self.dump_all(from, to, dumppath)
     
     # ZIP IT UP
     zip_outfile = "#{ location }/#{ label }.zip"
@@ -541,7 +541,12 @@ class Vendor < ActiveRecord::Base
         print_engine.open
         bytes_written, content_sent = print_engine.print(vendor_printers.first.id, output)
         bytes_sent = content_sent.length
-        Receipt.create(:vendor_id => self.id, :company_id => self.company_id, :vendor_printer_id => vendor_printers.first.id, :content => output, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        Receipt.create :vendor_id => self.id,
+            :company_id => self.company_id,
+            :vendor_printer_id => vendor_printers.first.id,
+            :content => output,
+            :bytes_sent => bytes_sent,
+            :bytes_written => bytes_written
         print_engine.close
       end
     end
@@ -584,7 +589,177 @@ class Vendor < ActiveRecord::Base
     ActiveRecord::Base.logger.info "Set hash_id to #{ self.hash_id }."
   end
   
+  def dump_all(from, to, device)
+    tfrom = from.strftime("%Y%m%d")
+    tto = to.strftime("%Y%m%d")
+    
+    items = self.items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityItems#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;count;article_id;order_id;created_at;updated_at;quantity_id;price;max_count;min_count;user_id;hidden;hidden_at;hidden_by;category_id;tax_sum;refunded;refund_sum;refunded_by;settlement_id;cost_center_id;taxes"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(items, Item, attributes)
+    end
+    
+    booking_items = self.booking_items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityBookingItems#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;booking_id;guest_type_id;sum;created_at;updated_at;count;base_price;refund_sum;taxes;from_date;to_date;season_id;duration;booking_item_id;ui_parent_id;ui_id;unit_sum;room_id;date_locked;tax_sum;hidden;hidden_at;hidden_by"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(booking_items, BookingItem, attributes)
+    end
+    
+    surcharge_items = self.surcharge_items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalitySurchargeItems#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;surcharge_id;booking_item_id;amount;season_id;guest_type_id;taxes;sum;duration;count;from_date;to_date;tax_sum;booking_id;hidden;hidden_at;hidden_by;created_at;updated_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(surcharge_items, SurchargeItem, attributes)
+    end
+    
+    bookings = self.bookings.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityBookings#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;from_date;to_date;customer_id;sum;paid;note;created_at;updated_at;room_id;finished;user_id;refund_sum;nr;change_given;duration;taxes;booking_item_sum;finished_at;paid_at;tax_sum;hidden;hidden_at;hidden_by"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(bookings, Booking, attributes)
+    end
+    
+    orders = self.orders.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityOrders#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;finished;table_id;user_id;settlement_id;created_at;updated_at;sum;cost_center_id;printed_from;nr;tax_id;refund_sum;note;customer_id;hidden;hidden_at;hidden_by;printed;paid;booking_id;taxes;finished_at;paid_at;reactivated;reactivated_by;reactivated_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(orders, Order, attributes)
+    end
+    
+    taxes = self.taxes
+    File.open("#{device}/SalorHospitalityTaxes#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;percent;name;created_at;updated_at;letter;hidden;hidden_by;hidden_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(taxes, Tax, attributes)
+    end
+    
+    option_items = self.option_items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityOptionItem#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;option_id;item_id;order_id;price;name;count;sum;created_at;updated_at;no_ticket;separate_ticket;hidden;hidden_by;hidden_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(option_items, OptionItem, attributes)
+    end
+    
+    tax_items = self.tax_items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityTaxItem#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;tax_id;item_id;booking_item_id;order_id;booking_id;settlement_id;gro;net;tax;created_at;updated_at;letter;surcharge_item_id;name;percent;hidden;hidden_by;hidden_at;refunded;cost_center_id;category_id"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(tax_items, TaxItem, attributes)
+    end
+    
+    pmis = self.payment_method_items.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityPaymentMethodItems#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;payment_method_id;order_id;amount;created_at;updated_at;booking_id;refunded;cash;refund_item_id;settlement_id;cost_center_id;change;hidden;hidden_by;hidden_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(pmis, PaymentMethodItem, attributes)
+    end
+    
+    settlements = self.settlements.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalitySettlements#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;nr;revenue;user_id;created_at;updated_at;finished;initial_cash;sum;hidden;hidden_by;hidden_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(settlements, Settlement, attributes)
+    end
+    
+    options = self.options
+    File.open("#{device}/SalorHospitalityOptions#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;name;price;created_at;updated_at;hidden;hidden_by;hidden_at;active;separate_ticket;no_ticket"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(options, Option, attributes)
+    end
+    
+    articles = self.articles
+    File.open("#{device}/SalorHospitalityArticles#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;name;description;category_id;price;active;created_at;updated_at;hidden;hidden_at;hidden_by"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(articles, Article, attributes)
+    end
+    
+    quantities = self.quantities
+    File.open("#{device}/SalorHospitalityQuantities#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;prefix;postfix;price;article_id;created_at;updated_at;active;hidden;hidden_by;hidden_at;category_id;article_name"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(quantities, Quantity, attributes)
+    end
+    
+    users = self.users
+    File.open("#{device}/SalorHospitalityUsers#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;login;title;created_at;updated_at;role_id;active;hidden;hidden_at;hidden_by;last_active_at;last_login_at;last_logout_at;email"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(users, User, attributes)
+    end
+    
+    cost_centers = self.cost_centers
+    File.open("#{device}/SalorHospitalityCostCenters#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;name;description;created_at;updated_at;hidden;hidden_by;hidden_at;no_payment_methods"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(cost_centers, CostCenter, attributes)
+    end
+    
+    
+    payment_methods = self.payment_methods
+    File.open("#{device}/SalorHospitalityPaymentMethods#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;name;created_at;updated_at;hidden;hidden_by;hidden_at;cash;change"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(payment_methods, PaymentMethod, attributes)
+    end
+    
+    
+    histories = self.histories.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityHistories#{tfrom}-#{tto}.csv","w") do |f|
+      attributes = "id;url;user_id;action_taken;model_type;model_id;ip;changes_made;params;created_at;updated_at"
+      f.write("#{attributes}\n")
+      f.write Vendor.to_csv(histories, History, attributes)
+    end
+    
+    receipts = self.receipts.where(:created_at => from..to)
+    File.open("#{device}/SalorHospitalityReceipts#{tfrom}-#{tto}.txt","w:ASCII-8BIT") do |f|
+      receipts.each do |r|
+        string = "\n\nReceipt id:%i, user_id:%i, vendor_printer_id:%i, order_id:%i, order_nr:%i, created_at:%s\n\n" % [r.id, r.user_id.to_i, r.vendor_printer_id.to_i, r.order_id.to_i, r.order_nr.to_i, r.created_at]
+        f.write string
+        f.write r.content.gsub("\e@\e!8\n", "").gsub("\x1DV\x00\ep\x00\x99\x99\f".force_encoding('ASCII-8BIT'), "")
+      end
+    end
+    
+    # Missing models for report, but not critical: Room, RoomType, RoomPrice, GuestType, Surcharge, Season
+  end
+  
   private
+  
+  def Vendor.to_csv(objects, klass, attributes)
+    attrs = attributes.split(";")
+    formatstring = ""
+    attrs.each do |a|
+      #puts "ATTR #{ klass.to_s}: #{ a }"
+      cls = klass.columns_hash[a].type if klass.columns_hash[a]
+      case cls
+      when :integer
+        formatstring += "%i;"
+      when :datetime, :string, :boolean, :text
+        formatstring += "%s;"
+      when :float
+        formatstring += "%.2f;"
+      else
+        formatstring += "%s;"
+      end
+    end
+    lines = []
+    objects.each do |item|
+      values = []
+      attrs.size.times do |j|
+        val = attrs[j].split('.').inject(item) do |klass, method|
+          klass.send(method) unless klass.nil?
+        end
+        val = 0 if val.nil?
+        values << val
+      end
+      lines << sprintf(formatstring, *values)
+    end
+    
+    return lines.join("\n")
+  end
   
   def generate_random_string
     collection = [('a'..'z'),('A'..'Z'),('0'..'9')].map{|i| i.to_a}.flatten

@@ -158,6 +158,7 @@ class UsersController < ApplicationController
     @user.hidden = true
     @user.password = "OLD #{ Time.now } #{ @user.password }"
     @user.save
+    
     redirect_to users_path
   end
   
@@ -168,6 +169,10 @@ class UsersController < ApplicationController
   end
   
   private
+  
+#   def record_history
+#     @user.record_history(@user.previous_changes, params[:action], @current_user, @current_vendor, request.ip)
+#   end
   
   def check_role_weight
     @user = get_model
