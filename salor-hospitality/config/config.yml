@@ -5,3 +5,4 @@
 :use_safe_device_path: false
 :tailor: false
 :history: true
+:receipt_history: true

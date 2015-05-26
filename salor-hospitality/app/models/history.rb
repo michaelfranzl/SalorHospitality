@@ -53,15 +53,17 @@ class History < ActiveRecord::Base
     bytes_written, content_sent = print_engine.print(vendor_printers.first.id, data)
     print_engine.close
     
-    r = Receipt.new
-    r.user_id = self.user_id
-    r.content = data
-    r.vendor_id = self.vendor_id
-    r.company_id = self.company_id
-    r.vendor_printer_id = vendor_printers.first.id
-    r.bytes_sent = content_sent.length
-    r.bytes_written = bytes_written
-    r.save
+    if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+      r = Receipt.new
+      r.user_id = self.user_id
+      r.content = data
+      r.vendor_id = self.vendor_id
+      r.company_id = self.company_id
+      r.vendor_printer_id = vendor_printers.first.id
+      r.bytes_sent = content_sent.length
+      r.bytes_written = bytes_written
+      r.save
+    end
     
     return data
   end

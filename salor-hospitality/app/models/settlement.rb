@@ -72,7 +72,18 @@ class Settlement < ActiveRecord::Base
     end
     
     bytes_sent = content_sent.length
-    Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :settlement_id => self.id, :settlement_nr => self.nr, :content => self.escpos, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+    
+    if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+      Receipt.create :vendor_id => self.vendor_id,
+          :company_id => self.company_id,
+          :user_id => self.user_id,
+          :vendor_printer_id => vendor_printer.id,
+          :settlement_id => self.id,
+          :settlement_nr => self.nr,
+          :content => self.escpos,
+          :bytes_sent => bytes_sent,
+          :bytes_written => bytes_written
+    end
   end
 
   def escpos
