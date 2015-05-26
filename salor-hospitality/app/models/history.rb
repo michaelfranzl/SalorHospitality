@@ -15,33 +15,56 @@ class History < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor
   
-  before_create :set_fields
-  
-  def set_fields
-    self.user = $User
-    self.url = $Request.url if $Request
-    self.params = $Params.to_json if $Params
-    self.ip = $Request.ip if $Request
-    self.vendor = $Vendor
-    self.company = $Company
+  def changes_made=(changes)
+    if changes.class == Hash
+      write_attribute :changes_made, changes.to_yaml
+    elsif changes.class == String
+      write_attribute :changes_made, changes.to_s
+    end
   end
   
-  def self.record(action, object)
-    return if $User.nil? or $Vendor.nil? or $Company.nil? or ($Request and $Request.url.include?("route")) # Do not record anything when nobody is logged in. History for the route action is done manually in Application Controller.
+  def escpos
+    output = "\e@" +
+        "\e!\x38" +       # big font
+        "UPDATE\n#{ self.model.class.to_s } ID #{ self.model.id }\n" +
+        I18n.l(Time.now, :format => :datetime_iso2) +
+        "\e!\x00" +        # normal font
+        "\n\n" +
+        "#{ self.user.login }@#{ self.ip }" +
+        "\n\n"
     
-    h = History.new
-    h.model = object
-    h.action_taken = action
-    changes = {}
-    if object and object.respond_to? :changes then
-      changes = object.changes
-      # do not record the following attributes
-      changes.delete('updated_at')
-      changes.delete('created_at')
-      changes.delete('last_active_at')
-      changes.delete('resources_cache')
-      h.changes_made = changes.to_json[0..200]
+    output += self.changes_made
+    
+    output += "\n\n\n\n\n\n\n" +         # space
+          "\x1DV\x00\x0C"            # paper cut
+    return output
+  end
+  
+  def print
+    return if self.vendor.nil? or self.vendor.history_print != true
+    
+    data = self.escpos
+    vendor_printers = self.vendor.vendor_printers.existing
+    
+    print_engine = Escper::Printer.new self.company.mode,
+        vendor_printers,
+        File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, self.vendor.hash_id)
+    print_engine.open
+    bytes_written, content_sent = print_engine.print(vendor_printers.first.id, data)
+    print_engine.close
+    
+    if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+      r = Receipt.new
+      r.user_id = self.user_id
+      r.content = data
+      r.vendor_id = self.vendor_id
+      r.company_id = self.company_id
+      r.vendor_printer_id = vendor_printers.first.id
+      r.bytes_sent = content_sent.length
+      r.bytes_written = bytes_written
+      r.save
     end
-    h.save unless changes == {}
+    
+    return data
   end
 end

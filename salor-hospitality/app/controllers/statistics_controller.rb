@@ -175,15 +175,17 @@ class StatisticsController < ApplicationController
         end
       end
       
-      r = Receipt.new
-      r.vendor_id = @current_vendor.id
-      r.company_id = @current_company.id
-      r.user_id = @current_user.id
-      r.content = text
-      r.vendor_printer_id = vendor_printer.id
-      r.bytes_written = bytes_written
-      r.bytes_sent = content_sent.length
-      r.save
+      if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+        r = Receipt.new
+        r.vendor_id = @current_vendor.id
+        r.company_id = @current_company.id
+        r.user_id = @current_user.id
+        r.content = text
+        r.vendor_printer_id = vendor_printer.id
+        r.bytes_written = bytes_written
+        r.bytes_sent = content_sent.length
+        r.save
+      end
     end
   end
   

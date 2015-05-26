@@ -1,3 +1,13 @@
+salor-hospitality (5.0.20) jessie; urgency=medium
+
+  * removed observer class, app config changes
+  * fixed depracated rmagick spelling
+  * moved reports into Vendor class, made history creation configurable in config.yml
+  * gitignore ignore tmp
+  * made Receipt saving to database configurable via config.yml
+
+ -- Michael Franzl <office@michaelfranzl.com>  Tue, 26 May 2015 18:06:07 +0200
+
 salor-hospitality (5.0.19) jessie; urgency=medium
 
   * postinst fix

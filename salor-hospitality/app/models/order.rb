@@ -553,7 +553,18 @@ class Order < ActiveRecord::Base
             end
             
             bytes_sent = content_sent.length
-            Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+            
+            if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+              Receipt.create :vendor_id => self.vendor_id,
+                  :company_id => self.company_id,
+                  :user_id => self.user_id,
+                  :vendor_printer_id => p.id,
+                  :order_id => self.id,
+                  :order_nr => self.nr,
+                  :content => contents[:text],
+                  :bytes_sent => bytes_sent,
+                  :bytes_written => bytes_written
+            end
           end
         end
       end
@@ -577,7 +588,18 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        
+        if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+          Receipt.create :vendor_id => self.vendor_id,
+              :company_id => self.company_id,
+              :user_id => self.user_id,
+              :vendor_printer_id => vendor_printer.id,
+              :order_id => self.id,
+              :order_nr => self.nr,
+              :content => contents[:text],
+              :bytes_sent => bytes_sent,
+              :bytes_written => bytes_written
+        end
         self.update_attribute :printed, true
       end
     end
@@ -599,7 +621,18 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        
+        if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
+          Receipt.create :vendor_id => self.vendor_id,
+              :company_id => self.company_id,
+              :user_id => self.user_id,
+              :vendor_printer_id => vendor_printer.id,
+              :order_id => self.id,
+              :order_nr => self.nr,
+              :content => contents,
+              :bytes_sent => bytes_sent,
+              :bytes_written => bytes_written
+        end
         self.update_attribute :printed_interim, true
       end
     end
