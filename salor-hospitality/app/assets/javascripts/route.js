@@ -156,7 +156,7 @@ function route(target, model_id, action, options) {
       // regular click on a table from main view
       switch_to_table();
       get_table_show(model_id);
-      $("#sku_input").focus();
+      if (settings.workstation) $("#sku_input").focus();
     }
     
     // clean workspace up
