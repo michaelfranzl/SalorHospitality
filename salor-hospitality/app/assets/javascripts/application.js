@@ -7,6 +7,7 @@
 //= require jquery
 //= require jquery.ui.all
 //= require jquery_ujs
+//= require colpick
 //= require ajax
 //= require articles
 //= require audio

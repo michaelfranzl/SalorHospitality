@@ -33,7 +33,7 @@ function set_handles() {
         $(this).remove();
       });
       $(id).show();
-      $(id).css({position: 'absolute', top: y, left: x, 'z-index': 1001});
+      $(id).css({position: 'absolute', top: y, left: x});
       $(this).css('z-index',1002);
       });
       $(this).addClass('toolbox-done')
@@ -74,8 +74,5 @@ $(function() {
     $('#search_text').getkeyboard().reveal();
   });
   
-  $("#page_color").modcoder_excolor({
-   hue_bar : 4,
-   shadow : false
-  });
+  $("#page_color").colpick();
 });

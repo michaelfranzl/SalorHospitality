@@ -78,7 +78,7 @@ function add_menu_button(elem,button,callback) {
 
 
 function make_select_widget(elem) {
-  if (elem.attr("no_select_widget") == 1)
+  if (elem.attr("no_select_widget") == 1 || elem.attr("no_select_widget") == "1")
     return;
   elem.hide();
   elem.attr("no_select_widget", 1);
