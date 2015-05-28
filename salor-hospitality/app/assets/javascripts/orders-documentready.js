@@ -13,15 +13,17 @@ $(function(){
     connect('dmenucard_entry_hook','after.go_to.table',add_dmenucard_button);
   }
   
-  $("#sku_input").on("keypress", function(e) {
-    if(e.which == 13) {
-      add_item_by_sku($(this).val());
-      $("#sku_input").val("");
-      $("#sku_input").focus();
-    }
-  });
-  
-  $("#sku_input").on("click", function() {
-    $("#sku_input").select();
-  });
+  if (settings.workstation) {
+    $("#sku_input").on("keypress", function(e) {
+      if(e.which == 13) {
+        add_item_by_sku($(this).val());
+        $("#sku_input").val("");
+        $("#sku_input").focus();
+      }
+    });
+    
+    $("#sku_input").on("click", function() {
+      $("#sku_input").select();
+    });
+  }
 })
