@@ -15,7 +15,6 @@
     
     - if workstation?
       = javascript_include_tag 'application-workstation'
-      = javascript_include_tag 'jquery.modcoder.excolor'
       = javascript_include_tag 'jquery.checkbox'
       = javascript_include_tag 'jquery.keyboard'
       = javascript_include_tag 'jquery.keyboard.config'
@@ -39,6 +38,7 @@
 
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
     = stylesheet_link_tag 'generic', :media => 'screen'
+    = stylesheet_link_tag 'colpick', :media => 'screen'
     - if mobile?
       = stylesheet_link_tag('mobile', :media => 'screen')
     - if workstation?

@@ -6,29 +6,29 @@
   .options
     %span.handle{ :href => "#toolbox-partial-#{partial.id}", :id => "handle_for_partial_#{ partial.id }" }
   .partial_toolbox{ :id => "toolbox-partial-#{partial.id}"}
-    P
-    %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]' }
+    Partial
+    %select{ :id => "presentation_for_partial_#{ partial.id }", :name => 'partial[presentation_id]', :no_select_widget => 1 }
       = options_from_collection_for_select presentations, 'id', 'name', partial.presentation_id
     %br
-    C
-    %input{ :style => 'display:none', :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
+    Color
+    %input{ :id => "color_for_partial_#{ partial.id }", :name => 'partial[color]', :type => 'text', :size => 4, :value => partial.color }
     %br
-    F
-    %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]' }
+    Font
+    %select{ :id => "font_for_partial_#{ partial.id }", :name => 'partial[font]', :no_select_widget => 1 }
       = options_for_select SalorHospitality::Application::FONTS, partial.font
     %br
-    S
-    %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]' }
+    Size
+    %select{ :id => "size_for_partial_#{ partial.id }", :name => 'partial[font]', :no_select_widget => 1 }
       = options_for_select [100,150,200,250,300,350,400,500,600,700], partial.size
-    F
-    %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]' }
+    Image size
+    %select{ :id => "image_size_for_partial_#{ partial.id }", :name => 'partial[image_size]', :no_select_widget => 1 }
       = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.image_size
     %br
-    W
-    %select{ :id => "width_for_partial_#{ partial.id }", :name => 'partial[width]' }
+    Width
+    %select{ :id => "width_for_partial_#{ partial.id }", :name => 'partial[width]', :no_select_widget => 1 }
       = options_for_select [100,150,200,250,300,400,500,600,700,800], partial.width
-    A
-    %select{ :id => "align_for_partial_#{ partial.id }", :name => 'partial[width]' }
+    Align
+    %select{ :id => "align_for_partial_#{ partial.id }", :name => 'partial[width]', :no_select_widget => 1 }
       = options_for_select ['left','center','right','justify'], partial.align
 
   %div{ :id => "html_for_partial_#{ partial.id }", :style => "font-size: #{ partial.size }%; font-family: #{ partial.font }; width: #{ partial.width }px; text-align:  #{ partial.align }" }= raw markup
@@ -36,14 +36,13 @@
     %textarea{ :id => "textbox_for_partial_#{ partial.id }" }= partial.blurb
   
 :javascript
-  $("#color_for_partial_#{ partial.id }").modcoder_excolor({
-   hue_bar : 4,
-   shadow : false,
-   callback_on_ok : function() {
+  $("#color_for_partial_#{ partial.id }").colpick({
+   onSubmit: function(hsb, hex, rgb, el, by_set_color) {
+     //console.log(arguments);
      $.ajax({
         type: 'PUT',
         url: "/partials/#{ partial.id }",
-        data: "partial[color]=" + $("#color_for_partial_#{ partial.id }").val()
+        data: "partial[color]=#" + hex,
       });
     }
   });
