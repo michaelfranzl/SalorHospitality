@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20150311143953) do
-=======
-ActiveRecord::Schema.define(version: 20150529101946) do
->>>>>>> 6514d11... added option to printers to cut every item in a ticket
+ActiveRecord::Schema.define(:version => 20150529101946) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -195,23 +191,14 @@ ActiveRecord::Schema.define(version: 20150529101946) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
-    t.string   "mode",               :default => "local"
+    t.string   "mode",       :default => "local"
     t.string   "subdomain"
-    t.boolean  "hidden",             :default => false
-    t.boolean  "active",             :default => true
+    t.boolean  "hidden",     :default => false
+    t.boolean  "active",     :default => true
     t.string   "email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "identifier"
-    t.string   "auth_user"
-    t.string   "full_subdomain"
-    t.string   "full_url"
-    t.string   "virtualhost_filter"
-    t.integer  "auth_https_mode"
-    t.boolean  "https"
-    t.boolean  "auth"
-    t.string   "domain"
-    t.boolean  "removal_pending"
   end
 
   create_table "cost_centers", :force => true do |t|
@@ -291,9 +278,6 @@ ActiveRecord::Schema.define(version: 20150529101946) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "logged_in"
-    t.string   "password_encrypted"
-    t.string   "password_salt"
-    t.string   "id_hash"
     t.string   "tax_info"
   end
 
@@ -1115,8 +1099,6 @@ ActiveRecord::Schema.define(version: 20150529101946) do
     t.integer  "default_vendor_id"
     t.string   "advertising_url"
     t.integer  "advertising_timeout",       :default => -1
-    t.string   "salt"
-    t.string   "encrypted_password"
     t.float    "hourly_rate"
     t.integer  "maximum_shift_duration",    :default => 9999
     t.integer  "current_settlement_id"
@@ -1149,12 +1131,8 @@ ActiveRecord::Schema.define(version: 20150529101946) do
     t.integer  "baudrate",              :default => 9600
     t.boolean  "pulse_tickets"
     t.boolean  "pulse_receipt"
-<<<<<<< HEAD
     t.string   "ticket_ad",             :default => ""
-=======
-    t.string   "ticket_ad",             default: ""
     t.boolean  "cut_every_ticket"
->>>>>>> 6514d11... added option to printers to cut every item in a ticket
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
@@ -1209,15 +1187,7 @@ ActiveRecord::Schema.define(version: 20150529101946) do
     t.datetime "hidden_at"
     t.boolean  "history_print"
     t.string   "branding",                    :limit => 5000,     :default => "--- {}\n"
-    t.string   "full_subdomain"
     t.string   "identifier"
-    t.string   "full_url"
-    t.string   "virtualhost_filter"
-    t.integer  "auth_https_mode"
-    t.boolean  "https"
-    t.boolean  "auth"
-    t.string   "domain"
-    t.string   "subdomain"
     t.integer  "ticket_space_top",                                :default => 5
     t.text     "public_holidays"
   end
