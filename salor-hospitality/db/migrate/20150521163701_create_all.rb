@@ -4,6 +4,7 @@ class CreateAll < ActiveRecord::Migration
 
   def change
     if ActiveRecord::Base.connection.table_exists? 'articles'
+      puts "It seems you're migrating your database from Salor Hospitality version 4.x.x.x. Skipping those migrations."
       return
     end
     
