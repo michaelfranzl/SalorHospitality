@@ -89,7 +89,7 @@ hr:
         height: Visina
         hidden: obriši
         image: Slika
-        width: Širina
+        width: "Širina"
       partial:
         active: aktivan
         blurb: Promotivna obavijest
@@ -161,8 +161,8 @@ hr:
         hidden: obriši
         name: Ime
         rotate: rotiraj?
-        width: Širina
-        width_mobile: Širina mobilno
+        width: "Širina"
+        width_mobile: "Širina mobilno"
       tax:
         color: Boja
         hidden: obriši
@@ -204,7 +204,7 @@ hr:
         automatic_printing: Automatsko ispisivanje
         country: Pravila za zemlju
         email: e-mail
-        enable_technician_emails: Šaljite tehničaru e-mailove
+        enable_technician_emails: "Šaljite tehničaru e-mailove"
         hidden: obriši
         invoice_footer_blurb: Promotivna obavijest u podnožju fakture
         invoice_header_blurb: Promotivna obavijest u zaglavlju fakture
@@ -222,7 +222,7 @@ hr:
         ticket_item_separator: Separacijska linija karte narudžbe
         ticket_space_top: Tickets space top
         ticket_tall_font: Visok font karte narudžbe
-        ticket_wide_font: Širok font karte narudžbe
+        ticket_wide_font: "Širok font karte narudžbe"
         time_offset: Korekcija vremena (sati)
         timeout: Vremensko ograničenje zaključavanja ekrana (sekunde)
         update_item_lists_interval: Interval ažuriranja obavijesti o artiklu
@@ -240,6 +240,7 @@ hr:
         pulse_receipt: Zvučni signal primitka
         pulse_tickets: Zvučni signal karta narudžbi
         ticket_ad: Ticket Ad.
+        cut_every_ticket: Cut every ticket
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -446,8 +447,8 @@ hr:
       soup: Juha
       sparkling: Pjenušavo vino
       starter: Starter
-      tea: Šalica za čaj
-      teapot: Čajnik
+      tea: "Šalica za čaj"
+      teapot: "Čajnik"
       whitewinebottle: Butelja bijelo
       whitewineglass: Bijelo vino
   clear: očisti
@@ -509,7 +510,7 @@ hr:
   kitchen: Kuhinja
   layouts:
     application:
-      admin_menu_hint: ☚ Kliknite ovdje za otvaranje glavnog izbornika
+      admin_menu_hint: "☚ Kliknite ovdje za otvaranje glavnog izbornika"
       submit_scribe: OK
     header:
       settings_common: General
@@ -615,7 +616,7 @@ hr:
       new_page: Nova stranica
   partials:
     default_blurb: uredi me
-    error_during_evaluation: ! 'Greška: '
+    error_during_evaluation: 'Greška: '
     no_presentation_found:
       no_presentations_found: Nema definiranog predloška za ovu parcijalu.
   payment_methods:
@@ -768,8 +769,8 @@ hr:
       new_room: Nova soba
   scopes:
     active: Aktivan
-    waiterpad: Konobarev blok
     inactive: Inactive
+    waiterpad: Konobarev blok
   scroll_down: Pomakni prema dolje
   scroll_to_area: Odi u sobu
   scroll_up: Pomakni prema gore
@@ -799,9 +800,9 @@ hr:
       username: Korisnik
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} je promijenio cijenu'
+      changed_price: "%{byuser} je promijenio cijenu"
       count: Brojanje
-      order_number_on_table_on_date: ! '%{order} broj %{number} na %{table} u %{time}'
+      order_number_on_table_on_date: "%{order} broj %{number} na %{table} u %{time}"
       reduced_count: Brojanje je smanjeno sa %{maxcount} na %{count}.
       revenue: Prihod
       total: Ukupno
@@ -896,15 +897,15 @@ hr:
     customer_request_waiter: Zatraži konobara
     delete: Obriši
     display: Prikaži
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+    double_submission_warning: 'Warning: Double submission. Please inform tech support
       about this.'
     download: Preuzmi
     end: Kraj
     exception_page:
       assistance_text: Molimo Vas kliknite na gumb "POČETNA" i pokušajte ponovno.
         Ako vidite istu grešku dvaput, molimo Vas kontaktirajte našu korisničku podršku.
-      exception_description: ! 'Opis pogreške:'
-      exception_in_files: ! 'Došlo je do pogreške u sljedećim datotekama:'
+      exception_description: 'Opis pogreške:'
+      exception_in_files: 'Došlo je do pogreške u sljedećim datotekama:'
       oops_an_error_occurred: Ups! Došlo je do pogreške
     finish_was_requested: Zatražili ste plaćanje. Molimo Vas imajte malo strpljenja,
       uskoro ćemo biti tamo za Vas.
@@ -926,7 +927,7 @@ hr:
     report: Izvješće
     restaurant: Restoran
     save: Spremi
-    sending: Šaljem...
+    sending: "Šaljem..."
     server_error: Ups! Došlo je do interne serverske pogreške. Molimo Vas provjerite
       podnošenje narudžbe na drugom uređaju.
     server_error_short: Serverska pogreška
@@ -959,7 +960,7 @@ hr:
     form:
       add_printer: Dodaj pisač
       identify_printers: Identificiraj pisače
-      print_via_salorbin_explanation: ! 'Ako želite ispis preko salor-bin preglednika,
+      print_via_salorbin_explanation: 'Ako želite ispis preko salor-bin preglednika,
         kopirajte i zalijepite sljedeće detalje u dijalog opcija salor-bina:'
       test_printers: Testiraj pisače
       test_printers_chartest: Testiraj sve znakove
@@ -975,4 +976,4 @@ hr:
   white: Bijela
   winered: Vino crveno
   wrong_password: Krivi podaci za prijavu
-  yellow: Žuta
+  yellow: "Žuta"

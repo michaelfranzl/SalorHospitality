@@ -1079,7 +1079,7 @@ $.keyboard = function(el, options){
 (function($, len, createRange, duplicate){
 $.fn.caret = function(options,opt2) {
 	var s, start, e, end, selRange, range, stored_range, te, val,
-		selection = document.selection, t = this[0], sTop = t.scrollTop, browser = $.browser.msie;
+		selection = document.selection, t = this[0], sTop = t.scrollTop, browser = false;
 	if (typeof t === 'undefined') { return; }
 	if (typeof options === "number" && typeof opt2 === "number") {
 		start = options;

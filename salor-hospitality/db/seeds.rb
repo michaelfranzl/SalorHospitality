@@ -465,7 +465,6 @@ company_count.times do |c|
       2.times do |o|
         option = Option.new :name => "Option#{ c }#{ v }#{ i }#{ o }", :price => (rand(3) + 1).to_f
         option.categories << category
-        category.options << option
         option.company = company
         option.vendor = vendor
         r = option.save

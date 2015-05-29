@@ -110,9 +110,9 @@ function toggle_admin_interface() {
 }
 
 function toggle_all_option_checkboxes(source) {
-  if ($(source).attr('checked') == 'checked') {
-    $('input.category_checkbox:checkbox').attr('checked',true);
+  if ($(source).is(":checked")) {
+    $('input.category_checkbox:checkbox').prop('checked', true);
   } else {
-    $('input.category_checkbox:checkbox').attr('checked',false);
+    $('input.category_checkbox:checkbox').prop('checked',false);
   }
 }

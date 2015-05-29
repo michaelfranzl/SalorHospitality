@@ -233,6 +233,7 @@ gn:
         baudrate: Baudrate
         codepage: Codepage
         copies: Kopien
+        cut_every_ticket: Jedes Ticket schneiden
         hidden: Löschen
         name: Name
         path: Pfad
@@ -508,7 +509,7 @@ gn:
   kitchen: Kueche
   layouts:
     application:
-      admin_menu_hint: ☚ Klicken Sie hier, um das Hauptmenü zu öffnen
+      admin_menu_hint: "☚ Klicken Sie hier, um das Hauptmenü zu öffnen"
       submit_scribe: OK
     header:
       settings_common: Allgemein
@@ -615,7 +616,7 @@ gn:
       new_page: Neue Karte
   partials:
     default_blurb: Text
-    error_during_evaluation: ! 'Fehler: '
+    error_during_evaluation: 'Fehler: '
     no_presentation_found:
       no_presentations_found: Für dieses Element ist noch keine Vorlage definiert.
   payment_methods:
@@ -799,7 +800,7 @@ gn:
     detailed_list:
       changed_price: Preis verändert von %{byuser}.
       count: Anzahl
-      order_number_on_table_on_date: ! '%{order} %{number} auf %{table} am %{time}'
+      order_number_on_table_on_date: "%{order} %{number} auf %{table} am %{time}"
       reduced_count: Anzahl reduziert von %{maxcount} auf %{count}.
       revenue: Umsatz
       total: Gesamt
@@ -893,7 +894,7 @@ gn:
     customer_request_waiter: Kellner anfragen
     delete: Löschen
     display: Anzeigen
-    double_submission_warning: ! 'Warnung: Mehrfach-Übermittlung. Bitte informieren
+    double_submission_warning: 'Warnung: Mehrfach-Übermittlung. Bitte informieren
       Sie das Techniker-Team über diesen Vorfall.'
     download: Download
     end: Ende
@@ -901,8 +902,8 @@ gn:
       assistance_text: Bitte klicken Sie auf den Button "HOME" und versuchen Sie es
         nochmals. Falls der Fehler erneut auftritt, rufen Sie den Kundensupport. Wir
         sind umgehend um Sie bemüht.
-      exception_description: ! 'Fehlerbeschreibung:'
-      exception_in_files: ! 'Der Fehler trat in diesen Dateien auf:'
+      exception_description: 'Fehlerbeschreibung:'
+      exception_in_files: 'Der Fehler trat in diesen Dateien auf:'
       oops_an_error_occurred: Oops! Es ist leider ein Fehler aufgetreten
     finish_was_requested: Sie haben die Bezahlung angefordert. Bitte haben Sie ein
       wenig Geduld.
@@ -941,7 +942,7 @@ gn:
     tax_amount: Betrag
     time: Zeit
     total_price_abbreviation: GP
-    translations: Übersetzungen
+    translations: "Übersetzungen"
     unamed: Unbenannt
     unit_price_abbreviation: EP
     waiter_was_requested: Sie haben einen Kellner gerufen. Bitte haben Sie ein wenig
@@ -956,7 +957,7 @@ gn:
     form:
       add_printer: Drucker hinzufügen
       identify_printers: Drucker identifizieren
-      print_via_salorbin_explanation: ! 'Wenn Sie über den Browser salor-bin drucken
+      print_via_salorbin_explanation: 'Wenn Sie über den Browser salor-bin drucken
         wollen, fügen Sie die folgenden Informationen in den Optionsdialog des salor-bin
         Browsers ein:'
       test_printers: Drucker testen

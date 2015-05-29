@@ -74,7 +74,7 @@ fi:
         category_id: Kategoria
         hidden: poista
         name: Nimi
-        no_ticket: Älä tulosta lappua
+        no_ticket: "Älä tulosta lappua"
         price: Hinta
         separate_ticket: Leikkaa lappu
       order:
@@ -178,7 +178,7 @@ fi:
         active: aktiivinen?
         advertising_timeout: Mainosajan katkaisu
         advertising_url: Mainonta URL
-        audio: Äänimerkit
+        audio: "Äänimerkit"
         color: Väri
         confirmation_user: Vahvista kaukotilaukset
         default_vendor_id: Kirjaudu myyntipisteen sivuille
@@ -240,6 +240,7 @@ fi:
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
         ticket_ad: Ticket Ad.
+        cut_every_ticket: Cut every ticket
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -509,7 +510,7 @@ fi:
   kitchen: Keittiö
   layouts:
     application:
-      admin_menu_hint: ☚ Klikkaa tästä avataksesi päävalikon
+      admin_menu_hint: "☚ Klikkaa tästä avataksesi päävalikon"
       submit_scribe: OK
     header:
       settings_common: General
@@ -614,7 +615,7 @@ fi:
       new_page: Uusi sivu
   partials:
     default_blurb: muokkaa minua
-    error_during_evaluation: ! 'Virhe: '
+    error_during_evaluation: 'Virhe: '
     no_presentation_found:
       no_presentations_found: Mallia ei löydy tähän elementtiin.
   payment_methods:
@@ -767,8 +768,8 @@ fi:
       new_room: Uusi huone
   scopes:
     active: Aktiivinen
-    waiterpad: Tarjoilijan lehtiö
     inactive: Inactive
+    waiterpad: Tarjoilijan lehtiö
   scroll_down: Vieritä alaspäin
   scroll_to_area: Siirry huoneen tietoihin
   scroll_up: Vierittää ylöspain
@@ -797,10 +798,10 @@ fi:
       username: Käyttäjä
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} muutti hintaa'
+      changed_price: "%{byuser} muutti hintaa"
       count: Laske
-      order_number_on_table_on_date: ! '%{order} numero %{number} %{table}:ssä, klo:
-        %{time}'
+      order_number_on_table_on_date: "%{order} numero %{number} %{table}:ssä, klo:
+        %{time}"
       reduced_count: Laske vähennetty %{maxcount} :sta %{count}:lle.
       revenue: Tulot
       total: Yhteensä
@@ -894,15 +895,15 @@ fi:
     customer_request_waiter: Pyydä tarjoilija
     delete: Poista
     display: Näyttä
-    double_submission_warning: ! 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta
+    double_submission_warning: 'Varoitus: kaksinkertainen syöttö. Ilmoita asiasta
       tekniselle tuelle.'
     download: Lataa
     end: Loppu
     exception_page:
       assistance_text: Klikkaa painiketta "HOME" ja yritä uudelleen. Jos näet saman
         virheen kahdesti, ota yhteyttä asiakaspalveluumme.
-      exception_description: ! 'Virhekuvaus:'
-      exception_in_files: ! 'Virhe tapahtui seuraavissa tiedostoissa:'
+      exception_description: 'Virhekuvaus:'
+      exception_in_files: 'Virhe tapahtui seuraavissa tiedostoissa:'
       oops_an_error_occurred: Hups! Virhe on tapahtunut
     finish_was_requested: Olet pyytänyt maksua. Ole hyvä ja odota hetki, palvelemme
       sinua pian.
