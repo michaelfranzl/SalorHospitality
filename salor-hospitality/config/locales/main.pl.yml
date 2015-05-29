@@ -240,6 +240,7 @@ pl:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+        cut_every_ticket: Cut every ticket
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -509,7 +510,7 @@ pl:
   kitchen: Kuchnia
   layouts:
     application:
-      admin_menu_hint: ☚ Click here to open the main menu
+      admin_menu_hint: "☚ Click here to open the main menu"
       submit_scribe: OK
     header:
       settings_common: General
@@ -614,7 +615,7 @@ pl:
       new_page: Nowa strona
   partials:
     default_blurb: Edytuj notatkę
-    error_during_evaluation: ! 'Błąd: '
+    error_during_evaluation: 'Błąd: '
     no_presentation_found:
       no_presentations_found: Nie wybrano szablonu dla tej części.
   payment_methods:
@@ -729,7 +730,7 @@ pl:
         quantities
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
-      split_items: Łączenie pozycji
+      split_items: "Łączenie pozycji"
       statistics:
         statistics_category: Categories
         statistics_payment_method: Payment Methods
@@ -770,8 +771,8 @@ pl:
       new_room: Dodaj pokój
   scopes:
     active: Aktywuj
-    waiterpad: Notes kelnerski
     inactive: Inactive
+    waiterpad: Notes kelnerski
   scroll_down: Przewiń w dół
   scroll_to_area: Go to room
   scroll_up: Przewiń w górę
@@ -801,10 +802,10 @@ pl:
       username: Użytkownik
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} changed price'
+      changed_price: "%{byuser} changed price"
       count: Ilość
-      order_number_on_table_on_date: ! '%{order} numer %{number} stolik %{table} dnia
-        %{time}'
+      order_number_on_table_on_date: "%{order} numer %{number} stolik %{table} dnia
+        %{time}"
       reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Suma całkowita
       total: Suma
@@ -856,7 +857,7 @@ pl:
   surcharges:
     new:
       add_tax_amount: Dodaj kwotę podatku
-      common_surcharge: Łączne dopłaty
+      common_surcharge: "Łączne dopłaty"
       edit_surcharge: Edytuj dopłaty
       new_surcharge: Nowa dopłata
   tables:
@@ -899,15 +900,15 @@ pl:
     customer_request_waiter: Poproś kelnera
     delete: Usuń
     display: Display
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+    double_submission_warning: 'Warning: Double submission. Please inform tech support
       about this.'
     download: Download
     end: Koniec
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see
         the same error twice, please contact our Customer Support.
-      exception_description: ! 'Error Description:'
-      exception_in_files: ! 'The Error occurred in the following files:'
+      exception_description: 'Error Description:'
+      exception_in_files: 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: Poprosiłeś kelnera o rachunek. Twoje powiadomienie zostało
       wysłane, prosimy o cierpliwość.
@@ -962,7 +963,7 @@ pl:
     form:
       add_printer: Dodaj drukarkę
       identify_printers: Wykry drukarkę
-      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+      print_via_salorbin_explanation: 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
       test_printers: Testuj drukarkę
       test_printers_chartest: Test all characters
@@ -978,4 +979,4 @@ pl:
   white: Biały
   winered: Winny
   wrong_password: Błędne dane do logowania!
-  yellow: Żółty
+  yellow: "Żółty"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521163701) do
+ActiveRecord::Schema.define(version: 20150529101946) do
 
   create_table "articles", force: true do |t|
     t.string   "name"
@@ -1146,6 +1146,7 @@ ActiveRecord::Schema.define(version: 20150521163701) do
     t.boolean  "pulse_tickets"
     t.boolean  "pulse_receipt"
     t.string   "ticket_ad",             default: ""
+    t.boolean  "cut_every_ticket"
   end
 
   add_index "vendor_printers", ["company_id"], name: "index_vendor_printers_on_company_id", using: :btree

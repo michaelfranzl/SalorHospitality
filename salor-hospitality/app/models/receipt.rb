@@ -16,4 +16,13 @@ class Receipt < ActiveRecord::Base
   belongs_to :company
   belongs_to :vendor_printer
   belongs_to :settlement
+  
+  def to_plaintext
+    txt = self.content
+    txt.gsub! "\e@", ""
+    txt.gsub! /\e!./, ""
+    txt.gsub! /{::escper}.*?{:\/}/, ""
+    txt.gsub! "\n\n\n\n\x1D\x56\x00", "===CUT===\n"
+    puts txt
+  end
 end

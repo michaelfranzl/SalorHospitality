@@ -736,7 +736,7 @@ class Order < ActiveRecord::Base
           itemstring += item_separator_format % item_separator_values
         end
         
-        if i.option_items.where(:separate_ticket => true).any?
+        if i.option_items.where(:separate_ticket => true).any? or vendor_printer.cut_every_ticket == true
           separate_receipt_contents << itemstring
         else
           catstring += itemstring
@@ -771,7 +771,7 @@ class Order < ActiveRecord::Base
     end
        
     if output == init
-      # print nothing
+      # nothing to print
       return {:text => '', :raw_insertations => {}}
     else
       output += pulse if vendor_printer.pulse_tickets == true

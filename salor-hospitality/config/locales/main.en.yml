@@ -233,6 +233,7 @@ en:
         baudrate: Baudrate
         codepage: Codepage
         copies: Copies
+        cut_every_ticket: Cut every ticket
         hidden: Delete
         name: Name
         path: Path
@@ -509,7 +510,7 @@ en:
   kitchen: Kitchen
   layouts:
     application:
-      admin_menu_hint: ☚ Click here to open the main menu
+      admin_menu_hint: "☚ Click here to open the main menu"
       submit_scribe: OK
     header:
       settings_common: General
@@ -615,7 +616,7 @@ en:
       new_page: New Page
   partials:
     default_blurb: edit me
-    error_during_evaluation: ! 'Error: '
+    error_during_evaluation: 'Error: '
     no_presentation_found:
       no_presentations_found: No template defined for this partial.
   payment_methods:
@@ -797,9 +798,9 @@ en:
       username: User
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} changed price'
+      changed_price: "%{byuser} changed price"
       count: Count
-      order_number_on_table_on_date: ! '%{order} number %{number} on %{table} at %{time}'
+      order_number_on_table_on_date: "%{order} number %{number} on %{table} at %{time}"
       reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Revenue
       total: Total
@@ -893,15 +894,15 @@ en:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+    double_submission_warning: 'Warning: Double submission. Please inform tech support
       about this.'
     download: Download
     end: End
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see
         the same error twice, please contact our Customer Support.
-      exception_description: ! 'Error Description:'
-      exception_in_files: ! 'The Error occurred in the following files:'
+      exception_description: 'Error Description:'
+      exception_in_files: 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
@@ -955,7 +956,7 @@ en:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+      print_via_salorbin_explanation: 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test all characters

@@ -85,7 +85,8 @@ class VendorsController < ApplicationController
           :ticket_ad,
           :pulse_receipt,
           :pulse_tickets,
-          :hidden
+          :hidden,
+          :cut_every_ticket
         ]
     
       unless @vendor.update_attributes permitted
@@ -139,7 +140,8 @@ class VendorsController < ApplicationController
           :ticket_ad,
           :pulse_receipt,
           :pulse_tickets,
-          :hidden
+          :hidden,
+          :cut_every_ticket
         ]
     
     @vendor = Vendor.new permitted
