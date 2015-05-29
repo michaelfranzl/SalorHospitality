@@ -33,7 +33,7 @@ es:
         custom_icon: Mi Ícono
         food: comida
         hidden: borrar
-        icon: Ícono
+        icon: "Ícono"
         image: Icon
         name: Nombre
         separate_print: cortar boleta
@@ -240,6 +240,7 @@ es:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+        cut_every_ticket: Cut every ticket
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -285,8 +286,8 @@ es:
         one: Imagen
         other: Imágenes
       item:
-        one: Ítem
-        other: ítems
+        one: "Ítem"
+        other: "ítems"
       option:
         one: Opción
         other: Opciones
@@ -366,7 +367,7 @@ es:
         one: Impresora
         other: Impresoras
   admin: Administrador
-  are_you_sure: ¿Está seguro?
+  are_you_sure: "¿Está seguro?"
   articles:
     create:
       license_limited: XXX Your License is limited to %{count} articles
@@ -509,7 +510,7 @@ es:
   kitchen: Cocina
   layouts:
     application:
-      admin_menu_hint: ☚ Click here to open the main menu
+      admin_menu_hint: "☚ Click here to open the main menu"
       submit_scribe: OK
     header:
       settings_common: General
@@ -767,8 +768,8 @@ es:
       new_room: New Room
   scopes:
     active: Active
-    waiterpad: Waiterpad
     inactive: Inactive
+    waiterpad: Waiterpad
   scroll_down: Bajar
   scroll_to_area: Go to room
   scroll_up: Subir
@@ -777,7 +778,7 @@ es:
       edit_season: Edit Season
       new_season: New Season
   send_and_go_back: Guardar y volver
-  served_by_X_on_table_Y: ! '%{waiter} lo ha servido en %{table}'
+  served_by_X_on_table_Y: "%{waiter} lo ha servido en %{table}"
   server_no_response: El servidor Bill Gastro ha dejado de responder. La línea está
     ocupada o bien el vínculo inalámbrico se ha interrumpido.
   sessions:
@@ -797,7 +798,7 @@ es:
       username: User
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} changed price'
+      changed_price: "%{byuser} changed price"
       count: Cantidad
       order_number_on_table_on_date: Pedido número %{number} en %{table} a las %{time}
       reduced_count: Count reduced from %{maxcount} to %{count}.
@@ -893,15 +894,15 @@ es:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
-    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
+    double_submission_warning: 'Warning: Double submission. Please inform tech support
       about this.'
     download: Download
     end: End
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see
         the same error twice, please contact our Customer Support.
-      exception_description: ! 'Error Description:'
-      exception_in_files: ! 'The Error occurred in the following files:'
+      exception_description: 'Error Description:'
+      exception_in_files: 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
@@ -955,7 +956,7 @@ es:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
+      print_via_salorbin_explanation: 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test all characters

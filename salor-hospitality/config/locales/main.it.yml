@@ -240,6 +240,7 @@ it:
         pulse_receipt: Beep Ricevuta
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+        cut_every_ticket: Cut every ticket
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -509,7 +510,7 @@ it:
   kitchen: Cucina
   layouts:
     application:
-      admin_menu_hint: ☚ Click qui per aprire il menu principale
+      admin_menu_hint: "☚ Click qui per aprire il menu principale"
       submit_scribe: OK
     header:
       settings_common: General
@@ -614,7 +615,7 @@ it:
       new_page: Nuova pagina
   partials:
     default_blurb: Editami
-    error_during_evaluation: ! 'Errore: '
+    error_during_evaluation: 'Errore: '
     no_presentation_found:
       no_presentations_found: Nessun template definito per questo partial.
   payment_methods:
@@ -765,8 +766,8 @@ it:
       new_room: Nuova camera
   scopes:
     active: Attivo
-    waiterpad: Waiterpad
     inactive: Inactive
+    waiterpad: Waiterpad
   scroll_down: Scrolla giù
   scroll_to_area: Vai alla camera
   scroll_up: Scrolla sù
@@ -795,10 +796,10 @@ it:
       username: Username
   settlements:
     detailed_list:
-      changed_price: ! '%{byuser} prezzo cambiato'
+      changed_price: "%{byuser} prezzo cambiato"
       count: Conto
-      order_number_on_table_on_date: ! '%{order} numero %{number} al tavolo %{table}
-        alle %{time}'
+      order_number_on_table_on_date: "%{order} numero %{number} al tavolo %{table}
+        alle %{time}"
       reduced_count: Conto scontato da %{maxcount} a %{count}.
       revenue: Ricavo
       total: Totale
@@ -893,15 +894,15 @@ it:
     customer_request_waiter: Richiesta cameriere
     delete: Cancella
     display: Schermo
-    double_submission_warning: ! 'Attenzione: Doppia immissione. Comunicalo al supporto
+    double_submission_warning: 'Attenzione: Doppia immissione. Comunicalo al supporto
       tecnico.'
     download: Download
     end: Fine
     exception_page:
       assistance_text: Fai click sul bottone 'HOME' e prova di nuovo. Se si ripresenta
         ancora lo stesso errore, contatta il Supporto Clienti.
-      exception_description: ! 'Descrizione Errore:'
-      exception_in_files: ! 'L''Errore è avvenuto nei seguenti files:'
+      exception_description: 'Descrizione Errore:'
+      exception_in_files: 'L''Errore è avvenuto nei seguenti files:'
       oops_an_error_occurred: Oops! C'è stato un errore'
     finish_was_requested: Hai richiesto il pagamento. Abbi pazienza, arriviamo al
       più presto.
@@ -956,7 +957,7 @@ it:
     form:
       add_printer: Aggiungi stampante
       identify_printers: Identifica stampanti
-      print_via_salorbin_explanation: ! 'Se vuoi stampare attraverso il browser salor-bin,
+      print_via_salorbin_explanation: 'Se vuoi stampare attraverso il browser salor-bin,
         copia (tasti [CTRl]-C) i seguenti dettagli ed incolla (tasti [Ctrl]-V) nel
         dialogo opzioni di salor-bin:'
       test_printers: Test stampanti

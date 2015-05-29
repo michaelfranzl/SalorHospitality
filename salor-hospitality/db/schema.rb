@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20150311143953) do
+=======
+ActiveRecord::Schema.define(version: 20150529101946) do
+>>>>>>> 6514d11... added option to printers to cut every item in a ticket
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1145,7 +1149,12 @@ ActiveRecord::Schema.define(:version => 20150311143953) do
     t.integer  "baudrate",              :default => 9600
     t.boolean  "pulse_tickets"
     t.boolean  "pulse_receipt"
+<<<<<<< HEAD
     t.string   "ticket_ad",             :default => ""
+=======
+    t.string   "ticket_ad",             default: ""
+    t.boolean  "cut_every_ticket"
+>>>>>>> 6514d11... added option to printers to cut every item in a ticket
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
