@@ -1,3 +1,16 @@
+salor-hospitality (5.0.21) jessie; urgency=medium
+
+  * replaced modcoder_excolor colorpicker with colpick
+  * show sku input only on workstations, not on mobile devices
+  * added option to printers to cut every item in a ticket
+  * onscreen keyboard and checkbox javascript fixes for newer jQuery version
+  * fixed database seeding problem for options
+  * permission changes and migration test
+  * fix for deleted payment_methods and cost_centers, report exceptions during settlement finish to technician
+  * moved SKU field into better place
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 03 Jun 2015 11:57:47 +0200
+
 salor-hospitality (5.0.20) jessie; urgency=medium
 
   * removed observer class, app config changes
