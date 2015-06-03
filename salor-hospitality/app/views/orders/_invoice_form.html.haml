@@ -39,7 +39,7 @@
           %td
             %select{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'change_cost_center', cost_center_id:$(this).val()});", :title => t('.set_cost_center') }
               = options_from_collection_for_select(@cost_centers, :id, :name, (invoice_form.cost_center.id if invoice_form.cost_center))
-        - if permit('assign_order_to_booking')
+        - if permit('assign_order_to_booking') and @bookings.any?
           %td
             %select#order_id{ :onchange => "update_order_from_invoice_form({id:#{oid},jsaction:'assign_to_booking', booking_id:$(this).val()});", :title => t('.set_booking') }
               %option
