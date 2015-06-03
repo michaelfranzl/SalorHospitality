@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.95) wheezy; urgency=medium
+
+  * depend on imagemagick for rmagick gem
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 03 Jun 2015 11:45:46 +0200
+
 salor-hospitality (4.1.4.94) wheezy; urgency=medium
 
   * remove require_reloader gem, bump rmagick gem version
