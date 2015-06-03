@@ -287,6 +287,7 @@ class Settlement < ActiveRecord::Base
         PP.pp report, report_string
       rescue Exception => e
         report_string = "Error during call to Settlement.check\n\n#{ e.message  }\n\n#{ e.backtrace.inspect }"
+        UserMailer.technician_message(self.vendor, "Exception in Settlement #{ self.nr }", report_string).deliver
       end
       
       if found

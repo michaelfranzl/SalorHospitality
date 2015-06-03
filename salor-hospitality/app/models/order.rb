@@ -456,7 +456,7 @@ class Order < ActiveRecord::Base
     # create a change payment method item
     unless self.payment_method_items.existing.where(:change => true).any? or
         (self.cost_center and self.cost_center.no_payment_methods == true)
-      change_payment_methods = self.vendor.payment_methods.where(:change => true)
+      change_payment_methods = self.vendor.payment_methods.existing.where(:change => true)
       if change_payment_methods.any?
         pmi = PaymentMethodItem.new
         pmi.company_id = self.company_id
@@ -1217,7 +1217,7 @@ class Order < ActiveRecord::Base
     
     payment_method_item_sum = (self.payment_method_items.existing.where(:change => false).sum(:amount) - self.payment_method_items.existing.where(:change => true).sum(:amount)).round(2)
     
-    if self.paid == true and self.cost_center.no_payment_methods == false
+    if self.paid == true and (self.cost_center.nil? or self.cost_center.no_payment_methods != true)
       if self.vendor.country == "us"
         perform_test({
               :should => self.tax_items.existing.sum(:gro).round(2),
@@ -1235,7 +1235,7 @@ class Order < ActiveRecord::Base
       end
     end
     
-    if self.paid == true and self.cost_center.no_payment_methods == true
+    if self.paid == true and self.cost_center and self.cost_center.no_payment_methods == true
       perform_test({
             :should => 0,
             :actual => payment_method_item_sum,
