@@ -1,3 +1,14 @@
+salor-hospitality (4.1.4.94) wheezy; urgency=medium
+
+  * remove require_reloader gem, bump rmagick gem version
+  * show sku input only on workstations, not on mobile devices
+  * added option to printers to cut every item in a ticket
+  * regenerated schema.rb
+  * fix for deleted payment_methods and cost_centers, report exceptions during settlement finish to technician
+  * moved SKU field into better place
+
+ -- Michael Franzl <office@michaelfranzl.com>  Wed, 03 Jun 2015 11:21:56 +0200
+
 salor-hospitality (4.1.4.93) wheezy; urgency=medium
 
   * always print order numbers on receipts for conformity with legal regulations
