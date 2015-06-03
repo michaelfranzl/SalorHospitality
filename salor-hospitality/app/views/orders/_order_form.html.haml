@@ -28,11 +28,9 @@
 #articles
 
 #items
-  %span{ :style => "vertical-align: middle" } SKU
-  - if workstation?
-    %input#sku_input
   .ordersum_container
-    %span== #{ t '.sum' } #{ t 'number.currency.format.unit', :locale => @region }
+    - if workstation?
+      %input#sku_input
     %span#order_sum
   
   %table#itemstable
