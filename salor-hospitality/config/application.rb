@@ -109,7 +109,8 @@ module SalorHospitality
       'kh' => 'ព្រះរាជាណាចក្រកម្ពុជា',
       'fi' => 'Suomi',
       'hr' => 'Hrvatska',
-      'nl' => 'Nederland' 
+      'nl' => 'Nederland',
+      'ng' => "Nigeria"
     }
     COUNTRIES_REGIONS = {
       'cc' => 'en-us',
@@ -133,7 +134,8 @@ module SalorHospitality
       'kh' => 'kh-kh',
       'fi' => 'fi-fi',
       'hr' => 'hr-hr',
-      'nl' => 'nl-nl'
+      'nl' => 'nl-nl',
+      'ng' => 'en-ng',
     }
     COUNTRIES_INVOICES = {
       'cc' => 'cc',
@@ -157,7 +159,8 @@ module SalorHospitality
       'kh' => 'cc',
       'fi' => 'cc',
       'hr' => 'cc',
-      'nl' => 'nl'
+      'nl' => 'cc',
+      'ng' => 'cc'
     }
     
     FONTS = Dir.glob(File.join(Rails.root,'public','fonts','*.ttf')).collect{ |f| "#{ /fonts\/(.*).ttf/.match(f)[1]}" }
