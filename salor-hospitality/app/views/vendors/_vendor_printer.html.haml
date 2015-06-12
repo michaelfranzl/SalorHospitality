@@ -49,6 +49,10 @@
   %br
   = f.label :cut_every_ticket, :class => 'narrow'
   = f.check_box :cut_every_ticket
+  
+  %br
+  = f.label :one_ticket_per_piece, :class => 'narrow'
+  = f.check_box :one_ticket_per_piece
 
   %br
   - unless f.object.new_record?

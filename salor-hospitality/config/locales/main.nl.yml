@@ -233,6 +233,7 @@ nl:
         baudrate: Baudrate
         codepage: Code pagina
         copies: Kopieen
+        cut_every_ticket: Cut every ticket
         hidden: Verwijder
         name: Naam
         path: Pad
@@ -240,7 +241,7 @@ nl:
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
         ticket_ad: Ticket Ad.
-        cut_every_ticket: Cut every ticket
+        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from

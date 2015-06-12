@@ -233,6 +233,7 @@ hr:
         baudrate: Brzina prijenosa
         codepage: Kodna stranica
         copies: Kopije
+        cut_every_ticket: Cut every ticket
         hidden: Obriši
         name: Ime
         path: Putanja
@@ -240,7 +241,7 @@ hr:
         pulse_receipt: Zvučni signal primitka
         pulse_tickets: Zvučni signal karta narudžbi
         ticket_ad: Ticket Ad.
-        cut_every_ticket: Cut every ticket
+        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from

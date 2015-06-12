@@ -717,35 +717,50 @@ class Order < ActiveRecord::Base
       catstring = ''
       items.each do |i|
         next if i.option_items.where(:no_ticket => true).any?
-        itemstring = ''
-        itemstring += article_format % [ i.count - i.printed_count, i.article.name]
-        itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
-        itemstring += comment_format % [i.comment] unless i.comment.empty?
-        i.option_items.each do |oi|
-          itemstring += option_format % [oi.name]
-        end
         
-        if i.scribe_escpos
-          raw_insertations.merge! :"scribe#{i.id}" => i.scribe_escpos.force_encoding('ASCII-8BIT')
-          markup = "{::escper}scribe#{i.id}{:/}"
-          itemstring += markup
-        end
-
-        if vendor.ticket_item_separator
-          item_separator_values = number_with_precision((i.price + i.options_price) * (i.count - i.printed_count), :locale => vendor.region)
-          itemstring += item_separator_format % item_separator_values
-        end
-        
-        if i.option_items.where(:separate_ticket => true).any? or vendor_printer.cut_every_ticket == true
-          separate_receipt_contents << itemstring
+        if vendor_printer.one_ticket_per_piece == true
+          count_to_print = 1
+          count_to_loop = i.count - i.printed_count
         else
-          catstring += itemstring
+          count_to_print = i.count - i.printed_count
+          count_to_loop = 1
+        end
+        
+        count_to_loop.times do |x|
+          itemstring = ''
+          itemstring += article_format % [ count_to_print, i.article.name]
+          itemstring += quantity_format % ["#{i.quantity.prefix} #{i.quantity.postfix}"] if i.quantity
+          itemstring += comment_format % [i.comment] unless i.comment.empty?
+          i.option_items.each do |oi|
+            itemstring += option_format % [oi.name]
+          end
+          
+          if i.scribe_escpos
+            raw_insertations.merge! :"scribe#{i.id}" => i.scribe_escpos.force_encoding('ASCII-8BIT')
+            markup = "{::escper}scribe#{i.id}{:/}"
+            itemstring += markup
+          end
+
+          if vendor.ticket_item_separator
+            item_separator_values = number_with_precision((i.price + i.options_price) * count_to_print, :locale => vendor.region)
+            itemstring += item_separator_format % item_separator_values
+          end
+          
+          if i.option_items.where(:separate_ticket => true).any? or
+              vendor_printer.cut_every_ticket == true or
+              vendor_printer.one_ticket_per_piece == true
+            # each item will be on a separately cut ticket
+            separate_receipt_contents << itemstring
+          else
+            catstring += itemstring
+          end
         end
         i.update_attribute :printed_count, i.count
       end
 
       unless items.size.zero?
         if c.separate_print == true
+          # each category will be on a separately cut ticket
           separate_receipt_contents << catstring
         else
           normal_receipt_content += catstring
