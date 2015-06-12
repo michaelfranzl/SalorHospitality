@@ -1,3 +1,9 @@
+salor-hospitality (4.1.4.97) wheezy; urgency=medium
+
+  * Optionally print one ticket per piece
+
+ -- Michael Franzl <office@michaelfranzl.com>  Fri, 12 Jun 2015 10:22:55 +0200
+
 salor-hospitality (4.1.4.96) wheezy; urgency=medium
 
   * better display of longer category names on ordering screen
