@@ -236,6 +236,7 @@ en:
         cut_every_ticket: Cut every ticket
         hidden: Delete
         name: Name
+        one_ticket_per_piece: One ticket per piece
         path: Path
         print_button_filename: Icon
         pulse_receipt: Beep Receipt

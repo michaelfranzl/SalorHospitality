@@ -233,6 +233,7 @@ kh:
         baudrate: Baudrate
         codepage: Codepage
         copies: Copies
+        cut_every_ticket: Cut every ticket
         hidden: Delete
         name: Name
         path: Path
@@ -240,7 +241,7 @@ kh:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
-        cut_every_ticket: Cut every ticket
+        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from

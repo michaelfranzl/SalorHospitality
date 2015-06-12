@@ -236,6 +236,7 @@ gn:
         cut_every_ticket: Jedes Ticket schneiden
         hidden: Löschen
         name: Name
+        one_ticket_per_piece: Ein Ticket per Stück
         path: Pfad
         print_button_filename: Icon
         pulse_receipt: Beep Rechnung

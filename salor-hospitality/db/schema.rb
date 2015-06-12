@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150529101946) do
+ActiveRecord::Schema.define(version: 20150612074929) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1133,6 +1133,7 @@ ActiveRecord::Schema.define(:version => 20150529101946) do
     t.boolean  "pulse_receipt"
     t.string   "ticket_ad",             :default => ""
     t.boolean  "cut_every_ticket"
+    t.boolean  "one_ticket_per_piece"
   end
 
   add_index "vendor_printers", ["company_id"], :name => "index_vendor_printers_on_company_id"
@@ -1190,6 +1191,7 @@ ActiveRecord::Schema.define(:version => 20150529101946) do
     t.string   "identifier"
     t.integer  "ticket_space_top",                                :default => 5
     t.text     "public_holidays"
+    t.boolean  "one_ticket_per_piece"
   end
 
 end
