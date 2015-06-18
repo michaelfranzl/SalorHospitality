@@ -62,6 +62,7 @@ class Order < ActiveRecord::Base
     permitted = params.require(:model).permit :table_id,
         :booking_id,
         :user_id,
+        :customer_id,
         :note,
         :hidden
     order = Order.new permitted
@@ -117,6 +118,7 @@ class Order < ActiveRecord::Base
       permitted = params[:model].permit :table_id,
           :booking_id,
           :user_id,
+          :customer_id,
           :note,
           :cost_center_id,
           :hidden
