@@ -131,6 +131,7 @@ nl:
       date_short: "%d. %b %y"
       date_iso: "%Y-%m-%d"
       time_short: "%H:%M"
+      time_long: "%H:%M:%S"
       month_and_day: "%d. %B"
     am: ""
     pm: ""
