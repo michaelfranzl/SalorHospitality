@@ -134,7 +134,7 @@ fr:
         hidden: Effacer
         is_master: Master?
         name: Nom
-        to_date: "À"
+        to_date: À
       settlement:
         initial_cash: Montant initial
         revenue: Montant final
@@ -229,6 +229,7 @@ fr:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Utiliser numéros de commande
+        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -236,12 +237,12 @@ fr:
         cut_every_ticket: Cut every ticket
         hidden: Effacer
         name: Nom
+        one_ticket_per_piece: One ticket per piece
         path: Chemin
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
-        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -299,8 +300,8 @@ fr:
         one: Carte
         other: Cartes
       partial:
-        one: "Élément"
-        other: "Éléments"
+        one: Élément
+        other: Éléments
       payment_method:
         one: Mode de paiement
         other: Modes de paiement
@@ -368,7 +369,7 @@ fr:
         one: Imprimante
         other: Imprimantes
   admin: Admin
-  are_you_sure: "Êtes-vous sûr ?"
+  are_you_sure: Êtes-vous sûr ?
   articles:
     create:
       license_limited: Votre licence est limitée à %{count} articles
@@ -393,7 +394,7 @@ fr:
       edit_article: Modifier l'article
       new_article: Nouvel article
       normal: Normal
-      takeaway: "À emporter"
+      takeaway: À emporter
     sort_index:
       sort: Trier les articles
   bar: En liquide
@@ -511,7 +512,7 @@ fr:
   kitchen: Cuisine
   layouts:
     application:
-      admin_menu_hint: "☚ Click here to open the main menu"
+      admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
       settings_common: General
@@ -566,9 +567,9 @@ fr:
       print_and_finish_gototables: Print and finish this order and return to the tables
         plan
       set_booking: Atrribuer à réservation
-      set_cost_center: "Établir centre de coût pour cette commande"
-      set_tax_for_all: "Établir centre de coût pour tous les articles"
-      set_taxes: "Établir centre de coût"
+      set_cost_center: Établir centre de coût pour cette commande
+      set_tax_for_all: Établir centre de coût pour tous les articles
+      set_taxes: Établir centre de coût
       split_invoice: Scinder facture
       split_this_item: Cliquer pour scinder ces articles un par un
       switch_tax_for_this_item: Cliquer pour modifier la taxe pour cet article
@@ -617,7 +618,7 @@ fr:
       new_page: Nouvelle Page
   partials:
     default_blurb: Modifiez-moi
-    error_during_evaluation: 'Erreur : '
+    error_during_evaluation: ! 'Erreur : '
     no_presentation_found:
       no_presentations_found: Aucun template défini pour cet élément
   payment_methods:
@@ -785,7 +786,7 @@ fr:
   sessions:
     browser_warning:
       continue: Continuer
-      warning: 'Salor ne supporte que les navigateurs suivants: Google Chrome (Windows),
+      warning: ! 'Salor ne supporte que les navigateurs suivants: Google Chrome (Windows),
         Chromium (Linux), et Safari (Apple). S''il vous plaît utilisez un de ceux
         navigateurs et essayez à nouveau.'
     new:
@@ -800,9 +801,9 @@ fr:
       username: User
   settlements:
     detailed_list:
-      changed_price: "%{byuser} changed price"
+      changed_price: ! '%{byuser} changed price'
       count: Compter
-      order_number_on_table_on_date: "%{order} numéro %{number} à %{table} à %{time}"
+      order_number_on_table_on_date: ! '%{order} numéro %{number} à %{table} à %{time}'
       reduced_count: Count reduced from %{maxcount} to %{count}.
       revenue: Montant
       total: Total
@@ -896,15 +897,15 @@ fr:
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
-    double_submission_warning: 'Warning: Double submission. Please inform tech support
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
       about this.'
     download: Download
     end: End
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see
         the same error twice, please contact our Customer Support.
-      exception_description: 'Error Description:'
-      exception_in_files: 'The Error occurred in the following files:'
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
@@ -958,7 +959,7 @@ fr:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      print_via_salorbin_explanation: 'If you want to print via the salor-bin browser,
+      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test all characters
