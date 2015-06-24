@@ -113,8 +113,7 @@ class VendorsController < ApplicationController
       timeout_update_resources = #{ @current_vendor.update_resources_interval };
       automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 };
       user_login = '#{ @current_user.login if @current_user }';
-      user_shift_ended = #{ @current_user.shift_ended };
-      user_shift_duration = #{ @current_user.current_shift_duration };
+      user_shift_ended = #{ @current_user ? @current_user.shift_ended : false };
       company_identifier = '#{ @current_company.identifier }';
     "
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612074929) do
+ActiveRecord::Schema.define(:version => 20150624110801) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1192,6 +1192,7 @@ ActiveRecord::Schema.define(version: 20150612074929) do
     t.integer  "ticket_space_top",                                :default => 5
     t.text     "public_holidays"
     t.boolean  "one_ticket_per_piece"
+    t.boolean  "print_count_reductions"
   end
 
 end
