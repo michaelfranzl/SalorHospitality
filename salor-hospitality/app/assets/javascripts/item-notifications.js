@@ -186,7 +186,7 @@ function render_item_list(type, model, scope) {
       color_intensity = (color_intensity < 0) ? 255 : color_intensity;
       var color = 'rgb(' + color_intensity + ', 60, 60)';
       var waiting_time = Math.floor(difference/60000);
-      var waiting_time_label = (waiting_time > 0) ? waiting_time + 'min.<br/>' : '';
+      var waiting_time_label = (waiting_time > 0) ? waiting_time + "'" : "";
 
       switch(scope) {
         case 'confirmation':
@@ -200,9 +200,21 @@ function render_item_list(type, model, scope) {
           break;
       }
       if (count != null) {
-        var label = table_name + " | " + waiting_time_label + count + ' × ' + v.l;
+        var label = "<b>" + table_name + "</b> | " + count + ' × ' + v.l;
         var item_container = create_dom_element('div',{id:'item_list_' + scope + '_' +  v.id}, label, list_container);
-        item_container.css('background-color', color);
+        
+        var time_colorbox = create_dom_element('div', {}, waiting_time_label, item_container);
+        time_colorbox.addClass("time_colorbox");
+        time_colorbox.css('background-color', color);
+        
+        var user_colorbox = create_dom_element('div', {}, "", item_container);
+        user_colorbox.addClass("user_colorbox");
+        var uid = v[scope + "_uid"];
+        if (uid) {
+          user_colorbox.css("background-color", resources.u[uid].c);
+          user_colorbox.attr("title", resources.u[uid].n);
+        }
+        
         item_container.addClass('item_list');
       }
     })
