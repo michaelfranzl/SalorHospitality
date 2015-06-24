@@ -243,6 +243,7 @@ pl:
       date_short: "%d. %b %y"
       date_iso: "%d-%m-%Y"
       time_short: "%H:%M"
+      time_long: "%H:%M:%S"
       month_and_day: "%d. %B"
     am: "am"
     pm: "pm"
