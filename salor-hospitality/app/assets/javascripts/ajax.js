@@ -99,5 +99,5 @@ function toggle_drag_tables() {
       toggle_drag_tables_state = 0;
       break;
   }
-  render_tables();
+  update_tables();
 }
