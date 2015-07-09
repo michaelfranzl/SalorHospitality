@@ -235,7 +235,6 @@ function update_table_coordinates(id) {
   $.ajax({
     type: 'PUT',
     url: '/tables/' + id + '/update_coordinates',
-    data: {left:left, top:top, mobile_drag_and_drop:settings.mobile_drag_and_drop},
-    success: update_tables
+    data: {left:left, top:top, mobile_drag_and_drop:settings.mobile_drag_and_drop}
   });
 }
