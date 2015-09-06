@@ -29,7 +29,7 @@
   .clear
 
   - if @booking.finished
-    %h1== #{ t('various.invoice') } #B#{ @booking.nr }
+    %h1== #{ t('various.invoice') } ##{ @booking.nr }
   - else
     %h1== #{ t('various.interim_invoice') }
   
@@ -49,7 +49,7 @@
       - @booking.orders.existing.each do |order|
         - order.items.existing.positioned.each do |item|
           %tr
-            %td.left.narrow== ##{ order.nr }
+            %td.left== ID #{ order.id }
             %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',')
             %td.left= item.quantity_id ? "#{ t(:refund) + ' ' if item.refunded }#{ item.quantity.prefix } #{ item.quantity.article.name } #{ item.quantity.postfix } #{ item.comment }" : "#{ t(:refund) + ' ' if item.refunded }#{ item.article.name } #{ item.comment }"
             %td.right= number_to_currency item.price
@@ -59,7 +59,7 @@
           - item.option_items.each do |o|
             - next if o.price == 0
             %tr
-              %td.left.narrow== ##{ order.nr }
+              %td.left.narrow== ID #{ order.id }
               %td.left.narrow= item.taxes.collect{ |k,v| v[:l] }.join(',') # options are just an item price modification, so they have the same taxes
               %td.left== #{ t(:refund) + ' ' if item.refunded }#{ o.name }
               %td.right= number_to_currency o.price
