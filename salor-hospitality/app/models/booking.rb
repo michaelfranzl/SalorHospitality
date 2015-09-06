@@ -39,7 +39,7 @@ class Booking < ActiveRecord::Base
   
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('booking')
+      self.update_attribute :nr, self.vendor.get_next_transaction_number('invoice')
     end
   end
   
@@ -91,7 +91,6 @@ class Booking < ActiveRecord::Base
     BookingItem.make_multiseason_associations
     booking.update_payment_method_items(params)
     booking.hide(user.id) if booking.hidden
-    booking.set_nr
     return booking
   end
 
@@ -202,6 +201,7 @@ class Booking < ActiveRecord::Base
   def finish
     self.finished = true
     self.finished_at = Time.now
+    self.set_nr
     self.save
   end
 
@@ -322,7 +322,6 @@ class Booking < ActiveRecord::Base
   end
 
   def hide(by_user_id)
-    self.vendor.unused_booking_numbers << self.nr
     self.vendor.save
     
     self.nr = nil

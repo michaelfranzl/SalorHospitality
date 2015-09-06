@@ -3,9 +3,9 @@
   items_json = <%= raw @order.items_to_json %>;
   submit_json.id = <%= @order.id %>;
   
-  $('#order_info').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @order.table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
+  $('#order_info').html('<%= escape_javascript Order.model_name.human %> ID <%= @order.id %> <%= escape_javascript @order.table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
   
-  $('#order_info_bottom').html('<%= escape_javascript Order.model_name.human %> #<%= @order.nr %> <%= escape_javascript @order.table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
+  $('#order_info_bottom').html('<%= escape_javascript Order.model_name.human %> ID <%= @order.id %> <%= escape_javascript @order.table.name %> (<%= escape_javascript @order.user_login %>) <%= escape_javascript @order.customer.full_name if @order.customer %>');
   
   $('#order_note').val('<%= escape_javascript @order.note %>');
   

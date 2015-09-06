@@ -292,7 +292,6 @@ class Item < ActiveRecord::Base
     
     if split_order.nil?
       split_order = Order.new(parent_order.attributes)
-      split_order.update_attribute :nr, first_item.vendor.get_unique_model_number('order')
       parent_order.order = split_order
       split_order.order = parent_order
     end

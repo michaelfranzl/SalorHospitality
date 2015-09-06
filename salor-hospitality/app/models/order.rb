@@ -55,7 +55,7 @@ class Order < ActiveRecord::Base
 
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
+      self.update_attribute :nr, self.vendor.get_next_transaction_number('invoice')
     end
   end
 
@@ -103,7 +103,6 @@ class Order < ActiveRecord::Base
     order.update_payment_method_items(params)
     hidden_by = user ? user.id : -12
     order.hide(hidden_by) if order.hidden or not order.items.existing.any?
-    order.set_nr
     order.table.update_color
     return order
   end
@@ -311,9 +310,7 @@ class Order < ActiveRecord::Base
   end
 
   def hide(by_user_id)
-    self.vendor.unused_order_numbers << self.nr
     self.vendor.save
-    self.nr = nil
     self.hidden = true
     self.hidden_by = by_user_id
     self.save
@@ -415,7 +412,7 @@ class Order < ActiveRecord::Base
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
-    self.set_nr
+    self.set_nr unless self.booking_id
     self.table.update_color
     
     # detach customer from this table
@@ -538,7 +535,15 @@ class Order < ActiveRecord::Base
             end
             
             bytes_sent = content_sent.length
-            Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => p.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+            Receipt.create :vendor_id => self.vendor_id,
+                :company_id => self.company_id,
+                :user_id => self.user_id,
+                :vendor_printer_id => p.id,
+                :order_id => self.id,
+                :order_nr => self.nr,
+                :content => contents[:text],
+                :bytes_sent => bytes_sent,
+                :bytes_written => bytes_written
           end
         end
       end
@@ -562,13 +567,20 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents[:text], :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        Receipt.create :vendor_id => self.vendor_id,
+            :company_id => self.company_id,
+            :user_id => self.user_id,
+            :vendor_printer_id => vendor_printer.id,
+            :order_id => self.id,
+            :order_nr => self.nr,
+            :content => contents[:text],
+            :bytes_sent => bytes_sent,
+            :bytes_written => bytes_written
         self.update_attribute :printed, true
       end
     end
     
     if what.include? 'interim_receipt'
-      # this is currently not implemented and never called.
       if vendor_printer
         contents = self.escpos_interim_receipt
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
@@ -584,7 +596,15 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        Receipt.create(:vendor_id => self.vendor_id, :company_id => self.company_id, :user_id => self.user_id, :vendor_printer_id => vendor_printer.id, :order_id => self.id, :order_nr => self.nr, :content => contents, :bytes_sent => bytes_sent, :bytes_written => bytes_written)
+        Receipt.create :vendor_id => self.vendor_id,
+            :company_id => self.company_id,
+            :user_id => self.user_id,
+            :vendor_printer_id => vendor_printer.id,
+            :order_id => self.id,
+            :order_nr => self.nr,
+            :content => contents[:text],
+            :bytes_sent => bytes_sent,
+            :bytes_written => bytes_written
         self.update_attribute :printed_interim, true
       end
     end
@@ -642,10 +662,9 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"
 
     header = ''
-    
-    nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
+
     if vendor.ticket_display_time_order
-      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_long), nr]
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_long), id]
     end
 
     header += header_format_user_table % [self.user.login, self.table.name]

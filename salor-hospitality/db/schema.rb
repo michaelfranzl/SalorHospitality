@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150709092112) do
+ActiveRecord::Schema.define(:version => 20150906175346) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -1157,14 +1157,12 @@ ActiveRecord::Schema.define(:version => 20150709092112) do
     t.string   "name",                                            :default => "Bill Gastro"
     t.datetime "created_at",                                                                 :null => false
     t.datetime "updated_at",                                                                 :null => false
-    t.integer  "largest_order_number",                            :default => 0
-    t.string   "unused_order_numbers",        :limit => 1000,     :default => "--- []\n"
+    t.integer  "largest_invoice_number",                          :default => 0
     t.string   "country"
     t.integer  "time_offset",                                     :default => 0
     t.text     "resources_cache",             :limit => 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                               :default => true
     t.integer  "company_id"
     t.boolean  "active",                                          :default => true
     t.boolean  "hidden"
@@ -1178,9 +1176,6 @@ ActiveRecord::Schema.define(:version => 20150709092112) do
     t.text     "receipt_footer_blurb"
     t.text     "invoice_header_blurb"
     t.text     "invoice_footer_blurb"
-    t.string   "unused_booking_numbers",      :limit => 10000,    :default => "--- []\n"
-    t.integer  "largest_booking_number",                          :default => 0
-    t.boolean  "use_booking_numbers",                             :default => true
     t.integer  "max_tables"
     t.integer  "max_rooms"
     t.integer  "max_articles"
@@ -1195,8 +1190,6 @@ ActiveRecord::Schema.define(:version => 20150709092112) do
     t.integer  "automatic_printing_interval",                     :default => 31
     t.string   "hash_id"
     t.integer  "largest_settlement_number",                       :default => 0
-    t.string   "unused_settlement_numbers",   :limit => 1000,     :default => "--- []\n"
-    t.boolean  "use_settlement_numbers",                          :default => true
     t.boolean  "enable_technician_emails",                        :default => false
     t.string   "technician_email"
     t.integer  "hidden_by"

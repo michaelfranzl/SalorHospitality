@@ -4,7 +4,7 @@
     %td#booking_total
   - booking.orders.each do |o|
     %tr
-      %td= "O#{ o.nr }"
+      %td= "#{ Order.model_name.human } ID #{ o.id }"
       %td= number_to_currency o.sum
   %tr.subtotal
     %td= t 'various.subtotal'
