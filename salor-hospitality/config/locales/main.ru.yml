@@ -13,6 +13,7 @@ ru:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Использование
+        item_type: Type
       booking_item:
         base_price: Preis
         count: Anzahl
@@ -171,6 +172,7 @@ ru:
         name: Название
         percent: Налог в %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Количество
         tax_id: Налог
@@ -211,6 +213,7 @@ ru:
         invoice_logo: XXX Invoice Logo
         logo: XXX Screen logo
         name: Название
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Текст снизу квитанции
         receipt_header_blurb: Текст вверху квитанции
         remote_orders: Remote orders
@@ -229,7 +232,6 @@ ru:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Использовать номера заказов
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ ru:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ ru:
       vendor_printer:
         one: Принтер
         other: Принтеры
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Админ
   are_you_sure: Вы уверены?
   articles:
@@ -975,3 +983,7 @@ ru:
   winered: Бардовый
   wrong_password: Неверный пароль
   yellow: Желтый
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

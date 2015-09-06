@@ -8,6 +8,7 @@ en:
         description: Description
         hidden: delete
         image: Image
+        item_type: Type
         name: Name
         price: Price
         statistic_category_id: Statistic-Category
@@ -70,6 +71,9 @@ en:
         hidden: delete
         name: Name
         taxes: Taxes
+      item_type:
+        behavior: Behavior
+        name: Name
       option:
         category_id: Category
         hidden: Delete
@@ -171,6 +175,7 @@ en:
         name: Name
         percent: Tax in %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Amount
         tax_id: Tax
@@ -290,6 +295,9 @@ en:
       item:
         one: Item
         other: Items
+      item_type:
+        one: Item Type
+        other: Item Types
       option:
         one: Option
         other: Options
@@ -503,6 +511,10 @@ en:
   invoice_numer_X_at_time: Invoice No. %{number} at %{datetime}
   invoices: Invoices
   is_no_number: is not a number.
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal
   items:
     item_tablerow:
       clear: Clear

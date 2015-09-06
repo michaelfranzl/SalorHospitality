@@ -13,6 +13,7 @@ el:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Χρήση
+        item_type: Type
       booking_item:
         base_price: Τιμή
         count: Ποσότητα
@@ -171,6 +172,7 @@ el:
         name: Όνομα
         percent: Φόρος ανά %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Ποσό
         tax_id: Φόρος
@@ -211,6 +213,7 @@ el:
         invoice_logo: Λογότυπο τιμολογίου
         logo: Λογότυπο οθόνης
         name: Name
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
         receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
         remote_orders: Remote orders
@@ -229,7 +232,6 @@ el:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ el:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ el:
       vendor_printer:
         one: Εκτυπωτής
         other: Εκτυπωτές
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Διαχειριστής
   are_you_sure: Είστε σίγουροι;
   articles:
@@ -978,3 +986,7 @@ el:
   winered: Κρασί Ερυθρό
   wrong_password: Λάθος στοιχεία σύνδεσης
   yellow: Κίτρινο
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

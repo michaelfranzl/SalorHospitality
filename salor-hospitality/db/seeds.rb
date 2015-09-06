@@ -29,6 +29,7 @@ else
 end
 
 taxes = [20, 10, 0]
+item_type_behaviors = ["normal", "gift_card", "coupon"]
 cost_center_names = ['guest','restaurant','broken']
 tax_colors = ['#e3bde1', '#f3d5ab','#ffafcf','#d2f694','#c2e8f3','#c6c6c6']
 category_colors = ['#80477d','#ed8b00','#cd0052','#75b10d','#136880','#27343b']
@@ -349,14 +350,34 @@ company_count.times do |c|
 
     tax_objects = Array.new
     letters = ['A','B','C']
+    types = ["standard", "reduced1", "vat_free"]
     taxes.size.times do |i|
-      tax = Tax.new :name => "#{ taxes[i] } #{ c } #{ v }", :letter => letters[i], :percent => taxes[i], :color => tax_colors[i]
+      tax = Tax.new :name => "#{ taxes[i] } #{ c } #{ v }",
+          :letter => letters[i],
+          :percent => taxes[i],
+          :color => tax_colors[i],
+          :tpe => types[i]
       tax.company = company
       tax.vendor = vendor
       r = tax.save
       tax_objects << tax
       puts "Tax #{ taxes[i] } #{ c } #{ v } created" if r == true
       raise "Could not save Tax" if r != true
+    end
+    
+    item_type_objects = Array.new
+    item_type_behaviors.size.times do |i|
+      b = item_type_behaviors[i]
+      n = I18n.t("item_type_names.#{ b }", :locale => vendor.get_region.to_s[0..1])
+      it = ItemType.new
+      it.name = "#{ n } #{ c } #{ v }"
+      it.behavior = b
+      it.vendor = vendor
+      it.company = company
+      r = it.save
+      item_type_objects << it
+      puts "Item Type #{ n } with behavior #{ b } created." if r == true
+      raise "Could not save ItemType" if r != true
     end
 
     cash_register_objects = Array.new
@@ -472,7 +493,11 @@ company_count.times do |c|
       end
         
       2.times do |a|
-        article = Article.new :name => "Article#{ c }#{ v }#{ i }#{ a }", :price => rand(30) + 1, :active => true
+        article = Article.new
+        article.name = "Article#{ c }#{ v }#{ i }#{ a }"
+        article.price = rand(30) + 1
+        article.active = true
+        article.item_type = item_type_objects[0]
         article.taxes = [tax_objects[rand(3)]]
         article.category = category
         article.company = company

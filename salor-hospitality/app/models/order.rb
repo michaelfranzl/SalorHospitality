@@ -11,6 +11,7 @@
 class Order < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Scope
+  
   belongs_to :company
   belongs_to :vendor
   belongs_to :settlement
@@ -185,6 +186,7 @@ class Order < ActiveRecord::Base
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
     if i.article
+      i.item_type_id = i.article.item_type_id
       i.calculate_totals
     else
       message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}, save result: #{ result }"
@@ -219,6 +221,7 @@ class Order < ActiveRecord::Base
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
     if i.article
+      i.item_type_id = i.article.item_type_id
       i.calculate_totals
     else
       message = "No article associated with item in Order.update_item. Item: #{ i.inspect }, Params: #{p.inspect}."
@@ -906,7 +909,7 @@ class Order < ActiveRecord::Base
         options_values = [
           item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
           "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }",
-          oi.price,
+          number_with_precision(oi.price, :locale => vendor.get_region),
           item.count,
           item.refunded ? 0 : number_with_precision(oi.price * item.count, :locale => vendor.get_region)
         ]

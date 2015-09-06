@@ -13,6 +13,7 @@ it:
         statistic_category_id: Categoria Statistica
         taxes: Tasse
         usage: Utilizzo
+        item_type: Type
       booking_item:
         base_price: Prezzo Base
         count: Conto
@@ -171,6 +172,7 @@ it:
         name: Nome
         percent: Tassa in %
         statistics_by_category: Statistiche per categoria
+        tpe: Type
       tax_amount:
         amount: Importo
         tax_id: Tassa
@@ -211,6 +213,7 @@ it:
         invoice_logo: Logo scontrino
         logo: Logo
         name: Nome
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Intestazione ricevuta piè di pagina
         receipt_header_blurb: Intestazione ricevuta inizio pagina
         remote_orders: Ordini remoti
@@ -229,7 +232,6 @@ it:
         update_resources_interval: Intervallo Aggiornamento Database Offline
         update_tables_interval: Intervallo Aggiornamento Tavoli
         use_order_numbers: Usa Numeri Ordine
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ it:
         pulse_receipt: Beep Ricevuta
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ it:
       vendor_printer:
         one: Stampante
         other: Stampanti
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Admin
   are_you_sure: Sei sicuro?
   articles:
@@ -977,3 +985,7 @@ it:
   winered: Vino Rosso
   wrong_password: Password errata
   yellow: Giallo
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal
