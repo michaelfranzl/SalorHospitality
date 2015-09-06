@@ -36,6 +36,9 @@ module SalorHospitality
   
   
   class Application < Rails::Application  
+    
+    require File.join(Rails.root, 'lib', 'escper', 'escper.rb')
+    
     if ENV['SH_DEBIAN_SITEID']
       SH_DEBIAN_SITEID = ENV['SH_DEBIAN_SITEID']
     else
