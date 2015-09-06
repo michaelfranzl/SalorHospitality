@@ -19,6 +19,8 @@ gem 'coffee-rails'
 gem 'therubyracer', '0.11.4', :require => 'v8'
 gem 'escper', '1.2.2'
 
+
 group :development do
   gem 'debugger'
+  gem 'require_reloader'
 end

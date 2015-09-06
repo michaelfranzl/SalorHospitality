@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150624110801) do
+ActiveRecord::Schema.define(:version => 20150709092112) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "sku"
+    t.integer  "item_type_id"
   end
 
   add_index "articles", ["category_id"], :name => "index_articles_on_category_id"
@@ -397,6 +398,18 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
   add_index "ingredients", ["article_id"], :name => "index_ingredients_on_article_id"
   add_index "ingredients", ["stock_id"], :name => "index_ingredients_on_stock_id"
 
+  create_table "item_types", :force => true do |t|
+    t.string   "name"
+    t.string   "behavior"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "hidden"
+    t.datetime "hidden_at"
+    t.integer  "hidden_by"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "items", :force => true do |t|
     t.integer  "count",                                  :default => 1
     t.integer  "article_id"
@@ -440,6 +453,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.boolean  "price_changed"
     t.integer  "price_changed_by"
     t.integer  "position_category"
+    t.integer  "item_type_id"
   end
 
   add_index "items", ["article_id"], :name => "index_items_on_article_id"
@@ -1032,6 +1046,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.boolean  "include_in_statistics",  :default => false
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.string   "tpe"
   end
 
   add_index "taxes", ["company_id"], :name => "index_taxes_company_id"
@@ -1191,7 +1206,6 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.string   "identifier"
     t.integer  "ticket_space_top",                                :default => 5
     t.text     "public_holidays"
-    t.boolean  "one_ticket_per_piece"
     t.boolean  "print_count_reductions"
   end
 

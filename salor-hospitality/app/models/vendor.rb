@@ -51,6 +51,7 @@ class Vendor < ActiveRecord::Base
   has_many :receipts
   has_many :cameras
   has_many :histories
+  has_many :item_types
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers

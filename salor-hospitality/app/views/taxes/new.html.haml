@@ -26,6 +26,11 @@
         %td= tax_form.label :letter
         %td= tax_form.text_field :letter, :size => '10'
       %tr
+        %td= tax_form.label :tpe
+        %td
+          %select#tpe{ :name => 'tax[tpe]' }
+            = options_for_select(["", "standard", "reduced1", "reduced2", "vat_free", "special1", "special2"], tax_form.object.tpe)
+      %tr
         %td= tax_form.label :color
         %td
           %select#category_color{ :name => 'tax[color]' }

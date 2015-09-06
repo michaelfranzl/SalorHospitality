@@ -7,10 +7,12 @@
     %th{ :style => 'width:120px' }= Tax.human_attribute_name(:name)
     %th{ :style => 'width:100px' }= Tax.human_attribute_name(:percent)
     %th{ :style => 'width:100px' }= Tax.human_attribute_name(:letter)
+    %th{ :style => 'width:100px' }= Tax.human_attribute_name(:tpe)
     %th{ :style => 'width:50px' }
   - @taxes.each do |ta|
     %tr
       %td= link_to ta.name, edit_tax_path(ta), :class => "list_item"
       %td= number_to_percentage ta.percent
       %td= ta.letter
+      %td= ta.tpe
       %td= link_to image_tag('button_small_delete.png', :title => Tax.human_attribute_name(:hidden), :alt => Tax.human_attribute_name(:hidden)), tax_path(ta), :method => :delete, :confirm => t(:are_you_sure)

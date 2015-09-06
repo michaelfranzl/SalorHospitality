@@ -13,6 +13,7 @@ es:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Uso
+        item_type: Type
       booking_item:
         base_price: Preis
         count: Anzahl
@@ -171,6 +172,7 @@ es:
         name: Nombre
         percent: Porcentaje de IVA
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Monto
         tax_id: IVA
@@ -211,6 +213,7 @@ es:
         invoice_logo: XXX Invoice Logo
         logo: XXX Screen logo
         name: Nombre
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         remote_orders: Remote orders
@@ -229,7 +232,6 @@ es:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Usar numeros del orden?
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ es:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ es:
       vendor_printer:
         one: Impresora
         other: Impresoras
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Administrador
   are_you_sure: ¿Está seguro?
   articles:
@@ -975,3 +983,7 @@ es:
   winered: Rojo Vino
   wrong_password: datos de conexión incorrectos
   yellow: amarillo
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

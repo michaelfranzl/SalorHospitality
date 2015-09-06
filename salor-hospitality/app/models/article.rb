@@ -15,6 +15,8 @@ class Article < ActiveRecord::Base
   belongs_to :statistic_category
   belongs_to :vendor
   belongs_to :company
+  belongs_to :item_type
+  
   has_many :ingredients
   has_many :quantities
   has_many :existing_quantities, :class_name => Quantity, :conditions => ['hidden = ?', false]
@@ -26,7 +28,7 @@ class Article < ActiveRecord::Base
   scope :waiterpad, where(:hidden => false, :waiterpad => true ).order('position ASC')
 
   # Validations 
-  validates_presence_of :name, :category_id, :taxes
+  validates_presence_of :name, :category_id, :taxes, :item_type_id
   validate :sku_unique_in_existing, :if => :sku_is_not_weird
   validates_each :price do |record, attr_name, value|
     #since some records are not saved yet, check manually if one of the quantities is hidden

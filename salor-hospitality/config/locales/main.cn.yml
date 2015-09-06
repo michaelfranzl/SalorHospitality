@@ -13,6 +13,7 @@ cn:
         statistic_category_id: 统计类别
         taxes: 税
         usage: 运用
+        item_type: Type
       booking_item:
         base_price: 价格
         count: Count
@@ -171,6 +172,7 @@ cn:
         name: 名称
         percent: 税(%)
         statistics_by_category: 结算统计数据类别
+        tpe: Type
       tax_amount:
         amount: 总数
         tax_id: 税
@@ -211,6 +213,7 @@ cn:
         invoice_logo: 发票标志
         logo: 荧幕标志
         name: 名称
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         remote_orders: 远程订单
@@ -229,7 +232,6 @@ cn:
         update_resources_interval: 更新离线数据库
         update_tables_interval: 更新桌子
         use_order_numbers: Use order numbers
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ cn:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ cn:
       vendor_printer:
         one: 打印机
         other: 打印机
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: 管理
   are_you_sure: 你确定吗?
   articles:
@@ -965,3 +973,7 @@ cn:
   winered: 酒红
   wrong_password: 错误登入数据
   yellow: 黄
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

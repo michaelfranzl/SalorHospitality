@@ -13,6 +13,7 @@ kh:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Usage
+        item_type: Type
       booking_item:
         base_price: Price
         count: Count
@@ -171,6 +172,7 @@ kh:
         name: Name
         percent: Tax in %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Amount
         tax_id: Tax
@@ -211,6 +213,7 @@ kh:
         invoice_logo: Invoice Logo
         logo: Screen logo
         name: Name
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Receipt footer blurb
         receipt_header_blurb: Receipt header blurb
         remote_orders: Remote orders
@@ -229,7 +232,6 @@ kh:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Use order numbers
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ kh:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ kh:
       vendor_printer:
         one: Printer
         other: Printers
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Admin
   are_you_sure: Are you sure?
   articles:
@@ -974,3 +982,7 @@ kh:
   winered: Wine Red
   wrong_password: Wrong login data
   yellow: Yellow
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal
