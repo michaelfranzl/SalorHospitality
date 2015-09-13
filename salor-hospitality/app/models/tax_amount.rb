@@ -8,6 +8,8 @@
 
 class TaxAmount < ActiveRecord::Base
   include Scope
+  include Base
+  
   belongs_to :tax
   belongs_to :surcharge
   belongs_to :vendor

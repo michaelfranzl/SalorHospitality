@@ -10,6 +10,8 @@
 
 class Table < ActiveRecord::Base
   include Scope
+  include Base
+  
   has_many :orders
   has_many :histories, :as => 'model'
   belongs_to :user

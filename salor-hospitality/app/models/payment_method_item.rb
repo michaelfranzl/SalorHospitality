@@ -9,6 +9,8 @@
 class PaymentMethodItem < ActiveRecord::Base
   #attr_accessible :amount, :company_id, :payment_method_id, :vendor_id, :order_id, :booking_id, :refunded, :cash, :refund_item_id, :settlement_id, :refunded, :cost_center_id, :change, :user_id
   include Scope
+  include Base
+  
   belongs_to :payment_method
   belongs_to :order
   belongs_to :vendor

@@ -1,0 +1,15 @@
+%h2= t('activerecord.models.plugin.other')
+
+%p= link_to((t :new), new_plugin_path, :class => 'links')
+
+%table
+  %tr
+    %th{ :style => 'width:120px' }= Plugin.human_attribute_name(:name)
+    %th{ :style => 'width:50px' }
+    %th{ :style => 'width:50px' }
+  - @plugins.each do |p|
+    %tr
+      %td= link_to p.name, edit_plugin_path(p), :class => "list_item"
+      %td
+        %img{ :style => "width: 50px", :src => p.icon }
+      %td= link_to image_tag('button_small_delete.png', :title => Plugin.human_attribute_name(:hidden), :alt => Plugin.human_attribute_name(:hidden)), plugin_path(p), :method => :delete, :confirm => t(:are_you_sure)

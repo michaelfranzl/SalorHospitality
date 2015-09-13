@@ -10,6 +10,8 @@
 
 class Tax < ActiveRecord::Base
   include Scope
+  include Base
+  
   has_many :items
   has_many :orders
   belongs_to :company

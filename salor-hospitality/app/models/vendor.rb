@@ -10,6 +10,7 @@ class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
   include Scope
+  include Base
 
   belongs_to :company
   has_and_belongs_to_many :users
@@ -52,6 +53,7 @@ class Vendor < ActiveRecord::Base
   has_many :cameras
   has_many :histories
   has_many :item_types
+  has_many :plugins
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers

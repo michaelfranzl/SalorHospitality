@@ -9,6 +9,8 @@
 class PaymentMethod < ActiveRecord::Base
   #attr_accessible :amount, :name, :order_id, :cash, :change
   include Scope
+  include Base
+  
   belongs_to :order
   belongs_to :vendor
   belongs_to :company

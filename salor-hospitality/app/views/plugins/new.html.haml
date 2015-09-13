@@ -1,0 +1,51 @@
+%h2= @plugin.new_record? ? (t '.new_plugin') : (t '.edit_plugin')
+
+
+
+- if @plugin.errors.any?
+  .errors
+    %h3= t 'activerecord.errors.template.header', :count => @plugin.errors.size, :model => Plugin.model_name.human
+    %ul
+      - @plugin.errors.full_messages.each do |msg|
+        %li= msg
+
+.form_fields
+  = form_for @plugin do |plugin_form|
+    = submit_tag( controller.action_name == 'new' ? (t :create) : (t :edit) )
+    .floatright= link_to(t('various.cancel'), plugins_path, :class => 'links')
+
+    .clear
+    
+    = plugin_form.label :filename
+    = plugin_form.file_field :filename
+    %br
+    %br
+    
+    - unless @plugin.new_record?
+      .floatright= image_tag @plugin.icon
+    
+    
+    - unless @plugin.new_record?
+      - fields = @current_plugin_manager.get_meta_fields_for(@plugin)
+      
+      - if fields.any? then
+        %h3 Settings
+        
+        - fields.each do |k,v|
+          %label= v[:name].titleize
+          - if v[:type] == 'yesorno' then
+            %select{:name=> "plugin[meta][" + v[:name] + "]", :id => "plugin_#{v[:name]}"}
+              %option{:value=>'yes'} Yes
+              %option{:value=>'no'} No
+              
+          - else
+            %input{ :type=> v[:type], :size => v[:size], :name=> "plugin[meta][" + v[:name] + "]", :value => (@plugin.meta ? @plugin.meta[v[:name]] : '') }
+          %br
+            
+      - if @plugin.files and @plugin.files.any?
+        %br
+        %br
+        %h3 Files
+        - @plugin.files.each do |f|
+          = f
+          %br

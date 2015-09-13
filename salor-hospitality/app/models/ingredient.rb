@@ -10,6 +10,8 @@
 
 class Ingredient < ActiveRecord::Base
   include Scope
+  include Base
+  
   belongs_to :article
   belongs_to :stock
   belongs_to :company

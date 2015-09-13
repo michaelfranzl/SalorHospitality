@@ -47,16 +47,7 @@ module SalorHospitality
     else
       SH_DEBIAN_SITEID = 'none'
     end
-    if File.exists? '/etc/redhat-release' then
-      SH_DEPLOY = 'REDHAT'
-      OS_RELEASE = `cat /etc/redhat-release`
-    elsif File.exists? '/etc/debian_version' then
-      SH_DEPLOY = 'DEBIAN'
-      OS_RELEASE = `cat /etc/debian_version`
-    elsif File.exists? '/mach_kernel' then
-      SH_DEPLOY = 'MAC'
-      OS_RELEASE = `uname -r`
-    end
+
     puts "Using database set by environment variable SH_DEBIAN_SITEID (#{SH_DEBIAN_SITEID})"
     
     if File.exists?(File.join(Rails.root, '..', 'debian', 'changelog'))
@@ -217,6 +208,7 @@ module SalorHospitality
       'manage_customers',
       'manage_hotel',
       'manage_roles',
+      'manage_plugins',
       'item_scribe',
       'assign_tables',
       'download_database',

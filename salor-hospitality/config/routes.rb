@@ -99,6 +99,7 @@ SalorHospitality::Application.routes.draw do
   resources :cameras
   resources :roles
   resources :customers
+  resources :plugins
 
   resources :reports do
     collection do

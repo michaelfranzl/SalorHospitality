@@ -11,6 +11,7 @@
 class Order < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Scope
+  include Base
   
   belongs_to :company
   belongs_to :vendor
@@ -430,7 +431,7 @@ class Order < ActiveRecord::Base
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
-    self.set_nr unless self.booking_id
+    
     self.table.update_color
     
     # detach customer from this table
@@ -442,11 +443,25 @@ class Order < ActiveRecord::Base
     
     self.items.existing.each do |i|
       i.create_tax_items
-      i.option_items.existing.each do |oi|
-        # prevent cluttering of invoices
-        oi.hide(-10) if oi.price == 0.0
-      end
     end
+    
+    unless self.booking_id
+      self.set_nr
+      
+      $PluginManager.do_action("order_finish", self.info)
+    end
+  end
+  
+  def info
+    vndr = self.vendor
+    statistics = {}
+    statistics["taxes"] = vndr.taxes.existing.as_json.to_json
+    statistics["vendor"] = {
+      :id => vndr.id,
+      :hash_id => vndr.hash_id,
+      }
+    statistics["order"] = self.to_json
+    return statistics
   end
 
   def pay(user=nil)
@@ -1026,11 +1041,29 @@ class Order < ActiveRecord::Base
         footer +
         duplicate +
         "\n" +
-        footerlogo +
-        "\n\n\n\n\n\n" +
-        paper_cut
+        footerlogo
     
-    return { :text => output_text, :raw_insertations => raw_insertations }
+    result_final = { :text => output_text, :raw_insertations => raw_insertations }
+    
+    if $PluginManager
+      # here, filters must return binary data (stored in :raw_insertations) in  BASE64 encoding
+      res = {:text => "", :raw_insertations => {}}
+      res = $PluginManager.apply_filter("after_receipt", res, self.info) # TODO: Test if works without plugins
+      
+      res[:raw_insertations].each do |k, v|
+        # decode BASE64 back into ASCII binary
+        decoded = Base64.decode64(res[:raw_insertations][k])
+        res[:raw_insertations][k] = decoded
+      end
+      
+      result_final[:text] += res[:text]
+      result_final[:raw_insertations].merge! res[:raw_insertations]
+    end
+
+    # add a bit of space and cut paper
+    result_final[:text] += "\n\n\n\n\n\n" + paper_cut
+    
+    return result_final
   end
   
   def escpos_interim_receipt
