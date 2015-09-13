@@ -11,6 +11,8 @@
 class Page < ActiveRecord::Base
   include ImageMethods
   include Scope
+  include Base
+  
   belongs_to :vendor
   belongs_to :company
   belongs_to :customer

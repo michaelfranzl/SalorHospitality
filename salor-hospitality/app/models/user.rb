@@ -10,6 +10,8 @@
 
 class User < ActiveRecord::Base
   include Scope
+  include Base
+  
   has_one :cash_drawer
   has_many :settlements
   has_many :orders

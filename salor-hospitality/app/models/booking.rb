@@ -8,7 +8,10 @@
 
 class Booking < ActiveRecord::Base
   attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given, :from_date, :to_date, :duration, :tax_sum
+  
   include Scope
+  include Base
+  
   has_many :booking_items
   has_many :payment_method_items
   has_many :orders

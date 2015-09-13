@@ -47,6 +47,10 @@
     
     = mainmenu_entry(main_app.taxes_path, "activerecord.models.tax.other", "tax") if permit('manage_taxes')
     
+    = mainmenu_entry(main_app.plugins_path, "activerecord.models.plugin.other", "plugin") if permit('manage_plugins')
+
+    = @current_plugin_manager.apply_filter("after_mainmenu_common", "").html_safe
+    
     %hr
     %h2= t '.settings_restaurant'
     

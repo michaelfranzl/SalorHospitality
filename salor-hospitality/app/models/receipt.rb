@@ -10,6 +10,8 @@
 
 class Receipt < ActiveRecord::Base
   include Scope
+  include Base
+  
   belongs_to :order
   belongs_to :user
   belongs_to :vendor

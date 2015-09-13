@@ -10,6 +10,8 @@
 
 class History < ActiveRecord::Base
   include Scope
+  include Base
+  
   belongs_to :user
   belongs_to :model, :polymorphic => true
   belongs_to :company

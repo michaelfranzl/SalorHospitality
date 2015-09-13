@@ -1,5 +1,6 @@
 class UserLogin < ActiveRecord::Base
   include Scope
+  include Base
   
   belongs_to :company
   belongs_to :vendor

@@ -11,7 +11,10 @@
   /%a.iconbutton.next_button{ :href => order_path(@next_order), :title => (t '.next_invoice'), :style => 'float:right' }
   /%a.iconbutton.previous_button{ :href => order_path(@previous_order), :title => (t '.previous_invoice'), :style => 'float:right' }
 
-.paper_invoice= render :partial => "orders/invoice_styles/#{SalorHospitality::Application::COUNTRIES_INVOICES[@current_vendor.country]}"
+.paper_invoice
+  = render :partial => "orders/invoice_styles/#{SalorHospitality::Application::COUNTRIES_INVOICES[@current_vendor.country]}"
+
+  = @current_plugin_manager.apply_filter("after_invoice", "", @order.info).html_safe
 
 
 :javascript

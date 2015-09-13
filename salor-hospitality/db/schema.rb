@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150906175346) do
+ActiveRecord::Schema.define(:version => 20150908065754) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -655,6 +655,22 @@ ActiveRecord::Schema.define(:version => 20150906175346) do
     t.boolean  "change",     :default => false
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+  end
+
+  create_table "plugins", :force => true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.string   "base_path"
+    t.text     "files"
+    t.text     "meta"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.integer  "user_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "presentations", :force => true do |t|

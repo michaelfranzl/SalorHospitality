@@ -2,6 +2,9 @@
 gn:
   activerecord:
     attributes:
+      plugin:
+        filename: Dateiname
+        name: Name
       article:
         active: aktiv?
         category_id: Kategorie
@@ -255,6 +258,9 @@ gn:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
         sku_already_taken: wird bereits verwendet
     models:
+      plugin:
+        one: Plugin
+        other: Plugins
       article:
         one: Artikel
         other: Artikel
@@ -701,6 +707,7 @@ gn:
       interim_receipt: Zwischenabrechnung
       item_scribe: Handschrift aktivieren
       manage_advertising: Werbung einrichten
+      manage_plugins: Plugins verwalten
       manage_articles: Artikel verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_cameras: Kameras verwalten

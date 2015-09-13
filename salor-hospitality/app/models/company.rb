@@ -11,6 +11,7 @@
 class Company < ActiveRecord::Base
   include Scope
   include ImageMethods
+  include Base
   
   has_many :articles
   has_many :booking_items
