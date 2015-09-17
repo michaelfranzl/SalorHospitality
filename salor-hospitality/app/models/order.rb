@@ -30,6 +30,8 @@ class Order < ActiveRecord::Base
   has_one :order
 
   serialize :taxes
+  
+  ITEM_NAME_LENGTH = 17
 
   #validates_presence_of :user_id
 
@@ -430,19 +432,23 @@ class Order < ActiveRecord::Base
     unless self.booking_id
       self.set_nr
       
-      $PluginManager.do_action("order_finish", self.info)
+      $PluginManager.do_action("order_finish", self.info.to_json)
     end
   end
   
   def info
     vndr = self.vendor
     statistics = {}
-    statistics["taxes"] = vndr.taxes.existing.as_json.to_json
+    statistics["taxes"] = vndr.taxes.existing
     statistics["vendor"] = {
       :id => vndr.id,
       :hash_id => vndr.hash_id,
       }
-    statistics["order"] = self.to_json
+    statistics["order"] = self
+    statistics["items"] = self.items.existing.as_json
+    statistics["option_items"] = self.option_items.existing.as_json
+    statistics["tax_items"] = self.tax_items.existing.as_json
+    statistics["item_name_length"] = ITEM_NAME_LENGTH
     return statistics
   end
 
@@ -803,7 +809,7 @@ class Order < ActiveRecord::Base
     else
       header3_format = "   %-17.17s %8.8s   %4.4s"
       options_format = "%2s %17.17s %8.8s %3u %8.8s\n"
-      items_format = "%2s %17.17s %8.8s %3u %8.8s\n"
+      items_format = "%2s %#{ ITEM_NAME_LENGTH }.#{ ITEM_NAME_LENGTH }s %8.8s %3u %8.8s\n"
       sum_format = "%s:   %s %s"
       refundsum_format = "\n%s:   %s %s"
       tax_header_format = "      %8.8s %8.8s %8.8s\n"
@@ -885,7 +891,6 @@ class Order < ActiveRecord::Base
 
     list_of_items = ''
     self.items.existing.order(:position_category).each do |item|
-      next if item.count == 0
       list_of_options = ''
       item.option_items.each do |oi|
         next if oi.price == 0
@@ -1019,7 +1024,7 @@ class Order < ActiveRecord::Base
     if $PluginManager
       # here, filters must return binary data (stored in :raw_insertations) in  BASE64 encoding
       res = {:text => "", :raw_insertations => {}}
-      res = $PluginManager.apply_filter("after_receipt", res, self.info) # TODO: Test if works without plugins
+      res = $PluginManager.apply_filter("after_receipt", res, self.info.to_json) # TODO: Test if works without plugins
       
       res[:raw_insertations].each do |k, v|
         # decode BASE64 back into ASCII binary
