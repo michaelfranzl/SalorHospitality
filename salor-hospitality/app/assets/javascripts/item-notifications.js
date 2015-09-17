@@ -77,18 +77,29 @@ function change_item_status(id,status) {
 }
 
 function render_item_list(type, model, scope) {
+  var last_table_id = null;
   if (typeof resources.tb == 'undefined')
     return;  // this happens after update_resources() has erased resources['tb'] and no update_tables() has yet happened. TODO: move the tables hash out of resources.
     
   if (type == 'interactive') {
     var list_container = $('#list_interactive_' + scope);
     list_container.html('');
-    $.each(resources['notifications_' + model][scope], function(k,v) {
+    var obj = resources['notifications_' + model][scope];
+    var keys = Object.keys(obj).sort();
+    
+    $.each(keys, function(idx, k) {
+      var v = obj[k];
       
       if (typeof resources.tb[v.tid] == 'undefined')
         return;
       
       var table_name = resources.tb[v.tid].n;
+      
+      if (last_table_id != v.tid) {
+        create_dom_element('div',{}, table_name, list_container);
+      }
+      last_table_id = v.tid;
+      
       var user_id = v[scope + '_uid'];
       if (user_id != null) {
         var user_name = resources.u[user_id].n;
@@ -114,11 +125,11 @@ function render_item_list(type, model, scope) {
       var waiting_time = Math.floor(difference/60000);
       var confirmed = v[scope + '_c'] != null
       if (!confirmed) {
-        var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed'}, table_name + ' | ' + v.c + " × " + v.l, item_container);
+        var unconfirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_unconfirmed'}, v.l, item_container);
         unconfirmed_element.css('background-color', color);
         unconfirmed_element.addClass('unconfirmed');
         unconfirmed_element.on('click', function() {
-          item_list_confirm(v.id, model, scope)
+          item_list_confirm(k, v.id, model, scope)
         });
       }
       var confirmed_element = create_dom_element('div',{id:'item_list_'+scope+'_'+v.id+'_confirmed', style:'display: none;'}, '', item_container);
@@ -128,7 +139,7 @@ function render_item_list(type, model, scope) {
       if (v.s) var image = create_dom_element('img',{src:'/items/' + v.id +'.svg'},'',confirmed_element);
       var table = create_dom_element('table',{},'',confirmed_element);
       var row = create_dom_element('tr',{},'',table);
-      var cell_tablename = create_dom_element('td',{},table_name,row);
+      //var cell_tablename = create_dom_element('td',{},table_name,row);
 
       switch(scope) {
         case 'confirmation':
@@ -155,7 +166,7 @@ function render_item_list(type, model, scope) {
       var cell_increment_count = create_dom_element('td',{id:'item_list_' + scope +'_'+ v.id + '_increment_button'}, v[scope + '_c'], row);
       cell_increment_count.addClass('increment');
       cell_increment_count.on('click', function() {
-        item_list_increment(v.id, model, scope);
+        item_list_increment(k, v.id, model, scope);
       });
       var cell_reset = create_dom_element('td',{id:'item_list_' + scope +'_' + v.id + '_reset_button'}, v.l, row);
       cell_reset.addClass('update');
@@ -163,8 +174,17 @@ function render_item_list(type, model, scope) {
   } else if (type == 'static') {
     var list_container = $('#list_static_' + scope);
     list_container.html('');
-    $.each(resources['notifications_' + model][scope], function(k,v) {
+    var obj = resources['notifications_' + model][scope];
+    var keys = Object.keys(obj).sort();
+    $.each(keys, function(idx, k) {
+      var v = obj[k];
       var table_name = resources.tb[v.tid].n;
+      
+      if (last_table_id != v.tid) {
+        create_dom_element('div',{}, table_name, list_container);
+      }
+      last_table_id = v.tid;
+        
       var user_id = v[scope + '_uid'];
       if (user_id != null) {
         var user_name = resources.u[user_id].n;
@@ -186,7 +206,7 @@ function render_item_list(type, model, scope) {
       color_intensity = (color_intensity < 0) ? 255 : color_intensity;
       var color = 'rgb(' + color_intensity + ', 60, 60)';
       var waiting_time = Math.floor(difference/60000);
-      var waiting_time_label = (waiting_time > 0) ? waiting_time + 'min.<br/>' : '';
+      var waiting_time_label = (waiting_time > 0) ? waiting_time + "'" : "";
 
       switch(scope) {
         case 'confirmation':
@@ -200,21 +220,33 @@ function render_item_list(type, model, scope) {
           break;
       }
       if (count != null) {
-        var label = table_name + " | " + waiting_time_label + count + ' × ' + v.l;
+        var label = count + ' × ' + v.l;
         var item_container = create_dom_element('div',{id:'item_list_' + scope + '_' +  v.id}, label, list_container);
-        item_container.css('background-color', color);
+        
+        var time_colorbox = create_dom_element('div', {}, waiting_time_label, item_container);
+        time_colorbox.addClass("time_colorbox");
+        time_colorbox.css('background-color', color);
+        
+        var user_colorbox = create_dom_element('div', {}, "", item_container);
+        user_colorbox.addClass("user_colorbox");
+        var uid = v[scope + "_uid"];
+        if (uid) {
+          user_colorbox.css("background-color", resources.u[uid].c);
+          user_colorbox.attr("title", resources.u[uid].n);
+        }
+        
         item_container.addClass('item_list');
       }
     })
   }
 }
 
-function item_list_confirm(id, model, scope) {
+function item_list_confirm(key, id, model, scope) {
   var unconfirmed_element = $('#item_list_' + scope + '_' + id + '_unconfirmed');
   var confirmed_element = $('#item_list_' + scope + '_' + id + '_confirmed');
-  var scope_count_attribute = (scope == 'preparation') ? 'preparation_c' : 'delivery_c'
+  var scope_count_attribute = (scope == 'preparation') ? 'preparation_c' : 'delivery_c';
   unconfirmed_element.remove();
-  resources['notifications_' + model][scope][id][scope_count_attribute] = 0;
+  resources['notifications_' + model][scope][key][scope_count_attribute] = 0;
   $('#item_list_' + scope + '_' + id + '_increment_button').html(0);
   confirmed_element.show();
   $.ajax({
@@ -225,7 +257,7 @@ function item_list_confirm(id, model, scope) {
 }
 
 
-function item_list_increment(id, model, scope) {
+function item_list_increment(key, id, model, scope) {
   var increment_button = $('#item_list_' + scope + '_' + id + '_increment_button');
   
   var scope_count_attribute = null;
@@ -244,17 +276,21 @@ function item_list_increment(id, model, scope) {
       break;
   }
   
-  var c = resources['notifications_' + model][scope][id][scope_count_attribute];
-  var r = resources['notifications_' + model][scope][id][reference_count_attribute];
+  var c = resources['notifications_' + model][scope][key][scope_count_attribute];
+  var r = resources['notifications_' + model][scope][key][reference_count_attribute];
   
   if ( c < r ) {
     increment_button.html(c + 1);
-    resources['notifications_' + model][scope][id][scope_count_attribute] = c+1;
+    resources['notifications_' + model][scope][key][scope_count_attribute] = c+1;
     increment_button.css('background-color','#3a474d');
     $.ajax({
       method: 'post',
       url: '/items/set_attribute',
-      data: {id:id, attribute:scope+'_count', value:c+1},
+      data: {
+        id: id,
+        attribute: scope + '_count',
+        value: c + 1,
+      },
       success: function() {
         increment_button.css('background-color','#3a4d3a');
         //increment_button.effect('highlight');
@@ -275,10 +311,13 @@ function item_list_reset(id, scope) {
   $.ajax({
     method: 'post',
     url: '/items/set_attribute',
-    data: {id:id, attribute:scope+'_count', value:0},
+    data: {
+      id:id,
+      attribute: scope + '_count',
+      value: 0
+    },
     success: function() {
       increment_button.css('background-color','#3a4d3a');
-      //increment_button.effect('highlight');
       counter_update_item_lists = 3;
     },
     error: function() {

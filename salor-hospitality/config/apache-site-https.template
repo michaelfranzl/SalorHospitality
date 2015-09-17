@@ -52,7 +52,6 @@
 
   # Passenger configuration for this VirtualHost
   PassengerMaxRequests 100000
-  RailsAutoDetect off
   PassengerStatThrottleRate 30
   PassengerSpawnMethod smart
   RailsAppSpawnerIdleTime 36000

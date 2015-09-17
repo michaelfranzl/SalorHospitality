@@ -84,8 +84,8 @@
           = SalorHospitality::Application::VERSION
           == | #{Company.model_name.human}: #{ @current_company.name } | #{Vendor.model_name.human}: #{ @current_vendor.name } | #{User.model_name.human}: #{ @current_user.login if @current_user }
         .right
-          &copy; 2012 Red (E) Tools Ltd. (thebigrede.net)
-          = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
+          &copy; #{ Time.now.year } Red (E) Tools Ltd. (thebigrede.net)
+          = image_tag "http://thebigrede.net/wp-content/uploads/2012/07/red-e-tiny.png?#{ Digest::SHA1.hexdigest(@current_vendor.name) }", :class => 'logo_red_e'
     %audio#audio{ :src=>"/alert.wav" }
     = form_tag @sessionpath, :id => 'logoutform', :method => 'delete' do
       = hidden_field_tag 'logout_error'

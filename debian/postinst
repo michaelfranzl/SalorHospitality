@@ -22,6 +22,9 @@ set -e
 installation_root=/usr/share/salor-hospitality
 app_root=${installation_root}/source
 
+db_get salor-hospitality/user || true
+app_user=$RET
+
 echo ""
 echo "POSTINST called with $@"
 echo "===================================="
@@ -189,8 +192,12 @@ for lInstance in $gInstances; do
       gemfile_lock_target=$rails_etc/Gemfile.lock
       ucf --debconf-ok $gemfile_lock_source $gemfile_lock_target
       
+      
+      chown -R $app_user:$app_user /etc/salor-hospitality
+      chmod -R 700 /etc/salor-hospitality
+      
       cd $app_root
-      bundle install --deployment --local --gemfile=${gemfile_target}
+      sudo -u www-data bundle install --deployment --without development --local --gemfile=${gemfile_target}
       
       if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
@@ -239,8 +246,7 @@ for lInstance in $gInstances; do
 done    
     
     
-db_get salor-hospitality/user || true
-app_user=$RET
+
 echo "  postinst: changing ownership for user $app_user"
 chown -R $app_user:$app_user $installation_root
 chown -R $app_user:$app_user /etc/salor-hospitality

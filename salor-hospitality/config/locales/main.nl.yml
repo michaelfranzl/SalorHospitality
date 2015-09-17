@@ -229,6 +229,7 @@ nl:
         update_resources_interval: Interval bijwerken offline database
         update_tables_interval: Interval bijwerken tabellen
         use_order_numbers: Gebruik volgnummers
+        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Code pagina
@@ -236,12 +237,12 @@ nl:
         cut_every_ticket: Cut every ticket
         hidden: Verwijder
         name: Naam
+        one_ticket_per_piece: One ticket per piece
         path: Pad
         print_button_filename: Icoon
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
         ticket_ad: Ticket Ad.
-        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -511,7 +512,7 @@ nl:
   kitchen: Keuken
   layouts:
     application:
-      admin_menu_hint: "☚ Klik hier om het hoofdmenu te openen"
+      admin_menu_hint: ☚ Klik hier om het hoofdmenu te openen
       submit_scribe: OK
     header:
       settings_common: General
@@ -617,7 +618,7 @@ nl:
       new_page: Nieuwe Pagina
   partials:
     default_blurb: Bewerk me
-    error_during_evaluation: 'Fout: '
+    error_during_evaluation: ! 'Fout: '
     no_presentation_found:
       no_presentations_found: Geen sjabloon gedefinieerd voor deze partial.
   payment_methods:
@@ -801,9 +802,10 @@ nl:
       username: Gebruiker
   settlements:
     detailed_list:
-      changed_price: "%{byuser} heeft prijs veranderd"
+      changed_price: ! '%{byuser} heeft prijs veranderd'
       count: Count
-      order_number_on_table_on_date: "%{order} nummer %{number} aan %{table} om %{time}"
+      order_number_on_table_on_date: ! '%{order} nummer %{number} aan %{table} om
+        %{time}'
       reduced_count: Aantal verminderd %{maxcount} naar %{count}.
       revenue: inkomsten
       total: Totaal
@@ -897,15 +899,15 @@ nl:
     customer_request_waiter: Vraag om een kelner
     delete: Verwijderen
     display: Tonen
-    double_submission_warning: 'Warning: Double submission. Please inform tech support
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
       about this.'
     download: Downloaden
     end: End
     exception_page:
       assistance_text: Klik dan op de "HOME" knop en probeer het opnieuw.Als de fout
         weer optreedt, neem dan a.u.b. contact op met Customer Support..
-      exception_description: 'Fout Omschrijving:'
-      exception_in_files: 'De fout is opgetreden in de volgende bestanden:'
+      exception_description: ! 'Fout Omschrijving:'
+      exception_in_files: ! 'De fout is opgetreden in de volgende bestanden:'
       oops_an_error_occurred: Oeps! Er is een fout opgetreden
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
@@ -960,7 +962,7 @@ nl:
     form:
       add_printer: Voeg printer toe
       identify_printers: Identificeer Printers
-      print_via_salorbin_explanation: 'Als u wilt afdrukken via desalor-bin browser,
+      print_via_salorbin_explanation: ! 'Als u wilt afdrukken via desalor-bin browser,
         Kopieer en plak de volgende gegevens in het opties dialoogvenster van salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test alle karakters

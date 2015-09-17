@@ -606,6 +606,8 @@ div.button_menu
   :display none
   
 div.item_list
+  position: relative
+  background-color: rgba(255, 255, 255, 0.2)
   .confirmed,
   .unconfirmed
     :background-color #333
@@ -613,6 +615,19 @@ div.item_list
       :background-color #3A474D
     .increment
       :background-color #74101B
+  div.user_colorbox
+    :position absolute
+    :right 0px
+    :top 0px
+    :width 20px
+    :height 100%
+  div.time_colorbox
+    :position absolute
+    :right 20px
+    :top 0px
+    :width 30px
+    :height 100%
+    :text-align right
       
 span.button
   :background-color white
@@ -819,3 +834,4 @@ img.asset
   
 .center
   :text-align center
+  

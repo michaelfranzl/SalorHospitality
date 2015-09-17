@@ -644,20 +644,20 @@ class Order < ActiveRecord::Base
     vendor_printer = self.vendor.vendor_printers.find_by_id(printer_id)
     
     if vendor.ticket_wide_font
-      header_format_time_order = "%-14.14s #%5i\n"
+      header_format_time_order = "%-13.13s #%6i\n"
       header_format_user_table = "%-12.12s %8s\n"
       header_note_format = "%20.20s\n"
-      article_format = "%i %-18.18s\n"
+      article_format = "%3i %-17.17s\n"
       quantity_format  = " > %-18.18s\n"
       comment_format   = " ! %-18.18s\n"
       option_format    = " * %-18.18s\n"
       width = 21
       item_separator_format = "\xC4" * (width - 11) + " %10.10s\n"
     else
-      header_format_time_order = "%-35.35s #%5i\n"
+      header_format_time_order = "%-34.34s #%6i\n"
       header_format_user_table = "%-33.33s %8s\n"
       header_note_format = "%42.42s\n"
-      article_format     = "%2i %-39.39s\n"
+      article_format     = "%3i %-38.38s\n"
       quantity_format    = "   > %-37.37s\n"
       comment_format     = "   ! %-37.37s\n"
       option_format      = "   * %-37.37s\n"
@@ -693,7 +693,7 @@ class Order < ActiveRecord::Base
     
     nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
     if vendor.ticket_display_time_order
-      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_short), nr]
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_long), nr]
     end
 
     header += header_format_user_table % [self.user.login, self.table.name]
@@ -713,16 +713,24 @@ class Order < ActiveRecord::Base
     
     raw_insertations = {}
     selected_categories.each do |c|
-      items = self.items.existing.where("count > printed_count AND category_id = #{ c.id }")
-      catstring = ''
+      
+      items = self.items.existing.where("count != printed_count AND category_id = #{ c.id }")
+      catstring = ""
       items.each do |i|
         next if i.option_items.where(:no_ticket => true).any?
         
+        diff = i.count - i.printed_count
+        if vendor.print_count_reductions != true and diff < 0
+          i.printed_count = i.count
+          i.save
+          next
+        end
+        
         if vendor_printer.one_ticket_per_piece == true
-          count_to_print = 1
-          count_to_loop = i.count - i.printed_count
+          count_to_print = diff < 0 ? -1 : 1
+          count_to_loop = diff.abs
         else
-          count_to_print = i.count - i.printed_count
+          count_to_print = diff
           count_to_loop = 1
         end
         

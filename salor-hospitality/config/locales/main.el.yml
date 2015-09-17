@@ -3,21 +3,21 @@ el:
   activerecord:
     attributes:
       article:
-        active: "ενεργό"
-        category_id: "Κατηγορία"
-        description: "Περιγραφή"
-        hidden: "διαγραφή"
-        image: "Απεικόνιση"
-        name: "Όνομα"
-        price: "Τιμή"
+        active: ενεργό
+        category_id: Κατηγορία
+        description: Περιγραφή
+        hidden: διαγραφή
+        image: Απεικόνιση
+        name: Όνομα
+        price: Τιμή
         statistic_category_id: Statistic-Category
         taxes: Tax
-        usage: "Χρήση"
+        usage: Χρήση
       booking_item:
-        base_price: "Τιμή"
-        count: "Ποσότητα"
-        duration: "Μέρες"
-        sum: "Άθροισμα"
+        base_price: Τιμή
+        count: Ποσότητα
+        duration: Μέρες
+        sum: Άθροισμα
       camera:
         active: active
         description: Description
@@ -29,387 +29,388 @@ el:
         url_snapshot: URL Snapshot
         url_stream: URL Stream
       category:
-        color: "Χρώμα"
-        custom_icon: "Το Εικονίδιο Μου"
-        food: "Φαγητό;"
-        hidden: "διαγραφή"
-        icon: "Εικονίδιο"
+        color: Χρώμα
+        custom_icon: Το Εικονίδιο Μου
+        food: Φαγητό;
+        hidden: διαγραφή
+        icon: Εικονίδιο
         image: Icon
-        name: "Όνομα"
-        separate_print: "Κόψτε απόκομμα"
-        tax_id: "Φόρος"
-        user_id: "Προετοιμασία Χρήστη"
-        vendor_printer_id: "Εκτυπωτής"
+        name: Όνομα
+        separate_print: Κόψτε απόκομμα
+        tax_id: Φόρος
+        user_id: Προετοιμασία Χρήστη
+        vendor_printer_id: Εκτυπωτής
       cost_center:
-        active: "ενεργό;"
-        description: "Περιγραφή"
-        hidden: "διαγραφή"
-        name: "Όνομα"
+        active: ενεργό;
+        description: Περιγραφή
+        hidden: διαγραφή
+        name: Όνομα
         no_payment_methods: No Payment Methods
       customer:
-        address: "Διεύθυνση"
-        cellphone: "κινητό"
-        city: "Πόλη"
-        company_name: "Όνομα Εταιρίας"
+        address: Διεύθυνση
+        cellphone: κινητό
+        city: Πόλη
+        company_name: Όνομα Εταιρίας
         default_table_id: Default Table
-        email: "ηλεκτρονική διεύθυνση"
-        first_name: "Όνομα"
-        full_name: "Ονοματεπώνυμο"
-        hidden: "διαγραφή"
+        email: ηλεκτρονική διεύθυνση
+        first_name: Όνομα
+        full_name: Ονοματεπώνυμο
+        hidden: διαγραφή
         language: Language
-        last_name: "Επώνυμο"
-        m_number: "Κωδικός Κάρτας Επιβράβευσης"
-        m_points: "Πόντοι Κάρτας Επιβράβευσης"
-        postalcode: "Ταχυδρομικός Κώδικας"
-        state: "Νομός"
+        last_name: Επώνυμο
+        m_number: Κωδικός Κάρτας Επιβράβευσης
+        m_points: Πόντοι Κάρτας Επιβράβευσης
+        postalcode: Ταχυδρομικός Κώδικας
+        state: Νομός
         tax_info: Tax Info
-        telephone: "Τηλέφωνο"
+        telephone: Τηλέφωνο
       group:
-        name: "Όνομα"
+        name: Όνομα
       guest_type:
-        hidden: "διαγραφή"
-        name: "Όνομα"
-        taxes: "Φόροι"
+        hidden: διαγραφή
+        name: Όνομα
+        taxes: Φόροι
       option:
-        category_id: "Κατηγορία"
-        hidden: "Διαγραφή"
-        name: "Όνομα"
-        no_ticket: "Μην εκτυπώσετε απόκομμα"
-        price: "Τιμή"
-        separate_ticket: "Κόψτε απόκομμα"
+        category_id: Κατηγορία
+        hidden: Διαγραφή
+        name: Όνομα
+        no_ticket: Μην εκτυπώσετε απόκομμα
+        price: Τιμή
+        separate_ticket: Κόψτε απόκομμα
       order:
-        change_given: "Αλλαγή"
+        change_given: Αλλαγή
         finished_at: Finished at
         nr: Number
         sum: Sum
         tax_sum: Taxes
       page:
-        active: "ενεργό"
-        color: "Χρώμα"
-        height: "Ύψος"
-        hidden: "διαγραφή"
-        image: "Απεικόνιση"
-        width: "Πλάτος"
+        active: ενεργό
+        color: Χρώμα
+        height: Ύψος
+        hidden: διαγραφή
+        image: Απεικόνιση
+        width: Πλάτος
       partial:
-        active: "ενεργό"
-        blurb: "Συνοπτική Περιγραφή"
-        hidden: "διαγραφή"
+        active: ενεργό
+        blurb: Συνοπτική Περιγραφή
+        hidden: διαγραφή
       payment_method:
         cash: Cash
         change: Change
         name: Name
       payment_method_item:
-        amount: "Ποσό"
+        amount: Ποσό
       presentation:
-        active: "ενεργό"
-        code: "Κωδικός Ruby"
-        description: "Περιγραφή"
-        hidden: "Διαγραφή"
+        active: ενεργό
+        code: Κωδικός Ruby
+        description: Περιγραφή
+        hidden: Διαγραφή
         markup: ERB Σήμανση
-        model: "Τύπος"
-        name: "Όνομα"
+        model: Τύπος
+        name: Όνομα
       quantity:
-        active: "ενεργό"
-        description: "Περιγραφή"
-        hidden: "διαγραφή"
-        postfix: "Κατάληξη"
-        prefix: "Όνομα"
-        price: "Μεταβλητή Τιμής"
-        usage: "χρήση"
+        active: ενεργό
+        description: Περιγραφή
+        hidden: διαγραφή
+        postfix: Κατάληξη
+        prefix: Όνομα
+        price: Μεταβλητή Τιμής
+        usage: χρήση
       role:
         hidden: delete
-        name: "Όνομα"
+        name: Όνομα
         weight: Level
       room_price:
-        base_price: "Βασική Τιμή"
-        guest_type_id: "Τύπος Πελάτη"
-        hidden: "διαγραφή"
-        room_type_id: "Κατηγορία Δωματίου"
-        season_id: "Σαιζόν"
+        base_price: Βασική Τιμή
+        guest_type_id: Τύπος Πελάτη
+        hidden: διαγραφή
+        room_type_id: Κατηγορία Δωματίου
+        season_id: Σαιζόν
       room_type:
-        hidden: "διαγραφή"
-        name: "Όνομα"
+        hidden: διαγραφή
+        name: Όνομα
       season:
-        from_date: "Από"
-        hidden: "διαγραφή"
+        from_date: Από
+        hidden: διαγραφή
         is_master: Master?
-        name: "Όνομα"
-        to_date: "Σε"
+        name: Όνομα
+        to_date: Σε
       settlement:
-        initial_cash: "Αρχικό ποσό"
-        revenue: "Τελικό ποσό"
+        initial_cash: Αρχικό ποσό
+        revenue: Τελικό ποσό
       statistic_category:
         hidden: löschen
         name: Name
       surcharge:
-        amount: "Ποσό"
-        guest_type_id: "Τύπος Πελάτη"
-        hidden: "διαγραφή"
-        name: "Όνομα"
-        radio_select: "Επιλογή Ραδιοφώνου"
-        season_id: "Σαιζόν"
-        selected: "Επιλεγμένο από προεπιλογή"
-        visible: "ορατό;"
+        amount: Ποσό
+        guest_type_id: Τύπος Πελάτη
+        hidden: διαγραφή
+        name: Όνομα
+        radio_select: Επιλογή Ραδιοφώνου
+        season_id: Σαιζόν
+        selected: Επιλεγμένο από προεπιλογή
+        visible: ορατό;
       table:
-        abbreviation: "Συντομογραφία"
+        abbreviation: Συντομογραφία
         booking_table: Booking
         customer_table: Customer
-        description: "Περιγραφή"
-        enabled: "ενεργό;"
-        height: "Ύψος"
-        height_mobile: "Ύψος Κινητού"
-        hidden: "διαγραφή"
-        name: "Όνομα"
-        rotate: "περιστροφή;"
-        width: "Πλάτος"
-        width_mobile: "Πλάτος Κινητού"
+        description: Περιγραφή
+        enabled: ενεργό;
+        height: Ύψος
+        height_mobile: Ύψος Κινητού
+        hidden: διαγραφή
+        name: Όνομα
+        rotate: περιστροφή;
+        width: Πλάτος
+        width_mobile: Πλάτος Κινητού
       tax:
-        color: "Χρώμα"
-        hidden: "διαγραφή"
+        color: Χρώμα
+        hidden: διαγραφή
         include_in_statistics: In Settlement Statistics
-        letter: "Συντομογραφία"
-        name: "Όνομα"
-        percent: "Φόρος ανά %"
+        letter: Συντομογραφία
+        name: Όνομα
+        percent: Φόρος ανά %
         statistics_by_category: Settlement Statistics by Category
       tax_amount:
-        amount: "Ποσό"
-        tax_id: "Φόρος"
+        amount: Ποσό
+        tax_id: Φόρος
       user:
-        active: "ενεργό;"
+        active: ενεργό;
         advertising_timeout: Advertising Timeout
         advertising_url: Advertising URL
         audio: Acoustic signals
-        color: "Χρώμα"
+        color: Χρώμα
         confirmation_user: Confirm remote orders
         default_vendor_id: Log in to Vendor
-        hidden: "διαγραφή;"
-        language: "Γλώσσα"
+        hidden: διαγραφή;
+        language: Γλώσσα
         layouts:
           auto: Autodetect
           mobile: mobile
           workstation: normal
-        login: "Συνδεθείτε"
+        login: Συνδεθείτε
         maximum_shift_duration: Shift duration
-        password: "Κωδικός πρόσβασης"
-        role: "Ρόλος"
-        screenlock_timeout: "Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)"
-        tables: "Πίνακες"
-        title: "Τίτλος"
+        password: Κωδικός πρόσβασης
+        role: Ρόλος
+        screenlock_timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
+        tables: Πίνακες
+        title: Τίτλος
         track_time: Track time
       user_login:
         duration: Duration
         login: Started
         logout: Ended
       vendor:
-        automatic_printing: "Αυτόματη Εκτύπωση"
-        country: "Κανόνες χώρας"
+        automatic_printing: Αυτόματη Εκτύπωση
+        country: Κανόνες χώρας
         email: e-mail
         enable_technician_emails: Send technician e-mails
-        hidden: "διαγραφή"
-        invoice_footer_blurb: "Συνοπτική περιγραφή υποσέλιδου τιμολογίου"
-        invoice_header_blurb: "Συνοπτική περιγραφή κεφαλίδας τιμολογίου"
-        invoice_logo: "Λογότυπο τιμολογίου"
-        logo: "Λογότυπο οθόνης"
+        hidden: διαγραφή
+        invoice_footer_blurb: Συνοπτική περιγραφή υποσέλιδου τιμολογίου
+        invoice_header_blurb: Συνοπτική περιγραφή κεφαλίδας τιμολογίου
+        invoice_logo: Λογότυπο τιμολογίου
+        logo: Λογότυπο οθόνης
         name: Name
-        receipt_footer_blurb: "Συνοπτική περιγραφή υποσέλιδου απόδειξης"
-        receipt_header_blurb: "Συνοπτική περιγραφή κεφαλίδας απόδειξης"
+        receipt_footer_blurb: Συνοπτική περιγραφή υποσέλιδου απόδειξης
+        receipt_header_blurb: Συνοπτική περιγραφή κεφαλίδας απόδειξης
         remote_orders: Remote orders
-        rlogo_footer: "Λογότυπο απόδειξης υποσέλιδο"
-        rlogo_header: "Λογότυπο απόδειξης κεφαλίδα"
-        saas: "Διαδικτυακή εναλλαγή"
+        rlogo_footer: Λογότυπο απόδειξης υποσέλιδο
+        rlogo_header: Λογότυπο απόδειξης κεφαλίδα
+        saas: Διαδικτυακή εναλλαγή
         technician_email: Technician e-mail
-        ticket_display_time_order: "Χρόνος και αριθμός τιμολογίου στο απόκομμα"
-        ticket_item_separator: "Διαχωριστική γραμμή αποκόμματος"
+        ticket_display_time_order: Χρόνος και αριθμός τιμολογίου στο απόκομμα
+        ticket_item_separator: Διαχωριστική γραμμή αποκόμματος
         ticket_space_top: Tickets space top
-        ticket_tall_font: "Ψηλή γραμματοσειρά αποκόμματος"
-        ticket_wide_font: "Φαρδιά γραμματοσειρά αποκόμματος"
-        time_offset: "Διόρθωση χρόνου (hours)"
-        timeout: "Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)"
+        ticket_tall_font: Ψηλή γραμματοσειρά αποκόμματος
+        ticket_wide_font: Φαρδιά γραμματοσειρά αποκόμματος
+        time_offset: Διόρθωση χρόνου (hours)
+        timeout: Λήξη Χρόνου Κλειδώματος Οθόνης (seconds)
         update_item_lists_interval: Interval update item notifications
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
-        use_order_numbers: "Χρησιμοποιείστε Αριθμούς Παραγγελίας"
+        use_order_numbers: Χρησιμοποιείστε Αριθμούς Παραγγελίας
+        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
-        copies: "Αντίγραφα"
+        copies: Αντίγραφα
         cut_every_ticket: Cut every ticket
-        hidden: "Διαγραφή"
-        name: "Όνομα"
-        path: "Πορεία"
+        hidden: Διαγραφή
+        name: Όνομα
+        one_ticket_per_piece: One ticket per piece
+        path: Πορεία
         print_button_filename: Icon
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
-        one_ticket_per_piece: One ticket per piece
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
           0-9
         invalid_iso_date_formatting: Dates must be entered in the format YYYY-MM-DD
-        prefix_or_postfix_must_be_given: "Πρέπει να δοθεί πρόθημα ή επίθημα"
+        prefix_or_postfix_must_be_given: Πρέπει να δοθεί πρόθημα ή επίθημα
         sku_already_taken: has already been taken
     models:
       article:
-        one: "Αντικείμενο"
-        other: "Αντικείμενα"
+        one: Αντικείμενο
+        other: Αντικείμενα
       booking:
-        one: "Κράτηση"
-        other: "Κρατήσεις"
+        one: Κράτηση
+        other: Κρατήσεις
       camera:
         one: Camera
         other: Cameras
       category:
-        one: "Κατηγορία"
-        other: "Κατηγορίες"
+        one: Κατηγορία
+        other: Κατηγορίες
       company:
-        one: "Εταιρία"
-        other: "Εταιρίες"
+        one: Εταιρία
+        other: Εταιρίες
       cost_center:
-        one: "Κέντρο Κόστους"
-        other: "Κέντρα κόστους"
+        one: Κέντρο Κόστους
+        other: Κέντρα κόστους
       coupon:
-        one: "Κουπόνι"
-        other: "Κουπόνια"
+        one: Κουπόνι
+        other: Κουπόνια
       customer:
-        one: "Πελάτης"
-        other: "Πελάτες"
+        one: Πελάτης
+        other: Πελάτες
       discount:
-        one: "Έκπτωση"
-        other: "Εκπτώσεις"
+        one: Έκπτωση
+        other: Εκπτώσεις
       group:
-        one: "Ομάδα Αποθέματος"
-        other: "Ομάδες Αποθέματος"
+        one: Ομάδα Αποθέματος
+        other: Ομάδες Αποθέματος
       guest_type:
-        one: "Τύπος Φιλοξενούμενου"
-        other: "Τύποι Φιλοξενούμενου"
+        one: Τύπος Φιλοξενούμενου
+        other: Τύποι Φιλοξενούμενου
       image:
-        one: "Απεικόνιση"
-        other: "Απεικονίσεις"
+        one: Απεικόνιση
+        other: Απεικονίσεις
       item:
-        one: "Αντικείμενο"
-        other: "Αντικείμενα"
+        one: Αντικείμενο
+        other: Αντικείμενα
       option:
-        one: "Επιλογή"
-        other: "Επιλογές"
+        one: Επιλογή
+        other: Επιλογές
       order:
-        one: "Παραγγελία"
-        other: "Παραγγελίες"
+        one: Παραγγελία
+        other: Παραγγελίες
       page:
-        one: "Κάρτα"
-        other: "Κάρτες"
+        one: Κάρτα
+        other: Κάρτες
       partial:
-        one: "Μερικό"
-        other: "Μερικά"
+        one: Μερικό
+        other: Μερικά
       payment_method:
-        one: "Μέθοδος Πληρωμής"
-        other: "Μεθόδοι Πληρωμής"
+        one: Μέθοδος Πληρωμής
+        other: Μεθόδοι Πληρωμής
       payment_method_item:
-        one: "Μέθοδος Πληρωμής"
-        other: "Μεθόδοι Πληρωμής"
+        one: Μέθοδος Πληρωμής
+        other: Μεθόδοι Πληρωμής
       presentation:
-        one: "Περίγραμμα"
-        other: "Περιγράμματα"
+        one: Περίγραμμα
+        other: Περιγράμματα
       quantity:
-        one: "Μεταβλητή"
-        other: "Μεταβλητές"
+        one: Μεταβλητή
+        other: Μεταβλητές
       report:
-        one: "Αναφορά"
-        other: "Αναφορές"
+        one: Αναφορά
+        other: Αναφορές
       reservation:
-        one: "Κράτηση"
-        other: "Κρατήσεις"
+        one: Κράτηση
+        other: Κρατήσεις
       role:
-        one: "Ρόλος"
-        other: "Ρόλοι"
+        one: Ρόλος
+        other: Ρόλοι
       room:
-        one: "Δωμάτιο"
-        other: "Δωμάτια"
+        one: Δωμάτιο
+        other: Δωμάτια
       room_price:
-        one: "Τιμή Δωματίου"
-        other: "Τιμές Δωματίου"
+        one: Τιμή Δωματίου
+        other: Τιμές Δωματίου
       room_type:
-        one: "Τύπος Δωματίου"
-        other: "Τύποι Δωματίου"
+        one: Τύπος Δωματίου
+        other: Τύποι Δωματίου
       season:
-        one: "Σαιζόν"
-        other: "Σαιζόνς"
+        one: Σαιζόν
+        other: Σαιζόνς
       settlement:
-        one: "Διακανονισμός"
-        other: "Διακανονισμοί"
+        one: Διακανονισμός
+        other: Διακανονισμοί
       statistic_category:
         one: Statistic-Category
         other: Statistic-Categories
       stock:
-        one: "Απόθεμα"
-        other: "Αποθέματα"
+        one: Απόθεμα
+        other: Αποθέματα
       surcharge:
-        one: "Επιπλέον Επιβάρυνση"
-        other: "Επιπλέον Επιβαρύνσεις"
+        one: Επιπλέον Επιβάρυνση
+        other: Επιπλέον Επιβαρύνσεις
       table:
-        one: "Πίνακας"
-        other: "Πίνακες"
+        one: Πίνακας
+        other: Πίνακες
       tax:
-        one: "Φορολογική Τάξη"
-        other: "Φορολογικές Τάξεις"
+        one: Φορολογική Τάξη
+        other: Φορολογικές Τάξεις
       tax_amount:
-        one: "Ποσό Φόρου"
-        other: "Ποσά Φόρου"
+        one: Ποσό Φόρου
+        other: Ποσά Φόρου
       user:
-        one: "Χρήστης"
-        other: "Χρήστες"
+        one: Χρήστης
+        other: Χρήστες
       user_login:
         one: Work time
         other: Work times
       vendor:
-        one: "Εστιατόριο"
-        other: "Εστιατόρια"
+        one: Εστιατόριο
+        other: Εστιατόρια
       vendor_printer:
-        one: "Εκτυπωτής"
-        other: "Εκτυπωτές"
-  admin: "Διαχειριστής"
-  are_you_sure: "Είστε σίγουροι;"
+        one: Εκτυπωτής
+        other: Εκτυπωτές
+  admin: Διαχειριστής
+  are_you_sure: Είστε σίγουροι;
   articles:
     create:
-      license_limited: "Η Άδεια σας περιορίζεται σε %{count} αντικείμενα"
-      success: "Το αντικείμενο δημιουργήθηκε επιτυχώς"
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} αντικείμενα
+      success: Το αντικείμενο δημιουργήθηκε επιτυχώς
     destroy:
-      success: "Το αντικείμενο διαγράφηκε επιτυχώς"
+      success: Το αντικείμενο διαγράφηκε επιτυχώς
     find:
       variants:
-        one: "Μεταβλητή"
-        other: "Μεταβλητές"
+        one: Μεταβλητή
+        other: Μεταβλητές
     index:
-      list_all: "Κάντε λίστα με όλα"
-      preview: "Προεπισκόπηση"
-      search_term: "Αναζήτηση όρου"
-      sort: "Ταξινομήστε"
-      update: "Ενημέρωση!"
-      view: "Προβολή"
+      list_all: Κάντε λίστα με όλα
+      preview: Προεπισκόπηση
+      search_term: Αναζήτηση όρου
+      sort: Ταξινομήστε
+      update: Ενημέρωση!
+      view: Προβολή
     listall:
-      all_articles: "Λίστα όλων των αντικειμένων"
+      all_articles: Λίστα όλων των αντικειμένων
     new:
-      add_quantity: "Προσθέστε Μεταβλητή"
-      edit_article: "Επεξεργαστείτε το αντικείμενο"
-      new_article: "Νέο αντικείμενο"
-      normal: "κανονικό"
-      takeaway: "αφαιρέστε"
+      add_quantity: Προσθέστε Μεταβλητή
+      edit_article: Επεξεργαστείτε το αντικείμενο
+      new_article: Νέο αντικείμενο
+      normal: κανονικό
+      takeaway: αφαιρέστε
     sort_index:
-      sort: "Ταξινομήστε αντικείμενα"
-  bar: "Μπαρ"
-  black: "Μαύρο"
+      sort: Ταξινομήστε αντικείμενα
+  bar: Μπαρ
+  black: Μαύρο
   blackboard:
     index:
-      update: "Ενημέρωση"
-  blank: "κενό"
-  blue: "Μπλε"
+      update: Ενημέρωση
+  blank: κενό
+  blue: Μπλε
   bookings:
     invoice_item_list:
-      served_by_X: "Σερβιριστήκατε από %{user}"
+      served_by_X: Σερβιριστήκατε από %{user}
     show:
       count: Count
-      go_to_bookings_calendar: "Πηγαίνετε στην προβολή ημερολογίου κρατήσεων"
-      search_by_number: "Αναζήτηση μέσω αρίθμησης"
+      go_to_bookings_calendar: Πηγαίνετε στην προβολή ημερολογίου κρατήσεων
+      search_by_number: Αναζήτηση μέσω αρίθμησης
       sum: Sum
       unit_price: Unit price
   cameras:
@@ -419,306 +420,306 @@ el:
       success: Camera was successfully deleted
     index:
       show: Show
-  cancel_and_go_back: "Ακυρώστε κι επιστρέψτε"
+  cancel_and_go_back: Ακυρώστε κι επιστρέψτε
   categories:
     create:
-      license_limited: "Η Άδεια σας περιορίζεται σε %{count} κατηγορίες"
-      success: "Επιτυχία!"
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} κατηγορίες
+      success: Επιτυχία!
     destroy:
-      success: "Η κατηγορία διαγράφηκε επιτυχώς"
+      success: Η κατηγορία διαγράφηκε επιτυχώς
     new:
-      aperitif: "απεριτίφ"
-      beer: "Μπύρα"
-      blank: "Κενό"
-      childrendish: "Πιάτο Παιδιών"
-      cigarette: "Καπνός"
-      coffee: "Καφές"
-      dessert: "Επιδόρπιο"
-      digestif: "Χωνευτικό"
-      edit_category: "Επεξεργασία Κατηγορίας"
-      maindish: "Κυρίως Πιάτο"
-      new_category: "Νέα Κατηγορία"
-      nonalcoholics: "Χωρίς Αλκοόλ"
-      noodles: "Πάστα"
-      redwinebottle: "Μπουκάλι Ερυθρό"
-      redwineglass: "Ερυθρό Κρασί"
-      rosewinebottle: "Μπουκάλι Ροζέ"
-      rosewineglass: "Ροζέ Κρασί"
-      sidedish: "Συνοδευτικό Πιάτο"
-      soup: "Σούπα"
-      sparkling: "Αφρώδες Κρασί"
-      starter: "Ορεκτικό"
-      tea: "Φλιτζάνι Τσάι"
-      teapot: "Τσαγέρα"
-      whitewinebottle: "Μπουκάλι Λευκό"
-      whitewineglass: "Λευκό Κρασί"
+      aperitif: απεριτίφ
+      beer: Μπύρα
+      blank: Κενό
+      childrendish: Πιάτο Παιδιών
+      cigarette: Καπνός
+      coffee: Καφές
+      dessert: Επιδόρπιο
+      digestif: Χωνευτικό
+      edit_category: Επεξεργασία Κατηγορίας
+      maindish: Κυρίως Πιάτο
+      new_category: Νέα Κατηγορία
+      nonalcoholics: Χωρίς Αλκοόλ
+      noodles: Πάστα
+      redwinebottle: Μπουκάλι Ερυθρό
+      redwineglass: Ερυθρό Κρασί
+      rosewinebottle: Μπουκάλι Ροζέ
+      rosewineglass: Ροζέ Κρασί
+      sidedish: Συνοδευτικό Πιάτο
+      soup: Σούπα
+      sparkling: Αφρώδες Κρασί
+      starter: Ορεκτικό
+      tea: Φλιτζάνι Τσάι
+      teapot: Τσαγέρα
+      whitewinebottle: Μπουκάλι Λευκό
+      whitewineglass: Λευκό Κρασί
   clear: clear
-  clear_order_and_go_back: "Σβήστε την παραγγελία και επιστρέψτε"
-  copy: "Αντίγραφο"
+  clear_order_and_go_back: Σβήστε την παραγγελία και επιστρέψτε
+  copy: Αντίγραφο
   cost_centers:
     create:
-      success: "Το κέντρο κόστους αποθηκεύτηκε επιτυχώς"
+      success: Το κέντρο κόστους αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Το κέντρο κόστους διαγράφηκε επιτυχώς"
+      success: Το κέντρο κόστους διαγράφηκε επιτυχώς
     index:
-      active: "Ενεργό"
-      inactive: "Απενεργοποιημένο"
+      active: Ενεργό
+      inactive: Απενεργοποιημένο
     new:
-      edit_cost_center: "Επεξεργασία Κέντρου Κόστους"
-      new_cost_center: "Νέο Κέντρο Κόστους"
-  count: "Μετρήστε"
-  create: "Δημιουργήστε"
+      edit_cost_center: Επεξεργασία Κέντρου Κόστους
+      new_cost_center: Νέο Κέντρο Κόστους
+  count: Μετρήστε
+  create: Δημιουργήστε
   customers:
     create:
-      success: "Ο πελάτης αποθηκεύτηκε επιτυχώς"
+      success: Ο πελάτης αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Ο πελάτης διαγράφηκε επιτυχώς"
+      success: Ο πελάτης διαγράφηκε επιτυχώς
     new:
-      edit_customer: "Επεξεργασία Πελάτη"
-      new_customer: "Νέος Πελάτης"
-  dateandtime: "Ημερομηνία"
-  default: "Προεπιλογή"
-  delete: "Διαγραφή"
-  display: "Ανάρτηση"
-  edit: "Επεξεργασία"
-  exit: "Έξοδος"
-  finish: "Απλά Τελειώστε"
-  food: "Φαγητά"
-  go_back: "Επιστρέψτε"
-  green: "Πράσινο"
-  gross: "Χονδρικό"
+      edit_customer: Επεξεργασία Πελάτη
+      new_customer: Νέος Πελάτης
+  dateandtime: Ημερομηνία
+  default: Προεπιλογή
+  delete: Διαγραφή
+  display: Ανάρτηση
+  edit: Επεξεργασία
+  exit: Έξοδος
+  finish: Απλά Τελειώστε
+  food: Φαγητά
+  go_back: Επιστρέψτε
+  green: Πράσινο
+  gross: Χονδρικό
   groups:
     new:
-      edit_group: "Επεξεργαστείτε Ομάδα"
-      new_group: "Νέα Ομάδα"
-  guestroom: "Ξενώνας"
-  host: "Οικοδεσπότης"
+      edit_group: Επεξεργαστείτε Ομάδα
+      new_group: Νέα Ομάδα
+  guestroom: Ξενώνας
+  host: Οικοδεσπότης
   images:
-    errempty: "Άκυρο αρχείο"
-    errsize: "Άκυρο μέγεθος αρχείου"
-    errtype: "Άκυρος τύπος αρχείου"
-  invalid_date: "Άκυρη ημερομηνία"
-  invoice: "Τιμολόγιο"
-  invoice_numer_X_at_time: "Αριθμός Τιμολογίου %{number} στις %{datetime}"
-  invoices: "Τιμολόγια"
-  is_no_number: "δεν είναι αριθμός."
+    errempty: Άκυρο αρχείο
+    errsize: Άκυρο μέγεθος αρχείου
+    errtype: Άκυρος τύπος αρχείου
+  invalid_date: Άκυρη ημερομηνία
+  invoice: Τιμολόγιο
+  invoice_numer_X_at_time: Αριθμός Τιμολογίου %{number} στις %{datetime}
+  invoices: Τιμολόγια
+  is_no_number: δεν είναι αριθμός.
   items:
     item_tablerow:
-      clear: "Καθαρίστε"
-      done: "Τελειωμένο"
-      no_printing: "όχι εκτύπωση"
-  just_order: "Απλά παραγγείλετε"
-  kitchen: "Κουζίνα"
+      clear: Καθαρίστε
+      done: Τελειωμένο
+      no_printing: όχι εκτύπωση
+  just_order: Απλά παραγγείλετε
+  kitchen: Κουζίνα
   layouts:
     application:
-      admin_menu_hint: "☚ Click here to open the main menu"
+      admin_menu_hint: ☚ Click here to open the main menu
       submit_scribe: OK
     header:
       settings_common: General
       settings_hotel: Hotel
       settings_restaurant: Restaurant
-  logout: "αποσυνδεθείτε %{who}"
+  logout: αποσυνδεθείτε %{who}
   messages:
-    hello_username: "Γεια χαρά %{name}!"
+    hello_username: Γεια χαρά %{name}!
     user_account_is_currently_locked: Account is locked
-  move_order_to_table: "Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι"
-  must_be_entered_either_for_article_or_for_quantity: "πρέπει να καταχωρηθεί είτε
-    για το αντικείμενο είτε για τη Μεταβλητή."
-  net: "Καθαρό"
-  new: "Νέο"
-  no_printing: "Όχι εκτύπωση"
-  not_found: "Δεν βρέθηκε"
+  move_order_to_table: Μετακινήστε την παραγγελία σε διαφορετικό τραπέζι
+  must_be_entered_either_for_article_or_for_quantity: πρέπει να καταχωρηθεί είτε για
+    το αντικείμενο είτε για τη Μεταβλητή.
+  net: Καθαρό
+  new: Νέο
+  no_printing: Όχι εκτύπωση
+  not_found: Δεν βρέθηκε
   options:
     create:
-      success: "Η επιλογή αποθηκεύτηκε επιτυχώς"
+      success: Η επιλογή αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Η επιλογή διαγράφηκε επιτυχώς"
+      success: Η επιλογή διαγράφηκε επιτυχώς
     index:
       no_categories_defined: There are no categories defined. You have to create at
         least one category in order to create an Option.
     new:
-      edit_option: "Επεξεργασία Επιλογής"
-      hidden: "διαγραφή"
-      new_option: "Νέα Επιλογή"
-      select_all: "Επιλέξτε όλα"
-  orange: "Πορτοκαλί"
+      edit_option: Επεξεργασία Επιλογής
+      hidden: διαγραφή
+      new_option: Νέα Επιλογή
+      select_all: Επιλέξτε όλα
+  orange: Πορτοκαλί
   orders:
     functions_header_index:
       exit: Exit
-      items_notifications: "Ανακοινώσεις"
-      print_now: "Εκτυπώστε τώρα"
-      show_last_booking: "Δείξτε την τελευταία κράτηση"
-      show_last_order: "Δείξτε την τελευταία παραγγελία"
+      items_notifications: Ανακοινώσεις
+      print_now: Εκτυπώστε τώρα
+      show_last_booking: Δείξτε την τελευταία κράτηση
+      show_last_order: Δείξτε την τελευταία παραγγελία
       toggle_drag_tables: Drag tables
     functions_header_order_form:
-      move_order: "Μετακινήστε την παραγγελία σε άλλο τραπέζι"
+      move_order: Μετακινήστε την παραγγελία σε άλλο τραπέζι
     index:
       confirmation_list: Self-order list
-      delivery_list: "Λίστα παράδοσης"
-      preparation_list: "Λίστα προετοιμασίας"
+      delivery_list: Λίστα παράδοσης
+      preparation_list: Λίστα προετοιμασίας
     invoice_form:
-      change_money: "Ρέστα"
+      change_money: Ρέστα
       finish: Finish and stay on this screen
       finish_gototables: Finish and return to the tables plan
-      just_finish: "Απλά τελειώστε την παραγγελία"
+      just_finish: Απλά τελειώστε την παραγγελία
       move_order: Move order to different table
-      print_and_finish: "Εκτυπώστε και τελειώστε αυτή την παραγγελία"
+      print_and_finish: Εκτυπώστε και τελειώστε αυτή την παραγγελία
       print_and_finish_gototables: Print and finish this order and return to the tables
         plan
-      set_booking: "Προσθήκη στις κρατήσεις"
-      set_cost_center: "Ορίστε το κέντρο κόστους γι’ αυτή την παραγγελία"
-      set_tax_for_all: "Ορίστε το κέντρο κόστους για όλα τα αντικείμενα"
-      set_taxes: "Ορίστε κέντρο κόστους"
-      split_invoice: "Μοιράστε το τιμολόγιο"
-      split_this_item: "Κάντε κλικ για να μοιράσετε αυτά τα αντικείμενα ένα ένα"
-      switch_tax_for_this_item: "Κάντε κλικ για να αλλάξετε το φόρο αυτού του αντικειμένο"
+      set_booking: Προσθήκη στις κρατήσεις
+      set_cost_center: Ορίστε το κέντρο κόστους γι’ αυτή την παραγγελία
+      set_tax_for_all: Ορίστε το κέντρο κόστους για όλα τα αντικείμενα
+      set_taxes: Ορίστε κέντρο κόστους
+      split_invoice: Μοιράστε το τιμολόγιο
+      split_this_item: Κάντε κλικ για να μοιράσετε αυτά τα αντικείμενα ένα ένα
+      switch_tax_for_this_item: Κάντε κλικ για να αλλάξετε το φόρο αυτού του αντικειμένο
     invoice_item_list:
-      count: "Ποσότητα"
-      sum: "Σύνολο"
-      unit_price: "Τιμή μονάδας"
+      count: Ποσότητα
+      sum: Σύνολο
+      unit_price: Τιμή μονάδας
     last:
       title: Last finished Orders
     login_form:
-      email: "Η Ηλεκτρονική σας Διεύθυνση"
-      login: "Συνδεθείτε"
-      password: "Κωδικός Πρόσβασης"
-      username: "Κωδικός Χρήστη"
+      email: Η Ηλεκτρονική σας Διεύθυνση
+      login: Συνδεθείτε
+      password: Κωδικός Πρόσβασης
+      username: Κωδικός Χρήστη
     order:
       new: New order
     order_form:
-      sum: "ΣΥΝΟΛΟ"
+      sum: ΣΥΝΟΛΟ
     refund_form:
-      do_refund: "Κάντε επιστροφή"
-      do_separate_items: "Ξεχωρίστε αυτό το αντικείμενο"
-    served_by: "Έχετε εξυπηρετηθεί από"
+      do_refund: Κάντε επιστροφή
+      do_separate_items: Ξεχωρίστε αυτό το αντικείμενο
+    served_by: Έχετε εξυπηρετηθεί από
     show:
       add_notes: Add notes
-      back: "Επιστροφή"
+      back: Επιστροφή
       cannot_reactivate: Reactivation failed. No table is vacant.
-      count: "Μετρήστε"
-      list_of_taxes: "Λίστα φόρων"
-      next_invoice: "Επόμενο τιμολόγιο"
-      previous_invoice: "Προηγούμενο τιμολόγιο"
-      print_business_invoice: "Εκτυπώστε το τιμολόγιο της εταιρίας"
-      print_invoice: "Εκτυπώστε το τιμολόγιο"
+      count: Μετρήστε
+      list_of_taxes: Λίστα φόρων
+      next_invoice: Επόμενο τιμολόγιο
+      previous_invoice: Προηγούμενο τιμολόγιο
+      print_business_invoice: Εκτυπώστε το τιμολόγιο της εταιρίας
+      print_invoice: Εκτυπώστε το τιμολόγιο
       reactivate: Reactivate
-      search_by_number: "Αναζήτηση μέσω αριθμού"
-      sum: "Σύνολο"
-      unit_price: "Τιμή μονάδας"
+      search_by_number: Αναζήτηση μέσω αριθμού
+      sum: Σύνολο
+      unit_price: Τιμή μονάδας
   pages:
     edit:
-      edit_page: "Επεξεργασία Σελίδας"
-      slideshow: "Αρχίστε την προβολή εικόνων"
-      view: "Προβολή"
+      edit_page: Επεξεργασία Σελίδας
+      slideshow: Αρχίστε την προβολή εικόνων
+      view: Προβολή
     form:
       slideshow: Slideshow
       view: View
     new:
-      new_page: "Νέα σελίδα"
+      new_page: Νέα σελίδα
   partials:
-    default_blurb: "Επεξεργαστείτε με"
-    error_during_evaluation: "Πρόβλημα: "
+    default_blurb: Επεξεργαστείτε με
+    error_during_evaluation: ! 'Πρόβλημα: '
     no_presentation_found:
-      no_presentations_found: "Κανένα περίγραμμα δεν καθορίστηκε για αυτό το στοιχείο."
+      no_presentations_found: Κανένα περίγραμμα δεν καθορίστηκε για αυτό το στοιχείο.
   payment_methods:
     create:
       success: Payment Method successfully saved
     destroy:
       success: Payment Method successfully deleted
-  pink: "Ροζ"
-  please_enter_item_comment: "Ιδιαίτερη επιθυμία"
-  please_enter_item_price: "Ιδιαίτερη τιμή"
+  pink: Ροζ
+  please_enter_item_comment: Ιδιαίτερη επιθυμία
+  please_enter_item_price: Ιδιαίτερη τιμή
   presentations:
     new:
-      edit_presentation: "Επεξεργασία περιγράμματος"
-      new_presentation: "Νέο περίγραμμα"
-  print: "Εκτύπωση"
-  print_and_finish: "Τελειώστε κι εκτυπώστε"
-  printing_test: "Δοκιμή εκτύπωσης"
-  refund: "Επιστροφή"
+      edit_presentation: Επεξεργασία περιγράμματος
+      new_presentation: Νέο περίγραμμα
+  print: Εκτύπωση
+  print_and_finish: Τελειώστε κι εκτυπώστε
+  printing_test: Δοκιμή εκτύπωσης
+  refund: Επιστροφή
   reports:
     download: Download
-    download_reports: "Μεταφορτώστε Αναφορά"
-    end_date: "Μέρα Λήξης"
+    download_reports: Μεταφορτώστε Αναφορά
+    end_date: Μέρα Λήξης
     fisc_report_dump_location: Output Location
     index:
-      backup_database: "Αντίγραφο Ασφαλείας Βάσης Δεδομένων"
-      backup_logfile: "Αντίγραφο Ασφαλείας Αρχείου Καταγραφής"
-      connect_ssh: "Απομακρυσμένη σύνδεση"
-      connect_vnc: "Μοιραστείτε οθόνη"
-      connected: "Συνδεδεμένοι"
-      disconnected: "Αποσυνδεδεμένοι"
-      download_reports: "Αποθηκεύστε Αναφορές"
-      header: "Αναφορές"
-      internet_connection_info: "Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να
+      backup_database: Αντίγραφο Ασφαλείας Βάσης Δεδομένων
+      backup_logfile: Αντίγραφο Ασφαλείας Αρχείου Καταγραφής
+      connect_ssh: Απομακρυσμένη σύνδεση
+      connect_vnc: Μοιραστείτε οθόνη
+      connected: Συνδεδεμένοι
+      disconnected: Αποσυνδεδεμένοι
+      download_reports: Αποθηκεύστε Αναφορές
+      header: Αναφορές
+      internet_connection_info: Για να έχετε εξ’ αποστάσεως Υποστήριξη, πρέπει να
         είστε συνδεδεμένοι στο διαδίκτυο. Εάν μπορείτε να δείτε το λογότυπο του Red
-        (E) πιο πάνω, είστε συνδεδεμένοι στο διαδίκτυο."
-      password: "Κωδικός"
-      remote_support: "Εξ’ αποστάσεως Υποστήριξη"
-      requesting_connection_status: "Αίτηση κατάστασης σύνδεσης ..."
-    remote_support: "Εξ’ αποστάσεως Υποστήριξη"
-    save: "Αποθήκευση"
-    start_date: "Μέρα Έναρξης"
-  restaurant: "Εστιατόριο"
+        (E) πιο πάνω, είστε συνδεδεμένοι στο διαδίκτυο.
+      password: Κωδικός
+      remote_support: Εξ’ αποστάσεως Υποστήριξη
+      requesting_connection_status: Αίτηση κατάστασης σύνδεσης ...
+    remote_support: Εξ’ αποστάσεως Υποστήριξη
+    save: Αποθήκευση
+    start_date: Μέρα Έναρξης
+  restaurant: Εστιατόριο
   roles:
     create:
-      success: "Ο ρόλος αποθηκεύτηκε επιτυχώς"
+      success: Ο ρόλος αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Ο ρόλος διαγράφηκε επιτυχώς"
+      success: Ο ρόλος διαγράφηκε επιτυχώς
     new:
       add_option_to_sent_item: Add Options to sent Items
       allow_exit: Allow Exit
-      assign_cost_center: "Προσδιορίστε κέντρο κόστους"
-      assign_order_to_booking: "Αναθέστε παραγγελίες σε κράτηση"
+      assign_cost_center: Προσδιορίστε κέντρο κόστους
+      assign_order_to_booking: Αναθέστε παραγγελίες σε κράτηση
       assign_order_to_user: Assign order to user
-      assign_tables: "Αναθέστε τραπέζια σε χρήστες"
+      assign_tables: Αναθέστε τραπέζια σε χρήστες
       assign_users_to_vendors: Assign Users to Vendors
-      cancel_all_items_in_active_order: "Ακυρώστε όλα τα αντικείμενα στην ενεργή παραγγελία"
-      change_waiter: "Αλλάξτε σερβιτόρο"
-      counter_mode: "Λειτουργεία Πάγκου"
-      decrement_items: "Μείωση αντικειμένων"
-      delete_items: "Διαγράψτε αντικείμενα μέσω μείωσης"
+      cancel_all_items_in_active_order: Ακυρώστε όλα τα αντικείμενα στην ενεργή παραγγελία
+      change_waiter: Αλλάξτε σερβιτόρο
+      counter_mode: Λειτουργεία Πάγκου
+      decrement_items: Μείωση αντικειμένων
+      delete_items: Διαγράψτε αντικείμενα μέσω μείωσης
       download_csv: Download CSV
-      download_database: "Μεταφορτώστε τη βάση δεδομένων"
-      edit_role: "Επεξεργασία ρόλου"
+      download_database: Μεταφορτώστε τη βάση δεδομένων
+      edit_role: Επεξεργασία ρόλου
       enter_payment_methods: Enter Payment Methods
-      finish_all_settlements: "Τελειώστε όλους τους διακανονισμούς"
-      finish_orders: "Τελειώστε τις παραγγελίες"
-      finish_own_settlement: "Τελειώστε τον δικό σας διακανονισμό"
+      finish_all_settlements: Τελειώστε όλους τους διακανονισμούς
+      finish_orders: Τελειώστε τις παραγγελίες
+      finish_own_settlement: Τελειώστε τον δικό σας διακανονισμό
       immediate_order_finish: Finish order from order screen
       interim_receipt: Interim Receipt
-      item_scribe: "Ενεργοποιείστε χειρογραφή"
+      item_scribe: Ενεργοποιείστε χειρογραφή
       manage_advertising: Manage Advertising
-      manage_articles: "Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές"
-      manage_business_invoice: "Διαχειριστείτε το εταιρικό τιμολόγιο"
+      manage_articles: Διαχειριστείτε αντικείμενα, κατηγορίες και επιλογές
+      manage_business_invoice: Διαχειριστείτε το εταιρικό τιμολόγιο
       manage_cameras: Manage cameras
-      manage_categories: "Διαχειριστείτε κατηγορίες"
-      manage_cost_centers: "Διαχειριστείτε κέντρα κόστους"
-      manage_customers: "Διαχειριστείτε Πελάτες"
-      manage_hotel: "Διαχειριστείτε το ξενοδοχείο"
-      manage_options: "Διαχειριστείτε επιλογές"
-      manage_pages: "Διαχειριστείτε Προβολή Εικόνων"
-      manage_payment_methods: "Διαχειριστείτε μεθόδους πληρωμής"
-      manage_roles: "Διαχειριστείτε ρόλους"
+      manage_categories: Διαχειριστείτε κατηγορίες
+      manage_cost_centers: Διαχειριστείτε κέντρα κόστους
+      manage_customers: Διαχειριστείτε Πελάτες
+      manage_hotel: Διαχειριστείτε το ξενοδοχείο
+      manage_options: Διαχειριστείτε επιλογές
+      manage_pages: Διαχειριστείτε Προβολή Εικόνων
+      manage_payment_methods: Διαχειριστείτε μεθόδους πληρωμής
+      manage_roles: Διαχειριστείτε ρόλους
       manage_statistic_categories: Manage Statistic Categories
-      manage_statistics: "Προβολή στατιστικών"
+      manage_statistics: Προβολή στατιστικών
       manage_statistics_hotel: View hotel statistics
-      manage_tables: "Διαχειριστείτε τραπέζια"
-      manage_taxes: "Διαχειριστείτε φόρους"
+      manage_tables: Διαχειριστείτε τραπέζια
+      manage_taxes: Διαχειριστείτε φόρους
       manage_user_logins: Manage User Logins
-      manage_users: "Διαχειριστείτε τους χρήστες"
-      manage_vendors: "Διαχειριστείτε προμηθευτές"
+      manage_users: Διαχειριστείτε τους χρήστες
+      manage_vendors: Διαχειριστείτε προμηθευτές
       mobile_show_tools: Show tool button on mobile devices
-      move_order: "Μετακινείστε την παραγγελία"
+      move_order: Μετακινείστε την παραγγελία
       move_order_from_invoice_form: Move order to table from invoice form
-      move_tables: "Μετακινείστε τραπέζια"
-      new_role: "Νέος ρόλος"
-      permissions: "Εγκρίσεις"
+      move_tables: Μετακινείστε τραπέζια
+      new_role: Νέος ρόλος
+      permissions: Εγκρίσεις
       reactivate_orders: Reactivate orders
       receipt_logo: Receipt Logos
-      refund: "Επιστροφή αντικειμένων"
-      remote_support: "Εξ’ αποστάσεως Υποστήριξη"
-      see_debug: "Δείτε μηνύματα προβλημάτων"
+      refund: Επιστροφή αντικειμένων
+      remote_support: Εξ’ αποστάσεως Υποστήριξη
+      see_debug: Δείτε μηνύματα προβλημάτων
       see_item_notifications_static: Item notifications summary list on main screen
       see_item_notifications_user_delivery: Item notifications personal delivery
       see_item_notifications_user_preparation: Item notifications personal preparation
@@ -728,7 +729,7 @@ el:
         quantities
       settlement_statistics_taxes: Show settlement tax statistics
       settlement_statistics_taxes_categories: Show settlement tax statistics by category
-      split_items: "Μοιράστε αντικείμενα"
+      split_items: Μοιράστε αντικείμενα
       statistics:
         statistics_category: Categories
         statistics_payment_method: Payment Methods
@@ -746,53 +747,53 @@ el:
       statistics_tax: Statistics Tax
       statistics_user: Statistics show Users
       statistics_weekday: Statistics Weekday
-      take_orders: "Πάρτε παραγγελίες"
-      view_all_settlements: "Δείτε όλους τους διακανονισμούς"
+      take_orders: Πάρτε παραγγελίες
+      view_all_settlements: Δείτε όλους τους διακανονισμούς
       view_settlements_table: View settlements table
   room_prices:
     index:
-      generate_price_skeleton: "Δημιουργήστε σκελετό τιμών"
+      generate_price_skeleton: Δημιουργήστε σκελετό τιμών
     new:
-      edit_room_price: "Επεξεργασία τιμής δωματίου"
-      new_room_price: "Νέα τιμή δωματίου"
+      edit_room_price: Επεξεργασία τιμής δωματίου
+      new_room_price: Νέα τιμή δωματίου
   room_types:
     new:
-      edit_room_type: "Επεξεργασία τύπου δωματίου"
-      new_room_type: "Νέος τύπος δωματίου"
+      edit_room_type: Επεξεργασία τύπου δωματίου
+      new_room_type: Νέος τύπος δωματίου
   rooms:
     create:
       success: Room successfully saved
     destroy:
       success: Room successfully deleted
     new:
-      edit_room: "Επεξεργασία δωματίου"
-      new_room: "Νέο δωμάτιο"
+      edit_room: Επεξεργασία δωματίου
+      new_room: Νέο δωμάτιο
   scopes:
-    active: "Ενεργό"
+    active: Ενεργό
     inactive: Inactive
-    waiterpad: "Σημειοματάριο σερβιτόρου"
-  scroll_down: "Κινηθείτε προς τα κάτω"
+    waiterpad: Σημειοματάριο σερβιτόρου
+  scroll_down: Κινηθείτε προς τα κάτω
   scroll_to_area: Go to room
-  scroll_up: "Κινηθείτε προς τα πάνω"
+  scroll_up: Κινηθείτε προς τα πάνω
   seasons:
     new:
-      edit_season: "Επεξεργασία Σαιζόν"
-      new_season: "Νέα Σαιζόν"
-  send_and_go_back: "Αποθηκεύστε κι επιστρέψτε"
-  served_by_X_on_table_Y: "Εξυπηρετηθήκατε από  %{waiter} στο %{table}"
-  server_no_response: "Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε
-    είναι απασχολημένος ή η διασύνδεση έχει διακοπεί."
+      edit_season: Επεξεργασία Σαιζόν
+      new_season: Νέα Σαιζόν
+  send_and_go_back: Αποθηκεύστε κι επιστρέψτε
+  served_by_X_on_table_Y: Εξυπηρετηθήκατε από  %{waiter} στο %{table}
+  server_no_response: Ο διακομιστής του Bill Gastro δεν ανταποκρίνεται πια. Είτε είναι
+    απασχολημένος ή η διασύνδεση έχει διακοπεί.
   sessions:
     browser_warning:
-      continue: "Συνεχίστε"
-      warning: "Το Salor υποστηρίζει μόνο τα προγράμματα περιήγησης Google Chrome
-        (Windows), Chromium (Linux) ή Safari (Apple). Παρακαλούμε όπως χρησιμοποιήσετε
-        ένα από αυτά τα προγράμματα περιήγησης και δοκιμάστε ξανά"
+      continue: Συνεχίστε
+      warning: Το Salor υποστηρίζει μόνο τα προγράμματα περιήγησης Google Chrome (Windows),
+        Chromium (Linux) ή Safari (Apple). Παρακαλούμε όπως χρησιμοποιήσετε ένα από
+        αυτά τα προγράμματα περιήγησης και δοκιμάστε ξανά
     new:
-      email: "Η Ηλεκτρονική σας Διεύθυνση"
-      login: "Όνομα Χρήστη"
-      password: "Κωδικός Πρόσβασης"
-      username: "Χρήστης"
+      email: Η Ηλεκτρονική σας Διεύθυνση
+      login: Όνομα Χρήστη
+      password: Κωδικός Πρόσβασης
+      username: Χρήστης
     new_customer:
       email: Your E-Mail
       login: Login
@@ -800,32 +801,32 @@ el:
       username: User
   settlements:
     detailed_list:
-      changed_price: "%{byuser} changed price"
-      count: "Μτρήστε"
-      order_number_on_table_on_date: "%{order} αριθμός %{number} στο %{table} στις
-        %{time}"
+      changed_price: ! '%{byuser} changed price'
+      count: Μτρήστε
+      order_number_on_table_on_date: ! '%{order} αριθμός %{number} στο %{table} στις
+        %{time}'
       reduced_count: Count reduced from %{maxcount} to %{count}.
-      revenue: "Έσοδα"
-      total: "Ολικό"
-      unit_price: "Τιμή μονάδας"
+      revenue: Έσοδα
+      total: Ολικό
+      unit_price: Τιμή μονάδας
       warning: Warning
     index:
       all: All
-      end_date: "Ημερομηνία λήξης"
+      end_date: Ημερομηνία λήξης
       one_day_one_row: List days
-      start_date: "Ημερομηνία έναρξης"
-      sum_total: "Ολικό σύνολο"
+      start_date: Ημερομηνία έναρξης
+      sum_total: Ολικό σύνολο
     settlement:
-      finish: "Τελειώστε"
+      finish: Τελειώστε
       please_wait: Analyzing data. Please wait ...
-      print: "Εκτυπώστε"
-      start: "Ξεκινήστε"
-      started_at: "Ξεκίνησε στις"
+      print: Εκτυπώστε
+      start: Ξεκινήστε
+      started_at: Ξεκίνησε στις
   shared:
     invoice_tax_list:
-      list_of_taxes: "Λίστα φόρων"
-  split_order: "Μοιράστε την παραγγελία"
-  statistic: "Στατιστικό"
+      list_of_taxes: Λίστα φόρων
+  split_order: Μοιράστε την παραγγελία
+  statistic: Στατιστικό
   statistic_categories:
     new:
       edit_statistic_category: Edit Statistic-Category
@@ -849,72 +850,72 @@ el:
       weekday: Weekday
   stocks:
     new:
-      edit_stock: "Επεξεργασία Αποθέματος"
-      new_stock: "Νέο Απόθεμα"
-  sum: "Σύνολο"
+      edit_stock: Επεξεργασία Αποθέματος
+      new_stock: Νέο Απόθεμα
+  sum: Σύνολο
   surcharges:
     new:
-      add_tax_amount: "Προσθέστε ποσό φόρου"
-      common_surcharge: "Κοινή Επιβάρυνση"
-      edit_surcharge: "Επεξεργασία Επιβάρυνσης"
-      new_surcharge: "Νέα Επιβάρυνση"
+      add_tax_amount: Προσθέστε ποσό φόρου
+      common_surcharge: Κοινή Επιβάρυνση
+      edit_surcharge: Επεξεργασία Επιβάρυνσης
+      new_surcharge: Νέα Επιβάρυνση
   tables:
     create:
-      license_limited: "Η Άδεια σας περιορίζεται σε %{count} τραπέζια"
-      success: "Ο πίνακας αποθηκεύτηκε επιτυχώς"
+      license_limited: Η Άδεια σας περιορίζεται σε %{count} τραπέζια
+      success: Ο πίνακας αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Ο πίνακας διαγράφηκε επιτυχώς"
+      success: Ο πίνακας διαγράφηκε επιτυχώς
     new:
-      edit_table: "Επεξεργασία Πίνακα"
-      new_table: "Νέος Πίνακας"
-  tax_amount: "Ποσό"
+      edit_table: Επεξεργασία Πίνακα
+      new_table: Νέος Πίνακας
+  tax_amount: Ποσό
   taxes:
     new:
-      edit_tax: "Επεξεργασία Φόρου"
-      new_tax: "Νέος Φόρος"
+      edit_tax: Επεξεργασία Φόρου
+      new_tax: Νέος Φόρος
   users:
     create:
-      success: "Ο χρήστης αποθηκεύτηκε επιτυχώς"
+      success: Ο χρήστης αποθηκεύτηκε επιτυχώς
     destroy:
-      success: "Ο χρήστης διαγράφηκε επιτυχώς"
+      success: Ο χρήστης διαγράφηκε επιτυχώς
     index:
       on_duty: On duty
     new:
-      edit_user: "Επεξεργασία Χρήστη"
-      new_user: "Νέος Χρήστης"
-      select_with_ctrl_key: "Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί
-        του ποντικιού"
+      edit_user: Επεξεργασία Χρήστη
+      new_user: Νέος Χρήστης
+      select_with_ctrl_key: Επιλέξτε ή αποεπιλέξτε με [Ctrl] + το αριστερό κουμπί
+        του ποντικιού
   various:
     already_finished_warning: This order has already been completed by someone else.
     attempt: Attempt
     begin: Begin
-    cancel: "Ακύρωση"
+    cancel: Ακύρωση
     check_order_on_workstation: Check order on different device
-    common_surcharges: "Κοινές Επιβαρύνσεις"
+    common_surcharges: Κοινές Επιβαρύνσεις
     connecting: Connecting...
-    consumations: "Εκπληρώσεις"
+    consumations: Εκπληρώσεις
     customer_request_finish: Request payment
     customer_request_send: Request these items
     customer_request_waiter: Request waiter
     delete: Delete
     display: Display
-    double_submission_warning: 'Warning: Double submission. Please inform tech support
+    double_submission_warning: ! 'Warning: Double submission. Please inform tech support
       about this.'
     download: Download
     end: End
     exception_page:
       assistance_text: Please click on the Button "HOME" and try again. If you see
         the same error twice, please contact our Customer Support.
-      exception_description: 'Error Description:'
-      exception_in_files: 'The Error occurred in the following files:'
+      exception_description: ! 'Error Description:'
+      exception_in_files: ! 'The Error occurred in the following files:'
       oops_an_error_occurred: Oops! An Error occurred
     finish_was_requested: You have requested payment. Please have a little patience,
       we will be there for your shortly.
     go: Go!
-    home: "Κύριο Μενού"
-    hotel: "Ξενοδοχείο"
-    interim_invoice: "Προσωρινό Τιμολόγιο"
-    invoice: "Τιμολόγιο"
+    home: Κύριο Μενού
+    hotel: Ξενοδοχείο
+    interim_invoice: Προσωρινό Τιμολόγιο
+    invoice: Τιμολόγιο
     mobile_view: Mobile device view
     no_connection: No connection
     no_connection_giving_up: No connection. Giving up.
@@ -922,12 +923,12 @@ el:
       items will be saved locally.
     no_connection_retrying: No connection. Trying again...
     order_will_be_confirmed: Your order will be confirmed by a waiter shortly
-    pay: "Πληρωστε"
+    pay: Πληρωστε
     print: Print
-    quantity_abbreviation: "Ποσ."
+    quantity_abbreviation: Ποσ.
     report: Report
-    restaurant: "Εστιατόριο"
-    save: "Αποθηκεύστε"
+    restaurant: Εστιατόριο
+    save: Αποθηκεύστε
     sending: Sending...
     server_error: Oops! There was an internal server error. Please check the submission
       of the order on a different device.
@@ -936,18 +937,18 @@ el:
       device. Then, re-submit oder cancel to delete the changes.
     sold_quantities: Sold Quantities
     statistics: Statistics
-    subtotal: "Υποσύνολο"
+    subtotal: Υποσύνολο
     successfully_sent: The items were successfully sent.
     switched_to_vendor: Vendor '%{vendorname}'
     table_contains_offline_items: This table contains items which haven't been sent
       yet. Send them now?
-    tax: "Φόρος"
-    tax_amount: "Ποσό"
+    tax: Φόρος
+    tax_amount: Ποσό
     time: Time
-    total_price_abbreviation: "ΣΤ"
+    total_price_abbreviation: ΣΤ
     translations: Translations
-    unamed: "Ανώνυμο"
-    unit_price_abbreviation: "ΤΜ"
+    unamed: Ανώνυμο
+    unit_price_abbreviation: ΤΜ
     waiter_was_requested: You have requested a waiter. Please have a little patience,
       we will be there for your shortly.
     workstation_view: Workstation view
@@ -960,20 +961,20 @@ el:
     form:
       add_printer: Add printer
       identify_printers: Identify Printers
-      print_via_salorbin_explanation: 'If you want to print via the salor-bin browser,
+      print_via_salorbin_explanation: ! 'If you want to print via the salor-bin browser,
         copy and paste the following details to the options dialog of salor-bin:'
       test_printers: Test Printers
       test_printers_chartest: Test all characters
     index:
-      edit: "Επεξεργασία"
-      switch_to: "Επιλέξτε"
+      edit: Επεξεργασία
+      switch_to: Επιλέξτε
     new:
-      edit_vendor: "Επεξεργασία Προμηθευτή"
-      new_vendor: "Νέος Προμηθευτής"
-  violet: "Βιολετί"
-  waiter: "Σερβιτόρος"
-  waiterpad_generic_name: "Σημειωματάριο σερβιτόρου"
-  white: "Άσπρο"
-  winered: "Κρασί Ερυθρό"
-  wrong_password: "Λάθος στοιχεία σύνδεσης"
-  yellow: "Κίτρινο"
+      edit_vendor: Επεξεργασία Προμηθευτή
+      new_vendor: Νέος Προμηθευτής
+  violet: Βιολετί
+  waiter: Σερβιτόρος
+  waiterpad_generic_name: Σημειωματάριο σερβιτόρου
+  white: Άσπρο
+  winered: Κρασί Ερυθρό
+  wrong_password: Λάθος στοιχεία σύνδεσης
+  yellow: Κίτρινο

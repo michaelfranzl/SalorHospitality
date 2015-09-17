@@ -1,3 +1,37 @@
+salor-hospitality (5.0.25) jessie; urgency=medium
+
+  * deployment optimization
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Sep 2015 09:16:21 +0200
+
+salor-hospitality (5.0.24) jessie; urgency=medium
+
+  * deployment optimization
+  * deployment optimization
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Sep 2015 09:01:18 +0200
+
+salor-hospitality (5.0.23) jessie; urgency=medium
+
+  * deployment optimization
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Sep 2015 08:41:41 +0200
+
+salor-hospitality (5.0.22) jessie; urgency=medium
+
+  * better display of longer category names on ordering screen
+  * added internationalization support for nigeria
+  * Optionally print one ticket per piece
+  * fix for saving tax classes
+  * Added configuration option to print reduced quantities of items onto tickets
+  * Print seconds on tickets for more accuracy
+  * load Red E Tools Ltd. logo from the internet
+  * added user color to notifications list
+  * group notifications list by table
+  * fix for passenger configuration
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Sep 2015 08:12:29 +0200
+
 salor-hospitality (5.0.21) jessie; urgency=medium
 
   * replaced modcoder_excolor colorpicker with colpick

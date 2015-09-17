@@ -24,6 +24,7 @@ class TaxesController < ApplicationController
 
   def create
     permitted = params.require(:tax).permit :name,
+        :percent,
         :letter,
         :color,
         :include_in_statistics,
@@ -48,6 +49,7 @@ class TaxesController < ApplicationController
     @tax = get_model
     redirect_to taxes_path and return unless @tax
     permitted = params.require(:tax).permit :name,
+        :percent,
         :letter,
         :color,
         :include_in_statistics,
