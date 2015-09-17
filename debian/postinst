@@ -197,7 +197,7 @@ for lInstance in $gInstances; do
       chmod -R 700 /etc/salor-hospitality
       
       cd $app_root
-      sudo -u www-data bundle install --deployment --local --gemfile=${gemfile_target}
+      sudo -u www-data bundle install --deployment --without development --local --gemfile=${gemfile_target}
       
       if [ -e $rails_etc/database.yml ]; then
         echo "  postinst: this instance has a configured database."
