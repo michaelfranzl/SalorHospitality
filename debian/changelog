@@ -1,3 +1,10 @@
+salor-hospitality (5.0.24) jessie; urgency=medium
+
+  * deployment optimization
+  * deployment optimization
+
+ -- Michael Franzl <office@michaelfranzl.com>  Thu, 17 Sep 2015 09:01:18 +0200
+
 salor-hospitality (5.0.23) jessie; urgency=medium
 
   * deployment optimization
