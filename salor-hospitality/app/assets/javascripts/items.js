@@ -199,17 +199,13 @@ function increment_item(d) {
 function decrement_item(d) {
   var i = items_json[d].c;
   var start_count = items_json[d].sc;
-  if ( i > 1 && ( permissions.decrement_items || i > start_count || ( ! items_json[d].hasOwnProperty('id') ) ) ) {
+  if ( i > 0 && ( permissions.decrement_items || i > start_count || ( ! items_json[d].hasOwnProperty('id') ) ) ) {
     i--;
     set_json('order', d, 'c', i)
     $('#tablerow_' + d + '_count').html(i);
     $('#tablerow_' + d + '_count').addClass('updated');
     if ( i == start_count ) { $('#tablerow_' + d + '_count').removeClass('updated'); }
-  } else if ( i == 1 && ( permissions.decrement_items || ( ! items_json[d].hasOwnProperty('id') ))) {
-    i--;
-    set_json('order', d, 'c', i)
-    $('#tablerow_' + d + '_count').html(i);
-    $('#tablerow_' + d + '_count').addClass('updated');
+  } else if ( i == 0 && ( permissions.decrement_items || ( ! items_json[d].hasOwnProperty('id') ))) {
     if (permissions.delete_items || start_count == undefined) {
       set_json('order', d, 'x', true);
       $('#item_' + d).fadeOut('slow');
