@@ -25,12 +25,9 @@ class ApplicationController < ActionController::Base
   end
   
   def intercept_plugin_requests
-    return unless @current_user
-    @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
-    $PluginManager = @current_plugin_manager
-    contents = ""
-    if params[:request_for_plugins] == "true"
-      render :text => @current_plugin_manager.apply_filter("ajax_request", contents)
+    if params[:plugin_request] == "true"
+      result = @current_plugin_manager.apply_filter("ajax_request", {})
+      render :json => result.to_json
       return
     end
   end
@@ -57,6 +54,14 @@ class ApplicationController < ActionController::Base
   
   def route
     create_history_for_route
+    
+    js = ""
+    js = @current_plugin_manager.apply_filter("override_route", js)
+    if js != ""
+      render :js => js
+      return
+    end
+    
     case params[:currentview]
       # this action is for simple writing of any model to the server and getting a Model object back. 
       when 'push'
@@ -299,6 +304,9 @@ class ApplicationController < ActionController::Base
       if params[:error] and params[:error].empty? == false
         flash[:error] = params[:error]
       end
+      
+      @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
+      $PluginManager = @current_plugin_manager
     end
     
     def autologout_customers

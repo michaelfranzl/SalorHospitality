@@ -30,6 +30,7 @@ class PluginManager < AbstractController::Base
     @context['SH']          = self
     @context['Params']      = params
     @context['Request']     = request
+    @context['Vendor']      = vendor.as_json
     #@context['PLUGINS_BASE_URL']         = @group.urls[:plugins]
     @code = nil
     
@@ -89,9 +90,8 @@ class PluginManager < AbstractController::Base
     begin
       @code = @context.eval(@text)
     rescue => e
-      raise "Code failed to evaluate: #{ e.inspect } #{ @text }"
-      
-      #log_action e.inspect
+      annotated_js = @text.split("\n").map.with_index{|l, i| "#{ i + 1 }: #{ l }" }
+      log_action "Code failed to evaluate: #{ e.inspect } \n\n #{ annotated_js.join("\n") }"
     end
   end
   
@@ -204,6 +204,7 @@ class PluginManager < AbstractController::Base
       end
       res = narg
     elsif cvrt == Hash then
+      #debugger
       res = v8_object_to_hash(res)
     end
     
@@ -215,7 +216,9 @@ class PluginManager < AbstractController::Base
   def do_action(name, arg=nil)
     name = name.to_s
     log_action("Beginning ACTION " + name)
-    #return '' if not @code
+    
+    return "" if not @code
+    
     content = ''
     if @actions[name.to_sym] then
       @actions[name.to_sym].each do |callback|
@@ -225,6 +228,7 @@ class PluginManager < AbstractController::Base
         
         if not function then
           log_action "function #{callback[:function]} is not set."
+          
         else
           log_action("About to call ACTION " + name)
           begin
@@ -238,8 +242,14 @@ class PluginManager < AbstractController::Base
             msg << e.backtrace[0..2].join("\n")
             annotated_js = @text.split("\n").map.with_index{|l, i| "#{ i + 1 }: #{ l }" }
             msg << annotated_js.join("\n")
+            
+            if @vendor.enable_technician_emails == true and @vendor.technician_email
+              UserMailer.technician_message(@vendor, "Errors in do_action", msg.join("\n")).deliver
+            end
+            
             return "<pre>#{ msg.join("\n") }</pre>"
           end
+          
           log_action("Call to ACTION " + name + " completed")
           if tmp.class != String then
             log_action "Must return a string from an action"
@@ -285,6 +295,14 @@ class PluginManager < AbstractController::Base
   
   def request_localhost(method, path, port, data={}, headers={}, user=nil, pass=nil)
     headers = self.v8_object_to_hash(headers)
+    
+    port = port.to_i
+    
+    if port < 8700 or port > 8710
+      # for security reasons, we don't allow just any port on localhost. 10 different services should be more than enough.
+      return "port out of range"
+    end
+    
     url = "http://localhost:#{ port }#{ path }"
     uri = URI.parse(url)
 
@@ -306,7 +324,13 @@ class PluginManager < AbstractController::Base
       request[k] = v
     end
     log_action "get_url: starting request"
-    response = http.request(request)
+    
+    begin
+      response = http.request(request)
+    rescue
+      return nil
+    end
+    
     log_action "get_url: finished request."
     return response.body
   end

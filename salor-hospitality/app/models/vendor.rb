@@ -137,6 +137,14 @@ class Vendor < ActiveRecord::Base
   def get_region
     SalorHospitality::Application::COUNTRIES_REGIONS[self.country].to_sym
   end
+  
+  def plugin_url
+    return "/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ self.hash_id }/plugins/"
+  end
+  
+  def plugin_path
+    return File.join(Rails.root, 'public', 'uploads', SalorHospitality::Application::SH_DEBIAN_SITEID, self.hash_id, "plugins")
+  end
 
   def logo_image
     return self.image('logo') if Image.where(:imageable_type => 'Vendor', :imageable_id => self.id, :image_type => 'logo').any?

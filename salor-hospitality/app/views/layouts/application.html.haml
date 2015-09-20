@@ -47,11 +47,8 @@
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
 
-    %script
-      == automatic_printing = #{ (@current_customer.nil? and @current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
-      == vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
-      == customer = #{ @current_customer ? @current_customer.table.id : 'null'};
-      == sh_debian_siteid = '#{ SalorHospitality::Application::SH_DEBIAN_SITEID }';
+    %script= render :partial => "layouts/js_variables"
+    = render :partial => "layouts/plugins"
 
   %body
     - if workstation? and controller.controller_name == 'orders' and @advertising_url

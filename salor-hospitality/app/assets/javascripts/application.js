@@ -40,3 +40,4 @@
 //= require ui-helpers
 //= require ui-widgets
 //= require various
+//= require underscore

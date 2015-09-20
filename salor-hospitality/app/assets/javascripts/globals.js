@@ -57,3 +57,16 @@ var counter_update_resources = timeout_update_resources;
 var counter_update_tables = 3;
 var counter_update_item_lists = 3;
 var counter_refresh_queue = timeout_refresh_queue;
+
+
+// TODO: All global-space variables should be organized and namespaced in the following scheme:
+var sh = {};
+sh.data = {
+  various: {},
+  vendor: {},
+  user: {},
+  vendor_printers: {},
+};
+
+sh.plugins = {};
+sh.fn = {};

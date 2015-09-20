@@ -432,23 +432,25 @@ class Order < ActiveRecord::Base
     unless self.booking_id
       self.set_nr
       
-      $PluginManager.do_action("order_finish", self.info.to_json)
+      $PluginManager.do_action("transaction_finish", self.info.to_json)
     end
   end
   
   def info
     vndr = self.vendor
     statistics = {}
+    statistics["model_class"] = "order"
     statistics["taxes"] = vndr.taxes.existing
     statistics["vendor"] = {
       :id => vndr.id,
       :hash_id => vndr.hash_id,
       }
-    statistics["order"] = self
+    statistics["model"] = self
     statistics["items"] = self.items.existing.as_json
     statistics["option_items"] = self.option_items.existing.as_json
     statistics["tax_items"] = self.tax_items.existing.as_json
     statistics["item_name_length"] = ITEM_NAME_LENGTH
+    statistics["user"] = self.user.as_json
     return statistics
   end
 
@@ -604,7 +606,7 @@ class Order < ActiveRecord::Base
     if what.include? 'interim_receipt'
       if vendor_printer
         contents = self.escpos_interim_receipt
-        bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
+        bytes_written, content_sent = print_engine.print(vendor_printer.id, contents[:text], contents[:raw_insertations])
         
         # Push notification
         if SalorHospitality.tailor
@@ -1074,22 +1076,20 @@ class Order < ActiveRecord::Base
       list_of_items += list_of_options
     end
 
-    sum_format =
-    "\e!\x18" + # double tall, bold
-    "\ea\x02"   # align right
-
-    sum = "#{I18n.t(:sum).upcase}:   #{friendly_unit} %.2f" % self.sum
-
     output_text =
         "\e@" +     # initialize
         header1 +
         header2 +
         list_of_items +
-        sum_format +
-        sum +
         "\n\n\n\n\n\n\n\n\n\n\n" +
         "\x1DV\x00\x0C" # paper cut
-    return output_text
+    
+    contents = {
+      :text => output_text,
+      :raw_insertations => {}
+    }
+    
+    return contents
   end
 
   def items_to_json

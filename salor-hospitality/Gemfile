@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby 1.9.3
+ruby '1.9.3'
 
 # The following gems are already part of Debian Wheezy and do NOT cause a dependency to the online API of rubygems.org
 gem 'rails', '3.2.6'

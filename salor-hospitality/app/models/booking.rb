@@ -26,6 +26,8 @@ class Booking < ActiveRecord::Base
   serialize :taxes
   attr_accessible :customer_name
   
+  ITEM_NAME_LENGTH = 17
+  
   def as_json(options={})
     return {
         :from => self.from_date.strftime("%Y-%m-%d"),
@@ -36,7 +38,12 @@ class Booking < ActiveRecord::Base
         :duration => self.duration,
         :hidden => self.hidden,
         :finished => self.finished,
-        :paid => self.paid
+        :paid => self.paid,
+        :sum => self.sum,
+        :taxes => self.taxes,
+        :tax_sum => self.tax_sum,
+        :finished_at => self.finished_at,
+        :nr => self.nr
       }
   end
   
@@ -206,6 +213,26 @@ class Booking < ActiveRecord::Base
     self.finished_at = Time.now
     self.set_nr
     self.save
+
+    $PluginManager.do_action("transaction_finish", self.info.to_json)
+  end
+  
+  def info
+    vndr = self.vendor
+    statistics = {}
+    statistics["model_class"] = "booking"
+    statistics["taxes"] = vndr.taxes.existing
+    statistics["vendor"] = {
+      :id => vndr.id,
+      :hash_id => vndr.hash_id,
+      }
+    statistics["model"] = self.as_json
+    statistics["booking_items"] = self.booking_items.existing.as_json
+    statistics["surcharge_items"] = self.surcharge_items.existing.as_json
+    statistics["tax_items"] = self.tax_items.existing.as_json
+    statistics["item_name_length"] = ITEM_NAME_LENGTH
+    statistics["user"] = self.user.as_json
+    return statistics
   end
 
   def update_associations(user)

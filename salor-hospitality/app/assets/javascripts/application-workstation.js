@@ -30,7 +30,7 @@ $(document).ready(function() {
   
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
-      if ( automatic_printing == true ) {
+      if ( sh.data.user.automatic_printing == true ) {
         if ( window.location.port == '' ) {
           download_printfile(1);
         } else {
@@ -54,13 +54,10 @@ $(document).ready(function() {
 })
 
 function download_printfile(path) {
-  var subdomain = window.location.host.replace('.red-e.eu','');
-  //url_parts = window.location.host.split('.');
-  //$.each(vendor_printers, function(k,v) {
-  for (var first_key in vendor_printers) { break }
-  var printer = vendor_printers[first_key];
+  for (var first_key in sh.data.vendor_printers) { break }
+  var printer = sh.data.vendor_printers[first_key];
   var printer_path = printer.p;
-  window.location.href = '/uploads/' + sh_debian_siteid + '/' + company_identifier + '/' + printer_path + '.bill';
+  window.location.href = '/uploads/' + sh.data.various.siteid + '/' + company_identifier + '/' + printer_path + '.bill';
 }
 
 function is_fullscreen() {

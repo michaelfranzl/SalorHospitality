@@ -80,6 +80,8 @@
       %tr
         %td.left= pm.payment_method.name
         %td.right= number_to_currency pm.amount
+        
+  = @current_plugin_manager.apply_filter("after_invoice", "", @booking.info.to_json).html_safe
 
   .invoice_footer= raw Kramdown::Document.new(@booking.vendor.invoice_footer_blurb).to_html if @booking.vendor.invoice_footer_blurb
 
