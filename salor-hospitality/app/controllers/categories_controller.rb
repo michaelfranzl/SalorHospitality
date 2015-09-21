@@ -25,10 +25,6 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    if @current_vendor.max_categories and @current_vendor.max_categories < @current_vendor.categories.existing.count
-      flash[:notice] = t('categories.create.license_limited', :count => @current_vendor.max_categories)
-      redirect_to categories_path and return
-    end
     @category = Category.new(Category.process_custom_icon(params[:category]))
     @taxes = @current_vendor.taxes.existing
     @users = @current_vendor.users.existing.active.where('role_weight > 0')
@@ -36,7 +32,6 @@ class CategoriesController < ApplicationController
     @category.vendor = @current_vendor
     @category.company = @current_company
     if @category.save then
-      #@category.images.update_all :company_id => @category.company_id
       flash[:notice] = I18n.t("categories.create.success")
       redirect_to(categories_path)
     else
@@ -57,8 +52,7 @@ class CategoriesController < ApplicationController
     @category = get_model
     redirect_to categories_path and return unless @category
     if @category.update_attributes(Category.process_custom_icon(params[:category])) then
-      #@category.images.update_all :company_id => @category.company_id
-      flash[:notice] = I18n.t("categories.create.success")
+      $MESSAGES[:notices] << I18n.t("categories.create.success")
       redirect_to categories_path
     else
       @taxes = @current_vendor.taxes.existing

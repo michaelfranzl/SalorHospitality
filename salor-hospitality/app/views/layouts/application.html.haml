@@ -66,14 +66,15 @@
       #header
         = render 'layouts/header'
         #admin_menu_hint= t('.admin_menu_hint')
-      #flash
-        - if flash[:notice] and flash[:notice].empty? == false
-          #flash_notice= flash[:notice]
-        - if flash[:error] and flash[:error].empty? == false
-          #flash_error= flash[:error]
+      
       - if permit('see_debug')
-        #messages messages
+        #debug
+      
       #main= yield
+      
+      %script= render :partial => "shared/messagesjs.js"
+      #messages
+      
       #footer
       #copyright
         .left

@@ -22,7 +22,7 @@ function send_email(subject, message) {
 function debug(message) {
   if ( debugmessages.length > 7 ) { debugmessages.shift(); }
   debugmessages.push(message);
-  $('#messages').html(debugmessages.join('<br />'));
+  $('#debug').html(debugmessages.join('<br />'));
 }
 
 function _log(arg1,arg2,arg3) {

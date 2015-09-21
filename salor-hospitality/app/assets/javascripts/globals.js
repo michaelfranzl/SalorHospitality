@@ -66,7 +66,14 @@ sh.data = {
   vendor: {},
   user: {},
   vendor_printers: {},
+  messages: {
+    notices: [],
+    alerts: [],
+    prompts: [],
+  },
 };
 
 sh.plugins = {};
-sh.fn = {};
+sh.fn = {
+  messages: {},
+};

@@ -1,0 +1,19 @@
+<% unless flash[:notices].blank? %>
+  sh.data.messages.notices = sh.data.messages.notices.concat(<%= raw flash[:notices].to_json %>);
+<% end %>
+<% unless flash[:alerts].blank? %>
+  sh.data.messages.alerts = sh.data.messages.alerts.concat(<%= raw flash[:alerts].to_json %>);
+<% end %>
+<% unless flash[:prompts].blank? %>
+  sh.data.messages.prompts = sh.data.messages.prompts.concat(<%= raw flash[:prompts].to_json %>);
+<% end %>
+
+<% unless $MESSAGES[:notices].blank? %>
+  sh.data.messages.notices = sh.data.messages.notices.concat(<%= raw $MESSAGES[:notices].to_json %>);
+<% end %>
+<% unless $MESSAGES[:alerts].blank? %>
+  sh.data.messages.alerts = sh.data.messages.alerts.concat(<%= raw $MESSAGES[:alerts].to_json %>);
+<% end %>
+<% unless $MESSAGES[:prompts].blank? %>
+  sh.data.messages.prompts = sh.data.messages.prompts.concat(<%= raw $MESSAGES[:prompts].to_json %>);
+<% end %>

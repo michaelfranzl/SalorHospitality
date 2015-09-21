@@ -33,7 +33,7 @@ $ ->
 window.add_payment_method_buttons = (event) ->
   packet = event.packet
   if packet.attr('id').indexOf('payment_methods_container') != -1 and $('.booking_form').is(":visible")
-    add_menu_button packet, create_dom_element('div',{'id': 'add_pm_button',class:'add-button', model_id: packet.attr('model_id')},'',''), ->
+    add_menu_button packet, create_dom_element('div',{'id': 'add_pm_button',clss:'add-button', model_id: packet.attr('model_id')},'',''), ->
       add_payment_method($(this).attr('model_id'))
       
 # Updates the local DB from JSON objects delivered by the Server.
@@ -63,7 +63,7 @@ window.update_salor_hotel_db = ->
 # Called when clicking on a room. Displays the booking form dynamically
 window.display_booking_form = (room_id) ->
   render_surcharge_header()
-  booking_form = create_dom_element 'div', {class:'booking_form'}, '', '#main'
+  booking_form = create_dom_element 'div', {clss:'booking_form'}, '', '#main'
   booking_tools = create_dom_element 'div', {id:'booking_tools'}, '', booking_form
   booking_totals = create_dom_element 'div', {id:'booking_totals'}, '', booking_form
   from_input = create_dom_element 'input', {type:'text',id:'booking_from'}, '', booking_tools
@@ -100,7 +100,7 @@ window.display_booking_form = (room_id) ->
   customer_input.on 'keyup', ->
     submit_json.model['customer_name'] = $(this).val()
     
-  rooms_button = create_dom_element 'span', {id: 'choose_room_container',class:'textbutton'},'',booking_tools
+  rooms_button = create_dom_element 'span', {id: 'choose_room_container',clss:'textbutton'},'',booking_tools
   rooms_select = create_dom_element 'select', {id:"choose_room"}, rooms_as_options(),rooms_button
   rooms_select.val room_id
   rooms_select.on 'change', ->
@@ -113,15 +113,15 @@ window.display_booking_form = (room_id) ->
       update_booking_totals()
     , 200
     
-  submit_link = create_dom_element 'span', {id:'booking_submit',class:'textbutton'}, i18n.save, booking_tools
+  submit_link = create_dom_element 'span', {id:'booking_submit',clss:'textbutton'}, i18n.save, booking_tools
   submit_link.on 'click', -> route 'rooms', room_id, 'send'
-  interim_invoice_link = create_dom_element 'span', {id:'booking_interim_invoice',class:'textbutton'}, i18n.interim_invoice, booking_tools
-  assign_order_link = create_dom_element 'span', {id:'booking_assign_order',class:'textbutton'}, i18n.assign_order_to_booking, booking_tools
-  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',class:'textbutton'}, i18n.payment_method, booking_tools
-  pay_link = create_dom_element 'span', {id:'booking_pay',class:'textbutton'}, i18n.pay, booking_tools
-  cancel_link = create_dom_element 'span', {id:'booking_cancel',class:'textbutton'}, i18n.cancel, booking_tools
+  interim_invoice_link = create_dom_element 'span', {id:'booking_interim_invoice',clss:'textbutton'}, i18n.interim_invoice, booking_tools
+  assign_order_link = create_dom_element 'span', {id:'booking_assign_order',clss:'textbutton'}, i18n.assign_order_to_booking, booking_tools
+  payment_methods_link = create_dom_element 'span', {id:'add_payment_method_button',clss:'textbutton'}, i18n.payment_method, booking_tools
+  pay_link = create_dom_element 'span', {id:'booking_pay',clss:'textbutton'}, i18n.pay, booking_tools
+  cancel_link = create_dom_element 'span', {id:'booking_cancel',clss:'textbutton'}, i18n.cancel, booking_tools
   cancel_link.on 'click', -> route 'rooms'
-  delete_link = create_dom_element 'span', {id:'booking_delete',class:'textbutton'}, i18n.delete, booking_tools
+  delete_link = create_dom_element 'span', {id:'booking_delete',clss:'textbutton'}, i18n.delete, booking_tools
   delete_link.on 'click', ->
     submit_json.model.hidden = true
     route 'rooms', room_id, 'send'
@@ -129,9 +129,9 @@ window.display_booking_form = (room_id) ->
   render_guest_type_buttons()
   booking_items_container = create_dom_element 'div', {id:'booking_items_container'}, '', booking_form
   create_dom_element 'div', {id:'booking_items'}, '', booking_items_container
-  payment_methods_container = create_dom_element 'div', {class:'payment_methods_container'}, '', booking_form
+  payment_methods_container = create_dom_element 'div', {clss:'payment_methods_container'}, '', booking_form
   create_dom_element 'table', {}, '', payment_methods_container
-  create_dom_element 'div', {class:'booking_change'}, '', payment_methods_container
+  create_dom_element 'div', {clss:'booking_change'}, '', payment_methods_container
 
 
 # Reads a time span from the submit_json object, writes back the duration. This called when the datepicker is changed.
@@ -192,7 +192,7 @@ render_surcharge_header= ->
 render_guest_type_buttons = ->
   guest_types_container = create_dom_element 'div', {id:'guest_types'}, '', '.booking_form'
   $.each resources.gt, (k,v) ->
-    gtbutton = create_dom_element 'div', {class:'guest_type'}, v.n, guest_types_container
+    gtbutton = create_dom_element 'div', {clss:'guest_type'}, v.n, guest_types_container
     gtbutton.on 'click', ->
       gtbutton.effect 'highlight', {}, 500
       id = get_unique_booking_number('d') # d is for "dynamically generated"
@@ -200,7 +200,7 @@ render_guest_type_buttons = ->
       setTimeout ->
         render_booking_items_from_json()
       , 200
-  gtbutton = create_dom_element 'div', {class:'guest_type'}, i18n.common_surcharges, guest_types_container
+  gtbutton = create_dom_element 'div', {clss:'guest_type'}, i18n.common_surcharges, guest_types_container
   gtbutton.on 'click', ->
     gtbutton.effect 'highlight', {}, 500
     id = get_unique_booking_number('d') # d is for "dynamically generated"
@@ -366,19 +366,19 @@ render_booking_item = (booking_item_id) ->
     add_class = 'semitransparent'
     
   label = guest_type_name + " <small>(" + resources.sn[items_json[booking_item_id].season_id].n + ")</small>"
-  booking_item_row = create_dom_element 'div', {class:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
-  create_dom_element 'div', {class:'surcharge_col'}, label, booking_item_row
+  booking_item_row = create_dom_element 'div', {clss:'booking_item ' + add_class, id:'booking_item'+booking_item_id}, '', '#booking_items'
+  create_dom_element 'div', {clss:'surcharge_col'}, label, booking_item_row
   render_booking_item_count booking_item_id
   
-  from_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_from_date_col',booking_item_id:booking_item_id}, '',booking_item_row
-  from_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_from_date', class:'booking_item_from_date'}, '', from_date_col
+  from_date_col = create_dom_element 'div', {clss:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_from_date_col',booking_item_id:booking_item_id}, '',booking_item_row
+  from_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_from_date', clss:'booking_item_from_date'}, '', from_date_col
   from_date_col_input.val items_json[booking_item_id].from_date
   
-  to_date_col = create_dom_element 'div', {class:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_to_date_col',booking_item_id:booking_item_id}, '',booking_item_row
-  to_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_to_date', class:'booking_item_to_date'}, '', to_date_col
+  to_date_col = create_dom_element 'div', {clss:'surcharge_col booking_item_datelock',id:'booking_item_'+booking_item_id+'_to_date_col',booking_item_id:booking_item_id}, '',booking_item_row
+  to_date_col_input = create_dom_element 'input', {id:'booking_item_'+booking_item_id+'_to_date', clss:'booking_item_to_date'}, '', to_date_col
   to_date_col_input.val items_json[booking_item_id].to_date
   
-  duration_col = create_dom_element 'div', {class:'surcharge_col',id:'booking_item_'+booking_item_id+'_duration_col',booking_item_id:booking_item_id}, items_json[booking_item_id].duration, booking_item_row
+  duration_col = create_dom_element 'div', {clss:'surcharge_col',id:'booking_item_'+booking_item_id+'_duration_col',booking_item_id:booking_item_id}, items_json[booking_item_id].duration, booking_item_row
   
   if items_json[booking_item_id].date_locked == true
     from_date_col.addClass 'selected'
@@ -405,7 +405,7 @@ render_booking_item = (booking_item_id) ->
     
   for header in surcharge_headers
     if items_json[booking_item_id].surcharges.hasOwnProperty(header)
-      surcharge_col = create_dom_element 'div', {class:'surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, header, booking_item_row
+      surcharge_col = create_dom_element 'div', {clss:'surcharge_col surcharge_col_'+booking_item_id,id:'surcharge_col_'+header+'_'+booking_item_id}, header, booking_item_row
       (=>
         h = header
         bid = booking_item_id
@@ -439,8 +439,8 @@ render_booking_item = (booking_item_id) ->
       if items_json[booking_item_id].surcharges[header].selected && items_json[booking_item_id].surcharges[header].amount != 0
         input_tag.attr 'checked', true
         input_tag.parent().addClass 'selected'
-  create_dom_element 'div', {class:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
-  delete_col = create_dom_element 'div', {class:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;',booking_item_row
+  create_dom_element 'div', {clss:'surcharge_col booking_item_total',id:'booking_item_'+booking_item_id+'_total'}, '', booking_item_row
+  delete_col = create_dom_element 'div', {clss:'surcharge_col booking_item_delete',id:'booking_item_'+booking_item_id+'_delete'}, '&nbsp;',booking_item_row
   delete_col.on 'click', ->
     delete_booking_item(booking_item_id)
   update_booking_totals()
@@ -515,8 +515,8 @@ window.render_booking_items_from_json = ->
 
 
 render_booking_item_count = (booking_item_id) ->
-  count_input_col = create_dom_element 'div', {class:'surcharge_col'}, count_input, '#booking_item' + booking_item_id
-  count_input = create_dom_element 'input', {type:'text', id:'booking_item_'+booking_item_id+'_count', class:'booking_item_count', value:items_json[booking_item_id].count}, '', count_input_col
+  count_input_col = create_dom_element 'div', {clss:'surcharge_col'}, count_input, '#booking_item' + booking_item_id
+  count_input = create_dom_element 'input', {type:'text', id:'booking_item_'+booking_item_id+'_count', clss:'booking_item_count', value:items_json[booking_item_id].count}, '', count_input_col
   if booking_item_id.indexOf('x') == 0
     return true
   make_keyboardable count_input, '', `function(){ change_booking_item_count(booking_item_id)}`, 'num'

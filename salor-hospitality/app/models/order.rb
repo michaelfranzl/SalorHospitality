@@ -431,7 +431,6 @@ class Order < ActiveRecord::Base
     
     unless self.booking_id
       self.set_nr
-      
       $PluginManager.do_action("transaction_finish", self.info.to_json)
     end
   end

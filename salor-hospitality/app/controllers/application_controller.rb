@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_up
   before_filter :autologout_customers
   before_filter :intercept_plugin_requests
+  
+  after_filter :loaddown
 
   helper_method :mobile?, :mobile_special?, :workstation?, :permit
 
@@ -305,8 +307,24 @@ class ApplicationController < ActionController::Base
         flash[:error] = params[:error]
       end
       
+      $MESSAGES = {
+        :notices => [],
+        :alerts => [],
+        :prompts => []
+      }
+      
       @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
       $PluginManager = @current_plugin_manager
+    end
+    
+    def loaddown
+      $PluginManager = nil
+      
+      flash[:notices] = $MESSAGES[:notices]
+      flash[:alerts] = $MESSAGES[:alerts]
+      flash[:prompts] = $MESSAGES[:prompts]
+      
+      $MESSAGES = {}
     end
     
     def autologout_customers
@@ -323,6 +341,7 @@ class ApplicationController < ActionController::Base
       end
     end
   
+    # Interface for package `salor-tailor` which facilitates server-push-notifications to `salor-bin`
     def set_tailor
       return unless @current_vendor and SalorHospitality::Application::CONFIGURATION[:tailor] and SalorHospitality::Application::CONFIGURATION[:tailor] == true
       
@@ -357,7 +376,6 @@ class ApplicationController < ActionController::Base
         end
         SalorHospitality.tailor = t
       end
-
     end
   
     def get_model(model_id=nil, model=nil)

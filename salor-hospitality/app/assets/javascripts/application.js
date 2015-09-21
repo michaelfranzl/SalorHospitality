@@ -41,3 +41,4 @@
 //= require ui-widgets
 //= require various
 //= require underscore
+//= require messages

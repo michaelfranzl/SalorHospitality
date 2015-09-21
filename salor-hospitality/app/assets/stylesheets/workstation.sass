@@ -156,12 +156,12 @@ img.logo_tiny
 div#areas,
   :display none
 
-div#messages, div#queue
+div#debug, div#queue
   :color $billgastrogrey2
   :position absolute
   :display inline-block
 
-div#messages
+div#debug
   :font-size 80%
   :z-index -10
   :width 50%
@@ -522,18 +522,38 @@ div#toggle_admin_interface
 div.clear
   :clear both
 
-div#flash
+div#messages
   :font-size 200%
   :position absolute
   :right 50%
   :top 8%
   :z-index 100
-  :padding 10px
   :background-color rgba(255,255,255,0.5)
   :-moz-border-radius 9px
   :-webkit-border-radius 9px
   :border-radius 9px
-  :display none
+  div.statusmessage
+    :padding 5px
+  div.message_notice
+    :color green
+  div.message_alert
+    :color red
+    
+div.prompt
+  :position fixed
+  :width 87%
+  :height 70%
+  :left 1%
+  :top 1%
+  :border-radius 10px
+  :text-align center
+  :border 3px solid white
+  :padding 100px 70px
+  :background-color rgba(173, 193, 204, 0.9)
+  :box-shadow 0px 0px 50px white
+  :color black
+  :font-size 110%
+  :z-index 10000
 
 
 select

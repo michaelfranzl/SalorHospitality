@@ -1,0 +1,8 @@
+== customer = #{ @current_customer ? @current_customer.table.id : 'null'};
+== sh.data.vendor_printers = #{ raw @current_vendor.vendor_printers_hash.to_json };
+
+
+
+== sh.data.user.automatic_printing = #{ (@current_customer.nil? and @current_user.automatic_printing and @current_company.mode != 'local') ? 'true' : 'false' };
+== sh.data.various.siteid = '#{ SalorHospitality::Application::SH_DEBIAN_SITEID }';
+== sh.data.vendor.hash_id = '#{ @current_vendor.hash_id if @current_vendor }';

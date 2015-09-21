@@ -20,13 +20,6 @@ $(document).ready(function() {
   $('input:radio').checkbox();
   
   $('#admin_menu_hint').fadeOut(6000);
-        
-  if ($('#flash').children().size() > 0) {
-    $('#flash').fadeIn(1000);
-    setTimeout(function(){
-      $('#flash').fadeOut(2000);
-    }, 6000);
-  }
   
   if (typeof(automatic_printing_timeout) == 'undefined') {
     automatic_printing_timeout = window.setInterval(function() {
@@ -51,6 +44,8 @@ $(document).ready(function() {
       make_select_widget($(v));
     });
   });
+  
+  sh.fn.messages.displayMessages();
 })
 
 function download_printfile(path) {

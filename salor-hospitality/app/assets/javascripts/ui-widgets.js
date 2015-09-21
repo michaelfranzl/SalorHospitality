@@ -1,8 +1,23 @@
-function create_dom_element (tag,attrs,content,append_to) {
+function create_dom_element(tag, attrs, content, append_to) {
+  if (attrs["id"] && $('#' + attrs["id"]).length != 0) {
+    var elem = $('#' + attrs["id"]);
+    elem.attr("existed", "true");
+    return elem;
+  }
+    
   element = $(document.createElement(tag));
+  
+  if ( typeof attrs.clss != 'undefined' ) {
+    //class is a reserved word on iPads
+    var cls = attrs['clss'];
+    delete attrs.clss;
+    element.addClass(cls);
+  }
+  
   $.each(attrs, function (k,v) {
     element.attr(k, v);
   });
+  
   element.html(content);
   if (append_to != '')
     $(append_to).append(element);
@@ -11,13 +26,7 @@ function create_dom_element (tag,attrs,content,append_to) {
 
 /* Adds a delete/X button to the element. Type options  are right and append. The default callback simply slides the element up.
  if you want special behavior on click, you can pass a closure.*/
-function deletable(elem,type,callback) {
-  if (typeof type == 'function') {
-    callback = type;
-    type = 'right'
-  }
-  if (!type)
-    type = 'right';
+function deletable(elem, type, callback) {
   if ($('#' + elem.attr('id') + '_delete').length == 0) {
     var del_button = create_dom_element('div',{id: elem.attr('id') + '_delete', 'class':'delete', 'target': elem.attr('id')},'',elem);
     if (!callback) {
@@ -75,7 +84,14 @@ function add_menu_button(elem,button,callback) {
   button.on('click',callback);
 }
 
-
+function create_dialog(title, id, text) {
+  var dialog = create_dom_element('div', {id: id, clss: 'prompt'}, '', $('body'));
+  
+  var header = create_dom_element('h2', {}, title, dialog);
+  var contents = create_dom_element('div', {}, text, dialog);
+  
+  return dialog
+}
 
 function make_select_widget(elem) {
   if (elem.attr("no_select_widget") == 1)

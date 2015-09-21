@@ -222,13 +222,13 @@ function get_from_to_of_booking(booking) {
  * Each booking has an inner div with elements, as new features get added, we put the stuff in here.
  */
 function booking_build_inner_div(booking) {
-  var inner_div = create_dom_element('div',{class:'inner-div'},'','');
-  var name_div = create_dom_element('div',{class:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
+  var inner_div = create_dom_element('div',{clss:'inner-div'},'','');
+  var name_div = create_dom_element('div',{clss:'name', booking_id: booking.id, room_id: booking.room_id},booking.customer_name,inner_div);
   inner_div.append("<br />");
-  var date_div = create_dom_element('div',{class: 'date',booking_id: booking.id, roomd_id: booking.room_id},get_from_to_of_booking(booking),inner_div);
-  var invoice_button = create_dom_element('a', {class:'iconbutton invoice_button'},'',inner_div);
+  var date_div = create_dom_element('div',{clss: 'date',booking_id: booking.id, roomd_id: booking.room_id},get_from_to_of_booking(booking),inner_div);
+  var invoice_button = create_dom_element('a', {clss:'iconbutton invoice_button'},'',inner_div);
   invoice_button.on('click', function(){window.location = '/bookings/' + booking.id});
-  var handle = create_dom_element('span',{class: 'handle', id:'booking_handle_' + booking.id},'',inner_div);
+  var handle = create_dom_element('span',{clss: 'handle', id:'booking_handle_' + booking.id},'',inner_div);
   name_div.on('mouseenter',booking_mouse_enter);
   name_div.on('mouseout',booking_mouse_out);
   name_div.on('click',function () {
@@ -378,7 +378,7 @@ function draw_booking(booking) {
                                               booking_id: booking.id,
                                               date: d, 
                                               room_id: booking.room_id,
-                                              class: 'room-booking booking-line room-booking-' + booking_class, 
+                                              clss: 'room-booking booking-line room-booking-' + booking_class, 
                                               id: 'booking_' + booking.id,
                                               x: x,
                                               y: y
@@ -513,7 +513,7 @@ function render_booking_lines () {
     } else {     
       var span;
       var new_margin;
-      var r = create_dom_element('div', {class: 'room-date-column left booking-line', id: 'booking_date_' + i, y: i, month: d.getMonth(), day: d.getDate() }, '', $('#rooms'));
+      var r = create_dom_element('div', {clss: 'room-date-column left booking-line', id: 'booking_date_' + i, y: i, month: d.getMonth(), day: d.getDate() }, '', $('#rooms'));
       var the_day = d.getDate().toString();
       
       for (var jj = 0; jj < num_rooms / 3; jj++) {

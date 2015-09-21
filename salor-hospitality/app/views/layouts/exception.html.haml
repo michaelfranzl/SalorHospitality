@@ -21,22 +21,11 @@
     - if mobile?
       = stylesheet_link_tag('mobile', :media => 'screen')
     - elsif workstation?
-      = stylesheet_link_tag('workstation', :media => 'screen')      
+      = stylesheet_link_tag('workstation', :media => 'screen')
 
   %body
     #container
       #header
-      #flash
-        - if flash[:notice]
-          #flash_notice= flash[:notice]
-        - if flash[:error]
-          #flash_error= flash[:error]
       #main= yield
       #footer
       #copyright
-        .left
-          Salor Hospitality
-          = SalorHospitality::Application::VERSION
-        .right
-          &copy; 2012 Red (E) Tools Ltd. (red-e.eu)
-          = image_tag 'red-e-tiny.png', :class => 'logo_red_e'
