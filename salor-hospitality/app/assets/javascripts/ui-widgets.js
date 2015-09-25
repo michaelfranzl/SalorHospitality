@@ -71,8 +71,6 @@ function add_button_menu(elem,offset_padding) {
   new_offset.left += offset_padding.left;
   menu.offset(new_offset);
   menu.css({width: menu_width});
-  /* we emit the render and include the element, which will be even.packet. You will have to
-   decide if it is the menu you want in your listener. probably by checking the id of even.packet.attr('id') == 'my_id'*/
   emit("button_menu.rendered", elem);
 }
 

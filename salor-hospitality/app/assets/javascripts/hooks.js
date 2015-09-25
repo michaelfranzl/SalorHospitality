@@ -1,17 +1,20 @@
 /*
- *  Allows us to latch onto events in the UI for adding menu items, i.e. in this case, customers, but later more.
+ *  Allows us to latch onto events in the UI 
  */
-function emit(msg,packet) {
-  $('body').triggerHandler({type: msg, packet:packet});
+function emit(type, params) {
+  //console.log("emitting", type, params);
+  $('body').triggerHandler({type: type, packet: params});
 }
 
-function connect(unique_name,msg,fun) {
+function connect(label, hookname, callback) {
+  //console.log("connecting", label, hookname);
   var pcd = _get('plugin_callbacks_done');
-  if (!pcd)
+  if (!pcd) {
     pcd = [];
-  if (pcd.indexOf(unique_name) == -1) {
-    $('body').on(msg,fun);
-    pcd.push(unique_name);
   }
-  _set('plugin_callbacks_done',pcd)
+  if (pcd.indexOf(label) == -1) {
+    $('body').on(hookname, callback);
+    pcd.push(label);
+  }
+  _set('plugin_callbacks_done',pcd) // just for debug
 }

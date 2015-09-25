@@ -50,7 +50,7 @@ class ArticlesController < ApplicationController
   # tested
   def create
     if @current_vendor.max_articles and @current_vendor.max_articles < @current_vendor.articles.existing.count
-      flash[:notice] = t('articles.create.license_limited', :count => @current_vendor.max_articles)
+      $MESSAGES[:notices] << t('articles.create.license_limited', :count => @current_vendor.max_articles)
       redirect_to articles_path and return
     end
     @article = Article.new
@@ -61,7 +61,7 @@ class ArticlesController < ApplicationController
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id, :article_name => @article.name
       #@article.images.update_all :company_id => @article.company_id
       redirect_to articles_path
-      flash[:notice] = t('articles.create.success')
+      $MESSAGES[:notices] << t('articles.create.success')
     else
       @categories = @current_vendor.categories.existing.active.positioned
       @statistic_categories = @current_vendor.statistic_categories.existing
@@ -89,7 +89,7 @@ class ArticlesController < ApplicationController
     if @article.update_attributes params[:article]
       @article.quantities.update_all :vendor_id => @current_vendor, :company_id => @current_company, :category_id => @article.category_id, :statistic_category_id => @article.statistic_category_id, :article_name => @article.name
       #@article.images.update_all :company_id => @article.company_id
-      flash[:notice] = t('articles.create.success')
+      $MESSAGES[:notices] << t('articles.create.success')
       if session[:return_to]
         redirect_to session[:return_to]
         session[:return_to] = nil
@@ -109,7 +109,7 @@ class ArticlesController < ApplicationController
     @article = get_model
     redirect_to roles_path and return unless @article
     @article.hide(@current_user)
-    flash[:notice] = t('articles.destroy.success')
+    $MESSAGES[:notices] << t('articles.destroy.success')
     redirect_to articles_path
   end
 

@@ -27,9 +27,11 @@ class PluginsController < ApplicationController
     @plugin = Plugin.new
     @plugin.company = @current_company
     @plugin.vendor = @current_vendor
-
+    @plugin.save
+    
+    @plugin.filename = params[:plugin][:filename]
+    
     if @plugin.save
-      @plugin.filename = params[:plugin][:filename]
       @plugin.unzip
       redirect_to plugins_path
     else

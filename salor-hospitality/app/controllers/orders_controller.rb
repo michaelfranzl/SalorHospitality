@@ -71,7 +71,7 @@ class OrdersController < ApplicationController
       redirect_to "/orders?table_id=#{table.id}"
     else
       redirect_to order_path(@order)
-      flash[:notice] = I18n.t('orders.show.cannot_reactivate')
+      $MESSAGES[:notices] << I18n.t('orders.show.cannot_reactivate')
     end
   end
 

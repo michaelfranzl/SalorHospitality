@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     @category.vendor = @current_vendor
     @category.company = @current_company
     if @category.save then
-      flash[:notice] = I18n.t("categories.create.success")
+      $MESSAGES[:notices] << I18n.t("categories.create.success")
       redirect_to(categories_path)
     else
       render :new
@@ -66,7 +66,7 @@ class CategoriesController < ApplicationController
     @category = get_model
     redirect_to roles_path and return unless @category
     @category.update_attribute :hidden, true
-    flash[:notice] = t('categories.destroy.success')
+    $MESSAGES[:notices] << t('categories.destroy.success')
     redirect_to categories_path
   end
 

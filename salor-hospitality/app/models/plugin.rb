@@ -85,9 +85,6 @@ class Plugin < ActiveRecord::Base
     if self.filename.match(/\.zip$/) then
       Zip::ZipFile.foreach(self.full_path_zip) do |file|
         
-        #log_action("creating dir " + self.full_path)
-        #FileUtils.mkdir_p(self.full_path)
-        
         basename = File.basename(file.name)
         target_filepath = File.join(self.full_path, basename)
         
@@ -134,7 +131,7 @@ class Plugin < ActiveRecord::Base
   
   def write_file(zf,path)
     log_action("Writing file: " + path)
-    File.open(path,"wb") do |f|
+    File.open(path, "wb") do |f|
       f.write zf.get_input_stream.read
     end
     if not File.exists? path then
@@ -144,12 +141,5 @@ class Plugin < ActiveRecord::Base
       log_action(" Ruby says the file exists!!")
     end
   end
-  
-  
-  
- 
-  
-
-  
   
 end

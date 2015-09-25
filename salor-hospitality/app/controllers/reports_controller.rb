@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
       return unless permit('download_database')
       zip_outfile = @current_vendor.fisc_dump(@from, @to, params[:location])
       redirect_to reports_path
-      flash[:notice] = "Complete"
+      $MESSAGES[:notices] << "Complete"
     elsif params.has_key?(:fisc_download)
       return unless permit('download_database')
       zip_outfile = @current_vendor.fisc_dump(@from, @to, '/tmp')

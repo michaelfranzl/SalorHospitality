@@ -66,7 +66,7 @@ class RoomsController < ApplicationController
     @room.vendor = @current_vendor
     @room.company = @current_company
     if @room.save
-      flash[:notice] = I18n.t("rooms.create.success")
+      $MESSAGES[:notices] << I18n.t("rooms.create.success")
       redirect_to rooms_path
     else
       @room_types = @current_vendor.room_types.existing.active
@@ -85,7 +85,7 @@ class RoomsController < ApplicationController
     @room = Room.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to user_path and return unless @room
     if @room.update_attributes(params[:room])
-      flash[:notice] = I18n.t("rooms.create.success")
+      $MESSAGES[:notices] << I18n.t("rooms.create.success")
       redirect_to(rooms_path)
     else
       @room_types = @current_vendor.room_types.existing.active
@@ -96,7 +96,7 @@ class RoomsController < ApplicationController
   def destroy
     @room = Room.accessible_by(@current_user).existing.find_by_id(params[:id])
     redirect_to user_path and return unless @room
-    flash[:notice] = I18n.t("rooms.destroy.success")
+    $MESSAGES[:notices] << I18n.t("rooms.destroy.success")
     @room.update_attribute :hidden, true
     redirect_to rooms_path
   end

@@ -73,7 +73,7 @@ class SessionsController < ApplicationController
           
           session[:admin_interface] = false
           flash[:error] = nil
-          flash[:notice] = t('messages.hello_username', :name => user.login)
+          $MESSAGES[:notices] << t('messages.hello_username', :name => user.login)
           
           if vendor and
               vendor.enable_technician_emails and
@@ -84,8 +84,7 @@ class SessionsController < ApplicationController
           end
           redirect_to orders_path and return
         else
-          flash[:error] = t('messages.user_account_is_currently_locked')
-          flash[:notice] = nil
+          $MESSAGES[:notices] = t('messages.user_account_is_currently_locked')
           redirect_to new_session_path and return
         end
       else
@@ -105,7 +104,7 @@ class SessionsController < ApplicationController
         customer.update_attributes :current_ip => request.ip, :last_active_at => Time.now, :last_login_at => Time.now
         I18n.locale = customer.language
         flash[:error] = nil
-        flash[:notice] = t('messages.hello_username', :name => customer.login)
+        $MESSAGES[:notices] << t('messages.hello_username', :name => customer.login)
         redirect_to orders_path and return
       else
         flash[:error] = t :wrong_password

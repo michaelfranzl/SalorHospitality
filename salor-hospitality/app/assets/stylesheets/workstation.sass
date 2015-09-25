@@ -524,20 +524,22 @@ div.clear
 
 div#messages
   :font-size 200%
-  :position absolute
-  :right 50%
-  :top 8%
   :z-index 100
-  :background-color rgba(255,255,255,0.5)
   :-moz-border-radius 9px
   :-webkit-border-radius 9px
   :border-radius 9px
+  :position absolute
+  :background-color rgba(255,255,255,0.5)
+  :top 8%
+  :left 20%
   div.statusmessage
     :padding 5px
   div.message_notice
     :color green
+    
   div.message_alert
     :color red
+    :font-size 150%
     
 div.prompt
   :position fixed

@@ -44,7 +44,7 @@ class CustomersController < ApplicationController
     @customer.company = @current_company
     @customer.vendor = @current_vendor
     if @customer.save
-      flash[:notice] = t('customers.create.success')
+      $MESSAGES[:notices] << t('customers.create.success')
       redirect_to customers_path
     else
       @tables = @current_vendor.tables.existing
@@ -56,7 +56,7 @@ class CustomersController < ApplicationController
     @customer = get_model
     redirect_to customers_path and return unless @customer
     if @customer.update_attributes params[:customer]
-      flash[:notice] = t('customers.create.success')
+      $MESSAGES[:notices] << t('customers.create.success')
       redirect_to customers_path
     else
       @tables = @current_vendor.tables.existing
@@ -68,7 +68,7 @@ class CustomersController < ApplicationController
     @customer = get_model
     redirect_to customers_path and return unless @customer
     @customer.update_attribute :hidden, true
-    flash[:notice] = t('customers.destroy.success')
+    $MESSAGES[:notices] << t('customers.destroy.success')
     redirect_to customers_path
   end
 end

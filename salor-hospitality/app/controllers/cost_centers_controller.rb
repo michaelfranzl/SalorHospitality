@@ -25,7 +25,7 @@ class CostCentersController < ApplicationController
     @cost_center.vendor = @current_vendor
     @cost_center.company = @current_company
     if @cost_center.save
-      flash[:notice] = t('cost_centers.create.success')
+      $MESSAGES[:notices] << t('cost_centers.create.success')
       redirect_to cost_centers_path
     else
       render :new
@@ -42,7 +42,7 @@ class CostCentersController < ApplicationController
     @cost_center = get_model
     redirect_to roles_path and return unless @cost_center
     if @cost_center.update_attributes(params[:cost_center])
-      flash[:notice] = t('cost_centers.create.success')
+      $MESSAGES[:notices] << t('cost_centers.create.success')
       redirect_to(cost_centers_path)
     else
       render(:new)
@@ -53,7 +53,7 @@ class CostCentersController < ApplicationController
     @cost_center = get_model
     redirect_to roles_path and return unless @cost_center
     @cost_center.hide(@current_user)
-    flash[:notice] = t('cost_centers.destroy.success')
+    $MESSAGES[:notices] << t('cost_centers.destroy.success')
     redirect_to cost_centers_path
   end
 end

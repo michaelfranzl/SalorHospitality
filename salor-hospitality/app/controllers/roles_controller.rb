@@ -31,7 +31,7 @@ class RolesController < ApplicationController
     @role.company = @current_company
     @role.vendor = @current_vendor
     if @role.save
-      flash[:notice] = t('roles.create.success')
+      $MESSAGES[:notices] << t('roles.create.success')
       redirect_to roles_path
     else
       render :action => 'new'
@@ -43,7 +43,7 @@ class RolesController < ApplicationController
     redirect_to roles_path and return unless @role
     if @role.update_attributes params[:role]
       @current_company.users.where(:role_id => @role.id).update_all :role_weight => @role.weight
-      flash[:notice] = t('roles.create.success')
+      $MESSAGES[:notices] << t('roles.create.success')
       redirect_to roles_path
     else
       render :action => 'new'
@@ -54,7 +54,7 @@ class RolesController < ApplicationController
     @role = get_model
     redirect_to roles_path and return unless @role
     @role.update_attribute :hidden, true
-    flash[:notice] = t('roles.destroy.success')
+    $MESSAGES[:notices] << t('roles.destroy.success')
     redirect_to roles_path
   end
 end

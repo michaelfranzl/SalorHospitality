@@ -300,7 +300,7 @@ class ApplicationController < ActionController::Base
       end
       
       if params[:notice] and params[:notice].empty? == false
-        flash[:notice] = params[:notice]
+        $MESSAGES[:notices] << params[:notice]
       end
       
       if params[:error] and params[:error].empty? == false
@@ -313,7 +313,10 @@ class ApplicationController < ActionController::Base
         :prompts => []
       }
       
-      @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
+      if @current_vendor
+        @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
+      end
+      
       $PluginManager = @current_plugin_manager
     end
     
@@ -470,7 +473,7 @@ class ApplicationController < ActionController::Base
 
       unless @current_vendor
         session[:vendor_id] = nil and session[:company_id] = nil
-        #flash[:notice] = "Invalid Vendor"
+        #$MESSAGES[:notices] << "Invalid Vendor"
         redirect_to new_session_path and return
       end
 

@@ -26,7 +26,7 @@ class PaymentMethodsController < ApplicationController
     @payment_method.vendor = @current_vendor
     @payment_method.company = @current_company
     if @payment_method.save
-      flash[:notice] = t('payment_methods.create.success')
+      $MESSAGES[:notices] << t('payment_methods.create.success')
       redirect_to payment_methods_path
     else
       render :new
@@ -43,7 +43,7 @@ class PaymentMethodsController < ApplicationController
     @payment_method = get_model
     redirect_to roles_path and return unless @payment_method
     if @payment_method.update_attributes(params[:payment_method])
-      flash[:notice] = t('payment_methods.create.success')
+      $MESSAGES[:notices] << t('payment_methods.create.success')
       redirect_to(payment_methods_path)
     else
       render(:new)
@@ -54,7 +54,7 @@ class PaymentMethodsController < ApplicationController
     @payment_method = get_model
     redirect_to roles_path and return unless @payment_method
     @payment_method.hide(@current_user.id)
-    flash[:notice] = t('payment_methods.destroy.success')
+    $MESSAGES[:notices] << t('payment_methods.destroy.success')
     redirect_to payment_methods_path
   end
 end

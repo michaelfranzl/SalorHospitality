@@ -29,7 +29,7 @@ class CamerasController < ApplicationController
     @camera.vendor = @current_vendor
     @camera.company = @current_company
     if @camera.save
-      flash[:notice] = t('cameras.create.success')
+      $MESSAGES[:notices] << t('cameras.create.success')
       redirect_to cameras_path
     else
       render :new
@@ -46,7 +46,7 @@ class CamerasController < ApplicationController
     @camera = get_model
     redirect_to roles_path and return unless @camera
     if @camera.update_attributes(params[:camera])
-      flash[:notice] = t('cameras.create.success')
+      $MESSAGES[:notices] << t('cameras.create.success')
       redirect_to(cameras_path)
     else
       render(:new)
@@ -57,7 +57,7 @@ class CamerasController < ApplicationController
     @camera = get_model
     redirect_to roles_path and return unless @camera
     @camera.update_attribute :hidden, true
-    flash[:notice] = t('cameras.destroy.success')
+    $MESSAGES[:notices] << t('cameras.destroy.success')
     redirect_to cameras_path
   end
 end

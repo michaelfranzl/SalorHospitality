@@ -30,7 +30,7 @@ class VendorsController < ApplicationController
     @current_vendor = vendor
     session[:vendor_id] = @current_user.default_vendor_id = params[:id] if vendor
     @current_user.save
-    flash[:notice] = t('various.switched_to_vendor', :vendorname => vendor.name)
+    $MESSAGES[:notices] << t('various.switched_to_vendor', :vendorname => vendor.name)
     redirect_to orders_path
   end
 
@@ -54,7 +54,7 @@ class VendorsController < ApplicationController
     end
     #@vendor.images.update_all :company_id => @vendor.company_id
     @vendor.update_cache
-    flash[:notice] = t('vendors.create.success')
+    $MESSAGES[:notices] << t('vendors.create.success')
     redirect_to edit_vendor_path(@vendor)
   end
 
@@ -70,7 +70,7 @@ class VendorsController < ApplicationController
       @vendor.update_cache
       @current_user.vendors << @vendor
       @current_user.save
-      flash[:notice] = t('vendors.create.success')
+      $MESSAGES[:notices] << t('vendors.create.success')
       redirect_to vendors_path
     else
       render :new
@@ -86,6 +86,7 @@ class VendorsController < ApplicationController
 
   def render_resources
     resources = @current_vendor.resources_cache
+    #permissions = @current_user.role.permissions # TODO: use this simpler system
     permissions = {
       :delete_items => permit("delete_items"),
       :decrement_items => permit("decrement_items"),
@@ -97,6 +98,7 @@ class VendorsController < ApplicationController
       :see_item_notifications_static => permit("see_item_notifications_static"),
       :see_item_notifications_user_delivery => permit("see_item_notifications_user_delivery"),
       :manage_payment_methods => permit("manage_payment_methods"),
+      :manage_plugins => permit("manage_plugins"),
       :manage_customers => permit("manage_customers"),
       :manage_pages => permit("manage_pages"),
       :audio => (@current_user.audio unless @current_customer),

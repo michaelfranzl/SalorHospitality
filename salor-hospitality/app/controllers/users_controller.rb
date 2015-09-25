@@ -56,7 +56,7 @@ class UsersController < ApplicationController
         @user.tables = @current_vendor.tables.existing.where(:enabled => true)
       end
       @user.save
-      flash[:notice] = I18n.t("users.create.success")
+      $MESSAGES[:notices] << I18n.t("users.create.success")
       redirect_to users_path
     else
       @roles = @current_company.roles.existing.active
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
         @user.role = @current_user.role
       end
       @user.save
-      flash[:notice] = I18n.t("users.create.success")
+      $MESSAGES[:notices] << I18n.t("users.create.success")
       redirect_to(users_path)
     else
       @tables = @current_vendor.tables.existing.where(:enabled => true)
@@ -113,11 +113,11 @@ class UsersController < ApplicationController
     @user = get_model
     redirect_to users_path and return unless @user
     if @current_vendor.tables.existing.active.where(:active_user_id => @user.id).any?
-      flash[:notice] = I18n.t("This user has active orders. Cannot delete.")
+      $MESSAGES[:notices] << "This user has active orders. Cannot delete."
       redirect_to users_path
       return
     end
-    flash[:notice] = I18n.t("users.destroy.success")
+    $MESSAGES[:notices] << I18n.t("users.destroy.success")
     @user.hidden = true
     @user.password = "OLD #{ Time.now } #{ @user.password }"
     @user.save

@@ -25,7 +25,7 @@ class StatisticCategoriesController < ApplicationController
     @statistic_category.vendor = @current_vendor
     @statistic_category.company = @current_company
     if @statistic_category.save
-      flash[:notice] = I18n.t("categories.create.success")
+      $MESSAGES[:notices] << I18n.t("categories.create.success")
       redirect_to(statistic_categories_path)
     else
       render :new
@@ -42,7 +42,7 @@ class StatisticCategoriesController < ApplicationController
     @statistic_category = get_model
     redirect_to roles_path and return unless @statistic_category
     if @statistic_category.update_attributes(params[:statistic_category]) 
-      flash[:notice] = I18n.t("categories.create.success")
+      $MESSAGES[:notices] << I18n.t("categories.create.success")
       redirect_to statistic_categories_path
     else
       render :new
@@ -53,7 +53,7 @@ class StatisticCategoriesController < ApplicationController
     @statistic_category = get_model
     redirect_to statistic_categories_path and return unless @statistic_category
     @statistic_category.update_attribute :hidden, true
-    flash[:notice] = t('categories.destroy.success')
+    $MESSAGES[:notices] << t('categories.destroy.success')
     redirect_to statistic_categories_path
   end
 

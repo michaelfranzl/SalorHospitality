@@ -30,7 +30,7 @@ class OptionsController < ApplicationController
     @option.company = @current_company
     if @option.save
       @option.images.update_all :company_id => @option.company_id
-      flash[:notice] = I18n.t("options.create.success")
+      $MESSAGES[:notices] << I18n.t("options.create.success")
       redirect_to options_path
     else
       render :new
@@ -50,7 +50,7 @@ class OptionsController < ApplicationController
     redirect_to roles_path and return unless @option
     if @option.update_attributes(params[:option])
       @option.images.update_all :company_id => @option.company_id
-      flash[:notice] = I18n.t("options.create.success")
+      $MESSAGES[:notices] << I18n.t("options.create.success")
       redirect_to options_path
     else
       render :new
@@ -61,7 +61,7 @@ class OptionsController < ApplicationController
     @option = get_model
     redirect_to roles_path and return unless @option
     @option.hide(@current_user.id)
-    flash[:notice] = I18n.t("options.destroy.success")
+    $MESSAGES[:notices] << I18n.t("options.destroy.success")
     redirect_to options_path
   end
 

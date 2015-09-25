@@ -52,7 +52,7 @@ class PluginManager < AbstractController::Base
     @actions                = {}
     
     @text = "(function() {\nvar plugins = {};\n"
-    @plugins.existing.each do |plugin|
+    @plugins.each do |plugin|
       log_action "PluginManager initializing #{ plugin.name }"
       
       _files = plugin.files
@@ -100,10 +100,10 @@ class PluginManager < AbstractController::Base
     Base.log_action(from, "PLUGIN: #{ v8_object_to_hash(obj) }", color)
   end
   
-  def log_action(txt="",color=:green)
-    from = self.class.to_s
-    Base.log_action(from, txt, color)
-  end
+#   def log_action(txt="",color=:green)
+#     from = self.class.to_s
+#     Base.log_action(from, txt, color)
+#   end
   
   # requires present "metafields" function in the plugin file
   def get_meta_fields_for(plugin)
@@ -151,7 +151,6 @@ class PluginManager < AbstractController::Base
       function = obj[path]
     end
     return function
-
   end
 
   # Filters work more or less in the same way as WP.
@@ -172,7 +171,7 @@ class PluginManager < AbstractController::Base
         begin
           function_name = callback[:function]
           
-          function = get_function_from(@code,function_name)
+          function = get_function_from(@code, function_name)
           
           if not function then
             log_action "function #{callback[:function]} is not set."
@@ -204,7 +203,6 @@ class PluginManager < AbstractController::Base
       end
       res = narg
     elsif cvrt == Hash then
-      #debugger
       res = v8_object_to_hash(res)
     end
     
@@ -224,7 +222,7 @@ class PluginManager < AbstractController::Base
       @actions[name.to_sym].each do |callback|
         log_action("Executing ACTION " + name)
         function_name = callback[:function]
-        function = get_function_from(@code,function_name)
+        function = get_function_from(@code, function_name)
         
         if not function then
           log_action "function #{callback[:function]} is not set."

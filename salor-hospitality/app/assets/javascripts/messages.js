@@ -20,7 +20,7 @@ sh.fn.messages.displayMessage = function(type, msg, id) {
     statusbar.prepend(statusmessage);
     setTimeout(function() {
       statusmessage.fadeOut(1000);
-    }, 10000);
+    }, 7000);
   }
 }
 
