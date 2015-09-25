@@ -35,7 +35,7 @@
     %input
 .clear
 
-%h1== #{ t 'invoice' } ##{ @order.nr }
+%h1== #{ t 'invoice' } ##{ @order.nr } (ID #{ @order.id })
 
 %p.date= l(@order.finished_at + @order.vendor.time_offset.hours, :format => :datetime_iso)
 

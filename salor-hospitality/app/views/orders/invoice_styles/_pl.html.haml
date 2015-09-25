@@ -31,7 +31,7 @@
 
 %h1== #{ t 'invoice' }
 
-%p.date== ##{ @order.nr } #{ l @order.finished_at, :format => :datetime_iso }
+%p.date== ##{ @order.nr } (ID #{ @order.id }) #{ l @order.finished_at, :format => :datetime_iso }
 
 .clear
 

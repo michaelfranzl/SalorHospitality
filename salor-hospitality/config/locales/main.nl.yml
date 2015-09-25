@@ -13,6 +13,7 @@ nl:
         statistic_category_id: Statistiek-Categorie
         taxes: Belasting
         usage: Gebruik
+        item_type: Type
       booking_item:
         base_price: Prijs
         count: Tellen
@@ -171,6 +172,7 @@ nl:
         name: Naam
         percent: Belasting in %
         statistics_by_category: Oplossingen statistieken per categorie
+        tpe: Type
       tax_amount:
         amount: Bedrag
         tax_id: Belasting
@@ -211,6 +213,7 @@ nl:
         invoice_logo: logo papieren factuur
         logo: Scherm logo
         name: Naam
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Promotionele informatie in de voet van de kwitantie
         receipt_header_blurb: Promotionele informatie in de kop van de kwitantie
         remote_orders: Externe bestellingen
@@ -229,7 +232,6 @@ nl:
         update_resources_interval: Interval bijwerken offline database
         update_tables_interval: Interval bijwerken tabellen
         use_order_numbers: Gebruik volgnummers
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Code pagina
@@ -243,6 +245,9 @@ nl:
         pulse_receipt: Ontvangstbewijs signaal
         pulse_tickets: Bon signaal
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ nl:
       vendor_printer:
         one: Printer
         other: Printers
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Admin
   are_you_sure: Weet je het zeker?
   articles:
@@ -979,3 +987,7 @@ nl:
   winered: Wijn rood
   wrong_password: Verkeerde login gegevens
   yellow: Geel
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

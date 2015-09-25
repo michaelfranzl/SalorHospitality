@@ -11,6 +11,8 @@
 class Order < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Scope
+  include Base
+  
   belongs_to :company
   belongs_to :vendor
   belongs_to :settlement
@@ -54,7 +56,7 @@ class Order < ActiveRecord::Base
 
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('order')
+      self.update_attribute :nr, self.vendor.get_next_transaction_number('invoice')
     end
   end
 
@@ -107,7 +109,6 @@ class Order < ActiveRecord::Base
     order.update_payment_method_items(params)
     hidden_by = user ? user.id : -12
     order.hide(hidden_by) if order.hidden or not order.items.existing.any?
-    order.set_nr
     order.table.update_color
     return order
   end
@@ -185,6 +186,7 @@ class Order < ActiveRecord::Base
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
     if i.article
+      i.item_type_id = i.article.item_type_id
       i.calculate_totals
     else
       message = "No article associated with item in Order.create_new_item. Item: #{ i.inspect }, Params: #{p.inspect}, save result: #{ result }"
@@ -219,6 +221,7 @@ class Order < ActiveRecord::Base
     i.create_option_items_from_ids p[1][:i]
     i.option_items.each { |oi| oi.calculate_totals }
     if i.article
+      i.item_type_id = i.article.item_type_id
       i.calculate_totals
     else
       message = "No article associated with item in Order.update_item. Item: #{ i.inspect }, Params: #{p.inspect}."
@@ -326,9 +329,7 @@ class Order < ActiveRecord::Base
   end
 
   def hide(by_user_id)
-    self.vendor.unused_order_numbers << self.nr
     self.vendor.save
-    self.nr = nil
     self.hidden = true
     self.hidden_by = by_user_id
     self.save
@@ -430,7 +431,7 @@ class Order < ActiveRecord::Base
     Item.connection.execute("UPDATE items SET confirmation_count = count, preparation_count = count, delivery_count = count WHERE vendor_id=#{self.vendor_id} AND  company_id=#{self.company_id} AND order_id=#{self.id};")
     self.save
     self.unlink
-    self.set_nr
+    
     self.table.update_color
     
     # detach customer from this table
@@ -442,11 +443,25 @@ class Order < ActiveRecord::Base
     
     self.items.existing.each do |i|
       i.create_tax_items
-      i.option_items.existing.each do |oi|
-        # prevent cluttering of invoices
-        oi.hide(-10) if oi.price == 0.0
-      end
     end
+    
+    unless self.booking_id
+      self.set_nr
+      
+      $PluginManager.do_action("order_finish", self.info)
+    end
+  end
+  
+  def info
+    vndr = self.vendor
+    statistics = {}
+    statistics["taxes"] = vndr.taxes.existing.as_json.to_json
+    statistics["vendor"] = {
+      :id => vndr.id,
+      :hash_id => vndr.hash_id,
+      }
+    statistics["order"] = self.to_json
+    return statistics
   end
 
   def pay(user=nil)
@@ -553,7 +568,7 @@ class Order < ActiveRecord::Base
             end
             
             bytes_sent = content_sent.length
-            
+
             if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
               Receipt.create :vendor_id => self.vendor_id,
                   :company_id => self.company_id,
@@ -588,7 +603,7 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        
+
         if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
           Receipt.create :vendor_id => self.vendor_id,
               :company_id => self.company_id,
@@ -600,12 +615,12 @@ class Order < ActiveRecord::Base
               :bytes_sent => bytes_sent,
               :bytes_written => bytes_written
         end
+
         self.update_attribute :printed, true
       end
     end
     
     if what.include? 'interim_receipt'
-      # this is currently not implemented and never called.
       if vendor_printer
         contents = self.escpos_interim_receipt
         bytes_written, content_sent = print_engine.print(vendor_printer.id, contents)
@@ -621,7 +636,7 @@ class Order < ActiveRecord::Base
         end
         
         bytes_sent = content_sent.length
-        
+
         if SalorHospitality::Application::CONFIGURATION[:receipt_history] == true
           Receipt.create :vendor_id => self.vendor_id,
               :company_id => self.company_id,
@@ -633,6 +648,7 @@ class Order < ActiveRecord::Base
               :bytes_sent => bytes_sent,
               :bytes_written => bytes_written
         end
+
         self.update_attribute :printed_interim, true
       end
     end
@@ -690,10 +706,9 @@ class Order < ActiveRecord::Base
     "\x1B\x70\x00\x99\x99\x0C"
 
     header = ''
-    
-    nr = self.nr ? self.nr : 0 # failsafe for the sprintf command below
+
     if vendor.ticket_display_time_order
-      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_long), nr]
+      header += header_format_time_order % [I18n.l(Time.now + vendor.time_offset.hours, :format => :time_long), id]
     end
 
     header += header_format_user_table % [self.user.login, self.table.name]
@@ -906,7 +921,7 @@ class Order < ActiveRecord::Base
         options_values = [
           item.taxes.collect{|k,v| v[:l]}[0..1].join(''),
           "#{ I18n.t(:refund) + ' ' if item.refunded}#{ oi.name }",
-          oi.price,
+          number_with_precision(oi.price, :locale => vendor.get_region),
           item.count,
           item.refunded ? 0 : number_with_precision(oi.price * item.count, :locale => vendor.get_region)
         ]
@@ -1026,11 +1041,29 @@ class Order < ActiveRecord::Base
         footer +
         duplicate +
         "\n" +
-        footerlogo +
-        "\n\n\n\n\n\n" +
-        paper_cut
+        footerlogo
     
-    return { :text => output_text, :raw_insertations => raw_insertations }
+    result_final = { :text => output_text, :raw_insertations => raw_insertations }
+    
+    if $PluginManager
+      # here, filters must return binary data (stored in :raw_insertations) in  BASE64 encoding
+      res = {:text => "", :raw_insertations => {}}
+      res = $PluginManager.apply_filter("after_receipt", res, self.info) # TODO: Test if works without plugins
+      
+      res[:raw_insertations].each do |k, v|
+        # decode BASE64 back into ASCII binary
+        decoded = Base64.decode64(res[:raw_insertations][k])
+        res[:raw_insertations][k] = decoded
+      end
+      
+      result_final[:text] += res[:text]
+      result_final[:raw_insertations].merge! res[:raw_insertations]
+    end
+
+    # add a bit of space and cut paper
+    result_final[:text] += "\n\n\n\n\n\n" + paper_cut
+    
+    return result_final
   end
   
   def escpos_interim_receipt

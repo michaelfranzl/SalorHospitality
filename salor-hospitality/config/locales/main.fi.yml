@@ -13,6 +13,7 @@ fi:
         statistic_category_id: Tilastointiluokitus
         taxes: Vero
         usage: käyttö
+        item_type: Type
       booking_item:
         base_price: Hinta
         count: Laske
@@ -171,6 +172,7 @@ fi:
         name: Nimi
         percent: Vero %
         statistics_by_category: Tilitys tilasto kategorioittain
+        tpe: Type
       tax_amount:
         amount: Summa
         tax_id: Vero
@@ -211,6 +213,7 @@ fi:
         invoice_logo: Laskun logo
         logo: Näytön logo
         name: Nimi
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Kuitin alatunniste
         receipt_header_blurb: Kuitin ylätunniste
         remote_orders: kaukotilaukset
@@ -229,7 +232,6 @@ fi:
         update_resources_interval: Offline-tietokannan päivitysintervalli
         update_tables_interval: Pöytien päivitysintervalli
         use_order_numbers: Käytä tilausnumeroita
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: baudrate
         codepage: codepage
@@ -243,6 +245,9 @@ fi:
         pulse_receipt: Piippaus kuittista
         pulse_tickets: Piippaus lapusta
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ fi:
       vendor_printer:
         one: Tulostin
         other: Tulostimet
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Hallinto
   are_you_sure: Oletko varma?
   articles:
@@ -975,3 +983,7 @@ fi:
   winered: Viininpunainen
   wrong_password: Väärä kirjautumistieto
   yellow: Keltainen
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

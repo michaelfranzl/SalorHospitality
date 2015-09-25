@@ -13,6 +13,7 @@ fr:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Utilisation
+        item_type: Type
       booking_item:
         base_price: Quantité
         count: Compter
@@ -171,6 +172,7 @@ fr:
         name: Nom
         percent: Taxe en %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Montant
         tax_id: Taxe
@@ -211,6 +213,7 @@ fr:
         invoice_logo: XXX Invoice Logo
         logo: XXX Screen logo
         name: Nom
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Texte pied de reçu
         receipt_header_blurb: Texte entête de reçu
         remote_orders: Remote orders
@@ -229,7 +232,6 @@ fr:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Utiliser numéros de commande
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ fr:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ fr:
       vendor_printer:
         one: Imprimante
         other: Imprimantes
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Admin
   are_you_sure: Êtes-vous sûr ?
   articles:
@@ -976,3 +984,7 @@ fr:
   winered: Vin rouge
   wrong_password: Données de connexion erronées
   yellow: Jaune
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal

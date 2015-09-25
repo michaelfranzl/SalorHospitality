@@ -9,6 +9,8 @@
 class GuestType < ActiveRecord::Base
   #attr_accessible :vendor_id, :company_id, :taxes_array, :name
   include Scope
+  include Base
+  
   belongs_to :vendor
   belongs_to :company
   has_many :room_prices

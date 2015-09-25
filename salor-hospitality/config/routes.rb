@@ -43,6 +43,7 @@ SalorHospitality::Application.routes.draw do
   #     end
   #   end
 
+
   resources :articles do
     collection do
       get  :listall
@@ -98,6 +99,7 @@ SalorHospitality::Application.routes.draw do
   resources :cameras
   resources :roles
   resources :customers
+  resources :plugins
 
   resources :reports do
     collection do

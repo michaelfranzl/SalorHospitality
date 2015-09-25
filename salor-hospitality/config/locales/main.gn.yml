@@ -2,12 +2,16 @@
 gn:
   activerecord:
     attributes:
+      plugin:
+        filename: Dateiname
+        name: Name
       article:
         active: aktiv?
         category_id: Kategorie
         description: Beschreibung
         hidden: löschen
         image: Bild
+        item_type: Typ
         name: Name
         price: Preis
         statistic_category_id: Statistik-Kategorie
@@ -70,6 +74,9 @@ gn:
         hidden: löschen
         name: Name
         taxes: Steuern
+      item_type:
+        behavior: Verhalten
+        name: Name
       option:
         category_id: Kategorie
         hidden: Löschen
@@ -171,6 +178,7 @@ gn:
         name: Name
         percent: Steuer in %
         statistics_by_category: Losungs-Statistik nach Kategorie
+        tpe: Typ
       tax_amount:
         amount: Betrag
         tax_id: Steuer
@@ -250,6 +258,9 @@ gn:
         prefix_or_postfix_must_be_given: Prefix oder Postfix muss angegeben werden
         sku_already_taken: wird bereits verwendet
     models:
+      plugin:
+        one: Plugin
+        other: Plugins
       article:
         one: Artikel
         other: Artikel
@@ -289,6 +300,9 @@ gn:
       item:
         one: Posten
         other: Posten
+      item_type:
+        one: Artikel-Art
+        other: Artikel-Arten
       option:
         one: Option
         other: Optionen
@@ -502,6 +516,10 @@ gn:
   invoice_numer_X_at_time: Rechnung Nr. %{number} am %{datetime}
   invoices: Invoices
   is_no_number: ist keine Zahl
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gutschein
+    normal: Normal
   items:
     item_tablerow:
       clear: Normal
@@ -689,6 +707,7 @@ gn:
       interim_receipt: Zwischenabrechnung
       item_scribe: Handschrift aktivieren
       manage_advertising: Werbung einrichten
+      manage_plugins: Plugins verwalten
       manage_articles: Artikel verwalten
       manage_business_invoice: Geschäftsrechnungen verwalten
       manage_cameras: Kameras verwalten

@@ -10,6 +10,8 @@
 
 class User < ActiveRecord::Base
   include Scope
+  include Base
+  
   has_one :cash_drawer
   has_many :settlements
   has_many :orders
@@ -112,7 +114,7 @@ class User < ActiveRecord::Base
   
   def settlement_start(vendor, by_user, initial_cash)
     s = Settlement.new
-    s.nr = vendor.get_unique_model_number('settlement')
+    s.nr = vendor.get_next_transaction_number('settlement')
     s.calculate_totals
     s.vendor = vendor
     s.company = self.company

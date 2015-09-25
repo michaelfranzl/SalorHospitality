@@ -8,7 +8,10 @@
 
 class BookingItem < ActiveRecord::Base
   #attr_accessible :booking_id, :company_id, :guest_type_id, :hidden, :sum, :vendor_id, :base_price, :count, :duration, :season_id, :booking_item_id, :parent_key, :ui_id, :date_locked, :from_date, :to_date
+
   include Scope
+  include Base
+  
   belongs_to :booking
   belongs_to :vendor
   belongs_to :company

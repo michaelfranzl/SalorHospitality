@@ -11,6 +11,8 @@
 class Option < ActiveRecord::Base
   include ImageMethods
   include Scope
+  include Base
+  
   belongs_to :company
   belongs_to :vendor
   has_and_belongs_to_many :categories

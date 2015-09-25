@@ -10,6 +10,8 @@
 
 class CostCenter < ActiveRecord::Base
   include Scope
+  include Base
+  
   has_many :orders
   has_many :items
   belongs_to :company

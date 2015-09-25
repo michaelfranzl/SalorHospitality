@@ -11,6 +11,7 @@
 class Company < ActiveRecord::Base
   include Scope
   include ImageMethods
+  include Base
   
   has_many :articles
   has_many :booking_items
@@ -57,6 +58,7 @@ class Company < ActiveRecord::Base
   has_many :users
   has_many :vendor_printers
   has_many :vendors
+  has_many :item_types
 
   
   validates_presence_of :name

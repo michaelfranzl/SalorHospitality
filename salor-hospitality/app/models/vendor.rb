@@ -10,6 +10,7 @@ class Vendor < ActiveRecord::Base
   include ActionView::Helpers
   include ImageMethods
   include Scope
+  include Base
 
   belongs_to :company
   has_and_belongs_to_many :users
@@ -51,6 +52,8 @@ class Vendor < ActiveRecord::Base
   has_many :receipts
   has_many :cameras
   has_many :histories
+  has_many :item_types
+  has_many :plugins
 
   serialize :unused_order_numbers
   serialize :unused_booking_numbers
@@ -172,25 +175,12 @@ class Vendor < ActiveRecord::Base
     return array.sort
   end
   
-  def get_unique_model_number(model_name_singular)
-    model_name_plural = model_name_singular + 's'
-    return 0 if not self.send("use_#{model_name_singular}_numbers")
-    if not self.send("unused_#{model_name_singular}_numbers").empty?
-      # reuse order numbers if present'
-      nr = self.send("unused_#{model_name_singular}_numbers").first
-      self.send("unused_#{model_name_singular}_numbers").delete(nr)
-      self.save
-    elsif not self.send("largest_#{model_name_singular}_number").zero?
-      # increment largest model number'
-      nr = self.send("largest_#{model_name_singular}_number") + 1
-      self.update_attribute "largest_#{model_name_singular}_number", nr
-    else
-      # find Order with largest nr attribute from database. this should happen only once when a new db'
-      last_model = self.send(model_name_plural).existing.where('nr is not NULL OR nr <> 0').last
-      nr = last_model ? last_model.nr + 1 : 1
-      self.update_attribute "largest_#{model_name_singular}_number", nr
-    end
-    return nr
+  # currently supported are attributes "invoice" and "settlement"
+  def get_next_transaction_number(attr)
+    largest = self.send("largest_#{ attr }_number")
+    largest += 1
+    self.update_attribute "largest_#{attr}_number", largest
+    return largest
   end
 
   # article_id and quantity_id is the model id of Article or Quantity

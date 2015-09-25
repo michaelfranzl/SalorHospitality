@@ -47,7 +47,7 @@
 
   %h3
     == #{ t('activerecord.models.order.one')}
-    == ##{invoice_form.nr}, #{ invoice_form.table.name },
+    == ID #{invoice_form.id}, #{ invoice_form.table.name },
     %span{ :id => "invoice_username_#{ oid }" }== #{ invoice_form.user.login }
   %p= l invoice_form.created_at, :format => :long
   %table.invoice

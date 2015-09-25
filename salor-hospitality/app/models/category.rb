@@ -11,6 +11,8 @@
 class Category < ActiveRecord::Base
   include ImageMethods
   include Scope
+  include Base
+  
   belongs_to :tax
   belongs_to :vendor_printer
   belongs_to :company

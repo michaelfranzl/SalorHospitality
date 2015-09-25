@@ -7,8 +7,12 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 class Booking < ActiveRecord::Base
+
   #attr_accessible :company_id, :customer_id, :hidden, :note, :paid, :sum, :vendor_id, :room_id, :user_id, :season_id, :booking_items_to_json, :taxes, :change_given, :from_date, :to_date, :duration, :tax_sum
+
   include Scope
+  include Base
+  
   has_many :booking_items
   has_many :payment_method_items
   has_many :orders
@@ -39,7 +43,7 @@ class Booking < ActiveRecord::Base
   
   def set_nr
     if self.nr.nil?
-      self.update_attribute :nr, self.vendor.get_unique_model_number('booking')
+      self.update_attribute :nr, self.vendor.get_next_transaction_number('invoice')
     end
   end
   
@@ -99,7 +103,6 @@ class Booking < ActiveRecord::Base
     BookingItem.make_multiseason_associations
     booking.update_payment_method_items(params)
     booking.hide(user.id) if booking.hidden
-    booking.set_nr
     return booking
   end
 
@@ -239,6 +242,7 @@ class Booking < ActiveRecord::Base
   def finish
     self.finished = true
     self.finished_at = Time.now
+    self.set_nr
     self.save
   end
 
@@ -359,7 +363,6 @@ class Booking < ActiveRecord::Base
   end
 
   def hide(by_user_id)
-    self.vendor.unused_booking_numbers << self.nr
     self.vendor.save
     
     self.nr = nil

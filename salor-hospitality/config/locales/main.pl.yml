@@ -13,6 +13,7 @@ pl:
         statistic_category_id: Statistic-Category
         taxes: Tax
         usage: Zużycie
+        item_type: Type
       booking_item:
         base_price: Cena
         count: Rozliczenie
@@ -171,6 +172,7 @@ pl:
         name: Nazwa podatku
         percent: Wysokość podatku w %
         statistics_by_category: Settlement Statistics by Category
+        tpe: Type
       tax_amount:
         amount: Ilość
         tax_id: Podatek
@@ -211,6 +213,7 @@ pl:
         invoice_logo: Logo faktury
         logo: Logo ekranu
         name: Nazwa
+        print_count_reductions: Print count reductions
         receipt_footer_blurb: Notka stopki rachunku
         receipt_header_blurb: Notka nagłówka rachunku
         remote_orders: Zamówienia zdalne
@@ -229,7 +232,6 @@ pl:
         update_resources_interval: Interval update offline database
         update_tables_interval: Interval update tables
         use_order_numbers: Użyj liczby zamówień
-        print_count_reductions: Print count reductions
       vendor_printer:
         baudrate: Baudrate
         codepage: Codepage
@@ -243,6 +245,9 @@ pl:
         pulse_receipt: Beep Receipt
         pulse_tickets: Beep Tickets
         ticket_ad: Ticket Ad.
+      item_type:
+        behavior: Behavior
+        name: Name
     errors:
       messages:
         dont_use_weird_skus: may only contain letters A-Z and a-z and numbers from
@@ -368,6 +373,9 @@ pl:
       vendor_printer:
         one: Bonownik
         other: Bonowniki
+      item_type:
+        one: Item Type
+        other: Item Types
   admin: Administrator
   are_you_sure: Potwierdź aby usunąć
   articles:
@@ -982,3 +990,7 @@ pl:
   winered: Winny
   wrong_password: Błędne dane do logowania!
   yellow: Żółty
+  item_type_names:
+    coupon: Coupon
+    gift_card: Gift Card
+    normal: Normal
