@@ -4,6 +4,11 @@ SALOR Hospitality (aka. Bill Gastro)
 The modern, enterprise-class Point of Sale (POS) Solution serving the Hospitality Industry: Hotels, Restaurants, Inns, Bars and Shops.
 
 
+Important Notice
+------------------------
+
+This project is no longer actively developed or supported. The last stable tag is `debian/4.1.4.97` in the `wheezy` branch. The `master` branch is a port to a newer Ruby on Rails version in Debian Jessie and is experimental.
+
 
 Development Installation
 ------------------------
