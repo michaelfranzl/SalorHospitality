@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150624110801) do
+ActiveRecord::Schema.define(version: 20150908065754) do
 
   create_table "articles", force: true do |t|
     t.string   "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "sku"
+    t.integer  "item_type_id"
   end
 
   add_index "articles", ["category_id"], name: "index_articles_on_category_id", using: :btree
@@ -191,14 +192,23 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
 
   create_table "companies", force: true do |t|
     t.string   "name"
-    t.string   "mode",       default: "local"
+    t.string   "mode",               default: "local"
     t.string   "subdomain"
-    t.boolean  "hidden",     default: false
-    t.boolean  "active",     default: true
+    t.boolean  "hidden",             default: false
+    t.boolean  "active",             default: true
     t.string   "email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.string   "identifier"
+    t.string   "auth_user"
+    t.string   "full_subdomain"
+    t.string   "full_url"
+    t.string   "virtualhost_filter"
+    t.integer  "auth_https_mode"
+    t.boolean  "https"
+    t.boolean  "auth"
+    t.string   "domain"
+    t.boolean  "removal_pending"
   end
 
   create_table "cost_centers", force: true do |t|
@@ -278,6 +288,9 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "logged_in"
+    t.string   "password_encrypted"
+    t.string   "password_salt"
+    t.string   "id_hash"
     t.string   "tax_info"
   end
 
@@ -397,6 +410,18 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
   add_index "ingredients", ["article_id"], name: "index_ingredients_on_article_id", using: :btree
   add_index "ingredients", ["stock_id"], name: "index_ingredients_on_stock_id", using: :btree
 
+  create_table "item_types", force: true do |t|
+    t.string   "name"
+    t.string   "behavior"
+    t.integer  "vendor_id"
+    t.integer  "company_id"
+    t.boolean  "hidden"
+    t.datetime "hidden_at"
+    t.integer  "hidden_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "items", force: true do |t|
     t.integer  "count",                               default: 1
     t.integer  "article_id"
@@ -440,6 +465,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.boolean  "price_changed"
     t.integer  "price_changed_by"
     t.integer  "position_category"
+    t.integer  "item_type_id"
   end
 
   add_index "items", ["article_id"], name: "index_items_on_article_id", using: :btree
@@ -641,6 +667,22 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.boolean  "change",                default: false
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+  end
+
+  create_table "plugins", force: true do |t|
+    t.string   "name"
+    t.string   "filename"
+    t.string   "base_path"
+    t.text     "files"
+    t.text     "meta"
+    t.integer  "company_id"
+    t.integer  "vendor_id"
+    t.integer  "user_id"
+    t.boolean  "hidden"
+    t.integer  "hidden_by"
+    t.datetime "hidden_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "presentations", force: true do |t|
@@ -1032,6 +1074,7 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.boolean  "include_in_statistics",             default: false
     t.integer  "hidden_by"
     t.datetime "hidden_at"
+    t.string   "tpe"
   end
 
   add_index "taxes", ["company_id"], name: "index_taxes_company_id", using: :btree
@@ -1099,6 +1142,8 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.integer  "default_vendor_id"
     t.string   "advertising_url"
     t.integer  "advertising_timeout",                  default: -1
+    t.string   "salt"
+    t.string   "encrypted_password"
     t.float    "hourly_rate",               limit: 24
     t.integer  "maximum_shift_duration",               default: 9999
     t.integer  "current_settlement_id"
@@ -1142,14 +1187,12 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.string   "name",                                         default: "Bill Gastro"
     t.datetime "created_at",                                                           null: false
     t.datetime "updated_at",                                                           null: false
-    t.integer  "largest_order_number",                         default: 0
-    t.string   "unused_order_numbers",        limit: 1000,     default: "--- []\n"
+    t.integer  "largest_invoice_number",                       default: 0
     t.string   "country"
     t.integer  "time_offset",                                  default: 0
     t.text     "resources_cache",             limit: 16777215
     t.string   "res_fetch_url"
     t.string   "res_confirm_url"
-    t.boolean  "use_order_numbers",                            default: true
     t.integer  "company_id"
     t.boolean  "active",                                       default: true
     t.boolean  "hidden"
@@ -1163,9 +1206,6 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.text     "receipt_footer_blurb"
     t.text     "invoice_header_blurb"
     t.text     "invoice_footer_blurb"
-    t.string   "unused_booking_numbers",      limit: 10000,    default: "--- []\n"
-    t.integer  "largest_booking_number",                       default: 0
-    t.boolean  "use_booking_numbers",                          default: true
     t.integer  "max_tables"
     t.integer  "max_rooms"
     t.integer  "max_articles"
@@ -1180,18 +1220,23 @@ ActiveRecord::Schema.define(:version => 20150624110801) do
     t.integer  "automatic_printing_interval",                  default: 31
     t.string   "hash_id"
     t.integer  "largest_settlement_number",                    default: 0
-    t.string   "unused_settlement_numbers",   limit: 1000,     default: "--- []\n"
-    t.boolean  "use_settlement_numbers",                       default: true
     t.boolean  "enable_technician_emails",                     default: false
     t.string   "technician_email"
     t.integer  "hidden_by"
     t.datetime "hidden_at"
     t.boolean  "history_print"
     t.string   "branding",                    limit: 5000,     default: "--- {}\n"
+    t.string   "full_subdomain"
     t.string   "identifier"
+    t.string   "full_url"
+    t.string   "virtualhost_filter"
+    t.integer  "auth_https_mode"
+    t.boolean  "https"
+    t.boolean  "auth"
+    t.string   "domain"
+    t.string   "subdomain"
     t.integer  "ticket_space_top",                             default: 5
     t.text     "public_holidays"
-    t.boolean  "one_ticket_per_piece"
     t.boolean  "print_count_reductions"
   end
 
