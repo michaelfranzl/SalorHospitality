@@ -72,8 +72,10 @@ class Plugin < ActiveRecord::Base
     self.hidden_by = by_id
     self.hidden_at = Time.now
     self.save!
-    FileUtils.rm_rf(self.full_path)
-    FileUtils.rm_rf(self.full_path_zip)
+    if self.filename
+      FileUtils.rm_rf(self.full_path)
+      FileUtils.rm_rf(self.full_path_zip)
+    end
   end
   
   def unzip

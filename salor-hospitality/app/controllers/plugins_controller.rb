@@ -29,6 +29,11 @@ class PluginsController < ApplicationController
     @plugin.vendor = @current_vendor
 
     if @plugin.save
+      if params[:plugin].nil?
+        @plugin.hide(@current_user.id)
+        redirect_to plugins_path
+        return
+      end
       @plugin.filename = params[:plugin][:filename]
       @plugin.unzip
       redirect_to plugins_path
