@@ -17,6 +17,7 @@ gem 'mysql2', '0.3.16'
 gem 'coffee-rails', '4.0.1'
 gem 'rmagick', '2.15.0'
 gem 'rubyzip', '0.9.9'
+gem 'therubyracer', '0.12.2'
 
 
 group :development do
