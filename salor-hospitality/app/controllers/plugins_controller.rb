@@ -29,8 +29,6 @@ class PluginsController < ApplicationController
     @plugin.vendor = @current_vendor
     @plugin.save
     
-    @plugin.filename = params[:plugin][:filename]
-    
     if @plugin.save
       if params[:plugin].nil?
         @plugin.hide(@current_user.id)
