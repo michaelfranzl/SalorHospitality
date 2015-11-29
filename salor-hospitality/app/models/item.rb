@@ -298,7 +298,7 @@ class Item < ActiveRecord::Base
       split_order.user_id = parent_order.user_id
       split_order.company_id = parent_order.company_id
       split_order.vendor_id = parent_order.vendor_id
-      split_order.nr = parent_order.vendor.get_unique_model_number('order')
+      split_order.nr = parent_order.vendor.get_next_transaction_number('invoice')
       parent_order.order = split_order
       split_order.order = parent_order
     end
