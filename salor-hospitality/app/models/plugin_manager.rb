@@ -290,7 +290,7 @@ class PluginManager < AbstractController::Base
   # The following methods are utility functions and are exposed to the plugin V8 sandbox
   
   def get_meta(plugin_name, attr)
-    return @metas[plugin_name][attr]
+    return @metas[plugin_name][attr] if @metas[plugin_name]
   end
   
   def request_localhost(method, path, port, data={}, headers={}, user=nil, pass=nil)
