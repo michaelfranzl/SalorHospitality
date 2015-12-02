@@ -48,6 +48,7 @@ class ArticlesController < ApplicationController
         :price,
         :category_id,
         :statistic_category_id,
+        :item_type_id,
         :taxes_array => [],
         :images_attributes => [
           :file_data
@@ -100,6 +101,7 @@ class ArticlesController < ApplicationController
         :price,
         :category_id,
         :statistic_category_id,
+        :item_type_id,
         :taxes_array => [],
         :images_attributes => [
           :file_data
