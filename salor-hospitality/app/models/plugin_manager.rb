@@ -89,9 +89,8 @@ class PluginManager < AbstractController::Base
     begin
       @code = @context.eval(@text)
     rescue => e
-      raise "Code failed to evaluate: #{ e.inspect } #{ @text }"
-      
-      #log_action e.inspect
+      annotated_js = @text.split("\n").map.with_index{|l, i| "#{ i + 1 }: #{ l }" }
+      log_action "Code failed to evaluate: #{ e.inspect } \n\n #{ annotated_js.join("\n") }"
     end
   end
   
@@ -279,15 +278,25 @@ class PluginManager < AbstractController::Base
     end
   end
   
+  # The following methods are utility functions and are exposed to the plugin V8 sandbox
+  
   def get_meta(plugin_name, attr)
     return @metas[plugin_name][attr]
   end
   
   def request_localhost(method, path, port, data={}, headers={}, user=nil, pass=nil)
     headers = self.v8_object_to_hash(headers)
+    
+    port = port.to_i
+    
+    if port < 3000 or port > 3010
+      # for security reasons, we don't allow just any port on localhost. 10 different services should be more than enough.
+      return "port out of range"
+    end
+    
     url = "http://localhost:#{ port }#{ path }"
     uri = URI.parse(url)
-
+    
     http = Net::HTTP.new(uri.host, uri.port)
     http.open_timeout = 5
     http.read_timeout = 2
@@ -306,7 +315,13 @@ class PluginManager < AbstractController::Base
       request[k] = v
     end
     log_action "get_url: starting request"
-    response = http.request(request)
+    
+    begin
+      response = http.request(request)
+    rescue
+      return nil
+    end
+    
     log_action "get_url: finished request."
     return response.body
   end

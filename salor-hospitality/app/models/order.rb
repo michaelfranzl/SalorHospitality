@@ -462,7 +462,7 @@ class Order < ActiveRecord::Base
       :id => vndr.id,
       :hash_id => vndr.hash_id,
       }
-    statistics["order"] = self.to_json
+    statistics["model"] = self.to_json
     return statistics
   end
 
