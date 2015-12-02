@@ -43,7 +43,8 @@ class PluginsController < ApplicationController
   end
 
   def update
-    permitted = params.require(:plugin).permit :meta
+    permitted = params.require(:plugin).permit!
+      
     @plugin = @current_vendor.plugins.find_by_id(params[:id])
     if @plugin.update_attributes(permitted)
       if params[:plugin][:filename]
