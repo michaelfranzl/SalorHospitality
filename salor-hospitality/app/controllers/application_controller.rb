@@ -25,12 +25,9 @@ class ApplicationController < ActionController::Base
   end
   
   def intercept_plugin_requests
-    return unless @current_user
-    @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
-    $PluginManager = @current_plugin_manager
-    contents = ""
-    if params[:request_for_plugins] == "true"
-      render :text => @current_plugin_manager.apply_filter("ajax_request", contents)
+    if params[:plugin_request] == "true"
+      result = @current_plugin_manager.apply_filter("ajax_request", {})
+      render :json => result.to_json
       return
     end
   end
@@ -299,6 +296,12 @@ class ApplicationController < ActionController::Base
       if params[:error] and params[:error].empty? == false
         flash[:error] = params[:error]
       end
+      
+      if @current_vendor
+        @current_plugin_manager = PluginManager.new(@current_vendor, @current_user, params, request)
+      end
+      
+      $PluginManager = @current_plugin_manager
     end
     
     def autologout_customers
