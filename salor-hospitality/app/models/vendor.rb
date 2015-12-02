@@ -500,6 +500,22 @@ class Vendor < ActiveRecord::Base
     return zip_outfile
   end
   
+  def paths
+    paths = {
+      :uploads => File.join(Rails.root, "public", "uploads", SalorHospitality::Application::SH_DEBIAN_SITEID, self.hash_id),
+      :plugins => File.join(Rails.root, "public", "uploads",SalorHospitality::Application::SH_DEBIAN_SITEID, self.hash_id, "plugins"),
+      }
+    return paths
+  end
+  
+  def urls
+    urls = {
+      :uploads => "/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ self.hash_id }",
+      :plugins => "/uploads/#{ SalorHospitality::Application::SH_DEBIAN_SITEID }/#{ self.hash_id }/plugins",
+      }
+    return urls
+  end
+  
   def package_upgrade
     lines = `zcat /usr/share/doc/salor-hospitality/changelog.gz`.split("\n")
     puts "Currently installed version is #{lines.first}"

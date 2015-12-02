@@ -1025,8 +1025,7 @@ class Order < ActiveRecord::Base
     if $PluginManager
       # here, filters must return binary data (stored in :raw_insertations) in  BASE64 encoding
       res = {:text => "", :raw_insertations => {}}
-      res = $PluginManager.apply_filter("after_receipt", res, self.info.to_json) # TODO: Test if works without plugins
-      
+      res = $PluginManager.apply_filter("after_receipt", res, self.info)
       res[:raw_insertations].each do |k, v|
         # decode BASE64 back into ASCII binary
         decoded = Base64.decode64(res[:raw_insertations][k])

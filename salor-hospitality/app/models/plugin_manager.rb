@@ -287,6 +287,8 @@ class PluginManager < AbstractController::Base
     end
   end
   
+  # The following methods are utility functions and are exposed to the plugin V8 sandbox
+  
   def get_meta(plugin_name, attr)
     return @metas[plugin_name][attr]
   end
@@ -303,7 +305,7 @@ class PluginManager < AbstractController::Base
     
     url = "http://localhost:#{ port }#{ path }"
     uri = URI.parse(url)
-
+    
     http = Net::HTTP.new(uri.host, uri.port)
     http.open_timeout = 5
     http.read_timeout = 2

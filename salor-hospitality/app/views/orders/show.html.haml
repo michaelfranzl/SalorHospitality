@@ -14,7 +14,8 @@
 .paper_invoice
   = render :partial => "orders/invoice_styles/#{SalorHospitality::Application::COUNTRIES_INVOICES[@current_vendor.country]}"
 
-  = @current_plugin_manager.apply_filter("after_invoice", "", @order.info.to_json).html_safe
+
+  = @current_plugin_manager.apply_filter("after_invoice", "", @order.info).to_s.html_safe
 
 
 :javascript

@@ -35,6 +35,17 @@
       - if controller.controller_name == 'orders' and (controller.action_name == 'index' or controller.action_name == 'refund')
         = javascript_include_tag 'orders-documentready'
         = javascript_include_tag 'orders-mobile'
+        
+    - if @current_plugin_manager
+      %script
+        == sh.data.plugins = {};
+        - @current_plugin_manager.metas.each do |name,hash|
+          == sh.data.plugins.#{ name } = {};
+          == sh.data.plugins.#{ name }.meta = #{ raw hash.to_json };
+        
+      - @current_plugin_manager.javascript_files.each do |k,v|
+        - v.each do |f|
+          %script{ :type => "text/javascript", :src => "#{ @current_vendor.urls[:plugins] }/#{ k }/#{ f }"}
 
 
     %style= render :file => 'app/views/layouts/_fonts', :formats => [:css], :content_type => 'text/css' 
@@ -46,9 +57,13 @@
       = stylesheet_link_tag('workstation', :media => 'screen')
     - if mobile_special?
       = stylesheet_link_tag('mobile_special', :media => 'screen')
+      
+    - if @current_plugin_manager
+      - @current_plugin_manager.stylesheet_files.each do |k,v|
+        - v.each do |f|
+          %link{ :rel => "stylesheet", :type => "text/css", :href => "#{ @current_vendor.urls[:plugins] }/#{ k }/#{ f }"}
 
     %script= render :partial => "layouts/js_variables"
-    = render :partial => "layouts/plugins"
 
   %body
     - if workstation? and controller.controller_name == 'orders' and @advertising_url
@@ -90,6 +105,11 @@
       = hidden_field_tag 'logout_error'
       = hidden_field_tag 'logout_notice'
       = hidden_field_tag 'logout_type'
+    
+    - if @current_plugin_manager
+      - @current_plugin_manager.template_files.each do |k,v|
+        - v.each do |f|
+          = raw File.read(File.join(@current_vendor.paths[:plugins], k, v))
 
 :javascript
   var i18n = #{ get_i18n };
