@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 ruby '2.1.5'
 
-gem 'rails', '4.1.8'
+gem 'rails', '~> 4.1'
 gem 'rake', '10.3.2'
 gem 'rack', '1.5.2'
 gem 'kramdown', '1.4.2'
@@ -20,6 +20,18 @@ gem 'rubyzip', '0.9.9'
 gem 'therubyracer', '0.12.2'
 
 
-group :development do
+group :development, :test do
   gem 'byebug'
+  gem 'rspec-rails'
+  gem 'pry-rails'
+  gem 'pry-nav'
+  gem 'pry-stack_explorer'
+  gem 'faker'
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'shoulda-matchers'
+  gem 'chronic'
 end
