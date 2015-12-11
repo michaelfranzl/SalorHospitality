@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 ruby '2.1.5'
 
-gem 'rails', '4.1.8'
+gem 'rails', '~> 4.1'
 gem 'rake', '10.3.2'
 gem 'rack', '1.5.2'
 gem 'kramdown', '1.4.2'
