@@ -25,6 +25,11 @@ Any Rails developer will not have any problems running Salor Hospitality, since 
     cd SalorHospitality/salor-hospitality
     cd config
     cp database.yml.default database.yml
+    cp secrets_yml.example secrets.yml
+
+Generate secrets and add to secrets.yml
+
+    rake secret
 
 At this point, change `database.yml` for your database installation.
 
@@ -43,14 +48,14 @@ If you want to re-seed the database do the following:
     rake db:create
     rake db:migrate
     rake db:seed
-    
+
 Or shorter:
 
     rake db:reset
-    
-    
 
-    
+
+
+
 License
 ------------------------
 
