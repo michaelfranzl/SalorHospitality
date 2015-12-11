@@ -45,3 +45,5 @@ log/*.yml
 salor-hospitality/.DS_Store
 salor-hospitality/config/.DS_Store
 .DS_Store
+salor-hospitality/.ruby-version
+salor-hospitality/.ruby-gemset
