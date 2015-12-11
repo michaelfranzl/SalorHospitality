@@ -13,11 +13,11 @@ class PresentationsController < ApplicationController
   def index
     @presentations = @current_vendor.presentations.existing.active
   end
-  
+
   def show
     @presentation = get_model
   end
-  
+
   def new
     @presentation = Presentation.new
   end
@@ -26,21 +26,21 @@ class PresentationsController < ApplicationController
     @presentation = get_model
     render :new
   end
-  
+
   def create
-    @presentation = Presentation.new params[:presentation]
+    @presentation = Presentation.new presentation_params
     @presentation.vendor = @current_vendor
     @presentation.company = @current_company
     if @presentation.save
       redirect_to presentations_path
-    else 
+    else
       render 'new'
     end
   end
 
   def update
     @presentation = get_model
-    @presentation.update_attributes params[:presentation]
+    @presentation.update_attributes presentation_params
     redirect_to presentations_path
   end
 
@@ -51,6 +51,9 @@ class PresentationsController < ApplicationController
   end
 
   private
+    def presentation_params
+      params.require(:presentation).permit(:name, :model, :description, :markup, :active)
+    end
 
     def check_permissions
       redirect_to '/' if not @current_user.role.permissions.include? 'manage_pages'
