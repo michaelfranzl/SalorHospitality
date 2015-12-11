@@ -22,7 +22,7 @@ class VendorsController < ApplicationController
     end
     return
   end
-  
+
   # scope everything by this vendor, saves the vendor id in the session
   def show
     vendor = get_model
@@ -48,51 +48,10 @@ class VendorsController < ApplicationController
     unless @vendor
       redirect_to vendors_path and return
     end
-    
-    permitted = params.require(:vendor).permit :name,
-        :identifier,
-        :email,
-        :technician_email,
-        :country,
-        :time_offset,
-        :ticket_space_top,
-        :update_tables_interval,
-        :update_item_lists_interval,
-        :update_resources_interval,
-        :receipt_header_blurb,
-        :receipt_footer_blurb,
-        :invoice_header_blurb,
-        :invoice_footer_blurb,
-        :enable_technician_emails,
-        :ticket_wide_font,
-        :ticket_tall_font,
-        :ticket_item_separator,
-        :ticket_display_time_order,
-        :history_print,
-        :remote_orders,
-        :images_attributes => [
-          :file_data,
-          :image_type
-        ],
-        :vendor_printers_attributes => [
-          :id,
-          :name,
-          :path,
-          :print_button_filename,
-          :copies,
-          :codepage,
-          :baudrate,
-          :ticket_ad,
-          :pulse_receipt,
-          :pulse_tickets,
-          :hidden,
-          :cut_every_ticket,
-          :one_ticket_per_piece
-        ]
-    
-      unless @vendor.update_attributes permitted
+
+    unless @vendor.update_attributes vendor_params
       @vendor.images.reload
-      render(:edit) and return 
+      render(:edit) and return
     end
     #@vendor.images.update_all :company_id => @vendor.company_id
     @vendor.update_cache
@@ -105,47 +64,7 @@ class VendorsController < ApplicationController
   end
 
   def create
-    permitted = params.require(:vendor).permit :name,
-        :identifier,
-        :email,
-        :technician_email,
-        :country,
-        :time_offset,
-        :ticket_space_top,
-        :update_tables_interval,
-        :update_item_lists_interval,
-        :update_resources_interval,
-        :receipt_header_blurb,
-        :receipt_footer_blurb,
-        :invoice_header_blurb,
-        :invoice_footer_blurb,
-        :enable_technician_emails,
-        :ticket_wide_font,
-        :ticket_tall_font,
-        :ticket_item_separator,
-        :ticket_display_time_order,
-        :history_print,
-        :remote_orders,
-        :images_attributes => [
-          :file_data,
-          :image_type
-        ],
-        :vendor_printers_attributes => [
-          :id,
-          :name,
-          :path,
-          :print_button_filename,
-          :copies,
-          :codepage,
-          :baudrate,
-          :ticket_ad,
-          :pulse_receipt,
-          :pulse_tickets,
-          :hidden,
-          :cut_every_ticket
-        ]
-    
-    @vendor = Vendor.new permitted
+    @vendor = Vendor.new vendor_params
     @vendor.company = @current_company
     if @vendor.save
       #@vendor.images.update_all :company_id => @vendor.company_id
@@ -186,11 +105,11 @@ class VendorsController < ApplicationController
       :add_option_to_sent_item => permit('add_option_to_sent_item'),
       :confirmation_user => (@current_user.confirmation_user unless @current_customer)
     }
-    
+
     render :js => "
       permissions = #{ permissions.to_json };
       resources = #{ resources };
-      timeout_update_tables = #{ @current_vendor.update_tables_interval }; 
+      timeout_update_tables = #{ @current_vendor.update_tables_interval };
       timeout_update_item_lists = #{ @current_vendor.update_item_lists_interval };
       timeout_update_resources = #{ @current_vendor.update_resources_interval };
       automatic_printing_interval = #{ @current_vendor.automatic_printing_interval * 1000 };
@@ -199,17 +118,17 @@ class VendorsController < ApplicationController
       company_identifier = '#{ @current_company.identifier }';
     "
   end
-  
+
   def report
     from = Time.parse(params[:from]).beginning_of_day
     to = Time.parse(params[:to]).end_of_day
-    
+
     #------------------------ START WITH PARENT MODELS
     settlement_ids = @current_vendor.settlements.where(:created_at => from..to).collect { |s| s.id }
-    
+
     order_ids = @current_vendor.orders.existing.where(:paid_at => from..to).collect { |o| o.id } unless settlement_ids.any? # If the user doesn't use the Settlement feature, user Orders gracefully instead.
-    
-    
+
+
     #------------------------ ITEMS
     if settlement_ids.any?
       items = Item.select("refund_sum, category_id, taxes").where(:settlement_id => settlement_ids, :hidden => nil)
@@ -218,15 +137,15 @@ class VendorsController < ApplicationController
     end
     items_json_string = items.collect{|i| "{\"r\":#{i.refund_sum ? i.refund_sum : 'null'},\"t\":#{i.taxes.to_json},\"y\":#{i.category_id}}" }.join(',')
     items_json_string.gsub! "\n", '\n'
-    
-    
+
+
     #------------------------ BOOKINGITEMS
     # Currently, the Settlements feature does not support Bookings, since it doesn't make much sense.
     booking_ids = @current_vendor.bookings.existing.where(:paid_at => from..to).collect { |o| o.id }
     booking_items = BookingItem.select("refund_sum, room_id, taxes, id").where(:booking_id => booking_ids, :hidden => nil)
     booking_items_json_string = booking_items.collect{|i| "{\"id\":#{i.id},\"r\":#{i.refund_sum.zero? ? 'null' : i.refund_sum},\"t\":#{i.taxes.to_json},\"m\":#{i.room_id}}" }.join(',')
     booking_items_json_string.gsub! "\n", '\n'
-    
+
     #------------------------ PAYMENTMETHODITEMS
 
     if settlement_ids.any?
@@ -234,31 +153,79 @@ class VendorsController < ApplicationController
     else
       payment_method_items = PaymentMethodItem.select("amount, refunded, payment_method_id, id").where(:booking_id => booking_ids, :hidden => nil)
     end
-    
+
     payment_methods_json_string = payment_method_items.collect{|pmi| "{\"id\":#{pmi.id},\"r\":#{pmi.refunded ? 'true' : 'false'},\"a\":#{pmi.amount},\"pm_id\":#{pmi.payment_method_id}}" }.join(',')
     payment_methods_json_string.gsub! "\n", '\n'
     payment_methods_json_string = ''
-    
+
     #------------------------ OUTPUT
     render :json => "{\"items\":[#{items_json_string}], \"booking_items\":[#{booking_items_json_string}],\"payment_method_items\":[#{payment_methods_json_string}]}"
   end
-  
+
   def identify_printers
     Escper::Printer.new(@current_company.mode).identify
     render :nothing => true
   end
-  
+
   def test_printers
     Escper::Printer.new(@current_company.mode, @current_vendor.vendor_printers.existing, File.join(SalorHospitality::Application::SH_DEBIAN_SITEID, @current_vendor.hash_id)).identify(params[:chartest])
     render :nothing => true
   end
-  
+
   def online_status
     render :text => 'online'
   end
-  
+
   def generic_print
     @current_vendor.generic_print(params[:text])
     render :nothing => true
+  end
+
+  private
+
+  def vendor_params
+    params.require(:vendor).permit :name,
+            :identifier,
+            :email,
+            :technician_email,
+            :country,
+            :time_offset,
+            :ticket_space_top,
+            :update_tables_interval,
+            :update_item_lists_interval,
+            :update_resources_interval,
+            :receipt_header_blurb,
+            :receipt_footer_blurb,
+            :invoice_header_blurb,
+            :invoice_footer_blurb,
+            :enable_technician_emails,
+            :ticket_wide_font,
+            :ticket_tall_font,
+            :ticket_item_separator,
+            :ticket_display_time_order,
+            :history_print,
+            :remote_orders,
+            :rlogo_header,
+            :rlogo_footer,
+            :print_count_reductions,
+            :images_attributes => [
+              :file_data,
+              :image_type
+            ],
+            :vendor_printers_attributes => [
+              :id,
+              :name,
+              :path,
+              :print_button_filename,
+              :copies,
+              :codepage,
+              :baudrate,
+              :ticket_ad,
+              :pulse_receipt,
+              :pulse_tickets,
+              :hidden,
+              :cut_every_ticket,
+              :one_ticket_per_piece
+            ]
   end
 end
