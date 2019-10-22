@@ -41,7 +41,8 @@ GEM
     columnize (0.9.0)
     erubis (2.7.0)
     execjs (2.5.2)
-    haml (4.0.5)
+    haml (5.0.0)
+      temple (>= 0.8.0)
       tilt
     hike (1.2.3)
     i18n (0.7.0)
@@ -97,6 +98,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    temple (0.8.2)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -115,7 +117,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (= 4.0.1)
-  haml (= 4.0.5)
+  haml (= 5.0.0)
   jquery-rails (= 3.1.2)
   jquery-ui-rails (= 4.2.0)
   kramdown (= 1.4.2)
