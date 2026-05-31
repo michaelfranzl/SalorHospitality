@@ -1,63 +1,26 @@
-SALOR Hospitality (aka. Bill Gastro)
-====================================
+# SALOR Hospitality (aka. Bill Gastro)
 
 The modern, enterprise-class Point of Sale (POS) Solution serving the Hospitality Industry: Hotels, Restaurants, Inns, Bars and Shops.
 
 
-Important Notice
-------------------------
+## Important Notices
 
-This project is no longer actively developed or supported. The last stable tag is `debian/4.1.4.97` in the `wheezy` branch. The `master` branch is a port to a newer Ruby on Rails version in Debian Jessie and is experimental.
+This project is now archived after almost two decades after its start in early 2009. As original architect and practically only software developer, I feel obliged to offer one important reflection on the code.
 
+This project was a rapidly created prototype that, following customer's demand, developed into a flagship solution for my garage-type, one-man, software start-up of 2009.
 
-Development Installation
-------------------------
+However, there was and still is one critical flaw hiding right at the core of the software that makes the software potentially unsafe to use: money data is stored in the database with a data type of float -- not, as it should be, integer.
 
-The following instructions are based on plain Debian Jessie, and will use its own Ruby interpreter 2.1.5.
+This directly came from the fact that I was not trained in Computer Science and lacked critical experience in software development. I lacked foundational knowledge, for example about [Machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon), that would have helped me to recognize potential consequences coming from this issue.
 
-You need a few system packages so that native extensions of ruby gems will compile successfully:
+When a money value was processed in the application, both before and after storing it in the database, Ruby's `Float#round` method was used.
+However, even rounding can expose machine epsilon.
+While in practice rounding errors from expected sums may be single cents, there still might be higher cost associated with answering corresponding questions about those errors.
 
-    apt-get install ruby libruby ruby-dev rake mysql-server libmysqld-dev libmysqlclient-dev libmagickwand-dev libmagickcore-dev libxslt1-dev nodejs bundler
+To my defense, Ruby's [money](https://rubygems.org/gems/money) gem was created only about 4 months before I started this project, and it also just [used](https://github.com/RubyMoney/money/blob/46762f8ea06119abbea84c1e8e11f3fecb710e12/lib/money/money.rb#L75) Ruby's `Float#round` method, which, by the way, is [inconsistent with](https://bugs.ruby-lang.org/issues/12548) Ruby's `sprintf` method, and which [almost](https://bugs.ruby-lang.org/issues/12958) got changed 10 years later.
 
-Any Rails developer will not have any problems running Salor Hospitality, since it is just a plain, standalone Rails 4.1.8 application without any special magic going on.
+This application's rounding algorithm should have been explicitly coded and tested, perhaps being made configurable, and the database should have stored integers instead of floats. These mistakes were architectural and therefore too expensive to fix.
 
-    git clone git://github.com/michaelfranzl/SalorHospitality.git
-    cd SalorHospitality/salor-hospitality
-    cd config
-    cp database.yml.default database.yml
+**For the above reasons, I strongly discourage to use this software.**
 
-At this point, change `database.yml` for your database installation.
-
-    cd ..
-    bundle install
-    rake db:create
-    rake db:migrate
-    rake db:seed
-    rails s
-
-At this point, the app is running. You can browse to http://localhost:3000 and enter 000 as password.
-
-If you want to re-seed the database do the following:
-
-    rake db:drop
-    rake db:create
-    rake db:migrate
-    rake db:seed
-    
-Or shorter:
-
-    rake db:reset
-    
-    
-
-    
-License
-------------------------
-
-Copyright © 2015 Red (E) Tools Ltd.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Consequently, I removed all refs (branches and tags) and the rest of this file, and archived this repository on GitHub, as it no longer serves any constructive purpose.
